@@ -19736,6 +19736,50 @@ public class DSL {
         return new ArrayConcat<>(arg1, arg2);
     }
 
+    /**
+     * The <code>ARRAY_OVERLAP</code> function.
+     * <p>
+     * Check if 2 arrays overlap.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Condition arrayOverlap(T[] arg1, T[] arg2) {
+        return new ArrayOverlap<>(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>ARRAY_OVERLAP</code> function.
+     * <p>
+     * Check if 2 arrays overlap.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Condition arrayOverlap(T[] arg1, Field<T[]> arg2) {
+        return new ArrayOverlap<>(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>ARRAY_OVERLAP</code> function.
+     * <p>
+     * Check if 2 arrays overlap.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Condition arrayOverlap(Field<T[]> arg1, T[] arg2) {
+        return new ArrayOverlap<>(arg1, Tools.field(arg2, arg1));
+    }
+
+    /**
+     * The <code>ARRAY_OVERLAP</code> function.
+     * <p>
+     * Check if 2 arrays overlap.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Condition arrayOverlap(Field<T[]> arg1, Field<T[]> arg2) {
+        return new ArrayOverlap<>(arg1, arg2);
+    }
+
     // -------------------------------------------------------------------------
     // Utility functions
     // -------------------------------------------------------------------------

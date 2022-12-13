@@ -4842,6 +4842,20 @@ public final class QOM {
     {}
 
     /**
+     * The <code>ARRAY OVERLAP</code> function.
+     * <p>
+     * Check if 2 arrays overlap.
+     */
+    public /*sealed*/ interface ArrayOverlap<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T[]>, Field<T[]>, Condition>,
+            org.jooq.Condition
+        //permits
+        //    ArrayOverlap
+    {}
+
+    /**
      * The <code>NVL</code> function.
      * <p>
      * Return the first non-null argument.

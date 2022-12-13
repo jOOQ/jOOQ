@@ -347,6 +347,7 @@ final class Names {
     static final Name N_ANY_VALUE              = systemName("any_value");
     static final Name N_ARRAY_CONCAT           = systemName("array_concat");
     static final Name N_ARRAY_GET              = systemName("array_get");
+    static final Name N_ARRAY_OVERLAP          = systemName("array_overlap");
     static final Name N_ASCII                  = systemName("ascii");
     static final Name N_ASIN                   = systemName("asin");
     static final Name N_ASINH                  = systemName("asinh");

@@ -71,10 +71,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array1 &amp;&amp; array2</code> overlap operator.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * true = array[1, 2, 3] &amp;&amp; array[3, 4, 5]
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14352] - Use
+     *             {@link DSL#arrayOverlap(Object[], Object[])} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(T[] left, T[] right) {
@@ -84,10 +92,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array1 &amp;&amp; array2</code> overlap operator.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * true = array[1, 2, 3] &amp;&amp; array[3, 4, 5]
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14352] - Use
+     *             {@link DSL#arrayOverlap(Object[], Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(T[] left, Field<T[]> right) {
@@ -97,10 +113,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array1 &amp;&amp; array2</code> overlap operator.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * true = array[1, 2, 3] &amp;&amp; array[3, 4, 5]
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14352] - Use
+     *             {@link DSL#arrayOverlap(Field, Object[])} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(Field<T[]> left, T[] right) {
@@ -110,10 +134,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array1 &amp;&amp; array2</code> overlap operator.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * true = array[1, 2, 3] &amp;&amp; array[3, 4, 5]
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14352] - Use
+     *             {@link DSL#arrayOverlap(Field, Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(Field<T[]> left, Field<T[]> right) {
@@ -260,9 +292,13 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_cat(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
-     * </code></pre>
+     * </code>
+     * </pre>
      *
      * @deprecated - 3.16.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Object[], Field)} instead.
@@ -277,9 +313,13 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_cat(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
-     * </code></pre>
+     * </code>
+     * </pre>
      *
      * @deprecated - 3.16.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Field, Object[])} instead.
@@ -294,9 +334,13 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_cat(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3, 4, 5} = array_cat(ARRAY[1, 2], ARRAY[3, 4, 5])
-     * </code></pre>
+     * </code>
+     * </pre>
      *
      * @deprecated - 3.16.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Field, Field)} instead.

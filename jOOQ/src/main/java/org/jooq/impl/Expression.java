@@ -89,6 +89,10 @@ import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Timestamp;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -873,41 +877,44 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
         Expr<Q1> e = expProvider.apply(exp);
         Class<Q2> expType = (Class<Q2>) exp.getClass();
 
-        // [#10665] Associativity is only given for two operands of the same data type
-        // [#12896] ... and if the feature is enabled
-        boolean associativity = (
-              e.lhs instanceof Typed && e.rhs instanceof Typed
-            ? ((Typed<?>) e.lhs).getDataType().equals(((Typed<?>) e.rhs).getDataType())
-            : true
-        ) && !ON.equals(ctx.settings().getRenderOptionalAssociativityParentheses());
+        List<Q1> elements = new ArrayList<>();
+        Deque<Expr<Q1>> queue = new ArrayDeque<>();
+        queue.add(e);
 
-        acceptAssociative(ctx, associativity, e.lhs, e.op, expType, expProvider, formatSeparator);
-        formatSeparator.accept(ctx);
-        ctx.visit(e.op)
-           .sql(' ');
-        acceptAssociative(ctx, associativity, e.rhs, e.op, expType, expProvider, formatSeparator);
-    }
+        int insertAt = 0;
+        while (!queue.isEmpty()) {
+            Expr<Q1> p = queue.pollFirst();
 
-    @SuppressWarnings("unchecked")
-    private static final <Q1 extends QueryPart, Q2 extends Q1> void acceptAssociative(
-        Context<?> ctx,
-        boolean associativity,
-        Q1 q,
-        QueryPart op,
-        Class<Q2> expType,
-        Function<? super Q2, ? extends Expr<Q1>> expProvider,
-        Consumer<? super Context<?>> formatSeparator
-    ) {
-        if (associativity && expType.isInstance(q)) {
-            Expr<Q1> exp = expProvider.apply((Q2) q);
+            // [#10665] Associativity is only given for two operands of the same data type
+            // [#12896] ... and if the feature is enabled
+            boolean associativity = (
+                  p.lhs instanceof Typed && p.rhs instanceof Typed
+                ? ((Typed<?>) p.lhs).getDataType().equals(((Typed<?>) p.rhs).getDataType())
+                : true
+            ) && !ON.equals(ctx.settings().getRenderOptionalAssociativityParentheses());
 
-            if (op.equals(exp.op)) {
-                acceptAssociative(ctx, (Q2) q, expProvider, formatSeparator);
-                return;
-            }
+            if (associativity && expType.isInstance(p.lhs))
+                queue.offerFirst(expProvider.apply((Q2) p.lhs));
+            else
+                elements.add(insertAt, p.lhs);
+
+            if (associativity && expType.isInstance(p.rhs))
+                queue.offerFirst(expProvider.apply((Q2) p.rhs));
+            else
+                elements.add(insertAt++, p.rhs);
         }
 
-        ctx.visit(q);
+        // Reverse iteration optimises ArrayList.add(int, Object) operations in
+        // the normal case ((((A op B) op C) op D) op E) as opposed to the less
+        // frequent case (A op (B op (C op (D op E))))
+        for (int i = elements.size() - 1; i >= 0; i--) {
+            ctx.visit(elements.get(i));
+
+            if (i > 0) {
+                formatSeparator.accept(ctx);
+                ctx.visit(e.op).sql(' ');
+            }
+        }
     }
 
     // -------------------------------------------------------------------------

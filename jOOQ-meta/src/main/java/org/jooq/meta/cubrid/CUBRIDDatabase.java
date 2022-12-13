@@ -248,7 +248,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
                 // [#1137] Avoid generating enum classes for enum types that
                 // are explicitly forced to another type
                 if (getConfiguredForcedType(columnDefinition) == null) {
-                    DefaultEnumDefinition definition = new DefaultEnumDefinition(getSchemata().get(0), name, "");
+                    DefaultEnumDefinition definition = new DefaultEnumDefinition(getSchemata().get(0), name, "", true);
                     for (String string : columnType.replaceAll("ENUM\\(|\\)", "").split(",")) {
                         definition.addLiteral(string.trim().replaceAll("'", ""));
                     }

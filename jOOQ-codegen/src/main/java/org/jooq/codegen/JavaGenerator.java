@@ -3711,7 +3711,8 @@ public class JavaGenerator extends AbstractGenerator {
         generateEnumClassJavadoc(e, out);
         printClassAnnotations(out, e, Mode.ENUM);
 
-        boolean enumHasNoSchema = e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase);
+        boolean enumHasNoSchema = e.isSynthetic();
+
         if (scala) {
             out.println("object %s {", className);
             out.println();

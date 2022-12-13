@@ -498,7 +498,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                     // [#1137] Avoid generating enum classes for enum types that
                     // are explicitly forced to another type
                     if (getConfiguredForcedType(columnDefinition, columnDefinition.getType()) == null) {
-                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, r.comment);
+                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, r.comment, true);
 
                         CSVReader reader = new CSVReader(
                             new StringReader(r.type.replaceAll("(^enum\\()|(\\)$)", ""))

@@ -155,10 +155,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_append(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3} = array_append(ARRAY[1, 2], 3)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayAppend(Object[], Object)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] array, T value) {
@@ -168,10 +176,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_append(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3} = array_append(ARRAY[1, 2], 3)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayPrepend(Object[], Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] array, Field<T> value) {
@@ -181,10 +197,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_append(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3} = array_append(ARRAY[1, 2], 3)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayPrepend(Field, Object)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> array, T value) {
@@ -194,10 +218,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_append(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3} = array_append(ARRAY[1, 2], 3)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayPrepend(Field, Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> array, Field<T> value) {
@@ -213,10 +245,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_prepend(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayPrepend(Object, Object[])} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T value, T[] array) {
@@ -226,10 +266,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_prepend(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayPrepend(Field, Object[])} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> value, T[] array) {
@@ -242,7 +290,11 @@ public class PostgresDSL extends DSL {
      * Example: <pre><code>
      * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
      * </code></pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayPrepend(Object, Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T value, Field<T[]> array) {
@@ -252,10 +304,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_prepend(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayPrepend(Field, Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> value, Field<T[]> array) {

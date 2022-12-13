@@ -79,8 +79,10 @@ import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.anyValue;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
+import static org.jooq.impl.DSL.arrayAppend;
 import static org.jooq.impl.DSL.arrayConcat;
 import static org.jooq.impl.DSL.arrayGet;
+import static org.jooq.impl.DSL.arrayPrepend;
 import static org.jooq.impl.DSL.arrayRemove;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
@@ -8351,6 +8353,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs2((f1, f2) -> arrayConcat(f1, f2));
                 else if (parseFunctionNameIf("ARRAY_REMOVE"))
                     return parseFunctionArgs2((f1, f2) -> arrayRemove((Field<Void[]>) f1, (Field<Void>) f2));
+                else if (parseFunctionNameIf("ARRAY_APPEND"))
+                    return parseFunctionArgs2((f1, f2) -> arrayAppend((Field<Void[]>) f1, (Field<Void>) f2));
+                else if (parseFunctionNameIf("ARRAY_PREPEND"))
+                    return parseFunctionArgs2((f1, f2) -> arrayPrepend((Field<Void>) f1, (Field<Void[]>) f2));
 
                 break;
 

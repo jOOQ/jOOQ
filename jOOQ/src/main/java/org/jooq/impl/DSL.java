@@ -19737,6 +19737,102 @@ public class DSL {
     }
 
     /**
+     * The <code>ARRAY_APPEND</code> function.
+     * <p>
+     * Append an element to an array.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayAppend(T[] arg1, T arg2) {
+        return new ArrayAppend<>(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>ARRAY_APPEND</code> function.
+     * <p>
+     * Append an element to an array.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayAppend(T[] arg1, Field<T> arg2) {
+        return new ArrayAppend<>(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>ARRAY_APPEND</code> function.
+     * <p>
+     * Append an element to an array.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, T arg2) {
+        return new ArrayAppend<>(arg1, Tools.field(arg2));
+    }
+
+    /**
+     * The <code>ARRAY_APPEND</code> function.
+     * <p>
+     * Append an element to an array.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, Field<T> arg2) {
+        return new ArrayAppend<>(arg1, arg2);
+    }
+
+    /**
+     * The <code>ARRAY_PREPEND</code> function.
+     * <p>
+     * Prepend an element to an array.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayPrepend(T arg1, T[] arg2) {
+        return new ArrayPrepend<>(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>ARRAY_PREPEND</code> function.
+     * <p>
+     * Prepend an element to an array.
+     *
+     * @param arg1 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayPrepend(T arg1, Field<T[]> arg2) {
+        return new ArrayPrepend<>(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>ARRAY_PREPEND</code> function.
+     * <p>
+     * Prepend an element to an array.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayPrepend(Field<T> arg1, T[] arg2) {
+        return new ArrayPrepend<>(arg1, Tools.field(arg2));
+    }
+
+    /**
+     * The <code>ARRAY_PREPEND</code> function.
+     * <p>
+     * Prepend an element to an array.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayPrepend(Field<T> arg1, Field<T[]> arg2) {
+        return new ArrayPrepend<>(arg1, arg2);
+    }
+
+    /**
      * The <code>ARRAY_OVERLAP</code> function.
      * <p>
      * Check if 2 arrays overlap.

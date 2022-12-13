@@ -4842,6 +4842,32 @@ public final class QOM {
     {}
 
     /**
+     * The <code>ARRAY APPEND</code> function.
+     * <p>
+     * Append an element to an array.
+     */
+    public /*sealed*/ interface ArrayAppend<T>
+        extends
+            UOperator2<Field<T[]>, Field<T>, Field<T[]>>,
+            org.jooq.Field<T[]>
+        //permits
+        //    ArrayAppend
+    {}
+
+    /**
+     * The <code>ARRAY PREPEND</code> function.
+     * <p>
+     * Prepend an element to an array.
+     */
+    public /*sealed*/ interface ArrayPrepend<T>
+        extends
+            UOperator2<Field<T>, Field<T[]>, Field<T[]>>,
+            org.jooq.Field<T[]>
+        //permits
+        //    ArrayPrepend
+    {}
+
+    /**
      * The <code>ARRAY OVERLAP</code> function.
      * <p>
      * Check if 2 arrays overlap.

@@ -242,6 +242,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -4010,6 +4011,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     final Condition getSeekCondition(Context<?> ctx) {
         SortFieldList o = getOrderBy();
         Condition c = null;
+        QueryPartList<Field<?>> s = getSeek();
 
         // [#2786] TODO: Check if NULLS FIRST | NULLS LAST clauses are
         // contained in the SortFieldList, in case of which, the below
@@ -4020,10 +4022,34 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // predicates can be applied, which can be heavily optimised on some
         // databases.
         if (o.size() > 1 && o.uniform() && !FALSE.equals(ctx.settings().isRenderRowConditionForSeekClause())) {
-            if (o.get(0).getOrder() != DESC ^ seekBefore)
-                c = row(o.fields()).gt(row(getSeek()));
+            List<Field<?>> l = o.fields();
+            List<Field<?>> r = s;
+
+            // [#14395] Exclude NoField markers
+            if (anyMatch(r, e -> e instanceof NoField)) {
+                l = new ArrayList<>(l);
+                r = new ArrayList<>(r);
+
+                for (int i = 0; i < r.size(); i++) {
+                    if (r.get(i) instanceof NoField) {
+                        l.remove(i);
+                        r.remove(i);
+                    }
+                }
+            }
+
+            if (l.isEmpty())
+                c = noCondition();
+            else if (o.get(0).getOrder() != DESC ^ seekBefore)
+                if (l.size() == 1)
+                    c = l.get(0).gt((Field) r.get(0));
+                else
+                    c = row(l).gt(row(r));
             else
-                c = row(o.fields()).lt(row(getSeek()));
+                if (l.size() == 1)
+                    c = l.get(0).lt((Field) r.get(0));
+                else
+                    c = row(l).lt(row(r));
         }
 
         // With alternating sorting, the SEEK clause has to be explicitly
@@ -4032,28 +4058,32 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             ConditionProviderImpl or = new ConditionProviderImpl();
 
             for (int i = 0; i < o.size(); i++) {
+                if (s.get(i) instanceof NoField)
+                    continue;
+
                 ConditionProviderImpl and = new ConditionProviderImpl();
 
                 for (int j = 0; j < i; j++)
-                    and.addConditions(((Field) o.get(j).$field()).eq(getSeek().get(j)));
+                    if (!(s.get(j) instanceof NoField))
+                        and.addConditions(((Field) o.get(j).$field()).eq(s.get(j)));
 
-                SortField<?> s = o.get(i);
-                if (s.getOrder() != DESC ^ seekBefore)
-                    and.addConditions(((Field) s.$field()).gt(getSeek().get(i)));
+                SortField<?> sf = o.get(i);
+                if (sf.getOrder() != DESC ^ seekBefore)
+                    and.addConditions(((Field) sf.$field()).gt(s.get(i)));
                 else
-                    and.addConditions(((Field) s.$field()).lt(getSeek().get(i)));
+                    and.addConditions(((Field) sf.$field()).lt(s.get(i)));
 
                 or.addConditions(OR, and);
             }
 
-            c = or;
+            c = or.getWhere();
         }
 
         if (o.size() > 1 && TRUE.equals(ctx.settings().isRenderRedundantConditionForSeekClause())) {
             if (o.get(0).getOrder() != DESC ^ seekBefore)
-                c = ((Field) o.get(0).$field()).ge(getSeek().get(0)).and(c);
+                c = ((Field) o.get(0).$field()).ge(s.get(0)).and(c);
             else
-                c = ((Field) o.get(0).$field()).le(getSeek().get(0)).and(c);
+                c = ((Field) o.get(0).$field()).le(s.get(0)).and(c);
         }
 
         return c;

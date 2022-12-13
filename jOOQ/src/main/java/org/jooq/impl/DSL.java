@@ -19780,6 +19780,54 @@ public class DSL {
         return new ArrayOverlap<>(arg1, arg2);
     }
 
+    /**
+     * The <code>ARRAY_REMOVE</code> function.
+     * <p>
+     * Remove an element from an array.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayRemove(T[] arg1, T arg2) {
+        return new ArrayRemove<>(Tools.field(arg1), Tools.field(arg2));
+    }
+
+    /**
+     * The <code>ARRAY_REMOVE</code> function.
+     * <p>
+     * Remove an element from an array.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayRemove(T[] arg1, Field<T> arg2) {
+        return new ArrayRemove<>(Tools.field(arg1), arg2);
+    }
+
+    /**
+     * The <code>ARRAY_REMOVE</code> function.
+     * <p>
+     * Remove an element from an array.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayRemove(Field<T[]> arg1, T arg2) {
+        return new ArrayRemove<>(arg1, Tools.field(arg2));
+    }
+
+    /**
+     * The <code>ARRAY_REMOVE</code> function.
+     * <p>
+     * Remove an element from an array.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayRemove(Field<T[]> arg1, Field<T> arg2) {
+        return new ArrayRemove<>(arg1, arg2);
+    }
+
     // -------------------------------------------------------------------------
     // Utility functions
     // -------------------------------------------------------------------------

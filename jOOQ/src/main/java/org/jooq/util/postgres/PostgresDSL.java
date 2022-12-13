@@ -355,10 +355,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_remove(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1,3} = array_remove(ARRAY[1,2,3,2], 2)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayConcat(Object[], Object)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(T[] array, T element) {
@@ -368,10 +376,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_remove(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1,3} = array_remove(ARRAY[1,2,3,2], 2)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayConcat(Field, Object)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(Field<T[]> array, T element) {
@@ -381,10 +397,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_remove(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1,3} = array_remove(ARRAY[1,2,3,2], 2)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayConcat(Object[], Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(T[] array, Field<T> element) {
@@ -394,10 +418,18 @@ public class PostgresDSL extends DSL {
     /**
      * The PostgreSQL <code>array_remove(anyarray, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1,3} = array_remove(ARRAY[1,2,3,2], 2)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.16.0 - [#14388] - Use
+     *             {@link DSL#arrayConcat(Field, Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(Field<T[]> array, Field<T> element) {

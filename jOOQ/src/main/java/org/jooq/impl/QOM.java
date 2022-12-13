@@ -4856,6 +4856,19 @@ public final class QOM {
     {}
 
     /**
+     * The <code>ARRAY REMOVE</code> function.
+     * <p>
+     * Remove an element from an array.
+     */
+    public /*sealed*/ interface ArrayRemove<T>
+        extends
+            UOperator2<Field<T[]>, Field<T>, Field<T[]>>,
+            org.jooq.Field<T[]>
+        //permits
+        //    ArrayRemove
+    {}
+
+    /**
      * The <code>NVL</code> function.
      * <p>
      * Return the first non-null argument.

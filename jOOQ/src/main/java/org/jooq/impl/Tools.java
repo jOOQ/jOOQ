@@ -6927,13 +6927,13 @@ final class Tools {
     static final boolean containsUnaliasedTable(Table<?> in, Table<?> search) {
 
         // [#6304] [#7626] Improved alias discovery
-        return traverseJoins(in, false, r -> r, search(search, Tools::unalias));
+        return traverseJoins(in, false, r -> r, search(search, Tools::unwrap));
     }
 
     static final boolean containsUnaliasedTable(Iterable<? extends Table<?>> in, Table<?> search) {
 
         // [#6304] [#7626] Improved alias discovery
-        return traverseJoins(in, false, r -> r, search(search, Tools::unalias));
+        return traverseJoins(in, false, r -> r, search(search, Tools::unwrap));
     }
 
     static final void traverseJoins(Iterable<? extends Table<?>> i, Consumer<? super Table<?>> consumer) {

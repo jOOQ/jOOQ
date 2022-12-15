@@ -66,11 +66,9 @@ import static org.jooq.impl.Keywords.K_STRUCT;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Keywords.K_VALUES;
-import static org.jooq.impl.Names.N_VALUES;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.EMPTY_ROW;
-import static org.jooq.impl.Tools.fieldNamesC;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
@@ -87,7 +85,6 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableOptions;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.UnmodifiableList;
 
@@ -112,13 +109,22 @@ implements
     private transient DataType<?>[] types;
 
     Values(Row[] rows) {
-        this(rows, name("v"), fieldNamesC(degree(rows)));
+        this(rows, name("v"), fieldAliases(degree(rows)));
     }
 
     Values(Row[] rows, Name alias, Name[] fieldAliases) {
         super(alias, fieldAliases);
 
         this.rows = assertNotEmpty(rows);
+    }
+
+    private static Name[] fieldAliases(int degree) {
+        Name[] result = new Name[degree];
+
+        for (int i = 0; i < result.length; i++)
+            result[i] = name("c" + (i + 1));
+
+        return result;
     }
 
     private static final int degree(Row[] rows) {
@@ -150,7 +156,7 @@ implements
 
     @Override
     final FieldsImpl<R> fields0() {
-        return new FieldsImpl<>(map(fieldAliases, (n, i) -> DSL.field(n, rows[0].dataType(i))));
+        return new FieldsImpl<>(map(fieldAliases, (n, i) -> DSL.field(alias.append(n), rows[0].dataType(i))));
     }
 
     // -------------------------------------------------------------------------

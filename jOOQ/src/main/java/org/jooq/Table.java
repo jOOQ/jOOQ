@@ -3032,11 +3032,12 @@ extends
 
 
 
-
-
-
-
-
+    /**
+     * Add the <code>WITH ORDINALITY</code> clause.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    Table<Record> withOrdinality();
 
     /**
      * Create a new <code>TABLE</code> reference from this table, applying

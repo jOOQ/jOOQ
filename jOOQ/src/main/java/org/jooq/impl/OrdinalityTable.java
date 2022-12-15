@@ -196,7 +196,7 @@ implements
 
 
         else
-            ctx.sql(' ').visit(K_WITH).sql(' ').visit(K_ORDINALITY);
+            ctx.visit(delegate).sql(' ').visit(K_WITH).sql(' ').visit(K_ORDINALITY);
     }
 
     private final void acceptEmulation(Context<?> ctx) {

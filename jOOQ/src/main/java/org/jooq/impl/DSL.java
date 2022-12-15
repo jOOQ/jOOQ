@@ -32753,15 +32753,7 @@ public class DSL {
     @NotNull
     @Support
     static Table<Record> values0(Row... rows) {
-        Values.assertNotEmpty(rows);
-        int size = rows[0].size();
-
-        String[] columns = new String[size];
-
-        for (int i = 0; i < size; i++)
-            columns[i] = "c" + (i + 1);
-
-        return new Values<Record>(rows).as("v", columns);
+        return new Values<Record>(Values.assertNotEmpty(rows));
     }
 
 

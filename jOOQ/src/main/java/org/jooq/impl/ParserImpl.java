@@ -2237,9 +2237,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         parseKeywordIf("FROM");
-        Table<?> table = scope.scope(parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)));
+        Table<?> table = scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)));
         DeleteUsingStep<?> s1 = with == null ? dsl.delete(table) : with.delete(table);
-        DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> scope.scope(parseTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM))))) : s1;
+        DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM))))) : s1;
         DeleteOrderByStep<?> s3 = parseKeywordIf("ALL")
             ? s2
             : parseKeywordIf("WHERE")
@@ -2430,9 +2430,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // percent = parseKeywordIf("PERCENT") && requireProEdition();
         }
 
-        Table<?> table = scope.scope(parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM)));
+        Table<?> table = scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM)));
         UpdateSetFirstStep<?> s1 = (with == null ? dsl.update(table) : with.update(table));
-        List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', t -> scope.scope(parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM)))) : null;
+        List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', t -> scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM)))) : null;
 
         parseKeyword("SET");
         UpdateFromStep<?> s2;
@@ -2457,7 +2457,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         UpdateWhereStep<?> s3 = from != null
             ? s2.from(from)
             : parseKeywordIf("FROM")
-            ? s2.from(parseList(',', t -> parseTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM))))
+            ? s2.from(parseList(',', t -> parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM))))
             : s2;
         UpdateOrderByStep<?> s4 = parseKeywordIf("ALL")
             ? s3
@@ -6811,20 +6811,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Table<?> parseTable() {
-        return parseTable(() -> peekKeyword(KEYWORDS_IN_SELECT_FROM));
-    }
-
-    private final Table<?> parseTable(BooleanSupplier forbiddenKeywords) {
-        Table<?> result = parseLateral(forbiddenKeywords);
-
-        for (;;) {
-            Table<?> joined = parseJoinedTableIf(result, forbiddenKeywords);
-
-            if (joined == null)
-                return result;
-            else
-                result = joined;
-        }
+        return parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_SELECT_FROM));
     }
 
     private final Table<?> parseLateral(BooleanSupplier forbiddenKeywords) {
@@ -7114,6 +7101,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
         }
+
+        if (parseKeywordIf("WITH ORDINALITY"))
+            result = t(result).withOrdinality();
 
         if (!ignoreProEdition() && parseKeywordIf("PIVOT") && requireProEdition()) {
 
@@ -7471,7 +7461,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (joinType == null)
             return null;
 
-        Table<?> right = joinType.qualified() ? parseTable(forbiddenKeywords) : parseLateral(forbiddenKeywords);
+        Table<?> right = joinType.qualified() ? parseJoinedTable(forbiddenKeywords) : parseLateral(forbiddenKeywords);
 
         TableOptionalOnStep<?> s0;
         TablePartitionByStep<?> s1;

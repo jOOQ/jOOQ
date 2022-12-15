@@ -38,7 +38,8 @@
 
 package org.jooq.impl;
 
-import org.jooq.Condition;
+import static org.jooq.impl.Tools.visitAutoAliased;
+
 import org.jooq.Context;
 import org.jooq.SelectFieldOrAsterisk;
 
@@ -88,13 +89,7 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
             acceptElement0(ctx, part);
     }
 
-    @SuppressWarnings("unchecked")
     private void acceptElement0(Context<?> ctx, F part) {
-        F alternative;
-
-        if (ctx.declareFields() && part instanceof AutoAlias && (alternative = ((AutoAlias<F>) part).autoAlias(ctx)) != null)
-            super.acceptElement(ctx, alternative);
-        else
-            super.acceptElement(ctx, part);
+        visitAutoAliased(ctx, part, Context::declareFields, (c, t) -> super.acceptElement(c, t));
     }
 }

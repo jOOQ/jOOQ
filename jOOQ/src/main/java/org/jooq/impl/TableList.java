@@ -46,11 +46,11 @@ import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.Tools.flatMap;
+import static org.jooq.impl.Tools.visitAutoAliased;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -82,15 +82,9 @@ final class TableList extends QueryPartList<Table<?>> {
         return true;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void acceptElement(Context<?> ctx, Table<?> part) {
-        Table<?> alternative;
-
-        if (ctx.declareTables() && part instanceof AutoAlias && (alternative = ((AutoAlias<Table<?>>) part).autoAlias(ctx)) != null)
-            super.acceptElement(ctx, alternative);
-        else
-            super.acceptElement(ctx, part);
+        visitAutoAliased(ctx, part, Context::declareTables, (c, t) -> super.acceptElement(c, t));
     }
 
     @Override

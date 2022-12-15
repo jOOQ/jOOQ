@@ -109,6 +109,7 @@ import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.visitAutoAliased;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 
@@ -467,7 +468,7 @@ implements
         if (wrap)
             ctx.sqlIndentStart('(');
 
-        ctx.visit(table);
+        visitAutoAliased(ctx, table, Context::declareTables, (c, t) -> c.visit(t));
 
         if (wrap)
             ctx.sqlIndentEnd(')');

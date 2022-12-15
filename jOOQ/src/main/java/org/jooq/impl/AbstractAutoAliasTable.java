@@ -37,50 +37,56 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_TABLE;
-import static org.jooq.impl.Names.N_FUNCTION;
-
 import org.jooq.Context;
-import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
-import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
+ * A base implementation for {@link AutoAlias} and {@link Table}.
+ *
  * @author Lukas Eder
  */
-final class FunctionTable<R extends Record>
+abstract class AbstractAutoAliasTable<R extends Record>
 extends
     AbstractTable<R>
 implements
-    UNotYetImplemented
+    AutoAlias<Table<R>>
 {
 
-    private final Field<?> function;
+    final Name   alias;
+    final Name[] fieldAliases;
 
-    FunctionTable(Field<?> function) {
-        super(TableOptions.function(), N_FUNCTION);
-
-        this.function = function;
+    AbstractAutoAliasTable(Name alias) {
+        this(alias, null);
     }
+
+    AbstractAutoAliasTable(Name alias, Name[] fieldAliases) {
+        super(TableOptions.expression(), alias != null ? alias : DSL.name("t"));
+
+        this.alias = alias;
+        this.fieldAliases = fieldAliases;
+    }
+
+    abstract AbstractAutoAliasTable<R> construct(Name newAlias, Name[] newFieldAliases);
 
     // -------------------------------------------------------------------------
     // XXX: Table API
     // -------------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
     @Override
-    public final Class<? extends R> getRecordType() {
-        // TODO: [#4695] Calculate the correct Record[B] type
-        return (Class<? extends R>) RecordImplN.class;
+    public final boolean declaresTables() {
+
+        // Always true, because unnested tables are always aliased
+        return true;
     }
 
     @Override
-    final FieldsImpl<R> fields0() {
-        return new FieldsImpl<>();
+    public final Table<R> autoAlias(Context<?> ctx, Table<R> t) {
+
+        // TODO [#5799] Possibly, add dialect specific behaviour?
+        return t.as(alias, fieldAliases);
     }
 
     // -------------------------------------------------------------------------
@@ -89,38 +95,25 @@ implements
 
     @Override
     public final Table<R> as(Name as) {
-        return new TableAlias<>(new FunctionTable<>(function), as);
+        return new TableAlias<>(construct(as, null), as, fieldAliases);
     }
 
     @Override
-    public final Table<R> as(Name as, Name... fieldAliases) {
-        return new TableAlias<>(new FunctionTable<>(function), as, fieldAliases);
+    public final Table<R> as(Name as, Name... fields) {
+        return new TableAlias<>(construct(as, fields), as, fields);
     }
 
     // -------------------------------------------------------------------------
-    // XXX: QueryPart API
+    // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
     @Override
-    public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-            case HSQLDB: {
-                ctx.visit(K_TABLE).sql('(').visit(function).sql(')');
-                break;
-            }
+    public final Table<R> $aliased() {
+        return construct(alias, null);
+    }
 
-            // [#4254] This is required to enable using PostgreSQL functions
-            // with defaulted parameters.
-
-
-            case POSTGRES:
-            case YUGABYTEDB: {
-                ctx.visit(function);
-                break;
-            }
-
-            default:
-                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + ctx.dialect());
-        }
+    @Override
+    public final Name $alias() {
+        return alias;
     }
 }

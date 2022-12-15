@@ -81,11 +81,11 @@ implements
     ) {
         super(
             N_ARRAY_CONCAT,
-            allNotNull(((DataType) OTHER).getArrayDataType(), arg1, arg2)
+            allNotNull((DataType) dataType(((DataType) OTHER).array(), arg1, false), arg1, arg2)
         );
 
-        this.arg1 = nullSafeNotNull(arg1, ((DataType) OTHER).getArrayDataType());
-        this.arg2 = nullSafeNotNull(arg2, ((DataType) OTHER).getArrayDataType());
+        this.arg1 = nullSafeNotNull(arg1, ((DataType) OTHER).array());
+        this.arg2 = nullSafeNotNull(arg2, ((DataType) OTHER).array());
     }
 
     // -------------------------------------------------------------------------

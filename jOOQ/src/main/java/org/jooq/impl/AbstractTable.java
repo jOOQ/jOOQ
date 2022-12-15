@@ -1112,6 +1112,12 @@ implements
         return as(otherTable.getUnqualifiedName(), (f, i) -> aliasFunction.apply(f, i).getUnqualifiedName());
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Table<Record> withOrdinality() {
+        return new OrdinalityTable<>(this);
+    }
+
 
 
 

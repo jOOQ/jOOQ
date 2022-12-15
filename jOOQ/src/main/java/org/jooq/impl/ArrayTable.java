@@ -48,30 +48,32 @@ import static org.jooq.impl.Tools.map;
 // ...
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Param;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
-import org.jooq.util.h2.H2DataType;
 
 /**
  * An unnested array
  *
  * @author Lukas Eder
  */
-final class ArrayTable extends AbstractTable<Record> implements UNotYetImplemented {
+final class ArrayTable
+extends
+    AbstractAutoAliasTable<Record>
+implements
+    UNotYetImplemented
+{
 
     private final Field<?>           array;
     private final FieldsImpl<Record> field;
-    private final Name               alias;
-    private final Name[]             fieldAliases;
 
     ArrayTable(Field<?> array) {
         this(array, N_ARRAY_TABLE);
@@ -85,7 +87,7 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
 
     @SuppressWarnings({ "unchecked" })
     ArrayTable(Field<?> array, Name alias, Name[] fieldAliases) {
-        super(TableOptions.expression(), alias);
+        super(alias, fieldAliases(fieldAliases));
 
         Class<?> arrayType;
 
@@ -111,9 +113,11 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
             arrayType = Object.class;
 
         this.array = array;
-        this.alias = alias;
-        this.fieldAliases = Tools.isEmpty(fieldAliases) ? new Name[] { N_COLUMN_VALUE } : fieldAliases;
         this.field = init(arrayType, this.alias, this.fieldAliases[0]);
+    }
+
+    static Name[] fieldAliases(Name[] fieldAliases) {
+        return isEmpty(fieldAliases) ? new Name[] { N_COLUMN_VALUE } : fieldAliases;
     }
 
     static final FieldsImpl<Record> init(Class<?> arrayType, Name alias, Name fieldAlias) {
@@ -137,33 +141,35 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
     }
 
     @Override
+    final ArrayTable construct(Name newAlias, Name[] newFieldAliases) {
+        return new ArrayTable(array, newAlias, newFieldAliases);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Table API
+    // -------------------------------------------------------------------------
+
+    @Override
     public final Class<? extends Record> getRecordType() {
+        // TODO: [#4695] Calculate the correct Record[B] type
         return RecordImplN.class;
     }
 
     @Override
-    public final Table<Record> as(Name as) {
-        return new ArrayTable(array, as);
+    final FieldsImpl<Record> fields0() {
+        return field;
     }
 
-    @Override
-    public final Table<Record> as(Name as, Name... fields) {
-        return new ArrayTable(array, as, fields);
-    }
-
-    @Override
-    public final boolean declaresTables() {
-
-        // Always true, because unnested tables are always aliased
-        return true;
-    }
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(table(ctx.configuration()));
     }
 
-    private final Table<Record> table(Configuration configuration) {
+    private final QueryPart table(Configuration configuration) {
         switch (configuration.family()) {
 
 
@@ -173,8 +179,6 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
 
 
 
-            case H2:
-                return new H2ArrayTable().as(alias);
 
             // Most dialects can simulate unnested arrays using UNION ALL
 
@@ -215,11 +219,11 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
 
             // [#756] The standard SQL behaviour
             default:
-                return new PostgresHSQLDBTable().as(alias, fieldAliases);
+                return new StandardUnnest();
         }
     }
 
-    private class PostgresHSQLDBTable extends DialectArrayTable {
+    private class StandardUnnest extends DialectArrayTable {
 
         @Override
         public final void accept(Context<?> ctx) {
@@ -227,25 +231,6 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
         }
     }
 
-    private class H2ArrayTable extends DialectArrayTable {
-
-        @Override
-        public final void accept(Context<?> ctx) {
-            ctx.visit(K_TABLE)
-               .sql('(')
-               .visit(fieldAliases == null || fieldAliases.length == 0 ? N_COLUMN_VALUE : fieldAliases[0])
-               .sql(' ');
-
-            // If the array type is unknown (e.g. because it's returned from
-            // a stored function), then a reasonable choice for arbitrary types is varchar
-            if (array.getDataType().getType() == Object[].class)
-                ctx.sql(H2DataType.VARCHAR.getTypeName());
-            else
-                ctx.sql(array.getDataType().getArrayComponentDataType().getTypeName(ctx.configuration()));
-
-            ctx.sql(" = ").visit(array).sql(')');
-        }
-    }
 
 
 
@@ -257,11 +242,21 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
 
 
 
-
-    private abstract class DialectArrayTable extends AbstractTable<Record> implements UTransient {
+    private abstract class DialectArrayTable
+    extends
+        AbstractTable<Record>
+    implements
+        AutoAlias<Table<Record>>,
+        UTransient
+    {
 
         DialectArrayTable() {
             super(TableOptions.expression(), alias);
+        }
+
+        @Override
+        public final boolean declaresTables() {
+            return true;
         }
 
         @Override
@@ -273,29 +268,15 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
         final FieldsImpl<Record> fields0() {
             return ArrayTable.this.fields0();
         }
+
+        @Override
+        public final Table<Record> autoAlias(Context<?> ctx, Table<Record> t) {
+            return t.as(alias, fieldAliases);
+        }
     }
 
     @SuppressWarnings("unchecked")
-    private final Table<Record> emulate() {
-        return new ArrayTableEmulation(((Param<Object[]>) array).getValue()).as(alias, fieldAliases);
-    }
-
-    @Override
-    final FieldsImpl<Record> fields0() {
-        return field;
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
-
-    @Override
-    public final Table<Record> $aliased() {
-        return new ArrayTable(array);
-    }
-
-    @Override
-    public final Name $alias() {
-        return alias;
+    private final QueryPart emulate() {
+        return new ArrayTableEmulation(((Param<Object[]>) array).getValue(), fieldAliases);
     }
 }

@@ -229,19 +229,19 @@ implements
     }
 
     @Override
-    public final SelectField<R> autoAlias(Context<?> ctx) {
+    public final SelectField<R> autoAlias(Context<?> ctx, SelectField<R> s) {
 
         // [#13843] Re-aliasing only applies if at least ROW() projection is supported natively
         if (RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect()))
-            return this;
+            return s;
 
         // [#13843] Within MULTISET(), re-aliasing isn't required, while it leads to new edge cases
         else if (forceMultisetContent(ctx, () -> getDataType().getRow().size() > 1))
-            return this;
+            return s;
 
         // [#13843] With native support, re-alias the table as field projection
         else
-            return new FieldAlias<>(this, getUnqualifiedName());
+            return new FieldAlias<>(DSL.field(s), getUnqualifiedName());
     }
 
     private static final Field<?> alias(Context<?> ctx, Name alias, Field<?> field) {

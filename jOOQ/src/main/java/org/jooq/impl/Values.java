@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_STRUCT;
@@ -69,6 +70,9 @@ import static org.jooq.impl.Names.N_VALUES;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.EMPTY_ROW;
+import static org.jooq.impl.Tools.fieldNamesC;
+import static org.jooq.impl.Tools.isEmpty;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -93,39 +97,77 @@ import org.jooq.impl.QOM.UnmodifiableList;
  *
  * @author Lukas Eder
  */
-final class Values<R extends Record> extends AbstractTable<R> implements QOM.Values<R> {
+final class Values<R extends Record>
+extends
+    AbstractAutoAliasTable<R>
+implements
+    QOM.Values<R>
+{
 
-    static final Set<SQLDialect>         NO_SUPPORT_VALUES      = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
-    static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST   = SQLDialect.supportedBy(FIREBIRD);
-    static final Set<SQLDialect>         NO_SUPPORT_PARENTHESES = SQLDialect.supportedBy();
+    static final Set<SQLDialect>    NO_SUPPORT_VALUES      = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
+    static final Set<SQLDialect>    REQUIRE_ROWTYPE_CAST   = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>    NO_SUPPORT_PARENTHESES = SQLDialect.supportedBy();
 
-    private final QueryPartListView<Row> rows;
-    private transient DataType<?>[]      types;
+    private final Row[]             rows;
+    private transient DataType<?>[] types;
 
     Values(Row[] rows) {
-        super(TableOptions.expression(), N_VALUES);
+        this(rows, name("v"), fieldNamesC(degree(rows)));
+    }
+
+    Values(Row[] rows, Name alias, Name[] fieldAliases) {
+        super(alias, fieldAliases);
 
         this.rows = assertNotEmpty(rows);
     }
 
-    static final QueryPartListView<Row> assertNotEmpty(Row[] rows) {
-        if (rows == null || rows.length == 0)
+    private static final int degree(Row[] rows) {
+        return isEmpty(rows) ? 0 : rows[0].size();
+    }
+
+    static final Row[] assertNotEmpty(Row[] rows) {
+        if (isEmpty(rows))
             throw new IllegalArgumentException("Cannot create a VALUES() constructor with an empty set of rows");
 
-        return QueryPartListView.wrap(rows);
+        return rows;
     }
+
+    @Override
+    final Values<R> construct(Name newAlias, Name[] newFieldAliases) {
+        return new Values<R>(rows, newAlias, newFieldAliases);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Table API
+    // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Class<? extends R> getRecordType() {
+        // TODO: [#4695] Calculate the correct Record[B] type
+        return (Class<? extends R>) RecordImplN.class;
+    }
+
+    @Override
+    final FieldsImpl<R> fields0() {
+        return new FieldsImpl<>(map(fieldAliases, (n, i) -> DSL.field(n, rows[0].dataType(i))));
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     private final DataType<?>[] rowType() {
         if (types == null) {
-            types = new DataType[rows.get(0).size()];
+            types = new DataType[rows[0].size()];
 
             typeLoop:
             for (int i = 0; i < types.length; i++) {
-                types[i] = rows.get(0).dataType(i);
+                types[i] = rows[0].dataType(i);
 
                 if (types[i].getType() == Object.class) {
-                    for (int j = 1; j < rows.size(); j++) {
-                        DataType<?> type = rows.get(j).dataType(i);
+                    for (int j = 1; j < rows.length; j++) {
+                        DataType<?> type = rows[j].dataType(i);
 
                         if (type.getType() != Object.class) {
                             types[i] = type;
@@ -150,25 +192,9 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
         return result;
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public final Class<? extends R> getRecordType() {
-        // TODO: [#4695] Calculate the correct Record[B] type
-        return (Class<? extends R>) RecordImplN.class;
-    }
-
-    @Override
-    public final Table<R> as(Name alias) {
-        return new TableAlias<>(this, alias, c -> !NO_SUPPORT_PARENTHESES.contains(c.dialect()));
-    }
-
-    @Override
-    public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<>(this, alias, fieldAliases, c -> !NO_SUPPORT_PARENTHESES.contains(c.dialect()));
-    }
-
     @Override
     public final void accept(Context<?> ctx) {
+
         // [#915] Emulate VALUES(..) with SELECT .. UNION ALL SELECT ..
         // for those dialects that do not support a VALUES() constructor
         if (NO_SUPPORT_VALUES.contains(ctx.dialect())) {
@@ -184,7 +210,7 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
                     selects = selects.unionAll(select);
             }
 
-            visitSubquery(ctx, selects, DERIVED_TABLE, false);
+            visitSubquery(ctx, selects, DERIVED_TABLE, true);
         }
 
 
@@ -196,6 +222,9 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
         // [#915] Native support of VALUES(..)
         else {
             ctx.start(TABLE_VALUES);
+
+            if (!NO_SUPPORT_PARENTHESES.contains(ctx.dialect()))
+                ctx.sqlIndentStart('(');
 
 
 
@@ -213,13 +242,13 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
 
             ctx.visit(K_VALUES);
 
-            if (rows.size() > 1)
+            if (rows.length > 1)
                 ctx.formatIndentStart()
                    .formatSeparator();
             else
                 ctx.sql(' ');
 
-            for (int i = 0; i < rows.size(); i++) {
+            for (int i = 0; i < rows.length; i++) {
                 if (i > 0)
                     ctx.sql(',')
                        .formatSeparator();
@@ -231,10 +260,10 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
 
 
 
-                ctx.visit(rows.get(i));
+                ctx.visit(rows[i]);
             }
 
-            if (rows.size() > 1)
+            if (rows.length > 1)
                 ctx.formatIndentEnd()
                    .formatNewLine();
 
@@ -247,13 +276,12 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
 
 
 
+
+            if (!NO_SUPPORT_PARENTHESES.contains(ctx.dialect()))
+                ctx.sqlIndentEnd(')');
+
             ctx.end(TABLE_VALUES);
         }
-    }
-
-    @Override
-    final FieldsImpl<R> fields0() {
-        return new FieldsImpl<>(rows.get(0).fields());
     }
 
     // -------------------------------------------------------------------------

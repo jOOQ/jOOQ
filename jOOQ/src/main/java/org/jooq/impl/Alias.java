@@ -80,6 +80,7 @@ import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.NoAutoAlias.noAutoAlias;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.EMPTY_NAME;
@@ -230,7 +231,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
                 && (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect))
                 && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
-            visitSubquery(context, select(asterisk()).from(((Table<?>) wrapped).as(alias)), DERIVED_TABLE);
+            visitSubquery(context, select(asterisk()).from(noAutoAlias((Table<?>) wrapped).as(alias)), DERIVED_TABLE);
         }
 
         // [#1801] Some databases do not support "derived column names".
@@ -258,7 +259,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
                   ? s
                   : wrapped instanceof DerivedTable<?> d
                   ? d.query()
-                  : select(asterisk()).from(((Table<?>) wrapped).as(alias));
+                  : select(asterisk()).from(noAutoAlias((Table<?>) wrapped).as(alias));
 
                 List<Field<?>> select = wrappedAsSelect.getSelect();
 

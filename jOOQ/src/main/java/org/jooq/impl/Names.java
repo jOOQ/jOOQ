@@ -231,6 +231,7 @@ final class Names {
     static final Name N_NTILE                  = systemName("ntile");
     static final Name N_NULL                   = systemName("null");
     static final Name N_NVL2                   = systemName("nvl2");
+    static final Name N_OFFSET                 = systemName("offset");
     static final Name N_OPENJSON               = systemName("openjson");
     static final Name N_OPENXML                = systemName("openxml");
     static final Name N_ORDINAL                = systemName("ordinal");

@@ -38,20 +38,39 @@
 package org.jooq.impl;
 
 import org.jooq.Context;
-import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
+import org.jooq.Record;
+import org.jooq.Table;
+import org.jooq.impl.QOM.UTransient;
 
 /**
- * [#11564] A table that produces auto table and column aliases, if no explicit alias is
- * provided.
- *
- * @author Lukas Eder
+ * A delegating table that un-{@link AutoAlias}-es a wrapped table.
+ * <p>
+ * When emulating the derived column list feature, the auto-aliasing feature
+ * would re-alias the table again and again, leading to a
+ * {@link StackOverflowError}. This helps prevent it.
  */
-interface AutoAlias<Q extends QueryPart> extends QueryPartInternal {
+final class NoAutoAlias<R extends Record>
+extends
+    AbstractDelegatingTable<R>
+implements
+    UTransient
+{
 
-    /**
-     * Create the aliased table expression or <code>null</code> if no auto-alias
-     * is required.
-     */
-    Q autoAlias(Context<?> ctx, Q unaliased);
+    NoAutoAlias(AbstractTable<R> delegate) {
+        super(delegate);
+    }
+
+    static final <R extends Record> Table<R> noAutoAlias(Table<R> table) {
+        return table instanceof AutoAlias ? new NoAutoAlias<>((AbstractTable<R>) table) : table;
+    }
+
+    @Override
+    final <O extends Record> NoAutoAlias<O> construct(AbstractTable<O> newDelegate) {
+        return new NoAutoAlias<>(newDelegate);
+    }
+
+    @Override
+    public final void accept(Context<?> ctx) {
+        ctx.visit(delegate);
+    }
 }

@@ -721,6 +721,21 @@ public final class QOM {
         @NotNull <O extends Record> HintedTable<O> $table(Table<O> newTable);
     }
 
+    /**
+     * A collection derived table or table valued function with a
+     * <code>WITH ORDINALITY</code> clause.
+     */
+    public sealed interface OrdinalityTable<R extends Record>
+        extends
+            Table<R>
+        permits
+            org.jooq.impl.OrdinalityTable
+    {
+        @NotNull Table<?> $table();
+        @CheckReturnValue
+        @NotNull OrdinalityTable<?> $table(Table<?> newTable);
+    }
+
     public interface PrimaryKey extends Constraint {
         @NotNull UnmodifiableList<? extends Field<?>> $fields();
     }

@@ -82,7 +82,7 @@ implements
             allNotNull(INTEGER, array)
         );
 
-        this.array = nullSafeNotNull(array, OTHER.getArrayDataType());
+        this.array = nullSafeNotNull(array, OTHER.array());
     }
 
     // -------------------------------------------------------------------------

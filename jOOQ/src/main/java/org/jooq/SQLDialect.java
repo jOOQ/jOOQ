@@ -985,7 +985,7 @@ public enum SQLDialect {
         for (SQLDialect dialect : dialects)
             result.addAll(dialect.predecessors());
 
-        return Collections.unmodifiableSet(result);
+        return result;
     }
 
     /**
@@ -1026,7 +1026,7 @@ public enum SQLDialect {
     public static final Set<SQLDialect> supportedBy(SQLDialect dialect) {
         EnumSet<SQLDialect> result = EnumSet.noneOf(SQLDialect.class);
         addSupportedBy(dialect, result);
-        return Collections.unmodifiableSet(result);
+        return result;
     }
 
     /**
@@ -1044,7 +1044,7 @@ public enum SQLDialect {
         for (SQLDialect dialect : dialects)
             addSupportedBy(dialect, result);
 
-        return Collections.unmodifiableSet(result);
+        return result;
     }
 
     private static final void addSupportedBy(SQLDialect dialect, EnumSet<SQLDialect> supported) {

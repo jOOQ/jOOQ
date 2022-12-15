@@ -247,11 +247,11 @@ implements
     }
 
     @Override
-    public final Table<Record1<Integer>> autoAlias(Context<?> ctx) {
+    public final Table<Record1<Integer>> autoAlias(Context<?> ctx, Table<Record1<Integer>> t) {
         if (EMULATE_WITH_RECURSIVE.contains(ctx.dialect()))
-            return as(name);
+            return t.as(name);
         else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect()))
-            return as(name, name);
+            return t.as(name, name);
 
 
 

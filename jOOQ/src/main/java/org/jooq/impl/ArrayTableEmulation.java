@@ -40,19 +40,16 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.using;
-import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
 import static org.jooq.impl.Tools.componentDataType;
+import static org.jooq.impl.Tools.visitSubquery;
 
-import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
-import org.jooq.Table;
-import org.jooq.TableOptions;
 import org.jooq.impl.QOM.UTransient;
 
 /**
@@ -61,79 +58,49 @@ import org.jooq.impl.QOM.UTransient;
  *
  * @author Lukas Eder
  */
-final class ArrayTableEmulation extends AbstractTable<Record> implements UTransient {
+final class ArrayTableEmulation
+extends
+    AbstractQueryPart
+implements
+    UTransient
+{
 
-    private final Object[]           array;
-    private final FieldsImpl<Record> field;
-    private final Name               alias;
-    private final Name               fieldAlias;
+    private final Object[]      array;
+    private final DataType<?>   type;
+    private final Name          fieldAlias;
 
-    private transient Table<Record>  table;
+    private transient Select<?> table;
 
-    ArrayTableEmulation(Object[] array) {
-        this(array, N_ARRAY_TABLE, null);
-    }
-
-    ArrayTableEmulation(Object[] array, Name alias) {
-        this(array, alias, null);
-    }
-
-    ArrayTableEmulation(Object[] array, Name alias, Name fieldAlias) {
-        super(TableOptions.expression(), alias);
+    ArrayTableEmulation(Object[] array, Name[] fieldAliases) {
+        if (Tools.isEmpty(fieldAliases))
+            this.fieldAlias = N_COLUMN_VALUE;
+        else if (fieldAliases.length == 1)
+            this.fieldAlias = fieldAliases[0];
+        else
+            throw new IllegalArgumentException("Array table simulations can only have a single field alias");
 
         this.array = array;
-        this.alias = alias;
-        this.fieldAlias = fieldAlias == null ? N_COLUMN_VALUE : fieldAlias;
-        this.field = new FieldsImpl<>(DSL.field(name(alias.last(), this.fieldAlias.last()), componentDataType(array)));
+        this.type = componentDataType(array);
     }
 
-    @Override
-    public final Class<? extends Record> getRecordType() {
-        return RecordImplN.class;
-    }
-
-    @Override
-    public final Table<Record> as(Name as) {
-        return new ArrayTableEmulation(array, as);
-    }
-
-    @Override
-    public final Table<Record> as(Name as, Name... fieldAliases) {
-        if (fieldAliases == null)
-            return new ArrayTableEmulation(array, as);
-        else if (fieldAliases.length == 1)
-            return new ArrayTableEmulation(array, as, fieldAliases[0]);
-
-        throw new IllegalArgumentException("Array table simulations can only have a single field alias");
-    }
-
-    @Override
-    public final boolean declaresTables() {
-
-        // [#1055] Always true, because unnested tables are always aliased.
-        // This is particularly important for simulated unnested arrays
-        return true;
-    }
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(table(ctx.configuration()));
+        visitSubquery(ctx, table(), SubqueryCharacteristics.DERIVED_TABLE, true);
     }
 
-    @Override
-    final FieldsImpl<Record> fields0() {
-        return field;
-    }
-
-    private final Table<Record> table(Configuration configuration) {
+    private final Select<?> table() {
         if (table == null) {
             Select<Record> select = null;
 
             for (Object element : array) {
 
                 // [#1081] Be sure to get the correct cast type also for null
-                Field<?> val = DSL.val(element, field.fields[0].getDataType());
-                Select<Record> subselect = using(configuration).select(val.as(fieldAlias)).select();
+                Field<?> val = DSL.val(element, type);
+                Select<Record> subselect = DSL.select(val.as(fieldAlias)).select();
 
                 if (select == null)
                     select = subselect;
@@ -143,9 +110,9 @@ final class ArrayTableEmulation extends AbstractTable<Record> implements UTransi
 
             // Empty arrays should result in empty tables
             if (select == null)
-                select = using(configuration).select(one().as(fieldAlias)).select().where(falseCondition());
+                select = DSL.select(one().as(fieldAlias)).select().where(falseCondition());
 
-            table = select.asTable(alias);
+            table = select;
         }
 
         return table;

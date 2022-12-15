@@ -240,6 +240,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinPool.ManagedBlocker;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -1614,12 +1615,16 @@ final class Tools {
     // ------------------------------------------------------------------------
 
     private static final int      FIELD_NAME_CACHE_SIZE = 128;
-    private static final String[] FIELD_NAME_STRINGS;
-    private static final Name[]   FIELD_NAMES;
+    private static final String[] V_FIELD_NAME_STRINGS;
+    private static final String[] C_FIELD_NAME_STRINGS;
+    private static final Name[]   V_FIELD_NAMES;
+    private static final Name[]   C_FIELD_NAMES;
 
     static {
-        FIELD_NAME_STRINGS = IntStream.range(0, FIELD_NAME_CACHE_SIZE).mapToObj(Tools::fieldNameString0).toArray(String[]::new);
-        FIELD_NAMES = IntStream.range(0, FIELD_NAME_CACHE_SIZE).mapToObj(i -> name(FIELD_NAME_STRINGS[i])).toArray(Name[]::new);
+        V_FIELD_NAME_STRINGS = IntStream.range(0, FIELD_NAME_CACHE_SIZE).mapToObj(Tools::fieldNameStringV0).toArray(String[]::new);
+        C_FIELD_NAME_STRINGS = IntStream.range(0, FIELD_NAME_CACHE_SIZE).mapToObj(Tools::fieldNameStringC0).toArray(String[]::new);
+        V_FIELD_NAMES = IntStream.range(0, FIELD_NAME_CACHE_SIZE).mapToObj(i -> name(V_FIELD_NAME_STRINGS[i])).toArray(Name[]::new);
+        C_FIELD_NAMES = IntStream.range(0, FIELD_NAME_CACHE_SIZE).mapToObj(i -> name(C_FIELD_NAME_STRINGS[i])).toArray(Name[]::new);
     }
 
     static final <T> SortField<T> sortField(OrderField<T> field) {
@@ -1642,16 +1647,29 @@ final class Tools {
         return Tools.map(fields, (OrderField<?> o) -> sortField(o));
     }
 
-    private static final String fieldNameString0(int index) {
+    // TODO: Check if these field names are ever really needed, or if we can just use the C field names
+    private static final String fieldNameStringV0(int index) {
         return "v" + index;
     }
 
+    private static final String fieldNameStringC0(int index) {
+        return "c" + (index + 1);
+    }
+
     static final String fieldNameString(int index) {
-        return index < FIELD_NAME_CACHE_SIZE ? FIELD_NAME_STRINGS[index] : fieldNameString0(index);
+        return index < FIELD_NAME_CACHE_SIZE ? V_FIELD_NAME_STRINGS[index] : fieldNameStringV0(index);
+    }
+
+    static final String fieldNameStringC(int index) {
+        return index < FIELD_NAME_CACHE_SIZE ? C_FIELD_NAME_STRINGS[index] : fieldNameStringC0(index);
     }
 
     static final Name fieldName(int index) {
-        return index < FIELD_NAME_CACHE_SIZE ? FIELD_NAMES[index] : name(fieldNameString0(index));
+        return index < FIELD_NAME_CACHE_SIZE ? V_FIELD_NAMES[index] : name(fieldNameStringV0(index));
+    }
+
+    static final Name fieldNameC(int index) {
+        return index < FIELD_NAME_CACHE_SIZE ? C_FIELD_NAMES[index] : name(fieldNameStringC0(index));
     }
 
     static final Name[] fieldNames(int length) {
@@ -1668,6 +1686,24 @@ final class Tools {
 
         for (int i = 0; i < length; i++)
             result[i] = fieldNameString(i);
+
+        return result;
+    }
+
+    static final Name[] fieldNamesC(int length) {
+        Name[] result = new Name[length];
+
+        for (int i = 0; i < length; i++)
+            result[i] = fieldNameC(i);
+
+        return result;
+    }
+
+    static final String[] fieldNameStringsC(int length) {
+        String[] result = new String[length];
+
+        for (int i = 0; i < length; i++)
+            result[i] = fieldNameStringC(i);
 
         return result;
     }
@@ -2750,6 +2786,21 @@ final class Tools {
         }
         else
             return e;
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <Q extends QueryPart> void visitAutoAliased(
+        Context<?> ctx,
+        Q q,
+        Predicate<? super Context<?>> declaring,
+        BiConsumer<? super Context<?>, ? super Q> visit
+    ) {
+        Q alternative;
+
+        if (declaring.test(ctx) && q instanceof AutoAlias && (alternative = ((AutoAlias<Q>) q).autoAlias(ctx, q)) != null)
+            visit.accept(ctx, alternative);
+        else
+            visit.accept(ctx, q);
     }
 
     static final void visitSubquery(

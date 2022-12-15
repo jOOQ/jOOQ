@@ -46,9 +46,7 @@ import static org.jooq.impl.Tools.isEmpty;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
-import org.jooq.Param;
 import org.jooq.Record;
-import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
@@ -58,12 +56,15 @@ import org.jooq.impl.QOM.UTransient;
  *
  * @author Lukas Eder
  */
-final class ArrayOfValues extends AbstractTable<Record> implements UNotYetImplemented {
+final class ArrayOfValues
+extends
+    AbstractAutoAliasTable<Record>
+implements
+    UNotYetImplemented
+{
 
     private final Field<?>[]         array;
     private final FieldsImpl<Record> field;
-    private final Name               alias;
-    private final Name[]             fieldAliases;
 
     ArrayOfValues(Field<?>[] array) {
         this(array, N_ARRAY_TABLE);
@@ -74,37 +75,37 @@ final class ArrayOfValues extends AbstractTable<Record> implements UNotYetImplem
     }
 
     ArrayOfValues(Field<?>[] array, Name alias, Name[] fieldAliases) {
-        super(TableOptions.expression(), alias);
+        super(alias, ArrayTable.fieldAliases(fieldAliases));
 
         Class<?> arrayType = !isEmpty(array) ? array[0].getType() : Object.class;
 
         this.array = array;
-        this.alias = alias;
-        this.fieldAliases = isEmpty(fieldAliases) ? new Name[] { N_COLUMN_VALUE } : fieldAliases;
         this.field = ArrayTable.init(arrayType, this.alias, this.fieldAliases[0]);
     }
 
     @Override
+    final ArrayOfValues construct(Name newAlias, Name[] newFieldAliases) {
+        return new ArrayOfValues(array, newAlias, newFieldAliases);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Table API
+    // -------------------------------------------------------------------------
+
+    @Override
     public final Class<? extends Record> getRecordType() {
+        // TODO: [#4695] Calculate the correct Record[B] type
         return RecordImplN.class;
     }
 
     @Override
-    public final Table<Record> as(Name as) {
-        return new ArrayOfValues(array, as);
+    final FieldsImpl<Record> fields0() {
+        return field;
     }
 
-    @Override
-    public final Table<Record> as(Name as, Name... fields) {
-        return new ArrayOfValues(array, as, fields);
-    }
-
-    @Override
-    public final boolean declaresTables() {
-
-        // Always true, because unnested tables are always aliased
-        return true;
-    }
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -133,16 +134,16 @@ final class ArrayOfValues extends AbstractTable<Record> implements UNotYetImplem
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                ctx.visit(new ArrayTableEmulation(array).as(alias, fieldAliases));
+                ctx.visit(new ArrayTableEmulation(array, fieldAliases));
                 break;
 
             default:
-                ctx.visit(new PostgresHSQLDBTable().as(alias, fieldAliases));
+                ctx.visit(new StandardUnnest());
                 break;
         }
     }
 
-    private class PostgresHSQLDBTable extends DialectArrayTable {
+    private class StandardUnnest extends DialectArrayTable {
 
         @Override
         public final void accept(Context<?> ctx) {
@@ -165,24 +166,5 @@ final class ArrayOfValues extends AbstractTable<Record> implements UNotYetImplem
         final FieldsImpl<Record> fields0() {
             return ArrayOfValues.this.fields0();
         }
-    }
-
-    @Override
-    final FieldsImpl<Record> fields0() {
-        return field;
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX: Query Object Model
-    // -------------------------------------------------------------------------
-
-    @Override
-    public final Table<Record> $aliased() {
-        return new ArrayOfValues(array);
-    }
-
-    @Override
-    public final Name $alias() {
-        return alias;
     }
 }

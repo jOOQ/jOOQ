@@ -129,11 +129,11 @@ implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Field<T> autoAlias(Context<?> ctx) {
+    public final Field<T> autoAlias(Context<?> ctx, Field<T> f) {
         if (field instanceof AutoAlias)
-            return ((AutoAlias<Field<T>>) field).autoAlias(ctx).coerce(getDataType());
+            return ((AutoAlias<Field<T>>) field).autoAlias(ctx, (Field<T>) field).coerce(getDataType());
         else
-            return this;
+            return f;
     }
 
     // -------------------------------------------------------------------------

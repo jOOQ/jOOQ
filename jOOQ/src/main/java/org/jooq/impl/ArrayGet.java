@@ -84,7 +84,7 @@ implements
             allNotNull((DataType<T>) StringUtils.defaultIfNull(array.getDataType().getArrayComponentDataType(), OTHER), array, index)
         );
 
-        this.array = nullSafeNotNull(array, ((DataType) OTHER).getArrayDataType());
+        this.array = nullSafeNotNull(array, ((DataType) OTHER).array());
         this.index = nullSafeNotNull(index, INTEGER);
     }
 

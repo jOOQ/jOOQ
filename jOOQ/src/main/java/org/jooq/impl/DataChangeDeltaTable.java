@@ -195,8 +195,8 @@ implements
     }
 
     @Override
-    public final Table<R> autoAlias(Context<?> ctx) {
-        return as(alias);
+    public final Table<R> autoAlias(Context<?> ctx, Table<R> t) {
+        return t.as(alias);
     }
 
     @Override

@@ -82,13 +82,21 @@ implements
     ArrayTable(Field<?> array, Name alias) {
 
         // [#7863] TODO: Possibly resolve field aliases from UDT type
-        this(array, alias, null);
+        this(array, alias, (Name[]) null);
     }
 
-    @SuppressWarnings({ "unchecked" })
     ArrayTable(Field<?> array, Name alias, Name[] fieldAliases) {
-        super(alias, fieldAliases(fieldAliases));
+        this(array, alias, init(arrayType(array), alias, fieldAliases(fieldAliases)[0]));
+    }
 
+    private ArrayTable(Field<?> array, Name alias, FieldsImpl<Record> fields) {
+        super(alias, Tools.map(fields.fields, Field::getUnqualifiedName, Name[]::new));
+
+        this.array = array;
+        this.field = fields;
+    }
+
+    private static final Class<?> arrayType(Field<?> array) {
         Class<?> arrayType;
 
         if (array.getDataType().getType().isArray())
@@ -112,11 +120,10 @@ implements
         else
             arrayType = Object.class;
 
-        this.array = array;
-        this.field = init(arrayType, this.alias, this.fieldAliases[0]);
+        return arrayType;
     }
 
-    static Name[] fieldAliases(Name[] fieldAliases) {
+    static final Name[] fieldAliases(Name[] fieldAliases) {
         return isEmpty(fieldAliases) ? new Name[] { N_COLUMN_VALUE } : fieldAliases;
     }
 
@@ -127,7 +134,7 @@ implements
             try {
                 return new FieldsImpl<>(map(
                     ((Record) arrayType.getDeclaredConstructor().newInstance()).fields(),
-                    f -> DSL.field(name(alias.last(), f.getName()), f.getDataType())
+                    f -> DSL.field(alias.append(f.getUnqualifiedName()), f.getDataType())
                 ));
             }
             catch (Exception e) {
@@ -215,7 +222,7 @@ implements
 
 
                 else
-                    return DSL.table("{0}", array).as(alias);
+                    return DSL.table("{0}", array);
 
             // [#756] The standard SQL behaviour
             default:

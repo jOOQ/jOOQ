@@ -72,6 +72,7 @@ import static org.jooq.impl.Names.N_OFFSET;
 import static org.jooq.impl.Names.N_ORDINAL;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
+// ...
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.List;
@@ -176,6 +177,8 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        Select<?> s;
+
         if ((delegate instanceof ArrayTable || delegate instanceof ArrayOfValues) && NO_SUPPORT_STANDARD.contains(ctx.dialect()))
             acceptEmulation(ctx);
         else if (delegate instanceof FunctionTable && NO_SUPPORT_TVF.contains(ctx.dialect()))
@@ -188,8 +191,12 @@ implements
 
 
 
+
+
+
+
         else
-            ctx.visit(delegate).sql(' ').visit(K_WITH).sql(' ').visit(K_ORDINALITY);
+            ctx.sql(' ').visit(K_WITH).sql(' ').visit(K_ORDINALITY);
     }
 
     private final void acceptEmulation(Context<?> ctx) {

@@ -179,12 +179,24 @@ implements
     public final void accept(Context<?> ctx) {
         Select<?> s;
 
-        if ((delegate instanceof ArrayTable || delegate instanceof ArrayOfValues) && NO_SUPPORT_STANDARD.contains(ctx.dialect()))
-            acceptEmulation(ctx);
-        else if (delegate instanceof FunctionTable && NO_SUPPORT_TVF.contains(ctx.dialect()))
-            acceptEmulation(ctx);
-        else if (delegate instanceof TableImpl && ((TableImpl<?>) delegate).parameters != null && NO_SUPPORT_TVF.contains(ctx.dialect()))
-            acceptEmulation(ctx);
+        if (delegate instanceof ArrayTable || delegate instanceof ArrayOfValues) {
+            if (NO_SUPPORT_STANDARD.contains(ctx.dialect()))
+                acceptEmulation(ctx);
+            else
+                acceptStandard(ctx);
+        }
+        else if (delegate instanceof FunctionTable && NO_SUPPORT_TVF.contains(ctx.dialect())) {
+            if (NO_SUPPORT_TVF.contains(ctx.dialect()))
+                acceptEmulation(ctx);
+            else
+                acceptStandard(ctx);
+        }
+        else if (delegate instanceof TableImpl && ((TableImpl<?>) delegate).parameters != null) {
+            if (NO_SUPPORT_TVF.contains(ctx.dialect()))
+                acceptEmulation(ctx);
+            else
+                acceptStandard(ctx);
+        }
         else if (NO_SUPPORT_TABLE_EXPRESSIONS.contains(ctx.dialect()))
             acceptEmulation(ctx);
 
@@ -196,7 +208,11 @@ implements
 
 
         else
-            ctx.visit(delegate).sql(' ').visit(K_WITH).sql(' ').visit(K_ORDINALITY);
+            acceptStandard(ctx);
+    }
+
+    private final void acceptStandard(Context<?> ctx) {
+        ctx.visit(delegate).sql(' ').visit(K_WITH).sql(' ').visit(K_ORDINALITY);
     }
 
     private final void acceptEmulation(Context<?> ctx) {

@@ -97,6 +97,14 @@ implements
 
 
 
+            case H2:
+            case HSQLDB:
+                ctx.visit(exists(
+                    select(asterisk()).from(unnest(arg1))
+                    .unionAll(select(asterisk()).from(unnest(arg2)))
+                ));
+                break;
+
             default:
                 ctx.sql('(').visit(arg1).sql(" && ").visit(arg2).sql(')');
                 break;

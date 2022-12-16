@@ -94,7 +94,14 @@ implements
 
     @Override
     final boolean parenthesised(Context<?> ctx) {
-        return true;
+        switch (ctx.family()) {
+            case H2:
+            case HSQLDB:
+                return false;
+
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -105,6 +112,19 @@ implements
 
 
 
+
+            case H2:
+            case HSQLDB: {
+                Field<T> x = DSL.field(name("x"), arg2.getDataType());
+                Field<Long> o = DSL.field(name("o"), BIGINT);
+
+                ctx.visit(DSL.field(
+                    select(arrayAgg(x).orderBy(o))
+                    .from(unnest(arg1).withOrdinality().as("t", "x", "o"))
+                    .where(x.ne(arg2))
+                ));
+                break;
+            }
 
             default:
                 ctx.visit(function(N_ARRAY_REMOVE, getDataType(), arg1, arg2));

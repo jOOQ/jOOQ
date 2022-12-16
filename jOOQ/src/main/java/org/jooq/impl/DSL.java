@@ -19744,7 +19744,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] arg1, T arg2) {
         return new ArrayAppend<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -19755,7 +19755,7 @@ public class DSL {
      * Append an element to an array.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] arg1, Field<T> arg2) {
         return new ArrayAppend<>(Tools.field(arg1), arg2);
     }
@@ -19768,7 +19768,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, T arg2) {
         return new ArrayAppend<>(arg1, Tools.field(arg2));
     }
@@ -19779,7 +19779,7 @@ public class DSL {
      * Append an element to an array.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, Field<T> arg2) {
         return new ArrayAppend<>(arg1, arg2);
     }
@@ -19792,7 +19792,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T arg1, T[] arg2) {
         return new ArrayPrepend<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -19805,7 +19805,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T arg1, Field<T[]> arg2) {
         return new ArrayPrepend<>(Tools.field(arg1), arg2);
     }
@@ -19816,7 +19816,7 @@ public class DSL {
      * Prepend an element to an array.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> arg1, T[] arg2) {
         return new ArrayPrepend<>(arg1, Tools.field(arg2));
     }
@@ -19827,7 +19827,7 @@ public class DSL {
      * Prepend an element to an array.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> arg1, Field<T[]> arg2) {
         return new ArrayPrepend<>(arg1, arg2);
     }

@@ -94,7 +94,14 @@ implements
 
     @Override
     final boolean parenthesised(Context<?> ctx) {
-        return true;
+        switch (ctx.family()) {
+            case H2:
+            case HSQLDB:
+                return false;
+
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -105,6 +112,11 @@ implements
 
 
 
+
+            case H2:
+            case HSQLDB:
+                ctx.visit(arrayConcat(arg1, array(arg2)));
+                break;
 
             default:
                 ctx.visit(function(N_ARRAY_APPEND, getDataType(), arg1, arg2));

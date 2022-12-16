@@ -877,39 +877,46 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
         Class<Q2> expType = (Class<Q2>) exp.getClass();
 
         List<Q1> elements = new ArrayList<>();
-        Deque<Expr<Q1>> queue = new ArrayDeque<>();
-        queue.add(e);
 
-        int insertAt = 0;
-        while (!queue.isEmpty()) {
-            Expr<Q1> p = queue.pollFirst();
+        // Effectively Deque<Q1|Expr<Q1>>
+        Deque<Object> queue = new ArrayDeque<>();
+        queue.push(e);
 
-            // [#10665] Associativity is only given for two operands of the same data type
-            boolean associativity = e.lhs instanceof Typed && e.rhs instanceof Typed
-                ? ((Typed<?>) e.lhs).getDataType().equals(((Typed<?>) e.rhs).getDataType())
-                : true;
+        // [#14356] Iterative breadth first tree traversal trading stack space
+        //          for heap space to prevent StackOverflowError if tree is
+        //          10000+ elements deep
+        for (Object o; (o = queue.pollFirst()) != null;) {
+            if (o instanceof Expr) {
+                Expr<Q1> p = (Expr<Q1>) o;
 
-            if (associativity && expType.isInstance(p.lhs))
-                queue.offerFirst(expProvider.apply((Q2) p.lhs));
+                // [#10665] Associativity is only given for two operands of the same data type
+                boolean associativity = e.lhs instanceof Typed && e.rhs instanceof Typed
+                    ? ((Typed<?>) e.lhs).getDataType().equals(((Typed<?>) e.rhs).getDataType())
+                    : true;
+
+                // [#14356] Delay processing of RHS to emulate depth first
+                //          traversal.
+                if (associativity && expType.isInstance(p.rhs))
+                    queue.push(expProvider.apply((Q2) p.rhs));
+                else
+                    queue.push(p.rhs);
+
+                if (associativity && expType.isInstance(p.lhs))
+                    queue.push(expProvider.apply((Q2) p.lhs));
+                else
+                    elements.add(p.lhs);
+            }
             else
-                elements.add(insertAt, p.lhs);
-
-            if (associativity && expType.isInstance(p.rhs))
-                queue.offerFirst(expProvider.apply((Q2) p.rhs));
-            else
-                elements.add(insertAt++, p.rhs);
+                elements.add((Q1) o);
         }
 
-        // Reverse iteration optimises ArrayList.add(int, Object) operations in
-        // the normal case ((((A op B) op C) op D) op E) as opposed to the less
-        // frequent case (A op (B op (C op (D op E))))
-        for (int i = elements.size() - 1; i >= 0; i--) {
-            ctx.visit(elements.get(i));
-
+        for (int i = 0; i < elements.size(); i++) {
             if (i > 0) {
                 formatSeparator.accept(ctx);
                 ctx.visit(e.op).sql(' ');
             }
+
+            ctx.visit(elements.get(i));
         }
     }
 

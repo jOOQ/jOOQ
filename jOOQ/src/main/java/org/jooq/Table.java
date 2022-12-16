@@ -3034,6 +3034,17 @@ extends
 
     /**
      * Add the <code>WITH ORDINALITY</code> clause.
+     * <p>
+     * This clause can be emulated using derived tables and calculations of
+     * {@link DSL#rowNumber()} or {@link DSL#rownum()}, where supported. The
+     * ordering stability of such a derived table is at the mercy of the
+     * optimiser implementation, and may break "unexpectedly," derived table
+     * ordering isn't required to be stable in most RDBMS. So, unless the
+     * ordinality can be assigned without any ambiguity (e.g. through native
+     * support or because the emulation is entirely implemented in jOOQ, client
+     * side), it is better not to rely on deterministic ordinalities, other than
+     * the fact that all numbers from <code>1</code> to <code>N</code> will be
+     * assigned uniquely.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })

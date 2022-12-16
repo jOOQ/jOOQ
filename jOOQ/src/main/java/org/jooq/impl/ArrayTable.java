@@ -177,7 +177,11 @@ implements
     }
 
     private final QueryPart table(Configuration configuration) {
+        boolean isArray = array.getDataType().getType().isArray();
+
         switch (configuration.family()) {
+
+
 
 
 
@@ -211,8 +215,12 @@ implements
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                if (array.getDataType().getType().isArray() && array instanceof Param)
-                    return emulate();
+                if (isArray && array instanceof Param)
+                    return emulateParam();
+
+                // [#14416] While Array isn't supported everywhere, Unnest(Array) is
+                else if (isArray && array instanceof Array)
+                    return emulateArray();
 
 
 
@@ -283,7 +291,12 @@ implements
     }
 
     @SuppressWarnings("unchecked")
-    private final QueryPart emulate() {
+    private final QueryPart emulateParam() {
         return new ArrayTableEmulation(((Param<Object[]>) array).getValue(), fieldAliases);
+    }
+
+    @SuppressWarnings("unchecked")
+    private final QueryPart emulateArray() {
+        return new ArrayTableEmulation(((Array<Object>) array).fields.fields, fieldAliases);
     }
 }

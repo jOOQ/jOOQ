@@ -67,7 +67,7 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
 
     private static final Set<SQLDialect> REQUIRES_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
-    private final FieldsImpl<Record>     fields;
+    final FieldsImpl<Record>             fields;
 
     Array(Collection<? extends Field<T>> fields) {
         super(N_ARRAY, type(fields));

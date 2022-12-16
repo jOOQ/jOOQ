@@ -19838,7 +19838,7 @@ public class DSL {
      * Check if 2 arrays overlap.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(T[] arg1, T[] arg2) {
         return new ArrayOverlap<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -19849,7 +19849,7 @@ public class DSL {
      * Check if 2 arrays overlap.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(T[] arg1, Field<T[]> arg2) {
         return new ArrayOverlap<>(Tools.field(arg1), arg2);
     }
@@ -19860,7 +19860,7 @@ public class DSL {
      * Check if 2 arrays overlap.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(Field<T[]> arg1, T[] arg2) {
         return new ArrayOverlap<>(arg1, Tools.field(arg2, arg1));
     }
@@ -19871,7 +19871,7 @@ public class DSL {
      * Check if 2 arrays overlap.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(Field<T[]> arg1, Field<T[]> arg2) {
         return new ArrayOverlap<>(arg1, arg2);
     }
@@ -19884,7 +19884,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(T[] arg1, T arg2) {
         return new ArrayRemove<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -19895,7 +19895,7 @@ public class DSL {
      * Remove an element from an array.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(T[] arg1, Field<T> arg2) {
         return new ArrayRemove<>(Tools.field(arg1), arg2);
     }
@@ -19908,7 +19908,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(Field<T[]> arg1, T arg2) {
         return new ArrayRemove<>(arg1, Tools.field(arg2));
     }
@@ -19919,7 +19919,7 @@ public class DSL {
      * Remove an element from an array.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(Field<T[]> arg1, Field<T> arg2) {
         return new ArrayRemove<>(arg1, arg2);
     }

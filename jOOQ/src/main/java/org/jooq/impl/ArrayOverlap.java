@@ -98,10 +98,16 @@ implements
 
 
             case H2:
+                ctx.visit(exists(
+                    select(asterisk()).from(unnest(arg1))
+                    .intersect(select(asterisk()).from(unnest(arg2)))
+                ));
+                break;
+
             case HSQLDB:
                 ctx.visit(exists(
                     select(asterisk()).from(unnest(arg1))
-                    .unionAll(select(asterisk()).from(unnest(arg2)))
+                    .intersectAll(select(asterisk()).from(unnest(arg2)))
                 ));
                 break;
 

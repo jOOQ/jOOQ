@@ -108,7 +108,7 @@ final class InterpreterMetaProvider implements MetaProvider {
         }
         catch (ParserException e) {
             log.error("An exception occurred while parsing a DDL script: " + e.getMessage()
-                + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);
+                + ". Please report this error to https://jooq.org/bug", e);
             throw e;
         }
         finally {

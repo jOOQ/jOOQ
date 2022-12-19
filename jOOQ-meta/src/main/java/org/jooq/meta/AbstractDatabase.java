@@ -416,7 +416,7 @@ public abstract class AbstractDatabase implements Database {
                             "Slow SQL",
                             "jOOQ Meta executed a slow query (slower than " + s + " seconds, configured by configuration/generator/database/logSlowQueriesAfterSeconds)"
                           + "\n\n"
-                          + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new"
+                          + "If you think this is a bug in jOOQ, please report it here: https://jooq.org/bug"
                           + "\n\n```sql\n"
                           + formatted(ctx.query())
                           + "```\n",
@@ -444,7 +444,7 @@ public abstract class AbstractDatabase implements Database {
                             "Slow Result Fetching",
                             "jOOQ Meta fetched a slow result (slower than " + s + " seconds, configured by configuration/generator/database/logSlowResultsAfterSeconds)"
                           + "\n\n"
-                          + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new"
+                          + "If you think this is a bug in jOOQ, please report it here: https://jooq.org/bug"
                           + "\n\n```sql\n"
                           + formatted(ctx.query())
                           + "```\n",
@@ -463,7 +463,7 @@ public abstract class AbstractDatabase implements Database {
                       ? ctx.exception().getMessage()
                       : "No exception available")
                       + "\n\n"
-                      + "If you think this is a bug in jOOQ, please report it here: https://github.com/jOOQ/jOOQ/issues/new"
+                      + "If you think this is a bug in jOOQ, please report it here: https://jooq.org/bug"
                       + "\n\n"
                       + "Note you can mute some exceptions using the configuration/onError flag"
                       + "\n\n```sql\n"
@@ -3375,7 +3375,7 @@ public abstract class AbstractDatabase implements Database {
                         ("" +
                         "An error was encountered during code generation. This can have various reasons:\n" +
                         "\n" +
-                        "- There's a bug in jOOQ. Please report it here: https://github.com/jOOQ/jOOQ/issues/new/choose\n" +
+                        "- There's a bug in jOOQ. Please report it here: https://jooq.org/bug\n" +
                         "- Your database user doesn't have the necessary privileges to access a metadata table\n" +
                         "- The database connection suffered a failure\n" +
                         "\n" +

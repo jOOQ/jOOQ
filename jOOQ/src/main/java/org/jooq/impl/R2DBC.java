@@ -1170,7 +1170,7 @@ final class R2DBC {
 
                 Converter<Object, T> converter = c.converterProvider().provide((Class<Object>) o.getClass(), uType);
                 if (converter == null)
-                    throw new DataTypeException("Cannot convert from " + o.getClass() + " to " + uType + ". Please report an issue here: https://github.com/jOOQ/jOOQ/issues/new. As a workaround, you can implement a ConverterProvider.");
+                    throw new DataTypeException("Cannot convert from " + o.getClass() + " to " + uType + ". Please report an issue here: https://jooq.org/bug. As a workaround, you can implement a ConverterProvider.");
                 else
                     return converter.from(o);
             }

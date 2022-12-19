@@ -255,8 +255,8 @@ implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public final OrdinalityTable<?> $table(Table<?> newTable) {
-        return new OrdinalityTable<>((AbstractTable<Record>) newTable);
+    public final WithOrdinalityTable<?> $table(Table<?> newTable) {
+        return new WithOrdinalityTable<>((AbstractTable<Record>) newTable);
     }
 
 
@@ -279,7 +279,7 @@ implements
 
     @Override
     public final Table<R> $aliased() {
-        return new OrdinalityTable<>((AbstractTable<?>) ((Aliasable<? extends Table<?>>) delegate).$aliased());
+        return new WithOrdinalityTable<>((AbstractTable<?>) ((Aliasable<? extends Table<?>>) delegate).$aliased());
     }
 
     @Override

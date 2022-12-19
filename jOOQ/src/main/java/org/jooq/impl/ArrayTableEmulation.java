@@ -38,17 +38,21 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.falseCondition;
-import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.values0;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
 import static org.jooq.impl.Tools.componentDataType;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.Field;
 import org.jooq.Name;
-import org.jooq.Record;
+import org.jooq.QueryPart;
+import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.impl.QOM.UTransient;
 
@@ -69,15 +73,13 @@ implements
     private final DataType<?>   type;
     private final Name          fieldAlias;
 
-    private transient Select<?> table;
-
     ArrayTableEmulation(Object[] array, Name[] fieldAliases) {
         if (Tools.isEmpty(fieldAliases))
             this.fieldAlias = N_COLUMN_VALUE;
         else if (fieldAliases.length == 1)
             this.fieldAlias = fieldAliases[0];
         else
-            throw new IllegalArgumentException("Array table simulations can only have a single field alias");
+            throw new IllegalArgumentException("Array table emulations can only have a single field alias");
 
         this.array = array;
         this.type = componentDataType(array);
@@ -89,32 +91,12 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        visitSubquery(ctx, table(), SubqueryCharacteristics.DERIVED_TABLE, true);
-    }
-
-    private final Select<?> table() {
-        if (table == null) {
-            Select<Record> select = null;
-
-            for (Object element : array) {
-
-                // [#1081] Be sure to get the correct cast type also for null
-                Field<?> val = DSL.val(element, type);
-                Select<Record> subselect = DSL.select(val.as(fieldAlias)).select();
-
-                if (select == null)
-                    select = subselect;
-                else
-                    select = select.unionAll(subselect);
-            }
-
-            // Empty arrays should result in empty tables
-            if (select == null)
-                select = DSL.select(one().as(fieldAlias)).select().where(falseCondition());
-
-            table = select;
-        }
-
-        return table;
+        visitSubquery(ctx,
+            array.length > 0
+              ? values0(map(array, e -> row(val(e, type)), Row[]::new))
+              : select(one().as(fieldAlias)).select().where(falseCondition()),
+            SubqueryCharacteristics.DERIVED_TABLE,
+            true
+        );
     }
 }

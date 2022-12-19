@@ -222,7 +222,7 @@ final class TranslatingMetaProvider implements MetaProvider {
                     - The jOOQ parser doesn't understand your SQL
                     - The jOOQ DDL interpretation logic (translating to H2) cannot simulate your SQL
 
-                    If you think this is a bug or a feature worth requesting, please report it here: https://github.com/jOOQ/jOOQ/issues/new/choose
+                    If you think this is a bug or a feature worth requesting, please report it here: https://jooq.org/bug
 
                     As a workaround, you can use the Settings.parseIgnoreComments syntax documented here:
                     https://www.jooq.org/doc/latest/manual/sql-building/dsl-context/custom-settings/settings-parser/

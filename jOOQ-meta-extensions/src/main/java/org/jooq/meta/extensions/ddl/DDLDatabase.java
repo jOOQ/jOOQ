@@ -166,7 +166,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
                         .load(source -> DDLDatabase.this.load(ctx, source));
         }
         catch (ParserException e) {
-            log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://github.com/jOOQ/jOOQ/issues/new", e);
+            log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://jooq.org/bug", e);
             throw e;
         }
     }
@@ -234,7 +234,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
                 + "- The jOOQ parser doesn't understand your SQL\n"
                 + "- The jOOQ DDL simulation logic (translating to H2) cannot simulate your SQL\n"
                 + "\n"
-                + "If you think this is a bug or a feature worth requesting, please report it here: https://github.com/jOOQ/jOOQ/issues/new/choose\n"
+                + "If you think this is a bug or a feature worth requesting, please report it here: https://jooq.org/bug\n"
                 + "\n"
                 + "As a workaround, you can use the Settings.parseIgnoreComments syntax documented here:\n"
                 + "https://www.jooq.org/doc/latest/manual/sql-building/dsl-context/custom-settings/settings-parser/");

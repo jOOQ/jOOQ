@@ -4778,7 +4778,7 @@ final class Tools {
         }
 
         if (i == maxConsumedResults)
-            log.warn("Maximum consumed results reached: " + maxConsumedResults + ". This is probably a bug. Please report to https://github.com/jOOQ/jOOQ/issues/new");
+            log.warn("Maximum consumed results reached: " + maxConsumedResults + ". This is probably a bug. Please report to https://jooq.org/bug");
 
         // Call this only when there was at least one ResultSet.
         if (anyResults) {

@@ -95,12 +95,12 @@ import org.jooq.impl.QOM.Aliasable;
 /**
  * @author Lukas Eder
  */
-final class OrdinalityTable<R extends Record>
+final class WithOrdinalityTable<R extends Record>
 extends
     AbstractTable<R>
 implements
     AutoAlias<Table<R>>,
-    QOM.OrdinalityTable<R>
+    QOM.WithOrdinalityTable<R>
 {
 
     static final Set<SQLDialect> NO_SUPPORT_STANDARD          = SQLDialect.supportedBy(DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
@@ -114,7 +114,7 @@ implements
 
     final AbstractTable<?>       delegate;
 
-    OrdinalityTable(AbstractTable<?> delegate) {
+    WithOrdinalityTable(AbstractTable<?> delegate) {
         super(delegate.getOptions(), delegate.getQualifiedName(), delegate.getSchema());
 
         this.delegate = delegate;

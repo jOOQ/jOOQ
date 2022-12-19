@@ -725,15 +725,15 @@ public final class QOM {
      * A collection derived table or table valued function with a
      * <code>WITH ORDINALITY</code> clause.
      */
-    public sealed interface OrdinalityTable<R extends Record>
+    public sealed interface WithOrdinalityTable<R extends Record>
         extends
             Table<R>
         permits
-            org.jooq.impl.OrdinalityTable
+            org.jooq.impl.WithOrdinalityTable
     {
         @NotNull Table<?> $table();
         @CheckReturnValue
-        @NotNull OrdinalityTable<?> $table(Table<?> newTable);
+        @NotNull WithOrdinalityTable<?> $table(Table<?> newTable);
     }
 
     public interface PrimaryKey extends Constraint {

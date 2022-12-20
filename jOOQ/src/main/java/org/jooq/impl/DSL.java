@@ -19924,6 +19924,31 @@ public class DSL {
         return new ArrayRemove<>(arg1, arg2);
     }
 
+    /**
+     * The <code>ARRAY_REPLACE</code> function.
+     * <p>
+     * Replace an element in an array.
+     *
+     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg3 is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayReplace(T[] arg1, T arg2, T arg3) {
+        return new ArrayReplace<>(Tools.field(arg1), Tools.field(arg2), Tools.field(arg3));
+    }
+
+    /**
+     * The <code>ARRAY_REPLACE</code> function.
+     * <p>
+     * Replace an element in an array.
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Field<T[]> arrayReplace(Field<T[]> arg1, Field<T> arg2, Field<T> arg3) {
+        return new ArrayReplace<>(arg1, arg2, arg3);
+    }
+
     // -------------------------------------------------------------------------
     // Utility functions
     // -------------------------------------------------------------------------

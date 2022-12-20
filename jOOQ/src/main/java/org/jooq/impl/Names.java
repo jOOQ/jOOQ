@@ -352,6 +352,7 @@ final class Names {
     static final Name N_ARRAY_OVERLAP          = systemName("array_overlap");
     static final Name N_ARRAY_PREPEND          = systemName("array_prepend");
     static final Name N_ARRAY_REMOVE           = systemName("array_remove");
+    static final Name N_ARRAY_REPLACE          = systemName("array_replace");
     static final Name N_ASCII                  = systemName("ascii");
     static final Name N_ASIN                   = systemName("asin");
     static final Name N_ASINH                  = systemName("asinh");

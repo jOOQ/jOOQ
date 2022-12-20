@@ -4910,6 +4910,19 @@ public final class QOM {
     {}
 
     /**
+     * The <code>ARRAY REPLACE</code> function.
+     * <p>
+     * Replace an element in an array.
+     */
+    public /*sealed*/ interface ArrayReplace<T>
+        extends
+            UOperator3<Field<T[]>, Field<T>, Field<T>, Field<T[]>>,
+            org.jooq.Field<T[]>
+        //permits
+        //    ArrayReplace
+    {}
+
+    /**
      * The <code>NVL</code> function.
      * <p>
      * Return the first non-null argument.

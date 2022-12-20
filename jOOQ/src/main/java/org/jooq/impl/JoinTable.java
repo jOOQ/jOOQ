@@ -99,6 +99,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_CROSS_JOIN_LATERAL;
 import static org.jooq.impl.Keywords.K_LEFT_JOIN_LATERAL;
 import static org.jooq.impl.Keywords.K_LEFT_OUTER_JOIN_LATERAL;
@@ -319,7 +320,8 @@ implements
                .formatSeparator()
                .start(TABLE_JOIN_ON)
                .visit(K_ON)
-               .sql(" 1 = 1")
+               .sql(' ')
+               .visit(trueCondition())
                .end(TABLE_JOIN_ON)
                .formatIndentEnd();
         }

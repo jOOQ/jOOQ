@@ -1114,7 +1114,7 @@ implements
 
     @Override
     public final Table<Record> withOrdinality() {
-        return new OrdinalityTable<>(this);
+        return new WithOrdinalityTable<>(this);
     }
 
 

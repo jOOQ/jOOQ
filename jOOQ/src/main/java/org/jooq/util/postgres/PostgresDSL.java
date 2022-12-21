@@ -506,10 +506,18 @@ public class PostgresDSL extends DSL {
      * The PostgreSQL
      * <code>array_replace(anyarray, anyelement, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1,2,3,4} = array_replace(ARRAY[1,2,5,4], 5, 3)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.18.0 - [#11981] - Use
+     *             {@link DSL#arrayReplace(Object[], Object, Object)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(T[] array, T search, T replace) {
@@ -520,10 +528,18 @@ public class PostgresDSL extends DSL {
      * The PostgreSQL
      * <code>array_replace(anyarray, anyelement, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1,2,3,4} = array_replace(ARRAY[1,2,5,4], 5, 3)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.18.0 - [#11981] - Use
+     *             {@link DSL#arrayReplace(Field, Field, Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(T[] array, Field<T> search, Field<T> replace) {
@@ -534,10 +550,18 @@ public class PostgresDSL extends DSL {
      * The PostgreSQL
      * <code>array_replace(anyarray, anyelement, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1,2,3,4} = array_replace(ARRAY[1,2,5,4], 5, 3)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.18.0 - [#11981] - Use
+     *             {@link DSL#arrayReplace(Field, Field, Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(Field<T[]> array, T search, T replace) {
@@ -548,10 +572,18 @@ public class PostgresDSL extends DSL {
      * The PostgreSQL
      * <code>array_replace(anyarray, anyelement, anyelement)</code> function.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * {1,2,3,4} = array_replace(ARRAY[1,2,5,4], 5, 3)
-     * </code></pre>
+     * </code>
+     * </pre>
+     *
+     * @deprecated - 3.18.0 - [#11981] - Use
+     *             {@link DSL#arrayReplace(Field, Field, Field)} instead.
      */
+    @Deprecated
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(Field<T[]> array, Field<T> search, Field<T> replace) {

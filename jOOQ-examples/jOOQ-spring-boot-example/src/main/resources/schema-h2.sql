@@ -55,3 +55,10 @@ CREATE TABLE book_to_book_store (
                              REFERENCES book (id)
                              ON DELETE CASCADE
 );
+
+CREATE TABLE stock
+(
+    id IDENTITY NOT NULL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    quantity INTEGER
+);

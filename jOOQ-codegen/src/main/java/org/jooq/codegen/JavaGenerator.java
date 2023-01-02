@@ -5703,7 +5703,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             out.overrideInherit();
-            printNonnullAnnotation(out);
+            printNullableAnnotation(out);
             out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
             out.println("return aliased() ? null : %s;", schemaId);
             out.println("}");

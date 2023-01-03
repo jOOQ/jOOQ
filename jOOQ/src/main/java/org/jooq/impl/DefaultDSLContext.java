@@ -3961,48 +3961,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public org.jooq.Query startTransaction() {
         return new StartTransaction(configuration());

@@ -85,7 +85,7 @@ public class Staff extends TableImpl<StaffRecord> {
     /**
      * The column <code>public.staff.active</code>.
      */
-    public final TableField<StaffRecord, Boolean> ACTIVE = createField(DSL.name("active"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field("true", SQLDataType.BOOLEAN)), this, "");
+    public final TableField<StaffRecord, Boolean> ACTIVE = createField(DSL.name("active"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("true"), SQLDataType.BOOLEAN)), this, "");
 
     /**
      * The column <code>public.staff.username</code>.
@@ -100,7 +100,7 @@ public class Staff extends TableImpl<StaffRecord> {
     /**
      * The column <code>public.staff.last_update</code>.
      */
-    public final TableField<StaffRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<StaffRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.staff.picture</code>.

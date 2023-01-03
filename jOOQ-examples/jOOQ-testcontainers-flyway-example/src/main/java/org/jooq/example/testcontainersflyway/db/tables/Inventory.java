@@ -72,7 +72,7 @@ public class Inventory extends TableImpl<InventoryRecord> {
     /**
      * The column <code>public.inventory.last_update</code>.
      */
-    public final TableField<InventoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<InventoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Inventory(Name alias, Table<InventoryRecord> aliased) {
         this(alias, aliased, null);

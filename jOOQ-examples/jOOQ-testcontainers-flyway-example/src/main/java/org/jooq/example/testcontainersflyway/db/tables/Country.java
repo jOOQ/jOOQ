@@ -63,7 +63,7 @@ public class Country extends TableImpl<CountryRecord> {
     /**
      * The column <code>public.country.last_update</code>.
      */
-    public final TableField<CountryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<CountryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Country(Name alias, Table<CountryRecord> aliased) {
         this(alias, aliased, null);

@@ -72,7 +72,7 @@ public class Store extends TableImpl<StoreRecord> {
     /**
      * The column <code>public.store.last_update</code>.
      */
-    public final TableField<StoreRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<StoreRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Store(Name alias, Table<StoreRecord> aliased) {
         this(alias, aliased, null);

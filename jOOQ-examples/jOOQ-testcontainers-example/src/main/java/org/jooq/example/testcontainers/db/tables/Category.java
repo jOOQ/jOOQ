@@ -63,7 +63,7 @@ public class Category extends TableImpl<CategoryRecord> {
     /**
      * The column <code>public.category.last_update</code>.
      */
-    public final TableField<CategoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<CategoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Category(Name alias, Table<CategoryRecord> aliased) {
         this(alias, aliased, null);

@@ -72,7 +72,7 @@ public class City extends TableImpl<CityRecord> {
     /**
      * The column <code>public.city.last_update</code>.
      */
-    public final TableField<CityRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<CityRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private City(Name alias, Table<CityRecord> aliased) {
         this(alias, aliased, null);

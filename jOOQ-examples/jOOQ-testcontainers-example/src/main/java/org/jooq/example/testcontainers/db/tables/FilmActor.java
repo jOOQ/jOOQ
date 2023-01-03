@@ -66,7 +66,7 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     /**
      * The column <code>public.film_actor.last_update</code>.
      */
-    public final TableField<FilmActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<FilmActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private FilmActor(Name alias, Table<FilmActorRecord> aliased) {
         this(alias, aliased, null);

@@ -2619,6 +2619,159 @@ public final class QOM {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * The <code>START TRANSACTION</code> statement.
+     * <p>
+     * Start a transaction
+     */
+    public /*sealed*/ interface StartTransaction
+        extends
+            UEmpty,
+            org.jooq.Query
+        //permits
+        //    StartTransaction
+    {}
+
+    /**
+     * The <code>SAVEPOINT</code> statement.
+     * <p>
+     * Specify a savepoint
+     */
+    public /*sealed*/ interface Savepoint
+        extends
+            org.jooq.Query
+        //permits
+        //    Savepoint
+    {
+        @NotNull  Name $name();
+        @CheckReturnValue
+        @NotNull  Savepoint $name(Name name);
+    }
+
+    /**
+     * The <code>RELEASE SAVEPOINT</code> statement.
+     * <p>
+     * Release a savepoint
+     */
+    public /*sealed*/ interface ReleaseSavepoint
+        extends
+            org.jooq.Query
+        //permits
+        //    ReleaseSavepoint
+    {
+        @NotNull  Name $name();
+        @CheckReturnValue
+        @NotNull  ReleaseSavepoint $name(Name name);
+    }
+
+    /**
+     * The <code>COMMIT</code> statement.
+     * <p>
+     * Commit a transaction
+     */
+    public /*sealed*/ interface Commit
+        extends
+            UEmpty,
+            org.jooq.Query
+        //permits
+        //    Commit
+    {}
+
+    /**
+     * The <code>ROLLBACK</code> statement.
+     * <p>
+     * Rollback a transaction
+     */
+    public /*sealed*/ interface Rollback
+        extends
+            RowCountQuery
+        //permits
+        //    Rollback
+    {
+        @Nullable Name $toSavepoint();
+        @CheckReturnValue
+        @NotNull  Rollback $toSavepoint(Name toSavepoint);
+    }
+
     /**
      * The <code>AND</code> operator.
      */

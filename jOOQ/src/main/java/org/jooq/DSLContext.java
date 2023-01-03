@@ -11240,6 +11240,167 @@ public interface DSLContext extends Scope {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * The <code>START TRANSACTION</code> statement.
+     * <p>
+     * Start a transaction
+     *
+     * @see DSL#startTransaction()
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Query startTransaction();
+
+    /**
+     * The <code>SAVEPOINT</code> statement.
+     * <p>
+     * Specify a savepoint
+     *
+     * @see DSL#savepoint(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Query savepoint(@Stringly.Name String name);
+
+    /**
+     * The <code>SAVEPOINT</code> statement.
+     * <p>
+     * Specify a savepoint
+     *
+     * @see DSL#savepoint(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Query savepoint(Name name);
+
+    /**
+     * The <code>RELEASE SAVEPOINT</code> statement.
+     * <p>
+     * Release a savepoint
+     *
+     * @see DSL#releaseSavepoint(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Query releaseSavepoint(@Stringly.Name String name);
+
+    /**
+     * The <code>RELEASE SAVEPOINT</code> statement.
+     * <p>
+     * Release a savepoint
+     *
+     * @see DSL#releaseSavepoint(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Query releaseSavepoint(Name name);
+
+    /**
+     * The <code>COMMIT</code> statement.
+     * <p>
+     * Commit a transaction
+     *
+     * @see DSL#commit()
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Query commit();
+
+    /**
+     * The <code>ROLLBACK</code> statement.
+     * <p>
+     * Rollback a transaction
+     *
+     * @see DSL#rollback()
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    RollbackToSavepointStep rollback();
+
+
+
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      *

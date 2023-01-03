@@ -10272,6 +10272,251 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * The <code>START TRANSACTION</code> statement.
+     * <p>
+     * Start a transaction
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#startTransaction()
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.Query startTransaction() {
+        return dsl().startTransaction();
+    }
+
+    /**
+     * The <code>SAVEPOINT</code> statement.
+     * <p>
+     * Specify a savepoint
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#savepoint(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.Query savepoint(@Stringly.Name String name) {
+        return dsl().savepoint(name);
+    }
+
+    /**
+     * The <code>SAVEPOINT</code> statement.
+     * <p>
+     * Specify a savepoint
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#savepoint(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.Query savepoint(Name name) {
+        return dsl().savepoint(name);
+    }
+
+    /**
+     * The <code>RELEASE SAVEPOINT</code> statement.
+     * <p>
+     * Release a savepoint
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#releaseSavepoint(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.Query releaseSavepoint(@Stringly.Name String name) {
+        return dsl().releaseSavepoint(name);
+    }
+
+    /**
+     * The <code>RELEASE SAVEPOINT</code> statement.
+     * <p>
+     * Release a savepoint
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#releaseSavepoint(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.Query releaseSavepoint(Name name) {
+        return dsl().releaseSavepoint(name);
+    }
+
+    /**
+     * The <code>COMMIT</code> statement.
+     * <p>
+     * Commit a transaction
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#commit()
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.Query commit() {
+        return dsl().commit();
+    }
+
+    /**
+     * The <code>ROLLBACK</code> statement.
+     * <p>
+     * Rollback a transaction
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#rollback()
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.RollbackToSavepointStep rollback() {
+        return dsl().rollback();
+    }
+
+
+
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
      *

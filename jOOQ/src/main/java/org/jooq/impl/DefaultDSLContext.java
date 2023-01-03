@@ -100,7 +100,6 @@ import org.jooq.BatchedRunnable;
 import org.jooq.BindContext;
 import org.jooq.Block;
 import org.jooq.Catalog;
-import org.jooq.Commit;
 import org.jooq.Commits;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
@@ -408,7 +407,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public Commit commit(String id) {
+    public org.jooq.Commit commit(String id) {
         return new CommitImpl(configuration, id, null, emptyList(), emptyList());
     }
 
@@ -418,7 +417,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public Migration migrateTo(Commit to) {
+    public Migration migrateTo(org.jooq.Commit to) {
         return new MigrationImpl(configuration, to);
     }
 
@@ -3961,6 +3960,83 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public org.jooq.Query startTransaction() {
+        return new StartTransaction(configuration());
+    }
+
+    @Override
+    public org.jooq.Query savepoint(@Stringly.Name String name) {
+        return new Savepoint(configuration(), DSL.name(name));
+    }
+
+    @Override
+    public org.jooq.Query savepoint(Name name) {
+        return new Savepoint(configuration(), name);
+    }
+
+    @Override
+    public org.jooq.Query releaseSavepoint(@Stringly.Name String name) {
+        return new ReleaseSavepoint(configuration(), DSL.name(name));
+    }
+
+    @Override
+    public org.jooq.Query releaseSavepoint(Name name) {
+        return new ReleaseSavepoint(configuration(), name);
+    }
+
+    @Override
+    public org.jooq.Query commit() {
+        return new Commit(configuration());
+    }
+
+    @Override
+    public org.jooq.RollbackToSavepointStep rollback() {
+        return new Rollback(configuration());
+    }
 
 
 

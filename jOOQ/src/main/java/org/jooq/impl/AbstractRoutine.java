@@ -537,9 +537,6 @@ implements
         try {
             // [#8968] Keep start() event inside of lifecycle management
             listener.start(ctx);
-
-            Connection connection = ctx.connection();
-
             listener.renderStart(ctx);
             // [#1520] TODO: Should the number of bind values be checked, here?
             ctx.sql(create(configuration).render(this));
@@ -547,7 +544,7 @@ implements
 
             listener.prepareStart(ctx);
             if (ctx.statement() == null)
-                ctx.statement(connection.prepareCall(ctx.sql()));
+                ctx.statement(ctx.connection().prepareCall(ctx.sql()));
             Tools.setFetchSize(ctx, 0);
             // [#1856] TODO: Add Statement flags like timeout here
             listener.prepareEnd(ctx);

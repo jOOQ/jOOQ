@@ -92,7 +92,6 @@ final class BatchMultiple extends AbstractBatch {
     static int[] execute(Configuration configuration, Query[] queries) {
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.MULTIPLE, queries);
         ExecuteListener listener = ExecuteListeners.get(ctx);
-        Connection connection = ctx.connection();
 
         try {
 
@@ -101,7 +100,7 @@ final class BatchMultiple extends AbstractBatch {
             ctx.transformQueries(listener);
 
             if (ctx.statement() == null)
-                ctx.statement(new SettingsEnabledPreparedStatement(connection));
+                ctx.statement(new SettingsEnabledPreparedStatement(ctx.connection()));
 
             String[] batchSQL = ctx.batchSQL();
             for (int i = 0; i < ctx.batchQueries().length; i++) {

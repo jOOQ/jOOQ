@@ -189,7 +189,6 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     private final int[] executePrepared() {
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.SINGLE, new Query[] { query });
         ExecuteListener listener = ExecuteListeners.get(ctx);
-        Connection connection = ctx.connection();
 
         Param<?>[] params = extractParams();
 
@@ -205,7 +204,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
 
             listener.prepareStart(ctx);
             if (ctx.statement() == null)
-                ctx.statement(connection.prepareStatement(ctx.sql()));
+                ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
             listener.prepareEnd(ctx);
 
             // [#9295] use query timeout from settings

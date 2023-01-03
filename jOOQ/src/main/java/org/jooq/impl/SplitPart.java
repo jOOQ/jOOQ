@@ -119,6 +119,11 @@ implements
             case HSQLDB:
                 return false;
 
+
+
+
+
+
             default:
                 return true;
         }
@@ -217,6 +222,12 @@ implements
                 );
                 break;
             }
+
+
+
+
+
+
 
             default:
                 ctx.visit(function(N_SPLIT_PART, getDataType(), string, delimiter, n));

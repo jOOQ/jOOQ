@@ -87,15 +87,15 @@ final class Names {
     static final Name N_BITOR                  = systemName("bitor");
     static final Name N_BITSHIFTLEFT           = systemName("bitshiftleft");
     static final Name N_BITSHIFTRIGHT          = systemName("bitshiftright");
-    static final Name N_BITXOR                 = systemName("bitxor");
     static final Name N_BITXNOR                = systemName("bitxnor");
+    static final Name N_BITXOR                 = systemName("bitxor");
     static final Name N_BIT_AND                = systemName("bit_and");
     static final Name N_BIT_NAND               = systemName("bit_nand");
     static final Name N_BIT_NOR                = systemName("bit_nor");
     static final Name N_BIT_NOT                = systemName("bit_not");
     static final Name N_BIT_OR                 = systemName("bit_or");
-    static final Name N_BIT_XOR                = systemName("bit_xor");
     static final Name N_BIT_XNOR               = systemName("bit_xnor");
+    static final Name N_BIT_XOR                = systemName("bit_xor");
     static final Name N_BOOLAND_AGG            = systemName("booland_agg");
     static final Name N_BOOLOR_AGG             = systemName("boolor_agg");
     static final Name N_BYTEA                  = systemName("bytea");
@@ -192,8 +192,8 @@ final class Names {
     static final Name N_JSON_QUOTE             = systemName("json_quote");
     static final Name N_JSON_TABLE             = systemName("json_table");
     static final Name N_JSON_TRANSFORM         = systemName("json_transform");
-    static final Name N_JSON_UNQUOTE           = systemName("json_unquote");
     static final Name N_JSON_TYPE              = systemName("json_type");
+    static final Name N_JSON_UNQUOTE           = systemName("json_unquote");
     static final Name N_JSON_VALID             = systemName("json_valid");
     static final Name N_JSON_VALUE             = systemName("json_value");
     static final Name N_LAG                    = systemName("lag");
@@ -296,6 +296,7 @@ final class Names {
     static final Name N_STRING_AGG             = systemName("string_agg");
     static final Name N_STRING_SPLIT           = systemName("string_split");
     static final Name N_STRREVERSE             = systemName("strreverse");
+    static final Name N_STRTOK                 = systemName("strtok");
     static final Name N_STR_REPLACE            = systemName("str_replace");
     static final Name N_ST_NUMINTERIORRINGS    = systemName("st_numinteriorrings");
     static final Name N_SUB                    = systemName("sub");

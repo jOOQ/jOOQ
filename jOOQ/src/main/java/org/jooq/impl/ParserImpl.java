@@ -8812,6 +8812,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return currentSchema();
                 else if (parseFunctionNameIf("STRREVERSE"))
                     return reverse((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("STRTOK"))
+                    return parseFunctionArgs3(DSL::splitPart);
                 else if (parseFunctionNameIf("SYSUUID") && parseEmptyParensIf())
                     return uuid();
 

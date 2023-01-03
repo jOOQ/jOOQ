@@ -660,6 +660,7 @@ import org.jooq.Row;
 import org.jooq.Row2;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectField;
@@ -6360,7 +6361,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final QueryPart parseAnd() {
         QueryPart condition = parseNot();
 
-        while (!forbidden.contains(FK_AND) && parseKeywordIf("AND"))
+        while (!forbidden.contains(FK_AND) && parseKeywordIf("AND") || parseCategory() == SQLDialectCategory.MYSQL && parseIf("&&"))
             condition = toCondition(condition).and(toCondition(parseNot()));
 
         return condition;
@@ -6385,7 +6386,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final int parseNot0() {
         int not = 0;
 
-        while (parseKeywordIf("NOT"))
+        while (parseKeywordIf("NOT") || parseCategory() == SQLDialectCategory.MYSQL && parseIf('!'))
             not++;
 
         return not;
@@ -14328,6 +14329,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     @Override
     public final SQLDialect parseFamily() {
         return parseDialect().family();
+    }
+
+    @Override
+    public final SQLDialectCategory parseCategory() {
+        return parseDialect().category();
     }
 
     @Override

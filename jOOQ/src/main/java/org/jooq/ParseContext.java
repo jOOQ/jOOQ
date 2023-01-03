@@ -74,6 +74,12 @@ public interface ParseContext extends Scope {
     @NotNull
     SQLDialect parseFamily();
 
+    /**
+     * Convenient access to {@link Settings#getParseDialect()}'s category.
+     */
+    @NotNull
+    SQLDialectCategory parseCategory();
+
     // -------------------------------------------------------------------------
     // Parse context
     // -------------------------------------------------------------------------

@@ -1103,7 +1103,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
                 case 'B':
-                    if (!parseResultQuery && peekKeyword("BEGIN")) {
+                    if (!parseResultQuery && peekKeyword("BEGIN TRANSACTION", "BEGIN TRAN"))
+                        return result = parseStartTransaction();
+                    else if (!parseResultQuery && peekKeyword("BEGIN")) {
                         languageContext = previous;
                         return result = parseBlock(false);
                     }
@@ -1124,8 +1126,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                         ;
-                    else if (parseKeywordIf("COMMIT"))
-                        throw notImplemented("COMMIT");
+                    else if (!parseResultQuery && peekKeyword("COMMIT"))
+                        return result = parseCommit();
                     else if (parseKeywordIf("CONNECT"))
                         throw notImplemented("CONNECT");
 
@@ -1193,8 +1195,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return result = metaLookupsForceIgnore(true).parseRevoke();
                     else if (parseKeywordIf("REPLACE"))
                         throw notImplemented("REPLACE");
-                    else if (parseKeywordIf("ROLLBACK"))
-                        throw notImplemented("ROLLBACK");
+                    else if (!parseResultQuery && peekKeyword("RELEASE"))
+                        return result = parseReleaseSavepoint();
+                    else if (!parseResultQuery && peekKeyword("ROLLBACK"))
+                        return result = parseRollback();
 
                     break;
 
@@ -1203,8 +1207,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return result = parseSelect();
                     else if (!parseResultQuery && peekKeyword("SET"))
                         return result = parseSet();
-                    else if (parseKeywordIf("SAVEPOINT"))
-                        throw notImplemented("SAVEPOINT");
+                    else if (!parseResultQuery && peekKeyword("SAVE", "SAVEPOINT"))
+                        return result = parseSavepoint();
+                    else if (!parseResultQuery && peekKeyword("START"))
+                        return result = parseStartTransaction();
 
                     break;
 
@@ -3450,6 +3456,43 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+    private final Query parseStartTransaction() {
+        parseKeyword("START", "BEGIN");
+        parseKeyword("TRAN", "TRANSACTION");
+        parseKeywordIf("READ WRITE");
+        return dsl.startTransaction();
+    }
+
+    private final Query parseSavepoint() {
+        if (parseKeywordIf("SAVEPOINT"))
+            return dsl.savepoint(parseIdentifier());
+
+        parseKeyword("SAVE");
+        parseKeyword("TRAN", "TRANSACTION");
+        return dsl.savepoint(parseIdentifier());
+    }
+
+    private final Query parseReleaseSavepoint() {
+        parseKeyword("RELEASE SAVEPOINT");
+        return dsl.releaseSavepoint(parseIdentifier());
+    }
+
+    private final Query parseCommit() {
+        parseKeyword("COMMIT");
+        parseKeywordIf("WORK", "TRAN", "TRANSACTION");
+        return dsl.commit();
+    }
+
+    private final Query parseRollback() {
+        parseKeyword("ROLLBACK");
+
+        if (parseKeywordIf("TRAN", "TRANSACTION", "TO SAVEPOINT"))
+            return dsl.rollback().toSavepoint(parseIdentifier());
+
+        parseKeywordIf("WORK");
+        return dsl.rollback();
+    }
 
     private final Block parseDo() {
         parseKeyword("DO");

@@ -84,6 +84,7 @@ implements
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
+
             case POSTGRES:
             case YUGABYTEDB: {
                 // [#7106] PostgreSQL blocks can't start new transactions

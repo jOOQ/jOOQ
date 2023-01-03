@@ -73,7 +73,7 @@ implements
     RollbackToSavepointStep
 {
 
-          Name toSavepoint;
+    Name toSavepoint;
 
     Rollback(
         Configuration configuration

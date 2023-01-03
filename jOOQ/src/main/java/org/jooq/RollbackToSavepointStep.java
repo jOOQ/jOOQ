@@ -73,14 +73,14 @@ public interface RollbackToSavepointStep extends Query {
     /**
      * Add the <code>TO SAVEPOINT</code> clause to the <code>ROLLBACK</code> statement.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     Query toSavepoint(@Stringly.Name String toSavepoint);
 
     /**
      * Add the <code>TO SAVEPOINT</code> clause to the <code>ROLLBACK</code> statement.
      */
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     Query toSavepoint(Name toSavepoint);
 }

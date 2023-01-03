@@ -10282,7 +10282,7 @@ public class DSL {
      * @see DSLContext#startTransaction()
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.Query startTransaction() {
         return dsl().startTransaction();
     }
@@ -10299,7 +10299,7 @@ public class DSL {
      * @see DSLContext#savepoint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.Query savepoint(@Stringly.Name String name) {
         return dsl().savepoint(name);
     }
@@ -10316,7 +10316,7 @@ public class DSL {
      * @see DSLContext#savepoint(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.Query savepoint(Name name) {
         return dsl().savepoint(name);
     }
@@ -10333,7 +10333,7 @@ public class DSL {
      * @see DSLContext#releaseSavepoint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.Query releaseSavepoint(@Stringly.Name String name) {
         return dsl().releaseSavepoint(name);
     }
@@ -10350,7 +10350,7 @@ public class DSL {
      * @see DSLContext#releaseSavepoint(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.Query releaseSavepoint(Name name) {
         return dsl().releaseSavepoint(name);
     }
@@ -10367,7 +10367,7 @@ public class DSL {
      * @see DSLContext#commit()
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.Query commit() {
         return dsl().commit();
     }
@@ -10384,7 +10384,7 @@ public class DSL {
      * @see DSLContext#rollback()
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.RollbackToSavepointStep rollback() {
         return dsl().rollback();
     }

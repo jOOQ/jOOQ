@@ -3474,7 +3474,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Query parseReleaseSavepoint() {
-        parseKeyword("RELEASE SAVEPOINT");
+        parseKeyword("RELEASE");
+        parseKeywordIf("SAVEPOINT");
         return dsl.releaseSavepoint(parseIdentifier());
     }
 
@@ -3487,11 +3488,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Query parseRollback() {
         parseKeyword("ROLLBACK");
 
-        if (parseKeywordIf("TRAN", "TRANSACTION", "TO SAVEPOINT"))
+        if (parseKeywordIf("WORK"))
+            return dsl.rollback();
+        else if (parseKeywordIf(
+                "TRAN",
+                "TRANSACTION TO SAVEPOINT",
+                "TRANSACTION TO",
+                "TRANSACTION",
+                "TO SAVEPOINT",
+                "TO"
+        ))
             return dsl.rollback().toSavepoint(parseIdentifier());
-
-        parseKeywordIf("WORK");
-        return dsl.rollback();
+        else
+            return dsl.rollback();
     }
 
     private final Block parseDo() {

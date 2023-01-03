@@ -11246,7 +11246,7 @@ public interface DSLContext extends Scope {
      * @see DSL#startTransaction()
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Query startTransaction();
 
     /**
@@ -11257,7 +11257,7 @@ public interface DSLContext extends Scope {
      * @see DSL#savepoint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Query savepoint(@Stringly.Name String name);
 
     /**
@@ -11268,7 +11268,7 @@ public interface DSLContext extends Scope {
      * @see DSL#savepoint(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Query savepoint(Name name);
 
     /**
@@ -11279,7 +11279,7 @@ public interface DSLContext extends Scope {
      * @see DSL#releaseSavepoint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Query releaseSavepoint(@Stringly.Name String name);
 
     /**
@@ -11290,7 +11290,7 @@ public interface DSLContext extends Scope {
      * @see DSL#releaseSavepoint(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Query releaseSavepoint(Name name);
 
     /**
@@ -11301,7 +11301,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commit()
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Query commit();
 
     /**
@@ -11312,7 +11312,7 @@ public interface DSLContext extends Scope {
      * @see DSL#rollback()
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     RollbackToSavepointStep rollback();
 
 

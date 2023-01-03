@@ -371,6 +371,7 @@ final class Keywords {
     static final Keyword K_ROWS_FROM                = keyword("rows from");
     static final Keyword K_ROWS_ONLY                = keyword("rows only");
     static final Keyword K_ROWS_WITH_TIES           = keyword("rows with ties");
+    static final Keyword K_SAVE                     = keyword("save");
     static final Keyword K_SAVEPOINT                = keyword("savepoint");
     static final Keyword K_SCHEMA                   = keyword("schema");
     static final Keyword K_SCN                      = keyword("scn");

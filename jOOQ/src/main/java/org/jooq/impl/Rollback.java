@@ -114,10 +114,25 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_ROLLBACK);
+        switch (ctx.family()) {
 
-        if (toSavepoint != null)
-            ctx.sql(' ').visit(K_TO).sql(' ').visit(K_SAVEPOINT).sql(' ').visit(toSavepoint);
+
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(K_ROLLBACK);
+
+                if (toSavepoint != null)
+                    ctx.sql(' ').visit(K_TO).sql(' ').visit(K_SAVEPOINT).sql(' ').visit(toSavepoint);
+                break;
+        }
     }
 
     // -------------------------------------------------------------------------

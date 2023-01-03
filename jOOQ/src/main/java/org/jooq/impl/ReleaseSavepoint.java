@@ -89,7 +89,21 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_RELEASE).sql(' ').visit(K_SAVEPOINT).sql(' ').visit(name);
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(K_RELEASE).sql(' ').visit(K_SAVEPOINT).sql(' ').visit(name);
+                break;
+        }
     }
 
     // -------------------------------------------------------------------------

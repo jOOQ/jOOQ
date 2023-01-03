@@ -92,6 +92,22 @@ implements
                 break;
             }
 
+
+
+
+
+
+
+
+
+
+            case FIREBIRD: {
+                ctx.visit(K_SET).sql(' ').visit(K_TRANSACTION).sql(' ').visit(K_READ).sql(' ').visit(K_WRITE);
+                break;
+            }
+
+
+
             case H2: {
                 ctx.visit(K_BEGIN).sql(' ').visit(K_TRANSACTION);
                 break;

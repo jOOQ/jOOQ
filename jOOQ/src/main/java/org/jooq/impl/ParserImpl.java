@@ -3465,8 +3465,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Query parseSavepoint() {
-        if (parseKeywordIf("SAVEPOINT"))
-            return dsl.savepoint(parseIdentifier());
+        if (parseKeywordIf("SAVEPOINT")) {
+            Name n = parseIdentifier();
+            parseKeywordIf("UNIQUE");
+            parseKeywordIf("ON ROLLBACK RETAIN CURSORS");
+            return dsl.savepoint(n);
+        }
 
         parseKeyword("SAVE");
         parseKeyword("TRAN", "TRANSACTION");
@@ -3475,6 +3479,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Query parseReleaseSavepoint() {
         parseKeyword("RELEASE");
+        parseKeywordIf("TO");
         parseKeywordIf("SAVEPOINT");
         return dsl.releaseSavepoint(parseIdentifier());
     }

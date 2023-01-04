@@ -2344,6 +2344,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
             ;
 
         List<Condition> semiAntiJoinPredicates = null;

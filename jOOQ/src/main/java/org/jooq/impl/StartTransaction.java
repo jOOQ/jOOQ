@@ -95,6 +95,13 @@ implements
 
 
 
+
+
+
+
+
+
+
             case FIREBIRD: {
                 // [#7106] Blocks can't start new transactions
                 if (ctx.data(DATA_BLOCK_NESTING) == null)

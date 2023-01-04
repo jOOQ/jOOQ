@@ -95,15 +95,10 @@ implements
 
 
 
-
-
-
-
-
-
-
             case FIREBIRD: {
-                ctx.visit(K_SET).sql(' ').visit(K_TRANSACTION).sql(' ').visit(K_READ).sql(' ').visit(K_WRITE);
+                // [#7106] Blocks can't start new transactions
+                if (ctx.data(DATA_BLOCK_NESTING) == null)
+                    ctx.visit(begin());
                 break;
             }
 

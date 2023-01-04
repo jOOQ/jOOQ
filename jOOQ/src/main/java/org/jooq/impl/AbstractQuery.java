@@ -42,6 +42,9 @@ import static java.lang.Boolean.TRUE;
 import static org.jooq.Constants.FULL_VERSION;
 import static org.jooq.ExecuteType.DDL;
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
 // ...
 // ...
 // ...
@@ -60,6 +63,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
@@ -69,9 +73,9 @@ import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
-import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.conf.QueryPoolable;
 import org.jooq.conf.SettingsTools;
@@ -87,14 +91,15 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPart implements CloseableQuery {
 
-    private static final JooqLogger log      = JooqLogger.getLogger(AbstractQuery.class);
+    private static final JooqLogger      log                                 = JooqLogger.getLogger(AbstractQuery.class);
+    private static final Set<SQLDialect> SET_AUTOCOMMIT_ON_START_TRANSACTION = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
 
-    private int                     timeout;
-    private QueryPoolable           poolable = QueryPoolable.DEFAULT;
-    private boolean                 keepStatement;
-    transient PreparedStatement     statement;
-    transient int                   statementExecutionCount;
-    transient Rendered              rendered;
+    private int                          timeout;
+    private QueryPoolable                poolable                            = QueryPoolable.DEFAULT;
+    private boolean                      keepStatement;
+    transient PreparedStatement          statement;
+    transient int                        statementExecutionCount;
+    transient Rendered                   rendered;
 
     AbstractQuery(Configuration configuration) {
         super(configuration);
@@ -305,6 +310,10 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
                               + "extend Publisher, which allows for reactive streams implementations to subscribe to the "
                               + "results of a jOOQ query. Simply embed your query in the stream, e.g. using Flux.from(query). "
                               + "See also: https://www.jooq.org/doc/latest/manual/sql-execution/fetching/reactive-fetching/");
+
+                    // [#7106] In some SQL dialects, starting a transaction requires JDBC interaction
+                    if (this instanceof StartTransaction && SET_AUTOCOMMIT_ON_START_TRANSACTION.contains(ctx.dialect()))
+                        ctx.connection().setAutoCommit(false);
 
                     listener.prepareStart(ctx);
                     prepare(ctx);

@@ -107,13 +107,13 @@ final class Keywords {
     static final Keyword K_COUNT                    = keyword("count");
     static final Keyword K_CREATE                   = keyword("create");
     static final Keyword K_CROSS_JOIN_LATERAL       = keyword("cross join lateral");
-    static final Keyword K_CURSOR                   = keyword("cursor");
-    static final Keyword K_CURSORS                  = keyword("cursors");
     static final Keyword K_CURRENT                  = keyword("current");
     static final Keyword K_CURRENT_ROW              = keyword("current row");
     static final Keyword K_CURRENT_SCHEMA           = keyword("current_schema");
     static final Keyword K_CURRENT_VALUE_FOR        = keyword("current value for");
     static final Keyword K_CURRVAL                  = keyword("currval");
+    static final Keyword K_CURSOR                   = keyword("cursor");
+    static final Keyword K_CURSORS                  = keyword("cursors");
     static final Keyword K_CYCLE                    = keyword("cycle");
     static final Keyword K_DATA                     = keyword("data");
     static final Keyword K_DATABASE                 = keyword("database");
@@ -462,6 +462,7 @@ final class Keywords {
     static final Keyword K_WITH_READ_ONLY           = keyword("with read only");
     static final Keyword K_WITH_ROLLUP              = keyword("with rollup");
     static final Keyword K_WITH_TIES                = keyword("with ties");
+    static final Keyword K_WORK                     = keyword("work");
     static final Keyword K_WRITE                    = keyword("write");
     static final Keyword K_XML                      = keyword("xml");
     static final Keyword K_XMLEXISTS                = keyword("xmlexists");

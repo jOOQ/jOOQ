@@ -1103,7 +1103,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
                 case 'B':
-                    if (!parseResultQuery && peekKeyword("BEGIN TRANSACTION", "BEGIN TRAN"))
+                    if (!parseResultQuery && peekKeyword("BEGIN WORK", "BEGIN TRANSACTION", "BEGIN TRAN"))
                         return result = parseStartTransaction();
                     else if (!parseResultQuery && peekKeyword("BEGIN")) {
                         languageContext = previous;
@@ -3459,7 +3459,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Query parseStartTransaction() {
         parseKeyword("START", "BEGIN");
-        parseKeyword("TRAN", "TRANSACTION");
+        parseKeyword("WORK", "TRAN", "TRANSACTION");
         parseKeywordIf("READ WRITE");
         return dsl.startTransaction();
     }
@@ -3493,19 +3493,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Query parseRollback() {
         parseKeyword("ROLLBACK");
 
-        if (parseKeywordIf("WORK"))
-            return dsl.rollback();
-        else if (parseKeywordIf(
+        if (parseKeywordIf(
                 "TRAN",
                 "TRANSACTION TO SAVEPOINT",
                 "TRANSACTION TO",
                 "TRANSACTION",
+                "WORK TO SAVEPOINT",
                 "TO SAVEPOINT",
                 "TO"
         ))
             return dsl.rollback().toSavepoint(parseIdentifier());
-        else
-            return dsl.rollback();
+
+        parseKeywordIf("WORK");
+        return dsl.rollback();
     }
 
     private final Block parseDo() {

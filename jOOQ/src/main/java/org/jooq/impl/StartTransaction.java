@@ -87,11 +87,12 @@ implements
 
             case POSTGRES:
             case YUGABYTEDB: {
-                // [#7106] PostgreSQL blocks can't start new transactions
+                // [#7106] Blocks can't start new transactions
                 if (ctx.data(DATA_BLOCK_NESTING) == null)
                     ctx.visit(K_START).sql(' ').visit(K_TRANSACTION);
                 break;
             }
+
 
 
 
@@ -108,6 +109,13 @@ implements
                     ctx.visit(begin());
                 break;
             }
+
+
+
+
+
+
+
 
 
 

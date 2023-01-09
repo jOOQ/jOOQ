@@ -134,6 +134,7 @@ final class Names {
     static final Name N_DAYS_BETWEEN           = systemName("days_between");
     static final Name N_DB_NAME                = systemName("db_name");
     static final Name N_DECODE                 = systemName("decode");
+    static final Name N_DECODE_ORACLE          = systemName("decode_oracle");
     static final Name N_DEFAULT                = systemName("default");
     static final Name N_DELETED                = systemName("deleted");
     static final Name N_DENSE_RANK             = systemName("dense_rank");

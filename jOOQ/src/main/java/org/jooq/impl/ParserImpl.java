@@ -11123,7 +11123,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldDecodeIf() {
-        if (parseFunctionNameIf("DECODE", "MAP")) {
+        if (parseFunctionNameIf("DECODE", "DECODE_ORACLE", "MAP")) {
             parse('(');
             List<Field<?>> fields = parseList(',', c -> c.parseField());
             int size = fields.size();

@@ -51,6 +51,8 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -62,6 +64,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_DECODE;
+import static org.jooq.impl.Names.N_DECODE_ORACLE;
 import static org.jooq.impl.Names.N_MAP;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
@@ -87,7 +90,8 @@ extends
 implements
     QOM.Decode<V, T>
 {
-    private static final Set<SQLDialect> EMULATE_DISTINCT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> EMULATE_DECODE_ORACLE = SQLDialect.supportedBy(MARIADB);
+    private static final Set<SQLDialect> EMULATE_DISTINCT      = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
 
 
 
@@ -133,6 +137,8 @@ implements
 
 
 
+        else if (EMULATE_DECODE_ORACLE.contains(ctx.dialect()))
+            ctx.visit(function(N_DECODE_ORACLE, getDataType(), args()));
         else
             ctx.visit(function(N_DECODE, getDataType(), args()));
     }

@@ -119,6 +119,7 @@ implements
 
 
 
+
             case H2:
             case SQLITE: {
                 ctx.visit(K_BEGIN).sql(' ').visit(K_TRANSACTION);

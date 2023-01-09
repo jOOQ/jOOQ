@@ -1105,6 +1105,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 case 'B':
                     if (!parseResultQuery && peekKeyword("BEGIN WORK", "BEGIN TRANSACTION", "BEGIN TRAN"))
                         return result = parseStartTransaction();
+                    else if (!parseResultQuery && parseKeywordIf("BT"))
+                        return dsl.startTransaction();
                     else if (!parseResultQuery && peekKeyword("BEGIN")) {
                         languageContext = previous;
                         return result = parseBlock(false);
@@ -1155,6 +1157,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                         ;
+                    else if (!parseResultQuery && parseKeywordIf("ET", "END TRANSACTION"))
+                        return dsl.commit();
 
                     break;
 

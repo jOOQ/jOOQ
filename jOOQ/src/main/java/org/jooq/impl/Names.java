@@ -139,6 +139,7 @@ final class Names {
     static final Name N_DENSE_RANK             = systemName("dense_rank");
     static final Name N_DIV                    = systemName("div");
     static final Name N_DUAL                   = systemName("dual");
+    static final Name N_ELT                    = systemName("elt");
     static final Name N_EVERY                  = systemName("every");
     static final Name N_EXTRACT                = systemName("extract");
     static final Name N_FIRST_VALUE            = systemName("first_value");

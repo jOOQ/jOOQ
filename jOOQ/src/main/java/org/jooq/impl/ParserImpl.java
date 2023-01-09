@@ -8560,14 +8560,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 // [#6704] PostgreSQL E'...' escaped string literals
                 if (characterNext() == '\'')
                     return inline(parseStringLiteral());
-
                 else if ((field = parseFieldExtractIf()) != null)
                     return field;
                 else if (parseFunctionNameIf("EXP"))
                     return exp((Field) parseFieldNumericOpParenthesised());
-
                 else if (parseFunctionNameIf("EPOCH"))
                     return epoch(parseFieldParenthesised());
+                else if ((field = parseFieldChooseIf()) != null)
+                    return field;
 
                 break;
 
@@ -11143,7 +11143,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldChooseIf() {
-        if (parseFunctionNameIf("CHOOSE")) {
+        if (parseFunctionNameIf("CHOOSE", "ELT")) {
             parse('(');
             Field<Integer> index = (Field<Integer>) parseField();
             parse(',');

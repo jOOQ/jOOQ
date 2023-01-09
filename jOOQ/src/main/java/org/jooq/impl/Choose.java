@@ -40,7 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Names.N_CHOOSE;
+import static org.jooq.impl.Names.*;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.nullSafeDataType;
 
@@ -96,16 +96,12 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
 
 
 
-
-
             case CUBRID:
             case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
             case IGNITE:
-            case MARIADB:
-            case MYSQL:
             case POSTGRES:
             case SQLITE:
             case YUGABYTEDB: {
@@ -118,6 +114,14 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
                         : when.when(inline(i + 1), values[i]);
 
                 ctx.visit(when);
+                break;
+            }
+
+
+
+            case MARIADB:
+            case MYSQL: {
+                ctx.visit(function(N_ELT, getDataType(), Tools.combine(index, values)));
                 break;
             }
 

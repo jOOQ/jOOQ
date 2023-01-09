@@ -65,6 +65,7 @@ import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_RAWTOHEX;
 import static org.jooq.impl.SQLDataType.BIT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.emulateMultiset;
@@ -140,6 +141,9 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
 
 
 

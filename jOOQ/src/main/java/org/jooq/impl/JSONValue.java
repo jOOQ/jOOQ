@@ -40,7 +40,10 @@ package org.jooq.impl;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
+import static org.jooq.impl.DSL.jsonTable;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.JSONValue.Behaviour.DEFAULT;
 import static org.jooq.impl.JSONValue.Behaviour.ERROR;
 import static org.jooq.impl.JSONValue.Behaviour.NULL;
@@ -51,6 +54,7 @@ import static org.jooq.impl.Names.N_JSONB_PATH_QUERY_FIRST;
 import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_VALUE;
 import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.isSimple;
 
@@ -59,11 +63,14 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.JSON;
 import org.jooq.JSONValueDefaultStep;
 import org.jooq.JSONValueOnStep;
 import org.jooq.Keyword;
+import org.jooq.Param;
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.TableField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 
@@ -172,6 +179,7 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings("unchecked")
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -187,56 +195,82 @@ implements
                 ctx.visit(function(N_JSONB_PATH_QUERY_FIRST, json.getDataType(), castIfNeeded(json, JSONB), DSL.field("cast({0} as jsonpath)", path)));
                 break;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             default: {
-                boolean format = !isSimple(ctx, json, path);
-
-                ctx.visit(N_JSON_VALUE).sql('(');
-
-                if (format)
-                    ctx.sqlIndentStart();
-
-                ctx.visit(json).sql(",");
-
-                if (format)
-                    ctx.formatSeparator();
-                else
-                    ctx.sql(' ');
-
-
-
-
-
-
-                ctx.visit(path);
-
-
-
-
-
-
-
-
-
-
-
-                if (returning != null) {
-                    JSONReturning r = new JSONReturning(returning);
-
-                    if (r.rendersContent(ctx)) {
-                        if (format)
-                            ctx.formatNewLine();
-
-                        ctx.separatorRequired(true).visit(r);
-                    }
-                }
-
-                if (format)
-                    ctx.sqlIndentEnd();
-
-                ctx.sql(')');
+                acceptDefault(ctx);
                 break;
             }
         }
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
+        boolean format = !isSimple(ctx, json, path);
+
+        ctx.visit(N_JSON_VALUE).sql('(');
+
+        if (format)
+            ctx.sqlIndentStart();
+
+        ctx.visit(json).sql(",");
+
+        if (format)
+            ctx.formatSeparator();
+        else
+            ctx.sql(' ');
+
+
+
+
+
+
+        ctx.visit(path);
+
+
+
+
+
+
+
+
+
+
+
+        if (returning != null) {
+            JSONReturning r = new JSONReturning(returning);
+
+            if (r.rendersContent(ctx)) {
+                if (format)
+                    ctx.formatNewLine();
+
+                ctx.separatorRequired(true).visit(r);
+            }
+        }
+
+        if (format)
+            ctx.sqlIndentEnd();
+
+        ctx.sql(')');
     }
 
 

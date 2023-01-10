@@ -62,6 +62,8 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.query;
 import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.DSL.xmlserializeContent;
+import static org.jooq.impl.DSL.xmlserializeDocument;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_SEPARATOR;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
@@ -84,6 +86,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.XML;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**

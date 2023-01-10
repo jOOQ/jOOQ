@@ -146,6 +146,12 @@ implements
     @Override
     final FieldsImpl<R> fields0() {
         FieldsImpl<R> r = new FieldsImpl<>(delegate.fields0().fields);
+
+        // [#5799] If WITH ORDINALITY is emulated using a derived table, then
+        //         we must not fully qualify the fields.
+        for (int i = 0; i < r.fields.length; i++)
+            r.fields[i] = DSL.field(delegate.getUnqualifiedName().append(r.fields[i].getUnqualifiedName()), r.fields[i].getDataType());
+
         r.add(DSL.field(N_ORDINAL, BIGINT));
         return r;
     }

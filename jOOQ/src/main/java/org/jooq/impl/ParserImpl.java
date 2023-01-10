@@ -1138,7 +1138,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 case 'D':
                     if (!parseResultQuery && !ignoreProEdition() && peekKeyword("DECLARE") && requireProEdition())
                         return result = parseBlock(true);
-                    else if (!parseSelect && (peekKeyword("DELETE") || peekKeyword("DEL")))
+                    else if (!parseSelect && (peekKeyword("DELETE", "DEL")))
                         return result = parseDelete(null, parseResultQuery);
                     else if (!parseResultQuery && peekKeyword("DROP"))
                         return result = metaLookupsForceIgnore(true).parseDrop();
@@ -1169,7 +1169,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
                 case 'I':
-                    if (!parseSelect && (peekKeyword("INSERT") || peekKeyword("INS")))
+                    if (!parseSelect && (peekKeyword("INSERT", "INS")))
                         return result = parseInsert(null, parseResultQuery);
 
                     break;
@@ -1227,7 +1227,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
                 case 'U':
-                    if (!parseSelect && (peekKeyword("UPDATE") || peekKeyword("UPD")))
+                    if (!parseSelect && (peekKeyword("UPDATE", "UPD")))
                         return result = parseUpdate(null, parseResultQuery);
                     else if (!parseResultQuery && peekKeyword("USE"))
                         return result = parseUse();
@@ -1338,15 +1338,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // TODO Better model API for WITH clause
         WithImpl with = (WithImpl) new WithImpl(dsl.configuration(), recursive).with(cte.toArray(EMPTY_COMMON_TABLE_EXPRESSION));
         Query result;
-        if (!parseSelect && (peekKeyword("DELETE") || peekKeyword("DEL")))
+        if (!parseSelect && (peekKeyword("DELETE", "DEL")))
             result = parseDelete(with, false);
-        else if (!parseSelect && (peekKeyword("INSERT") || peekKeyword("INS")))
+        else if (!parseSelect && (peekKeyword("INSERT", "INS")))
             result = parseInsert(with, false);
         else if (!parseSelect && peekKeyword("MERGE"))
             result = parseMerge(with);
         else if (peekSelect(true))
             result = parseSelect(degree, with);
-        else if (!parseSelect && (peekKeyword("UPDATE") || peekKeyword("UPD")))
+        else if (!parseSelect && (peekKeyword("UPDATE", "UPD")))
             result = parseUpdate(with, false);
         else if ((parseWhitespaceIf() || true) && done())
             throw exception("Missing statement after WITH");
@@ -1722,7 +1722,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return (SelectQueryImpl<Record>) dsl.selectQuery(parseExplicitTable());
 
         ignoreHints(false);
-        parseKeyword("SELECT", "SEL");
+        parseKeywordUndocumentedAlternatives("SELECT", "SEL");
         String hints = parseHints();
         boolean distinct = parseKeywordIf("DISTINCT", "UNIQUE");
         List<Field<?>> distinctOn = null;
@@ -2268,7 +2268,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Query parseInsert(WithImpl with, boolean parseResultQuery) {
         scope.scopeStart();
-        parseKeyword("INSERT", "INS");
+        parseKeywordUndocumentedAlternatives("INSERT", "INS");
         parseKeywordIf("INTO");
         Table<?> table = parseTableNameIf();
         if (table == null)
@@ -2431,7 +2431,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Query parseUpdate(WithImpl with, boolean parseResultQuery) {
-        parseKeyword("UPDATE", "UPD");
+        parseKeywordUndocumentedAlternatives("UPDATE", "UPD");
         Field<Long> limit = null;
 
         // T-SQL style TOP .. START AT
@@ -13821,6 +13821,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return true;
 
         throw expected(keyword1, keyword2, keyword3);
+    }
+
+    private final boolean parseKeywordUndocumentedAlternatives(String keyword, String undocumented1) {
+        if (parseKeywordIf(undocumented1))
+            return true;
+        else
+            return parseKeyword(keyword);
     }
 
     @Override

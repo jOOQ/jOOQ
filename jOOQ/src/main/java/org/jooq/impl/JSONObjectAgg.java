@@ -50,6 +50,7 @@ import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
+import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
@@ -63,6 +64,8 @@ import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 // ...
 import org.jooq.impl.QOM.JSONOnNull;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -160,6 +163,10 @@ implements
     }
 
     private final void acceptGroupConcat(Context<?> ctx) {
+        ctx.sql('(').visit(groupConcatEmulation(ctx)).sql(')');
+    }
+
+    private final Field<?> groupConcatEmulation(Context<?> ctx) {
         final Field<String> listagg = CustomField.of(Names.N_GROUP_CONCAT, VARCHAR, c1 -> {
             Field<JSON> o1 = jsonObject(entry.key(), entry.value());
 
@@ -177,7 +184,19 @@ implements
             acceptOverClause(c1);
         });
 
-        ctx.sql('(').visit(DSL.concat(inline('{'), listagg, inline('}'))).sql(')');
+        Field<String> result = DSL.concat(inline('{'), listagg, inline('}'));
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+            default:
+                return result;
+        }
     }
 
 

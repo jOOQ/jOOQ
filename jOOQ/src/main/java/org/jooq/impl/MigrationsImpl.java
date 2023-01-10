@@ -37,35 +37,49 @@
  */
 package org.jooq.impl;
 
-import org.jooq.CommitProvider;
-import org.jooq.Commits;
-import org.jooq.Configuration;
-import org.jooq.DSLContext;
-import org.jooq.migrations.xml.jaxb.MigrationsType;
+import static java.util.Collections.emptyList;
 
-import org.jetbrains.annotations.ApiStatus.Experimental;
+import org.jooq.Commit;
+import org.jooq.Commits;
+import org.jooq.DSLContext;
+import org.jooq.Migration;
+import org.jooq.Migrations;
+import org.jooq.Version;
+import org.jooq.Versions;
 
 /**
- * A default implementation of the {@link CommitProvider} SPI, which provides
- * a materialisation of the currently available database version graph.
- * <p>
- * It is based
- *
  * @author Lukas Eder
  */
-@Experimental
-public class DefaultCommitProvider implements CommitProvider {
+final class MigrationsImpl implements Migrations {
 
-    private final DSLContext     ctx;
-    private final MigrationsType migrations;
+    final DSLContext ctx;
 
-    public DefaultCommitProvider(Configuration configuration, MigrationsType migrations) {
-        this.ctx = configuration.dsl();
-        this.migrations = migrations;
+    MigrationsImpl(DSLContext ctx) {
+        this.ctx = ctx;
     }
 
     @Override
-    public Commits provide() {
-        return ctx.migrations().commits().load(migrations);
+    public final Version version(String id) {
+        return new VersionImpl(ctx, id, null, new Version[0]);
+    }
+
+    @Override
+    public final Versions versions() {
+        return new VersionsImpl(version("init"));
+    }
+
+    @Override
+    public final Commit commit(String id) {
+        return new CommitImpl(ctx.configuration(), id, null, emptyList(), emptyList());
+    }
+
+    @Override
+    public final Commits commits() {
+        return new CommitsImpl(ctx.configuration(), commit("init"));
+    }
+
+    @Override
+    public final Migration migrateTo(Commit to) {
+        return new MigrationImpl(ctx.configuration(), to);
     }
 }

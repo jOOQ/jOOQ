@@ -397,28 +397,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public Version version(String id) {
-        return new VersionImpl(this, id, null, new Version[0]);
-    }
-
-    @Override
-    public Versions versions() {
-        return new VersionsImpl(version("init"));
-    }
-
-    @Override
-    public org.jooq.Commit commit(String id) {
-        return new CommitImpl(configuration, id, null, emptyList(), emptyList());
-    }
-
-    @Override
-    public Commits commits() {
-        return new CommitsImpl(configuration, commit("init"));
-    }
-
-    @Override
-    public Migration migrateTo(org.jooq.Commit to) {
-        return new MigrationImpl(configuration, to);
+    public org.jooq.Migrations migrations() {
+        return new MigrationsImpl(this);
     }
 
     @Override

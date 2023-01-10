@@ -335,7 +335,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         }
 
         Map<String, File> versionFiles = new HashMap<>();
-        Version from = version(ctx.version("init"), id(), versionFiles, history.values());
+        Version from = version(ctx.migrations().version("init"), id(), versionFiles, history.values());
         Version to = version(from, resultCommit.id(), versionFiles, result.values());
         return new FilesImpl(from, to, result.values());
     }

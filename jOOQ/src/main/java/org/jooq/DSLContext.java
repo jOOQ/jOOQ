@@ -265,54 +265,14 @@ public interface DSLContext extends Scope {
     DataSource diagnosticsDataSource();
 
     /**
-     * Initialise a {@link Version}.
+     * The experimental migrations API.
      * <p>
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.
      */
     @Experimental
     @NotNull
-    Version version(String id);
-
-    /**
-     * Initialise a {@link Versions} graph.
-     * <p>
-     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
-     * versions.
-     */
-    @Experimental
-    @NotNull
-    Versions versions();
-
-    /**
-     * Initialise a {@link Version}.
-     * <p>
-     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
-     * versions.
-     */
-    @Experimental
-    @NotNull
-    Commit commit(String id);
-
-    /**
-     * Initialise a {@link Commits} graph.
-     * <p>
-     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
-     * versions.
-     */
-    @Experimental
-    @NotNull
-    Commits commits();
-
-    /**
-     * Create a migration from the currently installed version to a new version.
-     * <p>
-     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
-     * versions.
-     */
-    @Experimental
-    @NotNull
-    Migration migrateTo(Commit to);
+    Migrations migrations();
 
     /**
      * Access the database meta data.

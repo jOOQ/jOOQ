@@ -6994,7 +6994,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
         else if (parseFunctionNameIf("JSON_TABLE")) {
             parse('(');
-
             Field json = parseField();
             parse(',');
             Field path = toField(parseConcat());
@@ -7018,6 +7017,28 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(')');
             parse(')');
             result = s1;
+        }
+        else if (parseFunctionNameIf("OPENJSON") && requireProEdition()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
         else if (peekFunctionNameIf("VALUES")) {
             result = parseTableValueConstructor();

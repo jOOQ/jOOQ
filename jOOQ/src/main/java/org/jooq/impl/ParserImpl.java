@@ -201,6 +201,7 @@ import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonArrayAgg;
+import static org.jooq.impl.DSL.jsonArrayAggDistinct;
 import static org.jooq.impl.DSL.jsonExists;
 import static org.jooq.impl.DSL.jsonGetAttribute;
 import static org.jooq.impl.DSL.jsonGetAttributeAsText;
@@ -212,6 +213,7 @@ import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.jsonbArray;
 import static org.jooq.impl.DSL.jsonbArrayAgg;
+import static org.jooq.impl.DSL.jsonbArrayAggDistinct;
 import static org.jooq.impl.DSL.jsonbGetAttribute;
 import static org.jooq.impl.DSL.jsonbGetAttributeAsText;
 import static org.jooq.impl.DSL.jsonbGetElement;
@@ -9344,6 +9346,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BITAND_AGG")) ||
             (agg = parseKeywordIf("BIN_AND_AGG"))) {
             parse('(');
+            if (parseKeywordIf("DISTINCT", "ALL"))
+                agg = true;
             Field<?> x = toField(parseNumericOp());
 
             if (agg && parse(')') || parseIf(')'))
@@ -9362,6 +9366,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BITNAND_AGG")) ||
             (agg = parseKeywordIf("BIN_NAND_AGG"))) {
             parse('(');
+            if (parseKeywordIf("DISTINCT", "ALL"))
+                agg = true;
             Field<?> x = toField(parseNumericOp());
 
             if (agg && parse(')') || parseIf(')'))
@@ -9380,6 +9386,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BITOR_AGG")) ||
             (agg = parseKeywordIf("BIN_OR_AGG"))) {
             parse('(');
+            if (parseKeywordIf("DISTINCT", "ALL"))
+                agg = true;
             Field<?> x = toField(parseNumericOp());
 
             if (agg && parse(')') || parseIf(')'))
@@ -9398,6 +9406,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BITNOR_AGG")) ||
             (agg = parseKeywordIf("BIN_NOR_AGG"))) {
             parse('(');
+            if (parseKeywordIf("DISTINCT", "ALL"))
+                agg = true;
             Field<?> x = toField(parseNumericOp());
 
             if (agg && parse(')') || parseIf(')'))
@@ -9715,6 +9725,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             AggregateFilterStep<?> s2;
 
             parse('(');
+            parseKeywordIf("ALL");
             s2 = s1 = xmlagg((Field<XML>) parseField());
 
             if (parseKeywordIf("ORDER BY"))
@@ -9880,7 +9891,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             DataType<?> returning;
 
             parse('(');
-            result = s3 = s2 = s1 = jsonb ? jsonbArrayAgg(parseField()) : jsonArrayAgg(parseField());
+            boolean distinct = parseSetQuantifier();
+            result = s3 = s2 = s1 = jsonb
+                ? distinct ? jsonbArrayAggDistinct(parseField()) : jsonbArrayAgg(parseField())
+                : distinct ? jsonArrayAggDistinct(parseField()) : jsonArrayAgg(parseField());
 
             if (parseKeywordIf("ORDER BY"))
                 result = s3 = s2 = s1.orderBy(parseList(',', c -> c.parseSortField()));
@@ -9943,6 +9957,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             DataType<?> returning;
 
             parse('(');
+            parseKeywordIf("ALL");
             result = s2 = s1 = jsonb ? jsonbObjectAgg(parseJSONEntry()) : jsonObjectAgg(parseJSONEntry());
 
             if ((onNull = parseJSONNullTypeIf()) != null)
@@ -11438,7 +11453,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (parseKeywordIf("DISTINCT"))
                 s1 = DSL.groupConcatDistinct(parseField());
-            else
+            else if (parseKeywordIf("ALL") || true)
                 s1 = DSL.groupConcat(parseField());
 
             if (parseKeywordIf("ORDER BY"))
@@ -11478,6 +11493,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (parseIf(')'))
                 return parseWindowFunction(null, null, rank());
+            else
+                parseKeywordIf("ALL");
 
             // Hypothetical set function
             List<Field<?>> args = parseList(',', c -> c.parseField());
@@ -11494,6 +11511,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (parseIf(')'))
                 return parseWindowFunction(null, null, denseRank());
+            else
+                parseKeywordIf("ALL");
 
             // Hypothetical set function
             List<Field<?>> args = parseList(',', c -> c.parseField());
@@ -11510,6 +11529,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (parseIf(')'))
                 return parseWindowFunction(null, null, percentRank());
+            else
+                parseKeywordIf("ALL");
 
             // Hypothetical set function
             List<Field<?>> args = parseList(',', c -> c.parseField());
@@ -11526,6 +11547,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (parseIf(')'))
                 return parseWindowFunction(null, null, cumeDist());
+            else
+                parseKeywordIf("ALL");
 
             // Hypothetical set function
             List<Field<?>> args = parseList(',', c -> c.parseField());
@@ -11668,33 +11691,33 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         switch (characterUpper()) {
             case 'C':
                 if (parseFunctionNameIf("CORR"))
-                    return parseBindarySetFunction(DSL::corr);
+                    return parseBinarySetFunction(DSL::corr);
                 else if (parseFunctionNameIf("COVAR_POP"))
-                    return parseBindarySetFunction(DSL::covarPop);
+                    return parseBinarySetFunction(DSL::covarPop);
                 else if (parseFunctionNameIf("COVAR_SAMP"))
-                    return parseBindarySetFunction(DSL::covarSamp);
+                    return parseBinarySetFunction(DSL::covarSamp);
 
                 break;
 
             case 'R':
                 if (parseFunctionNameIf("REGR_AVGX"))
-                    return parseBindarySetFunction(DSL::regrAvgX);
+                    return parseBinarySetFunction(DSL::regrAvgX);
                 else if (parseFunctionNameIf("REGR_AVGY"))
-                    return parseBindarySetFunction(DSL::regrAvgY);
+                    return parseBinarySetFunction(DSL::regrAvgY);
                 else if (parseFunctionNameIf("REGR_COUNT"))
-                    return parseBindarySetFunction(DSL::regrCount);
+                    return parseBinarySetFunction(DSL::regrCount);
                 else if (parseFunctionNameIf("REGR_INTERCEPT"))
-                    return parseBindarySetFunction(DSL::regrIntercept);
+                    return parseBinarySetFunction(DSL::regrIntercept);
                 else if (parseFunctionNameIf("REGR_R2"))
-                    return parseBindarySetFunction(DSL::regrR2);
+                    return parseBinarySetFunction(DSL::regrR2);
                 else if (parseFunctionNameIf("REGR_SLOPE"))
-                    return parseBindarySetFunction(DSL::regrSlope);
+                    return parseBinarySetFunction(DSL::regrSlope);
                 else if (parseFunctionNameIf("REGR_SXX"))
-                    return parseBindarySetFunction(DSL::regrSXX);
+                    return parseBinarySetFunction(DSL::regrSXX);
                 else if (parseFunctionNameIf("REGR_SXY"))
-                    return parseBindarySetFunction(DSL::regrSXY);
+                    return parseBinarySetFunction(DSL::regrSXY);
                 else if (parseFunctionNameIf("REGR_SYY"))
-                    return parseBindarySetFunction(DSL::regrSYY);
+                    return parseBinarySetFunction(DSL::regrSYY);
 
                 break;
         }
@@ -11702,8 +11725,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
-    private final AggregateFunction<?> parseBindarySetFunction(BiFunction<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends AggregateFunction<?>> function) {
+    private final AggregateFunction<?> parseBinarySetFunction(BiFunction<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends AggregateFunction<?>> function) {
         parse('(');
+        parseKeywordIf("ALL");
         Field<? extends Number> arg1 = (Field) parseField();
         parse(',');
         Field<? extends Number> arg2 = (Field) parseField();
@@ -11737,7 +11761,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (parseKeywordIf("ARRAY_AGG")) {
             parse('(');
 
-            boolean distinct = parseKeywordIf("DISTINCT");
+            boolean distinct = parseSetQuantifier();
             Field<?> a1 = parseField();
             List<SortField<?>> sort = null;
 
@@ -11759,6 +11783,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final AggregateFilterStep<?> parseMultisetAggFunctionIf() {
         if (parseKeywordIf("MULTISET_AGG")) {
             parse('(');
+            parseKeywordIf("ALL");
 
             List<Field<?>> fields = parseList(',', c -> c.parseField());
             List<SortField<?>> sort = null;
@@ -11839,11 +11864,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseFunctionNameIf("PERCENTILE_CONT")) {
             parse('(');
+            parseKeywordIf("ALL");
             ordered = percentileCont((Field) parseField());
             parse(')');
         }
         else if (parseFunctionNameIf("PERCENTILE_DISC")) {
             parse('(');
+            parseKeywordIf("ALL");
             ordered = percentileDisc((Field) parseField());
             parse(')');
         }
@@ -11858,6 +11885,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseFunctionNameIf("LISTAGG")) {
             parse('(');
+            parseKeywordIf("ALL");
             Field<?> field = parseField();
 
             if (parseIf(','))
@@ -11898,7 +11926,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parse('(');
 
         switch (operation) {
+            case ANY:
+            case ANY_VALUE:
             case AVG:
+            case EVERY:
             case MAX:
             case MIN:
             case SUM:
@@ -11906,6 +11937,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 distinct = parseSetQuantifier();
                 break;
             default:
+                parseKeywordIf("ALL");
                 distinct = false;
                 break;
         }

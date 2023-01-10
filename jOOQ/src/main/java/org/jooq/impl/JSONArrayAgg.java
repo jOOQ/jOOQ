@@ -59,6 +59,7 @@ import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
@@ -188,6 +189,18 @@ implements
 
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
         Field<?> arg2 = arg1;
         return DSL.concat(

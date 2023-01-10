@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -168,6 +169,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             ctx.data(DATA_MULTISET_CONTENT, true, c -> accept0(c, false));
     }
 
+    @SuppressWarnings("unchecked")
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
@@ -273,7 +275,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                             Select<?> s = select
                                 .$select(Arrays.asList(DSL.coalesce(
                                     returningClob(ctx, returning),
-                                    returningClob(ctx, jsonArray())
+                                    returningClob(ctx, jsonbArray())
                                 )))
                                 .$distinct(false)
                                 .$orderBy(Arrays.asList());
@@ -336,14 +338,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
                     default: {
                         if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select) && !select.$distinct()) {
-                            AggregateFilterStep<XML> filter =
-                                xmlaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true).orderBy(select.$orderBy());
-
-                            Select<?> s = select
-                                .$select(Arrays.asList(xmlelement(nResult(ctx), filter)))
-                                .$orderBy(Arrays.asList());
-
-                            visitSubquery(ctx, s);
+                            acceptMultisetSubqueryForXMLEmulation(ctx, multisetCondition, (Select<Record1<XML>>)
+                                select
+                                .$select(asList(xmlelement(
+                                    nResult(ctx),
+                                    xmlaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true).orderBy(select.$orderBy())
+                                )))
+                                .$orderBy(asList())
+                            );
                         }
                         else {
                             XMLAggOrderByStep<XML> order;
@@ -355,12 +357,9 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                             if (multisetCondition)
                                 filter = order.orderBy(t.fields());
 
-                            Select<Record1<XML>> s = select(xmlelement(nResult(ctx), filter)).from(t);
-
-                            if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))
-                                ctx.visit(xmlserializeContent(DSL.field(s), VARCHAR));
-                            else
-                                visitSubquery(ctx, s);
+                            acceptMultisetSubqueryForXMLEmulation(ctx, multisetCondition,
+                                select(xmlelement(nResult(ctx), filter)).from(t)
+                            );
                         }
 
                         break;
@@ -374,6 +373,13 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                 visitSubquery(ctx.visit(K_MULTISET), select);
                 break;
         }
+    }
+
+    private static final void acceptMultisetSubqueryForXMLEmulation(Context<?> ctx, boolean multisetCondition, Select<Record1<XML>> s) {
+        if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))
+            ctx.visit(xmlserializeContent(DSL.field(s), VARCHAR));
+        else
+            visitSubquery(ctx, s);
     }
 
     // [#12045] Only simple selects can profit from the simplified MULTISET emulation

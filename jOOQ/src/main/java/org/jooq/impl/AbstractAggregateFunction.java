@@ -42,6 +42,7 @@ import static java.util.function.Function.identity;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -110,10 +111,11 @@ implements
 
 
 
-    static final Set<SQLDialect>  SUPPORT_FILTER       = SQLDialect.supportedBy(FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
-    static final Set<SQLDialect>  SUPPORT_DISTINCT_RVE = SQLDialect.supportedBy(H2, POSTGRES);
 
-    static final Field<Integer>   ASTERISK             = DSL.field(DSL.raw("*"), Integer.class);
+    static final Set<SQLDialect>  SUPPORT_FILTER             = SQLDialect.supportedBy(FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect>  SUPPORT_DISTINCT_RVE       = SQLDialect.supportedBy(H2, POSTGRES);
+
+    static final Field<Integer>   ASTERISK                   = DSL.field(DSL.raw("*"), Integer.class);
 
     // Other attributes
     final QueryPartList<Field<?>> arguments;
@@ -197,6 +199,11 @@ implements
 
 
                 default:
+
+
+
+
+
                     ctx.sql(' ').visit(K_WITHIN_GROUP)
                        .sql(" (").visit(K_ORDER_BY).sql(' ');
 

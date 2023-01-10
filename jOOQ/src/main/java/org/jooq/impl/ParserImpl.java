@@ -231,6 +231,7 @@ import static org.jooq.impl.DSL.length;
 // ...
 import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.listAgg;
+import static org.jooq.impl.DSL.listAggDistinct;
 import static org.jooq.impl.DSL.ln;
 import static org.jooq.impl.DSL.log;
 import static org.jooq.impl.DSL.log10;
@@ -11885,13 +11886,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseFunctionNameIf("LISTAGG")) {
             parse('(');
-            parseKeywordIf("ALL");
+            boolean distinct = parseSetQuantifier();
             Field<?> field = parseField();
 
             if (parseIf(','))
-                ordered = listAgg(field, parseStringLiteral());
+                ordered = distinct ? listAggDistinct(field, parseStringLiteral()) : listAgg(field, parseStringLiteral());
             else
-                ordered = listAgg(field);
+                ordered = distinct ? listAggDistinct(field) : listAgg(field);
 
             parse(')');
         }

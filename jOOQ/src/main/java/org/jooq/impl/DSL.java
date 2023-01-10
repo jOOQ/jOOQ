@@ -28974,18 +28974,6 @@ public class DSL {
 
     /**
      * Get the aggregated concatenation for a field.
-     * <p>
-     * This is natively supported by {@link SQLDialect#ORACLE11G} upwards. It is
-     * emulated by the following dialects:
-     * <ul>
-     * <li> {@link SQLDialect#AURORA_MYSQL}: Using <code>GROUP_CONCAT</code></li>
-     * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
-     * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT()</code></li>
-     * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT()</code></li>
-     * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT()</code></li>
-     * <li> {@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
-     * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
-     * </ul>
      *
      * @see #groupConcat(Field)
      */
@@ -28997,18 +28985,6 @@ public class DSL {
 
     /**
      * Get the aggregated concatenation for a field.
-     * <p>
-     * This is natively supported by {@link SQLDialect#ORACLE11G} upwards. It is
-     * emulated by the following dialects:
-     * <ul>
-     * <li> {@link SQLDialect#AURORA_MYSQL}: Using <code>GROUP_CONCAT</code></li>
-     * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
-     * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT</code></li>
-     * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT</code></li>
-     * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT</code></li>
-     * <li> {@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
-     * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
-     * </ul>
      *
      * @see #groupConcat(Field)
      */
@@ -29016,6 +28992,28 @@ public class DSL {
     @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
         return new ListAgg(false, Tools.nullSafe(field), inline(separator));
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcatDistinct(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static OrderedAggregateFunction<String> listAggDistinct(Field<?> field) {
+        return new ListAgg(true, Tools.nullSafe(field));
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcatDistinct(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static OrderedAggregateFunction<String> listAggDistinct(Field<?> field, String separator) {
+        return new ListAgg(true, Tools.nullSafe(field), inline(separator));
     }
 
     /**

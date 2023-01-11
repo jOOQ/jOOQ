@@ -7022,6 +7022,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             result = s1;
         }
         else if (parseFunctionNameIf("OPENJSON") && requireProEdition()) {
+            result = null;
+
 
 
 

@@ -303,9 +303,26 @@ final class R2DBC {
             super(downstream);
         }
 
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public void onNext(Result r) {
-            r.getRowsUpdated().subscribe(downstream.forwardingSubscriber((AbstractResultSubscriber) this));
+            Forwarding s = downstream.forwardingSubscriber((AbstractResultSubscriber) this);
+
+            // [#13565] r2dbc-spi's Result::getRowsUpdated now returns Long, not
+            //          Integer. To stay backwards compatible with 0.x drivers,
+            //          which may not support the 1.0 SPI yet, we'll runtime
+            //          cast things here
+            ((Publisher) r.getRowsUpdated()).subscribe(subscriber(
+                s::onSubscribe,
+                t -> {
+                    if (t instanceof Long l)
+                        s.onNext(l.intValue());
+                    else
+                        s.onNext(t);
+                },
+                s::onError,
+                s::onComplete
+            ));
         }
     }
 

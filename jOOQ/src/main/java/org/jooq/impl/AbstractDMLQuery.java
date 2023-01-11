@@ -41,7 +41,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.*;
 // ...
 // ...
 // ...
@@ -180,9 +180,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private static final JooqLogger              log                                    = JooqLogger.getLogger(AbstractQuery.class);
 
     private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE        = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL);
-    private static final Set<SQLDialect>         NATIVE_SUPPORT_INSERT_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>         NATIVE_SUPPORT_UPDATE_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>         NATIVE_SUPPORT_DELETE_RETURNING        = SQLDialect.supportedBy(FIREBIRD, MARIADB, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_INSERT_RETURNING     = SQLDialect.supportedBy(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE);
+    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_UPDATE_RETURNING     = SQLDialect.supportedBy(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE);
+    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_DELETE_RETURNING     = SQLDialect.supportedBy(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE = SQLDialect.supportedBy(H2);
     private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(IGNITE);
     private static final Set<SQLDialect>         NO_SUPPORT_RETURNING_ASTERISK          = SQLDialect.supportedUntil(MARIADB);
@@ -898,9 +898,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     }
 
     final boolean nativeSupportReturning(Scope ctx) {
-        return this instanceof Insert && NATIVE_SUPPORT_INSERT_RETURNING.contains(ctx.dialect())
-            || this instanceof Update && NATIVE_SUPPORT_UPDATE_RETURNING.contains(ctx.dialect())
-            || this instanceof Delete && NATIVE_SUPPORT_DELETE_RETURNING.contains(ctx.dialect());
+        return this instanceof Insert && !NO_NATIVE_SUPPORT_INSERT_RETURNING.contains(ctx.dialect())
+            || this instanceof Update && !NO_NATIVE_SUPPORT_UPDATE_RETURNING.contains(ctx.dialect())
+            || this instanceof Delete && !NO_NATIVE_SUPPORT_DELETE_RETURNING.contains(ctx.dialect());
     }
 
     final boolean nativeSupportReturningOrDataChangeDeltaTable(Scope ctx) {

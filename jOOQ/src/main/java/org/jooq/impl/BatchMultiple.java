@@ -152,4 +152,13 @@ final class BatchMultiple extends AbstractBatch {
             Tools.safeClose(listener, ctx);
         }
     }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        return dsl.queries(queries).toString();
+    }
 }

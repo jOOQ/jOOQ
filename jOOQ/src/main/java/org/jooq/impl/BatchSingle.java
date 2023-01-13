@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
@@ -268,6 +269,10 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     }
 
     private final int[] executeStatic() {
+        return batchMultiple().execute();
+    }
+
+    private final Batch batchMultiple() {
         List<Query> queries = new ArrayList<>(allBindValues.size());
 
         for (Object[] bindValues : allBindValues) {
@@ -277,6 +282,15 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
             queries.add(dsl.query(query.getSQL(INLINED)));
         }
 
-        return dsl.batch(queries).execute();
+        return dsl.batch(queries);
+    }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        return batchMultiple().toString();
     }
 }

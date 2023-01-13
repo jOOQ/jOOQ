@@ -185,7 +185,7 @@ final class R2DBC {
 
         @Override
         public final void cancel() {
-            complete(true);
+            complete(() -> {});
         }
 
         final boolean moreRequested() {
@@ -194,16 +194,16 @@ final class R2DBC {
             return !completed.get() && requested.getAndUpdate(l -> l == Long.MAX_VALUE ? l : Math.max(0, l - 1)) > 0;
         }
 
-        final void complete(boolean cancelled) {
+        final void complete(Runnable onComplete) {
 
             // required_spec306_afterSubscriptionIsCancelledRequestMustBeNops
             // required_spec307_afterSubscriptionIsCancelledAdditionalCancelationsMustBeNops
             if (!completed.getAndSet(true))
-                cancel0(cancelled);
+                cancel0(false, onComplete);
         }
 
         abstract void request0();
-        void cancel0(boolean cancelled) {}
+        void cancel0(boolean closeAfterTransaction, Runnable onComplete) {}
     }
 
     // -------------------------------------------------------------------------
@@ -238,21 +238,20 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            resultSubscriber.downstream.subscriber.onError(translate(resultSubscriber.downstream.sql(), t));
-            complete(true);
+            complete(true, () -> resultSubscriber.downstream.subscriber.onError(translate(resultSubscriber.downstream.sql(), t)));
         }
 
         @Override
         public final void onComplete() {
-            complete(false);
+            complete(false, () -> resultSubscriber.downstream.subscriber.onComplete());
         }
 
-        private final void complete(boolean cancelled) {
+        private final void complete(boolean cancelled, Runnable onComplete) {
             resultSubscriber.downstream.forwarders.remove(forwarderIndex);
 
             // [#13343] [#13669] Prevent premature completion
-            if (resultSubscriber.downstream.forwarders.isEmpty() && resultSubscriber.completionRequested.get())
-                resultSubscriber.complete(cancelled);
+            if (resultSubscriber.downstream.forwarders.isEmpty() && (cancelled || resultSubscriber.completionRequested.get()))
+                resultSubscriber.complete(cancelled, onComplete);
         }
     }
 
@@ -275,23 +274,22 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            downstream.subscriber.onError(translate(downstream.sql(), t));
-            complete(true);
+            complete(true, () -> downstream.subscriber.onError(translate(downstream.sql(), t)));
         }
 
         @Override
         public final void onComplete() {
-            complete(false);
+            complete(false, () -> downstream.subscriber.onComplete());
         }
 
-        final void complete(boolean cancelled) {
+        final void complete(boolean cancelled, Runnable onComplete) {
             completionRequested.set(true);
 
             // [#13343] [#13669] Delay completion of the downstream in case this
             //                   completion happens before each forwarder's
             //                   completion.
-            if (downstream.forwarders.isEmpty() && !completed.getAndSet(true))
-                downstream.complete(cancelled);
+            if ((cancelled || downstream.forwarders.isEmpty()) && !completed.getAndSet(true))
+                downstream.complete(onComplete);
         }
     }
 
@@ -600,27 +598,31 @@ final class R2DBC {
         }
 
         @Override
-        final void cancel0(boolean cancelled) {
-
-            // [#12977] Correctly sequence the delegation to run after close completion
-            cancel0(cancelled ? () -> {} : () -> subscriber.onComplete());
-        }
-
-        final void cancel0(Runnable onComplete) {
+        final void cancel0(boolean closeAfterTransaction, Runnable onComplete) {
 
             // [#12108] Must pass along cancellation to forwarding subscriptions
             forAllForwardingSubscriptions(Subscription::cancel);
 
+            // [#12977] Correctly sequence the delegation to run after close completion
             delegate().connection.updateAndGet(c -> {
+                if (
+                    // close() calls on already closed resources have no effect, so
+                    // the side-effect is OK with the AtomicReference contract
+                    c == null
 
-                // close() calls on already closed resources have no effect, so
-                // the side-effect is OK with the AtomicReference contract
-                if (c != null)
-                    c.close().subscribe(subscriber(s -> s.request(Long.MAX_VALUE), t -> {}, t -> {}, onComplete));
-                else
+                    // [#13802] Skip attempting to unnecessarily close NonClosingConnection
+                    || c instanceof NonClosingConnection
+
+                    // [#13802] Correctly sequence commit/rollback and then close
+                    || this instanceof TransactionSubscription && !closeAfterTransaction
+                ) {
                     onComplete.run();
-
-                return null;
+                    return c;
+                }
+                else {
+                    c.close().subscribe(subscriber(s -> s.request(Long.MAX_VALUE), t -> {}, t -> {}, onComplete));
+                    return null;
+                }
             });
         }
 
@@ -716,14 +718,14 @@ final class R2DBC {
                             e -> c.rollbackTransaction().subscribe(subscriber(
                                 s2 -> s2.request(1),
                                 v -> {},
-                                t -> cancel0(() -> subscriber.onError(t)),
-                                () -> cancel0(() -> subscriber.onError(e))
+                                t -> cancel0(true, () -> subscriber.onError(t)),
+                                () -> cancel0(true, () -> subscriber.onError(e))
                             )),
                             () -> c.commitTransaction().subscribe(subscriber(
                                 s2 -> s2.request(1),
                                 v -> {},
-                                t -> cancel0(() -> subscriber.onError(t)),
-                                () -> cancel0(false)
+                                t -> cancel0(true, () -> subscriber.onError(t)),
+                                () -> cancel0(true, () -> subscriber.onComplete())
                             ))
                         ))
                     ));
@@ -1468,8 +1470,9 @@ final class R2DBC {
         }
 
         @Override
-        final void cancel0(boolean cancelled) {
+        final void cancel0(boolean closeAfterTransaction, Runnable onComplete) {
             safeClose(c);
+            onComplete.run();
         }
     }
 

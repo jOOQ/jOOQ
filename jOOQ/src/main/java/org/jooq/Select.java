@@ -208,7 +208,7 @@ extends
      */
     @Experimental
     @CheckReturnValue
-    @Nullable Select<?> $with(With newWith);
+    @NotNull Select<?> $with(With newWith);
 
     /**
      * Experimental query object model accessor method, see also {@link QOM}.

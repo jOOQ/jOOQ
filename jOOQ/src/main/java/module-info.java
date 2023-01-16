@@ -53,6 +53,7 @@ module org.jooq {
     exports org.jooq.tools.csv;
     exports org.jooq.tools.jdbc;
     exports org.jooq.tools.json;
+    exports org.jooq.tools.r2dbc;
     exports org.jooq.tools.reflect;
     exports org.jooq.types;
     exports org.jooq.util.jaxb.tools;

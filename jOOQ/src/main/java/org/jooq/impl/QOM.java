@@ -432,14 +432,20 @@ public final class QOM {
      * A <code>WITH</code> clause of a {@link Select}, {@link Insert},
      * {@link Update}, or {@link Delete} statement.
      */
-    public /*sealed*/ interface With
+    public sealed interface With
         extends
             org.jooq.QueryPart
-        /*permits
-            WithImpl*/
+        permits
+            WithImpl
     {
         @NotNull UnmodifiableList<? extends CommonTableExpression<?>> $commonTableExpressions();
+        @CheckReturnValue
+        @NotNull
+        With $commonTableExpressions(UnmodifiableList<? extends CommonTableExpression<?>> commonTableExpressions);
         boolean $recursive();
+        @CheckReturnValue
+        @NotNull
+        With $recursive(boolean recursive);
     }
 
     /**

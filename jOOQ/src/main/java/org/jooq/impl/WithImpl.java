@@ -41,13 +41,6 @@ import static org.jooq.Clause.WITH;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-// ...
-// ...
-// ...
-// ...
 // ...
 // ...
 // ...
@@ -60,7 +53,6 @@ import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
-import static org.jooq.impl.Transformations.NO_SUPPORT_CTE;
 import static org.jooq.impl.Transformations.transformInlineCTE;
 
 import java.util.Arrays;
@@ -141,6 +133,8 @@ import org.jooq.WithStep;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This type models an intermediary DSL construction step, which leads towards
  * creating any of the other 5 DML statement types.
@@ -181,7 +175,7 @@ implements
     WithStep,
     With
 {
-    private static final Clause[]                                           CLAUSES              = { WITH };
+    private static final Clause[]                                                     CLAUSES              = { WITH };
 
 
 
@@ -189,15 +183,15 @@ implements
 
 
 
-    final CommonTableExpressionList                                         ctes;
-    final boolean                                                           recursive;
-    private Configuration                                                   configuration;
+    final CommonTableExpressionList                                                   ctes;
+    final boolean                                                                     recursive;
+    private Configuration                                                             configuration;
 
     // Intermediary properties for CTE construction
 
-    private Name                                                            alias;
-    private Name[]                                                          fieldAliases;
-    private BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction;
+    private transient Name                                                            alias;
+    private transient Name[]                                                          fieldAliases;
+    private transient BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction;
 
     WithImpl(Configuration configuration, boolean recursive) {
         this.configuration = configuration;
@@ -587,12 +581,12 @@ implements
 
 
     @Override
-    public final WithStep with(CommonTableExpression<?>... tables) {
+    public final WithImpl with(CommonTableExpression<?>... tables) {
         return with(Arrays.asList(tables));
     }
 
     @Override
-    public final WithStep with(Collection<? extends CommonTableExpression<?>> tables) {
+    public final WithImpl with(Collection<? extends CommonTableExpression<?>> tables) {
         for (CommonTableExpression<?> table : tables)
             ctes.add(table);
 
@@ -1192,8 +1186,18 @@ implements
     }
 
     @Override
+    public final WithImpl $commonTableExpressions(UnmodifiableList<? extends CommonTableExpression<?>> c) {
+        return new WithImpl(configuration, recursive).with(c);
+    }
+
+    @Override
     public final boolean $recursive() {
         return recursive;
+    }
+
+    @Override
+    public final WithImpl $recursive(boolean r) {
+        return new WithImpl(configuration, r).with(ctes);
     }
 
 

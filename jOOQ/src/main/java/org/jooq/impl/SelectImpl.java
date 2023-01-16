@@ -134,6 +134,8 @@ import org.jooq.WindowDefinition;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A wrapper for a {@link SelectQuery}
  *
@@ -3401,6 +3403,11 @@ implements
     @Override
     public final With $with() {
         return getDelegate().$with();
+    }
+
+    @Override
+    public final Select<?> $with(With newWith) {
+        return getDelegate().$with(newWith);
     }
 
     @Override

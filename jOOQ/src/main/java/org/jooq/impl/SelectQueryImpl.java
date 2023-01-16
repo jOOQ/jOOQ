@@ -306,6 +306,7 @@ import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.QOM.CompareCondition;
 import org.jooq.impl.QOM.Materialized;
 import org.jooq.impl.QOM.UnmodifiableList;
+import org.jooq.impl.QOM.With;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.impl.Tools.SimpleDataKey;
@@ -600,7 +601,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final SelectQueryImpl<R> copy(Consumer<? super SelectQueryImpl<R>> finisher) {
-        SelectQueryImpl<R> result = copyTo(CopyClause.END, false, new SelectQueryImpl<>(configuration(), with));
+        return copy(finisher, with);
+    }
+
+    private final SelectQueryImpl<R> copy(Consumer<? super SelectQueryImpl<R>> finisher, WithImpl newWith) {
+        SelectQueryImpl<R> result = copyTo(CopyClause.END, false, new SelectQueryImpl<>(configuration(), newWith));
         finisher.accept(result);
         return result;
     }
@@ -4672,6 +4677,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final WithImpl $with() {
         return with;
+    }
+
+    @Override
+    public final SelectQueryImpl<?> $with(With newWith) {
+        return copy(s -> {}, (WithImpl) newWith);
     }
 
     @Override

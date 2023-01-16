@@ -207,6 +207,14 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
+    @Nullable Select<?> $with(With newWith);
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
     @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $select();
 
     /**
@@ -214,6 +222,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<?> $select(Collection<? extends SelectFieldOrAsterisk> newSelect);
 
     /**
@@ -228,6 +237,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $distinct(boolean newDistinct);
 
     /**
@@ -242,6 +252,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $distinctOn(Collection<? extends SelectFieldOrAsterisk> newDistinctOn);
 
     /**
@@ -256,6 +267,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $from(Collection<? extends Table<?>> newFrom);
 
     /**
@@ -270,6 +282,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $where(Condition newWhere);
 
     /**
@@ -284,6 +297,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $groupBy(Collection<? extends GroupField> newGroupBy);
 
     /**
@@ -298,6 +312,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $groupByDistinct(boolean newGroupByDistinct);
 
     /**
@@ -312,6 +327,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $having(Condition newHaving);
 
     /**
@@ -326,6 +342,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $window(Collection<? extends WindowDefinition> newWindow);
 
     /**
@@ -340,6 +357,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $qualify(Condition newQualify);
 
     /**
@@ -354,6 +372,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $orderBy(Collection<? extends SortField<?>> newOrderBy);
 
     /**
@@ -368,6 +387,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $limit(Field<? extends Number> newLimit);
 
     /**
@@ -382,6 +402,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $limitPercent(boolean newLimitPercent);
 
     /**
@@ -396,6 +417,7 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $limitWithTies(boolean newLimitWithTies);
 
     /**
@@ -410,7 +432,11 @@ extends
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull Select<R> $offset(Field<? extends Number> newOffset);
+
+
+
 
 
 

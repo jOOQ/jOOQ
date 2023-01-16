@@ -46,6 +46,9 @@ import java.sql.Statement;
 import org.jooq.tools.JooqLogger;
 
 /**
+ * A JDBC {@link Connection} proxy that logs all statements that are prepared or
+ * executed using it.
+ *
  * @author Lukas Eder
  */
 public class LoggingConnection extends DefaultConnection {

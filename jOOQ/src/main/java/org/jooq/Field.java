@@ -295,12 +295,16 @@ extends
      * Attach a {@link Comment} to this field, for use in DDL statements, such
      * as {@link DSLContext#createTable(Table)}.
      */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     Field<T> comment(String comment);
 
     /**
      * Attach a {@link Comment} to this field, for use in DDL statements, such
      * as {@link DSLContext#createTable(Table)}.
      */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     Field<T> comment(Comment comment);
 
     // ------------------------------------------------------------------------

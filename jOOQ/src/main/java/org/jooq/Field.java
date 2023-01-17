@@ -288,6 +288,22 @@ extends
     <U> Field<U> convertTo(Function<? super U, ? extends T> to);
 
     // ------------------------------------------------------------------------
+    // DDL API
+    // ------------------------------------------------------------------------
+
+    /**
+     * Attach a {@link Comment} to this field, for use in DDL statements, such
+     * as {@link DSLContext#createTable(Table)}.
+     */
+    Field<T> comment(String comment);
+
+    /**
+     * Attach a {@link Comment} to this field, for use in DDL statements, such
+     * as {@link DSLContext#createTable(Table)}.
+     */
+    Field<T> comment(Comment comment);
+
+    // ------------------------------------------------------------------------
     // Type casts
     // ------------------------------------------------------------------------
 

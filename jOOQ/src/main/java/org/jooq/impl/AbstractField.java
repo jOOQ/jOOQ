@@ -267,6 +267,20 @@ implements
     }
 
     // ------------------------------------------------------------------------
+    // XXX: DDL API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> comment(String comment) {
+        return comment(DSL.comment(comment));
+    }
+
+    @Override
+    public final Field<T> comment(Comment comment) {
+        return DSL.field(getQualifiedName(), getDataType(), comment);
+    }
+
+    // ------------------------------------------------------------------------
     // XXX: Type casts
     // ------------------------------------------------------------------------
 

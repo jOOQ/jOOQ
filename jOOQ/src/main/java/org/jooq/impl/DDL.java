@@ -134,7 +134,10 @@ final class DDL {
                         : temporary
                             ? ctx.createTemporaryTable(table)
                             : ctx.createTable(table))
-                .columns(sortIf(asList(table.fields()), !configuration.respectColumnOrder()))
+
+                // [#14512] We're exporting COMMENT ON COLUMN statements, so
+                //          no need to comment columns again here.
+                .columns(sortIf(map(table.fields(), f -> f.comment("")), !configuration.respectColumnOrder()))
                 .constraints(constraints);
 
         if (temporary && onCommit != null) {

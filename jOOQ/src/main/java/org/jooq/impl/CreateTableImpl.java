@@ -351,7 +351,8 @@ implements
     private static final Set<SQLDialect> REQUIRES_WITH_DATA                 = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> WRAP_SELECT_IN_PARENS              = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> SUPPORT_TEMPORARY                  = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect> EMULATE_COMMENT_IN_BLOCK           = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> EMULATE_TABLE_COMMENT_IN_BLOCK     = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> EMULATE_COLUMN_COMMENT_IN_BLOCK    = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supportedBy(FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_NULLABLE_PRIMARY_KEY    = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> REQUIRE_NON_PK_COLUMNS             = SQLDialect.supportedBy(IGNITE);
@@ -401,19 +402,32 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
-        boolean bc = comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect());
+        boolean btc = comment != null && EMULATE_TABLE_COMMENT_IN_BLOCK.contains(ctx.dialect());
+        boolean bcc = EMULATE_COLUMN_COMMENT_IN_BLOCK.contains(ctx.dialect()) && anyMatch($columns(), c -> !c.getComment().isEmpty());
         boolean bi = !$indexes().isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect());
 
-        if (bc || bi) {
+        if (btc || bcc || bi) {
             begin(ctx, c1 -> {
                 executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(c1.dialect()), c1, c2 -> accept1(c2));
 
-                if (bc) {
+                if (btc) {
                     c1.formatSeparator();
 
                     executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), c1,
                         c2 -> c2.visit(commentOnTable(table).is(comment))
                     );
+                }
+
+                if (bcc) {
+                    c1.formatSeparator();
+
+                    for (Field<?> c : $columns()) {
+                        if (!c.getComment().isEmpty()) {
+                            executeImmediateIf(REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), c1,
+                                c2 -> c2.visit(commentOnColumn(table.getQualifiedName().append(c.getUnqualifiedName())).is(c.getComment()))
+                            );
+                        }
+                    }
                 }
 
                 if (bi) {
@@ -453,7 +467,7 @@ implements
             toSQLOnCommit(ctx);
         }
 
-        if (comment != null && !EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect())) {
+        if (comment != null && !EMULATE_TABLE_COMMENT_IN_BLOCK.contains(ctx.dialect())) {
             ctx.formatSeparator()
                .visit(K_COMMENT).sql(' ');
 
@@ -509,6 +523,9 @@ implements
                     ctx.sql(' ');
                     Tools.toSQLDDLTypeDeclarationForAddition(ctx, type);
                 }
+
+                if (!field.getComment().isEmpty() && !EMULATE_COLUMN_COMMENT_IN_BLOCK.contains(ctx.dialect()))
+                    ctx.sql(' ').visit(K_COMMENT).sql(' ').visit(inline(field.getComment()));
 
                 first = false;
             }

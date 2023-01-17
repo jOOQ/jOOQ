@@ -1304,6 +1304,7 @@ implements
                 if (part instanceof Field<?> f) {
                     ctx.sql(' ');
                     toSQLDDLTypeDeclarationForAddition(ctx, f.getDataType());
+                    CreateTableImpl.acceptColumnComment(ctx, f);
                 }
             }
 
@@ -1331,6 +1332,7 @@ implements
 
             ctx.qualify(false, c -> c.visit(Tools.uncollate(addColumn))).sql(' ');
             toSQLDDLTypeDeclarationForAddition(ctx, addColumnType);
+            CreateTableImpl.acceptColumnComment(ctx, addColumn);
 
 
 

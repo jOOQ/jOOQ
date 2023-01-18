@@ -51,7 +51,6 @@ import org.jooq.Context;
 import org.jooq.QueryPartInternal;
 import org.jooq.Statement;
 import org.jooq.impl.AbstractContext.ScopeStackElement;
-import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.impl.Tools.SimpleDataKey;
@@ -60,6 +59,13 @@ import org.jooq.impl.Tools.SimpleDataKey;
  * A set of markers for use with the {@link ScopeStack}.
  */
 enum ScopeMarker {
+
+
+
+
+
+
+
 
 
 

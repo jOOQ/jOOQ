@@ -939,12 +939,6 @@ final class Tools {
          */
         DATA_WINDOW_FUNCTION,
 
-        /**
-         * [#14510] [#14513] Whether inline column comments should be rendered
-         * in DDL statements.
-         */
-        DATA_INLINE_COLUMN_COMMENT,
-
         ;
 
         private final boolean resetInSubqueryScope;

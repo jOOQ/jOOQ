@@ -193,6 +193,7 @@ import static org.jooq.impl.SQLDataType.XML;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.SubqueryCharacteristics.SET_OPERATION;
+import static org.jooq.impl.Tools.executeImmediate;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -937,6 +938,12 @@ final class Tools {
          * {@link WindowSpecification}.
          */
         DATA_WINDOW_FUNCTION,
+
+        /**
+         * [#14510] [#14513] Whether inline column comments should be rendered
+         * in DDL statements.
+         */
+        DATA_INLINE_COLUMN_COMMENT,
 
         ;
 
@@ -5020,6 +5027,19 @@ final class Tools {
                     ctx.sql(" $$");
 
                 break;
+        }
+    }
+
+    /**
+     * Wrap a statement in an <code>EXECUTE IMMEDIATE</code> statement.
+     */
+    static final void executeImmediateIf(boolean wrap, Context<?> ctx, Consumer<? super Context<?>> runnable) {
+        if (wrap) {
+            executeImmediate(ctx, runnable);
+        }
+        else {
+            runnable.accept(ctx);
+            ctx.sql(';');
         }
     }
 

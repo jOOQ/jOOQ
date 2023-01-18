@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.jooq.Clause.ALTER_TABLE;
 import static org.jooq.Clause.ALTER_TABLE_ADD;
 import static org.jooq.Clause.ALTER_TABLE_ALTER;
@@ -77,12 +79,11 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.impl.QOM.Cascade.CASCADE;
-import static org.jooq.impl.QOM.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.DSL.begin;
+import static org.jooq.impl.DSL.commentOnColumn;
 import static org.jooq.impl.DSL.commentOnTable;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.constraint;
@@ -106,7 +107,6 @@ import static org.jooq.impl.Keywords.K_BEFORE;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
-import static org.jooq.impl.Keywords.K_COLUMN;
 import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_CONSTRAINTS;
@@ -140,7 +140,6 @@ import static org.jooq.impl.Keywords.K_RENAME_OBJECT;
 import static org.jooq.impl.Keywords.K_RENAME_TABLE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_REPLACE;
-import static org.jooq.impl.Keywords.K_RESTRICT;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
 import static org.jooq.impl.Keywords.K_SET_DEFAULT;
 import static org.jooq.impl.Keywords.K_SET_NOT_NULL;
@@ -150,12 +149,17 @@ import static org.jooq.impl.Keywords.K_TYPE;
 import static org.jooq.impl.Keywords.K_USING_INDEX;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WITH_NO_DATACOPY;
+import static org.jooq.impl.QOM.Cascade.CASCADE;
+import static org.jooq.impl.QOM.Cascade.RESTRICT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.endExecuteImmediate;
 import static org.jooq.impl.Tools.executeImmediate;
+import static org.jooq.impl.Tools.executeImmediateIf;
 import static org.jooq.impl.Tools.fieldsByName;
+import static org.jooq.impl.Tools.filter;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationForAddition;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityAfterNull;
@@ -187,14 +191,12 @@ import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.FieldOrConstraint;
 import org.jooq.Index;
 import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
 import org.jooq.Query;
-import org.jooq.QueryPart;
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
@@ -236,8 +238,6 @@ implements
     private static final Set<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
-
-
 
 
 
@@ -1130,7 +1130,41 @@ implements
 
 
 
+        if (CreateTableImpl.EMULATE_COLUMN_COMMENT_IN_BLOCK.contains(ctx.dialect())) {
+            List<Field<?>> comments = addColumnComments();
+
+            if (!comments.isEmpty()) {
+                begin(ctx, c1 -> {
+                    executeImmediateIf(
+                        CreateTableImpl.REQUIRE_EXECUTE_IMMEDIATE.contains(c1.dialect()),
+                        c1,
+                        c2 -> accept1(c2)
+                    );
+
+                    c1.formatSeparator();
+
+                    for (Field<?> c : comments) {
+                        executeImmediateIf(CreateTableImpl.REQUIRE_EXECUTE_IMMEDIATE.contains(ctx.dialect()), c1,
+                            c2 -> c2.visit(commentOnColumn(table.getQualifiedName().append(c.getUnqualifiedName())).is(c.getComment()))
+                        );
+                    }
+                });
+                return;
+            }
+        }
+
         accept1(ctx);
+    }
+
+    private final List<Field<?>> addColumnComments() {
+        if (addColumn != null) {
+            if (!addColumn.getComment().isEmpty())
+                return asList(addColumn);
+        }
+        else if (add != null)
+            return map(filter(add, c -> c instanceof Field<?> && !c.getComment().isEmpty()), c -> (Field<?>) c);
+
+        return emptyList();
     }
 
     private final void accept1(Context<?> ctx) {

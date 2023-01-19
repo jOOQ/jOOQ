@@ -235,7 +235,7 @@
             <dependency>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>org.eclipse.xtend.lib</artifactId>
-                <version>2.25.0</version>
+                <version>2.29.0</version>
             </dependency>
 
             <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
@@ -655,12 +655,12 @@
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>3.6.0</version>
 
-                    <!-- Required for Java 16 -->
+                    <!-- Required for Java 19 -->
                     <dependencies>
                         <dependency>
                             <groupId>org.ow2.asm</groupId>
                             <artifactId>asm</artifactId>
-                            <version>9.1</version>
+                            <version>9.4</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -730,7 +730,7 @@
                 <plugin>
                     <groupId>org.eclipse.xtend</groupId>
                     <artifactId>xtend-maven-plugin</artifactId>
-                    <version>2.25.0</version>
+                    <version>2.29.0</version>
 
                     <configuration>
                         <encoding>UTF-8</encoding>
@@ -753,12 +753,12 @@
                         <testNGArtifactName>none:none</testNGArtifactName>
                     </configuration>
 
-                    <!-- Required for Java 16 -->
+                    <!-- Required for Java 19 -->
                     <dependencies>
                         <dependency>
                             <groupId>org.ow2.asm</groupId>
                             <artifactId>asm</artifactId>
-                            <version>9.1</version>
+                            <version>9.4</version>
                         </dependency>
                     </dependencies>
                 </plugin>

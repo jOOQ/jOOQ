@@ -44,6 +44,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.Year;
 import java.util.UUID;
 
 import org.jooq.DataType;
@@ -155,6 +156,7 @@ public class H2DataType {
 
     protected static final DataType<String>         __LONGNVARCHAR               = new BuiltInDataType<>(FAMILY, SQLDataType.LONGNVARCHAR, "longvarchar(l)");
     protected static final DataType<Result<Record>> __RESULT                     = new BuiltInDataType<>(FAMILY, SQLDataType.RESULT, "result_set");
+    protected static final DataType<Year>           __YEAR                       = new BuiltInDataType<>(FAMILY, SQLDataType.YEAR, "smallint");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
@@ -170,7 +172,6 @@ public class H2DataType {
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<Short>             YEAR                         = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINT, "year");
     public static final DataType<Long>              IDENTITY                     = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "identity");
     public static final DataType<Timestamp>         SMALLDATETIME                = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "smalldatetime");
     public static final DataType<byte[]>            RAW                          = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "raw");

@@ -706,12 +706,12 @@
                     <artifactId>maven-plugin-plugin</artifactId>
                     <version>3.6.0</version>
 
-                    <!-- Required for Java 16 -->
+                    <!-- Required for Java 19 -->
                     <dependencies>
                         <dependency>
                             <groupId>org.ow2.asm</groupId>
                             <artifactId>asm</artifactId>
-                            <version>9.1</version>
+                            <version>9.4</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -804,12 +804,12 @@
                         <testNGArtifactName>none:none</testNGArtifactName>
                     </configuration>
 
-                    <!-- Required for Java 16 -->
+                    <!-- Required for Java 19 -->
                     <dependencies>
                         <dependency>
                             <groupId>org.ow2.asm</groupId>
                             <artifactId>asm</artifactId>
-                            <version>9.1</version>
+                            <version>9.4</version>
                         </dependency>
                     </dependencies>
                 </plugin>

@@ -72,6 +72,8 @@ implements
     QOM.JSONBKeys
 {
 
+    static final Set<SQLDialect> NO_SUPPORT_PATH_QUERY = SQLDialect.supportedUntil();
+
     final Field<JSONB> field;
 
     JSONBKeys(
@@ -101,9 +103,13 @@ implements
 
 
             case POSTGRES:
-            case YUGABYTEDB:
-                ctx.visit(DSL.field(select(DSL.coalesce(jsonbArrayAgg(DSL.field(unquotedName("j"))), jsonbArray())).from("jsonb_object_keys({0}) as j(j)", field)));
+            case YUGABYTEDB: {
+                if (NO_SUPPORT_PATH_QUERY.contains(ctx.dialect()))
+                    ctx.visit(DSL.field(select(DSL.coalesce(jsonArrayAgg(DSL.field(unquotedName("j"))), jsonArray())).from("json_object_keys({0}) as j(j)", field)));
+                else
+                    ctx.visit(function(N_JSONB_PATH_QUERY_ARRAY, getDataType(), field, inline("$.keyvalue().key")));
                 break;
+            }
 
 
 

@@ -176,6 +176,7 @@ final class Names {
     static final Name N_JSONB_BUILD_ARRAY      = systemName("jsonb_build_array");
     static final Name N_JSONB_OBJECT_AGG       = systemName("jsonb_object_agg");
     static final Name N_JSONB_PATH_EXISTS      = systemName("jsonb_path_exists");
+    static final Name N_JSONB_PATH_QUERY_ARRAY = systemName("jsonb_path_query_array");
     static final Name N_JSONB_PATH_QUERY_FIRST = systemName("jsonb_path_query_first");
     static final Name N_JSONPATH               = systemName("jsonpath");
     static final Name N_JSON_AGG               = systemName("json_agg");

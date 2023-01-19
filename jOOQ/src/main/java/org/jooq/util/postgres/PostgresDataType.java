@@ -46,6 +46,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.Year;
 import java.util.UUID;
 
 import org.jooq.DataType;
@@ -140,6 +141,7 @@ public class PostgresDataType {
     protected static final DataType<UShort>     __SMALLINTUNSIGNED      = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINTUNSIGNED, "int");
     protected static final DataType<UInteger>   __INTEGERUNSIGNED       = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGERUNSIGNED, "bigint");
     protected static final DataType<ULong>      __BIGINTUNSIGNED        = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINTUNSIGNED, "decimal(p, s)");
+    protected static final DataType<Year>       __YEAR                  = new BuiltInDataType<>(FAMILY, SQLDataType.YEAR, "smallint");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

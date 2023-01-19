@@ -43,6 +43,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Year;
 import java.util.UUID;
 
 import org.jooq.DataType;
@@ -124,6 +125,7 @@ public class DerbyDataType {
     protected static final DataType<ULong>      __BIGINTUNSIGNED        = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINTUNSIGNED, "decimal", "decimal(20)");
     protected static final DataType<JSON>       __JSON                  = new BuiltInDataType<>(FAMILY, SQLDataType.JSON, "clob");
     protected static final DataType<JSONB>      __JSONB                 = new BuiltInDataType<>(FAMILY, SQLDataType.JSONB, "blob");
+    protected static final DataType<Year>       __YEAR                  = new BuiltInDataType<>(FAMILY, SQLDataType.YEAR, "smallint");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

@@ -201,6 +201,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.Year;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -473,6 +474,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultYearToSecondBinding(dataType, converter);
         else if (type == YearToMonth.class)
             return new DefaultYearToMonthBinding(dataType, converter);
+        else if (type == Year.class)
+            return new DefaultYearBinding(dataType, converter);
 
         // Subtypes of array types etc.
         // The type byte[] is handled earlier. byte[][] can be handled here
@@ -3991,6 +3994,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return converter.from((T) UUID.fromString(string), ctx.converterContext());
             else if (type == XML.class)
                 return converter.from((T) XML.xml(string), ctx.converterContext());
+            else if (type == Year.class)
+                return converter.from((T) Year.parse(string), ctx.converterContext());
             else if (type.isArray())
                 return converter.from((T) pgNewArray(ctx, field, type, string), ctx.converterContext());
 
@@ -5732,6 +5737,48 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
             return Types.VARCHAR;
+        }
+    }
+
+    static final class DefaultYearBinding<U> extends InternalBinding<Year, U> {
+
+        DefaultYearBinding(DataType<Year> dataType, Converter<Year, U> converter) {
+            super(dataType, converter);
+        }
+
+        @Override
+        final void sqlInline0(BindingSQLContext<U> ctx, Year value) {
+            ctx.render().sql(value.getValue());
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, Year value) throws SQLException {
+            ctx.statement().setInt(ctx.index(), value.getValue());
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, Year value) throws SQLException {
+            ctx.output().writeInt(value.getValue());
+        }
+
+        @Override
+        final Year get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            return wasNull(ctx.resultSet(), Year.of(ctx.resultSet().getInt(ctx.index())));
+        }
+
+        @Override
+        final Year get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            return wasNull(ctx.statement(), Year.of(ctx.statement().getInt(ctx.index())));
+        }
+
+        @Override
+        final Year get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            return wasNull(ctx.input(), Year.of(ctx.input().readInt()));
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) {
+            return Types.SMALLINT;
         }
     }
 

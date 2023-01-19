@@ -72,6 +72,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.Year;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
@@ -724,6 +725,9 @@ public final class Convert {
                     if (wrapperFrom == Boolean.class)
                         return (U) (((Boolean) from) ? Long.valueOf(1L) : Long.valueOf(0L));
 
+                    if (wrapperFrom == Year.class)
+                        return (U) (Long) (long) ((Year) from).getValue();
+
                     if (java.util.Date.class.isAssignableFrom(fromClass))
                         return (U) Long.valueOf(((java.util.Date) from).getTime());
 
@@ -858,6 +862,17 @@ public final class Convert {
                         return (U) new BigDecimal(from.toString().trim()).toBigInteger();
                     }
                     catch (NumberFormatException e) {
+                        return null;
+                    }
+                }
+                else if (toClass == Year.class) {
+                    if (Number.class.isAssignableFrom(wrapperFrom))
+                        return (U) Year.of((((Number) from).intValue()));
+
+                    try {
+                        return (U) Year.parse(from.toString().trim());
+                    }
+                    catch (DateTimeParseException e) {
                         return null;
                     }
                 }

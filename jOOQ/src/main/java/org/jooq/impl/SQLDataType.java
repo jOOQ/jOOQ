@@ -82,6 +82,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.time.Year;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -96,6 +97,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.RowId;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.XML;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
@@ -609,6 +611,14 @@ public final class SQLDataType {
     public static final DataType<Instant> INSTANT(int precision) {
         return INSTANT.precision(precision);
     }
+
+    /**
+     * A {@link Types#SMALLINT} type that represents a year.
+     * <p>
+     * While JDBC does not support this type, some dialects do, specifically
+     * those of the {@link SQLDialectCategory#MYSQL} category.
+     */
+    public static final DataType<Year> YEAR = new BuiltInDataType<>(Year.class, "year");
 
     // -------------------------------------------------------------------------
     // Binary types

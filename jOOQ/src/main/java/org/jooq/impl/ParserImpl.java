@@ -458,6 +458,7 @@ import static org.jooq.impl.SQLDataType.TINYINT;
 import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.SQLDataType.YEAR;
 import static org.jooq.impl.SelectQueryImpl.EMULATE_SELECT_INTO_AS_CTAS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_FOR_UPDATE_OF_FIELDS;
 import static org.jooq.impl.Tools.CONFIG;
@@ -8420,7 +8421,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
 
                 else if (parseFunctionNameIf("ADD_YEARS"))
-                    return parseFieldAddDatePart(YEAR);
+                    return parseFieldAddDatePart(DatePart.YEAR);
                 else if (parseFunctionNameIf("ADD_MONTHS"))
                     return parseFieldAddDatePart(MONTH);
                 else if (parseFunctionNameIf("ADD_DAYS"))
@@ -12671,6 +12672,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'X':
                 if (parseKeywordOrIdentifierIf("XML"))
                     return SQLDataType.XML;
+
+                break;
+
+            case 'Y':
+                if (parseKeywordOrIdentifierIf("YEAR"))
+                    return parseDataTypeLength(SQLDataType.YEAR);
 
                 break;
         }

@@ -33,6 +33,9 @@
 
         <!-- R2DBC SPI version and some matching driver versions -->
         <io.r2dbc.version>0.9.1.RELEASE</io.r2dbc.version>
+        
+        <!-- From JDK 19 onwards, this is the required version of Xtend -->
+        <xtend.version>2.29.0</xtend.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>3.0.0</jaxb.version>
@@ -286,7 +289,7 @@
             <dependency>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>org.eclipse.xtend.lib</artifactId>
-                <version>2.29.0</version>
+                <version>${xtend.version}</version>
             </dependency>
 
             <!-- From JDK 9 onwards, the JAXB dependency needs to be made explicit -->
@@ -781,7 +784,7 @@
                 <plugin>
                     <groupId>org.eclipse.xtend</groupId>
                     <artifactId>xtend-maven-plugin</artifactId>
-                    <version>2.29.0</version>
+                    <version>${xtend.version}</version>
 
                     <configuration>
                         <encoding>UTF-8</encoding>

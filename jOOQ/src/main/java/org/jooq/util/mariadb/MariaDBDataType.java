@@ -145,5 +145,5 @@ public class MariaDBDataType {
     public static final DataType<byte[]>     TINYBLOB           = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "tinyblob", "binary");
     public static final DataType<byte[]>     MEDIUMBLOB         = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "mediumblob", "binary");
     public static final DataType<byte[]>     LONGBLOB           = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "longblob", "binary");
-    public static final DataType<Year>       YEAR               = new BuiltInDataType<>(FAMILY, SQLDataType.YEAR, "year", "year");
+    public static final DataType<Year>       YEAR               = new BuiltInDataType<>(FAMILY, SQLDataType.YEAR, "year", "signed");
 }

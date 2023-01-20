@@ -3956,6 +3956,15 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateRoutines(SchemaDefinition schema) {
         log.info("Generating routines and table-valued functions");
 
+        for (RoutineDefinition routine : database.getRoutines(schema)) {
+            try {
+                generateRoutine(schema, routine);
+            }
+            catch (Exception e) {
+                log.error("Error while generating routine " + routine, e);
+            }
+        }
+
         if (generateGlobalRoutineReferences()) {
             JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, RoutineDefinition.class));
             printGlobalReferencesPackage(out, schema, RoutineDefinition.class);
@@ -3985,15 +3994,6 @@ public class JavaGenerator extends AbstractGenerator {
             if (!kotlin)
                 out.println("}");
             closeJavaWriter(out);
-        }
-
-        for (RoutineDefinition routine : database.getRoutines(schema)) {
-            try {
-                generateRoutine(schema, routine);
-            }
-            catch (Exception e) {
-                log.error("Error while generating routine " + routine, e);
-            }
         }
 
         watch.splitInfo("Routines generated");

@@ -314,7 +314,7 @@ final class R2DBC {
             this.query = query;
         }
 
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public final void onNext(Result r) {
             r.map((row, meta) -> {
@@ -325,28 +325,19 @@ final class R2DBC {
                     // TODO: This call is duplicated from CursorImpl and related classes.
                     // Refactor this call to make sure code is re-used, especially when
                     // ExecuteListener lifecycle management is implemented
-                    RecordDelegate<? extends AbstractRecord> delegate = Tools.newRecord(true, recordFactory((Class<AbstractRecord>) query.getRecordType(), (AbstractRow<AbstractRecord>) Tools.row0(fields)), query.configuration());
+                    RecordDelegate<AbstractRecord> delegate = Tools.newRecord(true, recordFactory((Class<AbstractRecord>) query.getRecordType(), (AbstractRow<AbstractRecord>) Tools.row0(fields)), query.configuration());
 
-                    return (R) delegate.operate(record -> {
+                    // TODO: What data to pass here?
+                    DefaultBindingGetResultSetContext<?> ctx = new DefaultBindingGetResultSetContext(
+                        new SimpleExecuteContext(query.configuration(), query.configuration().data()),
+                        new R2DBCResultSet(query.configuration(), row, meta),
+                        0
+                    );
 
-                        // TODO: What data to pass here?
-                        DefaultBindingGetResultSetContext<?> ctx = new DefaultBindingGetResultSetContext(
-                            new SimpleExecuteContext(query.configuration(), query.configuration().data()),
-                            new R2DBCResultSet(query.configuration(), row, meta),
-                            0
-                        );
-
-                        // TODO: Make sure all the embeddable records, and other types of nested records are supported
-                        for (int i = 0; i < fields.length; i++) {
-                            ctx.index(i + 1);
-                            ctx.field((Field) fields[i]);
-                            fields[i].getBinding().get((BindingGetResultSetContext) ctx);
-                            record.values[i] = ctx.value();
-                            record.originals[i] = ctx.value();
-                        }
-
-                        return record;
-                    });
+                    return (R) delegate.operate(new CursorImpl.CursorRecordInitialiser(
+                        new DefaultExecuteContext(query.configuration(), query), new DefaultExecuteListener(),
+                        ctx, Tools.row0(fields), 0, new boolean[0]
+                    ));
                 }
                 catch (Throwable t) {
                     onError(t);

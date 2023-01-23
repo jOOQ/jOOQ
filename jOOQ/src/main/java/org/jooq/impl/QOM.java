@@ -841,6 +841,36 @@ public final class QOM {
     // -------------------------------------------------------------------------
 
     /**
+     * A {@link Condition} that is always <code>TRUE</code>.
+     */
+    public sealed interface True
+        extends
+            Condition
+        permits
+            TrueCondition
+    {}
+
+    /**
+     * A {@link Condition} that is always <code>FALSE</code>.
+     */
+    public sealed interface False
+        extends
+            Condition
+        permits
+            FalseCondition
+    {}
+
+    /**
+     * A {@link Condition} that is always <code>NULL</code>.
+     */
+    public sealed interface Null
+        extends
+            Condition
+        permits
+            NullCondition
+    {}
+
+    /**
      * A {@link Condition} consisting of two {@link Condition} operands and a
      * binary logic {@link Operator}.
      */

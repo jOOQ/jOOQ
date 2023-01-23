@@ -44,6 +44,7 @@ import org.jetbrains.annotations.*;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 
@@ -77,7 +78,7 @@ public interface AlterTableAddStep extends AlterTableFinalStep {
      * Add a <code>FIRST</code> clause to <code>ALTER TABLE … ADD …</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MYSQL })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL })
     AlterTableFinalStep first();
 
     /**
@@ -105,20 +106,20 @@ public interface AlterTableAddStep extends AlterTableFinalStep {
      * Add a <code>AFTER</code> clause to <code>ALTER TABLE … ADD …</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, MYSQL })
+    @Support({ H2, MARIADB, MYSQL })
     AlterTableFinalStep after(String columnName);
 
     /**
      * Add a <code>AFTER</code> clause to <code>ALTER TABLE … ADD …</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, MYSQL })
+    @Support({ H2, MARIADB, MYSQL })
     AlterTableFinalStep after(Name columnName);
 
     /**
      * Add a <code>AFTER</code> clause to <code>ALTER TABLE … ADD …</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, MYSQL })
+    @Support({ H2, MARIADB, MYSQL })
     AlterTableFinalStep after(Field<?> columnName);
 }

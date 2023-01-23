@@ -40,9 +40,9 @@ package org.jooq;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link Condition} that always yields <code>false</code>.
+ * A {@link Condition} that always yields <code>null</code>.
  * <p>
- * Instances can be created using {@link DSL#falseCondition()}.
+ * Instances can be created using {@link DSL#nullCondition()}.
  *
  * @author Lukas Eder
  */

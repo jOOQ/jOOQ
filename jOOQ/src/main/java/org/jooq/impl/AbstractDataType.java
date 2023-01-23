@@ -803,6 +803,14 @@ implements
     }
 
     @Override
+    public final boolean isFloat() {
+        Class<?> tType = tType0();
+        return Float.class == tType
+            || Double.class == tType
+        ;
+    }
+
+    @Override
     public final boolean isBoolean() {
         return tType0() == Boolean.class;
     }

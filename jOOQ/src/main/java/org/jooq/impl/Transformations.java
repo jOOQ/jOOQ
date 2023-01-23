@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -92,7 +93,7 @@ final class Transformations {
     static final Set<SQLDialect> EMULATE_QUALIFY                  = SQLDialect.supportedBy(CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_ROWNUM                   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_GROUP_BY_COLUMN_INDEX    = SQLDialect.supportedBy(CUBRID, DERBY, H2, HSQLDB, IGNITE);
-    static final Set<SQLDialect> NO_SUPPORT_CTE                   = SQLDialect.supportedBy(CUBRID, DERBY);
+    static final Set<SQLDialect> NO_SUPPORT_CTE                   = SQLDialect.supportedUntil(CUBRID, DERBYMYSQL_5_7);
 
     static final SelectQueryImpl<?> subqueryWithLimit(QueryPart source) {
         SelectQueryImpl<?> s;

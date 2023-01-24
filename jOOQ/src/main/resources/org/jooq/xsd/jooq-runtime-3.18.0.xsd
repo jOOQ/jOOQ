@@ -33,6 +33,22 @@ Setting this to false also implicitly sets "renderCatalog" to false.
 Use this for single-schema environments, or when all objects are made
 available using synonyms]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="renderTable" type="jooq-runtime:RenderTable" minOccurs="0" maxOccurs="1" default="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether any table name qualification should be rendered at all on columns.
+<p>
+Setting when tables aren't rendered, then implicitly, schemas and catalogs aren't rendered either.
+<p>
+The following values are available:
+<ul>
+<li>{@link RenderTable#ALWAYS}: The default, which should always be preferred. Columns are always qualified with their tables, where possible.</li>
+<li>{@link RenderTable#WHEN_MULTIPLE_TABLES}: The simplest option to reduce generated query verbosity, avoiding table qualification only in queries with a single table in the <code>FROM</code> clause.</li>
+<li>{@link RenderTable#WHEN_AMBIGUOUS_COLUMNS}: A much more expensive to compute option that checks the <code>FROM</code> clause for ambiguous column names, in case of which columns are qualified.</li>
+<li>{@link RenderTable#NEVER}: Always turn off table qualification.</li>
+</ul>
+<p>
+Use this when verbosity of rendered SQL is a problem.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="renderMapping" type="jooq-runtime:RenderMapping" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure render mapping for runtime schema / table rewriting in
@@ -1588,6 +1604,15 @@ inside of queries (including procedural statements) are still not supported.]]><
       </element>
     </all>
   </complexType>
+
+  <simpleType name="RenderTable">
+    <restriction base="string">
+      <enumeration value="ALWAYS"/>
+      <enumeration value="WHEN_MULTIPLE_TABLES"/>
+      <enumeration value="WHEN_AMBIGUOUS_COLUMNS"/>
+      <enumeration value="NEVER"/>
+    </restriction>
+  </simpleType>
 
   <complexType name="RenderMapping">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[The runtime schema and table mapping.]]></jxb:javadoc></jxb:class></appinfo></annotation>

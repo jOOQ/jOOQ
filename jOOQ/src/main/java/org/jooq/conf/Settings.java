@@ -43,6 +43,9 @@ public class Settings
     protected Boolean renderCatalog = true;
     @XmlElement(defaultValue = "true")
     protected Boolean renderSchema = true;
+    @XmlElement(defaultValue = "ALWAYS")
+    @XmlSchemaType(name = "string")
+    protected RenderTable renderTable = RenderTable.ALWAYS;
     protected RenderMapping renderMapping;
     @XmlElement(defaultValue = "EXPLICIT_DEFAULT_QUOTED")
     @XmlSchemaType(name = "string")
@@ -592,6 +595,46 @@ public class Settings
      */
     public void setRenderSchema(Boolean value) {
         this.renderSchema = value;
+    }
+
+    /**
+     * Whether any table name qualification should be rendered at all on columns.
+     * <p>
+     * Setting when tables aren't rendered, then implicitly, schemas and catalogs aren't rendered either.
+     * <p>
+     * The following values are available:
+     * <ul>
+     * <li>{@link RenderTable#ALWAYS}: The default, which should always be preferred. Columns are always qualified with their tables, where possible.</li>
+     * <li>{@link RenderTable#WHEN_MULTIPLE_TABLES}: The simplest option to reduce generated query verbosity, avoiding table qualification only in queries with a single table in the <code>FROM</code> clause.</li>
+     * <li>{@link RenderTable#WHEN_AMBIGUOUS_COLUMNS}: A much more expensive to compute option that checks the <code>FROM</code> clause for ambiguous column names, in case of which columns are qualified.</li>
+     * <li>{@link RenderTable#NEVER}: Always turn off table qualification.</li>
+     * </ul>
+     * <p>
+     * Use this when verbosity of rendered SQL is a problem.
+     * 
+     */
+    public RenderTable getRenderTable() {
+        return renderTable;
+    }
+
+    /**
+     * Whether any table name qualification should be rendered at all on columns.
+     * <p>
+     * Setting when tables aren't rendered, then implicitly, schemas and catalogs aren't rendered either.
+     * <p>
+     * The following values are available:
+     * <ul>
+     * <li>{@link RenderTable#ALWAYS}: The default, which should always be preferred. Columns are always qualified with their tables, where possible.</li>
+     * <li>{@link RenderTable#WHEN_MULTIPLE_TABLES}: The simplest option to reduce generated query verbosity, avoiding table qualification only in queries with a single table in the <code>FROM</code> clause.</li>
+     * <li>{@link RenderTable#WHEN_AMBIGUOUS_COLUMNS}: A much more expensive to compute option that checks the <code>FROM</code> clause for ambiguous column names, in case of which columns are qualified.</li>
+     * <li>{@link RenderTable#NEVER}: Always turn off table qualification.</li>
+     * </ul>
+     * <p>
+     * Use this when verbosity of rendered SQL is a problem.
+     * 
+     */
+    public void setRenderTable(RenderTable value) {
+        this.renderTable = value;
     }
 
     /**
@@ -5686,6 +5729,27 @@ public class Settings
     }
 
     /**
+     * Whether any table name qualification should be rendered at all on columns.
+     * <p>
+     * Setting when tables aren't rendered, then implicitly, schemas and catalogs aren't rendered either.
+     * <p>
+     * The following values are available:
+     * <ul>
+     * <li>{@link RenderTable#ALWAYS}: The default, which should always be preferred. Columns are always qualified with their tables, where possible.</li>
+     * <li>{@link RenderTable#WHEN_MULTIPLE_TABLES}: The simplest option to reduce generated query verbosity, avoiding table qualification only in queries with a single table in the <code>FROM</code> clause.</li>
+     * <li>{@link RenderTable#WHEN_AMBIGUOUS_COLUMNS}: A much more expensive to compute option that checks the <code>FROM</code> clause for ambiguous column names, in case of which columns are qualified.</li>
+     * <li>{@link RenderTable#NEVER}: Always turn off table qualification.</li>
+     * </ul>
+     * <p>
+     * Use this when verbosity of rendered SQL is a problem.
+     * 
+     */
+    public Settings withRenderTable(RenderTable value) {
+        setRenderTable(value);
+        return this;
+    }
+
+    /**
      * Configure render mapping for runtime schema / table rewriting in
      * generated SQL.
      * 
@@ -7180,6 +7244,7 @@ public class Settings
         builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("renderCatalog", renderCatalog);
         builder.append("renderSchema", renderSchema);
+        builder.append("renderTable", renderTable);
         builder.append("renderMapping", renderMapping);
         builder.append("renderQuotedNames", renderQuotedNames);
         builder.append("renderNameCase", renderNameCase);
@@ -7431,6 +7496,15 @@ public class Settings
             }
         } else {
             if (!renderSchema.equals(other.renderSchema)) {
+                return false;
+            }
+        }
+        if (renderTable == null) {
+            if (other.renderTable!= null) {
+                return false;
+            }
+        } else {
+            if (!renderTable.equals(other.renderTable)) {
                 return false;
             }
         }
@@ -9298,6 +9372,7 @@ public class Settings
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((renderCatalog == null)? 0 :renderCatalog.hashCode()));
         result = ((prime*result)+((renderSchema == null)? 0 :renderSchema.hashCode()));
+        result = ((prime*result)+((renderTable == null)? 0 :renderTable.hashCode()));
         result = ((prime*result)+((renderMapping == null)? 0 :renderMapping.hashCode()));
         result = ((prime*result)+((renderQuotedNames == null)? 0 :renderQuotedNames.hashCode()));
         result = ((prime*result)+((renderNameCase == null)? 0 :renderNameCase.hashCode()));

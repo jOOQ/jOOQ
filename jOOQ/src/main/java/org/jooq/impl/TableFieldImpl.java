@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.util.stream.Collectors.joining;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
@@ -45,7 +46,7 @@ import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
-import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
+import static org.jooq.impl.Tools.ExtendedDataKey.DATA_RENDER_TABLE;
 import static org.jooq.impl.UpdateQueryImpl.NO_SUPPORT_UPDATE_JOIN;
 
 import java.util.stream.Stream;
@@ -198,7 +199,7 @@ implements
 
     private final void accept1(Context<?> ctx) {
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
-            if (c.qualify() && getTable() != null)
+            if (c.qualify() && getTable() != null && !FALSE.equals(ctx.data(DATA_RENDER_TABLE)))
                 c.visit(getTable()).sql('.');
 
             c.visit(getUnqualifiedName());

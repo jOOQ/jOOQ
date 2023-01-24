@@ -45,51 +45,27 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.impl.DSL.and;
-import static org.jooq.impl.DSL.exists;
-import static org.jooq.impl.DSL.falseCondition;
-import static org.jooq.impl.DSL.multiset;
-import static org.jooq.impl.DSL.multisetAgg;
-import static org.jooq.impl.DSL.one;
-import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.selectFrom;
-import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultMetaProvider.meta;
-import static org.jooq.impl.DerivedTable.NO_SUPPORT_CORRELATED_DERIVED_TABLE;
 import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
-import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
-import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.getMappedTable;
-import static org.jooq.impl.Tools.unalias;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.jooq.Clause;
 import org.jooq.Comment;
-import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -98,25 +74,17 @@ import org.jooq.Name;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.Record2;
 // ...
-import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.TableLike;
 import org.jooq.TableOptions;
 // ...
-import org.jooq.exception.DataAccessException;
-import org.jooq.impl.QOM.UEmptyField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**

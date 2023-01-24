@@ -119,6 +119,7 @@ import static org.jooq.SortOrder.DESC;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.SettingsTools.getRenderTable;
 import static org.jooq.impl.AsteriskImpl.NO_SUPPORT_UNQUALIFIED_COMBINED;
 import static org.jooq.impl.AsteriskImpl.SUPPORT_NATIVE_EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT;
@@ -220,6 +221,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_INTO_CLAUSE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Tools.ExtendedDataKey.DATA_RENDER_TABLE;
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_TRANSFORM_ROWNUM_TO_LIMIT;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
@@ -242,7 +244,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1634,6 +1635,27 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         SQLDialect dialect = context.dialect();
+
+        switch (getRenderTable(context.settings())) {
+            case NEVER: {
+                context.data(DATA_RENDER_TABLE, false);
+                break;
+            }
+
+            case WHEN_MULTIPLE_TABLES: {
+                if (knownTableSource() && getFrom().size() < 2)
+                    context.data(DATA_RENDER_TABLE, false);
+
+                break;
+            }
+
+            case WHEN_AMBIGUOUS_COLUMNS: {
+                if (knownTableSource() && !hasAmbiguousNames(getSelect()))
+                    context.data(DATA_RENDER_TABLE, false);
+
+                break;
+            }
+        }
 
         // [#2791] [#9981] TODO: We have an automatic way of pushing / popping
         //                 these values onto the scope stack. Use that, instead

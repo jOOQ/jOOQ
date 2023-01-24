@@ -945,6 +945,12 @@ final class Tools {
          */
         DATA_WINDOW_FUNCTION,
 
+        /**
+         * [#8893] Whether {@link TableField} should be qualified with their
+         * tables when rendering in the current scope.
+         */
+        DATA_RENDER_TABLE(true, null, 0),
+
         ;
 
         private final boolean resetInSubqueryScope;

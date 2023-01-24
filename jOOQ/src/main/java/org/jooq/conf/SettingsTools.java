@@ -233,6 +233,16 @@ public final class SettingsTools {
     }
 
     /**
+     * Lazy access to {@link RenderTable}.
+     */
+    public static final RenderTable getRenderTable(Settings settings) {
+        if (settings.getRenderTable() == null)
+            settings.setRenderTable(RenderTable.ALWAYS);
+
+        return settings.getRenderTable();
+    }
+
+    /**
      * Lazy access to {@link RenderMapping}.
      */
     public static final RenderMapping getRenderMapping(Settings settings) {

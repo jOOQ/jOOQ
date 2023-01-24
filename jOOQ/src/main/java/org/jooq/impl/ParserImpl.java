@@ -112,6 +112,7 @@ import static org.jooq.impl.DSL.bitXorAgg;
 import static org.jooq.impl.DSL.boolOr;
 // ...
 import static org.jooq.impl.DSL.cardinality;
+import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.catalog;
 import static org.jooq.impl.DSL.ceil;
@@ -168,6 +169,7 @@ import static org.jooq.impl.DSL.exists;
 // ...
 import static org.jooq.impl.DSL.exp;
 import static org.jooq.impl.DSL.extract;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.finalTable;
 import static org.jooq.impl.DSL.firstValue;
@@ -377,6 +379,7 @@ import static org.jooq.impl.DSL.toHex;
 import static org.jooq.impl.DSL.toTimestamp;
 import static org.jooq.impl.DSL.translate;
 import static org.jooq.impl.DSL.trim;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.unnest;
@@ -8671,6 +8674,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs4(DSL::insert);
                 else if (parseFunctionNameIf("IFNULL"))
                     return parseFunctionArgs2((f1, f2) -> ifnull((Field<?>) f1, (Field<?>) f2));
+                else if (parseFunctionNameIf("ISJSON"))
+                    return parseFunctionArgs1(f -> case_(f.isJson()).when(trueCondition(), one()).when(falseCondition(), zero()));
                 else if (parseFunctionNameIf("ISNULL"))
                     return parseFunctionArgs2(f -> f.isNull(), (f1, f2) -> isnull((Field<?>) f1, (Field<?>) f2));
                 else if ((field = parseFieldIfIf()) != null)
@@ -8697,6 +8702,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs3(DSL::jsonReplace);
                 else if (parseFunctionNameIf("JSON_SET"))
                     return parseFunctionArgs3(DSL::jsonSet);
+                else if (parseFunctionNameIf("JSON_VALID"))
+                    return parseFunctionArgs1(f -> case_(f.isJson()).when(trueCondition(), one()).when(falseCondition(), zero()));
                 else if (parseFunctionNameIf("JSONB_KEYS"))
                     return parseFunctionArgs1(DSL::jsonbKeys);
                 else if (parseFunctionNameIf("JSONB_INSERT"))

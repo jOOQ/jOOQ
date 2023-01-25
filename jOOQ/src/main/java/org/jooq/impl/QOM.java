@@ -7389,7 +7389,7 @@ public final class QOM {
         @NotNull
         List<?> $args();
     }
-    interface UOperator0<R extends org.jooq.QueryPart> extends UOperator<R> {
+    interface UOperator0<R extends UOperator0<R>> extends UOperator<R> {
 
         @NotNull
         Function0<? extends R> $constructor();
@@ -7420,7 +7420,7 @@ public final class QOM {
 
     }
 
-    interface UOperator1<Q1, R extends org.jooq.QueryPart> extends UOperator<R> {
+    interface UOperator1<Q1, R extends UOperator1<Q1, R>> extends UOperator<R> {
         Q1 $arg1();
 
         @CheckReturnValue
@@ -7456,7 +7456,7 @@ public final class QOM {
 
     }
 
-    interface UOperator2<Q1, Q2, R extends org.jooq.QueryPart> extends UOperator<R> {
+    interface UOperator2<Q1, Q2, R extends UOperator2<Q1, Q2, R>> extends UOperator<R> {
         Q1 $arg1();
         Q2 $arg2();
 
@@ -7496,7 +7496,7 @@ public final class QOM {
 
     }
 
-    interface UOperator3<Q1, Q2, Q3, R extends org.jooq.QueryPart> extends UOperator<R> {
+    interface UOperator3<Q1, Q2, Q3, R extends UOperator3<Q1, Q2, Q3, R>> extends UOperator<R> {
         Q1 $arg1();
         Q2 $arg2();
         Q3 $arg3();
@@ -7540,7 +7540,7 @@ public final class QOM {
 
     }
 
-    interface UOperator4<Q1, Q2, Q3, Q4, R extends org.jooq.QueryPart> extends UOperator<R> {
+    interface UOperator4<Q1, Q2, Q3, Q4, R extends UOperator4<Q1, Q2, Q3, Q4, R>> extends UOperator<R> {
         Q1 $arg1();
         Q2 $arg2();
         Q3 $arg3();
@@ -7598,6 +7598,7 @@ public final class QOM {
          * Create a new expression with swapped operands, using the converse
          * operator.
          */
+        @NotNull
         C $converse();
     }
 
@@ -7610,6 +7611,7 @@ public final class QOM {
         /**
          * Create a new expression with swapped operands.
          */
+        @NotNull
         default R $swap() {
             return $constructor().apply($arg2(), $arg1());
         }
@@ -7720,6 +7722,42 @@ public final class QOM {
     interface UEmptyTable<R extends Record> extends Table<R>, UEmpty {}
     interface UEmptyStatement extends Statement, UEmpty {}
     interface UEmptyQuery extends Query, UEmpty {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2403,6 +2403,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
             tablelist = transformInlineDerivedTables(tablelist, where);
 
             context.formatSeparator()
@@ -2649,6 +2651,39 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             || join.lhs instanceof JoinTable && hasInlineDerivedTables((JoinTable) join.lhs)
             || join.rhs instanceof JoinTable && hasInlineDerivedTables((JoinTable) join.rhs);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final TableList transformInlineDerivedTables(TableList tablelist, ConditionProviderImpl where) {
         if (!hasInlineDerivedTables(tablelist))

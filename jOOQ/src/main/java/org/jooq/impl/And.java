@@ -171,8 +171,8 @@ implements
     }
 
     @Override
-    public final Function2<? super Condition, ? super Condition, ? extends Condition> $constructor() {
-        return (a1, a2) -> DSL.and(a1, a2);
+    public final Function2<? super Condition, ? super Condition, ? extends QOM.And> $constructor() {
+        return (a1, a2) -> new And(a1, a2);
     }
 
     // -------------------------------------------------------------------------

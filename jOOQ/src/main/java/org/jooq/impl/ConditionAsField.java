@@ -157,8 +157,8 @@ implements
     }
 
     @Override
-    public final Function1<? super Condition, ? extends Field<Boolean>> $constructor() {
-        return (a1) -> DSL.field(a1);
+    public final Function1<? super Condition, ? extends QOM.ConditionAsField> $constructor() {
+        return (a1) -> new ConditionAsField(a1);
     }
 
     // -------------------------------------------------------------------------

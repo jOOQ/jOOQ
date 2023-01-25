@@ -123,7 +123,7 @@ final class Coalesce<T> extends AbstractField<T> implements QOM.Coalesce<T> {
     }
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends QOM.Coalesce<T>> $constructor() {
         return l -> l.isEmpty()
             ? new Coalesce<>(EMPTY_FIELD, getDataType())
             : new Coalesce<>(l.toArray(EMPTY_FIELD));

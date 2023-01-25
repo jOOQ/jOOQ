@@ -333,7 +333,7 @@ implements
     }
 
     @Override
-    public final Function1<? super Field<?>, ? extends AggregateFunction<J>> $constructor() {
+    public final Function1<? super Field<?>, ? extends QOM.JSONArrayAgg<J>> $constructor() {
         return f -> {
             JSONArrayAgg<J> r = new JSONArrayAgg<J>(getDataType(), f, distinct);
             r.onNull = onNull;

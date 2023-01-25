@@ -106,7 +106,7 @@ final class Iif<T> extends AbstractField<T> implements QOM.Iif<T> {
     }
 
     @Override
-    public final Function3<? super Condition, ? super Field<T>, ? super Field<T>, ? extends Field<T>> $constructor() {
+    public final Function3<? super Condition, ? super Field<T>, ? super Field<T>, ? extends QOM.Iif<T>> $constructor() {
         return (c, f1, f2) -> new Iif<>(getQualifiedName(), c, f1, f2);
     }
 }

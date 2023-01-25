@@ -295,7 +295,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends Row>, ? extends Table<R>> $constructor() {
+    public final Function1<? super UnmodifiableList<? extends Row>, ? extends QOM.Values<R>> $constructor() {
         return r -> new Values<>(r.toArray(EMPTY_ROW));
     }
 

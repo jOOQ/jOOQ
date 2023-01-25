@@ -189,9 +189,10 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final Function3<? super Field<T>, ? super Field<T>, ? super Field<T>, ? extends Condition> $constructor() {
-        return (f, min, max) -> new BetweenCondition<>(f, min, not, symmetric).and(max);
+    public final Function3<? super Field<T>, ? super Field<T>, ? super Field<T>, ? extends QOM.Between<T>> $constructor() {
+        return (f, min, max) -> (QOM.Between<T>) new BetweenCondition<>(f, min, not, symmetric).and(max);
     }
 
     @Override

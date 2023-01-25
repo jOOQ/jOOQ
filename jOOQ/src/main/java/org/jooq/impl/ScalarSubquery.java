@@ -97,7 +97,7 @@ final class ScalarSubquery<T> extends AbstractField<T> implements QOM.ScalarSubq
     // -------------------------------------------------------------------------
 
     @Override
-    public final Function1<? super Select<? extends Record1<T>>, ? extends Field<T>> $constructor() {
+    public final Function1<? super Select<? extends Record1<T>>, ? extends QOM.ScalarSubquery<T>> $constructor() {
         return s -> new ScalarSubquery<>((Select<?>) s, (DataType<T>) Tools.scalarType(s), predicandSubquery);
     }
 

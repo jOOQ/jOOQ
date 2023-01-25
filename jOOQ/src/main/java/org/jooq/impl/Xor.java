@@ -168,8 +168,8 @@ implements
     }
 
     @Override
-    public final Function2<? super Condition, ? super Condition, ? extends Condition> $constructor() {
-        return (a1, a2) -> DSL.xor(a1, a2);
+    public final Function2<? super Condition, ? super Condition, ? extends QOM.Xor> $constructor() {
+        return (a1, a2) -> new Xor(a1, a2);
     }
 
     // -------------------------------------------------------------------------

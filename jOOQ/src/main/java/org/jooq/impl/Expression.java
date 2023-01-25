@@ -210,11 +210,11 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
 
     @Override
     public final Field<T> transform(TransformUnneededArithmeticExpressions transform) {
-        return transform((UOperator2<Field<T>, Field<T>, Field<T>>) (UOperator2) this, lhs, operator, (Field<T>) rhs, internal, transform);
+        return transform((UOperator2) this, lhs, operator, (Field<T>) rhs, internal, transform);
     }
 
-    static final <T> Field<T> transform(
-        UOperator2<Field<T>, Field<T>, Field<T>> expression,
+    static final <T, R extends UOperator2<Field<T>, Field<T>, R>> Field<T> transform(
+        R expression,
         Field<T> lhs,
         ExpressionOperator operator,
         Field<T> rhs,

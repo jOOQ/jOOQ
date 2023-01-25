@@ -135,7 +135,7 @@ final class Nvl2<T> extends AbstractField<T> implements QOM.Nvl2<T> {
     }
 
     @Override
-    public final Function3<? super Field<?>, ? super Field<T>, ? super Field<T>, ? extends Field<T>> $constructor() {
+    public final Function3<? super Field<?>, ? super Field<T>, ? super Field<T>, ? extends QOM.Nvl2<T>> $constructor() {
         return (a1, a2, a3) -> new Nvl2<>(a1, a2, a3);
     }
 }

@@ -108,7 +108,7 @@ final class Lateral<R extends Record> extends AbstractTable<R> implements QOM.La
     }
 
     @Override
-    public final Function1<? super Table<R>, ? extends Table<R>> $constructor() {
+    public final Function1<? super Table<R>, ? extends QOM.Lateral<R>> $constructor() {
         return t -> new Lateral<>(t);
     }
 

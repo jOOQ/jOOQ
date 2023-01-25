@@ -129,7 +129,7 @@ final class FieldFunction<T> extends AbstractField<Integer> implements QOM.Field
     }
 
     @Override
-    public final Function2<? super Field<T>, ? super UnmodifiableList<? extends Field<T>>, ? extends Field<Integer>> $constructor() {
+    public final Function2<? super Field<T>, ? super UnmodifiableList<? extends Field<T>>, ? extends QOM.FieldFunction<T>> $constructor() {
         return (f, a) -> new FieldFunction<T>(f, (Field<T>[]) a.toArray(EMPTY_FIELD));
     }
 }

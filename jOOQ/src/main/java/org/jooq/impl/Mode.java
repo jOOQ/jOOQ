@@ -90,7 +90,7 @@ final class Mode<T> extends AbstractAggregateFunction<T> implements QOM.Mode<T> 
     }
 
     @Override
-    public final Function1<? super Field<T>, ? extends AggregateFunction<T>> $constructor() {
+    public final Function1<? super Field<T>, ? extends QOM.Mode<T>> $constructor() {
         return f -> new Mode<>(f);
     }
 }

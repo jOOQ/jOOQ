@@ -160,7 +160,7 @@ final class RowOverlaps<T1, T2> extends AbstractCondition implements QOM.RowOver
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Function2<? super Row, ? super Row, ? extends Condition> $constructor() {
+    public final Function2<? super Row, ? super Row, ? extends QOM.RowOverlaps> $constructor() {
         return (r1, r2) -> new RowOverlaps<>((Row2<T1, T2>) r1, (Row2<T1, T2>) r2);
     }
 }

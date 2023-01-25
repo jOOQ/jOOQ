@@ -187,7 +187,7 @@ final class TimestampDiff<T> extends AbstractField<DayToSecond> implements QOM.T
     }
 
     @Override
-    public final Function2<? super Field<T>, ? super Field<T>, ? extends Field<DayToSecond>> $constructor() {
+    public final Function2<? super Field<T>, ? super Field<T>, ? extends QOM.TimestampDiff<T>> $constructor() {
         return (t1, t2) -> new TimestampDiff<>(t1, t2);
     }
 }

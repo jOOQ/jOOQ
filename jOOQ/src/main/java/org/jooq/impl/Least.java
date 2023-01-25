@@ -128,7 +128,7 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
     }
 
     @Override
-    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
+    public final Function1<? super UnmodifiableList<? extends Field<T>>, ? extends QOM.Least<T>> $constructor() {
         return a -> a.isEmpty()
             ? new Least<>(EMPTY_FIELD, getDataType())
             : new Least<>(a.toArray(EMPTY_FIELD));

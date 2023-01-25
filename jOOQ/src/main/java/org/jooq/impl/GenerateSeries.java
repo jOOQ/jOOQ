@@ -284,7 +284,7 @@ implements
     }
 
     @Override
-    public final Function3<? super Field<Integer>, ? super Field<Integer>, ? super Field<Integer>, ? extends Table<Record1<Integer>>> $constructor() {
+    public final Function3<? super Field<Integer>, ? super Field<Integer>, ? super Field<Integer>, ? extends QOM.GenerateSeries<Integer>> $constructor() {
         return (f1, f2, f3) -> new GenerateSeries(f1, f2, f3, name);
     }
 }

@@ -148,7 +148,7 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Function2<? super Field<Integer>, ? super UnmodifiableList<? extends Field<T>>, ? extends Field<T>> $constructor() {
+    public final Function2<? super Field<Integer>, ? super UnmodifiableList<? extends Field<T>>, ? extends QOM.Choose<T>> $constructor() {
         return (i, v) -> v.isEmpty()
             ? new Choose<T>(i, (Field<T>[]) EMPTY_FIELD, getDataType())
             : new Choose<T>(i, (Field<T>[]) v.toArray(EMPTY_FIELD));

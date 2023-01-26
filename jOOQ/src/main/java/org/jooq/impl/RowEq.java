@@ -150,7 +150,7 @@ implements
         ) {
 
             // The order component of the comparator (stripping the equal component)
-            org.jooq.Comparator order
+            org.jooq.Comparator comp
                 = (op == org.jooq.Comparator.GREATER) ? org.jooq.Comparator.GREATER
                 : (op == org.jooq.Comparator.GREATER_OR_EQUAL) ? org.jooq.Comparator.GREATER
                 : (op == org.jooq.Comparator.LESS) ? org.jooq.Comparator.LESS
@@ -158,41 +158,15 @@ implements
                 : null;
 
             // [#2658] The factored order component of the comparator (enforcing the equal component)
-            org.jooq.Comparator factoredOrder
+            org.jooq.Comparator factored
                 = (op == org.jooq.Comparator.GREATER) ? org.jooq.Comparator.GREATER_OR_EQUAL
                 : (op == org.jooq.Comparator.GREATER_OR_EQUAL) ? org.jooq.Comparator.GREATER_OR_EQUAL
                 : (op == org.jooq.Comparator.LESS) ? org.jooq.Comparator.LESS_OR_EQUAL
                 : (op == org.jooq.Comparator.LESS_OR_EQUAL) ? org.jooq.Comparator.LESS_OR_EQUAL
                 : null;
 
-            // Whether the comparator has an equal component
-            boolean equal
-                = (op == org.jooq.Comparator.GREATER_OR_EQUAL)
-                ||(op == org.jooq.Comparator.LESS_OR_EQUAL);
-
-            Field<?>[] arg1Fields = arg1.fields();
-            Field<?>[] arg2Fields = arg2.fields();
-
-            // The following algorithm emulates the equivalency of these expressions:
-            // (A, B, C) > (X, Y, Z)
-            // (A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z)
-            List<Condition> outer = new ArrayList<>(1 + arg1Fields.length);
-
-            for (int i = 0; i < arg1Fields.length; i++) {
-                List<Condition> inner = new ArrayList<>(1 + i);
-
-                for (int j = 0; j < i; j++)
-                    inner.add(arg1Fields[j].equal((Field) arg2Fields[j]));
-
-                inner.add(arg1Fields[i].compare(
-                    equal && i == arg1Fields.length - 1 ? op : order,
-                    (Field) arg2Fields[i])
-                );
-
-                outer.add(DSL.and(inner));
-            }
-
-            Condition result = DSL.or(outer);
+            // [#14555] Implement recursive emulation
+            Condition result = emulate(arg1, arg2, comp, op);
 
             // [#2658] For performance reasons, an additional, redundant
             // predicate is factored out to favour the application of range
@@ -200,8 +174,8 @@ implements
             // OR-connected:
             // (A, B, C) > (X, Y, Z)
             // (A >= X) AND ((A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z))
-            if (arg1Fields.length > 1)
-                result = arg1Fields[0].compare(factoredOrder, (Field) arg2Fields[0]).and(result);
+            if (arg1.size() > 1)
+                result = arg1.field(0).compare(factored, (Field) arg2.field(0)).and(result);
 
             ctx.visit(result);
         }
@@ -240,6 +214,24 @@ implements
                    .sql(extraParentheses ? ")" : "");
             }
         }
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private static final Condition emulate(
+        Row r1,
+        Row r2,
+        org.jooq.Comparator comp,
+        org.jooq.Comparator last
+    ) {
+        Condition result = r1.field(r1.size() - 1).compare(last, (Field) r2.field(r1.size() - 1));
+
+        for (int i = r1.size() - 2; i >= 0; i--) {
+            Field e1 = r1.field(i);
+            Field e2 = r2.field(i);
+            result = e1.compare(comp, e2).or(e1.eq(e2).and(result));
+        }
+
+        return result;
     }
 
     /**

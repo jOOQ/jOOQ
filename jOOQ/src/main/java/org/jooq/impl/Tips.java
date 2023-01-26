@@ -102,6 +102,9 @@ final class Tips {
         "In addition to <includes> and <excludes>, you can also use <includesSql> and <excludesSql> to generate regular expressions for the code generator! https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-includes-excludes/",
         "jOOQ can run diagnostics on all the queries passed to it, including if you're using JDBC or R2DBC directly: https://www.jooq.org/doc/latest/manual/sql-execution/diagnostics/",
         "Common SQL patterns can be matched and transformed into more optimal or simpler SQL using pattern transformation, both on jOOQ queires or ordinary JDBC based queries: https://www.jooq.org/doc/latest/manual/sql-building/queryparts/sql-transformation/transform-patterns/",
+        "The most common jOOQ types like Field, Condition, Table are summarised in this blog post: https://blog.jooq.org/a-brief-overview-over-the-most-common-jooq-types/",
+        "Sometimes, a native query can be the better choice than writing a jOOQ query. Here's when that happens: https://blog.jooq.org/when-to-use-jooq-and-when-to-use-native-sql/",
+        "Thinking of building a query with jOOQ and executing it elsewhere? Think again: https://blog.jooq.org/why-you-should-execute-jooq-queries-with-jooq/",
         ""
     };
 

@@ -138,12 +138,12 @@ implements
 
     @Override
     public final Condition compare(Comparator comparator, Row7<T1, T2, T3, T4, T5, T6, T7> row) {
-        return new RowCondition(this, row, comparator);
+        return compare(this, comparator, row);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record7<T1, T2, T3, T4, T5, T6, T7> record) {
-        return new RowCondition(this, record.valuesRow(), comparator);
+        return compare(this, comparator, record.valuesRow());
     }
 
     @Override

@@ -698,7 +698,7 @@ implements
         // These dialects either don't support row value expressions, or they
         // Can't handle row value expressions with the BETWEEN predicate
         else if (row.size() > 1 && EMULATE_BETWEEN.contains(ctx.dialect())) {
-            Condition result = new RowCondition(row, minValue, Comparator.GREATER_OR_EQUAL).and(new RowCondition(row, maxValue, Comparator.LESS_OR_EQUAL));
+            Condition result = AbstractRow.compare(row, Comparator.GREATER_OR_EQUAL, minValue).and(AbstractRow.compare(row, Comparator.LESS_OR_EQUAL, maxValue));
 
             if (not)
                 result = result.not();

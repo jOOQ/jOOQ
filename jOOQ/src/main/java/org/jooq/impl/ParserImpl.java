@@ -6636,7 +6636,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 : isField
                     ? ((Field) left).compare(comp, toField(parseConcat()))
-                    : new RowCondition((Row) left, parseRow(((Row) left).size(), true), comp);
+                    : AbstractRow.compare((Row) left, comp, parseRow(((Row) left).size(), true));
 
             if (all || any)
                 parse(')');

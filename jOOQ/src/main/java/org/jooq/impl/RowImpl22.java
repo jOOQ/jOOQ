@@ -213,12 +213,12 @@ implements
 
     @Override
     public final Condition compare(Comparator comparator, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
-        return new RowCondition(this, row, comparator);
+        return compare(this, comparator, row);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
-        return new RowCondition(this, record.valuesRow(), comparator);
+        return compare(this, comparator, record.valuesRow());
     }
 
     @Override

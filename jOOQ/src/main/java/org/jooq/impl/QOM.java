@@ -2790,10 +2790,9 @@ public final class QOM {
         //permits
         //    Ge
     {
-        @SuppressWarnings("unchecked")
         @Override
         default Le<T> $converse() {
-            return (Le<T>) $arg2().le($arg1());
+            return new org.jooq.impl.Le<>($arg2(), $arg1());
         }
     }
 
@@ -2808,10 +2807,9 @@ public final class QOM {
         //permits
         //    Gt
     {
-        @SuppressWarnings("unchecked")
         @Override
         default Lt<T> $converse() {
-            return (Lt<T>) $arg2().lt($arg1());
+            return new org.jooq.impl.Lt<>($arg2(), $arg1());
         }
     }
 
@@ -2899,10 +2897,9 @@ public final class QOM {
         //permits
         //    Le
     {
-        @SuppressWarnings("unchecked")
         @Override
         default Ge<T> $converse() {
-            return (Ge<T>) $arg2().ge($arg1());
+            return new org.jooq.impl.Ge<>($arg2(), $arg1());
         }
     }
 
@@ -2968,10 +2965,9 @@ public final class QOM {
         //permits
         //    Lt
     {
-        @SuppressWarnings("unchecked")
         @Override
         default Gt<T> $converse() {
-            return (Gt<T>) $arg2().gt($arg1());
+            return new org.jooq.impl.Gt<>($arg2(), $arg1());
         }
     }
 
@@ -3182,6 +3178,98 @@ public final class QOM {
         //permits
         //    Xor
     {}
+
+    /**
+     * The <code>ROW EQ</code> operator.
+     */
+    public /*sealed*/ interface RowEq
+        extends
+            UReturnsNullOnNullInput,
+            UCommutativeOperator<Row, RowEq>,
+            org.jooq.Condition
+        //permits
+        //    RowEq
+    {}
+
+    /**
+     * The <code>ROW NE</code> operator.
+     */
+    public /*sealed*/ interface RowNe
+        extends
+            UReturnsNullOnNullInput,
+            UCommutativeOperator<Row, RowNe>,
+            org.jooq.Condition
+        //permits
+        //    RowNe
+    {}
+
+    /**
+     * The <code>ROW GT</code> operator.
+     */
+    public /*sealed*/ interface RowGt
+        extends
+            UReturnsNullOnNullInput,
+            UConvertibleOperator<Row, RowGt, RowLt>,
+            org.jooq.Condition
+        //permits
+        //    RowGt
+    {
+        @Override
+        default RowLt $converse() {
+            return new org.jooq.impl.RowLt($arg2(), $arg1());
+        }
+    }
+
+    /**
+     * The <code>ROW GE</code> operator.
+     */
+    public /*sealed*/ interface RowGe
+        extends
+            UReturnsNullOnNullInput,
+            UConvertibleOperator<Row, RowGe, RowLe>,
+            org.jooq.Condition
+        //permits
+        //    RowGe
+    {
+        @Override
+        default RowLe $converse() {
+            return new org.jooq.impl.RowLe($arg2(), $arg1());
+        }
+    }
+
+    /**
+     * The <code>ROW LT</code> operator.
+     */
+    public /*sealed*/ interface RowLt
+        extends
+            UReturnsNullOnNullInput,
+            UConvertibleOperator<Row, RowLt, RowGt>,
+            org.jooq.Condition
+        //permits
+        //    RowLt
+    {
+        @Override
+        default RowGt $converse() {
+            return new org.jooq.impl.RowGt($arg2(), $arg1());
+        }
+    }
+
+    /**
+     * The <code>ROW LE</code> operator.
+     */
+    public /*sealed*/ interface RowLe
+        extends
+            UReturnsNullOnNullInput,
+            UConvertibleOperator<Row, RowLe, RowGe>,
+            org.jooq.Condition
+        //permits
+        //    RowLe
+    {
+        @Override
+        default RowGe $converse() {
+            return new org.jooq.impl.RowGe($arg2(), $arg1());
+        }
+    }
 
     /**
      * The <code>IS DOCUMENT</code> operator.

@@ -101,7 +101,7 @@ final class RowInCondition extends AbstractCondition implements UNotYetImplement
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE_IN.contains(ctx.dialect())) {
-            Condition result = DSL.or(map(right, r -> new RowCondition(left, r, EQUALS)));
+            Condition result = DSL.or(map(right, r -> AbstractRow.compare(left, EQUALS, r)));
 
             if (not)
                 result = result.not();

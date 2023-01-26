@@ -43,6 +43,7 @@ import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.nullSafe;
 
 import java.util.Collection;
 import java.util.function.Function;
@@ -51,6 +52,7 @@ import java.util.stream.Stream;
 import org.jooq.Binding;
 import org.jooq.Clause;
 import org.jooq.Comment;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -60,10 +62,12 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Record1;
 // ...
 import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
+import org.jooq.Select;
 import org.jooq.ContextConverter;
 import org.jooq.SelectField;
 // ...
@@ -259,6 +263,29 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     // ------------------------------------------------------------------------
     // XXX: Row accessor API
     // ------------------------------------------------------------------------
+
+    static final Condition compare(Row arg1, Comparator comparator, Row arg2) {
+        switch (comparator) {
+            case EQUALS:
+                return new RowEq(arg1, arg2);
+            case GREATER:
+                return new RowGt(arg1, arg2);
+            case GREATER_OR_EQUAL:
+                return new RowGe(arg1, arg2);
+            case LESS:
+                return new RowLt(arg1, arg2);
+            case LESS_OR_EQUAL:
+                return new RowLe(arg1, arg2);
+            case NOT_EQUALS:
+                return new RowNe(arg1, arg2);
+        }
+
+        throw new IllegalArgumentException("Comparator not supported: " + comparator);
+    }
+
+    final Condition compare(Comparator comparator, Row row) {
+        return compare(this, comparator, row);
+    }
 
     @Override
     public final int size() {

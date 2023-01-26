@@ -118,12 +118,12 @@ implements
 
     @Override
     public final Condition compare(Comparator comparator, Row3<T1, T2, T3> row) {
-        return new RowCondition(this, row, comparator);
+        return compare(this, comparator, row);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record3<T1, T2, T3> record) {
-        return new RowCondition(this, record.valuesRow(), comparator);
+        return compare(this, comparator, record.valuesRow());
     }
 
     @Override

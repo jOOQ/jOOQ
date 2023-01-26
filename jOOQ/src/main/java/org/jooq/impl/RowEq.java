@@ -65,23 +65,23 @@ import java.util.stream.*;
  * The <code>ROW EQ</code> statement.
  */
 @SuppressWarnings({ "unused" })
-final class RowEq
+final class RowEq<T extends Row>
 extends
     AbstractCondition
 implements
-    QOM.RowEq
+    QOM.RowEq<T>
 {
 
-    final Row arg1;
-    final Row arg2;
+    final T arg1;
+    final T arg2;
 
     RowEq(
-        Row arg1,
-        Row arg2
+        T arg1,
+        T arg2
     ) {
 
-        this.arg1 = ((AbstractRow) arg1).convertTo(arg2);
-        this.arg2 = ((AbstractRow) arg2).convertTo(arg1);
+        this.arg1 = (T) ((AbstractRow) arg1).convertTo(arg2);
+        this.arg2 = (T) ((AbstractRow) arg2).convertTo(arg1);
     }
 
     // -------------------------------------------------------------------------
@@ -279,28 +279,28 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Row $arg1() {
+    public final T $arg1() {
         return arg1;
     }
 
     @Override
-    public final Row $arg2() {
+    public final T $arg2() {
         return arg2;
     }
 
     @Override
-    public final QOM.RowEq $arg1(Row newValue) {
+    public final QOM.RowEq<T> $arg1(T newValue) {
         return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.RowEq $arg2(Row newValue) {
+    public final QOM.RowEq<T> $arg2(T newValue) {
         return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Row, ? super Row, ? extends QOM.RowEq> $constructor() {
-        return (a1, a2) -> new RowEq(a1, a2);
+    public final Function2<? super T, ? super T, ? extends QOM.RowEq<T>> $constructor() {
+        return (a1, a2) -> new RowEq<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------
@@ -309,7 +309,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.RowEq o) {
+        if (that instanceof QOM.RowEq<?> o) {
             return
                 StringUtils.equals($arg1(), o.$arg1()) &&
                 StringUtils.equals($arg2(), o.$arg2())

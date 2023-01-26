@@ -3182,10 +3182,10 @@ public final class QOM {
     /**
      * The <code>ROW EQ</code> operator.
      */
-    public /*sealed*/ interface RowEq
+    public /*sealed*/ interface RowEq<T extends Row>
         extends
             UReturnsNullOnNullInput,
-            UCommutativeOperator<Row, RowEq>,
+            UCommutativeOperator<T, RowEq<T>>,
             org.jooq.Condition
         //permits
         //    RowEq
@@ -3194,10 +3194,10 @@ public final class QOM {
     /**
      * The <code>ROW NE</code> operator.
      */
-    public /*sealed*/ interface RowNe
+    public /*sealed*/ interface RowNe<T extends Row>
         extends
             UReturnsNullOnNullInput,
-            UCommutativeOperator<Row, RowNe>,
+            UCommutativeOperator<T, RowNe<T>>,
             org.jooq.Condition
         //permits
         //    RowNe
@@ -3206,68 +3206,68 @@ public final class QOM {
     /**
      * The <code>ROW GT</code> operator.
      */
-    public /*sealed*/ interface RowGt
+    public /*sealed*/ interface RowGt<T extends Row>
         extends
             UReturnsNullOnNullInput,
-            UConvertibleOperator<Row, RowGt, RowLt>,
+            UConvertibleOperator<T, RowGt<T>, RowLt<T>>,
             org.jooq.Condition
         //permits
         //    RowGt
     {
         @Override
-        default RowLt $converse() {
-            return new org.jooq.impl.RowLt($arg2(), $arg1());
+        default RowLt<T> $converse() {
+            return new org.jooq.impl.RowLt<>($arg2(), $arg1());
         }
     }
 
     /**
      * The <code>ROW GE</code> operator.
      */
-    public /*sealed*/ interface RowGe
+    public /*sealed*/ interface RowGe<T extends Row>
         extends
             UReturnsNullOnNullInput,
-            UConvertibleOperator<Row, RowGe, RowLe>,
+            UConvertibleOperator<T, RowGe<T>, RowLe<T>>,
             org.jooq.Condition
         //permits
         //    RowGe
     {
         @Override
-        default RowLe $converse() {
-            return new org.jooq.impl.RowLe($arg2(), $arg1());
+        default RowLe<T> $converse() {
+            return new org.jooq.impl.RowLe<>($arg2(), $arg1());
         }
     }
 
     /**
      * The <code>ROW LT</code> operator.
      */
-    public /*sealed*/ interface RowLt
+    public /*sealed*/ interface RowLt<T extends Row>
         extends
             UReturnsNullOnNullInput,
-            UConvertibleOperator<Row, RowLt, RowGt>,
+            UConvertibleOperator<T, RowLt<T>, RowGt<T>>,
             org.jooq.Condition
         //permits
         //    RowLt
     {
         @Override
-        default RowGt $converse() {
-            return new org.jooq.impl.RowGt($arg2(), $arg1());
+        default RowGt<T> $converse() {
+            return new org.jooq.impl.RowGt<>($arg2(), $arg1());
         }
     }
 
     /**
      * The <code>ROW LE</code> operator.
      */
-    public /*sealed*/ interface RowLe
+    public /*sealed*/ interface RowLe<T extends Row>
         extends
             UReturnsNullOnNullInput,
-            UConvertibleOperator<Row, RowLe, RowGe>,
+            UConvertibleOperator<T, RowLe<T>, RowGe<T>>,
             org.jooq.Condition
         //permits
         //    RowLe
     {
         @Override
-        default RowGe $converse() {
-            return new org.jooq.impl.RowGe($arg2(), $arg1());
+        default RowGe<T> $converse() {
+            return new org.jooq.impl.RowGe<>($arg2(), $arg1());
         }
     }
 

@@ -278,6 +278,11 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
                 return new RowLe(arg1, arg2);
             case NOT_EQUALS:
                 return new RowNe(arg1, arg2);
+
+            case IS_DISTINCT_FROM:
+                return new RowIsDistinctFrom(arg1, arg2, false);
+            case IS_NOT_DISTINCT_FROM:
+                return new RowIsDistinctFrom(arg1, arg2, true);
         }
 
         throw new IllegalArgumentException("Comparator not supported: " + comparator);

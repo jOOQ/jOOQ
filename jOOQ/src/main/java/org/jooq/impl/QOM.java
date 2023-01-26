@@ -2775,6 +2775,7 @@ public final class QOM {
         //    Exists
     {
         @NotNull default Select<?> $query() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Exists $query(Select<?> newQuery) { return $arg1(newQuery); }
     }
 
@@ -2854,6 +2855,7 @@ public final class QOM {
         //    IsNull
     {
         @NotNull default Field<?> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default IsNull $field(Field<?> newField) { return $arg1(newField); }
     }
 
@@ -2882,6 +2884,7 @@ public final class QOM {
         //    IsNotNull
     {
         @NotNull default Field<?> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default IsNotNull $field(Field<?> newField) { return $arg1(newField); }
     }
 
@@ -2915,11 +2918,14 @@ public final class QOM {
         //    Like
     {
         @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Like $value(Field<?> newValue) { return $arg1(newValue); }
         @NotNull default Field<String> $pattern() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default Like $pattern(Field<String> newPattern) { return $arg2(newPattern); }
         @Nullable default Character $escape() { return $arg3(); }
-        @Nullable default Like $escape(Character newEscape) { return $arg3(newEscape); }
+        @CheckReturnValue
+        @NotNull default Like $escape(Character newEscape) { return $arg3(newEscape); }
     }
 
     /**
@@ -2941,11 +2947,14 @@ public final class QOM {
         //    LikeIgnoreCase
     {
         @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default LikeIgnoreCase $value(Field<?> newValue) { return $arg1(newValue); }
         @NotNull default Field<String> $pattern() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default LikeIgnoreCase $pattern(Field<String> newPattern) { return $arg2(newPattern); }
         @Nullable default Character $escape() { return $arg3(); }
-        @Nullable default LikeIgnoreCase $escape(Character newEscape) { return $arg3(newEscape); }
+        @CheckReturnValue
+        @NotNull default LikeIgnoreCase $escape(Character newEscape) { return $arg3(newEscape); }
     }
 
     /**
@@ -3002,6 +3011,7 @@ public final class QOM {
         //    Not
     {
         @NotNull default Condition $condition() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Not $condition(Condition newCondition) { return $arg1(newCondition); }
     }
 
@@ -3017,6 +3027,7 @@ public final class QOM {
         //    NotField
     {
         @NotNull default Field<Boolean> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default NotField $field(Field<Boolean> newField) { return $arg1(newField); }
     }
 
@@ -3051,11 +3062,14 @@ public final class QOM {
         //    NotLike
     {
         @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default NotLike $value(Field<?> newValue) { return $arg1(newValue); }
         @NotNull default Field<String> $pattern() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default NotLike $pattern(Field<String> newPattern) { return $arg2(newPattern); }
         @Nullable default Character $escape() { return $arg3(); }
-        @Nullable default NotLike $escape(Character newEscape) { return $arg3(newEscape); }
+        @CheckReturnValue
+        @NotNull default NotLike $escape(Character newEscape) { return $arg3(newEscape); }
     }
 
     /**
@@ -3077,11 +3091,14 @@ public final class QOM {
         //    NotLikeIgnoreCase
     {
         @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default NotLikeIgnoreCase $value(Field<?> newValue) { return $arg1(newValue); }
         @NotNull default Field<String> $pattern() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default NotLikeIgnoreCase $pattern(Field<String> newPattern) { return $arg2(newPattern); }
         @Nullable default Character $escape() { return $arg3(); }
-        @Nullable default NotLikeIgnoreCase $escape(Character newEscape) { return $arg3(newEscape); }
+        @CheckReturnValue
+        @NotNull default NotLikeIgnoreCase $escape(Character newEscape) { return $arg3(newEscape); }
     }
 
     /**
@@ -3096,11 +3113,14 @@ public final class QOM {
         //    NotSimilarTo
     {
         @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default NotSimilarTo $value(Field<?> newValue) { return $arg1(newValue); }
         @NotNull default Field<String> $pattern() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default NotSimilarTo $pattern(Field<String> newPattern) { return $arg2(newPattern); }
         @Nullable default Character $escape() { return $arg3(); }
-        @Nullable default NotSimilarTo $escape(Character newEscape) { return $arg3(newEscape); }
+        @CheckReturnValue
+        @NotNull default NotSimilarTo $escape(Character newEscape) { return $arg3(newEscape); }
     }
 
     /**
@@ -3126,11 +3146,14 @@ public final class QOM {
         //    SimilarTo
     {
         @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default SimilarTo $value(Field<?> newValue) { return $arg1(newValue); }
         @NotNull default Field<String> $pattern() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default SimilarTo $pattern(Field<String> newPattern) { return $arg2(newPattern); }
         @Nullable default Character $escape() { return $arg3(); }
-        @Nullable default SimilarTo $escape(Character newEscape) { return $arg3(newEscape); }
+        @CheckReturnValue
+        @NotNull default SimilarTo $escape(Character newEscape) { return $arg3(newEscape); }
     }
 
     /**
@@ -3144,6 +3167,7 @@ public final class QOM {
         //    Unique
     {
         @NotNull default Select<?> $query() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Unique $query(Select<?> newQuery) { return $arg1(newQuery); }
     }
 
@@ -3173,6 +3197,7 @@ public final class QOM {
         //    IsDocument
     {
         @NotNull default Field<?> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default IsDocument $field(Field<?> newField) { return $arg1(newField); }
     }
 
@@ -3190,6 +3215,7 @@ public final class QOM {
         //    IsNotDocument
     {
         @NotNull default Field<?> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default IsNotDocument $field(Field<?> newField) { return $arg1(newField); }
     }
 
@@ -3207,6 +3233,7 @@ public final class QOM {
         //    IsJson
     {
         @NotNull default Field<?> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default IsJson $field(Field<?> newField) { return $arg1(newField); }
     }
 
@@ -3224,6 +3251,7 @@ public final class QOM {
         //    IsNotJson
     {
         @NotNull default Field<?> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default IsNotJson $field(Field<?> newField) { return $arg1(newField); }
     }
 
@@ -3249,6 +3277,7 @@ public final class QOM {
         /**
          * The excluded field.
          */
+        @CheckReturnValue
         @NotNull default Excluded<T> $field(Field<T> newField) { return $arg1(newField); }
     }
 
@@ -3285,6 +3314,7 @@ public final class QOM {
         //    QualifiedRowid
     {
         @NotNull default Table<?> $table() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default QualifiedRowid $table(Table<?> newTable) { return $arg1(newTable); }
     }
 
@@ -3300,6 +3330,7 @@ public final class QOM {
         //    Abs
     {
         @NotNull default Field<T> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Abs<T> $value(Field<T> newValue) { return $arg1(newValue); }
     }
 
@@ -3315,6 +3346,7 @@ public final class QOM {
         //    Acos
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Acos $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3330,6 +3362,7 @@ public final class QOM {
         //    Acosh
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Acosh $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3345,6 +3378,7 @@ public final class QOM {
         //    Acoth
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Acoth $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3372,6 +3406,7 @@ public final class QOM {
         //    Asin
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Asin $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3387,6 +3422,7 @@ public final class QOM {
         //    Asinh
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Asinh $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3402,6 +3438,7 @@ public final class QOM {
         //    Atan
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Atan $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3417,8 +3454,10 @@ public final class QOM {
         //    Atan2
     {
         @NotNull default Field<? extends Number> $x() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Atan2 $x(Field<? extends Number> newX) { return $arg1(newX); }
         @NotNull default Field<? extends Number> $y() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default Atan2 $y(Field<? extends Number> newY) { return $arg2(newY); }
     }
 
@@ -3434,6 +3473,7 @@ public final class QOM {
         //    Atanh
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Atanh $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3463,6 +3503,7 @@ public final class QOM {
         //    BitCount
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default BitCount $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3552,6 +3593,7 @@ public final class QOM {
         //    Ceil
     {
         @NotNull default Field<T> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Ceil<T> $value(Field<T> newValue) { return $arg1(newValue); }
     }
 
@@ -3567,6 +3609,7 @@ public final class QOM {
         //    Cos
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Cos $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3582,6 +3625,7 @@ public final class QOM {
         //    Cosh
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Cosh $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3597,6 +3641,7 @@ public final class QOM {
         //    Cot
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Cot $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3612,6 +3657,7 @@ public final class QOM {
         //    Coth
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Coth $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3637,6 +3683,7 @@ public final class QOM {
         /**
          * The value in radians.
          */
+        @CheckReturnValue
         @NotNull default Degrees $radians(Field<? extends Number> newRadians) { return $arg1(newRadians); }
     }
 
@@ -3677,6 +3724,7 @@ public final class QOM {
         //    Exp
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Exp $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3694,6 +3742,7 @@ public final class QOM {
         //    Floor
     {
         @NotNull default Field<T> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Floor<T> $value(Field<T> newValue) { return $arg1(newValue); }
     }
 
@@ -3711,6 +3760,7 @@ public final class QOM {
         //    Ln
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Ln $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3728,8 +3778,10 @@ public final class QOM {
         //    Log
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Log $value(Field<? extends Number> newValue) { return $arg1(newValue); }
         @NotNull default Field<? extends Number> $base() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default Log $base(Field<? extends Number> newBase) { return $arg2(newBase); }
     }
 
@@ -3747,6 +3799,7 @@ public final class QOM {
         //    Log10
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Log10 $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3762,8 +3815,10 @@ public final class QOM {
         //    Mod
     {
         @NotNull default Field<T> $dividend() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Mod<T> $dividend(Field<T> newDividend) { return $arg1(newDividend); }
         @NotNull default Field<? extends Number> $divisor() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default Mod<T> $divisor(Field<? extends Number> newDivisor) { return $arg2(newDivisor); }
     }
 
@@ -3804,8 +3859,10 @@ public final class QOM {
         //    Power
     {
         @NotNull default Field<? extends Number> $base() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Power $base(Field<? extends Number> newBase) { return $arg1(newBase); }
         @NotNull default Field<? extends Number> $exponent() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default Power $exponent(Field<? extends Number> newExponent) { return $arg2(newExponent); }
     }
 
@@ -3831,6 +3888,7 @@ public final class QOM {
         /**
          * The value in degrees.
          */
+        @CheckReturnValue
         @NotNull default Radians $degrees(Field<? extends Number> newDegrees) { return $arg1(newDegrees); }
     }
 
@@ -3869,6 +3927,7 @@ public final class QOM {
         /**
          * The number to be rounded.
          */
+        @CheckReturnValue
         @NotNull default Round<T> $value(Field<T> newValue) { return $arg1(newValue); }
 
         /**
@@ -3879,7 +3938,8 @@ public final class QOM {
         /**
          * The decimals to round to.
          */
-        @Nullable default Round<T> $decimals(Field<Integer> newDecimals) { return $arg2(newDecimals); }
+        @CheckReturnValue
+        @NotNull default Round<T> $decimals(Field<Integer> newDecimals) { return $arg2(newDecimals); }
     }
 
     /**
@@ -3904,6 +3964,7 @@ public final class QOM {
         /**
          * The number whose bits to shift left.
          */
+        @CheckReturnValue
         @NotNull default Shl<T> $value(Field<T> newValue) { return $arg1(newValue); }
 
         /**
@@ -3914,6 +3975,7 @@ public final class QOM {
         /**
          * The number of bits to shift.
          */
+        @CheckReturnValue
         @NotNull default Shl<T> $count(Field<? extends Number> newCount) { return $arg2(newCount); }
     }
 
@@ -3939,6 +4001,7 @@ public final class QOM {
         /**
          * The number whose bits to shift right
          */
+        @CheckReturnValue
         @NotNull default Shr<T> $value(Field<T> newValue) { return $arg1(newValue); }
 
         /**
@@ -3949,6 +4012,7 @@ public final class QOM {
         /**
          * The number of bits to shift.
          */
+        @CheckReturnValue
         @NotNull default Shr<T> $count(Field<? extends Number> newCount) { return $arg2(newCount); }
     }
 
@@ -3966,6 +4030,7 @@ public final class QOM {
         //    Sign
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Sign $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3981,6 +4046,7 @@ public final class QOM {
         //    Sin
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Sin $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -3996,6 +4062,7 @@ public final class QOM {
         //    Sinh
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Sinh $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -4011,6 +4078,7 @@ public final class QOM {
         //    Sqrt
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Sqrt $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -4026,6 +4094,7 @@ public final class QOM {
         //    Square
     {
         @NotNull default Field<T> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Square<T> $value(Field<T> newValue) { return $arg1(newValue); }
     }
 
@@ -4053,6 +4122,7 @@ public final class QOM {
         //    Tan
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Tan $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -4068,6 +4138,7 @@ public final class QOM {
         //    Tanh
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Tanh $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -4106,6 +4177,7 @@ public final class QOM {
         /**
          * The number to be truncated
          */
+        @CheckReturnValue
         @NotNull default Trunc<T> $value(Field<T> newValue) { return $arg1(newValue); }
 
         /**
@@ -4116,6 +4188,7 @@ public final class QOM {
         /**
          * The decimals to truncate to.
          */
+        @CheckReturnValue
         @NotNull default Trunc<T> $decimals(Field<Integer> newDecimals) { return $arg2(newDecimals); }
     }
 
@@ -4141,6 +4214,7 @@ public final class QOM {
         /**
          * The value to divide into the range.
          */
+        @CheckReturnValue
         @NotNull default WidthBucket<T> $field(Field<T> newField) { return $arg1(newField); }
 
         /**
@@ -4151,6 +4225,7 @@ public final class QOM {
         /**
          * The lower bound of the range.
          */
+        @CheckReturnValue
         @NotNull default WidthBucket<T> $low(Field<T> newLow) { return $arg2(newLow); }
 
         /**
@@ -4161,6 +4236,7 @@ public final class QOM {
         /**
          * The upper bound of the range.
          */
+        @CheckReturnValue
         @NotNull default WidthBucket<T> $high(Field<T> newHigh) { return $arg3(newHigh); }
 
         /**
@@ -4171,6 +4247,7 @@ public final class QOM {
         /**
          * The number of buckets to produce.
          */
+        @CheckReturnValue
         @NotNull default WidthBucket<T> $buckets(Field<Integer> newBuckets) { return $arg4(newBuckets); }
     }
 
@@ -4188,6 +4265,7 @@ public final class QOM {
         //    Ascii
     {
         @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Ascii $string(Field<String> newString) { return $arg1(newString); }
     }
 
@@ -4205,6 +4283,7 @@ public final class QOM {
         //    BitLength
     {
         @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default BitLength $string(Field<String> newString) { return $arg1(newString); }
     }
 
@@ -4222,6 +4301,7 @@ public final class QOM {
         //    CharLength
     {
         @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default CharLength $string(Field<String> newString) { return $arg1(newString); }
     }
 
@@ -4237,6 +4317,7 @@ public final class QOM {
         //    Chr
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Chr $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -4272,8 +4353,10 @@ public final class QOM {
         //    Contains
     {
         @NotNull default Field<T> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Contains<T> $value(Field<T> newValue) { return $arg1(newValue); }
         @NotNull default Field<T> $content() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default Contains<T> $content(Field<T> newContent) { return $arg2(newContent); }
     }
 
@@ -4298,8 +4381,10 @@ public final class QOM {
         //    ContainsIgnoreCase
     {
         @NotNull default Field<T> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default ContainsIgnoreCase<T> $value(Field<T> newValue) { return $arg1(newValue); }
         @NotNull default Field<T> $content() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default ContainsIgnoreCase<T> $content(Field<T> newContent) { return $arg2(newContent); }
     }
 
@@ -4315,6 +4400,7 @@ public final class QOM {
         //    Digits
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Digits $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -4338,8 +4424,10 @@ public final class QOM {
         //    EndsWith
     {
         @NotNull default Field<T> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default EndsWith<T> $string(Field<T> newString) { return $arg1(newString); }
         @NotNull default Field<T> $suffix() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default EndsWith<T> $suffix(Field<T> newSuffix) { return $arg2(newSuffix); }
     }
 
@@ -4363,8 +4451,10 @@ public final class QOM {
         //    EndsWithIgnoreCase
     {
         @NotNull default Field<T> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default EndsWithIgnoreCase<T> $string(Field<T> newString) { return $arg1(newString); }
         @NotNull default Field<T> $suffix() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default EndsWithIgnoreCase<T> $suffix(Field<T> newSuffix) { return $arg2(newSuffix); }
     }
 
@@ -4390,6 +4480,7 @@ public final class QOM {
         /**
          * The string whose characters are extracted.
          */
+        @CheckReturnValue
         @NotNull default Left $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4400,6 +4491,7 @@ public final class QOM {
         /**
          * The number of characters to extract from the string.
          */
+        @CheckReturnValue
         @NotNull default Left $length(Field<? extends Number> newLength) { return $arg2(newLength); }
     }
 
@@ -4417,6 +4509,7 @@ public final class QOM {
         //    Lower
     {
         @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Lower $string(Field<String> newString) { return $arg1(newString); }
     }
 
@@ -4442,6 +4535,7 @@ public final class QOM {
         /**
          * The string to be padded.
          */
+        @CheckReturnValue
         @NotNull default Lpad $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4452,6 +4546,7 @@ public final class QOM {
         /**
          * The maximum length to pad the string to.
          */
+        @CheckReturnValue
         @NotNull default Lpad $length(Field<? extends Number> newLength) { return $arg2(newLength); }
 
         /**
@@ -4462,7 +4557,8 @@ public final class QOM {
         /**
          * The padding character, if different from whitespace
          */
-        @Nullable default Lpad $character(Field<String> newCharacter) { return $arg3(newCharacter); }
+        @CheckReturnValue
+        @NotNull default Lpad $character(Field<String> newCharacter) { return $arg3(newCharacter); }
     }
 
     /**
@@ -4487,6 +4583,7 @@ public final class QOM {
         /**
          * The string to be trimmed.
          */
+        @CheckReturnValue
         @NotNull default Ltrim $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4497,7 +4594,8 @@ public final class QOM {
         /**
          * The characters to be trimmed.
          */
-        @Nullable default Ltrim $characters(Field<String> newCharacters) { return $arg2(newCharacters); }
+        @CheckReturnValue
+        @NotNull default Ltrim $characters(Field<String> newCharacters) { return $arg2(newCharacters); }
     }
 
     /**
@@ -4514,6 +4612,7 @@ public final class QOM {
         //    Md5
     {
         @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Md5 $string(Field<String> newString) { return $arg1(newString); }
     }
 
@@ -4531,6 +4630,7 @@ public final class QOM {
         //    OctetLength
     {
         @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default OctetLength $string(Field<String> newString) { return $arg1(newString); }
     }
 
@@ -4556,6 +4656,7 @@ public final class QOM {
         /**
          * The original string on top of which the overlay is placed.
          */
+        @CheckReturnValue
         @NotNull default Overlay $in(Field<String> newIn) { return $arg1(newIn); }
 
         /**
@@ -4566,6 +4667,7 @@ public final class QOM {
         /**
          * The string that is being placed on top of the other string.
          */
+        @CheckReturnValue
         @NotNull default Overlay $placing(Field<String> newPlacing) { return $arg2(newPlacing); }
 
         /**
@@ -4576,6 +4678,7 @@ public final class QOM {
         /**
          * The start index (1-based) starting from where the overlay is placed.
          */
+        @CheckReturnValue
         @NotNull default Overlay $startIndex(Field<? extends Number> newStartIndex) { return $arg3(newStartIndex); }
 
         /**
@@ -4586,7 +4689,8 @@ public final class QOM {
         /**
          * The length in the original string that will be replaced, if different from the overlay length.
          */
-        @Nullable default Overlay $length(Field<? extends Number> newLength) { return $arg4(newLength); }
+        @CheckReturnValue
+        @NotNull default Overlay $length(Field<? extends Number> newLength) { return $arg4(newLength); }
     }
 
     /**
@@ -4611,6 +4715,7 @@ public final class QOM {
         /**
          * The string in which to search the substring.
          */
+        @CheckReturnValue
         @NotNull default Position $in(Field<String> newIn) { return $arg1(newIn); }
 
         /**
@@ -4621,6 +4726,7 @@ public final class QOM {
         /**
          * The substring to search for.
          */
+        @CheckReturnValue
         @NotNull default Position $search(Field<String> newSearch) { return $arg2(newSearch); }
 
         /**
@@ -4631,7 +4737,8 @@ public final class QOM {
         /**
          * The start index (1-based) from which to start looking for the substring.
          */
-        @Nullable default Position $startIndex(Field<? extends Number> newStartIndex) { return $arg3(newStartIndex); }
+        @CheckReturnValue
+        @NotNull default Position $startIndex(Field<? extends Number> newStartIndex) { return $arg3(newStartIndex); }
     }
 
     /**
@@ -4656,6 +4763,7 @@ public final class QOM {
         /**
          * The string to be repeated.
          */
+        @CheckReturnValue
         @NotNull default Repeat $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4666,6 +4774,7 @@ public final class QOM {
         /**
          * The number of times to repeat the string.
          */
+        @CheckReturnValue
         @NotNull default Repeat $count(Field<? extends Number> newCount) { return $arg2(newCount); }
     }
 
@@ -4691,6 +4800,7 @@ public final class QOM {
         /**
          * The string in which to replace contents.
          */
+        @CheckReturnValue
         @NotNull default Replace $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4701,6 +4811,7 @@ public final class QOM {
         /**
          * The substring to search for.
          */
+        @CheckReturnValue
         @NotNull default Replace $search(Field<String> newSearch) { return $arg2(newSearch); }
 
         /**
@@ -4711,7 +4822,8 @@ public final class QOM {
         /**
          * The replacement for each substring, if not empty.
          */
-        @Nullable default Replace $replace(Field<String> newReplace) { return $arg3(newReplace); }
+        @CheckReturnValue
+        @NotNull default Replace $replace(Field<String> newReplace) { return $arg3(newReplace); }
     }
 
     /**
@@ -4728,6 +4840,7 @@ public final class QOM {
         //    Reverse
     {
         @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Reverse $string(Field<String> newString) { return $arg1(newString); }
     }
 
@@ -4753,6 +4866,7 @@ public final class QOM {
         /**
          * The string whose characters are extracted.
          */
+        @CheckReturnValue
         @NotNull default Right $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4763,6 +4877,7 @@ public final class QOM {
         /**
          * The number of characters to extract from the string.
          */
+        @CheckReturnValue
         @NotNull default Right $length(Field<? extends Number> newLength) { return $arg2(newLength); }
     }
 
@@ -4788,6 +4903,7 @@ public final class QOM {
         /**
          * The string to be padded.
          */
+        @CheckReturnValue
         @NotNull default Rpad $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4798,6 +4914,7 @@ public final class QOM {
         /**
          * The maximum length to pad the string to.
          */
+        @CheckReturnValue
         @NotNull default Rpad $length(Field<? extends Number> newLength) { return $arg2(newLength); }
 
         /**
@@ -4808,7 +4925,8 @@ public final class QOM {
         /**
          * The padding character, if different from whitespace
          */
-        @Nullable default Rpad $character(Field<String> newCharacter) { return $arg3(newCharacter); }
+        @CheckReturnValue
+        @NotNull default Rpad $character(Field<String> newCharacter) { return $arg3(newCharacter); }
     }
 
     /**
@@ -4833,6 +4951,7 @@ public final class QOM {
         /**
          * The string to be trimmed.
          */
+        @CheckReturnValue
         @NotNull default Rtrim $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4843,7 +4962,8 @@ public final class QOM {
         /**
          * The characters to be trimmed.
          */
-        @Nullable default Rtrim $characters(Field<String> newCharacters) { return $arg2(newCharacters); }
+        @CheckReturnValue
+        @NotNull default Rtrim $characters(Field<String> newCharacters) { return $arg2(newCharacters); }
     }
 
     /**
@@ -4868,6 +4988,7 @@ public final class QOM {
         /**
          * The number of spaces to produce.
          */
+        @CheckReturnValue
         @NotNull default Space $count(Field<? extends Number> newCount) { return $arg1(newCount); }
     }
 
@@ -4893,6 +5014,7 @@ public final class QOM {
         /**
          * The string to be split into parts.
          */
+        @CheckReturnValue
         @NotNull default SplitPart $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4903,6 +5025,7 @@ public final class QOM {
         /**
          * The delimiter used for splitting.
          */
+        @CheckReturnValue
         @NotNull default SplitPart $delimiter(Field<String> newDelimiter) { return $arg2(newDelimiter); }
 
         /**
@@ -4913,6 +5036,7 @@ public final class QOM {
         /**
          * The token number (1-based).
          */
+        @CheckReturnValue
         @NotNull default SplitPart $n(Field<? extends Number> newN) { return $arg3(newN); }
     }
 
@@ -4936,8 +5060,10 @@ public final class QOM {
         //    StartsWith
     {
         @NotNull default Field<T> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default StartsWith<T> $string(Field<T> newString) { return $arg1(newString); }
         @NotNull default Field<T> $prefix() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default StartsWith<T> $prefix(Field<T> newPrefix) { return $arg2(newPrefix); }
     }
 
@@ -4961,8 +5087,10 @@ public final class QOM {
         //    StartsWithIgnoreCase
     {
         @NotNull default Field<T> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default StartsWithIgnoreCase<T> $string(Field<T> newString) { return $arg1(newString); }
         @NotNull default Field<T> $prefix() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default StartsWithIgnoreCase<T> $prefix(Field<T> newPrefix) { return $arg2(newPrefix); }
     }
 
@@ -4988,6 +5116,7 @@ public final class QOM {
         /**
          * The string from which to get the substring.
          */
+        @CheckReturnValue
         @NotNull default Substring $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -4998,6 +5127,7 @@ public final class QOM {
         /**
          * The position (1-based) from which to get the substring.
          */
+        @CheckReturnValue
         @NotNull default Substring $startingPosition(Field<? extends Number> newStartingPosition) { return $arg2(newStartingPosition); }
 
         /**
@@ -5008,7 +5138,8 @@ public final class QOM {
         /**
          * The maximum length of the substring.
          */
-        @Nullable default Substring $length(Field<? extends Number> newLength) { return $arg3(newLength); }
+        @CheckReturnValue
+        @NotNull default Substring $length(Field<? extends Number> newLength) { return $arg3(newLength); }
     }
 
     /**
@@ -5033,6 +5164,7 @@ public final class QOM {
         /**
          * The string from which to get the substring.
          */
+        @CheckReturnValue
         @NotNull default SubstringIndex $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -5043,6 +5175,7 @@ public final class QOM {
         /**
          * The delimiter.
          */
+        @CheckReturnValue
         @NotNull default SubstringIndex $delimiter(Field<String> newDelimiter) { return $arg2(newDelimiter); }
 
         /**
@@ -5053,6 +5186,7 @@ public final class QOM {
         /**
          * The number of occurrences of the delimiter.
          */
+        @CheckReturnValue
         @NotNull default SubstringIndex $n(Field<? extends Number> newN) { return $arg3(newN); }
     }
 
@@ -5078,6 +5212,7 @@ public final class QOM {
         /**
          * The value to be formatted.
          */
+        @CheckReturnValue
         @NotNull default ToChar $value(Field<?> newValue) { return $arg1(newValue); }
 
         /**
@@ -5088,7 +5223,8 @@ public final class QOM {
         /**
          * The vendor-specific formatting string.
          */
-        @Nullable default ToChar $formatMask(Field<String> newFormatMask) { return $arg2(newFormatMask); }
+        @CheckReturnValue
+        @NotNull default ToChar $formatMask(Field<String> newFormatMask) { return $arg2(newFormatMask); }
     }
 
     /**
@@ -5113,6 +5249,7 @@ public final class QOM {
         /**
          * The formatted DATE value.
          */
+        @CheckReturnValue
         @NotNull default ToDate $value(Field<String> newValue) { return $arg1(newValue); }
 
         /**
@@ -5123,6 +5260,7 @@ public final class QOM {
         /**
          * The vendor-specific formatting string.
          */
+        @CheckReturnValue
         @NotNull default ToDate $formatMask(Field<String> newFormatMask) { return $arg2(newFormatMask); }
     }
 
@@ -5140,6 +5278,7 @@ public final class QOM {
         //    ToHex
     {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default ToHex $value(Field<? extends Number> newValue) { return $arg1(newValue); }
     }
 
@@ -5165,6 +5304,7 @@ public final class QOM {
         /**
          * The formatted TIMESTAMP value.
          */
+        @CheckReturnValue
         @NotNull default ToTimestamp $value(Field<String> newValue) { return $arg1(newValue); }
 
         /**
@@ -5175,6 +5315,7 @@ public final class QOM {
         /**
          * The vendor-specific formatting string.
          */
+        @CheckReturnValue
         @NotNull default ToTimestamp $formatMask(Field<String> newFormatMask) { return $arg2(newFormatMask); }
     }
 
@@ -5200,6 +5341,7 @@ public final class QOM {
         /**
          * The string to translate.
          */
+        @CheckReturnValue
         @NotNull default Translate $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -5210,6 +5352,7 @@ public final class QOM {
         /**
          * The set of source characters.
          */
+        @CheckReturnValue
         @NotNull default Translate $from(Field<String> newFrom) { return $arg2(newFrom); }
 
         /**
@@ -5220,6 +5363,7 @@ public final class QOM {
         /**
          * The set of target characters, matched with source characters by position.
          */
+        @CheckReturnValue
         @NotNull default Translate $to(Field<String> newTo) { return $arg3(newTo); }
     }
 
@@ -5245,6 +5389,7 @@ public final class QOM {
         /**
          * The string to be trimmed.
          */
+        @CheckReturnValue
         @NotNull default Trim $string(Field<String> newString) { return $arg1(newString); }
 
         /**
@@ -5255,7 +5400,8 @@ public final class QOM {
         /**
          * The characters to be trimmed.
          */
-        @Nullable default Trim $characters(Field<String> newCharacters) { return $arg2(newCharacters); }
+        @CheckReturnValue
+        @NotNull default Trim $characters(Field<String> newCharacters) { return $arg2(newCharacters); }
     }
 
     /**
@@ -5272,6 +5418,7 @@ public final class QOM {
         //    Upper
     {
         @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Upper $string(Field<String> newString) { return $arg1(newString); }
     }
 
@@ -5310,6 +5457,7 @@ public final class QOM {
         /**
          * The date to add an interval to
          */
+        @CheckReturnValue
         @NotNull default DateAdd<T> $date(Field<T> newDate) { return $arg1(newDate); }
 
         /**
@@ -5320,6 +5468,7 @@ public final class QOM {
         /**
          * The interval to add to the date
          */
+        @CheckReturnValue
         @NotNull default DateAdd<T> $interval(Field<? extends Number> newInterval) { return $arg2(newInterval); }
 
         /**
@@ -5330,7 +5479,8 @@ public final class QOM {
         /**
          * The date part describing the interval
          */
-        @Nullable default DateAdd<T> $datePart(DatePart newDatePart) { return $arg3(newDatePart); }
+        @CheckReturnValue
+        @NotNull default DateAdd<T> $datePart(DatePart newDatePart) { return $arg3(newDatePart); }
     }
 
     /**
@@ -5347,6 +5497,7 @@ public final class QOM {
         //    Cardinality
     {
         @NotNull default Field<? extends Object[]> $array() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default Cardinality $array(Field<? extends Object[]> newArray) { return $arg1(newArray); }
     }
 
@@ -5364,8 +5515,10 @@ public final class QOM {
         //    ArrayGet
     {
         @NotNull default Field<T[]> $array() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default ArrayGet<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
         @NotNull default Field<Integer> $index() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default ArrayGet<T> $index(Field<Integer> newIndex) { return $arg2(newIndex); }
     }
 
@@ -5470,6 +5623,7 @@ public final class QOM {
         /**
          * The nullable value.
          */
+        @CheckReturnValue
         @NotNull default Nvl<T> $value(Field<T> newValue) { return $arg1(newValue); }
 
         /**
@@ -5480,6 +5634,7 @@ public final class QOM {
         /**
          * The default value if the other value is null.
          */
+        @CheckReturnValue
         @NotNull default Nvl<T> $defaultValue(Field<T> newDefaultValue) { return $arg2(newDefaultValue); }
     }
 
@@ -5502,6 +5657,7 @@ public final class QOM {
         /**
          * The result value if the other value is not equal.
          */
+        @CheckReturnValue
         @NotNull default Nullif<T> $value(Field<T> newValue) { return $arg1(newValue); }
 
         /**
@@ -5512,6 +5668,7 @@ public final class QOM {
         /**
          * The value to compare the result value with.
          */
+        @CheckReturnValue
         @NotNull default Nullif<T> $other(Field<T> newOther) { return $arg2(newOther); }
     }
 
@@ -5693,6 +5850,11 @@ public final class QOM {
 
 
 
+
+
+
+
+
     /**
      * The <code>XMLCOMMENT</code> function.
      */
@@ -5704,6 +5866,7 @@ public final class QOM {
         //    XMLComment
     {
         @NotNull default Field<String> $comment() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default XMLComment $comment(Field<String> newComment) { return $arg1(newComment); }
     }
 
@@ -5735,6 +5898,7 @@ public final class QOM {
 
 
 
+
     /**
      * The <code>XMLFOREST</code> function.
      */
@@ -5746,6 +5910,7 @@ public final class QOM {
         //    XMLForest
     {
         @NotNull default UnmodifiableList<? extends Field<?>> $fields() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default XMLForest $fields(UnmodifiableList<? extends Field<?>> newFields) { return $arg1(newFields); }
     }
 
@@ -5760,9 +5925,11 @@ public final class QOM {
         //    XMLPi
     {
         @NotNull default Name $target() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default XMLPi $target(Name newTarget) { return $arg1(newTarget); }
         @Nullable default Field<?> $content() { return $arg2(); }
-        @Nullable default XMLPi $content(Field<?> newContent) { return $arg2(newContent); }
+        @CheckReturnValue
+        @NotNull default XMLPi $content(Field<?> newContent) { return $arg2(newContent); }
     }
 
     /**
@@ -5776,10 +5943,13 @@ public final class QOM {
         //    XMLSerialize
     {
         @NotNull default Boolean $content() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default XMLSerialize<T> $content(Boolean newContent) { return $arg1(newContent); }
         @NotNull default Field<XML> $value() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default XMLSerialize<T> $value(Field<XML> newValue) { return $arg2(newValue); }
         @NotNull default DataType<T> $type() { return $arg3(); }
+        @CheckReturnValue
         @NotNull default XMLSerialize<T> $type(DataType<T> newType) { return $arg3(newType); }
     }
 
@@ -5794,13 +5964,17 @@ public final class QOM {
         //    JSONArray
     {
         @NotNull default DataType<T> $type() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONArray<T> $type(DataType<T> newType) { return $arg1(newType); }
         @NotNull default UnmodifiableList<? extends Field<?>> $fields() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONArray<T> $fields(UnmodifiableList<? extends Field<?>> newFields) { return $arg2(newFields); }
         @Nullable default JSONOnNull $onNull() { return $arg3(); }
-        @Nullable default JSONArray<T> $onNull(JSONOnNull newOnNull) { return $arg3(newOnNull); }
+        @CheckReturnValue
+        @NotNull default JSONArray<T> $onNull(JSONOnNull newOnNull) { return $arg3(newOnNull); }
         @Nullable default DataType<?> $returning() { return $arg4(); }
-        @Nullable default JSONArray<T> $returning(DataType<?> newReturning) { return $arg4(newReturning); }
+        @CheckReturnValue
+        @NotNull default JSONArray<T> $returning(DataType<?> newReturning) { return $arg4(newReturning); }
     }
 
     /**
@@ -5814,13 +5988,17 @@ public final class QOM {
         //    JSONObject
     {
         @NotNull default DataType<T> $type() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONObject<T> $type(DataType<T> newType) { return $arg1(newType); }
         @NotNull default UnmodifiableList<? extends JSONEntry<?>> $entries() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONObject<T> $entries(UnmodifiableList<? extends JSONEntry<?>> newEntries) { return $arg2(newEntries); }
         @Nullable default JSONOnNull $onNull() { return $arg3(); }
-        @Nullable default JSONObject<T> $onNull(JSONOnNull newOnNull) { return $arg3(newOnNull); }
+        @CheckReturnValue
+        @NotNull default JSONObject<T> $onNull(JSONOnNull newOnNull) { return $arg3(newOnNull); }
         @Nullable default DataType<?> $returning() { return $arg4(); }
-        @Nullable default JSONObject<T> $returning(DataType<?> newReturning) { return $arg4(newReturning); }
+        @CheckReturnValue
+        @NotNull default JSONObject<T> $returning(DataType<?> newReturning) { return $arg4(newReturning); }
     }
 
     /**
@@ -5837,8 +6015,10 @@ public final class QOM {
         //    JSONGetElement
     {
         @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONGetElement $field(Field<JSON> newField) { return $arg1(newField); }
         @NotNull default Field<Integer> $index() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONGetElement $index(Field<Integer> newIndex) { return $arg2(newIndex); }
     }
 
@@ -5856,8 +6036,10 @@ public final class QOM {
         //    JSONBGetElement
     {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONBGetElement $field(Field<JSONB> newField) { return $arg1(newField); }
         @NotNull default Field<Integer> $index() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONBGetElement $index(Field<Integer> newIndex) { return $arg2(newIndex); }
     }
 
@@ -5875,8 +6057,10 @@ public final class QOM {
         //    JSONGetElementAsText
     {
         @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONGetElementAsText $field(Field<JSON> newField) { return $arg1(newField); }
         @NotNull default Field<Integer> $index() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONGetElementAsText $index(Field<Integer> newIndex) { return $arg2(newIndex); }
     }
 
@@ -5894,8 +6078,10 @@ public final class QOM {
         //    JSONBGetElementAsText
     {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONBGetElementAsText $field(Field<JSONB> newField) { return $arg1(newField); }
         @NotNull default Field<Integer> $index() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONBGetElementAsText $index(Field<Integer> newIndex) { return $arg2(newIndex); }
     }
 
@@ -5913,8 +6099,10 @@ public final class QOM {
         //    JSONGetAttribute
     {
         @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONGetAttribute $field(Field<JSON> newField) { return $arg1(newField); }
         @NotNull default Field<String> $attribute() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONGetAttribute $attribute(Field<String> newAttribute) { return $arg2(newAttribute); }
     }
 
@@ -5932,8 +6120,10 @@ public final class QOM {
         //    JSONBGetAttribute
     {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONBGetAttribute $field(Field<JSONB> newField) { return $arg1(newField); }
         @NotNull default Field<String> $attribute() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONBGetAttribute $attribute(Field<String> newAttribute) { return $arg2(newAttribute); }
     }
 
@@ -5951,8 +6141,10 @@ public final class QOM {
         //    JSONGetAttributeAsText
     {
         @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONGetAttributeAsText $field(Field<JSON> newField) { return $arg1(newField); }
         @NotNull default Field<String> $attribute() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONGetAttributeAsText $attribute(Field<String> newAttribute) { return $arg2(newAttribute); }
     }
 
@@ -5971,8 +6163,10 @@ public final class QOM {
         //    JSONBGetAttributeAsText
     {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONBGetAttributeAsText $field(Field<JSONB> newField) { return $arg1(newField); }
         @NotNull default Field<String> $attribute() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONBGetAttributeAsText $attribute(Field<String> newAttribute) { return $arg2(newAttribute); }
     }
 
@@ -5990,6 +6184,7 @@ public final class QOM {
         //    JSONKeys
     {
         @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONKeys $field(Field<JSON> newField) { return $arg1(newField); }
     }
 
@@ -6007,6 +6202,7 @@ public final class QOM {
         //    JSONBKeys
     {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONBKeys $field(Field<JSONB> newField) { return $arg1(newField); }
     }
 
@@ -6023,10 +6219,13 @@ public final class QOM {
         //    JSONSet
     {
         @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONSet $field(Field<JSON> newField) { return $arg1(newField); }
         @NotNull default Field<String> $path() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONSet $path(Field<String> newPath) { return $arg2(newPath); }
         @NotNull default Field<?> $value() { return $arg3(); }
+        @CheckReturnValue
         @NotNull default JSONSet $value(Field<?> newValue) { return $arg3(newValue); }
     }
 
@@ -6043,10 +6242,13 @@ public final class QOM {
         //    JSONBSet
     {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONBSet $field(Field<JSONB> newField) { return $arg1(newField); }
         @NotNull default Field<String> $path() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONBSet $path(Field<String> newPath) { return $arg2(newPath); }
         @NotNull default Field<?> $value() { return $arg3(); }
+        @CheckReturnValue
         @NotNull default JSONBSet $value(Field<?> newValue) { return $arg3(newValue); }
     }
 
@@ -6063,10 +6265,13 @@ public final class QOM {
         //    JSONInsert
     {
         @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONInsert $field(Field<JSON> newField) { return $arg1(newField); }
         @NotNull default Field<String> $path() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONInsert $path(Field<String> newPath) { return $arg2(newPath); }
         @NotNull default Field<?> $value() { return $arg3(); }
+        @CheckReturnValue
         @NotNull default JSONInsert $value(Field<?> newValue) { return $arg3(newValue); }
     }
 
@@ -6083,10 +6288,13 @@ public final class QOM {
         //    JSONBInsert
     {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONBInsert $field(Field<JSONB> newField) { return $arg1(newField); }
         @NotNull default Field<String> $path() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONBInsert $path(Field<String> newPath) { return $arg2(newPath); }
         @NotNull default Field<?> $value() { return $arg3(); }
+        @CheckReturnValue
         @NotNull default JSONBInsert $value(Field<?> newValue) { return $arg3(newValue); }
     }
 
@@ -6103,10 +6311,13 @@ public final class QOM {
         //    JSONReplace
     {
         @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONReplace $field(Field<JSON> newField) { return $arg1(newField); }
         @NotNull default Field<String> $path() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONReplace $path(Field<String> newPath) { return $arg2(newPath); }
         @NotNull default Field<?> $value() { return $arg3(); }
+        @CheckReturnValue
         @NotNull default JSONReplace $value(Field<?> newValue) { return $arg3(newValue); }
     }
 
@@ -6123,10 +6334,13 @@ public final class QOM {
         //    JSONBReplace
     {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONBReplace $field(Field<JSONB> newField) { return $arg1(newField); }
         @NotNull default Field<String> $path() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONBReplace $path(Field<String> newPath) { return $arg2(newPath); }
         @NotNull default Field<?> $value() { return $arg3(); }
+        @CheckReturnValue
         @NotNull default JSONBReplace $value(Field<?> newValue) { return $arg3(newValue); }
     }
 
@@ -6144,8 +6358,10 @@ public final class QOM {
         //    JSONRemove
     {
         @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONRemove $field(Field<JSON> newField) { return $arg1(newField); }
         @NotNull default Field<String> $path() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONRemove $path(Field<String> newPath) { return $arg2(newPath); }
     }
 
@@ -6163,8 +6379,10 @@ public final class QOM {
         //    JSONBRemove
     {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default JSONBRemove $field(Field<JSONB> newField) { return $arg1(newField); }
         @NotNull default Field<String> $path() { return $arg2(); }
+        @CheckReturnValue
         @NotNull default JSONBRemove $path(Field<String> newPath) { return $arg2(newPath); }
     }
 
@@ -6220,6 +6438,7 @@ public final class QOM {
         //    ConditionAsField
     {
         @NotNull default Condition $condition() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default ConditionAsField $condition(Condition newCondition) { return $arg1(newCondition); }
     }
 
@@ -6245,6 +6464,7 @@ public final class QOM {
         //    FieldCondition
     {
         @NotNull default Field<Boolean> $field() { return $arg1(); }
+        @CheckReturnValue
         @NotNull default FieldCondition $field(Field<Boolean> newField) { return $arg1(newField); }
     }
 
@@ -6855,6 +7075,39 @@ public final class QOM {
         @CheckReturnValue
         @NotNull VarSamp $field(Field<? extends Number> field);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

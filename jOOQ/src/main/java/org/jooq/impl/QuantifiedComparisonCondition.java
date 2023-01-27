@@ -141,7 +141,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
         }
         else if ((comparator == EQUALS || comparator == NOT_EQUALS)
                 && (query instanceof QOM.QuantifiedSelect)
-                && (s = subqueryWithLimit(((QOM.QuantifiedSelect<?>) query).$select())) != null
+                && (s = subqueryWithLimit(((QOM.QuantifiedSelect<?>) query).$query())) != null
                 && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
 
 
@@ -230,7 +230,7 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
             }
             else {
                 QOM.QuantifiedSelect<?> s = (QOM.QuantifiedSelect<?>) query;
-                t = new AliasedSelect<>(s.$select(), true, true, false, name("pattern")).as("t");
+                t = new AliasedSelect<>(s.$query(), true, true, false, name("pattern")).as("t");
                 q = s.$quantifier();
             }
 

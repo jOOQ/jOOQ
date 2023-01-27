@@ -57,13 +57,13 @@ import org.jooq.Table;
  */
 final class ArrayQuery<T> extends AbstractField<T[]> implements QOM.ArrayQuery<T> {
 
-    private final Select<? extends Record1<T>> select;
+    private final Select<? extends Record1<T>> query;
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    ArrayQuery(Select<? extends Record1<T>> select) {
-        super(N_ARRAY, (DataType) select.getSelect().get(0).getDataType().getArrayDataType());
+    ArrayQuery(Select<? extends Record1<T>> query) {
+        super(N_ARRAY, (DataType) query.getSelect().get(0).getDataType().getArrayDataType());
 
-        this.select = select;
+        this.query = query;
     }
 
     @Override
@@ -77,7 +77,7 @@ final class ArrayQuery<T> extends AbstractField<T[]> implements QOM.ArrayQuery<T
 
 
             case H2: {
-                Table<?> t = select.asTable("t", "c");
+                Table<?> t = query.asTable("t", "c");
                 Field<?> c = t.field("c");
 
                 // [#11053] TODO: Move ORDER BY clause from subquery to ARRAY_AGG
@@ -87,7 +87,7 @@ final class ArrayQuery<T> extends AbstractField<T[]> implements QOM.ArrayQuery<T
             }
 
             default:
-                ctx.visit(K_ARRAY).visitSubquery(select);
+                ctx.visit(K_ARRAY).visitSubquery(query);
 
                 break;
         }
@@ -98,8 +98,8 @@ final class ArrayQuery<T> extends AbstractField<T[]> implements QOM.ArrayQuery<T
     // -------------------------------------------------------------------------
 
     @Override
-    public final Select<? extends Record1<T>> $select() {
-        return select;
+    public final Select<? extends Record1<T>> $query() {
+        return query;
     }
 
 

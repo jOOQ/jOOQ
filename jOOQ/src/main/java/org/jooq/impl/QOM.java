@@ -1033,8 +1033,8 @@ public final class QOM {
     {
         @NotNull default Quantifier $quantifier() { return $arg1(); }
         @NotNull default QuantifiedSelect<R> $quantifier(Quantifier newQuantifier) { return $arg1(newQuantifier); }
-        @NotNull default Select<R> $select() { return $arg2(); }
-        @NotNull default QuantifiedSelect<R> $array(Select<R> newSelect) { return $arg2(newSelect); }
+        @NotNull default Select<R> $query() { return $arg2(); }
+        @NotNull default QuantifiedSelect<R> $query(Select<R> newSelect) { return $arg2(newSelect); }
     }
 
     public sealed interface QuantifiedArray<T>
@@ -1549,7 +1549,7 @@ public final class QOM {
         /*permits
             ArrayQuery*/
     {
-        @NotNull Select<? extends Record1<T>> $select();
+        @NotNull Select<? extends Record1<T>> $query();
     }
 
     public /*sealed*/ interface Multiset<R extends org.jooq.Record>

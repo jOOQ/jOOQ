@@ -39,55 +39,40 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.val;
-import static org.jooq.impl.Quantifier.ANY;
+import static org.jooq.impl.QOM.Quantifier.ANY;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.visitSubquery;
 
-import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Param;
+import org.jooq.Function2;
 import org.jooq.QuantifiedSelect;
-import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Record1;
 import org.jooq.Select;
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
  */
-final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implements QuantifiedSelect<R>, UNotYetImplemented {
+final class QuantifiedSelectImpl<R extends Record>
+extends
+    AbstractQueryPart
+implements
+    QuantifiedSelect<R>,
+    QOM.QuantifiedSelect<R>
+{
 
-    final Quantifier                quantifier;
-    final Select<R>                 query;
-    final Field<? extends Object[]> array;
-    final Field<?>[]                values;
+    final Quantifier quantifier;
+    final Select<R>  query;
 
     QuantifiedSelectImpl(Quantifier quantifier, Select<R> query) {
         this.quantifier = quantifier;
         this.query = query;
-        this.array = null;
-        this.values = null;
     }
 
-    QuantifiedSelectImpl(Quantifier quantifier, Field<? extends Object[]> array) {
-        this.quantifier = quantifier;
-        this.query = null;
-        this.array = array;
-        this.values = null;
-    }
-
-    QuantifiedSelectImpl(Quantifier quantifier, Field<?>... values) {
-        this.quantifier = quantifier;
-        this.query = null;
-        this.array = null;
-        this.values = values;
-    }
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -102,77 +87,31 @@ final class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart imp
 
 
 
-
-
-
-
-
-
-
             default:
-                ctx.visit(quantifier.toKeyword());
+                ctx.visit(quantifier.keyword);
                 ctx.sql(extraParentheses ? " ((" : " (");
-                visitSubquery(ctx, delegate(ctx.configuration()), PREDICAND, false);
+                visitSubquery(ctx, query, PREDICAND, false);
                 ctx.sql(extraParentheses ? "))" : ")");
                 break;
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    private final QueryPart delegate(Configuration ctx) {
-        if (query != null) {
-            return query;
-        }
-        else if (values != null) {
-            Select<Record1<?>> select = null;
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
-            for (Field value : values)
-                if (select == null)
-                    select = select(value);
-                else
-                    select = select.unionAll(select(value));
+    @Override
+    public final Function2<? super Quantifier, ? super Select<R>, ? extends QOM.QuantifiedSelect<R>> $constructor() {
+        return (q, s) -> new QuantifiedSelectImpl<>(q, s);
+    }
 
-            return select;
-        }
-        else {
-            switch (ctx.family()) {
+    @Override
+    public final Quantifier $arg1() {
+        return quantifier;
+    }
 
-                // [#869] Postgres supports this syntax natively
-
-
-                case POSTGRES:
-                case YUGABYTEDB:
-                    return array;
-
-                // [#869] H2 and HSQLDB can emulate this syntax by unnesting
-                // the array in a subselect
-                case H2:
-                case HSQLDB:
-                    return create(ctx).select().from(table(array));
-
-                // [#1048] All other dialects emulate unnesting of arrays using
-                // UNION ALL-connected subselects
-                default: {
-
-                    // The Informix database has an interesting bug when quantified comparison predicates
-                    // use nested derived tables with UNION ALL
-                    if (array instanceof Param) {
-                        Object[] values0 = ((Param<? extends Object[]>) array).getValue();
-
-                        Select<Record1<Object>> select = null;
-                        for (Object value : values0)
-                            if (select == null)
-                                select = select(val(value));
-                            else
-                                select = select.unionAll(select(val(value)));
-
-                        return select;
-                    }
-                    else {
-                        return select().from(table(array));
-                    }
-                }
-            }
-        }
+    @Override
+    public final Select<R> $arg2() {
+        return query;
     }
 }

@@ -432,6 +432,7 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.DocumentOrContent;
+import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.QOM.ResultOption;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -10917,7 +10918,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
-        return array instanceof Field[] ? all((Field<T>[]) array) : new QuantifiedSelectImpl<>(Quantifier.ALL, val(array));
+        return array instanceof Field[] ? all((Field<T>[]) array) : new QuantifiedArray<>(Quantifier.ALL, val(array));
     }
 
     /**
@@ -10938,7 +10939,7 @@ public class DSL {
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T[]> array) {
-        return new QuantifiedSelectImpl<>(Quantifier.ALL, array);
+        return new QuantifiedArray<>(Quantifier.ALL, array);
     }
 
     /**
@@ -10960,7 +10961,7 @@ public class DSL {
     @Support
     @SafeVarargs
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T>... fields) {
-        return new QuantifiedSelectImpl<>(Quantifier.ALL, fields);
+        return new QuantifiedArray<>(Quantifier.ALL, new Array<>(asList(fields)));
     }
 
     /**
@@ -10999,7 +11000,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
-        return array instanceof Field[] ? any((Field<T>[]) array) : new QuantifiedSelectImpl<>(Quantifier.ANY, val(array));
+        return array instanceof Field[] ? any((Field<T>[]) array) : new QuantifiedArray<>(Quantifier.ANY, val(array));
     }
 
     /**
@@ -11020,7 +11021,7 @@ public class DSL {
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T[]> array) {
-        return new QuantifiedSelectImpl<>(Quantifier.ANY, array);
+        return new QuantifiedArray<>(Quantifier.ANY, array);
     }
 
     /**
@@ -11042,7 +11043,7 @@ public class DSL {
     @Support
     @SafeVarargs
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T>... fields) {
-        return new QuantifiedSelectImpl<>(Quantifier.ANY, fields);
+        return new QuantifiedArray<>(Quantifier.ANY, new Array<>(asList(fields)));
     }
 
     // -------------------------------------------------------------------------

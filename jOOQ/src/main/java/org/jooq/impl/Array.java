@@ -120,8 +120,8 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final UnmodifiableList<? extends Field<?>> $elements() {
-        return QOM.unmodifiable(fields.fields);
+    public final UnmodifiableList<? extends Field<T>> $elements() {
+        return (UnmodifiableList<? extends Field<T>>) QOM.unmodifiable(fields.fields);
     }
 
 

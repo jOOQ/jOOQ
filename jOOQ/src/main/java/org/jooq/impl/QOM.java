@@ -1016,6 +1016,40 @@ public final class QOM {
         @NotNull default Select<?> $field() { return $arg1(); }
     }
 
+    public sealed interface Quantified
+        extends
+            org.jooq.QueryPart
+        permits
+            QuantifiedSelect,
+            QuantifiedArray
+    {}
+
+    public sealed interface QuantifiedSelect<R extends Record>
+        extends
+            Quantified,
+            UOperator2<Quantifier, Select<R>, QuantifiedSelect<R>>
+        permits
+            org.jooq.impl.QuantifiedSelectImpl
+    {
+        @NotNull default Quantifier $quantifier() { return $arg1(); }
+        @NotNull default QuantifiedSelect<R> $quantifier(Quantifier newQuantifier) { return $arg1(newQuantifier); }
+        @NotNull default Select<R> $select() { return $arg2(); }
+        @NotNull default QuantifiedSelect<R> $array(Select<R> newSelect) { return $arg2(newSelect); }
+    }
+
+    public sealed interface QuantifiedArray<T>
+        extends
+            Quantified,
+            UOperator2<Quantifier, Field<T[]>, QuantifiedArray<T>>
+        permits
+            org.jooq.impl.QuantifiedArray
+    {
+        @NotNull default Quantifier $quantifier() { return $arg1(); }
+        @NotNull default QuantifiedArray<T> $quantifier(Quantifier newQuantifier) { return $arg1(newQuantifier); }
+        @NotNull default Field<T[]> $array() { return $arg2(); }
+        @NotNull default QuantifiedArray<T> $array(Field<T[]> newArray) { return $arg2(newArray); }
+    }
+
 
     // -------------------------------------------------------------------------
     // XXX: Rows
@@ -1506,7 +1540,7 @@ public final class QOM {
         /*permits
             org.jooq.impl.Array*/
     {
-        @NotNull UnmodifiableList<? extends Field<?>> $elements();
+        @NotNull UnmodifiableList<? extends Field<T>> $elements();
     }
 
     public /*sealed*/ interface ArrayQuery<T>
@@ -8253,6 +8287,23 @@ public final class QOM {
         final Keyword keyword;
 
         private ResultOption(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>Quantifier</code> type.
+     * <p>
+     * A quantifier for quantified selects.
+     */
+    public enum Quantifier {
+        ANY(keyword("any")),
+        ALL(keyword("all")),
+        ;
+
+        final Keyword keyword;
+
+        private Quantifier(Keyword keyword) {
             this.keyword = keyword;
         }
     }

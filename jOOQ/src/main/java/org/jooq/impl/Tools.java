@@ -111,6 +111,8 @@ import static org.jooq.impl.DDLStatementType.DROP_SCHEMA;
 import static org.jooq.impl.DDLStatementType.DROP_SEQUENCE;
 import static org.jooq.impl.DDLStatementType.DROP_TABLE;
 import static org.jooq.impl.DDLStatementType.DROP_VIEW;
+import static org.jooq.impl.DSL.all;
+import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
@@ -298,6 +300,7 @@ import org.jooq.Param;
 // ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QualifiedRecord;
+import org.jooq.QuantifiedSelect;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -343,6 +346,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
+import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
@@ -7415,5 +7419,16 @@ final class Tools {
             return array;
         else
             return Convert.convertArray(array, type);
+    }
+
+    static final <R extends Record> QuantifiedSelect<R> quantify(Quantifier q, Select<R> select) {
+        switch (q) {
+            case ANY:
+                return any(select);
+            case ALL:
+                return all(select);
+            default:
+                throw new IllegalArgumentException("Unsupported quantifier: " + q);
+        }
     }
 }

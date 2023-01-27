@@ -48,12 +48,13 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.Quantifier.ALL;
-import static org.jooq.impl.Quantifier.ANY;
+import static org.jooq.impl.QOM.Quantifier.ALL;
+import static org.jooq.impl.QOM.Quantifier.ANY;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.embeddedFieldsRow;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.fieldsByName;
+import static org.jooq.impl.Tools.quantify;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
 import static org.jooq.impl.Transformations.subqueryWithLimit;
@@ -73,6 +74,7 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectOrderByStep;
+import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.Tools.BooleanDataKey;
@@ -215,6 +217,13 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
                     && rightQuantified != null
                     && (s = subqueryWithLimit(rightQuantified)) != null
                     && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
+
+
+
+
+
+
+
 
 
 

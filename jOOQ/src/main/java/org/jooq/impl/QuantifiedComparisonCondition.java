@@ -80,6 +80,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.characterLiteral;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.quantify;
 import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
 import static org.jooq.impl.Transformations.subqueryWithLimit;
 import static org.jooq.tools.Convert.convert;
@@ -99,6 +100,8 @@ import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.impl.QOM.Array;
+import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
@@ -106,18 +109,18 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  */
 final class QuantifiedComparisonCondition extends AbstractCondition implements LikeEscapeStep, UNotYetImplemented {
 
-    private static final Clause[]         CLAUSES                          = { CONDITION, CONDITION_BETWEEN };
-    private static final Set<SQLDialect>  NO_SUPPORT_QUANTIFIED_LIKE       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect>  NO_SUPPORT_QUANTIFIED_SIMILAR_TO = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
-    private static final Set<SQLDialect>  SUPPORTS_QUANTIFIED_ARRAYS       = SQLDialect.supportedBy(POSTGRES);
+    private static final Clause[]        CLAUSES                          = { CONDITION, CONDITION_BETWEEN };
+    private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED_LIKE       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED_SIMILAR_TO = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> SUPPORTS_QUANTIFIED_ARRAYS       = SQLDialect.supportedBy(POSTGRES);
 
-    private final QuantifiedSelectImpl<?> query;
-    private final Field<?>                field;
-    private final Comparator              comparator;
-    private Character                     escape;
+    private final QuantifiedSelect<?>    query;
+    private final Field<?>               field;
+    private final Comparator             comparator;
+    private Character                    escape;
 
     QuantifiedComparisonCondition(QuantifiedSelect<?> query, Field<?> field, Comparator comparator) {
-        this.query = (QuantifiedSelectImpl<?>) query;
+        this.query = query;
         this.field = field;
         this.comparator = comparator;
     }
@@ -137,8 +140,12 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
             ctx.visit(row(embeddedFields(field)).compare(comparator, query));
         }
         else if ((comparator == EQUALS || comparator == NOT_EQUALS)
-                && (s = subqueryWithLimit(query.query)) != null
+                && (query instanceof QOM.QuantifiedSelect)
+                && (s = subqueryWithLimit(((QOM.QuantifiedSelect<?>) query).$select())) != null
                 && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
+
+
+
 
 
 
@@ -157,9 +164,9 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
             accept0(ctx);
     }
 
-    @SuppressWarnings({ "unchecked" })
     private final void accept0(Context<?> ctx) {
-        boolean quantifiedArray = query.array instanceof Param<?>;
+        boolean quantifiedArrayParam = query instanceof QOM.QuantifiedArray<?> a ? a.$arg2() instanceof Param : false;
+        boolean quantifiedArray = query instanceof QOM.QuantifiedArray<?> a ? a.$arg2() instanceof Array : false;
         boolean emulateOperator;
 
         switch (comparator) {
@@ -180,21 +187,23 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
 
         // [#9224] Special case when a SQL dialect actually supports quantified
         //         arrays, such as x = any(?::int[]) in PostgreSQL
-        if (quantifiedArray && SUPPORTS_QUANTIFIED_ARRAYS.contains(ctx.dialect()) && !emulateOperator) {
+        if (quantifiedArrayParam && SUPPORTS_QUANTIFIED_ARRAYS.contains(ctx.dialect()) && !emulateOperator) {
             accept1(ctx);
         }
-        else if (query.values != null || quantifiedArray) {
+        else if (quantifiedArrayParam || quantifiedArray) {
+            QOM.QuantifiedArray<?> a = (org.jooq.impl.QOM.QuantifiedArray<?>) query;
             ctx.visit(DSL.condition(
-                query.quantifier == Quantifier.ALL ? Operator.AND : Operator.OR,
-                query.values != null
-                    ? map(query.values, v -> comparisonCondition(comparator, (Field<String>) v))
-                    : map(((Param<? extends Object[]>) query.array).getValue(), v -> v instanceof Field ? comparisonCondition(comparator, (Field<String>) v) : comparisonCondition(comparator, v))
+                a.$quantifier() == Quantifier.ALL ? Operator.AND : Operator.OR,
+                a.$array() instanceof Array
+                    ? map(((Array) a.$array()).$elements(), v -> comparisonCondition(comparator, (Field<String>) v))
+                    : map(((Param<? extends Object[]>) a.$array()).getValue(), v -> v instanceof Field ? comparisonCondition(comparator, (Field<String>) v) : comparisonCondition(comparator, v))
             ));
         }
-        else if ((query.array != null || query.query != null) && emulateOperator) {
+        else if (emulateOperator) {
             Field<String> pattern = DSL.field(name("pattern"), VARCHAR);
             Condition condition;
             Field<Boolean> lhs;
+
             switch (comparator) {
                 case NOT_LIKE:
                 case NOT_SIMILAR_TO:
@@ -212,11 +221,20 @@ final class QuantifiedComparisonCondition extends AbstractCondition implements L
                     throw new IllegalStateException();
             }
 
-            Table<?> t = query.array != null
-                ? new ArrayTable(query.array).asTable("t", "pattern")
-                : new AliasedSelect<>(query.query, true, true, false, name("pattern")).as("t");
-            Select<Record1<Boolean>> select = select(condition).from(t);
-            ctx.visit(lhs.eq(query.quantifier.apply(select)));
+            Table<?> t;
+            Quantifier q;
+
+            if (query instanceof QuantifiedArray<?> a) {
+                t = new ArrayTable(a.$array()).asTable("t", "pattern");
+                q = a.$quantifier();
+            }
+            else {
+                QOM.QuantifiedSelect<?> s = (QOM.QuantifiedSelect<?>) query;
+                t = new AliasedSelect<>(s.$select(), true, true, false, name("pattern")).as("t");
+                q = s.$quantifier();
+            }
+
+            ctx.visit(lhs.eq(quantify(q, select(condition).from(t))));
         }
         else {
             accept1(ctx);

@@ -661,6 +661,13 @@ extends
     Condition eq(Field<T> arg2);
 
     /**
+     * The <code>EQ</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition eq(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
+
+    /**
      * The <code>EQUAL</code> operator, an alias for the <code>EQ</code> operator.
      */
     @NotNull
@@ -680,6 +687,13 @@ extends
     @NotNull
     @Support
     Condition equal(Field<T> arg2);
+
+    /**
+     * The <code>EQUAL</code> operator, an alias for the <code>EQ</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition equal(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
      * The <code>GE</code> operator.
@@ -703,6 +717,13 @@ extends
     Condition ge(Field<T> arg2);
 
     /**
+     * The <code>GE</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition ge(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
+
+    /**
      * The <code>GREATER_OR_EQUAL</code> operator, an alias for the <code>GE</code> operator.
      */
     @NotNull
@@ -722,6 +743,13 @@ extends
     @NotNull
     @Support
     Condition greaterOrEqual(Field<T> arg2);
+
+    /**
+     * The <code>GREATER_OR_EQUAL</code> operator, an alias for the <code>GE</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition greaterOrEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
      * The <code>GREATER_THAN</code> operator, an alias for the <code>GT</code> operator.
@@ -745,6 +773,13 @@ extends
     Condition greaterThan(Field<T> arg2);
 
     /**
+     * The <code>GREATER_THAN</code> operator, an alias for the <code>GT</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition greaterThan(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
+
+    /**
      * The <code>GT</code> operator.
      */
     @NotNull
@@ -764,6 +799,13 @@ extends
     @NotNull
     @Support
     Condition gt(Field<T> arg2);
+
+    /**
+     * The <code>GT</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition gt(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
      * The <code>IN</code> operator.
@@ -872,6 +914,13 @@ extends
     Condition le(Field<T> arg2);
 
     /**
+     * The <code>LE</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition le(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
+
+    /**
      * The <code>LESS_OR_EQUAL</code> operator, an alias for the <code>LE</code> operator.
      */
     @NotNull
@@ -891,6 +940,13 @@ extends
     @NotNull
     @Support
     Condition lessOrEqual(Field<T> arg2);
+
+    /**
+     * The <code>LESS_OR_EQUAL</code> operator, an alias for the <code>LE</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition lessOrEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
      * The <code>LESS_THAN</code> operator, an alias for the <code>LT</code> operator.
@@ -914,6 +970,13 @@ extends
     Condition lessThan(Field<T> arg2);
 
     /**
+     * The <code>LESS_THAN</code> operator, an alias for the <code>LT</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition lessThan(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
+
+    /**
      * The <code>LIKE</code> operator.
      *
      * @param pattern is wrapped as {@link #val(Object)}.
@@ -928,6 +991,13 @@ extends
     @NotNull
     @Support
     LikeEscapeStep like(Field<String> pattern);
+
+    /**
+     * The <code>LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep like(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern);
 
     /**
      * The <code>LIKE_IGNORE_CASE</code> operator.
@@ -981,6 +1051,13 @@ extends
     Condition lt(Field<T> arg2);
 
     /**
+     * The <code>LT</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition lt(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
+
+    /**
      * The <code>NE</code> operator.
      */
     @NotNull
@@ -1002,6 +1079,13 @@ extends
     Condition ne(Field<T> arg2);
 
     /**
+     * The <code>NE</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition ne(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
+
+    /**
      * The <code>NOT_EQUAL</code> operator, an alias for the <code>NE</code> operator.
      */
     @NotNull
@@ -1021,6 +1105,13 @@ extends
     @NotNull
     @Support
     Condition notEqual(Field<T> arg2);
+
+    /**
+     * The <code>NOT_EQUAL</code> operator, an alias for the <code>NE</code> operator.
+     */
+    @NotNull
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition notEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
      * The <code>NOT_IN</code> operator.
@@ -1052,6 +1143,13 @@ extends
     @NotNull
     @Support
     LikeEscapeStep notLike(Field<String> pattern);
+
+    /**
+     * The <code>NOT_LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep notLike(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern);
 
     /**
      * The <code>NOT_LIKE_IGNORE_CASE</code> operator.
@@ -1100,6 +1198,13 @@ extends
     LikeEscapeStep notSimilarTo(Field<String> pattern);
 
     /**
+     * The <code>NOT_SIMILAR_TO</code> operator.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep notSimilarTo(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern);
+
+    /**
      * The <code>SIMILAR_TO</code> operator.
      *
      * @param pattern is wrapped as {@link #val(Object)}.
@@ -1114,6 +1219,13 @@ extends
     @NotNull
     @Support
     LikeEscapeStep similarTo(Field<String> pattern);
+
+    /**
+     * The <code>SIMILAR_TO</code> operator.
+     */
+    @NotNull
+    @Support
+    LikeEscapeStep similarTo(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern);
 
     // -------------------------------------------------------------------------
     // XML predicates
@@ -2175,26 +2287,6 @@ extends
     Condition like(String value, char escape);
 
     /**
-     * Create a condition to pattern-check this field against a quantified select.
-     * <p>
-     * For example a query like {@code field.like(any("a%", "b%"))} translates into
-     * the SQL {@code (field like 'a%' or field like 'b%')}.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Field...)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Field...)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     * @see LikeEscapeStep#escape(char)
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep like(QuantifiedSelect<Record1<String>> query);
-
-    /**
      * Create a condition to case-insensitively pattern-check this field against
      * a field.
      * <p>
@@ -2243,26 +2335,6 @@ extends
     @NotNull
     @Support
     Condition notLike(String value, char escape);
-
-    /**
-     * Create a condition to pattern-check this field against a quantified select.
-     * <p>
-     * For example a query like {@code field.notLike(any("a%", "b%"))} translates into
-     * the SQL {@code (field not like 'a%' or field not like 'b%')}.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Field...)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Field...)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     * @see LikeEscapeStep#escape(char)
-     */
-    @NotNull
-    @Support
-    LikeEscapeStep notLike(QuantifiedSelect<Record1<String>> query);
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
@@ -2724,174 +2796,6 @@ extends
     // ------------------------------------------------------------------------
     // Comparison predicates
     // ------------------------------------------------------------------------
-
-    /**
-     * <code>this = [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition equal(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this = [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition eq(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this != [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this != [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition ne(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &lt; [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &lt; [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition lt(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &lt;= [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &lt;= [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition le(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &gt; [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &gt; [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition gt(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &gt;= [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
-
-    /**
-     * <code>this &gt;= [quantifier] (Select&lt;?&gt; …)</code>.
-     *
-     * @see DSL#all(Field)
-     * @see DSL#all(Select)
-     * @see DSL#all(Object...)
-     * @see DSL#any(Field)
-     * @see DSL#any(Select)
-     * @see DSL#any(Object...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition ge(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
      * Create a condition to check this field against known string literals for

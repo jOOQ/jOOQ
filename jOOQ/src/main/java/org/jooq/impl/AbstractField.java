@@ -416,6 +416,11 @@ implements
     }
 
     @Override
+    public final Condition eq(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
+        return new EqQuantified<>(this, arg2);
+    }
+
+    @Override
     public final Condition equal(T arg2) {
         return eq(arg2);
     }
@@ -427,6 +432,11 @@ implements
 
     @Override
     public final Condition equal(Field<T> arg2) {
+        return eq(arg2);
+    }
+
+    @Override
+    public final Condition equal(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
         return eq(arg2);
     }
 
@@ -446,6 +456,11 @@ implements
     }
 
     @Override
+    public final Condition ge(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
+        return new GeQuantified<>(this, arg2);
+    }
+
+    @Override
     public final Condition greaterOrEqual(T arg2) {
         return ge(arg2);
     }
@@ -457,6 +472,11 @@ implements
 
     @Override
     public final Condition greaterOrEqual(Field<T> arg2) {
+        return ge(arg2);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
         return ge(arg2);
     }
 
@@ -476,6 +496,11 @@ implements
     }
 
     @Override
+    public final Condition greaterThan(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
+        return gt(arg2);
+    }
+
+    @Override
     public final Condition gt(T arg2) {
         return new Gt<>(this, Tools.field(arg2, this));
     }
@@ -488,6 +513,11 @@ implements
     @Override
     public final Condition gt(Field<T> arg2) {
         return new Gt<>(this, nullSafe(arg2, getDataType()));
+    }
+
+    @Override
+    public final Condition gt(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
+        return new GtQuantified<>(this, arg2);
     }
 
     @Override
@@ -551,6 +581,11 @@ implements
     }
 
     @Override
+    public final Condition le(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
+        return new LeQuantified<>(this, arg2);
+    }
+
+    @Override
     public final Condition lessOrEqual(T arg2) {
         return le(arg2);
     }
@@ -562,6 +597,11 @@ implements
 
     @Override
     public final Condition lessOrEqual(Field<T> arg2) {
+        return le(arg2);
+    }
+
+    @Override
+    public final Condition lessOrEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
         return le(arg2);
     }
 
@@ -581,6 +621,11 @@ implements
     }
 
     @Override
+    public final Condition lessThan(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
+        return lt(arg2);
+    }
+
+    @Override
     public final LikeEscapeStep like(String pattern) {
         return new Like(this, Tools.field(pattern));
     }
@@ -588,6 +633,11 @@ implements
     @Override
     public final LikeEscapeStep like(Field<String> pattern) {
         return new Like(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    public final LikeEscapeStep like(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern) {
+        return new LikeQuantified(this, pattern);
     }
 
     @Override
@@ -616,6 +666,11 @@ implements
     }
 
     @Override
+    public final Condition lt(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
+        return new LtQuantified<>(this, arg2);
+    }
+
+    @Override
     public final Condition ne(T arg2) {
         return new Ne<>(this, Tools.field(arg2, this));
     }
@@ -628,6 +683,11 @@ implements
     @Override
     public final Condition ne(Field<T> arg2) {
         return new Ne<>(this, nullSafe(arg2, getDataType()));
+    }
+
+    @Override
+    public final Condition ne(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
+        return new NeQuantified<>(this, arg2);
     }
 
     @Override
@@ -646,6 +706,11 @@ implements
     }
 
     @Override
+    public final Condition notEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
+        return ne(arg2);
+    }
+
+    @Override
     public final Condition notIn(Select<? extends Record1<T>> arg2) {
         return new NotIn<>(this, arg2);
     }
@@ -658,6 +723,11 @@ implements
     @Override
     public final LikeEscapeStep notLike(Field<String> pattern) {
         return new NotLike(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    public final LikeEscapeStep notLike(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern) {
+        return new NotLikeQuantified(this, pattern);
     }
 
     @Override
@@ -681,6 +751,11 @@ implements
     }
 
     @Override
+    public final LikeEscapeStep notSimilarTo(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern) {
+        return new NotSimilarToQuantified(this, pattern);
+    }
+
+    @Override
     public final LikeEscapeStep similarTo(String pattern) {
         return new SimilarTo(this, Tools.field(pattern));
     }
@@ -688,6 +763,11 @@ implements
     @Override
     public final LikeEscapeStep similarTo(Field<String> pattern) {
         return new SimilarTo(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    public final LikeEscapeStep similarTo(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern) {
+        return new SimilarToQuantified(this, pattern);
     }
 
     // -------------------------------------------------------------------------
@@ -1171,11 +1251,6 @@ implements
     }
 
     @Override
-    public final LikeEscapeStep like(QuantifiedSelect<Record1<String>> query) {
-        return new QuantifiedComparisonCondition(query, this, LIKE);
-    }
-
-    @Override
     public final Condition likeIgnoreCase(String value, char escape) {
         return likeIgnoreCase(Tools.field(value), escape);
     }
@@ -1203,11 +1278,6 @@ implements
     @Override
     public final Condition notLike(Field<String> field, char escape) {
         return notLike(field).escape(escape);
-    }
-
-    @Override
-    public final LikeEscapeStep notLike(QuantifiedSelect<Record1<String>> query) {
-        return new QuantifiedComparisonCondition(query, this, NOT_LIKE);
     }
 
     @Override
@@ -1399,36 +1469,6 @@ implements
     }
 
     @Override
-    public final Condition eq(QuantifiedSelect<? extends Record1<T>> query) {
-        return equal(query);
-    }
-
-    @Override
-    public final Condition ne(QuantifiedSelect<? extends Record1<T>> query) {
-        return notEqual(query);
-    }
-
-    @Override
-    public final Condition lt(QuantifiedSelect<? extends Record1<T>> query) {
-        return lessThan(query);
-    }
-
-    @Override
-    public final Condition le(QuantifiedSelect<? extends Record1<T>> query) {
-        return lessOrEqual(query);
-    }
-
-    @Override
-    public final Condition gt(QuantifiedSelect<? extends Record1<T>> query) {
-        return greaterThan(query);
-    }
-
-    @Override
-    public final Condition ge(QuantifiedSelect<? extends Record1<T>> query) {
-        return greaterOrEqual(query);
-    }
-
-    @Override
     public final Condition equalIgnoreCase(String value) {
         return equalIgnoreCase(Tools.field(value));
     }
@@ -1439,11 +1479,6 @@ implements
     }
 
     @Override
-    public final Condition equal(QuantifiedSelect<? extends Record1<T>> query) {
-        return compare(EQUALS, query);
-    }
-
-    @Override
     public final Condition notEqualIgnoreCase(String value) {
         return notEqualIgnoreCase(Tools.field(value));
     }
@@ -1451,31 +1486,6 @@ implements
     @Override
     public final Condition notEqualIgnoreCase(Field<String> value) {
         return DSL.lower(castIfNeeded(this, String.class)).notEqual(DSL.lower(value));
-    }
-
-    @Override
-    public final Condition notEqual(QuantifiedSelect<? extends Record1<T>> query) {
-        return compare(NOT_EQUALS, query);
-    }
-
-    @Override
-    public final Condition lessThan(QuantifiedSelect<? extends Record1<T>> query) {
-        return compare(LESS, query);
-    }
-
-    @Override
-    public final Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query) {
-        return compare(LESS_OR_EQUAL, query);
-    }
-
-    @Override
-    public final Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query) {
-        return compare(GREATER, query);
-    }
-
-    @Override
-    public final Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query) {
-        return compare(GREATER_OR_EQUAL, query);
     }
 
     @Override
@@ -1541,7 +1551,30 @@ implements
 
     @Override
     public final Condition compare(Comparator comparator, QuantifiedSelect<? extends Record1<T>> query) {
-        return new QuantifiedComparisonCondition(query, this, comparator);
+        switch (comparator) {
+            case EQUALS:
+                return new EqQuantified<>(this, query);
+            case GREATER:
+                return new GtQuantified<>(this, query);
+            case GREATER_OR_EQUAL:
+                return new GeQuantified<>(this, query);
+            case LESS:
+                return new LtQuantified<>(this, query);
+            case LESS_OR_EQUAL:
+                return new LeQuantified<>(this, query);
+            case NOT_EQUALS:
+                return new NeQuantified<>(this, query);
+            case LIKE:
+                return new LikeQuantified(this, (QuantifiedSelect) query);
+            case NOT_LIKE:
+                return new NotLikeQuantified(this, (QuantifiedSelect) query);
+            case SIMILAR_TO:
+                return new SimilarToQuantified(this, (QuantifiedSelect) query);
+            case NOT_SIMILAR_TO:
+                return new NotSimilarToQuantified(this, (QuantifiedSelect) query);
+        }
+
+        throw new IllegalArgumentException("Comparator not supported: " + comparator);
     }
 
     // ------------------------------------------------------------------------

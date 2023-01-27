@@ -113,6 +113,7 @@ import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Privilege;
 // ...
+import org.jooq.QuantifiedSelect;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -1050,7 +1051,6 @@ public final class QOM {
         @NotNull default QuantifiedArray<T> $array(Field<T[]> newArray) { return $arg2(newArray); }
     }
 
-
     // -------------------------------------------------------------------------
     // XXX: Rows
     // -------------------------------------------------------------------------
@@ -1567,6 +1567,12 @@ public final class QOM {
             UOperator1<Select<? extends Record1<T>>, ScalarSubquery<T>>
         /*permits
             ScalarSubquery*/
+    {}
+
+    public /*sealed*/ interface RowSubquery
+        extends
+            Row,
+            UOperator1<Select<?>, RowSubquery>
     {}
 
     public /*sealed*/ interface Neg<T>
@@ -2799,6 +2805,18 @@ public final class QOM {
     {}
 
     /**
+     * The <code>EQ</code> operator.
+     */
+    public /*sealed*/ interface EqQuantified<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T>, org.jooq.QuantifiedSelect<? extends Record1<T>>, EqQuantified<T>>,
+            org.jooq.Condition
+        //permits
+        //    EqQuantified
+    {}
+
+    /**
      * The <code>EXISTS</code> function.
      */
     public /*sealed*/ interface Exists
@@ -2831,6 +2849,18 @@ public final class QOM {
     }
 
     /**
+     * The <code>GE</code> operator.
+     */
+    public /*sealed*/ interface GeQuantified<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T>, org.jooq.QuantifiedSelect<? extends Record1<T>>, GeQuantified<T>>,
+            org.jooq.Condition
+        //permits
+        //    GeQuantified
+    {}
+
+    /**
      * The <code>GT</code> operator.
      */
     public /*sealed*/ interface Gt<T>
@@ -2846,6 +2876,18 @@ public final class QOM {
             return new org.jooq.impl.Lt<>($arg2(), $arg1());
         }
     }
+
+    /**
+     * The <code>GT</code> operator.
+     */
+    public /*sealed*/ interface GtQuantified<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T>, org.jooq.QuantifiedSelect<? extends Record1<T>>, GtQuantified<T>>,
+            org.jooq.Condition
+        //permits
+        //    GtQuantified
+    {}
 
     /**
      * The <code>IN</code> operator.
@@ -2938,6 +2980,18 @@ public final class QOM {
     }
 
     /**
+     * The <code>LE</code> operator.
+     */
+    public /*sealed*/ interface LeQuantified<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T>, org.jooq.QuantifiedSelect<? extends Record1<T>>, LeQuantified<T>>,
+            org.jooq.Condition
+        //permits
+        //    LeQuantified
+    {}
+
+    /**
      * The <code>LIKE</code> operator.
      */
     public /*sealed*/ interface Like
@@ -2957,6 +3011,28 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
         @CheckReturnValue
         @NotNull default Like $escape(Character newEscape) { return $arg3(newEscape); }
+    }
+
+    /**
+     * The <code>LIKE</code> operator.
+     */
+    public /*sealed*/ interface LikeQuantified
+        extends
+            UReturnsNullOnNullInput,
+            UOperator3<Field<?>, org.jooq.QuantifiedSelect<? extends Record1<String>>, Character, LikeQuantified>,
+            Condition
+        //permits
+        //    LikeQuantified
+    {
+        @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default LikeQuantified $value(Field<?> newValue) { return $arg1(newValue); }
+        @NotNull default org.jooq.QuantifiedSelect<? extends Record1<String>> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default LikeQuantified $pattern(org.jooq.QuantifiedSelect<? extends Record1<String>> newPattern) { return $arg2(newPattern); }
+        @Nullable default Character $escape() { return $arg3(); }
+        @CheckReturnValue
+        @NotNull default LikeQuantified $escape(Character newEscape) { return $arg3(newEscape); }
     }
 
     /**
@@ -3006,6 +3082,18 @@ public final class QOM {
     }
 
     /**
+     * The <code>LT</code> operator.
+     */
+    public /*sealed*/ interface LtQuantified<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T>, org.jooq.QuantifiedSelect<? extends Record1<T>>, LtQuantified<T>>,
+            org.jooq.Condition
+        //permits
+        //    LtQuantified
+    {}
+
+    /**
      * The <code>NE</code> operator.
      */
     public /*sealed*/ interface TableNe<R extends Record>
@@ -3027,6 +3115,18 @@ public final class QOM {
             CompareCondition<T, Ne<T>>
         //permits
         //    Ne
+    {}
+
+    /**
+     * The <code>NE</code> operator.
+     */
+    public /*sealed*/ interface NeQuantified<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T>, org.jooq.QuantifiedSelect<? extends Record1<T>>, NeQuantified<T>>,
+            org.jooq.Condition
+        //permits
+        //    NeQuantified
     {}
 
     /**
@@ -3103,6 +3203,28 @@ public final class QOM {
     }
 
     /**
+     * The <code>NOT LIKE</code> operator.
+     */
+    public /*sealed*/ interface NotLikeQuantified
+        extends
+            UReturnsNullOnNullInput,
+            UOperator3<Field<?>, org.jooq.QuantifiedSelect<? extends Record1<String>>, Character, NotLikeQuantified>,
+            Condition
+        //permits
+        //    NotLikeQuantified
+    {
+        @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default NotLikeQuantified $value(Field<?> newValue) { return $arg1(newValue); }
+        @NotNull default org.jooq.QuantifiedSelect<? extends Record1<String>> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default NotLikeQuantified $pattern(org.jooq.QuantifiedSelect<? extends Record1<String>> newPattern) { return $arg2(newPattern); }
+        @Nullable default Character $escape() { return $arg3(); }
+        @CheckReturnValue
+        @NotNull default NotLikeQuantified $escape(Character newEscape) { return $arg3(newEscape); }
+    }
+
+    /**
      * The <code>NOT LIKE IGNORE CASE</code> operator.
      * <p>
      * Create a condition to case-insensitively pattern-check this field against
@@ -3154,6 +3276,28 @@ public final class QOM {
     }
 
     /**
+     * The <code>NOT SIMILAR TO</code> operator.
+     */
+    public /*sealed*/ interface NotSimilarToQuantified
+        extends
+            UReturnsNullOnNullInput,
+            UOperator3<Field<?>, org.jooq.QuantifiedSelect<? extends Record1<String>>, Character, NotSimilarToQuantified>,
+            Condition
+        //permits
+        //    NotSimilarToQuantified
+    {
+        @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default NotSimilarToQuantified $value(Field<?> newValue) { return $arg1(newValue); }
+        @NotNull default org.jooq.QuantifiedSelect<? extends Record1<String>> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default NotSimilarToQuantified $pattern(org.jooq.QuantifiedSelect<? extends Record1<String>> newPattern) { return $arg2(newPattern); }
+        @Nullable default Character $escape() { return $arg3(); }
+        @CheckReturnValue
+        @NotNull default NotSimilarToQuantified $escape(Character newEscape) { return $arg3(newEscape); }
+    }
+
+    /**
      * The <code>OR</code> operator.
      */
     public /*sealed*/ interface Or
@@ -3184,6 +3328,28 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
         @CheckReturnValue
         @NotNull default SimilarTo $escape(Character newEscape) { return $arg3(newEscape); }
+    }
+
+    /**
+     * The <code>SIMILAR TO</code> operator.
+     */
+    public /*sealed*/ interface SimilarToQuantified
+        extends
+            UReturnsNullOnNullInput,
+            UOperator3<Field<?>, org.jooq.QuantifiedSelect<? extends Record1<String>>, Character, SimilarToQuantified>,
+            Condition
+        //permits
+        //    SimilarToQuantified
+    {
+        @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default SimilarToQuantified $value(Field<?> newValue) { return $arg1(newValue); }
+        @NotNull default org.jooq.QuantifiedSelect<? extends Record1<String>> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default SimilarToQuantified $pattern(org.jooq.QuantifiedSelect<? extends Record1<String>> newPattern) { return $arg2(newPattern); }
+        @Nullable default Character $escape() { return $arg3(); }
+        @CheckReturnValue
+        @NotNull default SimilarToQuantified $escape(Character newEscape) { return $arg3(newEscape); }
     }
 
     /**

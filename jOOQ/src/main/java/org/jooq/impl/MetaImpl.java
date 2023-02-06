@@ -422,11 +422,12 @@ final class MetaImpl extends AbstractMeta {
                 String type = table.get(3, String.class);
                 String remarks = table.get(4, String.class);
 
-                // "TABLE","VIEW", "SYSTEM TABLE", "GLOBAL TEMPORARY","LOCAL TEMPORARY", "ALIAS", "SYNONYM".
                 TableType tableType =
                       "VIEW".equals(type)
                     ? TableType.VIEW
-                    : "SYSTEM_VIEW".equals(type)
+                    : "TEMPORARY VIEW".equals(type)
+                    ? TableType.VIEW
+                    : "SYSTEM_VIEW".equals(type) || "SYSTEM VIEW".equals(type)
                     ? TableType.VIEW
                     : "GLOBAL TEMPORARY".equals(type)
                     ? TableType.TEMPORARY

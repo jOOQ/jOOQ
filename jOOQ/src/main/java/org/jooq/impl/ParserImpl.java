@@ -8743,7 +8743,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseKeywordIf("LSHIFT"))
+                else if (parseKeywordIf("LSHIFT", "LEFT_SHIFT"))
                     return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shl(f1, f2));
                 else if ((field = parseFieldLeastIf()) != null)
                     return field;
@@ -8891,7 +8891,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if (parseFunctionNameIf("RATIO_TO_REPORT"))
                     return parseFunctionArgs1(f -> parseWindowFunction(null, null, ratioToReport(f)));
-                else if (parseKeywordIf("RSHIFT"))
+                else if (parseKeywordIf("RSHIFT", "RIGHT_SHIFT"))
                     return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shr(f1, f2));
                 else if (parseFunctionNameIf("ROW"))
                     return parseTuple();

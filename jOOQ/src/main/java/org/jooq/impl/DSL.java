@@ -16474,29 +16474,6 @@ public class DSL {
     /**
      * The <code>BIT_GET</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
-     * @param bit is wrapped as {@link #val(Object)}.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static <T extends Number> Field<T> bitGet(T value, int bit) {
-        return new BitGet<>(Tools.field(value), Tools.field(bit));
-    }
-
-    /**
-     * The <code>BIT_GET</code> function.
-     *
-     * @param value is wrapped as {@link #val(Object)}.
-     */
-    @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static <T extends Number> Field<T> bitGet(T value, Field<? extends Number> bit) {
-        return new BitGet<>(Tools.field(value), bit);
-    }
-
-    /**
-     * The <code>BIT_GET</code> function.
-     *
      * @param bit is wrapped as {@link #val(Object)}.
      */
     @NotNull
@@ -16666,24 +16643,44 @@ public class DSL {
     /**
      * The <code>BIT_SET</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
      * @param bit is wrapped as {@link #val(Object)}.
+     * @param newValue is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static <T extends Number> Field<T> bitSet(T value, int bit) {
-        return new BitSet<>(Tools.field(value), Tools.field(bit));
+    public static <T extends Number> Field<T> bitSet(Field<T> value, int bit, T newValue) {
+        return new BitSet<>(value, Tools.field(bit), Tools.field(newValue, value));
     }
 
     /**
      * The <code>BIT_SET</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param bit is wrapped as {@link #val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static <T extends Number> Field<T> bitSet(T value, Field<? extends Number> bit) {
-        return new BitSet<>(Tools.field(value), bit);
+    public static <T extends Number> Field<T> bitSet(Field<T> value, int bit, Field<T> newValue) {
+        return new BitSet<>(value, Tools.field(bit), newValue);
+    }
+
+    /**
+     * The <code>BIT_SET</code> function.
+     *
+     * @param newValue is wrapped as {@link #val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static <T extends Number> Field<T> bitSet(Field<T> value, Field<? extends Number> bit, T newValue) {
+        return new BitSet<>(value, bit, Tools.field(newValue, value));
+    }
+
+    /**
+     * The <code>BIT_SET</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static <T extends Number> Field<T> bitSet(Field<T> value, Field<? extends Number> bit, Field<T> newValue) {
+        return new BitSet<>(value, bit, newValue);
     }
 
     /**

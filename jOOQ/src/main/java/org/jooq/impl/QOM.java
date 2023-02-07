@@ -3868,7 +3868,7 @@ public final class QOM {
     public /*sealed*/ interface BitSet<T extends Number>
         extends
             UReturnsNullOnNullInput,
-            UOperator2<Field<T>, Field<? extends Number>, BitSet<T>>,
+            UOperator3<Field<T>, Field<? extends Number>, Field<T>, BitSet<T>>,
             org.jooq.Field<T>
         //permits
         //    BitSet
@@ -3879,6 +3879,9 @@ public final class QOM {
         @NotNull default Field<? extends Number> $bit() { return $arg2(); }
         @CheckReturnValue
         @NotNull default BitSet<T> $bit(Field<? extends Number> newBit) { return $arg2(newBit); }
+        @Nullable default Field<T> $newValue() { return $arg3(); }
+        @CheckReturnValue
+        @NotNull default BitSet<T> $newValue(Field<T> newNewValue) { return $arg3(newNewValue); }
     }
 
     /**

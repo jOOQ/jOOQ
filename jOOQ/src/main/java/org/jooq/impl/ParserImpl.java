@@ -8453,6 +8453,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'B':
                 if (parseFunctionNameIf("BIT_LENGTH"))
                     return bitLength((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("BITGET", "BIT_GET"))
+                    return parseFunctionArgs2(DSL::bitGet);
+                else if (parseFunctionNameIf("BITSET", "BIT_SET"))
+                    return parseFunctionArgs3(DSL::bitSet, DSL::bitSet);
                 else if (parseFunctionNameIf("BITCOUNT", "BIT_COUNT"))
                     return bitCount((Field) parseFieldNumericOpParenthesised());
                 else if (parseKeywordIf("BIT_LSHIFT"))
@@ -8628,9 +8632,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'G':
                 if (parseKeywordIf("GETDATE") && parseEmptyParens())
                     return currentTimestamp();
-
                 else if (parseFunctionNameIf("GENGUID", "GENERATE_UUID", "GEN_RANDOM_UUID") && parseEmptyParens())
                     return uuid();
+                else if (parseFunctionNameIf("GET_BIT", "GETBIT"))
+                    return parseFunctionArgs2(DSL::bitGet);
 
                 else if ((field = parseFieldGreatestIf()) != null)
                     return field;
@@ -8921,6 +8926,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs3(DSL::splitPart);
                 else if (parseFunctionNameIf("SYSUUID") && parseEmptyParensIf())
                     return uuid();
+                else if (parseFunctionNameIf("SET_BIT", "SETBIT"))
+                    return parseFunctionArgs3(DSL::bitSet, DSL::bitSet);
 
                 else if (parseFunctionNameIf("SECOND"))
                     return second(parseFieldParenthesised());

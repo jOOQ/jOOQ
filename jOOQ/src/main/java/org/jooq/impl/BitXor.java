@@ -104,6 +104,11 @@ implements
             case HSQLDB:
                 return true;
 
+
+
+
+
+
             case FIREBIRD:
                 return true;
 
@@ -134,6 +139,12 @@ implements
             case HSQLDB:
                 ctx.visit(function(N_BITXOR, getDataType(), arg1, arg2));
                 break;
+
+
+
+
+
+
 
             case FIREBIRD:
                 ctx.visit(function(N_BIN_XOR, getDataType(), arg1, arg2));

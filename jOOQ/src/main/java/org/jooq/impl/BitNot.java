@@ -105,6 +105,11 @@ implements
             case H2:
                 return true;
 
+
+
+
+
+
             case FIREBIRD:
                 return true;
 
@@ -136,6 +141,12 @@ implements
             case H2:
                 ctx.visit(function(N_BITNOT, getDataType(), arg1));
                 break;
+
+
+
+
+
+
 
             case FIREBIRD:
                 ctx.visit(function(N_BIN_NOT, getDataType(), arg1));

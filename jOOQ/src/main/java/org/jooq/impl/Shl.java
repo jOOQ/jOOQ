@@ -119,6 +119,9 @@ implements
 
 
 
+
+
+
             case HSQLDB:
                 return false;
 
@@ -143,6 +146,10 @@ implements
             case H2:
                 ctx.visit(function(N_LSHIFT, getDataType(), value, count));
                 break;
+
+
+
+
 
 
 

@@ -236,6 +236,10 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrivialBitwiseOperations = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsBitSet = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsBitGet = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsScalarSubqueryCountAsteriskGtZero = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsScalarSubqueryCountExpressionGtZero = true;
@@ -3076,6 +3080,58 @@ public class Settings
      */
     public void setTransformPatternsTrivialBitwiseOperations(Boolean value) {
         this.transformPatternsTrivialBitwiseOperations = value;
+    }
+
+    /**
+     * Transform bitwise operations to an equivalent <code>BIT_SET(a, b)</code> or <code>BIT_SET(a, b, c)</code> expression.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsBitSet() {
+        return transformPatternsBitSet;
+    }
+
+    /**
+     * Sets the value of the transformPatternsBitSet property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsBitSet(Boolean value) {
+        this.transformPatternsBitSet = value;
+    }
+
+    /**
+     * Transform bitwise operations to an equivalent <code>BIT_GET(a, b)</code> expression.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsBitGet() {
+        return transformPatternsBitGet;
+    }
+
+    /**
+     * Sets the value of the transformPatternsBitGet property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsBitGet(Boolean value) {
+        this.transformPatternsBitGet = value;
     }
 
     /**
@@ -6311,6 +6367,16 @@ public class Settings
         return this;
     }
 
+    public Settings withTransformPatternsBitSet(Boolean value) {
+        setTransformPatternsBitSet(value);
+        return this;
+    }
+
+    public Settings withTransformPatternsBitGet(Boolean value) {
+        setTransformPatternsBitGet(value);
+        return this;
+    }
+
     public Settings withTransformPatternsScalarSubqueryCountAsteriskGtZero(Boolean value) {
         setTransformPatternsScalarSubqueryCountAsteriskGtZero(value);
         return this;
@@ -7333,6 +7399,8 @@ public class Settings
         builder.append("transformPatternsTrivialCaseAbbreviation", transformPatternsTrivialCaseAbbreviation);
         builder.append("transformPatternsTrivialPredicates", transformPatternsTrivialPredicates);
         builder.append("transformPatternsTrivialBitwiseOperations", transformPatternsTrivialBitwiseOperations);
+        builder.append("transformPatternsBitSet", transformPatternsBitSet);
+        builder.append("transformPatternsBitGet", transformPatternsBitGet);
         builder.append("transformPatternsScalarSubqueryCountAsteriskGtZero", transformPatternsScalarSubqueryCountAsteriskGtZero);
         builder.append("transformPatternsScalarSubqueryCountExpressionGtZero", transformPatternsScalarSubqueryCountExpressionGtZero);
         builder.append("transformPatternsEmptyScalarSubquery", transformPatternsEmptyScalarSubquery);
@@ -8297,6 +8365,24 @@ public class Settings
             }
         } else {
             if (!transformPatternsTrivialBitwiseOperations.equals(other.transformPatternsTrivialBitwiseOperations)) {
+                return false;
+            }
+        }
+        if (transformPatternsBitSet == null) {
+            if (other.transformPatternsBitSet!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsBitSet.equals(other.transformPatternsBitSet)) {
+                return false;
+            }
+        }
+        if (transformPatternsBitGet == null) {
+            if (other.transformPatternsBitGet!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsBitGet.equals(other.transformPatternsBitGet)) {
                 return false;
             }
         }
@@ -9461,6 +9547,8 @@ public class Settings
         result = ((prime*result)+((transformPatternsTrivialCaseAbbreviation == null)? 0 :transformPatternsTrivialCaseAbbreviation.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialPredicates == null)? 0 :transformPatternsTrivialPredicates.hashCode()));
         result = ((prime*result)+((transformPatternsTrivialBitwiseOperations == null)? 0 :transformPatternsTrivialBitwiseOperations.hashCode()));
+        result = ((prime*result)+((transformPatternsBitSet == null)? 0 :transformPatternsBitSet.hashCode()));
+        result = ((prime*result)+((transformPatternsBitGet == null)? 0 :transformPatternsBitGet.hashCode()));
         result = ((prime*result)+((transformPatternsScalarSubqueryCountAsteriskGtZero == null)? 0 :transformPatternsScalarSubqueryCountAsteriskGtZero.hashCode()));
         result = ((prime*result)+((transformPatternsScalarSubqueryCountExpressionGtZero == null)? 0 :transformPatternsScalarSubqueryCountExpressionGtZero.hashCode()));
         result = ((prime*result)+((transformPatternsEmptyScalarSubquery == null)? 0 :transformPatternsEmptyScalarSubquery.hashCode()));

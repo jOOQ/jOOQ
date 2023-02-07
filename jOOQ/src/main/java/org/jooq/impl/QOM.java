@@ -3796,6 +3796,25 @@ public final class QOM {
     }
 
     /**
+     * The <code>BIT GET</code> function.
+     */
+    public /*sealed*/ interface BitGet<T extends Number>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<? extends Number>, BitGet<T>>,
+            org.jooq.Field<T>
+        //permits
+        //    BitGet
+    {
+        @NotNull default Field<T> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BitGet<T> $value(Field<T> newValue) { return $arg1(newValue); }
+        @NotNull default Field<? extends Number> $bit() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default BitGet<T> $bit(Field<? extends Number> newBit) { return $arg2(newBit); }
+    }
+
+    /**
      * The <code>BIT NAND</code> operator.
      */
     public /*sealed*/ interface BitNand<T extends Number>
@@ -3842,6 +3861,25 @@ public final class QOM {
         //permits
         //    BitOr
     {}
+
+    /**
+     * The <code>BIT SET</code> function.
+     */
+    public /*sealed*/ interface BitSet<T extends Number>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T>, Field<? extends Number>, BitSet<T>>,
+            org.jooq.Field<T>
+        //permits
+        //    BitSet
+    {
+        @NotNull default Field<T> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BitSet<T> $value(Field<T> newValue) { return $arg1(newValue); }
+        @NotNull default Field<? extends Number> $bit() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default BitSet<T> $bit(Field<? extends Number> newBit) { return $arg2(newBit); }
+    }
 
     /**
      * The <code>BIT X NOR</code> operator.

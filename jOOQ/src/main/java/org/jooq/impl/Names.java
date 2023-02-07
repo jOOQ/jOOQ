@@ -327,6 +327,7 @@ final class Names {
     static final Name N_BIN_SHR                = systemName("bin_shr");
     static final Name N_BIN_XOR                = systemName("bin_xor");
     static final Name N_BITAND                 = systemName("bitand");
+    static final Name N_BITGET                 = systemName("bitget");
     static final Name N_BITNOT                 = systemName("bitnot");
     static final Name N_BITOR                  = systemName("bitor");
     static final Name N_BITSHIFTLEFT           = systemName("bitshiftleft");
@@ -334,7 +335,9 @@ final class Names {
     static final Name N_BITXOR                 = systemName("bitxor");
     static final Name N_BIT_AND                = systemName("bit_and");
     static final Name N_BIT_AND_AGG            = systemName("bit_and_agg");
+    static final Name N_BIT_CHECK              = systemName("bit_check");
     static final Name N_BIT_COUNT              = systemName("bit_count");
+    static final Name N_BIT_GET                = systemName("bit_get");
     static final Name N_BIT_LENGTH             = systemName("bit_length");
     static final Name N_BIT_LSHIFT             = systemName("bit_lshift");
     static final Name N_BIT_NAND_AGG           = systemName("bit_nand_agg");
@@ -343,6 +346,7 @@ final class Names {
     static final Name N_BIT_OR                 = systemName("bit_or");
     static final Name N_BIT_OR_AGG             = systemName("bit_or_agg");
     static final Name N_BIT_RSHIFT             = systemName("bit_rshift");
+    static final Name N_BIT_SET                = systemName("bit_set");
     static final Name N_BIT_XNOR_AGG           = systemName("bit_xnor_agg");
     static final Name N_BIT_XOR                = systemName("bit_xor");
     static final Name N_BIT_XOR_AGG            = systemName("bit_xor_agg");
@@ -384,6 +388,8 @@ final class Names {
     static final Name N_GENERATE_UUID          = systemName("generate_uuid");
     static final Name N_GENGUID                = systemName("genguid");
     static final Name N_GEN_RANDOM_UUID        = systemName("gen_random_uuid");
+    static final Name N_GETBIT                 = systemName("getbit");
+    static final Name N_GET_BIT                = systemName("get_bit");
     static final Name N_GOTO                   = systemName("goto");
     static final Name N_HEX                    = systemName("hex");
     static final Name N_IFNULL                 = systemName("ifnull");
@@ -464,6 +470,8 @@ final class Names {
     static final Name N_RPAD                   = systemName("rpad");
     static final Name N_RSHIFT                 = systemName("rshift");
     static final Name N_RTRIM                  = systemName("rtrim");
+    static final Name N_SETBIT                 = systemName("setbit");
+    static final Name N_SET_BIT                = systemName("set_bit");
     static final Name N_SGN                    = systemName("sgn");
     static final Name N_SHIFTLEFT              = systemName("shiftleft");
     static final Name N_SHIFTRIGHT             = systemName("shiftright");

@@ -5679,7 +5679,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%soverride fun equals(other: Any?): Boolean {", visibilityPublic());
             out.println("if (this === other)");
             out.println("return true");
-            out.println("if (other === null)");
+            out.println("if (other == null)");
             out.println("return false");
             out.println("if (this::class != other::class)");
             out.println("return false");
@@ -5699,8 +5699,8 @@ public class JavaGenerator extends AbstractGenerator {
                         out.println("if (this.%s != o.%s)", columnMember, columnMember);
                 }
                 else {
-                    out.println("if (this.%s === null) {", columnMember);
-                    out.println("if (o.%s !== null)", columnMember);
+                    out.println("if (this.%s == null) {", columnMember);
+                    out.println("if (o.%s != null)", columnMember);
                     out.println("return false");
                     out.println("}");
 
@@ -5790,11 +5790,11 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else {
                     if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))
-                        out.println("result = prime * result + (if (this.%s === null) 0 else %s.deepHashCode(this.%s))", columnMember, Arrays.class, columnMember);
+                        out.println("result = prime * result + (if (this.%s == null) 0 else %s.deepHashCode(this.%s))", columnMember, Arrays.class, columnMember);
                     else if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
-                        out.println("result = prime * result + (if (this.%s === null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
+                        out.println("result = prime * result + (if (this.%s == null) 0 else %s.hashCode(this.%s))", columnMember, Arrays.class, columnMember);
                     else
-                        out.println("result = prime * result + (if (this.%s === null) 0 else this.%s.hashCode())", columnMember, columnMember);
+                        out.println("result = prime * result + (if (this.%s == null) 0 else this.%s.hashCode())", columnMember, columnMember);
                 }
             }
 

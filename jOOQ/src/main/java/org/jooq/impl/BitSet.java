@@ -208,6 +208,9 @@ implements
 
 
 
+
+
+
             case CUBRID:
             case FIREBIRD:
             case H2:
@@ -225,7 +228,10 @@ implements
             }
 
             default:
-                ctx.visit(function(N_BIT_SET, getDataType(), value, bit, newValue));
+                if (newValue != null)
+                    ctx.visit(function(N_BIT_SET, getDataType(), value, bit, newValue));
+                else
+                    ctx.visit(function(N_BIT_SET, getDataType(), value, bit));
                 break;
         }
     }

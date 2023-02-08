@@ -686,7 +686,11 @@ final class R2DBC {
             setParamType(configuration.dialect(), s)
         ), null);
 
-        return new Rendered(render.paramType(NAMED).visit(query).render(), render.bindValues(), render.skipUpdateCounts());
+        return new Rendered(
+            render.paramType(render.settings().getParamType()).visit(query).render(),
+            render.bindValues(),
+            render.skipUpdateCounts()
+        );
     }
 
     static final long addNoOverflow(long x, long y) {
@@ -1338,15 +1342,16 @@ final class R2DBC {
 
     static final Settings setParamType(SQLDialect dialect, Settings settings) {
         switch (dialect.family()) {
+
+            // [#14357] While Oracle style :x markers seem to work mostly,
+            //          there's a bug in r2dbc-mariadb that produces syntax
+            //          errors in rare cases.
             case MYSQL:
-                return settings
-                    .withParamType(NAMED)
-                    .withRenderNamedParamPrefix("?p")
-                    .withParseNamedParamPrefix("?p");
-
             case MARIADB:
+                return settings;
 
-                return settings.withParamType(NAMED);
+
+
 
 
 

@@ -1025,7 +1025,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             return super.execute(ctx, listener);
         }
         else {
-            int result = 1;
+            int result = 0;
             ResultSet rs;
             switch (ctx.family()) {
 

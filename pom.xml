@@ -27,7 +27,7 @@
         <hsqldb.version>2.7.1</hsqldb.version>
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
-        <postgres.version>42.5.1</postgres.version>
+        <postgres.version>42.5.3</postgres.version>
         <sqlserver.version>11.2.1.jre11</sqlserver.version>
         <oracle.version>21.7.0.0</oracle.version>
 
@@ -45,22 +45,22 @@
         <scala.version>2.13.9</scala.version>
 
         <!-- Kotlin versions -->
-        <kotlin.version>1.7.20</kotlin.version>
+        <kotlin.version>1.8.0</kotlin.version>
         <kotlinx.coroutines.version>1.6.4</kotlinx.coroutines.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
         <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>
 
         <!-- Examples and/or extension modules use these dependencies -->
-        <hibernate.version>5.6.5.Final</hibernate.version>
+        <hibernate.version>5.6.14.Final</hibernate.version>
         <liquibase.version>4.17.2</liquibase.version>
         <spring.version>5.3.20</spring.version>
         <spring.boot.version>2.6.1</spring.boot.version>
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
         <errorprone.version>2.11.0</errorprone.version>
-        <testcontainers.version>1.16.3</testcontainers.version>
-        <jackson.version>2.13.4</jackson.version>
-        <jackson.version.databind>2.13.4.2</jackson.version.databind>
+        <testcontainers.version>1.17.6</testcontainers.version>
+        <jackson.version>2.14.2</jackson.version>
+        <jackson.version.databind>2.14.2</jackson.version.databind>
     </properties>
 
     <licenses>
@@ -152,7 +152,7 @@
             <dependency>
                 <groupId>org.jetbrains</groupId>
                 <artifactId>annotations</artifactId>
-                <version>23.0.0</version>
+                <version>24.0.0</version>
             </dependency>
 
             <!-- R2DBC SPI and driver dependencies -->
@@ -334,7 +334,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.8.0-beta4</version>
+                <version>2.0.6</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>
@@ -348,7 +348,7 @@
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
-                <version>2.18.0</version>
+                <version>2.19.0</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>
@@ -459,11 +459,6 @@
                 <artifactId>firebird-testcontainers-java</artifactId>
                 <version>1.1.0</version>
             </dependency>
-
-
-
-
-
 
 
 

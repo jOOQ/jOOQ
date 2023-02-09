@@ -45,12 +45,14 @@ import static org.jooq.Records.mapping;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.mysql.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
@@ -76,9 +78,7 @@ import org.jooq.Field;
 // ...
 import org.jooq.Record;
 import org.jooq.Record12;
-import org.jooq.Record5;
 import org.jooq.Record6;
-import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -87,6 +87,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -116,6 +117,7 @@ import org.jooq.tools.csv.CSVReader;
  */
 public class MySQLDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
+    private Boolean is5_7;
     private Boolean is8;
     private Boolean is8_0_16;
 
@@ -259,6 +261,16 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                     || configuredDialectIsNotFamilyAndSupports(asList(MARIADB), () -> exists(CHECK_CONSTRAINTS));
 
         return is8_0_16;
+    }
+
+    protected boolean is5_7() {
+
+        // [#14598] The information_schema.columns.GENERATION_EXPRESSION column was added in MySQL 5.7 only
+        if (is5_7 == null)
+            is5_7 = configuredDialectIsNotFamilyAndSupports(asList(MYSQL), () -> exists(COLUMNS.GENERATION_EXPRESSION))
+                 || configuredDialectIsNotFamilyAndSupports(asList(MARIADB), () -> exists(COLUMNS.GENERATION_EXPRESSION));
+
+        return is5_7;
     }
 
     @Override
@@ -626,14 +638,10 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
         return schemas;
     }
 
-
-
-
-
-
-
-
-
-
-
+    protected Field<String> generationExpression(Field<String> generationExpression) {
+        if (is5_7())
+            return generationExpression;
+        else
+            return inline(null, VARCHAR);
+    }
 }

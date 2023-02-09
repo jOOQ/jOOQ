@@ -1557,6 +1557,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.setForUpdateSkipLocked();
         }
 
+        if (parseKeywordIf("WITH CHECK OPTION") && requireProEdition())
+
+
+
+            ;
+        else if (parseKeywordIf("WITH READ ONLY") && requireProEdition())
+
+
+
+            ;
+
         scope.scopeEnd(result);
         return result;
     }
@@ -7252,7 +7263,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         result = parseCorrelationNameIf(result, forbiddenKeywords);
 
         int p = position();
-        if (parseKeywordIf("WITH")) {
+        if (!peekKeyword("WITH CHECK OPTION", "WITH READ ONLY") && parseKeywordIf("WITH")) {
             if (!ignoreProEdition() && parseIf('(') && requireProEdition()) {
 
 

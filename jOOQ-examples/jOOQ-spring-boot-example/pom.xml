@@ -67,7 +67,7 @@
         <!-- jOOQ can log to slf4j out of the box, if made available. Alternatively, use the logging starters -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j18-impl</artifactId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

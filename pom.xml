@@ -33,7 +33,7 @@
 
         <!-- R2DBC SPI version and some matching driver versions -->
         <io.r2dbc.version>1.0.0.RELEASE</io.r2dbc.version>
-        
+
         <!-- From JDK 19 onwards, this is the required version of Xtend -->
         <xtend.version>2.29.0</xtend.version>
 
@@ -340,8 +340,8 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-slf4j18-impl</artifactId>
-                <version>2.18.0</version>
+                <artifactId>log4j-slf4j2-impl</artifactId>
+                <version>2.19.0</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>

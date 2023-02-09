@@ -1236,7 +1236,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 // [#13574] The DML statement itself may have produced a rowcount
                 //          but the returned results might be empty, so keep the
                 //          higher value of the two
-                result = Math.max(result, returnedResult.size());
+                // [#14571] The DML rowcount may have already been set to ctx.rows()
+                result = Math.max(Math.max(result, ctx.rows()), returnedResult.size());
                 ctx.rows(result);
             }
 

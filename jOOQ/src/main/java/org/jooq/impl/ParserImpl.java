@@ -12944,6 +12944,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 String prefix = defaultIfNull(settings().getParseNamedParamPrefix(), ":");
 
                 if (parseIf(prefix, false)) {
+
+                    // [#14594] ": param" is a valid placeholder in Oracle
+                    if (":".equals(prefix))
+                        parseWhitespaceIf();
+
                     Name identifier = parseIdentifier(false, true);
                     paramName = identifier.last();
 

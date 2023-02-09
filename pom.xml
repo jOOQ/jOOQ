@@ -33,7 +33,7 @@
 
         <!-- R2DBC SPI version and some matching driver versions -->
         <io.r2dbc.version>0.9.1.RELEASE</io.r2dbc.version>
-        
+
         <!-- From JDK 19 onwards, this is the required version of Xtend -->
         <xtend.version>2.29.0</xtend.version>
 
@@ -459,11 +459,6 @@
                 <artifactId>firebird-testcontainers-java</artifactId>
                 <version>1.1.0</version>
             </dependency>
-
-
-
-
-
 
 
 

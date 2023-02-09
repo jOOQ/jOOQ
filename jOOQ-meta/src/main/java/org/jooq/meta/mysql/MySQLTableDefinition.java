@@ -82,11 +82,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
     public List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<>();
         MySQLDatabase database = (MySQLDatabase) getDatabase();
-        Field<String> generationExpression = COLUMNS.GENERATION_EXPRESSION;
-
-
-
-
+        Field<String> generationExpression = database.generationExpression(COLUMNS.GENERATION_EXPRESSION);
 
         for (Record record : create().select(
                     COLUMNS.ORDINAL_POSITION,

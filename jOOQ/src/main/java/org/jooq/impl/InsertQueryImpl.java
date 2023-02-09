@@ -134,6 +134,7 @@ import org.jooq.UniqueKey;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.StringUtils;
@@ -1066,4 +1067,14 @@ implements
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    // [#14599] Backported methods:
+
+    public final UnmodifiableList<? extends Field<?>> $columns() {
+        return QOM.unmodifiable(new ArrayList<>(insertMaps.values.keySet()));
+    }
 }

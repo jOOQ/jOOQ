@@ -7266,7 +7266,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else
                 position(p);
         }
-        else if (!ignoreProEdition() && parseIf('(') && requireProEdition()) {
 
 
 
@@ -7279,7 +7278,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-        }
+
+
+
         else {
             for (;;) {
                 if (parseKeywordIf("USE KEY", "USE INDEX")) {

@@ -254,6 +254,10 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 if (!string.contains("[["))
                     break;
 
+                // [#10014] If there's nothing left to be translated
+                if (originals.equals(translated))
+                    break;
+
                 originals = translated;
                 translated = new ArrayList<>();
             }

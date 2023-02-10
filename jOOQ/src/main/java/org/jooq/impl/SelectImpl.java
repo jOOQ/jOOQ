@@ -1975,7 +1975,7 @@ implements
 
 
 
-    
+
     @Override
     public final SelectFinalStep<R> withCheckOption() {
         getQuery().setWithCheckOption();

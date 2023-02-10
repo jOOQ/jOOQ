@@ -84,6 +84,8 @@ import java.util.Collection;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A <code>SELECT</code> statement (model API).
  * <p>
@@ -1292,17 +1294,16 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
 
 
+    /**
+     * Add a <code>WITH CHECK OPTION</code> clause to the end of the subquery.
+     */
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    void setWithCheckOption();
 
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Add a <code>WITH READ ONLY</code> clause to the end of the subquery.
+     */
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    void setWithReadOnly();
 
 }

@@ -351,6 +351,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_UNION_ORDER_BY_ALIAS = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>         NO_SUPPORT_WITH_READ_ONLY       = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES);
 
 
 
@@ -376,10 +377,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private boolean                                      distinct;
     private final QueryPartList<SelectFieldOrAsterisk>   distinctOn;
     private ForLock                                      forLock;
-
-
-
-
+    private boolean                                      withCheckOption;
+    private boolean                                      withReadOnly;
 
 
 
@@ -583,8 +582,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
+            result.withCheckOption = withCheckOption;
+            result.withReadOnly = withReadOnly;
             result.option = option;
             result.intoTable = intoTable;
 
@@ -1418,6 +1417,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+    @SuppressWarnings("unchecked")
     @Override
     public final void accept(Context<?> ctx) {
         Table<?> dmlTable;
@@ -1487,6 +1487,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+        else if (withReadOnly && NO_SUPPORT_WITH_READ_ONLY.contains(ctx.dialect()))
+            ctx.visit(copy(s -> {
+                s.withReadOnly = false;
+
+                // [#14611] Avoid emulation if view isn't updatable anyway
+                if (!s.distinct
+                    && s.groupBy.isEmpty()
+                    && !s.having.hasWhere()
+                    && !s.limit.isApplicable()
+                    && !s.hasUnions())
+                    s.union((Select<R>) DSL.select(map(s.getSelect(), f -> inline((Object) null))).where(falseCondition()));
+            }));
         else
             accept0(ctx);
     }
@@ -1872,12 +1884,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (forLock != null)
                 context.visit(forLock);
 
-
-
-
-
-
-
+            // [#3600] The Oracle / SQL Server WITH CHECK OPTION / WITH READ ONLY clauses
+            else if (withCheckOption)
+                context.formatSeparator()
+                       .visit(K_WITH_CHECK_OPTION);
+            else if (withReadOnly && !NO_SUPPORT_WITH_READ_ONLY.contains(context.dialect()))
+                context.formatSeparator()
+                       .visit(K_WITH_READ_ONLY);
 
 
 
@@ -3768,19 +3781,17 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+    @Override
+    public final void setWithCheckOption() {
+        this.withCheckOption = true;
+        this.withReadOnly = false;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final void setWithReadOnly() {
+        this.withCheckOption = false;
+        this.withReadOnly = true;
+    }
 
     @Override
     public final List<Field<?>> getSelect() {

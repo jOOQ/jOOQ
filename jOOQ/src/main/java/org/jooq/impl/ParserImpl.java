@@ -1557,16 +1557,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.setForUpdateSkipLocked();
         }
 
-        if (parseKeywordIf("WITH CHECK OPTION") && requireProEdition())
-
-
-
-            ;
-        else if (parseKeywordIf("WITH READ ONLY") && requireProEdition())
-
-
-
-            ;
+        if (parseKeywordIf("WITH CHECK OPTION"))
+            result.setWithCheckOption();
+        else if (parseKeywordIf("WITH READ ONLY"))
+            result.setWithReadOnly();
 
         scope.scopeEnd(result);
         return result;

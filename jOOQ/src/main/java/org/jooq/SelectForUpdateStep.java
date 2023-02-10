@@ -39,7 +39,8 @@ package org.jooq;
 
 import org.jetbrains.annotations.*;
 
-
+// ...
+// ...
 // ...
 // ...
 // ...
@@ -47,6 +48,7 @@ import org.jetbrains.annotations.*;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -58,6 +60,12 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
@@ -166,22 +174,18 @@ public interface SelectForUpdateStep<R extends Record> extends SelectForStep<R> 
     @Support({ POSTGRES, YUGABYTEDB })
     SelectForUpdateOfStep<R> forKeyShare();
 
+    /**
+     * Add a <code>WITH CHECK OPTION</code> clause to the end of the subquery.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES })
+    SelectFinalStep<R> withCheckOption();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Add a <code>WITH READ ONLY</code> clause to the end of the subquery.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    SelectFinalStep<R> withReadOnly();
 
 }

@@ -1975,19 +1975,18 @@ implements
 
 
 
+    
+    @Override
+    public final SelectFinalStep<R> withCheckOption() {
+        getQuery().setWithCheckOption();
+        return this;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final SelectFinalStep<R> withReadOnly() {
+        getQuery().setWithReadOnly();
+        return this;
+    }
 
     @Override
     public final SelectImpl union(Select<? extends R> select) {

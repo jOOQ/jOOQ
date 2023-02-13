@@ -8819,6 +8819,8 @@ public class JavaGenerator extends AbstractGenerator {
         else if (db.getDomain(schema, u) != null) {
             sb.append(getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)));
             sb.append(".getDataType()");
+
+            appendTypeReferenceNullability(sb, n);
         }
         else if (db.getUDT(schema, u) != null) {
             sb.append(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)));
@@ -8913,8 +8915,7 @@ public class JavaGenerator extends AbstractGenerator {
                     sb.append(sqlDataTypeRef);
             }
 
-            if (!dataType.nullable())
-                sb.append(".nullable(false)");
+            appendTypeReferenceNullability(sb, n);
 
             if (dataType.identity())
                 sb.append(".identity(true)");
@@ -8972,6 +8973,11 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         return sb.toString();
+    }
+
+    private final void appendTypeReferenceNullability(StringBuilder sb, boolean n) {
+        if (!n)
+            sb.append(".nullable(false)");
     }
 
     private String kotlinNullability(TypedElementDefinition<?> typed) {

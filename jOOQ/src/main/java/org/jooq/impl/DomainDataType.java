@@ -37,9 +37,16 @@
  */
 package org.jooq.impl;
 
+import org.jooq.CharacterSet;
+import org.jooq.Collation;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Domain;
+import org.jooq.Field;
+import org.jooq.Generator;
+import org.jooq.Nullability;
+import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationOption;
 
 /**
  * A <code>DataType</code> used for {@link Domain} types.
@@ -75,6 +82,40 @@ final class DomainDataType<T> extends DefaultDataType<T> {
 
         this.domain = domain;
         this.baseType = baseType;
+    }
+
+    @Override
+    DefaultDataType<T> construct(
+        Integer newPrecision,
+        Integer newScale,
+        Integer newLength,
+        Nullability newNullability,
+        boolean newReadonly,
+        Generator<?, ?, T> newGeneratedAlwaysAs,
+        GenerationOption newGenerationOption,
+        GenerationLocation newGenerationLocation,
+        Collation newCollation,
+        CharacterSet newCharacterSet,
+        boolean newIdentity,
+        Field<T> newDefaultValue
+    ) {
+        return new DomainDataType<>(
+            domain,
+            ((AbstractDataTypeX<T>) baseType).construct(
+                newPrecision,
+                newScale,
+                newLength,
+                newNullability,
+                newReadonly,
+                newGeneratedAlwaysAs,
+                newGenerationOption,
+                newGenerationLocation,
+                newCollation,
+                newCharacterSet,
+                newIdentity,
+                newDefaultValue
+            )
+        );
     }
 
     @Override

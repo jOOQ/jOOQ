@@ -904,11 +904,16 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         // [#2736] This table is unavailable in Amazon Redshift
         if (exists(ATTRIBUTES)) {
             for (Identifier udt : create()
-                    .selectDistinct(
+                    .select(
                         ATTRIBUTES.UDT_SCHEMA,
                         ATTRIBUTES.UDT_NAME)
                     .from(ATTRIBUTES)
-                    .where(ATTRIBUTES.UDT_SCHEMA.in(getInputSchemata()))
+                    .where(ATTRIBUTES.UDT_SCHEMA.in(getInputSchemata().stream().map(DSL::inline).collect(toList())))
+
+                    // [#14621] Work around https://github.com/yugabyte/yugabyte-db/issues/16081
+                    .groupBy(
+                        ATTRIBUTES.UDT_SCHEMA,
+                        ATTRIBUTES.UDT_NAME)
                     .orderBy(
                         ATTRIBUTES.UDT_SCHEMA,
                         ATTRIBUTES.UDT_NAME)

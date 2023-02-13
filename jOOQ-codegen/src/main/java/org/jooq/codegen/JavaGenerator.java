@@ -9677,10 +9677,11 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(")");
         }
         else if (db.getDomain(schema, u) != null) {
-            sb.append(getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)));
-            sb.append(".getDataType()");
+            final String sqlDataTypeRef = getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)) + ".getDataType()";
+            sb.append(sqlDataTypeRef);
 
-            appendTypeReferenceNullability(sb, n);
+            appendTypeReferenceNullability(db, out, sb, n);
+            appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef);
         }
         else if (db.getUDT(schema, u) != null) {
             sb.append(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)));
@@ -9775,7 +9776,7 @@ public class JavaGenerator extends AbstractGenerator {
                     sb.append(sqlDataTypeRef);
             }
 
-            appendTypeReferenceNullability(sb, n);
+            appendTypeReferenceNullability(db, out, sb, n);
 
             if (dataType.identity())
                 sb.append(".identity(true)");
@@ -9804,47 +9805,52 @@ public class JavaGenerator extends AbstractGenerator {
 
             // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
             //         report actual values (e.g. MySQL).
-            if (dataType.defaulted()) {
-                sb.append(".defaultValue(");
+            if (dataType.defaulted())
+                appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef);
+        }
 
-                if (asList(MYSQL).contains(db.getDialect().family()))
+        return sb.toString();
+    }
 
-                    // [#5574] While MySQL usually reports actual values, it does report
-                    //         a CURRENT_TIMESTAMP expression, inconsistently
-                    if (d != null && d.toLowerCase(getStrategy().getTargetLocale()).startsWith("current_timestamp"))
-                        sb.append(out.ref(DSL.class))
-                          .append(".field(")
-                          .append(out.ref(DSL.class))
-                          .append(".raw(\"")
-                          .append(escapeString(d))
-                          .append("\")");
-                    else
-                        sb.append(out.ref(DSL.class))
-                          .append(".inline(\"")
-                          .append(escapeString(d))
-                          .append("\"");
-                else
+    private final void appendTypeReferenceNullability(Database db, JavaWriter out, StringBuilder sb, boolean n) {
+        if (!n)
+            sb.append(".nullable(false)");
+    }
+
+    private final void appendTypeReferenceDefault(Database db, JavaWriter out, StringBuilder sb, String d, String sqlDataTypeRef) {
+        if (d != null) {
+            sb.append(".defaultValue(");
+
+            if (asList(MYSQL).contains(db.getDialect().family()))
+
+                // [#5574] While MySQL usually reports actual values, it does report
+                //         a CURRENT_TIMESTAMP expression, inconsistently
+                if (d != null && d.toLowerCase(getStrategy().getTargetLocale()).startsWith("current_timestamp"))
                     sb.append(out.ref(DSL.class))
                       .append(".field(")
                       .append(out.ref(DSL.class))
                       .append(".raw(\"")
                       .append(escapeString(d))
                       .append("\")");
+                else
+                    sb.append(out.ref(DSL.class))
+                      .append(".inline(\"")
+                      .append(escapeString(d))
+                      .append("\"");
+            else
+                sb.append(out.ref(DSL.class))
+                  .append(".field(")
+                  .append(out.ref(DSL.class))
+                  .append(".raw(\"")
+                  .append(escapeString(d))
+                  .append("\")");
 
-                sb.append(", ")
-                  .append(sqlDataTypeRef)
-                  .append(")")
-                  .append(kotlin && dataType.getType() == Object.class ? " as Any?" : "")
-                  .append(")");
-            }
+            sb.append(", ")
+              .append(sqlDataTypeRef)
+              .append(")")
+              .append(kotlin && sqlDataTypeRef.contains(".OTHER") ? " as Any?" : "")
+              .append(")");
         }
-
-        return sb.toString();
-    }
-
-    private final void appendTypeReferenceNullability(StringBuilder sb, boolean n) {
-        if (!n)
-            sb.append(".nullable(false)");
     }
 
     private DataType<?> mapTypes(DataType<?> dataType) {

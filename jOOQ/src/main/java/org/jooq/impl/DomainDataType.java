@@ -43,9 +43,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.Field;
-import org.jooq.Generator;
 import org.jooq.Nullability;
-import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -91,9 +89,8 @@ final class DomainDataType<T> extends DefaultDataType<T> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Generator<?, ?, T> newGeneratedAlwaysAs,
+        Field<T> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
-        GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -109,7 +106,6 @@ final class DomainDataType<T> extends DefaultDataType<T> {
                 newReadonly,
                 newGeneratedAlwaysAs,
                 newGenerationOption,
-                newGenerationLocation,
                 newCollation,
                 newCharacterSet,
                 newIdentity,

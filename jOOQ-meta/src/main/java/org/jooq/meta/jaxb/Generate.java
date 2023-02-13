@@ -58,6 +58,8 @@ public class Generate implements Serializable, XMLAppendable
     protected GeneratedAnnotationType generatedAnnotationType = GeneratedAnnotationType.DETECT_FROM_JDK;
     @XmlElement(defaultValue = "false")
     protected Boolean generatedAnnotationDate = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean generatedAnnotationJooqVersion = true;
     @XmlElement(defaultValue = "false")
     protected Boolean nonnullAnnotation = false;
     @XmlElement(defaultValue = "javax.annotation.Nonnull")
@@ -549,6 +551,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setGeneratedAnnotationDate(Boolean value) {
         this.generatedAnnotationDate = value;
+    }
+
+    /**
+     * Whether the {@link javax.annotation.processing.Generated} annotation should include the jOOQ version.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isGeneratedAnnotationJooqVersion() {
+        return generatedAnnotationJooqVersion;
+    }
+
+    /**
+     * Sets the value of the generatedAnnotationJooqVersion property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setGeneratedAnnotationJooqVersion(Boolean value) {
+        this.generatedAnnotationJooqVersion = value;
     }
 
     /**
@@ -2665,6 +2691,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withGeneratedAnnotationJooqVersion(Boolean value) {
+        setGeneratedAnnotationJooqVersion(value);
+        return this;
+    }
+
     public Generate withNonnullAnnotation(Boolean value) {
         setNonnullAnnotation(value);
         return this;
@@ -3159,6 +3190,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("generatedAnnotation", generatedAnnotation);
         builder.append("generatedAnnotationType", generatedAnnotationType);
         builder.append("generatedAnnotationDate", generatedAnnotationDate);
+        builder.append("generatedAnnotationJooqVersion", generatedAnnotationJooqVersion);
         builder.append("nonnullAnnotation", nonnullAnnotation);
         builder.append("nonnullAnnotationType", nonnullAnnotationType);
         builder.append("nullableAnnotation", nullableAnnotation);
@@ -3381,6 +3413,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!generatedAnnotationDate.equals(other.generatedAnnotationDate)) {
+                return false;
+            }
+        }
+        if (generatedAnnotationJooqVersion == null) {
+            if (other.generatedAnnotationJooqVersion!= null) {
+                return false;
+            }
+        } else {
+            if (!generatedAnnotationJooqVersion.equals(other.generatedAnnotationJooqVersion)) {
                 return false;
             }
         }
@@ -4187,6 +4228,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((generatedAnnotation == null)? 0 :generatedAnnotation.hashCode()));
         result = ((prime*result)+((generatedAnnotationType == null)? 0 :generatedAnnotationType.hashCode()));
         result = ((prime*result)+((generatedAnnotationDate == null)? 0 :generatedAnnotationDate.hashCode()));
+        result = ((prime*result)+((generatedAnnotationJooqVersion == null)? 0 :generatedAnnotationJooqVersion.hashCode()));
         result = ((prime*result)+((nonnullAnnotation == null)? 0 :nonnullAnnotation.hashCode()));
         result = ((prime*result)+((nonnullAnnotationType == null)? 0 :nonnullAnnotationType.hashCode()));
         result = ((prime*result)+((nullableAnnotation == null)? 0 :nullableAnnotation.hashCode()));

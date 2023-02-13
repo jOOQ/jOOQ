@@ -9194,9 +9194,10 @@ public class JavaGenerator extends AbstractGenerator {
                 else
                     out.println("value = {");
 
-                out.println("\"https://www.jooq.org\",");
-                out.println("\"jOOQ version:%s\"%s", Constants.VERSION, (hasCatalogVersion || hasSchemaVersion ? "," : ""));
+                out.println("\"https://www.jooq.org\"%s", (generateGeneratedAnnotationJooqVersion() || hasCatalogVersion || hasSchemaVersion ? "," : ""));
 
+                if (generateGeneratedAnnotationJooqVersion())
+                    out.println("\"jOOQ version:%s\"%s", Constants.VERSION, (hasCatalogVersion || hasSchemaVersion ? "," : ""));
                 if (hasCatalogVersion)
                     out.println("\"catalog version:%s\"%s", escapeString(catalogVersions.get(catalog)), (hasSchemaVersion ? "," : ""));
                 if (hasSchemaVersion)
@@ -9221,8 +9222,10 @@ public class JavaGenerator extends AbstractGenerator {
                 else
                     out.println("value = {");
 
-                out.println("\"https://www.jooq.org\",");
-                out.println("\"jOOQ version:%s\"", Constants.VERSION);
+                out.println("\"https://www.jooq.org\"%s", (generateGeneratedAnnotationJooqVersion() ? "," : ""));
+
+                if (generateGeneratedAnnotationJooqVersion())
+                    out.println("\"jOOQ version:%s\"", Constants.VERSION);
 
                 if (scala)
                     out.println("),");

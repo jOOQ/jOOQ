@@ -2010,6 +2010,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link javax.annotation.processing.Generated} annotation should include the <code>date</code> attribute.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="generatedAnnotationJooqVersion" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link javax.annotation.processing.Generated} annotation should include the jOOQ version.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="nonnullAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether non-nullable items should be annotated with the annotation type specified in {@link #nonnullAnnotationType}. In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed statically. There may still be some cases (e.g. after unions, outer joins, etc.) where a normally non-null value turns out to be null!]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

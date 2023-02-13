@@ -75,7 +75,8 @@ abstract class AbstractGenerator implements Generator {
     VisibilityModifier                 generateVisibilityModifier                       = VisibilityModifier.DEFAULT;
     boolean                            generateGeneratedAnnotation                      = false;
     GeneratedAnnotationType            generatedGeneratedAnnotationType                 = GeneratedAnnotationType.DETECT_FROM_JDK;
-    boolean                            generateGeneratedAnnotationDate                  = true;
+    boolean                            generateGeneratedAnnotationDate                  = false;
+    boolean                            generateGeneratedAnnotationJooqVersion           = true;
     boolean                            generateNonnullAnnotation                        = false;
     String                             generatedNonnullAnnotationType                   = "javax.annotation.Nonnull";
     boolean                            generateNullableAnnotation                       = false;
@@ -373,6 +374,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGeneratedAnnotationDate(boolean generateGeneratedAnnotationDate) {
         this.generateGeneratedAnnotationDate = generateGeneratedAnnotationDate;
+    }
+
+    @Override
+    public boolean generateGeneratedAnnotationJooqVersion() {
+        return generateGeneratedAnnotationJooqVersion;
+    }
+
+    @Override
+    public void setGenerateGeneratedAnnotationJooqVersion(boolean generateGeneratedAnnotationJooqVersion) {
+        this.generateGeneratedAnnotationJooqVersion = generateGeneratedAnnotationJooqVersion;
     }
 
     @Override

@@ -749,6 +749,8 @@ public class GenerationTool {
                 generator.setGenerateGeneratedAnnotationType(g.getGenerate().getGeneratedAnnotationType());
             if (g.getGenerate().isGeneratedAnnotationDate() != null)
                 generator.setGenerateGeneratedAnnotationDate(g.getGenerate().isGeneratedAnnotationDate());
+            if (g.getGenerate().isGeneratedAnnotationJooqVersion() != null)
+                generator.setGenerateGeneratedAnnotationJooqVersion(g.getGenerate().isGeneratedAnnotationJooqVersion());
             if (g.getGenerate().isNonnullAnnotation() != null)
                 generator.setGenerateNonnullAnnotation(g.getGenerate().isNonnullAnnotation());
             if (g.getGenerate().getNonnullAnnotationType() != null)

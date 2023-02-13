@@ -211,6 +211,18 @@ public interface Generator {
     void setGenerateGeneratedAnnotationDate(boolean generateGeneratedAnnotationDate);
 
     /**
+     * Whether the {@link javax.annotation.processing.Generated} annotation
+     * should include the jOOQ version.
+     */
+    boolean generateGeneratedAnnotationJooqVersion();
+
+    /**
+     * Whether the {@link javax.annotation.processing.Generated} annotation
+     * should include the jOOQ version.
+     */
+    void setGenerateGeneratedAnnotationJooqVersion(boolean generateGeneratedAnnotationJooqVersion);
+
+    /**
      * Whether Nonnull annotations should be generated.
      * <p>
      * In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed

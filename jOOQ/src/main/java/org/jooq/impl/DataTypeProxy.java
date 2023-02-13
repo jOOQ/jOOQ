@@ -80,7 +80,6 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         this(type, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
-    @SuppressWarnings("unchecked")
     private DataTypeProxy(
         AbstractDataType<T> type,
         Integer overridePrecision,

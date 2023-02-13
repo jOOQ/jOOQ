@@ -1497,7 +1497,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     && !s.having.hasWhere()
                     && !s.limit.isApplicable()
                     && !s.hasUnions())
-                    s.union((Select<R>) DSL.select(map(s.getSelect(), f -> inline((Object) null))).where(falseCondition()));
+                    s.union((Select<R>) DSL.select(map(s.getSelect(), f -> inline((Object) null, f))).where(falseCondition()));
             }));
         else
             accept0(ctx);

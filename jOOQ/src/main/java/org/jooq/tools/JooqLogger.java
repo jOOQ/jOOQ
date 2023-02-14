@@ -70,7 +70,7 @@ public final class JooqLogger implements Log {
     private final AtomicInteger       limitMessages;
 
     public JooqLogger(int limitMessages) {
-        this.limitMessages = limitMessages >= 0 ? new AtomicInteger() : null;
+        this.limitMessages = limitMessages >= 0 ? new AtomicInteger(limitMessages) : null;
     }
 
     /**
@@ -168,6 +168,8 @@ public final class JooqLogger implements Log {
             return false;
         else if (!supportsTrace)
             return false;
+        else if (limitMessages != null && limitMessages.get() == 0)
+            return false;
         else if (slf4j != null)
             return slf4j.isTraceEnabled();
         else
@@ -243,6 +245,8 @@ public final class JooqLogger implements Log {
             return false;
         else if (!supportsDebug)
             return false;
+        else if (limitMessages != null && limitMessages.get() == 0)
+            return false;
         else if (slf4j != null)
             return slf4j.isDebugEnabled();
         else
@@ -316,7 +320,9 @@ public final class JooqLogger implements Log {
     public boolean isInfoEnabled() {
         if (!globalThreshold.supports(Log.Level.INFO))
             return false;
-        if (!supportsInfo)
+        else if (!supportsInfo)
+            return false;
+        else if (limitMessages != null && limitMessages.get() == 0)
             return false;
         else if (slf4j != null)
             return slf4j.isInfoEnabled();
@@ -391,7 +397,9 @@ public final class JooqLogger implements Log {
     public boolean isWarnEnabled() {
         if (!globalThreshold.supports(Log.Level.WARN))
             return false;
-        if (!supportsWarn)
+        else if (!supportsWarn)
+            return false;
+        else if (limitMessages != null && limitMessages.get() == 0)
             return false;
         else if (slf4j != null)
             return slf4j.isWarnEnabled();

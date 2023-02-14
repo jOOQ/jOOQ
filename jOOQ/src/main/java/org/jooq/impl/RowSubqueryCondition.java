@@ -208,25 +208,21 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
             if ((comparator == IN || comparator == NOT_IN)
                     && right != null
                     && (s = subqueryWithLimit(right)) != null
-                    && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
-
-
-
+                    && Transformations.NO_SUPPORT_IN_LIMIT.contains(ctx.dialect())) {
+                ctx.visit(new RowSubqueryCondition(left, select(asterisk()).from(s.asTable("t")), comparator));
             }
             else if ((comparator == EQUALS || comparator == NOT_EQUALS)
                     && rightQuantified != null
                     && (s = subqueryWithLimit(rightQuantified)) != null
-                    && transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
-
-
-
-
-
-
-
-
-
-
+                    && Transformations.NO_SUPPORT_IN_LIMIT.contains(ctx.dialect())) {
+                ctx.visit(new RowSubqueryCondition(
+                    left,
+                    quantify(
+                        ((QuantifiedSelectImpl<?>) rightQuantified).quantifier,
+                        select(asterisk()).from(s.asTable("t"))
+                    ),
+                    comparator
+                ));
             }
             else
                 accept0(ctx);

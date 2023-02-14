@@ -3702,8 +3702,12 @@ public class Settings
      * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
      * <p>
      * This feature is available in the commercial distribution only.
+     * <p>
+     * @deprecated - 3.18.0 - [#14634] - The configuration of this transformation is deprecated. It will no longer be commercially available only, but apply also to the jOOQ Open Source Edition, when required.
+     *               
      * 
      */
+    @Deprecated
     public Transformation getTransformInConditionSubqueryWithLimitToDerivedTable() {
         return transformInConditionSubqueryWithLimitToDerivedTable;
     }
@@ -3714,8 +3718,12 @@ public class Settings
      * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
      * <p>
      * This feature is available in the commercial distribution only.
+     * <p>
+     * @deprecated - 3.18.0 - [#14634] - The configuration of this transformation is deprecated. It will no longer be commercially available only, but apply also to the jOOQ Open Source Edition, when required.
+     *               
      * 
      */
+    @Deprecated
     public void setTransformInConditionSubqueryWithLimitToDerivedTable(Transformation value) {
         this.transformInConditionSubqueryWithLimitToDerivedTable = value;
     }
@@ -6473,8 +6481,12 @@ public class Settings
      * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
      * <p>
      * This feature is available in the commercial distribution only.
+     * <p>
+     * @deprecated - 3.18.0 - [#14634] - The configuration of this transformation is deprecated. It will no longer be commercially available only, but apply also to the jOOQ Open Source Edition, when required.
+     *               
      * 
      */
+    @Deprecated
     public Settings withTransformInConditionSubqueryWithLimitToDerivedTable(Transformation value) {
         setTransformInConditionSubqueryWithLimitToDerivedTable(value);
         return this;

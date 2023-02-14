@@ -1066,11 +1066,22 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
             
       <element name="transformInConditionSubqueryWithLimitToDerivedTable" type="jooq-runtime:Transformation" minOccurs="0" maxOccurs="1" default="WHEN_NEEDED">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[Transform a subquery from an IN condition with LIMIT to an equivalent derived table.
 <p>
 This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
 <p>
-This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+This feature is available in the commercial distribution only.
+<p>
+@deprecated - 3.18.0 - [#14634] - The configuration of this transformation is deprecated. It will no longer be commercially available only, but apply also to the jOOQ Open Source Edition, when required.]]>
+              </jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
       </element>
       
       <element name="transformQualify" type="jooq-runtime:Transformation" minOccurs="0" maxOccurs="1" default="WHEN_NEEDED">

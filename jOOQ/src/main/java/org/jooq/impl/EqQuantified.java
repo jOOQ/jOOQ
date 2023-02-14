@@ -140,13 +140,11 @@ implements
         else if ((op == org.jooq.Comparator.EQUALS || op == org.jooq.Comparator.NOT_EQUALS)
                 && (arg2 instanceof QOM.QuantifiedSelect)
                 && (s = Transformations.subqueryWithLimit(((QOM.QuantifiedSelect<?>) arg2).$query())) != null
-                && Transformations.transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
-
-
-
-
-
-
+                && Transformations.NO_SUPPORT_IN_LIMIT.contains(ctx.dialect())) {
+            ctx.visit(arg1.compare(op, quantify(
+                ((QOM.QuantifiedSelect<?>) arg2).$quantifier(),
+                (Select) select(asterisk()).from(s.asTable("t"))
+            )));
         }
 
 

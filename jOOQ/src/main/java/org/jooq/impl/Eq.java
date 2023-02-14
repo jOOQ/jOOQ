@@ -132,10 +132,8 @@ implements
             ctx.visit(compareRowRow.apply(row(embeddedFields(arg1)), row(embeddedFields(arg2))));
         else if ((op == org.jooq.Comparator.IN || op == org.jooq.Comparator.NOT_IN)
             && (s = Transformations.subqueryWithLimit(arg2)) != null
-            && Transformations.transformInConditionSubqueryWithLimitToDerivedTable(ctx.configuration())) {
-
-
-
+            && Transformations.NO_SUPPORT_IN_LIMIT.contains(ctx.dialect())) {
+            ctx.visit(arg1.compare(op, (Select) select(asterisk()).from(s.asTable("t"))));
         }
         else if (arg1.getDataType().isMultiset()
                 && arg2.getDataType().isMultiset()

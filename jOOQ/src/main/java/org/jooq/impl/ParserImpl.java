@@ -4467,10 +4467,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 ? withDataStep.withNoData()
                 : withDataStep;
         }
-        else if (ctas)
+        else if (ctas) {
             throw expected("AS, WITH, SELECT, or (");
-        else
+        }
+        else {
             onCommitStep = asStep;
+
+            // [#14631] SQLite optional keywords
+            parseKeywordIf("STRICT");
+        }
 
         commentStep = onCommit.apply(onCommitStep);
 

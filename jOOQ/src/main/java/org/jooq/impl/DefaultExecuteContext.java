@@ -90,7 +90,8 @@ import org.jetbrains.annotations.NotNull;
  */
 class DefaultExecuteContext implements ExecuteContext {
 
-    private static final JooqLogger                       log       = JooqLogger.getLogger(DefaultExecuteContext.class);
+    private static final JooqLogger                       log               = JooqLogger.getLogger(DefaultExecuteContext.class);
+    private static final JooqLogger                       logVersionSupport = JooqLogger.getLogger(DefaultExecuteContext.class, "logVersionSupport", 1);
 
     // Persistent attributes (repeatable)
     private final Configuration                           originalConfiguration;
@@ -563,6 +564,24 @@ class DefaultExecuteContext implements ExecuteContext {
      */
     final void connection(ConnectionProvider provider, Connection c) {
         if (c != null) {
+
+            // [#11355] Check configured dialect version vs. JDBC Connection server version.
+            if (dialect().isVersioned() && logVersionSupport.isWarnEnabled()) {
+                try {
+                    int majorVersion = c.getMetaData().getDatabaseMajorVersion();
+                    int minorVersion = c.getMetaData().getDatabaseMinorVersion();
+                    String productVersion = c.getMetaData().getDatabaseProductVersion();
+
+                    if (!dialect().supportsDatabaseVersion(majorVersion, minorVersion, productVersion))
+                        logVersionSupport.warn("Version mismatch", "Database version is older than what dialect " + dialect() + " supports: " + productVersion + ". Consider https://www.jooq.org/download/support-matrix to see what jOOQ version and edition supports which RDBMS versions.");
+                    else
+                        logVersionSupport.info("Version", "Database version is supported by dialect " + dialect() + ": " + productVersion);
+                }
+                catch (SQLException e) {
+                    logVersionSupport.error("Error reading database version", e);
+                }
+            }
+
             LOCAL_CONNECTION.set(c);
             connection = c;
             wrappedConnection = wrapConnection(provider, c);

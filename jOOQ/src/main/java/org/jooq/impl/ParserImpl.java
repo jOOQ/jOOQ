@@ -4420,6 +4420,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
             else
                 commentStep = onCommitStep;
+
+            // [#14631] SQLite optional keywords
+            parseKeywordIf("STRICT");
         }
 
         storageStep = commentStep;

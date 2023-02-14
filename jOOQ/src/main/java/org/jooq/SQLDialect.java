@@ -38,6 +38,7 @@
 
 package org.jooq;
 
+import java.sql.DatabaseMetaData;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -112,7 +113,7 @@ public enum SQLDialect {
      * <p>
      * This family behaves like the versioned dialect {@link #FIREBIRD_3_0}.
      */
-    FIREBIRD("Firebird", false, true),
+    FIREBIRD("Firebird", false, true, new RequiredVersion(4, null, null)),
 
 
 
@@ -143,7 +144,7 @@ public enum SQLDialect {
     /**
      * The H2 dialect family.
      */
-    H2("H2", false, true),
+    H2("H2", false, true, new RequiredVersion(2, 1, 214)),
 
 
 
@@ -268,7 +269,7 @@ public enum SQLDialect {
      * <p>
      * This family behaves like the versioned dialect {@link #MYSQL_8_0_20}.
      */
-    MYSQL("MySQL", false, true),
+    MYSQL("MySQL", false, true, new RequiredVersion(8, 0, 20)),
 
 
 
@@ -315,13 +316,13 @@ public enum SQLDialect {
     /**
      * The PostgreSQL dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #POSTGRES_13}.
+     * This family behaves like the versioned dialect {@link #POSTGRES_14}.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES("Postgres", false, true),
+    POSTGRES("Postgres", false, true, new RequiredVersion(14, null, null)),
 
 
 
@@ -424,9 +425,9 @@ public enum SQLDialect {
     /**
      * The SQLite dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #SQLITE_3_38}.
+     * This family behaves like the versioned dialect {@link #SQLITE_3_39}.
      */
-    SQLITE("SQLite", false, true),
+    SQLITE("SQLite", false, true, new RequiredVersion(3, 39, null)),
 
 
 
@@ -466,7 +467,7 @@ public enum SQLDialect {
     /**
      * The YugabyteDB dialect family.
      */
-    YUGABYTEDB("YugabyteDB", false, true),
+    YUGABYTEDB("YugabyteDB", false, true, new RequiredVersion(2, 9, null)),
 
 
 
@@ -903,6 +904,7 @@ public enum SQLDialect {
     private final String                  name;
     private final boolean                 commercial;
     private final boolean                 supported;
+    private final RequiredVersion         requiredVersion;
     private final SQLDialect              family;
     private SQLDialect                    predecessor;
     private transient EnumSet<SQLDialect> predecessors;
@@ -1003,17 +1005,22 @@ public enum SQLDialect {
     }
 
     private SQLDialect(String name, boolean commercial, boolean supported) {
-        this(name, commercial, supported, null, null);
+        this(name, commercial, supported, (RequiredVersion) null);
     }
 
-    private SQLDialect(String name, boolean commercial, boolean supported, SQLDialect family) {
-        this(name, commercial, supported, family, null);
+    private SQLDialect(String name, boolean commercial, boolean supported, RequiredVersion requiredVersion) {
+        this(name, commercial, supported, requiredVersion, null, null);
     }
 
-    private SQLDialect(String name, boolean commercial, boolean supported, SQLDialect family, SQLDialect predecessor) {
+    private SQLDialect(String name, boolean commercial, boolean supported, RequiredVersion requiredVersion, SQLDialect family) {
+        this(name, commercial, supported, requiredVersion, family, null);
+    }
+
+    private SQLDialect(String name, boolean commercial, boolean supported, RequiredVersion requiredVersion, SQLDialect family, SQLDialect predecessor) {
         this.name = name;
         this.commercial = commercial;
         this.supported = supported;
+        this.requiredVersion = requiredVersion;
         this.family = family == null ? this : family;
         this.predecessor = predecessor == null ? this : predecessor;
 
@@ -1071,7 +1078,7 @@ public enum SQLDialect {
      * dialects.
      */
     public final boolean isVersioned() {
-        return family().predecessor() != family();
+        return requiredVersion != null;
     }
 
     /**
@@ -1197,6 +1204,43 @@ public enum SQLDialect {
 
             if (candidate == (candidate = candidate.predecessor()))
                 return false;
+        }
+    }
+
+    /**
+     * Check if this {@link SQLDialect} supports a JDBC
+     * {@link DatabaseMetaData#getDatabaseMajorVersion()},
+     * {@link DatabaseMetaData#getDatabaseMinorVersion()}, patch version.
+     */
+    public final boolean supportsDatabaseVersion(
+        int majorVersion,
+        int minorVersion,
+        String productVersion
+    ) {
+        return requiredVersion == null
+            || requiredVersion.major == null
+            || requiredVersion.major < majorVersion
+            || requiredVersion.major == majorVersion && (
+                   requiredVersion.minor == null
+                || requiredVersion.minor < minorVersion
+                || requiredVersion.minor == minorVersion && (
+                       requiredVersion.patch == null
+                    || requiredVersion.patch <= patchVersion(productVersion)
+            )
+        );
+    }
+
+    private final int patchVersion(String productVersion) {
+        if (productVersion == null)
+            return Integer.MAX_VALUE;
+
+        switch (family()) {
+            case H2:
+                return Integer.parseInt(productVersion.split(" ")[0].split("\\.")[2]);
+            case MYSQL:
+                return Integer.parseInt(productVersion.split("\\.")[2]);
+            default:
+                return Integer.MAX_VALUE;
         }
     }
 
@@ -1372,4 +1416,6 @@ public enum SQLDialect {
             }
         }
     }
+
+    static final record RequiredVersion(Integer major, Integer minor, Integer patch) {}
 }

@@ -7157,15 +7157,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
         }
-        else if (!ignoreProEdition()
-            && peekKeyword("FOR")
-            && !peekKeyword("FOR JSON")
-            && !peekKeyword("FOR KEY SHARE")
-            && !peekKeyword("FOR NO KEY UPDATE")
-            && !peekKeyword("FOR SHARE")
-            && !peekKeyword("FOR UPDATE")
-            && !peekKeyword("FOR XML")
-            && parseKeyword("FOR") && requireProEdition()) {
+        else if (!ignoreProEdition() && parseForPeriodIf() && requireProEdition()) {
+
+
+
+
+
+
 
 
 
@@ -7329,6 +7327,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         return t(result);
+    }
+
+    private final boolean parseForPeriodIf() {
+        return peekKeyword("FOR")
+            && !peekKeyword("FOR JSON")
+            && !peekKeyword("FOR KEY SHARE")
+            && !peekKeyword("FOR NO KEY UPDATE")
+            && !peekKeyword("FOR SHARE")
+            && !peekKeyword("FOR UPDATE")
+            && !peekKeyword("FOR XML")
+            && parseKeyword("FOR");
     }
 
     private final String[] parseParenthesisedIdentifiers() {

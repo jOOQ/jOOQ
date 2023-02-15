@@ -37,6 +37,8 @@
  */
 package org.jooq.conf;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.jooq.conf.FetchIntermediateResult.WHEN_EXECUTE_LISTENERS_PRESENT;
 import static org.jooq.conf.FetchIntermediateResult.WHEN_RESULT_REQUESTED;
 import static org.jooq.conf.ParamType.INDEXED;
@@ -54,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import org.jooq.Configuration;
+import org.jooq.UpdatableRecord;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
@@ -464,5 +467,16 @@ public final class SettingsTools {
              : settings.getFetchServerOutputSize() != null
              ? settings.getFetchServerOutputSize()
              : 0;
+    }
+
+    /**
+     * Whether any value should be returned on an {@link UpdatableRecord}
+     * operation.
+     */
+    public static final boolean returnAnyOnUpdatableRecord(Settings settings) {
+        return !FALSE.equals(settings.isReturnIdentityOnUpdatableRecord())
+            || TRUE.equals(settings.isReturnAllOnUpdatableRecord())
+            || TRUE.equals(settings.isReturnDefaultOnUpdatableRecord())
+            || TRUE.equals(settings.isReturnComputedOnUpdatableRecord());
     }
 }

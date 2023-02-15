@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+import static org.jooq.conf.SettingsTools.returnAnyOnUpdatableRecord;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
@@ -59,6 +60,8 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.indexOrFail;
+import static org.jooq.impl.Tools.isEmpty;
+import static org.jooq.impl.Tools.let;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -90,6 +93,7 @@ import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.Update;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.JooqLogger;
@@ -208,7 +212,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
     }
 
     final void getReturningIfNeeded(StoreQuery<R> query, Collection<Field<?>> key) {
-        if (key != null && !key.isEmpty()) {
+        if (!isEmpty(key)) {
             R record = query.getReturnedRecord();
 
             if (record != null) {
@@ -223,7 +227,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
 
             // [#1859] In some databases, not all fields can be fetched via getGeneratedKeys()
             Configuration c = configuration();
-            if (TRUE.equals(c.settings().isReturnAllOnUpdatableRecord())
+            if (returnAnyOnUpdatableRecord(c.settings())
 
                     // [#11620] Refresh only if the RETURNING clause didn't run
                     //          E.g. in MySQL when there was no identity column
@@ -243,21 +247,12 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
     final Collection<Field<?>> setReturningIfNeeded(StoreQuery<R> query) {
         Collection<Field<?>> key = null;
 
-        if (configuration() != null)
+        if (configuration() != null && returnAnyOnUpdatableRecord(configuration().settings())) {
+            key = getReturning(query);
 
-            // [#7966] Allow users to turning off the returning clause entirely
-            if (!FALSE.equals(configuration().settings().isReturnIdentityOnUpdatableRecord()))
-
-                // [#1859] Return also non-key columns
-                if (TRUE.equals(configuration().settings().isReturnAllOnUpdatableRecord()))
-                    key = Arrays.asList(fields());
-
-                // [#5940] Getting the primary key mostly doesn't make sense on UPDATE statements
-                else if (query instanceof InsertQuery || updatablePrimaryKeys(settings(this)))
-                    key = getReturning();
-
-        if (key != null)
-            query.setReturning(key);
+            if (!isEmpty(key))
+                query.setReturning(key);
+        }
 
         return key;
     }
@@ -430,16 +425,35 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
             || getTable().getRecordVersion() != null && isUpdateRecordVersion();
     }
 
-    final Collection<Field<?>> getReturning() {
+    final Collection<Field<?>> getReturning(StoreQuery<R> query) {
+        Settings s = configuration().settings();
+
+        // [#1859] Returning all columns if requested explicitly
+        if (TRUE.equals(s.isReturnAllOnUpdatableRecord()))
+            return asList(fields());
+
         Collection<Field<?>> result = new LinkedHashSet<>();
 
-        Identity<R, ?> identity = getTable().getIdentity();
-        if (identity != null)
-            result.add(identity.getField());
+        // [#7966] Allow users to turning off the returning clause entirely
+        if (!FALSE.equals(s.isReturnIdentityOnUpdatableRecord())
 
-        UniqueKey<?> key = getPrimaryKey();
-        if (key != null)
-            result.addAll(key.getFields());
+            // [#5940] Getting the primary key mostly doesn't make sense on UPDATE statements
+            && (query instanceof InsertQuery || updatablePrimaryKeys(s))
+        ) {
+            let(getTable().getIdentity(), i -> result.add(i.getField()));
+            let(getPrimaryKey(), k -> result.addAll(k.getFields()));
+        }
+
+        // [#14573] Return also non-key columns
+        if (TRUE.equals(s.isReturnDefaultOnUpdatableRecord()))
+            for (Field<?> f : fields())
+                if (f.getDataType().defaulted())
+                    result.add(f);
+
+        if (TRUE.equals(s.isReturnComputedOnUpdatableRecord()))
+            for (Field<?> f : fields())
+                if (f.getDataType().computed())
+                    result.add(f);
 
         return result;
     }

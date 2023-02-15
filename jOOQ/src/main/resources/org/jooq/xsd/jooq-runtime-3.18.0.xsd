@@ -1305,6 +1305,14 @@ UpdatableRecord.store() and UpdatableRecord.update().]]></jxb:javadoc></jxb:prop
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether calls to store(), insert() and update() should return the identity column.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="returnDefaultOnUpdatableRecord" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether calls to store(), insert() and update() should return values for columns that are {@link org.jooq.DataType#defaulted()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="returnComputedOnUpdatableRecord" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether calls to store(), insert() and update() should return values for columns that are {@link org.jooq.DataType#computed()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="returnAllOnUpdatableRecord" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether calls to store(), insert() and update() should return all columns, not just identity columns.
 <p>

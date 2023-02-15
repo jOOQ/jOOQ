@@ -69,6 +69,7 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 
 /**
  * A common base implementation for generated {@link DAO}.
@@ -198,8 +199,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         if (objects.size() > 1)
 
             // [#2536] [#3327] We cannot batch UPDATE RETURNING calls yet
-            if (!FALSE.equals(settings().isReturnRecordToPojo()) &&
-                 TRUE.equals(settings().isReturnAllOnUpdatableRecord()))
+            if (returnAnyOnUpdatableRecord())
                 for (R record : records(objects, true))
                     record.update();
             else
@@ -228,8 +228,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         if (objects.size() > 1)
 
             // [#2536] [#3327] We cannot batch MERGE RETURNING calls yet
-            if (!FALSE.equals(settings().isReturnRecordToPojo()) &&
-                 TRUE.equals(settings().isReturnAllOnUpdatableRecord()))
+            if (returnAnyOnUpdatableRecord())
                 for (R record : records(objects, false))
                     record.merge();
             else
@@ -258,8 +257,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         if (objects.size() > 1)
 
             // [#2536] [#3327] We cannot batch DELETE RETURNING calls yet
-            if (!FALSE.equals(settings().isReturnRecordToPojo()) &&
-                 TRUE.equals(settings().isReturnAllOnUpdatableRecord()))
+            if (returnAnyOnUpdatableRecord())
                 for (R record : records(objects, true))
                     record.delete();
             else
@@ -509,5 +507,10 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         );
 
         return result;
+    }
+
+    private final boolean returnAnyOnUpdatableRecord() {
+        return !FALSE.equals(settings().isReturnRecordToPojo()) 
+            && SettingsTools.returnAnyOnUpdatableRecord(settings());
     }
 }

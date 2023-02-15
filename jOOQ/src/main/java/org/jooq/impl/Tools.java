@@ -2175,8 +2175,10 @@ final class Tools {
         return t == null ? s.get() : t;
     }
 
-    static final <T> T let(T t, Consumer<? super T> consumer) {
-        consumer.accept(t);
+    static final <T> T let(@Nullable T t, Consumer<? super @NotNull T> consumer) {
+        if (t != null)
+            consumer.accept(t);
+
         return t;
     }
 

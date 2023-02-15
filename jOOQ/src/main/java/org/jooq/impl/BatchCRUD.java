@@ -95,8 +95,10 @@ final class BatchCRUD extends AbstractBatch {
             // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
             .withExecuteLogging(false)
 
-            // [#3327] [#11509] We can't return generated keys from batches (yet)
+            // [#3327] [#11509] [#14573] We can't return generated keys from batches (yet)
             .withReturnAllOnUpdatableRecord(false)
+            .withReturnDefaultOnUpdatableRecord(false)
+            .withReturnComputedOnUpdatableRecord(false)
             .withReturnIdentityOnUpdatableRecord(false);
 
         return local;

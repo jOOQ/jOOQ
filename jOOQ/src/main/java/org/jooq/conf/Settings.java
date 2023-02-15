@@ -383,6 +383,10 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean returnIdentityOnUpdatableRecord = true;
     @XmlElement(defaultValue = "false")
+    protected Boolean returnDefaultOnUpdatableRecord = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean returnComputedOnUpdatableRecord = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean returnAllOnUpdatableRecord = false;
     @XmlElement(defaultValue = "true")
     protected Boolean returnRecordToPojo = true;
@@ -4613,6 +4617,54 @@ public class Settings
     }
 
     /**
+     * Whether calls to store(), insert() and update() should return values for columns that are {@link org.jooq.DataType#defaulted()}.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isReturnDefaultOnUpdatableRecord() {
+        return returnDefaultOnUpdatableRecord;
+    }
+
+    /**
+     * Sets the value of the returnDefaultOnUpdatableRecord property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setReturnDefaultOnUpdatableRecord(Boolean value) {
+        this.returnDefaultOnUpdatableRecord = value;
+    }
+
+    /**
+     * Whether calls to store(), insert() and update() should return values for columns that are {@link org.jooq.DataType#computed()}.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isReturnComputedOnUpdatableRecord() {
+        return returnComputedOnUpdatableRecord;
+    }
+
+    /**
+     * Sets the value of the returnComputedOnUpdatableRecord property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setReturnComputedOnUpdatableRecord(Boolean value) {
+        this.returnComputedOnUpdatableRecord = value;
+    }
+
+    /**
      * Whether calls to store(), insert() and update() should return all columns, not just identity columns.
      * <p>
      * Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
@@ -6840,6 +6892,16 @@ public class Settings
         return this;
     }
 
+    public Settings withReturnDefaultOnUpdatableRecord(Boolean value) {
+        setReturnDefaultOnUpdatableRecord(value);
+        return this;
+    }
+
+    public Settings withReturnComputedOnUpdatableRecord(Boolean value) {
+        setReturnComputedOnUpdatableRecord(value);
+        return this;
+    }
+
     public Settings withReturnAllOnUpdatableRecord(Boolean value) {
         setReturnAllOnUpdatableRecord(value);
         return this;
@@ -7473,6 +7535,8 @@ public class Settings
         builder.append("fetchWarnings", fetchWarnings);
         builder.append("fetchServerOutputSize", fetchServerOutputSize);
         builder.append("returnIdentityOnUpdatableRecord", returnIdentityOnUpdatableRecord);
+        builder.append("returnDefaultOnUpdatableRecord", returnDefaultOnUpdatableRecord);
+        builder.append("returnComputedOnUpdatableRecord", returnComputedOnUpdatableRecord);
         builder.append("returnAllOnUpdatableRecord", returnAllOnUpdatableRecord);
         builder.append("returnRecordToPojo", returnRecordToPojo);
         builder.append("mapJPAAnnotations", mapJPAAnnotations);
@@ -8938,6 +9002,24 @@ public class Settings
                 return false;
             }
         }
+        if (returnDefaultOnUpdatableRecord == null) {
+            if (other.returnDefaultOnUpdatableRecord!= null) {
+                return false;
+            }
+        } else {
+            if (!returnDefaultOnUpdatableRecord.equals(other.returnDefaultOnUpdatableRecord)) {
+                return false;
+            }
+        }
+        if (returnComputedOnUpdatableRecord == null) {
+            if (other.returnComputedOnUpdatableRecord!= null) {
+                return false;
+            }
+        } else {
+            if (!returnComputedOnUpdatableRecord.equals(other.returnComputedOnUpdatableRecord)) {
+                return false;
+            }
+        }
         if (returnAllOnUpdatableRecord == null) {
             if (other.returnAllOnUpdatableRecord!= null) {
                 return false;
@@ -9621,6 +9703,8 @@ public class Settings
         result = ((prime*result)+((fetchWarnings == null)? 0 :fetchWarnings.hashCode()));
         result = ((prime*result)+((fetchServerOutputSize == null)? 0 :fetchServerOutputSize.hashCode()));
         result = ((prime*result)+((returnIdentityOnUpdatableRecord == null)? 0 :returnIdentityOnUpdatableRecord.hashCode()));
+        result = ((prime*result)+((returnDefaultOnUpdatableRecord == null)? 0 :returnDefaultOnUpdatableRecord.hashCode()));
+        result = ((prime*result)+((returnComputedOnUpdatableRecord == null)? 0 :returnComputedOnUpdatableRecord.hashCode()));
         result = ((prime*result)+((returnAllOnUpdatableRecord == null)? 0 :returnAllOnUpdatableRecord.hashCode()));
         result = ((prime*result)+((returnRecordToPojo == null)? 0 :returnRecordToPojo.hashCode()));
         result = ((prime*result)+((mapJPAAnnotations == null)? 0 :mapJPAAnnotations.hashCode()));

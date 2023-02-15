@@ -475,7 +475,15 @@ public final class SettingsTools {
      */
     public static final boolean returnAnyOnUpdatableRecord(Settings settings) {
         return !FALSE.equals(settings.isReturnIdentityOnUpdatableRecord())
-            || TRUE.equals(settings.isReturnAllOnUpdatableRecord())
+            || returnAnyNonIdentityOnUpdatableRecord(settings);
+    }
+
+    /**
+     * Whether any non-identity value should be returned on an
+     * {@link UpdatableRecord} operation.
+     */
+    public static final boolean returnAnyNonIdentityOnUpdatableRecord(Settings settings) {
+        return TRUE.equals(settings.isReturnAllOnUpdatableRecord())
             || TRUE.equals(settings.isReturnDefaultOnUpdatableRecord())
             || TRUE.equals(settings.isReturnComputedOnUpdatableRecord());
     }

@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+import static org.jooq.conf.SettingsTools.returnAnyNonIdentityOnUpdatableRecord;
 import static org.jooq.conf.SettingsTools.returnAnyOnUpdatableRecord;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
@@ -227,7 +228,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
 
             // [#1859] In some databases, not all fields can be fetched via getGeneratedKeys()
             Configuration c = configuration();
-            if (returnAnyOnUpdatableRecord(c.settings())
+            if (returnAnyNonIdentityOnUpdatableRecord(c.settings())
 
                     // [#11620] Refresh only if the RETURNING clause didn't run
                     //          E.g. in MySQL when there was no identity column

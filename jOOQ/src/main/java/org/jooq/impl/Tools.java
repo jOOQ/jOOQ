@@ -6842,12 +6842,14 @@ final class Tools {
 
 
 
+                case POSTGRES:
+                case YUGABYTEDB:
+                    return NestedCollectionEmulation.JSONB;
+
                 case H2:
                 case MARIADB:
                 case MYSQL:
-                case POSTGRES:
                 case SQLITE:
-                case YUGABYTEDB:
                     return NestedCollectionEmulation.JSON;
 
 

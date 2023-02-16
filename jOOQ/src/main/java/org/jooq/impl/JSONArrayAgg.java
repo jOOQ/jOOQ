@@ -49,6 +49,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONEntryImpl.jsonMerge;
 import static org.jooq.impl.Keywords.K_DISTINCT;
+import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
@@ -66,7 +67,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jooq.AggregateFunction;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -118,6 +118,15 @@ implements
                 ctx.visit(jsonMerge(ctx, "[]", groupConcatEmulation(ctx)));
                 break;
             }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -8486,6 +8486,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs2((f1, f2) -> arrayAppend((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_PREPEND"))
                     return parseFunctionArgs2((f1, f2) -> arrayPrepend((Field<Void>) f1, (Field<Void[]>) f2));
+                else if ((field = parseFieldArrayConstructIf()) != null)
+                    return field;
 
                 break;
 
@@ -8870,9 +8872,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldTranslateIf()) != null)
                     return field;
-
                 else if (parseFunctionNameIf("OCTET_LENGTH"))
                     return octetLength((Field) parseFieldParenthesised());
+                else if ((field = parseFieldObjectConstructIf()) != null)
+                    return field;
 
                 break;
 
@@ -9978,6 +9981,42 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
+    private final Field<?> parseFieldArrayConstructIf() {
+        boolean absentOnNull = false;
+
+        if ((parseFunctionNameIf("ARRAY_CONSTRUCT") || (absentOnNull = parseFunctionNameIf("ARRAY_CONSTRUCT_COMPACT")) && requireProEdition())) {
+
+
+
+
+
+
+
+
+
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseFieldObjectConstructIf() {
+        boolean nullOnNull = false;
+
+        if ((parseFunctionNameIf("OBJECT_CONSTRUCT") || (nullOnNull = parseFunctionNameIf("OBJECT_CONSTRUCT_KEEP_NULL")) && requireProEdition())) {
+
+
+
+
+
+
+
+
+
+        }
+
+        return null;
+    }
+
     private final Field<?> parseFieldJSONObjectConstructorIf() {
         boolean jsonb = false;
 
@@ -10049,10 +10088,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final JSONEntry<?> parseJSONEntry() {
-        boolean valueRequired = parseKeywordIf("KEY");
+        return parseJSONEntry(true);
+    }
+
+    private final JSONEntry<?> parseJSONEntry(boolean supportKeyValue) {
+        boolean valueRequired = supportKeyValue && parseKeywordIf("KEY");
 
         Field<String> key = (Field<String>) parseField();
-        if (parseKeywordIf("VALUE"))
+        if (supportKeyValue && parseKeywordIf("VALUE"))
             ;
         else if (valueRequired)
             throw expected("VALUE");

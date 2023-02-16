@@ -6848,6 +6848,7 @@ final class Tools {
                 case YUGABYTEDB:
                     return NestedCollectionEmulation.JSONB;
 
+
                 case H2:
                 case MARIADB:
                 case MYSQL:

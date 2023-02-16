@@ -206,3 +206,12 @@ package org.jooq.impl;
 
 
 
+
+
+
+
+
+
+
+
+

@@ -132,15 +132,15 @@ public class LoggerListener implements ExecuteListener {
 
     @Override
     public void bindEnd(ExecuteContext ctx) {
-        if (log.isDebugEnabled())
-            if (ctx.type() == ExecuteType.BATCH)
+        if (ctx.type() == ExecuteType.BATCH)
+            if (log.isDebugEnabled())
                 ctx.data().compute(BATCH_SIZE, (k, v) -> v == null ? 1 : ((int) v) + 1);
     }
 
     @Override
     public void executeStart(ExecuteContext ctx) {
-        if (log.isDebugEnabled())
-            if (ctx.type() == ExecuteType.BATCH)
+        if (ctx.type() == ExecuteType.BATCH)
+            if (log.isDebugEnabled())
                 log.debug("Batch size", ctx.data().getOrDefault(BATCH_SIZE, ctx.batchSQL().length));
     }
 
@@ -192,7 +192,7 @@ public class LoggerListener implements ExecuteListener {
     public void fetchEnd(ExecuteContext ctx) {
         Result<Record> buffer = (Result<Record>) ctx.data(BUFFER);
 
-        if (buffer != null && !buffer.isEmpty()) {
+        if (buffer != null && !buffer.isEmpty() && log.isDebugEnabled()) {
             log(ctx.configuration(), buffer);
             log.debug("Fetched row(s)", buffer.size() + (buffer.size() < maxRows() ? "" : " (or more)"));
         }

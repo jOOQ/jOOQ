@@ -77,6 +77,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -98,6 +99,7 @@ import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
 import static org.jooq.impl.DefaultBinding.DefaultEnumTypeBinding.pgEnumValue;
 import static org.jooq.impl.DefaultBinding.DefaultEnumTypeBinding.pgRenderEnumCast;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBBinding.EMULATE_AS_BLOB;
+import static org.jooq.impl.DefaultBinding.DefaultJSONBinding.patchSnowflakeJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetXML;
 import static org.jooq.impl.DefaultDataType.getDataType;
@@ -217,6 +219,7 @@ import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // ...
@@ -4199,7 +4202,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         static final <R extends Record> Result<R> readMultisetJSON(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
             if (s.startsWith("{") || s.startsWith("["))
-                return new JSONReader<>(ctx.dsl(), row, recordType, true).read(new StringReader(s), true);
+                return new JSONReader<>(ctx.dsl(), row, recordType, true).read(new StringReader(patchSnowflakeJSON(ctx, s)), true);
             else
                 return readMultisetScalar(ctx, row, recordType, s);
         }
@@ -5498,25 +5501,56 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final JSON get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            String string = ctx.resultSet().getString(ctx.index());
+            String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
             return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
         final JSON get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            String string = ctx.statement().getString(ctx.index());
+            String string = patchSnowflakeJSON(ctx, ctx.statement().getString(ctx.index()));
             return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
         final JSON get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            String string = ctx.input().readString();
+            String string = patchSnowflakeJSON(ctx, ctx.input().readString());
             return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
             return Types.VARCHAR;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        static final String patchSnowflakeJSON(Scope ctx, String json) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return json;
         }
     }
 
@@ -5579,7 +5613,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
                 return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
 
-            String string = ctx.resultSet().getString(ctx.index());
+            String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
             return string == null ? null : JSONB.valueOf(string);
         }
 
@@ -5588,7 +5622,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
                 return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
 
-            String string = ctx.statement().getString(ctx.index());
+            String string = patchSnowflakeJSON(ctx, ctx.statement().getString(ctx.index()));
             return string == null ? null : JSONB.valueOf(string);
         }
 
@@ -5597,7 +5631,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (EMULATE_AS_BLOB.contains(ctx.dialect()))
                 return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
 
-            String string = ctx.input().readString();
+            String string = patchSnowflakeJSON(ctx, ctx.input().readString());
             return string == null ? null : JSONB.valueOf(string);
         }
 

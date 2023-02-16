@@ -59,8 +59,12 @@ import org.jooq.tools.LoggerListener;
  * @author Lukas Eder
  */
 final class ExecuteListeners implements ExecuteListener {
+
     private static final ExecuteListener EMPTY_LISTENER         = new DefaultExecuteListener();
     private static final JooqLogger      LOGGER_LISTENER_LOGGER = JooqLogger.getLogger(LoggerListener.class);
+
+
+
 
     private final ExecuteListener[][]    listeners;
 
@@ -115,6 +119,14 @@ final class ExecuteListeners implements ExecuteListener {
             if (LOGGER_LISTENER_LOGGER.isDebugEnabled())
                 (list = init(list)).add(new LoggerListener());
         }
+
+
+
+
+
+
+
+
 
         for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders())
 

@@ -54,12 +54,14 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.flattenFieldOrRows;
 import static org.jooq.impl.Tools.lazy;
+import static org.jooq.impl.Tools.row0;
 
 import java.util.AbstractList;
 import java.util.AbstractMap;
@@ -86,6 +88,7 @@ import org.jooq.Param;
 // ...
 import org.jooq.Record;
 import org.jooq.RenderContext.CastMode;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -531,9 +534,23 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             nextRow++;
     }
 
-    final List<Map<Field<?>, Field<?>>> maps() {
-        initNextRow();
+    final List<Row> rows() {
+        List<Map<Field<?>, Field<?>>> maps = maps();
 
+        return new AbstractList<Row>() {
+            @Override
+            public Row get(int index) {
+                return row0(maps.get(index).values().toArray(EMPTY_FIELD));
+            }
+
+            @Override
+            public int size() {
+                return rows;
+            }
+        };
+    }
+
+    final List<Map<Field<?>, Field<?>>> maps() {
         return new AbstractList<Map<Field<?>, Field<?>>>() {
             @Override
             public Map<Field<?>, Field<?>> get(int index) {
@@ -548,8 +565,6 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
     }
 
     final Map<Field<?>, Field<?>> map(final int index) {
-        initNextRow();
-
         return new AbstractMap<Field<?>, Field<?>>() {
             transient Set<Entry<Field<?>, Field<?>>> entrySet;
 

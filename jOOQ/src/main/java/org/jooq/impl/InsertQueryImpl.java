@@ -1215,7 +1215,7 @@ implements
 
     @Override
     public final UnmodifiableList<? extends Row> $values() {
-        return QOM.unmodifiable(new ArrayList<>());
+        return QOM.unmodifiable(insertMaps.rows());
     }
 
     @Override

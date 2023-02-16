@@ -342,6 +342,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean executeLogging = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean executeLoggingSQLExceptions = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsLogging = true;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
@@ -4171,7 +4173,7 @@ public class Settings
     }
 
     /**
-     * When set to true, this will add jOOQ's default logging ExecuteListeners.
+     * When set to true, this will add jOOQ's default {@link org.jooq.tools.LoggerListener} for debug logging. This is meant for use in development only.
      * 
      * @return
      *     possible object is
@@ -4192,6 +4194,30 @@ public class Settings
      */
     public void setExecuteLogging(Boolean value) {
         this.executeLogging = value;
+    }
+
+    /**
+     * [#14420] Whether constraint violations and other {@link java.sql.SQLException} should produce additional log information about the column name and data causing the problem. Unlike {@link #executeLogging}, this is meant for use in production as well as development. This feature is available only in commercial distributions.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isExecuteLoggingSQLExceptions() {
+        return executeLoggingSQLExceptions;
+    }
+
+    /**
+     * Sets the value of the executeLoggingSQLExceptions property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setExecuteLoggingSQLExceptions(Boolean value) {
+        this.executeLoggingSQLExceptions = value;
     }
 
     /**
@@ -6777,6 +6803,11 @@ public class Settings
         return this;
     }
 
+    public Settings withExecuteLoggingSQLExceptions(Boolean value) {
+        setExecuteLoggingSQLExceptions(value);
+        return this;
+    }
+
     public Settings withDiagnosticsLogging(Boolean value) {
         setDiagnosticsLogging(value);
         return this;
@@ -7516,6 +7547,7 @@ public class Settings
         builder.append("executeListenerStartInvocationOrder", executeListenerStartInvocationOrder);
         builder.append("executeListenerEndInvocationOrder", executeListenerEndInvocationOrder);
         builder.append("executeLogging", executeLogging);
+        builder.append("executeLoggingSQLExceptions", executeLoggingSQLExceptions);
         builder.append("diagnosticsLogging", diagnosticsLogging);
         builder.append("diagnosticsConnection", diagnosticsConnection);
         builder.append("updateRecordVersion", updateRecordVersion);
@@ -8831,6 +8863,15 @@ public class Settings
                 return false;
             }
         }
+        if (executeLoggingSQLExceptions == null) {
+            if (other.executeLoggingSQLExceptions!= null) {
+                return false;
+            }
+        } else {
+            if (!executeLoggingSQLExceptions.equals(other.executeLoggingSQLExceptions)) {
+                return false;
+            }
+        }
         if (diagnosticsLogging == null) {
             if (other.diagnosticsLogging!= null) {
                 return false;
@@ -9684,6 +9725,7 @@ public class Settings
         result = ((prime*result)+((executeListenerStartInvocationOrder == null)? 0 :executeListenerStartInvocationOrder.hashCode()));
         result = ((prime*result)+((executeListenerEndInvocationOrder == null)? 0 :executeListenerEndInvocationOrder.hashCode()));
         result = ((prime*result)+((executeLogging == null)? 0 :executeLogging.hashCode()));
+        result = ((prime*result)+((executeLoggingSQLExceptions == null)? 0 :executeLoggingSQLExceptions.hashCode()));
         result = ((prime*result)+((diagnosticsLogging == null)? 0 :diagnosticsLogging.hashCode()));
         result = ((prime*result)+((diagnosticsConnection == null)? 0 :diagnosticsConnection.hashCode()));
         result = ((prime*result)+((updateRecordVersion == null)? 0 :updateRecordVersion.hashCode()));

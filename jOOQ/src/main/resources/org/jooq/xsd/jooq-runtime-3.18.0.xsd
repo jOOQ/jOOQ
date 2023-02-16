@@ -1220,7 +1220,11 @@ case of which, this defaults to INLINED]]></jxb:javadoc></jxb:property></appinfo
       </element>
 
       <element name="executeLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[When set to true, this will add jOOQ's default logging ExecuteListeners.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[When set to true, this will add jOOQ's default {@link org.jooq.tools.LoggerListener} for debug logging. This is meant for use in development only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="executeLoggingSQLExceptions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#14420] Whether constraint violations and other {@link java.sql.SQLException} should produce additional log information about the column name and data causing the problem. Unlike {@link #executeLogging}, this is meant for use in production as well as development. This feature is available only in commercial distributions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="diagnosticsLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true">

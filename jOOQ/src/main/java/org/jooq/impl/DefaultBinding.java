@@ -48,6 +48,7 @@ import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 import static java.util.Arrays.asList;
 import static java.util.function.Function.identity;
+import static java.util.regex.Matcher.quoteReplacement;
 import static org.jooq.ContextConverter.scoped;
 import static org.jooq.Geography.geography;
 import static org.jooq.Geometry.geometry;
@@ -5535,8 +5536,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
         static final String patchSnowflakeJSON(Scope ctx, String json) {
+
+
+
+
+
+
+
 
 
 

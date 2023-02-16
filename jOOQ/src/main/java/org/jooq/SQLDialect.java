@@ -111,7 +111,7 @@ public enum SQLDialect {
     /**
      * The Firebird dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #FIREBIRD_3_0}.
+     * This family behaves like the versioned dialect {@link #FIREBIRD_4_0}.
      */
     FIREBIRD("Firebird", false, true, new RequiredVersion(4, null, null)),
 
@@ -144,7 +144,7 @@ public enum SQLDialect {
     /**
      * The H2 dialect family.
      */
-    H2("H2", false, true, new RequiredVersion(2, 1, 214)),
+    H2("H2", false, true, new RequiredVersion(2, 0, 202)),
 
 
 
@@ -192,9 +192,9 @@ public enum SQLDialect {
     /**
      * The MariaDB dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #MARIADB_10_5}.
+     * This family behaves like the versioned dialect {@link #MARIADB_10_7}.
      */
-    MARIADB("MariaDB", false, true),
+    MARIADB("MariaDB", false, true, new RequiredVersion(10, 7, null)),
 
 
 
@@ -425,9 +425,9 @@ public enum SQLDialect {
     /**
      * The SQLite dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #SQLITE_3_39}.
+     * This family behaves like the versioned dialect {@link #SQLITE_3_38}.
      */
-    SQLITE("SQLite", false, true, new RequiredVersion(3, 39, null)),
+    SQLITE("SQLite", false, true, new RequiredVersion(3, 38, null)),
 
 
 

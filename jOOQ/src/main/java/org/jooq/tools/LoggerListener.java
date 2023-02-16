@@ -178,7 +178,7 @@ public class LoggerListener extends DefaultExecuteListener {
     public void fetchEnd(ExecuteContext ctx) {
         Result<Record> buffer = (Result<Record>) ctx.data(BUFFER);
 
-        if (buffer != null && !buffer.isEmpty()) {
+        if (buffer != null && !buffer.isEmpty() && log.isDebugEnabled()) {
             log(ctx.configuration(), buffer);
             log.debug("Fetched row(s)", buffer.size() + (buffer.size() < maxRows() ? "" : " (or more)"));
         }

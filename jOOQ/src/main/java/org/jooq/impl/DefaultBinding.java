@@ -5528,14 +5528,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
-
-
-
-
-
-
         static final String patchSnowflakeJSON(Scope ctx, String json) {
 
 

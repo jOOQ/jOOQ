@@ -47,7 +47,9 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.impl.Keywords.K_EXCEPT;
+import static org.jooq.impl.Keywords.K_EXCLUDE;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -55,6 +57,7 @@ import java.util.Set;
 import org.jooq.Asterisk;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Keyword;
 import org.jooq.Name;
 // ...
 import org.jooq.QueryPart;
@@ -105,6 +108,20 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
 
                 ctx.sql(' ').visit(K_EXCEPT).sql(" (").visit(fields).sql(')');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Asterisk except(String... fieldNames) {

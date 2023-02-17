@@ -9984,7 +9984,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldArrayConstructIf() {
         boolean absentOnNull = false;
 
-        if ((parseFunctionNameIf("ARRAY_CONSTRUCT") || (absentOnNull = parseFunctionNameIf("ARRAY_CONSTRUCT_COMPACT")) && requireProEdition())) {
+        if ((parseFunctionNameIf("ARRAY_CONSTRUCT") || (absentOnNull = parseFunctionNameIf("ARRAY_CONSTRUCT_COMPACT"))) && requireProEdition()) {
 
 
 
@@ -10002,7 +10002,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldObjectConstructIf() {
         boolean nullOnNull = false;
 
-        if ((parseFunctionNameIf("OBJECT_CONSTRUCT") || (nullOnNull = parseFunctionNameIf("OBJECT_CONSTRUCT_KEEP_NULL")) && requireProEdition())) {
+        if ((parseFunctionNameIf("OBJECT_CONSTRUCT") || (nullOnNull = parseFunctionNameIf("OBJECT_CONSTRUCT_KEEP_NULL"))) && requireProEdition()) {
 
 
 

@@ -48,6 +48,7 @@ import static org.jooq.impl.Names.N_JSONB_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_OBJECT;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
+import static org.jooq.impl.Names.N_OBJECT_AGG;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.SQLDataType.BLOB;
@@ -93,6 +94,10 @@ implements
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -161,6 +166,23 @@ implements
 
         acceptOverClause(ctx);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void acceptGroupConcat(Context<?> ctx) {
         ctx.sql('(').visit(groupConcatEmulation(ctx)).sql(')');

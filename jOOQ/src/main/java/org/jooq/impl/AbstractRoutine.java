@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
@@ -388,6 +389,17 @@ implements
             return executeSelectFromPOSTGRES();
         }
 
+
+
+
+
+
+
+
+
+
+
+
         // Procedures (no return value) are always executed as CallableStatement
         else if (type == null) {
             return executeCallableStatement();
@@ -452,6 +464,14 @@ implements
             }
         }
     }
+
+
+
+
+
+
+
+
 
 
 
@@ -889,6 +909,7 @@ implements
 
 
 
+
         else
             context.sql(" }");
     }
@@ -1060,6 +1081,7 @@ implements
 
     private final void toSQLBegin(RenderContext context) {
         if (!isSQLUsable() && context.family() == POSTGRES) {}
+
 
 
 
@@ -1504,6 +1526,7 @@ implements
 
 
     private final void toSQLAssign(RenderContext context) {
+
 
 
 

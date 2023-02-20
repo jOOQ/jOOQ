@@ -198,6 +198,7 @@ import org.jooq.meta.jaxb.VisibilityModifier;
 // ...
 // ...
 import org.jooq.meta.postgres.PostgresRoutineDefinition;
+// ...
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
@@ -8478,6 +8479,10 @@ public class JavaGenerator extends AbstractGenerator {
         if (routine instanceof PostgresRoutineDefinition p)
             if (p.isProcedure())
                 out.println("setSQLUsable(false)%s", semicolon);
+
+
+
+
 
 
 

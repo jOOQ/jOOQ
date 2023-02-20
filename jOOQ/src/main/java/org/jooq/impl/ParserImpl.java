@@ -8876,6 +8876,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return octetLength((Field) parseFieldParenthesised());
                 else if ((field = parseFieldObjectConstructIf()) != null)
                     return field;
+                else if (parseFunctionNameIf("OBJECT_KEYS"))
+                    return parseFunctionArgs1(DSL::jsonKeys);
 
                 break;
 

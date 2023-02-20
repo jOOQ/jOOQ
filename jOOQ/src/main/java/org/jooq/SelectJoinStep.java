@@ -1907,7 +1907,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#straightJoin(TableLike)
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     SelectOnStep<R> straightJoin(TableLike<?> table);
 
     /**
@@ -1922,7 +1922,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#straightJoin(SQL)
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     @PlainSQL
     SelectOnStep<R> straightJoin(SQL sql);
 
@@ -1938,7 +1938,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#straightJoin(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     @PlainSQL
     SelectOnStep<R> straightJoin(String sql);
 
@@ -1955,7 +1955,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#straightJoin(String, Object...)
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     @PlainSQL
     SelectOnStep<R> straightJoin(String sql, Object... bindings);
 
@@ -1972,7 +1972,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#straightJoin(String, QueryPart...)
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     @PlainSQL
     SelectOnStep<R> straightJoin(String sql, QueryPart... parts);
 
@@ -1983,6 +1983,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#straightJoin(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     SelectOnStep<R> straightJoin(Name name);
 }

@@ -10013,7 +10013,7 @@ public class DSL {
      * @see DSLContext#set(Name, Param)
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.RowCountQuery set(Name name, Param<?> value) {
         return dsl().set(name, value);
     }
@@ -23785,7 +23785,7 @@ public class DSL {
     }
 
     /**
-     * Get the <code>REGEXP_REPLACE_ALL</code> function.
+     * Get the <code>REGEXP_REPLACE_FIRST</code> function.
      */
     @NotNull
     @Support({ MYSQL, POSTGRES, YUGABYTEDB })
@@ -23794,7 +23794,7 @@ public class DSL {
     }
 
     /**
-     * Get the <code>REGEXP_REPLACE_ALL</code> function.
+     * Get the <code>REGEXP_REPLACE_FIRST</code> function.
      */
     @NotNull
     @Support({ MYSQL, POSTGRES, YUGABYTEDB })

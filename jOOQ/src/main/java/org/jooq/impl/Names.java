@@ -170,7 +170,6 @@ final class Names {
     static final Name N_JSON_TRANSFORM              = systemName("json_transform");
     static final Name N_JSON_TYPE                   = systemName("json_type");
     static final Name N_JSON_UNQUOTE                = systemName("json_unquote");
-    static final Name N_JSON_VALID                  = systemName("json_valid");
     static final Name N_JSON_VALUE                  = systemName("json_value");
     static final Name N_LAG                         = systemName("lag");
     static final Name N_LAST_VALUE                  = systemName("last_value");
@@ -200,6 +199,7 @@ final class Names {
     static final Name N_NTILE                       = systemName("ntile");
     static final Name N_NULL                        = systemName("null");
     static final Name N_NVL2                        = systemName("nvl2");
+    static final Name N_OBJECT_AGG                  = systemName("object_agg");
     static final Name N_OBJECT_CONSTRUCT            = systemName("object_construct");
     static final Name N_OBJECT_CONSTRUCT_KEEP_NULL  = systemName("object_construct_keep_null");
     static final Name N_OFFSET                      = systemName("offset");
@@ -420,6 +420,7 @@ final class Names {
     static final Name N_JSON_REMOVE                 = systemName("json_remove");
     static final Name N_JSON_REPLACE                = systemName("json_replace");
     static final Name N_JSON_SET                    = systemName("json_set");
+    static final Name N_JSON_VALID                  = systemName("json_valid");
     static final Name N_LCASE                       = systemName("lcase");
     static final Name N_LEFT                        = systemName("left");
     static final Name N_LEN                         = systemName("len");
@@ -443,6 +444,7 @@ final class Names {
     static final Name N_NEWID                       = systemName("newid");
     static final Name N_NULLIF                      = systemName("nullif");
     static final Name N_NVL                         = systemName("nvl");
+    static final Name N_OBJECT_KEYS                 = systemName("object_keys");
     static final Name N_OCTET_LENGTH                = systemName("octet_length");
     static final Name N_OTRANSLATE                  = systemName("otranslate");
     static final Name N_OVERLAY                     = systemName("overlay");

@@ -131,6 +131,7 @@ final class Names {
     static final Name N_GENERATOR                   = systemName("generator");
     static final Name N_GEN_ID                      = systemName("gen_id");
     static final Name N_GEN_UUID                    = systemName("gen_uuid");
+    static final Name N_GET                         = systemName("get");
     static final Name N_GETDATE                     = systemName("getdate");
     static final Name N_GREATEST                    = systemName("greatest");
     static final Name N_GROUPING_SETS               = systemName("grouping sets");
@@ -393,6 +394,7 @@ final class Names {
     static final Name N_GENERATE_UUID               = systemName("generate_uuid");
     static final Name N_GENGUID                     = systemName("genguid");
     static final Name N_GEN_RANDOM_UUID             = systemName("gen_random_uuid");
+    static final Name N_GET                         = systemName("get");
     static final Name N_GETBIT                      = systemName("getbit");
     static final Name N_GET_BIT                     = systemName("get_bit");
     static final Name N_GOTO                        = systemName("goto");

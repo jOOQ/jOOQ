@@ -201,23 +201,35 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
+
+
+
+
+
+
+
+
                 case FIREBIRD: {
                     toSQLInsertSelect(ctx, insertSelect(ctx, GeneratorStatementType.INSERT));
                     break;
                 }
 
                 default: {
-                    ctx.formatSeparator()
-                       .start(INSERT_VALUES)
-                       .visit(K_VALUES)
-                       .sql(' ');
-                    toSQL92Values(ctx);
-                    ctx.end(INSERT_VALUES);
-
+                    toSQLValues(ctx);
                     break;
                 }
             }
         }
+    }
+
+    private final void toSQLValues(Context<?> ctx) {
+        ctx.formatSeparator()
+           .start(INSERT_VALUES)
+           .visit(K_VALUES)
+           .sql(' ');
+        toSQL92Values(ctx);
+        ctx.end(INSERT_VALUES);
     }
 
     static final void toSQLInsertSelect(Context<?> ctx, Select<?> select) {
@@ -318,6 +330,17 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
     private final boolean supportsValues(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
 
 
 

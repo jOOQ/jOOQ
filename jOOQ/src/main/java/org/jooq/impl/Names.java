@@ -448,6 +448,7 @@ final class Names {
     static final Name N_OCTET_LENGTH                = systemName("octet_length");
     static final Name N_OTRANSLATE                  = systemName("otranslate");
     static final Name N_OVERLAY                     = systemName("overlay");
+    static final Name N_PARSE_JSON                  = systemName("parse_json");
     static final Name N_PI                          = systemName("pi");
     static final Name N_POSITION                    = systemName("position");
     static final Name N_PRIOR                       = systemName("prior");

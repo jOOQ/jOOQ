@@ -292,10 +292,10 @@ implements
 
 
         else
-            ctx.visit(wrap(args).map((arg, i) -> applyFilter(arg, i) ? DSL.when(filter, arg == ASTERISK ? one() : arg) : arg).map(fun));
+            ctx.visit(wrap(args).map((arg, i) -> applyFilter(ctx, arg, i) ? DSL.when(filter, arg == ASTERISK ? one() : arg) : arg).map(fun));
     }
 
-    boolean applyFilter(Field<?> arg, int i) {
+    boolean applyFilter(Context<?> ctx, Field<?> arg, int i) {
         return true;
     }
 

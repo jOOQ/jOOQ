@@ -62,7 +62,9 @@ import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUERY;
+import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_RAWTOHEX;
+import static org.jooq.impl.Names.N_TO_VARIANT;
 import static org.jooq.impl.SQLDataType.BIT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.JSON;
@@ -78,9 +80,11 @@ import java.util.function.Function;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
 import org.jooq.Param;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record1;
 // ...
@@ -291,6 +295,19 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
         return field;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @SuppressWarnings("unchecked")
     private static Field<String> booleanCase(Field<?> field) {

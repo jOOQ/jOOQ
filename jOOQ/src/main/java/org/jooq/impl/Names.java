@@ -131,7 +131,6 @@ final class Names {
     static final Name N_GENERATOR                   = systemName("generator");
     static final Name N_GEN_ID                      = systemName("gen_id");
     static final Name N_GEN_UUID                    = systemName("gen_uuid");
-    static final Name N_GET                         = systemName("get");
     static final Name N_GETDATE                     = systemName("getdate");
     static final Name N_GREATEST                    = systemName("greatest");
     static final Name N_GROUPING_SETS               = systemName("grouping sets");
@@ -276,6 +275,7 @@ final class Names {
     static final Name N_TIMESTAMP_SUB               = systemName("timestamp_sub");
     static final Name N_TO_CLOB                     = systemName("to_clob");
     static final Name N_TO_NUMBER                   = systemName("to_number");
+    static final Name N_TO_VARIANT                  = systemName("to_variant");
     static final Name N_TRUNCATE                    = systemName("truncate");
     static final Name N_TRUNCNUM                    = systemName("truncnum");
     static final Name N_UNNEST                      = systemName("unnest");

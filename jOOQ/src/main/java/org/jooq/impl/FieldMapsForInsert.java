@@ -359,6 +359,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
             default:
                 return true;
         }

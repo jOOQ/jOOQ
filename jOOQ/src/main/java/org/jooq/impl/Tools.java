@@ -3799,6 +3799,11 @@ final class Tools {
         return field instanceof Param;
     }
 
+    static final boolean isParamOrCastParam(Field<?> field) {
+        return field instanceof Param
+            || field instanceof Cast && isParamOrCastParam(((Cast<?>) field).$field());
+    }
+
     static final boolean isVal(Field<?> field) {
         return field instanceof Val
             || field instanceof ConvertedVal && ((ConvertedVal<?>) field).delegate instanceof Val;

@@ -83,6 +83,7 @@ final class Names {
     static final Name N_BYTE_LENGTH                 = systemName("byte_length");
     static final Name N_CAST                        = systemName("cast");
     static final Name N_CHARINDEX                   = systemName("charindex");
+    static final Name N_CHECK_JSON                  = systemName("check_json");
     static final Name N_CHOOSE                      = systemName("choose");
     static final Name N_COLLECT                     = systemName("collect");
     static final Name N_CONCAT                      = systemName("concat");

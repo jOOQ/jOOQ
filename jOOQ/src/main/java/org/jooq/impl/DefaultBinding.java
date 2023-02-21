@@ -801,12 +801,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             // [#7242] [#13252] Other vendor specific types also need a lot of casting
-            if (dataType.isJSON()
-                || dataType.isXML()
-
-
-
-            ) {
+            if (dataType.isJSON() || dataType.isXML()) {
                 switch (ctx.family()) {
 
 
@@ -817,6 +812,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         return true;
                 }
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4891,6 +4900,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
     }
+
+
+
+
+
+
 
 
 

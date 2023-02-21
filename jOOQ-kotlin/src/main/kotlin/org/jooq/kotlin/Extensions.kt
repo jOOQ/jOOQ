@@ -291,10 +291,10 @@ operator fun <T> TableLike<*>.get(field: Field<T>) = this.field(field)
 // ----------------------------------------------------------------------------
 
 @Support(AURORA_POSTGRES, COCKROACHDB, H2, HSQLDB, POSTGRES, YUGABYTEDB)
-operator fun <T> Field<Array<T>>.get(index: Int) = arrayGet(this, index)
+operator fun <T> Field<Array<T>?>.get(index: Int) = arrayGet(this, index)
 
 @Support(AURORA_POSTGRES, COCKROACHDB, H2, HSQLDB, POSTGRES, YUGABYTEDB)
-operator fun <T> Field<Array<T>>.get(index: Field<Int?>) = arrayGet(this, index)
+operator fun <T> Field<Array<T>?>.get(index: Field<Int?>) = arrayGet(this, index)
 
 // ----------------------------------------------------------------------------
 // Extensions to make Field<JSON> and Field<JSONB> aware of its being JSON

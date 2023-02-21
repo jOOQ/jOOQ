@@ -309,6 +309,8 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
 
 
+
+
     @SuppressWarnings("unchecked")
     private static Field<String> booleanCase(Field<?> field) {
         return case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false"));

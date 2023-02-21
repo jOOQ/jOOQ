@@ -85,14 +85,14 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
-    private static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_IS_NULL };
-
     @Override
     final boolean isNullable() {
         return false;
     }
+
+
+
+    private static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_IS_NULL };
 
     @Override
     public final void accept(Context<?> ctx) {

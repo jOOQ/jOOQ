@@ -72,11 +72,6 @@ implements
     static final Set<SQLDialect>  NO_SUPPORT_UNTYPED_NULL = SQLDialect.supportedBy(DERBY, HSQLDB);
 
     @Override
-    final boolean isNullable() {
-        return true;
-    }
-
-    @Override
     final boolean parenthesised(Context<?> ctx) {
         return !NO_SUPPORT_UNTYPED_NULL.contains(ctx.dialect())
             && !NO_SUPPORT_BOOLEAN.contains(ctx.dialect());

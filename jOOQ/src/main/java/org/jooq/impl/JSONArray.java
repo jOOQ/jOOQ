@@ -134,6 +134,11 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @Override
+    final boolean isNullable() {
+        return false;
+    }
+
 
 
     @Override

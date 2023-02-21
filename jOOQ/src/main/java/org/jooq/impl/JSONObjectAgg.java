@@ -189,6 +189,11 @@ implements
 
 
 
+
+
+
+
+
     private final void acceptGroupConcat(Context<?> ctx) {
         ctx.sql('(').visit(groupConcatEmulation(ctx)).sql(')');
     }

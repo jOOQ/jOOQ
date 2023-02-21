@@ -121,6 +121,15 @@ implements
     // XXX: API (not implemented)
     // ------------------------------------------------------------------------
 
+    /**
+     * [#10179] [#14665] Subclasses may override this method to indicate that
+     * the condition may produce <code>TRUE</code>, <code>FALSE</code>, or
+     * <code>NULL</code>.
+     */
+    boolean isNullable() {
+        return true;
+    }
+
     @Override
     public abstract void accept(Context<?> ctx);
 

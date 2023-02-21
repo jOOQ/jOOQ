@@ -2,6 +2,7 @@ package org.jooq.kotlin
 
 import org.jetbrains.annotations.Blocking
 import org.jooq.*
+import org.jooq.SQLDialect.*
 import org.jooq.impl.DSL.*
 import java.util.stream.Collector
 
@@ -289,11 +290,47 @@ operator fun <T> TableLike<*>.get(field: Field<T>) = this.field(field)
 // Extensions to make Field<T[]> aware of its being an array
 // ----------------------------------------------------------------------------
 
-@Support
+@Support(AURORA_POSTGRES, COCKROACHDB, H2, HSQLDB, POSTGRES, YUGABYTEDB)
 operator fun <T> Field<Array<T>>.get(index: Int) = arrayGet(this, index)
 
-@Support
-operator fun <T> Field<Array<T>>.get(index: Field<Int>) = arrayGet(this, index)
+@Support(AURORA_POSTGRES, COCKROACHDB, H2, HSQLDB, POSTGRES, YUGABYTEDB)
+operator fun <T> Field<Array<T>>.get(index: Field<Int?>) = arrayGet(this, index)
+
+// ----------------------------------------------------------------------------
+// Extensions to make Field<JSON> and Field<JSONB> aware of its being JSON
+// ----------------------------------------------------------------------------
+
+@Support(AURORA_POSTGRES, COCKROACHDB, DB2_11, MARIADB_10_2, MYSQL_5_7, ORACLE12C, POSTGRES, SNOWFLAKE, SQLITE_3_38, YUGABYTEDB)
+@JvmName("jsonGetElement")
+operator fun Field<JSON?>.get(index: Int) = jsonGetElement(this, index)
+
+@Support(AURORA_POSTGRES, COCKROACHDB, DB2_11, MARIADB_10_2, MYSQL_5_7, ORACLE12C, POSTGRES, SNOWFLAKE, SQLITE_3_38, YUGABYTEDB)
+@JvmName("jsonGetElement")
+operator fun Field<JSON?>.get(index: Field<Int?>) = jsonGetElement(this, index)
+
+@Support(AURORA_POSTGRES, COCKROACHDB, DB2_11, MARIADB_10_2, MYSQL_5_7, ORACLE12C, POSTGRES, SNOWFLAKE, SQLITE_3_38, YUGABYTEDB)
+@JvmName("jsonGetAttribute")
+operator fun Field<JSON?>.get(name: String) = jsonGetAttribute(this, name)
+
+@Support(AURORA_POSTGRES, COCKROACHDB, DB2_11, MARIADB_10_2, MYSQL_5_7, ORACLE12C, POSTGRES, SNOWFLAKE, SQLITE_3_38, YUGABYTEDB)
+@JvmName("jsonGetAttribute")
+operator fun Field<JSON?>.get(name: Field<String?>) = jsonGetAttribute(this, name)
+
+@Support(AURORA_POSTGRES, COCKROACHDB, DB2_11, MARIADB_10_2, MYSQL_5_7, ORACLE12C, POSTGRES, SNOWFLAKE, SQLITE_3_38, YUGABYTEDB)
+@JvmName("jsonbGetElement")
+operator fun Field<JSONB?>.get(index: Int) = jsonbGetElement(this, index)
+
+@Support(AURORA_POSTGRES, COCKROACHDB, DB2_11, MARIADB_10_2, MYSQL_5_7, ORACLE12C, POSTGRES, SNOWFLAKE, SQLITE_3_38, YUGABYTEDB)
+@JvmName("jsonbGetElement")
+operator fun Field<JSONB?>.get(index: Field<Int?>) = jsonbGetElement(this, index)
+
+@Support(AURORA_POSTGRES, COCKROACHDB, DB2_11, MARIADB_10_2, MYSQL_5_7, ORACLE12C, POSTGRES, SNOWFLAKE, SQLITE_3_38, YUGABYTEDB)
+@JvmName("jsonbGetAttribute")
+operator fun Field<JSONB?>.get(name: String) = jsonbGetAttribute(this, name)
+
+@Support(AURORA_POSTGRES, COCKROACHDB, DB2_11, MARIADB_10_2, MYSQL_5_7, ORACLE12C, POSTGRES, SNOWFLAKE, SQLITE_3_38, YUGABYTEDB)
+@JvmName("jsonbGetAttribute")
+operator fun Field<JSONB?>.get(name: Field<String?>) = jsonbGetAttribute(this, name)
 
 // ----------------------------------------------------------------------------
 // Extensions to make Select<Record1<T>> a scalar subquery of type Field<T>

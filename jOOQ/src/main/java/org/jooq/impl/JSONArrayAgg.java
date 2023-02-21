@@ -143,6 +143,11 @@ implements
 
 
 
+
+
+
+
+
             case POSTGRES:
             case YUGABYTEDB:
                 ctx.visit(getDataType() == JSON ? N_JSON_AGG : N_JSONB_AGG).sql('(');

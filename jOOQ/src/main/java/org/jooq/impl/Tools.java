@@ -5970,6 +5970,21 @@ final class Tools {
         return result != null ? result : field;
     }
 
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> unaliasTable(Field<T> field) {
+        if (field instanceof TableField<?, ?> tf) {
+            Table<?> t = aliased(tf.getTable());
+
+            // [#14671] Use only the Field::getName for lookups to avoid:
+            //          - StackOverflowError
+            //          - Otherwise Field or Name related lookup efforts
+            if (t != null)
+                return (Field<T>) t.field(field.getName());
+        }
+
+        return field;
+    }
+
     static final <T> Field<T> aliased(Field<T> field) {
         if (field instanceof FieldAlias<T> f)
             return f.getAliasedField();

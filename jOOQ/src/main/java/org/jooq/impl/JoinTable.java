@@ -776,12 +776,17 @@ implements
 
     @Override
     public final J onKey(ForeignKey<?, ?> key) {
-        if (containsUnaliasedTable(lhs, key.getTable()))
-            return onKey(key, lhs, rhs);
-        else if (containsUnaliasedTable(rhs, key.getTable()))
-            return onKey(key, rhs, lhs);
 
-        throw onKeyException(OnKeyExceptionReason.NOT_FOUND, null, null);
+        // [#12214] Unlike onKey(TableField...), where the argument field is
+        //          expected to be a referencing field, not a referenced field,
+        //          here we have to check both ends of the key to avoid
+        //          ambiguities
+        if (containsUnaliasedTable(lhs, key.getTable()) && containsUnaliasedTable(rhs, key.getKey().getTable()))
+            return onKey(key, lhs, rhs);
+        else if (containsUnaliasedTable(rhs, key.getTable()) && containsUnaliasedTable(lhs, key.getKey().getTable()))
+            return onKey(key, rhs, lhs);
+        else
+            throw onKeyException(OnKeyExceptionReason.NOT_FOUND, null, null);
     }
 
     private final J onKey(ForeignKey<?, ?> key, Table<?> fk, Table<?> pk) {

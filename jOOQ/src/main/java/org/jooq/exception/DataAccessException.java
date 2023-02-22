@@ -40,6 +40,7 @@ package org.jooq.exception;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -49,8 +50,26 @@ import io.r2dbc.spi.R2dbcException;
 /**
  * The <code>DataAccessException</code> is a generic {@link RuntimeException}
  * indicating that something went wrong while executing a SQL statement from
- * jOOQ. The idea behind this unchecked exception is borrowed from Spring's
- * JDBC's DataAccessException
+ * jOOQ.
+ * <p>
+ * Unlike JDBC, jOOQ throws {@link RuntimeException}, knowing that
+ * <ul>
+ * <li>most {@link SQLException} types are not recoverable.</li>
+ * <li>even when they are (e.g.
+ * {@link SQLIntegrityConstraintViolationException}), they won't appear with
+ * most statements.</li>
+ * </ul>
+ * <p>
+ * Apart from jOOQ's own {@link DataAccessException} subtypes, which are thrown
+ * by jOOQ's internals, most {@link SQLException} types (or
+ * {@link R2dbcException} types) are translated and wrapped by:
+ * <ul>
+ * <li>{@link DataException} when jOOQ detects
+ * {@link SQLStateClass#C22_DATA_EXCEPTION}.</li>
+ * <li>{@link IntegrityConstraintViolationException} when jOOQ detects
+ * {@link SQLStateClass#C23_INTEGRITY_CONSTRAINT_VIOLATION}.</li>
+ * <li>{@link DataAccessException} otherwise.</li>
+ * </ul>
  *
  * @author Sergey Epik - Merged into jOOQ from Spring JDBC Support
  * @author Lukas Eder

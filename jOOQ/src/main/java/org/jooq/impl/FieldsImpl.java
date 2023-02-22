@@ -44,6 +44,7 @@ import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.newRecord;
+import static org.jooq.impl.Tools.unaliasTable;
 
 import java.sql.SQLWarning;
 import java.util.ArrayList;
@@ -240,10 +241,16 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
                 return result.result(f, i);
         }
 
-        // [#4283] table / column matches are better than only column matches
-        Field<?> columnMatch = null;
-        Field<?> columnMatch2 = null;
-        int indexMatch = -1;
+        // [#4283] table / column matches are better than column only matches
+        Field<?> columnOnlyMatch = null;
+        Field<?> columnOnlyMatch2 = null;
+        int columnOnlyIndexMatch = -1;
+
+        // [#14671] column only matches might still match on the unaliased table
+        Field<?> unaliased = null;
+        Field<?> aliasMatch = null;
+        Field<?> aliasMatch2 = null;
+        int aliasIndexMatch = -1;
 
         String tableName = tableName(field);
         String fieldName = field.getName();
@@ -261,26 +268,44 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
             // In case no exact match was found, return the first field with matching name
             if (fName.equals(fieldName)) {
-                if (columnMatch == null) {
-                    columnMatch = f;
-                    indexMatch = i;
+
+                // [#14671] Prefer matches by unaliased tables, if applicable
+                if (unaliased == null)
+                    unaliased = unaliasTable(field);
+
+                if (unaliased != null && unaliased.equals(unaliasTable(f))) {
+                    if (aliasMatch == null) {
+                        aliasMatch = f;
+                        aliasIndexMatch = i;
+                    }
+                    else
+                        aliasMatch2 = f;
+                }
+
+                if (columnOnlyMatch == null) {
+                    columnOnlyMatch = f;
+                    columnOnlyIndexMatch = i;
                 }
 
                 // [#4476] [#4477] This might be unintentional from a user
                 //                 perspective, e.g. when ambiguous ID columns are present.
                 // [#5578] Finish the loop, though, as we might have an exact match
                 //         despite some ambiguity
-                else {
-                    columnMatch2 = f;
-                }
+                else
+                    columnOnlyMatch2 = f;
             }
         }
 
-        if (columnMatch2 != null)
-            if (log.isInfoEnabled())
-                log.info("Ambiguous match found for " + fieldName + ". Both " + columnMatch + " and " + columnMatch2 + " match.", new SQLWarning());
+        if (aliasMatch2 != null && log.isInfoEnabled())
+            log.info("Ambiguous match found for " + fieldName + ". Both " + aliasMatch + " and " + aliasMatch2 + " match.", new SQLWarning());
 
-        return result.result(columnMatch, indexMatch);
+        if (aliasMatch != null)
+            return result.result(aliasMatch, aliasIndexMatch);
+
+        if (columnOnlyMatch2 != null && log.isInfoEnabled())
+            log.info("Ambiguous match found for " + fieldName + ". Both " + columnOnlyMatch + " and " + columnOnlyMatch2 + " match.", new SQLWarning());
+
+        return result.result(columnOnlyMatch, columnOnlyIndexMatch);
     }
 
     private final String tableName(Field<?> field) {

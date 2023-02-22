@@ -88,6 +88,8 @@ import static org.jooq.exception.SQLStateClass.CHZ_REMOTE_DATABASE_ACCESS;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * The subclass of the SQL state class as specified by the SQL standard, or by individual
  * vendors.
@@ -460,18 +462,22 @@ public enum SQLStateSubclass {
         this.subclass = subclass;
     }
 
+    @NotNull
     public String sqlStateSubclassName() {
         return subclass;
     }
 
+    @NotNull
     public SQLStateClass sqlStateClass() {
         return clazz;
     }
 
+    @NotNull
     public String sqlStateClassName() {
         return sqlStateClass().className();
     }
 
+    @NotNull
     public static SQLStateSubclass fromCode(String code) {
         if (code == null || code.length() != 5)
             return SQLStateSubclass.OTHER;
@@ -488,6 +494,7 @@ public enum SQLStateSubclass {
             return SQLStateSubclass.OTHER;
     }
 
+    @NotNull
     static SQLStateSubclass fromSQLiteVendorCode(int errorCode) {
 
         // See https://sqlite.org/c3ref/c_abort.html

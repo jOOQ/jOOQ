@@ -88,6 +88,7 @@ import static org.jooq.conf.SettingsTools.getBackslashEscaping;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
+import static org.jooq.exception.DataAccessException.sqlStateClass;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
@@ -339,11 +340,14 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.ThrowExceptions;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.DetachedException;
 import org.jooq.exception.ExceptionTools;
+import org.jooq.exception.IntegrityConstraintViolationException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.NoDataFoundException;
+import org.jooq.exception.SQLStateClass;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.QOM.Quantifier;
@@ -3412,7 +3416,7 @@ final class Tools {
      */
     static final DataAccessException translate(String sql, R2dbcException e) {
         if (e != null)
-            return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);
+            return translate(sql, e, sqlStateClass(e));
         else
             return new DataAccessException("SQL [" + sql + "]; Unspecified R2dbcException");
     }
@@ -3422,9 +3426,20 @@ final class Tools {
      */
     static final DataAccessException translate(String sql, SQLException e) {
         if (e != null)
-            return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);
+            return translate(sql, e, sqlStateClass(e));
         else
             return new DataAccessException("SQL [" + sql + "]; Unspecified SQLException");
+    }
+
+    private static final DataAccessException translate(String sql, Exception e, SQLStateClass sqlState) {
+        switch (sqlState) {
+            case C22_DATA_EXCEPTION:
+                return new DataException("SQL [" + sql + "]; " + e.getMessage(), e);
+            case C23_INTEGRITY_CONSTRAINT_VIOLATION:
+                return new IntegrityConstraintViolationException("SQL [" + sql + "]; " + e.getMessage(), e);
+            default:
+                return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);
+        }
     }
 
     /**

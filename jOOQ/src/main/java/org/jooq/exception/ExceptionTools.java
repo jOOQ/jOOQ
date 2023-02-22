@@ -37,6 +37,8 @@
  */
 package org.jooq.exception;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Lukas Eder
  */
@@ -52,6 +54,7 @@ public final class ExceptionTools {
      * of that type was found.
      */
     @SuppressWarnings("unchecked")
+    @Nullable
     public static <T extends Throwable> T getCause(Throwable t, Class<? extends T> type) {
         Throwable next = t.getCause();
         Throwable prev;

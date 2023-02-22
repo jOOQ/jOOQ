@@ -40,6 +40,8 @@ package org.jooq.exception;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * The class of the SQL state as specified by the SQL:2011 standard, or by individual
  * vendors.
@@ -165,10 +167,12 @@ public enum SQLStateClass {
         this.className = className;
     }
 
+    @NotNull
     public String className() {
         return className;
     }
 
+    @NotNull
     public static SQLStateClass fromCode(String code) {
         if (code == null || code.length() < 2)
             return SQLStateClass.OTHER;
@@ -177,6 +181,7 @@ public enum SQLStateClass {
         return result != null ? result : SQLStateClass.OTHER;
     }
 
+    @NotNull
     static SQLStateClass fromSQLiteVendorCode(int errorCode) {
 
         // See https://sqlite.org/c3ref/c_abort.html

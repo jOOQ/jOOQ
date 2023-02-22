@@ -107,6 +107,7 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.containsTable;
 import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
@@ -712,23 +713,26 @@ implements
                     unaliased.set(i, (TableField<?, ?>) alias.wrapped().field(f));
             }
 
-            if (containsUnaliasedTable(lhs, keyFields[0].getTable())) {
-                for (ForeignKey<?, ?> key : lhs.getReferences())
-                    if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
-                        return onKey(key);
+            // [#14668] Try exact matches first
+            for (boolean unalias : new boolean[] { false, true }) {
+                if (containsTable(lhs, keyFields[0].getTable(), unalias)) {
+                    for (ForeignKey<?, ?> key : lhs.getReferences())
+                        if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
+                            return onKey(key, lhs, rhs);
 
-                for (ForeignKey<?, ?> key : lhs.getReferences())
-                    if (key.getFields().containsAll(unaliased))
-                        return onKey(key);
-            }
-            else if (containsUnaliasedTable(rhs, keyFields[0].getTable())) {
-                for (ForeignKey<?, ?> key : rhs.getReferences())
-                    if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
-                        return onKey(key);
+                    for (ForeignKey<?, ?> key : lhs.getReferences())
+                        if (key.getFields().containsAll(unaliased))
+                            return onKey(key, lhs, rhs);
+                }
+                else if (containsTable(rhs, keyFields[0].getTable(), unalias)) {
+                    for (ForeignKey<?, ?> key : rhs.getReferences())
+                        if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
+                            return onKey(key, rhs, lhs);
 
-                for (ForeignKey<?, ?> key : rhs.getReferences())
-                    if (key.getFields().containsAll(unaliased))
-                        return onKey(key);
+                    for (ForeignKey<?, ?> key : rhs.getReferences())
+                        if (key.getFields().containsAll(unaliased))
+                            return onKey(key, rhs, lhs);
+                }
             }
         }
 

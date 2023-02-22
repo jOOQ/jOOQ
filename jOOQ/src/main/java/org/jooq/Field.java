@@ -1259,7 +1259,7 @@ extends
      * Create a condition to check if this field contains JSON data.
      */
     @NotNull
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     Condition isJson();
 
     /**
@@ -1268,7 +1268,7 @@ extends
      * Create a condition to check if this field does not contain JSON data.
      */
     @NotNull
-    @Support({ MYSQL })
+    @Support({ MARIADB, MYSQL })
     Condition isNotJson();
 
     // -------------------------------------------------------------------------

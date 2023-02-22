@@ -8876,6 +8876,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return octetLength((Field) parseFieldParenthesised());
                 else if ((field = parseFieldObjectConstructIf()) != null)
                     return field;
+                else if (parseFunctionNameIf("OBJECT_KEYS"))
+                    return parseFunctionArgs1(DSL::jsonKeys);
 
                 break;
 
@@ -10053,9 +10055,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final AggregateFilterStep<?> parseJSONObjectAggFunctionIf() {
         boolean jsonb = false;
+        AggregateFilterStep<?> result;
 
         if (parseFunctionNameIf("JSON_OBJECTAGG", "JSON_OBJECT_AGG", "JSON_GROUP_OBJECT") || (jsonb = parseFunctionNameIf("JSONB_OBJECT_AGG"))) {
-            AggregateFilterStep<?> result;
             JSONObjectAggNullStep<?> s1;
             JSONObjectAggReturningStep<?> s2;
             JSONOnNull onNull;
@@ -10073,6 +10075,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             parse(')');
             return result;
+        }
+        else if (parseFunctionNameIf("OBJECT_AGG") && requireProEdition()) {
+
+
+
+
+
+
         }
 
         return null;

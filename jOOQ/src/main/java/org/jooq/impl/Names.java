@@ -83,6 +83,7 @@ final class Names {
     static final Name N_BYTE_LENGTH                 = systemName("byte_length");
     static final Name N_CAST                        = systemName("cast");
     static final Name N_CHARINDEX                   = systemName("charindex");
+    static final Name N_CHECK_JSON                  = systemName("check_json");
     static final Name N_CHOOSE                      = systemName("choose");
     static final Name N_COLLECT                     = systemName("collect");
     static final Name N_CONCAT                      = systemName("concat");
@@ -170,7 +171,6 @@ final class Names {
     static final Name N_JSON_TRANSFORM              = systemName("json_transform");
     static final Name N_JSON_TYPE                   = systemName("json_type");
     static final Name N_JSON_UNQUOTE                = systemName("json_unquote");
-    static final Name N_JSON_VALID                  = systemName("json_valid");
     static final Name N_JSON_VALUE                  = systemName("json_value");
     static final Name N_LAG                         = systemName("lag");
     static final Name N_LAST_VALUE                  = systemName("last_value");
@@ -200,6 +200,7 @@ final class Names {
     static final Name N_NTILE                       = systemName("ntile");
     static final Name N_NULL                        = systemName("null");
     static final Name N_NVL2                        = systemName("nvl2");
+    static final Name N_OBJECT_AGG                  = systemName("object_agg");
     static final Name N_OBJECT_CONSTRUCT            = systemName("object_construct");
     static final Name N_OBJECT_CONSTRUCT_KEEP_NULL  = systemName("object_construct_keep_null");
     static final Name N_OFFSET                      = systemName("offset");
@@ -207,6 +208,7 @@ final class Names {
     static final Name N_OPENXML                     = systemName("openxml");
     static final Name N_ORDINAL                     = systemName("ordinal");
     static final Name N_OREPLACE                    = systemName("oreplace");
+    static final Name N_PARSE_JSON                  = systemName("parse_json");
     static final Name N_PERCENTILE_CONT             = systemName("percentile_cont");
     static final Name N_PERCENTILE_DISC             = systemName("percentile_disc");
     static final Name N_PERCENT_RANK                = systemName("percent_rank");
@@ -274,6 +276,7 @@ final class Names {
     static final Name N_TIMESTAMP_SUB               = systemName("timestamp_sub");
     static final Name N_TO_CLOB                     = systemName("to_clob");
     static final Name N_TO_NUMBER                   = systemName("to_number");
+    static final Name N_TO_VARIANT                  = systemName("to_variant");
     static final Name N_TRUNCATE                    = systemName("truncate");
     static final Name N_TRUNCNUM                    = systemName("truncnum");
     static final Name N_UNNEST                      = systemName("unnest");
@@ -392,6 +395,7 @@ final class Names {
     static final Name N_GENERATE_UUID               = systemName("generate_uuid");
     static final Name N_GENGUID                     = systemName("genguid");
     static final Name N_GEN_RANDOM_UUID             = systemName("gen_random_uuid");
+    static final Name N_GET                         = systemName("get");
     static final Name N_GETBIT                      = systemName("getbit");
     static final Name N_GET_BIT                     = systemName("get_bit");
     static final Name N_GOTO                        = systemName("goto");
@@ -420,6 +424,7 @@ final class Names {
     static final Name N_JSON_REMOVE                 = systemName("json_remove");
     static final Name N_JSON_REPLACE                = systemName("json_replace");
     static final Name N_JSON_SET                    = systemName("json_set");
+    static final Name N_JSON_VALID                  = systemName("json_valid");
     static final Name N_LCASE                       = systemName("lcase");
     static final Name N_LEFT                        = systemName("left");
     static final Name N_LEN                         = systemName("len");
@@ -443,6 +448,7 @@ final class Names {
     static final Name N_NEWID                       = systemName("newid");
     static final Name N_NULLIF                      = systemName("nullif");
     static final Name N_NVL                         = systemName("nvl");
+    static final Name N_OBJECT_KEYS                 = systemName("object_keys");
     static final Name N_OCTET_LENGTH                = systemName("octet_length");
     static final Name N_OTRANSLATE                  = systemName("otranslate");
     static final Name N_OVERLAY                     = systemName("overlay");

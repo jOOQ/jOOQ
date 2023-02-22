@@ -134,6 +134,11 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @Override
+    final boolean isNullable() {
+        return false;
+    }
+
 
 
     @Override
@@ -159,6 +164,10 @@ implements
                     ctx.visit(getDataType() == JSON ? N_JSON_BUILD_ARRAY : N_JSONB_BUILD_ARRAY).sql('(').visit(mapped).sql(')');
 
                 break;
+
+
+
+
 
 
 

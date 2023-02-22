@@ -64,15 +64,6 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
         super(DSL.name("condition"), SQLDataType.BOOLEAN);
     }
 
-    /**
-     * [#10179] Subclasses may override this method to indicate that the
-     * condition may produce <code>TRUE</code>, <code>FALSE</code>, or
-     * <code>NULL</code>.
-     */
-    boolean isNullable() {
-        return true;
-    }
-
     @Override
     public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;

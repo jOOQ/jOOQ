@@ -85,14 +85,14 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
-    private static final Clause[] CLAUSES_EXISTS = { Clause.CONDITION, Clause.CONDITION_EXISTS };
-
     @Override
     final boolean isNullable() {
         return false;
     }
+
+
+
+    private static final Clause[] CLAUSES_EXISTS = { Clause.CONDITION, Clause.CONDITION_EXISTS };
 
     @Override
     final boolean parenthesised(Context<?> ctx) {

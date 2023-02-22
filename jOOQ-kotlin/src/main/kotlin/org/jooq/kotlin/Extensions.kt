@@ -2,6 +2,7 @@ package org.jooq.kotlin
 
 import org.jetbrains.annotations.Blocking
 import org.jooq.*
+import org.jooq.SQLDialect.*
 import org.jooq.impl.DSL.*
 import java.util.stream.Collector
 
@@ -290,10 +291,46 @@ operator fun <T> TableLike<*>.get(field: Field<T>) = this.field(field)
 // ----------------------------------------------------------------------------
 
 @Support
-operator fun <T> Field<Array<T>>.get(index: Int) = arrayGet(this, index)
+operator fun <T> Field<Array<T>?>.get(index: Int) = arrayGet(this, index)
 
 @Support
-operator fun <T> Field<Array<T>>.get(index: Field<Int>) = arrayGet(this, index)
+operator fun <T> Field<Array<T>?>.get(index: Field<Int?>) = arrayGet(this, index)
+
+// ----------------------------------------------------------------------------
+// Extensions to make Field<JSON> and Field<JSONB> aware of its being JSON
+// ----------------------------------------------------------------------------
+
+@Support
+@JvmName("jsonGetElement")
+operator fun Field<JSON?>.get(index: Int) = jsonGetElement(this, index)
+
+@Support
+@JvmName("jsonGetElement")
+operator fun Field<JSON?>.get(index: Field<Int?>) = jsonGetElement(this, index)
+
+@Support
+@JvmName("jsonGetAttribute")
+operator fun Field<JSON?>.get(name: String) = jsonGetAttribute(this, name)
+
+@Support
+@JvmName("jsonGetAttribute")
+operator fun Field<JSON?>.get(name: Field<String?>) = jsonGetAttribute(this, name)
+
+@Support
+@JvmName("jsonbGetElement")
+operator fun Field<JSONB?>.get(index: Int) = jsonbGetElement(this, index)
+
+@Support
+@JvmName("jsonbGetElement")
+operator fun Field<JSONB?>.get(index: Field<Int?>) = jsonbGetElement(this, index)
+
+@Support
+@JvmName("jsonbGetAttribute")
+operator fun Field<JSONB?>.get(name: String) = jsonbGetAttribute(this, name)
+
+@Support
+@JvmName("jsonbGetAttribute")
+operator fun Field<JSONB?>.get(name: Field<String?>) = jsonbGetAttribute(this, name)
 
 // ----------------------------------------------------------------------------
 // Extensions to make Select<Record1<T>> a scalar subquery of type Field<T>

@@ -94,9 +94,15 @@ implements
 
 
 
+            case MARIADB:
             case MYSQL:
                 ctx.visit(condition(function(N_JSON_VALID, BOOLEAN, field)).not());
                 break;
+
+
+
+
+
 
 
 

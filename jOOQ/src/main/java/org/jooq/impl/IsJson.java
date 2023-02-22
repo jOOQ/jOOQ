@@ -86,6 +86,27 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+            case MARIADB:
+            case MYSQL:
+                return true;
+
+
+
+
+
+
+
+
+
+
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -94,9 +115,15 @@ implements
 
 
 
+            case MARIADB:
             case MYSQL:
                 ctx.visit(function(N_JSON_VALID, BOOLEAN, field));
                 break;
+
+
+
+
+
 
 
 

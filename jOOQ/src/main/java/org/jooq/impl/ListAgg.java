@@ -166,7 +166,7 @@ final class ListAgg extends AbstractAggregateFunction<String> implements UNotYet
     }
 
     @Override
-    boolean applyFilter(Field<?> arg, int i) {
+    boolean applyFilter(Context<?> ctx, Field<?> arg, int i) {
         return i == 0;
     }
 

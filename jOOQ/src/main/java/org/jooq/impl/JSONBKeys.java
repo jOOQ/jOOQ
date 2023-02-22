@@ -92,6 +92,31 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+            case POSTGRES:
+            case YUGABYTEDB:
+                return false;
+
+
+
+
+
+
+
+
+
+            case SQLITE:
+                return false;
+
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -110,6 +135,10 @@ implements
                     ctx.visit(function(N_JSONB_PATH_QUERY_ARRAY, getDataType(), field, inline("$.keyvalue().key")));
                 break;
             }
+
+
+
+
 
 
 

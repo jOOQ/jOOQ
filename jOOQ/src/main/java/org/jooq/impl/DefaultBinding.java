@@ -130,6 +130,7 @@ import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.Names.N_BYTEA;
+import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_ST_GEOMFROMTEXT;
 import static org.jooq.impl.Names.N_ST_GEOMFROMWKB;
 import static org.jooq.impl.R2DBC.isR2dbc;
@@ -800,13 +801,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             // [#7242] [#13252] Other vendor specific types also need a lot of casting
-            if (dataType.isJSON()
-                || dataType.isXML()
-
-
-
-            ) {
+            if (dataType.isJSON() || dataType.isXML()) {
                 switch (ctx.family()) {
+
 
 
 
@@ -815,6 +812,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         return true;
                 }
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -941,6 +952,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private final void sqlCast(BindingSQLContext<U> ctx, T converted, DataType<?> t, Integer length, Integer precision, Integer scale) throws SQLException {
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+                default:
+                    sqlCast0(ctx, converted, t, length, precision, scale);
+                    break;
+            }
+        }
+
+        private final void sqlCast0(BindingSQLContext<U> ctx, T converted, DataType<?> t, Integer length, Integer precision, Integer scale) throws SQLException {
             ctx.render().visit(K_CAST).sql('(');
             sql(ctx, converted);
             ctx.render().sql(' ').visit(K_AS).sql(' ')
@@ -5458,7 +5489,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-    static final class DefaultJSONBinding<U> extends InternalBinding<JSON, U> {
+
+
+
+
+
+
+    static final class DefaultJSONBinding<U> extends InternalBinding<org.jooq.JSON, U> {
 
         DefaultJSONBinding(DataType<JSON> dataType, Converter<JSON, U> converter) {
             super(dataType, converter);

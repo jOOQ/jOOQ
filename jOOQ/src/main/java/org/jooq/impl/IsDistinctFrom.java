@@ -88,6 +88,11 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @Override
+    final boolean isNullable() {
+        return false;
+    }
+
 
 
     static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedUntil(CUBRID, DERBY);
@@ -96,11 +101,6 @@ implements
 
 
 
-
-    @Override
-    final boolean isNullable() {
-        return false;
-    }
 
     @Override
     public final void accept(Context<?> ctx) {

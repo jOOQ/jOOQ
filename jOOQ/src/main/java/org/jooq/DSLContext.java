@@ -11032,7 +11032,7 @@ public interface DSLContext extends Scope {
      * @see DSL#set(Name, Param)
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     RowCountQuery set(Name name, Param<?> value);
 
     /**

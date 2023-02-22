@@ -5803,11 +5803,15 @@ final class Tools {
     }
 
     static final <R extends Record> Table<R> unwrap(Table<R> table) {
-        Table<R> r;
+        return unwrap(table, true);
+    }
+
+    static final <R extends Record> Table<R> unwrap(Table<R> table, boolean unalias) {
+        Table<R> r = table;
 
         if (table instanceof AbstractDelegatingTable)
             return unwrap(((AbstractDelegatingTable<R>) table).delegate);
-        else if ((r = unalias(table)) != table)
+        else if (unalias && (r = unalias(table)) != table)
             return unwrap(r);
         else
             return r;
@@ -6701,15 +6705,21 @@ final class Tools {
         return (r, t) -> r || unaliased.equals(f.apply(t));
     }
 
+    static final boolean containsTable(Table<?> in, Table<?> search, boolean unalias) {
+
+        // [#6304] [#7626] [#14668] Improved alias discovery
+        return traverseJoins(in, false, r -> r, search(search, t -> unwrap(t, unalias)));
+    }
+
     static final boolean containsUnaliasedTable(Table<?> in, Table<?> search) {
 
-        // [#6304] [#7626] Improved alias discovery
+        // [#6304] [#7626] [#14668] Improved alias discovery
         return traverseJoins(in, false, r -> r, search(search, Tools::unwrap));
     }
 
     static final boolean containsUnaliasedTable(Iterable<? extends Table<?>> in, Table<?> search) {
 
-        // [#6304] [#7626] Improved alias discovery
+        // [#6304] [#7626] [#14668] Improved alias discovery
         return traverseJoins(in, false, r -> r, search(search, Tools::unwrap));
     }
 

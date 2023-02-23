@@ -9633,7 +9633,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    AlterViewAsStep alterView(Table<?> view, Field<?>... fields);
+    AlterViewStep alterView(Table<?> view, Field<?>... fields);
 
     /**
      * The <code>ALTER VIEW</code> statement.
@@ -9642,7 +9642,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    AlterViewAsStep alterView(Table<?> view, Collection<? extends Field<?>> fields);
+    AlterViewStep alterView(Table<?> view, Collection<? extends Field<?>> fields);
 
     /**
      * The <code>COMMENT ON TABLE</code> statement.

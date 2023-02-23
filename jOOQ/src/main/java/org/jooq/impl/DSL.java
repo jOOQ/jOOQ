@@ -7714,7 +7714,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static org.jooq.AlterViewAsStep alterView(Table<?> view, Field<?>... fields) {
+    public static org.jooq.AlterViewStep alterView(Table<?> view, Field<?>... fields) {
         return dsl().alterView(view, fields);
     }
 
@@ -7729,7 +7729,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    public static org.jooq.AlterViewAsStep alterView(Table<?> view, Collection<? extends Field<?>> fields) {
+    public static org.jooq.AlterViewStep alterView(Table<?> view, Collection<? extends Field<?>> fields) {
         return dsl().alterView(view, fields);
     }
 

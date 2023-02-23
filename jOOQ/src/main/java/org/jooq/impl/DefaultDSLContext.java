@@ -3054,12 +3054,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.AlterViewAsStep alterView(Table<?> view, Field<?>... fields) {
+    public org.jooq.AlterViewStep alterView(Table<?> view, Field<?>... fields) {
         return new AlterViewImpl(configuration(), view, Arrays.asList(fields), false);
     }
 
     @Override
-    public org.jooq.AlterViewAsStep alterView(Table<?> view, Collection<? extends Field<?>> fields) {
+    public org.jooq.AlterViewStep alterView(Table<?> view, Collection<? extends Field<?>> fields) {
         return new AlterViewImpl(configuration(), view, new QueryPartList<>(fields), false);
     }
 

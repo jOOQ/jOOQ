@@ -4219,8 +4219,28 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final DDLQuery parseAlterView() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Table<?> oldName = parseTableName();
+        Field<?>[] fields = EMPTY_FIELD;
 
-        if (parseKeywordIf("RENAME")) {
+        if (parseIf('(')) {
+            fields = parseList(',', c -> parseFieldName()).toArray(fields);
+            parse(')');
+        }
+
+        if (parseKeywordIf("AS")) {
+            Select<?> select = parseWithOrSelect();
+            int degree = Tools.degree(select);
+
+            if (fields.length > 0 && fields.length != degree)
+                throw exception("Select list size (" + degree + ") must match declared field size (" + fields.length + ")");
+
+            if (fields.length == 0)
+                return dsl.alterView(oldName).as(select);
+            else
+                return dsl.alterView(oldName, fields).as(select);
+        }
+        else if (fields.length > 0)
+            throw expected("AS");
+        else if (parseKeywordIf("RENAME")) {
             parseKeyword("AS", "TO");
             Table<?> newName = parseTableName();
 
@@ -4233,7 +4253,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else if (parseKeywordIf("SET"))
             return dsl.alterView(oldName).comment(parseOptionsDescription());
         else
-            throw expected("OWNER TO", "RENAME", "SET");
+            throw expected("AS", "OWNER TO", "RENAME", "SET");
     }
 
     private final Comment parseOptionsDescription() {

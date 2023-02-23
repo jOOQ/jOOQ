@@ -71,7 +71,6 @@ extends
 implements
     QOM.AlterView,
     AlterViewStep,
-    AlterViewAsStep,
     AlterViewFinalStep
 {
 

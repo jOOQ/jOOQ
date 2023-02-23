@@ -68,7 +68,7 @@ import org.jetbrains.annotations.*;
  * </ul>
  */
 @SuppressWarnings({ "unused" })
-public interface AlterViewStep extends AlterViewAsStep {
+public interface AlterViewStep {
 
     /**
      * Add the <code>COMMENT</code> clause to the <code>ALTER VIEW</code> statement.
@@ -104,4 +104,11 @@ public interface AlterViewStep extends AlterViewAsStep {
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     AlterViewFinalStep renameTo(Table<?> renameTo);
+
+    /**
+     * Add the <code>AS</code> clause to the <code>ALTER VIEW</code> statement.
+     */
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
+    AlterViewFinalStep as(Select<?> as);
 }

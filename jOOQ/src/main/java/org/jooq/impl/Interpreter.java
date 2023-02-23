@@ -832,6 +832,8 @@ final class Interpreter {
 
         if (query.$renameTo() != null && checkNotExists(schema, query.$renameTo()))
             existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
+        else if (query.$as() != null)
+            initTable(existing, query.$fields(), query.$as(), TableOptions.view(query.$as()));
         else
             throw unsupportedQuery(query);
     }
@@ -1254,7 +1256,22 @@ final class Interpreter {
         Comment comment,
         TableOptions options
     ) {
-        MutableTable t = new MutableTable((UnqualifiedName) table.getUnqualifiedName(), schema, comment, options);
+        return initTable(
+            new MutableTable((UnqualifiedName) table.getUnqualifiedName(), schema, comment, options),
+            columns,
+            select,
+            options
+        );
+    }
+
+    private final MutableTable initTable(
+        MutableTable t,
+        List<? extends Field<?>> columns,
+        Select<?> select,
+        TableOptions options
+    ) {
+        t.fields.clear();
+        t.options = options;
 
         // TODO: [#13003] Merge the column and select types if both are available
         if (!columns.isEmpty())

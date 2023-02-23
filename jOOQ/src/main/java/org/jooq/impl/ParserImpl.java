@@ -907,7 +907,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
             while (parseDelimiterIf(true) && (p = positionBeforeWhitespace) >= 0 && !done());
 
-            retainComments(result, p);
+            if (query != null)
+                retainComments(result, p);
+
             return done("Unexpected token or missing query delimiter", dsl.queries(result));
         });
     }

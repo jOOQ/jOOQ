@@ -748,9 +748,11 @@ implements
                     unaliased.set(i, (TableField<?, ?>) alias.wrapped().field(f));
             }
 
-            // [#14668] Try exact matches first
+            // [#14668] Try exact matches of aliases first
             for (boolean unalias : new boolean[] { false, true }) {
                 if (containsTable(lhs, keyFields[0].getTable(), unalias)) {
+
+                    // [#11150] Try exact matches of key columns first
                     for (ForeignKey<?, ?> key : lhs.getReferences())
                         if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
                             return onKey(key, lhs, rhs);
@@ -760,6 +762,8 @@ implements
                             return onKey(key, lhs, rhs);
                 }
                 else if (containsTable(rhs, keyFields[0].getTable(), unalias)) {
+
+                    // [#11150] Try exact matches of key columns first
                     for (ForeignKey<?, ?> key : rhs.getReferences())
                         if (key.getFields().containsAll(unaliased) && unaliased.containsAll(key.getFields()))
                             return onKey(key, rhs, lhs);

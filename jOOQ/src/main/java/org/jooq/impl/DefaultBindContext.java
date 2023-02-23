@@ -64,8 +64,13 @@ final class DefaultBindContext extends AbstractBindContext {
                 new DefaultBindingSetStatementContext<>(new SimpleExecuteContext(configuration(), data()), stmt, nextIndex, value)
             );
         }
+
+        // [#14696] Maintain SQLState and ErrorCode if the exception is from the driver
+        catch (SQLException e) {
+            throw new SQLException("Error while writing value at JDBC bind index: " + nextIndex, e.getSQLState(), e.getErrorCode(), e);
+        }
         catch (Exception e) {
-            throw new SQLException("Error while writing value at JDBC bind index: " + nextIndex ,e);
+            throw new SQLException("Error while writing value at JDBC bind index: " + nextIndex, e);
         }
 
         return this;

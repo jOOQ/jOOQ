@@ -176,18 +176,33 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
 
 
 
-
             }
 
+            identityCheck:
             if (pk > 0) {
+
+                // [#14656] Explicit WITHOUT ROWID clauses mean there's no identity
+                if (getSource().matches("(?s:\\.*(?i:\\bwithout\\s+rowid\\b).*)"))
+                    break identityCheck;
 
                 // [#6854] sqlite_sequence only contains identity information once a table contains records.
                 identity |= existsSqliteSequence() && create()
                     .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
                     .get(0, Boolean.class);
 
-                if (!identity && !create().fetchExists(selectOne().from("{0}", DSL.name(getName()))))
+                // [#6854] If sqlite_sequence didn't contain an entry and the table is empty...
+                if (!identity && !create().fetchExists(selectOne().from("{0}", DSL.name(getName())))) {
+
+                    // [#14656] The presence of AUTOINCREMENT means there must be an identity (SQLite rejects it, otherwise)
                     identity = getSource().matches("(?s:.*\\b" + getName() + "\\b[^,]*(?i:\\bautoincrement\\b)[^,]*.*)");
+                }
+
+                // [#14656] Finally, a table can be non-empty, not have an autoincrement token, not have an entry in
+                //          sqlite_sequence, but still have an identity (!) when there's an INTEGER PRIMARY KEY column.
+                //          e.g. CREATE TABLE t (i INTEGER NOT NULL, PRIMARY KEY (i)) And then, there's also the possibility
+                //          of running into quirks when using DESC vs ASC, see
+                //          https://www.sqlite.org/lang_createtable.html#rowids_and_the_integer_primary_key
+                if (!identity) {}
             }
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(

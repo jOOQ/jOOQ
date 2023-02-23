@@ -63,7 +63,6 @@ public class PGInterval extends PGobject {
   }
 
   private void parseISO8601Format(String value) {
-    int number = 0;
     String dateValue;
     String timeValue = null;
 
@@ -80,7 +79,7 @@ public class PGInterval extends PGobject {
     for ( int i = 0; i < dateValue.length(); i++ ) {
       int lookAhead = lookAhead(dateValue, i, "YMD");
       if (lookAhead > 0) {
-        number = Integer.parseInt(dateValue.substring(i, lookAhead));
+        int number = Integer.parseInt(dateValue.substring(i, lookAhead));
         if (dateValue.charAt(lookAhead) == 'Y') {
           setYears(number);
         } else if (dateValue.charAt(lookAhead) == 'M') {
@@ -95,13 +94,13 @@ public class PGInterval extends PGobject {
       for (int i = 0; i < timeValue.length(); i++) {
         int lookAhead = lookAhead(timeValue, i, "HMS");
         if (lookAhead > 0) {
-          number = Integer.parseInt(timeValue.substring(i, lookAhead));
+          String number = timeValue.substring(i, lookAhead);
           if (timeValue.charAt(lookAhead) == 'H') {
-            setHours(number);
+            setHours(nullSafeIntGet(number));
           } else if (timeValue.charAt(lookAhead) == 'M') {
-            setMinutes(number);
+            setMinutes(nullSafeIntGet(number));
           } else if (timeValue.charAt(lookAhead) == 'S') {
-            setSeconds(number);
+            setSeconds(nullSafeDoubleGet(number));
           }
           i = lookAhead;
         }

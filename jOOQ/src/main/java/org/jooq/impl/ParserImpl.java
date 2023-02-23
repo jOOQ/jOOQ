@@ -4423,8 +4423,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else
                 commentStep = onCommitStep;
 
-            // [#14631] SQLite optional keywords
-            parseKeywordIf("STRICT");
+            // [#14631] [#14690] SQLite optional keywords
+            if (parseKeywordIf("STRICT", "WITHOUT ROWID") && parseIf(','))
+                parseKeyword("STRICT", "WITHOUT ROWID");
         }
 
         storageStep = commentStep;

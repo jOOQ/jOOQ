@@ -21,9 +21,9 @@ import org.jooq.example.chart.db.routines._GroupConcat;
 import org.jooq.example.chart.db.tables.FilmInStock;
 import org.jooq.example.chart.db.tables.FilmNotInStock;
 import org.jooq.example.chart.db.tables.RewardsReport;
+import org.jooq.example.chart.db.tables.records.CustomerRecord;
 import org.jooq.example.chart.db.tables.records.FilmInStockRecord;
 import org.jooq.example.chart.db.tables.records.FilmNotInStockRecord;
-import org.jooq.example.chart.db.tables.records.RewardsReportRecord;
 
 
 /**
@@ -341,7 +341,7 @@ public class Routines {
     /**
      * Call <code>public.rewards_report</code>.
      */
-    public static Result<RewardsReportRecord> rewardsReport(
+    public static Result<CustomerRecord> rewardsReport(
           Configuration configuration
         , Integer minMonthlyPurchases
         , BigDecimal minDollarAmountPurchased

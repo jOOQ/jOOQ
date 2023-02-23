@@ -91,7 +91,20 @@ public class StaffList extends TableImpl<StaffListRecord> {
     }
 
     private StaffList(Name alias, Table<StaffListRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("create view \"staff_list\" as  SELECT s.staff_id AS id,\n    (((s.first_name)::text || ' '::text) || (s.last_name)::text) AS name,\n    a.address,\n    a.postal_code AS \"zip code\",\n    a.phone,\n    city.city,\n    country.country,\n    s.store_id AS sid\n   FROM (((staff s\n     JOIN address a ON ((s.address_id = a.address_id)))\n     JOIN city ON ((a.city_id = city.city_id)))\n     JOIN country ON ((city.country_id = country.country_id)));"));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
+        create view "staff_list" as  SELECT s.staff_id AS id,
+         (((s.first_name)::text || ' '::text) || (s.last_name)::text) AS name,
+         a.address,
+         a.postal_code AS "zip code",
+         a.phone,
+         city.city,
+         country.country,
+         s.store_id AS sid
+        FROM (((staff s
+          JOIN address a ON ((s.address_id = a.address_id)))
+          JOIN city ON ((a.city_id = city.city_id)))
+          JOIN country ON ((city.country_id = country.country_id)));
+        """));
     }
 
     /**
@@ -135,7 +148,7 @@ public class StaffList extends TableImpl<StaffListRecord> {
     }
 
     @Override
-    public StaffList as(Table alias) {
+    public StaffList as(Table<?> alias) {
         return new StaffList(alias.getQualifiedName(), this);
     }
 
@@ -159,7 +172,7 @@ public class StaffList extends TableImpl<StaffListRecord> {
      * Rename this table
      */
     @Override
-    public StaffList rename(Table name) {
+    public StaffList rename(Table<?> name) {
         return new StaffList(name.getQualifiedName(), null);
     }
 
@@ -173,14 +186,15 @@ public class StaffList extends TableImpl<StaffListRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function8<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Short, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Short, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

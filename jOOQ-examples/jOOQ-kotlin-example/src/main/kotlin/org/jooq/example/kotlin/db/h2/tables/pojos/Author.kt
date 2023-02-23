@@ -25,43 +25,43 @@ data class Author(
     override fun equals(other: Any?): Boolean {
         if (this === other)
             return true
-        if (other === null)
+        if (other == null)
             return false
         if (this::class != other::class)
             return false
         val o: Author = other as Author
-        if (this.id === null) {
-            if (o.id !== null)
+        if (this.id == null) {
+            if (o.id != null)
                 return false
         }
         else if (this.id != o.id)
             return false
-        if (this.firstName === null) {
-            if (o.firstName !== null)
+        if (this.firstName == null) {
+            if (o.firstName != null)
                 return false
         }
         else if (this.firstName != o.firstName)
             return false
-        if (this.lastName === null) {
-            if (o.lastName !== null)
+        if (this.lastName == null) {
+            if (o.lastName != null)
                 return false
         }
         else if (this.lastName != o.lastName)
             return false
-        if (this.dateOfBirth === null) {
-            if (o.dateOfBirth !== null)
+        if (this.dateOfBirth == null) {
+            if (o.dateOfBirth != null)
                 return false
         }
         else if (this.dateOfBirth != o.dateOfBirth)
             return false
-        if (this.yearOfBirth === null) {
-            if (o.yearOfBirth !== null)
+        if (this.yearOfBirth == null) {
+            if (o.yearOfBirth != null)
                 return false
         }
         else if (this.yearOfBirth != o.yearOfBirth)
             return false
-        if (this.address === null) {
-            if (o.address !== null)
+        if (this.address == null) {
+            if (o.address != null)
                 return false
         }
         else if (this.address != o.address)
@@ -72,12 +72,12 @@ data class Author(
     override fun hashCode(): Int {
         val prime = 31
         var result = 1
-        result = prime * result + (if (this.id === null) 0 else this.id.hashCode())
-        result = prime * result + (if (this.firstName === null) 0 else this.firstName.hashCode())
-        result = prime * result + (if (this.lastName === null) 0 else this.lastName.hashCode())
-        result = prime * result + (if (this.dateOfBirth === null) 0 else this.dateOfBirth.hashCode())
-        result = prime * result + (if (this.yearOfBirth === null) 0 else this.yearOfBirth.hashCode())
-        result = prime * result + (if (this.address === null) 0 else this.address.hashCode())
+        result = prime * result + (if (this.id == null) 0 else this.id.hashCode())
+        result = prime * result + (if (this.firstName == null) 0 else this.firstName.hashCode())
+        result = prime * result + (if (this.lastName == null) 0 else this.lastName.hashCode())
+        result = prime * result + (if (this.dateOfBirth == null) 0 else this.dateOfBirth.hashCode())
+        result = prime * result + (if (this.yearOfBirth == null) 0 else this.yearOfBirth.hashCode())
+        result = prime * result + (if (this.address == null) 0 else this.address.hashCode())
         return result
     }
 

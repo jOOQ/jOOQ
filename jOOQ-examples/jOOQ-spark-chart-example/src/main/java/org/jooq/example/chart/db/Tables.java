@@ -40,9 +40,9 @@ import org.jooq.example.chart.db.tables.SalesByStore;
 import org.jooq.example.chart.db.tables.Staff;
 import org.jooq.example.chart.db.tables.StaffList;
 import org.jooq.example.chart.db.tables.Store;
+import org.jooq.example.chart.db.tables.records.CustomerRecord;
 import org.jooq.example.chart.db.tables.records.FilmInStockRecord;
 import org.jooq.example.chart.db.tables.records.FilmNotInStockRecord;
-import org.jooq.example.chart.db.tables.records.RewardsReportRecord;
 
 
 /**
@@ -264,7 +264,7 @@ public class Tables {
     /**
      * Call <code>public.rewards_report</code>.
      */
-    public static Result<RewardsReportRecord> REWARDS_REPORT(
+    public static Result<CustomerRecord> REWARDS_REPORT(
           Configuration configuration
         , Integer minMonthlyPurchases
         , BigDecimal minDollarAmountPurchased

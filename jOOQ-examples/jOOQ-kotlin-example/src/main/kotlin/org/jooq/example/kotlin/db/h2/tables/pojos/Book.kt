@@ -31,73 +31,73 @@ data class Book(
     override fun equals(other: Any?): Boolean {
         if (this === other)
             return true
-        if (other === null)
+        if (other == null)
             return false
         if (this::class != other::class)
             return false
         val o: Book = other as Book
-        if (this.id === null) {
-            if (o.id !== null)
+        if (this.id == null) {
+            if (o.id != null)
                 return false
         }
         else if (this.id != o.id)
             return false
-        if (this.authorId === null) {
-            if (o.authorId !== null)
+        if (this.authorId == null) {
+            if (o.authorId != null)
                 return false
         }
         else if (this.authorId != o.authorId)
             return false
-        if (this.coAuthorId === null) {
-            if (o.coAuthorId !== null)
+        if (this.coAuthorId == null) {
+            if (o.coAuthorId != null)
                 return false
         }
         else if (this.coAuthorId != o.coAuthorId)
             return false
-        if (this.detailsId === null) {
-            if (o.detailsId !== null)
+        if (this.detailsId == null) {
+            if (o.detailsId != null)
                 return false
         }
         else if (this.detailsId != o.detailsId)
             return false
-        if (this.title === null) {
-            if (o.title !== null)
+        if (this.title == null) {
+            if (o.title != null)
                 return false
         }
         else if (this.title != o.title)
             return false
-        if (this.publishedIn === null) {
-            if (o.publishedIn !== null)
+        if (this.publishedIn == null) {
+            if (o.publishedIn != null)
                 return false
         }
         else if (this.publishedIn != o.publishedIn)
             return false
-        if (this.languageId === null) {
-            if (o.languageId !== null)
+        if (this.languageId == null) {
+            if (o.languageId != null)
                 return false
         }
         else if (this.languageId != o.languageId)
             return false
-        if (this.contentText === null) {
-            if (o.contentText !== null)
+        if (this.contentText == null) {
+            if (o.contentText != null)
                 return false
         }
         else if (this.contentText != o.contentText)
             return false
-        if (this.contentPdf === null) {
-            if (o.contentPdf !== null)
+        if (this.contentPdf == null) {
+            if (o.contentPdf != null)
                 return false
         }
         else if (!Arrays.equals(this.contentPdf, o.contentPdf))
             return false
-        if (this.recVersion === null) {
-            if (o.recVersion !== null)
+        if (this.recVersion == null) {
+            if (o.recVersion != null)
                 return false
         }
         else if (this.recVersion != o.recVersion)
             return false
-        if (this.recTimestamp === null) {
-            if (o.recTimestamp !== null)
+        if (this.recTimestamp == null) {
+            if (o.recTimestamp != null)
                 return false
         }
         else if (this.recTimestamp != o.recTimestamp)
@@ -108,17 +108,17 @@ data class Book(
     override fun hashCode(): Int {
         val prime = 31
         var result = 1
-        result = prime * result + (if (this.id === null) 0 else this.id.hashCode())
-        result = prime * result + (if (this.authorId === null) 0 else this.authorId.hashCode())
-        result = prime * result + (if (this.coAuthorId === null) 0 else this.coAuthorId.hashCode())
-        result = prime * result + (if (this.detailsId === null) 0 else this.detailsId.hashCode())
-        result = prime * result + (if (this.title === null) 0 else this.title.hashCode())
-        result = prime * result + (if (this.publishedIn === null) 0 else this.publishedIn.hashCode())
-        result = prime * result + (if (this.languageId === null) 0 else this.languageId.hashCode())
-        result = prime * result + (if (this.contentText === null) 0 else this.contentText.hashCode())
-        result = prime * result + (if (this.contentPdf === null) 0 else Arrays.hashCode(this.contentPdf))
-        result = prime * result + (if (this.recVersion === null) 0 else this.recVersion.hashCode())
-        result = prime * result + (if (this.recTimestamp === null) 0 else this.recTimestamp.hashCode())
+        result = prime * result + (if (this.id == null) 0 else this.id.hashCode())
+        result = prime * result + (if (this.authorId == null) 0 else this.authorId.hashCode())
+        result = prime * result + (if (this.coAuthorId == null) 0 else this.coAuthorId.hashCode())
+        result = prime * result + (if (this.detailsId == null) 0 else this.detailsId.hashCode())
+        result = prime * result + (if (this.title == null) 0 else this.title.hashCode())
+        result = prime * result + (if (this.publishedIn == null) 0 else this.publishedIn.hashCode())
+        result = prime * result + (if (this.languageId == null) 0 else this.languageId.hashCode())
+        result = prime * result + (if (this.contentText == null) 0 else this.contentText.hashCode())
+        result = prime * result + (if (this.contentPdf == null) 0 else Arrays.hashCode(this.contentPdf))
+        result = prime * result + (if (this.recVersion == null) 0 else this.recVersion.hashCode())
+        result = prime * result + (if (this.recTimestamp == null) 0 else this.recTimestamp.hashCode())
         return result
     }
 

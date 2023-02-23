@@ -72,7 +72,7 @@ public class Store extends TableImpl<StoreRecord> {
     /**
      * The column <code>public.store.last_update</code>.
      */
-    public final TableField<StoreRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<StoreRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Store(Name alias, Table<StoreRecord> aliased) {
         this(alias, aliased, null);
@@ -166,7 +166,7 @@ public class Store extends TableImpl<StoreRecord> {
     }
 
     @Override
-    public Store as(Table alias) {
+    public Store as(Table<?> alias) {
         return new Store(alias.getQualifiedName(), this);
     }
 
@@ -190,7 +190,7 @@ public class Store extends TableImpl<StoreRecord> {
      * Rename this table
      */
     @Override
-    public Store rename(Table name) {
+    public Store rename(Table<?> name) {
         return new Store(name.getQualifiedName(), null);
     }
 
@@ -204,14 +204,15 @@ public class Store extends TableImpl<StoreRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function4<? super Integer, ? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Integer, ? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

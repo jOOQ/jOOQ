@@ -85,7 +85,7 @@ public class Staff extends TableImpl<StaffRecord> {
     /**
      * The column <code>public.staff.active</code>.
      */
-    public final TableField<StaffRecord, Boolean> ACTIVE = createField(DSL.name("active"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field("true", SQLDataType.BOOLEAN)), this, "");
+    public final TableField<StaffRecord, Boolean> ACTIVE = createField(DSL.name("active"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("true"), SQLDataType.BOOLEAN)), this, "");
 
     /**
      * The column <code>public.staff.username</code>.
@@ -100,7 +100,7 @@ public class Staff extends TableImpl<StaffRecord> {
     /**
      * The column <code>public.staff.last_update</code>.
      */
-    public final TableField<StaffRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<StaffRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.staff.picture</code>.
@@ -194,7 +194,7 @@ public class Staff extends TableImpl<StaffRecord> {
     }
 
     @Override
-    public Staff as(Table alias) {
+    public Staff as(Table<?> alias) {
         return new Staff(alias.getQualifiedName(), this);
     }
 
@@ -218,7 +218,7 @@ public class Staff extends TableImpl<StaffRecord> {
      * Rename this table
      */
     @Override
-    public Staff rename(Table name) {
+    public Staff rename(Table<?> name) {
         return new Staff(name.getQualifiedName(), null);
     }
 
@@ -232,14 +232,15 @@ public class Staff extends TableImpl<StaffRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function11<? super Integer, ? super String, ? super String, ? super Short, ? super String, ? super Short, ? super Boolean, ? super String, ? super String, ? super LocalDateTime, ? super byte[], ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function11<? super Integer, ? super String, ? super String, ? super Short, ? super String, ? super Short, ? super Boolean, ? super String, ? super String, ? super LocalDateTime, ? super byte[], ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

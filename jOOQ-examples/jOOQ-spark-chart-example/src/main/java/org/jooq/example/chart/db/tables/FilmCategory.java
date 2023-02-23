@@ -64,7 +64,7 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     /**
      * The column <code>public.film_category.last_update</code>.
      */
-    public final TableField<FilmCategoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<FilmCategoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private FilmCategory(Name alias, Table<FilmCategoryRecord> aliased) {
         this(alias, aliased, null);
@@ -148,7 +148,7 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     }
 
     @Override
-    public FilmCategory as(Table alias) {
+    public FilmCategory as(Table<?> alias) {
         return new FilmCategory(alias.getQualifiedName(), this);
     }
 
@@ -172,7 +172,7 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
      * Rename this table
      */
     @Override
-    public FilmCategory rename(Table name) {
+    public FilmCategory rename(Table<?> name) {
         return new FilmCategory(name.getQualifiedName(), null);
     }
 
@@ -186,14 +186,15 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function3<? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

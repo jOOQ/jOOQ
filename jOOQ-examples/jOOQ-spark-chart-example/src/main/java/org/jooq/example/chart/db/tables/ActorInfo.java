@@ -71,7 +71,22 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
     }
 
     private ActorInfo(Name alias, Table<ActorInfoRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("create view \"actor_info\" as  SELECT a.actor_id,\n    a.first_name,\n    a.last_name,\n    group_concat(DISTINCT (((c.name)::text || ': '::text) || ( SELECT group_concat((f.title)::text) AS group_concat\n           FROM ((film f\n             JOIN film_category fc_1 ON ((f.film_id = fc_1.film_id)))\n             JOIN film_actor fa_1 ON ((f.film_id = fa_1.film_id)))\n          WHERE ((fc_1.category_id = c.category_id) AND (fa_1.actor_id = a.actor_id))\n          GROUP BY fa_1.actor_id))) AS film_info\n   FROM (((actor a\n     LEFT JOIN film_actor fa ON ((a.actor_id = fa.actor_id)))\n     LEFT JOIN film_category fc ON ((fa.film_id = fc.film_id)))\n     LEFT JOIN category c ON ((fc.category_id = c.category_id)))\n  GROUP BY a.actor_id, a.first_name, a.last_name;"));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
+        create view "actor_info" as  SELECT a.actor_id,
+          a.first_name,
+          a.last_name,
+          group_concat(DISTINCT (((c.name)::text || ': '::text) || ( SELECT group_concat((f.title)::text) AS group_concat
+                 FROM ((film f
+                   JOIN film_category fc_1 ON ((f.film_id = fc_1.film_id)))
+                   JOIN film_actor fa_1 ON ((f.film_id = fa_1.film_id)))
+                WHERE ((fc_1.category_id = c.category_id) AND (fa_1.actor_id = a.actor_id))
+                GROUP BY fa_1.actor_id))) AS film_info
+         FROM (((actor a
+           LEFT JOIN film_actor fa ON ((a.actor_id = fa.actor_id)))
+           LEFT JOIN film_category fc ON ((fa.film_id = fc.film_id)))
+           LEFT JOIN category c ON ((fc.category_id = c.category_id)))
+        GROUP BY a.actor_id, a.first_name, a.last_name;
+        """));
     }
 
     /**
@@ -115,7 +130,7 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
     }
 
     @Override
-    public ActorInfo as(Table alias) {
+    public ActorInfo as(Table<?> alias) {
         return new ActorInfo(alias.getQualifiedName(), this);
     }
 
@@ -139,7 +154,7 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
      * Rename this table
      */
     @Override
-    public ActorInfo rename(Table name) {
+    public ActorInfo rename(Table<?> name) {
         return new ActorInfo(name.getQualifiedName(), null);
     }
 
@@ -153,14 +168,15 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function4<? super Integer, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Integer, ? super String, ? super String, ? super String, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

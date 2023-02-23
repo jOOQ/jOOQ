@@ -89,12 +89,12 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>public.film.rental_duration</code>.
      */
-    public final TableField<FilmRecord, Short> RENTAL_DURATION = createField(DSL.name("rental_duration"), SQLDataType.SMALLINT.nullable(false).defaultValue(DSL.field("3", SQLDataType.SMALLINT)), this, "");
+    public final TableField<FilmRecord, Short> RENTAL_DURATION = createField(DSL.name("rental_duration"), SQLDataType.SMALLINT.nullable(false).defaultValue(DSL.field(DSL.raw("3"), SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.film.rental_rate</code>.
      */
-    public final TableField<FilmRecord, BigDecimal> RENTAL_RATE = createField(DSL.name("rental_rate"), SQLDataType.NUMERIC(4, 2).nullable(false).defaultValue(DSL.field("4.99", SQLDataType.NUMERIC)), this, "");
+    public final TableField<FilmRecord, BigDecimal> RENTAL_RATE = createField(DSL.name("rental_rate"), SQLDataType.NUMERIC(4, 2).nullable(false).defaultValue(DSL.field(DSL.raw("4.99"), SQLDataType.NUMERIC)), this, "");
 
     /**
      * The column <code>public.film.length</code>.
@@ -104,22 +104,22 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>public.film.replacement_cost</code>.
      */
-    public final TableField<FilmRecord, BigDecimal> REPLACEMENT_COST = createField(DSL.name("replacement_cost"), SQLDataType.NUMERIC(5, 2).nullable(false).defaultValue(DSL.field("19.99", SQLDataType.NUMERIC)), this, "");
+    public final TableField<FilmRecord, BigDecimal> REPLACEMENT_COST = createField(DSL.name("replacement_cost"), SQLDataType.NUMERIC(5, 2).nullable(false).defaultValue(DSL.field(DSL.raw("19.99"), SQLDataType.NUMERIC)), this, "");
 
     /**
      * The column <code>public.film.rating</code>.
      */
-    public final TableField<FilmRecord, MpaaRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR.defaultValue(DSL.field("'G'::mpaa_rating", SQLDataType.VARCHAR)).asEnumDataType(org.jooq.example.chart.db.enums.MpaaRating.class), this, "");
+    public final TableField<FilmRecord, MpaaRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR.defaultValue(DSL.field(DSL.raw("'G'::mpaa_rating"), SQLDataType.VARCHAR)).asEnumDataType(org.jooq.example.chart.db.enums.MpaaRating.class), this, "");
 
     /**
      * The column <code>public.film.last_update</code>.
      */
-    public final TableField<FilmRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<FilmRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.film.special_features</code>.
      */
-    public final TableField<FilmRecord, String[]> SPECIAL_FEATURES = createField(DSL.name("special_features"), SQLDataType.CLOB.getArrayDataType(), this, "");
+    public final TableField<FilmRecord, String[]> SPECIAL_FEATURES = createField(DSL.name("special_features"), SQLDataType.CLOB.array(), this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -226,7 +226,7 @@ public class Film extends TableImpl<FilmRecord> {
     }
 
     @Override
-    public Film as(Table alias) {
+    public Film as(Table<?> alias) {
         return new Film(alias.getQualifiedName(), this);
     }
 
@@ -250,7 +250,7 @@ public class Film extends TableImpl<FilmRecord> {
      * Rename this table
      */
     @Override
-    public Film rename(Table name) {
+    public Film rename(Table<?> name) {
         return new Film(name.getQualifiedName(), null);
     }
 
@@ -264,14 +264,15 @@ public class Film extends TableImpl<FilmRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function14<? super Integer, ? super String, ? super String, ? super Integer, ? super Short, ? super Short, ? super Short, ? super BigDecimal, ? super Short, ? super BigDecimal, ? super MpaaRating, ? super LocalDateTime, ? super String[], ? super Object, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function14<? super Integer, ? super String, ? super String, ? super Integer, ? super Short, ? super Short, ? super Short, ? super BigDecimal, ? super Short, ? super BigDecimal, ? super MpaaRating, ? super LocalDateTime, ? super String[], ? super Object, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

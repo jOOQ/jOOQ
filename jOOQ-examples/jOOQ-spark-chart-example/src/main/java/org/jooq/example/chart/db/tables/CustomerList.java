@@ -96,7 +96,24 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
     }
 
     private CustomerList(Name alias, Table<CustomerListRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("create view \"customer_list\" as  SELECT cu.customer_id AS id,\n    (((cu.first_name)::text || ' '::text) || (cu.last_name)::text) AS name,\n    a.address,\n    a.postal_code AS \"zip code\",\n    a.phone,\n    city.city,\n    country.country,\n        CASE\n            WHEN cu.activebool THEN 'active'::text\n            ELSE ''::text\n        END AS notes,\n    cu.store_id AS sid\n   FROM (((customer cu\n     JOIN address a ON ((cu.address_id = a.address_id)))\n     JOIN city ON ((a.city_id = city.city_id)))\n     JOIN country ON ((city.country_id = country.country_id)));"));
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
+        create view "customer_list" as  SELECT cu.customer_id AS id,
+         (((cu.first_name)::text || ' '::text) || (cu.last_name)::text) AS name,
+         a.address,
+         a.postal_code AS "zip code",
+         a.phone,
+         city.city,
+         country.country,
+             CASE
+                 WHEN cu.activebool THEN 'active'::text
+                 ELSE ''::text
+             END AS notes,
+         cu.store_id AS sid
+        FROM (((customer cu
+          JOIN address a ON ((cu.address_id = a.address_id)))
+          JOIN city ON ((a.city_id = city.city_id)))
+          JOIN country ON ((city.country_id = country.country_id)));
+        """));
     }
 
     /**
@@ -140,7 +157,7 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
     }
 
     @Override
-    public CustomerList as(Table alias) {
+    public CustomerList as(Table<?> alias) {
         return new CustomerList(alias.getQualifiedName(), this);
     }
 
@@ -164,7 +181,7 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
      * Rename this table
      */
     @Override
-    public CustomerList rename(Table name) {
+    public CustomerList rename(Table<?> name) {
         return new CustomerList(name.getQualifiedName(), null);
     }
 
@@ -178,14 +195,15 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function9<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Short, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function9<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Short, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

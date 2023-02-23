@@ -21,25 +21,25 @@ data class BookToBookStore(
     override fun equals(other: Any?): Boolean {
         if (this === other)
             return true
-        if (other === null)
+        if (other == null)
             return false
         if (this::class != other::class)
             return false
         val o: BookToBookStore = other as BookToBookStore
-        if (this.bookStoreName === null) {
-            if (o.bookStoreName !== null)
+        if (this.bookStoreName == null) {
+            if (o.bookStoreName != null)
                 return false
         }
         else if (this.bookStoreName != o.bookStoreName)
             return false
-        if (this.bookId === null) {
-            if (o.bookId !== null)
+        if (this.bookId == null) {
+            if (o.bookId != null)
                 return false
         }
         else if (this.bookId != o.bookId)
             return false
-        if (this.stock === null) {
-            if (o.stock !== null)
+        if (this.stock == null) {
+            if (o.stock != null)
                 return false
         }
         else if (this.stock != o.stock)
@@ -50,9 +50,9 @@ data class BookToBookStore(
     override fun hashCode(): Int {
         val prime = 31
         var result = 1
-        result = prime * result + (if (this.bookStoreName === null) 0 else this.bookStoreName.hashCode())
-        result = prime * result + (if (this.bookId === null) 0 else this.bookId.hashCode())
-        result = prime * result + (if (this.stock === null) 0 else this.stock.hashCode())
+        result = prime * result + (if (this.bookStoreName == null) 0 else this.bookStoreName.hashCode())
+        result = prime * result + (if (this.bookId == null) 0 else this.bookId.hashCode())
+        result = prime * result + (if (this.stock == null) 0 else this.stock.hashCode())
         return result
     }
 

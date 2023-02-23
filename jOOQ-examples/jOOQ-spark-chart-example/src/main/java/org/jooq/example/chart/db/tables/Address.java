@@ -92,7 +92,7 @@ public class Address extends TableImpl<AddressRecord> {
     /**
      * The column <code>public.address.last_update</code>.
      */
-    public final TableField<AddressRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<AddressRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Address(Name alias, Table<AddressRecord> aliased) {
         this(alias, aliased, null);
@@ -175,7 +175,7 @@ public class Address extends TableImpl<AddressRecord> {
     }
 
     @Override
-    public Address as(Table alias) {
+    public Address as(Table<?> alias) {
         return new Address(alias.getQualifiedName(), this);
     }
 
@@ -199,7 +199,7 @@ public class Address extends TableImpl<AddressRecord> {
      * Rename this table
      */
     @Override
-    public Address rename(Table name) {
+    public Address rename(Table<?> name) {
         return new Address(name.getQualifiedName(), null);
     }
 
@@ -213,14 +213,15 @@ public class Address extends TableImpl<AddressRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function8<? super Integer, ? super String, ? super String, ? super String, ? super Short, ? super String, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Integer, ? super String, ? super String, ? super String, ? super Short, ? super String, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

@@ -88,17 +88,17 @@ public class Customer extends TableImpl<CustomerRecord> {
     /**
      * The column <code>public.customer.activebool</code>.
      */
-    public final TableField<CustomerRecord, Boolean> ACTIVEBOOL = createField(DSL.name("activebool"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field("true", SQLDataType.BOOLEAN)), this, "");
+    public final TableField<CustomerRecord, Boolean> ACTIVEBOOL = createField(DSL.name("activebool"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("true"), SQLDataType.BOOLEAN)), this, "");
 
     /**
      * The column <code>public.customer.create_date</code>.
      */
-    public final TableField<CustomerRecord, LocalDate> CREATE_DATE = createField(DSL.name("create_date"), SQLDataType.LOCALDATE.nullable(false).defaultValue(DSL.field("('now'::text)::date", SQLDataType.LOCALDATE)), this, "");
+    public final TableField<CustomerRecord, LocalDate> CREATE_DATE = createField(DSL.name("create_date"), SQLDataType.LOCALDATE.nullable(false).defaultValue(DSL.field(DSL.raw("('now'::text)::date"), SQLDataType.LOCALDATE)), this, "");
 
     /**
      * The column <code>public.customer.last_update</code>.
      */
-    public final TableField<CustomerRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<CustomerRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     /**
      * The column <code>public.customer.active</code>.
@@ -197,7 +197,7 @@ public class Customer extends TableImpl<CustomerRecord> {
     }
 
     @Override
-    public Customer as(Table alias) {
+    public Customer as(Table<?> alias) {
         return new Customer(alias.getQualifiedName(), this);
     }
 
@@ -221,7 +221,7 @@ public class Customer extends TableImpl<CustomerRecord> {
      * Rename this table
      */
     @Override
-    public Customer rename(Table name) {
+    public Customer rename(Table<?> name) {
         return new Customer(name.getQualifiedName(), null);
     }
 
@@ -235,14 +235,15 @@ public class Customer extends TableImpl<CustomerRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function10<? super Integer, ? super Short, ? super String, ? super String, ? super String, ? super Short, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function10<? super Integer, ? super Short, ? super String, ? super String, ? super String, ? super Short, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

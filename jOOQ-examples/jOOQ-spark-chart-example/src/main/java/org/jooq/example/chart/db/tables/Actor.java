@@ -72,7 +72,7 @@ public class Actor extends TableImpl<ActorRecord> {
     /**
      * The column <code>public.actor.last_update</code>.
      */
-    public final TableField<ActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<ActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Actor(Name alias, Table<ActorRecord> aliased) {
         this(alias, aliased, null);
@@ -138,7 +138,7 @@ public class Actor extends TableImpl<ActorRecord> {
     }
 
     @Override
-    public Actor as(Table alias) {
+    public Actor as(Table<?> alias) {
         return new Actor(alias.getQualifiedName(), this);
     }
 
@@ -162,7 +162,7 @@ public class Actor extends TableImpl<ActorRecord> {
      * Rename this table
      */
     @Override
-    public Actor rename(Table name) {
+    public Actor rename(Table<?> name) {
         return new Actor(name.getQualifiedName(), null);
     }
 
@@ -176,14 +176,15 @@ public class Actor extends TableImpl<ActorRecord> {
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
     public <U> SelectField<U> mapping(Function4<? super Integer, ? super String, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
     /**
-     * Convenience mapping calling {@link #convertFrom(Class, Function)}.
+     * Convenience mapping calling {@link SelectField#convertFrom(Class,
+     * Function)}.
      */
     public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Integer, ? super String, ? super String, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));

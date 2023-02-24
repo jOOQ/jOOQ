@@ -96,12 +96,29 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
     private static final JooqLogger                          log              = JooqLogger.getLogger(Val.class);
     private static final ConcurrentHashMap<Class<?>, Object> legacyWarnings   = new ConcurrentHashMap<>();
 
-    Val(T value, DataType<T> type) {
+    /**
+     * [#14694] Whether the data type was inferred as opposed to provided
+     * explicitly.
+     * <p>
+     * Numerous features depend on an inferred data type being overriden lazily
+     * once the information is available, e.g. when passing around a row(1, 2)
+     * to an <code>INSERT</code> statement, the initial type information should
+     * be overridden once the row is copied to the statement. It is different
+     * from when users provide type information explicitly, such as row(val(1,
+     * INTEGER), val(2, INTEGER)).
+     */
+    final boolean                                            inferredDataType;
+
+    Val(T value, DataType<T> type, boolean inferredDataType) {
         super(value, type(value, type));
+
+        this.inferredDataType = inferredDataType;
     }
 
-    Val(T value, DataType<T> type, String paramName) {
+    Val(T value, DataType<T> type, boolean inferredDataType, String paramName) {
         super(value, type(value, type), paramName);
+
+        this.inferredDataType = inferredDataType;
     }
 
     private static final <T> DataType<T> type(T value, DataType<T> type) {
@@ -116,7 +133,7 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
      * [#10438] Convert this bind value to a new type.
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    final <U> Field<U> convertTo(DataType<U> type) {
+    final <U> Param<U> convertTo(DataType<U> type) {
 
         // [#10438] A user defined data type could was not provided explicitly,
         //          when wrapping a bind value in DSL::val or DSL::inline
@@ -146,13 +163,13 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
     }
 
     final Val<T> copy(Object newValue) {
-        Val<T> w = new Val<>(getDataType().convert(newValue), getDataType(), getParamName());
+        Val<T> w = new Val<>(getDataType().convert(newValue), getDataType(), inferredDataType, getParamName());
         w.setInline0(isInline());
         return w;
     }
 
     final <U> Val<U> convertTo0(DataType<U> type) {
-        Val<U> w = new Val<>(type.convert(getValue()), type, getParamName());
+        Val<U> w = new Val<>(type.convert(getValue()), type, inferredDataType, getParamName());
         w.setInline0(isInline());
         return w;
     }
@@ -358,7 +375,7 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
 
     @Override
     public final Param<T> $inline(boolean inline) {
-        Val<T> w = new Val<>(value, getDataType(), getParamName());
+        Val<T> w = new Val<>(value, getDataType(), inferredDataType, getParamName());
         w.setInline0(inline);
         return w;
     }

@@ -1777,8 +1777,19 @@ final class Tools {
     @SuppressWarnings("unchecked")
     private static final <T> Field<T> field(Object value, Supplier<Field<T>> defaultValue) {
 
+        // [#14694] Inferred data types may have to be refined lazily, here.
+        //          For example, when wrapping row(1, 2), then the integers may
+        //          still require a converter to be applied to them, when the
+        //          row is passed to the INSERT's valuesOfRows() method.
+        if (value instanceof Val) { Val<?> p = (Val<?>) value;
+            if (p.inferredDataType)
+                return defaultValue.get();
+            else
+                return (Field<T>) p;
+        }
+
         // Fields can be mixed with constant values
-        if (value instanceof Field<?>)
+        else if (value instanceof Field<?>)
             return (Field<T>) value;
 
         // [#6362] [#8220] Single-column selects can be considered fields, too
@@ -2992,7 +3003,7 @@ final class Tools {
                 else {
                     @SuppressWarnings("unchecked")
                     Class<Object> type = (Class<Object>) (substitute != null ? substitute.getClass() : Object.class);
-                    result.add(new Val<>(substitute, DSL.getDataType(type)));
+                    result.add(new Val<>(substitute, DSL.getDataType(type), true));
                 }
             }
 

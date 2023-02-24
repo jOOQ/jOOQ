@@ -27509,7 +27509,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> param(DataType<T> type) {
-        return new Val<>(null, type);
+        return new Val<>(null, type, false);
     }
 
     /**
@@ -27571,7 +27571,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> param(String name, DataType<T> type) {
-        return new Val<>(null, type, name);
+        return new Val<>(null, type, false, name);
     }
 
     /**
@@ -27606,7 +27606,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> param(String name, T value) {
-        return new Val<>(value, Tools.field(value).getDataType(), name);
+        return new Val<>(value, Tools.field(value).getDataType(), true, name);
     }
 
     /**
@@ -29136,7 +29136,7 @@ public class DSL {
     @Support
     public static <T> Param<T> val(T value) {
         Class type = value == null ? Object.class : value.getClass();
-        return val(value, getDataType0(type));
+        return val0(value, getDataType0(type), true);
     }
 
     /**
@@ -29597,6 +29597,10 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> val(Object value, DataType<T> type) {
+        return val0(value, type, false);
+    }
+
+    private static <T> Param<T> val0(Object value, DataType<T> type, boolean inferredDataType) {
 
         // Advanced data types have dedicated constant types
         if (value instanceof QualifiedRecord)
@@ -29608,9 +29612,14 @@ public class DSL {
 
 
 
+
+        // [#14694] value can be a Param contained in a Row
+        else if (value instanceof Val)
+            return ((Val<?>) value).convertTo(type);
+
         // The default behaviour
         T converted = type.convert(value);
-        return new Val<>(converted, mostSpecific(converted, type));
+        return new Val<>(converted, mostSpecific(converted, type), inferredDataType);
     }
 
     /**

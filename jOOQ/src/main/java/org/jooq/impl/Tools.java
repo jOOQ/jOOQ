@@ -5601,7 +5601,7 @@ final class Tools {
     }
 
 
-    private static final void toSQLDDLTypeDeclaration0(Context<?> ctx, DataType<?> type) {
+    static final void toSQLDDLTypeDeclaration0(Context<?> ctx, DataType<?> type) {
         DataType<?> elementType = type instanceof ArrayDataType<?> t
             ? t.elementType
             : type;

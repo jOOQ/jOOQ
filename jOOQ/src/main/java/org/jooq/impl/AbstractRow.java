@@ -43,6 +43,8 @@ import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.extractVal;
+import static org.jooq.impl.Tools.isVal;
 
 import java.util.Collection;
 import java.util.function.Function;
@@ -209,7 +211,7 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
 
         findConversionCandidates: {
             for (int i = 0; i < size; i++)
-                if (fields.field(i) instanceof Val && !(row.field(i) instanceof Val))
+                if (isVal(fields.field(i)) && !isVal(row.field(i)))
                     break findConversionCandidates;
 
             return this;
@@ -218,9 +220,10 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
         Field<?>[] result = new Field[size];
         for (int i = 0; i < size; i++) {
             Field<?> f = fields.field(i);
+            Val<?> v;
 
-            if (f instanceof Val)
-                result[i] = ((Val) f).convertTo(row.field(i).getDataType());
+            if ((v = extractVal(f)) != null)
+                result[i] = v.convertTo(row.field(i).getDataType());
             else
                 result[i] = f;
         }

@@ -40,6 +40,8 @@ package org.jooq.exception;
 import java.util.HashMap;
 import java.util.Map;
 
+// ...
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -198,4 +200,52 @@ public enum SQLStateClass {
 
         return SQLStateClass.OTHER;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

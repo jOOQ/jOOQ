@@ -45,6 +45,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+// ...
+
 import io.r2dbc.spi.R2dbcException;
 
 /**
@@ -139,6 +141,22 @@ public class DataAccessException extends RuntimeException {
      */
     @NotNull
     public static SQLStateClass sqlStateClass(SQLException e) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (e.getSQLState() != null)
             return SQLStateClass.fromCode(e.getSQLState());
         else if (e.getSQLState() == null && "org.sqlite.SQLiteException".equals(e.getClass().getName()))

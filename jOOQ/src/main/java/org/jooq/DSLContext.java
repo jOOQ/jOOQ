@@ -11029,11 +11029,33 @@ public interface DSLContext extends Scope {
      * <p>
      * Set a vendor specific session configuration to a new value.
      *
+     * @see DSL#set(String, Param)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    RowCountQuery set(@Stringly.Name String name, Param<?> value);
+
+    /**
+     * The <code>SET</code> statement.
+     * <p>
+     * Set a vendor specific session configuration to a new value.
+     *
      * @see DSL#set(Name, Param)
      */
     @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     RowCountQuery set(Name name, Param<?> value);
+
+    /**
+     * The <code>SET LOCAL</code> statement.
+     * <p>
+     * Set a vendor specific transaction-local configuration to a new value.
+     *
+     * @see DSL#setLocal(String, Param)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    RowCountQuery setLocal(@Stringly.Name String name, Param<?> value);
 
     /**
      * The <code>SET LOCAL</code> statement.

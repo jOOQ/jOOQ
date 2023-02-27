@@ -10010,12 +10010,46 @@ public class DSL {
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
      *
+     * @see DSLContext#set(String, Param)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    public static org.jooq.RowCountQuery set(@Stringly.Name String name, Param<?> value) {
+        return dsl().set(name, value);
+    }
+
+    /**
+     * The <code>SET</code> statement.
+     * <p>
+     * Set a vendor specific session configuration to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
      * @see DSLContext#set(Name, Param)
      */
     @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.RowCountQuery set(Name name, Param<?> value) {
         return dsl().set(name, value);
+    }
+
+    /**
+     * The <code>SET LOCAL</code> statement.
+     * <p>
+     * Set a vendor specific transaction-local configuration to a new value.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#setLocal(String, Param)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.RowCountQuery setLocal(@Stringly.Name String name, Param<?> value) {
+        return dsl().setLocal(name, value);
     }
 
     /**

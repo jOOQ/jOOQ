@@ -81,6 +81,13 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
     Block block();
 
     /**
+     * The wrapped collection of queries as a {@link Batch}.
+     *
+     * @see DSLContext#batch(Queries)
+     */
+    Batch batch();
+
+    /**
      * The wrapped collection of queries.
      *
      * @deprecated - 3.10 - [#6143] - Use {@link #queryStream()} instead.
@@ -142,5 +149,6 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
-    @NotNull UnmodifiableList<? extends Query> $queries();
+    @NotNull
+    UnmodifiableList<? extends Query> $queries();
 }

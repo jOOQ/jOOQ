@@ -48,6 +48,7 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import org.jooq.Batch;
 import org.jooq.Block;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -98,6 +99,11 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
     @Override
     public final Block block() {
         return configurationOrDefault().dsl().begin(queries);
+    }
+
+    @Override
+    public final Batch batch() {
+        return configurationOrDefault().dsl().batch(queries);
     }
 
     @Override

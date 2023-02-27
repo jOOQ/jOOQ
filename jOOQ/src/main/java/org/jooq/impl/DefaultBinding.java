@@ -4031,6 +4031,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return converter.from((T) XML.xml(string), ctx.converterContext());
             else if (type == Year.class)
                 return converter.from((T) Year.parse(string), ctx.converterContext());
+            else if (type == YearToMonth.class)
+                return converter.from((T) PostgresUtils.toYearToMonth(string), ctx.converterContext());
+            else if (type == YearToSecond.class)
+                return converter.from((T) PostgresUtils.toYearToSecond(string), ctx.converterContext());
+            else if (type == DayToSecond.class)
+                return converter.from((T) PostgresUtils.toDayToSecond(string), ctx.converterContext());
             else if (type.isArray())
                 return converter.from((T) pgNewArray(ctx, field, type, string), ctx.converterContext());
 

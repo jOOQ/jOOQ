@@ -114,10 +114,14 @@ import org.jooq.impl.Internal;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.reflect.Reflect;
+import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
+import org.jooq.types.YearToMonth;
+import org.jooq.types.YearToSecond;
+import org.jooq.util.postgres.PostgresUtils;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
 /**
@@ -1054,6 +1058,53 @@ public final class Convert {
                         catch (DateTimeParseException e2) {
                             return null;
                         }
+                    }
+                }
+
+                // [#14437] [#14713] Interval conversions
+                else if (fromClass == String.class && toClass == YearToMonth.class) {
+
+                    // Try our own standard SQL implementation first
+                    YearToMonth r = YearToMonth.valueOf((String) from);
+                    if (r != null)
+                        return (U) r;
+
+                    // If that failed, try the PostgreSQL specific formats
+                    try {
+                        return (U) PostgresUtils.toYearToMonth(from);
+                    }
+                    catch (Exception e) {
+                        return null;
+                    }
+                }
+                else if (fromClass == String.class && toClass == DayToSecond.class) {
+
+                    // Try our own standard SQL implementation first
+                    DayToSecond r = DayToSecond.valueOf((String) from);
+                    if (r != null)
+                        return (U) r;
+
+                    // If that failed, try the PostgreSQL specific formats
+                    try {
+                        return (U) PostgresUtils.toDayToSecond(from);
+                    }
+                    catch (Exception e) {
+                        return null;
+                    }
+                }
+                else if (fromClass == String.class && toClass == YearToSecond.class) {
+
+                    // Try our own standard SQL implementation first
+                    YearToSecond r = YearToSecond.valueOf((String) from);
+                    if (r != null)
+                        return (U) r;
+
+                    // If that failed, try the PostgreSQL specific formats
+                    try {
+                        return (U) PostgresUtils.toYearToSecond(from);
+                    }
+                    catch (Exception e) {
+                        return null;
                     }
                 }
 

@@ -41,6 +41,7 @@ import static java.time.temporal.ChronoField.INSTANT_SECONDS;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
 import static org.jooq.impl.Internal.arrayType;
+import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.tools.reflect.Reflect.accessible;
@@ -1108,7 +1109,7 @@ final class Convert {
                     // If that failed, try the H2 specific format
                     if (((String) from).startsWith("INTERVAL")) {
                         try {
-                            r = ((Param<YearToMonth>) scope.dsl().parser().parseField((String) from)).getValue();
+                            r = ((Param<YearToMonth>) CTX.dsl().parser().parseField((String) from)).getValue();
                             return (U) r;
                         }
                         catch (Exception ignore) {}
@@ -1132,7 +1133,7 @@ final class Convert {
                     // If that failed, try the H2 specific format
                     if (((String) from).startsWith("INTERVAL")) {
                         try {
-                            r = ((Param<DayToSecond>) scope.dsl().parser().parseField((String) from)).getValue();
+                            r = ((Param<DayToSecond>) CTX.dsl().parser().parseField((String) from)).getValue();
                             return (U) r;
                         }
                         catch (Exception ignore) {}

@@ -86,8 +86,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import jakarta.xml.bind.JAXB;
-
 // ...
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
@@ -103,6 +101,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
@@ -116,6 +115,8 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 import org.jooq.util.xml.jaxb.InformationSchema;
+
+import jakarta.xml.bind.JAXB;
 
 /**
  * Utility methods for type conversions
@@ -1048,7 +1049,7 @@ public final class Convert {
                     // If that failed, try the H2 specific format
                     if (((String) from).startsWith("INTERVAL")) {
                         try {
-                            r = ((Param<YearToMonth>) scope.dsl().parser().parseField((String) from)).getValue();
+                            r = ((Param<YearToMonth>) new DefaultConfiguration().dsl().parser().parseField((String) from)).getValue();
                             return (U) r;
                         }
                         catch (Exception ignore) {}
@@ -1072,7 +1073,7 @@ public final class Convert {
                     // If that failed, try the H2 specific format
                     if (((String) from).startsWith("INTERVAL")) {
                         try {
-                            r = ((Param<DayToSecond>) scope.dsl().parser().parseField((String) from)).getValue();
+                            r = ((Param<DayToSecond>) new DefaultConfiguration().dsl().parser().parseField((String) from)).getValue();
                             return (U) r;
                         }
                         catch (Exception ignore) {}

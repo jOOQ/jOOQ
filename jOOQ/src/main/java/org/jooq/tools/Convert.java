@@ -96,6 +96,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.Param;
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -1044,6 +1045,15 @@ public final class Convert {
                     if (r != null)
                         return (U) r;
 
+                    // If that failed, try the H2 specific format
+                    if (((String) from).startsWith("INTERVAL")) {
+                        try {
+                            r = ((Param<YearToMonth>) scope.dsl().parser().parseField((String) from)).getValue();
+                            return (U) r;
+                        }
+                        catch (Exception ignore) {}
+                    }
+
                     // If that failed, try the PostgreSQL specific formats
                     try {
                         return (U) PostgresUtils.toYearToMonth(from);
@@ -1058,6 +1068,15 @@ public final class Convert {
                     DayToSecond r = DayToSecond.valueOf((String) from);
                     if (r != null)
                         return (U) r;
+
+                    // If that failed, try the H2 specific format
+                    if (((String) from).startsWith("INTERVAL")) {
+                        try {
+                            r = ((Param<DayToSecond>) scope.dsl().parser().parseField((String) from)).getValue();
+                            return (U) r;
+                        }
+                        catch (Exception ignore) {}
+                    }
 
                     // If that failed, try the PostgreSQL specific formats
                     try {

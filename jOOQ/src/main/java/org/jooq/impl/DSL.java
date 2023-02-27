@@ -27814,7 +27814,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> param(String name, T value) {
-        return new Val<>(value, Tools.field(value).getDataType(), true, name);
+        return new Val<>(value, val(value).getDataType(), false, name);
     }
 
     /**

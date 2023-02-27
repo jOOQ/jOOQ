@@ -1950,17 +1950,24 @@ final class Tools {
     }
 
     @SuppressWarnings("unchecked")
-    private static final <T> Field<T> field(Object value, Supplier<Field<T>> defaultValue) {
+    private static final <T> Field<T> field(
+        Object value,
+        boolean defaultInferred,
+        Function<? super Object, ? extends Param<T>> defaultValue
+    ) {
 
         // [#14694] Inferred data types may have to be refined lazily, here.
         //          For example, when wrapping row(1, 2), then the integers may
         //          still require a converter to be applied to them, when the
         //          row is passed to the INSERT's valuesOfRows() method.
-        if (value instanceof Val<?> p) {
-            if (p.inferredDataType)
-                return defaultValue.get();
+        if (value instanceof Val<?> p1) {
+            if (p1.inferredDataType && !defaultInferred) {
+                Val<T> p2 = (Val<T>) defaultValue.apply(p1.getValue());
+                p2.setInline0(p1.isInline());
+                return p2;
+            }
             else
-                return (Field<T>) p;
+                return (Field<T>) p1;
         }
 
         // Fields can be mixed with constant values
@@ -1980,23 +1987,24 @@ final class Tools {
             throw fieldExpected(value);
 
         else
-            return defaultValue.get();
+            return defaultValue.apply(value);
     }
 
+    @SuppressWarnings("unchecked")
     static final <T> Field<T> field(T value) {
-        return field(value, () -> val(value));
+        return field(value, true, v -> DSL.val0((T) v, true));
     }
 
     static final <T> Field<T> field(Object value, Field<T> field) {
-        return field(value, () -> val(value, field));
+        return field(value, false, v -> val(v, field));
     }
 
     static final <T> Field<T> field(Object value, Class<T> type) {
-        return field(value, () -> val(value, type));
+        return field(value, false, v -> val(v, type));
     }
 
     static final <T> Field<T> field(Object value, DataType<T> type) {
-        return field(value, () -> val(value, type));
+        return field(value, false, v -> val(v, type));
     }
 
     static final <T> List<Field<T>> fields(T[] values) {

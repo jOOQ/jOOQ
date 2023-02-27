@@ -29135,8 +29135,12 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> val(T value) {
+        return val0(value, false);
+    }
+
+    static <T> Param<T> val0(T value, boolean inferredDataType) {
         Class type = value == null ? Object.class : value.getClass();
-        return val0(value, getDataType0(type), true);
+        return val0(value, getDataType0(type), inferredDataType);
     }
 
     /**

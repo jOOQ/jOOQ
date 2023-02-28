@@ -941,6 +941,30 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ;
 
     private static final SQLDialect[] FAMILIES;
@@ -1507,6 +1531,9 @@ public enum SQLDialect {
                 case H2:            return "org.hibernate.dialect.H2Dialect";
                 case HSQLDB:        return "org.hibernate.dialect.HSQLDialect";
                 case MARIADB:
+
+
+
 
 
 

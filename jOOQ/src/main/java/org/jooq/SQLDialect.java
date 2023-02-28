@@ -202,7 +202,7 @@ public enum SQLDialect {
      * <p>
      * This family behaves like the versioned dialect {@link #MARIADB_10_5}.
      */
-    MARIADB("MariaDB", false, true, SQLDialectCategory.MYSQL),
+    MARIADB("MariaDB", false, true, new RequiredVersion(10, 7, null), SQLDialectCategory.MYSQL),
 
 
 

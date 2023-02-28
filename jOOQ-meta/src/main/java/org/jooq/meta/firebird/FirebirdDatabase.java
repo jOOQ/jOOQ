@@ -386,6 +386,18 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
+    public ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas) {
+        return create()
+            .select(
+                inline(null, VARCHAR).as("catalog"),
+                inline(null, VARCHAR).as("schema"),
+                RDB$RELATIONS.RDB$RELATION_NAME.trim(),
+                RDB$RELATIONS.RDB$VIEW_SOURCE.trim())
+            .from(RDB$RELATIONS)
+            .orderBy(RDB$RELATIONS.RDB$RELATION_NAME.trim());
+    }
+
+    @Override
     public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
         return create()
             .select(

@@ -42,9 +42,11 @@ import java.util.List;
 
 import org.jooq.Meta;
 import org.jooq.Record12;
+import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
 
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
@@ -72,8 +74,11 @@ public interface ResultQueryDatabase extends Database {
      * <li>Column name</li>
      * <li>Column sequence</li>
      * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't support the query.
      */
     @Internal
+    @Nullable
     ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas);
 
     /**
@@ -89,8 +94,11 @@ public interface ResultQueryDatabase extends Database {
      * <li>Column name</li>
      * <li>Column sequence</li>
      * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't support the query.
      */
     @Internal
+    @Nullable
     ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas);
 
     /**
@@ -111,7 +119,27 @@ public interface ResultQueryDatabase extends Database {
      * <li>Cycle</li>
      * <li>Cache</li>
      * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't support the query.
      */
     @Internal
+    @Nullable
     ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas);
+
+    /**
+     * A query that produces source code for a set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Object name (e.g. table, view, function, package)</li>
+     * <li>Source</li>
+     * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't support the query.
+     */
+    @Internal
+    @Nullable
+    ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas);
 }

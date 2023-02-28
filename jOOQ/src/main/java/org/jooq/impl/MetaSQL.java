@@ -11,6 +11,7 @@ final class MetaSQL {
     private static final EnumMap<SQLDialect, String> M_UNIQUE_KEYS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SEQUENCES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES = new EnumMap<>(SQLDialect.class);
+    private static final EnumMap<SQLDialect, String> M_SOURCES = new EnumMap<>(SQLDialect.class);
 
     static final String M_UNIQUE_KEYS(SQLDialect dialect) {
         String result = M_UNIQUE_KEYS.get(dialect);
@@ -27,6 +28,11 @@ final class MetaSQL {
         return result != null ? result : M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.get(dialect.family());
     }
 
+    static final String M_SOURCES(SQLDialect dialect) {
+        String result = M_SOURCES.get(dialect);
+        return result != null ? result : M_SOURCES.get(dialect.family());
+    }
+
     static {
 
         M_UNIQUE_KEYS.put(FIREBIRD, "select null catalog, null schema, trim(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME) RDB$RELATION_NAME, trim(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME) RDB$CONSTRAINT_NAME, trim(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME) RDB$FIELD_NAME, RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION from RDB$RELATION_CONSTRAINTS join RDB$INDEX_SEGMENTS on RDB$INDEX_SEGMENTS.RDB$INDEX_NAME = RDB$RELATION_CONSTRAINTS.RDB$INDEX_NAME where RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_TYPE = 'UNIQUE' order by RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME asc, RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION asc");
@@ -36,6 +42,10 @@ final class MetaSQL {
         M_UNIQUE_KEYS.put(MYSQL, "select distinct null as TABLE_CATALOG, information_schema.STATISTICS.TABLE_SCHEMA, information_schema.STATISTICS.TABLE_NAME, information_schema.STATISTICS.INDEX_NAME, information_schema.STATISTICS.COLUMN_NAME, information_schema.STATISTICS.SEQ_IN_INDEX from information_schema.STATISTICS where (information_schema.STATISTICS.TABLE_SCHEMA in (?, 'ee7f6174-34f2-484b-8d81-20a4d9fc866d') and information_schema.STATISTICS.INDEX_NAME <> 'PRIMARY' and information_schema.STATISTICS.NON_UNIQUE = 0) order by information_schema.STATISTICS.TABLE_SCHEMA, information_schema.STATISTICS.TABLE_NAME, information_schema.STATISTICS.INDEX_NAME, information_schema.STATISTICS.SEQ_IN_INDEX");
         M_UNIQUE_KEYS.put(POSTGRES, "select k.table_catalog, k.table_schema, k.table_name, k.constraint_name, k.column_name, k.ordinal_position from (pg_catalog.pg_constraint as c join (pg_catalog.pg_class as alias_89552482 join pg_catalog.pg_namespace as alias_126892781 on alias_89552482.relnamespace = alias_126892781.oid) on c.conrelid = alias_89552482.oid join pg_catalog.pg_namespace as alias_87501535 on c.connamespace = alias_87501535.oid) join information_schema.key_column_usage as k on (k.table_schema = alias_126892781.nspname and k.table_name = alias_89552482.relname and k.constraint_schema = alias_87501535.nspname and k.constraint_name = c.conname) where (c.contype = 'u' and alias_87501535.nspname in (?)) order by k.table_schema asc, k.table_name asc, k.constraint_name asc, k.ordinal_position asc");
         M_UNIQUE_KEYS.put(YUGABYTEDB, "select k.table_catalog, k.table_schema, k.table_name, k.constraint_name, k.column_name, k.ordinal_position from (pg_catalog.pg_constraint as c join (pg_catalog.pg_class as alias_89552482 join pg_catalog.pg_namespace as alias_126892781 on alias_89552482.relnamespace = alias_126892781.oid) on c.conrelid = alias_89552482.oid join pg_catalog.pg_namespace as alias_87501535 on c.connamespace = alias_87501535.oid) join information_schema.key_column_usage as k on (k.table_schema = alias_126892781.nspname and k.table_name = alias_89552482.relname and k.constraint_schema = alias_87501535.nspname and k.constraint_name = c.conname) where (c.contype = 'u' and alias_87501535.nspname in (?)) order by k.table_schema asc, k.table_name asc, k.constraint_name asc, k.ordinal_position asc");
+
+
+
+
 
 
 
@@ -151,6 +161,87 @@ final class MetaSQL {
         M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.put(HSQLDB, "select null as catalog, INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_SCHEMA, INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_NAME, INFORMATION_SCHEMA.SEQUENCES.DATA_TYPE, INFORMATION_SCHEMA.SEQUENCES.NUMERIC_PRECISION, INFORMATION_SCHEMA.SEQUENCES.NUMERIC_SCALE, INFORMATION_SCHEMA.SEQUENCES.START_WITH, INFORMATION_SCHEMA.SEQUENCES.INCREMENT, INFORMATION_SCHEMA.SEQUENCES.MINIMUM_VALUE, INFORMATION_SCHEMA.SEQUENCES.MAXIMUM_VALUE, case when INFORMATION_SCHEMA.SEQUENCES.CYCLE_OPTION is not distinct from 'YES' then true else false end as CYCLE_OPTION, null as cache from INFORMATION_SCHEMA.SEQUENCES where INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_SCHEMA in (cast(? as varchar(128))) order by INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_SCHEMA, INFORMATION_SCHEMA.SEQUENCES.SEQUENCE_NAME");
         M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.put(POSTGRES, "with schemas(schema) as (select v.c1 from (values (?)) as v (c1)) (select null as catalog, information_schema.sequences.sequence_schema, information_schema.sequences.sequence_name, information_schema.sequences.data_type, information_schema.sequences.numeric_precision, information_schema.sequences.numeric_scale, nullif(cast(information_schema.sequences.start_value as bigint), 1) as start_value, nullif(cast(information_schema.sequences.increment as bigint), 1) as increment, nullif(cast(information_schema.sequences.minimum_value as bigint), 1) as minimum_value, nullif(cast(information_schema.sequences.maximum_value as decimal), (power(cast(2 as decimal), cast((information_schema.sequences.numeric_precision - 1) as decimal)) - 1)) as maximum_value, cast(information_schema.sequences.cycle_option as boolean) as cycle_option, null as cache from information_schema.sequences where information_schema.sequences.sequence_schema in (select schemas.schema from schemas)) union all (select null, alias_14763223.nspname, alias_75351712.relname, alias_109453426.typname, information_schema._pg_numeric_precision(alias_109453426.typbasetype, alias_109453426.typtypmod), 0, pg_catalog.pg_sequence.seqstart, pg_catalog.pg_sequence.seqincrement, pg_catalog.pg_sequence.seqmin, pg_catalog.pg_sequence.seqmax, pg_catalog.pg_sequence.seqcycle, null as cache from (pg_catalog.pg_sequence join (pg_catalog.pg_class as alias_75351712 join pg_catalog.pg_namespace as alias_14763223 on alias_75351712.relnamespace = alias_14763223.oid) on pg_catalog.pg_sequence.seqrelid = alias_75351712.oid join pg_catalog.pg_type as alias_109453426 on pg_catalog.pg_sequence.seqtypid = alias_109453426.oid) where (alias_14763223.nspname in (select schemas.schema from schemas) and alias_75351712.oid in (select pg_catalog.pg_depend.objid from pg_catalog.pg_depend where (pg_catalog.pg_depend.deptype = 'i' and pg_catalog.pg_depend.classid = 'pg_class'::regclass)))) order by 2, 3");
         M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.put(YUGABYTEDB, "with schemas(schema) as (select v.c1 from (values (?)) as v (c1)) (select null as catalog, information_schema.sequences.sequence_schema, information_schema.sequences.sequence_name, information_schema.sequences.data_type, information_schema.sequences.numeric_precision, information_schema.sequences.numeric_scale, nullif(cast(information_schema.sequences.start_value as bigint), 1) as start_value, nullif(cast(information_schema.sequences.increment as bigint), 1) as increment, nullif(cast(information_schema.sequences.minimum_value as bigint), 1) as minimum_value, nullif(cast(information_schema.sequences.maximum_value as decimal), (power(cast(2 as decimal), cast((information_schema.sequences.numeric_precision - 1) as decimal)) - 1)) as maximum_value, cast(information_schema.sequences.cycle_option as boolean) as cycle_option, null as cache from information_schema.sequences where information_schema.sequences.sequence_schema in (select schemas.schema from schemas)) union all (select '', '', '', '', 0, 0, 0, 0, 0, 0, false, 0 where false) order by 2, 3");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        M_SOURCES.put(DERBY, "select cast(null as varchar(32672)) as catalog, alias_57844683.SCHEMANAME, SYS.SYSTABLES.TABLENAME, SYS.SYSVIEWS.VIEWDEFINITION from (SYS.SYSTABLES join SYS.SYSSCHEMAS as alias_57844683 on SYS.SYSTABLES.SCHEMAID = alias_57844683.SCHEMAID) left outer join SYS.SYSVIEWS on SYS.SYSTABLES.TABLEID = SYS.SYSVIEWS.TABLEID where cast(alias_57844683.SCHEMANAME as varchar(32672)) in (cast(? as varchar(32672))) order by alias_57844683.SCHEMANAME, SYS.SYSTABLES.TABLENAME");
+        M_SOURCES.put(FIREBIRD, "select null catalog, null schema, trim(RDB$RELATIONS.RDB$RELATION_NAME), trim(RDB$RELATIONS.RDB$VIEW_SOURCE) from RDB$RELATIONS order by trim(RDB$RELATIONS.RDB$RELATION_NAME)");
+        M_SOURCES.put(H2, "select INFORMATION_SCHEMA.VIEWS.TABLE_CATALOG, INFORMATION_SCHEMA.VIEWS.TABLE_SCHEMA, INFORMATION_SCHEMA.VIEWS.TABLE_NAME, INFORMATION_SCHEMA.VIEWS.VIEW_DEFINITION from INFORMATION_SCHEMA.VIEWS where INFORMATION_SCHEMA.VIEWS.TABLE_SCHEMA in (cast(? as varchar)) order by INFORMATION_SCHEMA.VIEWS.TABLE_SCHEMA, INFORMATION_SCHEMA.VIEWS.TABLE_NAME");
+        M_SOURCES.put(HSQLDB, "select INFORMATION_SCHEMA.VIEWS.TABLE_CATALOG, INFORMATION_SCHEMA.VIEWS.TABLE_SCHEMA, INFORMATION_SCHEMA.VIEWS.TABLE_NAME, INFORMATION_SCHEMA.VIEWS.VIEW_DEFINITION from INFORMATION_SCHEMA.VIEWS where INFORMATION_SCHEMA.VIEWS.TABLE_SCHEMA in (cast(? as varchar(128))) order by INFORMATION_SCHEMA.VIEWS.TABLE_SCHEMA, INFORMATION_SCHEMA.VIEWS.TABLE_NAME");
+        M_SOURCES.put(MARIADB, "select information_schema.VIEWS.TABLE_CATALOG, information_schema.VIEWS.TABLE_SCHEMA, information_schema.VIEWS.TABLE_NAME, information_schema.VIEWS.VIEW_DEFINITION from information_schema.VIEWS where information_schema.VIEWS.TABLE_SCHEMA in (?) order by information_schema.VIEWS.TABLE_SCHEMA, information_schema.VIEWS.TABLE_NAME");
+        M_SOURCES.put(MYSQL, "select information_schema.VIEWS.TABLE_CATALOG, information_schema.VIEWS.TABLE_SCHEMA, information_schema.VIEWS.TABLE_NAME, information_schema.VIEWS.VIEW_DEFINITION from information_schema.VIEWS where information_schema.VIEWS.TABLE_SCHEMA in (?) order by information_schema.VIEWS.TABLE_SCHEMA, information_schema.VIEWS.TABLE_NAME");
+        M_SOURCES.put(POSTGRES, "select information_schema.views.table_catalog, information_schema.views.table_schema, information_schema.views.table_name, information_schema.views.view_definition from information_schema.views where information_schema.views.table_schema in (?) order by information_schema.views.table_schema, information_schema.views.table_name");
+        M_SOURCES.put(SQLITE, "select null as catalog, null as schema, sqlite_master.name, sqlite_master.sql from sqlite_master order by sqlite_master.name");
+        M_SOURCES.put(YUGABYTEDB, "select information_schema.views.table_catalog, information_schema.views.table_schema, information_schema.views.table_name, information_schema.views.view_definition from information_schema.views where information_schema.views.table_schema in (?) order by information_schema.views.table_schema, information_schema.views.table_name");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

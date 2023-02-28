@@ -75,6 +75,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -91,7 +92,6 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Log;
-import org.jooq.Log.Level;
 import org.jooq.Meta;
 import org.jooq.MetaProvider;
 import org.jooq.Name;
@@ -3631,7 +3631,24 @@ public abstract class AbstractDatabase implements Database {
      * Retrieve ALL source code from the database.
      */
     protected Map<Definition, String> getSources0() throws SQLException {
-        return new LinkedHashMap<>();
+        Map<Definition, String> result = new LinkedHashMap<>();
+
+        if (this instanceof ResultQueryDatabase d) {
+            Optional
+                .ofNullable(d.sources(getInputSchemata()))
+                .ifPresent(q -> q.forEach(r -> {
+                    SchemaDefinition schema = getSchema(r.value2());
+
+                    if (schema != null) {
+                        Definition view = getTable(schema, r.value3());
+
+                        if (view != null)
+                            result.put(view, r.value4());
+                    }
+            }));
+        }
+
+        return result;
     }
 
     /**

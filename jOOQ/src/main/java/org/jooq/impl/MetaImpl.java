@@ -65,18 +65,16 @@ import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
+import static org.jooq.impl.MetaSQL.M_SOURCES;
 import static org.jooq.impl.MetaSQL.M_UNIQUE_KEYS;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.flatMap;
-import static org.jooq.impl.Tools.ignoreNPE;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -87,7 +85,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -101,6 +98,7 @@ import org.jooq.Catalog;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConstraintEnforcementStep;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -125,10 +123,8 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.ThreadGuard.Guard;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.jdbc.MockResultSet;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -342,6 +338,7 @@ final class MetaImpl extends AbstractMeta {
         private transient volatile Map<Name, Result<Record>> columnCache;
         private transient volatile Map<Name, Result<Record>> ukCache;
         private transient volatile Map<Name, Result<Record>> sequenceCache;
+        private transient volatile Map<Name, String>         sourceCache;
 
         MetaSchema(String name, Catalog catalog) {
             super(name, catalog);
@@ -497,7 +494,7 @@ final class MetaImpl extends AbstractMeta {
             }
         }
 
-        private void initUksSQLite(String catalog, String schema) {
+        private final void initUksSQLite(String catalog, String schema) {
             ukCache = new LinkedHashMap<>();
 
             dsl().resultQuery(
@@ -628,12 +625,42 @@ final class MetaImpl extends AbstractMeta {
                     Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
                     sequenceCache = new LinkedHashMap<>();
 
-                    groups.forEach((k, v) -> sequenceCache.put(name(k.get(0, String.class), k.get(1, String.class)), v));
+                    groups.forEach((k, v) -> sequenceCache.put(
+                        name(k.get(0, String.class), k.get(1, String.class)), v
+                    ));
                 }
             }
 
             if (sequenceCache != null)
                 return sequenceCache.get(name(MetaSchema.this.getCatalog().getName(), MetaSchema.this.getName()));
+            else
+                return null;
+        }
+
+        final String source(String tableName) {
+            if (sourceCache == null) {
+                String sql = M_SOURCES(family());
+
+                if (sql != null) {
+                    Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(sql, MetaSchema.this.getName()).fetch());
+
+                    // TODO Support catalogs as well
+                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
+                    sourceCache = new LinkedHashMap<>();
+
+                    groups.forEach((k, v) -> sourceCache.put(
+                        name(k.get(1, String.class), k.get(2, String.class)),
+                        Tools.apply(v.get(0).get(3, String.class), s ->
+                              s.toLowerCase().startsWith("create")
+                            ? s
+                            : "create view " + dsl().render(name(k.get(2, String.class))) + " as " + s
+                        )
+                    ));
+                }
+            }
+
+            if (sourceCache != null)
+                return sourceCache.get(name(MetaSchema.this.getName(), tableName));
             else
                 return null;
         }
@@ -689,11 +716,22 @@ final class MetaImpl extends AbstractMeta {
         String.class   // IS_AUTOINCREMENT
     };
 
+    private static final TableOptions tableOption(DSLContext ctx, MetaSchema schema, String tableName, TableType tableType) {
+        if (tableType == TableType.VIEW) {
+            String sql = M_SOURCES(ctx.dialect());
+
+            if (sql != null)
+                return TableOptions.view(schema.source(tableName));
+        }
+
+        return TableOptions.of(tableType);
+    }
+
     private final class MetaTable extends TableImpl<Record> {
         private final Result<Record> uks;
 
-        MetaTable(String name, Schema schema, Result<Record> columns, Result<Record> uks, String remarks, TableType tableType) {
-            super(name(name), schema, null, null, null, null, comment(remarks), TableOptions.of(tableType));
+        MetaTable(String name, MetaSchema schema, Result<Record> columns, Result<Record> uks, String remarks, TableType tableType) {
+            super(name(name), schema, null, null, null, null, comment(remarks), tableOption(dsl(), schema, name, tableType));
 
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM

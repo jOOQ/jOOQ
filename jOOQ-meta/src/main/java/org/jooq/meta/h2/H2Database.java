@@ -46,7 +46,6 @@ import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.condition;
-import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -54,7 +53,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nullif;
-import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -88,7 +86,6 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -140,7 +137,6 @@ import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Domains;
 import org.jooq.meta.hsqldb.information_schema.tables.ElementTypes;
 import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.h2.H2DataType;
@@ -637,6 +633,22 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         create().select(SCHEMATA.SCHEMA_NAME, SCHEMATA.REMARKS)
                 .from(SCHEMATA)
                 .fetch(mapping((s, r) -> new SchemaDefinition(this, s, r)));
+    }
+
+    @Override
+    public ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas) {
+        return create()
+            .select(
+                VIEWS.TABLE_CATALOG,
+                VIEWS.TABLE_SCHEMA,
+                VIEWS.TABLE_NAME,
+                VIEWS.VIEW_DEFINITION)
+            .from(VIEWS)
+            .where(VIEWS.TABLE_SCHEMA.in(schemas))
+            .orderBy(
+                VIEWS.TABLE_SCHEMA,
+                VIEWS.TABLE_NAME)
+        ;
     }
 
     @Override

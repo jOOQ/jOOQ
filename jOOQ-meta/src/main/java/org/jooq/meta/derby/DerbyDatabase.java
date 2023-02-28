@@ -75,6 +75,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
+import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
@@ -350,6 +351,24 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
         create().select(SYSSCHEMAS.SCHEMANAME)
                 .from(SYSSCHEMAS)
                 .collect(mapping(r -> new SchemaDefinition(this, r.value1(), ""), toList()));
+    }
+
+    @Override
+    public ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas) {
+        return create()
+            .select(
+                inline(null, VARCHAR).cast(VARCHAR).as("catalog"),
+                SYSTABLES.sysschemas().SCHEMANAME,
+                SYSTABLES.TABLENAME,
+                SYSVIEWS.VIEWDEFINITION)
+            .from(SYSTABLES)
+            .leftJoin(SYSVIEWS)
+                .on(SYSTABLES.TABLEID.eq(SYSVIEWS.TABLEID))
+            // [#6797] The cast is necessary if a non-standard collation is used
+            .where(SYSTABLES.sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(schemas))
+            .orderBy(
+                SYSTABLES.sysschemas().SCHEMANAME,
+                SYSTABLES.TABLENAME);
     }
 
     @Override

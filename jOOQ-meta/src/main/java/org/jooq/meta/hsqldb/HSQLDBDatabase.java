@@ -77,6 +77,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
+import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -388,6 +389,22 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
         create().select(SCHEMATA.SCHEMA_NAME)
                 .from(SCHEMATA)
                 .fetch(mapping(s -> new SchemaDefinition(this, s, "")));
+    }
+
+    @Override
+    public ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas) {
+        return create()
+            .select(
+                VIEWS.TABLE_CATALOG,
+                VIEWS.TABLE_SCHEMA,
+                VIEWS.TABLE_NAME,
+                VIEWS.VIEW_DEFINITION)
+            .from(VIEWS)
+            .where(VIEWS.TABLE_SCHEMA.in(schemas))
+            .orderBy(
+                VIEWS.TABLE_SCHEMA,
+                VIEWS.TABLE_NAME)
+        ;
     }
 
     @Override

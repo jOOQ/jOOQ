@@ -138,6 +138,8 @@ final class Names {
     static final Name N_GROUP_CONCAT                = systemName("group_concat");
     static final Name N_HASHBYTES                   = systemName("hashbytes");
     static final Name N_HASH_MD5                    = systemName("hash_md5");
+    static final Name N_HEX_TO_BINARY               = systemName("hex_to_binary");
+    static final Name N_HEX_TO_INTEGER              = systemName("hex_to_integer");
     static final Name N_IF                          = systemName("if");
     static final Name N_IIF                         = systemName("iif");
     static final Name N_INSERT                      = systemName("insert");

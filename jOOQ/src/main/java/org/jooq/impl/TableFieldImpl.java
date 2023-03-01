@@ -81,7 +81,8 @@ implements
     TableField<R, T>,
     SimpleQueryPart,
     UNotYetImplemented,
-    TypedReference<T>
+    TypedReference<T>,
+    ScopeMappable
 {
 
     private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };

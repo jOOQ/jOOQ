@@ -98,8 +98,7 @@ extends
     AbstractTypedNamed<T>
 implements
     Field<T>,
-    Aliasable<Field<?>>,
-    ScopeMappable
+    Aliasable<Field<?>>
 {
 
     private static final Clause[] CLAUSES = { FIELD };

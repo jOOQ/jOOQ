@@ -96,7 +96,8 @@ implements
     WindowRowsStep<T>,
     WindowRowsAndStep<T>,
     WindowExcludeStep<T>,
-    WindowFunction<T>
+    WindowFunction<T>,
+    ScopeMappable
 {
     private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
 

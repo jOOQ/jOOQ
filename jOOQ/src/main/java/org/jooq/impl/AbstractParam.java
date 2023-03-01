@@ -99,7 +99,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
      * </ul>
      */
     static final Name name(Object value, String paramName) {
-        return DSL.name(
+        return new LazyName(() -> DSL.name(
                paramName != null
              ? paramName
 
@@ -114,7 +114,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
 
 
              : name(value)
-        );
+        ));
     }
 
     private final static String name(Object value) {

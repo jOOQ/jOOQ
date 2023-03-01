@@ -101,7 +101,7 @@ import org.jooq.WindowPartitionByStep;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T>, ScopeMappable {
+abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T> {
 
     private static final Clause[] CLAUSES = { FIELD };
 

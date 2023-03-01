@@ -920,7 +920,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         // [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
         // then we should let the database apply DEFAULT values
-        resetChangedOnNotNull(this);
+        Tools.resetChangedOnNotNull(this);
+    }
+
+    /**
+     * Generated subclasses may call this method.
+     */
+    protected /* non-final */ void resetChangedOnNotNull() {
+        Tools.resetChangedOnNotNull(this);
     }
 
     private final Object prepareArrayOrIterableForUnmap(Object source, int[] targetIndexMapping) {

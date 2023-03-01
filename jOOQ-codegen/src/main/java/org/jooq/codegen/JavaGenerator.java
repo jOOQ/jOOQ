@@ -7811,6 +7811,10 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%s(from.%s());", setter, getter);
         }
 
+        // [#14727] Make sure the same behaviour as from(Object) is implemented
+        if (mode == Mode.RECORD)
+            out.println("resetChangedOnNotNull()%s", semicolon);
+
         out.println("}");
 
         if (override) {

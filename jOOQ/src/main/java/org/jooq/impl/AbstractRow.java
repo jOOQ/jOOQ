@@ -446,4 +446,23 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
 
 
 
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        return fields.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that)
+            return true;
+
+        if (that instanceof AbstractRow)
+            return fields.equals(((AbstractRow<?>) that).fields);
+
+        return super.equals(that);
+    }
 }

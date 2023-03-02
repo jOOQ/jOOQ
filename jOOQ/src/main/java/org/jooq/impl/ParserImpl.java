@@ -6513,7 +6513,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'E':
-                if (parseKeywordIf("EXISTS"))
+                if (parseFunctionNameIf("EQUAL_NULL"))
+                    return parseEqualNull();
+                else if (parseKeywordIf("EXISTS"))
                     return exists(parseParenthesised(c -> parseWithOrSelect()));
 
                 break;
@@ -6613,16 +6615,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
         }
 
-        FieldOrRow left;
+        boolean notOp = false;
+        FieldOrRow left = parseConcat();
+        int p = position();
+        boolean not = parseKeywordIf("NOT");
+        boolean isField = left instanceof Field;
         Comparator comp;
         TSQLOuterJoinComparator outer;
-        boolean not;
-        boolean notOp = false;
-
-        left = parseConcat();
-        int p = position();
-        not = parseKeywordIf("NOT");
-        boolean isField = left instanceof Field;
 
 
         if (!not && !ignoreProEdition() && ((outer = parseTSQLOuterJoinComparatorIf()) != null) && requireProEdition()) {
@@ -6861,6 +6860,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             position(p);
             return left;
         }
+    }
+
+    private final Condition parseEqualNull() {
+        Condition result;
+
+        parse('(');
+        FieldOrRow left = parseConcat();
+        parse(',');
+
+        if (left instanceof Field f)
+            result = f.isNotDistinctFrom((Field) toField(parseConcat()));
+        else
+            result = new RowIsDistinctFrom((Row) left, parseRow(((Row) left).size(), true), true);
+
+        parse(')');
+        return result;
     }
 
     private final Condition parsePredicateXMLExistsIf() {

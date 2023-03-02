@@ -54,12 +54,12 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     /**
      * The column <code>public.film_category.film_id</code>.
      */
-    public final TableField<FilmCategoryRecord, Short> FILM_ID = createField(DSL.name("film_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<FilmCategoryRecord, Integer> FILM_ID = createField(DSL.name("film_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.film_category.category_id</code>.
      */
-    public final TableField<FilmCategoryRecord, Short> CATEGORY_ID = createField(DSL.name("category_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<FilmCategoryRecord, Integer> CATEGORY_ID = createField(DSL.name("category_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.film_category.last_update</code>.
@@ -181,14 +181,14 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row3<Short, Short, LocalDateTime> fieldsRow() {
+    public Row3<Integer, Integer, LocalDateTime> fieldsRow() {
         return (Row3) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function3<? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function3<? super Integer, ? super Integer, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -196,7 +196,7 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Short, ? super Short, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function3<? super Integer, ? super Integer, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

@@ -72,7 +72,7 @@ public class Rental extends TableImpl<RentalRecord> {
     /**
      * The column <code>public.rental.customer_id</code>.
      */
-    public final TableField<RentalRecord, Short> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<RentalRecord, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.rental.return_date</code>.
@@ -82,7 +82,7 @@ public class Rental extends TableImpl<RentalRecord> {
     /**
      * The column <code>public.rental.staff_id</code>.
      */
-    public final TableField<RentalRecord, Short> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<RentalRecord, Integer> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.rental.last_update</code>.
@@ -225,14 +225,14 @@ public class Rental extends TableImpl<RentalRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row7<Integer, LocalDateTime, Integer, Short, LocalDateTime, Short, LocalDateTime> fieldsRow() {
+    public Row7<Integer, LocalDateTime, Integer, Integer, LocalDateTime, Integer, LocalDateTime> fieldsRow() {
         return (Row7) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function7<? super Integer, ? super LocalDateTime, ? super Integer, ? super Short, ? super LocalDateTime, ? super Short, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function7<? super Integer, ? super LocalDateTime, ? super Integer, ? super Integer, ? super LocalDateTime, ? super Integer, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -240,7 +240,7 @@ public class Rental extends TableImpl<RentalRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function7<? super Integer, ? super LocalDateTime, ? super Integer, ? super Short, ? super LocalDateTime, ? super Short, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function7<? super Integer, ? super LocalDateTime, ? super Integer, ? super Integer, ? super LocalDateTime, ? super Integer, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

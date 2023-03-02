@@ -63,12 +63,12 @@ public class Payment extends TableImpl<PaymentRecord> {
     /**
      * The column <code>public.payment.customer_id</code>.
      */
-    public final TableField<PaymentRecord, Short> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<PaymentRecord, Integer> CUSTOMER_ID = createField(DSL.name("customer_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.payment.staff_id</code>.
      */
-    public final TableField<PaymentRecord, Short> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<PaymentRecord, Integer> STAFF_ID = createField(DSL.name("staff_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.payment.rental_id</code>.
@@ -221,14 +221,14 @@ public class Payment extends TableImpl<PaymentRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, Short, Short, Integer, BigDecimal, LocalDateTime> fieldsRow() {
+    public Row6<Integer, Integer, Integer, Integer, BigDecimal, LocalDateTime> fieldsRow() {
         return (Row6) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function6<? super Integer, ? super Short, ? super Short, ? super Integer, ? super BigDecimal, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function6<? super Integer, ? super Integer, ? super Integer, ? super Integer, ? super BigDecimal, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -236,7 +236,7 @@ public class Payment extends TableImpl<PaymentRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super Integer, ? super Short, ? super Short, ? super Integer, ? super BigDecimal, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function6<? super Integer, ? super Integer, ? super Integer, ? super Integer, ? super BigDecimal, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

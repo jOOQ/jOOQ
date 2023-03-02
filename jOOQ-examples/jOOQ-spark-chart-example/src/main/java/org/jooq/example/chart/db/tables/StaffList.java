@@ -84,7 +84,7 @@ public class StaffList extends TableImpl<StaffListRecord> {
     /**
      * The column <code>public.staff_list.sid</code>.
      */
-    public final TableField<StaffListRecord, Short> SID = createField(DSL.name("sid"), SQLDataType.SMALLINT, this, "");
+    public final TableField<StaffListRecord, Integer> SID = createField(DSL.name("sid"), SQLDataType.INTEGER, this, "");
 
     private StaffList(Name alias, Table<StaffListRecord> aliased) {
         this(alias, aliased, null);
@@ -181,14 +181,14 @@ public class StaffList extends TableImpl<StaffListRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row8<Integer, String, String, String, String, String, String, Short> fieldsRow() {
+    public Row8<Integer, String, String, String, String, String, String, Integer> fieldsRow() {
         return (Row8) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function8<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Short, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function8<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Integer, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -196,7 +196,7 @@ public class StaffList extends TableImpl<StaffListRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Short, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Integer, ? super String, ? super String, ? super String, ? super String, ? super String, ? super String, ? super Integer, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

@@ -56,7 +56,7 @@ public class RewardsReport extends TableImpl<CustomerRecord> {
     /**
      * The column <code>public.rewards_report.store_id</code>.
      */
-    public final TableField<CustomerRecord, Short> STORE_ID = createField(DSL.name("store_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<CustomerRecord, Integer> STORE_ID = createField(DSL.name("store_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.rewards_report.first_name</code>.
@@ -76,7 +76,7 @@ public class RewardsReport extends TableImpl<CustomerRecord> {
     /**
      * The column <code>public.rewards_report.address_id</code>.
      */
-    public final TableField<CustomerRecord, Short> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<CustomerRecord, Integer> ADDRESS_ID = createField(DSL.name("address_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.rewards_report.activebool</code>.
@@ -184,7 +184,7 @@ public class RewardsReport extends TableImpl<CustomerRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row10<Integer, Short, String, String, String, Short, Boolean, LocalDate, LocalDateTime, Integer> fieldsRow() {
+    public Row10<Integer, Integer, String, String, String, Integer, Boolean, LocalDate, LocalDateTime, Integer> fieldsRow() {
         return (Row10) super.fieldsRow();
     }
 
@@ -221,7 +221,7 @@ public class RewardsReport extends TableImpl<CustomerRecord> {
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function10<? super Integer, ? super Short, ? super String, ? super String, ? super String, ? super Short, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function10<? super Integer, ? super Integer, ? super String, ? super String, ? super String, ? super Integer, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -229,7 +229,7 @@ public class RewardsReport extends TableImpl<CustomerRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function10<? super Integer, ? super Short, ? super String, ? super String, ? super String, ? super Short, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function10<? super Integer, ? super Integer, ? super String, ? super String, ? super String, ? super Integer, ? super Boolean, ? super LocalDate, ? super LocalDateTime, ? super Integer, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

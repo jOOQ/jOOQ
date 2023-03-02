@@ -67,7 +67,7 @@ public class City extends TableImpl<CityRecord> {
     /**
      * The column <code>public.city.country_id</code>.
      */
-    public final TableField<CityRecord, Short> COUNTRY_ID = createField(DSL.name("country_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<CityRecord, Integer> COUNTRY_ID = createField(DSL.name("country_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.city.last_update</code>.
@@ -188,14 +188,14 @@ public class City extends TableImpl<CityRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<Integer, String, Short, LocalDateTime> fieldsRow() {
+    public Row4<Integer, String, Integer, LocalDateTime> fieldsRow() {
         return (Row4) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function4<? super Integer, ? super String, ? super Short, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function4<? super Integer, ? super String, ? super Integer, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -203,7 +203,7 @@ public class City extends TableImpl<CityRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Integer, ? super String, ? super Short, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Integer, ? super String, ? super Integer, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

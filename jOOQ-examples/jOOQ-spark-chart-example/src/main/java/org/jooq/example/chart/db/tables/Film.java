@@ -79,12 +79,12 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>public.film.language_id</code>.
      */
-    public final TableField<FilmRecord, Short> LANGUAGE_ID = createField(DSL.name("language_id"), SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<FilmRecord, Integer> LANGUAGE_ID = createField(DSL.name("language_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.film.original_language_id</code>.
      */
-    public final TableField<FilmRecord, Short> ORIGINAL_LANGUAGE_ID = createField(DSL.name("original_language_id"), SQLDataType.SMALLINT, this, "");
+    public final TableField<FilmRecord, Integer> ORIGINAL_LANGUAGE_ID = createField(DSL.name("original_language_id"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.film.rental_duration</code>.
@@ -259,14 +259,14 @@ public class Film extends TableImpl<FilmRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row14<Integer, String, String, Integer, Short, Short, Short, BigDecimal, Short, BigDecimal, MpaaRating, LocalDateTime, String[], Object> fieldsRow() {
+    public Row14<Integer, String, String, Integer, Integer, Integer, Short, BigDecimal, Short, BigDecimal, MpaaRating, LocalDateTime, String[], Object> fieldsRow() {
         return (Row14) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function14<? super Integer, ? super String, ? super String, ? super Integer, ? super Short, ? super Short, ? super Short, ? super BigDecimal, ? super Short, ? super BigDecimal, ? super MpaaRating, ? super LocalDateTime, ? super String[], ? super Object, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function14<? super Integer, ? super String, ? super String, ? super Integer, ? super Integer, ? super Integer, ? super Short, ? super BigDecimal, ? super Short, ? super BigDecimal, ? super MpaaRating, ? super LocalDateTime, ? super String[], ? super Object, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -274,7 +274,7 @@ public class Film extends TableImpl<FilmRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function14<? super Integer, ? super String, ? super String, ? super Integer, ? super Short, ? super Short, ? super Short, ? super BigDecimal, ? super Short, ? super BigDecimal, ? super MpaaRating, ? super LocalDateTime, ? super String[], ? super Object, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function14<? super Integer, ? super String, ? super String, ? super Integer, ? super Integer, ? super Integer, ? super Short, ? super BigDecimal, ? super Short, ? super BigDecimal, ? super MpaaRating, ? super LocalDateTime, ? super String[], ? super Object, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

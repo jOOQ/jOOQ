@@ -45,6 +45,7 @@ import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
 // ...
+import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -179,4 +180,19 @@ implements
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Coerce<?> o) {
+            return
+                StringUtils.equals($field(), o.$field())
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }

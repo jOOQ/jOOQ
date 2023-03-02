@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
@@ -95,7 +96,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             .else_(COLUMNS.DATA_TYPE);
         Field<String> udtSchema = COLUMNS.UDT_SCHEMA;
 
-        // [#8067] [#11658] [#13919]
+        // [#8067] [#11658] [#13919] [#14736]
         // A more robust / sophisticated decoding might be available via
         // - information_schema._pg_char_max_length
         // - information_schema._pg_numeric_precision
@@ -120,14 +121,14 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             )
             .when(
                 COLUMNS.UDT_NAME.eq(inline("_numeric")),
-                PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)).shr(inline(16)).bitAnd(inline(65535))
+                nullif(PG_ATTRIBUTE.ATTTYPMOD, inline(-1)).sub(inline(4)).shr(inline(16)).bitAnd(inline(65535))
             )
         );
         Field<Integer> scale = nvl(
             COLUMNS.NUMERIC_SCALE,
             when(
                 COLUMNS.UDT_NAME.eq(inline("_numeric")),
-                PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4)).bitAnd(inline(65535))
+                nullif(PG_ATTRIBUTE.ATTTYPMOD, inline(-1)).sub(inline(4)).bitAnd(inline(65535))
             )
         );
 

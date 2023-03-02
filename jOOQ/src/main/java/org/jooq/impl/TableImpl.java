@@ -495,6 +495,16 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
     // ------------------------------------------------------------------------
     // XXX: Object API
     // ------------------------------------------------------------------------
@@ -506,16 +516,27 @@ implements
 
         // [#2144] TableImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof TableImpl) { TableImpl<?> other = (TableImpl<?>) that;
+        if (that instanceof TableImpl) { TableImpl<?> t = (TableImpl<?>) that;
             return
 
                 // [#7172] [#10274] Cannot use getQualifiedName() yet here
                 StringUtils.equals(
                     defaultIfNull(getSchema(), DEFAULT_SCHEMA),
-                    defaultIfNull(other.getSchema(), DEFAULT_SCHEMA)
+                    defaultIfNull(t.getSchema(), DEFAULT_SCHEMA)
                 ) &&
-                StringUtils.equals(getName(), other.getName()) &&
-                Arrays.equals(parameters, other.parameters);
+                StringUtils.equals(getName(), t.getName()) &&
+                Arrays.equals(parameters, t.parameters);
+        }
+
+        // [#14371] Unqualified TableImpls can be equal to TableAlias
+        else if (that instanceof TableAlias) { TableAlias<?> t = (TableAlias<?>) that;
+
+            if ($alias() != null)
+                return t.getUnqualifiedName().equals($alias());
+
+            // [#7172] [#10274] Cannot use getQualifiedName() yet here
+            else if (getSchema() == null)
+                return t.getUnqualifiedName().equals(getQualifiedName());
         }
 
         return super.equals(that);

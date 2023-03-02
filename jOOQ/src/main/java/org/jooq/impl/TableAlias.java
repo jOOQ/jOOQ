@@ -62,7 +62,13 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM.TableAlias<R>, SimpleCheckQueryPart {
+final class TableAlias<R extends Record>
+extends
+    AbstractTable<R>
+implements
+    QOM.TableAlias<R>,
+    SimpleCheckQueryPart
+{
 
     final Alias<Table<R>>   alias;
     transient FieldsImpl<R> aliasedFields;
@@ -223,9 +229,22 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof TableAlias)
-            return getUnqualifiedName().equals(((TableAlias<?>) that).getUnqualifiedName());
-        else
-            return super.equals(that);
+        if (this == that)
+            return true;
+
+        if (that instanceof TableAlias<?> t)
+            return getUnqualifiedName().equals(t.getUnqualifiedName());
+
+        // [#14371] Unqualified TableImpls can be equal to TableAlias
+        if (that instanceof TableImpl<?> t) {
+            if (t.$alias() != null)
+                return getUnqualifiedName().equals(t.$alias());
+
+            // [#7172] [#10274] Cannot use getQualifiedName() yet here
+            else if (t.getSchema() == null)
+                return getUnqualifiedName().equals(t.getQualifiedName());
+        }
+
+        return super.equals(that);
     }
 }

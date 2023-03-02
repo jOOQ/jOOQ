@@ -528,19 +528,19 @@ implements
         return super.field(name, dataType);
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
+    // [#14371] Backports
 
+    public final Table<R> $aliased() {
+        return alias == null ? this : alias.wrapped;
+    }
 
-
-
-
-
-
-
-
-
-
-
+    public final Name $alias() {
+        return alias == null ? null : alias.alias;
+    }
 
 
 

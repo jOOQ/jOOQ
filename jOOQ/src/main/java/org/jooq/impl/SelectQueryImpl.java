@@ -91,6 +91,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -333,7 +334,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     static final Set<SQLDialect>         NO_SUPPORT_WINDOW_CLAUSE        = SQLDialect.supportedUntil(CUBRID, DERBY, HSQLDB, IGNITE, MARIADB);
     private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(DEFAULT, H2, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
-    private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedUntil(MARIADB, MYSQL);
+    private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedUntil(MYSQL);
     private static final Set<SQLDialect> NO_IMPLICIT_GROUP_BY_ON_HAVING  = SQLDialect.supportedBy(SQLITE);
 
 
@@ -1423,7 +1424,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     public final void accept(Context<?> ctx) {
         Table<?> dmlTable;
 
-        // [#6583] Work around MySQL's self-reference-in-DML-subquery restriction
+        // [#6583] [#8609] [#14742] Work around MySQL's self-reference-in-DML-subquery restriction
         if (ctx.subqueryLevel() == 1
             && REQUIRES_DERIVED_TABLE_DML.contains(ctx.dialect())
             && !TRUE.equals(ctx.data(DATA_INSERT_SELECT))

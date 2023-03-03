@@ -220,8 +220,8 @@ final class JSONReader<R extends Record> {
             if (field.getType() == byte[].class && record.get(i) instanceof String)
                 record.set(i, Base64.getDecoder().decode((String) record.get(i)));
 
-            // [#12155] Recurse for nested data types
-            else if (multiset && field.getDataType().isMultiset())
+            // [#12155] Recurse for nested MULTISET
+            else if (multiset && field.getDataType().isMultiset()) {
                 record.set(i, read(
                     ctx,
                     (AbstractRow) field.getDataType().getRow(),
@@ -229,6 +229,21 @@ final class JSONReader<R extends Record> {
                     multiset,
                     record.get(i)
                 ));
+            }
+
+            // [#14657] Recurse for nested ROW
+            else if (multiset && field.getDataType().isRecord() && record.get(i) instanceof List) {
+                AbstractRow<? extends Record> actualRow = (AbstractRow) field.getDataType().getRow();
+                Class<? extends Record> recordType = field.getDataType().getRecordType();
+                List<Object> l = (List<Object>) record.get(i);
+                patchRecord(ctx, multiset, actualRow, l);
+
+                record.set(i, newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
+                    r.from(l);
+                    r.changed(false);
+                    return r;
+                }));
+            }
         }
 
         return record;

@@ -132,10 +132,10 @@ final class DeleteQueryImpl<R extends Record> extends AbstractDMLQuery<R> implem
 
 
 
-    private final TableList              using;
-    private final ConditionProviderImpl  condition;
-    private final SortFieldList          orderBy;
-    private Param<? extends Number>      limit;
+    final TableList                      using;
+    final ConditionProviderImpl          condition;
+    final SortFieldList                  orderBy;
+    Param<? extends Number>              limit;
 
     DeleteQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);

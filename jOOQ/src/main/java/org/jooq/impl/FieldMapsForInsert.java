@@ -129,13 +129,8 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-        else if (rows == 1 ) {
-            ctx.formatSeparator()
-               .start(INSERT_VALUES)
-               .visit(K_VALUES)
-               .sql(' ');
-            toSQL92Values(ctx);
-            ctx.end(INSERT_VALUES);
+        else if (rows == 1 && supportsValues(ctx)) {
+            toSQLValues(ctx);
         }
 
         // True SQL92 multi-record inserts aren't always supported
@@ -173,13 +168,14 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+                case MARIADB: {
+                    if (supportsValues(ctx))
+                        toSQLValues(ctx);
+                    else
+                        toSQLInsertSelect(ctx, insertSelect(ctx));
 
-
-
-
-
-
-
+                    break;
+                }
 
 
 
@@ -187,26 +183,32 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
                 case FIREBIRD: {
-                    ctx.formatSeparator()
-                       .start(INSERT_SELECT)
-                       .visit(insertSelect(ctx))
-                       .end(INSERT_SELECT);
-
+                    toSQLInsertSelect(ctx, insertSelect(ctx));
                     break;
                 }
 
                 default: {
-                    ctx.formatSeparator()
-                       .start(INSERT_VALUES)
-                       .visit(K_VALUES)
-                       .sql(' ');
-                    toSQL92Values(ctx);
-                    ctx.end(INSERT_VALUES);
-
+                    toSQLValues(ctx);
                     break;
                 }
             }
         }
+    }
+
+    private final void toSQLValues(Context<?> ctx) {
+        ctx.formatSeparator()
+           .start(INSERT_VALUES)
+           .visit(K_VALUES)
+           .sql(' ');
+        toSQL92Values(ctx);
+        ctx.end(INSERT_VALUES);
+    }
+
+    static final void toSQLInsertSelect(Context<?> ctx, Select<?> select) {
+        ctx.formatSeparator()
+           .start(INSERT_SELECT)
+           .visit(select)
+           .end(INSERT_SELECT);
     }
 
 
@@ -230,32 +232,47 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+            // [#14742] MariaDB can't have (unaliased!) self-references of the INSERT
+            //          target table in INSERT INTO t VALUES ((SELECT .. FROM t)),
+            //          though other subqueries are possible
+            // [#6583]  While MySQL also has this limitation, it is already covered
+            //          for all DML statements, elsewhere
+            case MARIADB:
+                for (List<Field<?>> row : values.values())
+                    for (Field<?> value : row)
+                        if (value instanceof ScalarSubquery)
+                            if (Tools.containsTable(((ScalarSubquery<?>) value).query.$from(), table, false))
+                                return false;
 
+                return true;
 
+            default:
+                return true;
+        }
+    }
 
+    @Pro
+    final boolean checkReadonly(Context<?> ctx, boolean throwIfFound) {
+        if (THROW.equals(ctx.settings().getReadonlyInsert()))
+            for (Field<?> f : values.keySet())
+                if (f.getDataType().readonly())
+                    if (throwIfFound)
+                        throw new DataTypeException("Cannot insert into readonly column: " + f);
+                    else
+                        return true;
 
+        return false;
+    }
 
+    @Pro
+    final boolean checkAnyWritables(Configuration c) {
+        if (IGNORE.equals(c.settings().getReadonlyInsert()))
+            return anyMatch(values.keySet(), f -> !f.getDataType().readonly());
 
+        return true;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /* [/pro] */
 
     final Select<Record> insertSelect(Context<?> ctx) {
         Select<Record> select = null;

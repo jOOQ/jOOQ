@@ -714,6 +714,11 @@ final class Tools {
         DATA_DML_TARGET_TABLE,
 
         /**
+         * [#6583] [#14742] The target table on which a DML operation operates on.
+         */
+        DATA_DML_USING_TABLES,
+
+        /**
          * [#8479] There is a WHERE clause to be emulated for ON DUPLICATE KEY
          */
         DATA_ON_DUPLICATE_KEY_WHERE,
@@ -6740,6 +6745,12 @@ final class Tools {
     }
 
     static final boolean containsTable(Table<?> in, Table<?> search, boolean unalias) {
+
+        // [#6304] [#7626] [#14668] Improved alias discovery
+        return traverseJoins(in, false, r -> r, search(search, t -> unwrap(t, unalias)));
+    }
+
+    static final boolean containsTable(Iterable<? extends Table<?>> in, Table<?> search, boolean unalias) {
 
         // [#6304] [#7626] [#14668] Improved alias discovery
         return traverseJoins(in, false, r -> r, search(search, t -> unwrap(t, unalias)));

@@ -162,12 +162,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
         // Single record inserts can use the standard syntax in any dialect
         else if (rows == 1 && supportsValues(ctx)) {
-            ctx.formatSeparator()
-               .start(INSERT_VALUES)
-               .visit(K_VALUES)
-               .sql(' ');
-            toSQL92Values(ctx);
-            ctx.end(INSERT_VALUES);
+            toSQLValues(ctx);
         }
 
         // True SQL92 multi-record inserts aren't always supported
@@ -197,13 +192,14 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+                case MARIADB: {
+                    if (supportsValues(ctx))
+                        toSQLValues(ctx);
+                    else
+                        toSQLInsertSelect(ctx, insertSelect(ctx, GeneratorStatementType.INSERT));
 
-
-
-
-
-
-
+                    break;
+                }
 
 
 
@@ -362,6 +358,20 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
+            // [#14742] MariaDB can't have (unaliased!) self-references of the INSERT
+            //          target table in INSERT INTO t VALUES ((SELECT .. FROM t)),
+            //          though other subqueries are possible
+            // [#6583]  While MySQL also has this limitation, it is already covered
+            //          for all DML statements, elsewhere
+            case MARIADB:
+                for (List<Field<?>> row : values.values())
+                    for (Field<?> value : row)
+                        if (value instanceof ScalarSubquery<?> s)
+                            if (Tools.containsTable(s.query.$from(), table, false))
+                                return false;
+
+                return true;
 
             default:
                 return true;

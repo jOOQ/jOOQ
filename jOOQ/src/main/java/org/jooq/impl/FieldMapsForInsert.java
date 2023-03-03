@@ -103,16 +103,16 @@ import org.jooq.impl.Tools.BooleanDataKey;
  * @author Lukas Eder
  */
 final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImplemented {
-    private static final Set<SQLDialect> CASTS_NEEDED     = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>        CASTS_NEEDED = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
-    final Table<?>                       table;
-    final Map<Field<?>, Field<?>>        empty;
+    final Table<?>                      table;
+    final Map<Field<?>, Field<?>>       empty;
     // Depending on whether embeddable types are allowed, this data structure
     // needs to be flattened with duplicates removed, prior to consumption
     // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-    final Map<Field<?>, List<Field<?>>>  values;
-    int                                  rows;
-    int                                  nextRow          = -1;
+    final Map<Field<?>, List<Field<?>>> values;
+    int                                 rows;
+    int                                 nextRow      = -1;
 
     FieldMapsForInsert(Table<?> table) {
         this.table = table;

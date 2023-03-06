@@ -42,6 +42,7 @@ import static org.jooq.Clause.TABLE_VALUES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -101,10 +102,10 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 final class Values<R extends Record> extends AbstractTable<R> implements QOM.Values<R> {
 
-    static final Set<SQLDialect>         NO_SUPPORT_VALUES             = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
-    static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST          = SQLDialect.supportedBy(FIREBIRD);
-    static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST_ON_NULLS = SQLDialect.supportedBy(POSTGRES);
-    static final Set<SQLDialect>         NO_SUPPORT_PARENTHESES        = SQLDialect.supportedBy();
+    static final Set<SQLDialect>         NO_SUPPORT_VALUES              = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
+    static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST           = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST_FIRST_ROW = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect>         NO_SUPPORT_PARENTHESES         = SQLDialect.supportedBy();
 
     private final QueryPartListView<Row> rows;
     private transient DataType<?>[]      types;
@@ -260,7 +261,11 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
 
 
                 // [#11015] NULL literals of known type should be cast in PostgreSQL in the first row
-                if (i == 0 && ctx.family() == POSTGRES)
+                if (i == 0 && REQUIRE_ROWTYPE_CAST_FIRST_ROW.contains(ctx.dialect()))
+                    ctx.visit(castNullLiteralToRowType(ctx, rows.get(i)));
+
+                // [#11015] Or in Derby in any other row, too
+                else if (REQUIRE_ROWTYPE_CAST.contains(ctx.dialect()))
                     ctx.visit(castNullLiteralToRowType(ctx, rows.get(i)));
                 else
                     ctx.visit(rows.get(i));

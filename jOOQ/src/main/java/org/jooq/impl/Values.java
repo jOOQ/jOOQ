@@ -53,12 +53,15 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_STRUCT;
@@ -69,6 +72,10 @@ import static org.jooq.impl.Names.N_VALUES;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.EMPTY_ROW;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.isEmpty;
+import static org.jooq.impl.Tools.isVal;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -95,9 +102,10 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 final class Values<R extends Record> extends AbstractTable<R> implements QOM.Values<R> {
 
-    static final Set<SQLDialect>         NO_SUPPORT_VALUES      = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
-    static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST   = SQLDialect.supportedBy(FIREBIRD);
-    static final Set<SQLDialect>         NO_SUPPORT_PARENTHESES = SQLDialect.supportedBy();
+    static final Set<SQLDialect>         NO_SUPPORT_VALUES             = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
+    static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST          = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>         REQUIRE_ROWTYPE_CAST_ON_NULLS = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect>         NO_SUPPORT_PARENTHESES        = SQLDialect.supportedBy();
 
     private final QueryPartListView<Row> rows;
     private transient DataType<?>[]      types;
@@ -167,6 +175,27 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
         return new TableAlias<>(this, alias, fieldAliases, c -> !NO_SUPPORT_PARENTHESES.contains(c.dialect()));
     }
 
+    private final Row castNullLiteralToRowType(Context<?> ctx, Row row) {
+        if (anyMatch(row.fields(), f -> rendersNullLiteral(ctx, f))) {
+            Field<?>[] result = new Field[row.size()];
+
+            for (int i = 0; i < result.length; i++)
+                if (rendersNullLiteral(ctx, row.field(i)) && rowType()[i].getType() != Object.class)
+                    result[i] = row.field(i).cast(rowType()[i]);
+                else
+                    result[i] = row.field(i);
+
+            return row(result);
+        }
+        else
+            return row;
+    }
+
+    private final boolean rendersNullLiteral(Context<?> ctx, Field<?> field) {
+        return isVal(field) && ((Val<?>) field).getValue() == null && ((Val<?>) field).isInline(ctx)
+            || field instanceof NullCondition;
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
         // [#915] Emulate VALUES(..) with SELECT .. UNION ALL SELECT ..
@@ -231,7 +260,11 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
 
 
 
-                ctx.visit(rows.get(i));
+                // [#11015] NULL literals of known type should be cast in PostgreSQL in the first row
+                if (i == 0 && ctx.family() == POSTGRES)
+                    ctx.visit(castNullLiteralToRowType(ctx, rows.get(i)));
+                else
+                    ctx.visit(rows.get(i));
             }
 
             if (rows.size() > 1)

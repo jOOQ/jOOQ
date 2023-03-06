@@ -192,8 +192,7 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
     }
 
     private final boolean rendersNullLiteral(Context<?> ctx, Field<?> field) {
-        return isVal(field) && ((Val<?>) field).getValue() == null && ((Val<?>) field).isInline(ctx)
-            || field instanceof NullCondition;
+        return isVal(field) && ((Val<?>) field).getValue() == null && ((Val<?>) field).isInline(ctx);
     }
 
     @Override

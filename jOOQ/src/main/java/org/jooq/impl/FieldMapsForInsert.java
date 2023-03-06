@@ -100,16 +100,16 @@ import org.jooq.impl.Tools.BooleanDataKey;
  * @author Lukas Eder
  */
 final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImplemented {
-    private static final Set<SQLDialect> CASTS_NEEDED     = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>        CASTS_NEEDED = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
-    final Table<?>                       table;
-    final Map<Field<?>, Field<?>>        empty;
+    final Table<?>                      table;
+    final Map<Field<?>, Field<?>>       empty;
     // Depending on whether embeddable types are allowed, this data structure
     // needs to be flattened with duplicates removed, prior to consumption
     // [#2530] [#6124] [#10481] TODO: Refactor and optimise these flattening algorithms
-    final Map<Field<?>, List<Field<?>>>  values;
-    int                                  rows;
-    int                                  nextRow          = -1;
+    final Map<Field<?>, List<Field<?>>> values;
+    int                                 rows;
+    int                                 nextRow      = -1;
 
     FieldMapsForInsert(Table<?> table) {
         this.table = table;
@@ -152,7 +152,12 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
         // Single record inserts can use the standard syntax in any dialect
         else if (rows == 1 && supportsValues(ctx)) {
-            toSQLValues(ctx);
+            ctx.formatSeparator()
+               .start(INSERT_VALUES)
+               .visit(K_VALUES)
+               .sql(' ');
+            toSQL92Values(ctx);
+            ctx.end(INSERT_VALUES);
         }
 
         // True SQL92 multi-record inserts aren't always supported
@@ -180,14 +185,6 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-                case MARIADB: {
-                    if (supportsValues(ctx))
-                        toSQLValues(ctx);
-                    else
-                        toSQLInsertSelect(ctx, insertSelect(ctx, GeneratorStatementType.INSERT));
-
-                    break;
-                }
 
 
 
@@ -200,20 +197,17 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 }
 
                 default: {
-                    toSQLValues(ctx);
+                    ctx.formatSeparator()
+                       .start(INSERT_VALUES)
+                       .visit(K_VALUES)
+                       .sql(' ');
+                    toSQL92Values(ctx);
+                    ctx.end(INSERT_VALUES);
+
                     break;
                 }
             }
         }
-    }
-
-    private final void toSQLValues(Context<?> ctx) {
-        ctx.formatSeparator()
-           .start(INSERT_VALUES)
-           .visit(K_VALUES)
-           .sql(' ');
-        toSQL92Values(ctx);
-        ctx.end(INSERT_VALUES);
     }
 
     static final void toSQLInsertSelect(Context<?> ctx, Select<?> select) {
@@ -331,20 +325,6 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-
-            // [#14742] MariaDB can't have (unaliased!) self-references of the INSERT
-            //          target table in INSERT INTO t VALUES ((SELECT .. FROM t)),
-            //          though other subqueries are possible
-            // [#6583]  While MySQL also has this limitation, it is already covered
-            //          for all DML statements, elsewhere
-            case MARIADB:
-                for (List<Field<?>> row : values.values())
-                    for (Field<?> value : row)
-                        if (value instanceof ScalarSubquery<?> s)
-                            if (Tools.containsTable(s.query.$from(), table, false))
-                                return false;
-
-                return true;
 
             default:
                 return true;

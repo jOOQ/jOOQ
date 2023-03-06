@@ -104,7 +104,6 @@ import static org.jooq.impl.Tools.removeGenerator;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
-import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_USING_TABLES;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -343,9 +342,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     public final void accept(Context<?> ctx) {
         WithImpl w = with;
 
-        ctx.scopeStart();
-        ctx.data(DATA_DML_TARGET_TABLE, table);
-        ctx.data(DATA_DML_USING_TABLES, this instanceof DeleteQueryImpl<?> d ? d.$using() : null);
+        ctx.scopeStart()
+           .data(DATA_DML_TARGET_TABLE, table);
 
 
 
@@ -676,7 +674,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-        ctx.data().remove(DATA_DML_USING_TABLES);
         ctx.data().remove(DATA_DML_TARGET_TABLE);
         ctx.scopeEnd();
     }

@@ -218,15 +218,6 @@ import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
-import static org.jooq.impl.Tools.DataExtendedKey.DATA_TRANSFORM_ROWNUM_TO_LIMIT;
-import static org.jooq.impl.Tools.DataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
-import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
-import static org.jooq.impl.Tools.DataKey.DATA_DML_USING_TABLES;
-import static org.jooq.impl.Tools.DataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
-import static org.jooq.impl.Tools.DataKey.DATA_SELECT_ALIASES;
-import static org.jooq.impl.Tools.DataKey.DATA_SELECT_INTO_TABLE;
-import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
-import static org.jooq.impl.Tools.DataKey.DATA_WINDOW_DEFINITIONS;
 import static org.jooq.impl.Transformations.transformQualify;
 import static org.jooq.impl.Transformations.transformRownum;
 
@@ -1375,7 +1366,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void accept(Context<?> ctx) {
         Table<?> dmlTable;
-        List<Table<?>> dmlTables;
 
         // [#6583] Work around MySQL's self-reference-in-DML-subquery restriction
         if (ctx.subqueryLevel() == 1
@@ -1383,23 +1373,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             && !TRUE.equals(ctx.data(DATA_INSERT_SELECT))
             && (dmlTable = (Table<?>) ctx.data(DATA_DML_TARGET_TABLE)) != null
             && containsUnaliasedTable(getFrom(), dmlTable)) {
-            ctx.visit(DSL.select(asterisk()).from(asTable("t")));
-        }
-
-        // [#14742] MariaDB still has this bug: https://jira.mariadb.org/browse/MDEV-17954
-        else if (ctx.subqueryLevel() == 1
-            && ctx.family() == MARIADB
-            && !TRUE.equals(ctx.data(DATA_INSERT_SELECT))
-            && (
-
-            // A USING clause can be generated when the target table is aliased
-                    (dmlTable = (Table<?>) ctx.data(DATA_DML_TARGET_TABLE)) != null
-                && Tools.aliased(dmlTable) != null
-                && containsUnaliasedTable(getFrom(), dmlTable)
-
-            // Or, explicitly
-            ||      (dmlTables = (List<Table<?>>) ctx.data(DATA_DML_USING_TABLES)) != null
-                && Tools.anyMatch(dmlTables, t -> containsUnaliasedTable(getFrom(), t)))) {
             ctx.visit(DSL.select(asterisk()).from(asTable("t")));
         }
 

@@ -99,9 +99,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_EMULATE_BULK_INSERT_RETURN
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
-import static org.jooq.impl.Tools.DataKey.DATA_DML_TARGET_TABLE;
-import static org.jooq.impl.Tools.DataKey.DATA_DML_USING_TABLES;
-import static org.jooq.impl.Tools.DataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
@@ -338,9 +335,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     public final void accept(Context<?> ctx) {
         WithImpl w = with;
 
-        ctx.scopeStart();
-        ctx.data(DATA_DML_TARGET_TABLE, table);
-        ctx.data(DATA_DML_USING_TABLES, this instanceof DeleteQueryImpl ? ((DeleteQueryImpl<?>) this).using : null);
+        ctx.scopeStart()
+           .data(DATA_DML_TARGET_TABLE, table);
 
 
 
@@ -650,7 +646,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-        ctx.data().remove(DATA_DML_USING_TABLES);
         ctx.data().remove(DATA_DML_TARGET_TABLE);
         ctx.scopeEnd();
     }

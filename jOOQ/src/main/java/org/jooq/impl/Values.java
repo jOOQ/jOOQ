@@ -179,11 +179,11 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
     }
 
     private final Row castNullLiteralToRowType(Context<?> ctx, Row row) {
-        if (anyMatch(row.fields(), f -> rendersNullLiteral(ctx, f))) {
+        if (anyMatch(row.fields(), f -> nullLiteralOrUntypedNullBind(ctx, f))) {
             Field<?>[] result = new Field[row.size()];
 
             for (int i = 0; i < result.length; i++)
-                if (rendersNullLiteral(ctx, row.field(i)) && rowType()[i].getType() != Object.class)
+                if (nullLiteralOrUntypedNullBind(ctx, row.field(i)) && rowType()[i].getType() != Object.class)
                     result[i] = row.field(i).cast(rowType()[i]);
                 else
                     result[i] = row.field(i);
@@ -194,8 +194,11 @@ final class Values<R extends Record> extends AbstractTable<R> implements QOM.Val
             return row;
     }
 
-    private final boolean rendersNullLiteral(Context<?> ctx, Field<?> field) {
-        return isVal(field) && ((Val<?>) field).getValue() == null && ((Val<?>) field).isInline(ctx);
+    private final boolean nullLiteralOrUntypedNullBind(Context<?> ctx, Field<?> field) {
+        return isVal(field)
+                    && ((Val<?>) field).getValue() == null
+                    && (((Val<?>) field).isInline(ctx) || field.getType() == Object.class)
+        ;
     }
 
     @Override

@@ -62,9 +62,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Keywords.K_ROW;
@@ -77,9 +77,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.isVal;
-import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;

@@ -94,24 +94,8 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, null, null, null, null, (String) null, (Name) null);
     }
 
-    /**
-     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String)} instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultable, typeName, null);
-    }
-
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, typeName, null);
-    }
-
-    /**
-     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, String)} instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, null);
     }
 
     /**
@@ -135,14 +119,6 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     /**
-     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, String, String)} instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType, String converter) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, converter, null);
-    }
-
-    /**
      * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String)}  instead.
      */
     @Deprecated
@@ -155,14 +131,6 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     /**
-     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, String, String, String)} instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType, String converter, String binding) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultable, userType, converter, binding, null);
-    }
-
-    /**
      * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String, String)}  instead.
      */
     @Deprecated
@@ -172,14 +140,6 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, converter, binding, null);
-    }
-
-    /**
-     * @deprecated - [#4841] - 3.8.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, String, String, String, String)} instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String userType, String converter, String binding, String javaType) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultValue(defaultable), userType, converter, binding, javaType);
     }
 
     /**

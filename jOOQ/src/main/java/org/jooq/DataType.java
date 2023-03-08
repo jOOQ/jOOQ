@@ -1072,18 +1072,6 @@ public interface DataType<T> extends Named {
     Field<T> default_();
 
     /**
-     * Return a new data type like this, with a new defaultability.
-     *
-     * @param defaulted The new defaultability
-     * @return The new data type
-     *
-     * @deprecated - [#3852] - 3.8.0 - Use {@link #defaultValue(Field)} instead.
-     */
-    @NotNull
-    @Deprecated(forRemoval = true, since = "3.8")
-    DataType<T> defaulted(boolean defaulted);
-
-    /**
      * Get the defaultability of this data type.
      *
      * @return The defaultability

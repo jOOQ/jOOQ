@@ -328,12 +328,6 @@ implements
     public abstract DataType<T> default_(Field<T> d);
 
     @Override
-    @Deprecated
-    public final DataType<T> defaulted(boolean d) {
-        return defaultValue(d ? Tools.field(null, this) : null);
-    }
-
-    @Override
     public final boolean defaulted() {
         return defaultValue() != null;
     }

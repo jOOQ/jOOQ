@@ -37,12 +37,12 @@ public class DbSerial extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>db_serial.current_val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.math.BigInteger> CURRENT_VAL = createField("current_val", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38).nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.math.BigInteger> CURRENT_VAL = createField("current_val", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38).nullable(false), this, "");
 
 	/**
 	 * The column <code>db_serial.increment_val</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.math.BigInteger> INCREMENT_VAL = createField("increment_val", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38).nullable(false).defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.math.BigInteger> INCREMENT_VAL = createField("increment_val", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38).nullable(false), this, "");
 
 	/**
 	 * The column <code>db_serial.max_val</code>.
@@ -57,12 +57,12 @@ public class DbSerial extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>db_serial.cyclic</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> CYCLIC = createField("cyclic", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> CYCLIC = createField("cyclic", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>db_serial.started</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> STARTED = createField("started", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> STARTED = createField("started", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * The column <code>db_serial.class_name</code>.
@@ -77,7 +77,7 @@ public class DbSerial extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>db_serial.cached_num</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> CACHED_NUM = createField("cached_num", org.jooq.impl.SQLDataType.INTEGER.defaulted(true), this, "");
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> CACHED_NUM = createField("cached_num", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>db_serial</code> table reference

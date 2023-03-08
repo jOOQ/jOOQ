@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-examples</artifactId>
-        <version>3.17.9-SNAPSHOT</version>
+        <version>3.17.9</version>
     </parent>
 
     <artifactId>jooq-r2dbc-example</artifactId>

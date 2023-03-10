@@ -265,10 +265,10 @@ implements
         if (entries.isEmpty() && ctx.family() == H2)
             jsonNull = new JSONNull(JSONOnNull.NULL_ON_NULL);
 
-
-
-
-
+        // Some dialects support the JSONNull clause only for non-empty JSON_OBJECT
+        // E.g. https://trino.io/docs/current/functions/json.html#json-object
+        else if (entries.isEmpty() && JSONNull.NO_SUPPORT_NULL_ON_EMPTY.contains(ctx.dialect()))
+            jsonNull = new JSONNull(null);
         else
             jsonNull = new JSONNull(onNull);
 

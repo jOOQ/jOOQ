@@ -3167,6 +3167,9 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+                return upper.startsWith("ARRAY(");
+
+
             case H2:
             case POSTGRES:
             case YUGABYTEDB:

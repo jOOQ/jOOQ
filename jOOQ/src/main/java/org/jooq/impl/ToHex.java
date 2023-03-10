@@ -108,6 +108,9 @@ implements
 
 
 
+
+                return false;
+
             default:
                 return true;
         }
@@ -141,6 +144,10 @@ implements
 
 
 
+
+
+                ctx.visit(function(N_TO_BASE, getDataType(), value, inline(16)));
+                break;
 
             default:
                 ctx.visit(function(N_TO_HEX, getDataType(), value));

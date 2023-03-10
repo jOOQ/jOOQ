@@ -113,6 +113,9 @@ implements
                 return true;
 
 
+                return true;
+
+
             case SQLITE:
                 return false;
 
@@ -148,6 +151,10 @@ implements
 
             case FIREBIRD:
                 ctx.visit(function(N_BIN_XOR, getDataType(), arg1, arg2));
+                break;
+
+
+                ctx.visit(function(N_BITWISE_XOR, getDataType(), arg1, arg2));
                 break;
 
 

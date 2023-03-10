@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Keywords.K_AND;
@@ -79,20 +80,18 @@ import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullableIf;
 
 import java.util.Set;
-import java.util.function.Predicate;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Function3;
+import org.jooq.QueryPart;
+// ...
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.Between;
-import org.jooq.QueryPart;
-// ...
 
 /**
  * @author Lukas Eder

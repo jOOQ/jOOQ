@@ -98,6 +98,7 @@ implements
 
             case DERBY:
             case SQLITE:
+
                 return false;
 
             default:
@@ -117,6 +118,7 @@ implements
 
             case DERBY:
             case SQLITE:
+
                 ctx.visit(DSL.substring(string, inline(1), length));
                 break;
 

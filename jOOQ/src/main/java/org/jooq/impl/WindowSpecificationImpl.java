@@ -59,6 +59,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
@@ -88,12 +89,9 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.GroupField;
 import org.jooq.OrderField;
 // ...

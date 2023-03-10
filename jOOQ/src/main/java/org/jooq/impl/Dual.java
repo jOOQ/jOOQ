@@ -138,6 +138,7 @@ final class Dual extends AbstractTable<Record> implements QOM.Dual {
                 case H2:
                 case POSTGRES:
                 case SQLITE:
+
                 case YUGABYTEDB:
                     break;
 

@@ -102,6 +102,7 @@ implements
 
 
             case FIREBIRD:
+
                 return false;
 
             case SQLITE:
@@ -135,6 +136,7 @@ implements
 
 
             case FIREBIRD:
+
                 ctx.visit(DSL.rpad(string, imul(DSL.length(string), count), string));
                 break;
 

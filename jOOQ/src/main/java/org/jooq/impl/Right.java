@@ -100,6 +100,7 @@ implements
 
 
             case SQLITE:
+
                 return false;
 
             default:
@@ -122,6 +123,7 @@ implements
 
 
             case SQLITE:
+
                 ctx.visit(DSL.substring(string, ineg(length)));
                 break;
 

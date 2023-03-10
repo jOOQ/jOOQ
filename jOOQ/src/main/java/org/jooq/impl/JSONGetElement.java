@@ -112,6 +112,7 @@ implements
 
             case MARIADB:
             case MYSQL:
+
                 return false;
 
             default:
@@ -156,6 +157,7 @@ implements
 
             case MARIADB:
             case MYSQL:
+
                 ctx.visit(function(N_JSON_EXTRACT, JSON, field, inline("$[").concat(index).concat(inline("]"))));
                 break;
 

@@ -121,6 +121,7 @@ implements
             case MARIADB:
             case MYSQL:
             case POSTGRES:
+
             case YUGABYTEDB:
                 return false;
 
@@ -168,6 +169,7 @@ implements
             case MARIADB:
             case MYSQL:
             case POSTGRES:
+
             case YUGABYTEDB: {
                 if (isSimple(ctx, value))
                     ctx.visit(imul(value, value));

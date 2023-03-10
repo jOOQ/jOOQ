@@ -113,6 +113,9 @@ implements
                 return true;
 
 
+                return true;
+
+
 
 
 
@@ -149,6 +152,10 @@ implements
 
             case FIREBIRD:
                 ctx.visit(function(N_BIN_OR, getDataType(), arg1, arg2));
+                break;
+
+
+                ctx.visit(function(N_BITWISE_OR, getDataType(), arg1, arg2));
                 break;
 
 

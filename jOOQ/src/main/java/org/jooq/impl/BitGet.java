@@ -131,6 +131,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+
             case YUGABYTEDB:
                 return false;
 
@@ -192,6 +193,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+
             case YUGABYTEDB:
                 ctx.visit(value.bitAnd((Field) one().shl(bit)).shr(bit));
                 break;

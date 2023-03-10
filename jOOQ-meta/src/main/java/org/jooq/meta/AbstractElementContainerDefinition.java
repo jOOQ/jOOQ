@@ -220,11 +220,8 @@ extends AbstractDefinition {
         if (typeName.contains("(")) {
             Matcher m = PRECISION_SCALE.matcher(typeName);
 
-            if (m.find()) {
-                if (!StringUtils.isBlank(m.group(1))) {
-                    return Integer.valueOf(m.group(1));
-                }
-            }
+            if (m.find() && !StringUtils.isBlank(m.group(1)))
+                return Integer.valueOf(m.group(1));
         }
 
         return 0;
@@ -234,11 +231,8 @@ extends AbstractDefinition {
         if (typeName.contains("(")) {
             Matcher m = PRECISION_SCALE.matcher(typeName);
 
-            if (m.find()) {
-                if (!StringUtils.isBlank(m.group(2))) {
-                    return Integer.valueOf(m.group(2));
-                }
-            }
+            if (m.find() && !StringUtils.isBlank(m.group(2)))
+                return Integer.valueOf(m.group(2));
         }
 
         return 0;

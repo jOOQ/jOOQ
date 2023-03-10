@@ -100,6 +100,7 @@ implements
 
 
             case SQLITE:
+
                 return false;
 
             default:
@@ -123,6 +124,7 @@ implements
 
 
             case SQLITE:
+
                 ctx.visit(idiv(DSL.cos(value), DSL.sin(value)));
                 break;
 

@@ -113,6 +113,11 @@ implements
 
 
 
+                return true;
+
+
+
+
 
 
 
@@ -158,6 +163,12 @@ implements
 
 
 
+
+
+
+
+                ctx.visit(function(N_BITWISE_RIGHT_SHIFT, getDataType(), value, count));
+                break;
 
 
 

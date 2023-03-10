@@ -97,6 +97,7 @@ final class Nvl2<T> extends AbstractField<T> implements QOM.Nvl2<T> {
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+
             case YUGABYTEDB:
                 acceptCase(ctx);
                 break;

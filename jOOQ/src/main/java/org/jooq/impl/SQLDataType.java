@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.math.BigDecimal;
@@ -99,6 +100,7 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectCategory;
 import org.jooq.XML;
+import org.jooq.impl.SQLDataTypes.TrinoDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -872,6 +874,9 @@ public final class SQLDataType {
 
             Class.forName(SQLiteDataType.class.getName());
             initJSR310Types(SQLITE);
+
+            Class.forName(TrinoDataType.class.getName());
+            initJSR310Types(TRINO);
 
             Class.forName(YugabyteDBDataType.class.getName());
             initJSR310Types(YUGABYTEDB);

@@ -212,8 +212,10 @@ implements
                 JSONReturning jsonReturning;
 
                 // Workaround for https://github.com/h2database/h2database/issues/2496
-                if (ctx.family() == H2 && fields.isEmpty())
+                if (fields.isEmpty() && ctx.family() == H2)
                     jsonNull = new JSONNull(JSONOnNull.NULL_ON_NULL);
+                else if (fields.isEmpty() && JSONNull.NO_SUPPORT_NULL_ON_EMPTY.contains(ctx.dialect()))
+                    jsonNull = new JSONNull(null);
                 else
                     jsonNull = new JSONNull(onNull);
 

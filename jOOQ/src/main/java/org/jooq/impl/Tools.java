@@ -76,6 +76,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
@@ -1161,6 +1162,7 @@ final class Tools {
 
     static final Set<SQLDialect>         REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
+    static final Set<SQLDialect>         NO_SUPPORT_NOT_NULL                = SQLDialect.supportedBy();
     static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
@@ -5546,7 +5548,11 @@ final class Tools {
     private static final void toSQLDDLTypeDeclarationForAdditionNullability(Context<?> ctx, DataType<?> type) {
         switch (type.nullability()) {
             case NOT_NULL:
-                ctx.sql(' ').visit(K_NOT_NULL);
+
+                // [#11485] Some dialects don't support NOT NULL constraints!
+                if (!NO_SUPPORT_NOT_NULL.contains(ctx.dialect()))
+                    ctx.sql(' ').visit(K_NOT_NULL);
+
                 break;
 
             case NULL:
@@ -6916,6 +6922,7 @@ final class Tools {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
+
                     return NestedCollectionEmulation.JSON;
 
 

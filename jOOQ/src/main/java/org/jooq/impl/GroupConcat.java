@@ -38,17 +38,20 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.OrderField;
+import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
@@ -60,6 +63,8 @@ extends
 implements
     GroupConcatOrderByStep,
     UNotYetImplemented {
+
+    final Set<SQLDialect>       REQUIRE_WITHIN_GROUP = SQLDialect.supportedBy();
 
     private final Field<?>      field;
     private final SortFieldList orderBy;
@@ -88,10 +93,9 @@ implements
         if (!orderBy.isEmpty())
             result.withinGroupOrderBy(orderBy);
 
-
-
-
-
+        // [#3045] [#11485] Dialects with mandatory WITHIN GROUP clause
+        else if (REQUIRE_WITHIN_GROUP.contains(ctx.dialect()))
+            result.withinGroupOrderBy(orderBy);
 
         ctx.visit(fo(result));
     }

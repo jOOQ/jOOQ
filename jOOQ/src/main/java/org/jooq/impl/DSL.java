@@ -101,6 +101,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Names.N_COUNT;
@@ -116,11 +117,11 @@ import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.Names.N_VALUE;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DATE;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
-import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
@@ -26279,7 +26280,7 @@ public class DSL {
     @NotNull
     @Support({ MYSQL, POSTGRES })
     public static Field<Integer> grouping(Field<?> field) {
-        return function("grouping", Integer.class, field);
+        return function("grouping", INTEGER, field);
     }
 
     // ------------------------------------------------------------------------

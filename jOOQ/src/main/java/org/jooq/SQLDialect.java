@@ -501,6 +501,11 @@ public enum SQLDialect {
 
 
     /**
+     * The Trino dialect family.
+     */
+    TRINO("Trino", true, true),
+
+    /**
      * The YugabyteDB dialect family.
      */
     YUGABYTEDB("YugabyteDB", false, true, new RequiredVersion(2, 9, null), SQLDialectCategory.POSTGRES),

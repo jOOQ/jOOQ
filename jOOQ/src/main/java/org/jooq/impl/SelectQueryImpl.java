@@ -115,6 +115,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.SortOrder.DESC;
 // ...
@@ -1870,6 +1871,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 case FIREBIRD:
                 case MYSQL: {
                     if (getLimit().isApplicable() && (getLimit().withTies() || getLimit().isExpression()))
+                        toSQLReferenceLimitWithWindowFunctions(context);
+                    else
+                        toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
+
+                    break;
+                }
+
+{
+                    if (getLimit().isApplicable() && getLimit().isExpression())
                         toSQLReferenceLimitWithWindowFunctions(context);
                     else
                         toSQLReferenceLimitDefault(context, originalFields, alternativeFields);

@@ -294,6 +294,10 @@ implements
                 ctx.visit(N_BIT_OR_AGG);
                 break;
 
+
+                ctx.visit(N_BITWISE_OR_AGG);
+                break;
+
             default:
                 super.acceptFunctionName(ctx);
                 break;

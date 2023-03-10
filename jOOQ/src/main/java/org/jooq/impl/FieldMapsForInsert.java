@@ -192,6 +192,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
                 case MARIADB: {
                     if (supportsValues(ctx))
                         toSQLValues(ctx);
@@ -353,11 +354,14 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+            // See https://github.com/trinodb/trino/issues/10161
 
+                for (List<Field<?>> row : values.values())
+                    for (Field<?> value : row)
+                        if (value instanceof ScalarSubquery)
+                            return false;
 
-
-
-
+                return true;
 
             // [#14742] MariaDB can't have (unaliased!) self-references of the INSERT
             //          target table in INSERT INTO t VALUES ((SELECT .. FROM t)),

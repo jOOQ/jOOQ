@@ -9449,9 +9449,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return null;
 
         if (parseKeywordIf("BIT_AND") ||
+            parseKeywordIf("BITWISE_AND") ||
             parseKeywordIf("BITAND") ||
             parseKeywordIf("BIN_AND") ||
             (agg = parseKeywordIf("BIT_AND_AGG")) ||
+            (agg = parseKeywordIf("BITWISE_AND_AGG")) ||
             (agg = parseKeywordIf("BITAND_AGG")) ||
             (agg = parseKeywordIf("BIN_AND_AGG"))) {
             parse('(');
@@ -9489,9 +9491,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return bitNand((Field) x, (Field) y);
         }
         else if (parseKeywordIf("BIT_OR") ||
+            parseKeywordIf("BITWISE_OR") ||
             parseKeywordIf("BITOR") ||
             parseKeywordIf("BIN_OR") ||
             (agg = parseKeywordIf("BIT_OR_AGG")) ||
+            (agg = parseKeywordIf("BITWISE_OR_AGG")) ||
             (agg = parseKeywordIf("BITOR_AGG")) ||
             (agg = parseKeywordIf("BIN_OR_AGG"))) {
             parse('(');
@@ -9529,6 +9533,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return bitNor((Field) x, (Field) y);
         }
         else if (parseKeywordIf("BIT_XOR") ||
+            parseKeywordIf("BITWISE_XOR") ||
             parseKeywordIf("BITXOR") ||
             parseKeywordIf("BIN_XOR") ||
             (agg = parseKeywordIf("BIT_XOR_AGG")) ||
@@ -9564,14 +9569,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return bitXNor((Field) x, (Field) y);
         }
-        else if (parseKeywordIf("BIT_NOT", "BITNOT", "BIN_NOT")) {
+        else if (parseKeywordIf("BIT_NOT", "BITNOT", "BIN_NOT", "BITWISE_NOT")) {
             parse('(');
             Field<?> x = toField(parseNumericOp());
             parse(')');
 
             return bitNot((Field) x);
         }
-        else if (parseKeywordIf("BIN_SHL", "BITSHIFTLEFT")) {
+        else if (parseKeywordIf("BIN_SHL", "BITSHIFTLEFT", "BITWISE_LEFT_SHIFT")) {
             parse('(');
             Field<?> x = toField(parseNumericOp());
             parse(',');
@@ -9580,7 +9585,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             return shl((Field) x, (Field) y);
         }
-        else if (parseKeywordIf("BIN_SHR", "BITSHIFTRIGHT")) {
+        else if (parseKeywordIf("BIN_SHR", "BITSHIFTRIGHT", "BITWISE_RIGHT_SHIFT")) {
             parse('(');
             Field<?> x = toField(parseNumericOp());
             parse(',');
@@ -13689,7 +13694,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'A':
                 if (parseFunctionNameIf("ANY"))
                     return ComputationalOperation.ANY;
-                else if (parseFunctionNameIf("ANY_VALUE"))
+                else if (parseFunctionNameIf("ANY_VALUE", "ARBITRARY"))
                     return ComputationalOperation.ANY_VALUE;
                 else if (parseFunctionNameIf("AVG"))
                     return ComputationalOperation.AVG;
@@ -14062,6 +14067,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final boolean parseKeywordIf(String keyword1, String keyword2, String keyword3) {
         return parseKeywordIf(keyword1) || parseKeywordIf(keyword2) || parseKeywordIf(keyword3);
+    }
+
+    private final boolean parseKeywordIf(String keyword1, String keyword2, String keyword3, String keyword4) {
+        return parseKeywordIf(keyword1) || parseKeywordIf(keyword2) || parseKeywordIf(keyword3) || parseKeywordIf(keyword4);
     }
 
     @Override

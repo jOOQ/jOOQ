@@ -176,6 +176,10 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                 ctx.visit(key).sql(", ").visit(jsonCast(ctx, value));
                 break;
 
+
+                ctx.visit(K_KEY).sql(' ').visit(jsonCast(ctx, key)).sql(' ').visit(K_VALUE).sql(' ').visit(jsonCast(ctx, value));
+                break;
+
             default:
                 ctx.visit(K_KEY).sql(' ').visit(key).sql(' ').visit(K_VALUE).sql(' ').visit(jsonCast(ctx, value));
                 break;
@@ -289,6 +293,14 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                         return field.cast(field.getDataType());
                     else
                         return field.cast(VARCHAR);
+                else
+                    return field;
+
+
+
+                // [#11485] https://github.com/trinodb/trino/issues/16489
+                if (field instanceof Param)
+                    return inlined(field);
                 else
                     return field;
         }

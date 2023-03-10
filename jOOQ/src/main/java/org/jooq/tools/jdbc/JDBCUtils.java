@@ -469,6 +469,8 @@ public class JDBCUtils {
         else if (url.contains(":sqlite:")
               || url.contains(":sqldroid:"))
             return SQLITE;
+        else if (url.contains(":trino:"))
+            return TRINO;
 
 
 

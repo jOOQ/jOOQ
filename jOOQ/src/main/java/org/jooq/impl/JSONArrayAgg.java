@@ -48,13 +48,16 @@ import static org.jooq.impl.DSL.groupConcatDistinct;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONEntryImpl.jsonMerge;
+import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
+import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_ARRAY;
+import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
@@ -177,6 +180,33 @@ implements
                     acceptFilterClause(ctx);
 
                 acceptOverClause(ctx);
+                break;
+
+
+                ctx.visit(N_CAST).sql('(');
+                ctx.visit(N_ARRAY_AGG).sql('(');
+                acceptDistinct(ctx);
+
+                if (arguments.get(0).getDataType().isJSON())
+                    ctx.visit(function(N_JSON_PARSE, JSON, arguments.get(0)));
+
+                // [#11485] CHAR types can't be cast to JSON: https://trino.io/docs/current/functions/json.html#cast-to-json
+                else if (arguments.get(0).getDataType().getSQLDataType() == SQLDataType.CHAR)
+                    ctx.visit(arguments.get(0).cast(VARCHAR));
+                else
+                    ctx.visit(arguments.get(0));
+
+                acceptOrderBy(ctx);
+                ctx.sql(')');
+
+                if (onNull == ABSENT_ON_NULL)
+                    acceptFilterClause(ctx, f(arguments.get(0).isNotNull()));
+                else
+                    acceptFilterClause(ctx);
+
+                acceptOverClause(ctx);
+                ctx.sql(' ').visit(K_AS).sql(' ').visit(JSON);
+                ctx.sql(')');
                 break;
 
             default:

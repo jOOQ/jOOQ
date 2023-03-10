@@ -109,6 +109,9 @@ implements
             case SQLITE:
                 return false;
 
+
+                return false;
+
             default:
                 return true;
         }
@@ -144,6 +147,10 @@ implements
 
             case SQLITE:
                 ctx.visit(DSL.field(select(jsonArrayAgg(DSL.field(name("key")))).from("json_each({0})", field)));
+                break;
+
+
+                ctx.visit(DSL.cast(function(N_MAP_KEYS, OTHER, DSL.field("cast(json_parse({0}) as map(varchar, json))", OTHER, field)), JSON));
                 break;
 
             default:

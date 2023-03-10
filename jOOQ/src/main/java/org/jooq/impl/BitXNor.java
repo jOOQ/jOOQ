@@ -120,6 +120,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+
             case YUGABYTEDB:
                 return false;
 
@@ -165,6 +166,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+
             case YUGABYTEDB:
                 ctx.visit(DSL.bitNot(DSL.bitXor((Field<Number>) arg1, (Field<Number>) arg2)));
                 break;

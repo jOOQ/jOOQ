@@ -110,6 +110,7 @@ implements
             case MARIADB:
             case MYSQL:
             case POSTGRES:
+
             case YUGABYTEDB:
                 return false;
 
@@ -144,6 +145,7 @@ implements
             case MARIADB:
             case MYSQL:
             case POSTGRES:
+
             case YUGABYTEDB:
                 ctx.visit(idiv(
                     isub(DSL.exp(imul(value, two())), one()),

@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.ConstraintImpl.Action.CASCADE;
 import static org.jooq.impl.ConstraintImpl.Action.NO_ACTION;
 import static org.jooq.impl.ConstraintImpl.Action.RESTRICT;
@@ -111,8 +112,6 @@ import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.impl.QOM.UNotYetImplemented;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder

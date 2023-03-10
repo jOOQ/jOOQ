@@ -38,16 +38,22 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Names.N_ARRAY_AGG;
+import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_FIELD;
 import static org.jooq.impl.Names.N_JSONB_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_OBJECT;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
+import static org.jooq.impl.Names.N_JSON_PARSE;
+import static org.jooq.impl.Names.N_MAP;
 import static org.jooq.impl.Names.N_OBJECT_AGG;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
@@ -135,10 +141,47 @@ implements
                 acceptSQLite(ctx);
                 break;
 
+
+                acceptTrino(ctx);
+                break;
+
             default:
                 acceptStandard(ctx);
                 break;
         }
+    }
+
+    private final void acceptTrino(Context<?> ctx) {
+        ctx.visit(N_CAST).sql('(');
+        ctx.visit(N_MAP).sql('(');
+        acceptTrinoArrayAgg(ctx, entry.key(), entry.value());
+        ctx.sql(", ");
+        acceptTrinoArrayAgg(ctx, entry.value(), entry.value());
+        ctx.sql(") ");
+        ctx.visit(K_AS).sql(' ').visit(JSON);
+        ctx.sql(')');
+    }
+
+    private final void acceptTrinoArrayAgg(Context<?> ctx, Field<?> f1, Field<?> f2) {
+        ctx.visit(N_ARRAY_AGG).sql('(');
+
+        if (f1.getDataType().isJSON())
+            ctx.visit(function(N_JSON_PARSE, JSON, f1));
+
+        // [#11485] CHAR types can't be cast to JSON: https://trino.io/docs/current/functions/json.html#cast-to-json
+        else if (f1.getDataType().getSQLDataType() == SQLDataType.CHAR)
+            ctx.visit(f1.cast(VARCHAR));
+        else
+            ctx.visit(f1);
+
+        ctx.sql(")");
+
+        if (onNull == ABSENT_ON_NULL)
+            acceptFilterClause(ctx, f(f2.isNotNull()));
+        else
+            acceptFilterClause(ctx);
+
+        acceptOverClause(ctx);
     }
 
     private final void acceptPostgres(Context<?> ctx) {

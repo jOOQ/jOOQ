@@ -122,6 +122,7 @@ implements
 
             case DERBY:
             case SQLITE:
+
                 ctx.visit(function(N_LENGTH, getDataType(), string));
                 break;
 

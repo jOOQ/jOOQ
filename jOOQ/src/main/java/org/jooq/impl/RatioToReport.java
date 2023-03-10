@@ -108,6 +108,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+
             case YUGABYTEDB:
                 DataType<?> cast;
 

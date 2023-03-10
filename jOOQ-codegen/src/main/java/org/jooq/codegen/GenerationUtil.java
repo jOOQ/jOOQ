@@ -540,6 +540,10 @@ class GenerationUtil {
 
 
 
+{
+                return new BaseType(t.replaceFirst("(?i:array\\((.*?)\\))", "$1"), u);
+            }
+
 
             case POSTGRES:
             case YUGABYTEDB: {

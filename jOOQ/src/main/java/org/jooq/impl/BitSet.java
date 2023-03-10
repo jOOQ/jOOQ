@@ -146,6 +146,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+
             case YUGABYTEDB:
                 return false;
 
@@ -219,6 +220,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
+
             case YUGABYTEDB: {
                 if (newValue == null)
                     ctx.visit(value.bitOr((Field) one().shl(bit)));

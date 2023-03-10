@@ -184,7 +184,8 @@ final class Limit extends AbstractQueryPart implements UTransient {
             }
 
 
-            case DERBY: {
+            case DERBY:
+{
                 acceptStandard(ctx, castMode);
                 break;
             }

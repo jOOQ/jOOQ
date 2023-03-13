@@ -59,6 +59,12 @@ fun <K, V> ResultQuery<Record2<K, V>>.fetchMap(): Map<K, V> = collect(Records.in
 @Blocking
 fun <E, R : Record1<E>> ResultQuery<R>.fetchSet(): Set<E> = collect(Records.intoSet())
 
+@Blocking
+fun <E, R: Record1<E>> ResultQuery<R>.fetchValue(): E? = fetchOne { it.value1() }
+
+@Blocking
+fun <E, R: Record1<E>> ResultQuery<R>.fetchSingleValue(): E = fetchSingle { it.value1() }
+
 // ----------------------------------------------------------------------------
 // Extensions to collect Result<Record[N]> into other types
 // ----------------------------------------------------------------------------

@@ -1187,21 +1187,21 @@ extends
      * @param pattern is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep notSimilarTo(@Stringly.Param String pattern);
 
     /**
      * The <code>NOT_SIMILAR_TO</code> operator.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep notSimilarTo(Field<String> pattern);
 
     /**
      * The <code>NOT_SIMILAR_TO</code> operator.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep notSimilarTo(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern);
 
     /**
@@ -1210,21 +1210,21 @@ extends
      * @param pattern is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep similarTo(@Stringly.Param String pattern);
 
     /**
      * The <code>SIMILAR_TO</code> operator.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep similarTo(Field<String> pattern);
 
     /**
      * The <code>SIMILAR_TO</code> operator.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep similarTo(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern);
 
     // -------------------------------------------------------------------------

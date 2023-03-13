@@ -658,15 +658,19 @@ implements
 
 
 
-    public final J partitionBy(Field<?>... fields) {
-        return partitionBy(Tools.list(fields));
-    }
+
+
+
+
+
+
+
 
 
 
 
     @SuppressWarnings("unchecked")
-    public final J partitionBy(Collection<? extends Field<?>> fields) {
+    final J partitionBy0(Collection<? extends Field<?>> fields) {
         rhsPartitionBy.addAll(fields);
         return (J) this;
     }

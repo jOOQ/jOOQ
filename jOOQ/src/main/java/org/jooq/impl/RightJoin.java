@@ -78,7 +78,7 @@ implements
         Collection<? extends Field<?>> u
     ) {
         return o != null
-            ? new RightJoin(table1, table2, partitionBy1).partitionBy(partitionBy2).on(o)
-            : new RightJoin(table1, table2, partitionBy1).partitionBy(partitionBy2).using(u);
+            ? new RightJoin(table1, table2, partitionBy1).partitionBy0(partitionBy2).on(o)
+            : new RightJoin(table1, table2, partitionBy1).partitionBy0(partitionBy2).using(u);
     }
 }

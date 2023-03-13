@@ -114,7 +114,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.SortOrder.DESC;
@@ -335,7 +335,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
     static final Set<SQLDialect>         NO_SUPPORT_WINDOW_CLAUSE        = SQLDialect.supportedUntil(CUBRID, DERBY, HSQLDB, IGNITE, MARIADB);
-    private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(DEFAULT, H2, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(DEFAULT, H2, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedUntil(MYSQL);
     private static final Set<SQLDialect> NO_IMPLICIT_GROUP_BY_ON_HAVING  = SQLDialect.supportedBy(SQLITE);
 
@@ -351,8 +351,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, MARIADB, POSTGRES);
-    private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, MARIADB, POSTGRES, TRINO);
+    private static final Set<SQLDialect> EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_UNION_ORDER_BY_ALIAS = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect>         NO_SUPPORT_WITH_READ_ONLY       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
@@ -1878,7 +1878,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     break;
                 }
 
-{
+                case TRINO: {
                     if (getLimit().isApplicable() && getLimit().isExpression())
                         toSQLReferenceLimitWithWindowFunctions(context);
                     else

@@ -503,7 +503,7 @@ public enum SQLDialect {
     /**
      * The Trino dialect family.
      */
-    TRINO("Trino", true, true),
+    TRINO("Trino", false, true),
 
     /**
      * The YugabyteDB dialect family.

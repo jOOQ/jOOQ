@@ -192,7 +192,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-
+                case TRINO:
                 case MARIADB: {
                     if (supportsValues(ctx))
                         toSQLValues(ctx);
@@ -355,7 +355,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
             // See https://github.com/trinodb/trino/issues/10161
-
+            case TRINO:
                 for (List<Field<?>> row : values.values())
                     for (Field<?> value : row)
                         if (value instanceof ScalarSubquery)

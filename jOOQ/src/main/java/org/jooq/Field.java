@@ -72,7 +72,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -1282,14 +1282,14 @@ extends
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitAnd(T arg2);
 
     /**
      * The <code>BIT_AND</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitAnd(Field<T> arg2);
 
     /**
@@ -1298,14 +1298,14 @@ extends
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNand(T arg2);
 
     /**
      * The <code>BIT_NAND</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNand(Field<T> arg2);
 
     /**
@@ -1314,21 +1314,21 @@ extends
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNor(T arg2);
 
     /**
      * The <code>BIT_NOR</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNor(Field<T> arg2);
 
     /**
      * The <code>BIT_NOT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNot();
 
     /**
@@ -1337,14 +1337,14 @@ extends
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitOr(T arg2);
 
     /**
      * The <code>BIT_OR</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitOr(Field<T> arg2);
 
     /**
@@ -1353,14 +1353,14 @@ extends
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitXNor(T arg2);
 
     /**
      * The <code>BIT_XNOR</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitXNor(Field<T> arg2);
 
     /**
@@ -1369,14 +1369,14 @@ extends
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitXor(T arg2);
 
     /**
      * The <code>BIT_XOR</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitXor(Field<T> arg2);
 
     /**
@@ -1468,7 +1468,7 @@ extends
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> shl(Number count);
 
     /**
@@ -1480,7 +1480,7 @@ extends
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> shl(Field<? extends Number> count);
 
     /**
@@ -1492,7 +1492,7 @@ extends
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> shr(Number count);
 
     /**
@@ -1504,7 +1504,7 @@ extends
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> shr(Field<? extends Number> count);
 
     // -------------------------------------------------------------------------
@@ -2273,7 +2273,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Condition like(Field<String> value, char escape);
 
     /**
@@ -2284,7 +2284,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Condition like(String value, char escape);
 
     /**
@@ -2298,7 +2298,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Condition likeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -2312,7 +2312,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Condition likeIgnoreCase(String value, char escape);
 
     /**
@@ -2323,7 +2323,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Condition notLike(Field<String> field, char escape);
 
     /**
@@ -2334,7 +2334,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Condition notLike(String value, char escape);
 
     /**
@@ -2348,7 +2348,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Condition notLikeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -2362,7 +2362,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Condition notLikeIgnoreCase(String value, char escape);
 
     /**
@@ -3185,7 +3185,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowPartitionByStep<Integer> countOver();
 
     /**
@@ -3195,7 +3195,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowPartitionByStep<T> maxOver();
 
     /**
@@ -3205,7 +3205,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowPartitionByStep<T> minOver();
 
     /**
@@ -3215,7 +3215,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowPartitionByStep<BigDecimal> sumOver();
 
     /**
@@ -3225,7 +3225,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowPartitionByStep<BigDecimal> avgOver();
 
     /**
@@ -3235,7 +3235,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> firstValue();
 
     /**
@@ -3245,7 +3245,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> lastValue();
 
     /**
@@ -3255,7 +3255,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> lead();
 
     /**
@@ -3265,7 +3265,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> lead(int offset);
 
     /**
@@ -3275,7 +3275,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
 
     /**
@@ -3285,7 +3285,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
 
     /**
@@ -3295,7 +3295,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> lag();
 
     /**
@@ -3305,7 +3305,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> lag(int offset);
 
     /**
@@ -3315,7 +3315,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
 
     /**
@@ -3325,7 +3325,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
     /**
@@ -3335,7 +3335,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, POSTGRES, TRINO, YUGABYTEDB })
     WindowPartitionByStep<BigDecimal> stddevPopOver();
 
     /**
@@ -3345,7 +3345,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, POSTGRES, TRINO, YUGABYTEDB })
     WindowPartitionByStep<BigDecimal> stddevSampOver();
 
     /**
@@ -3355,7 +3355,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, POSTGRES, TRINO, YUGABYTEDB })
     WindowPartitionByStep<BigDecimal> varPopOver();
 
     /**
@@ -3365,7 +3365,7 @@ extends
      */
     @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support({ CUBRID, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, POSTGRES, TRINO, YUGABYTEDB })
     WindowPartitionByStep<BigDecimal> varSampOver();
 
     /**

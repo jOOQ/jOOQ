@@ -58,7 +58,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -86,27 +86,27 @@ public interface WindowExcludeStep<T> extends WindowFinalStep<T> {
      * Add an <code>EXCLUDE CURRENT ROW</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> excludeCurrentRow();
 
     /**
      * Add an <code>EXCLUDE GROUP</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> excludeGroup();
 
     /**
      * Add an <code>EXCLUDE TIES</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> excludeTies();
 
     /**
      * Add an <code>EXCLUDE NO OTHERS</code> clause.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> excludeNoOthers();
 }

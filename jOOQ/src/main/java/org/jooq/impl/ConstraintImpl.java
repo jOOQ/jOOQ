@@ -45,7 +45,7 @@ import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.ConstraintImpl.Action.CASCADE;
 import static org.jooq.impl.ConstraintImpl.Action.NO_ACTION;
 import static org.jooq.impl.ConstraintImpl.Action.RESTRICT;
@@ -152,10 +152,10 @@ implements
 
 {
     private static final Clause[]        CLAUSES                      = { CONSTRAINT };
-    private static final Set<SQLDialect> NO_SUPPORT_PK                = SQLDialect.supportedBy();
-    private static final Set<SQLDialect> NO_SUPPORT_UK                = SQLDialect.supportedBy(IGNITE);
-    private static final Set<SQLDialect> NO_SUPPORT_FK                = SQLDialect.supportedBy(IGNITE);
-    private static final Set<SQLDialect> NO_SUPPORT_CHECK             = SQLDialect.supportedBy(IGNITE);
+    private static final Set<SQLDialect> NO_SUPPORT_PK                = SQLDialect.supportedBy(TRINO);
+    private static final Set<SQLDialect> NO_SUPPORT_UK                = SQLDialect.supportedBy(IGNITE, TRINO);
+    private static final Set<SQLDialect> NO_SUPPORT_FK                = SQLDialect.supportedBy(IGNITE, TRINO);
+    private static final Set<SQLDialect> NO_SUPPORT_CHECK             = SQLDialect.supportedBy(IGNITE, TRINO);
 
 
 

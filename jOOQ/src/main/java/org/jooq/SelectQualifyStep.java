@@ -59,7 +59,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -136,7 +136,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * other with {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectQualifyConditionStep<R> qualify(Condition condition);
 
     /**
@@ -144,7 +144,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * other with {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectQualifyConditionStep<R> qualify(Condition... conditions);
 
     /**
@@ -152,14 +152,14 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * other with {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectQualifyConditionStep<R> qualify(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>QUALIFY</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectQualifyConditionStep<R> qualify(Field<Boolean> condition);
 
     /**
@@ -174,7 +174,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(SQL sql);
 
@@ -190,7 +190,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(String sql);
 
@@ -207,7 +207,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(String sql, Object... bindings);
 
@@ -224,7 +224,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     SelectQualifyConditionStep<R> qualify(String sql, QueryPart... parts);
 

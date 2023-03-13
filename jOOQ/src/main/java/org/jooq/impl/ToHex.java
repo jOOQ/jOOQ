@@ -108,7 +108,7 @@ implements
 
 
 
-
+            case TRINO:
                 return false;
 
             default:
@@ -145,7 +145,7 @@ implements
 
 
 
-
+            case TRINO:
                 ctx.visit(function(N_TO_BASE, getDataType(), value, inline(16)));
                 break;
 

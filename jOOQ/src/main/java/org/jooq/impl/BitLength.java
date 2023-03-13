@@ -116,7 +116,7 @@ implements
 
             case DERBY:
             case SQLITE:
-
+            case TRINO:
                 return false;
 
             default:
@@ -161,7 +161,7 @@ implements
 
             case DERBY:
             case SQLITE:
-
+            case TRINO:
                 ctx.visit(imul(inline(8), function(N_LENGTH, getDataType(), string)));
                 break;
 

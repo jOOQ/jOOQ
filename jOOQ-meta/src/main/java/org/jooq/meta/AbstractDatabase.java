@@ -3166,7 +3166,7 @@ public abstract class AbstractDatabase implements Database {
 
 
 
-
+            case TRINO:
                 return upper.startsWith("ARRAY(");
 
 

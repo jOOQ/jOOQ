@@ -59,7 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.emptyGroupingSet;
@@ -78,8 +78,8 @@ import org.jooq.UniqueKey;
  */
 final class GroupFieldList extends QueryPartList<GroupField> {
 
-    static final Set<SQLDialect> NO_SUPPORT_GROUP_BY_TABLE       = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
-    static final Set<SQLDialect> NO_SUPPORT_GROUP_FUNCTIONAL_DEP = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    static final Set<SQLDialect> NO_SUPPORT_GROUP_BY_TABLE       = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_GROUP_FUNCTIONAL_DEP = SQLDialect.supportedBy(DERBY, FIREBIRD, TRINO);
 
     GroupFieldList() {
         super();

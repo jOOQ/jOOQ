@@ -100,7 +100,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
@@ -8127,7 +8127,7 @@ public class DSL {
      * @see DSLContext#createIndex(String)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createIndex(@Stringly.Name String index) {
         return dsl().createIndex(index);
     }
@@ -8142,7 +8142,7 @@ public class DSL {
      * @see DSLContext#createIndex(Name)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createIndex(Name index) {
         return dsl().createIndex(index);
     }
@@ -8157,7 +8157,7 @@ public class DSL {
      * @see DSLContext#createIndex(Index)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createIndex(Index index) {
         return dsl().createIndex(index);
     }
@@ -8172,7 +8172,7 @@ public class DSL {
      * @see DSLContext#createIndex()
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createIndex() {
         return dsl().createIndex();
     }
@@ -9201,7 +9201,7 @@ public class DSL {
      * @see DSLContext#dropIndex(String)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.DropIndexOnStep dropIndex(@Stringly.Name String index) {
         return dsl().dropIndex(index);
     }
@@ -9216,7 +9216,7 @@ public class DSL {
      * @see DSLContext#dropIndex(Name)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.DropIndexOnStep dropIndex(Name index) {
         return dsl().dropIndex(index);
     }
@@ -9231,7 +9231,7 @@ public class DSL {
      * @see DSLContext#dropIndex(Index)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.DropIndexOnStep dropIndex(Index index) {
         return dsl().dropIndex(index);
     }
@@ -11806,7 +11806,7 @@ public class DSL {
      * </code></pre>
      */
     @NotNull
-    @Support({ FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static <R extends Record> Table<R> lateral(TableLike<R> table) {
         return new Lateral<>(table.asTable());
     }
@@ -16262,7 +16262,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> acos(Number value) {
         return new Acos(Tools.field(value));
     }
@@ -16271,7 +16271,7 @@ public class DSL {
      * The <code>ACOS</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> acos(Field<? extends Number> value) {
         return new Acos(value);
     }
@@ -16282,7 +16282,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> acosh(Number value) {
         return new Acosh(Tools.field(value));
     }
@@ -16291,7 +16291,7 @@ public class DSL {
      * The <code>ACOSH</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> acosh(Field<? extends Number> value) {
         return new Acosh(value);
     }
@@ -16302,7 +16302,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> acoth(Number value) {
         return new Acoth(Tools.field(value));
     }
@@ -16311,7 +16311,7 @@ public class DSL {
      * The <code>ACOTH</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> acoth(Field<? extends Number> value) {
         return new Acoth(value);
     }
@@ -16322,7 +16322,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> asin(Number value) {
         return new Asin(Tools.field(value));
     }
@@ -16331,7 +16331,7 @@ public class DSL {
      * The <code>ASIN</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> asin(Field<? extends Number> value) {
         return new Asin(value);
     }
@@ -16342,7 +16342,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> asinh(Number value) {
         return new Asinh(Tools.field(value));
     }
@@ -16351,7 +16351,7 @@ public class DSL {
      * The <code>ASINH</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> asinh(Field<? extends Number> value) {
         return new Asinh(value);
     }
@@ -16362,7 +16362,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> atan(Number value) {
         return new Atan(Tools.field(value));
     }
@@ -16371,7 +16371,7 @@ public class DSL {
      * The <code>ATAN</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> atan(Field<? extends Number> value) {
         return new Atan(value);
     }
@@ -16383,7 +16383,7 @@ public class DSL {
      * @param y is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> atan2(Number x, Number y) {
         return new Atan2(Tools.field(x), Tools.field(y));
     }
@@ -16394,7 +16394,7 @@ public class DSL {
      * @param x is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
         return new Atan2(Tools.field(x), y);
     }
@@ -16405,7 +16405,7 @@ public class DSL {
      * @param y is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
         return new Atan2(x, Tools.field(y));
     }
@@ -16414,7 +16414,7 @@ public class DSL {
      * The <code>ATAN2</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new Atan2(x, y);
     }
@@ -16425,7 +16425,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> atanh(Number value) {
         return new Atanh(Tools.field(value));
     }
@@ -16434,7 +16434,7 @@ public class DSL {
      * The <code>ATANH</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<BigDecimal> atanh(Field<? extends Number> value) {
         return new Atanh(value);
     }
@@ -16446,7 +16446,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitAnd(T arg1, T arg2) {
         return new BitAnd<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -16457,7 +16457,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitAnd(T arg1, Field<T> arg2) {
         return new BitAnd<>(Tools.field(arg1), arg2);
     }
@@ -16468,7 +16468,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitAnd(Field<T> arg1, T arg2) {
         return new BitAnd<>(arg1, Tools.field(arg2, arg1));
     }
@@ -16477,7 +16477,7 @@ public class DSL {
      * The <code>BIT_AND</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitAnd(Field<T> arg1, Field<T> arg2) {
         return new BitAnd<>(arg1, arg2);
     }
@@ -16490,7 +16490,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<Integer> bitCount(Number value) {
         return new BitCount(Tools.field(value));
     }
@@ -16501,7 +16501,7 @@ public class DSL {
      * Count the number of bits set in a number
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<Integer> bitCount(Field<? extends Number> value) {
         return new BitCount(value);
     }
@@ -16512,7 +16512,7 @@ public class DSL {
      * @param bit is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitGet(Field<T> value, int bit) {
         return new BitGet<>(value, Tools.field(bit));
     }
@@ -16521,7 +16521,7 @@ public class DSL {
      * The <code>BIT_GET</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitGet(Field<T> value, Field<? extends Number> bit) {
         return new BitGet<>(value, bit);
     }
@@ -16533,7 +16533,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNand(T arg1, T arg2) {
         return new BitNand<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -16544,7 +16544,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNand(T arg1, Field<T> arg2) {
         return new BitNand<>(Tools.field(arg1), arg2);
     }
@@ -16555,7 +16555,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNand(Field<T> arg1, T arg2) {
         return new BitNand<>(arg1, Tools.field(arg2, arg1));
     }
@@ -16564,7 +16564,7 @@ public class DSL {
      * The <code>BIT_NAND</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNand(Field<T> arg1, Field<T> arg2) {
         return new BitNand<>(arg1, arg2);
     }
@@ -16576,7 +16576,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNor(T arg1, T arg2) {
         return new BitNor<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -16587,7 +16587,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNor(T arg1, Field<T> arg2) {
         return new BitNor<>(Tools.field(arg1), arg2);
     }
@@ -16598,7 +16598,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNor(Field<T> arg1, T arg2) {
         return new BitNor<>(arg1, Tools.field(arg2, arg1));
     }
@@ -16607,7 +16607,7 @@ public class DSL {
      * The <code>BIT_NOR</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNor(Field<T> arg1, Field<T> arg2) {
         return new BitNor<>(arg1, arg2);
     }
@@ -16618,7 +16618,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNot(T arg1) {
         return new BitNot<>(Tools.field(arg1));
     }
@@ -16627,7 +16627,7 @@ public class DSL {
      * The <code>BIT_NOT</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitNot(Field<T> arg1) {
         return new BitNot<>(arg1);
     }
@@ -16639,7 +16639,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitOr(T arg1, T arg2) {
         return new BitOr<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -16650,7 +16650,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitOr(T arg1, Field<T> arg2) {
         return new BitOr<>(Tools.field(arg1), arg2);
     }
@@ -16661,7 +16661,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitOr(Field<T> arg1, T arg2) {
         return new BitOr<>(arg1, Tools.field(arg2, arg1));
     }
@@ -16670,7 +16670,7 @@ public class DSL {
      * The <code>BIT_OR</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitOr(Field<T> arg1, Field<T> arg2) {
         return new BitOr<>(arg1, arg2);
     }
@@ -16682,7 +16682,7 @@ public class DSL {
      * @param newValue is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitSet(Field<T> value, int bit, T newValue) {
         return new BitSet<>(value, Tools.field(bit), Tools.field(newValue, value));
     }
@@ -16693,7 +16693,7 @@ public class DSL {
      * @param bit is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitSet(Field<T> value, int bit, Field<T> newValue) {
         return new BitSet<>(value, Tools.field(bit), newValue);
     }
@@ -16704,7 +16704,7 @@ public class DSL {
      * @param newValue is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitSet(Field<T> value, Field<? extends Number> bit, T newValue) {
         return new BitSet<>(value, bit, Tools.field(newValue, value));
     }
@@ -16713,7 +16713,7 @@ public class DSL {
      * The <code>BIT_SET</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitSet(Field<T> value, Field<? extends Number> bit, Field<T> newValue) {
         return new BitSet<>(value, bit, newValue);
     }
@@ -16724,7 +16724,7 @@ public class DSL {
      * @param bit is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitSet(Field<T> value, int bit) {
         return new BitSet<>(value, Tools.field(bit));
     }
@@ -16733,7 +16733,7 @@ public class DSL {
      * The <code>BIT_SET</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitSet(Field<T> value, Field<? extends Number> bit) {
         return new BitSet<>(value, bit);
     }
@@ -16745,7 +16745,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitXNor(T arg1, T arg2) {
         return new BitXNor<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -16756,7 +16756,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitXNor(T arg1, Field<T> arg2) {
         return new BitXNor<>(Tools.field(arg1), arg2);
     }
@@ -16767,7 +16767,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitXNor(Field<T> arg1, T arg2) {
         return new BitXNor<>(arg1, Tools.field(arg2, arg1));
     }
@@ -16776,7 +16776,7 @@ public class DSL {
      * The <code>BIT_XNOR</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitXNor(Field<T> arg1, Field<T> arg2) {
         return new BitXNor<>(arg1, arg2);
     }
@@ -16788,7 +16788,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitXor(T arg1, T arg2) {
         return new BitXor<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -16799,7 +16799,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitXor(T arg1, Field<T> arg2) {
         return new BitXor<>(Tools.field(arg1), arg2);
     }
@@ -16810,7 +16810,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitXor(Field<T> arg1, T arg2) {
         return new BitXor<>(arg1, Tools.field(arg2, arg1));
     }
@@ -16819,7 +16819,7 @@ public class DSL {
      * The <code>BIT_XOR</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> bitXor(Field<T> arg1, Field<T> arg2) {
         return new BitXor<>(arg1, arg2);
     }
@@ -17290,7 +17290,7 @@ public class DSL {
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> shl(T value, Number count) {
         return new Shl<>(Tools.field(value), Tools.field(count));
     }
@@ -17304,7 +17304,7 @@ public class DSL {
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> shl(T value, Field<? extends Number> count) {
         return new Shl<>(Tools.field(value), count);
     }
@@ -17318,7 +17318,7 @@ public class DSL {
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> shl(Field<T> value, Number count) {
         return new Shl<>(value, Tools.field(count));
     }
@@ -17332,7 +17332,7 @@ public class DSL {
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> shl(Field<T> value, Field<? extends Number> count) {
         return new Shl<>(value, count);
     }
@@ -17346,7 +17346,7 @@ public class DSL {
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> shr(T value, Number count) {
         return new Shr<>(Tools.field(value), Tools.field(count));
     }
@@ -17360,7 +17360,7 @@ public class DSL {
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> shr(T value, Field<? extends Number> count) {
         return new Shr<>(Tools.field(value), count);
     }
@@ -17374,7 +17374,7 @@ public class DSL {
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> shr(Field<T> value, Number count) {
         return new Shr<>(value, Tools.field(count));
     }
@@ -17388,7 +17388,7 @@ public class DSL {
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> shr(Field<T> value, Field<? extends Number> count) {
         return new Shr<>(value, count);
     }
@@ -17557,7 +17557,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> trunc(T value, int decimals) {
         return new Trunc<>(Tools.field(value), Tools.field(decimals));
     }
@@ -17571,7 +17571,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> trunc(T value, Field<Integer> decimals) {
         return new Trunc<>(Tools.field(value), decimals);
     }
@@ -17585,7 +17585,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> trunc(Field<T> value, int decimals) {
         return new Trunc<>(value, Tools.field(decimals));
     }
@@ -17599,7 +17599,7 @@ public class DSL {
      * @param decimals The decimals to truncate to.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> Field<T> trunc(Field<T> value, Field<Integer> decimals) {
         return new Trunc<>(value, decimals);
     }
@@ -17866,7 +17866,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> lpad(Field<String> string, int length, @Stringly.Param String character) {
         return new Lpad(string, Tools.field(length), Tools.field(character));
     }
@@ -17881,7 +17881,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> lpad(Field<String> string, int length, Field<String> character) {
         return new Lpad(string, Tools.field(length), character);
     }
@@ -17896,7 +17896,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> lpad(Field<String> string, Field<? extends Number> length, @Stringly.Param String character) {
         return new Lpad(string, length, Tools.field(character));
     }
@@ -17911,7 +17911,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> lpad(Field<String> string, Field<? extends Number> length, Field<String> character) {
         return new Lpad(string, length, character);
     }
@@ -17925,7 +17925,7 @@ public class DSL {
      * @param length The maximum length to pad the string to.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> lpad(Field<String> string, int length) {
         return new Lpad(string, Tools.field(length));
     }
@@ -17939,7 +17939,7 @@ public class DSL {
      * @param length The maximum length to pad the string to.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> lpad(Field<String> string, Field<? extends Number> length) {
         return new Lpad(string, length);
     }
@@ -17953,7 +17953,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> ltrim(@Stringly.Param String string, @Stringly.Param String characters) {
         return new Ltrim(Tools.field(string), Tools.field(characters));
     }
@@ -17967,7 +17967,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> ltrim(@Stringly.Param String string, Field<String> characters) {
         return new Ltrim(Tools.field(string), characters);
     }
@@ -17981,7 +17981,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> ltrim(Field<String> string, @Stringly.Param String characters) {
         return new Ltrim(string, Tools.field(characters));
     }
@@ -17995,7 +17995,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> ltrim(Field<String> string, Field<String> characters) {
         return new Ltrim(string, characters);
     }
@@ -18409,7 +18409,7 @@ public class DSL {
      * @param count The number of times to repeat the string.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> repeat(@Stringly.Param String string, int count) {
         return new Repeat(Tools.field(string), Tools.field(count));
     }
@@ -18423,7 +18423,7 @@ public class DSL {
      * @param count The number of times to repeat the string.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> repeat(@Stringly.Param String string, Field<? extends Number> count) {
         return new Repeat(Tools.field(string), count);
     }
@@ -18437,7 +18437,7 @@ public class DSL {
      * @param count The number of times to repeat the string.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> repeat(Field<String> string, int count) {
         return new Repeat(string, Tools.field(count));
     }
@@ -18451,7 +18451,7 @@ public class DSL {
      * @param count The number of times to repeat the string.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> repeat(Field<String> string, Field<? extends Number> count) {
         return new Repeat(string, count);
     }
@@ -18466,7 +18466,7 @@ public class DSL {
      * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> replace(Field<String> string, @Stringly.Param String search, @Stringly.Param String replace) {
         return new Replace(string, Tools.field(search), Tools.field(replace));
     }
@@ -18481,7 +18481,7 @@ public class DSL {
      * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> replace(Field<String> string, @Stringly.Param String search, Field<String> replace) {
         return new Replace(string, Tools.field(search), replace);
     }
@@ -18496,7 +18496,7 @@ public class DSL {
      * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> replace(Field<String> string, Field<String> search, @Stringly.Param String replace) {
         return new Replace(string, search, Tools.field(replace));
     }
@@ -18511,7 +18511,7 @@ public class DSL {
      * @param replace The replacement for each substring, if not empty.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> replace(Field<String> string, Field<String> search, Field<String> replace) {
         return new Replace(string, search, replace);
     }
@@ -18525,7 +18525,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> replace(Field<String> string, @Stringly.Param String search) {
         return new Replace(string, Tools.field(search));
     }
@@ -18539,7 +18539,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> replace(Field<String> string, Field<String> search) {
         return new Replace(string, search);
     }
@@ -18552,7 +18552,7 @@ public class DSL {
      * @param string is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> reverse(@Stringly.Param String string) {
         return new Reverse(Tools.field(string));
     }
@@ -18563,7 +18563,7 @@ public class DSL {
      * Reverse a string.
      */
     @NotNull
-    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> reverse(Field<String> string) {
         return new Reverse(string);
     }
@@ -18634,7 +18634,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> rpad(Field<String> string, int length, @Stringly.Param String character) {
         return new Rpad(string, Tools.field(length), Tools.field(character));
     }
@@ -18649,7 +18649,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> rpad(Field<String> string, int length, Field<String> character) {
         return new Rpad(string, Tools.field(length), character);
     }
@@ -18664,7 +18664,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> rpad(Field<String> string, Field<? extends Number> length, @Stringly.Param String character) {
         return new Rpad(string, length, Tools.field(character));
     }
@@ -18679,7 +18679,7 @@ public class DSL {
      * @param character The padding character, if different from whitespace
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> rpad(Field<String> string, Field<? extends Number> length, Field<String> character) {
         return new Rpad(string, length, character);
     }
@@ -18693,7 +18693,7 @@ public class DSL {
      * @param length The maximum length to pad the string to.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> rpad(Field<String> string, int length) {
         return new Rpad(string, Tools.field(length));
     }
@@ -18707,7 +18707,7 @@ public class DSL {
      * @param length The maximum length to pad the string to.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> rpad(Field<String> string, Field<? extends Number> length) {
         return new Rpad(string, length);
     }
@@ -18721,7 +18721,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static Field<String> rtrim(@Stringly.Param String string, @Stringly.Param String characters) {
         return new Rtrim(Tools.field(string), Tools.field(characters));
     }
@@ -18735,7 +18735,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static Field<String> rtrim(@Stringly.Param String string, Field<String> characters) {
         return new Rtrim(Tools.field(string), characters);
     }
@@ -18749,7 +18749,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static Field<String> rtrim(Field<String> string, @Stringly.Param String characters) {
         return new Rtrim(string, Tools.field(characters));
     }
@@ -18763,7 +18763,7 @@ public class DSL {
      * @param characters The characters to be trimmed.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static Field<String> rtrim(Field<String> string, Field<String> characters) {
         return new Rtrim(string, characters);
     }
@@ -18802,7 +18802,7 @@ public class DSL {
      * @param count The number of spaces to produce.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> space(Number count) {
         return new Space(Tools.field(count));
     }
@@ -18815,7 +18815,7 @@ public class DSL {
      * @param count The number of spaces to produce.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> space(Field<? extends Number> count) {
         return new Space(count);
     }
@@ -18830,7 +18830,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> splitPart(Field<String> string, @Stringly.Param String delimiter, Number n) {
         return new SplitPart(string, Tools.field(delimiter), Tools.field(n));
     }
@@ -18845,7 +18845,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> splitPart(Field<String> string, @Stringly.Param String delimiter, Field<? extends Number> n) {
         return new SplitPart(string, Tools.field(delimiter), n);
     }
@@ -18860,7 +18860,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Number n) {
         return new SplitPart(string, delimiter, Tools.field(n));
     }
@@ -18875,7 +18875,7 @@ public class DSL {
      * @param n The token number (1-based).
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> splitPart(Field<String> string, Field<String> delimiter, Field<? extends Number> n) {
         return new SplitPart(string, delimiter, n);
     }
@@ -19174,7 +19174,7 @@ public class DSL {
      * @param value is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> toHex(Number value) {
         return new ToHex(Tools.field(value));
     }
@@ -19185,7 +19185,7 @@ public class DSL {
      * Format a number to its hex value.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> toHex(Field<? extends Number> value) {
         return new ToHex(value);
     }
@@ -19256,7 +19256,7 @@ public class DSL {
      * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> translate(Field<String> string, @Stringly.Param String from, @Stringly.Param String to) {
         return new Translate(string, Tools.field(from), Tools.field(to));
     }
@@ -19271,7 +19271,7 @@ public class DSL {
      * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> translate(Field<String> string, @Stringly.Param String from, Field<String> to) {
         return new Translate(string, Tools.field(from), to);
     }
@@ -19286,7 +19286,7 @@ public class DSL {
      * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> translate(Field<String> string, Field<String> from, @Stringly.Param String to) {
         return new Translate(string, from, Tools.field(to));
     }
@@ -19301,7 +19301,7 @@ public class DSL {
      * @param to The set of target characters, matched with source characters by position.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<String> translate(Field<String> string, Field<String> from, Field<String> to) {
         return new Translate(string, from, to);
     }
@@ -19418,7 +19418,7 @@ public class DSL {
      * Generate a random UUID.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static Field<UUID> uuid() {
         return new Uuid();
     }
@@ -20433,7 +20433,7 @@ public class DSL {
      * The <code>CURRENT_USER</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> currentUser() {
         return new CurrentUser();
     }
@@ -20693,7 +20693,7 @@ public class DSL {
      * The <code>JSON_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSON> jsonArray(Field<?>... fields) {
         return new JSONArray(SQLDataType.JSON, Arrays.asList(fields));
     }
@@ -20702,7 +20702,7 @@ public class DSL {
      * The <code>JSON_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSON> jsonArray(Collection<? extends Field<?>> fields) {
         return new JSONArray(SQLDataType.JSON, new QueryPartList<>(fields));
     }
@@ -20711,7 +20711,7 @@ public class DSL {
      * The <code>JSONB_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSONB> jsonbArray(Field<?>... fields) {
         return new JSONArray(SQLDataType.JSONB, Arrays.asList(fields));
     }
@@ -20720,7 +20720,7 @@ public class DSL {
      * The <code>JSONB_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
         return new JSONArray(SQLDataType.JSONB, new QueryPartList<>(fields));
     }
@@ -20729,7 +20729,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
         return new JSONObject(SQLDataType.JSON, Tools.jsonEntries(entries));
     }
@@ -20738,7 +20738,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
         return new JSONObject(SQLDataType.JSON, Arrays.asList(entries));
     }
@@ -20747,7 +20747,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject(SQLDataType.JSON, new QueryPartList<>(entries));
     }
@@ -20756,7 +20756,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
         return new JSONObject(SQLDataType.JSONB, Tools.jsonEntries(entries));
     }
@@ -20765,7 +20765,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(JSONEntry<?>... entries) {
         return new JSONObject(SQLDataType.JSONB, Arrays.asList(entries));
     }
@@ -20774,7 +20774,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject(SQLDataType.JSONB, new QueryPartList<>(entries));
     }
@@ -20788,7 +20788,7 @@ public class DSL {
      * @param index is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(JSON field, int index) {
         return new JSONGetElement(Tools.field(field), Tools.field(index));
     }
@@ -20801,7 +20801,7 @@ public class DSL {
      * @param field is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(JSON field, Field<Integer> index) {
         return new JSONGetElement(Tools.field(field), index);
     }
@@ -20814,7 +20814,7 @@ public class DSL {
      * @param index is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(Field<JSON> field, int index) {
         return new JSONGetElement(field, Tools.field(index));
     }
@@ -20825,7 +20825,7 @@ public class DSL {
      * Access an array element from a JSON array expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(Field<JSON> field, Field<Integer> index) {
         return new JSONGetElement(field, index);
     }
@@ -20839,7 +20839,7 @@ public class DSL {
      * @param index is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(JSONB field, int index) {
         return new JSONBGetElement(Tools.field(field), Tools.field(index));
     }
@@ -20852,7 +20852,7 @@ public class DSL {
      * @param field is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(JSONB field, Field<Integer> index) {
         return new JSONBGetElement(Tools.field(field), index);
     }
@@ -20865,7 +20865,7 @@ public class DSL {
      * @param index is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(Field<JSONB> field, int index) {
         return new JSONBGetElement(field, Tools.field(index));
     }
@@ -20876,7 +20876,7 @@ public class DSL {
      * Access an array element from a JSONB array expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(Field<JSONB> field, Field<Integer> index) {
         return new JSONBGetElement(field, index);
     }
@@ -20992,7 +20992,7 @@ public class DSL {
      * @param attribute is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(JSON field, @Stringly.Param String attribute) {
         return new JSONGetAttribute(Tools.field(field), Tools.field(attribute));
     }
@@ -21005,7 +21005,7 @@ public class DSL {
      * @param field is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(JSON field, Field<String> attribute) {
         return new JSONGetAttribute(Tools.field(field), attribute);
     }
@@ -21018,7 +21018,7 @@ public class DSL {
      * @param attribute is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(Field<JSON> field, @Stringly.Param String attribute) {
         return new JSONGetAttribute(field, Tools.field(attribute));
     }
@@ -21029,7 +21029,7 @@ public class DSL {
      * Access an object attribute value from a JSON object expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(Field<JSON> field, Field<String> attribute) {
         return new JSONGetAttribute(field, attribute);
     }
@@ -21043,7 +21043,7 @@ public class DSL {
      * @param attribute is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(JSONB field, @Stringly.Param String attribute) {
         return new JSONBGetAttribute(Tools.field(field), Tools.field(attribute));
     }
@@ -21056,7 +21056,7 @@ public class DSL {
      * @param field is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(JSONB field, Field<String> attribute) {
         return new JSONBGetAttribute(Tools.field(field), attribute);
     }
@@ -21069,7 +21069,7 @@ public class DSL {
      * @param attribute is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(Field<JSONB> field, @Stringly.Param String attribute) {
         return new JSONBGetAttribute(field, Tools.field(attribute));
     }
@@ -21080,7 +21080,7 @@ public class DSL {
      * Access an object attribute value from a JSONB object expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(Field<JSONB> field, Field<String> attribute) {
         return new JSONBGetAttribute(field, attribute);
     }
@@ -21199,7 +21199,7 @@ public class DSL {
      * @param field is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonKeys(JSON field) {
         return new JSONKeys(Tools.field(field));
     }
@@ -21210,7 +21210,7 @@ public class DSL {
      * Retrieve all keys from a JSON object as an array of strings.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonKeys(Field<JSON> field) {
         return new JSONKeys(field);
     }
@@ -21223,7 +21223,7 @@ public class DSL {
      * @param field is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbKeys(JSONB field) {
         return new JSONBKeys(Tools.field(field));
     }
@@ -21234,7 +21234,7 @@ public class DSL {
      * Retrieve all keys from a JSONB object as an array of strings.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbKeys(Field<JSONB> field) {
         return new JSONBKeys(field);
     }
@@ -21704,7 +21704,7 @@ public class DSL {
      * Calculate the bitwise <code>AND</code> aggregate value.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> AggregateFunction<T> bitAndAgg(Field<T> value) {
         return new BitAndAgg<>(value);
     }
@@ -21715,7 +21715,7 @@ public class DSL {
      * Calculate the bitwise <code>OR</code> aggregate value.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> AggregateFunction<T> bitOrAgg(Field<T> value) {
         return new BitOrAgg<>(value);
     }
@@ -21726,7 +21726,7 @@ public class DSL {
      * Calculate the bitwise <code>XOR</code> aggregate value.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> AggregateFunction<T> bitXorAgg(Field<T> value) {
         return new BitXorAgg<>(value);
     }
@@ -21737,7 +21737,7 @@ public class DSL {
      * Calculate the bitwise <code>NAND</code> aggregate value.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> AggregateFunction<T> bitNandAgg(Field<T> value) {
         return new BitNandAgg<>(value);
     }
@@ -21748,7 +21748,7 @@ public class DSL {
      * Calculate the bitwise <code>NOR</code> aggregate value.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> AggregateFunction<T> bitNorAgg(Field<T> value) {
         return new BitNorAgg<>(value);
     }
@@ -21759,7 +21759,7 @@ public class DSL {
      * Calculate the bitwise <code>XNOR</code> aggregate value.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T extends Number> AggregateFunction<T> bitXNorAgg(Field<T> value) {
         return new BitXNorAgg<>(value);
     }
@@ -21809,7 +21809,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AggregateFunction<BigDecimal> corr(Field<? extends Number> y, Field<? extends Number> x) {
         return new Corr(y, x);
     }
@@ -21939,7 +21939,7 @@ public class DSL {
      * "https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AggregateFunction<BigDecimal> product(Field<? extends Number> field) {
         return new Product(field, false);
     }
@@ -21960,7 +21960,7 @@ public class DSL {
      * "https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AggregateFunction<BigDecimal> productDistinct(Field<? extends Number> field) {
         return new Product(field, true);
     }
@@ -22030,7 +22030,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
         return new RegrR2(y, x);
     }
@@ -22100,7 +22100,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
         return new StddevPop(field);
     }
@@ -22114,7 +22114,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new StddevSamp(field);
     }
@@ -22160,7 +22160,7 @@ public class DSL {
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new VarSamp(field);
     }
@@ -26099,7 +26099,7 @@ public class DSL {
      * @see #rollup(FieldOrRow...)
      */
     @NotNull
-    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES, TRINO })
     public static GroupField rollup(Field<?>... fields) {
         return rollup((FieldOrRow[]) Tools.nullSafe(fields));
     }
@@ -26118,7 +26118,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, MARIADB, MYSQL, POSTGRES, TRINO })
     public static GroupField rollup(FieldOrRow... fields) {
         return new Rollup(fields);
     }
@@ -26129,7 +26129,7 @@ public class DSL {
      * @see #cube(Field...)
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, TRINO })
     public static GroupField cube(Field<?>... fields) {
         return cube((FieldOrRow[]) Tools.nullSafe(fields));
     }
@@ -26148,7 +26148,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, TRINO })
     public static GroupField cube(FieldOrRow... fields) {
         return new Cube(fields);
     }
@@ -26168,7 +26168,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, TRINO })
     public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = map(fields, f -> asList(f), List[]::new);
         return groupingSets(array);
@@ -26189,7 +26189,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, TRINO })
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = map(fieldSets, f -> asList(f), List[]::new);
         return groupingSets(array);
@@ -26210,7 +26210,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, TRINO })
     @SafeVarargs
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         return new GroupingSets(fieldSets);
@@ -26278,7 +26278,7 @@ public class DSL {
      * @see #rollup(Field...)
      */
     @NotNull
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES, TRINO })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", INTEGER, field);
     }
@@ -26628,7 +26628,7 @@ public class DSL {
      * This is the same as calling {@link #jsonEntry(String, Field)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONEntryValueStep key(String key) {
         return key(Tools.field(key));
     }
@@ -26640,7 +26640,7 @@ public class DSL {
      * This is the same as calling {@link #jsonEntry(Field, Field)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONEntryValueStep key(Field<String> key) {
         return new JSONEntryImpl<>(key);
     }
@@ -26653,7 +26653,7 @@ public class DSL {
      * {@link Field#getName()} as a key.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(Field<T> value) {
         return jsonEntry(value.getName(), value);
     }
@@ -26663,7 +26663,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(String key, T value) {
         return jsonEntry(Tools.field(key), Tools.field(value));
     }
@@ -26673,7 +26673,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(String key, Field<T> value) {
         return jsonEntry(Tools.field(key), value);
     }
@@ -26683,7 +26683,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(String key, Select<? extends Record1<T>> value) {
         return jsonEntry(Tools.field(key), field(value));
     }
@@ -26693,7 +26693,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, T value) {
         return jsonEntry(key, Tools.field(value));
     }
@@ -26703,7 +26703,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
         return new JSONEntryImpl<>(key, value);
     }
@@ -26713,7 +26713,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Select<? extends Record1<T>> value) {
         return jsonEntry(key, field(value));
     }
@@ -26722,7 +26722,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(String key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -26731,7 +26731,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -26740,7 +26740,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Select<? extends Record1<?>> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -26749,7 +26749,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(String key, Field<?> value) {
         return jsonbObject(jsonEntry(key, value));
     }
@@ -26758,7 +26758,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<String> key, Field<?> value) {
         return jsonbObject(jsonEntry(key, value));
     }
@@ -26767,7 +26767,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<String> key, Select<? extends Record1<?>> value) {
         return jsonbObject(jsonEntry(key, value));
     }
@@ -26776,7 +26776,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject() {
         return jsonObject(Tools.EMPTY_JSONENTRY);
     }
@@ -26785,7 +26785,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject() {
         return jsonbObject(Tools.EMPTY_JSONENTRY);
     }
@@ -26794,7 +26794,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSON, value, false);
     }
@@ -26803,7 +26803,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSONB, value, false);
     }
@@ -26812,7 +26812,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, SQLITE })
+    @Support({ H2, MARIADB, MYSQL, SQLITE, TRINO })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAggDistinct(Field<?> value) {
         return new JSONArrayAgg<>(JSON, value, true);
     }
@@ -26821,7 +26821,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAggDistinct(Field<?> value) {
         return new JSONArrayAgg<>(JSONB, value, true);
     }
@@ -26833,7 +26833,7 @@ public class DSL {
      * {@link Field#getName()} as a key.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(Field<?> value) {
         return jsonObjectAgg(jsonEntry(value));
     }
@@ -26842,7 +26842,7 @@ public class DSL {
      * The JSON object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(String key, Field<?> value) {
         return jsonObjectAgg(Tools.field(key), value);
     }
@@ -26851,7 +26851,7 @@ public class DSL {
      * The JSON object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(Field<String> key, Field<?> value) {
         return jsonObjectAgg(jsonEntry(key, value));
     }
@@ -26860,7 +26860,7 @@ public class DSL {
      * The JSON object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(JSONEntry<?> entry) {
         return new JSONObjectAgg<>(JSON, entry);
     }
@@ -26872,7 +26872,7 @@ public class DSL {
      * {@link Field#getName()} as a key.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(Field<?> field) {
         return jsonbObjectAgg(jsonEntry(field));
     }
@@ -26881,7 +26881,7 @@ public class DSL {
      * The JSONB object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(String key, Field<?> value) {
         return jsonbObjectAgg(Tools.field(key), value);
     }
@@ -26890,7 +26890,7 @@ public class DSL {
      * The JSONB object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(Field<String> key, Field<?> value) {
         return jsonbObjectAgg(jsonEntry(key, value));
     }
@@ -26899,7 +26899,7 @@ public class DSL {
      * The JSONB object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(JSONEntry<?> entry) {
         return new JSONObjectAgg<>(JSONB, entry);
     }
@@ -27086,7 +27086,7 @@ public class DSL {
      * from this limitation.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <R extends Record> Field<Result<R>> multiset(TableLike<R> table) {
         return new Multiset<>(table);
     }
@@ -27168,7 +27168,7 @@ public class DSL {
      * Get the <code>array_agg()</code> aggregate function.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> ArrayAggOrderByStep<T[]> arrayAgg(Field<T> field) {
         return new ArrayAgg(false, Tools.nullSafe(field));
     }
@@ -27177,7 +27177,7 @@ public class DSL {
      * Get the <code>array_agg()</code> aggregate function.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
         return new ArrayAgg(true, Tools.nullSafe(field));
     }
@@ -27219,7 +27219,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Collection<? extends Field<?>> fields) {
         return new MultisetAgg<>(false, row(fields));
     }
@@ -27261,7 +27261,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Field<?>... fields) {
         return new MultisetAgg<>(false, row(fields));
     }
@@ -27303,7 +27303,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1> ArrayAggOrderByStep<Result<Record1<T1>>> multisetAgg(SelectField<T1> field1) {
         return new MultisetAgg<>(false, row(field1));
     }
@@ -27343,7 +27343,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2> ArrayAggOrderByStep<Result<Record2<T1, T2>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2) {
         return new MultisetAgg<>(false, row(field1, field2));
     }
@@ -27383,7 +27383,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3> ArrayAggOrderByStep<Result<Record3<T1, T2, T3>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) {
         return new MultisetAgg<>(false, row(field1, field2, field3));
     }
@@ -27423,7 +27423,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4> ArrayAggOrderByStep<Result<Record4<T1, T2, T3, T4>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4));
     }
@@ -27463,7 +27463,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5> ArrayAggOrderByStep<Result<Record5<T1, T2, T3, T4, T5>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5));
     }
@@ -27503,7 +27503,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6> ArrayAggOrderByStep<Result<Record6<T1, T2, T3, T4, T5, T6>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6));
     }
@@ -27543,7 +27543,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7> ArrayAggOrderByStep<Result<Record7<T1, T2, T3, T4, T5, T6, T7>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7));
     }
@@ -27583,7 +27583,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8> ArrayAggOrderByStep<Result<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8));
     }
@@ -27623,7 +27623,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> ArrayAggOrderByStep<Result<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9));
     }
@@ -27663,7 +27663,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> ArrayAggOrderByStep<Result<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
     }
@@ -27703,7 +27703,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> ArrayAggOrderByStep<Result<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
     }
@@ -27743,7 +27743,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ArrayAggOrderByStep<Result<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
     }
@@ -27783,7 +27783,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> ArrayAggOrderByStep<Result<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
     }
@@ -27823,7 +27823,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> ArrayAggOrderByStep<Result<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
     }
@@ -27863,7 +27863,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> ArrayAggOrderByStep<Result<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
     }
@@ -27903,7 +27903,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> ArrayAggOrderByStep<Result<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
     }
@@ -27943,7 +27943,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> ArrayAggOrderByStep<Result<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
     }
@@ -27983,7 +27983,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> ArrayAggOrderByStep<Result<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
     }
@@ -28023,7 +28023,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> ArrayAggOrderByStep<Result<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
     }
@@ -28063,7 +28063,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> ArrayAggOrderByStep<Result<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
     }
@@ -28103,7 +28103,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> ArrayAggOrderByStep<Result<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
     }
@@ -28143,7 +28143,7 @@ public class DSL {
      * {@link Settings#getEmulateMultiset()}.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> ArrayAggOrderByStep<Result<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>> multisetAgg(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
         return new MultisetAgg<>(false, row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
@@ -29097,7 +29097,7 @@ public class DSL {
      * @see #groupConcat(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
         return new ListAgg(false, Tools.nullSafe(field));
     }
@@ -29108,7 +29108,7 @@ public class DSL {
      * @see #groupConcat(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
         return new ListAgg(false, Tools.nullSafe(field), inline(separator));
     }
@@ -29159,7 +29159,7 @@ public class DSL {
      * @see #listAgg(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static GroupConcatOrderByStep groupConcat(Field<?> field) {
         return new GroupConcat(Tools.nullSafe(field));
     }
@@ -29191,7 +29191,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.12")
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static AggregateFunction<String> groupConcat(Field<?> field, String separator) {
         return new GroupConcat(Tools.nullSafe(field)).separator(separator);
     }
@@ -29383,7 +29383,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationOrderByStep partitionBy(GroupField... fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -29392,7 +29392,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>PARTITION BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationOrderByStep partitionBy(Collection<? extends GroupField> fields) {
         return new WindowSpecificationImpl().partitionBy(fields);
     }
@@ -29401,7 +29401,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsStep orderBy(Field<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -29410,7 +29410,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsStep orderBy(OrderField<?>... fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -29419,7 +29419,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with an <code>ORDER BY</code> clause.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsStep orderBy(Collection<? extends OrderField<?>> fields) {
         return new WindowSpecificationImpl().orderBy(fields);
     }
@@ -29428,7 +29428,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rowsUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsUnboundedPreceding();
     }
@@ -29437,7 +29437,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rowsPreceding(int number) {
         return new WindowSpecificationImpl().rowsPreceding(number);
     }
@@ -29446,7 +29446,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rowsCurrentRow() {
         return new WindowSpecificationImpl().rowsCurrentRow();
     }
@@ -29455,7 +29455,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rowsUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsUnboundedFollowing();
     }
@@ -29464,7 +29464,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rowsFollowing(int number) {
         return new WindowSpecificationImpl().rowsFollowing(number);
     }
@@ -29473,7 +29473,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedPreceding();
     }
@@ -29482,7 +29482,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rowsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rowsBetweenPreceding(number);
     }
@@ -29491,7 +29491,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rowsBetweenCurrentRow() {
         return new WindowSpecificationImpl().rowsBetweenCurrentRow();
     }
@@ -29500,7 +29500,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rowsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rowsBetweenUnboundedFollowing();
     }
@@ -29509,7 +29509,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>ROWS</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rowsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rowsBetweenFollowing(number);
     }
@@ -29518,7 +29518,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rangeUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeUnboundedPreceding();
     }
@@ -29527,7 +29527,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rangePreceding(int number) {
         return new WindowSpecificationImpl().rangePreceding(number);
     }
@@ -29536,7 +29536,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rangeCurrentRow() {
         return new WindowSpecificationImpl().rangeCurrentRow();
     }
@@ -29545,7 +29545,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rangeUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeUnboundedFollowing();
     }
@@ -29554,7 +29554,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep rangeFollowing(int number) {
         return new WindowSpecificationImpl().rangeFollowing(number);
     }
@@ -29563,7 +29563,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedPreceding();
     }
@@ -29572,7 +29572,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rangeBetweenPreceding(int number) {
         return new WindowSpecificationImpl().rangeBetweenPreceding(number);
     }
@@ -29581,7 +29581,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rangeBetweenCurrentRow() {
         return new WindowSpecificationImpl().rangeBetweenCurrentRow();
     }
@@ -29590,7 +29590,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rangeBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().rangeBetweenUnboundedFollowing();
     }
@@ -29599,7 +29599,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>RANGE</code> clause.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep rangeBetweenFollowing(int number) {
         return new WindowSpecificationImpl().rangeBetweenFollowing(number);
     }
@@ -29608,7 +29608,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep groupsUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsUnboundedPreceding();
     }
@@ -29617,7 +29617,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep groupsPreceding(int number) {
         return new WindowSpecificationImpl().groupsPreceding(number);
     }
@@ -29626,7 +29626,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep groupsCurrentRow() {
         return new WindowSpecificationImpl().groupsCurrentRow();
     }
@@ -29635,7 +29635,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep groupsUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsUnboundedFollowing();
     }
@@ -29644,7 +29644,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationExcludeStep groupsFollowing(int number) {
         return new WindowSpecificationImpl().groupsFollowing(number);
     }
@@ -29653,7 +29653,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedPreceding() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedPreceding();
     }
@@ -29662,7 +29662,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep groupsBetweenPreceding(int number) {
         return new WindowSpecificationImpl().groupsBetweenPreceding(number);
     }
@@ -29671,7 +29671,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep groupsBetweenCurrentRow() {
         return new WindowSpecificationImpl().groupsBetweenCurrentRow();
     }
@@ -29680,7 +29680,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep groupsBetweenUnboundedFollowing() {
         return new WindowSpecificationImpl().groupsBetweenUnboundedFollowing();
     }
@@ -29689,7 +29689,7 @@ public class DSL {
      * Create a {@link WindowSpecification} with a <code>GROUPS</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowSpecificationRowsAndStep groupsBetweenFollowing(int number) {
         return new WindowSpecificationImpl().groupsBetweenFollowing(number);
     }
@@ -29708,7 +29708,7 @@ public class DSL {
      * <code>ROWNUM()</code>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<Integer> rowNumber() {
         return new RowNumber();
     }
@@ -29717,7 +29717,7 @@ public class DSL {
      * The <code>rank() over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<Integer> rank() {
         return new Rank();
     }
@@ -29726,7 +29726,7 @@ public class DSL {
      * The <code>dense_rank() over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<Integer> denseRank() {
         return new DenseRank();
     }
@@ -29735,7 +29735,7 @@ public class DSL {
      * The <code>percent_rank() over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<BigDecimal> percentRank() {
         return new PercentRank();
     }
@@ -29744,7 +29744,7 @@ public class DSL {
      * The <code>cume_dist() over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new CumeDist();
     }
@@ -29753,7 +29753,7 @@ public class DSL {
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<Integer> ntile(int number) {
         return new Ntile(inline(number));
     }
@@ -29762,7 +29762,7 @@ public class DSL {
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<Integer> ntile(Field<Integer> number) {
         return new Ntile(number);
     }
@@ -29771,7 +29771,7 @@ public class DSL {
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<BigDecimal> ratioToReport(Number number) {
         return ratioToReport(Tools.field(number));
     }
@@ -29780,7 +29780,7 @@ public class DSL {
      * The <code>ratio_to_report([expression]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<BigDecimal> ratioToReport(Field<? extends Number> field) {
         return new RatioToReport(Tools.nullSafe(field));
     }
@@ -29789,7 +29789,7 @@ public class DSL {
      * The <code>first_value(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
         return new FirstValue<>(Tools.nullSafe(field));
     }
@@ -29798,7 +29798,7 @@ public class DSL {
      * The <code>last_value(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
         return new LastValue<>(Tools.nullSafe(field));
     }
@@ -29807,7 +29807,7 @@ public class DSL {
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, int nth) {
         return nthValue(field, val(nth));
     }
@@ -29816,7 +29816,7 @@ public class DSL {
      * The <code>nth_value(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowFromFirstLastStep<T> nthValue(Field<T> field, Field<Integer> nth) {
         return new NthValue<>(Tools.nullSafe(field), Tools.nullSafe(nth));
     }
@@ -29825,7 +29825,7 @@ public class DSL {
      * The <code>lead(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new Lead<>(Tools.nullSafe(field), null, null);
     }
@@ -29834,7 +29834,7 @@ public class DSL {
      * The <code>lead(field, offset) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return lead(field, inline(offset));
     }
@@ -29843,7 +29843,7 @@ public class DSL {
      * The <code>lead(field, offset) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset) {
         return new Lead<>(Tools.nullSafe(field), Tools.nullSafe(offset), null);
     }
@@ -29854,7 +29854,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(Tools.nullSafe(field), inline(offset), Tools.field(defaultValue, field));
     }
@@ -29865,7 +29865,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return lead(field, inline(offset), defaultValue);
     }
@@ -29876,7 +29876,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset, T defaultValue) {
         return lead(field, Tools.nullSafe(offset), Tools.field(defaultValue, field));
     }
@@ -29887,7 +29887,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
         return new Lead<>(Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
     }
@@ -29896,7 +29896,7 @@ public class DSL {
      * The <code>lag(field) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new Lag<>(Tools.nullSafe(field), null, null);
     }
@@ -29905,7 +29905,7 @@ public class DSL {
      * The <code>lag(field, offset) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return lag(field, inline(offset));
     }
@@ -29914,7 +29914,7 @@ public class DSL {
      * The <code>lag(field, offset) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset) {
         return new Lag<>(Tools.nullSafe(field), Tools.nullSafe(offset), null);
     }
@@ -29925,7 +29925,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(Tools.nullSafe(field), inline(offset), Tools.field(defaultValue, field));
     }
@@ -29936,7 +29936,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return lag(field, inline(offset), defaultValue);
     }
@@ -29947,7 +29947,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset, T defaultValue) {
         return lag(field, offset, Tools.field(defaultValue, field));
     }
@@ -29958,7 +29958,7 @@ public class DSL {
      * function.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
         return new Lag<>(Tools.nullSafe(field), Tools.nullSafe(offset), Tools.nullSafe(defaultValue));
     }

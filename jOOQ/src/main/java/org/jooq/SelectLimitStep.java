@@ -65,7 +65,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -163,7 +163,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     SelectLimitPercentStep<R> limit(Field<? extends Number> numberOfRows);
 
     /**

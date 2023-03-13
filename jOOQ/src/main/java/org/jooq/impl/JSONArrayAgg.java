@@ -182,7 +182,7 @@ implements
                 acceptOverClause(ctx);
                 break;
 
-
+            case TRINO:
                 ctx.visit(N_CAST).sql('(');
                 ctx.visit(N_ARRAY_AGG).sql('(');
                 acceptDistinct(ctx);

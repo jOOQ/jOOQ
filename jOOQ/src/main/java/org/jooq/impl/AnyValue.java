@@ -119,7 +119,7 @@ implements
                 ctx.visit(N_MIN);
                 break;
 
-
+            case TRINO:
                 ctx.visit(N_ARBITRARY);
                 break;
 

@@ -58,7 +58,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -136,7 +136,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * it is added explicitly via the jOOQ API.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectIntoStep<R> on(SelectFieldOrAsterisk... fields);
 
     /**
@@ -147,7 +147,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * it is added explicitly via the jOOQ API.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectIntoStep<R> on(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -155,7 +155,7 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * <code>SELECT DISTINCT ON (…)</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectIntoStep<R> distinctOn(SelectFieldOrAsterisk... fields);
 
     /**
@@ -163,6 +163,6 @@ public interface SelectDistinctOnStep<R extends Record> extends SelectIntoStep<R
      * <code>SELECT DISTINCT ON (…)</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectIntoStep<R> distinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 }

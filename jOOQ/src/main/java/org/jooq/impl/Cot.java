@@ -100,7 +100,7 @@ implements
 
 
             case SQLITE:
-
+            case TRINO:
                 return false;
 
             default:
@@ -124,7 +124,7 @@ implements
 
 
             case SQLITE:
-
+            case TRINO:
                 ctx.visit(idiv(DSL.cos(value), DSL.sin(value)));
                 break;
 

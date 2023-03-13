@@ -994,7 +994,7 @@ public interface DataType<T> extends Named {
      * @see #defaultValue(Field)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DataType<T> defaultValue(T defaultValue);
 
     /**
@@ -1014,7 +1014,7 @@ public interface DataType<T> extends Named {
      * This is an alias for {@link #default_(Field)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DataType<T> defaultValue(Field<T> defaultValue);
 
     /**
@@ -1039,7 +1039,7 @@ public interface DataType<T> extends Named {
      * @see #defaultValue(Field)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DataType<T> default_(T defaultValue);
 
     /**
@@ -1057,7 +1057,7 @@ public interface DataType<T> extends Named {
      * to learn what expressions are possible.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DataType<T> default_(Field<T> defaultValue);
 
     /**

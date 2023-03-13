@@ -98,7 +98,7 @@ implements
 
             case DERBY:
             case SQLITE:
-
+            case TRINO:
                 return false;
 
             default:
@@ -118,7 +118,7 @@ implements
 
             case DERBY:
             case SQLITE:
-
+            case TRINO:
                 ctx.visit(DSL.substring(string, inline(1), length));
                 break;
 

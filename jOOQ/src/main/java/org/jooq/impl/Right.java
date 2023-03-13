@@ -100,7 +100,7 @@ implements
 
 
             case SQLITE:
-
+            case TRINO:
                 return false;
 
             default:
@@ -123,7 +123,7 @@ implements
 
 
             case SQLITE:
-
+            case TRINO:
                 ctx.visit(DSL.substring(string, ineg(length)));
                 break;
 

@@ -148,7 +148,7 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * statements.
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     SelectForUpdateStep<R> limit(Field<? extends Number> numberOfRows);
 
 }

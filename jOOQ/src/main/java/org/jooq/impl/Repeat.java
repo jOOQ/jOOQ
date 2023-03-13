@@ -102,7 +102,7 @@ implements
 
 
             case FIREBIRD:
-
+            case TRINO:
                 return false;
 
             case SQLITE:
@@ -136,7 +136,7 @@ implements
 
 
             case FIREBIRD:
-
+            case TRINO:
                 ctx.visit(DSL.rpad(string, imul(DSL.length(string), count), string));
                 break;
 

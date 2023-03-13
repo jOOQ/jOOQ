@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 
@@ -64,7 +64,7 @@ implements
     GroupConcatOrderByStep,
     UNotYetImplemented {
 
-    final Set<SQLDialect>       REQUIRE_WITHIN_GROUP = SQLDialect.supportedBy();
+    final Set<SQLDialect>       REQUIRE_WITHIN_GROUP = SQLDialect.supportedBy(TRINO);
 
     private final Field<?>      field;
     private final SortFieldList orderBy;

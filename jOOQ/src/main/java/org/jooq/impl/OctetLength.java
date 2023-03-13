@@ -122,7 +122,7 @@ implements
 
             case DERBY:
             case SQLITE:
-
+            case TRINO:
                 ctx.visit(function(N_LENGTH, getDataType(), string));
                 break;
 

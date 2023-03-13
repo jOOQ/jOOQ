@@ -100,7 +100,7 @@ implements
 
             case FIREBIRD:
             case SQLITE:
-
+            case TRINO:
                 return false;
 
 
@@ -135,7 +135,7 @@ implements
 
             case FIREBIRD:
             case SQLITE:
-{
+            case TRINO: {
                 // [#10135] Avoid REPEAT() emulation that is too complicated for SPACE(N)
                 ctx.visit(DSL.rpad(DSL.inline(' '), count));
                 break;

@@ -59,7 +59,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.Names.N_DECODE;
@@ -90,7 +90,7 @@ implements
     QOM.Decode<V, T>
 {
     private static final Set<SQLDialect> EMULATE_DECODE_ORACLE = SQLDialect.supportedBy(MARIADB);
-    private static final Set<SQLDialect> EMULATE_DISTINCT      = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> EMULATE_DISTINCT      = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
 
 

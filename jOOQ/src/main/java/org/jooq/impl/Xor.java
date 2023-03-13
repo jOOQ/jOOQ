@@ -91,7 +91,7 @@ implements
 
 
     private static final Clause[]        CLAUSES           = { Clause.CONDITION, Clause.CONDITION_XOR };
-    private static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
     @Override
     final boolean parenthesised(Context<?> ctx) {

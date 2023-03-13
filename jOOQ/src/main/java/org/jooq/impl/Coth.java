@@ -123,7 +123,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-
+            case TRINO:
             case YUGABYTEDB:
                 return false;
 
@@ -171,7 +171,7 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-
+            case TRINO:
             case YUGABYTEDB:
                 ctx.visit(idiv(
                     iadd(DSL.exp(imul(value, two())), one()),

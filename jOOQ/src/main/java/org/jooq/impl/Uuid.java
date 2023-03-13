@@ -122,7 +122,7 @@ implements
             case IGNITE:
             case MARIADB:
             case MYSQL:
-
+            case TRINO:
                 return true;
 
 
@@ -210,7 +210,7 @@ implements
             case IGNITE:
             case MARIADB:
             case MYSQL:
-
+            case TRINO:
                 ctx.visit(function(N_UUID, getDataType()));
                 break;
 

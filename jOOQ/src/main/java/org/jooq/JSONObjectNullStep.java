@@ -75,7 +75,7 @@ public interface JSONObjectNullStep<T> extends JSONObjectReturningStep<T> {
      * <p>
      * Include <code>NULL</code> values in output JSON.
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @NotNull @CheckReturnValue
     JSONObjectReturningStep<T> nullOnNull();
 

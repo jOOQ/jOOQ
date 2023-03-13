@@ -112,7 +112,7 @@ implements
             case FIREBIRD:
                 return true;
 
-
+            case TRINO:
                 return true;
 
 
@@ -153,7 +153,7 @@ implements
                 ctx.visit(function(N_BIN_XOR, getDataType(), arg1, arg2));
                 break;
 
-
+            case TRINO:
                 ctx.visit(function(N_BITWISE_XOR, getDataType(), arg1, arg2));
                 break;
 

@@ -124,7 +124,7 @@ implements
             case YUGABYTEDB:
                 return false;
 
-
+            case TRINO:
                 return true;
 
             default:
@@ -175,7 +175,7 @@ implements
                 ctx.visit(string.like(DSL.concat(Tools.escapeForLike(prefix, ctx.configuration()), inline("%")), Tools.ESCAPE));
                 break;
 
-
+            case TRINO:
                 ctx.visit(function(N_STARTS_WITH, BOOLEAN, string, prefix));
                 break;
 

@@ -112,7 +112,7 @@ implements
 
             case MARIADB:
             case MYSQL:
-
+            case TRINO:
                 return false;
 
             default:
@@ -162,7 +162,7 @@ implements
 
             case MARIADB:
             case MYSQL:
-
+            case TRINO:
                 ctx.visit(function(N_JSON_EXTRACT, JSON, field, inline("$.").concat(attribute)));
                 break;
 

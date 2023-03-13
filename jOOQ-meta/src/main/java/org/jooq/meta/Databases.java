@@ -66,7 +66,7 @@ import org.jooq.meta.sqlite.SQLiteDatabase;
 // ...
 // ...
 // ...
-// ...
+import org.jooq.meta.trino.TrinoDatabase;
 // ...
 import org.jooq.meta.yugabytedb.YugabyteDBDatabase;
 
@@ -117,7 +117,7 @@ public class Databases {
             case MYSQL:            result = MySQLDatabase.class;            break;
             case POSTGRES:         result = PostgresDatabase.class;         break;
             case SQLITE:           result = SQLiteDatabase.class;           break;
-result = TrinoDatabase.class;            break;
+            case TRINO:            result = TrinoDatabase.class;            break;
             case YUGABYTEDB:       result = YugabyteDBDatabase.class;       break;
 
             case DEFAULT:          result = JDBCDatabase.class;             break;

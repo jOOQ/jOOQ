@@ -50,7 +50,7 @@ import static org.jooq.SQLDialect.H2;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 
 /**
@@ -76,7 +76,7 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @NotNull
-    @Support({ H2 })
+    @Support({ H2, TRINO })
     WindowOverStep<T> ignoreNulls();
 
     /**
@@ -84,6 +84,6 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @NotNull
-    @Support({ H2 })
+    @Support({ H2, TRINO })
     WindowOverStep<T> respectNulls();
 }

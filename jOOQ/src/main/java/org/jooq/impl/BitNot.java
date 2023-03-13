@@ -113,7 +113,7 @@ implements
             case FIREBIRD:
                 return true;
 
-
+            case TRINO:
                 return true;
 
             default:
@@ -155,7 +155,7 @@ implements
                 ctx.visit(function(N_BIN_NOT, getDataType(), arg1));
                 break;
 
-
+            case TRINO:
                 ctx.visit(function(N_BITWISE_NOT, getDataType(), arg1));
                 break;
 

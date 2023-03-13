@@ -58,7 +58,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -151,7 +151,7 @@ public interface SelectWindowStep<R extends Record> extends SelectQualifyStep<R>
      * will inline window definitions where they are referenced.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectQualifyStep<R> window(WindowDefinition... definitions);
 
     /**
@@ -177,6 +177,6 @@ public interface SelectWindowStep<R extends Record> extends SelectQualifyStep<R>
      * will inline window definitions where they are referenced.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectQualifyStep<R> window(Collection<? extends WindowDefinition> definitions);
 }

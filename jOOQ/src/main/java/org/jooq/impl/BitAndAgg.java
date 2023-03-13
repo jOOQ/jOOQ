@@ -294,7 +294,7 @@ implements
                 ctx.visit(N_BIT_AND_AGG);
                 break;
 
-
+            case TRINO:
                 ctx.visit(N_BITWISE_AND_AGG);
                 break;
 

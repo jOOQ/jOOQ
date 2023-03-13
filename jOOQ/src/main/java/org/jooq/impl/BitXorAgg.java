@@ -89,7 +89,7 @@ implements
 
 
 
-    public static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, SQLITE, YUGABYTEDB);
+    public static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, SQLITE, TRINO, YUGABYTEDB);
 
     @Override
     public final void accept(Context<?> ctx) {

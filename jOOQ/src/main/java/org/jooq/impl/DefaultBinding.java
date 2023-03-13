@@ -808,7 +808,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                     case POSTGRES:
-
+                    case TRINO:
                     case YUGABYTEDB:
                         return true;
                 }

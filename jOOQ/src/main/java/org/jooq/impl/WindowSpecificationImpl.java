@@ -58,7 +58,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.one;
@@ -125,7 +125,7 @@ implements
 
     private static final Set<SQLDialect> OMIT_PARTITION_BY_ONE                       = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
 
-    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB);
+    private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB, TRINO);
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_NTILE                  = SQLDialect.supportedBy(H2);
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2, MARIADB);
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_PERCENT_RANK_CUME_DIST = SQLDialect.supportedBy(MARIADB);

@@ -71,7 +71,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -118,7 +118,7 @@ public enum JoinType {
      * <code>FULL OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     FULL_OUTER_JOIN("full outer join", "full outer join", "full join", true),
 
     /**
@@ -139,28 +139,28 @@ public enum JoinType {
      * <code>NATURAL RIGHT OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     NATURAL_RIGHT_OUTER_JOIN("natural right outer join", "natural right outer join", "natural right join", false),
 
     /**
      * <code>NATURAL FULL OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     NATURAL_FULL_OUTER_JOIN("natural full outer join", "natural full outer join", "natural full join", false),
 
     /**
      * <code>CROSS APPLY</code> two tables.
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     CROSS_APPLY("cross apply", false),
 
     /**
      * <code>OUTER APPLY</code> two tables.
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     OUTER_APPLY("outer apply", false),
 
     /**

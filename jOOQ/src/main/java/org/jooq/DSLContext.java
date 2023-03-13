@@ -9883,7 +9883,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndex(String)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndex(@Stringly.Name String index);
 
     /**
@@ -9892,7 +9892,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndex(Name)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndex(Name index);
 
     /**
@@ -9901,7 +9901,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndex(Index)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndex(Index index);
 
     /**
@@ -9910,7 +9910,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndex()
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndex();
 
     /**
@@ -10537,7 +10537,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndex(String)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndex(@Stringly.Name String index);
 
     /**
@@ -10546,7 +10546,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndex(Name)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndex(Name index);
 
     /**
@@ -10555,7 +10555,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndex(Index)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndex(Index index);
 
     /**

@@ -76,7 +76,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -127,7 +127,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addDistinctOn(SelectFieldOrAsterisk... fields);
 
     /**
@@ -135,7 +135,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addDistinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -420,7 +420,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addWindow(WindowDefinition... definitions);
 
     /**
@@ -428,7 +428,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addWindow(Collection<? extends WindowDefinition> definitions);
 
     /**
@@ -437,7 +437,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param condition The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Condition condition);
 
     /**
@@ -446,7 +446,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Condition... conditions);
 
     /**
@@ -455,7 +455,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Collection<? extends Condition> conditions);
 
     /**
@@ -466,7 +466,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param condition The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Operator operator, Condition condition);
 
     /**
@@ -477,7 +477,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param conditions The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Operator operator, Condition... conditions);
 
     /**
@@ -488,7 +488,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param conditions The condition
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Operator operator, Collection<? extends Condition> conditions);
 
     /**
@@ -833,7 +833,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     void setWithTies(boolean withTies);
 
     /**

@@ -76,7 +76,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * If this is not supported by any given database, then the included columns will simply
      * be put in the index as ordinary columns, making the index a composite index.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexWhereStep include(String... include);
 
@@ -86,7 +86,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * If this is not supported by any given database, then the included columns will simply
      * be put in the index as ordinary columns, making the index a composite index.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexWhereStep include(Name... include);
 
@@ -96,7 +96,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * If this is not supported by any given database, then the included columns will simply
      * be put in the index as ordinary columns, making the index a composite index.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexWhereStep include(Field<?>... include);
 
@@ -106,7 +106,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * If this is not supported by any given database, then the included columns will simply
      * be put in the index as ordinary columns, making the index a composite index.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexWhereStep include(Collection<? extends Field<?>> include);
 }

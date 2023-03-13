@@ -59,7 +59,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -89,14 +89,14 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowOrderByStep<T> partitionBy(GroupField... fields);
 
     /**
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowOrderByStep<T> partitionBy(Collection<? extends GroupField> fields);
 
     /**
@@ -109,7 +109,7 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      */
     @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowOrderByStep<T> partitionByOne();
 
 }

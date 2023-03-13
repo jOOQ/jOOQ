@@ -73,7 +73,7 @@ public interface JSONObjectReturningStep<T> extends Field<T> {
     /**
      * Add the <code>RETURNING</code> clause to the <code>JSON OBJECT</code> function.
      */
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @NotNull @CheckReturnValue
     Field<T> returning(DataType<?> returning);
 }

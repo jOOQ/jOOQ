@@ -92,7 +92,7 @@ implements
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_NATIVE        = SQLDialect.supportedUntil(CUBRID, DERBY, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_NATIVE        = SQLDialect.supportedUntil(CUBRID, DERBY, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
 
 
 

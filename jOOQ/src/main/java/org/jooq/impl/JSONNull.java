@@ -41,7 +41,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
-// ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.Keywords.K_ABSENT;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ON;
@@ -60,7 +60,7 @@ import org.jooq.impl.QOM.UTransient;
  */
 final class JSONNull extends AbstractQueryPart implements SimpleQueryPart, UTransient {
     static final Set<SQLDialect> NO_SUPPORT_ABSENT_ON_NULL = SQLDialect.supportedBy(MARIADB, MYSQL, SQLITE);
-    static final Set<SQLDialect> NO_SUPPORT_NULL_ON_EMPTY  = SQLDialect.supportedBy();
+    static final Set<SQLDialect> NO_SUPPORT_NULL_ON_EMPTY  = SQLDialect.supportedBy(TRINO);
 
     final JSONOnNull             type;
 

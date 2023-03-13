@@ -76,7 +76,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.BackslashEscaping.DEFAULT;
 import static org.jooq.conf.BackslashEscaping.ON;
@@ -1161,8 +1161,8 @@ final class Tools {
     };
 
     static final Set<SQLDialect>         REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
-    static final Set<SQLDialect>         NO_SUPPORT_NOT_NULL                = SQLDialect.supportedBy();
+    static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, TRINO);
+    static final Set<SQLDialect>         NO_SUPPORT_NOT_NULL                = SQLDialect.supportedBy(TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
@@ -6922,7 +6922,7 @@ final class Tools {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
-
+                case TRINO:
                     return NestedCollectionEmulation.JSON;
 
 

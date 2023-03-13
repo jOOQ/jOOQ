@@ -73,42 +73,42 @@ public interface CreateIndexStep {
     /**
      * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexIncludeStep on(@Stringly.Name String table, String... on);
 
     /**
      * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexIncludeStep on(Name table, Name... on);
 
     /**
      * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexIncludeStep on(Table<?> table, OrderField<?>... on);
 
     /**
      * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexIncludeStep on(@Stringly.Name String table, Collection<? extends String> on);
 
     /**
      * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexIncludeStep on(Name table, Collection<? extends Name> on);
 
     /**
      * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateIndexIncludeStep on(Table<?> table, Collection<? extends OrderField<?>> on);
 }

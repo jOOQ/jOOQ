@@ -122,7 +122,7 @@ implements
             case FIREBIRD:
             case IGNITE:
             case POSTGRES:
-
+            case TRINO:
             case YUGABYTEDB:
                 return true;
 
@@ -186,7 +186,7 @@ implements
             case FIREBIRD:
             case IGNITE:
             case POSTGRES:
-
+            case TRINO:
             case YUGABYTEDB:
                 ctx.visit(function(N_COALESCE, getDataType(), value, defaultValue));
                 break;

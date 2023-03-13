@@ -141,7 +141,7 @@ implements
                 acceptSQLite(ctx);
                 break;
 
-
+            case TRINO:
                 acceptTrino(ctx);
                 break;
 

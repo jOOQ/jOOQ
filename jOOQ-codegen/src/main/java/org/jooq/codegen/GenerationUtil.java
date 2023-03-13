@@ -540,7 +540,7 @@ class GenerationUtil {
 
 
 
-{
+            case TRINO: {
                 return new BaseType(t.replaceFirst("(?i:array\\((.*?)\\))", "$1"), u);
             }
 

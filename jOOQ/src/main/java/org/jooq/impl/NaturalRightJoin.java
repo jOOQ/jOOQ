@@ -79,6 +79,6 @@ implements
         Condition o,
         Collection<? extends Field<?>> u
     ) {
-        return new NaturalRightJoin(table1, table2, partitionBy1).partitionBy(partitionBy2);
+        return new NaturalRightJoin(table1, table2, partitionBy1).partitionBy0(partitionBy2);
     }
 }

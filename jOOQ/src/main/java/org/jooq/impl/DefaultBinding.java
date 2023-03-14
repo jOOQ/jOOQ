@@ -131,6 +131,7 @@ import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.Names.N_BYTEA;
+import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_ST_GEOMFROMTEXT;
 import static org.jooq.impl.Names.N_ST_GEOMFROMWKB;
@@ -973,6 +974,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+                case TRINO: {
+                    if (t.isJSON()) {
+                        ctx.render().visit(N_JSON_PARSE).sql('(');
+                        sql(ctx, converted);
+                        ctx.render().sql(')');
+                    }
+                    else
+                        sqlCast0(ctx, converted, t, length, precision, scale);
+
+                    break;
+                }
 
                 default:
                     sqlCast0(ctx, converted, t, length, precision, scale);

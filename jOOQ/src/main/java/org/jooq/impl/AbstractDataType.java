@@ -75,6 +75,7 @@ import java.time.OffsetTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 // ...
@@ -945,6 +946,11 @@ implements
     public final boolean isSpatial() {
         Class<?> tType = tType0();
         return tType == Geometry.class || tType == Geography.class;
+    }
+
+    @Override
+    public final boolean isUUID() {
+        return tType0() == UUID.class;
     }
 
     @Override

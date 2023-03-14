@@ -1460,4 +1460,9 @@ public interface DataType<T> extends Named {
      * Whether this data type is a spatial type.
      */
     boolean isSpatial();
+
+    /**
+     * Whether this data type is a UUID type.
+     */
+    boolean isUUID();
 }

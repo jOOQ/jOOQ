@@ -3261,7 +3261,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // [#13509] Force a LIMIT clause to prevent optimisation of "unnecessary" ORDER BY
             else if (!actualOrderBy.isEmpty() && TRUE.equals(ctx.data(DATA_FORCE_LIMIT_WITH_ORDER_BY))) {
                 Limit l = new Limit();
-                l.setLimit(Long.MAX_VALUE);
+
+                switch (ctx.family()) {
+                    case TRINO:
+                        l.setLimit(Integer.MAX_VALUE);
+                        break;
+                    default:
+                        l.setLimit(Long.MAX_VALUE);
+                        break;
+                }
+
                 ctx.visit(l);
             }
         }

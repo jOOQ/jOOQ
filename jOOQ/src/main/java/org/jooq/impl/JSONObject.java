@@ -268,10 +268,10 @@ implements
         }
     }
 
-    static final <T> Field<T[]> absentOnNullIf(
+    static final Field<?> absentOnNullIf(
         BooleanSupplier test,
-        Function<Field<T[]>, Field<T[]>> e,
-        Field<T[]> array
+        Function<Field<?>, Field<?>> e,
+        Field<?> array
     ) {
         if (test.getAsBoolean())
             return function(N_FILTER, array.getDataType(),

@@ -166,7 +166,17 @@ final class ListAgg extends AbstractAggregateFunction<String> implements UNotYet
     }
 
     @Override
-    boolean applyFilter(Context<?> ctx, Field<?> arg, int i) {
+    final Field<?> applyMap(Context<?> ctx, Field<?> arg) {
+        switch (ctx.family()) {
+            case TRINO:
+                return arg.getDataType().isString() ? arg : arg.cast(VARCHAR);
+            default:
+                return arg;
+        }
+    }
+
+    @Override
+    final boolean applyFilter(Context<?> ctx, Field<?> arg, int i) {
         return i == 0;
     }
 

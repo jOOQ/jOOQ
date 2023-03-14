@@ -129,7 +129,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_JSONB_COMPARE     = SQLDialect.supportedBy();
     static final Set<SQLDialect> NO_SUPPORT_XML_COMPARE       = SQLDialect.supportedBy(POSTGRES);
-    static final Set<SQLDialect> FORCE_LIMIT_IN_DERIVED_TABLE = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> FORCE_LIMIT_IN_DERIVED_TABLE = SQLDialect.supportedBy(MARIADB, MYSQL, TRINO);
 
     final TableLike<R>           table;
     final Select<R>              select;

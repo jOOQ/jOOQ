@@ -83,6 +83,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
@@ -703,7 +704,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      */
     abstract static class InternalBinding<T, U> implements org.jooq.Binding<T, U> {
         static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
-        static final Set<SQLDialect> REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+        static final Set<SQLDialect> REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
         static final Set<SQLDialect> NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
         static final Set<SQLDialect> NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(DERBY, FIREBIRD, POSTGRES, SQLITE, YUGABYTEDB);
 
@@ -810,6 +811,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     case POSTGRES:
                     case TRINO:
                     case YUGABYTEDB:
+                        return true;
+                }
+            }
+
+            if (dataType.isUUID()) {
+                switch (ctx.family()) {
+                    case TRINO:
                         return true;
                 }
             }

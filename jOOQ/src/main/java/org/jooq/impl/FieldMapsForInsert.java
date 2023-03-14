@@ -46,6 +46,7 @@ import static org.jooq.Clause.INSERT_VALUES;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
@@ -103,7 +104,7 @@ import org.jooq.impl.Tools.BooleanDataKey;
  * @author Lukas Eder
  */
 final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImplemented {
-    static final Set<SQLDialect>        CASTS_NEEDED = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>        CASTS_NEEDED = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
 
     final Table<?>                      table;
     final Map<Field<?>, Field<?>>       empty;

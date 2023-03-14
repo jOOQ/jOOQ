@@ -281,7 +281,7 @@ implements
     }
 
     final void acceptArguments2(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
-        acceptArguments3(ctx, args, identity());
+        acceptArguments3(ctx, args, f -> applyMap(ctx, f));
     }
 
     final void acceptArguments3(Context<?> ctx, QueryPartCollectionView<Field<?>> args, Function<? super Field<?>, ? extends Field<?>> fun) {
@@ -293,6 +293,10 @@ implements
 
         else
             ctx.visit(wrap(args).map((arg, i) -> applyFilter(ctx, arg, i) ? DSL.when(filter, arg == ASTERISK ? one() : arg) : arg).map(fun));
+    }
+
+    Field<?> applyMap(Context<?> ctx, Field<?> arg) {
+        return arg;
     }
 
     boolean applyFilter(Context<?> ctx, Field<?> arg, int i) {

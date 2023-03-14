@@ -150,7 +150,7 @@ implements
                 break;
 
             case TRINO:
-                ctx.visit(DSL.cast(function(N_MAP_KEYS, OTHER, DSL.field("cast(json_parse({0}) as map(varchar, json))", OTHER, field)), JSON));
+                ctx.visit(DSL.cast(function(N_MAP_KEYS, OTHER, DSL.field("cast({0} as map(varchar, json))", OTHER, field)), JSON));
                 break;
 
             default:

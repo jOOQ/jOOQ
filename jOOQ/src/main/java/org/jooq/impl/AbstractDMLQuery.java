@@ -184,7 +184,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_UPDATE_RETURNING     = SQLDialect.supportedBy(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_DELETE_RETURNING     = SQLDialect.supportedBy(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE = SQLDialect.supportedBy(H2);
-    private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(IGNITE);
+    private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(IGNITE, TRINO);
     private static final Set<SQLDialect>         NO_SUPPORT_RETURNING_ASTERISK          = SQLDialect.supportedUntil(MARIADB);
 
 

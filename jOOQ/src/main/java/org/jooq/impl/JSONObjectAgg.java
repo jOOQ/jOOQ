@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_CAST;
@@ -164,16 +165,7 @@ implements
 
     private final void acceptTrinoArrayAgg(Context<?> ctx, Field<?> f1, Field<?> f2) {
         ctx.visit(N_ARRAY_AGG).sql('(');
-
-        if (f1.getDataType().isJSON())
-            ctx.visit(function(N_JSON_PARSE, JSON, f1));
-
-        // [#11485] CHAR types can't be cast to JSON: https://trino.io/docs/current/functions/json.html#cast-to-json
-        else if (f1.getDataType().getSQLDataType() == SQLDataType.CHAR)
-            ctx.visit(f1.cast(VARCHAR));
-        else
-            ctx.visit(f1);
-
+        ctx.visit(jsonCast(ctx, f1));
         ctx.sql(")");
 
         if (onNull == ABSENT_ON_NULL)

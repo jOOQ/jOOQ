@@ -207,6 +207,20 @@ implements
 
 
 
+            case TRINO: {
+                // [#11485] While JSON_OBJECT is supported in Trino, it seems there are a few show stopping bugs, including:
+                // https://github.com/trinodb/trino/issues/16522
+                // https://github.com/trinodb/trino/issues/16523
+                // https://github.com/trinodb/trino/issues/16525
+
+                ctx.visit(JSONObject.absentOnNullIf(
+                    () -> onNull == JSONOnNull.ABSENT_ON_NULL,
+                    e -> e,
+                    array(map(fields, e -> JSONEntryImpl.jsonCast(ctx, e).cast(JSON)))
+                ).cast(JSON));
+                break;
+            }
+
             default: {
                 JSONNull jsonNull;
                 JSONReturning jsonReturning;

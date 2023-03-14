@@ -64,6 +64,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.inline;
@@ -76,7 +77,6 @@ import static org.jooq.impl.Tools.visitSubquery;
 import java.util.Set;
 
 import org.jooq.Clause;
-import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.SQLDialect;
@@ -88,7 +88,7 @@ import org.jooq.Table;
  */
 final class SelectIsNull extends AbstractCondition implements QOM.SelectIsNull {
 
-    static final Set<SQLDialect> EMULATE_NULL_QUERY = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> EMULATE_NULL_QUERY = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
     final Select<?>              select;
 

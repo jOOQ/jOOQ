@@ -91,7 +91,7 @@ implements
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_DIGITS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_DIGITS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
     @Override
     public final void accept(Context<?> ctx) {

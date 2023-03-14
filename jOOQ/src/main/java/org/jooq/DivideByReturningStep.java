@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-
 // ...
 // ...
 // ...
@@ -68,6 +65,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 
 import java.util.Collection;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An intermediate type for the construction of a relational division

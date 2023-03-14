@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.groupConcatDistinct;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONEntryImpl.jsonMerge;
 import static org.jooq.impl.Keywords.K_AS;
@@ -186,16 +187,7 @@ implements
                 ctx.visit(N_CAST).sql('(');
                 ctx.visit(N_ARRAY_AGG).sql('(');
                 acceptDistinct(ctx);
-
-                if (arguments.get(0).getDataType().isJSON())
-                    ctx.visit(function(N_JSON_PARSE, JSON, arguments.get(0)));
-
-                // [#11485] CHAR types can't be cast to JSON: https://trino.io/docs/current/functions/json.html#cast-to-json
-                else if (arguments.get(0).getDataType().getSQLDataType() == SQLDataType.CHAR)
-                    ctx.visit(arguments.get(0).cast(VARCHAR));
-                else
-                    ctx.visit(arguments.get(0));
-
+                ctx.visit(jsonCast(ctx, arguments.get(0)));
                 acceptOrderBy(ctx);
                 ctx.sql(')');
 

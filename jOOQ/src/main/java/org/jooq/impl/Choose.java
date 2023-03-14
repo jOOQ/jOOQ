@@ -104,6 +104,7 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
             case IGNITE:
             case POSTGRES:
             case SQLITE:
+            case TRINO:
             case YUGABYTEDB: {
                 CaseValueStep<Integer> s = choose(index);
                 CaseWhenStep<Integer, T> when = null;

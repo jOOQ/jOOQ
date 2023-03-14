@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
@@ -105,7 +106,7 @@ implements
     QOM.GenerateSeries<Integer>
 {
 
-    private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedUntil(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedUntil(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect> EMULATE_SYSTEM_RANGE   = SQLDialect.supportedBy(H2);
 
 

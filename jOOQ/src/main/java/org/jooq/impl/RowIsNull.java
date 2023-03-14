@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.impl.Keywords.K_IS_NULL;
 import static org.jooq.impl.Tools.allNull;
@@ -68,7 +69,6 @@ import static org.jooq.impl.Tools.allNull;
 import java.util.Set;
 
 import org.jooq.Clause;
-import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Row;
@@ -81,7 +81,7 @@ final class RowIsNull extends AbstractCondition implements QOM.RowIsNull {
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
-    static final Set<SQLDialect> EMULATE_NULL_ROW   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> EMULATE_NULL_ROW   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
 
     private final Row            row;
 

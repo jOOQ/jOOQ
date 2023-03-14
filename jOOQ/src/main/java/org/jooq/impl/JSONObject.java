@@ -58,6 +58,7 @@ import org.jooq.tools.*;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.function.Function;
 import java.util.stream.*;
 
 
@@ -245,10 +246,40 @@ implements
                 break;
             }
 
+            case TRINO: {
+                // [#11485] While JSON_OBJECT is supported in Trino, it seems there are a few show stopping bugs, including:
+                // https://github.com/trinodb/trino/issues/16522
+                // https://github.com/trinodb/trino/issues/16523
+                // https://github.com/trinodb/trino/issues/16525
+
+                ctx.visit(function(N_MAP_FROM_ENTRIES, JSON,
+                    absentOnNullIf(
+                        () -> onNull == JSONOnNull.ABSENT_ON_NULL,
+                        e -> DSL.field("{0}[2]", e.getDataType(), e),
+                        array(map(entries, e -> function(N_ROW, JSON, e.key(), JSONEntryImpl.jsonCast(ctx, e.value()).cast(JSON))))
+                    )
+                ).cast(JSON));
+                break;
+            }
+
             default:
                 acceptStandard(ctx);
                 break;
         }
+    }
+
+    static final <T> Field<T[]> absentOnNullIf(
+        BooleanSupplier test,
+        Function<Field<T[]>, Field<T[]>> e,
+        Field<T[]> array
+    ) {
+        if (test.getAsBoolean())
+            return function(N_FILTER, array.getDataType(),
+                array,
+                DSL.field("e -> {0}", BOOLEAN, e.apply(DSL.field(raw("e"), array.getDataType())).isNotNull())
+            );
+        else
+            return array;
     }
 
     private static final boolean isJSONArray(Field<?> field) {

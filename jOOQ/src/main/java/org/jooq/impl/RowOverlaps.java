@@ -61,14 +61,13 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
-import static org.jooq.impl.Internal.iadd;
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.Keywords.K_OVERLAPS;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.util.Set;
 
 import org.jooq.Clause;
-import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -82,8 +81,8 @@ import org.jooq.SQLDialect;
  */
 final class RowOverlaps<T1, T2> extends AbstractCondition implements QOM.RowOverlaps {
 
-    private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(HSQLDB);
+    private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, MARIADB, MYSQL, SQLITE, TRINO);
+    private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(HSQLDB, TRINO);
 
     private final Row2<T1, T2>           left;
     private final Row2<T1, T2>           right;

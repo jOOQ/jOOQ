@@ -37,8 +37,14 @@
  */
 package org.jooq.impl;
 
+// ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.TRINO;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
@@ -81,6 +87,9 @@ public class ClobBinding implements Binding<String, String> {
 
     static final Set<SQLDialect> NO_SUPPORT_NULL_LOBS = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
 
+    // See also https://github.com/pgjdbc/pgjdbc/issues/458
+    static final Set<SQLDialect> NO_SUPPORT_LOBS      = SQLDialect.supportedBy(POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+
     @Override
     public final Converter<String, String> converter() {
         return Converters.identity(String.class);
@@ -96,59 +105,81 @@ public class ClobBinding implements Binding<String, String> {
 
     @Override
     public final void register(BindingRegisterContext<String> ctx) throws SQLException {
-        ctx.statement().registerOutParameter(ctx.index(), Types.CLOB);
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect()))
+            ctx.statement().registerOutParameter(ctx.index(), Types.CLOB);
+        else
+            ctx.statement().registerOutParameter(ctx.index(), Types.VARCHAR);
     }
 
     @Override
     public final void set(BindingSetStatementContext<String> ctx) throws SQLException {
-        Clob clob = newClob(ctx, ctx.value());
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            Clob clob = newClob(ctx, ctx.value());
 
-        // [#14067] Workaround for Firebird bug https://github.com/FirebirdSQL/jaybird/issues/712
-        if (clob == null && NO_SUPPORT_NULL_LOBS.contains(ctx.dialect()))
-            ctx.statement().setNull(ctx.index(), Types.CLOB);
+            // [#14067] Workaround for Firebird bug https://github.com/FirebirdSQL/jaybird/issues/712
+            if (clob == null && NO_SUPPORT_NULL_LOBS.contains(ctx.dialect()))
+                ctx.statement().setNull(ctx.index(), Types.CLOB);
+            else
+                ctx.statement().setClob(ctx.index(), clob);
+        }
         else
-            ctx.statement().setClob(ctx.index(), clob);
+            ctx.statement().setString(ctx.index(), ctx.value());
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<String> ctx) throws SQLException {
-        ctx.output().writeClob(newClob(ctx, ctx.value()));
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect()))
+            ctx.output().writeClob(newClob(ctx, ctx.value()));
+        else
+            ctx.output().writeString(ctx.value());
     }
 
     @Override
     public final void get(BindingGetResultSetContext<String> ctx) throws SQLException {
-        Clob clob = ctx.resultSet().getClob(ctx.index());
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            Clob clob = ctx.resultSet().getClob(ctx.index());
 
-        try {
-            ctx.value(clob == null ? null : read(ctx, clob));
+            try {
+                ctx.value(clob == null ? null : read(ctx, clob));
+            }
+            finally {
+                JDBCUtils.safeFree(clob);
+            }
         }
-        finally {
-            JDBCUtils.safeFree(clob);
-        }
+        else
+            ctx.value(ctx.resultSet().getString(ctx.index()));
     }
 
     @Override
     public final void get(BindingGetStatementContext<String> ctx) throws SQLException {
-        Clob clob = ctx.statement().getClob(ctx.index());
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            Clob clob = ctx.statement().getClob(ctx.index());
 
-        try {
-            ctx.value(clob == null ? null : read(ctx, clob));
+            try {
+                ctx.value(clob == null ? null : read(ctx, clob));
+            }
+            finally {
+                JDBCUtils.safeFree(clob);
+            }
         }
-        finally {
-            JDBCUtils.safeFree(clob);
-        }
+        else
+            ctx.value(ctx.statement().getString(ctx.index()));
     }
 
     @Override
     public final void get(BindingGetSQLInputContext<String> ctx) throws SQLException {
-        Clob clob = ctx.input().readClob();
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            Clob clob = ctx.input().readClob();
 
-        try {
-            ctx.value(clob == null ? null : read(ctx, clob));
+            try {
+                ctx.value(clob == null ? null : read(ctx, clob));
+            }
+            finally {
+                JDBCUtils.safeFree(clob);
+            }
         }
-        finally {
-            JDBCUtils.safeFree(clob);
-        }
+        else
+            ctx.value(ctx.input().readString());
     }
 
     static final String read(Scope ctx, Clob clob) throws SQLException {

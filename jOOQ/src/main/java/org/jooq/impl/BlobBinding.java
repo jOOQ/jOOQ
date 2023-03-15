@@ -37,17 +37,22 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.TRINO;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.ClobBinding.NO_SUPPORT_NULL_LOBS;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
 
 import java.sql.Blob;
-import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Set;
 
 import org.jooq.Binding;
 import org.jooq.BindingGetResultSetContext;
@@ -60,6 +65,7 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.ResourceManagingScope;
+import org.jooq.SQLDialect;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.R2DBC.R2DBCPreparedStatement;
 import org.jooq.impl.R2DBC.R2DBCResultSet;
@@ -78,6 +84,9 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 public class BlobBinding implements Binding<byte[], byte[]> {
 
+    // See also https://github.com/pgjdbc/pgjdbc/issues/458
+    static final Set<SQLDialect> NO_SUPPORT_LOBS      = SQLDialect.supportedBy(POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+
     @Override
     public final Converter<byte[], byte[]> converter() {
         return Converters.identity(byte[].class);
@@ -93,7 +102,10 @@ public class BlobBinding implements Binding<byte[], byte[]> {
 
     @Override
     public final void register(BindingRegisterContext<byte[]> ctx) throws SQLException {
-        ctx.statement().registerOutParameter(ctx.index(), Types.BLOB);
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect()))
+            ctx.statement().registerOutParameter(ctx.index(), Types.BLOB);
+        else
+            ctx.statement().registerOutParameter(ctx.index(), Types.BINARY);
     }
 
     @Override
@@ -103,7 +115,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         if (ctx.statement() instanceof R2DBCPreparedStatement) {
             ctx.statement().setBytes(ctx.index(), ctx.value());
         }
-        else {
+        else if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
             Blob blob = newBlob(ctx, ctx.value(), ctx.statement().getConnection());
 
             // [#14067] Workaround for Firebird bug https://github.com/FirebirdSQL/jaybird/issues/712
@@ -112,11 +124,16 @@ public class BlobBinding implements Binding<byte[], byte[]> {
             else
                 ctx.statement().setBlob(ctx.index(), blob);
         }
+        else
+            ctx.statement().setBytes(ctx.index(), ctx.value());
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<byte[]> ctx) throws SQLException {
-        ctx.output().writeBlob(newBlob(ctx, ctx.value(), null));
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect()))
+            ctx.output().writeBlob(newBlob(ctx, ctx.value(), null));
+        else
+            ctx.output().writeBytes(ctx.value());
     }
 
     @Override
@@ -126,7 +143,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         if (ctx.resultSet() instanceof R2DBCResultSet) {
             ctx.value(ctx.resultSet().getBytes(ctx.index()));
         }
-        else {
+        else if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
             Blob blob = ctx.resultSet().getBlob(ctx.index());
 
             try {
@@ -136,30 +153,40 @@ public class BlobBinding implements Binding<byte[], byte[]> {
                 JDBCUtils.safeFree(blob);
             }
         }
+        else
+            ctx.value(ctx.resultSet().getBytes(ctx.index()));
     }
 
     @Override
     public final void get(BindingGetStatementContext<byte[]> ctx) throws SQLException {
-        Blob blob = ctx.statement().getBlob(ctx.index());
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            Blob blob = ctx.statement().getBlob(ctx.index());
 
-        try {
-            ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
+            try {
+                ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
+            }
+            finally {
+                JDBCUtils.safeFree(blob);
+            }
         }
-        finally {
-            JDBCUtils.safeFree(blob);
-        }
+        else
+            ctx.value(ctx.statement().getBytes(ctx.index()));
     }
 
     @Override
     public final void get(BindingGetSQLInputContext<byte[]> ctx) throws SQLException {
-        Blob blob = ctx.input().readBlob();
+        if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            Blob blob = ctx.input().readBlob();
 
-        try {
-            ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
+            try {
+                ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
+            }
+            finally {
+                JDBCUtils.safeFree(blob);
+            }
         }
-        finally {
-            JDBCUtils.safeFree(blob);
-        }
+        else
+            ctx.value(ctx.input().readBytes());
     }
 
     static final Blob newBlob(ResourceManagingScope scope, byte[] bytes, Connection connection) throws SQLException {

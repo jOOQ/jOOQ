@@ -141,6 +141,7 @@ final class MetaImpl extends AbstractMeta {
     private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_SCHEMAS               = SQLDialect.supportedBy(FIREBIRD, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_INDEXES               = SQLDialect.supportedBy(TRINO);
 
 
 
@@ -743,6 +744,9 @@ final class MetaImpl extends AbstractMeta {
 
         @Override
         public final List<Index> getIndexes() {
+            if (NO_SUPPORT_INDEXES.contains(dsl().dialect()))
+                return emptyList();
+
             // See https://github.com/h2database/h2database/issues/3236
             return Tools.<List<Index>, RuntimeException>ignoreNPE(
                 () -> {

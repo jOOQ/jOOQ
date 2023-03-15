@@ -43,6 +43,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.concurrent.locks.Condition;
+import java.util.regex.Pattern;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -1230,6 +1232,8 @@ public enum SQLDialect {
         );
     }
 
+    private static final Pattern P_PATCH_VERSION_MYSQL = Pattern.compile("^\\d+\\.\\d+\\.(\\d+).*$");
+
     private final int patchVersion(String productVersion) {
         if (productVersion == null)
             return Integer.MAX_VALUE;
@@ -1238,7 +1242,7 @@ public enum SQLDialect {
             case H2:
                 return Integer.parseInt(productVersion.split(" ")[0].split("\\.")[2]);
             case MYSQL:
-                return Integer.parseInt(productVersion.split("\\.")[2]);
+                return Integer.parseInt(P_PATCH_VERSION_MYSQL.matcher(productVersion).replaceFirst("$1"));
             default:
                 return Integer.MAX_VALUE;
         }

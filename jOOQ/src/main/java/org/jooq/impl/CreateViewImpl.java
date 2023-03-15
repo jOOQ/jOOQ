@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.name;
@@ -74,7 +75,6 @@ import static org.jooq.impl.Tools.tryCatch;
 
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 import org.jooq.Clause;
 import org.jooq.Configuration;
@@ -83,7 +83,6 @@ import org.jooq.CreateViewAsStep;
 import org.jooq.CreateViewFinalStep;
 import org.jooq.DSLContext;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -111,6 +110,7 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
 
     private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
     private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>                                            NO_SUPPORT_COLUMN_RENAME = SQLDialect.supportedBy(TRINO);
 
     private final boolean                                                           ifNotExists;
     private final boolean                                                           orReplace;
@@ -198,9 +198,9 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     private final void accept0(Context<?> ctx) {
         Field<?>[] f = fields;
 
-        // [#2059] MemSQL doesn't support column aliases at the view level
+        // [#2059] [#11485] Some dialects don't support column aliases at the view level
         boolean rename = f != null && f.length > 0;
-        boolean renameSupported = true ;
+        boolean renameSupported = !NO_SUPPORT_COLUMN_RENAME.contains(ctx.dialect());
         boolean replaceSupported = false ;
 
 

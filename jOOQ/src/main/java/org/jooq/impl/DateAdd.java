@@ -242,6 +242,11 @@ implements
                 break;
             }
 
+            case TRINO: {
+                ctx.visit(N_DATE_ADD).sql('(').visit(inline(datePart.toString().toLowerCase())).sql(", ").visit(interval).sql(", ").visit(date).sql(')');
+                break;
+            }
+
 
 
 

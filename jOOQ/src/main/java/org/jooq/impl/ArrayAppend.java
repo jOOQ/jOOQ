@@ -97,6 +97,7 @@ implements
         switch (ctx.family()) {
             case H2:
             case HSQLDB:
+            case TRINO:
                 return false;
 
             default:
@@ -115,6 +116,7 @@ implements
 
             case H2:
             case HSQLDB:
+            case TRINO:
                 ctx.visit(arrayConcat(arg1, array(arg2)));
                 break;
 

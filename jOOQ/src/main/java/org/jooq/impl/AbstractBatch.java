@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.blocking;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
@@ -46,6 +47,7 @@ import java.util.concurrent.Executor;
 import org.jooq.Batch;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
 
 import org.reactivestreams.Subscriber;
 
@@ -54,8 +56,9 @@ import org.reactivestreams.Subscriber;
  */
 abstract class AbstractBatch implements Batch {
 
-    final Configuration configuration;
-    final DSLContext    dsl;
+    static final Set<SQLDialect> NO_SUPPORT_BATCH = SQLDialect.supportedBy(SQLDialect.TRINO);
+    final Configuration          configuration;
+    final DSLContext             dsl;
 
     AbstractBatch(Configuration configuration) {
         this.configuration = configuration;

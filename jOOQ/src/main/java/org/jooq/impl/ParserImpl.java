@@ -82,6 +82,7 @@ import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.arrayAppend;
 import static org.jooq.impl.DSL.arrayConcat;
 import static org.jooq.impl.DSL.arrayGet;
+import static org.jooq.impl.DSL.arrayOverlap;
 import static org.jooq.impl.DSL.arrayPrepend;
 import static org.jooq.impl.DSL.arrayRemove;
 import static org.jooq.impl.DSL.arrayReplace;
@@ -8512,18 +8513,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFieldAddDatePart(MINUTE);
                 else if (parseFunctionNameIf("ADD_SECONDS"))
                     return parseFieldAddDatePart(SECOND);
-                else if (parseFunctionNameIf("ARRAY_GET"))
-                    return parseFunctionArgs2((f1, f2) -> arrayGet(f1, f2));
+                else if (parseFunctionNameIf("ARRAY_APPEND"))
+                    return parseFunctionArgs2((f1, f2) -> arrayAppend((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_CAT", "ARRAY_CONCAT"))
                     return parseFunctionArgs2((f1, f2) -> arrayConcat(f1, f2));
+                else if (parseFunctionNameIf("ARRAY_GET"))
+                    return parseFunctionArgs2((f1, f2) -> arrayGet(f1, f2));
+                else if (parseFunctionNameIf("ARRAY_OVERLAP", "ARRAYS_OVERLAP"))
+                    return parseFunctionArgs2((f1, f2) -> arrayOverlap((Field<Void[]>) f1, (Field<Void[]>) f2));
+                else if (parseFunctionNameIf("ARRAY_PREPEND"))
+                    return parseFunctionArgs2((f1, f2) -> arrayPrepend((Field<Void>) f1, (Field<Void[]>) f2));
                 else if (parseFunctionNameIf("ARRAY_REMOVE"))
                     return parseFunctionArgs2((f1, f2) -> arrayRemove((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_REPLACE"))
                     return parseFunctionArgs3((f1, f2, f3) -> arrayReplace((Field<Void[]>) f1, (Field<Void>) f2, (Field<Void>) f3));
-                else if (parseFunctionNameIf("ARRAY_APPEND"))
-                    return parseFunctionArgs2((f1, f2) -> arrayAppend((Field<Void[]>) f1, (Field<Void>) f2));
-                else if (parseFunctionNameIf("ARRAY_PREPEND"))
-                    return parseFunctionArgs2((f1, f2) -> arrayPrepend((Field<Void>) f1, (Field<Void[]>) f2));
                 else if ((field = parseFieldArrayConstructIf()) != null)
                     return field;
 
@@ -8688,6 +8691,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return inline(parseStringLiteral());
                 else if ((field = parseFieldExtractIf()) != null)
                     return field;
+                else if (parseFunctionNameIf("ELEMENT_AT"))
+                    return parseFunctionArgs2(DSL::arrayGet);
                 else if (parseFunctionNameIf("EXP"))
                     return exp((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("EPOCH"))

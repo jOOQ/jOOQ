@@ -541,7 +541,8 @@ implements
 
 
                 case FIREBIRD:
-                case IGNITE: {
+                case IGNITE:
+                case TRINO: {
                     acceptInsertSelect(ctx);
                     break;
                 }

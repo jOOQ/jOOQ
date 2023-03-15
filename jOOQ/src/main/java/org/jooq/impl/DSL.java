@@ -7624,7 +7624,7 @@ public class DSL {
      * @see DSLContext#alterView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(@Stringly.Name String view) {
         return dsl().alterView(view);
     }
@@ -7639,7 +7639,7 @@ public class DSL {
      * @see DSLContext#alterView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(Name view) {
         return dsl().alterView(view);
     }
@@ -7654,7 +7654,7 @@ public class DSL {
      * @see DSLContext#alterView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(Table<?> view) {
         return dsl().alterView(view);
     }
@@ -7714,7 +7714,7 @@ public class DSL {
      * @see DSLContext#alterView(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(Table<?> view, Field<?>... fields) {
         return dsl().alterView(view, fields);
     }
@@ -7729,7 +7729,7 @@ public class DSL {
      * @see DSLContext#alterView(Table, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(Table<?> view, Collection<? extends Field<?>> fields) {
         return dsl().alterView(view, fields);
     }
@@ -7744,7 +7744,7 @@ public class DSL {
      * @see DSLContext#commentOnTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnTable(@Stringly.Name String table) {
         return dsl().commentOnTable(table);
     }
@@ -7759,7 +7759,7 @@ public class DSL {
      * @see DSLContext#commentOnTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnTable(Name table) {
         return dsl().commentOnTable(table);
     }
@@ -7774,7 +7774,7 @@ public class DSL {
      * @see DSLContext#commentOnTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnTable(Table<?> table) {
         return dsl().commentOnTable(table);
     }
@@ -7789,7 +7789,7 @@ public class DSL {
      * @see DSLContext#commentOnView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnView(@Stringly.Name String view) {
         return dsl().commentOnView(view);
     }
@@ -7804,7 +7804,7 @@ public class DSL {
      * @see DSLContext#commentOnView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnView(Name view) {
         return dsl().commentOnView(view);
     }
@@ -7819,7 +7819,7 @@ public class DSL {
      * @see DSLContext#commentOnView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnView(Table<?> view) {
         return dsl().commentOnView(view);
     }
@@ -7834,7 +7834,7 @@ public class DSL {
      * @see DSLContext#commentOnColumn(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnColumn(@Stringly.Name String field) {
         return dsl().commentOnColumn(field);
     }
@@ -7849,7 +7849,7 @@ public class DSL {
      * @see DSLContext#commentOnColumn(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnColumn(Name field) {
         return dsl().commentOnColumn(field);
     }
@@ -7864,7 +7864,7 @@ public class DSL {
      * @see DSLContext#commentOnColumn(Field)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnColumn(Field<?> field) {
         return dsl().commentOnColumn(field);
     }
@@ -8480,7 +8480,7 @@ public class DSL {
      * @see DSLContext#createTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createTableIfNotExists(@Stringly.Name String table) {
         return dsl().createTableIfNotExists(table);
     }
@@ -8495,7 +8495,7 @@ public class DSL {
      * @see DSLContext#createTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createTableIfNotExists(Name table) {
         return dsl().createTableIfNotExists(table);
     }
@@ -8510,7 +8510,7 @@ public class DSL {
      * @see DSLContext#createTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createTableIfNotExists(Table<?> table) {
         return dsl().createTableIfNotExists(table);
     }
@@ -10930,7 +10930,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static <R extends Record> QuantifiedSelect<R> all(Select<R> select) {
         return new QuantifiedSelectImpl<>(Quantifier.ALL, select);
     }
@@ -10951,7 +10951,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
         return array instanceof Field[] ? all((Field<T>[]) array) : new QuantifiedArray<>(Quantifier.ALL, val(array));
     }
@@ -10972,7 +10972,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T[]> array) {
         return new QuantifiedArray<>(Quantifier.ALL, array);
     }
@@ -11012,7 +11012,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static <R extends Record> QuantifiedSelect<R> any(Select<R> select) {
         return new QuantifiedSelectImpl<>(Quantifier.ANY, select);
     }
@@ -11033,7 +11033,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
         return array instanceof Field[] ? any((Field<T>[]) array) : new QuantifiedArray<>(Quantifier.ANY, val(array));
     }
@@ -11054,7 +11054,7 @@ public class DSL {
      * @see Field#like(QuantifiedSelect)
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T[]> array) {
         return new QuantifiedArray<>(Quantifier.ANY, array);
     }
@@ -19901,7 +19901,7 @@ public class DSL {
      * Calculate the cardinality of an array field.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<Integer> cardinality(Field<? extends Object[]> array) {
         return new Cardinality(array);
     }
@@ -19914,7 +19914,7 @@ public class DSL {
      * @param index is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T> arrayGet(Field<T[]> array, int index) {
         return new ArrayGet<>(array, Tools.field(index));
     }
@@ -19925,7 +19925,7 @@ public class DSL {
      * Get an array element at a given index (1 based).
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T> arrayGet(Field<T[]> array, Field<Integer> index) {
         return new ArrayGet<>(array, index);
     }
@@ -19936,7 +19936,7 @@ public class DSL {
      * Concatenate two arrays.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayConcat(T[] arg1, T[] arg2) {
         return new ArrayConcat<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -19947,7 +19947,7 @@ public class DSL {
      * Concatenate two arrays.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayConcat(T[] arg1, Field<T[]> arg2) {
         return new ArrayConcat<>(Tools.field(arg1), arg2);
     }
@@ -19958,7 +19958,7 @@ public class DSL {
      * Concatenate two arrays.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayConcat(Field<T[]> arg1, T[] arg2) {
         return new ArrayConcat<>(arg1, Tools.field(arg2, arg1));
     }
@@ -19969,7 +19969,7 @@ public class DSL {
      * Concatenate two arrays.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayConcat(Field<T[]> arg1, Field<T[]> arg2) {
         return new ArrayConcat<>(arg1, arg2);
     }
@@ -19982,7 +19982,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] arg1, T arg2) {
         return new ArrayAppend<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -19993,7 +19993,7 @@ public class DSL {
      * Append an element to an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] arg1, Field<T> arg2) {
         return new ArrayAppend<>(Tools.field(arg1), arg2);
     }
@@ -20006,7 +20006,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, T arg2) {
         return new ArrayAppend<>(arg1, Tools.field(arg2));
     }
@@ -20017,7 +20017,7 @@ public class DSL {
      * Append an element to an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, Field<T> arg2) {
         return new ArrayAppend<>(arg1, arg2);
     }
@@ -20030,7 +20030,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T arg1, T[] arg2) {
         return new ArrayPrepend<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -20043,7 +20043,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T arg1, Field<T[]> arg2) {
         return new ArrayPrepend<>(Tools.field(arg1), arg2);
     }
@@ -20054,7 +20054,7 @@ public class DSL {
      * Prepend an element to an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> arg1, T[] arg2) {
         return new ArrayPrepend<>(arg1, Tools.field(arg2));
     }
@@ -20065,7 +20065,7 @@ public class DSL {
      * Prepend an element to an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> arg1, Field<T[]> arg2) {
         return new ArrayPrepend<>(arg1, arg2);
     }
@@ -20076,7 +20076,7 @@ public class DSL {
      * Check if 2 arrays overlap.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Condition arrayOverlap(T[] arg1, T[] arg2) {
         return new ArrayOverlap<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -20087,7 +20087,7 @@ public class DSL {
      * Check if 2 arrays overlap.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Condition arrayOverlap(T[] arg1, Field<T[]> arg2) {
         return new ArrayOverlap<>(Tools.field(arg1), arg2);
     }
@@ -20098,7 +20098,7 @@ public class DSL {
      * Check if 2 arrays overlap.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Condition arrayOverlap(Field<T[]> arg1, T[] arg2) {
         return new ArrayOverlap<>(arg1, Tools.field(arg2, arg1));
     }
@@ -20109,7 +20109,7 @@ public class DSL {
      * Check if 2 arrays overlap.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Condition arrayOverlap(Field<T[]> arg1, Field<T[]> arg2) {
         return new ArrayOverlap<>(arg1, arg2);
     }
@@ -20122,7 +20122,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(T[] arg1, T arg2) {
         return new ArrayRemove<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -20133,7 +20133,7 @@ public class DSL {
      * Remove an element from an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(T[] arg1, Field<T> arg2) {
         return new ArrayRemove<>(Tools.field(arg1), arg2);
     }
@@ -20146,7 +20146,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(Field<T[]> arg1, T arg2) {
         return new ArrayRemove<>(arg1, Tools.field(arg2));
     }
@@ -20157,7 +20157,7 @@ public class DSL {
      * Remove an element from an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(Field<T[]> arg1, Field<T> arg2) {
         return new ArrayRemove<>(arg1, arg2);
     }
@@ -20171,7 +20171,7 @@ public class DSL {
      * @param arg3 is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(T[] arg1, T arg2, T arg3) {
         return new ArrayReplace<>(Tools.field(arg1), Tools.field(arg2), Tools.field(arg3));
     }
@@ -20182,7 +20182,7 @@ public class DSL {
      * Replace an element in an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(Field<T[]> arg1, Field<T> arg2, Field<T> arg3) {
         return new ArrayReplace<>(arg1, arg2, arg3);
     }

@@ -56,7 +56,7 @@ import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.Nullability.NULL;
 // ...
 // ...
-// ...
+import static org.jooq.SQLDialect.*;
 // ...
 // ...
 // ...
@@ -1453,12 +1453,6 @@ implements
 
 
 
-
-
-
-
-
-
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
@@ -1471,6 +1465,13 @@ implements
 
                     break;
                 }
+
+
+
+
+                case TRINO:
+                    ctx.visit(K_ALTER_COLUMN);
+                    break;
 
                 default:
                     ctx.visit(K_ALTER);
@@ -1490,6 +1491,7 @@ implements
 
 
                     case DERBY:
+                    case TRINO:
                         ctx.sql(' ').visit(K_SET_DATA_TYPE);
                         break;
 
@@ -1690,12 +1692,14 @@ implements
     }
 
     private final Keyword addColumnKeyword(Context<?> ctx) {
+        switch (ctx.family()) {
 
+            case TRINO:
+                return K_ADD_COLUMN;
 
-
-
-
-        return K_ADD;
+            default:
+                return K_ADD;
+        }
     }
 
     private final void acceptCascade(Context<?> ctx) {
@@ -1749,8 +1753,9 @@ implements
 
 
 
-
-
+            case TRINO:
+                ctx.visit(K_DROP_COLUMN);
+                break;
 
             default:
                 ctx.visit(K_DROP);

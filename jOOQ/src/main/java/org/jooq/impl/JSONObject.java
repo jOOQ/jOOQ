@@ -58,7 +58,6 @@ import org.jooq.tools.*;
 
 import java.util.*;
 import java.util.function.*;
-import java.util.function.Function;
 import java.util.stream.*;
 
 
@@ -270,7 +269,7 @@ implements
 
     static final Field<?> absentOnNullIf(
         BooleanSupplier test,
-        Function<Field<?>, Field<?>> e,
+        Function1<Field<?>, Field<?>> e,
         Field<?> array
     ) {
         if (test.getAsBoolean())

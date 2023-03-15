@@ -102,6 +102,9 @@ implements
             case HSQLDB:
                 return false;
 
+            case TRINO:
+                return false;
+
             default:
                 return true;
         }
@@ -125,6 +128,12 @@ implements
                     select(arrayAgg(when(x.isNotDistinctFrom(arg2), arg3).else_(x)).orderBy(o))
                     .from(unnest(arg1).withOrdinality().as("t", "x", "o"))
                 ));
+                break;
+            }
+
+            case TRINO: {
+                Field<T> e = DSL.field(raw("e"), arg2.getDataType());
+                ctx.visit(function(N_TRANSFORM, arg1.getDataType(), arg1, DSL.field("e -> {0}", when(e.isNotDistinctFrom(arg2), arg3).else_(e))));
                 break;
             }
 

@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
@@ -206,7 +207,7 @@ public interface DataType<T> extends Named {
      * A convenient short for form {@link #getArrayDataType()} for DSL usage
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     DataType<T[]> array() throws DataTypeException;
 
     /**

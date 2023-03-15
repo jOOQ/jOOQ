@@ -89,6 +89,23 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+            case H2:
+                return false;
+
+            case HSQLDB:
+                return false;
+
+            case TRINO:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -109,6 +126,10 @@ implements
                     select(asterisk()).from(unnest(arg1))
                     .intersectAll(select(asterisk()).from(unnest(arg2)))
                 ));
+                break;
+
+            case TRINO:
+                ctx.visit(function(N_ARRAYS_OVERLAP, BOOLEAN, arg1, arg2));
                 break;
 
             default:

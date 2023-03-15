@@ -118,6 +118,7 @@ final class Names {
     static final Name N_DENSE_RANK                  = systemName("dense_rank");
     static final Name N_DIV                         = systemName("div");
     static final Name N_DUAL                        = systemName("dual");
+    static final Name N_ELEMENT_AT                  = systemName("element_at");
     static final Name N_ELT                         = systemName("elt");
     static final Name N_EVERY                       = systemName("every");
     static final Name N_EXTRACT                     = systemName("extract");
@@ -304,6 +305,7 @@ final class Names {
     static final Name N_ACOSH                       = systemName("acosh");
     static final Name N_ACOTH                       = systemName("acoth");
     static final Name N_ANY_VALUE                   = systemName("any_value");
+    static final Name N_ARRAYS_OVERLAP              = systemName("arrays_overlap");
     static final Name N_ARRAY_APPEND                = systemName("array_append");
     static final Name N_ARRAY_CONCAT                = systemName("array_concat");
     static final Name N_ARRAY_GET                   = systemName("array_get");
@@ -561,6 +563,7 @@ final class Names {
     static final Name N_TO_DATE                     = systemName("to_date");
     static final Name N_TO_HEX                      = systemName("to_hex");
     static final Name N_TO_TIMESTAMP                = systemName("to_timestamp");
+    static final Name N_TRANSFORM                   = systemName("transform");
     static final Name N_TRANSLATE                   = systemName("translate");
     static final Name N_TRIM                        = systemName("trim");
     static final Name N_TRUNC                       = systemName("trunc");

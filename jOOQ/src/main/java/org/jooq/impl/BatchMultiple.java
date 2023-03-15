@@ -37,11 +37,10 @@
  */
 package org.jooq.impl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.stream.Stream;
 
 import org.jooq.Configuration;
-import org.jooq.ExecuteContext;
 import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.ExecuteListener;
 import org.jooq.Query;
@@ -86,7 +85,12 @@ final class BatchMultiple extends AbstractBatch {
 
     @Override
     public final int[] execute() {
-        return execute(configuration, queries);
+        Configuration c = Tools.configuration(configuration);
+
+        if (NO_SUPPORT_BATCH.contains(c.dialect()))
+            return Stream.of(queries).mapToInt(c.dsl()::execute).toArray();
+        else
+            return execute(c, queries);
     }
 
     static int[] execute(Configuration configuration, Query[] queries) {

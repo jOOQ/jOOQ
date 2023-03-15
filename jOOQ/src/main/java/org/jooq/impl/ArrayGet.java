@@ -111,14 +111,16 @@ implements
 
 
 
-
-
             case HSQLDB:
                 if (Boolean.TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)))
                     ctx.visit(new Standard());
                 else
                     ctx.visit(when(cardinality(array).ge(index), new Standard()));
 
+                break;
+
+            case TRINO:
+                ctx.visit(function(N_ELEMENT_AT, getDataType(), array, index));
                 break;
 
             default:

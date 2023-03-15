@@ -39,13 +39,14 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_VALUE;
-// ...
+import static org.jooq.SQLDialect.*;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 
 import java.util.Arrays;
+import java.util.Set;
 
 // ...
 // ...
@@ -57,6 +58,7 @@ import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.QualifiedRecord;
+import org.jooq.SQLDialect;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.NotYetImplementedException;
@@ -69,11 +71,12 @@ import org.jooq.tools.StringUtils;
  */
 abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQueryPart {
 
-    private static final Clause[] CLAUSES = { FIELD, FIELD_VALUE };
+    private static Set<SQLDialect> NO_SUPPORT_ARRAY_BINDS = SQLDialect.supportedBy(TRINO);
+    private static final Clause[]  CLAUSES                = { FIELD, FIELD_VALUE };
 
-    private final String          paramName;
-    T                             value;
-    private boolean               inline;
+    private final String           paramName;
+    T                              value;
+    private boolean                inline;
 
     AbstractParam(T value, DataType<T> type) {
         this(value, type, null);
@@ -191,10 +194,8 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         return isInline()
             || (ctx.paramType() == INLINED)
             || (ctx.paramType() == NAMED_OR_INLINED && StringUtils.isBlank(paramName))
-
-
-
-
+            // [#10153] [#11485] Some dialects support ARRAY types only as inline values
+            || NO_SUPPORT_ARRAY_BINDS.contains(ctx.dialect()) && getDataType().isArray()
         ;
     }
 

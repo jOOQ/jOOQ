@@ -10896,7 +10896,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropView(@Stringly.Name String view);
 
     /**
@@ -10905,7 +10905,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropView(Name view);
 
     /**
@@ -10914,7 +10914,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropView(Table<?> view);
 
     /**
@@ -10923,7 +10923,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropViewIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropViewIfExists(@Stringly.Name String view);
 
     /**
@@ -10932,7 +10932,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropViewIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropViewIfExists(Name view);
 
     /**
@@ -10941,7 +10941,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropViewIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropViewIfExists(Table<?> view);
 
     /**

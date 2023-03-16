@@ -305,7 +305,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                 //     return inlined(field);
 
                 // [#11485] CHAR types can't be cast to JSON: https://trino.io/docs/current/functions/json.html#cast-to-json
-                if (field.getDataType().getSQLDataType() == SQLDataType.CHAR)
+                if (type.getSQLDataType() == SQLDataType.CHAR)
+                    return field.cast(VARCHAR);
+
+                // [#11485] UUID types neither: https://github.com/trinodb/trino/issues/16579
+                else if (type.isUUID())
                     return field.cast(VARCHAR);
 
                 else

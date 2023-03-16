@@ -323,7 +323,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             if (keyword != null)
                 ctx.visit(keyword).sql(' ');
 
-            ctx.sql("$$")
+            ctx.sql('$').sql(ctx.settings().getRenderDollarQuotedStringToken()).sql('$')
                .formatSeparator()
                .data(DATA_FORCE_STATIC_STATEMENT, true);
         }
@@ -332,7 +332,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
         if (decrement(ctx.data(), DATA_BLOCK_NESTING))
             ctx.formatSeparator()
-               .sql("$$")
+               .sql('$').sql(ctx.settings().getRenderDollarQuotedStringToken()).sql('$')
                .paramType(previous);
     }
 

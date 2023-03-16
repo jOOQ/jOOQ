@@ -5047,7 +5047,7 @@ final class Tools {
             case POSTGRES:
             case YUGABYTEDB:
                 if (increment(ctx.data(), DATA_BLOCK_NESTING))
-                    ctx.visit(K_DO).sql(" $$").formatSeparator();
+                    ctx.visit(K_DO).sql(" $").sql(ctx.settings().getRenderDollarQuotedStringToken()).sql('$').formatSeparator();
 
                 ctx.visit(K_BEGIN).formatIndentStart().formatSeparator();
                 break;
@@ -5082,7 +5082,7 @@ final class Tools {
                    .visit(K_END);
 
                 if (decrement(ctx.data(), DATA_BLOCK_NESTING))
-                    ctx.sql(" $$");
+                    ctx.sql(" $").sql(ctx.settings().getRenderDollarQuotedStringToken()).sql('$');
 
                 break;
         }

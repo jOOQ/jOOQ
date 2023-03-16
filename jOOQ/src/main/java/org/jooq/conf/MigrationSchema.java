@@ -28,7 +28,7 @@ public class MigrationSchema
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31800L;
+    private final static long serialVersionUID = 31900L;
     protected String catalog;
     @XmlElement(required = true)
     protected String schema;

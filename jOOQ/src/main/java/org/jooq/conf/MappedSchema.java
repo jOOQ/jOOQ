@@ -34,7 +34,7 @@ public class MappedSchema
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31800L;
+    private final static long serialVersionUID = 31900L;
     protected String input;
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(RegexAdapter.class)

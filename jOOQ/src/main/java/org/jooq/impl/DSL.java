@@ -10529,7 +10529,7 @@ public class DSL {
      * @see DSLContext#createOrReplaceView(String, String...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static CreateViewAsStep<Record> createOrReplaceView(String view, String... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -10540,7 +10540,7 @@ public class DSL {
      * @see DSLContext#createOrReplaceView(Name, Name...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -10551,7 +10551,7 @@ public class DSL {
      * @see DSLContext#createOrReplaceView(Table, Field...)
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields) {
         return dsl().createOrReplaceView(view, fields);
     }
@@ -10572,7 +10572,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -10593,7 +10593,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -10614,7 +10614,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
     }
@@ -10886,7 +10886,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(String)
      */
     @NotNull
-    @Support({ H2, IGNITE, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     public static AlterTableStep alterTableIfExists(String table) {
         return dsl().alterTableIfExists(table);
     }
@@ -10897,7 +10897,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(Name)
      */
     @NotNull
-    @Support({ H2, IGNITE, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     public static AlterTableStep alterTableIfExists(Name table) {
         return dsl().alterTableIfExists(table);
     }
@@ -10908,7 +10908,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(Table)
      */
     @NotNull
-    @Support({ H2, IGNITE, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
     }

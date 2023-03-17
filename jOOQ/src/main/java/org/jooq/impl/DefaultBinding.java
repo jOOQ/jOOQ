@@ -2552,7 +2552,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultDayToSecondBinding<U> extends InternalBinding<DayToSecond, U> {
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-        private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2);
+        private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2, TRINO);
 
         DefaultDayToSecondBinding(DataType<DayToSecond> dataType, Converter<DayToSecond, U> converter) {
             super(dataType, converter);
@@ -2564,6 +2564,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
                 ctx.render().visit(inline(toPGInterval(value).toString()));
+
+            // [#11485] Truncate the nanosecond precision to (8) as Trino doesn't accept the usual precision of (9)
+            //          https://trino.io/docs/current/functions/datetime.html#extraction-function
+            else if (ctx.family() == TRINO)
+                ctx.render().sql(renderDTS(ctx, value, i -> apply(i.toString(), s -> s.substring(0, s.length() - 1))));
             else
                 super.sqlInline0(ctx, value);
         }
@@ -2615,12 +2620,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private final String renderDTS(Scope scope, DayToSecond dts) {
+            return renderDTS(scope, dts, Object::toString);
+        }
+
+        private final String renderDTS(Scope scope, DayToSecond dts, Function<? super DayToSecond, ? extends String> toString) {
             if (dts == null)
                 return null;
             else if (REQUIRE_STANDARD_INTERVAL.contains(scope.dialect()))
-                return "INTERVAL '" + dts.toString() + "' DAY TO SECOND";
+                return "INTERVAL '" + toString.apply(dts) + "' DAY TO SECOND";
             else
-                return dts.toString();
+                return toString.apply(dts);
         }
 
         @Override
@@ -5883,7 +5892,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultYearToMonthBinding<U> extends InternalBinding<YearToMonth, U> {
         private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-        private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2);
+        private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2, TRINO);
 
         DefaultYearToMonthBinding(DataType<YearToMonth> dataType, Converter<YearToMonth, U> converter) {
             super(dataType, converter);
@@ -5895,6 +5904,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
                 ctx.render().visit(inline(toPGInterval(value).toString()));
+            else if (ctx.family() == TRINO)
+                ctx.render().sql(renderYTM(ctx, value));
             else
                 super.sqlInline0(ctx, value);
         }
@@ -5946,12 +5957,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private final String renderYTM(Scope scope, YearToMonth ytm) {
+            return renderYTM(scope, ytm, Object::toString);
+        }
+
+        private final String renderYTM(Scope scope, YearToMonth ytm, Function<? super YearToMonth, ? extends String> toString) {
             if (ytm == null)
                 return null;
             else if (REQUIRE_STANDARD_INTERVAL.contains(scope.dialect()))
-                return "INTERVAL '" + ytm.toString() + "' YEAR TO MONTH";
+                return "INTERVAL '" + toString.apply(ytm) + "' YEAR TO MONTH";
             else
-                return ytm.toString();
+                return toString.apply(ytm);
         }
 
         @Override

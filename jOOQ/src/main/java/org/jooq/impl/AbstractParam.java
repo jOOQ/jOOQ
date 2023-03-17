@@ -71,8 +71,9 @@ import org.jooq.tools.StringUtils;
  */
 abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQueryPart {
 
-    private static Set<SQLDialect> NO_SUPPORT_ARRAY_BINDS = SQLDialect.supportedBy(TRINO);
-    private static final Clause[]  CLAUSES                = { FIELD, FIELD_VALUE };
+    private static Set<SQLDialect> NO_SUPPORT_ARRAY_BINDS    = SQLDialect.supportedBy(TRINO);
+    private static Set<SQLDialect> NO_SUPPORT_INTERVAL_BINDS = SQLDialect.supportedBy(TRINO);
+    private static final Clause[]  CLAUSES                   = { FIELD, FIELD_VALUE };
 
     private final String           paramName;
     T                              value;
@@ -196,6 +197,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
             || (ctx.paramType() == NAMED_OR_INLINED && StringUtils.isBlank(paramName))
             // [#10153] [#11485] Some dialects support ARRAY types only as inline values
             || NO_SUPPORT_ARRAY_BINDS.contains(ctx.dialect()) && getDataType().isArray()
+            || NO_SUPPORT_INTERVAL_BINDS.contains(ctx.dialect()) && getDataType().isInterval()
         ;
     }
 

@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.RenderOptionalKeyword.ON;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
@@ -108,6 +109,7 @@ import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Typed;
+import org.jooq.conf.ParamType;
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.UOperator2;
@@ -662,6 +664,12 @@ implements
 
 
 
+
+                case TRINO: {
+                    ctx.sql('(').visit(lhs).sql(' ').sql(operator.toSQL()).sql(' ').paramType(INLINED, c -> c.visit(rhs)).sql(')');
+                    break;
+                }
+
                 default:
                     ctx.sql('(').visit(lhs).sql(' ').sql(operator.toSQL()).sql(' ').visit(rhs).sql(')');
                     break;
@@ -783,7 +791,8 @@ implements
 
 
                 case POSTGRES:
-                case YUGABYTEDB: {
+                case YUGABYTEDB:
+                case TRINO: {
 
                     // This seems to be the most reliable way to avoid issues
                     // with incompatible data types and timezones

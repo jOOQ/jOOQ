@@ -302,6 +302,9 @@ final class DateDiff<T> extends AbstractField<Integer> implements UNotYetImpleme
 
 
 
+            case TRINO:
+                ctx.visit(N_DATE_DIFF).sql('(').visit(inline(p.name().toLowerCase())).sql(", ").visit(startDate).sql(", ").visit(endDate).sql(')');
+                return;
         }
 
         ctx.visit(castIfNeeded(endDate.minus(startDate), Integer.class));

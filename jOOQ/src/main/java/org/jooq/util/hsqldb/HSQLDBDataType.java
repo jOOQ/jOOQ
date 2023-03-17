@@ -69,8 +69,6 @@ import org.jooq.types.YearToSecond;
  * Supported data types for the {@link SQLDialect#HSQLDB} dialect
  *
  * @author Lukas Eder
- * @see <a href="http://hsqldb.org/doc/guide/ch09.html#datatypes-section">http://hsqldb.org/doc/guide/ch09.html#datatypes-section</a>
- * @see <a href="http://hsqldb.org/doc/2.0/guide/sqlgeneral-chapt.html#sqlgeneral_types_ops-sect">http://hsqldb.org/doc/2.0/guide/sqlgeneral-chapt.html#sqlgeneral_types_ops-sect</a>
  * @deprecated - 3.11.0 - [#7375] - This type is part of jOOQ's internal API. Do
  *             not reference this type directly from client code. Referencing
  *             this type before the {@link SQLDataType} class has been

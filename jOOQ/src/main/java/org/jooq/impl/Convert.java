@@ -1109,7 +1109,7 @@ final class Convert {
                     // If that failed, try the H2 specific format
                     if (((String) from).startsWith("INTERVAL")) {
                         try {
-                            r = ((Param<YearToMonth>) CTX.dsl().parser().parseField((String) from)).getValue();
+                            r = ((Param<YearToMonth>) CTX.get().parser().parseField((String) from)).getValue();
                             return (U) r;
                         }
                         catch (Exception ignore) {}
@@ -1133,7 +1133,7 @@ final class Convert {
                     // If that failed, try the H2 specific format
                     if (((String) from).startsWith("INTERVAL")) {
                         try {
-                            r = ((Param<DayToSecond>) CTX.dsl().parser().parseField((String) from)).getValue();
+                            r = ((Param<DayToSecond>) CTX.get().parser().parseField((String) from)).getValue();
                             return (U) r;
                         }
                         catch (Exception ignore) {}

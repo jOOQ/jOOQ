@@ -875,7 +875,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 retainComments(result, p);
                 query = patchParsedQuery(parseQuery(false, false));
-                if (query == IGNORE || query == IGNORE_NO_DELIMITER)
+                if (query == IGNORE.get() || query == IGNORE_NO_DELIMITER.get())
                     continue;
                 if (query != null)
                     result.add(query);
@@ -927,7 +927,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     if (!StringUtils.isBlank(schema = matcher.group(2)))
                         return configuration().dsl().setSchema(schema);
                     else
-                        return IGNORE;
+                        return IGNORE.get();
             }
         }
 
@@ -2595,7 +2595,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // There are many SET commands in programs like sqlplus, which we'll simply ignore
         else {
             parseUntilEOL();
-            return IGNORE_NO_DELIMITER;
+            return IGNORE_NO_DELIMITER.get();
         }
     }
 
@@ -2696,7 +2696,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseIdentifier();
             parseKeyword("IS");
             parseStringLiteral();
-            return IGNORE;
+            return IGNORE.get();
         }
 
         // TODO: (PostgreSQL)
@@ -2711,7 +2711,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseName();
             parseKeyword("IS");
             parseStringLiteral();
-            return IGNORE;
+            return IGNORE.get();
         }
         else if (parseAndGetKeywordIf(
             "POLICY",
@@ -2723,7 +2723,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseIdentifier();
             parseKeyword("IS");
             parseStringLiteral();
-            return IGNORE;
+            return IGNORE.get();
         }
         else if (parseKeywordIf("TRANSFORM FOR")) {
             parseIdentifier();
@@ -2731,7 +2731,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseIdentifier();
             parseKeyword("IS");
             parseStringLiteral();
-            return IGNORE;
+            return IGNORE.get();
         }
         else
             throw unsupportedClause();
@@ -4076,7 +4076,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             if (parseIdentifierIf() == null)
                 parseStringLiteral();
         parseKeywordIf("CASCADE");
-        return IGNORE;
+        return IGNORE.get();
     }
 
     private final DDLQuery parseDropExtension() {
@@ -4085,7 +4085,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         ifExists = ifExists || parseKeywordIf("IF EXISTS");
         if (!parseKeywordIf("CASCADE"))
             parseKeywordIf("RESTRICT");
-        return IGNORE;
+        return IGNORE.get();
     }
 
     private final DDLQuery parseAlterView() {
@@ -4101,7 +4101,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 : dsl.alterView(oldName).renameTo(newName);
         }
         else if (parseKeywordIf("OWNER TO") && parseUser() != null)
-            return IGNORE;
+            return IGNORE.get();
         else if (parseKeywordIf("SET"))
             return dsl.alterView(oldName).comment(parseOptionsDescription());
         else
@@ -4181,7 +4181,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return s.renameTo(parseSequenceName());
         }
         else if (parseKeywordIf("OWNER TO") && parseUser() != null) {
-            return IGNORE;
+            return IGNORE.get();
         }
         else {
             boolean found = false;
@@ -5301,7 +5301,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'O':
                 if (parseKeywordIf("OWNER TO") && parseUser() != null)
-                    return IGNORE;
+                    return IGNORE.get();
 
                 break;
 
@@ -5522,7 +5522,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (parseKeywordIf("ADD VALUE"))
             return s1.addValue(parseStringLiteral());
         else if (parseKeywordIf("OWNER TO") && parseUser() != null)
-            return IGNORE;
+            return IGNORE.get();
         else if (parseKeywordIf("RENAME TO"))
             return s1.renameTo(parseIdentifier());
         else if (parseKeywordIf("RENAME VALUE"))
@@ -6061,7 +6061,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return s1.dropNotNull();
         else if (parseKeywordIf("OWNER TO")) {
             parseUser();
-            return IGNORE;
+            return IGNORE.get();
         }
         else
             throw expected("ADD", "DROP", "RENAME", "SET", "OWNER TO");
@@ -6089,9 +6089,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return s1.renameTo(parseCatalogName());
         }
         else if (parseKeywordIf("OWNER TO") && parseUser() != null)
-            return IGNORE;
+            return IGNORE.get();
         else if (parseAlterDatabaseFlags(true))
-            return IGNORE;
+            return IGNORE.get();
         else
             throw expected("OWNER TO", "RENAME TO");
     }
@@ -6146,9 +6146,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return s1.renameTo(parseSchemaName());
         }
         else if (parseKeywordIf("OWNER TO") && parseUser() != null)
-            return IGNORE;
+            return IGNORE.get();
         else if (parseAlterDatabaseFlags(false))
-            return IGNORE;
+            return IGNORE.get();
         else
             throw expected("OWNER TO", "RENAME TO");
     }
@@ -13963,8 +13963,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "FOR"
     };
 
-    private static final DDLQuery IGNORE              = new IgnoreQuery();
-    private static final Query    IGNORE_NO_DELIMITER = new IgnoreQuery();
+    private static final Lazy<DDLQuery> IGNORE              = Lazy.of(() -> new IgnoreQuery());
+    private static final Lazy<Query>    IGNORE_NO_DELIMITER = Lazy.of(() -> new IgnoreQuery());
 
     static final class IgnoreQuery extends AbstractDDLQuery implements UEmpty {
         final String sql;
@@ -13974,7 +13974,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         IgnoreQuery(String sql) {
-            super(CONFIG);
+            super(CONFIG.get());
 
             this.sql = sql;
         }

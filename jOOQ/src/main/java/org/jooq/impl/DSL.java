@@ -25629,7 +25629,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<Integer> count() {
-        return count(DefaultAggregateFunction.ASTERISK);
+        return count(DefaultAggregateFunction.ASTERISK.get());
     }
 
     /**
@@ -31622,7 +31622,7 @@ public class DSL {
     @NotNull
     @Support
     public static Asterisk asterisk() {
-        return AsteriskImpl.INSTANCE;
+        return AsteriskImpl.INSTANCE.get();
     }
 
     /**

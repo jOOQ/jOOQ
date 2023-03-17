@@ -157,10 +157,10 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
 
         // [#3884] TODO: Move this logic into JSONReader to make it more generally useful
         else if (object instanceof List l) {
-            ResultImpl<R> result = new ResultImpl<>(CONFIG, row);
+            ResultImpl<R> result = new ResultImpl<>(CONFIG.get(), row);
 
             for (Object record : l)
-                result.add(newRecord(true, recordType, row, CONFIG)
+                result.add(newRecord(true, recordType, row, CONFIG.get())
                     .operate(r -> {
 
                         // [#12014] TODO: Fix this and remove workaround
@@ -179,7 +179,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
             return result;
         }
         else if (object == null)
-            return new ResultImpl<>(CONFIG, row);
+            return new ResultImpl<>(CONFIG.get(), row);
         else
             return super.convert(object);
     }

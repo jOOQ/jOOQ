@@ -218,7 +218,7 @@ implements
     @Override
     public final Field<T> generatedAlwaysAs() {
         Generator<?, ?, T> s = generatedAlwaysAsGenerator();
-        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG));
+        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG.get()));
     }
 
     @Override
@@ -524,7 +524,7 @@ implements
 
     @Override
     public /* non-final */ String getTypeName() {
-        return getTypeName0(CONFIG_UNQUOTED);
+        return getTypeName0(CONFIG_UNQUOTED.get());
     }
 
     private final String getTypeName0(Configuration configuration) {
@@ -543,7 +543,7 @@ implements
 
     @Override
     public /* final */ String getCastTypeName() {
-        return getCastTypeName0(CONFIG_UNQUOTED);
+        return getCastTypeName0(CONFIG_UNQUOTED.get());
     }
 
     private final String getCastTypeName0(Configuration configuration) {

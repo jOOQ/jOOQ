@@ -66,7 +66,7 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
 
     @Override
     protected final void toSQLEmptyList(Context<?> ctx) {
-        ctx.visit(AsteriskImpl.INSTANCE);
+        ctx.visit(AsteriskImpl.INSTANCE.get());
     }
 
     @Override

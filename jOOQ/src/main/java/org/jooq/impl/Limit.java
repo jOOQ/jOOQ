@@ -87,17 +87,17 @@ import org.jooq.impl.Tools.BooleanDataKey;
  */
 final class Limit extends AbstractQueryPart implements UTransient {
 
-    private static final Param<Integer> ZERO          = zero();
-    private static final Param<Integer> ONE           = one();
-    private static final Param<Integer> MAX           = DSL.inline(Integer.MAX_VALUE);
+    private static final Lazy<Param<Integer>> ZERO          = Lazy.of(() -> zero());
+    private static final Lazy<Param<Integer>> ONE           = Lazy.of(() -> one());
+    private static final Lazy<Param<Integer>> MAX           = Lazy.of(() -> DSL.inline(Integer.MAX_VALUE));
 
-    Field<? extends Number>             limit;
-    private Field<? extends Number>     limitOrMax    = MAX;
-    Field<? extends Number>             offset;
-    private Field<? extends Number>     offsetOrZero  = ZERO;
-    private Field<? extends Number>     offsetPlusOne = ONE;
-    boolean                             withTies;
-    boolean                             percent;
+    Field<? extends Number>                   limit;
+    private Field<? extends Number>           limitOrMax    = MAX.get();
+    Field<? extends Number>                   offset;
+    private Field<? extends Number>           offsetOrZero  = ZERO.get();
+    private Field<? extends Number>           offsetPlusOne = ONE.get();
+    boolean                                   withTies;
+    boolean                                   percent;
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -450,7 +450,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
             return;
 
         this.offset = offset;
-        this.offsetOrZero = offset == null ? ZERO : offset;
+        this.offsetOrZero = offset == null ? ZERO.get() : offset;
     }
 
     final void setLimit(Number l) {
@@ -463,7 +463,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
             return;
 
         this.limit = l;
-        this.limitOrMax = l == null ? MAX : l;
+        this.limitOrMax = l == null ? MAX.get() : l;
     }
 
     final Long getLimit() {
@@ -472,7 +472,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
         if (l instanceof Param<?> p)
             return Convert.convert(p.getValue(), long.class);
         else
-            return Convert.convert(MAX.getValue(), long.class);
+            return Convert.convert(MAX.get().getValue(), long.class);
     }
 
     final void setPercent(boolean percent) {

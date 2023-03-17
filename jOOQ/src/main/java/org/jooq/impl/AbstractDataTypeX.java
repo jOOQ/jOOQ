@@ -102,7 +102,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> readonly(boolean r) {
-        if (r && !CONFIG.commercial())
+        if (r && !CONFIG.get().commercial())
             logGeneratedAlwaysAs.info("Readonly columns", "Readonly columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
@@ -125,7 +125,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> generatedAlwaysAs(Generator<?, ?, T> g) {
-        if (g != null && !CONFIG.commercial())
+        if (g != null && !CONFIG.get().commercial())
             logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
@@ -146,7 +146,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> generationOption(GenerationOption g) {
-        if (g != null && !CONFIG.commercial())
+        if (g != null && !CONFIG.get().commercial())
             logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
@@ -167,7 +167,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
 
     @Override
     public final DataType<T> generationLocation(GenerationLocation g) {
-        if (g != null && !CONFIG.commercial())
+        if (g != null && !CONFIG.get().commercial())
             logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(

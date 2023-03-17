@@ -64,10 +64,10 @@ import org.jooq.impl.QOM.UnmodifiableList;
  * @author Lukas Eder
  */
 final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
-    static final AsteriskImpl     INSTANCE                        = new AsteriskImpl(new QueryPartList<>());
-    static final Set<SQLDialect>  SUPPORT_NATIVE_EXCEPT           = SQLDialect.supportedBy(H2);
-    static final Set<SQLDialect>  NO_SUPPORT_UNQUALIFIED_COMBINED = SQLDialect.supportedBy(FIREBIRD);
-    final QueryPartList<Field<?>> fields;
+    static final Lazy<AsteriskImpl> INSTANCE                        = Lazy.of(() -> new AsteriskImpl(new QueryPartList<>()));
+    static final Set<SQLDialect>    SUPPORT_NATIVE_EXCEPT           = SQLDialect.supportedBy(H2);
+    static final Set<SQLDialect>    NO_SUPPORT_UNQUALIFIED_COMBINED = SQLDialect.supportedBy(FIREBIRD);
+    final QueryPartList<Field<?>>   fields;
 
     private AsteriskImpl(QueryPartList<Field<?>> fields) {
         this.fields = fields;

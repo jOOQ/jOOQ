@@ -82,7 +82,7 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
 
 
             default:
-                ctx.visit(table).sql('.').visit(AsteriskImpl.INSTANCE);
+                ctx.visit(table).sql('.').visit(AsteriskImpl.INSTANCE.get());
 
                 // [#7921] H2 has native support for EXCEPT. Emulations are implemented
                 //         in SelectQueryImpl

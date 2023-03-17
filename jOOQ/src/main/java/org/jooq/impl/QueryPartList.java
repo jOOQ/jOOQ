@@ -99,10 +99,10 @@ permits
     }
 
     @SuppressWarnings("rawtypes")
-    private static final QueryPartList EMPTY_LIST = new QueryPartList<>();
+    private static final Lazy<QueryPartList> EMPTY_LIST = Lazy.of(() -> new QueryPartList<>());
 
     @SuppressWarnings("unchecked")
     static final <Q extends QueryPart> QueryPartList<Q> emptyList() {
-        return EMPTY_LIST;
+        return EMPTY_LIST.get();
     }
 }

@@ -125,7 +125,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
     @Override
     public final String getTypeName() {
-        return getTypeName(CONFIG);
+        return getTypeName(CONFIG.get());
     }
 
     @Override
@@ -136,7 +136,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
     @Override
     public final String getCastTypeName() {
-        return getCastTypeName(CONFIG);
+        return getCastTypeName(CONFIG.get());
     }
 
     @Override

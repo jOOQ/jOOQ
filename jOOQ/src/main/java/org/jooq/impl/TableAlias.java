@@ -106,7 +106,7 @@ implements
         List<Field<?>> result = Tools.map(this.alias.wrapped().fieldsRow().fields(), (f, i) -> new TableFieldImpl(
               alias.fieldAliases != null && alias.fieldAliases.length > i
             ? alias.fieldAliases[i]
-            : f.getUnqualifiedName(), removeGenerator(CONFIG, f.getDataType()), this, f.getCommentPart(), f.getBinding()
+            : f.getUnqualifiedName(), removeGenerator(CONFIG.get(), f.getDataType()), this, f.getCommentPart(), f.getBinding()
         ));
 
         return new FieldsImpl<>(result);

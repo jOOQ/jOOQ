@@ -166,7 +166,7 @@ implements
 
     @Override
     public final boolean readonlyInternal() {
-        return readonlyInternal(CONFIG);
+        return readonlyInternal(CONFIG.get());
     }
 
     @Override
@@ -184,7 +184,7 @@ implements
 
     @Override
     public final boolean computedOnServer() {
-        return computedOnServer(CONFIG);
+        return computedOnServer(CONFIG.get());
     }
 
     @Override
@@ -194,7 +194,7 @@ implements
 
     @Override
     public final boolean computedOnClient() {
-        return computedOnClient(CONFIG);
+        return computedOnClient(CONFIG.get());
     }
 
     @Override
@@ -204,7 +204,7 @@ implements
 
     @Override
     public final boolean computedOnClientStored() {
-        return computedOnClientStored(CONFIG);
+        return computedOnClientStored(CONFIG.get());
     }
 
     @Override
@@ -217,7 +217,7 @@ implements
 
     @Override
     public final boolean computedOnClientStoredOn(GeneratorStatementType statementType) {
-        return computedOnClientStoredOn(statementType, CONFIG);
+        return computedOnClientStoredOn(statementType, CONFIG.get());
     }
 
     @Override
@@ -229,7 +229,7 @@ implements
 
     @Override
     public final boolean computedOnClientVirtual() {
-        return computedOnClientVirtual(CONFIG);
+        return computedOnClientVirtual(CONFIG.get());
     }
 
     @Override
@@ -255,7 +255,7 @@ implements
     @Override
     public final Field<T> generatedAlwaysAs() {
         Generator<?, ?, T> s = generatedAlwaysAsGenerator();
-        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG));
+        return s == null ? null : s.apply(new DefaultGeneratorContext(CONFIG.get()));
     }
 
     @Override
@@ -573,7 +573,7 @@ implements
 
     @Override
     public /* non-final */ String getTypeName() {
-        return getTypeName0(CONFIG_UNQUOTED);
+        return getTypeName0(CONFIG_UNQUOTED.get());
     }
 
     private final String getTypeName0(Configuration configuration) {
@@ -592,7 +592,7 @@ implements
 
     @Override
     public /* final */ String getCastTypeName() {
-        return getCastTypeName0(CONFIG_UNQUOTED);
+        return getCastTypeName0(CONFIG_UNQUOTED.get());
     }
 
     private final String getCastTypeName0(Configuration configuration) {

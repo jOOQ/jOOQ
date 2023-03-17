@@ -67,7 +67,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // -------------------------------------------------------------------------
 
     Configuration configuration() {
-        return CONFIG;
+        return CONFIG.get();
     }
 
     // -------------------------------------------------------------------------

@@ -112,20 +112,20 @@ implements
 
 
 
-    static final Set<SQLDialect>  NO_SUPPORT_FILTER          = SQLDialect.supportedUntil(CUBRID, DERBY, IGNITE, MARIADB, MYSQL);
-    static final Set<SQLDialect>  SUPPORT_DISTINCT_RVE       = SQLDialect.supportedBy(H2, POSTGRES);
+    static final Set<SQLDialect>      NO_SUPPORT_FILTER          = SQLDialect.supportedUntil(CUBRID, DERBY, IGNITE, MARIADB, MYSQL);
+    static final Set<SQLDialect>      SUPPORT_DISTINCT_RVE       = SQLDialect.supportedBy(H2, POSTGRES);
 
-    static final Field<Integer>   ASTERISK                   = DSL.field(DSL.raw("*"), Integer.class);
-
-    // Other attributes
-    final QueryPartList<Field<?>> arguments;
-    final boolean                 distinct;
-    final ConditionProviderImpl   filter;
+    static final Lazy<Field<Integer>> ASTERISK                   = Lazy.of(() -> DSL.field(DSL.raw("*"), Integer.class));
 
     // Other attributes
-    SortFieldList                 withinGroupOrderBy;
-    SortFieldList                 keepDenseRankOrderBy;
-    boolean                       first;
+    final QueryPartList<Field<?>>     arguments;
+    final boolean                     distinct;
+    final ConditionProviderImpl       filter;
+
+    // Other attributes
+    SortFieldList                     withinGroupOrderBy;
+    SortFieldList                     keepDenseRankOrderBy;
+    boolean                           first;
 
 
     AbstractAggregateFunction(String name, DataType<T> type, Field<?>... arguments) {
@@ -292,7 +292,7 @@ implements
 
 
         else
-            ctx.visit(wrap(args).map((arg, i) -> applyFilter(ctx, arg, i) ? DSL.when(filter, arg == ASTERISK ? one() : arg) : arg).map(fun));
+            ctx.visit(wrap(args).map((arg, i) -> applyFilter(ctx, arg, i) ? DSL.when(filter, arg == ASTERISK.get() ? one() : arg) : arg).map(fun));
     }
 
     Field<?> applyMap(Context<?> ctx, Field<?> arg) {

@@ -1555,7 +1555,7 @@ final class Tools {
         Converter<T, U> result = configuration(configuration).converterProvider().provide(tType, uType);
 
         if (result == null)
-            result = CONFIG.converterProvider().provide(tType, uType);
+            result = CONFIG.get().converterProvider().provide(tType, uType);
 
         // [#11823] [#12208] The new ad-hoc conversion API tries to avoid the Class<U> literal
         //                   meaning there are perfectly reasonable API usages when using MULTISET
@@ -3776,14 +3776,14 @@ final class Tools {
 
 
 
-    static final Configuration CONFIG          = new DefaultConfiguration();
-    static final Configuration CONFIG_UNQUOTED = new DefaultConfiguration();
+    static final Lazy<Configuration> CONFIG          = Lazy.of(() -> new DefaultConfiguration());
+    static final Lazy<Configuration> CONFIG_UNQUOTED = Lazy.of(() -> {
+        DefaultConfiguration c = new DefaultConfiguration();
+        c.settings().setRenderQuotedNames(RenderQuotedNames.NEVER);
+        return c;
+    });
 
-    static {
-        CONFIG_UNQUOTED.settings().setRenderQuotedNames(RenderQuotedNames.NEVER);
-    }
-
-    static final DSLContext    CTX             = DSL.using(CONFIG);
+    static final Lazy<DSLContext>    CTX             = Lazy.of(() -> DSL.using(CONFIG.get()));
 
     /**
      * A possibly inefficient but stable way to generate an alias for any

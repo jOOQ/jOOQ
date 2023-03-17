@@ -492,7 +492,7 @@ public final class Internal {
      * Whether this is a commercial edition of jOOQ.
      */
     public static final boolean commercial() {
-        return CONFIG.commercial();
+        return CONFIG.get().commercial();
     }
 
     /**
@@ -500,7 +500,7 @@ public final class Internal {
      * if not.
      */
     public static final boolean commercial(Supplier<String> logMessage) {
-        return CONFIG.commercial(logMessage);
+        return CONFIG.get().commercial(logMessage);
     }
 
     /**
@@ -508,7 +508,7 @@ public final class Internal {
      * a message, if not.
      */
     public static final void requireCommercial(Supplier<String> logMessage) throws DataAccessException {
-        CONFIG.requireCommercial(logMessage);
+        CONFIG.get().requireCommercial(logMessage);
     }
 
 
@@ -616,7 +616,7 @@ public final class Internal {
      * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
      */
     public static final int hash(QueryPart part) {
-        return hash0(CTX.render(part));
+        return hash0(CTX.get().render(part));
     }
 
     static final int hash0(Object object) {
@@ -630,9 +630,9 @@ public final class Internal {
             return 0x7FFFFFF & object.hashCode();
     }
 
-    private static final ConverterContext CONVERTER_SCOPE = new DefaultConverterContext(CONFIG);
+    private static final Lazy<ConverterContext> CONVERTER_SCOPE = Lazy.of(() -> new DefaultConverterContext(CONFIG.get()));
 
     public static final ConverterContext converterContext() {
-        return CONVERTER_SCOPE;
+        return CONVERTER_SCOPE.get();
     }
 }

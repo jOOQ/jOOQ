@@ -83,7 +83,7 @@ import org.jooq.tools.StringUtils;
 public class SchemaImpl extends AbstractNamed implements Schema, SimpleQueryPart {
 
     private static final Clause[] CLAUSES        = { SCHEMA, SCHEMA_REFERENCE };
-    static final Schema           DEFAULT_SCHEMA = new SchemaImpl("");
+    static final Lazy<Schema>     DEFAULT_SCHEMA = Lazy.of(() -> new SchemaImpl(""));
 
     private Catalog               catalog;
 

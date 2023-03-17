@@ -535,8 +535,8 @@ implements
 
                 // [#7172] [#10274] Cannot use getQualifiedName() yet here
                 StringUtils.equals(
-                    defaultIfNull(getSchema(), DEFAULT_SCHEMA),
-                    defaultIfNull(t.getSchema(), DEFAULT_SCHEMA)
+                    defaultIfNull(getSchema(), DEFAULT_SCHEMA.get()),
+                    defaultIfNull(t.getSchema(), DEFAULT_SCHEMA.get())
                 ) &&
                 StringUtils.equals(getName(), t.getName()) &&
                 Arrays.equals(parameters, t.parameters);

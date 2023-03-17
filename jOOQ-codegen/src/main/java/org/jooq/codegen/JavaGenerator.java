@@ -5783,11 +5783,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (nn) {
                     if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))
-                        out.println("result = prime * result + %s.deepHashCode(this.%s)", columnMember, Arrays.class, columnMember);
+                        out.println("result = prime * result + %s.deepHashCode(this.%s)", Arrays.class, columnMember);
                     else if (isArrayType(getJavaType(column.getType(resolver(out)), out)))
-                        out.println("result = prime * result + %s.hashCode(this.%s)", columnMember, Arrays.class, columnMember);
+                        out.println("result = prime * result + %s.hashCode(this.%s)", Arrays.class, columnMember);
                     else
-                        out.println("result = prime * result + this.%s.hashCode()", columnMember, columnMember);
+                        out.println("result = prime * result + this.%s.hashCode()", columnMember);
                 }
                 else {
                     if (isObjectArrayType(getJavaType(column.getType(resolver(out)), out)))

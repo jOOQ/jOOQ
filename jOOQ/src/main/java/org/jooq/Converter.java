@@ -43,8 +43,6 @@ import static org.jooq.Converters.nullable;
 import java.io.Serializable;
 import java.util.function.Function;
 
-import org.jooq.exception.DataTypeException;
-import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.AbstractContextConverter;
 import org.jooq.impl.SQLDataType;
 
@@ -81,6 +79,10 @@ import org.jetbrains.annotations.NotNull;
  * <li><code>converter.from(null) == null</code></li>
  * <li><code>converter.to(null) == null</code></li>
  * </ul>
+ * <p>
+ * Irrespective of the <code>Converter</code>'s encoding of <code>null</code>
+ * values above, an implementation must be able to handle <code>null</code>
+ * values.
  * <p>
  * <h3>Creating user defined {@link DataType}s</h3>
  * <p>

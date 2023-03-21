@@ -2373,6 +2373,9 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
 
+            // [#14817] [#14727] Make sure the same behaviour as from(Object) is implemented
+            out.println("resetChangedOnNotNull()%s", semicolon);
+
             if (pojoArgument && degree > 0)
                 out.println("}");
 

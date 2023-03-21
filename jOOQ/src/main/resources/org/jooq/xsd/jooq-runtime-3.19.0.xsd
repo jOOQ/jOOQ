@@ -319,14 +319,14 @@ are present, or turned on even if they're absent.]]></jxb:javadoc></jxb:property
       </element>
       
       <element name="diagnosticsDuplicateStatements" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="diagnosticsDuplicateStatementsUsingTransformPatterns" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext) diagnostic with the {@link #transformPatterns} feature activated.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext)} diagnostic with the {@link #transformPatterns} feature activated.
 <p>
 When transforming patterns, many more complex, duplicate SQL statements can be recognised than if simply
 parsing and re-rendering the statement. This flag turns on all transformation patterns, independently of their
@@ -339,21 +339,21 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
       
       <element name="diagnosticsMissingWasNullCall" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#missingWasNullCall(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#missingWasNullCall(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="diagnosticsRepeatedStatements" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#repeatedStatements(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#repeatedStatements(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="diagnosticsConsecutiveAggregation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#consecutiveAggregation(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#consecutiveAggregation(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.
@@ -362,7 +362,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
       
       <element name="diagnosticsConcatenationInPredicate" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicate(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicate(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.
@@ -371,7 +371,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
       
       <element name="diagnosticsPossiblyWrongExpression" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#possiblyWrongExpression(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#possiblyWrongExpression(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.
@@ -380,21 +380,21 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
       
       <element name="diagnosticsTooManyColumnsFetched" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#tooManyColumnsFetched(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#tooManyColumnsFetched(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="diagnosticsTooManyRowsFetched" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#tooManyRowsFetched(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#tooManyRowsFetched(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="diagnosticsUnnecessaryWasNullCall" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#unnecessaryWasNullCall(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#unnecessaryWasNullCall(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -414,7 +414,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
       
       <element name="diagnosticsTrivialCondition" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#trivialCondition(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#trivialCondition(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.
@@ -423,7 +423,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
       
       <element name="diagnosticsNullCondition" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext) diagnostic.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
 <p>
 Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
 Once configured, this diagnostic is turned on by default.

@@ -1470,7 +1470,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1497,7 +1497,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext) diagnostic with the {@link #transformPatterns} feature activated.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext)} diagnostic with the {@link #transformPatterns} feature activated.
      * <p>
      * When transforming patterns, many more complex, duplicate SQL statements can be recognised than if simply
      * parsing and re-rendering the statement. This flag turns on all transformation patterns, independently of their
@@ -1530,7 +1530,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#missingWasNullCall(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#missingWasNullCall(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1557,7 +1557,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#repeatedStatements(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#repeatedStatements(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1584,7 +1584,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#consecutiveAggregation(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#consecutiveAggregation(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1613,7 +1613,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicate(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicate(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1642,7 +1642,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#possiblyWrongExpression(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#possiblyWrongExpression(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1671,7 +1671,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyColumnsFetched(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyColumnsFetched(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1698,7 +1698,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyRowsFetched(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyRowsFetched(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1725,7 +1725,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#unnecessaryWasNullCall(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#unnecessaryWasNullCall(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1785,7 +1785,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#trivialCondition(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#trivialCondition(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -1814,7 +1814,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext) diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.

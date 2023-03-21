@@ -1877,7 +1877,9 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println();
                     printDeprecationIfUnknownType(out, colTypeFull);
                     out.println("%soverride fun value%s(value: %s%s): %s {", visibilityPublic(), i, colType, column instanceof EmbeddableDefinition ? "" : "?", className);
-                    out.println("this.%s = value", colMember);
+
+                    // [#14785] Can't use setter, in case <kotlinNotNullRecordAttributes/> is active
+                    out.println("set(%s, value)", (i - 1));
                     out.println("return this");
                     out.println("}");
                 }

@@ -6961,6 +6961,8 @@ public class JavaGenerator extends AbstractGenerator {
         // [#10481] Use the types from replaced embeddables if applicable
         List<Definition> replacingEmbeddablesAndUnreplacedColumns = replacingEmbeddablesAndUnreplacedColumns(table);
         int degree = replacingEmbeddablesAndUnreplacedColumns.size();
+        int referencedDegree = replacingEmbeddablesAndUnreplacedColumns(table.getReferencedTable()).size();
+
         String rowType = refRowType(out, replacingEmbeddablesAndUnreplacedColumns);
         String rowTypeContravariantJava = refRowType(out, replacingEmbeddablesAndUnreplacedColumns, s -> "? super " + s);
 
@@ -7062,7 +7064,14 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
+        if (generateRecordsImplementingRecordN()
+            && degree > 0
+            && degree <= Constants.MAX_ROW_DEGREE
+
+            // [#5405] [#14830] A table valued function might have a degree that
+            //                  is different from the base table's Record type!
+            && degree == referencedDegree
+        ) {
             out.javadoc("Convenience mapping calling {@link %s#convertFrom(%s)}.", SelectField.class, Function.class);
 
             if (scala) {

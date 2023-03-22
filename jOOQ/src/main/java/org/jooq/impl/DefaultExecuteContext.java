@@ -578,6 +578,11 @@ class DefaultExecuteContext implements ExecuteContext {
                         logVersionSupport.info("Version", "Database version is supported by dialect " + dialect() + ": " + productVersion);
                 }
 
+                // [#14833] There are various reasons why the version can't be read, which we can ignore
+                catch (SQLException e) {
+                    logVersionSupport.info("Version", "Database version cannot be read: " + e.getMessage());
+                }
+
                 // [#14791] Could also be NumberFormatException when reading non-standard version numbers
                 catch (Exception e) {
                     logVersionSupport.error("Error reading database version", e);

@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.impl.Keywords.K_ROLLUP;
 import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
 import static org.jooq.impl.Names.N_ROLLUP;
 import static org.jooq.impl.SQLDataType.OTHER;
@@ -78,7 +79,7 @@ final class Rollup extends AbstractField<Object> implements QOM.Rollup {
                .visit(K_WITH_ROLLUP);
         }
         else
-            ctx.visit(N_ROLLUP).sql(" (").visit(arguments).sql(')');
+            ctx.visit(K_ROLLUP).sql(" (").visit(arguments).sql(')');
     }
 
     // -------------------------------------------------------------------------

@@ -54,7 +54,7 @@
         <!-- Examples and/or extension modules use these dependencies -->
         <hibernate.version>5.6.1.Final</hibernate.version>
         <liquibase.version>4.4.3</liquibase.version>
-        <spring.version>5.3.18</spring.version>
+        <spring.version>5.3.26</spring.version>
         <spring.boot.version>2.6.1</spring.boot.version>
         <errorprone.version>2.10.0</errorprone.version>
         <testcontainers.version>1.16.2</testcontainers.version>

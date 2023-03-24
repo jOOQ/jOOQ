@@ -54,7 +54,7 @@
         <!-- Examples and/or extension modules use these dependencies -->
         <hibernate.version>5.6.5.Final</hibernate.version>
         <liquibase.version>4.8.0</liquibase.version>
-        <spring.version>5.3.20</spring.version>
+        <spring.version>5.3.26</spring.version>
         <spring.boot.version>2.6.1</spring.boot.version>
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
         <errorprone.version>2.11.0</errorprone.version>

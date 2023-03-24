@@ -103,6 +103,7 @@ final class Keywords {
     static final Keyword K_CONTINUE                 = keyword("continue");
     static final Keyword K_CREATE                   = keyword("create");
     static final Keyword K_CROSS_JOIN_LATERAL       = keyword("cross join lateral");
+    static final Keyword K_CUBE                     = keyword("cube");
     static final Keyword K_CURRENT                  = keyword("current");
     static final Keyword K_CURRENT_ROW              = keyword("current row");
     static final Keyword K_CURRENT_SCHEMA           = keyword("current_schema");
@@ -351,6 +352,7 @@ final class Keywords {
     static final Keyword K_RETURNS                  = keyword("returns");
     static final Keyword K_REVERSE                  = keyword("reverse");
     static final Keyword K_REVOKE                   = keyword("revoke");
+    static final Keyword K_ROLLUP                   = keyword("rollup");
     static final Keyword K_ROOT                     = keyword("root");
     static final Keyword K_ROW                      = keyword("row");
     static final Keyword K_ROWCOUNT                 = keyword("rowcount");

@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Names.N_CUBE;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.EMPTY_FIELD_OR_ROW;
@@ -62,7 +63,7 @@ final class Cube extends AbstractField<Object> implements QOM.Cube {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(N_CUBE).sql('(').visit(arguments).sql(')');
+        ctx.visit(K_CUBE).sql(" (").visit(arguments).sql(')');
     }
 
     // -------------------------------------------------------------------------

@@ -133,7 +133,7 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
 
     public List<String> getFields() {
         if (fields == null) {
-            fields = new ArrayList<String>();
+            fields = new ArrayList<>();
         }
         return fields;
     }
@@ -144,7 +144,7 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
 
     public List<String> getReferencedFields() {
         if (referencedFields == null) {
-            referencedFields = new ArrayList<String>();
+            referencedFields = new ArrayList<>();
         }
         return referencedFields;
     }

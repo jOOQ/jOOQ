@@ -102,7 +102,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
 
     public List<SchemaMappingType> getSchemata() {
         if (schemata == null) {
-            schemata = new ArrayList<SchemaMappingType>();
+            schemata = new ArrayList<>();
         }
         return schemata;
     }

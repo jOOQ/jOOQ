@@ -1075,7 +1075,7 @@ implements
         if (getDataType().isDateTime() && ((rhs = nullSafe(value)).getDataType().isNumeric() || rhs.getDataType().isInterval()))
             return new Expression<>(ADD, false, this, rhs);
         else
-            return new Add<T>(this, (Field<T>) nullSafe(value, getDataType()));
+            return new Add<>(this, (Field<T>) nullSafe(value, getDataType()));
     }
 
     @Override
@@ -1091,7 +1091,7 @@ implements
         if (getDataType().isDateTime() && ((rhs = nullSafe(value)).getDataType().isNumeric() || rhs.getDataType().isInterval()))
             return new Expression<>(SUBTRACT, false, this, rhs);
         else
-            return new Sub<T>(this, (Field<T>) nullSafe(value, getDataType()));
+            return new Sub<>(this, (Field<T>) nullSafe(value, getDataType()));
     }
 
     @Override
@@ -1102,7 +1102,7 @@ implements
     @SuppressWarnings("unchecked")
     @Override
     public final Field<T> mul(Field<? extends Number> value) {
-        return new Mul<T>(this, (Field<T>) (getDataType().isTemporal() || nullSafe(value).getDataType().isTemporal()
+        return new Mul<>(this, (Field<T>) (getDataType().isTemporal() || nullSafe(value).getDataType().isTemporal()
             ? nullSafe(value)
             : nullSafe(value, getDataType())
         ));
@@ -1116,7 +1116,7 @@ implements
     @SuppressWarnings("unchecked")
     @Override
     public final Field<T> div(Field<? extends Number> value) {
-        return new Div<T>(this, (Field<T>) (getDataType().isTemporal() || nullSafe(value).getDataType().isTemporal()
+        return new Div<>(this, (Field<T>) (getDataType().isTemporal() || nullSafe(value).getDataType().isTemporal()
             ? nullSafe(value)
             : nullSafe(value, getDataType())
         ));

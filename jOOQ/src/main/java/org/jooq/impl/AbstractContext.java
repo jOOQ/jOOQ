@@ -229,7 +229,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             ? CastMode.NEVER
             : CastMode.DEFAULT;
         this.languageContext = LanguageContext.QUERY;
-        this.scopeStack = new ScopeStack<QueryPart, ScopeStackElement>(ScopeStackElement::new);
+        this.scopeStack = new ScopeStack<>(ScopeStackElement::new);
     }
 
     // ------------------------------------------------------------------------

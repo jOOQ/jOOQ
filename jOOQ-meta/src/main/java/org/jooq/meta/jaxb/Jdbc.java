@@ -211,7 +211,7 @@ public class Jdbc implements Serializable, XMLAppendable
 
     public List<Property> getProperties() {
         if (properties == null) {
-            properties = new ArrayList<Property>();
+            properties = new ArrayList<>();
         }
         return properties;
     }

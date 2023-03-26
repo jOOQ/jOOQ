@@ -61,7 +61,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public List<SyntheticReadonlyColumnType> getReadonlyColumns() {
         if (readonlyColumns == null) {
-            readonlyColumns = new ArrayList<SyntheticReadonlyColumnType>();
+            readonlyColumns = new ArrayList<>();
         }
         return readonlyColumns;
     }
@@ -72,7 +72,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public List<SyntheticReadonlyRowidType> getReadonlyRowids() {
         if (readonlyRowids == null) {
-            readonlyRowids = new ArrayList<SyntheticReadonlyRowidType>();
+            readonlyRowids = new ArrayList<>();
         }
         return readonlyRowids;
     }
@@ -83,7 +83,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public List<SyntheticColumnType> getColumns() {
         if (columns == null) {
-            columns = new ArrayList<SyntheticColumnType>();
+            columns = new ArrayList<>();
         }
         return columns;
     }
@@ -94,7 +94,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public List<SyntheticIdentityType> getIdentities() {
         if (identities == null) {
-            identities = new ArrayList<SyntheticIdentityType>();
+            identities = new ArrayList<>();
         }
         return identities;
     }
@@ -105,7 +105,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public List<SyntheticPrimaryKeyType> getPrimaryKeys() {
         if (primaryKeys == null) {
-            primaryKeys = new ArrayList<SyntheticPrimaryKeyType>();
+            primaryKeys = new ArrayList<>();
         }
         return primaryKeys;
     }
@@ -116,7 +116,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public List<SyntheticUniqueKeyType> getUniqueKeys() {
         if (uniqueKeys == null) {
-            uniqueKeys = new ArrayList<SyntheticUniqueKeyType>();
+            uniqueKeys = new ArrayList<>();
         }
         return uniqueKeys;
     }
@@ -127,7 +127,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public List<SyntheticForeignKeyType> getForeignKeys() {
         if (foreignKeys == null) {
-            foreignKeys = new ArrayList<SyntheticForeignKeyType>();
+            foreignKeys = new ArrayList<>();
         }
         return foreignKeys;
     }
@@ -138,7 +138,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public List<SyntheticViewType> getViews() {
         if (views == null) {
-            views = new ArrayList<SyntheticViewType>();
+            views = new ArrayList<>();
         }
         return views;
     }
@@ -149,7 +149,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public List<SyntheticDaoType> getDaos() {
         if (daos == null) {
-            daos = new ArrayList<SyntheticDaoType>();
+            daos = new ArrayList<>();
         }
         return daos;
     }

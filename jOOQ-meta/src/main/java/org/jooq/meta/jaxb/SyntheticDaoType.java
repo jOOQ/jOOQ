@@ -129,7 +129,7 @@ public class SyntheticDaoType implements Serializable, XMLAppendable
 
     public List<SyntheticDaoMethodType> getMethods() {
         if (methods == null) {
-            methods = new ArrayList<SyntheticDaoMethodType>();
+            methods = new ArrayList<>();
         }
         return methods;
     }

@@ -191,7 +191,7 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
 
     public List<EmbeddableField> getFields() {
         if (fields == null) {
-            fields = new ArrayList<EmbeddableField>();
+            fields = new ArrayList<>();
         }
         return fields;
     }

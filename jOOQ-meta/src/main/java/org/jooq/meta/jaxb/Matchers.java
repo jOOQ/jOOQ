@@ -65,7 +65,7 @@ public class Matchers implements Serializable, XMLAppendable
 
     public List<MatchersCatalogType> getCatalogs() {
         if (catalogs == null) {
-            catalogs = new ArrayList<MatchersCatalogType>();
+            catalogs = new ArrayList<>();
         }
         return catalogs;
     }
@@ -76,7 +76,7 @@ public class Matchers implements Serializable, XMLAppendable
 
     public List<MatchersSchemaType> getSchemas() {
         if (schemas == null) {
-            schemas = new ArrayList<MatchersSchemaType>();
+            schemas = new ArrayList<>();
         }
         return schemas;
     }
@@ -87,7 +87,7 @@ public class Matchers implements Serializable, XMLAppendable
 
     public List<MatchersTableType> getTables() {
         if (tables == null) {
-            tables = new ArrayList<MatchersTableType>();
+            tables = new ArrayList<>();
         }
         return tables;
     }
@@ -98,7 +98,7 @@ public class Matchers implements Serializable, XMLAppendable
 
     public List<MatchersFieldType> getFields() {
         if (fields == null) {
-            fields = new ArrayList<MatchersFieldType>();
+            fields = new ArrayList<>();
         }
         return fields;
     }
@@ -109,7 +109,7 @@ public class Matchers implements Serializable, XMLAppendable
 
     public List<MatchersRoutineType> getRoutines() {
         if (routines == null) {
-            routines = new ArrayList<MatchersRoutineType>();
+            routines = new ArrayList<>();
         }
         return routines;
     }
@@ -120,7 +120,7 @@ public class Matchers implements Serializable, XMLAppendable
 
     public List<MatchersSequenceType> getSequences() {
         if (sequences == null) {
-            sequences = new ArrayList<MatchersSequenceType>();
+            sequences = new ArrayList<>();
         }
         return sequences;
     }
@@ -131,7 +131,7 @@ public class Matchers implements Serializable, XMLAppendable
 
     public List<MatchersEnumType> getEnums() {
         if (enums == null) {
-            enums = new ArrayList<MatchersEnumType>();
+            enums = new ArrayList<>();
         }
         return enums;
     }
@@ -142,7 +142,7 @@ public class Matchers implements Serializable, XMLAppendable
 
     public List<MatchersEmbeddableType> getEmbeddables() {
         if (embeddables == null) {
-            embeddables = new ArrayList<MatchersEmbeddableType>();
+            embeddables = new ArrayList<>();
         }
         return embeddables;
     }

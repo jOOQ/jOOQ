@@ -371,7 +371,7 @@ implements
     @Override
     public final Function1<? super Field<?>, ? extends QOM.JSONArrayAgg<J>> $constructor() {
         return f -> {
-            JSONArrayAgg<J> r = new JSONArrayAgg<J>(getDataType(), f, distinct);
+            JSONArrayAgg<J> r = new JSONArrayAgg<>(getDataType(), f, distinct);
             r.onNull = onNull;
             r.returning = returning;
             return r;

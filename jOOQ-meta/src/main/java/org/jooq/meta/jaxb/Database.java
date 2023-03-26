@@ -326,7 +326,7 @@ public class Database implements Serializable, XMLAppendable
      */
     public List<RegexFlag> getRegexFlags() {
         if (regexFlags == null) {
-            regexFlags = new ArrayList<RegexFlag>();
+            regexFlags = new ArrayList<>();
         }
         return this.regexFlags;
     }
@@ -1931,7 +1931,7 @@ public class Database implements Serializable, XMLAppendable
 
     public List<Property> getProperties() {
         if (properties == null) {
-            properties = new ArrayList<Property>();
+            properties = new ArrayList<>();
         }
         return properties;
     }
@@ -1942,7 +1942,7 @@ public class Database implements Serializable, XMLAppendable
 
     public List<CommentType> getComments() {
         if (comments == null) {
-            comments = new ArrayList<CommentType>();
+            comments = new ArrayList<>();
         }
         return comments;
     }
@@ -1953,7 +1953,7 @@ public class Database implements Serializable, XMLAppendable
 
     public List<CatalogMappingType> getCatalogs() {
         if (catalogs == null) {
-            catalogs = new ArrayList<CatalogMappingType>();
+            catalogs = new ArrayList<>();
         }
         return catalogs;
     }
@@ -1964,7 +1964,7 @@ public class Database implements Serializable, XMLAppendable
 
     public List<SchemaMappingType> getSchemata() {
         if (schemata == null) {
-            schemata = new ArrayList<SchemaMappingType>();
+            schemata = new ArrayList<>();
         }
         return schemata;
     }
@@ -1975,7 +1975,7 @@ public class Database implements Serializable, XMLAppendable
 
     public List<EmbeddableDefinitionType> getEmbeddables() {
         if (embeddables == null) {
-            embeddables = new ArrayList<EmbeddableDefinitionType>();
+            embeddables = new ArrayList<>();
         }
         return embeddables;
     }
@@ -1987,7 +1987,7 @@ public class Database implements Serializable, XMLAppendable
     @Deprecated
     public List<CustomType> getCustomTypes() {
         if (customTypes == null) {
-            customTypes = new ArrayList<CustomType>();
+            customTypes = new ArrayList<>();
         }
         return customTypes;
     }
@@ -2000,7 +2000,7 @@ public class Database implements Serializable, XMLAppendable
     @Deprecated
     public List<EnumType> getEnumTypes() {
         if (enumTypes == null) {
-            enumTypes = new ArrayList<EnumType>();
+            enumTypes = new ArrayList<>();
         }
         return enumTypes;
     }
@@ -2012,7 +2012,7 @@ public class Database implements Serializable, XMLAppendable
 
     public List<ForcedType> getForcedTypes() {
         if (forcedTypes == null) {
-            forcedTypes = new ArrayList<ForcedType>();
+            forcedTypes = new ArrayList<>();
         }
         return forcedTypes;
     }

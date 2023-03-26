@@ -109,7 +109,7 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
 
     public List<String> getFields() {
         if (fields == null) {
-            fields = new ArrayList<String>();
+            fields = new ArrayList<>();
         }
         return fields;
     }

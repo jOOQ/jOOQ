@@ -378,7 +378,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala)
             return "";
         else if (kotlin)
-            return "".equals(visibility()) ? visibility() : "public ";
+            return "public ";
         else
             return "public ";
     }
@@ -2522,7 +2522,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (kotlin) {
             out.println();
-            out.println("%sopen %svar %s: %s", visibility(override), (generateInterfaces() ? "override " : ""), member, type);
+            out.println("%sopen %svar %s: %s", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type);
             out.tab(1).println("set(value): %s {", setterReturnType);
         }
         else {
@@ -5338,7 +5338,10 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateEmbeddablePojoGetter(EmbeddableDefinition embeddable, @SuppressWarnings("unused") int index, JavaWriter out) {
         final String columnTypeFull = getStrategy().getFullJavaClassName(embeddable, Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
+        final String columnTypeDeclaredFull = getStrategy().getFullJavaClassName(embeddable, generateInterfaces() ? Mode.INTERFACE : Mode.POJO);
+        final String columnTypeDeclared = out.ref(columnTypeDeclaredFull);
         final String columnGetter = getStrategy().getJavaGetterName(embeddable, Mode.POJO);
+        final String columnMember = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
         final String name = embeddable.getQualifiedOutputName();
 
         // Getter
@@ -5347,10 +5350,18 @@ public class JavaGenerator extends AbstractGenerator {
 
         printNonnullAnnotation(out);
 
-        if (scala)
+        if (scala) {
             out.println("%sdef %s: %s = new %s(", visibility(generateInterfaces()), scalaWhitespaceSuffix(columnGetter), columnType, columnType);
-        else if (kotlin)
-            out.tab(1).println("get(): %s = %s(", columnType, columnType);
+        }
+        else if (kotlin) {
+
+            // [#14853] The POJO property hasn't been generated in the setter, if the POJO
+            //          is immutable, as there are no setters.
+            if (generateImmutablePojos())
+                generateEmbeddablePojoProperty(out, generateImmutableInterfaces(), generateInterfaces(), columnTypeDeclared, columnMember);
+
+            out.tab(1).println("get(): %s = %s(", columnTypeDeclared, columnType);
+        }
         else {
             out.overrideIf(generateInterfaces());
             out.println("%s%s %s() {", visibility(generateInterfaces()), columnType, columnGetter);
@@ -5439,7 +5450,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sdef %s(value: %s): %s = {", visibility(override), columnSetter, columnType, columnSetterReturnType);
         }
         else if (kotlin) {
+<<<<<<< version-3.17.0-branch
             out.println("%svar %s: %s", visibility(override), columnMember, columnType);
+=======
+            generateEmbeddablePojoProperty(out, false, override, columnType, columnMember);
+>>>>>>> fa6d0ee [jOOQ/jOOQ#14853] Kotlin Code generator generates invalid code for embeddables in POJOs when immutable interfaces is activated
             out.tab(1).println("set(value): %s {", columnSetterReturnType);
         }
         else {
@@ -5471,6 +5486,10 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
         else
             out.println("}");
+    }
+
+    private void generateEmbeddablePojoProperty(JavaWriter out, boolean immutable, boolean override, String columnType, String columnMember) {
+        out.println("%s%s%s %s: %s", visibility(override), override ? "override " : "", immutable ? "val" : "var", columnMember, columnType);
     }
 
     /**

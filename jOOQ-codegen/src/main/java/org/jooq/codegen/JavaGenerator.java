@@ -5450,11 +5450,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sdef %s(value: %s): %s = {", visibility(override), columnSetter, columnType, columnSetterReturnType);
         }
         else if (kotlin) {
-<<<<<<< version-3.17.0-branch
-            out.println("%svar %s: %s", visibility(override), columnMember, columnType);
-=======
             generateEmbeddablePojoProperty(out, false, override, columnType, columnMember);
->>>>>>> fa6d0ee [jOOQ/jOOQ#14853] Kotlin Code generator generates invalid code for embeddables in POJOs when immutable interfaces is activated
             out.tab(1).println("set(value): %s {", columnSetterReturnType);
         }
         else {

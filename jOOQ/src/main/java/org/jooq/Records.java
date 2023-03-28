@@ -41,6 +41,7 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
 
 import java.lang.reflect.Array;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -49,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -594,7 +596,8 @@ public final class Records {
      *    .collect(intoHierarchy(
      *        r -&gt; r.value1(),
      *        r -&gt; r.value2(),
-     *        (r, l) -&gt; new File(r.value3(), l)
+     *        r -&gt; new File(r.value3(), new ArrayList<>()),
+     *        (p, c) -&gt; p.contents().add(c)
      *    ));
      * </code>
      * </pre>
@@ -605,80 +608,34 @@ public final class Records {
      * @param keyMapper A function that extract a key from a record
      * @param parentKeyMapper A function that extracts the parent key from a
      *            record.
-     * @param recordMapper A function that maps a record and a list of child
-     *            values to a new value type.
+     * @param nodeMapper A function that maps a record to a new value type.
+     * @param parentChildAppender A (parent, child) consumer that adds the child
+     *            to its parent.
      */
     public static final <K, E, R extends Record> Collector<R, ?, List<E>> intoHierarchy(
         Function<? super R, ? extends K> keyMapper,
         Function<? super R, ? extends K> parentKeyMapper,
-        BiFunction<? super R, ? super List<E>, ? extends E> recordMapper
-    ) {
-        return intoHierarchy(keyMapper, parentKeyMapper, recordMapper, ArrayList::new);
-    }
-
-    /**
-     * Create a collector that can collect {@link Record} resulting from a
-     * {@link ResultQuery} into a hierarchy of custom data types.
-     * <p>
-     * For example:
-     * <p>
-     *
-     * <pre>
-     * <code>
-     * record File(String name, List&lt;File&gt; contents) {}
-     *
-     * List&lt;File&gt; files =
-     * ctx.select(FILE.ID, FILE.PARENT_ID, FILE.NAME)
-     *    .from(FILE)
-     *    .collect(intoHierarchy(
-     *        r -&gt; r.value1(),
-     *        r -&gt; r.value2(),
-     *        (r, l) -&gt; new File(r.value3(), l),
-     *        ArrayList::new
-     *    ));
-     * </code>
-     * </pre>
-     *
-     * @param <K> The key type (e.g. an <code>ID</code>)
-     * @param <E> The value type (e.g. a POJO)
-     * @param <R> The record type
-     * @param keyMapper A function that extract a key from a record
-     * @param parentKeyMapper A function that extracts the parent key from a
-     *            record.
-     * @param collectionFactory A supplier for new child value collections.
-     * @param recordMapper A function that maps a record and a list of child
-     *            values to a new value type.
-     */
-    public static final <K, E, C extends Collection<E>, R extends Record> Collector<R, ?, List<E>> intoHierarchy(
-        Function<? super R, ? extends K> keyMapper,
-        Function<? super R, ? extends K> parentKeyMapper,
-        BiFunction<? super R, ? super C, ? extends E> recordMapper,
-        Supplier<? extends C> collectionFactory
+        Function<? super R, ? extends E> nodeMapper,
+        BiConsumer<? super E, ? super E> parentChildAppender
     ) {
         return collectingAndThen(
-            intoMap(keyMapper, r -> {
-                C e = collectionFactory.get();
-                return new Tuple3<R, C, E>(r, e, recordMapper.apply(r, e));
-            }),
+            intoMap(keyMapper, r -> new SimpleImmutableEntry<R, E>(r, nodeMapper.apply(r))),
             m -> {
                 List<E> r = new ArrayList<>();
 
                 m.forEach((k, v) -> {
-                    K parent = parentKeyMapper.apply(v.t1());
-                    E child = v.t3();
+                    Entry<R, E> parent = m.get(parentKeyMapper.apply(v.getKey()));
 
-                    if (m.containsKey(parent))
-                        m.get(parent).t2().add(child);
+                    if (parent != null)
+                        parentChildAppender.accept(parent.getValue(), v.getValue());
                     else
-                        r.add(child);
+                        r.add(v.getValue());
                 });
 
                 return r;
             }
         );
     }
-
-    private static final record Tuple3<T1, T2, T3>(T1 t1, T2 t2, T3 t3) {}
 
 
 

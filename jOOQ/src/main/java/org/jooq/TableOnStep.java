@@ -190,7 +190,10 @@ public interface TableOnStep<R extends Record> {
      *
      * @see #onKey(ForeignKey)
      * @throws DataAccessException If there is no non-ambiguous key definition
-     *             known to jOOQ
+     *             known to jOOQ. <em>Please note that if you evolve your
+     *             schema, a previously non-ambiguous <code>ON KEY</code> clause
+     *             can suddenly become ambiguous on an existing query, so use
+     *             this clause with care.</em>
      */
     @NotNull
     @Support
@@ -204,7 +207,10 @@ public interface TableOnStep<R extends Record> {
      *
      * @see #onKey(ForeignKey)
      * @throws DataAccessException If there is no non-ambiguous key definition
-     *             known to jOOQ
+     *             known to jOOQ. <em>Please note that if you evolve your
+     *             schema, a previously non-ambiguous <code>ON KEY</code> clause
+     *             can suddenly become ambiguous on an existing query, so use
+     *             this clause with care.</em>
      */
     @NotNull
     @Support

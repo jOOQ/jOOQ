@@ -43,7 +43,7 @@ import java.io.PrintWriter;
 
 import org.jooq.checker.Tools.Printer;
 
-import org.checkerframework.framework.source.Result;
+
 import org.checkerframework.framework.source.SourceChecker;
 
 /**
@@ -54,7 +54,7 @@ import org.checkerframework.framework.source.SourceChecker;
 abstract class AbstractChecker extends SourceChecker {
 
     Void error(Object node, String message) {
-        getChecker().report(Result.failure(message, node), node);
+        this.getSourceChecker().reportError(node, message);
         return null;
     }
 
@@ -69,5 +69,9 @@ abstract class AbstractChecker extends SourceChecker {
         catch (IOException ignore) {}
 
         return null;
+    }
+
+    SourceChecker getSourceChecker() {
+        return this;
     }
 }

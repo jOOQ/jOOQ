@@ -40,8 +40,8 @@ package org.jooq.checker;
 import static java.util.Arrays.asList;
 import static org.checkerframework.javacutil.TreeUtils.elementFromDeclaration;
 import static org.checkerframework.javacutil.TreeUtils.elementFromUse;
-import static org.checkerframework.javacutil.TreeUtils.enclosingClass;
-import static org.checkerframework.javacutil.TreeUtils.enclosingMethod;
+import static org.checkerframework.javacutil.TreePathUtil.enclosingClass;
+import static org.checkerframework.javacutil.TreePathUtil.enclosingMethod;
 
 import java.io.PrintWriter;
 import java.util.EnumSet;

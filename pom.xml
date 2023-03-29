@@ -537,7 +537,7 @@
             <dependency>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>checker</artifactId>
-                <version>2.5.6</version>
+                <version>3.19.0</version>
             </dependency>
 
             <dependency>
@@ -613,8 +613,8 @@
                         <maxmem>512m</maxmem>
                         <meminitial>256m</meminitial>
                         <encoding>UTF-8</encoding>
-
-                        <release>17</release>
+                        <!-- https://youtrack.jetbrains.com/issue/IDEA-176994 -->
+                        <!-- <release>17</release> -->
 
 
                         <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->
@@ -627,6 +627,8 @@
                              But don't fail (yet) -->
                         <compilerArgs>
                             <arg>-Xlint:varargs</arg>
+                            <arg>--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+                            <arg>--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
                         </compilerArgs>
                     </configuration>
                 </plugin>

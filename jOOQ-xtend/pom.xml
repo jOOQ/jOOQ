@@ -45,8 +45,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <encoding>UTF-8</encoding>
-
-                    <release>17</release>
+                    <!-- https://youtrack.jetbrains.com/issue/IDEA-176994 -->
+                    <!-- <release>17</release> -->
 
 
                     <!-- IntelliJ needs these https://youtrack.jetbrains.com/issue/IDEA-195472 -->

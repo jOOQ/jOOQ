@@ -55,7 +55,7 @@ public class PlainSQLChecker extends AbstractChecker {
 
     @Override
     protected SourceVisitor<Void, Void> createSourceVisitor() {
-        return new SourceVisitor<Void, Void>(getChecker()) {
+        return new SourceVisitor<Void, Void>(getSourceChecker()) {
 
             @Override
             public Void visitMethodInvocation(MethodInvocationTree node, Void p) {

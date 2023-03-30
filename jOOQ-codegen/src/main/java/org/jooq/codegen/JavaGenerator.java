@@ -56,7 +56,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
-import static org.jooq.meta.jaxb.VisibilityModifier.PUBLIC;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
@@ -87,8 +86,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import jakarta.xml.bind.DatatypeConverter;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Catalog;
@@ -174,6 +171,7 @@ import org.jooq.meta.TypedElementDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
+import org.jooq.meta.jaxb.VisibilityModifier;
 // ...
 // ...
 // ...
@@ -370,25 +368,24 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String visibility() {
-        if (visibility == null) {
-            switch (generateVisibilityModifier()) {
-                case NONE:
-                    visibility = "";
-                    break;
-                case PUBLIC:
-                    visibility = scala ? "" : "public ";
-                    break;
-                case INTERNAL:
-                    visibility = scala ? "" : kotlin ? "internal " : "public ";
-                    break;
-                case DEFAULT:
-                default:
-                    visibility = scala || kotlin ? "" : "public ";
-                    break;
-            }
-        }
+        if (visibility == null)
+            visibility = visibility(generateVisibilityModifier());
 
         return visibility;
+    }
+
+    private String visibility(VisibilityModifier modifier) {
+        switch (modifier) {
+            case NONE:
+                return "";
+            case PUBLIC:
+                return scala ? "" : "public ";
+            case INTERNAL:
+                return scala ? "" : kotlin ? "internal " : "public ";
+            case DEFAULT:
+            default:
+                return scala || kotlin ? "" : "public ";
+        }
     }
 
     @Override

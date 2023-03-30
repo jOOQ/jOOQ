@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -48,7 +45,6 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.QueryPart;
 import org.jooq.impl.QOM.UProxy;
 
 /**
@@ -58,7 +54,14 @@ import org.jooq.impl.QOM.UProxy;
  * @author Lukas Eder
  */
 @SuppressWarnings("unchecked")
-final class FieldProxy<T> extends AbstractField<T> implements TableField<Record, T>, UProxy<Field<T>> {
+final class FieldProxy<T>
+extends
+    AbstractField<T>
+implements
+    TableField<Record, T>,
+    UProxy<Field<T>>,
+    ScopeMappable
+{
 
     /**
      * The resolved field after a successful meta lookup.

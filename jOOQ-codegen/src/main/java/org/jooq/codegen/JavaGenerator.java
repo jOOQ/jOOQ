@@ -5164,7 +5164,8 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%srecord %s(", visibility(), className);
 
                 forEach(getTypedElements(tableUdtOrEmbeddable), (column, separator) -> {
-                    out.println("%s %s%s",
+                    out.println("[[before=@][after= ][%s]]%s %s%s",
+                        list(nullableOrNonnullAnnotation(out, column)),
                         out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
                         getStrategy().getJavaMemberName(column, Mode.POJO),
                         separator);

@@ -59,6 +59,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
+import static org.jooq.meta.jaxb.VisibilityModifier.PUBLIC;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
@@ -377,8 +378,15 @@ public class JavaGenerator extends AbstractGenerator {
     private String visibilityPublic() {
         if (scala)
             return "";
+
+        // [#14855] Make sure visibility isn't reduced to anything less than "public"
+        // [#14883] Don't generate explicit "public" unless explicitly requested
         else if (kotlin)
-            return "public ";
+            return visibility(
+                generateVisibilityModifier() == VisibilityModifier.PUBLIC
+                ? VisibilityModifier.PUBLIC
+                : VisibilityModifier.DEFAULT
+            );
         else
             return "public ";
     }

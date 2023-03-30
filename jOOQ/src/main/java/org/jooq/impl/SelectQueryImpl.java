@@ -260,6 +260,7 @@ import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONObjectReturningStep;
 import org.jooq.JoinType;
 import org.jooq.Name;
+import org.jooq.Name.Quoted;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
@@ -1296,6 +1297,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return limit.offset != null ? s1.offset(limit.offset) : s1;
     }
+
+
+
+
+
+
+
+
+
 
 
 

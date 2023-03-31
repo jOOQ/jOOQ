@@ -131,6 +131,13 @@ public interface DAO<R extends TableRecord<R>, P, T> {
 
     /**
      * Performs an <code>INSERT</code> statement for a given POJO.
+     * <p>
+     * Depending on various settings, like
+     * {@link Settings#isReturnRecordToPojo()},
+     * {@link Settings#isReturnIdentityOnUpdatableRecord()},
+     * {@link Settings#isReturnAllOnUpdatableRecord()}, and others, the argument
+     * POJO, if mutable, will receive any server side generated values using a
+     * {@link Record#into(Object)} call.
      *
      * @param object The POJO to be inserted
      * @throws DataAccessException if something went wrong executing the query
@@ -140,6 +147,13 @@ public interface DAO<R extends TableRecord<R>, P, T> {
 
     /**
      * Performs a batch <code>INSERT</code> statement for a given set of POJOs.
+     * <p>
+     * Depending on various settings, like
+     * {@link Settings#isReturnRecordToPojo()},
+     * {@link Settings#isReturnIdentityOnUpdatableRecord()},
+     * {@link Settings#isReturnAllOnUpdatableRecord()}, and others, the argument
+     * POJO, if mutable, will receive any server side generated values using a
+     * {@link Record#into(Object)} call.
      *
      * @param objects The POJOs to be inserted
      * @throws DataAccessException if something went wrong executing the query
@@ -150,6 +164,13 @@ public interface DAO<R extends TableRecord<R>, P, T> {
 
     /**
      * Performs a batch <code>INSERT</code> statement for a given set of POJOs.
+     * <p>
+     * Depending on various settings, like
+     * {@link Settings#isReturnRecordToPojo()},
+     * {@link Settings#isReturnIdentityOnUpdatableRecord()},
+     * {@link Settings#isReturnAllOnUpdatableRecord()}, and others, the argument
+     * POJO, if mutable, will receive any server side generated values using a
+     * {@link Record#into(Object)} call.
      *
      * @param objects The POJOs to be inserted
      * @throws DataAccessException if something went wrong executing the query
@@ -160,6 +181,14 @@ public interface DAO<R extends TableRecord<R>, P, T> {
 
     /**
      * Performs an <code>UPDATE</code> statement for a given POJO.
+     * <p>
+     * Depending on various settings, like
+     * {@link Settings#isReturnRecordToPojo()},
+     * {@link Settings#isReturnIdentityOnUpdatableRecord()},
+     * {@link Settings#isReturnAllOnUpdatableRecord()}, and others, the argument
+     * POJO, if mutable, will receive any server side generated values using a
+     * {@link Record#into(Object)} call, if <code>UPDATE … RETURNING</code> is
+     * supported by the dialect.
      *
      * @param object The POJO to be updated
      * @throws DataAccessException if something went wrong executing the query
@@ -169,6 +198,14 @@ public interface DAO<R extends TableRecord<R>, P, T> {
 
     /**
      * Performs a batch <code>UPDATE</code> statement for a given set of POJOs.
+     * <p>
+     * Depending on various settings, like
+     * {@link Settings#isReturnRecordToPojo()},
+     * {@link Settings#isReturnIdentityOnUpdatableRecord()},
+     * {@link Settings#isReturnAllOnUpdatableRecord()}, and others, the argument
+     * POJO, if mutable, will receive any server side generated values using a
+     * {@link Record#into(Object)} call, if <code>UPDATE … RETURNING</code> is
+     * supported by the dialect.
      *
      * @param objects The POJOs to be updated
      * @throws DataAccessException if something went wrong executing the query
@@ -179,6 +216,14 @@ public interface DAO<R extends TableRecord<R>, P, T> {
 
     /**
      * Performs a batch <code>UPDATE</code> statement for a given set of POJOs.
+     * <p>
+     * Depending on various settings, like
+     * {@link Settings#isReturnRecordToPojo()},
+     * {@link Settings#isReturnIdentityOnUpdatableRecord()},
+     * {@link Settings#isReturnAllOnUpdatableRecord()}, and others, the argument
+     * POJO, if mutable, will receive any server side generated values using a
+     * {@link Record#into(Object)} call, if <code>UPDATE … RETURNING</code> is
+     * supported by the dialect.
      *
      * @param objects The POJOs to be updated
      * @throws DataAccessException if something went wrong executing the query

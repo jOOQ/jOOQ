@@ -27,7 +27,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class MatchersRoutineType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31800L;
+    private final static long serialVersionUID = 31900L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;
     protected MatcherRule routineClass;

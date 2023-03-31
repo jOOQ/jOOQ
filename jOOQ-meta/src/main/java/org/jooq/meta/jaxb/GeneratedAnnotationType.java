@@ -15,6 +15,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="DETECT_FROM_JDK"/&gt;
  *     &lt;enumeration value="JAVAX_ANNOTATION_GENERATED"/&gt;
  *     &lt;enumeration value="JAVAX_ANNOTATION_PROCESSING_GENERATED"/&gt;
+ *     &lt;enumeration value="ORG_JOOQ_GENERATED"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -26,7 +27,8 @@ public enum GeneratedAnnotationType {
 
     DETECT_FROM_JDK,
     JAVAX_ANNOTATION_GENERATED,
-    JAVAX_ANNOTATION_PROCESSING_GENERATED;
+    JAVAX_ANNOTATION_PROCESSING_GENERATED,
+    ORG_JOOQ_GENERATED;
 
     public String value() {
         return name();

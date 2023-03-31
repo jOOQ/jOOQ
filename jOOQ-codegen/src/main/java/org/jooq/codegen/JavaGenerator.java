@@ -105,6 +105,7 @@ import org.jooq.Domain;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Generated;
 import org.jooq.Identity;
 import org.jooq.Index;
 // ...
@@ -9221,6 +9222,9 @@ public class JavaGenerator extends AbstractGenerator {
                     break;
                 case JAVAX_ANNOTATION_PROCESSING_GENERATED:
                     generated = "javax.annotation.processing.Generated";
+                    break;
+                case ORG_JOOQ_GENERATED:
+                    generated = Generated.class.getName();
                     break;
                 default:
                     throw new IllegalStateException("Unsupported type: " + type);

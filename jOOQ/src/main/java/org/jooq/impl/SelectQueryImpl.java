@@ -288,6 +288,7 @@ import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.SelectGroupByStep;
 import org.jooq.SelectHavingStep;
 import org.jooq.SelectLimitPercentStep;
 import org.jooq.SelectLimitStep;

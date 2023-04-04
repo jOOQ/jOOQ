@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.groupConcatDistinct;
@@ -59,6 +60,7 @@ import static org.jooq.impl.Names.N_JSON_QUOTE;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.SQLDataType.BLOB;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -78,7 +80,7 @@ import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
-import org.jooq.SelectHavingStep;
+import org.jooq.SelectGroupByStep;
 import org.jooq.impl.QOM.JSONOnNull;
 
 
@@ -95,7 +97,11 @@ implements
     QOM.JSONArrayAgg<J>
 {
 
-    static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT   = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT = SQLDialect.supportedBy(MARIADB, MYSQL);
+
+
+
+
 
 
 
@@ -316,7 +322,17 @@ implements
         return (JSONArrayAgg<J>) super.orderBy(fields);
     }
 
-    static final <R extends Record> Select<R> patchOracleArrayAggBug(Scope scope, SelectHavingStep<R> select) {
+    static final <R extends Record> Select<R> patchOracleArrayAggBug(Scope scope, SelectGroupByStep<R> select) {
+
+
+
+
+
+
+
+
+
+
 
 
 

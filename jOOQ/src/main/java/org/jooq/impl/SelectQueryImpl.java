@@ -100,6 +100,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -290,7 +291,6 @@ import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectGroupByStep;
-import org.jooq.SelectHavingStep;
 import org.jooq.SelectLimitPercentStep;
 import org.jooq.SelectLimitStep;
 import org.jooq.SelectOffsetStep;
@@ -2428,6 +2428,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         //         See also org.jooq.impl.Dual for details.
         boolean hasFrom = !getFrom().isEmpty()
             || !OPTIONAL_FROM_CLAUSE.contains(context.dialect())
+
+
+
+
+
+
 
 
 

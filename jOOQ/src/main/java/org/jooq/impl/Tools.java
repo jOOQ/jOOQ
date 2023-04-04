@@ -3926,6 +3926,8 @@ final class Tools {
 
 
 
+
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     static final <R extends Record> SelectQueryImpl<R> selectQueryImpl(QueryPart part) {
         if (part instanceof SelectQueryImpl s)

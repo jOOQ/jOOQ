@@ -950,6 +950,14 @@ implements
         return or(notExists(select));
     }
 
+    // [#14906] Re-declare internal-type-returning method here, to prevent J
+    //          from leaking into client code.
+    @SuppressWarnings("unchecked")
+    @Override
+    public final J join(TableLike<?> table, JoinType type) {
+        return (J) super.join(table, type);
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------

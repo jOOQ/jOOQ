@@ -972,6 +972,14 @@ public enum SQLDialect {
 
 
 
+
+
+
+
+
+
+
+
     ;
 
     private static final SQLDialect[] FAMILIES;
@@ -1501,7 +1509,7 @@ public enum SQLDialect {
          */
         @Nullable
         public final String hibernateDialect() {
-            switch (SQLDialect.this) {
+            switch (SQLDialect.this.family()) {
 
 
 
@@ -1534,40 +1542,40 @@ public enum SQLDialect {
 
 
 
-                case CUBRID:        return "org.hibernate.dialect.CUBRIDDialect";
-                case DERBY:         return "org.hibernate.dialect.DerbyTenSevenDialect";
-                case FIREBIRD:      return "org.hibernate.dialect.FirebirdDialect";
-                case H2:            return "org.hibernate.dialect.H2Dialect";
-                case HSQLDB:        return "org.hibernate.dialect.HSQLDialect";
+
+
+
+
+
+
+                case CUBRID:
+                    return "org.hibernate.dialect.CUBRIDDialect";
+                case DERBY:
+                    return "org.hibernate.dialect.DerbyTenSevenDialect";
+                case FIREBIRD:
+                    return "org.hibernate.dialect.FirebirdDialect";
+                case H2:
+                    return "org.hibernate.dialect.H2Dialect";
+                case HSQLDB:
+                    return "org.hibernate.dialect.HSQLDialect";
                 case MARIADB:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                case MYSQL:         return "org.hibernate.dialect.MySQL5Dialect";
-
-
-
-
-
-
+                case MYSQL:
+                    return "org.hibernate.dialect.MySQL5Dialect";
                 case POSTGRES:
-                case YUGABYTEDB:    return "org.hibernate.dialect.PostgreSQL94Dialect";
-                case SQLITE:        return null;
 
-                default:            return null;
+
+
+
+
+                        return "org.hibernate.dialect.PostgreSQL94Dialect";
+                case YUGABYTEDB:
+                    return "org.hibernate.dialect.PostgreSQL94Dialect";
+                case SQLITE:
+                    return null;
+
+                default:
+                    return null;
             }
         }
     }

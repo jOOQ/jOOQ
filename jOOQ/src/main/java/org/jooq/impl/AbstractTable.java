@@ -1335,8 +1335,10 @@ implements
     // XXX: JOIN API
     // ------------------------------------------------------------------------
 
+    // [#14906] Declare public API return type, allowing for JoinTable to override
+    //          this only internally, to prevent leaking JoinTable into client code
     @Override
-    public final JoinTable<?> join(TableLike<?> table, JoinType type) {
+    public /* non-final */ TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type) {
         switch (type) {
             case CROSS_APPLY:
                 return new CrossApply(this, table);

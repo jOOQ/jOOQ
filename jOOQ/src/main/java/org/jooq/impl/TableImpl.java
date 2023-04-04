@@ -70,6 +70,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.JoinType;
 import org.jooq.Name;
 // ...
 import org.jooq.QueryPart;
@@ -80,6 +81,8 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableLike;
+import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
 // ...
 import org.jooq.impl.QOM.UNotYetImplemented;
@@ -455,6 +458,11 @@ implements
     @Override
     public boolean declaresTables() {
         return true;
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type) {
+        return super.join(table, type);
     }
 
     // -------------------------------------------------------------------------

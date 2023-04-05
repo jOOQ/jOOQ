@@ -14032,10 +14032,46 @@ public class DSL {
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static Domain<?> domain(Name name) {
+        return domain(name, SQLDataType.OTHER);
+    }
+
+    /**
+     * Create a <code>DOMAIN</code> reference.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Domain<T> domain(String name, Class<T> type) {
+        return domain(name(name), getDataType(type));
+    }
+
+    /**
+     * Create a <code>DOMAIN</code> reference.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Domain<T> domain(Name name, Class<T> type) {
+        return domain(name, getDataType(type));
+    }
+
+    /**
+     * Create a <code>DOMAIN</code> reference.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Domain<T> domain(String name, DataType<T> type) {
+        return domain(name(name), type);
+    }
+
+    /**
+     * Create a <code>DOMAIN</code> reference.
+     */
+    @NotNull
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    public static <T> Domain<T> domain(Name name, DataType<T> type) {
         return new DomainImpl<>(
             name.qualified() ? schema(name.qualifier()) : null,
             name.unqualifiedName(),
-            new DefaultDataType<>(null, Object.class, name)
+            new DefaultDataType<>(null, type.getSQLDataType(), name)
         );
     }
 

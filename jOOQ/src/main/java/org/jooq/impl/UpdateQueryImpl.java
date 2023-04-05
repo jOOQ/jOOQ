@@ -69,6 +69,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -202,7 +203,7 @@ implements
 
 
 
-    private static final Set<SQLDialect> EMULATE_FROM_WITH_MERGE       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
+    private static final Set<SQLDialect> EMULATE_FROM_WITH_MERGE       = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
     private static final Set<SQLDialect> EMULATE_RETURNING_WITH_UPSERT = SQLDialect.supportedBy(MARIADB);
 
     // LIMIT is not supported at all

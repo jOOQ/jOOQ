@@ -2649,18 +2649,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 for (Select<?> other : union.get(i)) {
                     boolean derivedTableRequired = derivedTableRequired(context, other);
+                    boolean otherUnionParensRequired = unionParensRequired || unionOpNesting();
 
                     context.formatSeparator()
                            .visit(op.toKeyword(family));
 
-                    if (unionParensRequired)
+                    if (otherUnionParensRequired)
                         context.sql(' ');
                     else
                         context.formatSeparator();
 
-                    unionParenthesis(context, '(', other.getSelect(), derivedTableRequired, unionParensRequired);
+                    unionParenthesis(context, '(', other.getSelect(), derivedTableRequired, otherUnionParensRequired);
                     context.visit(other);
-                    unionParenthesis(context, ')', null, derivedTableRequired, unionParensRequired);
+                    unionParenthesis(context, ')', null, derivedTableRequired, otherUnionParensRequired);
                 }
 
                 // [#1658] Close parentheses opened previously
@@ -3400,6 +3401,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean unionParensRequired(Context<?> context) {
+        if (unionOp.isEmpty())
+            return false;
+
         if (unionParensRequired(this) || context.settings().isRenderParenthesisAroundSetOperationQueries())
             return true;
 

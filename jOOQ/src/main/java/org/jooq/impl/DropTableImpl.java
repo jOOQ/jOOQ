@@ -132,7 +132,7 @@ implements
 
 
     private static final Clause[]        CLAUSES              = { Clause.DROP_TABLE };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD);
     private static final Set<SQLDialect> TEMPORARY_SEMANTIC   = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final boolean supportsIfExists(Context<?> ctx) {

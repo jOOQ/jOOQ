@@ -127,7 +127,7 @@ implements
 
 
     private static final Clause[]        CLAUSES                    = { Clause.DROP_SCHEMA };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS       = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS       = SQLDialect.supportedUntil(DERBY, FIREBIRD);
     private static final Set<SQLDialect> REQUIRES_RESTRICT          = SQLDialect.supportedBy(DERBY);
 
 

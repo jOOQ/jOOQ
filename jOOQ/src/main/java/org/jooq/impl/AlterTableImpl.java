@@ -227,7 +227,7 @@ implements
 {
 
     private static final Clause[]        CLAUSES                               = { ALTER_TABLE };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, MARIADB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);

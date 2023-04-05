@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -109,7 +110,7 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
 {
 
     private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
-    private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>                                            NO_SUPPORT_COLUMN_RENAME = SQLDialect.supportedBy(TRINO);
 
     private final boolean                                                           ifNotExists;

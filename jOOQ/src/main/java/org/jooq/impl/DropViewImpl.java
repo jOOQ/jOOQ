@@ -94,7 +94,7 @@ implements
 
 
     private static final Clause[]        CLAUSES              = { Clause.DROP_VIEW };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());

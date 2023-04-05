@@ -277,18 +277,22 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES              = { Clause.ALTER_SEQUENCE };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> NO_SEPARATOR         = SQLDialect.supportedBy(CUBRID, MARIADB);
-    private static final Set<SQLDialect> NO_SUPPORT_CACHE     = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect> EMULATE_NO_CACHE     = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Clause[]        CLAUSES                     = { Clause.ALTER_SEQUENCE };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS        = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_RENAME_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SEPARATOR                = SQLDialect.supportedBy(CUBRID, MARIADB);
+    private static final Set<SQLDialect> NO_SUPPORT_CACHE            = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> EMULATE_NO_CACHE            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
 
 
 
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
+        if (renameTo != null)
+            return !NO_SUPPORT_RENAME_IF_EXISTS.contains(ctx.dialect());
+        else
+            return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
 
     @Override

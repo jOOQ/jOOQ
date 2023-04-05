@@ -251,7 +251,7 @@ implements
 
 
     private static final Clause[]        CLAUSES                  = { Clause.CREATE_INDEX };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_UNNAMED_INDEX    = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_INCLUDE          = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_UNIQUE_INCLUDE   = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);

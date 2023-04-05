@@ -152,7 +152,7 @@ implements
 
 
     private static final Clause[]            CLAUSES              = { Clause.ALTER_INDEX };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect>     SUPPORT_RENAME_INDEX = SQLDialect.supportedBy(DERBY);
 
     private final boolean supportsIfExists(Context<?> ctx) {

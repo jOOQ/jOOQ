@@ -94,7 +94,7 @@ implements
 
 
     private static final Clause[]            CLAUSES                    = { Clause.CREATE_SCHEMA };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS   = SQLDialect.supportedBy(DERBY, FIREBIRD);
+    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS   = SQLDialect.supportedUntil(DERBY, FIREBIRD);
 
 
 

@@ -173,12 +173,16 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES                    = { Clause.ALTER_VIEW };
-    private static final Set<SQLDialect> SUPPORT_IF_EXISTS          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> SUPPORT_ALTER_TABLE_RENAME = SQLDialect.supportedBy(HSQLDB, YUGABYTEDB);
+    private static final Clause[]        CLAUSES                     = { Clause.ALTER_VIEW };
+    private static final Set<SQLDialect> NO_SUPPORT_RENAME_IF_EXISTS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS        = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> SUPPORT_ALTER_TABLE_RENAME  = SQLDialect.supportedBy(HSQLDB, YUGABYTEDB);
 
     private final boolean supportsIfExists(Context<?> ctx) {
-        return !SUPPORT_IF_EXISTS.contains(ctx.dialect());
+        if (renameTo != null)
+            return !NO_SUPPORT_RENAME_IF_EXISTS.contains(ctx.dialect());
+        else
+            return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
 
     @Override

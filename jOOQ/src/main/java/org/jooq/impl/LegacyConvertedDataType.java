@@ -44,9 +44,7 @@ import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Generator;
 import org.jooq.Nullability;
-import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -87,9 +85,8 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
         Integer newLength,
         Nullability newNullability,
         boolean newReadonly,
-        Generator<?, ?, U> newGeneratedAlwaysAs,
+        Field<U> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
-        GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
         boolean newIdentity,
@@ -104,7 +101,6 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
                 newReadonly,
                 newGeneratedAlwaysAs,
                 newGenerationOption,
-                newGenerationLocation,
                 newCollation,
                 newCharacterSet,
                 newIdentity,

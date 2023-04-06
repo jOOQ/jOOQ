@@ -38,10 +38,16 @@
 package org.jooq.impl;
 
 import org.jooq.Binding;
+import org.jooq.CharacterSet;
+import org.jooq.Collation;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Generator;
+import org.jooq.Nullability;
+import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationOption;
 
 /**
  * @author Lukas Eder
@@ -52,10 +58,10 @@ import org.jooq.Field;
 @Deprecated
 final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
 
-    private final DataType<T>           delegate;
+    private final AbstractDataTypeX<T> delegate;
 
     @SuppressWarnings("unchecked")
-    LegacyConvertedDataType(AbstractDataType<T> delegate, Binding<? super T, U> binding) {
+    LegacyConvertedDataType(AbstractDataTypeX<T> delegate, Binding<? super T, U> binding) {
         super(
             null,
             binding.converter().toType(),
@@ -71,6 +77,41 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
         );
 
         this.delegate = delegate;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    DefaultDataType<U> construct(
+        Integer newPrecision,
+        Integer newScale,
+        Integer newLength,
+        Nullability newNullability,
+        boolean newReadonly,
+        Generator<?, ?, U> newGeneratedAlwaysAs,
+        GenerationOption newGenerationOption,
+        GenerationLocation newGenerationLocation,
+        Collation newCollation,
+        CharacterSet newCharacterSet,
+        boolean newIdentity,
+        Field<U> newDefaultValue
+    ) {
+        return new LegacyConvertedDataType<>(
+            ((AbstractDataTypeX) delegate).construct(
+                newPrecision,
+                newScale,
+                newLength,
+                newNullability,
+                newReadonly,
+                newGeneratedAlwaysAs,
+                newGenerationOption,
+                newGenerationLocation,
+                newCollation,
+                newCharacterSet,
+                newIdentity,
+                newDefaultValue
+            ),
+            (Binding<T, U>) getBinding()
+        );
     }
 
     @Override

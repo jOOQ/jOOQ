@@ -3517,7 +3517,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("  schema");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
-                if (!converter.isEmpty() && !binding.isEmpty())
+                if (!converter.isEmpty() || !binding.isEmpty())
                     out.println(converterTemplate(converter) + converterTemplate(binding), converter, binding);
 
                 for (String check : domain.getCheckClauses())
@@ -3530,7 +3530,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("  schema()");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
-                if (!converter.isEmpty() && !binding.isEmpty())
+                if (!converter.isEmpty() || !binding.isEmpty())
                     out.println(converterTemplate(converter) + converterTemplate(binding), converter, binding);
 
                 for (String check : domain.getCheckClauses())
@@ -3544,7 +3544,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("  schema()");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
-                if (!converter.isEmpty() && !binding.isEmpty())
+                if (!converter.isEmpty() || !binding.isEmpty())
                     out.println(converterTemplate(converter) + converterTemplate(binding), converter, binding);
 
                 for (String check : domain.getCheckClauses())
@@ -6146,7 +6146,7 @@ public class JavaGenerator extends AbstractGenerator {
             final List<String> generator = new ArrayList<>();
             // [#14916] Domain types may already have bindings/converters. Don't re-apply them.
             if (domain == null || !StringUtils.equals(domain.getType(resolver(out)).getConverter(), columnTypeDef.getConverter()))
-                binding.addAll(out.ref(list(columnTypeDef.getConverter())));
+                converter.addAll(out.ref(list(columnTypeDef.getConverter())));
             if (domain == null || !StringUtils.equals(domain.getType(resolver(out)).getBinding(), columnTypeDef.getBinding()))
                 binding.addAll(out.ref(list(columnTypeDef.getBinding())));
 

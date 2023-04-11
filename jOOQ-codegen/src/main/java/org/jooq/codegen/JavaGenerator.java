@@ -3445,6 +3445,8 @@ public class JavaGenerator extends AbstractGenerator {
             final String domainTypeFull = getJavaType(domain.getType(resolver(out)), out);
             final String domainType = out.ref(domainTypeFull);
             final String domainTypeRef = getJavaTypeReference(domain.getDatabase(), domain.getType(resolver(out)), out);
+            final List<String> converter = out.ref(list(domain.getType(resolver(out)).getConverter()));
+            final List<String> binding = out.ref(list(domain.getType(resolver(out)).getBinding()));
 
             out.javadoc("The domain <code>%s</code>.", domain.getQualifiedOutputName());
 
@@ -3453,6 +3455,8 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("  schema");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
+                if (!converter.isEmpty() || !binding.isEmpty())
+                    out.println(converterTemplate(converter) + converterTemplate(binding), converter, binding);
 
                 for (String check : domain.getCheckClauses())
                     out.println(", %s.createCheck(null, null, \"%s\")", Internal.class, escapeString(check));
@@ -3464,6 +3468,8 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("  schema()");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
+                if (!converter.isEmpty() || !binding.isEmpty())
+                    out.println(converterTemplate(converter) + converterTemplate(binding), converter, binding);
 
                 for (String check : domain.getCheckClauses())
                     out.println(", %s.createCheck<%s>(null, null, \"%s\")", Internal.class, Record.class, escapeString(check));
@@ -3471,10 +3477,13 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println(")");
             }
             else {
+                //
                 out.println("%sstatic final %s<%s> %s = %s.createDomain(", visibility(), Domain.class, domainType, id, Internal.class);
                 out.println("  schema()");
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
+                if (!converter.isEmpty() || !binding.isEmpty())
+                    out.println(converterTemplate(converter) + converterTemplate(binding), converter, binding);
 
                 for (String check : domain.getCheckClauses())
                     out.println(", %s.createCheck(null, null, \"%s\")", Internal.class, escapeString(check));
@@ -6023,14 +6032,21 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         for (ColumnDefinition column : table.getColumns()) {
-            final String columnTypeFull = getJavaType(column.getType(resolver(out)), out);
+            final DataTypeDefinition columnTypeDef = column.getType(resolver(out));
+            final DomainDefinition domain = schema.getDatabase().getDomain(schema, columnTypeDef.getQualifiedUserType());
+            final String columnTypeFull = getJavaType(columnTypeDef, out);
             final String columnType = out.ref(columnTypeFull);
-            final String columnTypeRef = getJavaTypeReference(column.getDatabase(), column.getType(resolver(out)), out);
+            final String columnTypeRef = getJavaTypeReference(column.getDatabase(), columnTypeDef, out);
             final String columnId = out.ref(getStrategy().getJavaIdentifier(column), colRefSegments(column));
             final String columnName = column.getName();
-            final List<String> converter = out.ref(list(column.getType(resolver(out)).getConverter()));
-            final List<String> binding = out.ref(list(column.getType(resolver(out)).getBinding()));
+            final List<String> converter = new ArrayList<>();
+            final List<String> binding = new ArrayList<>();
             final List<String> generator = new ArrayList<>();
+            // [#14916] Domain types may already have bindings/converters. Don't re-apply them.
+            if (domain == null || !StringUtils.equals(domain.getType(resolver(out)).getConverter(), columnTypeDef.getConverter()))
+                converter.addAll(out.ref(list(columnTypeDef.getConverter())));
+            if (domain == null || !StringUtils.equals(domain.getType(resolver(out)).getBinding(), columnTypeDef.getBinding()))
+                binding.addAll(out.ref(list(columnTypeDef.getBinding())));
 
 
 
@@ -9470,7 +9486,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Check for DOMAIN types
         else if (db.getDomain(schema, u) != null) {
-            type = getJavaType(db.getDomain(schema, u).getDefinedType(), out);
+            type = getJavaType(db.getDomain(schema, u).getType(resolver(out)), out);
         }
 
         // Check for ENUM types

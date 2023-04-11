@@ -254,7 +254,37 @@ public final class Internal {
      */
     @NotNull
     public static final <T> Domain<T> createDomain(Schema schema, Name name, DataType<T> type, Check<?>... checks) {
-        return new DomainImpl<>(schema, name, type, checks);
+        return createDomain(schema, name, type, null, null, checks);
+    }
+
+    /**
+     * Factory method for domain specifications.
+     */
+    @NotNull
+    public static final <T, U> Domain<U> createDomain(Schema schema, Name name, DataType<T> type, Converter<T, U> converter, Check<?>... checks) {
+        return createDomain(schema, name, type, converter, null, checks);
+    }
+
+    /**
+     * Factory method for domain specifications.
+     */
+    @NotNull
+    public static final <T, U> Domain<U> createDomain(Schema schema, Name name, DataType<T> type, Binding<T, U> binding, Check<?>... checks) {
+        return createDomain(schema, name, type, null, binding, checks);
+    }
+
+    /**
+     * Factory method for domain specifications.
+     */
+    @NotNull
+    public static final <T, X, U> Domain<U> createDomain(Schema schema, Name name, DataType<T> type, Converter<X, U> converter, Binding<T, X> binding, Check<?>... checks) {
+        Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
+        DataType<U> actualType =
+            converter == null && binding == null
+          ? (DataType<U>) type
+          : type.asConvertedDataType(actualBinding);
+
+        return new DomainImpl<>(schema, name, actualType, checks);
     }
 
     /**

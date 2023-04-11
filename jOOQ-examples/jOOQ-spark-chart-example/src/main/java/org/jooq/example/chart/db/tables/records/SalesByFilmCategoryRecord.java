@@ -131,5 +131,6 @@ public class SalesByFilmCategoryRecord extends TableRecordImpl<SalesByFilmCatego
 
         setCategory(category);
         setTotalSales(totalSales);
+        resetChangedOnNotNull();
     }
 }

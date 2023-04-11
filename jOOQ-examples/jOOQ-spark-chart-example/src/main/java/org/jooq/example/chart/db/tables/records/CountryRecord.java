@@ -178,5 +178,6 @@ public class CountryRecord extends UpdatableRecordImpl<CountryRecord> implements
         setCountryId(countryId);
         setCountry(country);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

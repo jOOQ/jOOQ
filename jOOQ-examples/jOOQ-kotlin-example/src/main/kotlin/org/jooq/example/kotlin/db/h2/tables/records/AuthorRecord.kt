@@ -76,32 +76,32 @@ open class AuthorRecord() : UpdatableRecordImpl<AuthorRecord>(Author.AUTHOR), Re
     override fun value6(): String? = address
 
     override fun value1(value: Int?): AuthorRecord {
-        this.id = value
+        set(0, value)
         return this
     }
 
     override fun value2(value: String?): AuthorRecord {
-        this.firstName = value
+        set(1, value)
         return this
     }
 
     override fun value3(value: String?): AuthorRecord {
-        this.lastName = value
+        set(2, value)
         return this
     }
 
     override fun value4(value: LocalDate?): AuthorRecord {
-        this.dateOfBirth = value
+        set(3, value)
         return this
     }
 
     override fun value5(value: Int?): AuthorRecord {
-        this.yearOfBirth = value
+        set(4, value)
         return this
     }
 
     override fun value6(value: String?): AuthorRecord {
-        this.address = value
+        set(5, value)
         return this
     }
 
@@ -125,6 +125,7 @@ open class AuthorRecord() : UpdatableRecordImpl<AuthorRecord>(Author.AUTHOR), Re
         this.dateOfBirth = dateOfBirth
         this.yearOfBirth = yearOfBirth
         this.address = address
+        resetChangedOnNotNull()
     }
 
     /**
@@ -138,6 +139,7 @@ open class AuthorRecord() : UpdatableRecordImpl<AuthorRecord>(Author.AUTHOR), Re
             this.dateOfBirth = value.dateOfBirth
             this.yearOfBirth = value.yearOfBirth
             this.address = value.address
+            resetChangedOnNotNull()
         }
     }
 }

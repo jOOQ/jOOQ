@@ -635,5 +635,6 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
         setLastUpdate(lastUpdate);
         setSpecialFeatures(specialFeatures);
         setFulltext(fulltext);
+        resetChangedOnNotNull();
     }
 }

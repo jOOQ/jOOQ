@@ -626,6 +626,8 @@
                         <encoding>UTF-8</encoding>
                         <show>protected</show>
                         <notree>true</notree>
+                        <!-- Explicit configuration of javadoc language to avoid defaulting to build system's configuration -->
+                        <locale>en</locale>
 
                         <!-- Avoid running into Java 8's very restrictive doclint issues -->
                         <additionalparam>-Xdoclint:none</additionalparam>

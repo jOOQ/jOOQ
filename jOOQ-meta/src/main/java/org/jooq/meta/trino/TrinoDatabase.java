@@ -53,6 +53,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record12;
+import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -65,6 +66,7 @@ import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.PackageDefinition;
+import org.jooq.meta.ResultQueryDatabase;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
@@ -73,12 +75,14 @@ import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * The Trino database
  *
  * @author Lukas Eder
  */
-public class TrinoDatabase extends AbstractDatabase {
+public class TrinoDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
     @Override
     protected DSLContext create0() {
@@ -96,7 +100,7 @@ public class TrinoDatabase extends AbstractDatabase {
                     when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                         .else_(inline(TableType.TABLE.name())).trim().as("table_type"),
                     when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
-                        .else_(inline("create view \"").concat(TABLES.TABLE_NAME).concat("\" as ").concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION)
+                        .else_(inline("create view \"").concat(TABLES.TABLE_NAME).concat(inline("\" as ")).concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION)
                 )
                 .from(TABLES)
                 .leftJoin(VIEWS)
@@ -133,6 +137,38 @@ public class TrinoDatabase extends AbstractDatabase {
 
     @Override
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+    }
+
+    @Override
+    public final ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas) {
+        return null;
+    }
+
+    @Override
+    public final ResultQuery<Record6<String, String, String, String, String, Integer>> uniqueKeys(List<String> schemas) {
+        return null;
+    }
+
+    @Override
+    public final ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
+        return null;
+    }
+
+    @Override
+    public final ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas) {
+        return create()
+            .select(
+                inline("").as(VIEWS.TABLE_CATALOG),
+                VIEWS.TABLE_SCHEMA,
+                VIEWS.TABLE_NAME,
+                when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
+                    .else_(inline("create view \"").concat(VIEWS.TABLE_NAME).concat(inline("\" as ")).concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION)
+            )
+            .from(VIEWS)
+            .where(VIEWS.TABLE_SCHEMA.in(schemas))
+            .orderBy(
+                VIEWS.TABLE_SCHEMA,
+                VIEWS.TABLE_NAME);
     }
 
     @Override

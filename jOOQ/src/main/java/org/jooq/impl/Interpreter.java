@@ -1422,6 +1422,7 @@ final class Interpreter {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
+                case TRINO:
                     return InterpreterNameLookupCaseSensitivity.NEVER;
 
                 case DEFAULT:

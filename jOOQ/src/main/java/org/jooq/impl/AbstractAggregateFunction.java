@@ -343,7 +343,7 @@ implements
         }
     }
 
-    private final boolean supportsFilter(Context<?> ctx) {
+    /* non-final */ boolean supportsFilter(Context<?> ctx) {
         return !(
              NO_SUPPORT_FILTER.contains(ctx.dialect())
           || NO_SUPPORT_WINDOW_FILTER.contains(ctx.dialect()) && isWindow()

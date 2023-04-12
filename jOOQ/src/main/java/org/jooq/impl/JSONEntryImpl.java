@@ -298,12 +298,6 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
             case TRINO:
 
-                // [#11485] https://github.com/trinodb/trino/issues/16489
-                //          This isn't necessary when emulating JSON_OBJECT and JSON_ARRAY
-                //          with CAST(MAP) and CAST(ARRAY), however:
-                // if (field instanceof Param)
-                //     return inlined(field);
-
                 // [#11485] CHAR types can't be cast to JSON: https://trino.io/docs/current/functions/json.html#cast-to-json
                 if (type.getSQLDataType() == SQLDataType.CHAR)
                     return field.cast(VARCHAR);

@@ -180,6 +180,16 @@ final class ListAgg extends AbstractAggregateFunction<String> implements UNotYet
         return i == 0;
     }
 
+    @Override
+    boolean supportsFilter(Context<?> ctx) {
+        switch (ctx.family()) {
+            case TRINO:
+                return false;
+            default:
+                return super.supportsFilter(ctx);
+        }
+    }
+
     /**
      * [#1273] <code>LIST_AGG</code> emulation for MySQL
      */

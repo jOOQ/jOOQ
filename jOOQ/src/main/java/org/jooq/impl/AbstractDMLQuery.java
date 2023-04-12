@@ -181,7 +181,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
     private static final JooqLogger              log                                    = JooqLogger.getLogger(AbstractQuery.class);
 
-    private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE        = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL);
+    private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE        = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL, TRINO);
     private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_INSERT_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_UPDATE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_DELETE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);

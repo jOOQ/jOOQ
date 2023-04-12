@@ -823,6 +823,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
 
+            if (dataType.getType() == OffsetDateTime.class ||
+                dataType.getType() == OffsetTime.class ||
+                dataType.getType() == Instant.class
+            ) {
+                switch (ctx.family()) {
+                    case TRINO:
+                        return true;
+                }
+            }
+
 
 
 
@@ -3320,6 +3330,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                 case HSQLDB:
+                case TRINO:
                     ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
                     break;
 

@@ -6896,6 +6896,7 @@ final class Tools {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
+                case TRINO:
                     return ParseNameCase.AS_IS;
 
                 default:

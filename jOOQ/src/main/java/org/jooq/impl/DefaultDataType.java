@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.CommentImpl.NO_COMMENT;
 import static org.jooq.impl.DSL.systemName;
@@ -141,6 +142,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION  = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
     private static final Set<SQLDialect>                        SUPPORT_POSTGRES_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION   = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect>                        SUPPORT_TRINO_ARRAY_NOTATION    = SQLDialect.supportedBy(TRINO);
 
     /**
      * A pattern for data type name normalisation.
@@ -691,6 +693,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                 // [#9609] H2 might still report an untyped array, too
                 else if (result == null && SUPPORT_HSQLDB_ARRAY_NOTATION.contains(dialect) && upper.equals("ARRAY"))
                     result = SQLDataType.OTHER.getArrayDataType();
+
+                // [#11485] Trino lists arrays as array(component_type)
+                else if (result == null && SUPPORT_TRINO_ARRAY_NOTATION.contains(dialect) && upper.startsWith("ARRAY("))
+                    result = getDataType(dialect, typeName.substring(6, typeName.length() - 1)).getArrayDataType();
 
 
 

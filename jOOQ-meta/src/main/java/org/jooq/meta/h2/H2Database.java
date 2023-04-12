@@ -642,7 +642,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 VIEWS.TABLE_CATALOG,
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME,
-                VIEWS.VIEW_DEFINITION)
+                concat(inline("create view \""), VIEWS.TABLE_NAME, inline("\" as "), VIEWS.VIEW_DEFINITION).as(VIEWS.VIEW_DEFINITION))
             .from(VIEWS)
             .where(VIEWS.TABLE_SCHEMA.in(schemas))
             .orderBy(
@@ -721,7 +721,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         return result;
     }
 
-    static record TableRecord(String schema, String table, TableType type, String comment, String source) {}
+    static record TableRecord(String schema, String table, TableType type, String comment) {}
 
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
@@ -733,12 +733,8 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                     when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                        .when(TABLES.STORAGE_TYPE.like(inline("%TEMPORARY%")), inline(TableType.TEMPORARY.name()))
                        .else_(inline(TableType.TABLE.name())).convertFrom(TableType::valueOf).as("table_type"),
-                    TABLES.REMARKS,
-                    VIEWS.VIEW_DEFINITION)
+                    TABLES.REMARKS)
                 .from(TABLES)
-                .leftJoin(VIEWS)
-                    .on(TABLES.TABLE_SCHEMA.eq(VIEWS.TABLE_SCHEMA))
-                    .and(TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
                 .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
                 .orderBy(
                     TABLES.TABLE_SCHEMA,
@@ -746,12 +742,9 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 .fetch(mapping(TableRecord::new))) {
 
             SchemaDefinition schema = getSchema(r.schema);
-            String source = r.source;
-            if (source != null && !source.toLowerCase().startsWith("create"))
-                source = "create view \"" + r.table + "\" as " + source;
 
             if (schema != null)
-                result.add(new H2TableDefinition(schema, r.table, r.comment, r.type, source));
+                result.add(new H2TableDefinition(schema, r.table, r.comment, r.type, null));
         }
 
         return result;

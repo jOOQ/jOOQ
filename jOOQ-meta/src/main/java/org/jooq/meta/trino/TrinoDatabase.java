@@ -98,14 +98,9 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
                     TABLES.TABLE_SCHEMA,
                     TABLES.TABLE_NAME,
                     when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                        .else_(inline(TableType.TABLE.name())).trim().as("table_type"),
-                    when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
-                        .else_(inline("create view \"").concat(TABLES.TABLE_NAME).concat(inline("\" as ")).concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION)
+                        .else_(inline(TableType.TABLE.name())).trim().as("table_type")
                 )
                 .from(TABLES)
-                .leftJoin(VIEWS)
-                    .on(TABLES.TABLE_SCHEMA.eq(VIEWS.TABLE_SCHEMA))
-                    .and(TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
                 .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
                 .orderBy(
                     TABLES.TABLE_SCHEMA,
@@ -115,9 +110,8 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
             String name = record.get(TABLES.TABLE_NAME);
             String comment = "";
             TableType tableType = record.get("table_type", TableType.class);
-            String source = record.get(VIEWS.VIEW_DEFINITION);
 
-            result.add(new TrinoTableDefinition(schema, name, comment, tableType, source));
+            result.add(new TrinoTableDefinition(schema, name, comment, tableType, null));
         }
 
         return result;

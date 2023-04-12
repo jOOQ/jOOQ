@@ -851,7 +851,7 @@ final class ParserImpl implements Parser {
 }
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class DefaultParseContext extends AbstractScope implements ParseContext {
+final class DefaultParseContext extends AbstractScope implements org.jooq.ParseContext {
 
 
 

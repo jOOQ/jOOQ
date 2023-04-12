@@ -555,6 +555,7 @@ implements
             case FIREBIRD:
             case HSQLDB:
             case SQLITE:
+            case TRINO:
                 return DOUBLE;
 
             default:

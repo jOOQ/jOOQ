@@ -88,12 +88,6 @@ implements
 
 
 
-
-
-
-
-
-
             case CUBRID:
 
             case FIREBIRD:
@@ -113,9 +107,19 @@ implements
                 DataType<?> cast;
 
                 switch (ctx.family()) {
-                    case SQLITE:   cast = DOUBLE;          break;
-                    case FIREBIRD: cast = DECIMAL(38, 19); break;
-                    default:       cast = DECIMAL;         break;
+                    case SQLITE:
+                        cast = DOUBLE;
+                        break;
+
+
+                    case FIREBIRD:
+                    case TRINO:
+                        cast = DECIMAL(38, 19);
+                        break;
+
+                    default:
+                        cast = DECIMAL;
+                        break;
                 }
 
                 ctx.visit(castIfNeeded(field, cast))

@@ -442,11 +442,9 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                     SYSTABLES.TABLENAME,
                     SYSTABLES.TABLEID,
                     when(SYSTABLES.TABLETYPE.eq(inline("V")), inline(TableType.VIEW.name()))
-                        .else_(inline(TableType.TABLE.name())).as("table_type"),
-                    SYSVIEWS.VIEWDEFINITION)
+                        .else_(inline(TableType.TABLE.name())).as("table_type"))
                 .from(SYSTABLES)
-                .leftJoin(SYSVIEWS)
-                    .on(SYSTABLES.TABLEID.eq(SYSVIEWS.TABLEID))
+
                 // [#6797] The cast is necessary if a non-standard collation is used
                 .where(SYSTABLES.sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
                 .orderBy(
@@ -457,9 +455,8 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
             String name = record.get(SYSTABLES.TABLENAME);
             String id = record.get(SYSTABLES.TABLEID);
             TableType tableType = record.get("table_type", TableType.class);
-            String source = record.get(SYSVIEWS.VIEWDEFINITION);
 
-            DerbyTableDefinition table = new DerbyTableDefinition(schema, name, id, tableType, source);
+            DerbyTableDefinition table = new DerbyTableDefinition(schema, name, id, tableType, null);
             result.add(table);
         }
 

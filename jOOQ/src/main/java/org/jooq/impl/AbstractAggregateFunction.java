@@ -113,6 +113,7 @@ implements
 
 
     static final Set<SQLDialect>      NO_SUPPORT_FILTER          = SQLDialect.supportedUntil(CUBRID, DERBY, IGNITE, MARIADB, MYSQL);
+    static final Set<SQLDialect>      NO_SUPPORT_WINDOW_FILTER   = SQLDialect.supportedBy(TRINO);
     static final Set<SQLDialect>      SUPPORT_DISTINCT_RVE       = SQLDialect.supportedBy(H2, POSTGRES);
 
     static final Lazy<Field<Integer>> ASTERISK                   = Lazy.of(() -> DSL.field(DSL.raw("*"), Integer.class));
@@ -285,7 +286,7 @@ implements
     }
 
     final void acceptArguments3(Context<?> ctx, QueryPartCollectionView<Field<?>> args, Function<? super Field<?>, ? extends Field<?>> fun) {
-        if (!filter.hasWhere() || !NO_SUPPORT_FILTER.contains(ctx.dialect()))
+        if (!filter.hasWhere() || supportsFilter(ctx))
             ctx.visit(wrap(args).map(fun));
 
 
@@ -321,7 +322,7 @@ implements
             acceptFilterClause(ctx, filter);
     }
 
-    static final void acceptFilterClause(Context<?> ctx, Condition filter) {
+    final void acceptFilterClause(Context<?> ctx, Condition f) {
         switch (ctx.family()) {
 
 
@@ -330,16 +331,23 @@ implements
 
 
             default:
-                if (!NO_SUPPORT_FILTER.contains(ctx.dialect()))
+                if (supportsFilter(ctx))
                     ctx.sql(' ')
                        .visit(K_FILTER)
                        .sql(" (")
                        .visit(K_WHERE)
                        .sql(' ')
-                       .visit(filter)
+                       .visit(f)
                        .sql(')');
                 break;
         }
+    }
+
+    private final boolean supportsFilter(Context<?> ctx) {
+        return !(
+             NO_SUPPORT_FILTER.contains(ctx.dialect())
+          || NO_SUPPORT_WINDOW_FILTER.contains(ctx.dialect()) && isWindow()
+        );
     }
 
     final void acceptOrderBy(Context<?> ctx) {

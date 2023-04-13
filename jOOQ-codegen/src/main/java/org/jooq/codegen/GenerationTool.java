@@ -64,6 +64,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import javax.sql.DataSource;
 
@@ -260,6 +262,7 @@ public class GenerationTool {
     private void run0(Configuration configuration) throws Exception {
         // Trigger logging of jOOQ logo eagerly already here
         selectOne().toString();
+        boolean propertyOverride = "true".equalsIgnoreCase(System.getProperty("jooq.codegen.propertyOverride"));
 
         if (configuration.getLogging() != null) {
             setGlobalLoggingThreshold(configuration);
@@ -332,28 +335,14 @@ public class GenerationTool {
                     if (url != null) {
                         j = defaultIfNull(j, new Jdbc());
 
-                        if (j.getDriver() == null)
-                            j.setDriver(System.getProperty("jooq.codegen.jdbc.driver"));
-                        if (j.getUrl() == null)
-                            j.setUrl(url);
-                        if (j.getUser() == null)
-                            j.setUser(System.getProperty("jooq.codegen.jdbc.user"));
-                        if (j.getUsername() == null)
-                            j.setUsername(System.getProperty("jooq.codegen.jdbc.username"));
-                        if (j.getPassword() == null)
-                            j.setPassword(System.getProperty("jooq.codegen.jdbc.password"));
-
-                        if (j.isAutoCommit() == null) {
-                            String a = System.getProperty("jooq.codegen.jdbc.autoCommit");
-
-                            if (a != null)
-                                j.setAutoCommit(Boolean.valueOf(a));
-                        }
-
-                        if (j.getInitScript() == null)
-                            j.setInitScript(System.getProperty("jooq.codegen.jdbc.initScript"));
-                        if (j.getInitSeparator() == null)
-                            j.setInitSeparator(System.getProperty("jooq.codegen.jdbc.initSeparator"));
+                        set(j, propertyOverride, "jooq.codegen.jdbc.driver", Jdbc::getDriver, Jdbc::setDriver);
+                        set(j, propertyOverride, "jooq.codegen.jdbc.url", Jdbc::getUrl, Jdbc::setUrl);
+                        set(j, propertyOverride, "jooq.codegen.jdbc.user", Jdbc::getUser, Jdbc::setUser);
+                        set(j, propertyOverride, "jooq.codegen.jdbc.username", Jdbc::getUsername, Jdbc::setUsername);
+                        set(j, propertyOverride, "jooq.codegen.jdbc.password", Jdbc::getPassword, Jdbc::setPassword);
+                        set(j, propertyOverride, "jooq.codegen.jdbc.password", Jdbc::isAutoCommit, Jdbc::setAutoCommit, Boolean::valueOf);
+                        set(j, propertyOverride, "jooq.codegen.jdbc.initScript", Jdbc::getInitScript, Jdbc::setInitScript);
+                        set(j, propertyOverride, "jooq.codegen.jdbc.initSeparator", Jdbc::getInitSeparator, Jdbc::setInitSeparator);
                     }
 
                     if (j != null && !StringUtils.isBlank(j.getUrl())) {
@@ -999,6 +988,30 @@ public class GenerationTool {
                 }
             }
         }
+    }
+
+    private void set(
+        Jdbc j,
+        boolean override,
+        String property,
+        Function<? super Jdbc, ? extends String> get,
+        BiConsumer<? super Jdbc, ? super String> set
+    ) {
+        set(j, override, property, get, set, Function.identity());
+    }
+
+    private <T> void set(
+        Jdbc j,
+        boolean override,
+        String property,
+        Function<? super Jdbc, ? extends T> get,
+        BiConsumer<? super Jdbc, ? super T> set,
+        Function<? super String, ? extends T> convert
+    ) {
+        String p = System.getProperty(property);
+
+        if (override ? p != null : get.apply(j) == null)
+            set.accept(j, convert.apply(p));
     }
 
     private void verifyVersions() {

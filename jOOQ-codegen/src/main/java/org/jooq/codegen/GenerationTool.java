@@ -340,7 +340,7 @@ public class GenerationTool {
                         set(j, propertyOverride, "jooq.codegen.jdbc.user", Jdbc::getUser, Jdbc::setUser);
                         set(j, propertyOverride, "jooq.codegen.jdbc.username", Jdbc::getUsername, Jdbc::setUsername);
                         set(j, propertyOverride, "jooq.codegen.jdbc.password", Jdbc::getPassword, Jdbc::setPassword);
-                        set(j, propertyOverride, "jooq.codegen.jdbc.password", Jdbc::isAutoCommit, Jdbc::setAutoCommit, Boolean::valueOf);
+                        set(j, propertyOverride, "jooq.codegen.jdbc.autoCommit", Jdbc::isAutoCommit, Jdbc::setAutoCommit, Boolean::valueOf);
                         set(j, propertyOverride, "jooq.codegen.jdbc.initScript", Jdbc::getInitScript, Jdbc::setInitScript);
                         set(j, propertyOverride, "jooq.codegen.jdbc.initSeparator", Jdbc::getInitSeparator, Jdbc::setInitSeparator);
                     }

@@ -40,6 +40,7 @@ package org.jooq.codegen;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Comparator.comparing;
+import static java.util.function.Function.identity;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
@@ -66,6 +67,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import javax.sql.DataSource;
 
@@ -695,14 +697,10 @@ public class GenerationTool {
             if (isBlank(g.getTarget().getEncoding()))
                 g.getTarget().setEncoding(DEFAULT_TARGET_ENCODING);
 
-            if (DEFAULT_TARGET_PACKAGENAME.equals(g.getTarget().getPackageName()) && System.getProperty("jooq.codegen.target.packageName") != null)
-                g.getTarget().setPackageName(System.getProperty("jooq.codegen.target.packageName"));
-            if (DEFAULT_TARGET_DIRECTORY.equals(g.getTarget().getDirectory()) && System.getProperty("jooq.codegen.target.directory") != null)
-                g.getTarget().setDirectory(System.getProperty("jooq.codegen.target.directory"));
-            if (DEFAULT_TARGET_ENCODING.equals(g.getTarget().getEncoding()) && System.getProperty("jooq.codegen.target.encoding") != null)
-                g.getTarget().setEncoding(System.getProperty("jooq.codegen.target.encoding"));
-            if (isBlank(g.getTarget().getLocale()) && System.getProperty("jooq.codegen.target.locale") != null)
-                g.getTarget().setLocale(System.getProperty("jooq.codegen.target.locale"));
+            set(g.getTarget(), propertyOverride, "jooq.codegen.target.packageName", Target::getPackageName, Target::setPackageName, identity(), DEFAULT_TARGET_PACKAGENAME::equals);
+            set(g.getTarget(), propertyOverride, "jooq.codegen.target.directory", Target::getDirectory, Target::setDirectory, identity(), DEFAULT_TARGET_DIRECTORY::equals);
+            set(g.getTarget(), propertyOverride, "jooq.codegen.target.encoding", Target::getEncoding, Target::setEncoding, identity(), DEFAULT_TARGET_ENCODING::equals);
+            set(g.getTarget(), propertyOverride, "jooq.codegen.target.locale", Target::getLocale, Target::setLocale);
 
             // [#2887] [#9727] Patch relative paths to take plugin execution basedir into account
             if (!new File(g.getTarget().getDirectory()).isAbsolute())
@@ -990,28 +988,40 @@ public class GenerationTool {
         }
     }
 
-    private void set(
-        Jdbc j,
+    private <O> void set(
+        O configurationObject,
         boolean override,
         String property,
-        Function<? super Jdbc, ? extends String> get,
-        BiConsumer<? super Jdbc, ? super String> set
+        Function<? super O, ? extends String> get,
+        BiConsumer<? super O, ? super String> set
     ) {
-        set(j, override, property, get, set, Function.identity());
+        set(configurationObject, override, property, get, set, Function.identity());
     }
 
-    private <T> void set(
-        Jdbc j,
+    private <O, T> void set(
+        O configurationObject,
         boolean override,
         String property,
-        Function<? super Jdbc, ? extends T> get,
-        BiConsumer<? super Jdbc, ? super T> set,
+        Function<? super O, ? extends T> get,
+        BiConsumer<? super O, ? super T> set,
         Function<? super String, ? extends T> convert
+    ) {
+        set(configurationObject, override, property, get, set, convert, t -> t == null);
+    }
+
+    private <O, T> void set(
+        O configurationObject,
+        boolean override,
+        String property,
+        Function<? super O, ? extends T> get,
+        BiConsumer<? super O, ? super T> set,
+        Function<? super String, ? extends T> convert,
+        Predicate<? super T> checkDefault
     ) {
         String p = System.getProperty(property);
 
-        if (override ? p != null : get.apply(j) == null)
-            set.accept(j, convert.apply(p));
+        if (override ? p != null : checkDefault.test(get.apply(configurationObject)))
+            set.accept(configurationObject, convert.apply(p));
     }
 
     private void verifyVersions() {

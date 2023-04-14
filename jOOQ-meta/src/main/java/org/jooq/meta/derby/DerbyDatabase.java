@@ -202,7 +202,8 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
             .join("sys.sysschemas       ps").on("ps.schemaid = pt.schemaid")
             // [#6797] The cast is necessary if a non-standard collation is used
             .where("cast(fc.type as varchar(32672)) = 'F'")
-            .fetch()) {
+            .orderBy(fkSchema, fkTable, fkName)
+        ) {
 
             SchemaDefinition foreignKeySchema = getSchema(record.get(fkSchema));
             SchemaDefinition uniqueKeySchema = getSchema(record.get(ukSchema));

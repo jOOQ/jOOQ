@@ -75,7 +75,6 @@ import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
-// ...
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record4;
@@ -88,7 +87,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -432,7 +430,8 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                 VIEWS.TABLE_CATALOG,
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME,
-                VIEWS.VIEW_DEFINITION)
+                when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
+                .else_(inline("create view `").concat(VIEWS.TABLE_NAME).concat("` as ").concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION))
             .from(VIEWS)
             .where(VIEWS.TABLE_SCHEMA.in(schemas))
             .orderBy(
@@ -461,13 +460,8 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                 TABLES.TABLE_NAME,
                 TABLES.TABLE_COMMENT,
                 when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                    .else_(inline(TableType.TABLE.name())).as("table_type"),
-                when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
-                    .else_(inline("create view `").concat(TABLES.TABLE_NAME).concat("` as ").concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION))
+                    .else_(inline(TableType.TABLE.name())).as("table_type"))
             .from(TABLES)
-            .leftJoin(VIEWS)
-                .on(TABLES.TABLE_SCHEMA.eq(VIEWS.TABLE_SCHEMA))
-                .and(TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
             .where(TABLES.TABLE_SCHEMA.in(workaroundFor5213(getInputSchemata())))
 
             // [#9291] MariaDB treats sequences as tables
@@ -480,9 +474,8 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
             String name = record.get(TABLES.TABLE_NAME);
             String comment = record.get(TABLES.TABLE_COMMENT);
             TableType tableType = record.get("table_type", TableType.class);
-            String source = record.get(VIEWS.VIEW_DEFINITION);
 
-            MySQLTableDefinition table = new MySQLTableDefinition(schema, name, comment, tableType, source);
+            MySQLTableDefinition table = new MySQLTableDefinition(schema, name, comment, tableType, null);
             result.add(table);
         }
 

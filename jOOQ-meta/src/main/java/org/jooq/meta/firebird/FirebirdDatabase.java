@@ -392,7 +392,8 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 inline(null, VARCHAR).as("catalog"),
                 inline(null, VARCHAR).as("schema"),
                 RDB$RELATIONS.RDB$RELATION_NAME.trim(),
-                RDB$RELATIONS.RDB$VIEW_SOURCE.trim())
+                when(RDB$RELATIONS.RDB$VIEW_SOURCE.lower().like(inline("create%")), RDB$RELATIONS.RDB$VIEW_SOURCE.trim())
+                .else_(inline("create view \"").concat(RDB$RELATIONS.RDB$RELATION_NAME.trim()).concat("\" as ").concat(RDB$RELATIONS.RDB$VIEW_SOURCE)).as("view_source"))
             .from(RDB$RELATIONS)
             .orderBy(RDB$RELATIONS.RDB$RELATION_NAME.trim());
     }

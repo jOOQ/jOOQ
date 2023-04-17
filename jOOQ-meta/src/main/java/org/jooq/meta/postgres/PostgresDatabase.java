@@ -127,7 +127,7 @@ import org.jooq.Record12;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
-import org.jooq.Record8;
+import org.jooq.Record7;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -468,8 +468,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         List<TableDefinition> result = new ArrayList<>();
         Map<Name, PostgresTableDefinition> map = new HashMap<>();
 
-        Select<Record8<String, String, String, String, String, String, String, String>> empty =
-            select(inline(""), inline(""), inline(""), inline(""), inline(""), inline(""), inline(""), inline(""))
+        Select<Record7<String, String, String, String, String, String, String>> empty =
+            select(inline(""), inline(""), inline(""), inline(""), inline(""), inline(""), inline(""))
             .where(falseCondition());
 
         for (Record record : create()
@@ -482,7 +482,6 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         PG_DESCRIPTION.DESCRIPTION,
                         when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                             .else_(inline(TableType.TABLE.name())).as("table_type"),
-                        VIEWS.VIEW_DEFINITION,
                         inline("").as(ROUTINES.TYPE_UDT_SCHEMA),
                         inline("").as(ROUTINES.TYPE_UDT_NAME))
                     .from(TABLES)
@@ -521,7 +520,6 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         PG_DESCRIPTION.DESCRIPTION,
                         inline(TableType.MATERIALIZED_VIEW.name()).as("table_type"),
                         inline(""),
-                        inline(""),
                         inline(""))
                     .from(PG_CLASS)
                     .leftOuterJoin(PG_DESCRIPTION)
@@ -540,7 +538,6 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                             ROUTINES.SPECIFIC_NAME,
                             inline(""),
                             inline(TableType.FUNCTION.name()).as("table_type"),
-                            inline(""),
                             ROUTINES.TYPE_UDT_SCHEMA,
                             ROUTINES.TYPE_UDT_NAME)
                         .from(ROUTINES)
@@ -558,10 +555,6 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             String name = record.get(TABLES.TABLE_NAME);
             String comment = record.get(PG_DESCRIPTION.DESCRIPTION, String.class);
             TableType tableType = record.get("table_type", TableType.class);
-            String source = record.get(VIEWS.VIEW_DEFINITION);
-
-            if (source != null && !source.toLowerCase().startsWith("create"))
-                source = "create view \"" + name + "\" as " + source;
 
             switch (tableType) {
                 case FUNCTION: {
@@ -579,7 +572,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     break;
                 }
                 default: {
-                    PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment, tableType, source);
+                    PostgresTableDefinition t = new PostgresTableDefinition(schema, name, comment, tableType, null);
                     result.add(t);
                     map.put(name(schema.getName(), name), t);
                     break;
@@ -660,7 +653,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 VIEWS.TABLE_CATALOG,
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME,
-                VIEWS.VIEW_DEFINITION)
+                when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
+                .else_(inline("create view \"").concat(VIEWS.TABLE_NAME).concat(inline("\" as ")).concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION))
             .from(VIEWS)
             .where(VIEWS.TABLE_SCHEMA.in(schemas))
             .orderBy(

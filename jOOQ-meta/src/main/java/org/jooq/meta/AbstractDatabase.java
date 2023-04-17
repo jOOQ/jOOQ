@@ -3648,10 +3648,21 @@ public abstract class AbstractDatabase implements Database {
                     SchemaDefinition schema = getSchema(r.value2());
 
                     if (schema != null) {
-                        Definition view = getTable(schema, r.value3());
+                        String name = r.value3();
+                        Definition view = getTable(schema, name);
 
-                        if (view != null)
-                            result.put(view, r.value4());
+                        if (view != null) {
+                            String source = r.value4();
+
+
+
+
+
+
+
+
+                            result.put(view, source);
+                        }
                     }
             }));
         }

@@ -4718,7 +4718,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> T fetchValue(TableField<?, T> field) {
-        return fetchValue(select(field).from(field.getTable()));
+        return fetchValue(field, noCondition());
+    }
+
+    @Override
+    public <T> T fetchValue(TableField<?, T> field, Condition condition) {
+        return fetchValue(select(field).from(field.getTable()).where(condition));
     }
 
     @Override
@@ -4741,6 +4746,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public <T> Optional<T> fetchOptionalValue(TableField<?, T> field, Condition condition) {
+        return Optional.ofNullable(fetchValue(field, condition));
+    }
+
+    @Override
     public <T> List<T> fetchValues(Table<? extends Record1<T>> table) {
         return fetchValues(selectFrom(table));
     }
@@ -4752,7 +4762,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> List<T> fetchValues(TableField<?, T> field) {
-        return fetchValues(select(field).from(field.getTable()));
+        return fetchValues(field, noCondition());
+    }
+
+    @Override
+    public <T> List<T> fetchValues(TableField<?, T> field, Condition condition) {
+        return fetchValues(select(field).from(field.getTable()).where(condition));
     }
 
     @Override

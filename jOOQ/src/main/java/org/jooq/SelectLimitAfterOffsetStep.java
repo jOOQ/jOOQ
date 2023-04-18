@@ -140,7 +140,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * function and nested <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectLimitPercentAfterOffsetStep<R> limit(Number numberOfRows);
 
     /**
@@ -156,7 +156,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * statements.
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectLimitPercentAfterOffsetStep<R> limit(Field<? extends Number> numberOfRows);
 
 }

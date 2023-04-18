@@ -111,6 +111,11 @@ public enum SQLDialect {
     DERBY("Derby", false, true),
 
     /**
+     * The DuckDB dialect family.
+     */
+    DUCKDB("DuckDB", false, true),
+
+    /**
      * The Firebird dialect family.
      * <p>
      * This family behaves like the versioned dialect {@link #FIREBIRD_3_0}.

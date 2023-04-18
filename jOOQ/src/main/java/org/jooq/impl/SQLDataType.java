@@ -46,6 +46,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -93,13 +94,13 @@ import org.jooq.Geography;
 import org.jooq.Geometry;
 import org.jooq.JSON;
 import org.jooq.JSONB;
-// ...
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectCategory;
 import org.jooq.XML;
+import org.jooq.impl.SQLDataTypes.DuckDBDataType;
 import org.jooq.impl.SQLDataTypes.TrinoDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
@@ -850,6 +851,9 @@ public final class SQLDataType {
 
             Class.forName(DerbyDataType.class.getName());
             initJSR310Types(DERBY);
+
+            Class.forName(DuckDBDataType.class.getName());
+            initJSR310Types(DUCKDB);
 
             Class.forName(FirebirdDataType.class.getName());
             initJSR310Types(FIREBIRD);

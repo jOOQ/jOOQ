@@ -383,7 +383,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(TableLike)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectJoinStep<R> crossJoin(TableLike<?> table);
 
     /**
@@ -408,7 +408,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     SelectJoinStep<R> crossJoin(SQL sql);
 
@@ -434,7 +434,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     SelectJoinStep<R> crossJoin(String sql);
 
@@ -461,7 +461,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     SelectJoinStep<R> crossJoin(String sql, Object... bindings);
 
@@ -488,7 +488,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     SelectJoinStep<R> crossJoin(String sql, QueryPart... parts);
 
@@ -508,7 +508,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see Table#crossJoin(Name)
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectJoinStep<R> crossJoin(Name name);
 
     /**

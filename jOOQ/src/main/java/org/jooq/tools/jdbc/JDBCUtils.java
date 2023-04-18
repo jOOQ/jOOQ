@@ -452,6 +452,8 @@ public class JDBCUtils {
             return CUBRID;
         else if (url.contains(":derby:"))
             return DERBY;
+        else if (url.contains(":duckdb:"))
+            return DUCKDB;
         else if (url.contains(":firebirdsql:"))
             return FIREBIRD;
         else if (url.contains(":h2:"))
@@ -523,6 +525,8 @@ public class JDBCUtils {
                 return "cubrid.jdbc.driver.CUBRIDDriver";
             case DERBY:
                 return "org.apache.derby.jdbc.ClientDriver";
+            case DUCKDB:
+                return "org.duckdb.DuckDBDriver";
             case FIREBIRD:
                 return "org.firebirdsql.jdbc.FBDriver";
             case H2:

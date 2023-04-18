@@ -45,6 +45,7 @@ import org.jooq.SQLDialect;
 import org.jooq.meta.cubrid.CUBRIDDatabase;
 // ...
 import org.jooq.meta.derby.DerbyDatabase;
+import org.jooq.meta.duckdb.DuckDBDatabase;
 // ...
 import org.jooq.meta.firebird.FirebirdDatabase;
 import org.jooq.meta.h2.H2Database;
@@ -109,6 +110,7 @@ public class Databases {
 
             case CUBRID:           result = CUBRIDDatabase.class;           break;
             case DERBY:            result = DerbyDatabase.class;            break;
+            case DUCKDB:           result = DuckDBDatabase.class;           break;
             case FIREBIRD:         result = FirebirdDatabase.class;         break;
             case H2:               result = H2Database.class;               break;
             case HSQLDB:           result = HSQLDBDatabase.class;           break;

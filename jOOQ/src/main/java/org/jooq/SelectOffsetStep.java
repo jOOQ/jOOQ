@@ -144,7 +144,7 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectForUpdateStep<R> offset(Number offset);
 
     /**
@@ -158,6 +158,6 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectForUpdateStep<R> offset(Field<? extends Number> offset);
 }

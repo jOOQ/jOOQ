@@ -1433,14 +1433,14 @@ extends
      * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<BigDecimal> power(Number exponent);
 
     /**
      * The <code>POWER</code> operator.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<BigDecimal> power(Field<? extends Number> exponent);
 
     /**
@@ -1449,14 +1449,14 @@ extends
      * @param exponent is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<BigDecimal> pow(Number exponent);
 
     /**
      * The <code>POW</code> operator, an alias for the <code>POWER</code> operator.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<BigDecimal> pow(Field<? extends Number> exponent);
 
     /**

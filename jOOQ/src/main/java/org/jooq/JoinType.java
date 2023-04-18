@@ -97,7 +97,7 @@ public enum JoinType {
      * <code>CROSS JOIN</code> two tables.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CROSS_JOIN("cross join", false),
 
     /**

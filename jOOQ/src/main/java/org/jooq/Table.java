@@ -1797,7 +1797,7 @@ extends
      * </code></pre>
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Table<Record> crossJoin(TableLike<?> table);
 
     /**
@@ -1819,7 +1819,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> crossJoin(SQL sql);
 
@@ -1842,7 +1842,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> crossJoin(String sql);
 
@@ -1866,7 +1866,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> crossJoin(String sql, Object... bindings);
 
@@ -1890,7 +1890,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> crossJoin(String sql, QueryPart... parts);
 
@@ -1907,7 +1907,7 @@ extends
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Table<Record> crossJoin(Name name);
 
     /**

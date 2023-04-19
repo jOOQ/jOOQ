@@ -55,6 +55,25 @@ import org.jetbrains.annotations.Nullable;
  * reference of type {@link JSONB}, not as <code>data() == null</code>. This is
  * consistent with jOOQ's general way of returning <code>NULL</code> from
  * {@link Result} and {@link Record} methods.
+ * <p>
+ * Unlike the purely text based, formatting-preserving {@link JSON} data type,
+ * the {@link JSONB} type uses a normalised representation of the JSON content,
+ * meaning that e.g. the following two documents are equal, despite their
+ * different object attribute order and formatting:
+ * <p>
+ * <ul>
+ * <li><code>{"a":1,"b":2}</code></li>
+ * <li><code>{"b": 2, "a": 1}</code></li>
+ * </ul>
+ * <p>
+ * This impacts the behaviour (and performance!) of
+ * <ul>
+ * <li>{@link #equals(Object)}</li>
+ * <li>{@link #hashCode()}</li>
+ * <li>{@link #toString()}</li>
+ * </ul>
+ * <p>
+ * The {@link #data()} content, however, is not normalised.
  */
 public final class JSONB implements Serializable {
 
@@ -111,12 +130,36 @@ public final class JSONB implements Serializable {
         return parsed;
     }
 
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <h3>{@link JSONB} specifics:</h3>
+     * <p>
+     * The {@link JSONB} type uses a normalised representation of the JSON
+     * content, meaning that two equivalent JSON documents are considered equal
+     * (see {@link JSONB} for details). This impacts both behaviour and
+     * performance!
+     */
     @Override
     public int hashCode() {
         Object p = parsed();
         return p == null ? 0 : p.hashCode();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <h3>{@link JSONB} specifics:</h3>
+     * <p>
+     * The {@link JSONB} type uses a normalised representation of the JSON
+     * content, meaning that two equivalent JSON documents are considered equal
+     * (see {@link JSONB} for details). This impacts both behaviour and
+     * performance!
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -126,6 +169,16 @@ public final class JSONB implements Serializable {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <h3>{@link JSONB} specifics:</h3>
+     * <p>
+     * The {@link JSONB} type uses a normalised representation of the JSON
+     * content, meaning that two equivalent JSON documents are considered equal
+     * (see {@link JSONB} for details). This impacts both behaviour and
+     * performance!
+     */
     @Override
     public String toString() {
         return JSONValue.toJSONString(parsed());

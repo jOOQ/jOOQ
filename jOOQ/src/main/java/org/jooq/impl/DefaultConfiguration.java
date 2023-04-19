@@ -165,7 +165,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         this(
             null,
             dialect,
-            SettingsTools.defaultSettings()
+            null
         );
     }
 

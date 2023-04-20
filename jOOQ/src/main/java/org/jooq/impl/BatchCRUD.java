@@ -54,6 +54,8 @@ import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 
+import org.reactivestreams.Subscriber;
+
 /**
  * @author Lukas Eder
  */
@@ -73,6 +75,13 @@ final class BatchCRUD extends AbstractBatch {
     @Override
     public final int size() {
         return records.length;
+    }
+
+    @Override
+    public void subscribe(Subscriber<? super Integer> s) {
+
+        // [#11700] TODO: Implement this
+        throw new UnsupportedOperationException("BatchCRUD operations are not yet supported in a reactive way. Use ordinary batch operations, instead, or avoid batching. See https://github.com/jOOQ/jOOQ/issues/14874");
     }
 
     @Override

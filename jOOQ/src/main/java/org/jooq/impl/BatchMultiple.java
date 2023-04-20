@@ -80,7 +80,7 @@ final class BatchMultiple extends AbstractBatch {
 
         // TODO: [#11700] Implement this
         else
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("The blocking, JDBC backed implementation of reactive batching has not yet been implemented. Use the R2DBC backed implementation, instead, or avoid batching.");
     }
 
     @Override

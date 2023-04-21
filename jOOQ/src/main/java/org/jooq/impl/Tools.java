@@ -53,6 +53,7 @@ import static org.jooq.ContextConverter.scoped;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -5675,6 +5676,7 @@ final class Tools {
             }
         }
     }
+
 
 
 

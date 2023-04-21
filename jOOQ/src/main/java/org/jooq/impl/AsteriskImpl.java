@@ -40,6 +40,7 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -109,19 +110,15 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
                 ctx.sql(' ').visit(K_EXCEPT).sql(" (").visit(fields).sql(')');
     }
 
+    static final Keyword keyword(Context<?> ctx) {
+        switch (ctx.family()) {
 
-
-
-
-
-
-
-
-
-
-
-
-
+            case DUCKDB:
+                return K_EXCLUDE;
+            default:
+                return K_EXCEPT;
+        }
+    }
 
     @Override
     public final Asterisk except(String... fieldNames) {

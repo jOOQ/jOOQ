@@ -64,6 +64,7 @@ import java.io.StringReader;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,6 +76,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
@@ -139,6 +141,8 @@ import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.tools.jdbc.JDBCUtils;
+
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * A base implementation for all types of databases.
@@ -807,6 +811,17 @@ public abstract class AbstractDatabase implements Database {
                 return sc;
 
         return null;
+    }
+
+    @Internal
+    protected List<Entry<String, String>> getInputCatalogsAndSchemata() {
+        List<Entry<String, String>> result = new ArrayList<>();
+
+        for (String catalog : getInputCatalogs())
+            for (String schema : getInputSchemata(catalog))
+                result.add(new SimpleImmutableEntry<>(catalog, schema));
+
+        return result;
     }
 
     @Override

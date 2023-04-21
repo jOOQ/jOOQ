@@ -7,6 +7,8 @@ So far, there had been only few database abstraction frameworks or libraries, th
 
 jOOQ has come to fill this gap.
 
+Testing...
+
 jOOQ's reason of being - compared to LINQ
 =========================================
 

@@ -105,6 +105,7 @@ implements
 
 
 
+            case DUCKDB:
             case SQLITE:
                 return false;
 
@@ -134,6 +135,7 @@ implements
 
 
 
+            case DUCKDB:
             case SQLITE: {
                 ctx.sql('(').visit(dividend).sql(" % ").visit(divisor).sql(')');
                 break;

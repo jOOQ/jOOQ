@@ -47,6 +47,7 @@ import org.jetbrains.annotations.*;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -144,7 +145,7 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectForUpdateStep<R> offset(Number offset);
 
     /**
@@ -158,6 +159,6 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectForUpdateStep<R> offset(Field<? extends Number> offset);
 }

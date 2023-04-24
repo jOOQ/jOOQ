@@ -107,6 +107,7 @@ implements
 
 
 
+            case DUCKDB:
             case POSTGRES:
             case SQLITE:
                 return false;
@@ -141,6 +142,7 @@ implements
 
 
 
+            case DUCKDB:
             case POSTGRES:
             case SQLITE: {
 

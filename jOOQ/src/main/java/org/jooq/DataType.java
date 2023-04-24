@@ -45,6 +45,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -207,7 +208,7 @@ public interface DataType<T> extends Named {
      * A convenient short for form {@link #getArrayDataType()} for DSL usage
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     DataType<T[]> array() throws DataTypeException;
 
     /**
@@ -776,7 +777,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> generatedAlwaysAs(T generatedAlwaysAsValue);
 
     /**
@@ -788,7 +789,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> generatedAlwaysAs(Field<T> generatedAlwaysAsValue);
 
     /**
@@ -844,7 +845,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> stored();
 
     /**
@@ -856,7 +857,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> virtual();
 
     /**
@@ -867,7 +868,7 @@ public interface DataType<T> extends Named {
      * This feature is implemented in commercial distributions only.
      */
     @NotNull
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     DataType<T> generationOption(GenerationOption generationOption);
 
     /**
@@ -995,7 +996,7 @@ public interface DataType<T> extends Named {
      * @see #defaultValue(Field)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DataType<T> defaultValue(T defaultValue);
 
     /**
@@ -1015,7 +1016,7 @@ public interface DataType<T> extends Named {
      * This is an alias for {@link #default_(Field)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DataType<T> defaultValue(Field<T> defaultValue);
 
     /**
@@ -1040,7 +1041,7 @@ public interface DataType<T> extends Named {
      * @see #defaultValue(Field)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DataType<T> default_(T defaultValue);
 
     /**
@@ -1058,7 +1059,7 @@ public interface DataType<T> extends Named {
      * to learn what expressions are possible.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DataType<T> default_(Field<T> defaultValue);
 
     /**

@@ -756,6 +756,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                         case DERBY:
+                        case DUCKDB:
                         case FIREBIRD:
 
                         // These dialects have some trouble, when they mostly get it right.
@@ -2227,6 +2228,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, byte[] value) throws SQLException {
             switch (ctx.family()) {
+                case DUCKDB:
                 case H2:
                     blobs.set(new DefaultBindingSetStatementContext<>(ctx.executeContext(), ctx.statement(), ctx.index(), value));
                     break;
@@ -2254,6 +2256,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final byte[] get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
+                case DUCKDB:
                 case H2:
                     DefaultBindingGetResultSetContext<byte[]> x = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), ctx.resultSet(), ctx.index());
                     blobs.get(x);
@@ -2267,6 +2270,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final byte[] get0(BindingGetStatementContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
+                case DUCKDB:
                 case H2:
                     DefaultBindingGetStatementContext<byte[]> x = new DefaultBindingGetStatementContext<>(ctx.executeContext(), ctx.statement(), ctx.index());
                     blobs.get(x);

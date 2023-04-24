@@ -584,6 +584,7 @@ final class Names {
     static final Name N_XMLPI                       = systemName("xmlpi");
     static final Name N_XMLSERIALIZE                = systemName("xmlserialize");
     static final Name N_XMLSERIALIZE_CONTENT        = systemName("xmlserialize_content");
+    static final Name N_XOR                         = systemName("xor");
 
 
 

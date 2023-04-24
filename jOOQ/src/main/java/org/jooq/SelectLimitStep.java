@@ -45,6 +45,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -163,7 +164,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     SelectLimitPercentStep<R> limit(Field<? extends Number> numberOfRows);
 
     /**
@@ -178,7 +179,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectWithTiesAfterOffsetStep<R> limit(Number offset, Number numberOfRows);
 
     /**
@@ -194,7 +195,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectLimitPercentAfterOffsetStep<R> limit(Number offset, Field<? extends Number> numberOfRows);
 
     /**
@@ -210,7 +211,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectLimitPercentAfterOffsetStep<R> limit(Field<? extends Number> offset, Number numberOfRows);
 
     /**
@@ -226,7 +227,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * and nested <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectLimitPercentAfterOffsetStep<R> limit(Field<? extends Number> offset, Field<? extends Number> numberOfRows);
 
     /**
@@ -240,7 +241,7 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectLimitAfterOffsetStep<R> offset(Number offset);
 
     /**
@@ -254,6 +255,6 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectLimitAfterOffsetStep<R> offset(Field<? extends Number> offset);
 }

@@ -115,6 +115,9 @@ implements
             case TRINO:
                 return true;
 
+            case DUCKDB:
+                return true;
+
 
             case SQLITE:
                 return false;
@@ -155,6 +158,10 @@ implements
 
             case TRINO:
                 ctx.visit(function(N_BITWISE_XOR, getDataType(), arg1, arg2));
+                break;
+
+            case DUCKDB:
+                ctx.visit(function(N_XOR, getDataType(), arg1, arg2));
                 break;
 
 

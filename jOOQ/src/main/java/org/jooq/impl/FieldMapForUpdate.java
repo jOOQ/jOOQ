@@ -45,6 +45,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.IGNITE;
@@ -122,7 +123,7 @@ extends
 {
 
     static final Set<SQLDialect> CASTS_NEEDED                      = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect> NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(DUCKDB, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_RVE_SET_QUERY             = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
 
 

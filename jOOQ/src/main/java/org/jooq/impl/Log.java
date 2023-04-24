@@ -127,6 +127,7 @@ implements
 
 
             case DERBY:
+            case DUCKDB:
             case HSQLDB:
             case IGNITE:
             case SQLITE:

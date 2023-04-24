@@ -88,8 +88,10 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
+import org.jooq.impl.DefaultUnwrapperProvider.DefaultUnwrapper;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.BatchedPreparedStatement;
 
 /**
  * @author Lukas Eder
@@ -421,6 +423,17 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
     }
 
     /**
+     * Make sure a {@link PreparedStatement}, which may be a
+     * {@link BatchedPreparedStatement}, is executed immediately, not batched.
+     */
+    final PreparedStatement executeImmediate(PreparedStatement s) throws SQLException {
+        if (DefaultUnwrapper.isWrapperFor(s, BatchedPreparedStatement.class))
+            s.unwrap(BatchedPreparedStatement.class).setExecuteImmediate(true);
+
+        return s;
+    }
+
+    /**
      * Default implementation for query execution using a prepared statement.
      * Subclasses may override this method.
      */
@@ -431,22 +444,35 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
         try {
             listener.executeStart(ctx);
 
-            // [#1829] Statement.execute() is preferred over Statement.executeUpdate(), as
-            // we might be executing plain SQL and returning results.
-            if (!stmt.execute()) {
-                result = stmt.getUpdateCount();
-                ctx.rows(result);
+            switch (ctx.family()) {
+                // [#12052] DuckDB doesn't correctly implement the JDBC API protocol:
+                //          https://github.com/duckdb/duckdb/issues/7188
+                case DUCKDB: {
+                    result = executeImmediate(ctx.statement()).executeUpdate();
+                    ctx.rows(result);
+                    break;
+                }
+
+                default: {
+                    // [#1829] Statement.execute() is preferred over Statement.executeUpdate(), as
+                    // we might be executing plain SQL and returning results.
+                    if (!stmt.execute()) {
+                        result = stmt.getUpdateCount();
+                        ctx.rows(result);
+                    }
+
+
+
+
+
+
+
+
+
+
+                    break;
+                }
             }
-
-
-
-
-
-
-
-
-
-
 
             listener.executeEnd(ctx);
             return result;

@@ -42,6 +42,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -151,7 +152,7 @@ public interface SelectWindowStep<R extends Record> extends SelectQualifyStep<R>
      * will inline window definitions where they are referenced.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectQualifyStep<R> window(WindowDefinition... definitions);
 
     /**
@@ -177,6 +178,6 @@ public interface SelectWindowStep<R extends Record> extends SelectQualifyStep<R>
      * will inline window definitions where they are referenced.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectQualifyStep<R> window(Collection<? extends WindowDefinition> definitions);
 }

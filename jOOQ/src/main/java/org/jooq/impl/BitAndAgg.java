@@ -277,6 +277,7 @@ implements
 
 
 
+            case DUCKDB:
             case IGNITE:
             case MARIADB:
             case MYSQL:

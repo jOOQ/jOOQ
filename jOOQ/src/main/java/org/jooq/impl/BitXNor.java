@@ -114,6 +114,7 @@ implements
 
 
             case CUBRID:
+            case DUCKDB:
             case FIREBIRD:
             case HSQLDB:
             case MARIADB:
@@ -160,6 +161,7 @@ implements
 
 
             case CUBRID:
+            case DUCKDB:
             case FIREBIRD:
             case HSQLDB:
             case MARIADB:

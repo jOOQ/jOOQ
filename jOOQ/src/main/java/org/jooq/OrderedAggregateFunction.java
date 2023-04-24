@@ -43,6 +43,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -95,7 +96,7 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AggregateFilterStep<T> withinGroupOrderBy(OrderField<?>... fields);
 
     /**
@@ -103,6 +104,6 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AggregateFilterStep<T> withinGroupOrderBy(Collection<? extends OrderField<?>> fields);
 }

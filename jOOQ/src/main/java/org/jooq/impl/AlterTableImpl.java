@@ -1011,9 +1011,9 @@ implements
         if (family == FIREBIRD) {
             if (addFirst) {
                 begin(ctx, c1 -> {
-                    executeImmediate(c1, c2 -> accept1(c2));
+                    Tools.executeImmediate(c1, c2 -> accept1(c2));
                     c1.formatSeparator();
-                    executeImmediate(c1, c2 -> {
+                    Tools.executeImmediate(c1, c2 -> {
                         c2.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_ALTER).sql(' ').visit(addColumn).sql(' ').visit(K_POSITION).sql(" 1");
                     });
                 });

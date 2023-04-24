@@ -98,8 +98,9 @@ implements
 
 
 
-
-
+            case DUCKDB:
+                acceptNative(ctx);
+                break;
 
             default:
                 acceptEmulation(ctx);
@@ -107,23 +108,29 @@ implements
         }
     }
 
+    private final void acceptNative(Context<?> ctx) {
+        Name name;
+
+        switch (ctx.family()) {
 
 
 
 
 
+            default:
+                name = N_PRODUCT;
+                break;
+        }
 
+        ctx.visit(CustomField.of(name, NUMERIC, c -> {
+            c.visit(distinct
+                ? aggregateDistinct(name, NUMERIC, arguments.toArray(EMPTY_FIELD))
+                : aggregate(name, NUMERIC, arguments.toArray(EMPTY_FIELD)));
 
-
-
-
-
-
-
-
-
-
-
+            acceptFilterClause(c);
+            acceptOverClause(c);
+        }));
+    }
 
     private final void acceptEmulation(Context<?> ctx) {
 

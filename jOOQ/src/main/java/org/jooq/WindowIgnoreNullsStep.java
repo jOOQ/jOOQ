@@ -41,6 +41,7 @@ import org.jetbrains.annotations.*;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -76,7 +77,7 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @NotNull
-    @Support({ H2, TRINO })
+    @Support({ DUCKDB, H2, TRINO })
     WindowOverStep<T> ignoreNulls();
 
     /**
@@ -84,6 +85,6 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @NotNull
-    @Support({ H2, TRINO })
+    @Support({ DUCKDB, H2, TRINO })
     WindowOverStep<T> respectNulls();
 }

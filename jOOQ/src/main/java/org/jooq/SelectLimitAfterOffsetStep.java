@@ -47,6 +47,7 @@ import org.jetbrains.annotations.*;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -140,7 +141,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * function and nested <code>SELECT</code> statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectLimitPercentAfterOffsetStep<R> limit(Number numberOfRows);
 
     /**
@@ -156,7 +157,7 @@ public interface SelectLimitAfterOffsetStep<R extends Record> extends SelectForU
      * statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     SelectLimitPercentAfterOffsetStep<R> limit(Field<? extends Number> numberOfRows);
 
 }

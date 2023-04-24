@@ -108,6 +108,7 @@ implements
 
             case CUBRID:
             case DERBY:
+            case DUCKDB:
             case H2:
             case HSQLDB:
             case IGNITE:
@@ -145,6 +146,7 @@ implements
 
             case CUBRID:
             case DERBY:
+            case DUCKDB:
             case H2:
             case HSQLDB:
             case IGNITE:

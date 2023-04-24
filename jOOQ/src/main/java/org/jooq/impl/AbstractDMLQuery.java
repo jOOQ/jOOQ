@@ -1132,6 +1132,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 // Firebird and Postgres can execute the INSERT .. RETURNING
                 // clause like a select clause. JDBC support is not implemented
                 // in the Postgres JDBC driver
+                case DUCKDB:
                 case FIREBIRD:
                 case POSTGRES:
                 case YUGABYTEDB: {
@@ -1247,17 +1248,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
             return result;
         }
-    }
-
-    /**
-     * Make sure a {@link PreparedStatement}, which may be a
-     * {@link BatchedPreparedStatement}, is executed immediately, not batched.
-     */
-    private final PreparedStatement executeImmediate(PreparedStatement s) throws SQLException {
-        if (DefaultUnwrapper.isWrapperFor(s, BatchedPreparedStatement.class))
-            s.unwrap(BatchedPreparedStatement.class).setExecuteImmediate(true);
-
-        return s;
     }
 
     private final ResultSet executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener) throws SQLException {

@@ -168,5 +168,6 @@ public class SalesByStoreRecord extends TableRecordImpl<SalesByStoreRecord> impl
         setStore(store);
         setManager(manager);
         setTotalSales(totalSales);
+        resetChangedOnNotNull();
     }
 }

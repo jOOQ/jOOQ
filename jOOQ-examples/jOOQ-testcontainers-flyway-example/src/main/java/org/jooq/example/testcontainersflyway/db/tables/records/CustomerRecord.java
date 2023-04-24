@@ -438,5 +438,6 @@ public class CustomerRecord extends UpdatableRecordImpl<CustomerRecord> implemen
         setCreateDate(createDate);
         setLastUpdate(lastUpdate);
         setActive(active);
+        resetChangedOnNotNull();
     }
 }

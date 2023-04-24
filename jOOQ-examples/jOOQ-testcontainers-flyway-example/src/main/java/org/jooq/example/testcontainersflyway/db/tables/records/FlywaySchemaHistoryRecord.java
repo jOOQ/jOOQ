@@ -437,5 +437,6 @@ public class FlywaySchemaHistoryRecord extends UpdatableRecordImpl<FlywaySchemaH
         setInstalledOn(installedOn);
         setExecutionTime(executionTime);
         setSuccess(success);
+        resetChangedOnNotNull();
     }
 }

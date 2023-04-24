@@ -176,5 +176,6 @@ public class ActorRecord extends UpdatableRecordImpl<ActorRecord> implements Rec
         setActorid(actorid);
         setFirstname(firstname);
         setLastname(lastname);
+        resetChangedOnNotNull();
     }
 }

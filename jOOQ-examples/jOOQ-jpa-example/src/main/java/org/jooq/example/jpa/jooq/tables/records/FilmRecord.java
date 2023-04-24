@@ -289,5 +289,6 @@ public class FilmRecord extends UpdatableRecordImpl<FilmRecord> implements Recor
         setTitle(title);
         setLanguageLanguageid(languageLanguageid);
         setOriginallanguageLanguageid(originallanguageLanguageid);
+        resetChangedOnNotNull();
     }
 }

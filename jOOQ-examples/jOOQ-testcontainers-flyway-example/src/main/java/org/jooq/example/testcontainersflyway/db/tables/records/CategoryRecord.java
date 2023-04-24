@@ -178,5 +178,6 @@ public class CategoryRecord extends UpdatableRecordImpl<CategoryRecord> implemen
         setCategoryId(categoryId);
         setName(name);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

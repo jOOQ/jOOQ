@@ -176,5 +176,6 @@ public class BookRecord extends UpdatableRecordImpl<BookRecord> implements Recor
         setId(id);
         setAuthorId(authorId);
         setTitle(title);
+        resetChangedOnNotNull();
     }
 }

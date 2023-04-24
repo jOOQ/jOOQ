@@ -215,5 +215,6 @@ public class InventoryRecord extends UpdatableRecordImpl<InventoryRecord> implem
         setFilmId(filmId);
         setStoreId(storeId);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

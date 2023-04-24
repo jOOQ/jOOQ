@@ -474,5 +474,6 @@ public class StaffRecord extends UpdatableRecordImpl<StaffRecord> implements Rec
         setPassword(password);
         setLastUpdate(lastUpdate);
         setPicture(picture);
+        resetChangedOnNotNull();
     }
 }

@@ -215,5 +215,6 @@ public class CityRecord extends UpdatableRecordImpl<CityRecord> implements Recor
         setCity(city);
         setCountryId(countryId);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

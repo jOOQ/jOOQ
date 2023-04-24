@@ -92,5 +92,6 @@ public class FilmInStockRecord extends TableRecordImpl<FilmInStockRecord> implem
         super(FilmInStock.FILM_IN_STOCK);
 
         setPFilmCount(pFilmCount);
+        resetChangedOnNotNull();
     }
 }

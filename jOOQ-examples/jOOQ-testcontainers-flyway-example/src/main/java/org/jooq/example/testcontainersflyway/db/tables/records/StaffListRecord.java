@@ -351,5 +351,6 @@ public class StaffListRecord extends TableRecordImpl<StaffListRecord> implements
         setCity(city);
         setCountry(country);
         setSid(sid);
+        resetChangedOnNotNull();
     }
 }

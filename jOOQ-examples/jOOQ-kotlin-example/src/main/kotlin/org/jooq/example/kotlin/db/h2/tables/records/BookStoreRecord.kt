@@ -38,7 +38,7 @@ open class BookStoreRecord() : UpdatableRecordImpl<BookStoreRecord>(BookStore.BO
     override fun value1(): String? = name
 
     override fun value1(value: String?): BookStoreRecord {
-        this.name = value
+        set(0, value)
         return this
     }
 
@@ -52,6 +52,7 @@ open class BookStoreRecord() : UpdatableRecordImpl<BookStoreRecord>(BookStore.BO
      */
     constructor(name: String? = null): this() {
         this.name = name
+        resetChangedOnNotNull()
     }
 
     /**
@@ -60,6 +61,7 @@ open class BookStoreRecord() : UpdatableRecordImpl<BookStoreRecord>(BookStore.BO
     constructor(value: org.jooq.example.kotlin.db.h2.tables.pojos.BookStore?): this() {
         if (value != null) {
             this.name = value.name
+            resetChangedOnNotNull()
         }
     }
 }

@@ -178,5 +178,6 @@ public class LanguageRecord extends UpdatableRecordImpl<LanguageRecord> implemen
         setLanguageId(languageId);
         setName(name);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

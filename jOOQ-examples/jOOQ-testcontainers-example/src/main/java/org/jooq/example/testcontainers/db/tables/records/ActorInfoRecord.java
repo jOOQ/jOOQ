@@ -203,5 +203,6 @@ public class ActorInfoRecord extends TableRecordImpl<ActorInfoRecord> implements
         setFirstName(firstName);
         setLastName(lastName);
         setFilmInfo(filmInfo);
+        resetChangedOnNotNull();
     }
 }

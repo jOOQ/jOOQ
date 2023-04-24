@@ -138,5 +138,6 @@ public class FilmActorRecord extends UpdatableRecordImpl<FilmActorRecord> implem
 
         setFilmsFilmid(filmsFilmid);
         setActorsActorid(actorsActorid);
+        resetChangedOnNotNull();
     }
 }

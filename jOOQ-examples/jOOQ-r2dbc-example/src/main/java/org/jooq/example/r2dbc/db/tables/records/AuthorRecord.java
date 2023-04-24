@@ -176,5 +176,6 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements R
         setId(id);
         setFirstName(firstName);
         setLastName(lastName);
+        resetChangedOnNotNull();
     }
 }

@@ -289,5 +289,6 @@ public class AuthorRecord extends UpdatableRecordImpl<AuthorRecord> implements R
         setDateOfBirth(dateOfBirth);
         setYearOfBirth(yearOfBirth);
         setAddress(address);
+        resetChangedOnNotNull();
     }
 }

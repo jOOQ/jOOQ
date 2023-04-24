@@ -111,57 +111,57 @@ open class BookRecord() : UpdatableRecordImpl<BookRecord>(Book.BOOK), Record11<I
     override fun value11(): LocalDateTime? = recTimestamp
 
     override fun value1(value: Int?): BookRecord {
-        this.id = value
+        set(0, value)
         return this
     }
 
     override fun value2(value: Int?): BookRecord {
-        this.authorId = value
+        set(1, value)
         return this
     }
 
     override fun value3(value: Int?): BookRecord {
-        this.coAuthorId = value
+        set(2, value)
         return this
     }
 
     override fun value4(value: Int?): BookRecord {
-        this.detailsId = value
+        set(3, value)
         return this
     }
 
     override fun value5(value: String?): BookRecord {
-        this.title = value
+        set(4, value)
         return this
     }
 
     override fun value6(value: Int?): BookRecord {
-        this.publishedIn = value
+        set(5, value)
         return this
     }
 
     override fun value7(value: Int?): BookRecord {
-        this.languageId = value
+        set(6, value)
         return this
     }
 
     override fun value8(value: String?): BookRecord {
-        this.contentText = value
+        set(7, value)
         return this
     }
 
     override fun value9(value: ByteArray?): BookRecord {
-        this.contentPdf = value
+        set(8, value)
         return this
     }
 
     override fun value10(value: Int?): BookRecord {
-        this.recVersion = value
+        set(9, value)
         return this
     }
 
     override fun value11(value: LocalDateTime?): BookRecord {
-        this.recTimestamp = value
+        set(10, value)
         return this
     }
 
@@ -195,6 +195,7 @@ open class BookRecord() : UpdatableRecordImpl<BookRecord>(Book.BOOK), Record11<I
         this.contentPdf = contentPdf
         this.recVersion = recVersion
         this.recTimestamp = recTimestamp
+        resetChangedOnNotNull()
     }
 
     /**
@@ -213,6 +214,7 @@ open class BookRecord() : UpdatableRecordImpl<BookRecord>(Book.BOOK), Record11<I
             this.contentPdf = value.contentPdf
             this.recVersion = value.recVersion
             this.recTimestamp = value.recTimestamp
+            resetChangedOnNotNull()
         }
     }
 }

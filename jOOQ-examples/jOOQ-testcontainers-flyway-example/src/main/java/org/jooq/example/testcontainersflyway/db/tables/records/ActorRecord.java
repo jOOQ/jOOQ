@@ -215,5 +215,6 @@ public class ActorRecord extends UpdatableRecordImpl<ActorRecord> implements Rec
         setFirstName(firstName);
         setLastName(lastName);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

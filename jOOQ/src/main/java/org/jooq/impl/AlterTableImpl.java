@@ -1491,6 +1491,7 @@ implements
 
 
                     case DERBY:
+                    case DUCKDB:
                     case TRINO:
                         ctx.sql(' ').visit(K_SET_DATA_TYPE);
                         break;

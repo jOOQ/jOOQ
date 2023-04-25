@@ -87,21 +87,21 @@ public interface AlterViewStep {
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.
      */
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     @NotNull @CheckReturnValue
     AlterViewFinalStep renameTo(@Stringly.Name String renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.
      */
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     @NotNull @CheckReturnValue
     AlterViewFinalStep renameTo(Name renameTo);
 
     /**
      * Add the <code>RENAME TO</code> clause to the <code>ALTER VIEW</code> statement.
      */
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     @NotNull @CheckReturnValue
     AlterViewFinalStep renameTo(Table<?> renameTo);
 

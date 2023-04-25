@@ -85,7 +85,7 @@ import org.jooq.impl.Tools.BooleanDataKey;
 final class RowSubqueryCondition extends AbstractCondition implements UNotYetImplemented {
     private static final Clause[]        CLAUSES                                    = { CONDITION, CONDITION_COMPARISON };
     private static final Set<SQLDialect> NO_SUPPORT_NATIVE                          = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD);
-    private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED                      = SQLDialect.supportedBy(DERBY, FIREBIRD, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED                      = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, SQLITE);
     // See https://bugs.mysql.com/bug.php?id=103494
     private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED_OTHER_THAN_IN_NOT_IN = SQLDialect.supportedBy(MARIADB, MYSQL);
 

@@ -9581,7 +9581,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterViewStep alterView(@Stringly.Name String view);
 
     /**
@@ -9590,7 +9590,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterViewStep alterView(Name view);
 
     /**
@@ -9599,7 +9599,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterViewStep alterView(Table<?> view);
 
     /**
@@ -9608,7 +9608,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterViewIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     AlterViewStep alterViewIfExists(@Stringly.Name String view);
 
     /**
@@ -9617,7 +9617,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterViewIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     AlterViewStep alterViewIfExists(Name view);
 
     /**
@@ -9626,7 +9626,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterViewIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     AlterViewStep alterViewIfExists(Table<?> view);
 
     /**
@@ -9635,7 +9635,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterViewStep alterView(Table<?> view, Field<?>... fields);
 
     /**
@@ -9644,7 +9644,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(Table, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterViewStep alterView(Table<?> view, Collection<? extends Field<?>> fields);
 
     /**
@@ -11866,7 +11866,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableStep alterTableIfExists(String table);
 
     /**
@@ -11875,7 +11875,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableStep alterTableIfExists(Name table);
 
     /**
@@ -11884,7 +11884,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableStep alterTableIfExists(Table<?> table);
 
     // -------------------------------------------------------------------------

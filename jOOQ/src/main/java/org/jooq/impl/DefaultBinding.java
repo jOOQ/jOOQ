@@ -2379,12 +2379,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+            switch (ctx.family()) {
 
 
 
 
 
-            super.setNull0(ctx);
+                default:
+                    super.setNull0(ctx);
+                    break;
+            }
         }
 
         @Override
@@ -2443,6 +2447,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlBind0(BindingSQLContext<U> ctx, Date value) throws SQLException {
+            switch (ctx.family()) {
 
 
 
@@ -2453,12 +2458,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-            super.sqlBind0(ctx, value);
+                default:
+                    super.sqlBind0(ctx, value);
+                    break;
+            }
         }
 
         @Override
         final void register0(BindingRegisterContext<U> ctx) throws SQLException {
+            switch (ctx.family()) {
 
 
 
@@ -2466,14 +2474,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-            super.register0(ctx);
+                default:
+                    super.register0(ctx);
+                    break;
+            }
         }
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Date value) throws SQLException {
-            if (ctx.family() == SQLITE)
-                ctx.statement().setString(ctx.index(), value.toString());
+            switch (ctx.family()) {
+
+                // DuckDB doesn't support setDate() yet: https://github.com/duckdb/duckdb/discussions/7207
+                case DUCKDB:
+
+                // SQLite's type affinity needs special care...
+                case SQLITE:
+                    ctx.statement().setString(ctx.index(), value.toString());
+                    break;
 
 
 
@@ -2481,12 +2498,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            else
-                ctx.statement().setDate(ctx.index(), value);
+
+                default:
+                    ctx.statement().setDate(ctx.index(), value);
+                    break;
+            }
         }
 
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, Date value) throws SQLException {
+            switch (ctx.family()) {
 
 
 
@@ -2495,20 +2516,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            ctx.output().writeDate(value);
+                default:
+                    ctx.output().writeDate(value);
+                    break;
+            }
         }
 
         @Override
         final Date get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            SQLDialect family = ctx.family();
+            switch (ctx.family()) {
 
-            // SQLite's type affinity needs special care...
-            if (family == SQLITE) {
-                String date = ctx.resultSet().getString(ctx.index());
-                return date == null ? null : new Date(parse(Date.class, date));
-            }
-
-
+                // SQLite's type affinity needs special care...
+                case SQLITE: {
+                    String date = ctx.resultSet().getString(ctx.index());
+                    return date == null ? null : new Date(parse(Date.class, date));
+                }
 
 
 
@@ -2516,13 +2538,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            else {
-                return ctx.resultSet().getDate(ctx.index());
+
+
+                default:
+                    return ctx.resultSet().getDate(ctx.index());
             }
         }
 
         @Override
         final Date get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            switch (ctx.family()) {
 
 
 
@@ -2531,13 +2556,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
-            return ctx.statement().getDate(ctx.index());
+                default:
+                    return ctx.statement().getDate(ctx.index());
+            }
         }
 
         @Override
         final Date get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            switch (ctx.family()) {
 
 
 
@@ -2546,21 +2572,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-
-
-            return ctx.input().readDate();
+                default:
+                    return ctx.input().readDate();
+            }
         }
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
+            switch (configuration.family()) {
 
 
 
 
 
 
-
-            return Types.DATE;
+                default:
+                    return Types.DATE;
+            }
         }
     }
 

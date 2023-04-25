@@ -43,6 +43,7 @@ import org.jetbrains.annotations.*;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -88,6 +89,6 @@ public interface AlterTableDropStep extends AlterTableFinalStep {
      * <code>ALTER TABLE … DROP</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ DERBY, DUCKDB, HSQLDB, POSTGRES, YUGABYTEDB })
     AlterTableFinalStep restrict();
 }

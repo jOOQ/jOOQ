@@ -241,7 +241,8 @@ implements
 
 
 
-
+            case DUCKDB:
+                break;
 
             default:
                 acceptNullTreatmentStandard(ctx);
@@ -252,9 +253,8 @@ implements
     final void acceptNullTreatmentStandard(Context<?> ctx) {
         switch (ctx.family()) {
 
-
-
-
+            case DUCKDB:
+                break;
 
             default:
                 if (nullTreatment == NullTreatment.IGNORE_NULLS)

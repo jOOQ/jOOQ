@@ -133,7 +133,7 @@ extends
 
 
 
-    static final Set<SQLDialect> NO_SUPPORT_RVE_SET                = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> NO_SUPPORT_RVE_SET                = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect> NO_SUPPORT_RVE_SET_IN_MERGE       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 

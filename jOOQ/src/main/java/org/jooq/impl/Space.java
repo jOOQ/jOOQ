@@ -108,6 +108,7 @@ implements
 
 
             case DERBY:
+            case DUCKDB:
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
@@ -146,6 +147,7 @@ implements
 
 
             case DERBY:
+            case DUCKDB:
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:

@@ -171,11 +171,16 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
 
         else if (NO_SUPPORT_NATIVE.contains(ctx.dialect()))
             return emulationUsingExists(ctx, left, right,
-                comparator == GREATER
-             || comparator == GREATER_OR_EQUAL
-             || comparator == LESS
-             || comparator == LESS_OR_EQUAL ? comparator : EQUALS,
-                comparator == NOT_IN || comparator == NOT_EQUALS
+                   comparator == GREATER
+                || comparator == GREATER_OR_EQUAL
+                || comparator == LESS
+                || comparator == LESS_OR_EQUAL
+                || comparator == IS_DISTINCT_FROM
+                || comparator == IS_NOT_DISTINCT_FROM
+                 ? comparator
+                 : EQUALS,
+                   comparator == NOT_IN
+                || comparator == NOT_EQUALS
             );
         else
             return new Native();

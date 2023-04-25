@@ -119,6 +119,7 @@ implements
 
 
             case DERBY:
+            case DUCKDB:
             case SQLITE:
             case TRINO:
                 ctx.visit(function(N_LENGTH, getDataType(), string));

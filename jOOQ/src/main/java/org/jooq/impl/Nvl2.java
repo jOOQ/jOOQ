@@ -93,6 +93,7 @@ final class Nvl2<T> extends AbstractField<T> implements QOM.Nvl2<T> {
 
             case CUBRID:
             case DERBY:
+            case DUCKDB:
             case FIREBIRD:
             case MYSQL:
             case POSTGRES:

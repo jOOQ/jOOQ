@@ -45,6 +45,7 @@ import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -114,7 +115,6 @@ import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -165,12 +165,10 @@ import org.jooq.conf.ExecuteWithoutWhere;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.DefaultUnwrapperProvider.DefaultUnwrapper;
 import org.jooq.impl.QOM.ResultOption;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.jdbc.BatchedPreparedStatement;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 
@@ -181,7 +179,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
     private static final JooqLogger              log                                    = JooqLogger.getLogger(AbstractQuery.class);
 
-    private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE        = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, MARIADB, MYSQL, TRINO);
+    private static final Set<SQLDialect>         NO_SUPPORT_INSERT_ALIASED_TABLE        = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, TRINO);
     private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_INSERT_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_UPDATE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_DELETE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);

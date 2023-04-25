@@ -118,6 +118,7 @@ implements
             case H2:
                 return true;
 
+            case DUCKDB:
             case HSQLDB:
             case IGNITE:
             case MARIADB:
@@ -206,6 +207,7 @@ implements
                 ctx.visit(function(N_RANDOM_UUID, getDataType()));
                 break;
 
+            case DUCKDB:
             case HSQLDB:
             case IGNITE:
             case MARIADB:

@@ -43,6 +43,7 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -78,8 +79,8 @@ import org.jooq.UniqueKey;
  */
 final class GroupFieldList extends QueryPartList<GroupField> {
 
-    static final Set<SQLDialect> NO_SUPPORT_GROUP_BY_TABLE       = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect> NO_SUPPORT_GROUP_FUNCTIONAL_DEP = SQLDialect.supportedBy(DERBY, FIREBIRD, TRINO);
+    static final Set<SQLDialect> NO_SUPPORT_GROUP_BY_TABLE       = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_GROUP_FUNCTIONAL_DEP = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, TRINO);
 
     GroupFieldList() {
         super();

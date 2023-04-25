@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * Dialects and dialect families as supported by jOOQ.
@@ -112,7 +113,13 @@ public enum SQLDialect {
 
     /**
      * The DuckDB dialect family.
+     * <p>
+     * jOOQ integration tests have found that this RDBMS is in a beta state. We
+     * do not run the complete integration test suite against it, nor do we
+     * regression test, currently, until significant issues are resolved in both
+     * the RDBMS and the JDBC driver.
      */
+    @Experimental
     DUCKDB("DuckDB", false, true),
 
     /**

@@ -47,6 +47,7 @@ import org.jetbrains.annotations.*;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -364,7 +365,7 @@ public interface InsertSetStep<R extends Record> {
      * Add an empty record with default values.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnDuplicateStep<R> defaultValues();
 
     /**

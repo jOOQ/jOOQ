@@ -169,8 +169,8 @@ implements
     private static final Clause[]            CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
     private static final Clause[]            CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
     private static final Clause[]            CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
-    private static final Set<SQLDialect>     NO_SUPPORT_SYMMETRIC          = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
-    private static final Set<SQLDialect>     EMULATE_BETWEEN               = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL);
+    private static final Set<SQLDialect>     NO_SUPPORT_SYMMETRIC          = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
+    private static final Set<SQLDialect>     EMULATE_BETWEEN               = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, MARIADB, MYSQL);
 
     private final boolean                    symmetric;
     private final boolean                    not;

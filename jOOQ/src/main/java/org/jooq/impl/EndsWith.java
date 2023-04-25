@@ -89,6 +89,17 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+            case DUCKDB:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -96,6 +107,10 @@ implements
 
 
 
+
+            case DUCKDB:
+                ctx.visit(function(N_SUFFIX, BOOLEAN, string, suffix));
+                break;
 
             default:
                 ctx.visit(string.like(DSL.concat(inline("%"), Tools.escapeForLike(suffix, ctx.configuration())), Tools.ESCAPE));

@@ -8585,6 +8585,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return coth((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("COT"))
                     return cot((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("CONTAINS"))
+                    return parseFunctionArgs2((f1, f2) -> f1.contains(f2));
                 else if ((field = parseNextvalCurrvalIf(SequenceMethod.CURRVAL)) != null)
                     return field;
                 else if (parseFunctionNameIf("CENTURY"))
@@ -8693,6 +8695,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if (parseFunctionNameIf("ELEMENT_AT"))
                     return parseFunctionArgs2(DSL::arrayGet);
+                else if (parseFunctionNameIf("ENDS_WITH"))
+                    return parseFunctionArgs2((f1, f2) -> f1.endsWith(f2));
                 else if (parseFunctionNameIf("EXP"))
                     return exp((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("EPOCH"))
@@ -9005,6 +9009,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs3(DSL::splitPart);
                 else if (parseFunctionNameIf("STR_REPLACE"))
                     return parseFunctionArgs3(DSL::replace, DSL::replace);
+                else if (parseFunctionNameIf("STARTS_WITH"))
+                    return parseFunctionArgs2((f1, f2) -> f1.startsWith(f2));
                 else if (parseFunctionNameIf("SCHEMA") && parseEmptyParensIf())
                     return currentSchema();
                 else if (parseFunctionNameIf("STRREVERSE"))

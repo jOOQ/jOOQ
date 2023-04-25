@@ -43,6 +43,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -110,7 +111,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
@@ -119,7 +120,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
@@ -128,7 +129,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>ON CONFLICT … DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
@@ -141,7 +142,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * <code>(T)</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     <T> InsertOnDuplicateSetMoreStep<R> setNull(Field<T> field);
 
     /**
@@ -157,7 +158,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * corresponding field's type.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnDuplicateSetMoreStep<R> set(Map<?, ?> map);
 
     /**
@@ -171,7 +172,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * @see #set(Map)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnDuplicateSetMoreStep<R> set(Record record);
 
     /**
@@ -179,7 +180,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * {@link DSL#excluded(Field)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnDuplicateSetMoreStep<R> setAllToExcluded();
 
 }

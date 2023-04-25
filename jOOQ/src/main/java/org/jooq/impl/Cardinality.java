@@ -103,6 +103,10 @@ implements
 
 
 
+            case DUCKDB:
+                ctx.visit(function(N_ARRAY_LENGTH, getDataType(), array));
+                break;
+
             default:
                 ctx.visit(function(N_CARDINALITY, getDataType(), array));
                 break;

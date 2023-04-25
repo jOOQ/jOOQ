@@ -42,6 +42,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -101,7 +102,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> and(Condition condition);
 
     /**
@@ -109,7 +110,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> and(Field<Boolean> condition);
 
     /**
@@ -125,7 +126,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> and(SQL sql);
 
@@ -142,7 +143,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> and(String sql);
 
@@ -160,7 +161,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> and(String sql, Object... bindings);
 
@@ -178,7 +179,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> and(String sql, QueryPart... parts);
 
@@ -187,7 +188,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> andNot(Condition condition);
 
     /**
@@ -195,7 +196,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> andNot(Field<Boolean> condition);
 
     /**
@@ -203,7 +204,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> andExists(Select<?> select);
 
     /**
@@ -211,7 +212,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> andNotExists(Select<?> select);
 
     /**
@@ -219,7 +220,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> or(Condition condition);
 
     /**
@@ -227,7 +228,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> or(Field<Boolean> condition);
 
     /**
@@ -243,7 +244,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> or(SQL sql);
 
@@ -260,7 +261,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> or(String sql);
 
@@ -278,7 +279,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> or(String sql, Object... bindings);
 
@@ -296,7 +297,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictConditionStep<R> or(String sql, QueryPart... parts);
 
@@ -305,7 +306,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> orNot(Condition condition);
 
     /**
@@ -313,7 +314,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> orNot(Field<Boolean> condition);
 
     /**
@@ -321,7 +322,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> orExists(Select<?> select);
 
     /**
@@ -329,6 +330,6 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictConditionStep<R> orNotExists(Select<?> select);
 }

@@ -666,7 +666,7 @@ extends
      * The <code>EQ</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition eq(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -694,7 +694,7 @@ extends
      * The <code>EQUAL</code> operator, an alias for the <code>EQ</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition equal(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -722,7 +722,7 @@ extends
      * The <code>GE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition ge(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -750,7 +750,7 @@ extends
      * The <code>GREATER_OR_EQUAL</code> operator, an alias for the <code>GE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition greaterOrEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -778,7 +778,7 @@ extends
      * The <code>GREATER_THAN</code> operator, an alias for the <code>GT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition greaterThan(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -806,7 +806,7 @@ extends
      * The <code>GT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition gt(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -919,7 +919,7 @@ extends
      * The <code>LE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition le(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -947,7 +947,7 @@ extends
      * The <code>LESS_OR_EQUAL</code> operator, an alias for the <code>LE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition lessOrEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -975,7 +975,7 @@ extends
      * The <code>LESS_THAN</code> operator, an alias for the <code>LT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition lessThan(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -1056,7 +1056,7 @@ extends
      * The <code>LT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition lt(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -1084,7 +1084,7 @@ extends
      * The <code>NE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition ne(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -1112,7 +1112,7 @@ extends
      * The <code>NOT_EQUAL</code> operator, an alias for the <code>NE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition notEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -1189,21 +1189,21 @@ extends
      * @param pattern is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep notSimilarTo(@Stringly.Param String pattern);
 
     /**
      * The <code>NOT_SIMILAR_TO</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep notSimilarTo(Field<String> pattern);
 
     /**
      * The <code>NOT_SIMILAR_TO</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep notSimilarTo(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern);
 
     /**
@@ -1212,21 +1212,21 @@ extends
      * @param pattern is wrapped as {@link #val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep similarTo(@Stringly.Param String pattern);
 
     /**
      * The <code>SIMILAR_TO</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep similarTo(Field<String> pattern);
 
     /**
      * The <code>SIMILAR_TO</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
     LikeEscapeStep similarTo(org.jooq.QuantifiedSelect<? extends Record1<String>> pattern);
 
     // -------------------------------------------------------------------------
@@ -1261,7 +1261,7 @@ extends
      * Create a condition to check if this field contains JSON data.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL })
+    @Support({ DUCKDB, MARIADB, MYSQL })
     Condition isJson();
 
     /**
@@ -1270,7 +1270,7 @@ extends
      * Create a condition to check if this field does not contain JSON data.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL })
+    @Support({ DUCKDB, MARIADB, MYSQL })
     Condition isNotJson();
 
     // -------------------------------------------------------------------------

@@ -73,7 +73,7 @@ public interface CreateTableAsStep extends CreateTableOnCommitStep {
     /**
      * Add the <code>AS</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTableWithDataStep as(Select<?> select);
 }

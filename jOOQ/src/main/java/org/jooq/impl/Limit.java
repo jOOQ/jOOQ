@@ -295,6 +295,14 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
 
 
+            case DUCKDB: {
+
+                // It appears that bind values in OFFSET can be trouble, see
+                // https://github.com/duckdb/duckdb/issues/7212
+                ctx.paramType(INLINED, c -> acceptDefault(c, castMode));
+                break;
+            }
+
             default: {
                 acceptDefault(ctx, castMode);
                 break;

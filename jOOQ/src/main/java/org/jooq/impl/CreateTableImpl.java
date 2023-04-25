@@ -343,14 +343,14 @@ implements
 
 
     static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS           = SQLDialect.supportedUntil(DERBY, FIREBIRD);
-    static final Set<SQLDialect> NO_SUPPORT_WITH_DATA               = SQLDialect.supportedBy(H2, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> NO_SUPPORT_WITH_DATA               = SQLDialect.supportedBy(DUCKDB, H2, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect> NO_SUPPORT_CTAS_COLUMN_NAMES       = SQLDialect.supportedBy(H2);
     static final Set<SQLDialect> EMULATE_INDEXES_IN_BLOCK           = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_SOME_ENUM_TYPES_AS_CHECK   = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_STORED_ENUM_TYPES_AS_CHECK = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
     static final Set<SQLDialect> REQUIRES_WITH_DATA                 = SQLDialect.supportedBy(HSQLDB);
     static final Set<SQLDialect> WRAP_SELECT_IN_PARENS              = SQLDialect.supportedBy(HSQLDB);
-    static final Set<SQLDialect> SUPPORT_TEMPORARY                  = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> SUPPORT_TEMPORARY                  = SQLDialect.supportedBy(DUCKDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_TABLE_COMMENT_IN_BLOCK     = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_COLUMN_COMMENT_IN_BLOCK    = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supportedBy(FIREBIRD);

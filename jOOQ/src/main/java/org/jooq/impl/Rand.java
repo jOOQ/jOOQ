@@ -98,6 +98,9 @@ implements
 
 
 
+            case DUCKDB:
+                return true;
+
 
 
 
@@ -141,6 +144,10 @@ implements
 
 
 
+
+            case DUCKDB:
+                ctx.visit(function(N_RANDOM, getDataType()));
+                break;
 
 
 

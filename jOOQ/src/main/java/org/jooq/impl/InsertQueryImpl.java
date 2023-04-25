@@ -371,6 +371,7 @@ implements
             switch (ctx.family()) {
 
 
+                case DUCKDB:
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB: {
@@ -549,6 +550,7 @@ implements
 
 
 
+                case DUCKDB:
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB: {

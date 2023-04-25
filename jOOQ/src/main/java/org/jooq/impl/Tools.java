@@ -6895,6 +6895,7 @@ final class Tools {
 
 
 
+                case DUCKDB:
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:

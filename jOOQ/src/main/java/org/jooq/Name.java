@@ -42,6 +42,7 @@ package org.jooq;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -55,6 +56,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -242,7 +244,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * @see #as(WindowSpecification)
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowDefinition as();
 
     /**
@@ -257,7 +259,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * </ul>
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowDefinition as(WindowSpecification window);
 
     /**

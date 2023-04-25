@@ -72,7 +72,6 @@ final class Names {
     static final Name N_ARRAY_AGG                   = systemName("array_agg");
     static final Name N_ARRAY_CONSTRUCT             = systemName("array_construct");
     static final Name N_ARRAY_CONSTRUCT_COMPACT     = systemName("array_construct_compact");
-    static final Name N_ARRAY_LENGTH                = systemName("array_length");
     static final Name N_BITCOUNT                    = systemName("bitcount");
     static final Name N_BITWISE_AND_AGG             = systemName("bitwise_and_agg");
     static final Name N_BITWISE_OR_AGG              = systemName("bitwise_or_agg");
@@ -309,6 +308,7 @@ final class Names {
     static final Name N_ARRAY_APPEND                = systemName("array_append");
     static final Name N_ARRAY_CONCAT                = systemName("array_concat");
     static final Name N_ARRAY_GET                   = systemName("array_get");
+    static final Name N_ARRAY_LENGTH                = systemName("array_length");
     static final Name N_ARRAY_OVERLAP               = systemName("array_overlap");
     static final Name N_ARRAY_PREPEND               = systemName("array_prepend");
     static final Name N_ARRAY_REMOVE                = systemName("array_remove");
@@ -377,6 +377,7 @@ final class Names {
     static final Name N_CONNECT_BY_ISCYCLE          = systemName("connect_by_iscycle");
     static final Name N_CONNECT_BY_ISLEAF           = systemName("connect_by_isleaf");
     static final Name N_CONNECT_BY_ROOT             = systemName("connect_by_root");
+    static final Name N_CONTAINS                    = systemName("contains");
     static final Name N_CORR                        = systemName("corr");
     static final Name N_COS                         = systemName("cos");
     static final Name N_COSH                        = systemName("cosh");
@@ -515,6 +516,7 @@ final class Names {
     static final Name N_STDDEV_SAMP                 = systemName("stddev_samp");
     static final Name N_STRREVERSE                  = systemName("strreverse");
     static final Name N_STRTOK                      = systemName("strtok");
+    static final Name N_STR_SPLIT                   = systemName("str_split");
     static final Name N_ST_AREA                     = systemName("st_area");
     static final Name N_ST_ASBINARY                 = systemName("st_asbinary");
     static final Name N_ST_ASTEXT                   = systemName("st_astext");
@@ -552,6 +554,7 @@ final class Names {
     static final Name N_ST_Z                        = systemName("st_z");
     static final Name N_SUBSTRING                   = systemName("substring");
     static final Name N_SUBSTRING_INDEX             = systemName("substring_index");
+    static final Name N_SUFFIX                      = systemName("suffix");
     static final Name N_SUM                         = systemName("sum");
     static final Name N_SYS_CONNECT_BY_PATH         = systemName("sys_connect_by_path");
     static final Name N_TAN                         = systemName("tan");

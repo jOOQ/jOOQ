@@ -119,6 +119,7 @@ implements
 
 
             case CUBRID:
+            case DUCKDB:
             case FIREBIRD:
             case IGNITE:
             case POSTGRES:
@@ -183,6 +184,7 @@ implements
 
 
             case CUBRID:
+            case DUCKDB:
             case FIREBIRD:
             case IGNITE:
             case POSTGRES:

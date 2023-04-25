@@ -73,14 +73,14 @@ public interface CreateTableWithDataStep extends CreateTableOnCommitStep {
     /**
      * Add the <code>WITH DATA</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTableOnCommitStep withData();
 
     /**
      * Add the <code>WITH NO DATA</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTableOnCommitStep withNoData();
 }

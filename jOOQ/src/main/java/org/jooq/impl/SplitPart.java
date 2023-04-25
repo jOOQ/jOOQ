@@ -110,6 +110,9 @@ implements
 
 
 
+            case DUCKDB:
+                return false;
+
 
 
             case MARIADB:
@@ -180,6 +183,10 @@ implements
 
 
 
+
+            case DUCKDB:
+                ctx.visit(arrayGet(function(N_STR_SPLIT, getDataType().array(), string, delimiter), (Field<Integer>) n));
+                break;
 
 
 

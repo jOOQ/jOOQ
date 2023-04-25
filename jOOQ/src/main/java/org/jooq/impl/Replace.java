@@ -148,6 +148,7 @@ implements
 
 
 
+            case DUCKDB:
             case FIREBIRD:
             case HSQLDB:
             case MARIADB:

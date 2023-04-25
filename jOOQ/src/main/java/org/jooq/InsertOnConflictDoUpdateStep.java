@@ -45,6 +45,7 @@ import org.jetbrains.annotations.*;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -82,7 +83,7 @@ public interface InsertOnConflictDoUpdateStep<R extends Record> {
      * Add the <code>DO UPDATE</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnDuplicateSetStep<R> doUpdate();
 
     /**

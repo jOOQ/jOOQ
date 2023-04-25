@@ -89,6 +89,23 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+            case POSTGRES:
+            case YUGABYTEDB:
+                return false;
+
+            case DUCKDB:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -111,6 +128,10 @@ implements
                     acceptDefault(ctx);
                 break;
             }
+
+            case DUCKDB:
+                ctx.visit(function(N_CONTAINS, BOOLEAN, value, content));
+                break;
 
             default:
                 acceptDefault(ctx);

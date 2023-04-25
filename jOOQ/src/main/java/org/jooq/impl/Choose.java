@@ -98,6 +98,7 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
 
             case CUBRID:
             case DERBY:
+            case DUCKDB:
             case FIREBIRD:
             case H2:
             case HSQLDB:

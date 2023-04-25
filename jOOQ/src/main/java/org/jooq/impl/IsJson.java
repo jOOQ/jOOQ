@@ -88,6 +88,7 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+            case DUCKDB:
             case MARIADB:
             case MYSQL:
                 return true;
@@ -115,6 +116,7 @@ implements
 
 
 
+            case DUCKDB:
             case MARIADB:
             case MYSQL:
                 ctx.visit(function(N_JSON_VALID, BOOLEAN, field));

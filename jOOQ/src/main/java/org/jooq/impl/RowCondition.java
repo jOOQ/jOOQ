@@ -51,6 +51,7 @@ import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -75,11 +76,9 @@ import java.util.Set;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 // ...
-import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UNotYetImplemented;
@@ -95,8 +94,8 @@ final class RowCondition extends AbstractCondition implements UNotYetImplemented
 
 
 
-    private static final Set<SQLDialect> EMULATE_EQ_AND_NE  = SQLDialect.supportedBy(DERBY, FIREBIRD);
-    private static final Set<SQLDialect> EMULATE_RANGES     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> EMULATE_EQ_AND_NE  = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD);
+    private static final Set<SQLDialect> EMULATE_RANGES     = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD);
 
     private final Row                    left;
     private final Row                    right;

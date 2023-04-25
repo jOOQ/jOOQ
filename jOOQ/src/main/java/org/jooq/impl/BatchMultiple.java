@@ -85,15 +85,15 @@ final class BatchMultiple extends AbstractBatch {
 
     @Override
     public final int[] execute() {
-        Configuration c = Tools.configuration(configuration);
-
-        if (NO_SUPPORT_BATCH.contains(c.dialect()))
-            return Stream.of(queries).mapToInt(c.dsl()::execute).toArray();
-        else
-            return execute(c, queries);
+        return execute(Tools.configuration(configuration), queries);
     }
 
     static int[] execute(Configuration configuration, Query[] queries) {
+
+        // [#14784] TODO: Make this configurable also for other dialects
+        if (NO_SUPPORT_BATCH.contains(configuration.dialect()))
+            return Stream.of(queries).mapToInt(configuration.dsl()::execute).toArray();
+
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.MULTIPLE, queries);
         ExecuteListener listener = ExecuteListeners.get(ctx);
 

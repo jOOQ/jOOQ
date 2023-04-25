@@ -213,31 +213,35 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
             if (t != 0)
                 ctx.statement().setQueryTimeout(t);
 
-            for (Object[] bindValues : allBindValues) {
-                listener.bindStart(ctx);
+            // [#14784] TODO: Make this configurable also for other dialects
+            if (NO_SUPPORT_BATCH.contains(ctx.dialect())) {
+                int size = allBindValues.size();
+                int[] result = new int[size];
 
-                // [#1371] [#2139] Don't bind variables directly onto statement, bind them through the collected params
-                //                 list to preserve type information
-                // [#3547]         The original query may have no Params specified - e.g. when it was constructed with
-                //                 plain SQL. In that case, infer the bind value type directly from the bind value
-                visitAll(new DefaultBindContext(configuration, ctx, ctx.statement()),
-                    (params.length > 0)
-                        ? fields(bindValues, params)
-                        : fields(bindValues));
+                for (int i = 0; i < size; i++) {
+                    Object[] bindValues = allBindValues.get(i);
 
-                listener.bindEnd(ctx);
-                ctx.statement().addBatch();
+                    setBindValues(ctx, listener, params, bindValues);
+                    listener.executeStart(ctx);
+                    result[i] = ctx.statement().executeUpdate();
+                    listener.executeEnd(ctx);
+                }
+
+                setBatchRows(ctx, result);
+                return result;
             }
+            else {
+                for (Object[] bindValues : allBindValues) {
+                    setBindValues(ctx, listener, params, bindValues);
+                    ctx.statement().addBatch();
+                }
 
-            listener.executeStart(ctx);
-            int[] result = ctx.statement().executeBatch();
-
-            int[] batchRows = ctx.batchRows();
-            for (int i = 0; i < batchRows.length && i < result.length; i++)
-                batchRows[i] = result[i];
-
-            listener.executeEnd(ctx);
-            return result;
+                listener.executeStart(ctx);
+                int[] result = ctx.statement().executeBatch();
+                setBatchRows(ctx, result);
+                listener.executeEnd(ctx);
+                return result;
+            }
         }
 
         // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
@@ -257,6 +261,34 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         finally {
             Tools.safeClose(listener, ctx);
         }
+    }
+
+    private final void setBindValues(
+        DefaultExecuteContext ctx,
+        ExecuteListener listener,
+        Param<?>[] params,
+        Object[] bindValues
+    ) {
+        listener.bindStart(ctx);
+
+        // [#1371] [#2139] Don't bind variables directly onto statement, bind them through the collected params
+        //                 list to preserve type information
+        // [#3547]         The original query may have no Params specified - e.g. when it was constructed with
+        //                 plain SQL. In that case, infer the bind value type directly from the bind value
+        visitAll(new DefaultBindContext(configuration, ctx, ctx.statement()),
+            (params.length > 0)
+                ? fields(bindValues, params)
+                : fields(bindValues)
+        );
+
+        listener.bindEnd(ctx);
+    }
+
+    private final void setBatchRows(DefaultExecuteContext ctx, int[] result) {
+        int[] batchRows = ctx.batchRows();
+
+        for (int i = 0; i < batchRows.length && i < result.length; i++)
+            batchRows[i] = result[i];
     }
 
     final Param<?>[] extractParams() {

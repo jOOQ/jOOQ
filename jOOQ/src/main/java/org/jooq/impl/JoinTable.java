@@ -566,14 +566,20 @@ implements
                  emulateNaturalLeftOuterJoin(ctx) ||
                  emulateNaturalRightOuterJoin(ctx) ||
                  emulateNaturalFullOuterJoin(ctx)) {
-
             toSQLJoinCondition(ctx, naturalCondition());
         }
 
-        // Regular JOIN condition
-        else {
-            toSQLJoinCondition(ctx, condition);
+        // [#14985] Path joins additional conditions
+        else if (rhs instanceof TableImpl && ((TableImpl<?>) rhs).child != null) {
+            toSQLJoinCondition(ctx, new Join(((TableImpl<?>) rhs).child, rhs)
+                .onKey(((TableImpl<?>) rhs).childPath)
+                .condition.getWhere().and(condition.getWhere())
+            );
         }
+
+        // Regular JOIN condition
+        else
+            toSQLJoinCondition(ctx, condition);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

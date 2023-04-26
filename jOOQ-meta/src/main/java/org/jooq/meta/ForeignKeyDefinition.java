@@ -88,4 +88,9 @@ public interface ForeignKeyDefinition extends ConstraintDefinition {
      * Count the number of references between referencing and referenced tables.
      */
     int countSimilarReferences();
+
+    /**
+     * Get the inverse key.
+     */
+    InverseForeignKeyDefinition inverse();
 }

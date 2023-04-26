@@ -108,6 +108,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Generated;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 // ...
 import org.jooq.Name;
 import org.jooq.OrderField;
@@ -177,6 +178,7 @@ import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
+import org.jooq.meta.InverseForeignKeyDefinition;
 import org.jooq.meta.JavaTypeResolver;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.ParameterDefinition;
@@ -6352,21 +6354,41 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
-        if (generateImplicitJoinPathsToOne() && generateGlobalKeyReferences() && !table.isTableValuedFunction()) {
-            out.println();
+        if (generateGlobalKeyReferences() && !table.isTableValuedFunction()) {
+            if (generateImplicitJoinPathsToOne()) {
+                out.println();
 
-            if (scala) {
-                out.println("%sdef this(child: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(child, key), child, key, %s, null)",
-                    visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
+                if (scala) {
+                    out.println("%sdef this(child: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(child, key), child, key, %s, null)",
+                        visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
+                }
+                else if (kotlin) {
+                    out.println("%sconstructor(child: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(child, key), child, key, %s, null)",
+                        visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
+                }
+                else {
+                    out.println("%s<O extends %s> %s(%s<O> child, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType);
+                    out.println("super(child, key, %s);", tableId);
+                    out.println("}");
+                }
             }
-            else if (kotlin) {
-                out.println("%sconstructor(child: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(child, key), child, key, %s, null)",
-                    visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
-            }
-            else {
-                out.println("%s<O extends %s> %s(%s<O> child, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType);
-                out.println("super(child, key, %s);", tableId);
-                out.println("}");
+
+            if (generateImplicitJoinPathsToMany()) {
+                out.println();
+
+                if (scala) {
+                    out.println("%sdef this(parent: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(parent, key), parent, key, %s, null)",
+                        visibility(), Table.class, Record.class, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
+                }
+                else if (kotlin) {
+                    out.println("%sconstructor(parent: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(parent, key), parent, key, %s, null)",
+                        visibility(), Table.class, Record.class, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
+                }
+                else {
+                    out.println("%s<O extends %s> %s(%s<O> parent, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, InverseForeignKey.class, recordType);
+                    out.println("super(parent, key, %s);", tableId);
+                    out.println("}");
+                }
             }
         }
 
@@ -6597,13 +6619,13 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             // Foreign keys
-            List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
+            List<ForeignKeyDefinition> outboundFKs = table.getForeignKeys();
 
             // [#7554] [#8028] Not yet supported with global key references turned off
-            if (foreignKeys.size() > 0 && generateGlobalKeyReferences()) {
+            if (outboundFKs.size() > 0 && generateGlobalKeyReferences()) {
                 final List<String> keyFullIds = kotlin
-                    ? out.ref(getStrategy().getFullJavaIdentifiers(foreignKeys))
-                    : out.ref(getStrategy().getFullJavaIdentifiers(foreignKeys), 2);
+                    ? out.ref(getStrategy().getFullJavaIdentifiers(outboundFKs))
+                    : out.ref(getStrategy().getFullJavaIdentifiers(outboundFKs), 2);
 
                 if (scala) {
                     out.println();
@@ -6629,7 +6651,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.println();
 
                         // [#8762] Cache these calls for much improved runtime performance!
-                        for (ForeignKeyDefinition foreignKey : foreignKeys) {
+                        for (ForeignKeyDefinition foreignKey : outboundFKs) {
                             final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
                             final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
 
@@ -6643,8 +6665,8 @@ public class JavaGenerator extends AbstractGenerator {
                         }
                     }
 
-                    Map<TableDefinition, Long> pathCounts = foreignKeys.stream().collect(groupingBy(ForeignKeyDefinition::getReferencedTable, counting()));
-                    for (ForeignKeyDefinition foreignKey : foreignKeys) {
+                    Map<TableDefinition, Long> pathCounts = outboundFKs.stream().collect(groupingBy(ForeignKeyDefinition::getReferencedTable, counting()));
+                    for (ForeignKeyDefinition foreignKey : outboundFKs) {
                         final String keyFullId = kotlin
                             ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
                             : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
@@ -6679,6 +6701,74 @@ public class JavaGenerator extends AbstractGenerator {
                             out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);
                             out.println("if (_%s == null)", keyMethodName);
                             out.println("_%s = new %s(this, %s);", keyMethodName, referencedTableClassName, keyFullId);
+                            out.println();
+                            out.println("return _%s;", keyMethodName);
+                            out.println("}");
+                        }
+                    }
+                }
+            }
+
+            List<InverseForeignKeyDefinition> inboundFKs = table.getInverseForeignKeys();
+            if (inboundFKs.size() > 0 && generateGlobalKeyReferences()) {
+
+                // Inbound (to-many) implicit join paths
+                if (generateImplicitJoinPathsToMany()) {
+                    if (scala) {}
+                    else {
+                        out.println();
+
+                        // [#8762] Cache these calls for much improved runtime performance!
+                        for (InverseForeignKeyDefinition foreignKey : inboundFKs) {
+                            final String referencingTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencingTable()));
+                            final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+
+                            // [#13008] Prevent conflicts with the below leading underscore
+                            final String unquotedKeyMethodName = keyMethodName.replace("`", "");
+
+                            if (kotlin)
+                                out.println("private lateinit var _%s: %s", unquotedKeyMethodName, referencingTableClassName);
+                            else
+                                out.println("private transient %s _%s;", referencingTableClassName, keyMethodName);
+                        }
+                    }
+
+                    Map<TableDefinition, Long> pathCounts = inboundFKs.stream().collect(groupingBy(InverseForeignKeyDefinition::getReferencingTable, counting()));
+                    for (InverseForeignKeyDefinition foreignKey : inboundFKs) {
+                        final String keyFullId = kotlin
+                            ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
+                            : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
+                        final String referencingTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencingTable()));
+                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+                        final String unquotedKeyMethodName = keyMethodName.replace("`", "");
+
+                        out.javadoc(
+                            "Get the implicit to-many join path to the <code>" + foreignKey.getReferencingTable().getQualifiedName() + "</code> table"
+                          + (pathCounts.get(foreignKey.getReferencingTable()) > 1 ? ", via the <code>" + foreignKey.getInputName() + "</code> key" : "")
+                          + ".<p><strong>EXPERIMENTAL! DO NOT USE THIS FEATURE YET.</strong>"
+                        );
+
+                        if (scala) {
+                            out.println("%slazy val %s: %s = { new %s(this, %s.getInverseKey()) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencingTableClassName, referencingTableClassName, keyFullId);
+                        }
+                        else if (kotlin) {
+                            out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencingTableClassName);
+                            out.println("if (!this::_%s.isInitialized)", unquotedKeyMethodName);
+                            out.println("_%s = %s(this, %s.inverseKey)", unquotedKeyMethodName, referencingTableClassName, keyFullId);
+                            out.println();
+                            out.println("return _%s;", unquotedKeyMethodName);
+                            out.println("}");
+
+                            if (generateImplicitJoinPathsAsKotlinProperties()) {
+                                out.println();
+                                out.println("%sval %s: %s", visibility(), keyMethodName, referencingTableClassName);
+                                out.tab(1).println("get(): %s = %s()", referencingTableClassName, keyMethodName);
+                            }
+                        }
+                        else {
+                            out.println("%s%s %s() {", visibility(), referencingTableClassName, keyMethodName);
+                            out.println("if (_%s == null)", keyMethodName);
+                            out.println("_%s = new %s(this, %s.getInverseKey());", keyMethodName, referencingTableClassName, keyFullId);
                             out.println();
                             out.println("return _%s;", keyMethodName);
                             out.println("}");

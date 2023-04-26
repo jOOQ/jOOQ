@@ -1951,6 +1951,10 @@ This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:prope
       <element name="implicitJoinPathsToOne" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="implicitJoinPathsToMany" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for incoming foreign key relationships (to-many relationships)<p><strong>EXPERIMENTAL functionality! Do not use this feature, yet</strong>]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="implicitJoinPathsUseTableNameForUnambiguousFKs" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether names of unambiguous {@link org.jooq.meta.ForeignKeyDefinition} should be based

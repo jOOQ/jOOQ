@@ -79,6 +79,7 @@ import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexDefinition;
+import org.jooq.meta.InverseForeignKeyDefinition;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -284,11 +285,20 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     public String getJavaMethodName(Definition definition, Mode mode) {
         // [#7148] If table A references table B only once, then B is the ideal name
         //         for the implicit JOIN path. Otherwise, fall back to the foreign key name
-        if (getUseTableNameForUnambiguousFKs() && definition instanceof ForeignKeyDefinition fk) {
-            TableDefinition referenced = fk.getReferencedTable();
+        if (getUseTableNameForUnambiguousFKs()) {
+            if (definition instanceof ForeignKeyDefinition fk) {
+                TableDefinition referenced = fk.getReferencedTable();
 
-            if (fk.getKeyTable().getForeignKeys(referenced).size() == 1)
-                return getJavaMethodName(referenced, mode);
+                if (fk.getTable().getForeignKeys(referenced).size() == 1)
+                    return getJavaMethodName(referenced, mode);
+            }
+
+            if (definition instanceof InverseForeignKeyDefinition fk) {
+                TableDefinition referencing = fk.getReferencingTable();
+
+                if (fk.getTable().getInverseForeignKeys(referencing).size() == 1)
+                    return getJavaMethodName(referencing, mode);
+            }
         }
 
         return getJavaClassName0LC(definition, Mode.DEFAULT);

@@ -1733,7 +1733,7 @@ final class Interpreter {
 
         private final class InterpretedTable extends TableImpl<Record> {
             InterpretedTable(MutableSchema.InterpretedSchema schema) {
-                super(MutableTable.this.name(), schema, null, null, null, null, MutableTable.this.comment(), MutableTable.this.options);
+                super(MutableTable.this.name(), schema, null, (ForeignKey<?, Record>) null, null, null, MutableTable.this.comment(), MutableTable.this.options);
 
                 for (MutableField field : MutableTable.this.fields)
                     createField(field.name(), field.type, field.comment() != null ? field.comment().getComment() : null);

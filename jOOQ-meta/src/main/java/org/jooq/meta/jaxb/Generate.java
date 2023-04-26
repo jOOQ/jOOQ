@@ -38,6 +38,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean sequenceFlags = true;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToOne = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean implicitJoinPathsToMany = false;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsUseTableNameForUnambiguousFKs = true;
     @XmlElement(defaultValue = "true")
@@ -334,6 +336,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setImplicitJoinPathsToOne(Boolean value) {
         this.implicitJoinPathsToOne = value;
+    }
+
+    /**
+     * Generate implicit join path constructors on generated tables for incoming foreign key relationships (to-many relationships)<p><strong>EXPERIMENTAL functionality! Do not use this feature, yet</strong>
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isImplicitJoinPathsToMany() {
+        return implicitJoinPathsToMany;
+    }
+
+    /**
+     * Sets the value of the implicitJoinPathsToMany property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setImplicitJoinPathsToMany(Boolean value) {
+        this.implicitJoinPathsToMany = value;
     }
 
     /**
@@ -2637,6 +2663,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withImplicitJoinPathsToMany(Boolean value) {
+        setImplicitJoinPathsToMany(value);
+        return this;
+    }
+
     public Generate withImplicitJoinPathsUseTableNameForUnambiguousFKs(Boolean value) {
         setImplicitJoinPathsUseTableNameForUnambiguousFKs(value);
         return this;
@@ -3181,6 +3212,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("relations", relations);
         builder.append("sequenceFlags", sequenceFlags);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
+        builder.append("implicitJoinPathsToMany", implicitJoinPathsToMany);
         builder.append("implicitJoinPathsUseTableNameForUnambiguousFKs", implicitJoinPathsUseTableNameForUnambiguousFKs);
         builder.append("implicitJoinPathsAsKotlinProperties", implicitJoinPathsAsKotlinProperties);
         builder.append("deprecated", deprecated);
@@ -3332,6 +3364,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!implicitJoinPathsToOne.equals(other.implicitJoinPathsToOne)) {
+                return false;
+            }
+        }
+        if (implicitJoinPathsToMany == null) {
+            if (other.implicitJoinPathsToMany!= null) {
+                return false;
+            }
+        } else {
+            if (!implicitJoinPathsToMany.equals(other.implicitJoinPathsToMany)) {
                 return false;
             }
         }
@@ -4219,6 +4260,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((relations == null)? 0 :relations.hashCode()));
         result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
+        result = ((prime*result)+((implicitJoinPathsToMany == null)? 0 :implicitJoinPathsToMany.hashCode()));
         result = ((prime*result)+((implicitJoinPathsUseTableNameForUnambiguousFKs == null)? 0 :implicitJoinPathsUseTableNameForUnambiguousFKs.hashCode()));
         result = ((prime*result)+((implicitJoinPathsAsKotlinProperties == null)? 0 :implicitJoinPathsAsKotlinProperties.hashCode()));
         result = ((prime*result)+((deprecated == null)? 0 :deprecated.hashCode()));

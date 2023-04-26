@@ -100,4 +100,9 @@ public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition im
 
         return keys.size();
     }
+
+    @Override
+    public InverseForeignKeyDefinition inverse() {
+        return new DefaultInverseForeignKeyDefinition(this);
+    }
 }

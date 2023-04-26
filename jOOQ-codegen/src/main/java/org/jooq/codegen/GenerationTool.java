@@ -718,8 +718,10 @@ public class GenerationTool {
                 generator.setGenerateIndexes(g.getGenerate().isIndexes());
             if (g.getGenerate().isRelations() != null)
                 generator.setGenerateRelations(g.getGenerate().isRelations());
-            if (g.getGenerate().isImplicitJoinPathsToOne() != null)
+            if (g.getGenerate().isImplicitJoinPathsToMany() != null)
                 generator.setGenerateImplicitJoinPathsToOne(g.getGenerate().isImplicitJoinPathsToOne());
+            if (g.getGenerate().isImplicitJoinPathsToOne() != null)
+                generator.setGenerateImplicitJoinPathsToMany(g.getGenerate().isImplicitJoinPathsToMany());
             if (g.getGenerate().isImplicitJoinPathsAsKotlinProperties() != null)
                 generator.setGenerateImplicitJoinPathsAsKotlinProperties(g.getGenerate().isImplicitJoinPathsAsKotlinProperties());
             if (g.getGenerate().isDeprecated() != null)

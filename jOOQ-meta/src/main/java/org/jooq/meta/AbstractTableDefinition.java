@@ -161,6 +161,28 @@ implements
     }
 
     @Override
+    public final List<InverseForeignKeyDefinition> getInverseForeignKeys() {
+        List<InverseForeignKeyDefinition> result = new ArrayList<>();
+
+        for (UniqueKeyDefinition uk : getKeys())
+            for (ForeignKeyDefinition fk : uk.getForeignKeys())
+                result.add(fk.inverse());
+
+        return result;
+    }
+
+    @Override
+    public final List<InverseForeignKeyDefinition> getInverseForeignKeys(TableDefinition referencing) {
+        List<InverseForeignKeyDefinition> result = new ArrayList<>();
+
+        for (InverseForeignKeyDefinition key : getInverseForeignKeys())
+            if (referencing.equals(key.getReferencingTable()))
+                result.add(key);
+
+        return result;
+    }
+
+    @Override
     public final List<CheckConstraintDefinition> getCheckConstraints() {
         return getDatabase().getRelations().getCheckConstraints(this);
     }

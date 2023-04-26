@@ -51,6 +51,7 @@ import org.jooq.ConstraintEnforcementStep;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -64,12 +65,18 @@ import org.jooq.impl.QOM.UEmpty;
 /**
  * @author Lukas Eder
  */
-final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> implements ForeignKey<R, O>, UEmpty {
+final class ReferenceImpl<CHILD extends Record, PARENT extends Record>
+extends
+    AbstractKey<CHILD>
+implements
+    ForeignKey<CHILD, PARENT>,
+    UEmpty
+{
 
-    private final UniqueKey<O>       uk;
-    private final TableField<O, ?>[] ukFields;
+    private final UniqueKey<PARENT>       uk;
+    private final TableField<PARENT, ?>[] ukFields;
 
-    ReferenceImpl(Table<R> table, Name name, TableField<R, ?>[] fkFields, UniqueKey<O> uk, TableField<O, ?>[] ukFields, boolean enforced) {
+    ReferenceImpl(Table<CHILD> table, Name name, TableField<CHILD, ?>[] fkFields, UniqueKey<PARENT> uk, TableField<PARENT, ?>[] ukFields, boolean enforced) {
         super(table, name, fkFields, enforced);
 
         this.uk = uk;
@@ -77,33 +84,38 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     }
 
     @Override
-    public final UniqueKey<O> getKey() {
+    public final InverseForeignKey<PARENT, CHILD> getInverseKey() {
+        return new InverseReferenceImpl<>(this);
+    }
+
+    @Override
+    public final UniqueKey<PARENT> getKey() {
         return uk;
     }
 
     @Override
-    public final List<TableField<O, ?>> getKeyFields() {
+    public final List<TableField<PARENT, ?>> getKeyFields() {
         return Arrays.asList(ukFields);
     }
 
     @Override
-    public final TableField<O, ?>[] getKeyFieldsArray() {
+    public final TableField<PARENT, ?>[] getKeyFieldsArray() {
         return ukFields;
     }
 
     @Override
-    public final O fetchParent(R record) {
+    public final PARENT fetchParent(CHILD record) {
         return filterOne(fetchParents(record));
     }
 
     @Override
     @SafeVarargs
-    public final Result<O> fetchParents(R... records) {
+    public final Result<PARENT> fetchParents(CHILD... records) {
         return fetchParents(list(records));
     }
 
     @Override
-    public final Result<O> fetchParents(Collection<? extends R> records) {
+    public final Result<PARENT> fetchParents(Collection<? extends CHILD> records) {
         if (records == null || records.size() == 0)
             return new ResultImpl<>(new DefaultConfiguration(), uk.getFields());
         else
@@ -111,18 +123,18 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     }
 
     @Override
-    public final Result<R> fetchChildren(O record) {
+    public final Result<CHILD> fetchChildren(PARENT record) {
         return fetchChildren(list(record));
     }
 
     @Override
     @SafeVarargs
-    public final Result<R> fetchChildren(O... records) {
+    public final Result<CHILD> fetchChildren(PARENT... records) {
         return fetchChildren(list(records));
     }
 
     @Override
-    public final Result<R> fetchChildren(Collection<? extends O> records) {
+    public final Result<CHILD> fetchChildren(Collection<? extends PARENT> records) {
         if (records == null || records.size() == 0)
             return new ResultImpl<>(new DefaultConfiguration(), getFields());
         else
@@ -130,34 +142,34 @@ final class ReferenceImpl<R extends Record, O extends Record> extends AbstractKe
     }
 
     @Override
-    public final Table<O> parent(R record) {
+    public final Table<PARENT> parent(CHILD record) {
         return parents(list(record));
     }
 
     @SafeVarargs
     @Override
-    public final Table<O> parents(R... records) {
+    public final Table<PARENT> parents(CHILD... records) {
         return parents(list(records));
     }
 
     @Override
-    public final Table<O> parents(Collection<? extends R> records) {
+    public final Table<PARENT> parents(Collection<? extends CHILD> records) {
         return table(records, uk.getTable(), uk.getFieldsArray(), getFieldsArray());
     }
 
     @Override
-    public final Table<R> children(O record) {
+    public final Table<CHILD> children(PARENT record) {
         return children(list(record));
     }
 
     @SafeVarargs
     @Override
-    public final Table<R> children(O... records) {
+    public final Table<CHILD> children(PARENT... records) {
         return children(list(records));
     }
 
     @Override
-    public final Table<R> children(Collection<? extends O> records) {
+    public final Table<CHILD> children(Collection<? extends PARENT> records) {
         return table(records, getTable(), getFieldsArray(), uk.getFieldsArray());
     }
 

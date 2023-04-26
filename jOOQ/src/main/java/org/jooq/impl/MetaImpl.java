@@ -733,7 +733,7 @@ final class MetaImpl extends AbstractMeta {
         private final Result<Record> uks;
 
         MetaTable(String name, MetaSchema schema, Result<Record> columns, Result<Record> uks, String remarks, TableType tableType) {
-            super(name(name), schema, null, null, null, null, comment(remarks), tableOption(dsl(), schema, name, tableType));
+            super(name(name), schema, null, (ForeignKey<?, Record>) null, null, null, comment(remarks), tableOption(dsl(), schema, name, tableType));
 
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM

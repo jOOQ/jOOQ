@@ -71,6 +71,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Name;
 // ...
@@ -124,6 +125,8 @@ implements
     protected final Field<?>[]           parameters;
     final Table<?>                       child;
     final ForeignKey<?, R>               childPath;
+    final Table<?>                       parent;
+    final InverseForeignKey<?, R>        parentPath;
 
     /**
      * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name)} instead (or
@@ -171,19 +174,19 @@ implements
     }
 
     public TableImpl(Name name) {
-        this(name, null, null, null, null, null, (Comment) null);
+        this(name, null, null, (ForeignKey<?, R>) null, null, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema) {
-        this(name, schema, null, null, null, null, (Comment) null);
+        this(name, schema, null, (ForeignKey<?, R>) null, null, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased) {
-        this(name, schema, null, null, aliased, null, (Comment) null);
+        this(name, schema, null, (ForeignKey<?, R>) null, aliased, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
-        this(name, schema, null, null, aliased, parameters, (Comment) null);
+        this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, (Comment) null);
     }
 
     /**
@@ -191,42 +194,79 @@ implements
      */
     @Deprecated
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
-        this(name, schema, null, null, aliased, parameters, DSL.comment(comment));
+        this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, DSL.comment(comment));
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, Comment comment) {
-        this(name, schema, null, null, aliased, parameters, comment);
+        this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, comment);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
-        this(name, schema, null, null, aliased, parameters, comment, options);
+        this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, comment, options);
     }
 
     public TableImpl(Table<?> child, ForeignKey<?, R> path, Table<R> parent) {
         this(createPathAlias(child, path), null, child, path, parent, null, parent.getCommentPart());
     }
 
+    public TableImpl(Table<?> parent, InverseForeignKey<?, R> path, Table<R> child) {
+        this(createPathAlias(parent, path), null, parent, path, child, null, child.getCommentPart());
+    }
+
     public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
         this(name, schema, child, path, aliased, parameters, comment, TableOptions.table());
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public TableImpl(Name name, Schema schema, Table<?> parent, InverseForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
+        this(name, schema, parent, path, aliased, parameters, comment, TableOptions.table());
+    }
+
     public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
+        this(name, schema, child, path, null, null, aliased, parameters, comment, options);
+    }
+
+    public TableImpl(Name name, Schema schema, Table<?> parent, InverseForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
+        this(name, schema, null, null, parent, path, aliased, parameters, comment, options);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private TableImpl(
+        Name name,
+        Schema schema,
+        Table<?> child, ForeignKey<?, R> childPath,
+        Table<?> parent, InverseForeignKey<?, R> parentPath,
+        Table<R> aliased,
+        Field<?>[] parameters,
+        Comment comment,
+        TableOptions options
+    ) {
         super(options, name, schema, comment);
 
         this.fields = new FieldsImpl<>();
 
         if (child != null) {
             this.child = child;
-            this.childPath = path == null ? null : Tools.aliasedKey((ForeignKey) path, child, this);
+            this.childPath = childPath == null ? null : Tools.aliasedKey((ForeignKey) childPath, child, this);
+            this.parent = null;
+            this.parentPath = null;
+        }
+        else if (parent != null) {
+            this.child = null;
+            this.childPath = null;
+            this.parent = parent;
+            this.parentPath = parentPath == null ? null : Tools.aliasedKey((ForeignKey) parentPath.getForeignKey(), this, parent).getInverseKey();
         }
         else if (aliased instanceof TableImpl t) {
             this.child = t.child;
             this.childPath = t.childPath;
+            this.parent = t.parent;
+            this.parentPath = t.parentPath;
         }
         else {
             this.child = null;
             this.childPath = null;
+            this.parent = null;
+            this.parentPath = null;
         }
 
         if (aliased != null) {

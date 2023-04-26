@@ -129,6 +129,16 @@ public interface TableDefinition extends Definition {
     List<ForeignKeyDefinition> getForeignKeys(TableDefinition referenced);
 
     /**
+     * Get the inverse foreign keys for this table.
+     */
+    List<InverseForeignKeyDefinition> getInverseForeignKeys();
+
+    /**
+     * Get the inverse foreign keys for this table referenced from a specific table.
+     */
+    List<InverseForeignKeyDefinition> getInverseForeignKeys(TableDefinition referencing);
+
+    /**
      * Get the <code>CHECK</code> constraints for this table.
      */
     List<CheckConstraintDefinition> getCheckConstraints();

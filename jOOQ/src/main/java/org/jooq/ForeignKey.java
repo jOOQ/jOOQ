@@ -53,18 +53,24 @@ import org.jetbrains.annotations.Nullable;
  * Instances of this type cannot be created directly. They are available from
  * generated code.
  *
- * @param <R> The <code>FOREIGN KEY</code>'s owner table record
- * @param <O> The referenced <code>KEY</code>'s owner table record
+ * @param <CHILD> The <code>FOREIGN KEY</code>'s owner table record
+ * @param <PARENT> The referenced <code>KEY</code>'s owner table record
  * @author Lukas Eder
  */
 @SuppressWarnings("unchecked")
-public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
+public interface ForeignKey<CHILD extends Record, PARENT extends Record> extends Key<CHILD> {
+
+    /**
+     * The inverse key.
+     */
+    @NotNull
+    InverseForeignKey<PARENT, CHILD> getInverseKey();
 
     /**
      * The referenced <code>UniqueKey</code>.
      */
     @NotNull
-    UniqueKey<O> getKey();
+    UniqueKey<PARENT> getKey();
 
     /**
      * The fields that make up the referenced <code>UniqueKey</code>.
@@ -74,7 +80,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * {@link UniqueKey#getFields()}, but not necessarily so.
      */
     @NotNull
-    List<TableField<O, ?>> getKeyFields();
+    List<TableField<PARENT, ?>> getKeyFields();
 
     /**
      * The fields that make up the referenced <code>UniqueKey</code>.
@@ -86,7 +92,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      * @see #getKeyFields()
      */
     @NotNull
-    TableField<O, ?> @NotNull [] getKeyFieldsArray();
+    TableField<PARENT, ?> @NotNull [] getKeyFieldsArray();
 
     /**
      * Fetch a parent record of a given record through this foreign key
@@ -100,7 +106,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      */
     @Nullable
     @Blocking
-    O fetchParent(R record) throws DataAccessException;
+    PARENT fetchParent(CHILD record) throws DataAccessException;
 
     /**
      * Fetch parent records of a given set of record through this foreign key
@@ -114,7 +120,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      */
     @NotNull
     @Blocking
-    Result<O> fetchParents(R... records) throws DataAccessException;
+    Result<PARENT> fetchParents(CHILD... records) throws DataAccessException;
 
     /**
      * Fetch parent records of a given set of record through this foreign key
@@ -128,7 +134,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      */
     @NotNull
     @Blocking
-    Result<O> fetchParents(Collection<? extends R> records) throws DataAccessException;
+    Result<PARENT> fetchParents(Collection<? extends CHILD> records) throws DataAccessException;
 
     /**
      * Fetch child records of a given record through this foreign key
@@ -142,7 +148,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      */
     @NotNull
     @Blocking
-    Result<R> fetchChildren(O record) throws DataAccessException;
+    Result<CHILD> fetchChildren(PARENT record) throws DataAccessException;
 
     /**
      * Fetch child records of a given set of records through this foreign key
@@ -157,7 +163,7 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      */
     @NotNull
     @Blocking
-    Result<R> fetchChildren(O... records) throws DataAccessException;
+    Result<CHILD> fetchChildren(PARENT... records) throws DataAccessException;
 
     /**
      * Fetch child records of a given set of records through this foreign key
@@ -172,47 +178,47 @@ public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
      */
     @NotNull
     @Blocking
-    Result<R> fetchChildren(Collection<? extends O> records) throws DataAccessException;
+    Result<CHILD> fetchChildren(Collection<? extends PARENT> records) throws DataAccessException;
 
     /**
      * Get a table expression representing the parent of a record, given this
      * foreign key.
      */
     @NotNull
-    Table<O> parent(R record);
+    Table<PARENT> parent(CHILD record);
 
     /**
      * Get a table expression representing the parents of a record, given this
      * foreign key.
      */
     @NotNull
-    Table<O> parents(R... records);
+    Table<PARENT> parents(CHILD... records);
 
     /**
      * Get a table expression representing the parents of a record, given this
      * foreign key.
      */
     @NotNull
-    Table<O> parents(Collection<? extends R> records);
+    Table<PARENT> parents(Collection<? extends CHILD> records);
 
     /**
      * Get a table expression representing the children of a record, given this
      * foreign key.
      */
     @NotNull
-    Table<R> children(O record);
+    Table<CHILD> children(PARENT record);
 
     /**
      * Get a table expression representing the children of a record, given this
      * foreign key.
      */
     @NotNull
-    Table<R> children(O... records);
+    Table<CHILD> children(PARENT... records);
 
     /**
      * Get a table expression representing the children of a record, given this
      * foreign key.
      */
     @NotNull
-    Table<R> children(Collection<? extends O> records);
+    Table<CHILD> children(Collection<? extends PARENT> records);
 }

@@ -7248,8 +7248,8 @@ final class Tools {
         Iterable<? extends Table<?>> i,
         T result,
         Predicate<? super T> abort,
-        Predicate<? super JoinTable> recurseLhs,
-        Predicate<? super JoinTable> recurseRhs,
+        Predicate<? super JoinTable<?>> recurseLhs,
+        Predicate<? super JoinTable<?>> recurseRhs,
         BiFunction<? super T, ? super JoinType, ? extends T> joinTypeFunction,
         BiFunction<? super T, ? super Table<?>, ? extends T> tableFunction
     ) {
@@ -7266,15 +7266,15 @@ final class Tools {
         Table<?> t,
         T result,
         Predicate<? super T> abort,
-        Predicate<? super JoinTable> recurseLhs,
-        Predicate<? super JoinTable> recurseRhs,
+        Predicate<? super JoinTable<?>> recurseLhs,
+        Predicate<? super JoinTable<?>> recurseRhs,
         BiFunction<? super T, ? super JoinType, ? extends T> joinTypeFunction,
         BiFunction<? super T, ? super Table<?>, ? extends T> tableFunction
     ) {
         if (abort != null && abort.test(result))
             return result;
 
-        if (t instanceof JoinTable j) {
+        if (t instanceof JoinTable<?> j) {
             if (recurseLhs == null || recurseLhs.test(j)) {
                 result = traverseJoins(j.lhs, result, abort, recurseLhs, recurseRhs, joinTypeFunction, tableFunction);
 

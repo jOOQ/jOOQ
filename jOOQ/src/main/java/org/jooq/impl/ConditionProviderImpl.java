@@ -89,7 +89,7 @@ final class ConditionProviderImpl extends AbstractField<Boolean> implements Cond
 
     @NotNull
     final Condition getWhere() {
-        return hasWhere() ? condition : noCondition();
+        return hasWhere() ? extractCondition(condition) : noCondition();
     }
 
     final void setWhere(Condition newCondition) {

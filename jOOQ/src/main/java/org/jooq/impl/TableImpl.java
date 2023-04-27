@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
@@ -67,6 +68,7 @@ import java.util.stream.Stream;
 
 import org.jooq.Clause;
 import org.jooq.Comment;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -284,6 +286,13 @@ implements
             this.alias = null;
 
         this.parameters = parameters;
+    }
+
+    final Condition childPathCondition() {
+        if (child == null)
+            return noCondition();
+        else
+            return new Join(child, this).onKey(childPath).condition.getWhere();
     }
 
     /**

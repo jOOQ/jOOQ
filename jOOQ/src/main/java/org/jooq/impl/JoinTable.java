@@ -95,6 +95,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.noCondition;
@@ -276,7 +277,7 @@ implements
                         ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN, semiAntiJoinPredicates);
                     }
 
-                    Condition c = !using.isEmpty() ? usingCondition() : condition;
+                    Condition c = extractCondition(!using.isEmpty() ? usingCondition() : condition);
                     switch (translatedType) {
                         case LEFT_SEMI_JOIN:
                             semiAntiJoinPredicates.add(exists(selectOne().from(rhs).where(c)));
@@ -579,9 +580,8 @@ implements
             && ctx.data(DATA_RENDER_IMPLICIT_JOIN) == null
         ) {
             toSQLJoinCondition(ctx, DSL.and(
-                new Join(((TableImpl<?>) rhs).child, rhs)
-                    .onKey(((TableImpl<?>) rhs).childPath)
-                    .condition.getWhere(), condition.getWhere()
+                ((TableImpl<?>) rhs).childPathCondition(),
+                condition.getWhere()
             ));
         }
 

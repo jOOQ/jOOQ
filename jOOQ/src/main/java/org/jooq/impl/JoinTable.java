@@ -578,10 +578,11 @@ implements
             // are expected, and their predicates are already present.
             && ctx.data(DATA_RENDER_IMPLICIT_JOIN) == null
         ) {
-            toSQLJoinCondition(ctx, new Join(((TableImpl<?>) rhs).child, rhs)
-                .onKey(((TableImpl<?>) rhs).childPath)
-                .condition.getWhere().and(condition.getWhere())
-            );
+            toSQLJoinCondition(ctx, DSL.and(
+                new Join(((TableImpl<?>) rhs).child, rhs)
+                    .onKey(((TableImpl<?>) rhs).childPath)
+                    .condition.getWhere(), condition.getWhere()
+            ));
         }
 
         // Regular JOIN condition

@@ -47,6 +47,7 @@ import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_APPEND_SQL;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_PREPEND_SQL;
 
@@ -312,9 +313,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             // [#11367] TODO: Move this logic into a ScopeMarker as well
             //          TODO: subqueryLevel() is lower than scopeLevel if we use implicit join in procedural logic
             else if (e1.joinNode != null && !e1.joinNode.children.isEmpty()) {
-                replacedSQL = configuration
-                    .dsl()
-                    .renderContext()
+                RenderContext ctx = configuration.dsl().renderContext();
+                ctx.data(DATA_RENDER_IMPLICIT_JOIN, true);
+                replacedSQL = ctx
                     .declareTables(true)
                     .sql('(')
                     .formatIndentStart(e1.indent)

@@ -114,6 +114,7 @@ import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitAutoAliased;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_COLLECTED_SEMI_ANTI_JOIN;
 
 import java.util.ArrayList;
@@ -570,7 +571,13 @@ implements
         }
 
         // [#14985] Path joins additional conditions
-        else if (rhs instanceof TableImpl && ((TableImpl<?>) rhs).child != null) {
+        else if (rhs instanceof TableImpl
+            && ((TableImpl<?>) rhs).child != null
+
+            // Do this only if we're *not* rendering implicit joins, in case of which join paths
+            // are expected, and their predicates are already present.
+            && ctx.data(DATA_RENDER_IMPLICIT_JOIN) == null
+        ) {
             toSQLJoinCondition(ctx, new Join(((TableImpl<?>) rhs).child, rhs)
                 .onKey(((TableImpl<?>) rhs).childPath)
                 .condition.getWhere().and(condition.getWhere())

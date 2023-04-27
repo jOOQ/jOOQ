@@ -48,6 +48,7 @@ import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 // ...
 import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.Tools.DATAKEY_RESET_IN_SUBQUERY_SCOPE;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
@@ -1203,6 +1204,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                         break;
                 }
 
+                // [#14985] Once explicit join paths stabilise, it should be possible
+                //          to omit the ON clause here, and have it generated in JoinTable
                 result = result.join(e.getValue().joinTree(), type).onKey(e.getKey());
             }
 

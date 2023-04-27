@@ -662,6 +662,12 @@ final class Tools {
          */
         DATA_STORE_ASSIGNMENT,
 
+        /**
+         * [#14985] We're in a context where implicit joins are being rendered,
+         * not the query itself.
+         */
+        DATA_RENDER_IMPLICIT_JOIN,
+
         ;
 
         private final boolean resetInSubqueryScope;

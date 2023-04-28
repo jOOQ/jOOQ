@@ -80,6 +80,7 @@ import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.InverseForeignKeyDefinition;
+import org.jooq.meta.ManyToManyKeyDefinition;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -292,12 +293,20 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
                 if (fk.getTable().getForeignKeys(referenced).size() == 1)
                     return getJavaMethodName(referenced, mode);
             }
-
-            if (definition instanceof InverseForeignKeyDefinition fk) {
+            else if (definition instanceof InverseForeignKeyDefinition fk) {
                 TableDefinition referencing = fk.getReferencingTable();
 
                 if (fk.getTable().getInverseForeignKeys(referencing).size() == 1)
                     return getJavaMethodName(referencing, mode);
+            }
+            else if (definition instanceof ManyToManyKeyDefinition k) {
+                TableDefinition t1 = k.getForeignKey1().getReferencedTable();
+                TableDefinition t2 = k.getForeignKey2().getReferencedTable();
+
+                if (t1.getManyToManyKeys(t2).size() == 1)
+                    return getJavaMethodName(t2, mode);
+                else
+                    return getJavaClassName0LC(k.getForeignKey2(), Mode.DEFAULT);
             }
         }
 

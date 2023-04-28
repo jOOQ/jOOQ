@@ -43,7 +43,9 @@ import static org.jooq.impl.DSL.table;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Record;
 import org.jooq.Table;
@@ -166,7 +168,7 @@ implements
 
         for (UniqueKeyDefinition uk : getKeys())
             for (ForeignKeyDefinition fk : uk.getForeignKeys())
-                result.add(fk.inverse());
+                result.add(fk.getInverse());
 
         return result;
     }
@@ -177,6 +179,52 @@ implements
 
         for (InverseForeignKeyDefinition key : getInverseForeignKeys())
             if (referencing.equals(key.getReferencingTable()))
+                result.add(key);
+
+        return result;
+    }
+
+    @Override
+    public final List<ManyToManyKeyDefinition> getManyToManyKeys() {
+        List<ManyToManyKeyDefinition> result = new ArrayList<>();
+
+        for (InverseForeignKeyDefinition k : getInverseForeignKeys()) {
+
+            ukLoop:
+            for (UniqueKeyDefinition uk : k.getReferencingTable().getKeys()) {
+                if (!uk.getKeyColumns().containsAll(k.getReferencingColumns()))
+                    continue ukLoop;
+
+                fkLoop:
+                for (ForeignKeyDefinition fk : k.getReferencingTable().getForeignKeys()) {
+                    if (!k.getForeignKey().equals(fk)) {
+                        Set<ColumnDefinition> columns = new HashSet<>();
+                        columns.addAll(k.getForeignKey().getKeyColumns());
+
+                        // [#13639] The two FKs must not overlap
+                        for (ColumnDefinition c : fk.getKeyColumns())
+                            if (!columns.add(c))
+                                continue fkLoop;
+
+                        // [#13639] Require UK = FK1 + FK2
+                        if (!columns.equals(new HashSet<>(uk.getKeyColumns())))
+                            continue fkLoop;
+
+                        result.add(new DefaultManyToManyKeyDefinition(k.getForeignKey(), uk, fk));
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public final List<ManyToManyKeyDefinition> getManyToManyKeys(TableDefinition referencing) {
+        List<ManyToManyKeyDefinition> result = new ArrayList<>();
+
+        for (ManyToManyKeyDefinition key : getManyToManyKeys())
+            if (referencing.equals(key.getForeignKey2().getReferencedTable()))
                 result.add(key);
 
         return result;

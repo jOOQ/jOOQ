@@ -102,7 +102,7 @@ public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition im
     }
 
     @Override
-    public InverseForeignKeyDefinition inverse() {
+    public InverseForeignKeyDefinition getInverse() {
         return new DefaultInverseForeignKeyDefinition(this);
     }
 }

@@ -139,6 +139,17 @@ public interface TableDefinition extends Definition {
     List<InverseForeignKeyDefinition> getInverseForeignKeys(TableDefinition referencing);
 
     /**
+     * Get the many to many keys for this table.
+     */
+    List<ManyToManyKeyDefinition> getManyToManyKeys();
+
+    /**
+     * Get the many to many keys for this table referencing another, specific
+     * table.
+     */
+    List<ManyToManyKeyDefinition> getManyToManyKeys(TableDefinition referencing);
+
+    /**
      * Get the <code>CHECK</code> constraints for this table.
      */
     List<CheckConstraintDefinition> getCheckConstraints();

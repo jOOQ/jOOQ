@@ -92,5 +92,5 @@ public interface ForeignKeyDefinition extends ConstraintDefinition {
     /**
      * Get the inverse key.
      */
-    InverseForeignKeyDefinition inverse();
+    InverseForeignKeyDefinition getInverse();
 }

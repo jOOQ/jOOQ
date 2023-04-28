@@ -39,48 +39,44 @@ package org.jooq.meta;
 
 import java.util.List;
 
-import org.jooq.Name;
-
 /**
  * @author Lukas Eder
  */
-public class DefaultInverseForeignKeyDefinition extends AbstractDefinition implements InverseForeignKeyDefinition {
+public class DefaultManyToManyKeyDefinition extends AbstractConstraintDefinition implements ManyToManyKeyDefinition {
 
-    private final ForeignKeyDefinition foreignKey;
+    private final ForeignKeyDefinition foreignKey1;
+    private final UniqueKeyDefinition  uniqueKey;
+    private final ForeignKeyDefinition foreignKey2;
 
-    public DefaultInverseForeignKeyDefinition(ForeignKeyDefinition foreignKey) {
-        super(foreignKey.getDatabase(), foreignKey.getSchema(), foreignKey.getName());
+    public DefaultManyToManyKeyDefinition(
+        ForeignKeyDefinition foreignKey1,
+        UniqueKeyDefinition uniqueKey,
+        ForeignKeyDefinition foreignKey2
+    ) {
+        super(uniqueKey.getSchema(), uniqueKey.getTable(), uniqueKey.getName(), uniqueKey.enforced());
 
-        this.foreignKey = foreignKey;
+        this.foreignKey1 = foreignKey1;
+        this.uniqueKey = uniqueKey;
+        this.foreignKey2 = foreignKey2;
     }
 
     @Override
-    public TableDefinition getTable() {
-        return foreignKey.getReferencedTable();
-    }
-
-    @Override
-    public boolean enforced() {
-        return foreignKey.enforced();
+    public UniqueKeyDefinition getUniqueKey() {
+        return uniqueKey;
     }
 
     @Override
     public List<ColumnDefinition> getKeyColumns() {
-        return foreignKey.getReferencedColumns();
+        return uniqueKey.getKeyColumns();
     }
 
     @Override
-    public TableDefinition getReferencingTable() {
-        return foreignKey.getTable();
+    public ForeignKeyDefinition getForeignKey1() {
+        return foreignKey1;
     }
 
     @Override
-    public List<ColumnDefinition> getReferencingColumns() {
-        return foreignKey.getKeyColumns();
-    }
-
-    @Override
-    public ForeignKeyDefinition getForeignKey() {
-        return foreignKey;
+    public ForeignKeyDefinition getForeignKey2() {
+        return foreignKey2;
     }
 }

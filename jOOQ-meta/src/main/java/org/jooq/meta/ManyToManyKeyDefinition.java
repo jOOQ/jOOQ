@@ -40,14 +40,18 @@ package org.jooq.meta;
 import java.util.List;
 
 /**
- * An object holding information about an inverse foreign key relationship.
+ * An object holding information about an many to many foreign key relationship.
  * <p>
  * This constraint represents the {@link UniqueKeyDefinition} that enforces the
- * uniqueness at the referenced end of the {@link ForeignKeyDefinition}.
+ * relationship in the relationship table. The {@link UniqueKeyDefinition} is a
+ * composite key, whose columns are completely contained in the two outbound
+ * {@link ForeignKeyDefinition} specified by {@link #getForeignKey1()} and
+ * {@link #getForeignKey2()}. The order of {@link ForeignKeyDefinition} depends
+ * on the navigation direction.
  *
  * @author Lukas Eder
  */
-public interface InverseForeignKeyDefinition extends ConstraintDefinition {
+public interface ManyToManyKeyDefinition extends ConstraintDefinition {
 
     /**
      * The list of columns making up the unique key.
@@ -55,17 +59,17 @@ public interface InverseForeignKeyDefinition extends ConstraintDefinition {
     List<ColumnDefinition> getKeyColumns();
 
     /**
-     * The definition of the referencing table.
+     * The unique key that enforces the relationship.
      */
-    TableDefinition getReferencingTable();
+    UniqueKeyDefinition getUniqueKey();
 
     /**
-     * The list of columns referencing this unique key from the foreign key.
+     * Get the first foreign key in the relationship.
      */
-    List<ColumnDefinition> getReferencingColumns();
+    ForeignKeyDefinition getForeignKey1();
 
     /**
-     * Get the foreign key this is an inverse of.
+     * Get the second foreign key in the relationship.
      */
-    ForeignKeyDefinition getForeignKey();
+    ForeignKeyDefinition getForeignKey2();
 }

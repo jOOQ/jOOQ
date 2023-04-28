@@ -288,6 +288,14 @@ implements
         this.parameters = parameters;
     }
 
+    static final Table<?> child(Table<?> t) {
+        if (t instanceof TableImpl<?> ti)
+            if (ti.child != null)
+                return ti.child;
+
+        return null;
+    }
+
     final Condition childPathCondition() {
         if (child == null)
             return noCondition();

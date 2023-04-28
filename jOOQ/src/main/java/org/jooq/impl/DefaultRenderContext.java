@@ -226,19 +226,19 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             if (part instanceof TableImpl) {
                 Table<?> root = (Table<?>) part;
                 Table<?> child = root;
-                List<Table<?>> tables = new ArrayList<>();
+                List<TableImpl<?>> tables = new ArrayList<>();
 
                 // [#14985] Traverse paths only when referencing paths (!forceNew),
                 //          not when declaring them in FROM (forceNew)
                 if (!forceNew) {
-                    while (root instanceof TableImpl && (child = ((TableImpl<?>) root).child) != null) {
+                    while ((child = TableImpl.child(root)) != null) {
 
                         // [#14985] If a subpath has been declared in FROM, join
                         //          to that, instead of the root.
                         if (scopeStack.get(root) != null)
                             break;
 
-                        tables.add(root);
+                        tables.add((TableImpl<?>) root);
                         root = child;
                     }
                 }
@@ -252,8 +252,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
                 JoinNode childNode = e.joinNode;
                 for (int i = tables.size() - 1; i >= 0; i--) {
-                    Table<?> t = tables.get(i);
-                    ForeignKey<?, ?> k = ((TableImpl<?>) t).childPath;
+                    TableImpl<?> t = tables.get(i);
+                    ForeignKey<?, ?> k = t.childPath;
 
                     JoinNode next = childNode.children.get(k);
                     if (next == null) {

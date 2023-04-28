@@ -59,7 +59,6 @@ import static org.jooq.Clause.TABLE_JOIN_PARTITION_BY;
 import static org.jooq.Clause.TABLE_JOIN_SEMI_LEFT;
 import static org.jooq.Clause.TABLE_JOIN_STRAIGHT;
 import static org.jooq.Clause.TABLE_JOIN_USING;
-import static org.jooq.JoinType.CROSS_APPLY;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.FULL_OUTER_JOIN;
 import static org.jooq.JoinType.JOIN;
@@ -70,7 +69,6 @@ import static org.jooq.JoinType.NATURAL_FULL_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_JOIN;
 import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
-import static org.jooq.JoinType.OUTER_APPLY;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 // ...
 // ...
@@ -98,13 +96,11 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.Keywords.K_CROSS_JOIN_LATERAL;
-import static org.jooq.impl.Keywords.K_LEFT_JOIN_LATERAL;
-import static org.jooq.impl.Keywords.K_LEFT_OUTER_JOIN_LATERAL;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
@@ -238,11 +234,23 @@ implements
 
 
 
+        // [#14985] APPLY or LATERAL with path joins
+        if ((this instanceof CrossApply || this instanceof OuterApply) && TableImpl.child(rhs) != null)
+            ctx.visit($table2(selectFrom(rhs).asTable(rhs)));
+        else if (rhs instanceof Lateral && TableImpl.child(((Lateral<?>) rhs).$arg1()) != null)
+            ctx.visit($table2(lateral(selectFrom(((Lateral<?>) rhs).$arg1()).asTable(((Lateral<?>) rhs).$arg1()))));
+
+        // [#14988] Make sure APPLY table reference continues working by wrapping lateral(rhs)
+        else if (this instanceof CrossApply && EMULATE_APPLY.contains(ctx.dialect()))
+            ctx.visit(lhs.crossJoin(lateral(rhs)));
+        else if (this instanceof OuterApply && EMULATE_APPLY.contains(ctx.dialect()))
+            ctx.visit(lhs.leftJoin(lateral(rhs)).on(noCondition()));
 
 
 
 
-        accept0(ctx);
+        else
+            accept0(ctx);
     }
 
     private final void accept0(Context<?> ctx) {
@@ -319,17 +327,6 @@ implements
             toSQLJoinCondition(ctx);
             ctx.formatIndentEnd();
         }
-        else if (OUTER_APPLY == translatedType && EMULATE_APPLY.contains(ctx.dialect())) {
-            ctx.formatIndentStart()
-               .formatSeparator()
-               .start(TABLE_JOIN_ON)
-               .visit(K_ON)
-               .sql(' ')
-               .visit(trueCondition())
-               .end(TABLE_JOIN_ON)
-               .formatIndentEnd();
-        }
-
         ctx.end(translatedClause)
            .formatIndentEnd();
     }
@@ -448,15 +445,6 @@ implements
                 break;
         }
 
-        if (translatedType == CROSS_APPLY && EMULATE_APPLY.contains(ctx.dialect()))
-            keyword = K_CROSS_JOIN_LATERAL;
-        else if (translatedType == OUTER_APPLY && EMULATE_APPLY.contains(ctx.dialect()))
-            if (ctx.settings().getRenderOptionalOuterKeyword() == RenderOptionalKeyword.OFF)
-                keyword = K_LEFT_JOIN_LATERAL;
-            else
-                keyword = K_LEFT_OUTER_JOIN_LATERAL;
-
-
         return keyword;
     }
 
@@ -572,8 +560,7 @@ implements
         }
 
         // [#14985] Path joins additional conditions
-        else if (rhs instanceof TableImpl
-            && ((TableImpl<?>) rhs).child != null
+        else if (TableImpl.child(rhs) != null
 
             // Do this only if we're *not* rendering implicit joins, in case of which join paths
             // are expected, and their predicates are already present.

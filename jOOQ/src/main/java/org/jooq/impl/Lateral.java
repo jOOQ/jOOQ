@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.lateral;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Keywords.K_LATERAL;
 
 import org.jooq.Context;

@@ -11810,7 +11810,14 @@ public class DSL {
     @NotNull
     @Support({ FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static <R extends Record> Table<R> lateral(TableLike<R> table) {
-        return new Lateral<>(table.asTable());
+
+        // [#14988] LATERAL (table reference) isn't supported in any dialect
+        //          and it's also superfluous, so we'll just omit it to make
+        //          sure things like APPLY table reference are emulated correctly
+        if (table instanceof TableImpl || table instanceof JoinTable)
+            return (Table<R>) table;
+        else
+            return new Lateral<>(table.asTable());
     }
 
     /**

@@ -106,7 +106,6 @@ final class Keywords {
     static final Keyword K_CONTINUE                 = keyword("continue");
     static final Keyword K_COUNT                    = keyword("count");
     static final Keyword K_CREATE                   = keyword("create");
-    static final Keyword K_CROSS_JOIN_LATERAL       = keyword("cross join lateral");
     static final Keyword K_CUBE                     = keyword("cube");
     static final Keyword K_CURRENT                  = keyword("current");
     static final Keyword K_CURRENT_ROW              = keyword("current row");
@@ -247,8 +246,6 @@ final class Keywords {
     static final Keyword K_LATERAL                  = keyword("lateral");
     static final Keyword K_LEADING                  = keyword("leading");
     static final Keyword K_LEAVE                    = keyword("leave");
-    static final Keyword K_LEFT_JOIN_LATERAL        = keyword("left join lateral");
-    static final Keyword K_LEFT_OUTER_JOIN_LATERAL  = keyword("left outer join lateral");
     static final Keyword K_LET                      = keyword("let");
     static final Keyword K_LIKE                     = keyword("like");
     static final Keyword K_LIKE_REGEX               = keyword("like_regex");

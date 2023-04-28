@@ -6057,16 +6057,18 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.println("%sclass %s(", visibility(), className);
             out.println("alias: %s,", Name.class);
-            out.println("child: %s[_ <: %s],", Table.class, Record.class);
-            out.println("path: %s[_ <: %s, %s],", ForeignKey.class, Record.class, recordType);
+            out.println("path: %s[_ <: %s],", Table.class, Record.class);
+            out.println("childPath: %s[_ <: %s, %s],", ForeignKey.class, Record.class, recordType);
+            out.println("parentPath: %s[_ <: %s, %s],", InverseForeignKey.class, Record.class, recordType);
             out.println("aliased: %s[%s],", Table.class, recordType);
             out.println("parameters: %s[ %s[_] ]", out.ref("scala.Array"), Field.class);
             out.println(")");
             out.println("extends %s[%s](", classExtends, recordType);
             out.println("alias,");
             out.println("%s,", schemaId);
-            out.println("child,");
             out.println("path,");
+            out.println("childPath,");
+            out.println("parentPath,");
             out.println("aliased,");
             out.println("parameters,");
             out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
@@ -6083,15 +6085,17 @@ public class JavaGenerator extends AbstractGenerator {
         else if (kotlin) {
             out.println("%sopen class %s(", visibility(), className);
             out.println("alias: %s,", Name.class);
-            out.println("child: %s<out %s>?,", Table.class, Record.class);
-            out.println("path: %s<out %s, %s>?,", ForeignKey.class, Record.class, recordType);
+            out.println("path: %s<out %s>?,", Table.class, Record.class);
+            out.println("childPath: %s<out %s, %s>?,", ForeignKey.class, Record.class, recordType);
+            out.println("parentPath: %s<out %s, %s>?,", InverseForeignKey.class, Record.class, recordType);
             out.println("aliased: %s<%s>?,", Table.class, recordType);
             out.println("parameters: Array<%s<*>?>?", Field.class);
             out.println("): %s<%s>(", classExtends, recordType);
             out.println("alias,");
             out.println("%s,", schemaId);
-            out.println("child,");
             out.println("path,");
+            out.println("childPath,");
+            out.println("parentPath,");
             out.println("aliased,");
             out.println("parameters,");
             out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
@@ -6227,7 +6231,7 @@ public class JavaGenerator extends AbstractGenerator {
         // "called constructor's definition must precede calling constructor's definition"
         if (scala) {
             if (table.isTableValuedFunction()) {
-                out.println("private def this(alias: %s, aliased: %s[%s]) = this(alias, null, null, aliased, %s(",
+                out.println("private def this(alias: %s, aliased: %s[%s]) = this(alias, null, null, null, aliased, %s(",
                     Name.class, Table.class, recordType, out.ref("scala.Array"));
 
                 forEach(parameters, (parameter, separator) -> {
@@ -6241,12 +6245,12 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("))");
             }
             else
-                out.println("private def this(alias: %s, aliased: %s[%s]) = this(alias, null, null, aliased, null)",
+                out.println("private def this(alias: %s, aliased: %s[%s]) = this(alias, null, null, null, aliased, null)",
                     Name.class, Table.class, recordType);
         }
         else if (kotlin) {
             if (table.isTableValuedFunction()) {
-                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, arrayOf(",
+                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, null, aliased, arrayOf(",
                     Name.class, Table.class, recordType, Field.class, parameters.size());
 
                 forEach(parameters, (parameter, separator) -> {
@@ -6260,10 +6264,10 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("))");
             }
             else
-                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, aliased, null)",
+                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, null, aliased, null)",
                     Name.class, Table.class, recordType);
 
-            out.println("private constructor(alias: %s, aliased: %s<%s>?, parameters: Array<%s<*>?>?): this(alias, null, null, aliased, parameters)",
+            out.println("private constructor(alias: %s, aliased: %s<%s>?, parameters: Array<%s<*>?>?): this(alias, null, null, null, aliased, parameters)",
                 Name.class, Table.class, recordType, Field.class);
         }
         else {
@@ -6359,11 +6363,11 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println();
 
                 if (scala) {
-                    out.println("%sdef this(child: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(child, key), child, key, %s, null)",
+                    out.println("%sdef this(child: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(child, key), child, key, null, %s, null)",
                         visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
                 }
                 else if (kotlin) {
-                    out.println("%sconstructor(child: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(child, key), child, key, %s, null)",
+                    out.println("%sconstructor(child: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(child, key), child, key, null, %s, null)",
                         visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
                 }
                 else {
@@ -6377,11 +6381,11 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println();
 
                 if (scala) {
-                    out.println("%sdef this(parent: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(parent, key), parent, key, %s, null)",
+                    out.println("%sdef this(parent: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(parent, key.getForeignKey()), parent, null, key, %s, null)",
                         visibility(), Table.class, Record.class, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
                 }
                 else if (kotlin) {
-                    out.println("%sconstructor(parent: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(parent, key), parent, key, %s, null)",
+                    out.println("%sconstructor(parent: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(parent, key.foreignKey), parent, null, key, %s, null)",
                         visibility(), Table.class, Record.class, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
                 }
                 else {
@@ -6896,21 +6900,21 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), String.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(%s.name(alias), null, null, this, parameters)", className, DSL.class);
+                out.println("new %s(%s.name(alias), null, null, null, this, parameters)", className, DSL.class);
             else
                 out.println("new %s(%s.name(alias), this)", className, DSL.class);
 
             out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), Name.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(alias, null, null, this, parameters)", className);
+                out.println("new %s(alias, null, null, null, this, parameters)", className);
             else
                 out.println("new %s(alias, this)", className);
 
             out.print("%soverride def as(alias: %s[_]): %s = ", visibilityPublic(), Table.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(alias.getQualifiedName(), null, null, this, parameters)", className);
+                out.println("new %s(alias.getQualifiedName(), null, null, null, this, parameters)", className);
             else
                 out.println("new %s(alias.getQualifiedName(), this)", className);
         }
@@ -6981,7 +6985,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), String.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(%s.name(name), null, null, null, parameters)", className, DSL.class);
+                out.println("new %s(%s.name(name), null, null, null, null, parameters)", className, DSL.class);
             else
                 out.println("new %s(%s.name(name), null)", className, DSL.class);
 
@@ -6989,7 +6993,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), Name.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(name, null, null, null, parameters)", className);
+                out.println("new %s(name, null, null, null, null, parameters)", className);
             else
                 out.println("new %s(name, null)", className);
 
@@ -6997,7 +7001,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride def rename(name: %s[_]): %s = ", visibilityPublic(), Table.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(name.getQualifiedName(), null, null, null, parameters)", className);
+                out.println("new %s(name.getQualifiedName(), null, null, null, null, parameters)", className);
             else
                 out.println("new %s(name.getQualifiedName(), null)", className);
         }
@@ -7137,7 +7141,7 @@ public class JavaGenerator extends AbstractGenerator {
                     printParameterDeclarations(out, parameters, parametersAsField, "  ");
                     out.print("): %s = ", className);
 
-                    out.print("Option(new %s(%s.name(\"%s\"), null, null, null, %s(", className, DSL.class, escapeString(table.getOutputName()), out.ref("scala.Array")).printlnIf(!parameters.isEmpty());
+                    out.print("Option(new %s(%s.name(\"%s\"), null, null, null, null, %s(", className, DSL.class, escapeString(table.getOutputName()), out.ref("scala.Array")).printlnIf(!parameters.isEmpty());
 
                     forEach(parameters, (parameter, separator) -> {
                         final String paramArgName = getStrategy().getJavaMemberName(parameter);

@@ -231,7 +231,7 @@ implements
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private TableImpl(
+    public TableImpl(
         Name name,
         Schema schema,
         Table<?> path,

@@ -6620,6 +6620,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Foreign keys
             List<ForeignKeyDefinition> outboundFKs = table.getForeignKeys();
+            Set<String> outboundKeyMethodNames = new HashSet<>();
 
             // [#7554] [#8028] Not yet supported with global key references turned off
             if (outboundFKs.size() > 0 && generateGlobalKeyReferences()) {
@@ -6646,33 +6647,30 @@ public class JavaGenerator extends AbstractGenerator {
 
                 // Outbound (to-one) implicit join paths
                 if (generateImplicitJoinPathsToOne()) {
-                    if (scala) {}
-                    else {
-                        out.println();
+                    Map<TableDefinition, Long> pathCounts = outboundFKs.stream().collect(groupingBy(ForeignKeyDefinition::getReferencedTable, counting()));
 
-                        // [#8762] Cache these calls for much improved runtime performance!
-                        for (ForeignKeyDefinition foreignKey : outboundFKs) {
-                            final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
-                            final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+                    // [#8762] Cache these calls for much improved runtime performance!
+                    for (ForeignKeyDefinition foreignKey : outboundFKs) {
+                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+                        final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
+                        final String keyFullId = kotlin
+                            ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
+                            : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
 
-                            // [#13008] Prevent conflicts with the below leading underscore
-                            final String unquotedKeyMethodName = keyMethodName.replace("`", "");
+                        // [#13008] Prevent conflicts with the below leading underscore
+                        final String unquotedKeyMethodName = keyMethodName.replace("`", "");
+
+                        if (scala) {}
+                        else {
+                            out.println();
+
+                            outboundKeyMethodNames.add(keyMethodName);
 
                             if (kotlin)
                                 out.println("private lateinit var _%s: %s", unquotedKeyMethodName, referencedTableClassName);
                             else
                                 out.println("private transient %s _%s;", referencedTableClassName, keyMethodName);
                         }
-                    }
-
-                    Map<TableDefinition, Long> pathCounts = outboundFKs.stream().collect(groupingBy(ForeignKeyDefinition::getReferencedTable, counting()));
-                    for (ForeignKeyDefinition foreignKey : outboundFKs) {
-                        final String keyFullId = kotlin
-                            ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
-                            : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
-                        final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
-                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
-                        final String unquotedKeyMethodName = keyMethodName.replace("`", "");
 
                         out.javadoc(
                             "Get the implicit join path to the <code>" + foreignKey.getReferencedTable().getQualifiedName() + "</code> table"
@@ -6714,33 +6712,41 @@ public class JavaGenerator extends AbstractGenerator {
 
                 // Inbound (to-many) implicit join paths
                 if (generateImplicitJoinPathsToMany()) {
-                    if (scala) {}
-                    else {
-                        out.println();
+                    Map<TableDefinition, Long> pathCounts = inboundFKs.stream().collect(groupingBy(InverseForeignKeyDefinition::getReferencingTable, counting()));
 
-                        // [#8762] Cache these calls for much improved runtime performance!
-                        for (InverseForeignKeyDefinition foreignKey : inboundFKs) {
-                            final String referencingTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencingTable()));
-                            final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+                    inboundFKLoop:
+                    for (InverseForeignKeyDefinition foreignKey : inboundFKs) {
+                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
 
-                            // [#13008] Prevent conflicts with the below leading underscore
-                            final String unquotedKeyMethodName = keyMethodName.replace("`", "");
+                        if (outboundKeyMethodNames.contains(keyMethodName)) {
+                            log.warn("Ambiguous key name",
+                                "The database object " + foreignKey.getQualifiedOutputName()
+                              + " generates an inbound key method name " + keyMethodName
+                              + " which conflicts with the previously generated outbound key method name."
+                              + " Use a custom generator strategy to disambiguate the types. More information here:\n"
+                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
+                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"
+                            );
+                            continue inboundFKLoop;
+                        }
+
+                        final String keyFullId = kotlin
+                            ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
+                            : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
+                        final String referencingTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencingTable()));
+
+                        // [#13008] Prevent conflicts with the below leading underscore
+                        final String unquotedKeyMethodName = keyMethodName.replace("`", "");
+
+                        if (scala) {}
+                        else {
+                            out.println();
 
                             if (kotlin)
                                 out.println("private lateinit var _%s: %s", unquotedKeyMethodName, referencingTableClassName);
                             else
                                 out.println("private transient %s _%s;", referencingTableClassName, keyMethodName);
                         }
-                    }
-
-                    Map<TableDefinition, Long> pathCounts = inboundFKs.stream().collect(groupingBy(InverseForeignKeyDefinition::getReferencingTable, counting()));
-                    for (InverseForeignKeyDefinition foreignKey : inboundFKs) {
-                        final String keyFullId = kotlin
-                            ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
-                            : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
-                        final String referencingTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencingTable()));
-                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
-                        final String unquotedKeyMethodName = keyMethodName.replace("`", "");
 
                         out.javadoc(
                             "Get the implicit to-many join path to the <code>" + foreignKey.getReferencingTable().getQualifiedName() + "</code> table"

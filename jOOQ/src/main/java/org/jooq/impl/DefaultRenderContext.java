@@ -231,7 +231,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 // [#14985] Traverse paths only when referencing paths (!forceNew),
                 //          not when declaring them in FROM (forceNew)
                 if (!forceNew) {
-                    while ((child = TableImpl.child(root)) != null) {
+                    while ((child = TableImpl.path(root)) != null) {
 
                         // [#14985] If a subpath has been declared in FROM, join
                         //          to that, instead of the root.
@@ -250,18 +250,18 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 if (e.joinNode == null)
                     e.joinNode = new JoinNode(configuration(), root);
 
-                JoinNode childNode = e.joinNode;
+                JoinNode node = e.joinNode;
                 for (int i = tables.size() - 1; i >= 0; i--) {
                     TableImpl<?> t = tables.get(i);
-                    ForeignKey<?, ?> k = t.childPath;
+                    ForeignKey<?, ?> k = t.childPath != null ? t.childPath : t.parentPath.getForeignKey();
 
-                    JoinNode next = childNode.children.get(k);
+                    JoinNode next = node.paths.get(k);
                     if (next == null) {
                         next = new JoinNode(configuration(), t);
-                        childNode.children.put(k, next);
+                        node.paths.put(k, next);
                     }
 
-                    childNode = next;
+                    node = next;
                 }
             }
             else if (forceNew)
@@ -312,7 +312,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
             // [#11367] TODO: Move this logic into a ScopeMarker as well
             //          TODO: subqueryLevel() is lower than scopeLevel if we use implicit join in procedural logic
-            else if (e1.joinNode != null && !e1.joinNode.children.isEmpty()) {
+            else if (e1.joinNode != null && !e1.joinNode.paths.isEmpty()) {
                 RenderContext ctx = configuration.dsl().renderContext();
                 ctx.data(DATA_RENDER_IMPLICIT_JOIN, true);
                 replacedSQL = ctx

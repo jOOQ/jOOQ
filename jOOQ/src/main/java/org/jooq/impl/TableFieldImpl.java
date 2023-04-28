@@ -173,7 +173,7 @@ implements
         //         be emulated differently
         if (ctx.topLevelForLanguageContext() instanceof DMLQuery
             && table instanceof TableImpl
-            && (root = ((TableImpl<?>) table).rootChild()) != null
+            && (root = ((TableImpl<?>) table).pathRoot()) != null
 
             // [#7508] Apply the emulation only in the DML statement itself, or
             //         when the root child is the DML target table. Implicit
@@ -191,7 +191,7 @@ implements
                 TableImpl<?> t = (TableImpl<?>) table;
                 Table<?> parent = t.alias.wrapped;
                 Field<T> parentField = parent.field(this);
-                ctx.visit(DSL.field(select(parentField).from(parent).where(JoinTable.onKey0(t.childPath, t.child, parent))));
+                ctx.visit(DSL.field(select(parentField).from(parent).where(JoinTable.onKey0(t.childPath, t.path, parent))));
             }
         }
         else

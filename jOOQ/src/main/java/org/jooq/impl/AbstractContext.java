@@ -1176,18 +1176,18 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     static class JoinNode {
         final Configuration                   configuration;
         final Table<?>                        table;
-        final Map<ForeignKey<?, ?>, JoinNode> children;
+        final Map<ForeignKey<?, ?>, JoinNode> paths;
 
         JoinNode(Configuration configuration, Table<?> table) {
             this.configuration = configuration;
             this.table = table;
-            this.children = new LinkedHashMap<>();
+            this.paths = new LinkedHashMap<>();
         }
 
         public Table<?> joinTree() {
             Table<?> result = table;
 
-            for (Entry<ForeignKey<?, ?>, JoinNode> e : children.entrySet()) {
+            for (Entry<ForeignKey<?, ?>, JoinNode> e : paths.entrySet()) {
                 JoinType type;
 
                 switch (StringUtils.defaultIfNull(Tools.settings(configuration).getRenderImplicitJoinType(),

@@ -125,9 +125,8 @@ implements
     final Alias<Table<R>>                alias;
 
     protected final Field<?>[]           parameters;
-    final Table<?>                       child;
+    final Table<?>                       path;
     final ForeignKey<?, R>               childPath;
-    final Table<?>                       parent;
     final InverseForeignKey<?, R>        parentPath;
 
     /**
@@ -207,36 +206,37 @@ implements
         this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, comment, options);
     }
 
-    public TableImpl(Table<?> child, ForeignKey<?, R> path, Table<R> parent) {
-        this(createPathAlias(child, path), null, child, path, parent, null, parent.getCommentPart());
+    public TableImpl(Table<?> child, ForeignKey<?, R> childPath, Table<R> parent) {
+        this(createPathAlias(child, childPath), null, child, childPath, parent, null, parent.getCommentPart());
     }
 
-    public TableImpl(Table<?> parent, InverseForeignKey<?, R> path, Table<R> child) {
-        this(createPathAlias(parent, path), null, parent, path, child, null, child.getCommentPart());
+    public TableImpl(Table<?> parent, InverseForeignKey<?, R> parentPath, Table<R> child) {
+        this(createPathAlias(parent, parentPath.getForeignKey()), null, parent, parentPath, child, null, child.getCommentPart());
     }
 
-    public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
-        this(name, schema, child, path, aliased, parameters, comment, TableOptions.table());
+    public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, Table<R> aliased, Field<?>[] parameters, Comment comment) {
+        this(name, schema, path, childPath, aliased, parameters, comment, TableOptions.table());
     }
 
-    public TableImpl(Name name, Schema schema, Table<?> parent, InverseForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment) {
-        this(name, schema, parent, path, aliased, parameters, comment, TableOptions.table());
+    public TableImpl(Name name, Schema schema, Table<?> path, InverseForeignKey<?, R> parentPath, Table<R> aliased, Field<?>[] parameters, Comment comment) {
+        this(name, schema, path, null, parentPath, aliased, parameters, comment, TableOptions.table());
     }
 
-    public TableImpl(Name name, Schema schema, Table<?> child, ForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
-        this(name, schema, child, path, null, null, aliased, parameters, comment, options);
+    public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
+        this(name, schema, path, childPath, null, aliased, parameters, comment, options);
     }
 
-    public TableImpl(Name name, Schema schema, Table<?> parent, InverseForeignKey<?, R> path, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
-        this(name, schema, null, null, parent, path, aliased, parameters, comment, options);
+    public TableImpl(Name name, Schema schema, Table<?> path, InverseForeignKey<?, R> parentPath, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
+        this(name, schema, path, null, parentPath, aliased, parameters, comment, options);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private TableImpl(
         Name name,
         Schema schema,
-        Table<?> child, ForeignKey<?, R> childPath,
-        Table<?> parent, InverseForeignKey<?, R> parentPath,
+        Table<?> path,
+        ForeignKey<?, R> childPath,
+        InverseForeignKey<?, R> parentPath,
         Table<R> aliased,
         Field<?>[] parameters,
         Comment comment,
@@ -246,28 +246,24 @@ implements
 
         this.fields = new FieldsImpl<>();
 
-        if (child != null) {
-            this.child = child;
-            this.childPath = childPath == null ? null : Tools.aliasedKey((ForeignKey) childPath, child, this);
-            this.parent = null;
+        if (childPath != null) {
+            this.path = path;
+            this.childPath = Tools.aliasedKey((ForeignKey) childPath, path, this);
             this.parentPath = null;
         }
-        else if (parent != null) {
-            this.child = null;
+        else if (parentPath != null) {
+            this.path = path;
             this.childPath = null;
-            this.parent = parent;
-            this.parentPath = parentPath == null ? null : Tools.aliasedKey((ForeignKey) parentPath.getForeignKey(), this, parent).getInverseKey();
+            this.parentPath = Tools.aliasedKey((ForeignKey) parentPath.getForeignKey(), this, path).getInverseKey();
         }
         else if (aliased instanceof TableImpl t) {
-            this.child = t.child;
+            this.path = t.path;
             this.childPath = t.childPath;
-            this.parent = t.parent;
             this.parentPath = t.parentPath;
         }
         else {
-            this.child = null;
+            this.path = null;
             this.childPath = null;
-            this.parent = null;
             this.parentPath = null;
         }
 
@@ -288,19 +284,21 @@ implements
         this.parameters = parameters;
     }
 
-    static final Table<?> child(Table<?> t) {
+    static final Table<?> path(Table<?> t) {
         if (t instanceof TableImpl<?> ti)
-            if (ti.child != null)
-                return ti.child;
+            if (ti.path != null)
+                return ti.path;
 
         return null;
     }
 
-    final Condition childPathCondition() {
-        if (child == null)
-            return noCondition();
+    final Condition pathCondition() {
+        if (childPath != null)
+            return new Join(path, this).onKey(childPath).condition.getWhere();
+        else if (parentPath != null)
+            return new Join(this, path).onKey(parentPath.getForeignKey()).condition.getWhere();
         else
-            return new Join(child, this).onKey(childPath).condition.getWhere();
+            return noCondition();
     }
 
     /**
@@ -308,12 +306,12 @@ implements
      * <code>null</code> if not
      */
     @Nullable
-    final Table<?> rootChild() {
-        if (child instanceof TableImpl<?> t)
-            if (t.child != null)
-                return t.rootChild();
+    final Table<?> pathRoot() {
+        if (path instanceof TableImpl<?> t)
+            if (t.path != null)
+                return t.pathRoot();
             else
-                return child;
+                return t;
         else
             return null;
     }
@@ -400,7 +398,7 @@ implements
             return;
         }
 
-        if (child != null)
+        if (path != null)
             ctx.scopeRegister(this);
 
         if (alias != null) {

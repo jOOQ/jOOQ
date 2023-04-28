@@ -4177,8 +4177,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (t instanceof TableImpl<?> ti) {
 
             // [#14985] TODO: Should we check whether ti.child is in scope, or leave that to the user?
-            if (ti.child != null)
-                result.addConditions(ti.childPathCondition());
+            if (ti.path != null)
+                result.addConditions(ti.pathCondition());
         }
     }
 

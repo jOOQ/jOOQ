@@ -62,7 +62,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Index;
-import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.ParamMode;
@@ -296,31 +295,12 @@ public final class Internal {
         Name name = DSL.name(path.getName());
 
         if (child instanceof TableImpl<?> t) {
-            Table<?> ancestor = t.child;
-
-            if (ancestor != null)
-                name = createPathAlias(ancestor, t.childPath).append(name);
+            if (t.childPath != null)
+                name = createPathAlias(t.path, t.childPath).append(name);
+            else if (t.parentPath != null)
+                name = createPathAlias(t.path, t.parentPath.getForeignKey()).append(name);
             else
                 name = child.getQualifiedName().append(name);
-        }
-
-        return DSL.name("alias_" + hash(name));
-    }
-
-    /**
-     * Factory method for path aliases.
-     */
-    @NotNull
-    public static final Name createPathAlias(Table<?> parent, InverseForeignKey<?, ?> path) {
-        Name name = DSL.name(path.getName());
-
-        if (parent instanceof TableImpl<?> t) {
-            Table<?> ancestor = t.parent;
-
-            if (ancestor != null)
-                name = createPathAlias(ancestor, t.parentPath).append(name);
-            else
-                name = parent.getQualifiedName().append(name);
         }
 
         return DSL.name("alias_" + hash(name));

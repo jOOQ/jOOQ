@@ -235,9 +235,9 @@ implements
 
 
         // [#14985] APPLY or LATERAL with path joins
-        if ((this instanceof CrossApply || this instanceof OuterApply) && TableImpl.child(rhs) != null)
+        if ((this instanceof CrossApply || this instanceof OuterApply) && TableImpl.path(rhs) != null)
             ctx.visit($table2(selectFrom(rhs).asTable(rhs)));
-        else if (rhs instanceof Lateral && TableImpl.child(((Lateral<?>) rhs).$arg1()) != null)
+        else if (rhs instanceof Lateral && TableImpl.path(((Lateral<?>) rhs).$arg1()) != null)
             ctx.visit($table2(lateral(selectFrom(((Lateral<?>) rhs).$arg1()).asTable(((Lateral<?>) rhs).$arg1()))));
 
         // [#14988] Make sure APPLY table reference continues working by wrapping lateral(rhs)
@@ -560,14 +560,14 @@ implements
         }
 
         // [#14985] Path joins additional conditions
-        else if (TableImpl.child(rhs) != null
+        else if (TableImpl.path(rhs) != null
 
             // Do this only if we're *not* rendering implicit joins, in case of which join paths
             // are expected, and their predicates are already present.
             && ctx.data(DATA_RENDER_IMPLICIT_JOIN) == null
         ) {
             toSQLJoinCondition(ctx, DSL.and(
-                ((TableImpl<?>) rhs).childPathCondition(),
+                ((TableImpl<?>) rhs).pathCondition(),
                 condition.getWhere()
             ));
         }

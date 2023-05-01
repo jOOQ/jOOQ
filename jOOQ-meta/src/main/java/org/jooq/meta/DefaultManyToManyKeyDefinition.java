@@ -53,7 +53,7 @@ public class DefaultManyToManyKeyDefinition extends AbstractConstraintDefinition
         UniqueKeyDefinition uniqueKey,
         ForeignKeyDefinition foreignKey2
     ) {
-        super(uniqueKey.getSchema(), uniqueKey.getTable(), uniqueKey.getName(), uniqueKey.enforced());
+        super(foreignKey2.getSchema(), foreignKey2.getTable(), foreignKey2.getName(), foreignKey2.enforced());
 
         this.foreignKey1 = foreignKey1;
         this.uniqueKey = uniqueKey;

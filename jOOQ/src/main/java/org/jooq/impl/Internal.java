@@ -292,13 +292,21 @@ public final class Internal {
      */
     @NotNull
     public static final Name createPathAlias(Table<?> child, ForeignKey<?, ?> path) {
-        Name name = DSL.name(path.getName());
+        return createPathAlias(child, path, "");
+    }
+
+    /**
+     * Factory method for path aliases.
+     */
+    @NotNull
+    static final Name createPathAlias(Table<?> child, ForeignKey<?, ?> path, String suffix) {
+        Name name = DSL.name(path.getName() + suffix);
 
         if (child instanceof TableImpl<?> t) {
             if (t.childPath != null)
                 name = createPathAlias(t.path, t.childPath).append(name);
             else if (t.parentPath != null)
-                name = createPathAlias(t.path, t.parentPath.getForeignKey()).append(name);
+                name = createPathAlias(t.path, t.parentPath.getForeignKey(), ".inverse").append(name);
             else
                 name = child.getQualifiedName().append(name);
         }

@@ -211,7 +211,7 @@ implements
     }
 
     public TableImpl(Table<?> parent, InverseForeignKey<?, R> parentPath, Table<R> child) {
-        this(createPathAlias(parent, parentPath.getForeignKey()), null, parent, parentPath, child, null, child.getCommentPart());
+        this(createPathAlias(parent, parentPath.getForeignKey(), ".inverse"), null, parent, parentPath, child, null, child.getCommentPart());
     }
 
     public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, Table<R> aliased, Field<?>[] parameters, Comment comment) {

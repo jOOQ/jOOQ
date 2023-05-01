@@ -37,14 +37,9 @@
  */
 package org.jooq;
 
-import java.util.Collection;
 import java.util.List;
 
-import org.jooq.exception.DataAccessException;
-
-import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * An <code>InverseForeignKey</code> is an inverse {@link ForeignKey}. It

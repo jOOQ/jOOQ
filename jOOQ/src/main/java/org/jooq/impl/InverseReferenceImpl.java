@@ -40,13 +40,11 @@ package org.jooq.impl;
 import java.util.List;
 
 import org.jooq.ConstraintEnforcementStep;
-import org.jooq.Record;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
+import org.jooq.Record;
 import org.jooq.TableField;
 import org.jooq.impl.QOM.UTransient;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder

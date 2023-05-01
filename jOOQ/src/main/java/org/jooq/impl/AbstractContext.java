@@ -55,6 +55,7 @@ import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.sql.PreparedStatement;
 import java.text.DecimalFormat;
@@ -84,6 +85,7 @@ import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.LanguageContext;
 // ...
@@ -1174,24 +1176,25 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     static class JoinNode {
-        final Configuration                   configuration;
-        final Table<?>                        table;
-        final Map<ForeignKey<?, ?>, JoinNode> paths;
+        final Configuration                          configuration;
+        final Table<?>                               table;
+        final Map<ForeignKey<?, ?>, JoinNode>        pathsToOne;
+        final Map<InverseForeignKey<?, ?>, JoinNode> pathsToMany;
 
         JoinNode(Configuration configuration, Table<?> table) {
             this.configuration = configuration;
             this.table = table;
-            this.paths = new LinkedHashMap<>();
+            this.pathsToOne = new LinkedHashMap<>();
+            this.pathsToMany = new LinkedHashMap<>();
         }
 
-        public Table<?> joinTree() {
+        Table<?> joinTree() {
             Table<?> result = table;
 
-            for (Entry<ForeignKey<?, ?>, JoinNode> e : paths.entrySet()) {
+            for (Entry<ForeignKey<?, ?>, JoinNode> e : pathsToOne.entrySet()) {
                 JoinType type;
 
-                switch (StringUtils.defaultIfNull(Tools.settings(configuration).getRenderImplicitJoinType(),
-                    RenderImplicitJoinType.DEFAULT)) {
+                switch (defaultIfNull(Tools.settings(configuration).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT)) {
                     case INNER_JOIN:
                         type = JOIN;
                         break;
@@ -1209,7 +1212,28 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 result = result.join(e.getValue().joinTree(), type).onKey(e.getKey());
             }
 
+            for (Entry<InverseForeignKey<?, ?>, JoinNode> e : pathsToMany.entrySet()) {
+                JoinType type;
+
+                switch (defaultIfNull(Tools.settings(configuration).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT)) {
+                    case INNER_JOIN:
+                        type = JOIN;
+                        break;
+                    case LEFT_JOIN:
+                    case DEFAULT:
+                    default:
+                        type = LEFT_OUTER_JOIN;
+                        break;
+                }
+
+                result = result.join(e.getValue().joinTree(), type).onKey(e.getKey().getForeignKey());
+            }
+
             return result;
+        }
+
+        boolean hasJoinPaths() {
+            return !pathsToOne.isEmpty() || !pathsToMany.isEmpty();
         }
 
         @Override

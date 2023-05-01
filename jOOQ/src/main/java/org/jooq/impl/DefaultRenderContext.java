@@ -253,15 +253,11 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 JoinNode node = e.joinNode;
                 for (int i = tables.size() - 1; i >= 0; i--) {
                     TableImpl<?> t = tables.get(i);
-                    ForeignKey<?, ?> k = t.childPath != null ? t.childPath : t.parentPath.getForeignKey();
 
-                    JoinNode next = node.paths.get(k);
-                    if (next == null) {
-                        next = new JoinNode(configuration(), t);
-                        node.paths.put(k, next);
-                    }
-
-                    node = next;
+                    if (t.childPath != null)
+                        node = node.pathsToOne.computeIfAbsent(t.childPath, k -> new JoinNode(configuration(), t));
+                    else
+                        node = node.pathsToMany.computeIfAbsent(t.parentPath, k -> new JoinNode(configuration(), t));
                 }
             }
             else if (forceNew)
@@ -312,7 +308,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
             // [#11367] TODO: Move this logic into a ScopeMarker as well
             //          TODO: subqueryLevel() is lower than scopeLevel if we use implicit join in procedural logic
-            else if (e1.joinNode != null && !e1.joinNode.paths.isEmpty()) {
+            else if (e1.joinNode != null && e1.joinNode.hasJoinPaths()) {
                 RenderContext ctx = configuration.dsl().renderContext();
                 ctx.data(DATA_RENDER_IMPLICIT_JOIN, true);
                 replacedSQL = ctx

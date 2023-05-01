@@ -64,6 +64,8 @@ import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
+import org.jooq.meta.InverseForeignKeyDefinition;
+import org.jooq.meta.ManyToManyKeyDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -214,7 +216,9 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
         }
 
         // [#11032] Foreign keys produce implicit join methods that can collide with TableImpl methods
-        else if (definition instanceof ForeignKeyDefinition) {
+        else if (definition instanceof ForeignKeyDefinition
+              || definition instanceof InverseForeignKeyDefinition
+              || definition instanceof ManyToManyKeyDefinition) {
             reserved = reservedColumns(TableImpl.class, 0);
         }
 

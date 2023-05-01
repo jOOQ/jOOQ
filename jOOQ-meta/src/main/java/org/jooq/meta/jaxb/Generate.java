@@ -38,8 +38,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean sequenceFlags = true;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToOne = true;
-    @XmlElement(defaultValue = "false")
-    protected Boolean implicitJoinPathsToMany = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean implicitJoinPathsToMany = true;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsUseTableNameForUnambiguousFKs = true;
     @XmlElement(defaultValue = "true")

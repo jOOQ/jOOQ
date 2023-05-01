@@ -25,6 +25,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
     "catalogs",
     "schemas",
     "tables",
+    "foreignKeys",
     "fields",
     "routines",
     "sequences",
@@ -47,6 +48,9 @@ public class Matchers implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "tables")
     @XmlElement(name = "table")
     protected List<MatchersTableType> tables;
+    @XmlElementWrapper(name = "foreignKeys")
+    @XmlElement(name = "table")
+    protected List<MatchersForeignKeyType> foreignKeys;
     @XmlElementWrapper(name = "fields")
     @XmlElement(name = "field")
     protected List<MatchersFieldType> fields;
@@ -94,6 +98,17 @@ public class Matchers implements Serializable, XMLAppendable
 
     public void setTables(List<MatchersTableType> tables) {
         this.tables = tables;
+    }
+
+    public List<MatchersForeignKeyType> getForeignKeys() {
+        if (foreignKeys == null) {
+            foreignKeys = new ArrayList<MatchersForeignKeyType>();
+        }
+        return foreignKeys;
+    }
+
+    public void setForeignKeys(List<MatchersForeignKeyType> foreignKeys) {
+        this.foreignKeys = foreignKeys;
     }
 
     public List<MatchersFieldType> getFields() {
@@ -214,6 +229,27 @@ public class Matchers implements Serializable, XMLAppendable
         return this;
     }
 
+    public Matchers withForeignKeys(MatchersForeignKeyType... values) {
+        if (values!= null) {
+            for (MatchersForeignKeyType value: values) {
+                getForeignKeys().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Matchers withForeignKeys(Collection<MatchersForeignKeyType> values) {
+        if (values!= null) {
+            getForeignKeys().addAll(values);
+        }
+        return this;
+    }
+
+    public Matchers withForeignKeys(List<MatchersForeignKeyType> foreignKeys) {
+        setForeignKeys(foreignKeys);
+        return this;
+    }
+
     public Matchers withFields(MatchersFieldType... values) {
         if (values!= null) {
             for (MatchersFieldType value: values) {
@@ -324,6 +360,7 @@ public class Matchers implements Serializable, XMLAppendable
         builder.append("catalogs", "catalog", catalogs);
         builder.append("schemas", "schema", schemas);
         builder.append("tables", "table", tables);
+        builder.append("foreignKeys", "table", foreignKeys);
         builder.append("fields", "field", fields);
         builder.append("routines", "routine", routines);
         builder.append("sequences", "sequence", sequences);
@@ -374,6 +411,15 @@ public class Matchers implements Serializable, XMLAppendable
             }
         } else {
             if (!tables.equals(other.tables)) {
+                return false;
+            }
+        }
+        if (foreignKeys == null) {
+            if (other.foreignKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!foreignKeys.equals(other.foreignKeys)) {
                 return false;
             }
         }
@@ -432,6 +478,7 @@ public class Matchers implements Serializable, XMLAppendable
         result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
         result = ((prime*result)+((schemas == null)? 0 :schemas.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((foreignKeys == null)? 0 :foreignKeys.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));

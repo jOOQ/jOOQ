@@ -102,6 +102,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MatchersForeignKeyType }
+     * 
+     */
+    public MatchersForeignKeyType createMatchersForeignKeyType() {
+        return new MatchersForeignKeyType();
+    }
+
+    /**
      * Create an instance of {@link MatchersFieldType }
      * 
      */

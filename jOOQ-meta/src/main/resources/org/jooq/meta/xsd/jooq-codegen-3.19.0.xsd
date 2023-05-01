@@ -179,6 +179,10 @@
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for table names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="foreignKeys" type="tns:MatchersForeignKeysType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for foreign key names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="fields" type="tns:MatchersFieldsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for field names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -354,6 +358,33 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
       <element name="pojoImplements" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated POJO should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="MatchersForeignKeysType">
+    <sequence>
+      <element name="table" type="tns:MatchersForeignKeyType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MatchersForeignKeyType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for foreign key names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="methodName" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated to-one path join methods.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="methodNameInverse" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated to-many path join methods.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="methodNameManyToMany" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated many-to-many path join methods.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -1952,7 +1983,7 @@ This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:prope
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="implicitJoinPathsToMany" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+      <element name="implicitJoinPathsToMany" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for incoming foreign key relationships (to-many relationships)<p><strong>EXPERIMENTAL functionality! Do not use this feature, yet</strong>]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       

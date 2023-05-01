@@ -51,6 +51,9 @@ import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.EmbeddableDefinition;
 import org.jooq.meta.EnumDefinition;
+import org.jooq.meta.ForeignKeyDefinition;
+import org.jooq.meta.InverseForeignKeyDefinition;
+import org.jooq.meta.ManyToManyKeyDefinition;
 import org.jooq.meta.Patterns;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -60,7 +63,7 @@ import org.jooq.meta.jaxb.MatcherRule;
 import org.jooq.meta.jaxb.MatcherTransformType;
 import org.jooq.meta.jaxb.Matchers;
 import org.jooq.meta.jaxb.MatchersCatalogType;
-import org.jooq.meta.jaxb.MatchersEmbeddableType;
+import org.jooq.meta.jaxb.*;
 import org.jooq.meta.jaxb.MatchersEnumType;
 import org.jooq.meta.jaxb.MatchersFieldType;
 import org.jooq.meta.jaxb.MatchersRoutineType;
@@ -191,6 +194,27 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return emptyList();
     }
 
+    private final List<MatchersForeignKeyType> foreignKeys(Definition definition) {
+        if (definition instanceof ForeignKeyDefinition)
+            return matchers.getForeignKeys();
+
+        return emptyList();
+    }
+
+    private final List<MatchersForeignKeyType> inverseForeignKeys(Definition definition) {
+        if (definition instanceof InverseForeignKeyDefinition)
+            return matchers.getForeignKeys();
+
+        return emptyList();
+    }
+
+    private final List<MatchersForeignKeyType> manyToManyKeys(Definition definition) {
+        if (definition instanceof ManyToManyKeyDefinition)
+            return matchers.getForeignKeys();
+
+        return emptyList();
+    }
+
     private final List<MatchersFieldType> fields(Definition definition) {
         if (definition instanceof ColumnDefinition)
             return matchers.getFields();
@@ -294,6 +318,27 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     public String getJavaMethodName(Definition definition, Mode mode) {
         for (MatchersRoutineType routines : routines(definition)) {
             String result = match(definition, routines.getExpression(), routines.getRoutineMethod());
+
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersForeignKeyType foreignKeys : foreignKeys(definition)) {
+            String result = match(definition, foreignKeys.getExpression(), foreignKeys.getMethodName());
+
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersForeignKeyType inverseForeignKeys : inverseForeignKeys(definition)) {
+            String result = match(definition, inverseForeignKeys.getExpression(), inverseForeignKeys.getMethodNameInverse());
+
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersForeignKeyType manyToManyKeys : manyToManyKeys(definition)) {
+            String result = match(definition, manyToManyKeys.getExpression(), manyToManyKeys.getMethodNameManyToMany());
 
             if (result != null)
                 return result;

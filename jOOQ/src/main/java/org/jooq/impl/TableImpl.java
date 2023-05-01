@@ -307,11 +307,12 @@ implements
      */
     @Nullable
     final Table<?> pathRoot() {
-        if (path instanceof TableImpl<?> t)
+        if (path instanceof TableImpl<?> t) {
             if (t.path != null)
                 return t.pathRoot();
             else
                 return t;
+        }
         else
             return null;
     }

@@ -6814,7 +6814,7 @@ public class JavaGenerator extends AbstractGenerator {
                         );
 
                         if (scala) {
-                            out.println("%sdef %s: %s = %s().%s()", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, key1MethodName, key2MethodName);
+                            out.println("%sdef %s: %s = %s.%s", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, key1MethodName, key2MethodName);
                         }
                         else if (kotlin) {
                             if (generateImplicitJoinPathsAsKotlinProperties()) {

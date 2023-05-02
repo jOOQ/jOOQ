@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -106,7 +107,6 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 abstract class AbstractInList<T> extends AbstractCondition {
 
-    static final int              IN_LIMIT               = 1000;
     static final Set<SQLDialect>  REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect>  NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB);
 
@@ -120,6 +120,19 @@ abstract class AbstractInList<T> extends AbstractCondition {
     }
 
     abstract Function2<? super RowN, ? super RowN[], ? extends Condition> rowCondition();
+
+    static final int limit(Context<?> ctx) {
+        if (REQUIRES_IN_LIMIT.contains(ctx.dialect())) {
+
+
+
+
+
+            return 1000;
+        }
+
+        return Integer.MAX_VALUE;
+    }
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -149,6 +162,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
     }
 
     private static final <T> void accept1(Context<?> ctx, boolean in, Field<T> field, QueryPartList<Field<T>> values) {
+        int limit = limit(ctx);
 
 
 
@@ -169,7 +183,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
             else
                 ctx.visit(trueCondition());
         }
-        else if (values.size() > IN_LIMIT) {
+        else if (values.size() > limit) {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
             switch (ctx.family()) {
@@ -180,7 +194,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
                 case FIREBIRD: {
                     ctx.sqlIndentStart('(');
 
-                    for (int i = 0; i < values.size(); i += IN_LIMIT) {
+                    for (int i = 0; i < values.size(); i += limit) {
                         if (i > 0) {
 
                             // [#1515] The connector depends on the IN / NOT IN
@@ -195,7 +209,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
                                    .sql(' ');
                         }
 
-                        toSQLSubValues(ctx, field, in, padded(ctx, values.subList(i, Math.min(i + IN_LIMIT, values.size()))));
+                        toSQLSubValues(ctx, field, in, padded(ctx, values.subList(i, Math.min(i + limit, values.size())), limit));
                     }
 
                     ctx.sqlIndentEnd(')');
@@ -210,17 +224,17 @@ abstract class AbstractInList<T> extends AbstractCondition {
             }
         }
         else
-            toSQLSubValues(ctx, field, in, padded(ctx, values));
+            toSQLSubValues(ctx, field, in, padded(ctx, values, limit));
     }
 
     static final RowN[] rows(List<? extends Field<?>> values) {
         return map(values, v -> row(embeddedFields(v)), RowN[]::new);
     }
 
-    static final <T> List<T> padded(Context<?> ctx, List<T> list) {
+    static final <T> List<T> padded(Context<?> ctx, List<T> list, int limit) {
         return ctx.paramType() == INDEXED && TRUE.equals(ctx.settings().isInListPadding())
             ? new PaddedList<>(list, REQUIRES_IN_LIMIT.contains(ctx.dialect())
-                ? IN_LIMIT
+                ? limit
                 : Integer.MAX_VALUE,
                   defaultIfNull(ctx.settings().getInListPadBase(), 2))
             : list;

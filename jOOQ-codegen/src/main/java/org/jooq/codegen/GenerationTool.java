@@ -722,6 +722,8 @@ public class GenerationTool {
                 generator.setGenerateImplicitJoinPathsToOne(g.getGenerate().isImplicitJoinPathsToOne());
             if (g.getGenerate().isImplicitJoinPathsToOne() != null)
                 generator.setGenerateImplicitJoinPathsToMany(g.getGenerate().isImplicitJoinPathsToMany());
+            if (g.getGenerate().isImplicitJoinPathUnusedConstructors() != null)
+                generator.setGenerateImplicitJoinPathUnusedConstructors(g.getGenerate().isImplicitJoinPathUnusedConstructors());
             if (g.getGenerate().isImplicitJoinPathsAsKotlinProperties() != null)
                 generator.setGenerateImplicitJoinPathsAsKotlinProperties(g.getGenerate().isImplicitJoinPathsAsKotlinProperties());
             if (g.getGenerate().isDeprecated() != null)

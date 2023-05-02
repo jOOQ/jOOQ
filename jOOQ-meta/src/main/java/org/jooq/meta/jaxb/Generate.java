@@ -40,6 +40,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean implicitJoinPathsToOne = true;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToMany = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean implicitJoinPathUnusedConstructors = false;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsUseTableNameForUnambiguousFKs = true;
     @XmlElement(defaultValue = "true")
@@ -339,7 +341,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate implicit join path constructors on generated tables for incoming foreign key relationships (to-many relationships)<p><strong>EXPERIMENTAL functionality! Do not use this feature, yet</strong>
+     * Generate implicit join path constructors on generated tables for incoming foreign key relationships (to-many relationships)
      * 
      * @return
      *     possible object is
@@ -360,6 +362,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setImplicitJoinPathsToMany(Boolean value) {
         this.implicitJoinPathsToMany = value;
+    }
+
+    /**
+     * Generate implicit join path constructors also if there isn't any outgoing or incoming foreign key relationship.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isImplicitJoinPathUnusedConstructors() {
+        return implicitJoinPathUnusedConstructors;
+    }
+
+    /**
+     * Sets the value of the implicitJoinPathUnusedConstructors property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setImplicitJoinPathUnusedConstructors(Boolean value) {
+        this.implicitJoinPathUnusedConstructors = value;
     }
 
     /**
@@ -2668,6 +2694,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withImplicitJoinPathUnusedConstructors(Boolean value) {
+        setImplicitJoinPathUnusedConstructors(value);
+        return this;
+    }
+
     public Generate withImplicitJoinPathsUseTableNameForUnambiguousFKs(Boolean value) {
         setImplicitJoinPathsUseTableNameForUnambiguousFKs(value);
         return this;
@@ -3213,6 +3244,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("sequenceFlags", sequenceFlags);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
         builder.append("implicitJoinPathsToMany", implicitJoinPathsToMany);
+        builder.append("implicitJoinPathUnusedConstructors", implicitJoinPathUnusedConstructors);
         builder.append("implicitJoinPathsUseTableNameForUnambiguousFKs", implicitJoinPathsUseTableNameForUnambiguousFKs);
         builder.append("implicitJoinPathsAsKotlinProperties", implicitJoinPathsAsKotlinProperties);
         builder.append("deprecated", deprecated);
@@ -3373,6 +3405,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!implicitJoinPathsToMany.equals(other.implicitJoinPathsToMany)) {
+                return false;
+            }
+        }
+        if (implicitJoinPathUnusedConstructors == null) {
+            if (other.implicitJoinPathUnusedConstructors!= null) {
+                return false;
+            }
+        } else {
+            if (!implicitJoinPathUnusedConstructors.equals(other.implicitJoinPathUnusedConstructors)) {
                 return false;
             }
         }
@@ -4261,6 +4302,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToMany == null)? 0 :implicitJoinPathsToMany.hashCode()));
+        result = ((prime*result)+((implicitJoinPathUnusedConstructors == null)? 0 :implicitJoinPathUnusedConstructors.hashCode()));
         result = ((prime*result)+((implicitJoinPathsUseTableNameForUnambiguousFKs == null)? 0 :implicitJoinPathsUseTableNameForUnambiguousFKs.hashCode()));
         result = ((prime*result)+((implicitJoinPathsAsKotlinProperties == null)? 0 :implicitJoinPathsAsKotlinProperties.hashCode()));
         result = ((prime*result)+((deprecated == null)? 0 :deprecated.hashCode()));

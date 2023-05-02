@@ -144,6 +144,18 @@ public interface Generator {
     void setGenerateImplicitJoinPathsToMany(boolean generateImplicitJoinPathsToMany);
 
     /**
+     * Whether implicit join path constructors should also be generated if there
+     * isn't any outgoing or incoming foreign key relationship.
+     */
+    boolean generateImplicitJoinPathUnusedConstructors();
+
+    /**
+     * Whether implicit join path constructors should also be generated if there
+     * isn't any outgoing or incoming foreign key relationship.
+     */
+    void setGenerateImplicitJoinPathUnusedConstructors(boolean generateImplicitJoinPathUnusedConstructors);
+
+    /**
      * Whether implicit join path constructors should be offered as properties
      * in Kotlin.
      */

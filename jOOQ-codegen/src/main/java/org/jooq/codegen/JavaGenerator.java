@@ -6360,7 +6360,9 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateGlobalKeyReferences() && !table.isTableValuedFunction()) {
-            if (generateImplicitJoinPathsToOne()) {
+            if (generateImplicitJoinPathsToOne()
+                && (generateImplicitJoinPathUnusedConstructors() || !table.getInverseForeignKeys().isEmpty())
+            ) {
                 out.println();
 
                 if (scala) {
@@ -6378,7 +6380,9 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
 
-            if (generateImplicitJoinPathsToMany()) {
+            if (generateImplicitJoinPathsToMany()
+                && (generateImplicitJoinPathUnusedConstructors() || !table.getForeignKeys().isEmpty())
+            ) {
                 out.println();
 
                 if (scala) {

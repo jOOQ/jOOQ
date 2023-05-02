@@ -71,6 +71,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRelations                                = true;
     boolean                            generateImplicitJoinPathsToOne                   = true;
     boolean                            generateImplicitJoinPathsToMany                  = true;
+    boolean                            generateImplicitJoinPathUnusedConstructors       = true;
     boolean                            generateImplicitJoinPathsAsKotlinProperties      = true;
     boolean                            generateInstanceFields                           = true;
     VisibilityModifier                 generateVisibilityModifier                       = VisibilityModifier.DEFAULT;
@@ -309,6 +310,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateImplicitJoinPathsToMany(boolean generateImplicitJoinPathsToMany) {
         this.generateImplicitJoinPathsToMany = generateImplicitJoinPathsToMany;
+    }
+
+    @Override
+    public boolean generateImplicitJoinPathUnusedConstructors() {
+        return generateImplicitJoinPathUnusedConstructors && generateRelations();
+    }
+
+    @Override
+    public void setGenerateImplicitJoinPathUnusedConstructors(boolean generateImplicitJoinPathUnusedConstructors) {
+        this.generateImplicitJoinPathUnusedConstructors = generateImplicitJoinPathUnusedConstructors;
     }
 
     @Override

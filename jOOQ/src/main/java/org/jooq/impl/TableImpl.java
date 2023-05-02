@@ -175,19 +175,19 @@ implements
     }
 
     public TableImpl(Name name) {
-        this(name, null, null, (ForeignKey<?, R>) null, null, null, (Comment) null);
+        this(name, null, null, null, null, null, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema) {
-        this(name, schema, null, (ForeignKey<?, R>) null, null, null, (Comment) null);
+        this(name, schema, null, null, null, null, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased) {
-        this(name, schema, null, (ForeignKey<?, R>) null, aliased, null, (Comment) null);
+        this(name, schema, null, null, null, aliased, null, (Comment) null);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
-        this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, (Comment) null);
+        this(name, schema, null, null, null, aliased, parameters, (Comment) null);
     }
 
     /**
@@ -206,28 +206,36 @@ implements
         this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, comment, options);
     }
 
-    public TableImpl(Table<?> child, ForeignKey<?, R> childPath, Table<R> parent) {
-        this(createPathAlias(child, childPath), null, child, childPath, parent, null, parent.getCommentPart());
+    /**
+     * @deprecated - [#13639] [#14985] [#15005] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
+    public TableImpl(Table<?> path, ForeignKey<?, R> childPath, Table<R> parent) {
+        this(path, childPath, null, parent);
     }
 
-    public TableImpl(Table<?> parent, InverseForeignKey<?, R> parentPath, Table<R> child) {
-        this(createPathAlias(parent, parentPath.getForeignKey(), ".inverse"), null, parent, parentPath, child, null, child.getCommentPart());
+    public TableImpl(Table<?> path, ForeignKey<?, R> childPath, InverseForeignKey<?, R> parentPath, Table<R> parent) {
+        this(createPathAlias(path, childPath, parentPath), null, path, childPath, parentPath, parent, null, parent.getCommentPart());
     }
 
+    /**
+     * @deprecated - [#13639] [#14985] [#15005] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
     public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, Table<R> aliased, Field<?>[] parameters, Comment comment) {
         this(name, schema, path, childPath, aliased, parameters, comment, TableOptions.table());
     }
 
-    public TableImpl(Name name, Schema schema, Table<?> path, InverseForeignKey<?, R> parentPath, Table<R> aliased, Field<?>[] parameters, Comment comment) {
-        this(name, schema, path, null, parentPath, aliased, parameters, comment, TableOptions.table());
+    public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, InverseForeignKey<?, R> parentPath, Table<R> aliased, Field<?>[] parameters, Comment comment) {
+        this(name, schema, path, childPath, parentPath, aliased, parameters, comment, TableOptions.table());
     }
 
+    /**
+     * @deprecated - [#13639] [#14985] [#15005] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
     public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
         this(name, schema, path, childPath, null, aliased, parameters, comment, options);
-    }
-
-    public TableImpl(Name name, Schema schema, Table<?> path, InverseForeignKey<?, R> parentPath, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
-        this(name, schema, path, null, parentPath, aliased, parameters, comment, options);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

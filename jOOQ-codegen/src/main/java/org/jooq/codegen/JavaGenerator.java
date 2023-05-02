@@ -6043,12 +6043,29 @@ public class JavaGenerator extends AbstractGenerator {
             ? "function"
             : "table";
         final List<ParameterDefinition> parameters = table.getParameters();
+        final boolean supportsPathsToOne = generateGlobalKeyReferences()
+            && !table.isTableValuedFunction()
+            && generateImplicitJoinPathsToOne()
+            && (generateImplicitJoinPathUnusedConstructors() || !table.getInverseForeignKeys().isEmpty());
+
+        final boolean supportsPathsToMany = generateGlobalKeyReferences()
+            && !table.isTableValuedFunction()
+            && generateImplicitJoinPathsToMany()
+            && (generateImplicitJoinPathUnusedConstructors() || !table.getForeignKeys().isEmpty());
 
         printPackage(out, table);
 
         if (scala) {
             out.println("object %s {", className);
             printSingletonInstance(out, table);
+
+            // [#14985] Scala nested classes have to be located in the object
+            if (generateImplicitJoinPathTableSubtypes() && (supportsPathsToOne || supportsPathsToMany)) {
+                out.println();
+                out.println("%sclass %sPath(path: %s[_ <: %s], childPath: %s[_ <: %s, %s], parentPath: %s[_ <: %s, %s]) extends %s(path, childPath, parentPath) with %s[%s]",
+                    visibility(), className, Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, className, Path.class, recordType);
+            }
+
             out.println("}");
             out.println();
         }
@@ -6360,76 +6377,37 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
-        if (generateGlobalKeyReferences() && !table.isTableValuedFunction()) {
-            boolean supportsPathsToOne = false;
-            boolean supportsPathsToMany = false;
+        if (supportsPathsToOne || supportsPathsToMany) {
+            out.println();
 
-            if (generateImplicitJoinPathsToOne()
-                && (generateImplicitJoinPathUnusedConstructors() || !table.getInverseForeignKeys().isEmpty())
-            ) {
-                supportsPathsToOne = true;
-                out.println();
-
-                if (scala) {
-                    out.println("%sdef this(child: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(child, key), child, key, null, %s, null)",
-                        visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
-                }
-                else if (kotlin) {
-                    out.println("%sconstructor(child: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(child, key), child, key, null, %s, null)",
-                        visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, Internal.class, tableId);
-                }
-                else {
-                    out.println("%s<O extends %s> %s(%s<O> child, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType);
-                    out.println("super(child, key, %s);", tableId);
-                    out.println("}");
-                }
+            if (scala) {
+                out.println("%sdef this(path: %s[_ <: %s], childPath: %s[_ <: %s, %s], parentPath: %s[_ <: %s, %s]) = this(%s.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, %s, null)",
+                    visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
+            }
+            else if (kotlin) {
+                out.println("%sconstructor(path: %s<out %s>, childPath: %s<out %s, %s>?, parentPath: %s<out %s, %s>?): this(%s.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, %s, null)",
+                    visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
+            }
+            else {
+                out.println("%s<O extends %s> %s(%s<O> path, %s<O, %s> childPath, %s<O, %s> parentPath) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType, InverseForeignKey.class, recordType);
+                out.println("super(path, childPath, parentPath, %s);", tableId);
+                out.println("}");
             }
 
-            if (generateImplicitJoinPathsToMany()
-                && (generateImplicitJoinPathUnusedConstructors() || !table.getForeignKeys().isEmpty())
-            ) {
-                supportsPathsToMany = true;
+            if (generateImplicitJoinPathTableSubtypes()) {
                 out.println();
 
-                if (scala) {
-                    out.println("%sdef this(parent: %s[_ <: %s], key: %s[_ <: %s, %s]) = this(%s.createPathAlias(parent, key.getForeignKey()), parent, null, key, %s, null)",
-                        visibility(), Table.class, Record.class, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
-                }
+                // [#14985] Scala nested classes have to be located in the companion object
+                if (scala) {}
                 else if (kotlin) {
-                    out.println("%sconstructor(parent: %s<out %s>, key: %s<out %s, %s>): this(%s.createPathAlias(parent, key.foreignKey), parent, null, key, %s, null)",
-                        visibility(), Table.class, Record.class, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
+                    out.println("%sopen class %sPath(path: %s<out %s>, childPath: %s<out %s, %s>?, parentPath: %s<out %s, %s>?) : %s(path, childPath, parentPath), %s<%s>",
+                        visibility(), className, Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, className, Path.class, recordType);
                 }
                 else {
-                    out.println("%s<O extends %s> %s(%s<O> parent, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, InverseForeignKey.class, recordType);
-                    out.println("super(parent, key, %s);", tableId);
+                    out.println("%s static class %sPath extends %s implements %s<%s> {", visibility(), className, className, Path.class, recordType);
+                    out.println("%s<O extends %s> %sPath(%s<O> path, %s<O, %s> childPath, %s<O, %s> parentPath) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType, InverseForeignKey.class, recordType);
+                    out.println("super(path, childPath, parentPath);");
                     out.println("}");
-                }
-            }
-
-            if (generateImplicitJoinPathTableSubtypes() && (supportsPathsToOne || supportsPathsToMany)) {
-                out.println();
-
-                if (scala) {
-                    // TODO:
-                }
-                else if (kotlin) {
-                    // TODO:
-                }
-                else {
-                    out.println("public static class %sPath extends %s implements %s<%s> {", className, className, Path.class, recordType);
-
-                    if (supportsPathsToOne) {
-                        out.println("%s<O extends %s> %sPath(%s<O> child, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType);
-                        out.println("super(child, key);");
-                        out.println("}");
-                    }
-
-                    if (supportsPathsToMany) {
-                        out.println("%s<O extends %s> %sPath(%s<O> parent, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, InverseForeignKey.class, recordType);
-                        out.println("super(parent, key);");
-                        out.println("}");
-                    }
-
                     out.println("}");
                 }
             }
@@ -6725,12 +6703,12 @@ public class JavaGenerator extends AbstractGenerator {
                         );
 
                         if (scala) {
-                            out.println("%slazy val %s: %s = { new %s(this, %s) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
+                            out.println("%slazy val %s: %s = { new %s(this, %s, null) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
                         }
                         else if (kotlin) {
                             out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencedTableClassName);
                             out.println("if (!this::_%s.isInitialized)", unquotedKeyMethodName);
-                            out.println("_%s = %s(this, %s)", unquotedKeyMethodName, referencedTableClassName, keyFullId);
+                            out.println("_%s = %s(this, %s, null)", unquotedKeyMethodName, referencedTableClassName, keyFullId);
                             out.println();
                             out.println("return _%s;", unquotedKeyMethodName);
                             out.println("}");
@@ -6744,7 +6722,7 @@ public class JavaGenerator extends AbstractGenerator {
                         else {
                             out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);
                             out.println("if (_%s == null)", keyMethodName);
-                            out.println("_%s = new %s(this, %s);", keyMethodName, referencedTableClassName, keyFullId);
+                            out.println("_%s = new %s(this, %s, null);", keyMethodName, referencedTableClassName, keyFullId);
                             out.println();
                             out.println("return _%s;", keyMethodName);
                             out.println("}");
@@ -6802,12 +6780,12 @@ public class JavaGenerator extends AbstractGenerator {
                         );
 
                         if (scala) {
-                            out.println("%slazy val %s: %s = { new %s(this, %s.getInverseKey()) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencingTableClassName, referencingTableClassName, keyFullId);
+                            out.println("%slazy val %s: %s = { new %s(this, null, %s.getInverseKey()) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencingTableClassName, referencingTableClassName, keyFullId);
                         }
                         else if (kotlin) {
                             out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencingTableClassName);
                             out.println("if (!this::_%s.isInitialized)", unquotedKeyMethodName);
-                            out.println("_%s = %s(this, %s.inverseKey)", unquotedKeyMethodName, referencingTableClassName, keyFullId);
+                            out.println("_%s = %s(this, null, %s.inverseKey)", unquotedKeyMethodName, referencingTableClassName, keyFullId);
                             out.println();
                             out.println("return _%s;", unquotedKeyMethodName);
                             out.println("}");
@@ -6821,7 +6799,7 @@ public class JavaGenerator extends AbstractGenerator {
                         else {
                             out.println("%s%s %s() {", visibility(), referencingTableClassName, keyMethodName);
                             out.println("if (_%s == null)", keyMethodName);
-                            out.println("_%s = new %s(this, %s.getInverseKey());", keyMethodName, referencingTableClassName, keyFullId);
+                            out.println("_%s = new %s(this, null, %s.getInverseKey());", keyMethodName, referencingTableClassName, keyFullId);
                             out.println();
                             out.println("return _%s;", keyMethodName);
                             out.println("}");

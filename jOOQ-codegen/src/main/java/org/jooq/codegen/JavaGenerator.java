@@ -6404,7 +6404,7 @@ public class JavaGenerator extends AbstractGenerator {
                         visibility(), className, Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, className, Path.class, recordType);
                 }
                 else {
-                    out.println("%s static class %sPath extends %s implements %s<%s> {", visibility(), className, className, Path.class, recordType);
+                    out.println("%sstatic class %sPath extends %s implements %s<%s> {", visibility(), className, className, Path.class, recordType);
                     out.println("%s<O extends %s> %sPath(%s<O> path, %s<O, %s> childPath, %s<O, %s> parentPath) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType, InverseForeignKey.class, recordType);
                     out.println("super(path, childPath, parentPath);");
                     out.println("}");

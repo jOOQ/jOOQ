@@ -40,7 +40,7 @@ package org.jooq.postgres.extensions.types;
 import java.time.OffsetDateTime;
 
 /**
- * A data type representing the PostgreSQL <code>tsrange</code> type.
+ * A data type representing the PostgreSQL <code>tstzrange</code> type.
  *
  * @author Lukas Eder
  */

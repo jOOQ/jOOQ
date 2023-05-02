@@ -1987,6 +1987,10 @@ This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:prope
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for incoming foreign key relationships (to-many relationships)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="implicitJoinPathTableSubtypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path table subtypes implementing {@link org.jooq.Path} for increased JOIN convenience.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="implicitJoinPathUnusedConstructors" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors also if there isn't any outgoing or incoming foreign key relationship.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

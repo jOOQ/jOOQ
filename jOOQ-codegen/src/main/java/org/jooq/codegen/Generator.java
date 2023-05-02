@@ -44,6 +44,7 @@ import java.util.Locale;
 import org.jooq.Constants;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.Path;
 import org.jooq.Spatial;
 import org.jooq.XML;
 import org.jooq.impl.DAOImpl;
@@ -142,6 +143,18 @@ public interface Generator {
      * foreign key relationships (to-many relationships) should be generated.
      */
     void setGenerateImplicitJoinPathsToMany(boolean generateImplicitJoinPathsToMany);
+
+    /**
+     * Whether to generate implicit join path table subtypes implementing
+     * {@link Path} for increased JOIN convenience.
+     */
+    boolean generateImplicitJoinPathTableSubtypes();
+
+    /**
+     * Whether to generate implicit join path table subtypes implementing
+     * {@link Path} for increased JOIN convenience.
+     */
+    void setGenerateImplicitJoinPathTableSubtypes(boolean generateImplicitJoinPathTableSubtypes);
 
     /**
      * Whether implicit join path constructors should also be generated if there

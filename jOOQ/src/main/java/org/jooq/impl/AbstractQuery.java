@@ -444,35 +444,22 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
         try {
             listener.executeStart(ctx);
 
-            switch (ctx.family()) {
-                // [#12052] DuckDB doesn't correctly implement the JDBC API protocol:
-                //          https://github.com/duckdb/duckdb/issues/7188
-                case DUCKDB: {
-                    result = executeImmediate(ctx.statement()).executeUpdate();
-                    ctx.rows(result);
-                    break;
-                }
-
-                default: {
-                    // [#1829] Statement.execute() is preferred over Statement.executeUpdate(), as
-                    // we might be executing plain SQL and returning results.
-                    if (!stmt.execute()) {
-                        result = stmt.getUpdateCount();
-                        ctx.rows(result);
-                    }
-
-
-
-
-
-
-
-
-
-
-                    break;
-                }
+            // [#1829] Statement.execute() is preferred over Statement.executeUpdate(), as
+            // we might be executing plain SQL and returning results.
+            if (!stmt.execute()) {
+                result = stmt.getUpdateCount();
+                ctx.rows(result);
             }
+
+
+
+
+
+
+
+
+
+
 
             listener.executeEnd(ctx);
             return result;

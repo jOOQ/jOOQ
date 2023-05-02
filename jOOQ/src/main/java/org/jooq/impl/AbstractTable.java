@@ -95,6 +95,7 @@ import org.jooq.JoinType;
 // ...
 import org.jooq.Name;
 import org.jooq.Package;
+import org.jooq.Path;
 // ...
 // ...
 // ...
@@ -1265,16 +1266,28 @@ implements
         return new DivideBy(this, divisor);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings("unchecked")
     @Override
     public final TableOnStep<R> leftSemiJoin(TableLike<?> table) {
-        return (TableOnStep) join(table, LEFT_SEMI_JOIN);
+        return (TableOnStep<R>) join(table, LEFT_SEMI_JOIN);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TableOptionalOnStep<R> leftSemiJoin(Path<?> path) {
+        return (TableOptionalOnStep<R>) join(path, LEFT_SEMI_JOIN);
+    }
+
+    @SuppressWarnings("unchecked")
     @Override
     public final TableOnStep<R> leftAntiJoin(TableLike<?> table) {
-        return (TableOnStep) join(table, LEFT_ANTI_JOIN);
+        return (TableOnStep<R>) join(table, LEFT_ANTI_JOIN);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TableOptionalOnStep<R> leftAntiJoin(Path<?> path) {
+        return (TableOptionalOnStep<R>) join(path, LEFT_ANTI_JOIN);
     }
 
     // ------------------------------------------------------------------------
@@ -1379,6 +1392,11 @@ implements
     }
 
     @Override
+    public final TableOptionalOnStep<Record> join(Path<?> path) {
+        return innerJoin(path);
+    }
+
+    @Override
     public final TableOnStep<Record> join(SQL sql) {
         return innerJoin(sql);
     }
@@ -1406,6 +1424,11 @@ implements
     @Override
     public final TableOnStep<Record> innerJoin(TableLike<?> table) {
         return join(table, JOIN);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> innerJoin(Path<?> path) {
+        return join(path, JOIN);
     }
 
     @Override
@@ -1453,6 +1476,11 @@ implements
     }
 
     @Override
+    public final TableOptionalOnStep<Record> leftJoin(Path<?> path) {
+        return leftOuterJoin(path);
+    }
+
+    @Override
     public final TablePartitionByStep<Record> leftJoin(SQL sql) {
         return leftOuterJoin(sql);
     }
@@ -1484,6 +1512,11 @@ implements
     }
 
     @Override
+    public final TableOptionalOnStep<Record> leftOuterJoin(Path<?> path) {
+        return join(path, LEFT_OUTER_JOIN);
+    }
+
+    @Override
     public final TablePartitionByStep<Record> leftOuterJoin(SQL sql) {
         return leftOuterJoin(table(sql));
     }
@@ -1511,6 +1544,11 @@ implements
     @Override
     public final TablePartitionByStep<Record> rightJoin(TableLike<?> table) {
         return rightOuterJoin(table);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> rightJoin(Path<?> path) {
+        return rightOuterJoin(path);
     }
 
     @Override
@@ -1545,6 +1583,11 @@ implements
     }
 
     @Override
+    public final TableOptionalOnStep<Record> rightOuterJoin(Path<?> path) {
+        return join(path, RIGHT_OUTER_JOIN);
+    }
+
+    @Override
     public final TablePartitionByStep<Record> rightOuterJoin(SQL sql) {
         return rightOuterJoin(table(sql));
     }
@@ -1569,9 +1612,15 @@ implements
         return rightOuterJoin(table(name));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final TablePartitionByStep<Record> fullOuterJoin(TableLike<?> table) {
         return (TablePartitionByStep<Record>) join(table, FULL_OUTER_JOIN);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> fullOuterJoin(Path<?> path) {
+        return join(path, FULL_OUTER_JOIN);
     }
 
     @Override
@@ -1602,6 +1651,11 @@ implements
     @Override
     public final TablePartitionByStep<Record> fullJoin(TableLike<?> table) {
         return fullOuterJoin(table);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> fullJoin(Path<?> path) {
+        return fullOuterJoin(path);
     }
 
     @Override
@@ -1842,6 +1896,11 @@ implements
     @Override
     public final TableOptionalOnStep<Record> straightJoin(TableLike<?> table) {
         return join(table, STRAIGHT_JOIN);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> straightJoin(Path<?> path) {
+        return join(path, STRAIGHT_JOIN);
     }
 
     @Override

@@ -71,6 +71,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRelations                                = true;
     boolean                            generateImplicitJoinPathsToOne                   = true;
     boolean                            generateImplicitJoinPathsToMany                  = true;
+    boolean                            generateImplicitJoinPathTableSubtypes            = true;
     boolean                            generateImplicitJoinPathUnusedConstructors       = true;
     boolean                            generateImplicitJoinPathsAsKotlinProperties      = true;
     boolean                            generateInstanceFields                           = true;
@@ -310,6 +311,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateImplicitJoinPathsToMany(boolean generateImplicitJoinPathsToMany) {
         this.generateImplicitJoinPathsToMany = generateImplicitJoinPathsToMany;
+    }
+
+    @Override
+    public boolean generateImplicitJoinPathTableSubtypes() {
+        return generateImplicitJoinPathTableSubtypes && generateRelations();
+    }
+
+    @Override
+    public void setGenerateImplicitJoinPathTableSubtypes(boolean generateImplicitJoinPathTableSubtypes) {
+        this.generateImplicitJoinPathTableSubtypes = generateImplicitJoinPathTableSubtypes;
     }
 
     @Override

@@ -40,6 +40,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean implicitJoinPathsToOne = true;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToMany = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean implicitJoinPathTableSubtypes = true;
     @XmlElement(defaultValue = "false")
     protected Boolean implicitJoinPathUnusedConstructors = false;
     @XmlElement(defaultValue = "true")
@@ -362,6 +364,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setImplicitJoinPathsToMany(Boolean value) {
         this.implicitJoinPathsToMany = value;
+    }
+
+    /**
+     * Generate implicit join path table subtypes implementing {@link org.jooq.Path} for increased JOIN convenience.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isImplicitJoinPathTableSubtypes() {
+        return implicitJoinPathTableSubtypes;
+    }
+
+    /**
+     * Sets the value of the implicitJoinPathTableSubtypes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setImplicitJoinPathTableSubtypes(Boolean value) {
+        this.implicitJoinPathTableSubtypes = value;
     }
 
     /**
@@ -2694,6 +2720,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withImplicitJoinPathTableSubtypes(Boolean value) {
+        setImplicitJoinPathTableSubtypes(value);
+        return this;
+    }
+
     public Generate withImplicitJoinPathUnusedConstructors(Boolean value) {
         setImplicitJoinPathUnusedConstructors(value);
         return this;
@@ -3244,6 +3275,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("sequenceFlags", sequenceFlags);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
         builder.append("implicitJoinPathsToMany", implicitJoinPathsToMany);
+        builder.append("implicitJoinPathTableSubtypes", implicitJoinPathTableSubtypes);
         builder.append("implicitJoinPathUnusedConstructors", implicitJoinPathUnusedConstructors);
         builder.append("implicitJoinPathsUseTableNameForUnambiguousFKs", implicitJoinPathsUseTableNameForUnambiguousFKs);
         builder.append("implicitJoinPathsAsKotlinProperties", implicitJoinPathsAsKotlinProperties);
@@ -3405,6 +3437,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!implicitJoinPathsToMany.equals(other.implicitJoinPathsToMany)) {
+                return false;
+            }
+        }
+        if (implicitJoinPathTableSubtypes == null) {
+            if (other.implicitJoinPathTableSubtypes!= null) {
+                return false;
+            }
+        } else {
+            if (!implicitJoinPathTableSubtypes.equals(other.implicitJoinPathTableSubtypes)) {
                 return false;
             }
         }
@@ -4302,6 +4343,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToMany == null)? 0 :implicitJoinPathsToMany.hashCode()));
+        result = ((prime*result)+((implicitJoinPathTableSubtypes == null)? 0 :implicitJoinPathTableSubtypes.hashCode()));
         result = ((prime*result)+((implicitJoinPathUnusedConstructors == null)? 0 :implicitJoinPathUnusedConstructors.hashCode()));
         result = ((prime*result)+((implicitJoinPathsUseTableNameForUnambiguousFKs == null)? 0 :implicitJoinPathsUseTableNameForUnambiguousFKs.hashCode()));
         result = ((prime*result)+((implicitJoinPathsAsKotlinProperties == null)? 0 :implicitJoinPathsAsKotlinProperties.hashCode()));

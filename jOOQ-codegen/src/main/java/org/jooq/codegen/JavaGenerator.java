@@ -115,6 +115,7 @@ import org.jooq.OrderField;
 import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Parser;
+import org.jooq.Path;
 // ...
 import org.jooq.Query;
 import org.jooq.Record;
@@ -6360,9 +6361,13 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateGlobalKeyReferences() && !table.isTableValuedFunction()) {
+            boolean supportsPathsToOne = false;
+            boolean supportsPathsToMany = false;
+
             if (generateImplicitJoinPathsToOne()
                 && (generateImplicitJoinPathUnusedConstructors() || !table.getInverseForeignKeys().isEmpty())
             ) {
+                supportsPathsToOne = true;
                 out.println();
 
                 if (scala) {
@@ -6383,6 +6388,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (generateImplicitJoinPathsToMany()
                 && (generateImplicitJoinPathUnusedConstructors() || !table.getForeignKeys().isEmpty())
             ) {
+                supportsPathsToMany = true;
                 out.println();
 
                 if (scala) {
@@ -6396,6 +6402,34 @@ public class JavaGenerator extends AbstractGenerator {
                 else {
                     out.println("%s<O extends %s> %s(%s<O> parent, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, InverseForeignKey.class, recordType);
                     out.println("super(parent, key, %s);", tableId);
+                    out.println("}");
+                }
+            }
+
+            if (generateImplicitJoinPathTableSubtypes() && (supportsPathsToOne || supportsPathsToMany)) {
+                out.println();
+
+                if (scala) {
+                    // TODO:
+                }
+                else if (kotlin) {
+                    // TODO:
+                }
+                else {
+                    out.println("public static class %sPath extends %s implements %s<%s> {", className, className, Path.class, recordType);
+
+                    if (supportsPathsToOne) {
+                        out.println("%s<O extends %s> %sPath(%s<O> child, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType);
+                        out.println("super(child, key);");
+                        out.println("}");
+                    }
+
+                    if (supportsPathsToMany) {
+                        out.println("%s<O extends %s> %sPath(%s<O> parent, %s<O, %s> key) {", visibility(), Record.class, className, Table.class, InverseForeignKey.class, recordType);
+                        out.println("super(parent, key);");
+                        out.println("}");
+                    }
+
                     out.println("}");
                 }
             }
@@ -6661,7 +6695,10 @@ public class JavaGenerator extends AbstractGenerator {
                     // [#8762] Cache these calls for much improved runtime performance!
                     for (ForeignKeyDefinition foreignKey : outboundFKs) {
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
-                        final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
+                        final String referencedTableClassName = out.ref(
+                              getStrategy().getFullJavaClassName(foreignKey.getReferencedTable())
+                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(foreignKey.getReferencedTable()) + "Path") : "")
+                        );
                         final String keyFullId = kotlin
                             ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
                             : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
@@ -6741,7 +6778,10 @@ public class JavaGenerator extends AbstractGenerator {
                         final String keyFullId = kotlin
                             ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
                             : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
-                        final String referencingTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencingTable()));
+                        final String referencingTableClassName = out.ref(
+                            getStrategy().getFullJavaClassName(foreignKey.getReferencingTable())
+                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(foreignKey.getReferencingTable()) + "Path") : "")
+                        );
 
                         // [#13008] Prevent conflicts with the below leading underscore
                         final String unquotedKeyMethodName = keyMethodName.replace("`", "");
@@ -6810,7 +6850,10 @@ public class JavaGenerator extends AbstractGenerator {
                         final String key1MethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey.getForeignKey1().getInverse()));
                         final String key2MethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey.getForeignKey2()));
                         final TableDefinition referencedTable = manyToManyKey.getForeignKey2().getReferencedTable();
-                        final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(referencedTable));
+                        final String referencedTableClassName = out.ref(
+                            getStrategy().getFullJavaClassName(referencedTable)
+                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(referencedTable) + "Path") : "")
+                        );
 
                         out.javadoc(
                             "Get the implicit many-to-many join path to the <code>" + referencedTable.getQualifiedName() + "</code> table"

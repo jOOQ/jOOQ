@@ -1032,6 +1032,15 @@ extends
     TableOnStep<Record> join(TableLike<?> table);
 
     /**
+     * <code>INNER JOIN</code> a path to this table.
+     * <p>
+     * A synonym for {@link #innerJoin(Path)}.
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<Record> join(Path<?> path);
+
+    /**
      * <code>INNER JOIN</code> a table to this table.
      * <p>
      * A synonym for {@link #innerJoin(String)}.
@@ -1128,6 +1137,13 @@ extends
     @NotNull
     @Support
     TableOnStep<Record> innerJoin(TableLike<?> table);
+
+    /**
+     * <code>INNER JOIN</code> a path to this table.
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<Record> innerJoin(Path<?> path);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -1236,6 +1252,17 @@ extends
     TablePartitionByStep<Record> leftJoin(TableLike<?> table);
 
     /**
+     * <code>LEFT OUTER JOIN</code> a path to this table.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(Path)}.
+     *
+     * @see #leftOuterJoin(Path)
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<Record> leftJoin(Path<?> path);
+
+    /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
      * <p>
      * A synonym for {@link #leftOuterJoin(String)}.
@@ -1333,6 +1360,13 @@ extends
     TablePartitionByStep<Record> leftOuterJoin(TableLike<?> table);
 
     /**
+     * <code>LEFT OUTER JOIN</code> a path to this table.
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<Record> leftOuterJoin(Path<?> path);
+
+    /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -1412,8 +1446,6 @@ extends
      * <code>RIGHT OUTER JOIN</code> a table to this table.
      * <p>
      * A synonym for {@link #rightOuterJoin(TableLike)}.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it.
      *
      * @see #rightOuterJoin(TableLike)
      */
@@ -1422,11 +1454,20 @@ extends
     TablePartitionByStep<Record> rightJoin(TableLike<?> table);
 
     /**
+     * <code>RIGHT OUTER JOIN</code> a path to this table.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(Path)}.
+     *
+     * @see #rightOuterJoin(Path)
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<Record> rightJoin(Path<?> path);
+
+    /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
      * <p>
      * A synonym for {@link #rightOuterJoin(String)}.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1447,8 +1488,6 @@ extends
      * <p>
      * A synonym for {@link #rightOuterJoin(String)}.
      * <p>
-     * This is only possible where the underlying RDBMS supports it.
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -1467,8 +1506,6 @@ extends
      * <code>RIGHT OUTER JOIN</code> a table to this table.
      * <p>
      * A synonym for {@link #rightOuterJoin(String, Object...)}.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1490,8 +1527,6 @@ extends
      * <p>
      * A synonym for {@link #rightOuterJoin(String, QueryPart...)}.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -1511,8 +1546,6 @@ extends
      * <code>RIGHT OUTER JOIN</code> a table to this table.
      * <p>
      * A synonym for {@link #rightOuterJoin(Name)}.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      *
      * @see DSL#table(Name)
      * @see #rightOuterJoin(Name)
@@ -1523,17 +1556,20 @@ extends
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      */
     @NotNull
     @Support
     TablePartitionByStep<Record> rightOuterJoin(TableLike<?> table);
 
     /**
+     * <code>RIGHT OUTER JOIN</code> a path to this table.
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<Record> rightOuterJoin(Path<?> path);
+
+    /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1551,8 +1587,6 @@ extends
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -1568,8 +1602,6 @@ extends
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1588,8 +1620,6 @@ extends
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -1606,8 +1636,6 @@ extends
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      *
      * @see DSL#table(Name)
      */
@@ -1623,6 +1651,15 @@ extends
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TablePartitionByStep<Record> fullJoin(TableLike<?> table);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a path to this table.
+     * <p>
+     * A synonym for {@link #fullOuterJoin(Path)}.
+     */
+    @NotNull
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    TableOptionalOnStep<Record> fullJoin(Path<?> path);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -1695,17 +1732,20 @@ extends
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TablePartitionByStep<Record> fullOuterJoin(TableLike<?> table);
 
     /**
+     * <code>FULL OUTER JOIN</code> a path to this table.
+     */
+    @NotNull
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    TableOptionalOnStep<Record> fullOuterJoin(Path<?> path);
+
+    /**
      * <code>FULL OUTER JOIN</code> a table to this table.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1723,8 +1763,6 @@ extends
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -1740,8 +1778,6 @@ extends
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1760,8 +1796,6 @@ extends
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -1778,8 +1812,6 @@ extends
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      *
      * @see DSL#table(Name)
      */
@@ -2488,6 +2520,13 @@ extends
     TableOnStep<Record> straightJoin(TableLike<?> table);
 
     /**
+     * <code>STRAIGHT_JOIN</code> a path to this table.
+     */
+    @NotNull
+    @Support({ MARIADB, MYSQL })
+    TableOptionalOnStep<Record> straightJoin(Path<?> path);
+
+    /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -3170,6 +3209,35 @@ extends
     TableOnStep<R> leftSemiJoin(TableLike<?> table);
 
     /**
+     * A synthetic <code>LEFT SEMI JOIN</code> clause that translates to an
+     * equivalent <code>EXISTS</code> predicate.
+     * <p>
+     * The following two SQL snippets are semantically equivalent:
+     * <pre><code>
+     * -- Using LEFT SEMI JOIN
+     * FROM A
+     *     LEFT SEMI JOIN B
+     *         ON A.ID = B.ID
+     *
+     * -- Using WHERE EXISTS
+     * FROM A
+     * WHERE EXISTS (
+     *     SELECT 1 FROM B WHERE A.ID = B.ID
+     * )
+     * </code></pre>
+     * <p>
+     * Notice that according to
+     * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
+     * algebra's</a> understanding of left semi join, the right hand side of the
+     * left semi join operator is not projected, i.e. it cannot be accessed from
+     * <code>WHERE</code> or <code>SELECT</code> or any other clause than
+     * <code>ON</code>.
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<R> leftSemiJoin(Path<?> path);
+
+    /**
      * A synthetic <code>LEFT ANTI JOIN</code> clause that translates to an
      * equivalent <code>NOT EXISTS</code> predicate.
      * <p>
@@ -3197,6 +3265,35 @@ extends
     @NotNull
     @Support
     TableOnStep<R> leftAntiJoin(TableLike<?> table);
+
+    /**
+     * A synthetic <code>LEFT ANTI JOIN</code> clause that translates to an
+     * equivalent <code>NOT EXISTS</code> predicate.
+     * <p>
+     * The following two SQL snippets are semantically equivalent:
+     * <pre><code>
+     * -- Using LEFT ANTI JOIN
+     * FROM A
+     *     LEFT ANTI JOIN B
+     *         ON A.ID = B.ID
+     *
+     * -- Using WHERE NOT EXISTS
+     * FROM A
+     * WHERE NOT EXISTS (
+     *     SELECT 1 FROM B WHERE A.ID = B.ID
+     * )
+     * </code></pre>
+     * <p>
+     * Notice that according to
+     * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
+     * algebra's</a> understanding of left anti join, the right hand side of the
+     * left anti join operator is not projected, i.e. it cannot be accessed from
+     * <code>WHERE</code> or <code>SELECT</code> or any other clause than
+     * <code>ON</code>.
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<R> leftAntiJoin(Path<?> path);
 
 
 

@@ -167,6 +167,19 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> join(TableLike<?> table);
 
     /**
+     * Convenience method to <code>INNER JOIN</code> a path to the last table
+     * added to the <code>FROM</code> clause using {@link Table#join(Path)}.
+     * <p>
+     * A synonym for {@link #innerJoin(Path)}.
+     *
+     * @see Table#join(Path)
+     * @see #innerJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    SelectOptionalOnStep<R> join(Path<?> path);
+
+    /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
      * added to the <code>FROM</code> clause using {@link Table#join(String)}.
      * <p>
@@ -279,6 +292,16 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     SelectOnStep<R> innerJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>INNER JOIN</code> a path to the last table
+     * added to the <code>FROM</code> clause using {@link Table#join(Path)}.
+     *
+     * @see Table#innerJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    SelectOnStep<R> innerJoin(Path<?> path);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -526,6 +549,20 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinPartitionByStep<R> leftJoin(TableLike<?> table);
 
     /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(Path)}.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(Path)}.
+     *
+     * @see Table#leftOuterJoin(Path)
+     * @see #leftOuterJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    SelectOptionalOnStep<R> leftJoin(Path<?> table);
+
+    /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#leftOuterJoin(String)}.
@@ -642,6 +679,17 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinPartitionByStep<R> leftOuterJoin(TableLike<?> table);
 
     /**
+     * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(Path)}
+     *
+     * @see Table#leftOuterJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    SelectOptionalOnStep<R> leftOuterJoin(Path<?> path);
+
+    /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#leftOuterJoin(String)}
@@ -737,8 +785,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#rightOuterJoin(TableLike)}.
      * <p>
      * A synonym for {@link #rightOuterJoin(TableLike)}.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      *
      * @see Table#rightOuterJoin(TableLike)
      * @see #rightOuterJoin(TableLike)
@@ -748,13 +794,25 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinPartitionByStep<R> rightJoin(TableLike<?> table);
 
     /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(Path)}.
+     * <p>
+     * A synonym for {@link #rightOuterJoin(Path)}.
+     *
+     * @see Table#rightOuterJoin(Path)
+     * @see #rightOuterJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    SelectOptionalOnStep<R> rightJoin(Path<?> path);
+
+    /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(String)}.
      * <p>
      * A synonym for {@link #rightOuterJoin(String)}.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -778,8 +836,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * A synonym for {@link #rightOuterJoin(String)}.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -801,8 +857,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#rightOuterJoin(String, Object...)}.
      * <p>
      * A synonym for {@link #rightOuterJoin(String, Object...)}.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -827,8 +881,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * A synonym for {@link #rightOuterJoin(String, QueryPart...)}.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -851,8 +903,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * {@link Table#rightOuterJoin(Name)}.
      * <p>
      * A synonym for {@link #rightOuterJoin(Name)}.
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      *
      * @see DSL#table(Name)
      * @see Table#rightOuterJoin(Name)
@@ -866,8 +916,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(TableLike)}
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      *
      * @see Table#rightOuterJoin(TableLike)
      */
@@ -876,11 +924,20 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinPartitionByStep<R> rightOuterJoin(TableLike<?> table);
 
     /**
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(Path)}
+     *
+     * @see Table#rightOuterJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    SelectOptionalOnStep<R> rightOuterJoin(Path<?> path);
+
+    /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(String)}
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -901,8 +958,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(String)}
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -921,8 +976,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(String, Object...)}
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -944,8 +997,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(String, QueryPart...)}
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -965,8 +1016,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(Name)}
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      *
      * @see DSL#table(Name)
      * @see Table#rightOuterJoin(Name)
@@ -985,6 +1034,17 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectOnStep<R> fullJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#fullOuterJoin(Path)}.
+     * <p>
+     * A synonym for {@link #fullOuterJoin(Path)}.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    SelectOptionalOnStep<R> fullJoin(Path<?> table);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -1069,8 +1129,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(TableLike)}
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      *
      * @see Table#fullOuterJoin(TableLike)
      */
@@ -1079,11 +1137,20 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> fullOuterJoin(TableLike<?> table);
 
     /**
+     * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#fullOuterJoin(Path)}
+     *
+     * @see Table#fullOuterJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    SelectOptionalOnStep<R> fullOuterJoin(Path<?> table);
+
+    /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(String)}
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1104,8 +1171,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(String)}
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -1124,8 +1189,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(String, Object...)}
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1147,8 +1210,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(String, QueryPart...)}
      * <p>
-     * This is only possible where the underlying RDBMS supports it
-     * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
@@ -1168,8 +1229,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(Name)}
-     * <p>
-     * This is only possible where the underlying RDBMS supports it
      *
      * @see DSL#table(Name)
      * @see Table#fullOuterJoin(Name)
@@ -1690,6 +1749,37 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> leftSemiJoin(TableLike<?> table);
 
     /**
+     * A synthetic <code>LEFT SEMI JOIN</code> clause that translates to an
+     * equivalent <code>EXISTS</code> predicate.
+     * <p>
+     * The following two SQL snippets are semantically equivalent:
+     * <pre><code>
+     * -- Using LEFT SEMI JOIN
+     * FROM A
+     *     LEFT SEMI JOIN B
+     *         ON A.ID = B.ID
+     *
+     * -- Using WHERE EXISTS
+     * FROM A
+     * WHERE EXISTS (
+     *     SELECT 1 FROM B WHERE A.ID = B.ID
+     * )
+     * </code></pre>
+     * <p>
+     * Notice that according to
+     * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
+     * algebra's</a> understanding of left semi join, the right hand side of the
+     * left semi join operator is not projected, i.e. it cannot be accessed from
+     * <code>WHERE</code> or <code>SELECT</code> or any other clause than
+     * <code>ON</code>.
+     *
+     * @see Table#leftSemiJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    SelectOptionalOnStep<R> leftSemiJoin(Path<?> path);
+
+    /**
      * A synthetic <code>LEFT ANTI JOIN</code> clause that translates to an
      * equivalent <code>NOT EXISTS</code> predicate.
      * <p>
@@ -1719,6 +1809,37 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     SelectOnStep<R> leftAntiJoin(TableLike<?> table);
+
+    /**
+     * A synthetic <code>LEFT ANTI JOIN</code> clause that translates to an
+     * equivalent <code>NOT EXISTS</code> predicate.
+     * <p>
+     * The following two SQL snippets are semantically equivalent:
+     * <pre><code>
+     * -- Using LEFT ANTI JOIN
+     * FROM A
+     *     LEFT ANTI JOIN B
+     *         ON A.ID = B.ID
+     *
+     * -- Using WHERE NOT EXISTS
+     * FROM A
+     * WHERE NOT EXISTS (
+     *     SELECT 1 FROM B WHERE A.ID = B.ID
+     * )
+     * </code></pre>
+     * <p>
+     * Notice that according to
+     * <a href="https://en.wikipedia.org/wiki/Relational_algebra">Relational
+     * algebra's</a> understanding of left semi join, the right hand side of the
+     * left semi join operator is not projected, i.e. it cannot be accessed from
+     * <code>WHERE</code> or <code>SELECT</code> or any other clause than
+     * <code>ON</code>.
+     *
+     * @see Table#leftAntiJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    SelectOptionalOnStep<R> leftAntiJoin(Path<?> path);
 
     // -------------------------------------------------------------------------
     // XXX: APPLY clauses on tables
@@ -1910,6 +2031,15 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     SelectOnStep<R> straightJoin(TableLike<?> table);
+
+    /**
+     * <code>STRAIGHT_JOIN</code> a path to this table.
+     *
+     * @see Table#straightJoin(Path)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ MARIADB, MYSQL })
+    SelectOnStep<R> straightJoin(Path<?> table);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.

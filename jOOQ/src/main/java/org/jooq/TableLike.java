@@ -73,7 +73,8 @@ extends
     QueryPart
 permits
     Select,
-    Table
+    Table,
+    Path
 {
 
     /**

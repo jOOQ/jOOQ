@@ -68,6 +68,7 @@ import org.jooq.JoinType;
 import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
+import org.jooq.Path;
 // ...
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPart;
@@ -2242,8 +2243,18 @@ implements
     }
 
     @Override
+    public final SelectImpl join(Path<?> path) {
+        return innerJoin(path);
+    }
+
+    @Override
     public final SelectImpl innerJoin(TableLike<?> table) {
         return join(table, JoinType.JOIN);
+    }
+
+    @Override
+    public final SelectImpl innerJoin(Path<?> path) {
+        return join(path, JoinType.JOIN);
     }
 
     @Override
@@ -2252,8 +2263,18 @@ implements
     }
 
     @Override
+    public final SelectImpl leftJoin(Path<?> path) {
+        return leftOuterJoin(path);
+    }
+
+    @Override
     public final SelectImpl leftOuterJoin(TableLike<?> table) {
         return join(table, JoinType.LEFT_OUTER_JOIN);
+    }
+
+    @Override
+    public final SelectImpl leftOuterJoin(Path<?> path) {
+        return join(path, JoinType.LEFT_OUTER_JOIN);
     }
 
     @Override
@@ -2262,18 +2283,38 @@ implements
     }
 
     @Override
+    public final SelectImpl rightJoin(Path<?> path) {
+        return rightOuterJoin(path);
+    }
+
+    @Override
     public final SelectImpl rightOuterJoin(TableLike<?> table) {
         return join(table, JoinType.RIGHT_OUTER_JOIN);
     }
 
     @Override
-    public final SelectOnStep<R> fullJoin(TableLike<?> table) {
+    public final SelectImpl rightOuterJoin(Path<?> path) {
+        return join(path, JoinType.RIGHT_OUTER_JOIN);
+    }
+
+    @Override
+    public final SelectImpl fullJoin(TableLike<?> table) {
         return fullOuterJoin(table);
+    }
+
+    @Override
+    public final SelectImpl fullJoin(Path<?> path) {
+        return fullOuterJoin(path);
     }
 
     @Override
     public final SelectImpl fullOuterJoin(TableLike<?> table) {
         return join(table, JoinType.FULL_OUTER_JOIN);
+    }
+
+    @Override
+    public final SelectImpl fullOuterJoin(Path<?> path) {
+        return join(path, JoinType.FULL_OUTER_JOIN);
     }
 
     @Override
@@ -2337,8 +2378,18 @@ implements
     }
 
     @Override
+    public final SelectImpl leftSemiJoin(Path<?> path) {
+        return join(path, JoinType.LEFT_SEMI_JOIN);
+    }
+
+    @Override
     public final SelectImpl leftAntiJoin(TableLike<?> table) {
         return join(table, JoinType.LEFT_ANTI_JOIN);
+    }
+
+    @Override
+    public final SelectImpl leftAntiJoin(Path<?> path) {
+        return join(path, JoinType.LEFT_ANTI_JOIN);
     }
 
     @Override
@@ -2354,6 +2405,11 @@ implements
     @Override
     public final SelectImpl straightJoin(TableLike<?> table) {
         return join(table, JoinType.STRAIGHT_JOIN);
+    }
+
+    @Override
+    public final SelectImpl straightJoin(Path<?> path) {
+        return join(path, JoinType.STRAIGHT_JOIN);
     }
 
     @Override

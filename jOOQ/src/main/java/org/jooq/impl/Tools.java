@@ -2065,6 +2065,10 @@ final class Tools {
         else if (value instanceof AbstractRow<?> r)
             return (Field<T>) r.rf();
 
+        // [#15008] Tables can be mixed with values in ROW constructors
+        else if (value instanceof AbstractTable<?> t)
+            return (Field<T>) t.tf();
+
         // [#4771] Any other QueryPart type is not supported here
         else if (value instanceof QueryPart)
             throw fieldExpected(value);

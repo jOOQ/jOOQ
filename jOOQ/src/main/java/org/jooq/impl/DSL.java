@@ -447,6 +447,7 @@ import org.jooq.types.UShort;
 
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Obsolete;
 
 import io.r2dbc.spi.ConnectionFactory;
 
@@ -27265,7 +27266,7 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Collection<? extends Field<?>> fields) {
+    public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Collection<? extends SelectField<?>> fields) {
         return new MultisetAgg<>(false, row(fields));
     }
 
@@ -27305,6 +27306,16 @@ public class DSL {
      * The emulation to be chosen is governed by
      * {@link Settings#getEmulateMultiset()}.
      */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static ArrayAggOrderByStep<Result<Record>> multisetAgg(SelectField<?>... fields) {
+        return new MultisetAgg<>(false, row(fields));
+    }
+
+    /**
+     * @see #multisetAgg(SelectField...)
+     */
+    @Obsolete
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static ArrayAggOrderByStep<Result<Record>> multisetAgg(Field<?>... fields) {

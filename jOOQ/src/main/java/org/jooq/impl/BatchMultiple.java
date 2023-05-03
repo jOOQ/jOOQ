@@ -38,6 +38,8 @@
 package org.jooq.impl;
 
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.jooq.Configuration;
@@ -85,7 +87,12 @@ final class BatchMultiple extends AbstractBatch {
 
     @Override
     public final int[] execute() {
-        return execute(Tools.configuration(configuration), queries);
+        return
+        Tools.chunks(Arrays.asList(queries), SettingsTools.getBatchSize(Tools.settings(configuration)))
+             .stream()
+             .map(chunk -> execute(Tools.configuration(configuration), chunk.toArray(Tools.EMPTY_QUERY)))
+             .flatMapToInt(IntStream::of)
+             .toArray();
     }
 
     static int[] execute(Configuration configuration, Query[] queries) {

@@ -258,6 +258,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                         node = node.pathsToOne.computeIfAbsent(t.childPath, k -> new JoinNode(configuration(), t));
                     else
                         node = node.pathsToMany.computeIfAbsent(t.parentPath, k -> new JoinNode(configuration(), t));
+
+                    if (i == 0)
+                        node.references++;
                 }
             }
             else if (forceNew)

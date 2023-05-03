@@ -1181,6 +1181,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         final Table<?>                               table;
         final Map<ForeignKey<?, ?>, JoinNode>        pathsToOne;
         final Map<InverseForeignKey<?, ?>, JoinNode> pathsToMany;
+        int                                          references;
 
         JoinNode(Configuration configuration, Table<?> table) {
             this.configuration = configuration;
@@ -1193,53 +1194,66 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             Table<?> result = table;
 
             for (Entry<ForeignKey<?, ?>, JoinNode> e : pathsToOne.entrySet()) {
-                JoinType type;
-
-                switch (defaultIfNull(Tools.settings(configuration).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT)) {
-                    case INNER_JOIN:
-                        type = JOIN;
-                        break;
-                    case LEFT_JOIN:
-                        type = LEFT_OUTER_JOIN;
-                        break;
-                    case DEFAULT:
-                    default:
-                        type = e.getKey().nullable() ? LEFT_OUTER_JOIN : JOIN;
-                        break;
-                }
-
-                // [#14985] Once explicit join paths stabilise, it should be possible
-                //          to omit the ON clause here, and have it generated in JoinTable
                 Table<?> t = e.getValue().joinTree();
-                result = result
-                    .join(t, type)
-                    .on(onKey0(e.getKey(), result, t));
+
+                // [#14992] Eliminate to-one -> to-many hops if there are no projection references
+                if (skippable(e.getKey(), e.getValue()))
+
+                    // [#14992] TODO: Currently, skippable JoinNodes have no outgoing to-one
+                    //          relationships, but that might change in the future.
+                    result = appendToManyPaths(result, e.getValue());
+                else
+                    result = result
+                        .join(t, joinType(e.getKey().nullable() ? LEFT_OUTER_JOIN : JOIN))
+                        .on(onKey0(e.getKey(), result, t));
             }
 
-            for (Entry<InverseForeignKey<?, ?>, JoinNode> e : pathsToMany.entrySet()) {
-                JoinType type;
+            return appendToManyPaths(result, this);
+        }
 
-                switch (defaultIfNull(Tools.settings(configuration).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT)) {
-                    case INNER_JOIN:
-                        type = JOIN;
-                        break;
-                    case LEFT_JOIN:
-                    case DEFAULT:
-                    default:
-                        type = LEFT_OUTER_JOIN;
-                        break;
-                }
-
+        private static final Table<?> appendToManyPaths(Table<?> result, JoinNode node) {
+            for (Entry<InverseForeignKey<?, ?>, JoinNode> e : node.pathsToMany.entrySet()) {
                 Table<?> t = e.getValue().joinTree();
+
                 result = result
-                    .join(t, type)
+                    .join(t, node.joinType(LEFT_OUTER_JOIN))
                     .on(onKey0(e.getKey().getForeignKey(), t, result));
             }
 
             return result;
         }
 
-        boolean hasJoinPaths() {
+        private final boolean skippable(ForeignKey<?, ?> fk, JoinNode node) {
+            if (node.references == 0) {
+
+                // [#14992] TODO: Do this for to-one paths as well, if that exists?
+                if (!node.pathsToOne.isEmpty())
+                    return false;
+
+                for (Entry<InverseForeignKey<?, ?>, JoinNode> path : node.pathsToMany.entrySet()) {
+                    if (!fk.getKeyFields().equals(path.getKey().getFields()))
+                        return false;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private final JoinType joinType(JoinType onDefault) {
+            switch (defaultIfNull(Tools.settings(configuration).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT)) {
+                case INNER_JOIN:
+                    return JOIN;
+                case LEFT_JOIN:
+                    return LEFT_OUTER_JOIN;
+                case DEFAULT:
+                default:
+                    return onDefault;
+            }
+        }
+
+        final boolean hasJoinPaths() {
             return !pathsToOne.isEmpty() || !pathsToMany.isEmpty();
         }
 

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -2254,7 +2255,7 @@ implements
 
     @Override
     public final SelectImpl innerJoin(Path<?> path) {
-        return join(path, JoinType.JOIN);
+        return join(path, JoinType.JOIN).on(noCondition());
     }
 
     @Override
@@ -2274,7 +2275,7 @@ implements
 
     @Override
     public final SelectImpl leftOuterJoin(Path<?> path) {
-        return join(path, JoinType.LEFT_OUTER_JOIN);
+        return join(path, JoinType.LEFT_OUTER_JOIN).on(noCondition());
     }
 
     @Override
@@ -2294,7 +2295,7 @@ implements
 
     @Override
     public final SelectImpl rightOuterJoin(Path<?> path) {
-        return join(path, JoinType.RIGHT_OUTER_JOIN);
+        return join(path, JoinType.RIGHT_OUTER_JOIN).on(noCondition());
     }
 
     @Override
@@ -2314,7 +2315,7 @@ implements
 
     @Override
     public final SelectImpl fullOuterJoin(Path<?> path) {
-        return join(path, JoinType.FULL_OUTER_JOIN);
+        return join(path, JoinType.FULL_OUTER_JOIN).on(noCondition());
     }
 
     @Override
@@ -2379,7 +2380,7 @@ implements
 
     @Override
     public final SelectImpl leftSemiJoin(Path<?> path) {
-        return join(path, JoinType.LEFT_SEMI_JOIN);
+        return join(path, JoinType.LEFT_SEMI_JOIN).on(noCondition());
     }
 
     @Override
@@ -2389,7 +2390,7 @@ implements
 
     @Override
     public final SelectImpl leftAntiJoin(Path<?> path) {
-        return join(path, JoinType.LEFT_ANTI_JOIN);
+        return join(path, JoinType.LEFT_ANTI_JOIN).on(noCondition());
     }
 
     @Override
@@ -2409,7 +2410,7 @@ implements
 
     @Override
     public final SelectImpl straightJoin(Path<?> path) {
-        return join(path, JoinType.STRAIGHT_JOIN);
+        return join(path, JoinType.STRAIGHT_JOIN).on(noCondition());
     }
 
     @Override

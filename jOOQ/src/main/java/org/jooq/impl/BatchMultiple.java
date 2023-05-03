@@ -106,6 +106,11 @@ final class BatchMultiple extends AbstractBatch {
             if (ctx.statement() == null)
                 ctx.statement(new SettingsEnabledPreparedStatement(ctx.connection()));
 
+            // [#9295] use query timeout from settings
+            int t = SettingsTools.getQueryTimeout(0, ctx.settings());
+            if (t != 0)
+                ctx.statement().setQueryTimeout(t);
+
             String[] batchSQL = ctx.batchSQL();
             for (int i = 0; i < ctx.batchQueries().length; i++) {
                 ctx.sql(null);
@@ -121,11 +126,6 @@ final class BatchMultiple extends AbstractBatch {
                 ctx.statement().addBatch(batchSQL[i]);
                 listener.prepareEnd(ctx);
             }
-
-            // [#9295] use query timeout from settings
-            int t = SettingsTools.getQueryTimeout(0, ctx.settings());
-            if (t != 0)
-                ctx.statement().setQueryTimeout(t);
 
             listener.executeStart(ctx);
 

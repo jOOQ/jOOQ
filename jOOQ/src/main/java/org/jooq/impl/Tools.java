@@ -2321,6 +2321,50 @@ final class Tools {
         return DSL.and(map(fields, Field::isNotNull));
     }
 
+    static final <T> List<List<T>> chunks(List<T> list, int size) {
+        int l;
+
+        if (size <= 0 || size == Integer.MAX_VALUE || (l = list.size()) <= size)
+            return asList(list);
+
+        List<List<T>> result = new ArrayList<>();
+        int prev = 0, next = size;
+        while (prev < l) {
+            result.add(list.subList(prev, Math.min(next, l)));
+            prev = next;
+            next = next += size;
+        }
+
+        return result;
+    }
+
+    /**
+     * "sneaky-throw" a checked exception or throwable.
+     */
+    static final void throwChecked(Throwable t) {
+        Tools.<RuntimeException>throwChecked0(t);
+    }
+
+    /**
+     * "sneaky-throw" a checked exception or throwable.
+     */
+    @SuppressWarnings("unchecked")
+    static final <E extends Throwable> void throwChecked0(Throwable throwable) throws E {
+        throw (E) throwable;
+    }
+
+    static final <T, R> Function<T, R> checkedFunction(ThrowingFunction<T, R, Throwable> function) {
+        return t -> {
+            try {
+                return function.apply(t);
+            }
+            catch (Throwable e) {
+                throwChecked(e);
+                throw new IllegalStateException(e);
+            }
+        };
+    }
+
     /**
      * Like <code>Stream.of(array).map(mapper).toArray(constructor)</code> but
      * without the entire stream pipeline.

@@ -39,26 +39,29 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
+import static org.jooq.conf.SettingsTools.getBatchSize;
+import static org.jooq.impl.Tools.checkedFunction;
+import static org.jooq.impl.Tools.chunks;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitAll;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.IntStream;
 
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
-import org.jooq.ExecuteContext;
+import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
-import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.impl.R2DBC.BatchSingleSubscriber;
@@ -231,16 +234,27 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
                 return result;
             }
             else {
-                for (Object[] bindValues : allBindValues) {
-                    setBindValues(ctx, listener, params, bindValues);
-                    ctx.statement().addBatch();
-                }
+                AtomicBoolean reset = new AtomicBoolean();
+                return chunks(allBindValues, getBatchSize(ctx.settings()))
+                    .stream()
+                    .map(checkedFunction(chunk -> {
+                        if (reset.get())
+                            ctx.statement().clearBatch();
 
-                listener.executeStart(ctx);
-                int[] result = ctx.statement().executeBatch();
-                setBatchRows(ctx, result);
-                listener.executeEnd(ctx);
-                return result;
+                        for (Object[] bindValues : chunk) {
+                            setBindValues(ctx, listener, params, bindValues);
+                            ctx.statement().addBatch();
+                        }
+
+                        listener.executeStart(ctx);
+                        int[] result = ctx.statement().executeBatch();
+                        setBatchRows(ctx, result);
+                        listener.executeEnd(ctx);
+                        reset.set(true);
+                        return result;
+                    }))
+                    .flatMapToInt(IntStream::of)
+                    .toArray();
             }
         }
 

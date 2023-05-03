@@ -107,7 +107,7 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 abstract class AbstractInList<T> extends AbstractCondition {
 
-    static final Set<SQLDialect>  REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>  REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(DERBY, FIREBIRD);
     static final Set<SQLDialect>  NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB);
 
     final Field<T>                field;
@@ -187,6 +187,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
             switch (ctx.family()) {
+                case DERBY:
 
 
 
@@ -218,7 +219,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
 
                 // Most dialects can handle larger lists
                 default: {
-                    toSQLSubValues(ctx, field, in, values);
+                    toSQLSubValues(ctx, field, in, padded(ctx, values, limit));
                     break;
                 }
             }

@@ -2127,38 +2127,52 @@ implements
     @Override
     public final SelectImpl on(Condition conditions) {
         conditionStep = ConditionStep.ON;
-        joinConditions = new ConditionProviderImpl();
-        joinConditions.addConditions(conditions);
+
+        if (joinTable == null) {
+            joinConditions.addConditions(conditions);
+        }
+        else {
+            joinConditions = new ConditionProviderImpl();
+            joinConditions.addConditions(conditions);
 
 
 
 
 
 
-            getQuery().addJoin(joinTable, joinType, joinConditions);
+                getQuery().addJoin(joinTable, joinType, joinConditions);
 
-        joinTable = null;
-        joinPartitionBy = null;
-        joinType = null;
+            joinTable = null;
+            joinPartitionBy = null;
+            joinType = null;
+        }
+
         return this;
     }
 
     @Override
     public final SelectImpl on(Condition... conditions) {
         conditionStep = ConditionStep.ON;
-        joinConditions = new ConditionProviderImpl();
-        joinConditions.addConditions(conditions);
+
+        if (joinTable == null) {
+            joinConditions.addConditions(conditions);
+        }
+        else {
+            joinConditions = new ConditionProviderImpl();
+            joinConditions.addConditions(conditions);
 
 
 
 
 
 
-            getQuery().addJoin(joinTable, joinType, new Condition[] { joinConditions });
+                getQuery().addJoin(joinTable, joinType, new Condition[] { joinConditions });
 
-        joinTable = null;
-        joinPartitionBy = null;
-        joinType = null;
+            joinTable = null;
+            joinPartitionBy = null;
+            joinType = null;
+        }
+
         return this;
     }
 
@@ -2190,38 +2204,49 @@ implements
     @Override
     public final SelectImpl onKey() {
         conditionStep = ConditionStep.ON;
-        getQuery().addJoinOnKey(joinTable, joinType);
 
-        joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
-        joinTable = null;
-        joinPartitionBy = null;
-        joinType = null;
+        if (joinTable != null) {
+            getQuery().addJoinOnKey(joinTable, joinType);
+
+            joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
+            joinTable = null;
+            joinPartitionBy = null;
+            joinType = null;
+        }
+
         return this;
     }
 
     @Override
     public final SelectImpl onKey(TableField<?, ?>... keyFields) {
         conditionStep = ConditionStep.ON;
-        getQuery().addJoinOnKey(joinTable, joinType, keyFields);
 
-        joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
-        joinTable = null;
-        joinPartitionBy = null;
-        joinType = null;
+        if (joinTable != null) {
+            getQuery().addJoinOnKey(joinTable, joinType, keyFields);
+
+            joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
+            joinTable = null;
+            joinPartitionBy = null;
+            joinType = null;
+        }
+
         return this;
     }
 
     @Override
     public final SelectImpl onKey(ForeignKey<?, ?> key) {
         conditionStep = ConditionStep.ON;
-        getQuery().addJoinOnKey(joinTable, joinType, key);
 
-        joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
-        joinTable = null;
-        joinPartitionBy = null;
-        joinType = null;
+        if (joinTable != null) {
+            getQuery().addJoinOnKey(joinTable, joinType, key);
+
+            joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
+            joinTable = null;
+            joinPartitionBy = null;
+            joinType = null;
+        }
+
         return this;
-
     }
 
     @Override
@@ -2231,10 +2256,13 @@ implements
 
     @Override
     public final SelectImpl using(Collection<? extends Field<?>> fields) {
-        getQuery().addJoinUsing(joinTable, joinType, fields);
-        joinTable = null;
-        joinPartitionBy = null;
-        joinType = null;
+        if (joinTable != null) {
+            getQuery().addJoinUsing(joinTable, joinType, fields);
+            joinTable = null;
+            joinPartitionBy = null;
+            joinType = null;
+        }
+
         return this;
     }
 

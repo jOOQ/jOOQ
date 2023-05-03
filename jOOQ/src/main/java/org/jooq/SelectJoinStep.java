@@ -301,7 +301,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectOnStep<R> innerJoin(Path<?> path);
+    SelectOptionalOnStep<R> innerJoin(Path<?> path);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table

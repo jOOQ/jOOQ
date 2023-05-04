@@ -86,7 +86,6 @@ extends
 implements
     TableField<R, T>,
     SimpleQueryPart,
-    UNotYetImplemented,
     TypedReference<T>,
     ScopeMappable
 {
@@ -216,6 +215,25 @@ implements
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ------------------------------------------------------------------------
     // XXX: Object API

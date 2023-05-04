@@ -108,6 +108,7 @@ import org.jooq.GeneratorStatementType;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
+// ...
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
@@ -392,10 +393,6 @@ extends
         else
             return super.put(key, value);
     }
-
-
-
-
 
 
 

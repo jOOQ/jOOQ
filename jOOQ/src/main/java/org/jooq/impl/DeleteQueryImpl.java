@@ -74,11 +74,14 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
+// ...
 import static org.jooq.conf.SettingsTools.getExecuteDeleteWithoutWhere;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.Internal.hash;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
@@ -90,6 +93,7 @@ import static org.jooq.impl.Tools.traverseJoins;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -109,7 +113,9 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.SortField;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
+// ...
 // ...
 import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.Delete;
@@ -126,17 +132,19 @@ implements
     QOM.Delete<R>
 {
 
-    private static final Clause[]        CLAUSES                         = { DELETE };
-    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX        = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Clause[]        CLAUSES                          = { DELETE };
+    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX         = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     // LIMIT is not supported at all
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                = SQLDialect.supportedUntil(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                 = SQLDialect.supportedUntil(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
 
     // LIMIT is supported but not ORDER BY
-    private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT       = SQLDialect.supportedBy(IGNITE);
-    private static final Set<SQLDialect> SUPPORT_MULTITABLE_DELETE       = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> REQUIRE_REPEAT_FROM_IN_USING    = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> NO_SUPPORT_REPEAT_FROM_IN_USING = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT        = SQLDialect.supportedBy(IGNITE);
+    private static final Set<SQLDialect> SUPPORT_MULTITABLE_DELETE        = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> REQUIRE_REPEAT_FROM_IN_USING     = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_REPEAT_FROM_IN_USING  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+
+
 
 
 
@@ -269,9 +277,12 @@ implements
             ctx.visit(K_FROM).sql(' ').declareTables(!specialDeleteAsSyntax, c -> c.visit(t));
 
         // [#11925] In MySQL, the tables in FROM must be repeated in USING
-        if (!using.isEmpty() || multiTableJoin || specialDeleteAsSyntax && Tools.alias(t) != null) {
-            TableList u;
+        boolean hasUsing = !using.isEmpty() || multiTableJoin || specialDeleteAsSyntax && Tools.alias(t) != null;
 
+        // [#14011] Additional predicates that are added for various reasons
+        Condition moreWhere = noCondition();
+        if (hasUsing) {
+            TableList u;
 
             if (REQUIRE_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && !containsDeclaredTable(using, t)) {
                 u = new TableList(t);
@@ -284,10 +295,38 @@ implements
             else
                 u = using;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            TableList u0 = u;
             ctx.formatSeparator()
                .visit(K_USING)
                .sql(' ')
-               .declareTables(true, c -> c.visit(u));
+               .declareTables(true, c -> c.visit(u0));
         }
 
         ctx.end(DELETE_DELETE);
@@ -297,6 +336,13 @@ implements
 
 
         boolean noSupportParametersInWhere = false;
+
+
+
+
+
+
+        Condition where = DSL.and(getWhere(), moreWhere);
 
         if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
             Field<?>[] keyFields =
@@ -311,10 +357,11 @@ implements
                .visit(K_WHERE).sql(' ');
 
             ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
-                if (keyFields.length == 1)
-                    c.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
+                if (keyFields.length == 1) {
+                    c.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(where).orderBy(orderBy).limit(limit)));
+                }
                 else
-                    c.visit(row(keyFields).in(select(keyFields).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
+                    c.visit(row(keyFields).in(select(keyFields).from(table()).where(where).orderBy(orderBy).limit(limit)));
             });
 
             ctx.end(DELETE_WHERE);
@@ -322,18 +369,12 @@ implements
         else {
             ctx.start(DELETE_WHERE);
 
-            if (hasWhere())
+            if (!(where instanceof NoCondition))
                 ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c ->
                     c.formatSeparator()
                        .visit(K_WHERE).sql(' ')
-                       .visit(getWhere())
+                       .visit(where)
                 );
-
-
-
-
-
-
 
             ctx.end(DELETE_WHERE);
 

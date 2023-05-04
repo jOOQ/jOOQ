@@ -26251,25 +26251,10 @@ public class DSL {
 
 
 
-
-
-
-
-
-
     /**
      * Create a GROUPING(field) aggregation field to be used along with
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
      * groupings.
-     * <p>
-     * This has been observed to work with the following databases:
-     * <ul>
-     * <li>DB2</li>
-     * <li>Oracle</li>
-     * <li>PostgreSQL 9.5</li>
-     * <li>SQL Server</li>
-     * <li>Sybase SQL Anywhere</li>
-     * </ul>
      *
      * @param field The function argument
      * @return The <code>GROUPING</code> aggregation field

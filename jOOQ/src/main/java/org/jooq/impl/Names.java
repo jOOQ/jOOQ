@@ -202,7 +202,6 @@ final class Names {
     static final Name N_OBJECT_CONSTRUCT            = systemName("object_construct");
     static final Name N_OBJECT_CONSTRUCT_KEEP_NULL  = systemName("object_construct_keep_null");
     static final Name N_OFFSET                      = systemName("offset");
-    static final Name N_OPAQUE                      = systemName("opaque");
     static final Name N_OPENJSON                    = systemName("openjson");
     static final Name N_OPENXML                     = systemName("openxml");
     static final Name N_ORDINAL                     = systemName("ordinal");

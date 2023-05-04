@@ -50,10 +50,8 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Name;
-import org.jooq.QueryPart;
-// ...
 import org.jooq.Schema;
-// ...
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -64,7 +62,15 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class CatalogImpl extends AbstractNamed implements Catalog, SimpleQueryPart {
+public class CatalogImpl
+extends
+    AbstractNamed
+implements
+    Catalog,
+    SimpleQueryPart,
+    UEmpty
+{
+
     private static final Clause[] CLAUSES          = { CATALOG, CATALOG_REFERENCE };
     static final Catalog          DEFAULT_CATALOG  = new CatalogImpl("");
 
@@ -119,24 +125,6 @@ public class CatalogImpl extends AbstractNamed implements Catalog, SimpleQueryPa
     public final Stream<Schema> schemaStream() {
         return getSchemas().stream();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // ------------------------------------------------------------------------
     // XXX: Object API

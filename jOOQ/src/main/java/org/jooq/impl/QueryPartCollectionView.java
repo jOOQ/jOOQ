@@ -59,12 +59,15 @@ import java.util.function.Predicate;
 
 import org.jooq.Condition;
 import org.jooq.Context;
+import org.jooq.Function0;
 import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 // ...
 // ...
 import org.jooq.impl.QOM.UnmodifiableCollection;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like

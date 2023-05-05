@@ -5866,8 +5866,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super(dataType, converter);
         }
 
-        // setNull0
-
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, YearToMonth value) throws SQLException {
 

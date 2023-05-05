@@ -66,6 +66,7 @@ import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Year;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -964,6 +965,8 @@ final class R2DBC {
                 return LocalTime.class;
             else if (type == Timestamp.class)
                 return LocalDateTime.class;
+            else if (type == Year.class)
+                return Integer.class;
             else if (type == XML.class)
                 return String.class;
             else if (type == JSON.class)

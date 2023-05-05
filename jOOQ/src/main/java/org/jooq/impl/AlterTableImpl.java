@@ -1469,6 +1469,7 @@ implements
 
 
 
+
                 case TRINO:
                     ctx.visit(K_ALTER_COLUMN);
                     break;
@@ -1742,6 +1743,7 @@ implements
 
     private final void acceptDropColumn(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 

@@ -2332,7 +2332,7 @@ final class Tools {
         while (prev < l) {
             result.add(list.subList(prev, Math.min(next, l)));
             prev = next;
-            next = next += size;
+            next += size;
         }
 
         return result;

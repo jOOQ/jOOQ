@@ -560,7 +560,7 @@ implements
         }
 
         // [#14985] Path joins additional conditions
-        else if ((TableImpl.path(lhs) != null || TableImpl.path(lhs) != null)
+        else if ((TableImpl.path(lhs) != null || TableImpl.path(rhs) != null)
 
             // Do this only if we're *not* rendering implicit joins, in case of which join paths
             // are expected, and their predicates are already present.

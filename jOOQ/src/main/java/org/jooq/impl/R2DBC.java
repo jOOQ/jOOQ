@@ -67,6 +67,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -107,6 +108,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.DefaultResultSet;
 import org.jooq.tools.jdbc.MockArray;
+import org.jooq.types.Interval;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
@@ -120,6 +122,7 @@ import io.r2dbc.spi.ConnectionFactoryOptions;
 import io.r2dbc.spi.ConnectionFactoryOptions.Builder;
 import io.r2dbc.spi.Result.RowSegment;
 import io.r2dbc.spi.Option;
+import io.r2dbc.spi.R2dbcException;
 import io.r2dbc.spi.Result;
 import io.r2dbc.spi.Row;
 import io.r2dbc.spi.RowMetadata;
@@ -846,6 +849,40 @@ final class R2DBC {
     // JDBC to R2DBC bridges for better interop, where it doesn't matter
     // -------------------------------------------------------------------------
 
+    static final class R2DBCGenericException extends R2dbcException {
+        R2DBCGenericException(Throwable cause) {
+            super(cause);
+        }
+    }
+
+    static final void wrapExceptions(Runnable runnable) {
+        try {
+            runnable.run();
+        }
+        catch (R2dbcException e) {
+            throw e;
+        }
+
+        // [#15028] Wrap IllegalArgumentException or NoSuchElementException in a more traceable exception
+        catch (Exception e) {
+            throw new R2DBCGenericException(e);
+        }
+    }
+
+    static final <T> T wrapExceptions(Callable<T> callable) {
+        try {
+            return callable.call();
+        }
+        catch (R2dbcException e) {
+            throw e;
+        }
+
+        // [#15028] Wrap IllegalArgumentException or NoSuchElementException in a more traceable exception
+        catch (Exception e) {
+            throw new R2DBCGenericException(e);
+        }
+    }
+
     static final class R2DBCPreparedStatement extends DefaultPreparedStatement {
 
         final Configuration c;
@@ -859,7 +896,8 @@ final class R2DBC {
         }
 
         private final void bindNonNull(int parameterIndex, Object x) {
-            switch (c.family()) {
+            wrapExceptions(() -> {
+                switch (c.family()) {
 
 
 
@@ -867,14 +905,16 @@ final class R2DBC {
 
 
 
-                default:
-                    s.bind(parameterIndex - 1, x);
-                    break;
-            }
+                    default:
+                        s.bind(parameterIndex - 1, x);
+                        break;
+                }
+            });
         }
 
         private final <T> void bindNull(int parameterIndex, Class<T> type) {
-            switch (c.family()) {
+            wrapExceptions(() -> {
+                switch (c.family()) {
 
 
 
@@ -882,10 +922,11 @@ final class R2DBC {
 
 
 
-                default:
-                    s.bindNull(parameterIndex - 1, type);
-                    break;
-            }
+                    default:
+                        s.bindNull(parameterIndex - 1, type);
+                        break;
+                }
+            });
         }
 
         private final <T> void bindNullable(int parameterIndex, T x, Class<T> type) {
@@ -930,6 +971,8 @@ final class R2DBC {
             else if (type == JSONB.class)
                 return String.class;
             else if (Enum.class.isAssignableFrom(type))
+                return String.class;
+            else if (Interval.class.isAssignableFrom(type))
                 return String.class;
 
 
@@ -1104,18 +1147,24 @@ final class R2DBC {
         }
 
         private final <T, U> U nullable(int columnIndex, Class<T> type, Function<? super T, ? extends U> conversion) {
-            T t = wasNull(r.get(columnIndex - 1, type));
-            return wasNull ? null : conversion.apply(t);
+            return wrapExceptions(() -> {
+                T t = wasNull(r.get(columnIndex - 1, type));
+                return wasNull ? null : conversion.apply(t);
+            });
         }
 
         private final <U> U nullable(int columnIndex, Function<? super Object, ? extends U> conversion) {
-            Object t = wasNull(r.get(columnIndex - 1));
-            return wasNull ? null : conversion.apply(t);
+            return wrapExceptions(() -> {
+                Object t = wasNull(r.get(columnIndex - 1));
+                return wasNull ? null : conversion.apply(t);
+            });
         }
 
         private final <T> T nonNull(int columnIndex, Class<T> type, T nullValue) {
-            T t = wasNull(r.get(columnIndex - 1, type));
-            return wasNull ? nullValue : t;
+            return wrapExceptions(() -> {
+                T t = wasNull(r.get(columnIndex - 1, type));
+                return wasNull ? nullValue : t;
+            });
         }
 
         @Override
@@ -1223,26 +1272,30 @@ final class R2DBC {
 
             @Override
             public final <T> T get(int index, Class<T> uType) {
-                switch (c.family()) {
-                    case H2:
-                    case MYSQL:
-                        return get0(r.get(index), uType);
+                return wrapExceptions(() -> {
+                    switch (c.family()) {
+                        case H2:
+                        case MYSQL:
+                            return get0(r.get(index), uType);
 
-                    default:
-                        return r.get(index, uType);
-                }
+                        default:
+                            return r.get(index, uType);
+                    }
+                });
             }
 
             @Override
             public final <T> T get(String name, Class<T> uType) {
-                switch (c.family()) {
-                    case H2:
-                    case MYSQL:
-                        return get0(r.get(name), uType);
+                return wrapExceptions(() -> {
+                    switch (c.family()) {
+                        case H2:
+                        case MYSQL:
+                            return get0(r.get(name), uType);
 
-                    default:
-                        return r.get(name, uType);
-                }
+                        default:
+                            return r.get(name, uType);
+                    }
+                });
             }
 
             @SuppressWarnings("unchecked")

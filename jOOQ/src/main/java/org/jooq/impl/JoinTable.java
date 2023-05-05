@@ -560,14 +560,15 @@ implements
         }
 
         // [#14985] Path joins additional conditions
-        else if (TableImpl.path(rhs) != null
+        else if ((TableImpl.path(lhs) != null || TableImpl.path(lhs) != null)
 
             // Do this only if we're *not* rendering implicit joins, in case of which join paths
             // are expected, and their predicates are already present.
             && ctx.data(DATA_RENDER_IMPLICIT_JOIN) == null
         ) {
             toSQLJoinCondition(ctx, DSL.and(
-                ((TableImpl<?>) rhs).pathCondition(),
+                lhs instanceof TableImpl<?> ti ? ti.pathCondition() : noCondition(),
+                rhs instanceof TableImpl<?> ti ? ti.pathCondition() : noCondition(),
                 condition.getWhere()
             ));
         }

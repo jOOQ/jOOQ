@@ -3930,7 +3930,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("return literal;");
             out.println("}");
 
-            out.javadoc("Lookup a value of this EnumType by its literal");
+            out.javadoc("Lookup a value of this EnumType by its literal. Returns <code>null</code>, if no such value could be found, {@see %s#lookupLiteral(Class, String)}.", EnumType.class);
+            printNullableAnnotation(out);
             out.println("%sstatic %s lookupLiteral(%s literal) {", visibilityPublic(), className, String.class);
             out.println("return %s.lookupLiteral(%s.class, literal);", EnumType.class, className);
             out.println("}");

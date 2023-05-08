@@ -49,7 +49,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_RENDER_TABLE;
 import static org.jooq.impl.UpdateQueryImpl.NO_SUPPORT_UPDATE_JOIN;
 
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -61,19 +60,14 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
-import org.jooq.QueryPart;
 import org.jooq.Record;
-// ...
 import org.jooq.RowId;
 import org.jooq.Table;
 import org.jooq.TableField;
-// ...
 import org.jooq.Update;
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base type for table fields.
@@ -86,9 +80,9 @@ extends
 implements
     TableField<R, T>,
     SimpleQueryPart,
-    UNotYetImplemented,
     TypedReference<T>,
-    ScopeMappable
+    ScopeMappable,
+    UEmpty
 {
 
     private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };

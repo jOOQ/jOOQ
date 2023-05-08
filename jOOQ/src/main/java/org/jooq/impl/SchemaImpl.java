@@ -59,14 +59,12 @@ import org.jooq.Domain;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
-import org.jooq.QueryPart;
-// ...
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
-// ...
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -77,7 +75,14 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class SchemaImpl extends AbstractNamed implements Schema, SimpleQueryPart {
+public class SchemaImpl
+extends
+    AbstractNamed
+implements
+    Schema,
+    SimpleQueryPart,
+    UEmpty
+{
 
     private static final Clause[] CLAUSES        = { SCHEMA, SCHEMA_REFERENCE };
     static final Lazy<Schema>     DEFAULT_SCHEMA = Lazy.of(() -> new SchemaImpl(""));
@@ -343,24 +348,6 @@ public class SchemaImpl extends AbstractNamed implements Schema, SimpleQueryPart
     public final Stream<Sequence<?>> sequenceStream() {
         return getSequences().stream();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // ------------------------------------------------------------------------
     // XXX: Object API

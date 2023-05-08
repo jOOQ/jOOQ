@@ -89,6 +89,7 @@ import org.jooq.TableLike;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
 // ...
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
 
@@ -109,7 +110,7 @@ implements
     ScopeMappable,
     ScopeNestable,
     SimpleCheckQueryPart,
-    UNotYetImplemented
+    UEmpty
 {
 
     private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
@@ -563,16 +564,6 @@ implements
     public <T> Field<T> field(Name name, DataType<T> dataType) {
         return super.field(name, dataType);
     }
-
-
-
-
-
-
-
-
-
-
 
 
 

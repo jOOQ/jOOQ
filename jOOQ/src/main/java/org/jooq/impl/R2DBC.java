@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.ContextConverter.scoped;
 import static org.jooq.conf.ParamType.NAMED;
@@ -959,7 +960,7 @@ final class R2DBC {
             }
         }
 
-        private static final Set<SQLDialect> NO_SUPPORT_UUID = SQLDialect.supportedBy(MARIADB);
+        private static final Set<SQLDialect> NO_SUPPORT_UUID = SQLDialect.supportedBy(MARIADB, MYSQL);
 
         private final Class<?> nullType(Class<?> type) {
 

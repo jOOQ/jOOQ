@@ -72,6 +72,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -5659,6 +5660,7 @@ final class Tools {
     }
 
     private static final Set<SQLDialect> REQUIRE_IDENTITY_AFTER_NULL = SQLDialect.supportedBy(H2, MARIADB, MYSQL);
+    private static final Set<SQLDialect> SUPPORT_PG_IDENTITY         = SQLDialect.supportedBy(POSTGRES);
 
     /**
      * If a type is an identity type, some dialects require the relevant
@@ -5684,15 +5686,9 @@ final class Tools {
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
                 case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
                 case POSTGRES:
-                    switch (ctx.dialect()) {
+                    if (SUPPORT_PG_IDENTITY.contains(ctx.dialect()))
+                        ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
 
-
-
-
-
-                        case POSTGRES:
-                                ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
-                    }
                     break;
 
 

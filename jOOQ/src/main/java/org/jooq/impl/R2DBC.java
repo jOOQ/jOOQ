@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.Internal.subscriber;
@@ -65,6 +66,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Properties;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -935,6 +938,8 @@ final class R2DBC {
             }
         }
 
+        private static final Set<SQLDialect> NO_SUPPORT_UUID = SQLDialect.supportedBy(MARIADB);
+
         private final Class<?> nullType(Class<?> type) {
 
             // [#11700] Intercept JDBC temporal types, which aren't supported by R2DBC
@@ -949,6 +954,8 @@ final class R2DBC {
             else if (type == JSON.class)
                 return String.class;
             else if (type == JSONB.class)
+                return String.class;
+            else if (type == UUID.class && NO_SUPPORT_UUID.contains(c.dialect()))
                 return String.class;
             else if (Enum.class.isAssignableFrom(type))
                 return String.class;

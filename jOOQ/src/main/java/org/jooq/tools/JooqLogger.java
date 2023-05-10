@@ -37,6 +37,8 @@
  */
 package org.jooq.tools;
 
+import static java.util.Arrays.asList;
+
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.SimpleFormatter;
 
@@ -63,10 +65,7 @@ public final class JooqLogger implements Log {
     private static volatile Log.Level globalThreshold = Log.Level.TRACE;
     private org.slf4j.Logger          slf4j;
     private java.util.logging.Logger  util;
-    private boolean                   supportsTrace   = true;
-    private boolean                   supportsDebug   = true;
-    private boolean                   supportsInfo    = true;
-    private boolean                   supportsWarn    = true;
+    private volatile Log.Level        threshold       = Log.Level.TRACE;
     private final AtomicInteger       limitMessages;
 
     public JooqLogger(int limitMessages) {
@@ -131,27 +130,48 @@ public final class JooqLogger implements Log {
         // of log4j or any other logger
 
         try {
-            result.isInfoEnabled();
+            result.isTraceEnabled();
         }
         catch (Throwable e) {
-            result.supportsInfo = false;
+            result.threshold = Log.Level.DEBUG;
         }
 
         try {
             result.isDebugEnabled();
         }
         catch (Throwable e) {
-            result.supportsDebug = false;
+            result.threshold = Log.Level.INFO;
         }
 
         try {
-            result.isTraceEnabled();
+            result.isInfoEnabled();
         }
         catch (Throwable e) {
-            result.supportsTrace = false;
+            result.threshold = Log.Level.WARN;
+        }
+
+        // [#15050] Turn off logging if specified by system properties
+        String p = System.getProperty("org.jooq.log." + name);
+        if (p != null) {
+            try {
+                Log.Level level = Log.Level.valueOf(p.toUpperCase());
+
+                if (result.threshold.supports(level))
+                    result.threshold = level;
+            }
+            catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Unsupported log level for org.jooq.log." + name + ": " + p + ". Supported levels include: " + asList(Log.Level.values()), e);
+            }
         }
 
         return result;
+    }
+
+    private final Log.Level threshold() {
+        Log.Level global = globalThreshold;
+        Log.Level local = threshold;
+
+        return local.supports(global) ? global : local;
     }
 
     private final void decrementLimitAndDo(Runnable runnable) {
@@ -164,9 +184,7 @@ public final class JooqLogger implements Log {
      */
     @Override
     public boolean isTraceEnabled() {
-        if (!globalThreshold.supports(Log.Level.TRACE))
-            return false;
-        else if (!supportsTrace)
+        if (!threshold().supports(Log.Level.TRACE))
             return false;
         else if (limitMessages != null && limitMessages.get() == 0)
             return false;
@@ -195,7 +213,7 @@ public final class JooqLogger implements Log {
     @Override
     public void trace(Object message, Object details) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.TRACE))
+            if (!isTraceEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.trace(getMessage(message, details));
@@ -227,7 +245,7 @@ public final class JooqLogger implements Log {
     @Override
     public void trace(Object message, Object details, Throwable throwable) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.TRACE))
+            if (!isTraceEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.trace(getMessage(message, details), throwable);
@@ -241,9 +259,7 @@ public final class JooqLogger implements Log {
      */
     @Override
     public boolean isDebugEnabled() {
-        if (!globalThreshold.supports(Log.Level.DEBUG))
-            return false;
-        else if (!supportsDebug)
+        if (!threshold().supports(Log.Level.DEBUG))
             return false;
         else if (limitMessages != null && limitMessages.get() == 0)
             return false;
@@ -272,7 +288,7 @@ public final class JooqLogger implements Log {
     @Override
     public void debug(Object message, Object details) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.DEBUG))
+            if (!isDebugEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.debug(getMessage(message, details));
@@ -304,7 +320,7 @@ public final class JooqLogger implements Log {
     @Override
     public void debug(Object message, Object details, Throwable throwable) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.DEBUG))
+            if (!isDebugEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.debug(getMessage(message, details), throwable);
@@ -318,9 +334,7 @@ public final class JooqLogger implements Log {
      */
     @Override
     public boolean isInfoEnabled() {
-        if (!globalThreshold.supports(Log.Level.INFO))
-            return false;
-        else if (!supportsInfo)
+        if (!threshold().supports(Log.Level.INFO))
             return false;
         else if (limitMessages != null && limitMessages.get() == 0)
             return false;
@@ -349,7 +363,7 @@ public final class JooqLogger implements Log {
     @Override
     public void info(Object message, Object details) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.INFO))
+            if (!isInfoEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.info(getMessage(message, details));
@@ -381,7 +395,7 @@ public final class JooqLogger implements Log {
     @Override
     public void info(Object message, Object details, Throwable throwable) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.INFO))
+            if (!isInfoEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.info(getMessage(message, details), throwable);
@@ -391,13 +405,11 @@ public final class JooqLogger implements Log {
     }
 
     /**
-     * Check if <code>INFO</code> level logging is enabled.
+     * Check if <code>WARN</code> level logging is enabled.
      */
     @Override
     public boolean isWarnEnabled() {
-        if (!globalThreshold.supports(Log.Level.WARN))
-            return false;
-        else if (!supportsWarn)
+        if (!threshold().supports(Log.Level.WARN))
             return false;
         else if (limitMessages != null && limitMessages.get() == 0)
             return false;
@@ -426,7 +438,7 @@ public final class JooqLogger implements Log {
     @Override
     public void warn(Object message, Object details) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.WARN))
+            if (!isWarnEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.warn(getMessage(message, details));
@@ -458,13 +470,28 @@ public final class JooqLogger implements Log {
     @Override
     public void warn(Object message, Object details, Throwable throwable) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.WARN))
+            if (!isWarnEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.warn(getMessage(message, details), throwable);
             else
                 util.log(java.util.logging.Level.WARNING, getMessage(message, details), throwable);
         });
+    }
+
+    /**
+     * Check if <code>ERROR</code> level logging is enabled.
+     */
+    @Override
+    public boolean isErrorEnabled() {
+        if (!threshold().supports(Log.Level.ERROR))
+            return false;
+        else if (limitMessages != null && limitMessages.get() == 0)
+            return false;
+        else if (slf4j != null)
+            return slf4j.isErrorEnabled();
+        else
+            return util.isLoggable(java.util.logging.Level.SEVERE);
     }
 
     /**
@@ -486,7 +513,7 @@ public final class JooqLogger implements Log {
     @Override
     public void error(Object message, Object details) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.ERROR))
+            if (!isErrorEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.error(getMessage(message, details));
@@ -518,7 +545,7 @@ public final class JooqLogger implements Log {
     @Override
     public void error(Object message, Object details, Throwable throwable) {
         decrementLimitAndDo(() -> {
-            if (!globalThreshold.supports(Log.Level.ERROR))
+            if (!isErrorEnabled())
                 return;
             else if (slf4j != null)
                 slf4j.error(getMessage(message, details), throwable);

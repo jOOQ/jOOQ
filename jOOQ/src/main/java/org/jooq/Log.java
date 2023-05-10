@@ -46,19 +46,19 @@ package org.jooq;
 public interface Log {
 
     /**
-     * Check if <code>TRACE</code> level logging is enabled.
+     * Check if {@link Log.Level#TRACE} level logging is enabled.
      */
     boolean isTraceEnabled();
 
     /**
-     * Log a message in <code>TRACE</code> level.
+     * Log a message in {@link Log.Level#TRACE} level.
      *
      * @param message The log message
      */
     void trace(Object message);
 
     /**
-     * Log a message in <code>TRACE</code> level.
+     * Log a message in {@link Log.Level#TRACE} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -66,7 +66,7 @@ public interface Log {
     void trace(Object message, Object details);
 
     /**
-     * Log a message in <code>TRACE</code> level.
+     * Log a message in {@link Log.Level#TRACE} level.
      *
      * @param message The log message
      * @param throwable An exception whose stacktrace is logged along with the
@@ -75,7 +75,7 @@ public interface Log {
     void trace(Object message, Throwable throwable);
 
     /**
-     * Log a message in <code>TRACE</code> level.
+     * Log a message in {@link Log.Level#TRACE} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -85,19 +85,19 @@ public interface Log {
     void trace(Object message, Object details, Throwable throwable);
 
     /**
-     * Check if <code>DEBUG</code> level logging is enabled.
+     * Check if {@link Log.Level#DEBUG} level logging is enabled.
      */
     boolean isDebugEnabled();
 
     /**
-     * Log a message in <code>DEBUG</code> level.
+     * Log a message in {@link Log.Level#DEBUG} level.
      *
      * @param message The log message
      */
     void debug(Object message);
 
     /**
-     * Log a message in <code>DEBUG</code> level.
+     * Log a message in {@link Log.Level#DEBUG} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -105,7 +105,7 @@ public interface Log {
     void debug(Object message, Object details);
 
     /**
-     * Log a message in <code>DEBUG</code> level.
+     * Log a message in {@link Log.Level#DEBUG} level.
      *
      * @param message The log message
      * @param throwable An exception whose stacktrace is logged along with the
@@ -114,7 +114,7 @@ public interface Log {
     void debug(Object message, Throwable throwable);
 
     /**
-     * Log a message in <code>DEBUG</code> level.
+     * Log a message in {@link Log.Level#DEBUG} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -124,19 +124,19 @@ public interface Log {
     void debug(Object message, Object details, Throwable throwable);
 
     /**
-     * Check if <code>INFO</code> level logging is enabled.
+     * Check if {@link Log.Level#INFO} level logging is enabled.
      */
     boolean isInfoEnabled();
 
     /**
-     * Log a message in <code>INFO</code> level.
+     * Log a message in {@link Log.Level#INFO} level.
      *
      * @param message The log message
      */
     void info(Object message);
 
     /**
-     * Log a message in <code>INFO</code> level.
+     * Log a message in {@link Log.Level#INFO} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -144,7 +144,7 @@ public interface Log {
     void info(Object message, Object details);
 
     /**
-     * Log a message in <code>INFO</code> level.
+     * Log a message in {@link Log.Level#INFO} level.
      *
      * @param message The log message
      * @param throwable An exception whose stacktrace is logged along with the
@@ -153,7 +153,7 @@ public interface Log {
     void info(Object message, Throwable throwable);
 
     /**
-     * Log a message in <code>INFO</code> level.
+     * Log a message in {@link Log.Level#INFO} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -163,19 +163,19 @@ public interface Log {
     void info(Object message, Object details, Throwable throwable);
 
     /**
-     * Check if <code>WARN</code> level logging is enabled.
+     * Check if {@link Log.Level#WARN} level logging is enabled.
      */
     boolean isWarnEnabled();
 
     /**
-     * Log a message in <code>WARN</code> level.
+     * Log a message in {@link Log.Level#WARN} level.
      *
      * @param message The log message
      */
     void warn(Object message);
 
     /**
-     * Log a message in <code>WARN</code> level.
+     * Log a message in {@link Log.Level#WARN} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -183,7 +183,7 @@ public interface Log {
     void warn(Object message, Object details);
 
     /**
-     * Log a message in <code>WARN</code> level.
+     * Log a message in {@link Log.Level#WARN} level.
      *
      * @param message The log message
      * @param throwable An exception whose stacktrace is logged along with the
@@ -192,7 +192,7 @@ public interface Log {
     void warn(Object message, Throwable throwable);
 
     /**
-     * Log a message in <code>WARN</code> level.
+     * Log a message in {@link Log.Level#WARN} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -202,14 +202,19 @@ public interface Log {
     void warn(Object message, Object details, Throwable throwable);
 
     /**
-     * Log a message in <code>ERROR</code> level.
+     * Check if {@link Log.Level#ERROR} level logging is enabled.
+     */
+    boolean isErrorEnabled();
+
+    /**
+     * Log a message in {@link Log.Level#ERROR} level.
      *
      * @param message The log message
      */
     void error(Object message);
 
     /**
-     * Log a message in <code>ERROR</code> level.
+     * Log a message in {@link Log.Level#ERROR} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -217,7 +222,7 @@ public interface Log {
     void error(Object message, Object details);
 
     /**
-     * Log a message in <code>ERROR</code> level.
+     * Log a message in {@link Log.Level#ERROR} level.
      *
      * @param message The log message
      * @param throwable An exception whose stacktrace is logged along with the
@@ -226,7 +231,7 @@ public interface Log {
     void error(Object message, Throwable throwable);
 
     /**
-     * Log a message in <code>ERROR</code> level.
+     * Log a message in {@link Log.Level#ERROR} level.
      *
      * @param message The log message
      * @param details The message details (padded to a constant-width message);
@@ -285,6 +290,9 @@ public interface Log {
         ERROR,
         FATAL;
 
+        /**
+         * If this level is a lower level than the argument level.
+         */
         public boolean supports(Level level) {
             return ordinal() <= level.ordinal();
         }

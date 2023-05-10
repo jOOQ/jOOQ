@@ -236,6 +236,11 @@ public class BufferedLog implements Log {
     }
 
     @Override
+    public boolean isErrorEnabled() {
+        return delegate.isErrorEnabled();
+    }
+
+    @Override
     public void error(Object message) {
         delegate.error(message);
         messages.add(message(ERROR, message));

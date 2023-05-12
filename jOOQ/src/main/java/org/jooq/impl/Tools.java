@@ -5523,7 +5523,13 @@ final class Tools {
     }
 
     static final void toSQLDDLTypeDeclarationForAddition(Context<?> ctx, DataType<?> type) {
+        boolean qualify = ctx.qualify();
         toSQLDDLTypeDeclaration(ctx, type);
+
+        // [#15048] While qualified type declarations are supported, we can't
+        //          have qualified field references elsewhere, e.g. in computed
+        //          column declarations.
+        ctx.qualify(false);
         toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, type);
 
 
@@ -5548,6 +5554,8 @@ final class Tools {
 
 
 
+
+        ctx.qualify(qualify);
     }
 
     private static final void toSQLDDLTypeDeclarationForAdditionNullability(Context<?> ctx, DataType<?> type) {

@@ -180,11 +180,11 @@ implements
             for (int i = 0; i < types.length; i++) {
                 types[i] = rows[0].dataType(i);
 
-                if (types[i].getType() == Object.class) {
+                if (types[i].isOther()) {
                     for (int j = 1; j < rows.length; j++) {
                         DataType<?> type = rows[j].dataType(i);
 
-                        if (type.getType() != Object.class) {
+                        if (!type.isOther()) {
                             types[i] = type;
                             continue typeLoop;
                         }
@@ -212,7 +212,7 @@ implements
             Field<?>[] result = new Field[row.size()];
 
             for (int i = 0; i < result.length; i++)
-                if (nullLiteralOrUntypedNullBind(ctx, row.field(i)) && rowType()[i].getType() != Object.class)
+                if (nullLiteralOrUntypedNullBind(ctx, row.field(i)) && !rowType()[i].isOther())
                     result[i] = row.field(i).cast(rowType()[i]);
                 else
                     result[i] = row.field(i);
@@ -226,7 +226,7 @@ implements
     private final boolean nullLiteralOrUntypedNullBind(Context<?> ctx, Field<?> field) {
         return isVal(field)
                     && ((Val<?>) field).getValue() == null
-                    && (((Val<?>) field).isInline(ctx) || field.getType() == Object.class)
+                    && (((Val<?>) field).isInline(ctx) || field.getDataType().isOther())
             || field instanceof NullCondition;
     }
 

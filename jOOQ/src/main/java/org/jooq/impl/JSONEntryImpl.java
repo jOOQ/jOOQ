@@ -289,7 +289,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             case POSTGRES:
             case YUGABYTEDB:
                 if (field instanceof Param)
-                    if (field.getType() != Object.class)
+                    if (field.getDataType().isOther())
                         return field.cast(field.getDataType());
                     else
                         return field.cast(VARCHAR);

@@ -7868,7 +7868,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return c;
         else if (part instanceof Field f) {
             DataType dataType = f.getDataType();
-            Class<?> type = dataType.getType();
 
             if (dataType.isBoolean())
                 return condition(f);
@@ -7878,7 +7877,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return f.ne(zero());
 
             // [#7266] Support parsing column references as predicates
-            else if (type == Object.class && (part instanceof TableFieldImpl || part instanceof Val))
+            else if (dataType.isOther() && (part instanceof TableFieldImpl || part instanceof Val))
                 return condition((Field) part);
             else
                 throw expected("Boolean field");

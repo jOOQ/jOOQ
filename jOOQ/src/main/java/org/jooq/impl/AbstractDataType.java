@@ -954,6 +954,11 @@ implements
     }
 
     @Override
+    public final boolean isOther() {
+        return getType() == Object.class;
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 

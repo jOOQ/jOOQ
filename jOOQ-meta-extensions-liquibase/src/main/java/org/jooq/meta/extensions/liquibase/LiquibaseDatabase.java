@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.extensions.liquibase;
 
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
@@ -83,6 +84,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
     private boolean                          includeLiquibaseTables;
     private String                           databaseChangeLogTableName;
     private String                           databaseChangeLogLockTableName;
+    private String                           databaseLiquibaseSchemaName;
 
     static {
         SETTERS = new HashMap<>();
@@ -144,6 +146,9 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
         // Retrieve changeLog table names as they might be overridden by configuration setters
         databaseChangeLogTableName = database.getDatabaseChangeLogTableName();
         databaseChangeLogLockTableName = database.getDatabaseChangeLogLockTableName();
+        databaseLiquibaseSchemaName = database.getLiquibaseSchemaName();
+
+        create().createSchemaIfNotExists(unquotedName(databaseLiquibaseSchemaName)).execute();
 
         // [#9866] Allow for loading included files from the classpath or using absolute paths.
         // [#12872] [#13021] The decision is made based on the presence of the rootPath property

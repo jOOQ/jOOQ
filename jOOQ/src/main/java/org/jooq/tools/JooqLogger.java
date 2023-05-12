@@ -39,6 +39,7 @@ package org.jooq.tools;
 
 import static java.util.Arrays.asList;
 
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.SimpleFormatter;
 
@@ -66,9 +67,22 @@ public final class JooqLogger implements Log {
     private org.slf4j.Logger          slf4j;
     private java.util.logging.Logger  util;
     private volatile Log.Level        threshold       = Log.Level.TRACE;
+    private final String              name;
+    private final String              propertyName;
     private final AtomicInteger       limitMessages;
 
+    /**
+     * @deprecated - [#15050] - 3.19.0 - Do not construct your own logger. Use
+     *             {@link #getLogger(Class)} methods instead.
+     */
+    @Deprecated
     public JooqLogger(int limitMessages) {
+        this(UUID.randomUUID().toString(), limitMessages);
+    }
+
+    JooqLogger(String name, int limitMessages) {
+        this.name = name;
+        this.propertyName = "org.jooq.log." + name;
         this.limitMessages = limitMessages >= 0 ? new AtomicInteger(limitMessages) : null;
     }
 
@@ -113,7 +127,7 @@ public final class JooqLogger implements Log {
             ? clazz.getName()
             : nameSuffix;
 
-        JooqLogger result = new JooqLogger(limitMessages);
+        JooqLogger result = new JooqLogger(name, limitMessages);
 
         // Prioritise slf4j
         try {
@@ -150,26 +164,24 @@ public final class JooqLogger implements Log {
             result.threshold = Log.Level.WARN;
         }
 
+        return result;
+    }
+
+    private final Log.Level threshold() {
+
+        Log.Level global = globalThreshold;
+        Log.Level local = threshold;
+
         // [#15050] Turn off logging if specified by system properties
-        String p = System.getProperty("org.jooq.log." + name);
+        String p = System.getProperty(propertyName);
         if (p != null) {
             try {
-                Log.Level level = Log.Level.valueOf(p.toUpperCase());
-
-                if (result.threshold.supports(level))
-                    result.threshold = level;
+                threshold = local = Log.Level.valueOf(p.toUpperCase());
             }
             catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("Unsupported log level for org.jooq.log." + name + ": " + p + ". Supported levels include: " + asList(Log.Level.values()), e);
             }
         }
-
-        return result;
-    }
-
-    private final Log.Level threshold() {
-        Log.Level global = globalThreshold;
-        Log.Level local = threshold;
 
         return local.supports(global) ? global : local;
     }

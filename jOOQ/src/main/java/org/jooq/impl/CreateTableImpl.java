@@ -486,7 +486,6 @@ implements
 
             Field<?> identity = null;
             boolean qualify = ctx.qualify();
-            ctx.qualify(false);
             boolean first = true;
 
             columnLoop:
@@ -503,7 +502,9 @@ implements
                 if (!first)
                     ctx.sql(',').formatSeparator();
 
+                ctx.qualify(false);
                 ctx.visit(Tools.uncollate(field));
+                ctx.qualify(qualify);
 
                 if (select == null) {
                     ctx.sql(' ');
@@ -516,7 +517,6 @@ implements
             // [#10551] Ignite requires at least one non-PK column.
             toSQLDummyColumns(ctx);
 
-            ctx.qualify(qualify);
             ctx.end(Clause.CREATE_TABLE_COLUMNS)
                .start(Clause.CREATE_TABLE_CONSTRAINTS);
 

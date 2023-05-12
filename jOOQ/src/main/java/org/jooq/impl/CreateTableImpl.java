@@ -518,14 +518,15 @@ implements
 
             Field<?> identity = null;
             boolean qualify = ctx.qualify();
-            ctx.qualify(false);
 
             for (int i = 0; i < columnFields.size(); i++) {
                 DataType<?> type = columnType(ctx, i);
                 if (identity == null && type.identity())
                     identity = columnFields.get(i);
 
+                ctx.qualify(false);
                 ctx.visit(Tools.uncollate(columnFields.get(i)));
+                ctx.qualify(qualify);
 
                 if (select == null) {
                     ctx.sql(' ');
@@ -539,7 +540,6 @@ implements
             // [#10551] Ignite requires at least one non-PK column.
             toSQLDummyColumns(ctx);
 
-            ctx.qualify(qualify);
             ctx.end(CREATE_TABLE_COLUMNS)
                .start(CREATE_TABLE_CONSTRAINTS);
 

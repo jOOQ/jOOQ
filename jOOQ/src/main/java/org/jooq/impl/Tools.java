@@ -5591,6 +5591,9 @@ final class Tools {
 
 
 
+        // [#15048] User defined types may need quoting, etc.
+        else if (type.getType() == Object.class && !(type instanceof BuiltInDataType))
+            ctx.visit(type.getQualifiedName());
         else
             ctx.sql(typeName);
 

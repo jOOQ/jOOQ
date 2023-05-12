@@ -52,11 +52,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <configuration>
-
-                    <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
-                    <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-                </configuration>
                 <executions>
                     <execution>
                         <id>mojo-descriptor</id>
@@ -73,15 +68,6 @@
                         </goals>
                     </execution>
                 </executions>
-                
-                <!-- Workaround for https://issues.apache.org/jira/browse/MPLUGIN-369 -->
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.plugin-tools</groupId>
-                        <artifactId>maven-plugin-tools-annotations</artifactId>
-                        <version>3.6.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             
             <plugin>
@@ -111,14 +97,6 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
-
-            <!-- junit 4.8.2 sneaking in here -->
-            <exclusions>
-                <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>

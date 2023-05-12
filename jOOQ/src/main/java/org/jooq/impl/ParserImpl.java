@@ -933,7 +933,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // [#8910] Some statements can be parsed differently when we know we're
         //         parsing them for the DDLDatabase. This method patches these
         //         statements.
-        if (TRUE.equals(configuration().data("org.jooq.ddl.parse-for-ddldatabase"))) {
+        if (isDDLDatabase()) {
             if (query instanceof Select) {
                 String string =
                 configuration().deriveSettings(s -> s
@@ -958,6 +958,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         return query;
+    }
+
+    private boolean isDDLDatabase() {
+        return TRUE.equals(configuration().data("org.jooq.ddl.parse-for-ddldatabase"));
     }
 
     final Query parseQuery0() {
@@ -12292,7 +12296,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else
                 arguments = new ArrayList<>();
 
-            return function(name, Object.class, arguments.toArray(EMPTY_FIELD));
+            // [#10107] Completely ignore functions in the DDLDatabase
+            return isDDLDatabase()
+                 ? inline((Object) null)
+                 : function(name, Object.class, arguments.toArray(EMPTY_FIELD));
         }
 
 

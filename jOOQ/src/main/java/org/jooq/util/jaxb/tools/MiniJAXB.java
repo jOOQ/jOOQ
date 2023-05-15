@@ -51,6 +51,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
@@ -78,8 +79,10 @@ import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
@@ -227,57 +230,91 @@ public final class MiniJAXB {
         if (result == null)
             return;
 
-        Map<String, Field> map = fieldsByElementName(fieldsByClass, result.getClass());
-
+        Map<String, Field> fieldsByElementName = fieldsByElementName(fieldsByClass, result.getClass());
         NodeList childNodes = element.getChildNodes();
+
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node item = childNodes.item(i);
+            unmarshal1(result, item, fieldsByClass, fieldsByElementName);
+        }
 
-            if (item.getNodeType() != Node.ELEMENT_NODE)
-                continue;
+        NamedNodeMap attributes = element.getAttributes();
 
-            Element childElement = (Element) item;
-            Field child = map.get(childElement.getTagName());
+        for (int i = 0; i < attributes.getLength(); i++) {
+            Node item = attributes.item(i);
+            unmarshal1(result, item, fieldsByClass, fieldsByElementName);
+        }
+    }
+
+    private static void unmarshal1(Object result, Node item, Map<Class<?>, Map<String, Field>> fieldsByClass, Map<String, Field> fieldsByName) throws Exception {
+        Field child = null;
+        Element childElement = null;
+        String textContent = null;
+
+        if (item.getNodeType() == Node.ELEMENT_NODE) {
+            childElement = (Element) item;
+            child = fieldsByName.get(childElement.getTagName());
+
             if (child == null)
-                child = map.get(childElement.getLocalName());
-            // skip unknown elements
+                child = fieldsByName.get(childElement.getLocalName());
+
+            if (child != null)
+                textContent = childElement.getTextContent();
+        }
+        else if (item.getNodeType() == Node.ATTRIBUTE_NODE) {
+            Attr childAttr = (Attr) item;
+            child = fieldsByName.get(childAttr.getName());
+
             if (child == null)
-                continue;
+                child = fieldsByName.get(childAttr.getLocalName());
 
-            XmlElementWrapper w = child.getAnnotation(XmlElementWrapper.class);
-            XmlElement e = child.getAnnotation(XmlElement.class);
-            XmlJavaTypeAdapter a = child.getAnnotation(XmlJavaTypeAdapter.class);
-            XmlList l = child.getAnnotation(XmlList.class);
+            if (child != null)
+                textContent = childAttr.getValue();
+        }
 
-            String childName = child.getName();
-            Class<?> childType = child.getType();
+        // skip unknown elements
+        if (child == null)
+            return;
 
-            if (List.class.isAssignableFrom(childType) && w != null && e != null) {
-                List<Object> list = new ArrayList<Object>();
-                unmarshalList0(list, childElement, e.name(), (Class<?>) ((ParameterizedType) child.getGenericType()).getActualTypeArguments()[0], fieldsByClass);
-                Reflect.on(result).set(childName, list);
-            }
-            else if (List.class.isAssignableFrom(childType) && l != null) {
-                List<Object> list = new ArrayList<Object>(asList(childElement.getTextContent().split(" +")));
-                Reflect.on(result).set(childName, Convert.convert(list, (Class<?>) ((ParameterizedType) child.getGenericType()).getActualTypeArguments()[0]));
-            }
-            else if (childType.getAnnotation(XmlEnum.class) != null) {
-                Reflect.on(result).set(childName, Reflect.onClass(childType).call("fromValue", childElement.getTextContent().trim()));
-            }
-            else if (childType.getAnnotation(XmlType.class) != null) {
-                Object object = Reflect.on(childType).create().get();
-                Reflect.on(result).set(childName, object);
+        XmlElementWrapper w = child.getAnnotation(XmlElementWrapper.class);
+        XmlElement e = child.getAnnotation(XmlElement.class);
+        XmlJavaTypeAdapter a = child.getAnnotation(XmlJavaTypeAdapter.class);
+        XmlList l = child.getAnnotation(XmlList.class);
 
-                unmarshal0(object, childElement, fieldsByClass);
-            }
-            else if (a != null) {
-                @SuppressWarnings("unchecked")
-                XmlAdapter<Object, Object> adapter = a.value().getDeclaredConstructor().newInstance();
-                Reflect.on(result).set(childName, adapter.unmarshal(childElement.getTextContent().trim()));
-            }
-            else {
-                Reflect.on(result).set(childName, Convert.convert(childElement.getTextContent().trim(), childType));
-            }
+        String childName = child.getName();
+        Class<?> childType = child.getType();
+
+        if (List.class.isAssignableFrom(childType) && w != null && e != null) {
+            if (childElement == null)
+                return;
+
+            List<Object> list = new ArrayList<Object>();
+            unmarshalList0(list, childElement, e.name(), (Class<?>) ((ParameterizedType) child.getGenericType()).getActualTypeArguments()[0], fieldsByClass);
+            Reflect.on(result).set(childName, list);
+        }
+        else if (List.class.isAssignableFrom(childType) && l != null) {
+            if (childElement == null)
+                return;
+
+            List<Object> list = new ArrayList<Object>(asList(childElement.getTextContent().split(" +")));
+            Reflect.on(result).set(childName, Convert.convert(list, (Class<?>) ((ParameterizedType) child.getGenericType()).getActualTypeArguments()[0]));
+        }
+        else if (childType.getAnnotation(XmlEnum.class) != null) {
+            Reflect.on(result).set(childName, Reflect.onClass(childType).call("fromValue", textContent.trim()));
+        }
+        else if (childType.getAnnotation(XmlType.class) != null) {
+            Object object = Reflect.on(childType).create().get();
+            Reflect.on(result).set(childName, object);
+
+            unmarshal0(object, childElement, fieldsByClass);
+        }
+        else if (a != null) {
+            @SuppressWarnings("unchecked")
+            XmlAdapter<Object, Object> adapter = a.value().getDeclaredConstructor().newInstance();
+            Reflect.on(result).set(childName, adapter.unmarshal(textContent.trim()));
+        }
+        else {
+            Reflect.on(result).set(childName, Convert.convert(textContent.trim(), childType));
         }
     }
 

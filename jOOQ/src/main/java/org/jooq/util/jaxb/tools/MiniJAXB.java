@@ -253,20 +253,20 @@ public final class MiniJAXB {
 
         if (item.getNodeType() == Node.ELEMENT_NODE) {
             childElement = (Element) item;
-            child = fieldsByName.get(childElement.getTagName());
+            child = fieldsByName.remove(childElement.getTagName());
 
             if (child == null)
-                child = fieldsByName.get(childElement.getLocalName());
+                child = fieldsByName.remove(childElement.getLocalName());
 
             if (child != null)
                 textContent = childElement.getTextContent();
         }
         else if (item.getNodeType() == Node.ATTRIBUTE_NODE) {
             Attr childAttr = (Attr) item;
-            child = fieldsByName.get(childAttr.getName());
+            child = fieldsByName.remove(childAttr.getName());
 
             if (child == null)
-                child = fieldsByName.get(childAttr.getLocalName());
+                child = fieldsByName.remove(childAttr.getLocalName());
 
             if (child != null)
                 textContent = childAttr.getValue();
@@ -344,6 +344,7 @@ public final class MiniJAXB {
 
     private static Map<String, Field> fieldsByElementName(Map<Class<?>, Map<String, Field>> fieldsByClass, Class<?> type) {
         Map<String, Field> result = fieldsByClass.get(type);
+
         if (result == null) {
             result = new HashMap<String, Field>();
             fieldsByClass.put(type, result);
@@ -369,7 +370,8 @@ public final class MiniJAXB {
                 result.put(childElementName, child);
             }
         }
-        return result;
+
+        return new HashMap<>(result);
     }
 
     private static DocumentBuilder builder(Class<?> type) {

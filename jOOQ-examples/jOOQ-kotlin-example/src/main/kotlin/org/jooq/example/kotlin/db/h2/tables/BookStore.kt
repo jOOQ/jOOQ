@@ -8,7 +8,9 @@ import java.util.function.Function
 
 import org.jooq.Field
 import org.jooq.ForeignKey
+import org.jooq.InverseForeignKey
 import org.jooq.Name
+import org.jooq.Path
 import org.jooq.Record
 import org.jooq.Records
 import org.jooq.Row1
@@ -19,7 +21,10 @@ import org.jooq.TableField
 import org.jooq.TableOptions
 import org.jooq.UniqueKey
 import org.jooq.example.kotlin.db.h2.Public
+import org.jooq.example.kotlin.db.h2.keys.FK_B2BS_BS_NAME
 import org.jooq.example.kotlin.db.h2.keys.UK_T_BOOK_STORE_NAME
+import org.jooq.example.kotlin.db.h2.tables.Book.BookPath
+import org.jooq.example.kotlin.db.h2.tables.BookToBookStore.BookToBookStorePath
 import org.jooq.example.kotlin.db.h2.tables.records.BookStoreRecord
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
@@ -33,15 +38,17 @@ import org.jooq.impl.TableImpl
 @Suppress("UNCHECKED_CAST")
 open class BookStore(
     alias: Name,
-    child: Table<out Record>?,
-    path: ForeignKey<out Record, BookStoreRecord>?,
+    path: Table<out Record>?,
+    childPath: ForeignKey<out Record, BookStoreRecord>?,
+    parentPath: InverseForeignKey<out Record, BookStoreRecord>?,
     aliased: Table<BookStoreRecord>?,
     parameters: Array<Field<*>?>?
 ): TableImpl<BookStoreRecord>(
     alias,
     Public.PUBLIC,
-    child,
     path,
+    childPath,
+    parentPath,
     aliased,
     parameters,
     DSL.comment(""),
@@ -65,8 +72,8 @@ open class BookStore(
      */
     val NAME: TableField<BookStoreRecord, String?> = createField(DSL.name("NAME"), SQLDataType.VARCHAR(400).nullable(false), this, "")
 
-    private constructor(alias: Name, aliased: Table<BookStoreRecord>?): this(alias, null, null, aliased, null)
-    private constructor(alias: Name, aliased: Table<BookStoreRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
+    private constructor(alias: Name, aliased: Table<BookStoreRecord>?): this(alias, null, null, null, aliased, null)
+    private constructor(alias: Name, aliased: Table<BookStoreRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters)
 
     /**
      * Create an aliased <code>PUBLIC.BOOK_STORE</code> table reference
@@ -83,9 +90,34 @@ open class BookStore(
      */
     constructor(): this(DSL.name("BOOK_STORE"), null)
 
-    constructor(child: Table<out Record>, key: ForeignKey<out Record, BookStoreRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK_STORE, null)
+    constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookStoreRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, BOOK_STORE, null)
+
+    open class BookStorePath(path: Table<out Record>, childPath: ForeignKey<out Record, BookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookStoreRecord>?) : BookStore(path, childPath, parentPath), Path<BookStoreRecord>
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<BookStoreRecord> = UK_T_BOOK_STORE_NAME
+
+    private lateinit var _bookToBookStore: BookToBookStorePath
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>PUBLIC.BOOK_TO_BOOK_STORE</code> table
+     */
+    fun bookToBookStore(): BookToBookStorePath {
+        if (!this::_bookToBookStore.isInitialized)
+            _bookToBookStore = BookToBookStorePath(this, null, FK_B2BS_BS_NAME.inverseKey)
+
+        return _bookToBookStore;
+    }
+
+    val bookToBookStore: BookToBookStorePath
+        get(): BookToBookStorePath = bookToBookStore()
+
+    /**
+     * Get the implicit many-to-many join path to the <code>PUBLIC.BOOK</code>
+     * table
+     */
+    val book: BookPath
+        get(): BookPath = bookToBookStore().book()
     override fun `as`(alias: String): BookStore = BookStore(DSL.name(alias), this)
     override fun `as`(alias: Name): BookStore = BookStore(alias, this)
     override fun `as`(alias: Table<*>): BookStore = BookStore(alias.getQualifiedName(), this)

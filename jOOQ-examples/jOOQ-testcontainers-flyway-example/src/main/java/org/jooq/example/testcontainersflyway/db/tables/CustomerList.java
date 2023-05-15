@@ -7,10 +7,8 @@ package org.jooq.example.testcontainersflyway.db.tables;
 import java.util.function.Function;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Function9;
 import org.jooq.Name;
-import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row9;
 import org.jooq.Schema;
@@ -135,10 +133,6 @@ public class CustomerList extends TableImpl<CustomerListRecord> {
      */
     public CustomerList() {
         this(DSL.name("customer_list"), null);
-    }
-
-    public <O extends Record> CustomerList(Table<O> child, ForeignKey<O, CustomerListRecord> key) {
-        super(child, key, CUSTOMER_LIST);
     }
 
     @Override

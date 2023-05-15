@@ -11,7 +11,9 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
@@ -23,6 +25,7 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.flyway.ddl.db.h2.FlywayTest;
 import org.jooq.example.flyway.ddl.db.h2.Keys;
+import org.jooq.example.flyway.ddl.db.h2.tables.Author.AuthorPath;
 import org.jooq.example.flyway.ddl.db.h2.tables.records.BookRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -94,8 +97,14 @@ public class Book extends TableImpl<BookRecord> {
         this(DSL.name("BOOK"), null);
     }
 
-    public <O extends Record> Book(Table<O> child, ForeignKey<O, BookRecord> key) {
-        super(child, key, BOOK);
+    public <O extends Record> Book(Table<O> path, ForeignKey<O, BookRecord> childPath, InverseForeignKey<O, BookRecord> parentPath) {
+        super(path, childPath, parentPath, BOOK);
+    }
+
+    public static class BookPath extends Book implements Path<BookRecord> {
+        public <O extends Record> BookPath(Table<O> path, ForeignKey<O, BookRecord> childPath, InverseForeignKey<O, BookRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -113,14 +122,14 @@ public class Book extends TableImpl<BookRecord> {
         return Arrays.asList(Keys.FK_T_BOOK_AUTHOR_ID);
     }
 
-    private transient Author _author;
+    private transient AuthorPath _author;
 
     /**
      * Get the implicit join path to the <code>FLYWAY_TEST.AUTHOR</code> table.
      */
-    public Author author() {
+    public AuthorPath author() {
         if (_author == null)
-            _author = new Author(this, Keys.FK_T_BOOK_AUTHOR_ID);
+            _author = new AuthorPath(this, Keys.FK_T_BOOK_AUTHOR_ID, null);
 
         return _author;
     }

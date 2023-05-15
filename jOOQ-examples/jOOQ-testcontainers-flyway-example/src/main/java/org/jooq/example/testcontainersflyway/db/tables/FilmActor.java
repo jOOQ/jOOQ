@@ -13,7 +13,9 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
@@ -26,6 +28,8 @@ import org.jooq.UniqueKey;
 import org.jooq.example.testcontainersflyway.db.Indexes;
 import org.jooq.example.testcontainersflyway.db.Keys;
 import org.jooq.example.testcontainersflyway.db.Public;
+import org.jooq.example.testcontainersflyway.db.tables.Actor.ActorPath;
+import org.jooq.example.testcontainersflyway.db.tables.Film.FilmPath;
 import org.jooq.example.testcontainersflyway.db.tables.records.FilmActorRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -97,8 +101,14 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         this(DSL.name("film_actor"), null);
     }
 
-    public <O extends Record> FilmActor(Table<O> child, ForeignKey<O, FilmActorRecord> key) {
-        super(child, key, FILM_ACTOR);
+    public <O extends Record> FilmActor(Table<O> path, ForeignKey<O, FilmActorRecord> childPath, InverseForeignKey<O, FilmActorRecord> parentPath) {
+        super(path, childPath, parentPath, FILM_ACTOR);
+    }
+
+    public static class FilmActorPath extends FilmActor implements Path<FilmActorRecord> {
+        public <O extends Record> FilmActorPath(Table<O> path, ForeignKey<O, FilmActorRecord> childPath, InverseForeignKey<O, FilmActorRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -121,25 +131,26 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return Arrays.asList(Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY);
     }
 
-    private transient Actor _actor;
-    private transient Film _film;
+    private transient ActorPath _actor;
 
     /**
      * Get the implicit join path to the <code>public.actor</code> table.
      */
-    public Actor actor() {
+    public ActorPath actor() {
         if (_actor == null)
-            _actor = new Actor(this, Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY);
+            _actor = new ActorPath(this, Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY, null);
 
         return _actor;
     }
 
+    private transient FilmPath _film;
+
     /**
      * Get the implicit join path to the <code>public.film</code> table.
      */
-    public Film film() {
+    public FilmPath film() {
         if (_film == null)
-            _film = new Film(this, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY);
+            _film = new FilmPath(this, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY, null);
 
         return _film;
     }

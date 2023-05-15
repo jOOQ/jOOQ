@@ -10,7 +10,9 @@ import kotlin.collections.List
 
 import org.jooq.Field
 import org.jooq.ForeignKey
+import org.jooq.InverseForeignKey
 import org.jooq.Name
+import org.jooq.Path
 import org.jooq.Record
 import org.jooq.Records
 import org.jooq.Row3
@@ -24,6 +26,8 @@ import org.jooq.example.kotlin.db.h2.Public
 import org.jooq.example.kotlin.db.h2.keys.FK_B2BS_BS_NAME
 import org.jooq.example.kotlin.db.h2.keys.FK_B2BS_B_ID
 import org.jooq.example.kotlin.db.h2.keys.PK_B2BS
+import org.jooq.example.kotlin.db.h2.tables.Book.BookPath
+import org.jooq.example.kotlin.db.h2.tables.BookStore.BookStorePath
 import org.jooq.example.kotlin.db.h2.tables.records.BookToBookStoreRecord
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
@@ -37,15 +41,17 @@ import org.jooq.impl.TableImpl
 @Suppress("UNCHECKED_CAST")
 open class BookToBookStore(
     alias: Name,
-    child: Table<out Record>?,
-    path: ForeignKey<out Record, BookToBookStoreRecord>?,
+    path: Table<out Record>?,
+    childPath: ForeignKey<out Record, BookToBookStoreRecord>?,
+    parentPath: InverseForeignKey<out Record, BookToBookStoreRecord>?,
     aliased: Table<BookToBookStoreRecord>?,
     parameters: Array<Field<*>?>?
 ): TableImpl<BookToBookStoreRecord>(
     alias,
     Public.PUBLIC,
-    child,
     path,
+    childPath,
+    parentPath,
     aliased,
     parameters,
     DSL.comment(""),
@@ -79,8 +85,8 @@ open class BookToBookStore(
      */
     val STOCK: TableField<BookToBookStoreRecord, Int?> = createField(DSL.name("STOCK"), SQLDataType.INTEGER, this, "")
 
-    private constructor(alias: Name, aliased: Table<BookToBookStoreRecord>?): this(alias, null, null, aliased, null)
-    private constructor(alias: Name, aliased: Table<BookToBookStoreRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
+    private constructor(alias: Name, aliased: Table<BookToBookStoreRecord>?): this(alias, null, null, null, aliased, null)
+    private constructor(alias: Name, aliased: Table<BookToBookStoreRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters)
 
     /**
      * Create an aliased <code>PUBLIC.BOOK_TO_BOOK_STORE</code> table reference
@@ -97,39 +103,42 @@ open class BookToBookStore(
      */
     constructor(): this(DSL.name("BOOK_TO_BOOK_STORE"), null)
 
-    constructor(child: Table<out Record>, key: ForeignKey<out Record, BookToBookStoreRecord>): this(Internal.createPathAlias(child, key), child, key, BOOK_TO_BOOK_STORE, null)
+    constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookToBookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookToBookStoreRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, BOOK_TO_BOOK_STORE, null)
+
+    open class BookToBookStorePath(path: Table<out Record>, childPath: ForeignKey<out Record, BookToBookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookToBookStoreRecord>?) : BookToBookStore(path, childPath, parentPath), Path<BookToBookStoreRecord>
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<BookToBookStoreRecord> = PK_B2BS
     override fun getReferences(): List<ForeignKey<BookToBookStoreRecord, *>> = listOf(FK_B2BS_BS_NAME, FK_B2BS_B_ID)
 
-    private lateinit var _bookStore: BookStore
-    private lateinit var _book: Book
+    private lateinit var _bookStore: BookStorePath
 
     /**
      * Get the implicit join path to the <code>PUBLIC.BOOK_STORE</code> table.
      */
-    fun bookStore(): BookStore {
+    fun bookStore(): BookStorePath {
         if (!this::_bookStore.isInitialized)
-            _bookStore = BookStore(this, FK_B2BS_BS_NAME)
+            _bookStore = BookStorePath(this, FK_B2BS_BS_NAME, null)
 
         return _bookStore;
     }
 
-    val bookStore: BookStore
-        get(): BookStore = bookStore()
+    val bookStore: BookStorePath
+        get(): BookStorePath = bookStore()
+
+    private lateinit var _book: BookPath
 
     /**
      * Get the implicit join path to the <code>PUBLIC.BOOK</code> table.
      */
-    fun book(): Book {
+    fun book(): BookPath {
         if (!this::_book.isInitialized)
-            _book = Book(this, FK_B2BS_B_ID)
+            _book = BookPath(this, FK_B2BS_B_ID, null)
 
         return _book;
     }
 
-    val book: Book
-        get(): Book = book()
+    val book: BookPath
+        get(): BookPath = book()
     override fun `as`(alias: String): BookToBookStore = BookToBookStore(DSL.name(alias), this)
     override fun `as`(alias: Name): BookToBookStore = BookToBookStore(alias, this)
     override fun `as`(alias: Table<*>): BookToBookStore = BookToBookStore(alias.getQualifiedName(), this)

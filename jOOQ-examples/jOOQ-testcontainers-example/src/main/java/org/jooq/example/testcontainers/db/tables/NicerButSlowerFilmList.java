@@ -8,10 +8,8 @@ import java.math.BigDecimal;
 import java.util.function.Function;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Function8;
 import org.jooq.Name;
-import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row8;
 import org.jooq.Schema;
@@ -132,10 +130,6 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
      */
     public NicerButSlowerFilmList() {
         this(DSL.name("nicer_but_slower_film_list"), null);
-    }
-
-    public <O extends Record> NicerButSlowerFilmList(Table<O> child, ForeignKey<O, NicerButSlowerFilmListRecord> key) {
-        super(child, key, NICER_BUT_SLOWER_FILM_LIST);
     }
 
     @Override

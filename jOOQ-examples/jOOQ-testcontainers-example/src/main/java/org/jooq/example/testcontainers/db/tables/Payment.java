@@ -15,7 +15,9 @@ import org.jooq.ForeignKey;
 import org.jooq.Function6;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row6;
@@ -28,6 +30,9 @@ import org.jooq.UniqueKey;
 import org.jooq.example.testcontainers.db.Indexes;
 import org.jooq.example.testcontainers.db.Keys;
 import org.jooq.example.testcontainers.db.Public;
+import org.jooq.example.testcontainers.db.tables.Customer.CustomerPath;
+import org.jooq.example.testcontainers.db.tables.Rental.RentalPath;
+import org.jooq.example.testcontainers.db.tables.Staff.StaffPath;
 import org.jooq.example.testcontainers.db.tables.records.PaymentRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -114,8 +119,14 @@ public class Payment extends TableImpl<PaymentRecord> {
         this(DSL.name("payment"), null);
     }
 
-    public <O extends Record> Payment(Table<O> child, ForeignKey<O, PaymentRecord> key) {
-        super(child, key, PAYMENT);
+    public <O extends Record> Payment(Table<O> path, ForeignKey<O, PaymentRecord> childPath, InverseForeignKey<O, PaymentRecord> parentPath) {
+        super(path, childPath, parentPath, PAYMENT);
+    }
+
+    public static class PaymentPath extends Payment implements Path<PaymentRecord> {
+        public <O extends Record> PaymentPath(Table<O> path, ForeignKey<O, PaymentRecord> childPath, InverseForeignKey<O, PaymentRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -143,36 +154,38 @@ public class Payment extends TableImpl<PaymentRecord> {
         return Arrays.asList(Keys.PAYMENT__PAYMENT_CUSTOMER_ID_FKEY, Keys.PAYMENT__PAYMENT_STAFF_ID_FKEY, Keys.PAYMENT__PAYMENT_RENTAL_ID_FKEY);
     }
 
-    private transient Customer _customer;
-    private transient Staff _staff;
-    private transient Rental _rental;
+    private transient CustomerPath _customer;
 
     /**
      * Get the implicit join path to the <code>public.customer</code> table.
      */
-    public Customer customer() {
+    public CustomerPath customer() {
         if (_customer == null)
-            _customer = new Customer(this, Keys.PAYMENT__PAYMENT_CUSTOMER_ID_FKEY);
+            _customer = new CustomerPath(this, Keys.PAYMENT__PAYMENT_CUSTOMER_ID_FKEY, null);
 
         return _customer;
     }
 
+    private transient StaffPath _staff;
+
     /**
      * Get the implicit join path to the <code>public.staff</code> table.
      */
-    public Staff staff() {
+    public StaffPath staff() {
         if (_staff == null)
-            _staff = new Staff(this, Keys.PAYMENT__PAYMENT_STAFF_ID_FKEY);
+            _staff = new StaffPath(this, Keys.PAYMENT__PAYMENT_STAFF_ID_FKEY, null);
 
         return _staff;
     }
 
+    private transient RentalPath _rental;
+
     /**
      * Get the implicit join path to the <code>public.rental</code> table.
      */
-    public Rental rental() {
+    public RentalPath rental() {
         if (_rental == null)
-            _rental = new Rental(this, Keys.PAYMENT__PAYMENT_RENTAL_ID_FKEY);
+            _rental = new RentalPath(this, Keys.PAYMENT__PAYMENT_RENTAL_ID_FKEY, null);
 
         return _rental;
     }

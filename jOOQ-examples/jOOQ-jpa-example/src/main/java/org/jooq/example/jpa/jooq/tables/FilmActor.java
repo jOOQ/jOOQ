@@ -11,7 +11,9 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function2;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row2;
@@ -23,6 +25,8 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Keys;
+import org.jooq.example.jpa.jooq.tables.Actor.ActorPath;
+import org.jooq.example.jpa.jooq.tables.Film.FilmPath;
 import org.jooq.example.jpa.jooq.tables.records.FilmActorRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -89,8 +93,14 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         this(DSL.name("FILM_ACTOR"), null);
     }
 
-    public <O extends Record> FilmActor(Table<O> child, ForeignKey<O, FilmActorRecord> key) {
-        super(child, key, FILM_ACTOR);
+    public <O extends Record> FilmActor(Table<O> path, ForeignKey<O, FilmActorRecord> childPath, InverseForeignKey<O, FilmActorRecord> parentPath) {
+        super(path, childPath, parentPath, FILM_ACTOR);
+    }
+
+    public static class FilmActorPath extends FilmActor implements Path<FilmActorRecord> {
+        public <O extends Record> FilmActorPath(Table<O> path, ForeignKey<O, FilmActorRecord> childPath, InverseForeignKey<O, FilmActorRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -108,25 +118,26 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return Arrays.asList(Keys.FK3FSUXQ0JJ1XONRE7BHROOPVBX, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2);
     }
 
-    private transient Film _film;
-    private transient Actor _actor;
+    private transient FilmPath _film;
 
     /**
      * Get the implicit join path to the <code>PUBLIC.FILM</code> table.
      */
-    public Film film() {
+    public FilmPath film() {
         if (_film == null)
-            _film = new Film(this, Keys.FK3FSUXQ0JJ1XONRE7BHROOPVBX);
+            _film = new FilmPath(this, Keys.FK3FSUXQ0JJ1XONRE7BHROOPVBX, null);
 
         return _film;
     }
 
+    private transient ActorPath _actor;
+
     /**
      * Get the implicit join path to the <code>PUBLIC.ACTOR</code> table.
      */
-    public Actor actor() {
+    public ActorPath actor() {
         if (_actor == null)
-            _actor = new Actor(this, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2);
+            _actor = new ActorPath(this, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2, null);
 
         return _actor;
     }

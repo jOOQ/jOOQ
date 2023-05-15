@@ -14,7 +14,9 @@ import org.jooq.ForeignKey;
 import org.jooq.Function4;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row4;
@@ -27,6 +29,10 @@ import org.jooq.UniqueKey;
 import org.jooq.example.testcontainersflyway.db.Indexes;
 import org.jooq.example.testcontainersflyway.db.Keys;
 import org.jooq.example.testcontainersflyway.db.Public;
+import org.jooq.example.testcontainersflyway.db.tables.Address.AddressPath;
+import org.jooq.example.testcontainersflyway.db.tables.Customer.CustomerPath;
+import org.jooq.example.testcontainersflyway.db.tables.Inventory.InventoryPath;
+import org.jooq.example.testcontainersflyway.db.tables.Staff.StaffPath;
 import org.jooq.example.testcontainersflyway.db.tables.records.StoreRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -103,8 +109,14 @@ public class Store extends TableImpl<StoreRecord> {
         this(DSL.name("store"), null);
     }
 
-    public <O extends Record> Store(Table<O> child, ForeignKey<O, StoreRecord> key) {
-        super(child, key, STORE);
+    public <O extends Record> Store(Table<O> path, ForeignKey<O, StoreRecord> childPath, InverseForeignKey<O, StoreRecord> parentPath) {
+        super(path, childPath, parentPath, STORE);
+    }
+
+    public static class StorePath extends Store implements Path<StoreRecord> {
+        public <O extends Record> StorePath(Table<O> path, ForeignKey<O, StoreRecord> childPath, InverseForeignKey<O, StoreRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -132,27 +144,54 @@ public class Store extends TableImpl<StoreRecord> {
         return Arrays.asList(Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY, Keys.STORE__STORE_ADDRESS_ID_FKEY);
     }
 
-    private transient Staff _staff;
-    private transient Address _address;
+    private transient StaffPath _staff;
 
     /**
      * Get the implicit join path to the <code>public.staff</code> table.
      */
-    public Staff staff() {
+    public StaffPath staff() {
         if (_staff == null)
-            _staff = new Staff(this, Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY);
+            _staff = new StaffPath(this, Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY, null);
 
         return _staff;
     }
 
+    private transient AddressPath _address;
+
     /**
      * Get the implicit join path to the <code>public.address</code> table.
      */
-    public Address address() {
+    public AddressPath address() {
         if (_address == null)
-            _address = new Address(this, Keys.STORE__STORE_ADDRESS_ID_FKEY);
+            _address = new AddressPath(this, Keys.STORE__STORE_ADDRESS_ID_FKEY, null);
 
         return _address;
+    }
+
+    private transient CustomerPath _customer;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.customer</code>
+     * table
+     */
+    public CustomerPath customer() {
+        if (_customer == null)
+            _customer = new CustomerPath(this, null, Keys.CUSTOMER__CUSTOMER_STORE_ID_FKEY.getInverseKey());
+
+        return _customer;
+    }
+
+    private transient InventoryPath _inventory;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.inventory</code>
+     * table
+     */
+    public InventoryPath inventory() {
+        if (_inventory == null)
+            _inventory = new InventoryPath(this, null, Keys.INVENTORY__INVENTORY_STORE_ID_FKEY.getInverseKey());
+
+        return _inventory;
     }
 
     @Override

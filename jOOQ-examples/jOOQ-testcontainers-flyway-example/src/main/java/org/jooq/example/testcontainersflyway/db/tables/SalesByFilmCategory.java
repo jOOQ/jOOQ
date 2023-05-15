@@ -8,10 +8,8 @@ import java.math.BigDecimal;
 import java.util.function.Function;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Function2;
 import org.jooq.Name;
-import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row2;
 import org.jooq.Schema;
@@ -97,10 +95,6 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
      */
     public SalesByFilmCategory() {
         this(DSL.name("sales_by_film_category"), null);
-    }
-
-    public <O extends Record> SalesByFilmCategory(Table<O> child, ForeignKey<O, SalesByFilmCategoryRecord> key) {
-        super(child, key, SALES_BY_FILM_CATEGORY);
     }
 
     @Override

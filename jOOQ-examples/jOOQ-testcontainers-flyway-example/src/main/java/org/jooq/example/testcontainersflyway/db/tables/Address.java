@@ -14,7 +14,9 @@ import org.jooq.ForeignKey;
 import org.jooq.Function8;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row8;
@@ -27,6 +29,10 @@ import org.jooq.UniqueKey;
 import org.jooq.example.testcontainersflyway.db.Indexes;
 import org.jooq.example.testcontainersflyway.db.Keys;
 import org.jooq.example.testcontainersflyway.db.Public;
+import org.jooq.example.testcontainersflyway.db.tables.City.CityPath;
+import org.jooq.example.testcontainersflyway.db.tables.Customer.CustomerPath;
+import org.jooq.example.testcontainersflyway.db.tables.Staff.StaffPath;
+import org.jooq.example.testcontainersflyway.db.tables.Store.StorePath;
 import org.jooq.example.testcontainersflyway.db.tables.records.AddressRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -123,8 +129,14 @@ public class Address extends TableImpl<AddressRecord> {
         this(DSL.name("address"), null);
     }
 
-    public <O extends Record> Address(Table<O> child, ForeignKey<O, AddressRecord> key) {
-        super(child, key, ADDRESS);
+    public <O extends Record> Address(Table<O> path, ForeignKey<O, AddressRecord> childPath, InverseForeignKey<O, AddressRecord> parentPath) {
+        super(path, childPath, parentPath, ADDRESS);
+    }
+
+    public static class AddressPath extends Address implements Path<AddressRecord> {
+        public <O extends Record> AddressPath(Table<O> path, ForeignKey<O, AddressRecord> childPath, InverseForeignKey<O, AddressRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -152,16 +164,53 @@ public class Address extends TableImpl<AddressRecord> {
         return Arrays.asList(Keys.ADDRESS__ADDRESS_CITY_ID_FKEY);
     }
 
-    private transient City _city;
+    private transient CityPath _city;
 
     /**
      * Get the implicit join path to the <code>public.city</code> table.
      */
-    public City city() {
+    public CityPath city() {
         if (_city == null)
-            _city = new City(this, Keys.ADDRESS__ADDRESS_CITY_ID_FKEY);
+            _city = new CityPath(this, Keys.ADDRESS__ADDRESS_CITY_ID_FKEY, null);
 
         return _city;
+    }
+
+    private transient CustomerPath _customer;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.customer</code>
+     * table
+     */
+    public CustomerPath customer() {
+        if (_customer == null)
+            _customer = new CustomerPath(this, null, Keys.CUSTOMER__CUSTOMER_ADDRESS_ID_FKEY.getInverseKey());
+
+        return _customer;
+    }
+
+    private transient StaffPath _staff;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.staff</code> table
+     */
+    public StaffPath staff() {
+        if (_staff == null)
+            _staff = new StaffPath(this, null, Keys.STAFF__STAFF_ADDRESS_ID_FKEY.getInverseKey());
+
+        return _staff;
+    }
+
+    private transient StorePath _store;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.store</code> table
+     */
+    public StorePath store() {
+        if (_store == null)
+            _store = new StorePath(this, null, Keys.STORE__STORE_ADDRESS_ID_FKEY.getInverseKey());
+
+        return _store;
     }
 
     @Override

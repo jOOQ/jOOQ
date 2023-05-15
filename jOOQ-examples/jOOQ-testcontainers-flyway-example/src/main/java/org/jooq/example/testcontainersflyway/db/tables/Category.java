@@ -11,7 +11,9 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
@@ -23,6 +25,8 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.testcontainersflyway.db.Keys;
 import org.jooq.example.testcontainersflyway.db.Public;
+import org.jooq.example.testcontainersflyway.db.tables.Film.FilmPath;
+import org.jooq.example.testcontainersflyway.db.tables.FilmCategory.FilmCategoryPath;
 import org.jooq.example.testcontainersflyway.db.tables.records.CategoryRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -94,8 +98,14 @@ public class Category extends TableImpl<CategoryRecord> {
         this(DSL.name("category"), null);
     }
 
-    public <O extends Record> Category(Table<O> child, ForeignKey<O, CategoryRecord> key) {
-        super(child, key, CATEGORY);
+    public <O extends Record> Category(Table<O> path, ForeignKey<O, CategoryRecord> childPath, InverseForeignKey<O, CategoryRecord> parentPath) {
+        super(path, childPath, parentPath, CATEGORY);
+    }
+
+    public static class CategoryPath extends Category implements Path<CategoryRecord> {
+        public <O extends Record> CategoryPath(Table<O> path, ForeignKey<O, CategoryRecord> childPath, InverseForeignKey<O, CategoryRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -111,6 +121,27 @@ public class Category extends TableImpl<CategoryRecord> {
     @Override
     public UniqueKey<CategoryRecord> getPrimaryKey() {
         return Keys.CATEGORY_PKEY;
+    }
+
+    private transient FilmCategoryPath _filmCategory;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.film_category</code> table
+     */
+    public FilmCategoryPath filmCategory() {
+        if (_filmCategory == null)
+            _filmCategory = new FilmCategoryPath(this, null, Keys.FILM_CATEGORY__FILM_CATEGORY_CATEGORY_ID_FKEY.getInverseKey());
+
+        return _filmCategory;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>public.film</code>
+     * table
+     */
+    public FilmPath film() {
+        return filmCategory().film();
     }
 
     @Override

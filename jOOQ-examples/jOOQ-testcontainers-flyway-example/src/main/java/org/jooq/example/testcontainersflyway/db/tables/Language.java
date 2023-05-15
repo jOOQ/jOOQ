@@ -11,7 +11,9 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
@@ -23,6 +25,7 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.testcontainersflyway.db.Keys;
 import org.jooq.example.testcontainersflyway.db.Public;
+import org.jooq.example.testcontainersflyway.db.tables.Film.FilmPath;
 import org.jooq.example.testcontainersflyway.db.tables.records.LanguageRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -94,8 +97,14 @@ public class Language extends TableImpl<LanguageRecord> {
         this(DSL.name("language"), null);
     }
 
-    public <O extends Record> Language(Table<O> child, ForeignKey<O, LanguageRecord> key) {
-        super(child, key, LANGUAGE);
+    public <O extends Record> Language(Table<O> path, ForeignKey<O, LanguageRecord> childPath, InverseForeignKey<O, LanguageRecord> parentPath) {
+        super(path, childPath, parentPath, LANGUAGE);
+    }
+
+    public static class LanguagePath extends Language implements Path<LanguageRecord> {
+        public <O extends Record> LanguagePath(Table<O> path, ForeignKey<O, LanguageRecord> childPath, InverseForeignKey<O, LanguageRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -111,6 +120,32 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public UniqueKey<LanguageRecord> getPrimaryKey() {
         return Keys.LANGUAGE_PKEY;
+    }
+
+    private transient FilmPath _filmLanguageIdFkey;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.film</code> table,
+     * via the <code>film_language_id_fkey</code> key
+     */
+    public FilmPath filmLanguageIdFkey() {
+        if (_filmLanguageIdFkey == null)
+            _filmLanguageIdFkey = new FilmPath(this, null, Keys.FILM__FILM_LANGUAGE_ID_FKEY.getInverseKey());
+
+        return _filmLanguageIdFkey;
+    }
+
+    private transient FilmPath _filmOriginalLanguageIdFkey;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.film</code> table,
+     * via the <code>film_original_language_id_fkey</code> key
+     */
+    public FilmPath filmOriginalLanguageIdFkey() {
+        if (_filmOriginalLanguageIdFkey == null)
+            _filmOriginalLanguageIdFkey = new FilmPath(this, null, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY.getInverseKey());
+
+        return _filmOriginalLanguageIdFkey;
     }
 
     @Override

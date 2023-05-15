@@ -15,7 +15,9 @@ import org.jooq.ForeignKey;
 import org.jooq.Function14;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row14;
@@ -29,6 +31,12 @@ import org.jooq.example.testcontainersflyway.db.Indexes;
 import org.jooq.example.testcontainersflyway.db.Keys;
 import org.jooq.example.testcontainersflyway.db.Public;
 import org.jooq.example.testcontainersflyway.db.enums.MpaaRating;
+import org.jooq.example.testcontainersflyway.db.tables.Actor.ActorPath;
+import org.jooq.example.testcontainersflyway.db.tables.Category.CategoryPath;
+import org.jooq.example.testcontainersflyway.db.tables.FilmActor.FilmActorPath;
+import org.jooq.example.testcontainersflyway.db.tables.FilmCategory.FilmCategoryPath;
+import org.jooq.example.testcontainersflyway.db.tables.Inventory.InventoryPath;
+import org.jooq.example.testcontainersflyway.db.tables.Language.LanguagePath;
 import org.jooq.example.testcontainersflyway.db.tables.records.FilmRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -161,8 +169,14 @@ public class Film extends TableImpl<FilmRecord> {
         this(DSL.name("film"), null);
     }
 
-    public <O extends Record> Film(Table<O> child, ForeignKey<O, FilmRecord> key) {
-        super(child, key, FILM);
+    public <O extends Record> Film(Table<O> path, ForeignKey<O, FilmRecord> childPath, InverseForeignKey<O, FilmRecord> parentPath) {
+        super(path, childPath, parentPath, FILM);
+    }
+
+    public static class FilmPath extends Film implements Path<FilmRecord> {
+        public <O extends Record> FilmPath(Table<O> path, ForeignKey<O, FilmRecord> childPath, InverseForeignKey<O, FilmRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -190,29 +204,85 @@ public class Film extends TableImpl<FilmRecord> {
         return Arrays.asList(Keys.FILM__FILM_LANGUAGE_ID_FKEY, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);
     }
 
-    private transient Language _filmLanguageIdFkey;
-    private transient Language _filmOriginalLanguageIdFkey;
+    private transient LanguagePath _filmLanguageIdFkey;
 
     /**
      * Get the implicit join path to the <code>public.language</code> table, via
      * the <code>film_language_id_fkey</code> key.
      */
-    public Language filmLanguageIdFkey() {
+    public LanguagePath filmLanguageIdFkey() {
         if (_filmLanguageIdFkey == null)
-            _filmLanguageIdFkey = new Language(this, Keys.FILM__FILM_LANGUAGE_ID_FKEY);
+            _filmLanguageIdFkey = new LanguagePath(this, Keys.FILM__FILM_LANGUAGE_ID_FKEY, null);
 
         return _filmLanguageIdFkey;
     }
+
+    private transient LanguagePath _filmOriginalLanguageIdFkey;
 
     /**
      * Get the implicit join path to the <code>public.language</code> table, via
      * the <code>film_original_language_id_fkey</code> key.
      */
-    public Language filmOriginalLanguageIdFkey() {
+    public LanguagePath filmOriginalLanguageIdFkey() {
         if (_filmOriginalLanguageIdFkey == null)
-            _filmOriginalLanguageIdFkey = new Language(this, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);
+            _filmOriginalLanguageIdFkey = new LanguagePath(this, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY, null);
 
         return _filmOriginalLanguageIdFkey;
+    }
+
+    private transient FilmActorPath _filmActor;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.film_actor</code>
+     * table
+     */
+    public FilmActorPath filmActor() {
+        if (_filmActor == null)
+            _filmActor = new FilmActorPath(this, null, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY.getInverseKey());
+
+        return _filmActor;
+    }
+
+    private transient FilmCategoryPath _filmCategory;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.film_category</code> table
+     */
+    public FilmCategoryPath filmCategory() {
+        if (_filmCategory == null)
+            _filmCategory = new FilmCategoryPath(this, null, Keys.FILM_CATEGORY__FILM_CATEGORY_FILM_ID_FKEY.getInverseKey());
+
+        return _filmCategory;
+    }
+
+    private transient InventoryPath _inventory;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.inventory</code>
+     * table
+     */
+    public InventoryPath inventory() {
+        if (_inventory == null)
+            _inventory = new InventoryPath(this, null, Keys.INVENTORY__INVENTORY_FILM_ID_FKEY.getInverseKey());
+
+        return _inventory;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>public.actor</code>
+     * table
+     */
+    public ActorPath actor() {
+        return filmActor().actor();
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the
+     * <code>public.category</code> table
+     */
+    public CategoryPath category() {
+        return filmCategory().category();
     }
 
     @Override

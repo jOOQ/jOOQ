@@ -9,7 +9,9 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
@@ -21,6 +23,8 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Keys;
+import org.jooq.example.jpa.jooq.tables.Film.FilmPath;
+import org.jooq.example.jpa.jooq.tables.FilmActor.FilmActorPath;
 import org.jooq.example.jpa.jooq.tables.records.ActorRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -92,8 +96,14 @@ public class Actor extends TableImpl<ActorRecord> {
         this(DSL.name("ACTOR"), null);
     }
 
-    public <O extends Record> Actor(Table<O> child, ForeignKey<O, ActorRecord> key) {
-        super(child, key, ACTOR);
+    public <O extends Record> Actor(Table<O> path, ForeignKey<O, ActorRecord> childPath, InverseForeignKey<O, ActorRecord> parentPath) {
+        super(path, childPath, parentPath, ACTOR);
+    }
+
+    public static class ActorPath extends Actor implements Path<ActorRecord> {
+        public <O extends Record> ActorPath(Table<O> path, ForeignKey<O, ActorRecord> childPath, InverseForeignKey<O, ActorRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -104,6 +114,27 @@ public class Actor extends TableImpl<ActorRecord> {
     @Override
     public UniqueKey<ActorRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_3;
+    }
+
+    private transient FilmActorPath _filmActor;
+
+    /**
+     * Get the implicit to-many join path to the <code>PUBLIC.FILM_ACTOR</code>
+     * table
+     */
+    public FilmActorPath filmActor() {
+        if (_filmActor == null)
+            _filmActor = new FilmActorPath(this, null, Keys.FK43SD2F45W7YN0GAXQ94EHTWT2.getInverseKey());
+
+        return _filmActor;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>PUBLIC.FILM</code>
+     * table
+     */
+    public FilmPath film() {
+        return filmActor().film();
     }
 
     @Override

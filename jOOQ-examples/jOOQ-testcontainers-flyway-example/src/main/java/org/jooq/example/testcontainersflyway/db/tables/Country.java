@@ -11,7 +11,9 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
@@ -23,6 +25,7 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.testcontainersflyway.db.Keys;
 import org.jooq.example.testcontainersflyway.db.Public;
+import org.jooq.example.testcontainersflyway.db.tables.City.CityPath;
 import org.jooq.example.testcontainersflyway.db.tables.records.CountryRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -94,8 +97,14 @@ public class Country extends TableImpl<CountryRecord> {
         this(DSL.name("country"), null);
     }
 
-    public <O extends Record> Country(Table<O> child, ForeignKey<O, CountryRecord> key) {
-        super(child, key, COUNTRY);
+    public <O extends Record> Country(Table<O> path, ForeignKey<O, CountryRecord> childPath, InverseForeignKey<O, CountryRecord> parentPath) {
+        super(path, childPath, parentPath, COUNTRY);
+    }
+
+    public static class CountryPath extends Country implements Path<CountryRecord> {
+        public <O extends Record> CountryPath(Table<O> path, ForeignKey<O, CountryRecord> childPath, InverseForeignKey<O, CountryRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -111,6 +120,18 @@ public class Country extends TableImpl<CountryRecord> {
     @Override
     public UniqueKey<CountryRecord> getPrimaryKey() {
         return Keys.COUNTRY_PKEY;
+    }
+
+    private transient CityPath _city;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.city</code> table
+     */
+    public CityPath city() {
+        if (_city == null)
+            _city = new CityPath(this, null, Keys.CITY__CITY_COUNTRY_ID_FKEY.getInverseKey());
+
+        return _city;
     }
 
     @Override

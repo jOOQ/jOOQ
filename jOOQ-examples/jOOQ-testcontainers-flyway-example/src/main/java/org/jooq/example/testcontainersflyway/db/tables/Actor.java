@@ -14,7 +14,9 @@ import org.jooq.ForeignKey;
 import org.jooq.Function4;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row4;
@@ -27,6 +29,8 @@ import org.jooq.UniqueKey;
 import org.jooq.example.testcontainersflyway.db.Indexes;
 import org.jooq.example.testcontainersflyway.db.Keys;
 import org.jooq.example.testcontainersflyway.db.Public;
+import org.jooq.example.testcontainersflyway.db.tables.Film.FilmPath;
+import org.jooq.example.testcontainersflyway.db.tables.FilmActor.FilmActorPath;
 import org.jooq.example.testcontainersflyway.db.tables.records.ActorRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -103,8 +107,14 @@ public class Actor extends TableImpl<ActorRecord> {
         this(DSL.name("actor"), null);
     }
 
-    public <O extends Record> Actor(Table<O> child, ForeignKey<O, ActorRecord> key) {
-        super(child, key, ACTOR);
+    public <O extends Record> Actor(Table<O> path, ForeignKey<O, ActorRecord> childPath, InverseForeignKey<O, ActorRecord> parentPath) {
+        super(path, childPath, parentPath, ACTOR);
+    }
+
+    public static class ActorPath extends Actor implements Path<ActorRecord> {
+        public <O extends Record> ActorPath(Table<O> path, ForeignKey<O, ActorRecord> childPath, InverseForeignKey<O, ActorRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -125,6 +135,27 @@ public class Actor extends TableImpl<ActorRecord> {
     @Override
     public UniqueKey<ActorRecord> getPrimaryKey() {
         return Keys.ACTOR_PKEY;
+    }
+
+    private transient FilmActorPath _filmActor;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.film_actor</code>
+     * table
+     */
+    public FilmActorPath filmActor() {
+        if (_filmActor == null)
+            _filmActor = new FilmActorPath(this, null, Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY.getInverseKey());
+
+        return _filmActor;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>public.film</code>
+     * table
+     */
+    public FilmPath film() {
+        return filmActor().film();
     }
 
     @Override

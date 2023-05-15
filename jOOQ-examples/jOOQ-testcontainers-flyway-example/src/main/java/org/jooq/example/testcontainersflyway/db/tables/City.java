@@ -14,7 +14,9 @@ import org.jooq.ForeignKey;
 import org.jooq.Function4;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row4;
@@ -27,6 +29,8 @@ import org.jooq.UniqueKey;
 import org.jooq.example.testcontainersflyway.db.Indexes;
 import org.jooq.example.testcontainersflyway.db.Keys;
 import org.jooq.example.testcontainersflyway.db.Public;
+import org.jooq.example.testcontainersflyway.db.tables.Address.AddressPath;
+import org.jooq.example.testcontainersflyway.db.tables.Country.CountryPath;
 import org.jooq.example.testcontainersflyway.db.tables.records.CityRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -103,8 +107,14 @@ public class City extends TableImpl<CityRecord> {
         this(DSL.name("city"), null);
     }
 
-    public <O extends Record> City(Table<O> child, ForeignKey<O, CityRecord> key) {
-        super(child, key, CITY);
+    public <O extends Record> City(Table<O> path, ForeignKey<O, CityRecord> childPath, InverseForeignKey<O, CityRecord> parentPath) {
+        super(path, childPath, parentPath, CITY);
+    }
+
+    public static class CityPath extends City implements Path<CityRecord> {
+        public <O extends Record> CityPath(Table<O> path, ForeignKey<O, CityRecord> childPath, InverseForeignKey<O, CityRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -132,16 +142,29 @@ public class City extends TableImpl<CityRecord> {
         return Arrays.asList(Keys.CITY__CITY_COUNTRY_ID_FKEY);
     }
 
-    private transient Country _country;
+    private transient CountryPath _country;
 
     /**
      * Get the implicit join path to the <code>public.country</code> table.
      */
-    public Country country() {
+    public CountryPath country() {
         if (_country == null)
-            _country = new Country(this, Keys.CITY__CITY_COUNTRY_ID_FKEY);
+            _country = new CountryPath(this, Keys.CITY__CITY_COUNTRY_ID_FKEY, null);
 
         return _country;
+    }
+
+    private transient AddressPath _address;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.address</code>
+     * table
+     */
+    public AddressPath address() {
+        if (_address == null)
+            _address = new AddressPath(this, null, Keys.ADDRESS__ADDRESS_CITY_ID_FKEY.getInverseKey());
+
+        return _address;
     }
 
     @Override

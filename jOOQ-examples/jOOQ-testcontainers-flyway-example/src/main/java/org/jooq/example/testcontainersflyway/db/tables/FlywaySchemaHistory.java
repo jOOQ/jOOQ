@@ -10,11 +10,9 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Function10;
 import org.jooq.Index;
 import org.jooq.Name;
-import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row10;
 import org.jooq.Schema;
@@ -132,10 +130,6 @@ public class FlywaySchemaHistory extends TableImpl<FlywaySchemaHistoryRecord> {
      */
     public FlywaySchemaHistory() {
         this(DSL.name("flyway_schema_history"), null);
-    }
-
-    public <O extends Record> FlywaySchemaHistory(Table<O> child, ForeignKey<O, FlywaySchemaHistoryRecord> key) {
-        super(child, key, FLYWAY_SCHEMA_HISTORY);
     }
 
     @Override

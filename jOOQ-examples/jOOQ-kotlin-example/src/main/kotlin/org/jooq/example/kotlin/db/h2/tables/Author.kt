@@ -10,7 +10,9 @@ import java.util.function.Function
 import org.jooq.Field
 import org.jooq.ForeignKey
 import org.jooq.Identity
+import org.jooq.InverseForeignKey
 import org.jooq.Name
+import org.jooq.Path
 import org.jooq.Record
 import org.jooq.Records
 import org.jooq.Row6
@@ -21,7 +23,10 @@ import org.jooq.TableField
 import org.jooq.TableOptions
 import org.jooq.UniqueKey
 import org.jooq.example.kotlin.db.h2.Public
+import org.jooq.example.kotlin.db.h2.keys.FK_T_BOOK_AUTHOR_ID
+import org.jooq.example.kotlin.db.h2.keys.FK_T_BOOK_CO_AUTHOR_ID
 import org.jooq.example.kotlin.db.h2.keys.PK_T_AUTHOR
+import org.jooq.example.kotlin.db.h2.tables.Book.BookPath
 import org.jooq.example.kotlin.db.h2.tables.records.AuthorRecord
 import org.jooq.impl.DSL
 import org.jooq.impl.Internal
@@ -35,15 +40,17 @@ import org.jooq.impl.TableImpl
 @Suppress("UNCHECKED_CAST")
 open class Author(
     alias: Name,
-    child: Table<out Record>?,
-    path: ForeignKey<out Record, AuthorRecord>?,
+    path: Table<out Record>?,
+    childPath: ForeignKey<out Record, AuthorRecord>?,
+    parentPath: InverseForeignKey<out Record, AuthorRecord>?,
     aliased: Table<AuthorRecord>?,
     parameters: Array<Field<*>?>?
 ): TableImpl<AuthorRecord>(
     alias,
     Public.PUBLIC,
-    child,
     path,
+    childPath,
+    parentPath,
     aliased,
     parameters,
     DSL.comment(""),
@@ -92,8 +99,8 @@ open class Author(
      */
     val ADDRESS: TableField<AuthorRecord, String?> = createField(DSL.name("ADDRESS"), SQLDataType.VARCHAR(50), this, "")
 
-    private constructor(alias: Name, aliased: Table<AuthorRecord>?): this(alias, null, null, aliased, null)
-    private constructor(alias: Name, aliased: Table<AuthorRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
+    private constructor(alias: Name, aliased: Table<AuthorRecord>?): this(alias, null, null, null, aliased, null)
+    private constructor(alias: Name, aliased: Table<AuthorRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters)
 
     /**
      * Create an aliased <code>PUBLIC.AUTHOR</code> table reference
@@ -110,10 +117,44 @@ open class Author(
      */
     constructor(): this(DSL.name("AUTHOR"), null)
 
-    constructor(child: Table<out Record>, key: ForeignKey<out Record, AuthorRecord>): this(Internal.createPathAlias(child, key), child, key, AUTHOR, null)
+    constructor(path: Table<out Record>, childPath: ForeignKey<out Record, AuthorRecord>?, parentPath: InverseForeignKey<out Record, AuthorRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, AUTHOR, null)
+
+    open class AuthorPath(path: Table<out Record>, childPath: ForeignKey<out Record, AuthorRecord>?, parentPath: InverseForeignKey<out Record, AuthorRecord>?) : Author(path, childPath, parentPath), Path<AuthorRecord>
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getIdentity(): Identity<AuthorRecord, Int?> = super.getIdentity() as Identity<AuthorRecord, Int?>
     override fun getPrimaryKey(): UniqueKey<AuthorRecord> = PK_T_AUTHOR
+
+    private lateinit var _fkTBookAuthorId: BookPath
+
+    /**
+     * Get the implicit to-many join path to the <code>PUBLIC.BOOK</code> table,
+     * via the <code>FK_T_BOOK_AUTHOR_ID</code> key
+     */
+    fun fkTBookAuthorId(): BookPath {
+        if (!this::_fkTBookAuthorId.isInitialized)
+            _fkTBookAuthorId = BookPath(this, null, FK_T_BOOK_AUTHOR_ID.inverseKey)
+
+        return _fkTBookAuthorId;
+    }
+
+    val fkTBookAuthorId: BookPath
+        get(): BookPath = fkTBookAuthorId()
+
+    private lateinit var _fkTBookCoAuthorId: BookPath
+
+    /**
+     * Get the implicit to-many join path to the <code>PUBLIC.BOOK</code> table,
+     * via the <code>FK_T_BOOK_CO_AUTHOR_ID</code> key
+     */
+    fun fkTBookCoAuthorId(): BookPath {
+        if (!this::_fkTBookCoAuthorId.isInitialized)
+            _fkTBookCoAuthorId = BookPath(this, null, FK_T_BOOK_CO_AUTHOR_ID.inverseKey)
+
+        return _fkTBookCoAuthorId;
+    }
+
+    val fkTBookCoAuthorId: BookPath
+        get(): BookPath = fkTBookCoAuthorId()
     override fun `as`(alias: String): Author = Author(DSL.name(alias), this)
     override fun `as`(alias: Name): Author = Author(alias, this)
     override fun `as`(alias: Table<*>): Author = Author(alias.getQualifiedName(), this)

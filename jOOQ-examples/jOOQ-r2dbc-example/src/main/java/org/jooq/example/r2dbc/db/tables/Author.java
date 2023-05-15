@@ -10,7 +10,9 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
@@ -22,6 +24,7 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.r2dbc.db.Keys;
 import org.jooq.example.r2dbc.db.R2dbcExample;
+import org.jooq.example.r2dbc.db.tables.Book.BookPath;
 import org.jooq.example.r2dbc.db.tables.records.AuthorRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -93,8 +96,14 @@ public class Author extends TableImpl<AuthorRecord> {
         this(DSL.name("AUTHOR"), null);
     }
 
-    public <O extends Record> Author(Table<O> child, ForeignKey<O, AuthorRecord> key) {
-        super(child, key, AUTHOR);
+    public <O extends Record> Author(Table<O> path, ForeignKey<O, AuthorRecord> childPath, InverseForeignKey<O, AuthorRecord> parentPath) {
+        super(path, childPath, parentPath, AUTHOR);
+    }
+
+    public static class AuthorPath extends Author implements Path<AuthorRecord> {
+        public <O extends Record> AuthorPath(Table<O> path, ForeignKey<O, AuthorRecord> childPath, InverseForeignKey<O, AuthorRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -110,6 +119,19 @@ public class Author extends TableImpl<AuthorRecord> {
     @Override
     public UniqueKey<AuthorRecord> getPrimaryKey() {
         return Keys.PK_AUTHOR;
+    }
+
+    private transient BookPath _book;
+
+    /**
+     * Get the implicit to-many join path to the <code>R2DBC_EXAMPLE.BOOK</code>
+     * table
+     */
+    public BookPath book() {
+        if (_book == null)
+            _book = new BookPath(this, null, Keys.FK_BOOK_AUTHOR.getInverseKey());
+
+        return _book;
     }
 
     @Override

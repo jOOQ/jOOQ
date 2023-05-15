@@ -9,7 +9,9 @@ import java.util.function.Function;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function2;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row2;
@@ -21,6 +23,7 @@ import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.jpa.jooq.DefaultSchema;
 import org.jooq.example.jpa.jooq.Keys;
+import org.jooq.example.jpa.jooq.tables.Film.FilmPath;
 import org.jooq.example.jpa.jooq.tables.records.LanguageRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -87,8 +90,14 @@ public class Language extends TableImpl<LanguageRecord> {
         this(DSL.name("LANGUAGE"), null);
     }
 
-    public <O extends Record> Language(Table<O> child, ForeignKey<O, LanguageRecord> key) {
-        super(child, key, LANGUAGE);
+    public <O extends Record> Language(Table<O> path, ForeignKey<O, LanguageRecord> childPath, InverseForeignKey<O, LanguageRecord> parentPath) {
+        super(path, childPath, parentPath, LANGUAGE);
+    }
+
+    public static class LanguagePath extends Language implements Path<LanguageRecord> {
+        public <O extends Record> LanguagePath(Table<O> path, ForeignKey<O, LanguageRecord> childPath, InverseForeignKey<O, LanguageRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -99,6 +108,32 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public UniqueKey<LanguageRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_C;
+    }
+
+    private transient FilmPath _fkd2yjc1ru34h1smwla3fx7b6nx;
+
+    /**
+     * Get the implicit to-many join path to the <code>PUBLIC.FILM</code> table,
+     * via the <code>FKD2YJC1RU34H1SMWLA3FX7B6NX</code> key
+     */
+    public FilmPath fkd2yjc1ru34h1smwla3fx7b6nx() {
+        if (_fkd2yjc1ru34h1smwla3fx7b6nx == null)
+            _fkd2yjc1ru34h1smwla3fx7b6nx = new FilmPath(this, null, Keys.FKD2YJC1RU34H1SMWLA3FX7B6NX.getInverseKey());
+
+        return _fkd2yjc1ru34h1smwla3fx7b6nx;
+    }
+
+    private transient FilmPath _fkn2ub730rpo5b5e9x6u2lwl9ft;
+
+    /**
+     * Get the implicit to-many join path to the <code>PUBLIC.FILM</code> table,
+     * via the <code>FKN2UB730RPO5B5E9X6U2LWL9FT</code> key
+     */
+    public FilmPath fkn2ub730rpo5b5e9x6u2lwl9ft() {
+        if (_fkn2ub730rpo5b5e9x6u2lwl9ft == null)
+            _fkn2ub730rpo5b5e9x6u2lwl9ft = new FilmPath(this, null, Keys.FKN2UB730RPO5B5E9X6U2LWL9FT.getInverseKey());
+
+        return _fkn2ub730rpo5b5e9x6u2lwl9ft;
     }
 
     @Override

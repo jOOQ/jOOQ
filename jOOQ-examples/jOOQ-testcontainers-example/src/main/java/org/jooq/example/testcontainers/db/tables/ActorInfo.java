@@ -7,10 +7,8 @@ package org.jooq.example.testcontainers.db.tables;
 import java.util.function.Function;
 
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Function4;
 import org.jooq.Name;
-import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row4;
 import org.jooq.Schema;
@@ -108,10 +106,6 @@ public class ActorInfo extends TableImpl<ActorInfoRecord> {
      */
     public ActorInfo() {
         this(DSL.name("actor_info"), null);
-    }
-
-    public <O extends Record> ActorInfo(Table<O> child, ForeignKey<O, ActorInfoRecord> key) {
-        super(child, key, ACTOR_INFO);
     }
 
     @Override

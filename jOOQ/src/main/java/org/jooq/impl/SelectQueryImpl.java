@@ -244,6 +244,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.jooq.Asterisk;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -3685,7 +3686,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return getSelectResolveAllAsterisks(Tools.configuration(configuration()).dsl());
     }
 
-    private final Collection<? extends Field<?>> subtract(List<Field<?>> left, List<Field<?>> right) {
+    private static final Collection<? extends Field<?>> subtract(List<? extends Field<?>> left, List<? extends Field<?>> right) {
 
         // [#7921] TODO Make this functionality more generally reusable
         FieldsImpl<?> e = new FieldsImpl<>(right);
@@ -3710,7 +3711,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      */
     final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveImplicitAsterisks() {
         if (getSelectAsSpecified().isEmpty())
-            return resolveAsterisk(new SelectFieldList<>());
+            return resolveAsterisk(new SelectFieldList<SelectFieldOrAsterisk>());
 
         return getSelectAsSpecified();
     }
@@ -3745,14 +3746,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         for (SelectFieldOrAsterisk s : list)
             if (s instanceof Field<?> f)
                 result.add(getResolveProjection(ctx, f));
-            else if (s instanceof QualifiedAsteriskImpl q) {
-                if (q.fields.isEmpty())
+            else if (s instanceof QualifiedAsterisk q) {
+                if (q.$except().isEmpty())
                     if (resolveSupported)
                         result.addAll(Arrays.asList(q.qualifier().fields()));
                     else
                         result.add(s);
                 else if (resolveExcept)
-                    result.addAll(subtract(Arrays.asList(((QualifiedAsterisk) s).qualifier().fields()), (((QualifiedAsteriskImpl) s).fields)));
+                    result.addAll(subtract(Arrays.asList(q.qualifier().fields()), q.$except()));
                 else
                     result.add(s);
             }
@@ -3829,7 +3830,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return resolveAsterisk(result, null);
     }
 
-    private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result, QueryPartList<Field<?>> except) {
+    private final <Q extends QueryPartList<? super Field<?>>> Q resolveAsterisk(Q result, QueryPartCollectionView<? extends Field<?>> except) {
         FieldsImpl<?> e = except == null ? null : new FieldsImpl<>(except);
 
         // [#109] [#489] [#7231]: SELECT * is only applied when at least one

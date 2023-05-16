@@ -11752,7 +11752,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 }
                 else {
                     parse('*');
-                    return lookupTable(positionBeforeName, result == null ? i1 : DSL.name(result.toArray(EMPTY_NAME))).asterisk();
+                    return lookupQualifiedAsterisk(positionBeforeName, result == null ? i1 : DSL.name(result.toArray(EMPTY_NAME)));
                 }
             }
             while (parseIf('.'));
@@ -14305,10 +14305,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private class ParseScope {
-        private boolean                               scopeClear      = false;
-        private final ScopeStack<Name, Table<?>>      tableScope      = new ScopeStack<>();
-        private final ScopeStack<Name, Field<?>>      fieldScope      = new ScopeStack<>();
-        private final ScopeStack<Name, FieldProxy<?>> lookupFields    = new ScopeStack<>();
+        private boolean                                        scopeClear               = false;
+        private final ScopeStack<Name, Table<?>>               tableScope               = new ScopeStack<>();
+        private final ScopeStack<Name, Field<?>>               fieldScope               = new ScopeStack<>();
+        private final ScopeStack<Name, QualifiedAsteriskProxy> lookupQualifiedAsterisks = new ScopeStack<>();
+        private final ScopeStack<Name, FieldProxy<?>>          lookupFields             = new ScopeStack<>();
 
 
 
@@ -14327,6 +14328,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         private final void scopeResolve() {
             if (!lookupFields.isEmpty())
                 unknownField(lookupFields.iterator().next());
+            if (!lookupQualifiedAsterisks.isEmpty())
+                unknownTable(lookupQualifiedAsterisks.iterator().next());
         }
 
         private final void scopeStart() {
@@ -14334,10 +14337,28 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             fieldScope.scopeStart();
             lookupFields.scopeStart();
             lookupFields.setAll(null);
+            lookupQualifiedAsterisks.scopeStart();
+            lookupQualifiedAsterisks.setAll(null);
         }
 
         private final void scopeEnd(Query scopeOwner) {
-            List<FieldProxy<?>> retain = new ArrayList<>();
+            List<FieldProxy<?>> fields = new ArrayList<>();
+
+            // [#14372] Avoid looking up tables at a higher scope level
+            lookupLoop:
+            for (QualifiedAsteriskProxy lookup : scope.lookupQualifiedAsterisks.iterableAtScopeLevel()) {
+                for (Table<?> t : scope.tableScope) {
+
+                    // [#15056] TODO: Could there be an ambiguity, as with fields?
+                    if (t.getName().equals(lookup.$table().getName())) {
+                        lookup.delegate((QualifiedAsteriskImpl) t.asterisk());
+                        continue lookupLoop;
+                    }
+                }
+
+                // [#15056] TODO: Should we support references to higher scopes?
+                unknownTable(lookup);
+            }
 
             // [#14372] Avoid looking up fields at a higher scope level
             for (FieldProxy<?> lookup : scope.lookupFields.iterableAtScopeLevel()) {
@@ -14362,15 +14383,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 }
                 else {
                     lookup.scopeOwner(scopeOwner);
-                    retain.add(lookup);
+                    fields.add(lookup);
                 }
             }
 
+            scope.lookupQualifiedAsterisks.scopeEnd();
             scope.lookupFields.scopeEnd();
             scope.tableScope.scopeEnd();
             scope.fieldScope.scopeEnd();
 
-            for (FieldProxy<?> r : retain)
+            for (FieldProxy<?> r : fields)
                 if (scope.lookupFields.get(r.getQualifiedName()) == null)
                     if (scope.lookupFields.inScope())
                         scope.lookupFields.set(r.getQualifiedName(), r);
@@ -14417,6 +14439,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (metaLookups() == THROW_ON_FAILURE) {
                     position(field.position());
                     throw exception("Unknown field identifier");
+                }
+            }
+        }
+
+        private final void unknownTable(QualifiedAsteriskProxy asterisk) {
+            if (!scopeClear) {
+                if (metaLookups() == THROW_ON_FAILURE) {
+                    position(asterisk.position());
+                    throw exception("Unknown table identifier");
                 }
             }
         }
@@ -14495,6 +14526,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         return table(name);
+    }
+
+    private final QualifiedAsterisk lookupQualifiedAsterisk(int positionBeforeName, Name name) {
+        if (metaLookups() == ParseWithMetaLookups.OFF || scope.lookupQualifiedAsterisks.scopeLevel() < 0)
+            return table(name).asterisk();
+
+        QualifiedAsteriskProxy asterisk = scope.lookupQualifiedAsterisks.get(name);
+        if (asterisk == null)
+            scope.lookupQualifiedAsterisks.set(name, asterisk = new QualifiedAsteriskProxy((QualifiedAsteriskImpl) table(name).asterisk(), positionBeforeName));
+
+        return asterisk;
     }
 
     private final Field<?> lookupField(int positionBeforeName, Name name) {

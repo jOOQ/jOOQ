@@ -736,9 +736,9 @@ implements
             return onKey((ForeignKey<?, ?>) rightToLeft.get(0), rhs, lhs);
 
         if (rightToLeft.isEmpty() && leftToRight.isEmpty())
-            throw onKeyException(OnKeyExceptionReason.NOT_FOUND, leftToRight, rightToLeft);
+            throw onKeyException(OnKeyExceptionReason.NOT_FOUND, null, null);
         else
-            throw onKeyException(OnKeyExceptionReason.AMBIGUOUS, null, null);
+            throw onKeyException(OnKeyExceptionReason.AMBIGUOUS, leftToRight, rightToLeft);
     }
 
     @Override

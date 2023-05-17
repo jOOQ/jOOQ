@@ -51,9 +51,32 @@ public interface EmbeddableColumnDefinition extends TypedElementDefinition<Embed
     ColumnDefinition getReferencingColumn();
 
     /**
+     * The data type definition of the embeddable.
+     * <p>
+     * This may be different from the data type definition of the
+     * {@link #getReferencingColumn()}, depending on what
+     * {@link #merge(EmbeddableColumnDefinition)} produced as a result e.g. of
+     * merging multiple distinct nullabilities.
+     */
+    @Override
+    DataTypeDefinition getType();
+
+    /**
      * The {@link PositionedDefinition#getPosition()} of
      * {@link #getReferencingColumn()} within its defining table.
      */
     int getReferencingColumnPosition();
+
+    /**
+     * Merge type information of another referencing
+     * {@link EmbeddableColumnDefinition} into this
+     * {@link EmbeddableColumnDefinition}.
+     * <p>
+     * Multiple referencing column definitions can be used to define an
+     * embeddable column definition. The types and constraints on these
+     * alternative references may differ. For example, one column may be
+     * nullable, others may not be nullable.
+     */
+    void merge(EmbeddableColumnDefinition other);
 
 }

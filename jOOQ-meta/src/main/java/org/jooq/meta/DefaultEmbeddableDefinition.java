@@ -180,6 +180,21 @@ public class DefaultEmbeddableDefinition
     }
 
     @Override
+    public void merge(EmbeddableDefinition other) {
+        int size = embeddableColumns.size();
+
+        if (size != other.getColumns().size()) {
+            log.warn("Embeddable " + getName() + " has two references with non-matching column sets: "
+                + getReferencingName() + " (" + this + ") and "
+                + other.getReferencingName() + " (" + other + ")");
+            return;
+        }
+
+        for (int i = 0; i < size; i++)
+            embeddableColumns.get(i).merge(other.getColumns().get(i));
+    }
+
+    @Override
     public String toString() {
         return super.toString() + " (referenced by " + getReferencingTable() + " " + getColumns() + ")";
     }

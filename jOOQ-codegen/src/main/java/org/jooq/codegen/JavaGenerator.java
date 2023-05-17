@@ -5557,7 +5557,14 @@ public class JavaGenerator extends AbstractGenerator {
                 final String s = getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO);
                 final String g = getStrategy().getJavaMemberName(column, Mode.POJO);
 
-                out.tab(1).println("%s = value.%s", s, g);
+                out.tab(1).println("%s = value.%s[[before= ?: throw NullPointerException(\"Shared embeddable allows NULL value for column ][after=, but this table does not\")][%s]]",
+                    s, g,
+                    list(kotlinEffectivelyNotNull(out, column.getReferencingColumn(), Mode.POJO) &&
+                        !kotlinEffectivelyNotNull(out, column, Mode.POJO)
+                        ? column.getReferencingColumn().getName()
+                        : null
+                    )
+                );
             }
         }
         else {
@@ -8404,13 +8411,12 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private boolean kotlinEffectivelyNotNull(JavaWriter out, TypedElementDefinition<?> typed, Mode mode) {
-        if (mode == Mode.POJO && generateKotlinNotNullPojoAttributes() ||
+        return (
+            mode == Mode.POJO && generateKotlinNotNullPojoAttributes() ||
             mode == Mode.RECORD && generateKotlinNotNullRecordAttributes() ||
             mode == Mode.INTERFACE && generateKotlinNotNullInterfaceAttributes() ||
-            mode == Mode.DEFAULT)
-            return effectivelyNotNull(out, typed) ? true : false;
-        else
-            return false;
+            mode == Mode.DEFAULT
+        ) && effectivelyNotNull(out, typed);
     }
 
     private boolean effectivelyNotNull(JavaWriter out, TypedElementDefinition<?> column) {

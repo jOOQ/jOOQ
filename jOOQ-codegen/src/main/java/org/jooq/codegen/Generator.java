@@ -41,11 +41,13 @@ package org.jooq.codegen;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jooq.Condition;
 import org.jooq.Constants;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Path;
 import org.jooq.Spatial;
+import org.jooq.Table;
 import org.jooq.XML;
 import org.jooq.impl.DAOImpl;
 import org.jooq.meta.Database;
@@ -1286,6 +1288,18 @@ public interface Generator {
      * Whether to generate String in text block format.
      */
     void setGenerateTextBlocks(GeneratedTextBlocks textBlocks);
+
+    /**
+     * Whether to generate overrides for {@link Table#where(Condition)} and
+     * related overloads.
+     */
+    boolean generateWhereMethodOverrides();
+
+    /**
+     * Whether to generate overrides for {@link Table#where(Condition)} and
+     * related overloads.
+     */
+    void setGenerateWhereMethodOverrides(boolean whereMethodOverrides);
 
     /**
      * The target directory

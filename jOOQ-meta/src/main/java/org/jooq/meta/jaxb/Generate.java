@@ -244,6 +244,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "DETECT_FROM_JDK")
     @XmlSchemaType(name = "string")
     protected GeneratedTextBlocks textBlocks = GeneratedTextBlocks.DETECT_FROM_JDK;
+    @XmlElement(defaultValue = "true")
+    protected Boolean whereMethodOverrides = true;
 
     /**
      * Generate index information.
@@ -2695,6 +2697,30 @@ public class Generate implements Serializable, XMLAppendable
         this.textBlocks = value;
     }
 
+    /**
+     * Whether to generate overrides for {@link org.jooq.Table#where(org.jooq.Condition)} and related overloads.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isWhereMethodOverrides() {
+        return whereMethodOverrides;
+    }
+
+    /**
+     * Sets the value of the whereMethodOverrides property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setWhereMethodOverrides(Boolean value) {
+        this.whereMethodOverrides = value;
+    }
+
     public Generate withIndexes(Boolean value) {
         setIndexes(value);
         return this;
@@ -3268,6 +3294,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withWhereMethodOverrides(Boolean value) {
+        setWhereMethodOverrides(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("indexes", indexes);
@@ -3374,6 +3405,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("indentation", indentation);
         builder.append("printMarginForBlockComment", printMarginForBlockComment);
         builder.append("textBlocks", textBlocks);
+        builder.append("whereMethodOverrides", whereMethodOverrides);
     }
 
     @Override
@@ -4331,6 +4363,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (whereMethodOverrides == null) {
+            if (other.whereMethodOverrides!= null) {
+                return false;
+            }
+        } else {
+            if (!whereMethodOverrides.equals(other.whereMethodOverrides)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -4442,6 +4483,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((indentation == null)? 0 :indentation.hashCode()));
         result = ((prime*result)+((printMarginForBlockComment == null)? 0 :printMarginForBlockComment.hashCode()));
         result = ((prime*result)+((textBlocks == null)? 0 :textBlocks.hashCode()));
+        result = ((prime*result)+((whereMethodOverrides == null)? 0 :whereMethodOverrides.hashCode()));
         return result;
     }
 

@@ -172,6 +172,7 @@ abstract class AbstractGenerator implements Generator {
     String                             generateIndentation;
     int                                generatePrintMarginForBlockComment               = 80;
     GeneratedTextBlocks                generateTextBlocks                               = GeneratedTextBlocks.DETECT_FROM_JDK;
+    boolean                            generateWhereMethodOverrides                     = true;
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                                   = "UTF-8";
@@ -1369,6 +1370,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateTextBlocks(GeneratedTextBlocks textBlocks) {
         this.generateTextBlocks = textBlocks;
+    }
+
+    @Override
+    public boolean generateWhereMethodOverrides() {
+        return generateWhereMethodOverrides;
+    }
+
+    @Override
+    public void setGenerateWhereMethodOverrides(boolean whereMethodOverrides) {
+        this.generateWhereMethodOverrides = whereMethodOverrides;
     }
 
     // ----

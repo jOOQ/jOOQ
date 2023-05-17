@@ -124,6 +124,7 @@ implements
 
     final FieldsImpl<R>                  fields;
     final Alias<Table<R>>                alias;
+    final Condition                      where;
 
     protected final Field<?>[]           parameters;
     final Table<?>                       path;
@@ -239,7 +240,10 @@ implements
         this(name, schema, path, childPath, null, aliased, parameters, comment, options);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    /**
+     * @deprecated - [#8012] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
     public TableImpl(
         Name name,
         Schema schema,
@@ -250,6 +254,22 @@ implements
         Field<?>[] parameters,
         Comment comment,
         TableOptions options
+    ) {
+        this(name, schema, path, childPath, parentPath, aliased, parameters, comment, options, null);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public TableImpl(
+        Name name,
+        Schema schema,
+        Table<?> path,
+        ForeignKey<?, R> childPath,
+        InverseForeignKey<?, R> parentPath,
+        Table<R> aliased,
+        Field<?>[] parameters,
+        Comment comment,
+        TableOptions options,
+        Condition where
     ) {
         super(options, name, schema, comment);
 
@@ -291,6 +311,7 @@ implements
             this.alias = null;
 
         this.parameters = parameters;
+        this.where = where;
     }
 
     static final Table<?> path(Table<?> t) {
@@ -367,7 +388,14 @@ implements
 
     @Override
     final FieldsImpl<R> fields0() {
-        return fields;
+
+        // [#8012] Implement the same behaviour as InlineDerivedTable to make
+        //         sure we produce the proper qualification of fields also when
+        //         dereferencing a field using Table.field(String), for example
+        if (where != null)
+            return new InlineDerivedTable<>(this, where).fields0();
+        else
+            return fields;
     }
 
     // [#8489] this override is necessary due to a Scala compiler bug (versions 2.10 and 2.11)

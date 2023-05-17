@@ -922,6 +922,8 @@ public class GenerationTool {
                 generator.setGeneratePrintMarginForBlockComment(g.getGenerate().getPrintMarginForBlockComment());
             if (g.getGenerate().getTextBlocks() != null)
                 generator.setGenerateTextBlocks(g.getGenerate().getTextBlocks());
+            if (g.getGenerate().isWhereMethodOverrides() != null)
+                generator.setGenerateWhereMethodOverrides(g.getGenerate().isWhereMethodOverrides());
 
 
             if (!isBlank(d.getSchemaVersionProvider()))

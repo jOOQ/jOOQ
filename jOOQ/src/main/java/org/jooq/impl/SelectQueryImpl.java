@@ -156,6 +156,7 @@ import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 // ...
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.unquotedName;
@@ -261,6 +262,7 @@ import java.util.function.Function;
 
 import org.jooq.Asterisk;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -271,6 +273,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GeneratorStatementType;
 import org.jooq.GroupField;
+import org.jooq.InverseForeignKey;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONObjectReturningStep;
@@ -288,6 +291,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectField;
@@ -304,6 +308,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
+import org.jooq.TableOptions;
 import org.jooq.TablePartitionByStep;
 // ...
 // ...
@@ -2708,18 +2713,31 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         ));
     }
 
-    private final boolean hasInlineDerivedTables(TableList tablelist) {
-        return anyMatch(tablelist, t ->
-               t instanceof InlineDerivedTable
-            || t instanceof JoinTable && hasInlineDerivedTables((JoinTable) t)
-        );
+    private static final <R extends Record> Table<R> inlineDerivedTable(Table<R> t) {
+        if (t instanceof InlineDerivedTable<R> i) {
+            return i;
+        }
+        else if (t instanceof TableImpl<R> i) {
+            if (i.where != null)
+                return new InlineDerivedTable<>(removeWhere(i), i.where);
+
+            Table<R> unaliased = Tools.unalias(i);
+            if (unaliased instanceof TableImpl<R> u) {
+                if (u.where != null)
+                    return new InlineDerivedTable<>(removeWhere(u), u.where).query().asTable(i);
+            }
+        }
+
+        return null;
     }
 
-    private final boolean hasInlineDerivedTables(JoinTable join) {
-        return join.lhs instanceof InlineDerivedTable
-            || join.rhs instanceof InlineDerivedTable
-            || join.lhs instanceof JoinTable && hasInlineDerivedTables((JoinTable) join.lhs)
-            || join.rhs instanceof JoinTable && hasInlineDerivedTables((JoinTable) join.rhs);
+    private static final boolean hasInlineDerivedTables(Table<?> t) {
+        return inlineDerivedTable(t) != null
+            || t instanceof JoinTable && (hasInlineDerivedTables(((JoinTable<?>) t).lhs) || hasInlineDerivedTables(((JoinTable<?>) t).rhs));
+    }
+
+    private static final boolean hasInlineDerivedTables(TableList tablelist) {
+        return anyMatch(tablelist, t -> hasInlineDerivedTables(t));
     }
 
 
@@ -2755,7 +2773,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private final TableList transformInlineDerivedTables(TableList tablelist, ConditionProviderImpl where) {
+    private static final TableList transformInlineDerivedTables(TableList tablelist, ConditionProviderImpl where) {
         if (!hasInlineDerivedTables(tablelist))
             return tablelist;
 
@@ -2767,10 +2785,35 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return result;
     }
 
-    private final void transformInlineDerivedTable0(Table<?> table, TableList result, ConditionProviderImpl where) {
-        if (table instanceof InlineDerivedTable<?> t) {
-            result.add(t.table);
-            where.addConditions(t.condition);
+    private static final <R extends Record> Table<R> removeWhere(Table<R> t) {
+        if (t instanceof TableImpl<R> i) {
+            return new TableImpl<>(
+                i.getQualifiedName(),
+                i.getSchema(),
+                i.path,
+                i.childPath,
+                i.parentPath,
+                i.alias != null ? removeWhere(i.alias.wrapped) : null,
+                i.parameters,
+                i.getCommentPart(),
+                i.getOptions(),
+                null
+            );
+        }
+        else
+            return t;
+    }
+
+    private static final void transformInlineDerivedTable0(Table<?> table, TableList result, ConditionProviderImpl where) {
+        Table<?> t = inlineDerivedTable(table);
+
+        if (t != null) {
+            if (t instanceof InlineDerivedTable<?> i) {
+                result.add(i.table);
+                where.addConditions(i.condition);
+            }
+            else
+                result.add(t);
         }
         else if (table instanceof JoinTable)
             result.add(transformInlineDerivedTables0(table, where, false));
@@ -2778,15 +2821,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             result.add(table);
     }
 
-    private final Table<?> transformInlineDerivedTables0(Table<?> table, ConditionProviderImpl where, boolean keepDerivedTable) {
-        if (table instanceof InlineDerivedTable<?> t) {
-            if (keepDerivedTable)
-                return t.query().asTable(t.table);
+    private static final Table<?> transformInlineDerivedTables0(Table<?> table, ConditionProviderImpl where, boolean keepDerivedTable) {
+        Table<?> t = inlineDerivedTable(table);
 
-            where.addConditions(t.condition);
-            return t.table;
+        if (t != null) {
+            if (t instanceof InlineDerivedTable<?> i) {
+                if (keepDerivedTable)
+                    return i.query().asTable(i.table);
+
+                where.addConditions(i.condition);
+                return i.table;
+            }
+            else
+                return t;
         }
-        else if (table instanceof JoinTable j) {
+        else if (table instanceof JoinTable<?> j) {
             Table<?> lhs;
             Table<?> rhs;
 

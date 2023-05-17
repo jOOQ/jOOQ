@@ -2459,6 +2459,10 @@ This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb
       <element name="textBlocks" type="tns:GeneratedTextBlocks" minOccurs="0" maxOccurs="1" default="DETECT_FROM_JDK">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to generate String in text block format.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="whereMethodOverrides" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to generate overrides for {@link org.jooq.Table#where(org.jooq.Condition)} and related overloads.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 

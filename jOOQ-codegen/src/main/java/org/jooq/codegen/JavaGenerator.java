@@ -59,7 +59,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
-import static org.jooq.meta.jaxb.VisibilityModifier.PUBLIC;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.io.File;
@@ -97,6 +96,7 @@ import java.util.stream.Stream;
 import org.jooq.AggregateFunction;
 import org.jooq.Catalog;
 import org.jooq.Check;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.DSLContext;
@@ -6313,7 +6313,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("});");
             }
             else
-                out.println("this(alias, aliased, null);");
+                out.println("this(alias, aliased, (%s<?>[]) null);", Field.class);
 
             out.println("}");
 
@@ -6328,6 +6328,18 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
 
             out.println("}");
+
+            if (!table.isTableValuedFunction()) {
+                out.println();
+                out.println("private %s(%s alias, %s<%s> aliased, %s where) {", className, Name.class, Table.class, recordType, Condition.class);
+
+                if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
+                    out.println("super(alias, null, null, null, null, aliased, null, %s.comment(\"%s\"), %s.%s(%s), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
+                else
+                    out.println("super(alias, null, null, null, null, aliased, null, %s.comment(\"%s\"), %s.%s(), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
+
+                out.println("}");
+            }
         }
 
         if (scala) {
@@ -7150,6 +7162,15 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("return new %s(name.getQualifiedName(), null);", className);
 
             out.println("}");
+
+            if (!table.isTableValuedFunction()) {
+                out.javadoc("Create an inline derived table from this table");
+                out.override();
+                printNonnullAnnotation(out);
+                out.println("%s%s where(%s condition) {", visibilityPublic(), className, Condition.class);
+                out.println("return new %s(getQualifiedName(), aliased() ? this : null, condition);", className);
+                out.println("}");
+            }
         }
 
 

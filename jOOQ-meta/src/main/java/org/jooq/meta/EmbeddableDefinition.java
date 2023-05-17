@@ -116,4 +116,15 @@ public interface EmbeddableDefinition extends TableElementDefinition {
      */
     boolean replacesFields();
 
+    /**
+     * Merge type information of another {@link EmbeddableDefinition} into this
+     * {@link EmbeddableDefinition}.
+     * <p>
+     * Multiple referencing column definitions can be used to define an
+     * embeddable column definition. The types and constraints on these
+     * alternative references may differ. For example, one column may be
+     * nullable, others may not be nullable.
+     */
+    void merge(EmbeddableDefinition other);
+
 }

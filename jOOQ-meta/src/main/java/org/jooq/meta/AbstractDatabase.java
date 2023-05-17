@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.groupingBy;
 import static org.jooq.Log.Level.ERROR;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -2619,6 +2620,20 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
+        // [#14991] Make sure shared embeddables have updated data types that
+        //          match all the referencing columns, e.g. to ensure correct
+        //          nullability.
+        result
+            .values()
+            .stream()
+            .collect(groupingBy(e -> e.getQualifiedInputNamePart()))
+            .forEach((n, l) -> {
+                for (EmbeddableDefinition e1 : l)
+                    for (EmbeddableDefinition e2 : l)
+                        if (e1 != e2)
+                            e1.merge(e2);
+            });
 
         return new ArrayList<>(result.values());
     }

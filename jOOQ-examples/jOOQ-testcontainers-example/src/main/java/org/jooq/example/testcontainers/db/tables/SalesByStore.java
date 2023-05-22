@@ -5,15 +5,22 @@ package org.jooq.example.testcontainers.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Function3;
 import org.jooq.Name;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Records;
 import org.jooq.Row3;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -61,7 +68,7 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
     public final TableField<SalesByStoreRecord, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), SQLDataType.NUMERIC, this, "");
 
     private SalesByStore(Name alias, Table<SalesByStoreRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private SalesByStore(Name alias, Table<SalesByStoreRecord> aliased, Field<?>[] parameters) {
@@ -80,6 +87,24 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
         GROUP BY cy.country, c.city, s.store_id, m.first_name, m.last_name
         ORDER BY cy.country, c.city;
         """));
+    }
+
+    private SalesByStore(Name alias, Table<SalesByStoreRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.view("""
+        create view "sales_by_store" as  SELECT (((c.city)::text || ','::text) || (cy.country)::text) AS store,
+          (((m.first_name)::text || ' '::text) || (m.last_name)::text) AS manager,
+          sum(p.amount) AS total_sales
+         FROM (((((((payment p
+           JOIN rental r ON ((p.rental_id = r.rental_id)))
+           JOIN inventory i ON ((r.inventory_id = i.inventory_id)))
+           JOIN store s ON ((i.store_id = s.store_id)))
+           JOIN address a ON ((s.address_id = a.address_id)))
+           JOIN city c ON ((a.city_id = c.city_id)))
+           JOIN country cy ON ((c.country_id = cy.country_id)))
+           JOIN staff m ON ((s.manager_staff_id = m.staff_id)))
+        GROUP BY cy.country, c.city, s.store_id, m.first_name, m.last_name
+        ORDER BY cy.country, c.city;
+        """), where);
     }
 
     /**
@@ -145,6 +170,90 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
     @Override
     public SalesByStore rename(Table<?> name) {
         return new SalesByStore(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByStore where(Condition condition) {
+        return new SalesByStore(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByStore where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByStore where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByStore where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public SalesByStore where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public SalesByStore where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public SalesByStore where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public SalesByStore where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByStore whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByStore whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

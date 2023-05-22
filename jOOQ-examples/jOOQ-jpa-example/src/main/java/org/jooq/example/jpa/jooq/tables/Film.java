@@ -6,20 +6,27 @@ package org.jooq.example.jpa.jooq.tables;
 
 import java.time.Year;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function6;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row6;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -87,11 +94,15 @@ public class Film extends TableImpl<FilmRecord> {
     public final TableField<FilmRecord, Integer> ORIGINALLANGUAGE_LANGUAGEID = createField(DSL.name("ORIGINALLANGUAGE_LANGUAGEID"), SQLDataType.INTEGER, this, "");
 
     private Film(Name alias, Table<FilmRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private Film(Name alias, Table<FilmRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    }
+
+    private Film(Name alias, Table<FilmRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -224,6 +235,90 @@ public class Film extends TableImpl<FilmRecord> {
     @Override
     public Film rename(Table<?> name) {
         return new Film(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film where(Condition condition) {
+        return new Film(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Film where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Film where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Film where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Film where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

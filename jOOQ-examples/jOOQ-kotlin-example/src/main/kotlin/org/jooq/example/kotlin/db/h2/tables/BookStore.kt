@@ -6,16 +6,24 @@ package org.jooq.example.kotlin.db.h2.tables
 
 import java.util.function.Function
 
+import kotlin.collections.Collection
+
+import org.jooq.Condition
 import org.jooq.Field
 import org.jooq.ForeignKey
 import org.jooq.InverseForeignKey
 import org.jooq.Name
 import org.jooq.Path
+import org.jooq.PlainSQL
+import org.jooq.QueryPart
 import org.jooq.Record
 import org.jooq.Records
 import org.jooq.Row1
+import org.jooq.SQL
 import org.jooq.Schema
+import org.jooq.Select
 import org.jooq.SelectField
+import org.jooq.Stringly
 import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.TableOptions
@@ -42,7 +50,8 @@ open class BookStore(
     childPath: ForeignKey<out Record, BookStoreRecord>?,
     parentPath: InverseForeignKey<out Record, BookStoreRecord>?,
     aliased: Table<BookStoreRecord>?,
-    parameters: Array<Field<*>?>?
+    parameters: Array<Field<*>?>?,
+    where: Condition?
 ): TableImpl<BookStoreRecord>(
     alias,
     Public.PUBLIC,
@@ -52,7 +61,8 @@ open class BookStore(
     aliased,
     parameters,
     DSL.comment(""),
-    TableOptions.table()
+    TableOptions.table(),
+    where,
 ) {
     companion object {
 
@@ -72,8 +82,9 @@ open class BookStore(
      */
     val NAME: TableField<BookStoreRecord, String?> = createField(DSL.name("NAME"), SQLDataType.VARCHAR(400).nullable(false), this, "")
 
-    private constructor(alias: Name, aliased: Table<BookStoreRecord>?): this(alias, null, null, null, aliased, null)
-    private constructor(alias: Name, aliased: Table<BookStoreRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters)
+    private constructor(alias: Name, aliased: Table<BookStoreRecord>?): this(alias, null, null, null, aliased, null, null)
+    private constructor(alias: Name, aliased: Table<BookStoreRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters, null)
+    private constructor(alias: Name, aliased: Table<BookStoreRecord>?, where: Condition): this(alias, null, null, null, aliased, null, where)
 
     /**
      * Create an aliased <code>PUBLIC.BOOK_STORE</code> table reference
@@ -90,7 +101,7 @@ open class BookStore(
      */
     constructor(): this(DSL.name("BOOK_STORE"), null)
 
-    constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookStoreRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, BOOK_STORE, null)
+    constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookStoreRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, BOOK_STORE, null, null)
 
     open class BookStorePath(path: Table<out Record>, childPath: ForeignKey<out Record, BookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookStoreRecord>?) : BookStore(path, childPath, parentPath), Path<BookStoreRecord>
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
@@ -120,7 +131,7 @@ open class BookStore(
         get(): BookPath = bookToBookStore().book()
     override fun `as`(alias: String): BookStore = BookStore(DSL.name(alias), this)
     override fun `as`(alias: Name): BookStore = BookStore(alias, this)
-    override fun `as`(alias: Table<*>): BookStore = BookStore(alias.getQualifiedName(), this)
+    override fun `as`(alias: Table<*>): BookStore = BookStore(alias.qualifiedName, this)
 
     /**
      * Rename this table
@@ -135,7 +146,57 @@ open class BookStore(
     /**
      * Rename this table
      */
-    override fun rename(name: Table<*>): BookStore = BookStore(name.getQualifiedName(), null)
+    override fun rename(name: Table<*>): BookStore = BookStore(name.qualifiedName, null)
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun where(condition: Condition): BookStore = BookStore(qualifiedName, if (aliased()) this else null, condition)
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun where(conditions: Collection<Condition>): BookStore = where(DSL.and(conditions))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun where(vararg conditions: Condition): BookStore = where(DSL.and(*conditions))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun where(condition: Field<Boolean?>): BookStore = where(DSL.condition(condition))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @PlainSQL override fun where(condition: SQL): BookStore = where(DSL.condition(condition))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @PlainSQL override fun where(@Stringly.SQL condition: String): BookStore = where(DSL.condition(condition))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @PlainSQL override fun where(@Stringly.SQL condition: String, vararg binds: Any?): BookStore = where(DSL.condition(condition, *binds))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @PlainSQL override fun where(@Stringly.SQL condition: String, vararg parts: QueryPart): BookStore = where(DSL.condition(condition, *parts))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun whereExists(select: Select<*>): BookStore = where(DSL.exists(select))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun whereNotExists(select: Select<*>): BookStore = where(DSL.notExists(select))
 
     // -------------------------------------------------------------------------
     // Row1 type methods

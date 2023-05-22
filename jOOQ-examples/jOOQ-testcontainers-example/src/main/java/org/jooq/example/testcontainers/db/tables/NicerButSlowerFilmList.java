@@ -5,15 +5,22 @@ package org.jooq.example.testcontainers.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Function8;
 import org.jooq.Name;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Records;
 import org.jooq.Row8;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -87,7 +94,7 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
     public final TableField<NicerButSlowerFilmListRecord, String> ACTORS = createField(DSL.name("actors"), SQLDataType.CLOB, this, "");
 
     private NicerButSlowerFilmList(Name alias, Table<NicerButSlowerFilmListRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private NicerButSlowerFilmList(Name alias, Table<NicerButSlowerFilmListRecord> aliased, Field<?>[] parameters) {
@@ -107,6 +114,25 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
            JOIN actor ON ((film_actor.actor_id = actor.actor_id)))
         GROUP BY film.film_id, film.title, film.description, category.name, film.rental_rate, film.length, film.rating;
         """));
+    }
+
+    private NicerButSlowerFilmList(Name alias, Table<NicerButSlowerFilmListRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.view("""
+        create view "nicer_but_slower_film_list" as  SELECT film.film_id AS fid,
+          film.title,
+          film.description,
+          category.name AS category,
+          film.rental_rate AS price,
+          film.length,
+          film.rating,
+          group_concat((((upper("substring"((actor.first_name)::text, 1, 1)) || lower("substring"((actor.first_name)::text, 2))) || upper("substring"((actor.last_name)::text, 1, 1))) || lower("substring"((actor.last_name)::text, 2)))) AS actors
+         FROM ((((category
+           LEFT JOIN film_category ON ((category.category_id = film_category.category_id)))
+           LEFT JOIN film ON ((film_category.film_id = film.film_id)))
+           JOIN film_actor ON ((film.film_id = film_actor.film_id)))
+           JOIN actor ON ((film_actor.actor_id = actor.actor_id)))
+        GROUP BY film.film_id, film.title, film.description, category.name, film.rental_rate, film.length, film.rating;
+        """), where);
     }
 
     /**
@@ -174,6 +200,90 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
     @Override
     public NicerButSlowerFilmList rename(Table<?> name) {
         return new NicerButSlowerFilmList(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public NicerButSlowerFilmList where(Condition condition) {
+        return new NicerButSlowerFilmList(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public NicerButSlowerFilmList where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public NicerButSlowerFilmList where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public NicerButSlowerFilmList where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public NicerButSlowerFilmList where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public NicerButSlowerFilmList where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public NicerButSlowerFilmList where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public NicerButSlowerFilmList where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public NicerButSlowerFilmList whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public NicerButSlowerFilmList whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

@@ -7,17 +7,25 @@ package org.jooq.example.kotlin.db.h2.tables
 import java.time.LocalDate
 import java.util.function.Function
 
+import kotlin.collections.Collection
+
+import org.jooq.Condition
 import org.jooq.Field
 import org.jooq.ForeignKey
 import org.jooq.Identity
 import org.jooq.InverseForeignKey
 import org.jooq.Name
 import org.jooq.Path
+import org.jooq.PlainSQL
+import org.jooq.QueryPart
 import org.jooq.Record
 import org.jooq.Records
 import org.jooq.Row6
+import org.jooq.SQL
 import org.jooq.Schema
+import org.jooq.Select
 import org.jooq.SelectField
+import org.jooq.Stringly
 import org.jooq.Table
 import org.jooq.TableField
 import org.jooq.TableOptions
@@ -44,7 +52,8 @@ open class Author(
     childPath: ForeignKey<out Record, AuthorRecord>?,
     parentPath: InverseForeignKey<out Record, AuthorRecord>?,
     aliased: Table<AuthorRecord>?,
-    parameters: Array<Field<*>?>?
+    parameters: Array<Field<*>?>?,
+    where: Condition?
 ): TableImpl<AuthorRecord>(
     alias,
     Public.PUBLIC,
@@ -54,7 +63,8 @@ open class Author(
     aliased,
     parameters,
     DSL.comment(""),
-    TableOptions.table()
+    TableOptions.table(),
+    where,
 ) {
     companion object {
 
@@ -99,8 +109,9 @@ open class Author(
      */
     val ADDRESS: TableField<AuthorRecord, String?> = createField(DSL.name("ADDRESS"), SQLDataType.VARCHAR(50), this, "")
 
-    private constructor(alias: Name, aliased: Table<AuthorRecord>?): this(alias, null, null, null, aliased, null)
-    private constructor(alias: Name, aliased: Table<AuthorRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters)
+    private constructor(alias: Name, aliased: Table<AuthorRecord>?): this(alias, null, null, null, aliased, null, null)
+    private constructor(alias: Name, aliased: Table<AuthorRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters, null)
+    private constructor(alias: Name, aliased: Table<AuthorRecord>?, where: Condition): this(alias, null, null, null, aliased, null, where)
 
     /**
      * Create an aliased <code>PUBLIC.AUTHOR</code> table reference
@@ -117,7 +128,7 @@ open class Author(
      */
     constructor(): this(DSL.name("AUTHOR"), null)
 
-    constructor(path: Table<out Record>, childPath: ForeignKey<out Record, AuthorRecord>?, parentPath: InverseForeignKey<out Record, AuthorRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, AUTHOR, null)
+    constructor(path: Table<out Record>, childPath: ForeignKey<out Record, AuthorRecord>?, parentPath: InverseForeignKey<out Record, AuthorRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, AUTHOR, null, null)
 
     open class AuthorPath(path: Table<out Record>, childPath: ForeignKey<out Record, AuthorRecord>?, parentPath: InverseForeignKey<out Record, AuthorRecord>?) : Author(path, childPath, parentPath), Path<AuthorRecord>
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
@@ -157,7 +168,7 @@ open class Author(
         get(): BookPath = fkTBookCoAuthorId()
     override fun `as`(alias: String): Author = Author(DSL.name(alias), this)
     override fun `as`(alias: Name): Author = Author(alias, this)
-    override fun `as`(alias: Table<*>): Author = Author(alias.getQualifiedName(), this)
+    override fun `as`(alias: Table<*>): Author = Author(alias.qualifiedName, this)
 
     /**
      * Rename this table
@@ -172,7 +183,57 @@ open class Author(
     /**
      * Rename this table
      */
-    override fun rename(name: Table<*>): Author = Author(name.getQualifiedName(), null)
+    override fun rename(name: Table<*>): Author = Author(name.qualifiedName, null)
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun where(condition: Condition): Author = Author(qualifiedName, if (aliased()) this else null, condition)
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun where(conditions: Collection<Condition>): Author = where(DSL.and(conditions))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun where(vararg conditions: Condition): Author = where(DSL.and(*conditions))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun where(condition: Field<Boolean?>): Author = where(DSL.condition(condition))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @PlainSQL override fun where(condition: SQL): Author = where(DSL.condition(condition))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @PlainSQL override fun where(@Stringly.SQL condition: String): Author = where(DSL.condition(condition))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @PlainSQL override fun where(@Stringly.SQL condition: String, vararg binds: Any?): Author = where(DSL.condition(condition, *binds))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @PlainSQL override fun where(@Stringly.SQL condition: String, vararg parts: QueryPart): Author = where(DSL.condition(condition, *parts))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun whereExists(select: Select<*>): Author = where(DSL.exists(select))
+
+    /**
+     * Create an inline derived table from this table
+     */
+    override fun whereNotExists(select: Select<*>): Author = where(DSL.notExists(select))
 
     // -------------------------------------------------------------------------
     // Row6 type methods

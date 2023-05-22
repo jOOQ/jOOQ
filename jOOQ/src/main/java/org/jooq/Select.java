@@ -110,6 +110,12 @@ extends
 
     /**
      * Apply the <code>UNION</code> set operation.
+     * <p>
+     * In SQL, a <code>UNION</code> is <code>DISTINCT</code> by default,
+     * meaning, duplicates are removed from the result set. So, this is the same
+     * as {@link #unionDistinct(Select)}. If duplicate removal isn't required,
+     * or already guaranteed by the data model, it is recommended to use
+     * {@link #unionAll(Select)}, instead.
      *
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
@@ -120,6 +126,23 @@ extends
     @NotNull @CheckReturnValue
     @Support
     Select<R> union(Select<? extends R> select);
+
+    /**
+     * Apply the <code>UNION DISTINCT</code> set operation.
+     * <p>
+     * In SQL, a <code>UNION</code> is <code>DISTINCT</code> by default.
+     * However, it is often useful to make this explicit to express intent when
+     * distinct removal is really desired.
+     *
+     * @throws IllegalArgumentException If the argument select has the same
+     *             identity as this select. The jOOQ 3.x API is mutable, which
+     *             means that calls to the DSL API mutate this instance. Adding
+     *             this instance as an set operation argument would lead to a
+     *             {@link StackOverflowError} when generating the SQL.
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    Select<R> unionDistinct(Select<? extends R> select);
 
     /**
      * Apply the <code>UNION ALL</code> set operation.
@@ -136,6 +159,12 @@ extends
 
     /**
      * Apply the <code>EXCEPT</code> (or <code>MINUS</code>) set operation.
+     * <p>
+     * In SQL, an <code>EXCEPT</code> is <code>DISTINCT</code> by default,
+     * meaning, duplicates are removed from the result set. So, this is the same
+     * as {@link #exceptDistinct(Select)}. If duplicate removal isn't required,
+     * or already guaranteed by the data model, it is recommended to use
+     * {@link #exceptAll(Select)}, instead, if the underlying RDBMS supports it.
      *
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
@@ -146,6 +175,23 @@ extends
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Select<R> except(Select<? extends R> select);
+
+    /**
+     * Apply the <code>EXCEPT</code> (or <code>MINUS</code>) set operation.
+     * <p>
+     * In SQL, an <code>EXCEPT</code> is <code>DISTINCT</code> by default.
+     * However, it is often useful to make this explicit to express intent when
+     * distinct removal is really desired.
+     *
+     * @throws IllegalArgumentException If the argument select has the same
+     *             identity as this select. The jOOQ 3.x API is mutable, which
+     *             means that calls to the DSL API mutate this instance. Adding
+     *             this instance as an set operation argument would lead to a
+     *             {@link StackOverflowError} when generating the SQL.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    Select<R> exceptDistinct(Select<? extends R> select);
 
     /**
      * Apply the <code>EXCEPT ALL</code> set operation.
@@ -162,6 +208,13 @@ extends
 
     /**
      * Apply the <code>INTERSECT</code> set operation.
+     * <p>
+     * In SQL, an <code>INTERSECT</code> is <code>DISTINCT</code> by default,
+     * meaning, duplicates are removed from the result set. So, this is the same
+     * as {@link #intersectDistinct(Select)}. If duplicate removal isn't
+     * required, or already guaranteed by the data model, it is recommended to
+     * use {@link #intersectAll(Select)}, instead, if the underlying RDBMS
+     * supports it. Apply the <code>INTERSECT</code> set operation.
      *
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
@@ -172,6 +225,23 @@ extends
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Select<R> intersect(Select<? extends R> select);
+
+    /**
+     * Apply the <code>INTERSECT</code> set operation.
+     * <p>
+     * In SQL, a <code>INTERSECT</code> is <code>DISTINCT</code> by default.
+     * However, it is often useful to make this explicit to express intent when
+     * distinct removal is really desired.
+     *
+     * @throws IllegalArgumentException If the argument select has the same
+     *             identity as this select. The jOOQ 3.x API is mutable, which
+     *             means that calls to the DSL API mutate this instance. Adding
+     *             this instance as an set operation argument would lead to a
+     *             {@link StackOverflowError} when generating the SQL.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    Select<R> intersectDistinct(Select<? extends R> select);
 
     /**
      * Apply the <code>INTERSECT ALL</code> set operation.

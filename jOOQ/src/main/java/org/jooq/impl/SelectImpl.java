@@ -1996,6 +1996,11 @@ implements
     }
 
     @Override
+    public final SelectImpl unionDistinct(Select<? extends R> select) {
+        return new SelectImpl(getDelegate().unionDistinct(select));
+    }
+
+    @Override
     public final SelectImpl unionAll(Select<? extends R> select) {
         return new SelectImpl(getDelegate().unionAll(select));
     }
@@ -2006,6 +2011,11 @@ implements
     }
 
     @Override
+    public final SelectImpl exceptDistinct(Select<? extends R> select) {
+        return new SelectImpl(getDelegate().exceptDistinct(select));
+    }
+
+    @Override
     public final SelectImpl exceptAll(Select<? extends R> select) {
         return new SelectImpl(getDelegate().exceptAll(select));
     }
@@ -2013,6 +2023,11 @@ implements
     @Override
     public final SelectImpl intersect(Select<? extends R> select) {
         return new SelectImpl(getDelegate().intersect(select));
+    }
+
+    @Override
+    public final SelectImpl intersectDistinct(Select<? extends R> select) {
+        return new SelectImpl(getDelegate().intersectDistinct(select));
     }
 
     @Override

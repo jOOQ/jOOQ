@@ -4666,6 +4666,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final SelectQueryImpl<R> unionDistinct(Select<? extends R> other) {
+        return combine(UNION, other);
+    }
+
+    @Override
     public final SelectQueryImpl<R> unionAll(Select<? extends R> other) {
         return combine(UNION_ALL, other);
     }
@@ -4676,12 +4681,22 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
+    public final SelectQueryImpl<R> exceptDistinct(Select<? extends R> other) {
+        return combine(EXCEPT, other);
+    }
+
+    @Override
     public final SelectQueryImpl<R> exceptAll(Select<? extends R> other) {
         return combine(EXCEPT_ALL, other);
     }
 
     @Override
     public final SelectQueryImpl<R> intersect(Select<? extends R> other) {
+        return combine(INTERSECT, other);
+    }
+
+    @Override
+    public final SelectQueryImpl<R> intersectDistinct(Select<? extends R> other) {
         return combine(INTERSECT, other);
     }
 

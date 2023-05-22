@@ -135,11 +135,29 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
 
     /**
      * Apply the <code>UNION</code> set operation.
+     * <p>
+     * In SQL, a <code>UNION</code> is <code>DISTINCT</code> by default,
+     * meaning, duplicates are removed from the result set. So, this is the same
+     * as {@link #unionDistinct(Select)}. If duplicate removal isn't required,
+     * or already guaranteed by the data model, it is recommended to use
+     * {@link #unionAll(Select)}, instead.
      */
     @Override
     @NotNull @CheckReturnValue
     @Support
     SelectOrderByStep<R> union(Select<? extends R> select);
+
+    /**
+     * Apply the <code>UNION DISTINCT</code> set operation.
+     * <p>
+     * In SQL, a <code>UNION</code> is <code>DISTINCT</code> by default.
+     * However, it is often useful to make this explicit to express intent when
+     * distinct removal is really desired.
+     */
+    @Override
+    @NotNull @CheckReturnValue
+    @Support
+    SelectOrderByStep<R> unionDistinct(Select<? extends R> select);
 
     /**
      * Apply the <code>UNION ALL</code> set operation.
@@ -151,11 +169,29 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
 
     /**
      * Apply the <code>EXCEPT</code> (or <code>MINUS</code>) set operation.
+     * <p>
+     * In SQL, an <code>EXCEPT</code> is <code>DISTINCT</code> by default,
+     * meaning, duplicates are removed from the result set. So, this is the same
+     * as {@link #exceptDistinct(Select)}. If duplicate removal isn't required,
+     * or already guaranteed by the data model, it is recommended to use
+     * {@link #exceptAll(Select)}, instead, if the underlying RDBMS supports it.
      */
     @Override
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectOrderByStep<R> except(Select<? extends R> select);
+
+    /**
+     * Apply the <code>EXCEPT</code> (or <code>MINUS</code>) set operation.
+     * <p>
+     * In SQL, an <code>EXCEPT</code> is <code>DISTINCT</code> by default.
+     * However, it is often useful to make this explicit to express intent when
+     * distinct removal is really desired.
+     */
+    @Override
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    SelectOrderByStep<R> exceptDistinct(Select<? extends R> select);
 
     /**
      * Apply the <code>EXCEPT ALL</code> set operation.
@@ -167,11 +203,33 @@ public interface SelectUnionStep<R extends Record> extends SelectCorrelatedSubqu
 
     /**
      * Apply the <code>INTERSECT</code> set operation.
+     * <p>
+     * In SQL, an <code>INTERSECT</code> is <code>DISTINCT</code> by default,
+     * meaning, duplicates are removed from the result set. So, this is the same
+     * as {@link #intersectDistinct(Select)}. If duplicate removal isn't
+     * required, or already guaranteed by the data model, it is recommended to
+     * use {@link #intersectAll(Select)}, instead, if the underlying RDBMS
+     * supports it. Apply the <code>INTERSECT</code> set operation.
      */
     @Override
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectOrderByStep<R> intersect(Select<? extends R> select);
+
+    /**
+     * Apply the <code>INTERSECT</code> set operation.
+     * <p>
+     * In SQL, an <code>INTERSECT</code> is <code>DISTINCT</code> by default,
+     * meaning, duplicates are removed from the result set. So, this is the same
+     * as {@link #intersectDistinct(Select)}. If duplicate removal isn't
+     * required, or already guaranteed by the data model, it is recommended to
+     * use {@link #intersectAll(Select)}, instead, if the underlying RDBMS
+     * supports it. Apply the <code>INTERSECT</code> set operation.
+     */
+    @Override
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    SelectOrderByStep<R> intersectDistinct(Select<? extends R> select);
 
     /**
      * Apply the <code>INTERSECT ALL</code> set operation.

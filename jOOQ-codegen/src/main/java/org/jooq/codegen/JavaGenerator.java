@@ -116,19 +116,23 @@ import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Parser;
 import org.jooq.Path;
+import org.jooq.PlainSQL;
 // ...
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.RowId;
+import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Sequence;
 import org.jooq.SortOrder;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -6088,7 +6092,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("childPath: %s[_ <: %s, %s],", ForeignKey.class, Record.class, recordType);
             out.println("parentPath: %s[_ <: %s, %s],", InverseForeignKey.class, Record.class, recordType);
             out.println("aliased: %s[%s],", Table.class, recordType);
-            out.println("parameters: %s[ %s[_] ]", out.ref("scala.Array"), Field.class);
+            out.println("parameters: %s[ %s[_] ],", out.ref("scala.Array"), Field.class);
+            out.println("where: %s", Condition.class);
             out.println(")");
             out.println("extends %s[%s](", classExtends, recordType);
             out.println("alias,");
@@ -6101,12 +6106,13 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
 
             if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
-                out.println("%s.%s(%s)", TableOptions.class, tableType, textBlock(table.getSource()));
+                out.println("%s.%s(%s),", TableOptions.class, tableType, textBlock(table.getSource()));
             else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
-                out.println("%s.%s(%s)", TableOptions.class, tableType, textBlock(table.getSource()));
+                out.println("%s.%s(%s),", TableOptions.class, tableType, textBlock(table.getSource()));
             else
-                out.println("%s.%s", TableOptions.class, tableType);
+                out.println("%s.%s,", TableOptions.class, tableType);
 
+            out.println("where");
             out.println(")[[before= with ][separator= with ][%s]] {", interfaces);
         }
         else if (kotlin) {
@@ -6116,7 +6122,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("childPath: %s<out %s, %s>?,", ForeignKey.class, Record.class, recordType);
             out.println("parentPath: %s<out %s, %s>?,", InverseForeignKey.class, Record.class, recordType);
             out.println("aliased: %s<%s>?,", Table.class, recordType);
-            out.println("parameters: Array<%s<*>?>?", Field.class);
+            out.println("parameters: Array<%s<*>?>?,", Field.class);
+            out.println("where: %s?", Condition.class);
             out.println("): %s<%s>(", classExtends, recordType);
             out.println("alias,");
             out.println("%s,", schemaId);
@@ -6128,12 +6135,13 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s.comment(\"%s\"),", DSL.class, escapeString(comment(table)));
 
             if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
-                out.println("%s.%s(%s)", TableOptions.class, tableType, textBlock(table.getSource()));
+                out.println("%s.%s(%s),", TableOptions.class, tableType, textBlock(table.getSource()));
             else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
-                out.println("%s.%s(%s)", TableOptions.class, tableType, textBlock(table.getSource()));
+                out.println("%s.%s(%s),", TableOptions.class, tableType, textBlock(table.getSource()));
             else
-                out.println("%s.%s()", TableOptions.class, tableType);
+                out.println("%s.%s(),", TableOptions.class, tableType);
 
+            out.println("where,");
             out.println(")[[before=, ][%s]] {", interfaces);
 
             out.println("%scompanion object {", visibility());
@@ -6151,7 +6159,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (table.isSynthetic()) {
             if (scala) {
                 out.println();
-                out.println("protected override def isSynthetic(): Boolean = true");
+                out.println("protected override def isSynthetic(): %s = true", out.ref("scala.Boolean"));
             }
             else if (kotlin) {
                 out.println();
@@ -6269,11 +6277,15 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("%s.value(null, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")%s", DSL.class, paramTypeRef, converter, binding, separator);
                 });
 
-                out.println("))");
+                out.println("), null)");
             }
             else
-                out.println("private def this(alias: %s, aliased: %s[%s]) = this(alias, null, null, null, aliased, null)",
+                out.println("private def this(alias: %s, aliased: %s[%s]) = this(alias, null, null, null, aliased, null, null)",
                     Name.class, Table.class, recordType);
+
+            if (generateWhereMethodOverrides() && !table.isTableValuedFunction())
+                out.println("private def this(alias: %s, aliased: %s[%s], where: %s) = this(alias, null, null, null, aliased, null, where)",
+                    Name.class, Table.class, recordType, Condition.class);
         }
         else if (kotlin) {
             if (table.isTableValuedFunction()) {
@@ -6288,14 +6300,18 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("%s.value(null, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")%s", DSL.class, paramTypeRef, converter, binding, separator);
                 });
 
-                out.println("))");
+                out.println("), null)");
             }
             else
-                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, null, aliased, null)",
+                out.println("private constructor(alias: %s, aliased: %s<%s>?): this(alias, null, null, null, aliased, null, null)",
                     Name.class, Table.class, recordType);
 
-            out.println("private constructor(alias: %s, aliased: %s<%s>?, parameters: Array<%s<*>?>?): this(alias, null, null, null, aliased, parameters)",
+            out.println("private constructor(alias: %s, aliased: %s<%s>?, parameters: Array<%s<*>?>?): this(alias, null, null, null, aliased, parameters, null)",
                 Name.class, Table.class, recordType, Field.class);
+
+            if (generateWhereMethodOverrides() && !table.isTableValuedFunction())
+                out.println("private constructor(alias: %s, aliased: %s<%s>?, where: %s): this(alias, null, null, null, aliased, null, where)",
+                    Name.class, Table.class, recordType, Condition.class);
         }
         else {
             out.println("private %s(%s alias, %s<%s> aliased) {", className, Name.class, Table.class, recordType);
@@ -6329,7 +6345,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println("}");
 
-            if (!table.isTableValuedFunction()) {
+            if (generateWhereMethodOverrides() && !table.isTableValuedFunction()) {
                 out.println();
                 out.println("private %s(%s alias, %s<%s> aliased, %s where) {", className, Name.class, Table.class, recordType, Condition.class);
 
@@ -6401,11 +6417,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (scala) {
-                out.println("%sdef this(path: %s[_ <: %s], childPath: %s[_ <: %s, %s], parentPath: %s[_ <: %s, %s]) = this(%s.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, %s, null)",
+                out.println("%sdef this(path: %s[_ <: %s], childPath: %s[_ <: %s, %s], parentPath: %s[_ <: %s, %s]) = this(%s.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, %s, null, null)",
                     visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
             }
             else if (kotlin) {
-                out.println("%sconstructor(path: %s<out %s>, childPath: %s<out %s, %s>?, parentPath: %s<out %s, %s>?): this(%s.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, %s, null)",
+                out.println("%sconstructor(path: %s<out %s>, childPath: %s<out %s, %s>?, parentPath: %s<out %s, %s>?): this(%s.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, %s, null, null)",
                     visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, Internal.class, tableId);
             }
             else {
@@ -6993,21 +7009,21 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), String.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(%s.name(alias), null, null, null, this, parameters)", className, DSL.class);
+                out.println("new %s(%s.name(alias), null, null, null, this, parameters, null)", className, DSL.class);
             else
                 out.println("new %s(%s.name(alias), this)", className, DSL.class);
 
             out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), Name.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(alias, null, null, null, this, parameters)", className);
+                out.println("new %s(alias, null, null, null, this, parameters, null)", className);
             else
                 out.println("new %s(alias, this)", className);
 
             out.print("%soverride def as(alias: %s[_]): %s = ", visibilityPublic(), Table.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(alias.getQualifiedName(), null, null, null, this, parameters)", className);
+                out.println("new %s(alias.getQualifiedName(), null, null, null, this, parameters, null)", className);
             else
                 out.println("new %s(alias.getQualifiedName(), this)", className);
         }
@@ -7029,9 +7045,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride fun `as`(alias: %s<*>): %s = ", visibilityPublic(), Table.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("%s(alias.getQualifiedName(), this, parameters)", className);
+                out.println("%s(alias.qualifiedName, this, parameters)", className);
             else
-                out.println("%s(alias.getQualifiedName(), this)", className);
+                out.println("%s(alias.qualifiedName, this)", className);
         }
 
         // [#117] With instance fields, it makes sense to create a
@@ -7078,7 +7094,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), String.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(%s.name(name), null, null, null, null, parameters)", className, DSL.class);
+                out.println("new %s(%s.name(name), null, null, null, null, parameters, null)", className, DSL.class);
             else
                 out.println("new %s(%s.name(name), null)", className, DSL.class);
 
@@ -7086,7 +7102,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), Name.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(name, null, null, null, null, parameters)", className);
+                out.println("new %s(name, null, null, null, null, parameters, null)", className);
             else
                 out.println("new %s(name, null)", className);
 
@@ -7094,9 +7110,29 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride def rename(name: %s[_]): %s = ", visibilityPublic(), Table.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("new %s(name.getQualifiedName(), null, null, null, null, parameters)", className);
+                out.println("new %s(name.getQualifiedName(), null, null, null, null, parameters, null)", className);
             else
                 out.println("new %s(name.getQualifiedName(), null)", className);
+
+            if (generateWhereMethodOverrides() && !table.isTableValuedFunction()) {
+                Consumer<Runnable> idt = r -> {
+                    out.javadoc("Create an inline derived table from this table");
+                    r.run();
+                };
+
+                idt.accept(() -> out.println("%soverride def where(condition: %s): %s = new %s(getQualifiedName(), if (aliased()) this else null, condition)", visibilityPublic(), Condition.class, className, className));
+                idt.accept(() -> out.println("%soverride def where(conditions: %s[_ <: %s]): %s = where(%s.and(conditions))", visibilityPublic(), Collection.class, Condition.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride def where(conditions: %s*): %s = where(%s.and(conditions:_*))", visibilityPublic(), Condition.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride def where(condition: %s[%s]): %s = where(%s.condition(condition))", visibilityPublic(), Field.class, Boolean.class, className, DSL.class));
+                idt.accept(() -> out.println("@%s %soverride def where(condition: %s): %s = where(%s.condition(condition))", PlainSQL.class, visibilityPublic(), SQL.class, className, DSL.class));
+                idt.accept(() -> out.println("@%s %soverride def where(@%s.SQL condition: %s): %s = where(%s.condition(condition))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, className, DSL.class));
+                idt.accept(() -> out.println("@%s %soverride def where(@%s.SQL condition: %s, binds: AnyRef*): %s = where(%s.condition(condition, binds:_*))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, className, DSL.class));
+                // This produces the same erasure as the previous, in scala:
+                // (condition: String, binds: Seq)
+                // idt.accept(() -> out.println("@%s %soverride def where(@%s.SQL condition: %s, parts: %s*): %s = where(%s.condition(condition, parts:_*))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, QueryPart.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride def whereExists(select: %s[_]): %s = where(%s.exists(select))", visibilityPublic(), Select.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride def whereNotExists(select: %s[_]): %s = where(%s.notExists(select))", visibilityPublic(), Select.class, className, DSL.class));
+            }
         }
 
         else if (kotlin) {
@@ -7120,9 +7156,27 @@ public class JavaGenerator extends AbstractGenerator {
             out.print("%soverride fun rename(name: %s<*>): %s = ", visibilityPublic(), Table.class, className);
 
             if (table.isTableValuedFunction())
-                out.println("%s(name.getQualifiedName(), null, parameters)", className);
+                out.println("%s(name.qualifiedName, null, parameters)", className);
             else
-                out.println("%s(name.getQualifiedName(), null)", className);
+                out.println("%s(name.qualifiedName, null)", className);
+
+            if (generateWhereMethodOverrides() && !table.isTableValuedFunction()) {
+                Consumer<Runnable> idt = r -> {
+                    out.javadoc("Create an inline derived table from this table");
+                    r.run();
+                };
+
+                idt.accept(() -> out.println("%soverride fun where(condition: %s): %s = %s(qualifiedName, if (aliased()) this else null, condition)", visibilityPublic(), Condition.class, className, className));
+                idt.accept(() -> out.println("%soverride fun where(conditions: %s<%s>): %s = where(%s.and(conditions))", visibilityPublic(), out.ref("kotlin.collections.Collection"), Condition.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride fun where(vararg conditions: %s): %s = where(%s.and(*conditions))", visibilityPublic(), Condition.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride fun where(condition: %s<%s?>): %s = where(%s.condition(condition))", visibilityPublic(), Field.class, Boolean.class, className, DSL.class));
+                idt.accept(() -> out.println("@%s %soverride fun where(condition: %s): %s = where(%s.condition(condition))", PlainSQL.class, visibilityPublic(), SQL.class, className, DSL.class));
+                idt.accept(() -> out.println("@%s %soverride fun where(@%s.SQL condition: %s): %s = where(%s.condition(condition))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, className, DSL.class));
+                idt.accept(() -> out.println("@%s %soverride fun where(@%s.SQL condition: %s, vararg binds: Any?): %s = where(%s.condition(condition, *binds))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, className, DSL.class));
+                idt.accept(() -> out.println("@%s %soverride fun where(@%s.SQL condition: %s, vararg parts: %s): %s = where(%s.condition(condition, *parts))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, QueryPart.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride fun whereExists(select: %s<*>): %s = where(%s.exists(select))", visibilityPublic(), Select.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride fun whereNotExists(select: %s<*>): %s = where(%s.notExists(select))", visibilityPublic(), Select.class, className, DSL.class));
+            }
         }
 
         // [#2921] With instance fields, tables can be renamed.
@@ -7163,13 +7217,68 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println("}");
 
-            if (!table.isTableValuedFunction()) {
-                out.javadoc("Create an inline derived table from this table");
-                out.override();
-                printNonnullAnnotation(out);
-                out.println("%s%s where(%s condition) {", visibilityPublic(), className, Condition.class);
-                out.println("return new %s(getQualifiedName(), aliased() ? this : null, condition);", className);
-                out.println("}");
+            if (generateWhereMethodOverrides() && !table.isTableValuedFunction()) {
+                Consumer<Runnable> idt = r -> {
+                    out.javadoc("Create an inline derived table from this table");
+                    out.override();
+                    printNonnullAnnotation(out);
+                    r.run();
+                };
+
+                idt.accept(() -> {
+                    out.println("%s%s where(%s condition) {", visibilityPublic(), className, Condition.class);
+                    out.println("return new %s(getQualifiedName(), aliased() ? this : null, condition);", className);
+                    out.println("}");
+                });
+                idt.accept(() -> {
+                    out.println("%s%s where(%s<? extends %s> conditions) {", visibilityPublic(), className, Collection.class, Condition.class);
+                    out.println("return where(%s.and(conditions));", DSL.class);
+                    out.println("}");
+                });
+                idt.accept(() -> {
+                    out.println("%s%s where(%s... conditions) {", visibilityPublic(), className, Condition.class);
+                    out.println("return where(%s.and(conditions));", DSL.class);
+                    out.println("}");
+                });
+                idt.accept(() -> {
+                    out.println("%s%s where(%s<%s> condition) {", visibilityPublic(), className, Field.class, Boolean.class);
+                    out.println("return where(%s.condition(condition));", DSL.class);
+                    out.println("}");
+                });
+                idt.accept(() -> {
+                    out.println("@%s", PlainSQL.class);
+                    out.println("%s%s where(%s condition) {", visibilityPublic(), className, SQL.class);
+                    out.println("return where(%s.condition(condition));", DSL.class);
+                    out.println("}");
+                });
+                idt.accept(() -> {
+                    out.println("@%s", PlainSQL.class);
+                    out.println("%s%s where(@%s.SQL %s condition) {", visibilityPublic(), className, Stringly.class, String.class);
+                    out.println("return where(%s.condition(condition));", DSL.class);
+                    out.println("}");
+                });
+                idt.accept(() -> {
+                    out.println("@%s", PlainSQL.class);
+                    out.println("%s%s where(@%s.SQL %s condition, %s... binds) {", visibilityPublic(), className, Stringly.class, String.class, Object.class);
+                    out.println("return where(%s.condition(condition, binds));", DSL.class);
+                    out.println("}");
+                });
+                idt.accept(() -> {
+                    out.println("@%s", PlainSQL.class);
+                    out.println("%s%s where(@%s.SQL %s condition, %s... parts) {", visibilityPublic(), className, Stringly.class, String.class, QueryPart.class);
+                    out.println("return where(%s.condition(condition, parts));", DSL.class);
+                    out.println("}");
+                });
+                idt.accept(() -> {
+                    out.println("%s%s whereExists(%s<?> select) {", visibilityPublic(), className, Select.class);
+                    out.println("return where(%s.exists(select));", DSL.class);
+                    out.println("}");
+                });
+                idt.accept(() -> {
+                    out.println("%s%s whereNotExists(%s<?> select) {", visibilityPublic(), className, Select.class);
+                    out.println("return where(%s.notExists(select));", DSL.class);
+                    out.println("}");
+                });
             }
         }
 
@@ -7257,7 +7366,7 @@ public class JavaGenerator extends AbstractGenerator {
                             out.println("%s.value(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")%s", DSL.class, paramArgName, paramTypeRef, converter, binding, separator);
                     });
 
-                    out.println("))).map(r => if (aliased()) r.as(getUnqualifiedName) else r).get");
+                    out.println("), null)).map(r => if (aliased()) r.as(getUnqualifiedName) else r).get");
                 }
                 else if (kotlin) {
                     out.print("%sfun call(", visibility()).printlnIf(!parameters.isEmpty());

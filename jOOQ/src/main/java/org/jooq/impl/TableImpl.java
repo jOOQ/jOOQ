@@ -77,9 +77,7 @@ import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Name;
 // ...
-import org.jooq.QueryPart;
 import org.jooq.Record;
-// ...
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -88,9 +86,7 @@ import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
-// ...
 import org.jooq.impl.QOM.UEmpty;
-import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.Nullable;
@@ -197,15 +193,19 @@ implements
      */
     @Deprecated
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
-        this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, DSL.comment(comment));
+        this(name, schema, null, null, null, aliased, parameters, DSL.comment(comment));
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, Comment comment) {
-        this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, comment);
+        this(name, schema, null, null, null, aliased, parameters, comment);
     }
 
     public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
-        this(name, schema, null, (ForeignKey<?, R>) null, aliased, parameters, comment, options);
+        this(name, schema, null, null, null, aliased, parameters, comment, options, null);
+    }
+
+    public TableImpl(Name name, Schema schema, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options, Condition where) {
+        this(name, schema, null, null, null, aliased, parameters, comment, options, where);
     }
 
     /**
@@ -229,7 +229,7 @@ implements
     }
 
     public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, InverseForeignKey<?, R> parentPath, Table<R> aliased, Field<?>[] parameters, Comment comment) {
-        this(name, schema, path, childPath, parentPath, aliased, parameters, comment, TableOptions.table());
+        this(name, schema, path, childPath, parentPath, aliased, parameters, comment, TableOptions.table(), null);
     }
 
     /**

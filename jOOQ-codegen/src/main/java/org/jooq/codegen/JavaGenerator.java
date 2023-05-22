@@ -6334,9 +6334,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("private %s(%s alias, %s<%s> aliased, %s where) {", className, Name.class, Table.class, recordType, Condition.class);
 
                 if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
-                    out.println("super(alias, null, null, null, null, aliased, null, %s.comment(\"%s\"), %s.%s(%s), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
+                    out.println("super(alias, null, aliased, null, %s.comment(\"%s\"), %s.%s(%s), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
                 else
-                    out.println("super(alias, null, null, null, null, aliased, null, %s.comment(\"%s\"), %s.%s(), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
+                    out.println("super(alias, null, aliased, null, %s.comment(\"%s\"), %s.%s(), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
 
                 out.println("}");
             }

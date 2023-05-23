@@ -62,7 +62,7 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
     }
 
     InlineDerivedTable(Table<R> table, Condition condition) {
-        super(selectFrom(table).where(condition), table.getUnqualifiedName());
+        super(Lazy.of(() -> selectFrom(table).where(condition)), table.getUnqualifiedName());
 
         this.table = table;
         this.condition = condition;

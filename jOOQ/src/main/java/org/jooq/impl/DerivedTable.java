@@ -66,21 +66,21 @@ import org.jooq.TableOptions;
  */
 class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.DerivedTable<R> {
 
-    static final Set<SQLDialect> NO_SUPPORT_CORRELATED_DERIVED_TABLE = SQLDialect.supportedUntil(DERBY, H2, MARIADB);
-    private final Select<R>      query;
+    static final Set<SQLDialect>  NO_SUPPORT_CORRELATED_DERIVED_TABLE = SQLDialect.supportedUntil(DERBY, H2, MARIADB);
+    private final Lazy<Select<R>> query;
 
     DerivedTable(Select<R> query) {
-        this(query, N_T);
+        this(Lazy.of(() -> query), N_T);
     }
 
-    DerivedTable(Select<R> query, Name name) {
+    DerivedTable(Lazy<Select<R>> query, Name name) {
         super(TableOptions.expression(), name);
 
         this.query = query;
     }
 
     final Select<R> query() {
-        return query;
+        return query.get();
     }
 
     @Override
@@ -95,12 +95,12 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
 
     @Override
     /* non-final */ FieldsImpl<R> fields0() {
-        return new FieldsImpl<>(query.getSelect());
+        return new FieldsImpl<>(query().getSelect());
     }
 
     @Override
     public final Class<? extends R> getRecordType() {
-        return query.getRecordType();
+        return query().getRecordType();
     }
 
     @Override
@@ -109,7 +109,7 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
 
 
 
-        visitSubquery(ctx, query, DERIVED_TABLE, false);
+        visitSubquery(ctx, query(), DERIVED_TABLE, false);
     }
 
     @Override // Avoid AbstractTable implementation
@@ -128,6 +128,6 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
 
     @Override
     public final Select<R> $arg1() {
-        return query;
+        return query();
     }
 }

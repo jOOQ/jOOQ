@@ -57,11 +57,34 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
     final Table<R>  table;
     final Condition condition;
 
+    InlineDerivedTable(TableImpl<R> t) {
+        this(removeWhere(t), t.where);
+    }
+
     InlineDerivedTable(Table<R> table, Condition condition) {
         super(selectFrom(table).where(condition), table.getUnqualifiedName());
 
         this.table = table;
         this.condition = condition;
+    }
+
+    private static final <R extends Record> Table<R> removeWhere(Table<R> t) {
+        if (t instanceof TableImpl<R> i) {
+            return new TableImpl<>(
+                i.getQualifiedName(),
+                i.getSchema(),
+                i.path,
+                i.childPath,
+                i.parentPath,
+                i.alias != null ? removeWhere(i.alias.wrapped) : null,
+                i.parameters,
+                i.getCommentPart(),
+                i.getOptions(),
+                null
+            );
+        }
+        else
+            return t;
     }
 
     @Override

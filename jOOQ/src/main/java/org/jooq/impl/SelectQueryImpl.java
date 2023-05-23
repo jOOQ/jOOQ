@@ -2719,18 +2719,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
         else if (t instanceof TableImpl<R> i) {
             if (i.where != null)
-                return new InlineDerivedTable<>(removeWhere(i), i.where);
+                return new InlineDerivedTable<>(i);
 
             Table<R> unaliased = Tools.unalias(i);
             if (unaliased instanceof TableImpl<R> u) {
                 if (u.where != null)
-                    return new InlineDerivedTable<>(removeWhere(u), u.where).query().asTable(i);
+                    return new InlineDerivedTable<>(u).query().asTable(i);
             }
         }
         else if (t instanceof TableAlias<R> a) {
             if (a.$aliased() instanceof TableImpl<R> u) {
                 if (u.where != null) {
-                    Select<R> q = new InlineDerivedTable<>(removeWhere(u), u.where).query();
+                    Select<R> q = new InlineDerivedTable<>(u).query();
 
                     if (a.hasFieldAliases())
                         return q.asTable(a.getUnqualifiedName(), a.alias.fieldAliases);
@@ -2795,25 +2795,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             transformInlineDerivedTable0(table, result, where);
 
         return result;
-    }
-
-    private static final <R extends Record> Table<R> removeWhere(Table<R> t) {
-        if (t instanceof TableImpl<R> i) {
-            return new TableImpl<>(
-                i.getQualifiedName(),
-                i.getSchema(),
-                i.path,
-                i.childPath,
-                i.parentPath,
-                i.alias != null ? removeWhere(i.alias.wrapped) : null,
-                i.parameters,
-                i.getCommentPart(),
-                i.getOptions(),
-                null
-            );
-        }
-        else
-            return t;
     }
 
     private static final void transformInlineDerivedTable0(Table<?> table, TableList result, ConditionProviderImpl where) {

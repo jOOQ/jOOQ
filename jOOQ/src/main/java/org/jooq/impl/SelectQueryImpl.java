@@ -2727,6 +2727,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     return new InlineDerivedTable<>(removeWhere(u), u.where).query().asTable(i);
             }
         }
+        else if (t instanceof TableAlias<R> a) {
+            if (a.$aliased() instanceof TableImpl<R> u) {
+                if (u.where != null) {
+                    Select<R> q = new InlineDerivedTable<>(removeWhere(u), u.where).query();
+
+                    if (a.hasFieldAliases())
+                        return q.asTable(a.getUnqualifiedName(), a.alias.fieldAliases);
+                    else
+                        return q.asTable(a);
+                }
+            }
+        }
 
         return null;
     }

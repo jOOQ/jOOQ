@@ -66,7 +66,14 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
 
     @Override
     final FieldsImpl<R> fields0() {
-        return new FieldsImpl<>(table.as(table).fields());
+
+        // [#8012] Re-use the existing fields row if this is an aliased table
+        if (table instanceof TableAlias)
+            return new FieldsImpl<>(table.fields());
+
+        // [#8012] Re-wrap fields in new TableAlias to prevent StackOverflowError
+        else
+            return new FieldsImpl<>(table.as(table).fields());
     }
 
 

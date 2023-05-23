@@ -561,6 +561,13 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
+    public int hashCode() {
+
+        // [#7172] [#10274] [#14875] Cannot use getQualifiedName() based super implementation yet here
+        return defaultIfNull(getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName().append(getUnqualifiedName()).hashCode();
+    }
+
+    @Override
     public boolean equals(Object that) {
         if (this == that)
             return true;

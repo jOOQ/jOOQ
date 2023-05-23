@@ -44,9 +44,11 @@ import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
+import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.UpdateQueryImpl.NO_SUPPORT_UPDATE_JOIN;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.stream.Stream;
 
@@ -213,6 +215,18 @@ implements
     // ------------------------------------------------------------------------
     // XXX: Object API
     // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+
+        // [#7172] [#10274] [#14875] Cannot use Table.getQualifiedName() based super implementation yet here
+        if (getTable() == null)
+            return getUnqualifiedName().hashCode();
+        else
+            return defaultIfNull(getTable().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName()
+                .append(getTable().getUnqualifiedName())
+                .append(getUnqualifiedName()).hashCode();
+    }
 
     @Override
     public boolean equals(Object that) {

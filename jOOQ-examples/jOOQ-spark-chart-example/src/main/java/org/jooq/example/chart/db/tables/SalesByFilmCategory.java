@@ -5,17 +5,22 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Function2;
 import org.jooq.Name;
-import org.jooq.Record;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Records;
 import org.jooq.Row2;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -58,7 +63,7 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     public final TableField<SalesByFilmCategoryRecord, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), SQLDataType.NUMERIC, this, "");
 
     private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Field<?>[] parameters) {
@@ -74,6 +79,21 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
         GROUP BY c.name
         ORDER BY (sum(p.amount)) DESC;
         """));
+    }
+
+    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.view("""
+        create view "sales_by_film_category" as  SELECT c.name AS category,
+          sum(p.amount) AS total_sales
+         FROM (((((payment p
+           JOIN rental r ON ((p.rental_id = r.rental_id)))
+           JOIN inventory i ON ((r.inventory_id = i.inventory_id)))
+           JOIN film f ON ((i.film_id = f.film_id)))
+           JOIN film_category fc ON ((f.film_id = fc.film_id)))
+           JOIN category c ON ((fc.category_id = c.category_id)))
+        GROUP BY c.name
+        ORDER BY (sum(p.amount)) DESC;
+        """), where);
     }
 
     /**
@@ -97,10 +117,6 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
      */
     public SalesByFilmCategory() {
         this(DSL.name("sales_by_film_category"), null);
-    }
-
-    public <O extends Record> SalesByFilmCategory(Table<O> child, ForeignKey<O, SalesByFilmCategoryRecord> key) {
-        super(child, key, SALES_BY_FILM_CATEGORY);
     }
 
     @Override
@@ -145,6 +161,90 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     @Override
     public SalesByFilmCategory rename(Table<?> name) {
         return new SalesByFilmCategory(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByFilmCategory where(Condition condition) {
+        return new SalesByFilmCategory(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByFilmCategory where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByFilmCategory where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByFilmCategory where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public SalesByFilmCategory where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public SalesByFilmCategory where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public SalesByFilmCategory where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public SalesByFilmCategory where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByFilmCategory whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public SalesByFilmCategory whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

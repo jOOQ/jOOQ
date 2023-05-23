@@ -6,19 +6,28 @@ package org.jooq.example.chart.db.tables;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -26,6 +35,8 @@ import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
+import org.jooq.example.chart.db.tables.Actor.ActorPath;
+import org.jooq.example.chart.db.tables.Film.FilmPath;
 import org.jooq.example.chart.db.tables.records.FilmActorRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -69,11 +80,15 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     public final TableField<FilmActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private FilmActor(Name alias, Table<FilmActorRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private FilmActor(Name alias, Table<FilmActorRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    }
+
+    private FilmActor(Name alias, Table<FilmActorRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -97,8 +112,14 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         this(DSL.name("film_actor"), null);
     }
 
-    public <O extends Record> FilmActor(Table<O> child, ForeignKey<O, FilmActorRecord> key) {
-        super(child, key, FILM_ACTOR);
+    public <O extends Record> FilmActor(Table<O> path, ForeignKey<O, FilmActorRecord> childPath, InverseForeignKey<O, FilmActorRecord> parentPath) {
+        super(path, childPath, parentPath, FILM_ACTOR);
+    }
+
+    public static class FilmActorPath extends FilmActor implements Path<FilmActorRecord> {
+        public <O extends Record> FilmActorPath(Table<O> path, ForeignKey<O, FilmActorRecord> childPath, InverseForeignKey<O, FilmActorRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -121,25 +142,26 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
         return Arrays.asList(Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY);
     }
 
-    private transient Actor _actor;
-    private transient Film _film;
+    private transient ActorPath _actor;
 
     /**
      * Get the implicit join path to the <code>public.actor</code> table.
      */
-    public Actor actor() {
+    public ActorPath actor() {
         if (_actor == null)
-            _actor = new Actor(this, Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY);
+            _actor = new ActorPath(this, Keys.FILM_ACTOR__FILM_ACTOR_ACTOR_ID_FKEY, null);
 
         return _actor;
     }
 
+    private transient FilmPath _film;
+
     /**
      * Get the implicit join path to the <code>public.film</code> table.
      */
-    public Film film() {
+    public FilmPath film() {
         if (_film == null)
-            _film = new Film(this, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY);
+            _film = new FilmPath(this, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY, null);
 
         return _film;
     }
@@ -181,6 +203,90 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     @Override
     public FilmActor rename(Table<?> name) {
         return new FilmActor(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmActor where(Condition condition) {
+        return new FilmActor(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmActor where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmActor where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmActor where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public FilmActor where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public FilmActor where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public FilmActor where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public FilmActor where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmActor whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmActor whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

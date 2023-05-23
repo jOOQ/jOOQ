@@ -6,25 +6,44 @@ package org.jooq.example.chart.db.tables;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function11;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row11;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
+import org.jooq.example.chart.db.tables.Address.AddressPath;
+import org.jooq.example.chart.db.tables.Payment.PaymentPath;
+import org.jooq.example.chart.db.tables.PaymentP2007_01.PaymentP2007_01Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_02.PaymentP2007_02Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_03.PaymentP2007_03Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_04.PaymentP2007_04Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_05.PaymentP2007_05Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_06.PaymentP2007_06Path;
+import org.jooq.example.chart.db.tables.Rental.RentalPath;
+import org.jooq.example.chart.db.tables.Store.StorePath;
 import org.jooq.example.chart.db.tables.records.StaffRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -108,11 +127,15 @@ public class Staff extends TableImpl<StaffRecord> {
     public final TableField<StaffRecord, byte[]> PICTURE = createField(DSL.name("picture"), SQLDataType.BLOB, this, "");
 
     private Staff(Name alias, Table<StaffRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private Staff(Name alias, Table<StaffRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    }
+
+    private Staff(Name alias, Table<StaffRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -136,8 +159,14 @@ public class Staff extends TableImpl<StaffRecord> {
         this(DSL.name("staff"), null);
     }
 
-    public <O extends Record> Staff(Table<O> child, ForeignKey<O, StaffRecord> key) {
-        super(child, key, STAFF);
+    public <O extends Record> Staff(Table<O> path, ForeignKey<O, StaffRecord> childPath, InverseForeignKey<O, StaffRecord> parentPath) {
+        super(path, childPath, parentPath, STAFF);
+    }
+
+    public static class StaffPath extends Staff implements Path<StaffRecord> {
+        public <O extends Record> StaffPath(Table<O> path, ForeignKey<O, StaffRecord> childPath, InverseForeignKey<O, StaffRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -160,27 +189,132 @@ public class Staff extends TableImpl<StaffRecord> {
         return Arrays.asList(Keys.STAFF__STAFF_ADDRESS_ID_FKEY, Keys.STAFF__STAFF_STORE_ID_FKEY);
     }
 
-    private transient Address _address;
-    private transient Store _store;
+    private transient AddressPath _address;
 
     /**
      * Get the implicit join path to the <code>public.address</code> table.
      */
-    public Address address() {
+    public AddressPath address() {
         if (_address == null)
-            _address = new Address(this, Keys.STAFF__STAFF_ADDRESS_ID_FKEY);
+            _address = new AddressPath(this, Keys.STAFF__STAFF_ADDRESS_ID_FKEY, null);
 
         return _address;
     }
 
+    private transient StorePath _store;
+
     /**
      * Get the implicit join path to the <code>public.store</code> table.
      */
-    public Store store() {
+    public StorePath store() {
         if (_store == null)
-            _store = new Store(this, Keys.STAFF__STAFF_STORE_ID_FKEY);
+            _store = new StorePath(this, Keys.STAFF__STAFF_STORE_ID_FKEY, null);
 
         return _store;
+    }
+
+    private transient PaymentPath _payment;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.payment</code>
+     * table
+     */
+    public PaymentPath payment() {
+        if (_payment == null)
+            _payment = new PaymentPath(this, null, Keys.PAYMENT__PAYMENT_STAFF_ID_FKEY.getInverseKey());
+
+        return _payment;
+    }
+
+    private transient PaymentP2007_01Path _paymentP2007_01;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_01</code> table
+     */
+    public PaymentP2007_01Path paymentP2007_01() {
+        if (_paymentP2007_01 == null)
+            _paymentP2007_01 = new PaymentP2007_01Path(this, null, Keys.PAYMENT_P2007_01__PAYMENT_P2007_01_STAFF_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_01;
+    }
+
+    private transient PaymentP2007_02Path _paymentP2007_02;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_02</code> table
+     */
+    public PaymentP2007_02Path paymentP2007_02() {
+        if (_paymentP2007_02 == null)
+            _paymentP2007_02 = new PaymentP2007_02Path(this, null, Keys.PAYMENT_P2007_02__PAYMENT_P2007_02_STAFF_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_02;
+    }
+
+    private transient PaymentP2007_03Path _paymentP2007_03;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_03</code> table
+     */
+    public PaymentP2007_03Path paymentP2007_03() {
+        if (_paymentP2007_03 == null)
+            _paymentP2007_03 = new PaymentP2007_03Path(this, null, Keys.PAYMENT_P2007_03__PAYMENT_P2007_03_STAFF_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_03;
+    }
+
+    private transient PaymentP2007_04Path _paymentP2007_04;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_04</code> table
+     */
+    public PaymentP2007_04Path paymentP2007_04() {
+        if (_paymentP2007_04 == null)
+            _paymentP2007_04 = new PaymentP2007_04Path(this, null, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_STAFF_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_04;
+    }
+
+    private transient PaymentP2007_05Path _paymentP2007_05;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_05</code> table
+     */
+    public PaymentP2007_05Path paymentP2007_05() {
+        if (_paymentP2007_05 == null)
+            _paymentP2007_05 = new PaymentP2007_05Path(this, null, Keys.PAYMENT_P2007_05__PAYMENT_P2007_05_STAFF_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_05;
+    }
+
+    private transient PaymentP2007_06Path _paymentP2007_06;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_06</code> table
+     */
+    public PaymentP2007_06Path paymentP2007_06() {
+        if (_paymentP2007_06 == null)
+            _paymentP2007_06 = new PaymentP2007_06Path(this, null, Keys.PAYMENT_P2007_06__PAYMENT_P2007_06_STAFF_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_06;
+    }
+
+    private transient RentalPath _rental;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.rental</code>
+     * table
+     */
+    public RentalPath rental() {
+        if (_rental == null)
+            _rental = new RentalPath(this, null, Keys.RENTAL__RENTAL_STAFF_ID_FKEY.getInverseKey());
+
+        return _rental;
     }
 
     @Override
@@ -220,6 +354,90 @@ public class Staff extends TableImpl<StaffRecord> {
     @Override
     public Staff rename(Table<?> name) {
         return new Staff(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Staff where(Condition condition) {
+        return new Staff(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Staff where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Staff where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Staff where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Staff where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Staff where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Staff where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Staff where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Staff whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Staff whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

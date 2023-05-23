@@ -5,24 +5,34 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
+import org.jooq.example.chart.db.tables.City.CityPath;
 import org.jooq.example.chart.db.tables.records.CountryRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -66,11 +76,15 @@ public class Country extends TableImpl<CountryRecord> {
     public final TableField<CountryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Country(Name alias, Table<CountryRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private Country(Name alias, Table<CountryRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    }
+
+    private Country(Name alias, Table<CountryRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -94,8 +108,14 @@ public class Country extends TableImpl<CountryRecord> {
         this(DSL.name("country"), null);
     }
 
-    public <O extends Record> Country(Table<O> child, ForeignKey<O, CountryRecord> key) {
-        super(child, key, COUNTRY);
+    public <O extends Record> Country(Table<O> path, ForeignKey<O, CountryRecord> childPath, InverseForeignKey<O, CountryRecord> parentPath) {
+        super(path, childPath, parentPath, COUNTRY);
+    }
+
+    public static class CountryPath extends Country implements Path<CountryRecord> {
+        public <O extends Record> CountryPath(Table<O> path, ForeignKey<O, CountryRecord> childPath, InverseForeignKey<O, CountryRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -111,6 +131,18 @@ public class Country extends TableImpl<CountryRecord> {
     @Override
     public UniqueKey<CountryRecord> getPrimaryKey() {
         return Keys.COUNTRY_PKEY;
+    }
+
+    private transient CityPath _city;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.city</code> table
+     */
+    public CityPath city() {
+        if (_city == null)
+            _city = new CityPath(this, null, Keys.CITY__CITY_COUNTRY_ID_FKEY.getInverseKey());
+
+        return _city;
     }
 
     @Override
@@ -150,6 +182,90 @@ public class Country extends TableImpl<CountryRecord> {
     @Override
     public Country rename(Table<?> name) {
         return new Country(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Country where(Condition condition) {
+        return new Country(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Country where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Country where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Country where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Country where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Country where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Country where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Country where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Country whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Country whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

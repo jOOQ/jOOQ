@@ -6,20 +6,29 @@ package org.jooq.example.chart.db.tables;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function4;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row4;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -27,6 +36,10 @@ import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
+import org.jooq.example.chart.db.tables.Address.AddressPath;
+import org.jooq.example.chart.db.tables.Customer.CustomerPath;
+import org.jooq.example.chart.db.tables.Inventory.InventoryPath;
+import org.jooq.example.chart.db.tables.Staff.StaffPath;
 import org.jooq.example.chart.db.tables.records.StoreRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -75,11 +88,15 @@ public class Store extends TableImpl<StoreRecord> {
     public final TableField<StoreRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Store(Name alias, Table<StoreRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private Store(Name alias, Table<StoreRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    }
+
+    private Store(Name alias, Table<StoreRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -103,8 +120,14 @@ public class Store extends TableImpl<StoreRecord> {
         this(DSL.name("store"), null);
     }
 
-    public <O extends Record> Store(Table<O> child, ForeignKey<O, StoreRecord> key) {
-        super(child, key, STORE);
+    public <O extends Record> Store(Table<O> path, ForeignKey<O, StoreRecord> childPath, InverseForeignKey<O, StoreRecord> parentPath) {
+        super(path, childPath, parentPath, STORE);
+    }
+
+    public static class StorePath extends Store implements Path<StoreRecord> {
+        public <O extends Record> StorePath(Table<O> path, ForeignKey<O, StoreRecord> childPath, InverseForeignKey<O, StoreRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -132,27 +155,54 @@ public class Store extends TableImpl<StoreRecord> {
         return Arrays.asList(Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY, Keys.STORE__STORE_ADDRESS_ID_FKEY);
     }
 
-    private transient Staff _staff;
-    private transient Address _address;
+    private transient StaffPath _staff;
 
     /**
      * Get the implicit join path to the <code>public.staff</code> table.
      */
-    public Staff staff() {
+    public StaffPath staff() {
         if (_staff == null)
-            _staff = new Staff(this, Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY);
+            _staff = new StaffPath(this, Keys.STORE__STORE_MANAGER_STAFF_ID_FKEY, null);
 
         return _staff;
     }
 
+    private transient AddressPath _address;
+
     /**
      * Get the implicit join path to the <code>public.address</code> table.
      */
-    public Address address() {
+    public AddressPath address() {
         if (_address == null)
-            _address = new Address(this, Keys.STORE__STORE_ADDRESS_ID_FKEY);
+            _address = new AddressPath(this, Keys.STORE__STORE_ADDRESS_ID_FKEY, null);
 
         return _address;
+    }
+
+    private transient CustomerPath _customer;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.customer</code>
+     * table
+     */
+    public CustomerPath customer() {
+        if (_customer == null)
+            _customer = new CustomerPath(this, null, Keys.CUSTOMER__CUSTOMER_STORE_ID_FKEY.getInverseKey());
+
+        return _customer;
+    }
+
+    private transient InventoryPath _inventory;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.inventory</code>
+     * table
+     */
+    public InventoryPath inventory() {
+        if (_inventory == null)
+            _inventory = new InventoryPath(this, null, Keys.INVENTORY__INVENTORY_STORE_ID_FKEY.getInverseKey());
+
+        return _inventory;
     }
 
     @Override
@@ -192,6 +242,90 @@ public class Store extends TableImpl<StoreRecord> {
     @Override
     public Store rename(Table<?> name) {
         return new Store(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Store where(Condition condition) {
+        return new Store(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Store where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Store where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Store where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Store where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Store where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Store where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Store where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Store whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Store whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

@@ -6,20 +6,29 @@ package org.jooq.example.chart.db.tables;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function7;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row7;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -27,6 +36,16 @@ import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
+import org.jooq.example.chart.db.tables.Customer.CustomerPath;
+import org.jooq.example.chart.db.tables.Inventory.InventoryPath;
+import org.jooq.example.chart.db.tables.Payment.PaymentPath;
+import org.jooq.example.chart.db.tables.PaymentP2007_01.PaymentP2007_01Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_02.PaymentP2007_02Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_03.PaymentP2007_03Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_04.PaymentP2007_04Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_05.PaymentP2007_05Path;
+import org.jooq.example.chart.db.tables.PaymentP2007_06.PaymentP2007_06Path;
+import org.jooq.example.chart.db.tables.Staff.StaffPath;
 import org.jooq.example.chart.db.tables.records.RentalRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -90,11 +109,15 @@ public class Rental extends TableImpl<RentalRecord> {
     public final TableField<RentalRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Rental(Name alias, Table<RentalRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private Rental(Name alias, Table<RentalRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    }
+
+    private Rental(Name alias, Table<RentalRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -118,8 +141,14 @@ public class Rental extends TableImpl<RentalRecord> {
         this(DSL.name("rental"), null);
     }
 
-    public <O extends Record> Rental(Table<O> child, ForeignKey<O, RentalRecord> key) {
-        super(child, key, RENTAL);
+    public <O extends Record> Rental(Table<O> path, ForeignKey<O, RentalRecord> childPath, InverseForeignKey<O, RentalRecord> parentPath) {
+        super(path, childPath, parentPath, RENTAL);
+    }
+
+    public static class RentalPath extends Rental implements Path<RentalRecord> {
+        public <O extends Record> RentalPath(Table<O> path, ForeignKey<O, RentalRecord> childPath, InverseForeignKey<O, RentalRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -147,38 +176,131 @@ public class Rental extends TableImpl<RentalRecord> {
         return Arrays.asList(Keys.RENTAL__RENTAL_INVENTORY_ID_FKEY, Keys.RENTAL__RENTAL_CUSTOMER_ID_FKEY, Keys.RENTAL__RENTAL_STAFF_ID_FKEY);
     }
 
-    private transient Inventory _inventory;
-    private transient Customer _customer;
-    private transient Staff _staff;
+    private transient InventoryPath _inventory;
 
     /**
      * Get the implicit join path to the <code>public.inventory</code> table.
      */
-    public Inventory inventory() {
+    public InventoryPath inventory() {
         if (_inventory == null)
-            _inventory = new Inventory(this, Keys.RENTAL__RENTAL_INVENTORY_ID_FKEY);
+            _inventory = new InventoryPath(this, Keys.RENTAL__RENTAL_INVENTORY_ID_FKEY, null);
 
         return _inventory;
     }
 
+    private transient CustomerPath _customer;
+
     /**
      * Get the implicit join path to the <code>public.customer</code> table.
      */
-    public Customer customer() {
+    public CustomerPath customer() {
         if (_customer == null)
-            _customer = new Customer(this, Keys.RENTAL__RENTAL_CUSTOMER_ID_FKEY);
+            _customer = new CustomerPath(this, Keys.RENTAL__RENTAL_CUSTOMER_ID_FKEY, null);
 
         return _customer;
     }
 
+    private transient StaffPath _staff;
+
     /**
      * Get the implicit join path to the <code>public.staff</code> table.
      */
-    public Staff staff() {
+    public StaffPath staff() {
         if (_staff == null)
-            _staff = new Staff(this, Keys.RENTAL__RENTAL_STAFF_ID_FKEY);
+            _staff = new StaffPath(this, Keys.RENTAL__RENTAL_STAFF_ID_FKEY, null);
 
         return _staff;
+    }
+
+    private transient PaymentPath _payment;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.payment</code>
+     * table
+     */
+    public PaymentPath payment() {
+        if (_payment == null)
+            _payment = new PaymentPath(this, null, Keys.PAYMENT__PAYMENT_RENTAL_ID_FKEY.getInverseKey());
+
+        return _payment;
+    }
+
+    private transient PaymentP2007_01Path _paymentP2007_01;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_01</code> table
+     */
+    public PaymentP2007_01Path paymentP2007_01() {
+        if (_paymentP2007_01 == null)
+            _paymentP2007_01 = new PaymentP2007_01Path(this, null, Keys.PAYMENT_P2007_01__PAYMENT_P2007_01_RENTAL_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_01;
+    }
+
+    private transient PaymentP2007_02Path _paymentP2007_02;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_02</code> table
+     */
+    public PaymentP2007_02Path paymentP2007_02() {
+        if (_paymentP2007_02 == null)
+            _paymentP2007_02 = new PaymentP2007_02Path(this, null, Keys.PAYMENT_P2007_02__PAYMENT_P2007_02_RENTAL_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_02;
+    }
+
+    private transient PaymentP2007_03Path _paymentP2007_03;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_03</code> table
+     */
+    public PaymentP2007_03Path paymentP2007_03() {
+        if (_paymentP2007_03 == null)
+            _paymentP2007_03 = new PaymentP2007_03Path(this, null, Keys.PAYMENT_P2007_03__PAYMENT_P2007_03_RENTAL_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_03;
+    }
+
+    private transient PaymentP2007_04Path _paymentP2007_04;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_04</code> table
+     */
+    public PaymentP2007_04Path paymentP2007_04() {
+        if (_paymentP2007_04 == null)
+            _paymentP2007_04 = new PaymentP2007_04Path(this, null, Keys.PAYMENT_P2007_04__PAYMENT_P2007_04_RENTAL_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_04;
+    }
+
+    private transient PaymentP2007_05Path _paymentP2007_05;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_05</code> table
+     */
+    public PaymentP2007_05Path paymentP2007_05() {
+        if (_paymentP2007_05 == null)
+            _paymentP2007_05 = new PaymentP2007_05Path(this, null, Keys.PAYMENT_P2007_05__PAYMENT_P2007_05_RENTAL_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_05;
+    }
+
+    private transient PaymentP2007_06Path _paymentP2007_06;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.payment_p2007_06</code> table
+     */
+    public PaymentP2007_06Path paymentP2007_06() {
+        if (_paymentP2007_06 == null)
+            _paymentP2007_06 = new PaymentP2007_06Path(this, null, Keys.PAYMENT_P2007_06__PAYMENT_P2007_06_RENTAL_ID_FKEY.getInverseKey());
+
+        return _paymentP2007_06;
     }
 
     @Override
@@ -218,6 +340,90 @@ public class Rental extends TableImpl<RentalRecord> {
     @Override
     public Rental rename(Table<?> name) {
         return new Rental(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Rental where(Condition condition) {
+        return new Rental(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Rental where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Rental where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Rental where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Rental where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Rental where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Rental where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Rental where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Rental whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Rental whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

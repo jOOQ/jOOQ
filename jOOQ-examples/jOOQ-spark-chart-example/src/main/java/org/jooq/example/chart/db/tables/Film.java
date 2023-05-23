@@ -7,20 +7,29 @@ package org.jooq.example.chart.db.tables;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function14;
 import org.jooq.Identity;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row14;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -29,6 +38,12 @@ import org.jooq.example.chart.db.Indexes;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
 import org.jooq.example.chart.db.enums.MpaaRating;
+import org.jooq.example.chart.db.tables.Actor.ActorPath;
+import org.jooq.example.chart.db.tables.Category.CategoryPath;
+import org.jooq.example.chart.db.tables.FilmActor.FilmActorPath;
+import org.jooq.example.chart.db.tables.FilmCategory.FilmCategoryPath;
+import org.jooq.example.chart.db.tables.Inventory.InventoryPath;
+import org.jooq.example.chart.db.tables.Language.LanguagePath;
 import org.jooq.example.chart.db.tables.records.FilmRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -133,11 +148,15 @@ public class Film extends TableImpl<FilmRecord> {
     public final TableField<FilmRecord, Object> FULLTEXT = createField(DSL.name("fulltext"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"tsvector\"").nullable(false), this, "");
 
     private Film(Name alias, Table<FilmRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private Film(Name alias, Table<FilmRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    }
+
+    private Film(Name alias, Table<FilmRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -161,8 +180,14 @@ public class Film extends TableImpl<FilmRecord> {
         this(DSL.name("film"), null);
     }
 
-    public <O extends Record> Film(Table<O> child, ForeignKey<O, FilmRecord> key) {
-        super(child, key, FILM);
+    public <O extends Record> Film(Table<O> path, ForeignKey<O, FilmRecord> childPath, InverseForeignKey<O, FilmRecord> parentPath) {
+        super(path, childPath, parentPath, FILM);
+    }
+
+    public static class FilmPath extends Film implements Path<FilmRecord> {
+        public <O extends Record> FilmPath(Table<O> path, ForeignKey<O, FilmRecord> childPath, InverseForeignKey<O, FilmRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -190,29 +215,85 @@ public class Film extends TableImpl<FilmRecord> {
         return Arrays.asList(Keys.FILM__FILM_LANGUAGE_ID_FKEY, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);
     }
 
-    private transient Language _filmLanguageIdFkey;
-    private transient Language _filmOriginalLanguageIdFkey;
+    private transient LanguagePath _filmLanguageIdFkey;
 
     /**
      * Get the implicit join path to the <code>public.language</code> table, via
      * the <code>film_language_id_fkey</code> key.
      */
-    public Language filmLanguageIdFkey() {
+    public LanguagePath filmLanguageIdFkey() {
         if (_filmLanguageIdFkey == null)
-            _filmLanguageIdFkey = new Language(this, Keys.FILM__FILM_LANGUAGE_ID_FKEY);
+            _filmLanguageIdFkey = new LanguagePath(this, Keys.FILM__FILM_LANGUAGE_ID_FKEY, null);
 
         return _filmLanguageIdFkey;
     }
+
+    private transient LanguagePath _filmOriginalLanguageIdFkey;
 
     /**
      * Get the implicit join path to the <code>public.language</code> table, via
      * the <code>film_original_language_id_fkey</code> key.
      */
-    public Language filmOriginalLanguageIdFkey() {
+    public LanguagePath filmOriginalLanguageIdFkey() {
         if (_filmOriginalLanguageIdFkey == null)
-            _filmOriginalLanguageIdFkey = new Language(this, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY);
+            _filmOriginalLanguageIdFkey = new LanguagePath(this, Keys.FILM__FILM_ORIGINAL_LANGUAGE_ID_FKEY, null);
 
         return _filmOriginalLanguageIdFkey;
+    }
+
+    private transient FilmActorPath _filmActor;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.film_actor</code>
+     * table
+     */
+    public FilmActorPath filmActor() {
+        if (_filmActor == null)
+            _filmActor = new FilmActorPath(this, null, Keys.FILM_ACTOR__FILM_ACTOR_FILM_ID_FKEY.getInverseKey());
+
+        return _filmActor;
+    }
+
+    private transient FilmCategoryPath _filmCategory;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.film_category</code> table
+     */
+    public FilmCategoryPath filmCategory() {
+        if (_filmCategory == null)
+            _filmCategory = new FilmCategoryPath(this, null, Keys.FILM_CATEGORY__FILM_CATEGORY_FILM_ID_FKEY.getInverseKey());
+
+        return _filmCategory;
+    }
+
+    private transient InventoryPath _inventory;
+
+    /**
+     * Get the implicit to-many join path to the <code>public.inventory</code>
+     * table
+     */
+    public InventoryPath inventory() {
+        if (_inventory == null)
+            _inventory = new InventoryPath(this, null, Keys.INVENTORY__INVENTORY_FILM_ID_FKEY.getInverseKey());
+
+        return _inventory;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>public.actor</code>
+     * table
+     */
+    public ActorPath actor() {
+        return filmActor().actor();
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the
+     * <code>public.category</code> table
+     */
+    public CategoryPath category() {
+        return filmCategory().category();
     }
 
     @Override
@@ -252,6 +333,90 @@ public class Film extends TableImpl<FilmRecord> {
     @Override
     public Film rename(Table<?> name) {
         return new Film(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film where(Condition condition) {
+        return new Film(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Film where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Film where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Film where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Film where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Film whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

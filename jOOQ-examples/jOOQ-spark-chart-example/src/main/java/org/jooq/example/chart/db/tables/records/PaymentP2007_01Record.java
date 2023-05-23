@@ -280,5 +280,6 @@ public class PaymentP2007_01Record extends TableRecordImpl<PaymentP2007_01Record
         setRentalId(rentalId);
         setAmount(amount);
         setPaymentDate(paymentDate);
+        resetChangedOnNotNull();
     }
 }

@@ -5,17 +5,22 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Function8;
 import org.jooq.Name;
-import org.jooq.Record;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Records;
 import org.jooq.Row8;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -89,7 +94,7 @@ public class FilmList extends TableImpl<FilmListRecord> {
     public final TableField<FilmListRecord, String> ACTORS = createField(DSL.name("actors"), SQLDataType.CLOB, this, "");
 
     private FilmList(Name alias, Table<FilmListRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private FilmList(Name alias, Table<FilmListRecord> aliased, Field<?>[] parameters) {
@@ -111,6 +116,25 @@ public class FilmList extends TableImpl<FilmListRecord> {
         """));
     }
 
+    private FilmList(Name alias, Table<FilmListRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.view("""
+        create view "film_list" as  SELECT film.film_id AS fid,
+          film.title,
+          film.description,
+          category.name AS category,
+          film.rental_rate AS price,
+          film.length,
+          film.rating,
+          group_concat((((actor.first_name)::text || ' '::text) || (actor.last_name)::text)) AS actors
+         FROM ((((category
+           LEFT JOIN film_category ON ((category.category_id = film_category.category_id)))
+           LEFT JOIN film ON ((film_category.film_id = film.film_id)))
+           JOIN film_actor ON ((film.film_id = film_actor.film_id)))
+           JOIN actor ON ((film_actor.actor_id = actor.actor_id)))
+        GROUP BY film.film_id, film.title, film.description, category.name, film.rental_rate, film.length, film.rating;
+        """), where);
+    }
+
     /**
      * Create an aliased <code>public.film_list</code> table reference
      */
@@ -130,10 +154,6 @@ public class FilmList extends TableImpl<FilmListRecord> {
      */
     public FilmList() {
         this(DSL.name("film_list"), null);
-    }
-
-    public <O extends Record> FilmList(Table<O> child, ForeignKey<O, FilmListRecord> key) {
-        super(child, key, FILM_LIST);
     }
 
     @Override
@@ -178,6 +198,90 @@ public class FilmList extends TableImpl<FilmListRecord> {
     @Override
     public FilmList rename(Table<?> name) {
         return new FilmList(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmList where(Condition condition) {
+        return new FilmList(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmList where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmList where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmList where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public FilmList where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public FilmList where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public FilmList where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public FilmList where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmList whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public FilmList whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

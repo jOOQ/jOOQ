@@ -178,5 +178,6 @@ public class FilmCategoryRecord extends UpdatableRecordImpl<FilmCategoryRecord> 
         setFilmId(filmId);
         setCategoryId(categoryId);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

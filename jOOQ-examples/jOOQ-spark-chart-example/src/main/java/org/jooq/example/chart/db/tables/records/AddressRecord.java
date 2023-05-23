@@ -363,5 +363,6 @@ public class AddressRecord extends UpdatableRecordImpl<AddressRecord> implements
         setPostalCode(postalCode);
         setPhone(phone);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

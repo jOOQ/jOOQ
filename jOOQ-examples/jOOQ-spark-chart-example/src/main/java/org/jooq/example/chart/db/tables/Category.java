@@ -5,24 +5,35 @@ package org.jooq.example.chart.db.tables;
 
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function3;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Records;
 import org.jooq.Row3;
+import org.jooq.SQL;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectField;
+import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.example.chart.db.Keys;
 import org.jooq.example.chart.db.Public;
+import org.jooq.example.chart.db.tables.Film.FilmPath;
+import org.jooq.example.chart.db.tables.FilmCategory.FilmCategoryPath;
 import org.jooq.example.chart.db.tables.records.CategoryRecord;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -66,11 +77,15 @@ public class Category extends TableImpl<CategoryRecord> {
     public final TableField<CategoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Category(Name alias, Table<CategoryRecord> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null);
     }
 
     private Category(Name alias, Table<CategoryRecord> aliased, Field<?>[] parameters) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    }
+
+    private Category(Name alias, Table<CategoryRecord> aliased, Condition where) {
+        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -94,8 +109,14 @@ public class Category extends TableImpl<CategoryRecord> {
         this(DSL.name("category"), null);
     }
 
-    public <O extends Record> Category(Table<O> child, ForeignKey<O, CategoryRecord> key) {
-        super(child, key, CATEGORY);
+    public <O extends Record> Category(Table<O> path, ForeignKey<O, CategoryRecord> childPath, InverseForeignKey<O, CategoryRecord> parentPath) {
+        super(path, childPath, parentPath, CATEGORY);
+    }
+
+    public static class CategoryPath extends Category implements Path<CategoryRecord> {
+        public <O extends Record> CategoryPath(Table<O> path, ForeignKey<O, CategoryRecord> childPath, InverseForeignKey<O, CategoryRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -111,6 +132,27 @@ public class Category extends TableImpl<CategoryRecord> {
     @Override
     public UniqueKey<CategoryRecord> getPrimaryKey() {
         return Keys.CATEGORY_PKEY;
+    }
+
+    private transient FilmCategoryPath _filmCategory;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.film_category</code> table
+     */
+    public FilmCategoryPath filmCategory() {
+        if (_filmCategory == null)
+            _filmCategory = new FilmCategoryPath(this, null, Keys.FILM_CATEGORY__FILM_CATEGORY_CATEGORY_ID_FKEY.getInverseKey());
+
+        return _filmCategory;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>public.film</code>
+     * table
+     */
+    public FilmPath film() {
+        return filmCategory().film();
     }
 
     @Override
@@ -150,6 +192,90 @@ public class Category extends TableImpl<CategoryRecord> {
     @Override
     public Category rename(Table<?> name) {
         return new Category(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Category where(Condition condition) {
+        return new Category(getQualifiedName(), aliased() ? this : null, condition);
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Category where(Collection<? extends Condition> conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Category where(Condition... conditions) {
+        return where(DSL.and(conditions));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Category where(Field<Boolean> condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Category where(SQL condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Category where(@Stringly.SQL String condition) {
+        return where(DSL.condition(condition));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Category where(@Stringly.SQL String condition, Object... binds) {
+        return where(DSL.condition(condition, binds));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    @PlainSQL
+    public Category where(@Stringly.SQL String condition, QueryPart... parts) {
+        return where(DSL.condition(condition, parts));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Category whereExists(Select<?> select) {
+        return where(DSL.exists(select));
+    }
+
+    /**
+     * Create an inline derived table from this table
+     */
+    @Override
+    public Category whereNotExists(Select<?> select) {
+        return where(DSL.notExists(select));
     }
 
     // -------------------------------------------------------------------------

@@ -215,5 +215,6 @@ public class StoreRecord extends UpdatableRecordImpl<StoreRecord> implements Rec
         setManagerStaffId(managerStaffId);
         setAddressId(addressId);
         setLastUpdate(lastUpdate);
+        resetChangedOnNotNull();
     }
 }

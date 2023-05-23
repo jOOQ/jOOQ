@@ -6329,33 +6329,29 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("});");
             }
             else
-                out.println("this(alias, aliased, (%s<?>[]) null);", Field.class);
+                out.println("this(alias, aliased, (%s<?>[]) null, null);", Field.class);
 
             out.println("}");
 
-            out.println();
-            out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
-
-            if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
-            else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s));", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
-            else
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s());", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
-
-            out.println("}");
-
-            if (generateWhereMethodOverrides() && !table.isTableValuedFunction()) {
+            if (table.isTableValuedFunction()) {
                 out.println();
-                out.println("private %s(%s alias, %s<%s> aliased, %s where) {", className, Name.class, Table.class, recordType, Condition.class);
-
-                if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
-                    out.println("super(alias, null, aliased, null, %s.comment(\"%s\"), %s.%s(%s), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
-                else
-                    out.println("super(alias, null, aliased, null, %s.comment(\"%s\"), %s.%s(), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
-
+                out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters) {", className, Name.class, Table.class, recordType, Field.class);
+                out.println("this(alias, aliased, parameters, null);");
                 out.println("}");
             }
+
+            out.println();
+            out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters, %s where) {", className, Name.class, Table.class, recordType, Field.class, Condition.class);
+
+
+            if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
+            else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
+            else
+                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
+
+            out.println("}");
         }
 
         if (scala) {
@@ -7227,7 +7223,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 idt.accept(() -> {
                     out.println("%s%s where(%s condition) {", visibilityPublic(), className, Condition.class);
-                    out.println("return new %s(getQualifiedName(), aliased() ? this : null, condition);", className);
+                    out.println("return new %s(getQualifiedName(), aliased() ? this : null, null, condition);", className);
                     out.println("}");
                 });
                 idt.accept(() -> {

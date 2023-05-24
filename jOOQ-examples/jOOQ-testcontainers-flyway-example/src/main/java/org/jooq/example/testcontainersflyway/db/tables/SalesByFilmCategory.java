@@ -63,26 +63,11 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
     public final TableField<SalesByFilmCategoryRecord, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), SQLDataType.NUMERIC, this, "");
 
     private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Field<?>[] parameters) {
+    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Field<?>[] parameters, Condition where) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
-        create view "sales_by_film_category" as  SELECT c.name AS category,
-          sum(p.amount) AS total_sales
-         FROM (((((payment p
-           JOIN rental r ON ((p.rental_id = r.rental_id)))
-           JOIN inventory i ON ((r.inventory_id = i.inventory_id)))
-           JOIN film f ON ((i.film_id = f.film_id)))
-           JOIN film_category fc ON ((f.film_id = fc.film_id)))
-           JOIN category c ON ((fc.category_id = c.category_id)))
-        GROUP BY c.name
-        ORDER BY (sum(p.amount)) DESC;
-        """));
-    }
-
-    private SalesByFilmCategory(Name alias, Table<SalesByFilmCategoryRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.view("""
         create view "sales_by_film_category" as  SELECT c.name AS category,
           sum(p.amount) AS total_sales
          FROM (((((payment p
@@ -168,7 +153,7 @@ public class SalesByFilmCategory extends TableImpl<SalesByFilmCategoryRecord> {
      */
     @Override
     public SalesByFilmCategory where(Condition condition) {
-        return new SalesByFilmCategory(getQualifiedName(), aliased() ? this : null, condition);
+        return new SalesByFilmCategory(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

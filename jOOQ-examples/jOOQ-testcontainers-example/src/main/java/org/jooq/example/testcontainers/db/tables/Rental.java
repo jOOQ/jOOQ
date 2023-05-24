@@ -109,15 +109,11 @@ public class Rental extends TableImpl<RentalRecord> {
     public final TableField<RentalRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Rental(Name alias, Table<RentalRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Rental(Name alias, Table<RentalRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Rental(Name alias, Table<RentalRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Rental(Name alias, Table<RentalRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -347,7 +343,7 @@ public class Rental extends TableImpl<RentalRecord> {
      */
     @Override
     public Rental where(Condition condition) {
-        return new Rental(getQualifiedName(), aliased() ? this : null, condition);
+        return new Rental(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

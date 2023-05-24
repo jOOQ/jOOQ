@@ -94,15 +94,11 @@ public class Film extends TableImpl<FilmRecord> {
     public final TableField<FilmRecord, Integer> ORIGINALLANGUAGE_LANGUAGEID = createField(DSL.name("ORIGINALLANGUAGE_LANGUAGEID"), SQLDataType.INTEGER, this, "");
 
     private Film(Name alias, Table<FilmRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Film(Name alias, Table<FilmRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Film(Name alias, Table<FilmRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Film(Name alias, Table<FilmRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -242,7 +238,7 @@ public class Film extends TableImpl<FilmRecord> {
      */
     @Override
     public Film where(Condition condition) {
-        return new Film(getQualifiedName(), aliased() ? this : null, condition);
+        return new Film(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

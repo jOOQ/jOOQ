@@ -76,15 +76,11 @@ public class Book extends TableImpl<BookRecord> {
     public final TableField<BookRecord, String> TITLE = createField(DSL.name("TITLE"), SQLDataType.VARCHAR(400).nullable(false), this, "");
 
     private Book(Name alias, Table<BookRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Book(Name alias, Table<BookRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Book(Name alias, Table<BookRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Book(Name alias, Table<BookRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -189,7 +185,7 @@ public class Book extends TableImpl<BookRecord> {
      */
     @Override
     public Book where(Condition condition) {
-        return new Book(getQualifiedName(), aliased() ? this : null, condition);
+        return new Book(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

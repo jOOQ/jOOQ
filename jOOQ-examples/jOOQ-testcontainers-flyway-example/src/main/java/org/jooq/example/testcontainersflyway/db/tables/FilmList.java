@@ -94,30 +94,11 @@ public class FilmList extends TableImpl<FilmListRecord> {
     public final TableField<FilmListRecord, String> ACTORS = createField(DSL.name("actors"), SQLDataType.CLOB, this, "");
 
     private FilmList(Name alias, Table<FilmListRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private FilmList(Name alias, Table<FilmListRecord> aliased, Field<?>[] parameters) {
+    private FilmList(Name alias, Table<FilmListRecord> aliased, Field<?>[] parameters, Condition where) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
-        create view "film_list" as  SELECT film.film_id AS fid,
-          film.title,
-          film.description,
-          category.name AS category,
-          film.rental_rate AS price,
-          film.length,
-          film.rating,
-          group_concat((((actor.first_name)::text || ' '::text) || (actor.last_name)::text)) AS actors
-         FROM ((((category
-           LEFT JOIN film_category ON ((category.category_id = film_category.category_id)))
-           LEFT JOIN film ON ((film_category.film_id = film.film_id)))
-           JOIN film_actor ON ((film.film_id = film_actor.film_id)))
-           JOIN actor ON ((film_actor.actor_id = actor.actor_id)))
-        GROUP BY film.film_id, film.title, film.description, category.name, film.rental_rate, film.length, film.rating;
-        """));
-    }
-
-    private FilmList(Name alias, Table<FilmListRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.view("""
         create view "film_list" as  SELECT film.film_id AS fid,
           film.title,
           film.description,
@@ -205,7 +186,7 @@ public class FilmList extends TableImpl<FilmListRecord> {
      */
     @Override
     public FilmList where(Condition condition) {
-        return new FilmList(getQualifiedName(), aliased() ? this : null, condition);
+        return new FilmList(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

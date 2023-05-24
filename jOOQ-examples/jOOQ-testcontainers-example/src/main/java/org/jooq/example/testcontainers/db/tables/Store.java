@@ -88,15 +88,11 @@ public class Store extends TableImpl<StoreRecord> {
     public final TableField<StoreRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Store(Name alias, Table<StoreRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Store(Name alias, Table<StoreRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Store(Name alias, Table<StoreRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Store(Name alias, Table<StoreRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -249,7 +245,7 @@ public class Store extends TableImpl<StoreRecord> {
      */
     @Override
     public Store where(Condition condition) {
-        return new Store(getQualifiedName(), aliased() ? this : null, condition);
+        return new Store(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

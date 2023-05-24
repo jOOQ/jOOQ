@@ -86,15 +86,11 @@ public class City extends TableImpl<CityRecord> {
     public final TableField<CityRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private City(Name alias, Table<CityRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private City(Name alias, Table<CityRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private City(Name alias, Table<CityRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private City(Name alias, Table<CityRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -222,7 +218,7 @@ public class City extends TableImpl<CityRecord> {
      */
     @Override
     public City where(Condition condition) {
-        return new City(getQualifiedName(), aliased() ? this : null, condition);
+        return new City(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

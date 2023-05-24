@@ -76,15 +76,11 @@ public class Country extends TableImpl<CountryRecord> {
     public final TableField<CountryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Country(Name alias, Table<CountryRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Country(Name alias, Table<CountryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Country(Name alias, Table<CountryRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Country(Name alias, Table<CountryRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -189,7 +185,7 @@ public class Country extends TableImpl<CountryRecord> {
      */
     @Override
     public Country where(Condition condition) {
-        return new Country(getQualifiedName(), aliased() ? this : null, condition);
+        return new Country(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

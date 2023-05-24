@@ -86,15 +86,11 @@ public class Actor extends TableImpl<ActorRecord> {
     public final TableField<ActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Actor(Name alias, Table<ActorRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Actor(Name alias, Table<ActorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Actor(Name alias, Table<ActorRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Actor(Name alias, Table<ActorRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -213,7 +209,7 @@ public class Actor extends TableImpl<ActorRecord> {
      */
     @Override
     public Actor where(Condition condition) {
-        return new Actor(getQualifiedName(), aliased() ? this : null, condition);
+        return new Actor(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

@@ -87,15 +87,11 @@ public class Inventory extends TableImpl<InventoryRecord> {
     public final TableField<InventoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private Inventory(Name alias, Table<InventoryRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Inventory(Name alias, Table<InventoryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Inventory(Name alias, Table<InventoryRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Inventory(Name alias, Table<InventoryRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -235,7 +231,7 @@ public class Inventory extends TableImpl<InventoryRecord> {
      */
     @Override
     public Inventory where(Condition condition) {
-        return new Inventory(getQualifiedName(), aliased() ? this : null, condition);
+        return new Inventory(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

@@ -125,15 +125,11 @@ public class Customer extends TableImpl<CustomerRecord> {
     public final TableField<CustomerRecord, Integer> ACTIVE = createField(DSL.name("active"), SQLDataType.INTEGER, this, "");
 
     private Customer(Name alias, Table<CustomerRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Customer(Name alias, Table<CustomerRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Customer(Name alias, Table<CustomerRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Customer(Name alias, Table<CustomerRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -364,7 +360,7 @@ public class Customer extends TableImpl<CustomerRecord> {
      */
     @Override
     public Customer where(Condition condition) {
-        return new Customer(getQualifiedName(), aliased() ? this : null, condition);
+        return new Customer(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

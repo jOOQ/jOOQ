@@ -80,15 +80,11 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
     public final TableField<FilmActorRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private FilmActor(Name alias, Table<FilmActorRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private FilmActor(Name alias, Table<FilmActorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private FilmActor(Name alias, Table<FilmActorRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private FilmActor(Name alias, Table<FilmActorRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -210,7 +206,7 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
      */
     @Override
     public FilmActor where(Condition condition) {
-        return new FilmActor(getQualifiedName(), aliased() ? this : null, condition);
+        return new FilmActor(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

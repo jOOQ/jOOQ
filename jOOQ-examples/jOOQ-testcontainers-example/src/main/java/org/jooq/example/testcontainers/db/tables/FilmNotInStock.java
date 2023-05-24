@@ -6,6 +6,7 @@ package org.jooq.example.testcontainers.db.tables;
 
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.Name;
@@ -57,7 +58,11 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
     }
 
     private FilmNotInStock(Name alias, Table<FilmNotInStockRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.function());
+        this(alias, aliased, parameters, null);
+    }
+
+    private FilmNotInStock(Name alias, Table<FilmNotInStockRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.function(), where);
     }
 
     /**

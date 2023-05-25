@@ -1,5 +1,6 @@
 package org.jooq.kotlin.coroutines
 
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactor.mono
 import org.jooq.Configuration
@@ -13,6 +14,15 @@ suspend fun <T> DSLContext.transactionCoroutine(transactional: suspend (Configur
     @Suppress("UNCHECKED_CAST")
     return transactionPublisher { c ->
         mono {
+            transactional.invoke(c)
+        }
+    }.awaitFirstOrNull() as T
+}
+
+suspend fun <T> DSLContext.transactionCoroutine(context: CoroutineContext, transactional: suspend (Configuration) -> T): T {
+    @Suppress("UNCHECKED_CAST")
+    return transactionPublisher { c ->
+        mono(context) {
             transactional.invoke(c)
         }
     }.awaitFirstOrNull() as T

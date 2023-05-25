@@ -19,6 +19,8 @@
     <url>http://www.jooq.org</url>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- These in-memory DBs are used by jOOQ-meta-extensions and a variety of integration tests -->
         <h2.version>2.1.214</h2.version>
@@ -58,7 +60,7 @@
         <spring.boot.version>2.6.1</spring.boot.version>
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
         <errorprone.version>2.11.0</errorprone.version>
-        <testcontainers.version>1.17.6</testcontainers.version>
+        <testcontainers.version>1.18.1</testcontainers.version>
         <jackson.version>2.14.2</jackson.version>
         <jackson.version.databind>2.14.2</jackson.version.databind>
     </properties>
@@ -452,6 +454,11 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>postgresql</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>yugabytedb</artifactId>
                 <version>${testcontainers.version}</version>
             </dependency>
             <dependency>

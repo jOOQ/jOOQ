@@ -92,28 +92,11 @@ public class StaffList extends TableImpl<StaffListRecord> {
     public final TableField<StaffListRecord, Long> SID = createField(DSL.name("sid"), SQLDataType.BIGINT, this, "");
 
     private StaffList(Name alias, Table<StaffListRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private StaffList(Name alias, Table<StaffListRecord> aliased, Field<?>[] parameters) {
+    private StaffList(Name alias, Table<StaffListRecord> aliased, Field<?>[] parameters, Condition where) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
-        create view "staff_list" as  SELECT s.staff_id AS id,
-         (((s.first_name)::text || ' '::text) || (s.last_name)::text) AS name,
-         a.address,
-         a.postal_code AS "zip code",
-         a.phone,
-         city.city,
-         country.country,
-         s.store_id AS sid
-        FROM (((staff s
-          JOIN address a ON ((s.address_id = a.address_id)))
-          JOIN city ON ((a.city_id = city.city_id)))
-          JOIN country ON ((city.country_id = country.country_id)));
-        """));
-    }
-
-    private StaffList(Name alias, Table<StaffListRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.view("""
         create view "staff_list" as  SELECT s.staff_id AS id,
          (((s.first_name)::text || ' '::text) || (s.last_name)::text) AS name,
          a.address,
@@ -199,7 +182,7 @@ public class StaffList extends TableImpl<StaffListRecord> {
      */
     @Override
     public StaffList where(Condition condition) {
-        return new StaffList(getQualifiedName(), aliased() ? this : null, condition);
+        return new StaffList(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

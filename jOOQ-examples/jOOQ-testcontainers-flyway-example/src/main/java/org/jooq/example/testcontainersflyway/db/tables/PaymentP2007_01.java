@@ -99,15 +99,11 @@ public class PaymentP2007_01 extends TableImpl<PaymentP2007_01Record> {
     public final TableField<PaymentP2007_01Record, LocalDateTime> PAYMENT_DATE = createField(DSL.name("payment_date"), SQLDataType.LOCALDATETIME(6).nullable(false), this, "");
 
     private PaymentP2007_01(Name alias, Table<PaymentP2007_01Record> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private PaymentP2007_01(Name alias, Table<PaymentP2007_01Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private PaymentP2007_01(Name alias, Table<PaymentP2007_01Record> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private PaymentP2007_01(Name alias, Table<PaymentP2007_01Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -248,7 +244,7 @@ public class PaymentP2007_01 extends TableImpl<PaymentP2007_01Record> {
      */
     @Override
     public PaymentP2007_01 where(Condition condition) {
-        return new PaymentP2007_01(getQualifiedName(), aliased() ? this : null, condition);
+        return new PaymentP2007_01(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

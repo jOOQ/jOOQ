@@ -109,15 +109,11 @@ public class FlywaySchemaHistory extends TableImpl<FlywaySchemaHistoryRecord> {
     public final TableField<FlywaySchemaHistoryRecord, Boolean> SUCCESS = createField(DSL.name("success"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     private FlywaySchemaHistory(Name alias, Table<FlywaySchemaHistoryRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private FlywaySchemaHistory(Name alias, Table<FlywaySchemaHistoryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private FlywaySchemaHistory(Name alias, Table<FlywaySchemaHistoryRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private FlywaySchemaHistory(Name alias, Table<FlywaySchemaHistoryRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -202,7 +198,7 @@ public class FlywaySchemaHistory extends TableImpl<FlywaySchemaHistoryRecord> {
      */
     @Override
     public FlywaySchemaHistory where(Condition condition) {
-        return new FlywaySchemaHistory(getQualifiedName(), aliased() ? this : null, condition);
+        return new FlywaySchemaHistory(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

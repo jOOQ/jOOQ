@@ -1225,11 +1225,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 }
             }
 
-            ExecuteContext ctx2 = new DefaultExecuteContext(((DefaultExecuteContext) ctx).originalConfiguration());
-            ExecuteListener listener2 = ExecuteListeners.getAndStart(ctx2);
-
-            ctx2.resultSet(rs);
-            returnedResult = new CursorImpl<>(ctx2, listener2, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, true).fetch();
+            returnedResult = new CursorImpl<>(ctx, listener, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, true).fetch();
 
             // [#5366] HSQLDB currently doesn't support fetching updated records in UPDATE statements.
             // [#5408] Other dialects may fall through the switch above (PostgreSQL, Firebird, Oracle) and must
@@ -1252,9 +1248,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         listener.executeStart(ctx);
         int result = executeImmediate(ctx.statement()).executeUpdate();
         ctx.rows(result);
+        ctx.resultSet(ctx.statement().getGeneratedKeys());
         listener.executeEnd(ctx);
-
-        return ctx.statement().getGeneratedKeys();
+        return ctx.resultSet();
     }
 
     private final int executeReturningGeneratedKeysFetchAdditionalRows(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
@@ -1303,10 +1299,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
     private final ResultSet executeReturningQuery(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
-        ResultSet rs = ctx.statement().executeQuery();
+        ctx.resultSet(ctx.statement().executeQuery());
         listener.executeEnd(ctx);
 
-        return rs;
+        return ctx.resultSet();
     }
 
     /**

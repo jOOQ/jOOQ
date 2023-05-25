@@ -68,29 +68,11 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
     public final TableField<SalesByStoreRecord, BigDecimal> TOTAL_SALES = createField(DSL.name("total_sales"), SQLDataType.NUMERIC, this, "");
 
     private SalesByStore(Name alias, Table<SalesByStoreRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private SalesByStore(Name alias, Table<SalesByStoreRecord> aliased, Field<?>[] parameters) {
+    private SalesByStore(Name alias, Table<SalesByStoreRecord> aliased, Field<?>[] parameters, Condition where) {
         super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view("""
-        create view "sales_by_store" as  SELECT (((c.city)::text || ','::text) || (cy.country)::text) AS store,
-          (((m.first_name)::text || ' '::text) || (m.last_name)::text) AS manager,
-          sum(p.amount) AS total_sales
-         FROM (((((((payment p
-           JOIN rental r ON ((p.rental_id = r.rental_id)))
-           JOIN inventory i ON ((r.inventory_id = i.inventory_id)))
-           JOIN store s ON ((i.store_id = s.store_id)))
-           JOIN address a ON ((s.address_id = a.address_id)))
-           JOIN city c ON ((a.city_id = c.city_id)))
-           JOIN country cy ON ((c.country_id = cy.country_id)))
-           JOIN staff m ON ((s.manager_staff_id = m.staff_id)))
-        GROUP BY cy.country, c.city, s.store_id, m.first_name, m.last_name
-        ORDER BY cy.country, c.city;
-        """));
-    }
-
-    private SalesByStore(Name alias, Table<SalesByStoreRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.view("""
         create view "sales_by_store" as  SELECT (((c.city)::text || ','::text) || (cy.country)::text) AS store,
           (((m.first_name)::text || ' '::text) || (m.last_name)::text) AS manager,
           sum(p.amount) AS total_sales
@@ -177,7 +159,7 @@ public class SalesByStore extends TableImpl<SalesByStoreRecord> {
      */
     @Override
     public SalesByStore where(Condition condition) {
-        return new SalesByStore(getQualifiedName(), aliased() ? this : null, condition);
+        return new SalesByStore(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

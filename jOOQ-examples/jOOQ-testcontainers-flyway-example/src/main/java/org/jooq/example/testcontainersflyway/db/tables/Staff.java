@@ -127,15 +127,11 @@ public class Staff extends TableImpl<StaffRecord> {
     public final TableField<StaffRecord, byte[]> PICTURE = createField(DSL.name("picture"), SQLDataType.BLOB, this, "");
 
     private Staff(Name alias, Table<StaffRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Staff(Name alias, Table<StaffRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Staff(Name alias, Table<StaffRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Staff(Name alias, Table<StaffRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -361,7 +357,7 @@ public class Staff extends TableImpl<StaffRecord> {
      */
     @Override
     public Staff where(Condition condition) {
-        return new Staff(getQualifiedName(), aliased() ? this : null, condition);
+        return new Staff(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

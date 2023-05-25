@@ -2255,6 +2255,8 @@ public class JavaGenerator extends AbstractGenerator {
                     final boolean isUDT = t.getType(r).isUDT();
                     final boolean isArray = t.getType(r).isArray();
                     final boolean isUDTArray = t.getType(r).isUDTArray();
+                    final ArrayDefinition array = database.getArray(t.getType(r).getSchema(), t.getType(r).getQualifiedUserType());
+                    final String indexTypeFull = array == null || array.getIndexType() == null ? null : getJavaType(array.getIndexType(resolver(out)), out);
                     final boolean isArrayOfUDTs = isArrayOfUDTs(t, r);
 
                     final String udtType = (isUDT || isArray)
@@ -2333,15 +2335,21 @@ public class JavaGenerator extends AbstractGenerator {
                     else {
                         if (pojoArgument) {
                             if (isUDTArray) {
-                                out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(%s::new).collect(%s.toList())));",
-                                    getStrategy().getJavaSetterName(column, Mode.RECORD),
-                                    getStrategy().getJavaGetterName(column, Mode.POJO),
-                                    udtType,
-                                    generatePojosAsJavaRecordClasses()
-                                        ? getStrategy().getJavaMemberName(column, Mode.POJO)
-                                        : getStrategy().getJavaGetterName(column, Mode.POJO),
-                                    udtArrayElementType,
-                                    Collectors.class);
+                                if (indexTypeFull == null) {
+                                    out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(%s::new).collect(%s.toList())));",
+                                        getStrategy().getJavaSetterName(column, Mode.RECORD),
+                                        getStrategy().getJavaGetterName(column, Mode.POJO),
+                                        udtType,
+                                        generatePojosAsJavaRecordClasses()
+                                            ? getStrategy().getJavaMemberName(column, Mode.POJO)
+                                            : getStrategy().getJavaGetterName(column, Mode.POJO),
+                                        udtArrayElementType,
+                                        Collectors.class);
+                                }
+                                else {
+                                    out.println("if (true)");
+                                    out.println("throw new %s(\"Cannot use POJO constructor for POJO that references Oracle associative array yet. See https://github.com/jOOQ/jOOQ/issues/15108 for details.\");", UnsupportedOperationException.class);
+                                }
                             }
                             else if (isArrayOfUDTs) {
                                 final String columnTypeFull = getJavaType(t.getType(resolver(out, Mode.POJO)), out, Mode.POJO);

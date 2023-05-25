@@ -78,15 +78,11 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
     public final TableField<FilmCategoryRecord, LocalDateTime> LAST_UPDATE = createField(DSL.name("last_update"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field(DSL.raw("now()"), SQLDataType.LOCALDATETIME)), this, "");
 
     private FilmCategory(Name alias, Table<FilmCategoryRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private FilmCategory(Name alias, Table<FilmCategoryRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private FilmCategory(Name alias, Table<FilmCategoryRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private FilmCategory(Name alias, Table<FilmCategoryRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -203,7 +199,7 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
      */
     @Override
     public FilmCategory where(Condition condition) {
-        return new FilmCategory(getQualifiedName(), aliased() ? this : null, condition);
+        return new FilmCategory(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

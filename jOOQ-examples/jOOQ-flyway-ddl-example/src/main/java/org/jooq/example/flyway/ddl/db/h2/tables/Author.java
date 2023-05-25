@@ -90,15 +90,11 @@ public class Author extends TableImpl<AuthorRecord> {
     public final TableField<AuthorRecord, String> ADDRESS = createField(DSL.name("ADDRESS"), SQLDataType.VARCHAR(50), this, "");
 
     private Author(Name alias, Table<AuthorRecord> aliased) {
-        this(alias, aliased, (Field<?>[]) null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Author(Name alias, Table<AuthorRecord> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
-    }
-
-    private Author(Name alias, Table<AuthorRecord> aliased, Condition where) {
-        super(alias, null, aliased, null, DSL.comment(""), TableOptions.table(), where);
+    private Author(Name alias, Table<AuthorRecord> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -199,7 +195,7 @@ public class Author extends TableImpl<AuthorRecord> {
      */
     @Override
     public Author where(Condition condition) {
-        return new Author(getQualifiedName(), aliased() ? this : null, condition);
+        return new Author(getQualifiedName(), aliased() ? this : null, null, condition);
     }
 
     /**

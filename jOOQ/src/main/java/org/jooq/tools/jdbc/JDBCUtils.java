@@ -475,6 +475,8 @@ public class JDBCUtils {
             return SQLITE;
         else if (url.contains(":trino:"))
             return TRINO;
+        else if (url.contains(":yugabytedb:"))
+            return YUGABYTEDB;
 
 
 
@@ -543,6 +545,8 @@ public class JDBCUtils {
                 return "org.postgresql.Driver";
             case SQLITE:
                 return "org.sqlite.JDBC";
+            case YUGABYTEDB:
+                return "com.yugabyte.Driver";
 
 
 

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
+// ...
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.Tools.EMPTY_INT;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
@@ -56,6 +58,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
@@ -78,6 +82,8 @@ import org.jooq.Update;
 import org.jooq.conf.Settings;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -567,15 +573,32 @@ class DefaultExecuteContext implements ExecuteContext {
 
             // [#11355] Check configured dialect version vs. JDBC Connection server version.
             if (dialect().isVersioned() && logVersionSupport.isWarnEnabled()) {
+                String productVersion = null;
+
                 try {
                     int majorVersion = c.getMetaData().getDatabaseMajorVersion();
                     int minorVersion = c.getMetaData().getDatabaseMinorVersion();
-                    String productVersion = c.getMetaData().getDatabaseProductVersion();
+                    productVersion = c.getMetaData().getDatabaseProductVersion();
 
-                    if (!dialect().supportsDatabaseVersion(majorVersion, minorVersion, productVersion))
-                        logVersionSupport.warn("Version mismatch", "Database version is older than what dialect " + dialect() + " supports: " + productVersion + ". Consider https://www.jooq.org/download/support-matrix to see what jOOQ version and edition supports which RDBMS versions.");
-                    else
-                        logVersionSupport.info("Version", "Database version is supported by dialect " + dialect() + ": " + productVersion);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    logVersionSupport(majorVersion, minorVersion, productVersion);
                 }
 
                 // [#14833] There are various reasons why the version can't be read, which we can ignore
@@ -585,7 +608,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
                 // [#14791] Could also be NumberFormatException when reading non-standard version numbers
                 catch (Exception e) {
-                    logVersionSupport.error("Error reading database version", e);
+                    logVersionSupport.info("Version", "Cannot obtain database version for " + dialect() + ": " + productVersion + ". (" + e.getClass() + ": " + e.getMessage() + "). Please consider reporting this here: https://jooq.org/bug");
                 }
             }
 
@@ -593,6 +616,13 @@ class DefaultExecuteContext implements ExecuteContext {
             connection = c;
             wrappedConnection = wrapConnection(provider, c);
         }
+    }
+
+    private final void logVersionSupport(int majorVersion, int minorVersion, String productVersion) {
+        if (!dialect().supportsDatabaseVersion(majorVersion, minorVersion, productVersion))
+            logVersionSupport.warn("Version mismatch", "Database version is older than what dialect " + dialect() + " supports: " + productVersion + ". Consider https://www.jooq.org/download/support-matrix to see what jOOQ version and edition supports which RDBMS versions.");
+        else
+            logVersionSupport.info("Version", "Database version is supported by dialect " + dialect() + ": " + productVersion);
     }
 
     private final SettingsEnabledConnection wrapConnection(ConnectionProvider provider, Connection c) {

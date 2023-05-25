@@ -116,14 +116,14 @@ import org.jooq.impl.QOM.UEmpty;
  */
 final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmpty, SimpleCheckQueryPart {
 
-    private static final Clause[]        CLAUSES_TABLE_REFERENCE               = { TABLE, TABLE_REFERENCE };
-    private static final Clause[]        CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
-    private static final Clause[]        CLAUSES_FIELD_REFERENCE               = { FIELD, FIELD_REFERENCE };
-    private static final Clause[]        CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
-    private static final Set<SQLDialect> NO_SUPPORT_ALIASED_JOIN_TABLES        = SQLDialect.supportedBy(DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect> SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
-    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedUntil(IGNITE, MARIADB, SQLITE);
+    private static final Clause[] CLAUSES_TABLE_REFERENCE               = { TABLE, TABLE_REFERENCE };
+    private static final Clause[] CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
+    private static final Clause[] CLAUSES_FIELD_REFERENCE               = { FIELD, FIELD_REFERENCE };
+    private static final Clause[] CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
+    static final Set<SQLDialect>  NO_SUPPORT_ALIASED_JOIN_TABLES        = SQLDialect.supportedBy(DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect>  SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect>  SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
+    static final Set<SQLDialect>  SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedUntil(IGNITE, MARIADB, SQLITE);
 
 
 

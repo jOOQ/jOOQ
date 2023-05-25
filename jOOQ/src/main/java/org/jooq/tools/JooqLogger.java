@@ -187,8 +187,13 @@ public final class JooqLogger implements Log {
     }
 
     private final void decrementLimitAndDo(Runnable runnable) {
-        if (limitMessages == null || limitMessages.getAndUpdate(i -> Math.max(i - 1, 0)) > 0)
+        try {
             runnable.run();
+        }
+        finally {
+            if (limitMessages != null)
+                limitMessages.getAndUpdate(i -> Math.max(i - 1, 0));
+        }
     }
 
     /**

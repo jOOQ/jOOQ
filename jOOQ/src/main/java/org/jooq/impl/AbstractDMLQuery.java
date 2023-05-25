@@ -1028,7 +1028,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
         else {
             int result = 0;
-            ResultSet rs;
             switch (ctx.family()) {
 
                 // SQLite can select _rowid_ after the insert
@@ -1107,7 +1106,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                     if (!nativeSupportReturning(ctx))
                         return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
 
-                    rs = executeReturningQuery(ctx, listener);
+                    executeReturningQuery(ctx, listener);
                     break;
                 }
 
@@ -1118,7 +1117,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-                    rs = executeReturningQuery(ctx, listener);
+                    executeReturningQuery(ctx, listener);
                     break;
 
 
@@ -1134,7 +1133,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 case FIREBIRD:
                 case POSTGRES:
                 case YUGABYTEDB: {
-                    rs = executeReturningQuery(ctx, listener);
+                    executeReturningQuery(ctx, listener);
                     break;
                 }
 
@@ -1220,7 +1219,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 case HSQLDB:
                 default: {
-                    rs = executeReturningGeneratedKeys(ctx, listener);
+                    executeReturningGeneratedKeys(ctx, listener);
                     break;
                 }
             }
@@ -1244,13 +1243,12 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
     }
 
-    private final ResultSet executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+    private final void executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
         int result = executeImmediate(ctx.statement()).executeUpdate();
         ctx.rows(result);
         ctx.resultSet(ctx.statement().getGeneratedKeys());
         listener.executeEnd(ctx);
-        return ctx.resultSet();
     }
 
     private final int executeReturningGeneratedKeysFetchAdditionalRows(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
@@ -1297,12 +1295,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
     }
 
-    private final ResultSet executeReturningQuery(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+    private final void executeReturningQuery(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
         ctx.resultSet(ctx.statement().executeQuery());
         listener.executeEnd(ctx);
-
-        return ctx.resultSet();
     }
 
     /**

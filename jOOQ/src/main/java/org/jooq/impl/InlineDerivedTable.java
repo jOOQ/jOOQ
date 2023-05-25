@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.table;
 
 import org.jooq.Condition;
 import org.jooq.QueryPart;
@@ -46,8 +47,6 @@ import org.jooq.Record;
 // ...
 import org.jooq.Table;
 // ...
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -90,13 +89,15 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
     @Override
     final FieldsImpl<R> fields0() {
 
-        // [#8012] Re-use the existing fields row if this is an aliased table
+        // [#8012] Re-use the existing fields row if this is an aliased table.
         if (table instanceof TableAlias)
             return new FieldsImpl<>(table.fields());
 
-        // [#8012] Re-wrap fields in new TableAlias to prevent StackOverflowError
+        // [#8012] Re-wrap fields in new TableAlias to prevent StackOverflowError.
+        //         Cannot produce qualified table references here in case the
+        //         InlineDerivedTable cannot be inlined.
         else
-            return new FieldsImpl<>(table.as(table).fields());
+            return new FieldsImpl<>(Tools.qualify(table(table.getUnqualifiedName()), table.as(table).fields()));
     }
 
 

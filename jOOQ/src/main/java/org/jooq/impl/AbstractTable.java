@@ -879,7 +879,7 @@ implements
 
         // [#1199] The public API of Table returns immutable field lists
         if (table instanceof TableImpl<?> t)
-            t.fields0().add(tableField);
+            t.fields.add(tableField);
 
         return tableField;
     }

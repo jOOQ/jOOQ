@@ -6208,6 +6208,10 @@ final class Tools {
             throw new UnsupportedOperationException("Unsupported field : " + field);
     }
 
+    static final Field<?>[] qualify(Table<?> table, Field<?>[] fields) {
+        return map(fields, f -> qualify(table, f), Field<?>[]::new);
+    }
+
     static final <T> Field<T> qualify(Table<?> table, Field<T> field) {
         Field<T> result = table.field(field);
 

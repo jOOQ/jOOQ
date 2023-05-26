@@ -93,7 +93,7 @@ final class DefaultConnectionFactory implements ConnectionFactory {
         return () -> connectionOrThrow().getMetadata().getDatabaseProductName();
     }
 
-    private final class NonClosingConnection implements Connection {
+    final class NonClosingConnection implements Connection {
 
         // ---------------------------------------------------------------------
         // 0.9.0.M1 API

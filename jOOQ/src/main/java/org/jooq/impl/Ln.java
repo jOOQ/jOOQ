@@ -105,8 +105,10 @@ implements
 
 
 
+
+
             case SQLITE:
-                return true;
+                return false;
 
             default:
                 return true;
@@ -141,10 +143,10 @@ implements
 
 
 
-                ctx.visit(function(N_LOG, getDataType(), value));
-                break;
 
-            case SQLITE:
+
+
+            case SQLITE: {
 
 
 
@@ -152,6 +154,7 @@ implements
 
                 ctx.visit(function(N_LN, getDataType(), value));
                 break;
+            }
 
             default:
                 ctx.visit(function(N_LN, getDataType(), value));

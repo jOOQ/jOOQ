@@ -141,8 +141,16 @@ implements
 
 
 
-            case SQLITE:
                 ctx.visit(function(N_LOG, getDataType(), value));
+                break;
+
+            case SQLITE:
+
+
+
+
+
+                ctx.visit(function(N_LN, getDataType(), value));
                 break;
 
             default:

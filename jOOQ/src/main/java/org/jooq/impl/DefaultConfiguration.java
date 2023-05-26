@@ -93,6 +93,7 @@ import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ConfigurationException;
+import org.jooq.impl.DefaultConnectionFactory.NonClosingConnection;
 import org.jooq.impl.DefaultExecuteContext.ExecuteContextConnectionProvider;
 import org.jooq.impl.ThreadLocalTransactionProvider.ThreadLocalConnectionProvider;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
@@ -2016,8 +2017,12 @@ public class DefaultConfiguration extends AbstractConfiguration {
     @Override
     public String toString() {
         return "DefaultConfiguration " +
-            "[\n\tconnected=" + (connectionProvider != null && !(connectionProvider instanceof NoConnectionProvider)) +
-            ",\n\ttransactional=" + (transactionProvider != null && !(transactionProvider instanceof NoTransactionProvider)) +
+            "[\n\tconnected=" + (
+                connectionProvider != null && !(connectionProvider instanceof NoConnectionProvider)
+             || connectionFactory != null && !(connectionFactory instanceof NoConnectionFactory)) +
+            ",\n\ttransactional=" + (
+                transactionProvider != null && !(transactionProvider instanceof NoTransactionProvider)
+             || connectionFactory instanceof DefaultConnectionFactory && ((DefaultConnectionFactory) connectionFactory).connection instanceof NonClosingConnection) +
             ",\n\tdialect=" + dialect +
             ",\n\tdata=" + data +
             ",\n\tsettings=\n\t\t" + settings +

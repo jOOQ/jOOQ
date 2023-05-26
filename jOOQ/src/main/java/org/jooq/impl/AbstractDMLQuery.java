@@ -1219,7 +1219,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 case HSQLDB:
                 default: {
-                    executeReturningGeneratedKeys(ctx, listener);
+                    result = executeReturningGeneratedKeys(ctx, listener);
                     break;
                 }
             }
@@ -1243,12 +1243,14 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
     }
 
-    private final void executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+    private final int executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
         int result = executeImmediate(ctx.statement()).executeUpdate();
         ctx.rows(result);
         ctx.resultSet(ctx.statement().getGeneratedKeys());
         listener.executeEnd(ctx);
+
+        return result;
     }
 
     private final int executeReturningGeneratedKeysFetchAdditionalRows(ExecuteContext ctx, ExecuteListener listener) throws SQLException {

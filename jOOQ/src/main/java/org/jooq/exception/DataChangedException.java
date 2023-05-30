@@ -40,8 +40,17 @@ package org.jooq.exception;
 import org.jooq.UpdatableRecord;
 
 /**
- * An error occurred while storing a record whose underlying data had already
- * been changed
+ * An error occurred while storing a record with optimistic locking active,
+ * whose underlying data had already been changed.
+ * <p>
+ * This exception may be thrown if:
+ * <ul>
+ * <li>The record has been changed.</li>
+ * <li>The record has been removed.</li>
+ * <li>It isn't possible to detect whether the record has been changed (e.g.
+ * because {@link UpdatableRecord#update()} is called on a record that hasn't
+ * been previously fetched from the database).</li>
+ * </ul>
  *
  * @see UpdatableRecord#store()
  * @author Lukas Eder

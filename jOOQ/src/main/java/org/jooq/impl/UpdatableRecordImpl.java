@@ -504,7 +504,10 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             Object thatObject = record.original(field);
 
             if (!StringUtils.equals(thisObject, thatObject))
-                throw new DataChangedException("Database record has been changed");
+                if (thisObject == null && !fetched)
+                    throw new DataChangedException("Cannot detect whether unversioned record has been changed. Either make sure the record is fetched from the database, or use a version or timestamp column to version the record.");
+                else
+                    throw new DataChangedException("Database record has been changed");
         }
     }
 

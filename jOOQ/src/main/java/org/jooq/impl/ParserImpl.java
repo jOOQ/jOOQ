@@ -4806,6 +4806,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         readonly |= type.readonly();
 
         for (;;) {
+            ConstraintTypeStep inlineConstraint = parseConstraintNameSpecification();
+
             if (!nullable) {
                 if (parseKeywordIf("NULL")) {
                     type = type.nullable(true);
@@ -4899,18 +4901,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 }
             }
 
-            if (!onUpdate) {
-                if (parseKeywordIf("ON UPDATE")) {
-
-                    // [#6132] TODO: Support this feature in the jOOQ DDL API
-                    parseConcat();
-                    onUpdate = true;
-                    continue;
-                }
-            }
-
-            ConstraintTypeStep inlineConstraint = parseConstraintNameSpecification();
-
             if (!primary && parsePrimaryKeyClusteredNonClusteredKeywordIf()) {
                 constraints.add(parseConstraintEnforcementIf(inlineConstraint == null
                     ? primaryKey(fieldName)
@@ -4948,21 +4938,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 continue;
             }
 
-            if (!nullable) {
-                if (parseKeywordIf("NULL")) {
-                    type = type.nullable(true);
-                    nullable = true;
-                    continue;
-                }
-                else if (parseNotNullOptionalEnable()) {
-                    type = type.nullable(false);
-                    nullable = true;
+            if (inlineConstraint != null)
+                throw expected("CHECK", "DEFAULT", "NOT NULL", "NULL", "PRIMARY KEY", "REFERENCES", "UNIQUE");
+
+            if (!onUpdate) {
+                if (parseKeywordIf("ON UPDATE")) {
+
+                    // [#6132] TODO: Support this feature in the jOOQ DDL API
+                    parseConcat();
+                    onUpdate = true;
                     continue;
                 }
             }
-
-            if (inlineConstraint != null)
-                throw expected("CHECK", "NOT NULL", "NULL", "PRIMARY KEY", "REFERENCES", "UNIQUE");
 
             if (!identity) {
                 if (parseKeywordIf("AUTO_INCREMENT") ||

@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRDEF;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
@@ -153,6 +154,7 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
                     ))
                 .leftJoin(PG_DESCRIPTION)
                     .on(PG_DESCRIPTION.OBJOID.eq(c.OID))
+                    .and(PG_DESCRIPTION.CLASSOID.eq(field("'pg_class'::regclass", BIGINT)))
                     .and(PG_DESCRIPTION.OBJSUBID.eq(a.ATTNUM.coerce(PG_DESCRIPTION.OBJSUBID)))
             .where(
                 not(condition("pg_is_other_temp_schema({0})", nc.OID))

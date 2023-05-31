@@ -44,6 +44,7 @@ import static java.util.stream.Collectors.toList;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -103,11 +104,8 @@ import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
-import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 
 import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -188,6 +186,7 @@ implements
 
     private static final Set<SQLDialect>      REQUIRE_SELECT_FROM                = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>      REQUIRE_DISAMBIGUATE_OVERLOADS     = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>      SUPPORT_NAMED_ARGUMENTS            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     // ------------------------------------------------------------------------
     // Meta-data attributes (the same for every call)
@@ -2305,8 +2304,9 @@ implements
                 // Disambiguate overloaded function signatures
                 if (REQUIRE_DISAMBIGUATE_OVERLOADS.contains(ctx.dialect()))
 
-                    // [#4920] In case there are any unnamed parameters, we mustn't
-                    if (hasUnnamedParameters())
+                    // [#4920]  In case there are any unnamed parameters, we mustn't
+                    // [#13947] Or, if named arguments aren't supported
+                    if (hasUnnamedParameters() || !SUPPORT_NAMED_ARGUMENTS.contains(ctx.dialect()))
                         if (pgArgNeedsCasting(parameter))
                             fields.add(new Cast(getInValues().get(parameter), parameter.getDataType()));
                         else

@@ -753,7 +753,8 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <code>ROW_NUMBER()</code> window function and nested <code>SELECT</code>
      * statements.
      * <p>
-     * This is the same as calling {@link #addLimit(int, int)} with offset = 0
+     * This is the same as calling {@link #addLimit(Number, Number)} with offset
+     * = 0
      *
      * @param numberOfRows The number of rows to return
      */

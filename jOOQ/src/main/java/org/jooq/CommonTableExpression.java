@@ -63,7 +63,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  *    .fetch();
  * </code></pre>
  * <p>
- * Instances can be created using {@link Name#as(Select)}.
+ * Instances can be created using {@link Name#as(ResultQuery)}.
  *
  * @author Lukas Eder
  */

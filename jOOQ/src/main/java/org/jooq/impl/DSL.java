@@ -1897,7 +1897,7 @@ public class DSL {
      * <li>{@link #name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      * <p>
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
@@ -1924,7 +1924,7 @@ public class DSL {
      * <li>{@link #name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      * <p>
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
@@ -2950,7 +2950,7 @@ public class DSL {
      * <li>{@link #name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      * <p>
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
@@ -2980,7 +2980,7 @@ public class DSL {
      * <li>{@link #name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      * <p>
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
@@ -16285,7 +16285,7 @@ public class DSL {
     /**
      * The <code>ABS</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -16305,7 +16305,7 @@ public class DSL {
     /**
      * The <code>ACOS</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16325,7 +16325,7 @@ public class DSL {
     /**
      * The <code>ACOSH</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16345,7 +16345,7 @@ public class DSL {
     /**
      * The <code>ACOTH</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16365,7 +16365,7 @@ public class DSL {
     /**
      * The <code>ASIN</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16385,7 +16385,7 @@ public class DSL {
     /**
      * The <code>ASINH</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16405,7 +16405,7 @@ public class DSL {
     /**
      * The <code>ATAN</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16425,8 +16425,8 @@ public class DSL {
     /**
      * The <code>ATAN2</code> function.
      *
-     * @param x is wrapped as {@link #val(Object)}.
-     * @param y is wrapped as {@link #val(Object)}.
+     * @param x is wrapped as {@link DSL#val(Object)}.
+     * @param y is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16437,7 +16437,7 @@ public class DSL {
     /**
      * The <code>ATAN2</code> function.
      *
-     * @param x is wrapped as {@link #val(Object)}.
+     * @param x is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16448,7 +16448,7 @@ public class DSL {
     /**
      * The <code>ATAN2</code> function.
      *
-     * @param y is wrapped as {@link #val(Object)}.
+     * @param y is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16468,7 +16468,7 @@ public class DSL {
     /**
      * The <code>ATANH</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -16488,8 +16488,8 @@ public class DSL {
     /**
      * The <code>BIT_AND</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16500,7 +16500,7 @@ public class DSL {
     /**
      * The <code>BIT_AND</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16511,7 +16511,7 @@ public class DSL {
     /**
      * The <code>BIT_AND</code> function.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16533,7 +16533,7 @@ public class DSL {
      * <p>
      * Count the number of bits set in a number
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16555,7 +16555,7 @@ public class DSL {
     /**
      * The <code>BIT_GET</code> function.
      *
-     * @param bit is wrapped as {@link #val(Object)}.
+     * @param bit is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16575,8 +16575,8 @@ public class DSL {
     /**
      * The <code>BIT_NAND</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16587,7 +16587,7 @@ public class DSL {
     /**
      * The <code>BIT_NAND</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16598,7 +16598,7 @@ public class DSL {
     /**
      * The <code>BIT_NAND</code> function.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16618,8 +16618,8 @@ public class DSL {
     /**
      * The <code>BIT_NOR</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16630,7 +16630,7 @@ public class DSL {
     /**
      * The <code>BIT_NOR</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16641,7 +16641,7 @@ public class DSL {
     /**
      * The <code>BIT_NOR</code> function.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16661,7 +16661,7 @@ public class DSL {
     /**
      * The <code>BIT_NOT</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16681,8 +16681,8 @@ public class DSL {
     /**
      * The <code>BIT_OR</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16693,7 +16693,7 @@ public class DSL {
     /**
      * The <code>BIT_OR</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16704,7 +16704,7 @@ public class DSL {
     /**
      * The <code>BIT_OR</code> function.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16724,8 +16724,8 @@ public class DSL {
     /**
      * The <code>BIT_SET</code> function.
      *
-     * @param bit is wrapped as {@link #val(Object)}.
-     * @param newValue is wrapped as {@link #val(Object)}.
+     * @param bit is wrapped as {@link DSL#val(Object)}.
+     * @param newValue is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16736,7 +16736,7 @@ public class DSL {
     /**
      * The <code>BIT_SET</code> function.
      *
-     * @param bit is wrapped as {@link #val(Object)}.
+     * @param bit is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16747,7 +16747,7 @@ public class DSL {
     /**
      * The <code>BIT_SET</code> function.
      *
-     * @param newValue is wrapped as {@link #val(Object)}.
+     * @param newValue is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16767,7 +16767,7 @@ public class DSL {
     /**
      * The <code>BIT_SET</code> function.
      *
-     * @param bit is wrapped as {@link #val(Object)}.
+     * @param bit is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16787,8 +16787,8 @@ public class DSL {
     /**
      * The <code>BIT_XNOR</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16799,7 +16799,7 @@ public class DSL {
     /**
      * The <code>BIT_XNOR</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16810,7 +16810,7 @@ public class DSL {
     /**
      * The <code>BIT_XNOR</code> function.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16830,8 +16830,8 @@ public class DSL {
     /**
      * The <code>BIT_XOR</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16842,7 +16842,7 @@ public class DSL {
     /**
      * The <code>BIT_XOR</code> function.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16853,7 +16853,7 @@ public class DSL {
     /**
      * The <code>BIT_XOR</code> function.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -16875,7 +16875,7 @@ public class DSL {
      * <p>
      * Get the smallest integer value equal or greater to a value.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -16897,7 +16897,7 @@ public class DSL {
     /**
      * The <code>COS</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -16917,7 +16917,7 @@ public class DSL {
     /**
      * The <code>COSH</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -16937,7 +16937,7 @@ public class DSL {
     /**
      * The <code>COT</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -16957,7 +16957,7 @@ public class DSL {
     /**
      * The <code>COTH</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17014,7 +17014,7 @@ public class DSL {
     /**
      * The <code>EXP</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17036,7 +17036,7 @@ public class DSL {
      * <p>
      * Get the biggest integer value equal or less than a value.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17060,7 +17060,7 @@ public class DSL {
      * <p>
      * Get the natural logarithm of a value.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17084,8 +17084,8 @@ public class DSL {
      * <p>
      * Get the logarithm of a value for a base.
      *
-     * @param value is wrapped as {@link #val(Object)}.
-     * @param base is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
+     * @param base is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17098,7 +17098,7 @@ public class DSL {
      * <p>
      * Get the logarithm of a value for a base.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17111,7 +17111,7 @@ public class DSL {
      * <p>
      * Get the logarithm of a value for a base.
      *
-     * @param base is wrapped as {@link #val(Object)}.
+     * @param base is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17135,7 +17135,7 @@ public class DSL {
      * <p>
      * Get the logarithm of a value for base 10.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17168,8 +17168,8 @@ public class DSL {
     /**
      * The <code>POWER</code> function.
      *
-     * @param base is wrapped as {@link #val(Object)}.
-     * @param exponent is wrapped as {@link #val(Object)}.
+     * @param base is wrapped as {@link DSL#val(Object)}.
+     * @param exponent is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17180,7 +17180,7 @@ public class DSL {
     /**
      * The <code>POWER</code> function.
      *
-     * @param base is wrapped as {@link #val(Object)}.
+     * @param base is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17191,7 +17191,7 @@ public class DSL {
     /**
      * The <code>POWER</code> function.
      *
-     * @param exponent is wrapped as {@link #val(Object)}.
+     * @param exponent is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17444,7 +17444,7 @@ public class DSL {
      * <p>
      * Get the sign of a number and return it as any of +1, 0, -1.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17466,7 +17466,7 @@ public class DSL {
     /**
      * The <code>SIN</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17486,7 +17486,7 @@ public class DSL {
     /**
      * The <code>SINH</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17506,7 +17506,7 @@ public class DSL {
     /**
      * The <code>SQRT</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17526,7 +17526,7 @@ public class DSL {
     /**
      * The <code>SQUARE</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17546,7 +17546,7 @@ public class DSL {
     /**
      * The <code>TAN</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17566,7 +17566,7 @@ public class DSL {
     /**
      * The <code>TANH</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17691,7 +17691,7 @@ public class DSL {
      * <p>
      * The ASCII value of a character.
      *
-     * @param string is wrapped as {@link #val(Object)}.
+     * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
@@ -17715,7 +17715,7 @@ public class DSL {
      * <p>
      * The length of a string in bits.
      *
-     * @param string is wrapped as {@link #val(Object)}.
+     * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17739,7 +17739,7 @@ public class DSL {
      * <p>
      * The length of a string in characters.
      *
-     * @param string is wrapped as {@link #val(Object)}.
+     * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17761,7 +17761,7 @@ public class DSL {
     /**
      * The <code>CHR</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -17781,7 +17781,7 @@ public class DSL {
     /**
      * The <code>DIGITS</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17859,7 +17859,7 @@ public class DSL {
      * <p>
      * The length of a string in characters.
      *
-     * @param string is wrapped as {@link #val(Object)}.
+     * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -17883,7 +17883,7 @@ public class DSL {
      * <p>
      * Turn a string into lower case.
      *
-     * @param string is wrapped as {@link #val(Object)}.
+     * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -18077,7 +18077,7 @@ public class DSL {
      * <p>
      * Calculate an MD5 hash from a string.
      *
-     * @param string is wrapped as {@link #val(Object)}.
+     * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
@@ -18189,7 +18189,7 @@ public class DSL {
      * <p>
      * The length of a string in octets.
      *
-     * @param string is wrapped as {@link #val(Object)}.
+     * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -18595,7 +18595,7 @@ public class DSL {
      * <p>
      * Reverse a string.
      *
-     * @param string is wrapped as {@link #val(Object)}.
+     * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
@@ -19217,7 +19217,7 @@ public class DSL {
      * <p>
      * Format a number to its hex value.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -19439,7 +19439,7 @@ public class DSL {
      * <p>
      * Turn a string into upper case.
      *
-     * @param string is wrapped as {@link #val(Object)}.
+     * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -19957,7 +19957,7 @@ public class DSL {
      * <p>
      * Get an array element at a given index (1 based).
      *
-     * @param index is wrapped as {@link #val(Object)}.
+     * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -20025,7 +20025,7 @@ public class DSL {
      * <p>
      * Append an element to an array.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -20049,7 +20049,7 @@ public class DSL {
      * <p>
      * Append an element to an array.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -20073,7 +20073,7 @@ public class DSL {
      * <p>
      * Prepend an element to an array.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -20086,7 +20086,7 @@ public class DSL {
      * <p>
      * Prepend an element to an array.
      *
-     * @param arg1 is wrapped as {@link #val(Object)}.
+     * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -20165,7 +20165,7 @@ public class DSL {
      * <p>
      * Remove an element from an array.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -20189,7 +20189,7 @@ public class DSL {
      * <p>
      * Remove an element from an array.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -20213,8 +20213,8 @@ public class DSL {
      * <p>
      * Replace an element in an array.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
-     * @param arg3 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
+     * @param arg3 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -20588,7 +20588,7 @@ public class DSL {
     /**
      * The <code>XMLCOMMENT</code> function.
      *
-     * @param comment is wrapped as {@link #val(Object)}.
+     * @param comment is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ POSTGRES })
@@ -20694,7 +20694,7 @@ public class DSL {
     /**
      * The <code>XMLSERIALIZE</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ POSTGRES })
@@ -20714,7 +20714,7 @@ public class DSL {
     /**
      * The <code>XMLSERIALIZE_CONTENT</code> function.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ POSTGRES })
@@ -20830,8 +20830,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression.
      *
-     * @param field is wrapped as {@link #val(Object)}.
-     * @param index is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -20844,7 +20844,7 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -20857,7 +20857,7 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression.
      *
-     * @param index is wrapped as {@link #val(Object)}.
+     * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -20881,8 +20881,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression.
      *
-     * @param field is wrapped as {@link #val(Object)}.
-     * @param index is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -20895,7 +20895,7 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -20908,7 +20908,7 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression.
      *
-     * @param index is wrapped as {@link #val(Object)}.
+     * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -20932,8 +20932,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression and return it as a string.
      *
-     * @param field is wrapped as {@link #val(Object)}.
-     * @param index is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -20946,7 +20946,7 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression and return it as a string.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -20959,7 +20959,7 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression and return it as a string.
      *
-     * @param index is wrapped as {@link #val(Object)}.
+     * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -20983,8 +20983,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression and return it as a string.
      *
-     * @param field is wrapped as {@link #val(Object)}.
-     * @param index is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -20997,7 +20997,7 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression and return it as a string.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -21010,7 +21010,7 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression and return it as a string.
      *
-     * @param index is wrapped as {@link #val(Object)}.
+     * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -21034,8 +21034,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression.
      *
-     * @param field is wrapped as {@link #val(Object)}.
-     * @param attribute is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -21048,7 +21048,7 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -21061,7 +21061,7 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression.
      *
-     * @param attribute is wrapped as {@link #val(Object)}.
+     * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -21085,8 +21085,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSONB object expression.
      *
-     * @param field is wrapped as {@link #val(Object)}.
-     * @param attribute is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -21099,7 +21099,7 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSONB object expression.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -21112,7 +21112,7 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSONB object expression.
      *
-     * @param attribute is wrapped as {@link #val(Object)}.
+     * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -21136,8 +21136,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression and return it as string.
      *
-     * @param field is wrapped as {@link #val(Object)}.
-     * @param attribute is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -21150,7 +21150,7 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression and return it as string.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -21163,7 +21163,7 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression and return it as string.
      *
-     * @param attribute is wrapped as {@link #val(Object)}.
+     * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -21188,8 +21188,8 @@ public class DSL {
      * Access an object attribute value from a JSONB object expression and return it as
      * string.
      *
-     * @param field is wrapped as {@link #val(Object)}.
-     * @param attribute is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -21203,7 +21203,7 @@ public class DSL {
      * Access an object attribute value from a JSONB object expression and return it as
      * string.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -21217,7 +21217,7 @@ public class DSL {
      * Access an object attribute value from a JSONB object expression and return it as
      * string.
      *
-     * @param attribute is wrapped as {@link #val(Object)}.
+     * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -21242,7 +21242,7 @@ public class DSL {
      * <p>
      * Retrieve all keys from a JSON object as an array of strings.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -21266,7 +21266,7 @@ public class DSL {
      * <p>
      * Retrieve all keys from a JSONB object as an array of strings.
      *
-     * @param field is wrapped as {@link #val(Object)}.
+     * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -21290,8 +21290,8 @@ public class DSL {
      * <p>
      * Add or replace a JSON value to a JSON field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21304,7 +21304,7 @@ public class DSL {
      * <p>
      * Add or replace a JSON value to a JSON field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21317,7 +21317,7 @@ public class DSL {
      * <p>
      * Add or replace a JSON value to a JSON field at a given path.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21341,8 +21341,8 @@ public class DSL {
      * <p>
      * Add or replace a JSONB value to a JSONB field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21355,7 +21355,7 @@ public class DSL {
      * <p>
      * Add or replace a JSONB value to a JSONB field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21368,7 +21368,7 @@ public class DSL {
      * <p>
      * Add or replace a JSONB value to a JSONB field at a given path.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21392,8 +21392,8 @@ public class DSL {
      * <p>
      * Add (but not replace) a JSON value to a JSON field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21406,7 +21406,7 @@ public class DSL {
      * <p>
      * Add (but not replace) a JSON value to a JSON field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21419,7 +21419,7 @@ public class DSL {
      * <p>
      * Add (but not replace) a JSON value to a JSON field at a given path.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21443,8 +21443,8 @@ public class DSL {
      * <p>
      * Add (but not replace) a JSON value to a JSON field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21457,7 +21457,7 @@ public class DSL {
      * <p>
      * Add (but not replace) a JSON value to a JSON field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21470,7 +21470,7 @@ public class DSL {
      * <p>
      * Add (but not replace) a JSON value to a JSON field at a given path.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21494,8 +21494,8 @@ public class DSL {
      * <p>
      * Replace (but not add) a JSON value to a JSON field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21508,7 +21508,7 @@ public class DSL {
      * <p>
      * Replace (but not add) a JSON value to a JSON field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21521,7 +21521,7 @@ public class DSL {
      * <p>
      * Replace (but not add) a JSON value to a JSON field at a given path.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21545,8 +21545,8 @@ public class DSL {
      * <p>
      * Replace (but not add) a JSONB value to a JSONB field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21559,7 +21559,7 @@ public class DSL {
      * <p>
      * Replace (but not add) a JSONB value to a JSONB field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21572,7 +21572,7 @@ public class DSL {
      * <p>
      * Replace (but not add) a JSONB value to a JSONB field at a given path.
      *
-     * @param value is wrapped as {@link #val(Object)}.
+     * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21596,7 +21596,7 @@ public class DSL {
      * <p>
      * Remove a JSON value from a JSON field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21620,7 +21620,7 @@ public class DSL {
      * <p>
      * Remove a JSONB value from a JSONB field at a given path.
      *
-     * @param path is wrapped as {@link #val(Object)}.
+     * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ MARIADB, MYSQL, SQLITE })
@@ -21850,7 +21850,7 @@ public class DSL {
      * The <code>CORR</code> function.
      * <p>
      * Calculate the correlation coefficient. This standard SQL function may be supported
-     * natively, or emulated using {@link #covarPop(Field, Field)} and {@link #stddevPop(Field)}.
+     * natively, or emulated using {@link DSL#covarPop(Field, Field)} and {@link DSL#stddevPop(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -21882,7 +21882,7 @@ public class DSL {
      * The <code>COVAR_SAMP</code> function.
      * <p>
      * Calculate the sample covariance. This standard SQL function may be supported natively,
-     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
      * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -21896,8 +21896,8 @@ public class DSL {
      * The <code>COVAR_POP</code> function.
      * <p>
      * Calculate the population covariance. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
@@ -22015,7 +22015,7 @@ public class DSL {
      * The <code>REGR_AVGX</code> function.
      * <p>
      * Calculate the average of the independent values (x). This standard SQL function may
-     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -22029,7 +22029,7 @@ public class DSL {
      * The <code>REGR_AVGY</code> function.
      * <p>
      * Calculate the average of the dependent values (y). This standard SQL function may
-     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -22043,7 +22043,7 @@ public class DSL {
      * The <code>REGR_COUNT</code> function.
      * <p>
      * Calculate the number of non-<code>NULL</code> pairs. This standard SQL function may
-     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -22057,7 +22057,7 @@ public class DSL {
      * The <code>REGR_INTERCEPT</code> function.
      * <p>
      * Calculate the y intercept of the regression line. This standard SQL function may
-     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -22071,8 +22071,8 @@ public class DSL {
      * The <code>REGR_R2</code> function.
      * <p>
      * Calculate the coefficient of determination. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
@@ -22085,8 +22085,8 @@ public class DSL {
      * The <code>REGR_SLOPE</code> function.
      * <p>
      * Calculate the slope of the regression line. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
@@ -22099,7 +22099,7 @@ public class DSL {
      * The <code>REGR_SXX</code> function.
      * <p>
      * Calculate the <code>REGR_SXX</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -22113,7 +22113,7 @@ public class DSL {
      * The <code>REGR_SXY</code> function.
      * <p>
      * Calculate the <code>REGR_SXY</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -22127,7 +22127,7 @@ public class DSL {
      * The <code>REGR_SYY</code> function.
      * <p>
      * Calculate the <code>REGR_SYY</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -22141,8 +22141,8 @@ public class DSL {
      * The <code>STDDEV_POP</code> function.
      * <p>
      * Calculate the population standard deviation. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
@@ -22155,8 +22155,8 @@ public class DSL {
      * The <code>STDDEV_SAMP</code> function.
      * <p>
      * Calculate the sample standard deviation. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     @NotNull
@@ -22187,7 +22187,7 @@ public class DSL {
      * The <code>VAR_POP</code> function.
      * <p>
      * Calculate the population variance. This standard SQL function may be supported natively,
-     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
      * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -22201,7 +22201,7 @@ public class DSL {
      * The <code>VAR_SAMP</code> function.
      * <p>
      * Calculate the sample variance. This standard SQL function may be supported natively,
-     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
      * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */

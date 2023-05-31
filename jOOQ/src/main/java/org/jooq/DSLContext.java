@@ -5100,7 +5100,7 @@ public interface DSLContext extends Scope {
      * <li>{@link DSL#name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      * <p>
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
@@ -5125,7 +5125,7 @@ public interface DSLContext extends Scope {
      * <li>{@link DSL#name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      * <p>
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
@@ -6060,7 +6060,7 @@ public interface DSLContext extends Scope {
      * <li>{@link DSL#name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      * <p>
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
@@ -6085,7 +6085,7 @@ public interface DSLContext extends Scope {
      * <li>{@link DSL#name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      * <p>
      * The <code>RECURSIVE</code> keyword may be optional or unsupported in some
@@ -13913,7 +13913,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -13932,7 +13932,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -13951,7 +13951,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -13970,7 +13970,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -13989,7 +13989,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14008,7 +14008,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14027,7 +14027,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14046,7 +14046,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14065,7 +14065,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14084,7 +14084,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14103,7 +14103,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14122,7 +14122,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14141,7 +14141,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14160,7 +14160,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14179,7 +14179,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14198,7 +14198,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14217,7 +14217,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14236,7 +14236,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18, SelectField19)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14255,7 +14255,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18, SelectField19, SelectField20)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14274,7 +14274,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18, SelectField19, SelectField20, SelectField21)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.
@@ -14293,7 +14293,7 @@ public interface DSLContext extends Scope {
      * Since jOOQ 3.17, {@link Table} extends {@link SelectField}, and
      * {@link Condition} extends {@link Field}. As such, there is an overload
      * conflict between {@link #fetchSingle(Table, Condition...)} and
-     * {@link #fetchSingle(SelectField1, SelectField2, SelectField3, SelectField4, SelectField5, SelectField6, SelectField7, SelectField8, SelectField9, SelectField10, SelectField11, SelectField12, SelectField13, SelectField14, SelectField15, SelectField16, SelectField17, SelectField18, SelectField19, SelectField20, SelectField21, SelectField22)}, which can be
+     * {@link #fetchSingle(SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField, SelectField)}, which can be
      * resolved backwards compatibly with this method.
      *
      * @return The record. This is never <code>null</code>.

@@ -206,7 +206,7 @@ public class PostgresDSL extends DSL {
      * </pre>
      *
      * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayPrepend(Field, Object)} instead.
+     *             {@link DSL#arrayPrepend(Field, Object[])} instead.
      */
     @Deprecated
     @NotNull
@@ -424,7 +424,7 @@ public class PostgresDSL extends DSL {
      * </pre>
      *
      * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Object[], Object)} instead.
+     *             {@link DSL#arrayConcat(Object[], Object[])} instead.
      */
     @Deprecated
     @NotNull
@@ -445,7 +445,7 @@ public class PostgresDSL extends DSL {
      * </pre>
      *
      * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Field, Object)} instead.
+     *             {@link DSL#arrayConcat(Field, Object[])} instead.
      */
     @Deprecated
     @NotNull

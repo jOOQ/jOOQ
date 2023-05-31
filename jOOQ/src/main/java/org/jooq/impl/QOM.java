@@ -169,7 +169,7 @@ import org.jetbrains.annotations.Nullable;
  * the DSL and model API functionality.
  * <p>
  * The goal of this model API is to allow for expression tree transformations
- * via {@link QueryPart#$replace(Function1)} as well as via per-querypart
+ * via {@link QueryPart#$replace(Replacer)} as well as via per-querypart
  * methods, such as for example {@link Substring#$startingPosition(Field)}, and
  * traversals via {@link QueryPart#$traverse(Traverser)} that are independent of
  * the DSL API that would otherwise be too noisy for this task.
@@ -4653,7 +4653,7 @@ public final class QOM {
     /**
      * The <code>CONTAINS</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
@@ -4692,7 +4692,7 @@ public final class QOM {
     /**
      * The <code>CONTAINS IGNORE CASE</code> operator.
      * <p>
-     * Convenience method for {@link #likeIgnoreCase(String, char)} including
+     * Convenience method for {@link Field#likeIgnoreCase(String, char)} including
      * proper adding of wildcards and escaping.
      * <p>
      * This translates to
@@ -4736,7 +4736,7 @@ public final class QOM {
     /**
      * The <code>ENDS WITH</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
@@ -4763,7 +4763,7 @@ public final class QOM {
     /**
      * The <code>ENDS WITH IGNORE CASE</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
@@ -5372,7 +5372,7 @@ public final class QOM {
     /**
      * The <code>STARTS WITH</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
@@ -5399,7 +5399,7 @@ public final class QOM {
     /**
      * The <code>STARTS WITH IGNORE CASE</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
@@ -6958,7 +6958,7 @@ public final class QOM {
      * The <code>CORR</code> function.
      * <p>
      * Calculate the correlation coefficient. This standard SQL function may be supported
-     * natively, or emulated using {@link #covarPop(Field, Field)} and {@link #stddevPop(Field)}.
+     * natively, or emulated using {@link DSL#covarPop(Field, Field)} and {@link DSL#stddevPop(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -6997,7 +6997,7 @@ public final class QOM {
      * The <code>COVAR SAMP</code> function.
      * <p>
      * Calculate the sample covariance. This standard SQL function may be supported natively,
-     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
      * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -7019,8 +7019,8 @@ public final class QOM {
      * The <code>COVAR POP</code> function.
      * <p>
      * Calculate the population covariance. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     public /*sealed*/ interface CovarPop
@@ -7118,7 +7118,7 @@ public final class QOM {
      * The <code>REGR AVGX</code> function.
      * <p>
      * Calculate the average of the independent values (x). This standard SQL function may
-     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -7140,7 +7140,7 @@ public final class QOM {
      * The <code>REGR AVGY</code> function.
      * <p>
      * Calculate the average of the dependent values (y). This standard SQL function may
-     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -7162,7 +7162,7 @@ public final class QOM {
      * The <code>REGR COUNT</code> function.
      * <p>
      * Calculate the number of non-<code>NULL</code> pairs. This standard SQL function may
-     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -7184,7 +7184,7 @@ public final class QOM {
      * The <code>REGR INTERCEPT</code> function.
      * <p>
      * Calculate the y intercept of the regression line. This standard SQL function may
-     * be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -7206,8 +7206,8 @@ public final class QOM {
      * The <code>REGR R2</code> function.
      * <p>
      * Calculate the coefficient of determination. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     public /*sealed*/ interface RegrR2
@@ -7228,8 +7228,8 @@ public final class QOM {
      * The <code>REGR SLOPE</code> function.
      * <p>
      * Calculate the slope of the regression line. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     public /*sealed*/ interface RegrSlope
@@ -7250,7 +7250,7 @@ public final class QOM {
      * The <code>REGR SXX</code> function.
      * <p>
      * Calculate the <code>REGR_SXX</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -7272,7 +7272,7 @@ public final class QOM {
      * The <code>REGR SXY</code> function.
      * <p>
      * Calculate the <code>REGR_SXY</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -7294,7 +7294,7 @@ public final class QOM {
      * The <code>REGR SYY</code> function.
      * <p>
      * Calculate the <code>REGR_SYY</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}.
+     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -7316,8 +7316,8 @@ public final class QOM {
      * The <code>STDDEV POP</code> function.
      * <p>
      * Calculate the population standard deviation. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     public /*sealed*/ interface StddevPop
@@ -7335,8 +7335,8 @@ public final class QOM {
      * The <code>STDDEV SAMP</code> function.
      * <p>
      * Calculate the sample standard deviation. This standard SQL function may be supported
-     * natively, or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an
-     * emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
+     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
+     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
     public /*sealed*/ interface StddevSamp
@@ -7371,7 +7371,7 @@ public final class QOM {
      * The <code>VAR POP</code> function.
      * <p>
      * Calculate the population variance. This standard SQL function may be supported natively,
-     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
      * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
@@ -7390,7 +7390,7 @@ public final class QOM {
      * The <code>VAR SAMP</code> function.
      * <p>
      * Calculate the sample variance. This standard SQL function may be supported natively,
-     * or emulated using {@link #sum(Field)} and {@link #count(Field)}. If an emulation
+     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
      * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */

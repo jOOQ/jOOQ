@@ -882,7 +882,7 @@ public interface Database extends AutoCloseable {
      * of synthetic primary keys in generated code.
      *
      * @deprecated - 3.14.0 - [#10588] - Use
-     *             {@link #setConfiguredSyntheticKeys(SyntheticKeysType)}
+     *             {@link #setConfiguredSyntheticObjects(SyntheticObjectsType)}
      *             instead.
      */
     @Deprecated
@@ -903,7 +903,7 @@ public interface Database extends AutoCloseable {
      * primary keys in generated code.
      *
      * @deprecated - 3.14.0 - [#10588] - Use
-     *             {@link #setConfiguredSyntheticKeys(SyntheticKeysType)}
+     *             {@link #setConfiguredSyntheticObjects(SyntheticObjectsType)}
      *             instead.
      */
     @Deprecated
@@ -924,7 +924,7 @@ public interface Database extends AutoCloseable {
      * columns in generated code.
      *
      * @deprecated - 3.14.0 - [#10588] - Use
-     *             {@link #setConfiguredSyntheticKeys(SyntheticKeysType)}
+     *             {@link #setConfiguredSyntheticObjects(SyntheticObjectsType)}
      *             instead.
      */
     @Deprecated

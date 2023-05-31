@@ -487,7 +487,7 @@ public interface WithStep extends QueryPart {
      * <li>{@link DSL#name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      */
     @NotNull @CheckReturnValue
@@ -502,7 +502,7 @@ public interface WithStep extends QueryPart {
      * <li>{@link DSL#name(String...)}</li>
      * <li>{@link Name#fields(String...)}</li>
      * <li>
-     * {@link DerivedColumnList#as(Select)}</li>
+     * {@link DerivedColumnList#as(ResultQuery)}</li>
      * </ul>
      */
     @NotNull @CheckReturnValue

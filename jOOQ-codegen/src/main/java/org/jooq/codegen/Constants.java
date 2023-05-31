@@ -149,7 +149,7 @@ public final class Constants {
 
 
     /**
-     * The maximum degree of {@link Row} and {@link Record} subtypes
+     * The maximum degree of {@link org.jooq.Row} and {@link org.jooq.Record} subtypes
      */
     public static final int    MAX_ROW_DEGREE = 22;
 

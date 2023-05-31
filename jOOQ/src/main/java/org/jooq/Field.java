@@ -981,7 +981,7 @@ extends
     /**
      * The <code>LIKE</code> operator.
      *
-     * @param pattern is wrapped as {@link #val(Object)}.
+     * @param pattern is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1011,7 +1011,7 @@ extends
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(value)</code> in all other dialects.
      *
-     * @param pattern is wrapped as {@link #val(Object)}.
+     * @param pattern is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1133,7 +1133,7 @@ extends
     /**
      * The <code>NOT_LIKE</code> operator.
      *
-     * @param pattern is wrapped as {@link #val(Object)}.
+     * @param pattern is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1163,7 +1163,7 @@ extends
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(value)</code> in all other dialects.
      *
-     * @param pattern is wrapped as {@link #val(Object)}.
+     * @param pattern is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1186,7 +1186,7 @@ extends
     /**
      * The <code>NOT_SIMILAR_TO</code> operator.
      *
-     * @param pattern is wrapped as {@link #val(Object)}.
+     * @param pattern is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
@@ -1209,7 +1209,7 @@ extends
     /**
      * The <code>SIMILAR_TO</code> operator.
      *
-     * @param pattern is wrapped as {@link #val(Object)}.
+     * @param pattern is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, IGNITE, POSTGRES, YUGABYTEDB })
@@ -1280,7 +1280,7 @@ extends
     /**
      * The <code>BIT_AND</code> operator.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -1296,7 +1296,7 @@ extends
     /**
      * The <code>BIT_NAND</code> operator.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -1312,7 +1312,7 @@ extends
     /**
      * The <code>BIT_NOR</code> operator.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -1335,7 +1335,7 @@ extends
     /**
      * The <code>BIT_OR</code> operator.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -1351,7 +1351,7 @@ extends
     /**
      * The <code>BIT_XNOR</code> operator.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -1367,7 +1367,7 @@ extends
     /**
      * The <code>BIT_XOR</code> operator.
      *
-     * @param arg2 is wrapped as {@link #val(Object)}.
+     * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -1383,7 +1383,7 @@ extends
     /**
      * The <code>MOD</code> operator.
      *
-     * @param divisor is wrapped as {@link #val(Object)}.
+     * @param divisor is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1399,7 +1399,7 @@ extends
     /**
      * The <code>MODULO</code> operator, an alias for the <code>MOD</code> operator.
      *
-     * @param divisor is wrapped as {@link #val(Object)}.
+     * @param divisor is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1415,7 +1415,7 @@ extends
     /**
      * The <code>REM</code> operator, an alias for the <code>MOD</code> operator.
      *
-     * @param divisor is wrapped as {@link #val(Object)}.
+     * @param divisor is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1431,7 +1431,7 @@ extends
     /**
      * The <code>POWER</code> operator.
      *
-     * @param exponent is wrapped as {@link #val(Object)}.
+     * @param exponent is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1447,7 +1447,7 @@ extends
     /**
      * The <code>POW</code> operator, an alias for the <code>POWER</code> operator.
      *
-     * @param exponent is wrapped as {@link #val(Object)}.
+     * @param exponent is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1515,7 +1515,7 @@ extends
     /**
      * The <code>CONTAINS</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
@@ -1535,7 +1535,7 @@ extends
      * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
      * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
      *
-     * @param content is wrapped as {@link #val(Object)}.
+     * @param content is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1544,7 +1544,7 @@ extends
     /**
      * The <code>CONTAINS</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
@@ -1571,7 +1571,7 @@ extends
     /**
      * The <code>CONTAINS_IGNORE_CASE</code> operator.
      * <p>
-     * Convenience method for {@link #likeIgnoreCase(String, char)} including
+     * Convenience method for {@link Field#likeIgnoreCase(String, char)} including
      * proper adding of wildcards and escaping.
      * <p>
      * This translates to
@@ -1580,7 +1580,7 @@ extends
      * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
      * in all other dialects.
      *
-     * @param content is wrapped as {@link #val(Object)}.
+     * @param content is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1589,7 +1589,7 @@ extends
     /**
      * The <code>CONTAINS_IGNORE_CASE</code> operator.
      * <p>
-     * Convenience method for {@link #likeIgnoreCase(String, char)} including
+     * Convenience method for {@link Field#likeIgnoreCase(String, char)} including
      * proper adding of wildcards and escaping.
      * <p>
      * This translates to
@@ -1605,7 +1605,7 @@ extends
     /**
      * The <code>ENDS_WITH</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
@@ -1613,7 +1613,7 @@ extends
      * Note: This also works with numbers, for instance
      * <code>val(1133).endsWith(33)</code>
      *
-     * @param suffix is wrapped as {@link #val(Object)}.
+     * @param suffix is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1622,7 +1622,7 @@ extends
     /**
      * The <code>ENDS_WITH</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
@@ -1637,7 +1637,7 @@ extends
     /**
      * The <code>ENDS_WITH_IGNORE_CASE</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
@@ -1645,7 +1645,7 @@ extends
      * Note: This also works with numbers, for instance
      * <code>val(1133).endsWithIgnoreCase(33)</code>
      *
-     * @param suffix is wrapped as {@link #val(Object)}.
+     * @param suffix is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1654,7 +1654,7 @@ extends
     /**
      * The <code>ENDS_WITH_IGNORE_CASE</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
@@ -1669,7 +1669,7 @@ extends
     /**
      * The <code>STARTS_WITH</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
@@ -1677,7 +1677,7 @@ extends
      * Note: This also works with numbers, for instance
      * <code>val(1133).startsWith(11)</code>
      *
-     * @param prefix is wrapped as {@link #val(Object)}.
+     * @param prefix is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1686,7 +1686,7 @@ extends
     /**
      * The <code>STARTS_WITH</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
@@ -1701,7 +1701,7 @@ extends
     /**
      * The <code>STARTS_WITH_IGNORE_CASE</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
@@ -1709,7 +1709,7 @@ extends
      * Note: This also works with numbers, for instance
      * <code>val(1133).startsWithIgnoreCase(11)</code>
      *
-     * @param prefix is wrapped as {@link #val(Object)}.
+     * @param prefix is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support
@@ -1718,7 +1718,7 @@ extends
     /**
      * The <code>STARTS_WITH_IGNORE_CASE</code> operator.
      * <p>
-     * Convenience method for {@link #like(String, char)} including proper
+     * Convenience method for {@link Field#like(String, char)} including proper
      * adding of wildcards and escaping.
      * <p>
      * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>

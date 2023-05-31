@@ -1440,7 +1440,7 @@ public interface DataType<T> extends Named {
      * Whether this data type is a nested collection type.
      * <p>
      * This is true for anonymous, structural nested collection types
-     * constructed with {@link DSL#multiset(Select)} or
+     * constructed with {@link DSL#multiset(TableLike)} or
      * {@link DSL#multisetAgg(Field...)}.
      */
     boolean isMultiset();

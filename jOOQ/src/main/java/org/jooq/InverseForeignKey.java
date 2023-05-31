@@ -64,8 +64,8 @@ public interface InverseForeignKey<PARENT extends Record, CHILD extends Record> 
     /**
      * The fields that make up the referenced <code>UniqueKey</code>.
      * <p>
-     * This returns the order in which the fields of {@link #getKey()} are
-     * referenced, which is usually the same as the fields of
+     * This returns the order in which the fields of {@link ForeignKey#getKey()}
+     * are referenced, which is usually the same as the fields of
      * {@link UniqueKey#getFields()}, but not necessarily so.
      */
     @NotNull
@@ -74,11 +74,11 @@ public interface InverseForeignKey<PARENT extends Record, CHILD extends Record> 
     /**
      * The fields that make up the referenced <code>UniqueKey</code>.
      * <p>
-     * This returns the order in which the fields of {@link #getKey()} are
-     * referenced, which is usually the same as the fields of
+     * This returns the order in which the fields of {@link ForeignKey#getKey()}
+     * are referenced, which is usually the same as the fields of
      * {@link UniqueKey#getFieldsArray()}, but not necessarily so.
      *
-     * @see #getKeyFields()
+     * @see ForeignKey#getKeyFields()
      */
     @NotNull
     TableField<CHILD, ?> @NotNull [] getForeignKeyFieldsArray();

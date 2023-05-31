@@ -920,7 +920,7 @@ public interface ExecuteListener extends EventListener, Serializable {
      * be fetched.</li>
      * <li>{@link ExecuteContext#resultLevel()}: The result nesting level, in
      * case the upcoming {@link ExecuteContext#result()} is a
-     * {@link DSL#multiset(Select)} or other type of nested result.</li>
+     * {@link DSL#multiset(TableLike)} or other type of nested result.</li>
      * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
      * emitted by the database or <code>null</code> if no warning was
      * emitted.</li>
@@ -1096,7 +1096,7 @@ public interface ExecuteListener extends EventListener, Serializable {
      * fetched.</li>
      * <li>{@link ExecuteContext#resultLevel()}: The result nesting level, in
      * case the upcoming {@link ExecuteContext#result()} is a
-     * {@link DSL#multiset(Select)} or other type of nested result.</li>
+     * {@link DSL#multiset(TableLike)} or other type of nested result.</li>
      * <li>{@link ExecuteContext#sqlWarning()}: The {@link SQLWarning} that was
      * emitted by the database or <code>null</code> if no warning was
      * emitted.</li>

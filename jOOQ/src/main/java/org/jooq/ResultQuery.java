@@ -470,7 +470,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * <p>
      * If the argument {@link Field} is the same as the one you've provided to
      * {@link DSLContext#select(SelectField)}, then you could also just call
-     * {@link #collect(Collector)} with {@link Records#toList()}.
+     * {@link #collect(Collector)} with {@link Records#intoList()}.
      *
      * @return The result. This will never be <code>null</code>.
      * @throws DataAccessException if something went wrong executing the query
@@ -2350,7 +2350,8 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * <p>
      * If the argument {@link Field}s are the same as the ones you've provided
      * to {@link DSLContext#select(SelectField, SelectField)}, then you could
-     * also just call {@link #collect(Collector)} with {@link Records#toMap()}.
+     * also just call {@link #collect(Collector)} with
+     * {@link Records#intoMap()}.
      *
      * @param <K> The key's generic field type
      * @param <V> The value's generic field type
@@ -3674,7 +3675,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * If the argument {@link Field}s are the same as the ones you've provided
      * to {@link DSLContext#select(SelectField, SelectField)}, then you could
      * also just call {@link #collect(Collector)} with
-     * {@link Records#toGroups()}.
+     * {@link Records#intoGroups()}.
      *
      * @param <K> The key's generic field type
      * @param <V> The value's generic field type
@@ -5173,7 +5174,7 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
      * <p>
      * If the argument {@link Field}s are the same as the ones you've provided
      * to {@link DSLContext#select(SelectField)}, then you could also just call
-     * {@link #collect(Collector)} with {@link Records#toSet()}.
+     * {@link #collect(Collector)} with {@link Records#intoSet()}.
      * <p>
      * Whether this fetches an intermediate {@link Result} (accessible by
      * {@link ExecuteListener} implementations), or streams records directly to

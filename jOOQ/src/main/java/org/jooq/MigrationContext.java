@@ -61,7 +61,7 @@ public interface MigrationContext extends Scope {
 
     /**
      * The set of schemas that are being migrated, as specified in
-     * {@link Settings#getMigration()}.
+     * {@link Settings#getMigrationSchemata()}.
      * <p>
      * This is available on all {@link MigrationListener} events.
      */

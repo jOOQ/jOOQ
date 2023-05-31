@@ -333,7 +333,7 @@ public interface ExecuteContext extends Scope {
      * result events are triggered via
      * {@link ExecuteListener#resultStart(ExecuteContext)} and
      * {@link ExecuteListener#resultEnd(ExecuteContext)}, e.g. in the presence
-     * of {@link DSL#multiset(Select)}.
+     * of {@link DSL#multiset(TableLike)}.
      */
     int recordLevel();
 
@@ -389,7 +389,7 @@ public interface ExecuteContext extends Scope {
      * result events are triggered via
      * {@link ExecuteListener#resultStart(ExecuteContext)} and
      * {@link ExecuteListener#resultEnd(ExecuteContext)}, e.g. in the presence
-     * of {@link DSL#multiset(Select)}.
+     * of {@link DSL#multiset(TableLike)}.
      */
     int resultLevel();
 

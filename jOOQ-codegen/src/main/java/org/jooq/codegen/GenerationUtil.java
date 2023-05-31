@@ -540,26 +540,15 @@ class GenerationUtil {
 
 
 
-            case TRINO: {
-                return new BaseType(t.replaceFirst("(?i:array\\((.*?)\\))", "$1"), u);
-            }
 
 
             case POSTGRES:
             case YUGABYTEDB: {
+                return getPGArrayBaseType(t, u);
+            }
 
-                // The convention is to prepend a "_" to a type to get an array type
-                if (u != null) {
-                    if (u.last().startsWith("_"))
-                        return new BaseType(u.last().substring(1), u);
-                    else if (u.last().toUpperCase().endsWith(" ARRAY"))
-                        return new BaseType(u.last().replaceFirst("(?i: ARRAY)", ""), u);
-                    else if (t.toUpperCase().endsWith(" ARRAY"))
-                        return new BaseType(t.replaceFirst("(?i: ARRAY)", ""), u);
-                }
-
-                // But there are also arrays with a "vector" suffix
-                return new BaseType(t, u);
+            case TRINO: {
+                return new BaseType(t.replaceFirst("(?i:array\\((.*?)\\))", "$1"), u);
             }
 
             case H2:
@@ -577,6 +566,21 @@ class GenerationUtil {
                     return new BaseType(t.replaceFirst("(?i: ARRAY)", ""), u);
             }
         }
+    }
+
+    private static final BaseType getPGArrayBaseType(String t, Name u) {
+        // The convention is to prepend a "_" to a type to get an array type
+        if (u != null) {
+            if (u.last().startsWith("_"))
+                return new BaseType(u.last().substring(1), u);
+            else if (u.last().toUpperCase().endsWith(" ARRAY"))
+                return new BaseType(u.last().replaceFirst("(?i: ARRAY)", ""), u);
+            else if (t.toUpperCase().endsWith(" ARRAY"))
+                return new BaseType(t.replaceFirst("(?i: ARRAY)", ""), u);
+        }
+
+        // But there are also arrays with a "vector" suffix
+        return new BaseType(t, u);
     }
 
     static ExpressionType expressionType(String expression) {

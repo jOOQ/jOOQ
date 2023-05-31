@@ -3193,17 +3193,15 @@ public abstract class AbstractDatabase implements Database {
 
 
 
-
-
-
             case TRINO:
                 return upper.startsWith("ARRAY(");
+
 
 
             case H2:
             case POSTGRES:
             case YUGABYTEDB:
-                return "ARRAY".equals(upper) || upper.endsWith(" ARRAY") || upper.equals("ANYARRAY");
+                return "ARRAY".equals(upper) || dataType.endsWith("[]") || upper.endsWith(" ARRAY") || upper.equals("ANYARRAY");
 
 
             case HSQLDB:

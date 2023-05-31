@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
@@ -50,6 +51,7 @@ import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
@@ -192,6 +194,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 .on(PG_ATTRIBUTE.ATTTYPID.eq(PG_TYPE.OID))
             .leftJoin(PG_DESCRIPTION)
                 .on(PG_DESCRIPTION.OBJOID.eq(PG_ATTRIBUTE.ATTRELID))
+                .and(PG_DESCRIPTION.CLASSOID.eq(field("'pg_class'::regclass", BIGINT)))
                 .and(PG_DESCRIPTION.OBJSUBID.eq(COLUMNS.ORDINAL_POSITION))
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(COLUMNS.TABLE_NAME.equal(getName()))

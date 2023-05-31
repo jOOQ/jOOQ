@@ -7,8 +7,8 @@ package org.jooq.meta.postgres.pg_catalog.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -71,11 +71,11 @@ public class PgAttrdef extends TableImpl<Record> {
     public final TableField<Record, Object> ADBIN = createField(DSL.name("adbin"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\"").nullable(false), this, "");
 
     private PgAttrdef(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private PgAttrdef(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private PgAttrdef(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -97,10 +97,6 @@ public class PgAttrdef extends TableImpl<Record> {
      */
     public PgAttrdef() {
         this(DSL.name("pg_attrdef"), null);
-    }
-
-    public <O extends Record> PgAttrdef(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PG_ATTRDEF);
     }
 
     @Override

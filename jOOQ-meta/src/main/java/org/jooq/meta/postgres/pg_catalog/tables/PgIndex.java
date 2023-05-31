@@ -7,9 +7,12 @@ package org.jooq.meta.postgres.pg_catalog.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
+import org.jooq.meta.postgres.pg_catalog.tables.PgClass.PgClassPath;
 
 
 /**
@@ -162,11 +166,11 @@ public class PgIndex extends TableImpl<Record> {
     public final TableField<Record, Object> INDPRED = createField(DSL.name("indpred"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     private PgIndex(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private PgIndex(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private PgIndex(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -190,8 +194,14 @@ public class PgIndex extends TableImpl<Record> {
         this(DSL.name("pg_index"), null);
     }
 
-    public <O extends Record> PgIndex(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PG_INDEX);
+    public <O extends Record> PgIndex(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, PG_INDEX);
+    }
+
+    public static class PgIndexPath extends PgIndex implements Path<Record> {
+        public <O extends Record> PgIndexPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -209,27 +219,28 @@ public class PgIndex extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_INDEX__INDEX_CLASS, Keys.PG_INDEX__TABLE_CLASS);
     }
 
-    private transient PgClass _indexClass;
-    private transient PgClass _tableClass;
+    private transient PgClassPath _indexClass;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_class</code> table,
      * via the <code>INDEX_CLASS</code> key.
      */
-    public PgClass indexClass() {
+    public PgClassPath indexClass() {
         if (_indexClass == null)
-            _indexClass = new PgClass(this, Keys.PG_INDEX__INDEX_CLASS);
+            _indexClass = new PgClassPath(this, Keys.PG_INDEX__INDEX_CLASS, null);
 
         return _indexClass;
     }
+
+    private transient PgClassPath _tableClass;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_class</code> table,
      * via the <code>TABLE_CLASS</code> key.
      */
-    public PgClass tableClass() {
+    public PgClassPath tableClass() {
         if (_tableClass == null)
-            _tableClass = new PgClass(this, Keys.PG_INDEX__TABLE_CLASS);
+            _tableClass = new PgClassPath(this, Keys.PG_INDEX__TABLE_CLASS, null);
 
         return _tableClass;
     }

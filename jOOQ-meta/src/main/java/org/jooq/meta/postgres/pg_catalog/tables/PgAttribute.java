@@ -7,9 +7,12 @@ package org.jooq.meta.postgres.pg_catalog.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
+import org.jooq.meta.postgres.pg_catalog.tables.PgClass.PgClassPath;
 
 
 /**
@@ -175,11 +179,11 @@ public class PgAttribute extends TableImpl<Record> {
     public final TableField<Record, Object[]> ATTMISSINGVAL = createField(DSL.name("attmissingval"), SQLDataType.OTHER.array(), this, "");
 
     private PgAttribute(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private PgAttribute(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private PgAttribute(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -203,8 +207,14 @@ public class PgAttribute extends TableImpl<Record> {
         this(DSL.name("pg_attribute"), null);
     }
 
-    public <O extends Record> PgAttribute(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PG_ATTRIBUTE);
+    public <O extends Record> PgAttribute(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, PG_ATTRIBUTE);
+    }
+
+    public static class PgAttributePath extends PgAttribute implements Path<Record> {
+        public <O extends Record> PgAttributePath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -227,14 +237,14 @@ public class PgAttribute extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS);
     }
 
-    private transient PgClass _pgClass;
+    private transient PgClassPath _pgClass;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_class</code> table.
      */
-    public PgClass pgClass() {
+    public PgClassPath pgClass() {
         if (_pgClass == null)
-            _pgClass = new PgClass(this, Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS);
+            _pgClass = new PgClassPath(this, Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS, null);
 
         return _pgClass;
     }

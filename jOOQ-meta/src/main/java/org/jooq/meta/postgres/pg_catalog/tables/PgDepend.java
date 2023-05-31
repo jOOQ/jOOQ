@@ -4,8 +4,8 @@
 package org.jooq.meta.postgres.pg_catalog.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -75,11 +75,11 @@ public class PgDepend extends TableImpl<Record> {
     public final TableField<Record, String> DEPTYPE = createField(DSL.name("deptype"), SQLDataType.CHAR.nullable(false), this, "");
 
     private PgDepend(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private PgDepend(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private PgDepend(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -101,10 +101,6 @@ public class PgDepend extends TableImpl<Record> {
      */
     public PgDepend() {
         this(DSL.name("pg_depend"), null);
-    }
-
-    public <O extends Record> PgDepend(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PG_DEPEND);
     }
 
     @Override

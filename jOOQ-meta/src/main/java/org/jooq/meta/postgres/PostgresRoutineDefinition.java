@@ -125,7 +125,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
     @Override
     protected void init0() throws SQLException {
-        Parameters p = PARAMETERS;
+        Parameters p = PARAMETERS.as("p");
         Field<Integer> count = count()
             .filterWhere(p.PARAMETER_NAME.ne(inline("")))
             .over(partitionBy(p.SPECIFIC_NAME, p.PARAMETER_NAME));

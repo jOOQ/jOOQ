@@ -7,9 +7,12 @@ package org.jooq.meta.postgres.pg_catalog.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,8 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
+import org.jooq.meta.postgres.pg_catalog.tables.PgClass.PgClassPath;
+import org.jooq.meta.postgres.pg_catalog.tables.PgType.PgTypePath;
 
 
 /**
@@ -85,11 +90,11 @@ public class PgSequence extends TableImpl<Record> {
     public final TableField<Record, Boolean> SEQCYCLE = createField(DSL.name("seqcycle"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     private PgSequence(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private PgSequence(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private PgSequence(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -113,8 +118,14 @@ public class PgSequence extends TableImpl<Record> {
         this(DSL.name("pg_sequence"), null);
     }
 
-    public <O extends Record> PgSequence(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PG_SEQUENCE);
+    public <O extends Record> PgSequence(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, PG_SEQUENCE);
+    }
+
+    public static class PgSequencePath extends PgSequence implements Path<Record> {
+        public <O extends Record> PgSequencePath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -132,25 +143,26 @@ public class PgSequence extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_CLASS, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_TYPE);
     }
 
-    private transient PgClass _pgClass;
-    private transient PgType _pgType;
+    private transient PgClassPath _pgClass;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_class</code> table.
      */
-    public PgClass pgClass() {
+    public PgClassPath pgClass() {
         if (_pgClass == null)
-            _pgClass = new PgClass(this, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_CLASS);
+            _pgClass = new PgClassPath(this, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_CLASS, null);
 
         return _pgClass;
     }
 
+    private transient PgTypePath _pgType;
+
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_type</code> table.
      */
-    public PgType pgType() {
+    public PgTypePath pgType() {
         if (_pgType == null)
-            _pgType = new PgType(this, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_TYPE);
+            _pgType = new PgTypePath(this, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_TYPE, null);
 
         return _pgType;
     }

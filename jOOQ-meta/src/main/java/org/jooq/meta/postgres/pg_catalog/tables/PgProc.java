@@ -7,9 +7,12 @@ package org.jooq.meta.postgres.pg_catalog.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,8 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
+import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace.PgNamespacePath;
+import org.jooq.meta.postgres.pg_catalog.tables.PgType.PgTypePath;
 
 
 /**
@@ -207,11 +212,11 @@ public class PgProc extends TableImpl<Record> {
     public final TableField<Record, String[]> PROACL = createField(DSL.name("proacl"), SQLDataType.VARCHAR.array(), this, "");
 
     private PgProc(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private PgProc(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private PgProc(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -235,8 +240,14 @@ public class PgProc extends TableImpl<Record> {
         this(DSL.name("pg_proc"), null);
     }
 
-    public <O extends Record> PgProc(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PG_PROC);
+    public <O extends Record> PgProc(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, PG_PROC);
+    }
+
+    public static class PgProcPath extends PgProc implements Path<Record> {
+        public <O extends Record> PgProcPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -256,20 +267,32 @@ public class PgProc extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.asList(Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE);
+        return Arrays.asList(Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_TYPE);
     }
 
-    private transient PgNamespace _pgNamespace;
+    private transient PgNamespacePath _pgNamespace;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_namespace</code>
      * table.
      */
-    public PgNamespace pgNamespace() {
+    public PgNamespacePath pgNamespace() {
         if (_pgNamespace == null)
-            _pgNamespace = new PgNamespace(this, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE);
+            _pgNamespace = new PgNamespacePath(this, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE, null);
 
         return _pgNamespace;
+    }
+
+    private transient PgTypePath _pgType;
+
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_type</code> table.
+     */
+    public PgTypePath pgType() {
+        if (_pgType == null)
+            _pgType = new PgTypePath(this, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_TYPE, null);
+
+        return _pgType;
     }
 
     @Override

@@ -7,8 +7,8 @@ package org.jooq.meta.postgres.pg_catalog.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -100,11 +100,11 @@ public class PgCollation extends TableImpl<Record> {
     public final TableField<Record, String> COLLVERSION = createField(DSL.name("collversion"), SQLDataType.CLOB, this, "");
 
     private PgCollation(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private PgCollation(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private PgCollation(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -126,10 +126,6 @@ public class PgCollation extends TableImpl<Record> {
      */
     public PgCollation() {
         this(DSL.name("pg_collation"), null);
-    }
-
-    public <O extends Record> PgCollation(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PG_COLLATION);
     }
 
     @Override

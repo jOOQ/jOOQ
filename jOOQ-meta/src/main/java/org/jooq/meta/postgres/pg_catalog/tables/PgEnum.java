@@ -7,9 +7,12 @@ package org.jooq.meta.postgres.pg_catalog.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
+import org.jooq.meta.postgres.pg_catalog.tables.PgType.PgTypePath;
 
 
 /**
@@ -65,11 +69,11 @@ public class PgEnum extends TableImpl<Record> {
     public final TableField<Record, String> ENUMLABEL = createField(DSL.name("enumlabel"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     private PgEnum(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private PgEnum(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private PgEnum(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -93,8 +97,14 @@ public class PgEnum extends TableImpl<Record> {
         this(DSL.name("pg_enum"), null);
     }
 
-    public <O extends Record> PgEnum(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PG_ENUM);
+    public <O extends Record> PgEnum(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, PG_ENUM);
+    }
+
+    public static class PgEnumPath extends PgEnum implements Path<Record> {
+        public <O extends Record> PgEnumPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -117,14 +127,14 @@ public class PgEnum extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
     }
 
-    private transient PgType _pgType;
+    private transient PgTypePath _pgType;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_type</code> table.
      */
-    public PgType pgType() {
+    public PgTypePath pgType() {
         if (_pgType == null)
-            _pgType = new PgType(this, Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
+            _pgType = new PgTypePath(this, Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE, null);
 
         return _pgType;
     }

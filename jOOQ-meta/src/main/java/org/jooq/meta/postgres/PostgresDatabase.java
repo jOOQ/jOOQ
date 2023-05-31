@@ -1203,12 +1203,12 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         return canUseTupleInPredicates;
     }
 
-    boolean canUseRoutines() {
+    protected boolean canUseRoutines() {
 
         // [#7892] The information_schema.routines table is not available in all PostgreSQL
         //         style databases, e.g. CockroachDB
         if (canUseRoutines == null)
-            canUseRoutines = exists(ROUTINES);
+            canUseRoutines = existAll(ROUTINES, PG_PROC);
 
         return canUseRoutines;
     }

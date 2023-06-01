@@ -4865,7 +4865,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (!computed
                         && !ignoreProEdition()
                         && (parseKeywordIf("AS")
-                            || parseKeywordIf("COMPUTED") && (parseKeywordIf("BY") || true))
+                            || parseKeywordIf("COMPUTED") && (parseKeywordIf("BY") || true)
+                            || parseKeywordIf("COMPUTE"))
                         && requireProEdition()) {
 
 

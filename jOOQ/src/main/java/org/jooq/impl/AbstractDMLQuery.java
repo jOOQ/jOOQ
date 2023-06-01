@@ -1224,7 +1224,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 }
             }
 
-            returnedResult = new CursorImpl<>(ctx, listener, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, true).fetch();
+            returnedResult = new CursorImpl<>(ctx, listener, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, false).fetch();
 
             // [#5366] HSQLDB currently doesn't support fetching updated records in UPDATE statements.
             // [#5408] Other dialects may fall through the switch above (PostgreSQL, Firebird, Oracle) and must

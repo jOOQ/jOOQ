@@ -1027,8 +1027,9 @@ public class GenerationTool {
         Predicate<? super T> checkDefault
     ) {
         String p = System.getProperty(property);
+        boolean currentValueIsDefault = checkDefault.test(get.apply(configurationObject));
 
-        if (override ? p != null : checkDefault.test(get.apply(configurationObject)))
+        if ((p != null && currentValueIsDefault) || override)
             set.accept(configurationObject, convert.apply(p));
     }
 

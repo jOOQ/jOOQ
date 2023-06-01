@@ -836,6 +836,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final boolean inScope(QueryPart part) {
+        return scopeStack.get(part) != null;
+    }
+
+    @Override
     public /* non-final */ QueryPart scopeMapping(QueryPart part) {
         return part;
     }

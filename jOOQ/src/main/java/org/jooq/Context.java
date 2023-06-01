@@ -405,6 +405,11 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C scopeRegister(QueryPart part, boolean forceNew, QueryPart mapped);
 
     /**
+     * Check whether a query part is registered in the current scope.
+     */
+    boolean inScope(QueryPart part);
+
+    /**
      * Retrieve the registered mapping for a query part in the current scope.
      * <p>
      * If no such mapping exists, the argument {@link QueryPart} itself is

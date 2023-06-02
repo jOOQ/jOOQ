@@ -27,7 +27,7 @@
         <sqlite.version>3.42.0.0</sqlite.version>
         <duckdb.version>0.7.1</duckdb.version>
         <derby.version>10.14.2.0</derby.version>
-        <hsqldb.version>2.7.1</hsqldb.version>
+        <hsqldb.version>2.7.2</hsqldb.version>
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.5.4</postgres.version>
@@ -49,7 +49,7 @@
 
         <!-- Kotlin versions -->
         <kotlin.version>1.8.0</kotlin.version>
-        <kotlinx.coroutines.version>1.6.4</kotlinx.coroutines.version>
+        <kotlinx.coroutines.version>1.7.1</kotlinx.coroutines.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->
         <jakarta.persistence-api.version>3.0.0</jakarta.persistence-api.version>
@@ -61,9 +61,9 @@
         <spring.boot.version>2.6.1</spring.boot.version>
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
         <errorprone.version>2.11.0</errorprone.version>
-        <testcontainers.version>1.18.1</testcontainers.version>
-        <jackson.version>2.15.0</jackson.version>
-        <jackson.version.databind>2.15.0</jackson.version.databind>
+        <testcontainers.version>1.18.3</testcontainers.version>
+        <jackson.version>2.15.2</jackson.version>
+        <jackson.version.databind>2.15.2</jackson.version.databind>
     </properties>
 
     <licenses>
@@ -155,19 +155,19 @@
             <dependency>
                 <groupId>org.jetbrains</groupId>
                 <artifactId>annotations</artifactId>
-                <version>24.0.0</version>
+                <version>24.0.1</version>
             </dependency>
 
             <!-- R2DBC SPI and driver dependencies -->
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
-                <version>3.5.3</version>
+                <version>3.5.6</version>
             </dependency>
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-test</artifactId>
-                <version>3.5.3</version>
+                <version>3.5.6</version>
             </dependency>
 
             <!-- Data binding -->
@@ -337,7 +337,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>2.0.6</version>
+                <version>2.0.7</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>

@@ -1028,7 +1028,7 @@ public class GenerationTool {
     ) {
         String p = System.getProperty(property);
 
-        if (override ? p != null : checkDefault.test(get.apply(configurationObject)))
+        if (p != null && (override || checkDefault.test(get.apply(configurationObject))))
             set.accept(configurationObject, convert.apply(p));
     }
 

@@ -8624,6 +8624,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 }
 
+
+
+
+
                 break;
 
             case 'D':
@@ -8870,6 +8874,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if ((field = parseFieldDecodeIf()) != null)
                     return field;
 
+
+
+
+
+
+
+
                 break;
 
             case 'N':
@@ -8943,6 +8954,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if (parseFunctionNameIf("QUARTER"))
                     return quarter(parseFieldParenthesised());
+
+
+
+
+
 
             case 'R':
                 if (parseFunctionNameIf("REPLACE"))
@@ -9409,6 +9425,58 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else
             return parseFieldNameOrSequenceExpression();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final Field<?> parseFieldAddDatePart(DatePart part) {
         return parseFunctionArgs2((f1, f2) -> dateAdd(f1, f2, part));
@@ -11659,6 +11727,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return parseWindowFunction(null, null, rank());
             else
                 parseKeywordIf("ALL");
+
+
+
+
+
+
+
 
             // Hypothetical set function
             List<Field<?>> args = parseList(',', c -> c.parseField());

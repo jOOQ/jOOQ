@@ -12299,6 +12299,8 @@ public class DSL {
      * can be used to avoid creating a <code>FROM</code> clause or a join
      * operation.
      */
+    @NotNull
+    @Support
     public static Table<?> noTable() {
         return NoTable.INSTANCE;
     }

@@ -1024,64 +1024,68 @@ implements
     // XXX: Other API
     // ------------------------------------------------------------------------
 
+    /* non-final */ Table<R> hintedTable(String keywords, String... indexes) {
+        return new HintedTable<>(this, keywords, indexes);
+    }
+
     @Override
     public final Table<R> useIndex(String... indexes) {
-        return new HintedTable<>(this, "use index", indexes);
+        return hintedTable("use index", indexes);
     }
 
     @Override
     public final Table<R> useIndexForJoin(String... indexes) {
-        return new HintedTable<>(this, "use index for join", indexes);
+        return hintedTable("use index for join", indexes);
     }
 
     @Override
     public final Table<R> useIndexForOrderBy(String... indexes) {
-        return new HintedTable<>(this, "use index for order by", indexes);
+        return hintedTable("use index for order by", indexes);
     }
 
     @Override
     public final Table<R> useIndexForGroupBy(String... indexes) {
-        return new HintedTable<>(this, "use index for group by", indexes);
+        return hintedTable("use index for group by", indexes);
     }
 
     @Override
     public final Table<R> ignoreIndex(String... indexes) {
-        return new HintedTable<>(this, "ignore index", indexes);
+        return hintedTable("ignore index", indexes);
     }
 
     @Override
     public final Table<R> ignoreIndexForJoin(String... indexes) {
-        return new HintedTable<>(this, "ignore index for join", indexes);
+        return hintedTable("ignore index for join", indexes);
     }
 
     @Override
     public final Table<R> ignoreIndexForOrderBy(String... indexes) {
-        return new HintedTable<>(this, "ignore index for order by", indexes);
+        return hintedTable("ignore index for order by", indexes);
     }
 
     @Override
     public final Table<R> ignoreIndexForGroupBy(String... indexes) {
-        return new HintedTable<>(this, "ignore index for group by", indexes);
+        return hintedTable("ignore index for group by", indexes);
     }
 
     @Override
     public final Table<R> forceIndex(String... indexes) {
-        return new HintedTable<>(this, "force index", indexes);
+        return hintedTable("force index", indexes);
     }
 
     @Override
     public final Table<R> forceIndexForJoin(String... indexes) {
-        return new HintedTable<>(this, "force index for join", indexes);
+        return hintedTable("force index for join", indexes);
     }
 
     @Override
     public final Table<R> forceIndexForOrderBy(String... indexes) {
-        return new HintedTable<>(this, "force index for order by", indexes);
+        return hintedTable("force index for order by", indexes);
     }
 
     @Override
     public final Table<R> forceIndexForGroupBy(String... indexes) {
-        return new HintedTable<>(this, "force index for group by", indexes);
+        return hintedTable("force index for group by", indexes);
     }
 
     // ------------------------------------------------------------------------
@@ -1114,7 +1118,7 @@ implements
     }
 
     @Override
-    public final Table<Record> withOrdinality() {
+    public /* non-final */ Table<Record> withOrdinality() {
         return new WithOrdinalityTable<>(this);
     }
 
@@ -1352,6 +1356,15 @@ implements
     //          this only internally, to prevent leaking JoinTable into client code
     @Override
     public /* non-final */ TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type) {
+        if (this instanceof NoTable)
+            return new NoTableJoin(table.asTable());
+        else if (this instanceof NoTableJoin n)
+            return n.table.join(table, type);
+        else if (table instanceof NoTable)
+            return new NoTableJoin(this);
+        else if (table instanceof NoTableJoin n)
+            return join(n.table, type);
+
         switch (type) {
             case CROSS_APPLY:
                 return new CrossApply(this, table);

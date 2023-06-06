@@ -4538,20 +4538,24 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @Override
-    public final void addFrom(Collection<? extends TableLike<?>> f) {
-        for (TableLike<?> provider : f)
-            getFrom().add(provider.asTable());
+    public final void addFrom(Collection<? extends TableLike<?>> tables) {
+        for (TableLike<?> t : tables)
+            addFrom(t);
     }
 
     @Override
-    public final void addFrom(TableLike<?> f) {
-        getFrom().add(f.asTable());
+    public final void addFrom(TableLike<?> table) {
+        if (table instanceof NoTable) {}
+        else if (table instanceof NoTableJoin t)
+            addFrom(t.table);
+        else
+            getFrom().add(table.asTable());
     }
 
     @Override
-    public final void addFrom(TableLike<?>... f) {
-        for (TableLike<?> provider : f)
-            getFrom().add(provider.asTable());
+    public final void addFrom(TableLike<?>... tables) {
+        for (TableLike<?> t : tables)
+            addFrom(t);
     }
 
 

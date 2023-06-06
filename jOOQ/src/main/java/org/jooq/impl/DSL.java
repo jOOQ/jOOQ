@@ -12291,6 +12291,19 @@ public class DSL {
     }
 
     /**
+     * Return a {@link Table} that behaves like no table being present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts tables, the {@link #noTable()}
+     * can be used to avoid creating a <code>FROM</code> clause or a join
+     * operation.
+     */
+    public static Table<?> noTable() {
+        return NoTable.INSTANCE;
+    }
+
+    /**
      * Return a {@link Field} that behaves like no field being present.
      * <p>
      * When creating dynamic SQL queries using expressions, it is often useful

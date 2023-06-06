@@ -94,7 +94,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
-import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.noCondition;
@@ -132,17 +131,11 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
-import org.jooq.SQL;
 import org.jooq.SQLDialect;
-import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
-import org.jooq.TableOnConditionStep;
-import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
-import org.jooq.TableOuterJoinStep;
-import org.jooq.TablePartitionByStep;
 // ...
 import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.exception.DataAccessException;
@@ -150,19 +143,11 @@ import org.jooq.impl.QOM.Lateral;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
- * A table consisting of two joined tables and possibly a join condition
+ * A table consisting of two joined tables and possibly a join condition.
  *
  * @author Lukas Eder
  */
-abstract class JoinTable<J extends JoinTable<J>>
-extends
-    AbstractTable<Record>
-implements
-    TableOuterJoinStep<Record>,
-    TableOptionalOnStep<Record>,
-    TablePartitionByStep<Record>,
-    TableOnConditionStep<Record>
-{
+abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
     static final Clause[]         CLAUSES                    = { TABLE, TABLE_JOIN };
 
@@ -658,20 +643,7 @@ implements
     // Join API
     // ------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
     @SuppressWarnings("unchecked")
     final J partitionBy0(Collection<? extends Field<?>> fields) {
         rhsPartitionBy.addAll(fields);
@@ -689,39 +661,6 @@ implements
     @Override
     public final J on(Condition... conditions) {
         condition.addConditions(conditions);
-        return (J) this;
-    }
-
-    @Override
-    public final J on(Field<Boolean> c) {
-        return on(condition(c));
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final J on(SQL sql) {
-        and(sql);
-        return (J) this;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final J on(String sql) {
-        and(sql);
-        return (J) this;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final J on(String sql, Object... bindings) {
-        and(sql, bindings);
-        return (J) this;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final J on(String sql, QueryPart... parts) {
-        and(sql, parts);
         return (J) this;
     }
 
@@ -836,11 +775,6 @@ implements
         }
     }
 
-    @Override
-    public final J using(Field<?>... fields) {
-        return using(asList(fields));
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public final J using(Collection<? extends Field<?>> fields) {
@@ -855,109 +789,11 @@ implements
         return (J) this;
     }
 
-    @Override
-    public final J and(Field<Boolean> c) {
-        return and(condition(c));
-    }
-
-    @Override
-    public final J and(SQL sql) {
-        return and(condition(sql));
-    }
-
-    @Override
-    public final J and(String sql) {
-        return and(condition(sql));
-    }
-
-    @Override
-    public final J and(String sql, Object... bindings) {
-        return and(condition(sql, bindings));
-    }
-
-    @Override
-    public final J and(String sql, QueryPart... parts) {
-        return and(condition(sql, parts));
-    }
-
-    @Override
-    public final J andNot(Condition c) {
-        return and(c.not());
-    }
-
-    @Override
-    public final J andNot(Field<Boolean> c) {
-        return andNot(condition(c));
-    }
-
-    @Override
-    public final J andExists(Select<?> select) {
-        return and(exists(select));
-    }
-
-    @Override
-    public final J andNotExists(Select<?> select) {
-        return and(notExists(select));
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public final J or(Condition c) {
         condition.addConditions(Operator.OR, c);
         return (J) this;
-    }
-
-    @Override
-    public final J or(Field<Boolean> c) {
-        return or(condition(c));
-    }
-
-    @Override
-    public final J or(SQL sql) {
-        return or(condition(sql));
-    }
-
-    @Override
-    public final J or(String sql) {
-        return or(condition(sql));
-    }
-
-    @Override
-    public final J or(String sql, Object... bindings) {
-        return or(condition(sql, bindings));
-    }
-
-    @Override
-    public final J or(String sql, QueryPart... parts) {
-        return or(condition(sql, parts));
-    }
-
-    @Override
-    public final J orNot(Condition c) {
-        return or(c.not());
-    }
-
-    @Override
-    public final J orNot(Field<Boolean> c) {
-        return orNot(condition(c));
-    }
-
-    @Override
-    public final J orExists(Select<?> select) {
-        return or(exists(select));
-    }
-
-    @Override
-    public final J orNotExists(Select<?> select) {
-        return or(notExists(select));
-    }
-
-    // [#14906] Re-declare internal-type-returning method here, to prevent J
-    //          from leaking into client code.
-    @SuppressWarnings("unchecked")
-    @Override
-    public final J join(TableLike<?> table, JoinType type) {
-        return (J) super.join(table, type);
     }
 
     // -------------------------------------------------------------------------

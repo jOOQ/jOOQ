@@ -104,7 +104,15 @@ dsl.select(
    .fetch(mapping(Film::new));
 ```
 
-The query is completely type safe. Change a column type, name, or the target DTO, and it will stop compiling! How does it work? Look at this annotated example:
+The query is completely type safe. Change a column type, name, or the target DTO, and it will stop compiling! Trust only your own eyes:
+
+![multiset](https://github.com/jOOQ/jOOQ/assets/734593/948f8e62-2a93-4152-86d6-42a6eceb7133)
+
+And here you see the nested result in action from the logs:
+
+![execute](https://github.com/jOOQ/jOOQ/assets/734593/ba2f2a9f-218c-4ec9-8fb2-c2b8b7df2f4d)
+
+How does it work? Look at this annotated example:
 
 
 ```java

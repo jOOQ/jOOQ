@@ -1,29 +1,164 @@
-jOOQ's reason for being - compared to JPA
-=========================================
+jOOQ
+====
 
-Java and SQL have come a long way. SQL is an "ancient", yet established and well-understood technology. Java is a legacy too, although its platform JVM allows for many new and contemporary languages built on top of it. Yet, after all these years, libraries dealing with the interface between SQL and Java have come and gone, leaving JPA to be a standard that is accepted only with doubts, short of any surviving options.
+jOOQ is an internal DSL and source code generator, modelling the SQL language as a type safe Java API to help you write better SQL. 
 
-So far, there had been only few database abstraction frameworks or libraries, that truly respected SQL as a first class citizen among languages. Most frameworks, including the industry standards JPA, EJB, Hibernate, JDO, Criteria Query, and many others try to hide SQL itself, minimising its scope to things called JPQL, HQL, JDOQL and various other inferior query languages
+Its main features include:
 
-jOOQ has come to fill this gap.
+- [The source code generator](https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/)
+- The [DSL API for type safe query construction](https://www.jooq.org/doc/latest/manual/sql-building/dsl-api/) and [dynamic SQL](https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql/)
 
-jOOQ's reason of being - compared to LINQ
-=========================================
+Secondary features include:
 
-Other platforms incorporate ideas such as LINQ (with LINQ-to-SQL), or Scala's SLICK, or also Java's QueryDSL to better integrate querying as a concept into their respective language. By querying, they understand querying of arbitrary targets, such as SQL, XML, Collections and other heterogeneous data stores. jOOQ claims that this is going the wrong way too.
+- [DAOs](https://www.jooq.org/doc/latest/manual/sql-execution/daos/)
+- [Data export](https://www.jooq.org/doc/latest/manual/sql-execution/exporting/) and [import](https://www.jooq.org/doc/latest/manual/sql-execution/importing/)
+- [Data type conversion](https://www.jooq.org/doc/latest/manual/sql-execution/fetching/data-type-conversion/)
+- [DDL statement support](https://www.jooq.org/doc/latest/manual/sql-building/ddl-statements/)
+- [DML statement support](https://www.jooq.org/doc/latest/manual/sql-building/sql-statements/)
+- [Diagnostics](https://www.jooq.org/doc/latest/manual/sql-execution/diagnostics/)
+- [Dialect agnosticity for 30+ RDBMS](https://www.jooq.org/download/#databases)
+- [Embedded types](https://www.jooq.org/doc/latest/manual/code-generation/codegen-embeddable-types/)
+- [Formatting and pretty printing](https://www.jooq.org/doc/latest/manual/sql-building/queryparts/pretty-printing/)
+- [Implicit joins](https://www.jooq.org/doc/latest/manual/sql-building/sql-statements/select-statement/implicit-join/)
+- [Kotlin support](https://www.jooq.org/doc/latest/manual/sql-building/kotlin-sql-building/)
+- [Mapping](https://www.jooq.org/doc/latest/manual/sql-execution/fetching/recordmapper/)
+- [Meta data API](https://www.jooq.org/doc/latest/manual/sql-execution/meta-data/)
+- [Mocking API for JDBC](https://www.jooq.org/doc/latest/manual/sql-execution/mocking-connection/)
+- [Model API for use in traversal and replacement](https://www.jooq.org/doc/latest/manual/sql-building/model-api/)
+- [`MULTISET` and `ROW` nested collections and records](https://blog.jooq.org/jooq-3-15s-new-multiset-operator-will-change-how-you-think-about-sql/)
+- [Multitenancy](https://www.jooq.org/doc/latest/manual/sql-building/dsl-context/custom-settings/settings-render-mapping/)
+- [Parser (and translator)](https://www.jooq.org/doc/latest/manual/sql-building/sql-parser/)
+- [Pattern based transformation](https://www.jooq.org/doc/latest/manual/sql-building/queryparts/sql-transformation/transform-patterns/)
+- [Plain SQL templating](https://www.jooq.org/doc/latest/manual/sql-building/plain-sql-templating/)
+- [Procedural logic API](https://blog.jooq.org/vendor-agnostic-dynamic-procedural-logic-with-jooq/)
+- [Reactive support via R2DBC](https://www.jooq.org/doc/latest/manual/sql-execution/fetching/reactive-fetching/)
+- [Readonly columns](https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-readonly-columns/)
+- [Scala support](https://www.jooq.org/doc/latest/manual/sql-building/scala-sql-building/)
+- [Schema diff](https://www.jooq.org/doc/latest/manual/sql-building/schema-diff/)
+- [SQL transformation](https://www.jooq.org/doc/latest/manual/sql-building/queryparts/sql-transformation/)
+- [SQL translation](https://www.jooq.org/translate/)
+- [Stored procedure support](https://blog.jooq.org/the-best-way-to-call-stored-procedures-from-java-with-jooq/)
+- [Transaction API](https://www.jooq.org/doc/latest/manual/sql-execution/transaction-management/)
+- [UpdatableRecords for simplified CRUD, with opt-in optimistic locking](https://www.jooq.org/doc/latest/manual/sql-execution/crud-with-updatablerecords/simple-crud/)
+- And much more
 
-In more advanced querying use-cases (more than simple CRUD and the occasional JOIN), people will want to profit from the expressivity of SQL. Due to the relational nature of SQL, this is quite different from what object-oriented and partially functional languages such as C#, Scala, or Java can offer.
+Examples
+========
 
-It is very hard to formally express and validate joins and the ad-hoc table expression types they create. It gets even harder when you want support for more advanced table expressions, such as pivot tables, unnested cursors, or just arbitrary projections from derived tables. With a very strong object-oriented typing model, these features will probably stay out of scope.
+For many more examples, [please have a look at the demo](https://github.com/jOOQ/demo). A key example showing jOOQ's various strengths is from the [`MULTISET` operator announcement blog post](https://blog.jooq.org/jooq-3-15s-new-multiset-operator-will-change-how-you-think-about-sql/):
 
-In essence, the decision of creating an API that looks like SQL or one that looks like C#, Scala, Java is a definite decision in favour of one or the other platform. While it will be easier to evolve SLICK in similar ways as LINQ (or QueryDSL in the Java world), SQL feature scope that clearly communicates its underlying intent will be very hard to add, later on (e.g. how would you model Oracle's partitioned outer join syntax? How would you model ANSI/ISO SQL:1999 grouping sets? How can you support scalar subquery caching? etc...).
+Given these target DTOs:
 
-jOOQ has come to fill this gap.
+```java
+record Actor(String firstName, String lastName) {}
+record Film(
+  String title,
+  List<Actor> actors,
+  List<String> categories
+) {}
+```
 
-jOOQ is different
-=================
-SQL was never meant to be abstracted. To be confined in the narrow boundaries of heavy mappers, hiding the beauty and simplicity of relational data. SQL was never meant to be object-oriented. SQL was never meant to be anything other than... SQL!
+You can now write the following query to fetch films, their nested actors and their nested categorise in a single, type safe query:
 
-For more details please visit [jooq.org](https://www.jooq.org).
+```java
+List<Film> result =
+dsl.select(
+      FILM.TITLE,
+      multiset(
+        select(
+          FILM.actor().FIRST_NAME, 
+          FILM.actor().LAST_NAME)
+        .from(FILM.actor())
+      ).as("actors").convertFrom(r -> r.map(mapping(Actor::new))),
+      multiset(
+        select(FILM.category().NAME)
+        .from(FILM.category())
+      ).as("categories").convertFrom(r -> r.map(Record1::value1))
+   )
+   .from(FILM)
+   .orderBy(FILM.TITLE)
+   .fetch(mapping(Film::new));
+```
 
-Follow jOOQ on [Twitter](https://twitter.com/JavaOOQ) and [the jOOQ blog](https://blog.jooq.org).
+The query is completely type safe. Change a column type, name, or the target DTO, and it will stop compiling! How does it work? Look at this annotated example:
+
+
+```java
+List<Film> result =
+dsl.select(
+      FILM.TITLE,
+
+      // MULTISET is a standard SQL operator that allows for nesting collections
+      // directly in SQL. It is either
+      // - supported natively
+      // - emulated using SQL/JSON or SQL/XML
+      multiset(
+
+        // Implicit path based joins allow for simpler navigation of foreign
+        // key relationships.
+        select(
+          FILM.actor().FIRST_NAME, 
+          FILM.actor().LAST_NAME)
+
+        // Implicit correlation to outer queries allows for avoiding repetitive
+        // writing of predicates.
+        .from(FILM.actor())
+
+      // Ad-hoc conversion allows for mapping structural Record2<String, String>
+      // types to your custom DTO using constructor references
+      ).as("actors").convertFrom(r -> r.map(mapping(Actor::new))),
+      multiset(
+        select(FILM.category().NAME)
+        .from(FILM.category())
+      ).as("categories").convertFrom(r -> r.map(Record1::value1))
+   )
+   .from(FILM)
+   .orderBy(FILM.TITLE)
+   .fetch(mapping(Film::new));
+```
+
+The generated SQL query might look like this, in PostgreSQL:
+
+```sql
+select
+  film.title,
+  (
+    select coalesce(
+      jsonb_agg(jsonb_build_object(
+        'first_name', t.first_name,
+        'last_name', t.last_name
+      )),
+      jsonb_build_array()
+    )
+    from (
+      select
+        alias_78509018.first_name, 
+        alias_78509018.last_name
+      from (
+        film_actor
+          join actor as alias_78509018
+            on film_actor.actor_id = alias_78509018.actor_id
+        )
+      where film_actor.film_id = film.film_id
+    ) as t
+  ) as actors,
+  (
+    select coalesce(
+      jsonb_agg(jsonb_build_object('name', t.name)),
+      jsonb_build_array()
+    )
+    from (
+      select alias_130639425.name
+      from (
+        film_category
+          join category as alias_130639425
+            on film_category.category_id = alias_130639425.category_id
+        )
+      where film_category.film_id = film.film_id
+    ) as t
+  ) as categories
+from film
+order by film.title
+```
+
+This particular example is explained more in detail in the [`MULTISET` operator announcement blog post](https://blog.jooq.org/jooq-3-15s-new-multiset-operator-will-change-how-you-think-about-sql/). For many more examples, [please have a look at the demo](https://github.com/jOOQ/demo).

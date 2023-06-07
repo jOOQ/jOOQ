@@ -45,6 +45,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Name;
 // ...
+// ...
 import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Table;
@@ -98,11 +99,6 @@ implements
     }
 
     @Override
-    public final Table<Record> with(SQL hint) {
-        return this;
-    }
-
-    @Override
     public final Table<Record> where(Condition condition) {
         return this;
     }
@@ -117,8 +113,19 @@ implements
         return this;
     }
 
-    @Override
-    public final Table<Record> for_(PeriodSpecification periodSpecification) {
-        return this;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

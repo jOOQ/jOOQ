@@ -2142,7 +2142,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final Field<Integer> limitWindowFunction(Context<?> c) {
         return distinct
-            ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
+            ? DSL.denseRank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
             : getLimit().withTies()
             ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
             : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())));
@@ -4438,16 +4438,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         return getOrderBy();
-    }
-
-    final SortFieldList getNonEmptyOrderByForDistinct(Configuration configuration) {
-        SortFieldList order = new SortFieldList();
-        order.addAll(getNonEmptyOrderBy(configuration));
-
-        for (Field<?> field : getSelect())
-            order.add(field.asc());
-
-        return order;
     }
 
     @Override

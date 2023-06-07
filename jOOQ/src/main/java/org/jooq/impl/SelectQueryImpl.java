@@ -194,6 +194,7 @@ import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Names.N_LEVEL;
 import static org.jooq.impl.Names.N_ROWNUM;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -1868,7 +1869,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 case MARIADB: {
                     if (getLimit().isApplicable() && getLimit().isExpression())
-                        toSQLReferenceLimitWithWindowFunctions(context);
+                        toSQLReferenceLimitWithWindowFunctions(context, originalFields, alternativeFields);
 
 
 
@@ -1894,7 +1895,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 case FIREBIRD:
                 case MYSQL: {
                     if (getLimit().isApplicable() && (getLimit().withTies() || getLimit().isExpression()))
-                        toSQLReferenceLimitWithWindowFunctions(context);
+                        toSQLReferenceLimitWithWindowFunctions(context, originalFields, alternativeFields);
                     else
                         toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
 
@@ -1903,7 +1904,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 case TRINO: {
                     if (getLimit().isApplicable() && getLimit().isExpression())
-                        toSQLReferenceLimitWithWindowFunctions(context);
+                        toSQLReferenceLimitWithWindowFunctions(context, originalFields, alternativeFields);
                     else
                         toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
 
@@ -1918,7 +1919,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 case DUCKDB:
                 case YUGABYTEDB: {
                     if (getLimit().isApplicable() && getLimit().withTies())
-                        toSQLReferenceLimitWithWindowFunctions(context);
+                        toSQLReferenceLimitWithWindowFunctions(context, originalFields, alternativeFields);
                     else
                         toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
 
@@ -2032,14 +2033,29 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * The default LIMIT / OFFSET clause in most dialects
      */
     private final void toSQLReferenceLimitDefault(Context<?> context, List<Field<?>> originalFields, List<Field<?>> alternativeFields) {
-        context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true, c -> toSQLReference0(context, originalFields, alternativeFields));
+        context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true, c -> toSQLReference0(context, originalFields, alternativeFields, null));
+    }
+
+    /**
+     * Omit rendering any limit clause
+     */
+    private final void toSQLReferenceQualifyInsteadOfLimit(Context<?> context, List<Field<?>> originalFields, List<Field<?>> alternativeFields) {
+        context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, false, c -> toSQLReference0(context, originalFields, alternativeFields, limitWindowFunctionCondition(limitWindowFunction(context))));
     }
 
     /**
      * Emulate the LIMIT / OFFSET clause using window functions, specifically
      * when the WITH TIES clause is specified.
      */
-    private final void toSQLReferenceLimitWithWindowFunctions(Context<?> ctx) {
+    private final void toSQLReferenceLimitWithWindowFunctions(Context<?> ctx, List<Field<?>> originalFields, List<Field<?>> alternativeFields) {
+        if (Transformations.EMULATE_QUALIFY.contains(ctx.dialect()) || getQualify().hasWhere())
+            toSQLReferenceLimitWithWindowFunctions0(ctx);
+        else
+            toSQLReferenceQualifyInsteadOfLimit(ctx, originalFields, alternativeFields);
+    }
+
+
+    private final void toSQLReferenceLimitWithWindowFunctions0(Context<?> ctx) {
 
         // AUTHOR.ID, BOOK.ID, BOOK.TITLE
         final List<Field<?>> originalFields = getSelect();
@@ -2077,13 +2093,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // ----------------------------------------------
             // DISTINCT seems irrelevant here (to be proven)
 
-            c.visit(distinct
-                ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
-                : getLimit().withTies()
-                ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
-                : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())))
-            );
-
+            c.visit(limitWindowFunction(c));
             c.data().remove(DATA_UNALIAS_ALIASED_EXPRESSIONS);
             c.data().remove(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
             if (wrapQueryExpressionBodyInDerivedTable)
@@ -2099,23 +2109,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
            .visit(K_FROM).sqlIndentStart(" (")
            .subquery(true);
 
-        toSQLReference0(ctx, originalFields, alternativeFields);
+        toSQLReference0(ctx, originalFields, alternativeFields, null);
 
         ctx.subquery(false)
            .sqlIndentEnd(") ")
            .visit(name("x"))
            .formatSeparator()
            .visit(K_WHERE).sql(' ')
-           .visit(name("rn"))
-           .sql(" > ")
-           .visit(getLimit().getLowerRownum());
-
-        if (!getLimit().limitZero())
-            ctx.formatSeparator()
-               .visit(K_AND).sql(' ')
-               .visit(name("rn"))
-               .sql(" <= ")
-               .visit(getLimit().getUpperRownum());
+           .visit(limitWindowFunctionCondition(DSL.field(name("rn"), INTEGER)));
 
         // [#5068] Don't rely on nested query's ordering in case an operation
         //         like DISTINCT or JOIN produces hashing.
@@ -2128,6 +2129,23 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                .visit(K_ORDER_BY)
                .sql(' ')
                .visit(name("rn"));
+    }
+
+    @SuppressWarnings("unchecked")
+    private final Condition limitWindowFunctionCondition(Field<Integer> limitWindowFunction) {
+        return getLimit().limitZero()
+            ? limitWindowFunction.gt((Field<Integer>) getLimit().getLowerRownum())
+            : limitWindowFunction
+                    .between((Field<Integer>) getLimit().getLowerRownum().add(inline(1)))
+                    .and((Field<Integer>) getLimit().getUpperRownum());
+    }
+
+    private final Field<Integer> limitWindowFunction(Context<?> c) {
+        return distinct
+            ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
+            : getLimit().withTies()
+            ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
+            : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())));
     }
 
 
@@ -2206,7 +2224,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * This part is common to any type of limited query
      */
     @SuppressWarnings("unchecked")
-    private final void toSQLReference0(Context<?> context, List<Field<?>> originalFields, List<Field<?>> alternativeFields) {
+    private final void toSQLReference0(
+        Context<?> context,
+        List<Field<?>> originalFields,
+        List<Field<?>> alternativeFields,
+        Condition additionalQualify
+    ) {
         SQLDialect family = context.family();
         boolean qualify = context.qualify();
 
@@ -2634,11 +2657,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // QUALIFY clause
         // -------------
 
-        if (getQualify().hasWhere())
+        if (additionalQualify != null || getQualify().hasWhere())
             context.formatSeparator()
                    .visit(K_QUALIFY)
                    .sql(' ')
-                   .visit(getQualify());
+
+                   // [#15188] Callers ensure that the two QUALIFY conditions are mutually exclusive
+                   .visit(additionalQualify != null ? additionalQualify : getQualify().getWhere());
 
         // ORDER BY clause for local subselect
         // -----------------------------------

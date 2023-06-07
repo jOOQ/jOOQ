@@ -45,6 +45,30 @@ Secondary features include:
 Examples
 ========
 
+Typesafe, embedded SQL
+----------------------
+
+jOOQ's main feature is typesafe, embedded SQL, allowing for IDE auto completion of SQL syntax...
+
+![image](https://github.com/jOOQ/jOOQ/assets/734593/a62305d7-c8a7-4a32-aa32-30708f70337d)
+
+... as well as of schema meta data:
+
+![image](https://github.com/jOOQ/jOOQ/assets/734593/a8e23067-254c-4a03-89b2-82985325ee69)
+
+This allows for preventing errors of various types, including typos of identifiers:
+
+![image](https://github.com/jOOQ/jOOQ/assets/734593/d2659a0c-7d45-4851-9455-81ac4bc18485)
+
+Or data type mismatches:
+
+![image](https://github.com/jOOQ/jOOQ/assets/734593/8d230f16-ce82-4de8-88b2-64997451ebfe)
+
+[The examples are from the code generation blog post](https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/).
+
+A more powerful example using nested collections
+------------------------------------------------
+
 For many more examples, [please have a look at the demo](https://github.com/jOOQ/demo). A key example showing jOOQ's various strengths is from the [`MULTISET` operator announcement blog post](https://blog.jooq.org/jooq-3-15s-new-multiset-operator-will-change-how-you-think-about-sql/):
 
 Given these target DTOs:

@@ -412,6 +412,19 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
+    private boolean visible(VisibilityModifier modifier) {
+        switch (modifier) {
+            case NONE:
+            case PRIVATE:
+                return false;
+            case PUBLIC:
+            case INTERNAL:
+            case DEFAULT:
+            default:
+                return true;
+        }
+    }
+
     @Override
     public final void generate0(Database db) {
         this.isoDate = Instant.now().toString();
@@ -4904,6 +4917,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
 
         List<Definition> embeddablesAndUnreplacedColumns = embeddablesAndUnreplacedColumns(table);
+
+        columnLoop:
         for (Definition column : embeddablesAndUnreplacedColumns) {
             final String colName = column.getOutputName();
             final String colClass = getStrategy().getJavaClassName(column);
@@ -4912,6 +4927,16 @@ public class JavaGenerator extends AbstractGenerator {
             final String colTypeRecord = out.ref(getJavaType(column, out, Mode.RECORD));
             final String colType = out.ref(colTypeFull);
             final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+
+
+
+
+
+
+
+
+
+
 
             // fetchRangeOf[Column]([T]...)
             // -----------------------

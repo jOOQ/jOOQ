@@ -253,6 +253,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -2142,7 +2143,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final Field<Integer> limitWindowFunction(Context<?> c) {
         return distinct
-            ? DSL.denseRank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
+            ? DSL.denseRank().over(orderBy(getNonEmptyOrderByForDistinct(c.configuration())))
             : getLimit().withTies()
             ? DSL.rank().over(orderBy(getNonEmptyOrderBy(c.configuration())))
             : DSL.rowNumber().over(orderBy(getNonEmptyOrderBy(c.configuration())));
@@ -4438,6 +4439,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         return getOrderBy();
+    }
+
+    final SortFieldList getNonEmptyOrderByForDistinct(Configuration configuration) {
+        SortFieldList order = new SortFieldList();
+        order.addAll(getNonEmptyOrderBy(configuration));
+        Set<Field<?>> fields = new HashSet<>(map(order, o -> o.$field()));
+
+        for (Field<?> field : getSelect())
+            if (!fields.contains(field))
+                order.add(field.asc());
+
+        return order;
     }
 
     @Override

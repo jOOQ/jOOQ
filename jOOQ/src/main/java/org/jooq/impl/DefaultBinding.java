@@ -4655,15 +4655,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final UUID get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
 
-                // [#1624] Some JDBC drivers natively support the
-                // java.util.UUID data type
-
+                // [#1624] Some JDBC drivers natively support the java.util.UUID data type
+                // [#8439] In edge cases (e.g. arrays over domains) the type info may have
+                //         been lost between server and JDBC driver, so let's expect PGobject
 
 
                 case H2:
                 case POSTGRES:
-                case YUGABYTEDB:
-                    return Convert.convert(ctx.resultSet().getObject(ctx.index()), UUID.class);
+                case YUGABYTEDB: {
+                    Object o = ctx.resultSet().getObject(ctx.index());
+
+                    if (o == null)
+                        return null;
+                    else if (o instanceof UUID)
+                        return (UUID) o;
+                    else
+                        return Convert.convert(o.toString(), UUID.class);
+                }
 
 
 

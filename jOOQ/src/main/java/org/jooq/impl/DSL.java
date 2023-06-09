@@ -20791,15 +20791,6 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
-        return new JSONObject(SQLDataType.JSON, Tools.jsonEntries(entries));
-    }
-
-    /**
-     * The <code>JSON_OBJECT</code> function.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
         return new JSONObject(SQLDataType.JSON, Arrays.asList(entries));
     }
@@ -20811,15 +20802,6 @@ public class DSL {
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject(SQLDataType.JSON, new QueryPartList<>(entries));
-    }
-
-    /**
-     * The <code>JSONB_OBJECT</code> function.
-     */
-    @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
-        return new JSONObject(SQLDataType.JSONB, Tools.jsonEntries(entries));
     }
 
     /**
@@ -26792,6 +26774,23 @@ public class DSL {
     }
 
     /**
+     * The <code>JSON_OBJECT</code> function.
+     *
+     * @deprecated - [#15196] - 3.19.0 - The semantics of the {@link Field}
+     *             arguments in this method is inconsistent with that of other
+     *             overloads, such as {@link #jsonbObject(Field, Field)}, which
+     *             can lead to subtle bugs. Please refrain from using this
+     *             overload as it will be removed in the future. Use
+     *             {@link #jsonObject(JSONEntry...)} instead.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Deprecated(forRemoval = true, since = "3.19")
+    public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
+        return new JSONObject(SQLDataType.JSON, Tools.jsonEntries(entries));
+    }
+
+    /**
      * The JSON object constructor.
      */
     @NotNull
@@ -26816,6 +26815,23 @@ public class DSL {
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<String> key, Select<? extends Record1<?>> value) {
         return jsonbObject(jsonEntry(key, value));
+    }
+
+    /**
+     * The <code>JSONB_OBJECT</code> function.
+     *
+     * @deprecated - [#15196] - 3.19.0 - The semantics of the {@link Field}
+     *             arguments in this method is inconsistent with that of other
+     *             overloads, such as {@link #jsonbObject(Field, Field)}, which
+     *             can lead to subtle bugs. Please refrain from using this
+     *             overload as it will be removed in the future. Use
+     *             {@link #jsonObject(JSONEntry...)} instead.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Deprecated(forRemoval = true, since = "3.19")
+    public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
+        return new JSONObject(SQLDataType.JSONB, Tools.jsonEntries(entries));
     }
 
     /**

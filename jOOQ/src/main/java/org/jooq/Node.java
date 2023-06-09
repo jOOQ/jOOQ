@@ -40,6 +40,7 @@ package org.jooq;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * An abstraction over directed, acyclic graph models.
@@ -49,6 +50,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
+@Experimental
 public interface Node<N extends Node<N>> {
 
     /**

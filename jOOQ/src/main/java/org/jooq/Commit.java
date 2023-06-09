@@ -40,12 +40,14 @@ package org.jooq;
 import java.util.Collection;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A commit in a version control system.
  *
  * @author Lukas Eder
  */
+@Experimental
 public interface Commit extends Node<Commit> {
 
     /**

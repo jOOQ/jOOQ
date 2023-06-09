@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.ApiStatus.Experimental;
+
 /**
  * The {@link File#type()}.
  * <p>
@@ -48,6 +50,7 @@ package org.jooq;
  * <li>{@link ContentType#SCHEMA}</li>
  * </ul>
  */
+@Experimental
 public enum ContentType {
 
     /**

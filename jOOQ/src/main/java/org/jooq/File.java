@@ -39,12 +39,14 @@ package org.jooq;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A source of migration content.
  *
  * @author Lukas Eder
  */
+@Experimental
 public interface File {
 
     /**

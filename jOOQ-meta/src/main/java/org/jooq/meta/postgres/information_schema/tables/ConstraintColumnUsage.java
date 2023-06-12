@@ -4,8 +4,8 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -83,11 +83,11 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
     public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), SQLDataType.VARCHAR, this, "");
 
     private ConstraintColumnUsage(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private ConstraintColumnUsage(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private ConstraintColumnUsage(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -114,10 +114,6 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
         this(DSL.name("constraint_column_usage"), null);
     }
 
-    public <O extends Record> ConstraintColumnUsage(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, CONSTRAINT_COLUMN_USAGE);
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -136,29 +132,5 @@ public class ConstraintColumnUsage extends TableImpl<Record> {
     @Override
     public ConstraintColumnUsage as(Table<?> alias) {
         return new ConstraintColumnUsage(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public ConstraintColumnUsage rename(String name) {
-        return new ConstraintColumnUsage(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public ConstraintColumnUsage rename(Name name) {
-        return new ConstraintColumnUsage(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public ConstraintColumnUsage rename(Table<?> name) {
-        return new ConstraintColumnUsage(name.getQualifiedName(), null);
     }
 }

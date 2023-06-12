@@ -157,28 +157,4 @@ public class PgCollation extends TableImpl<Record> {
     public PgCollation as(Table<?> alias) {
         return new PgCollation(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgCollation rename(String name) {
-        return new PgCollation(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgCollation rename(Name name) {
-        return new PgCollation(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgCollation rename(Table<?> name) {
-        return new PgCollation(name.getQualifiedName(), null);
-    }
 }

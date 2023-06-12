@@ -4,8 +4,8 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -206,11 +206,11 @@ public class Parameters extends TableImpl<Record> {
     public final TableField<Record, String> PARAMETER_DEFAULT = createField(DSL.name("parameter_default"), SQLDataType.VARCHAR, this, "");
 
     private Parameters(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Parameters(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private Parameters(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -236,10 +236,6 @@ public class Parameters extends TableImpl<Record> {
         this(DSL.name("parameters"), null);
     }
 
-    public <O extends Record> Parameters(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PARAMETERS);
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -258,29 +254,5 @@ public class Parameters extends TableImpl<Record> {
     @Override
     public Parameters as(Table<?> alias) {
         return new Parameters(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Parameters rename(String name) {
-        return new Parameters(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Parameters rename(Name name) {
-        return new Parameters(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Parameters rename(Table<?> name) {
-        return new Parameters(name.getQualifiedName(), null);
     }
 }

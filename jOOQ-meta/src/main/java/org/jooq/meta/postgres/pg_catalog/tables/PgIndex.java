@@ -259,28 +259,4 @@ public class PgIndex extends TableImpl<Record> {
     public PgIndex as(Table<?> alias) {
         return new PgIndex(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgIndex rename(String name) {
-        return new PgIndex(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgIndex rename(Name name) {
-        return new PgIndex(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgIndex rename(Table<?> name) {
-        return new PgIndex(name.getQualifiedName(), null);
-    }
 }

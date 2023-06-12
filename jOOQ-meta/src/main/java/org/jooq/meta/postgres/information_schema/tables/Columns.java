@@ -7,9 +7,12 @@ package org.jooq.meta.postgres.information_schema.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,6 +23,8 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
 import org.jooq.meta.postgres.information_schema.Keys;
+import org.jooq.meta.postgres.information_schema.tables.Schemata.SchemataPath;
+import org.jooq.meta.postgres.information_schema.tables.Tables.TablesPath;
 
 
 /**
@@ -267,11 +272,11 @@ public class Columns extends TableImpl<Record> {
     public final TableField<Record, String> IS_UPDATABLE = createField(DSL.name("is_updatable"), SQLDataType.VARCHAR(3), this, "");
 
     private Columns(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -295,8 +300,14 @@ public class Columns extends TableImpl<Record> {
         this(DSL.name("columns"), null);
     }
 
-    public <O extends Record> Columns(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, COLUMNS);
+    public <O extends Record> Columns(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, COLUMNS);
+    }
+
+    public static class ColumnsPath extends Columns implements Path<Record> {
+        public <O extends Record> ColumnsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -309,27 +320,28 @@ public class Columns extends TableImpl<Record> {
         return Arrays.asList(Keys.COLUMNS__SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES, Keys.COLUMNS__SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient Tables _tables;
-    private transient Schemata _schemata;
+    private transient TablesPath _tables;
 
     /**
      * Get the implicit join path to the <code>information_schema.tables</code>
      * table.
      */
-    public Tables tables() {
+    public TablesPath tables() {
         if (_tables == null)
-            _tables = new Tables(this, Keys.COLUMNS__SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES);
+            _tables = new TablesPath(this, Keys.COLUMNS__SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES, null);
 
         return _tables;
     }
+
+    private transient SchemataPath _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>information_schema.schemata</code> table.
      */
-    public Schemata schemata() {
+    public SchemataPath schemata() {
         if (_schemata == null)
-            _schemata = new Schemata(this, Keys.COLUMNS__SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA);
+            _schemata = new SchemataPath(this, Keys.COLUMNS__SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
@@ -347,29 +359,5 @@ public class Columns extends TableImpl<Record> {
     @Override
     public Columns as(Table<?> alias) {
         return new Columns(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Columns rename(String name) {
-        return new Columns(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Columns rename(Name name) {
-        return new Columns(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Columns rename(Table<?> name) {
-        return new Columns(name.getQualifiedName(), null);
     }
 }

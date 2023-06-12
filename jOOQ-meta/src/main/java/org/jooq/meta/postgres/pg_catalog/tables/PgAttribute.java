@@ -263,28 +263,4 @@ public class PgAttribute extends TableImpl<Record> {
     public PgAttribute as(Table<?> alias) {
         return new PgAttribute(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgAttribute rename(String name) {
-        return new PgAttribute(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgAttribute rename(Name name) {
-        return new PgAttribute(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgAttribute rename(Table<?> name) {
-        return new PgAttribute(name.getQualifiedName(), null);
-    }
 }

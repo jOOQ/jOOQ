@@ -104,12 +104,6 @@ public class InformationSchema extends SchemaImpl {
         super("INFORMATION_SCHEMA", null);
     }
 
-
-    @Override
-    public Catalog getCatalog() {
-        return DefaultCatalog.DEFAULT_CATALOG;
-    }
-
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(

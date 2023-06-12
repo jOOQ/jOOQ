@@ -7,9 +7,12 @@ package org.jooq.meta.postgres.information_schema.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,6 +23,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
 import org.jooq.meta.postgres.information_schema.Keys;
+import org.jooq.meta.postgres.information_schema.tables.Schemata.SchemataPath;
 
 
 /**
@@ -96,11 +100,11 @@ public class KeyColumnUsage extends TableImpl<Record> {
     public final TableField<Record, Integer> POSITION_IN_UNIQUE_CONSTRAINT = createField(DSL.name("position_in_unique_constraint"), SQLDataType.INTEGER, this, "");
 
     private KeyColumnUsage(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private KeyColumnUsage(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private KeyColumnUsage(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -126,8 +130,14 @@ public class KeyColumnUsage extends TableImpl<Record> {
         this(DSL.name("key_column_usage"), null);
     }
 
-    public <O extends Record> KeyColumnUsage(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, KEY_COLUMN_USAGE);
+    public <O extends Record> KeyColumnUsage(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, KEY_COLUMN_USAGE);
+    }
+
+    public static class KeyColumnUsagePath extends KeyColumnUsage implements Path<Record> {
+        public <O extends Record> KeyColumnUsagePath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -140,15 +150,15 @@ public class KeyColumnUsage extends TableImpl<Record> {
         return Arrays.asList(Keys.KEY_COLUMN_USAGE__SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient Schemata _schemata;
+    private transient SchemataPath _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>information_schema.schemata</code> table.
      */
-    public Schemata schemata() {
+    public SchemataPath schemata() {
         if (_schemata == null)
-            _schemata = new Schemata(this, Keys.KEY_COLUMN_USAGE__SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_SCHEMATA);
+            _schemata = new SchemataPath(this, Keys.KEY_COLUMN_USAGE__SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
@@ -166,29 +176,5 @@ public class KeyColumnUsage extends TableImpl<Record> {
     @Override
     public KeyColumnUsage as(Table<?> alias) {
         return new KeyColumnUsage(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public KeyColumnUsage rename(String name) {
-        return new KeyColumnUsage(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public KeyColumnUsage rename(Name name) {
-        return new KeyColumnUsage(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public KeyColumnUsage rename(Table<?> name) {
-        return new KeyColumnUsage(name.getQualifiedName(), null);
     }
 }

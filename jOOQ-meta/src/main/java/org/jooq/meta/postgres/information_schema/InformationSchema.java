@@ -7,7 +7,6 @@ package org.jooq.meta.postgres.information_schema;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.postgres.information_schema.tables.Attributes;
@@ -108,12 +107,6 @@ public class InformationSchema extends SchemaImpl {
      */
     private InformationSchema() {
         super("information_schema", null);
-    }
-
-
-    @Override
-    public Catalog getCatalog() {
-        return DefaultCatalog.DEFAULT_CATALOG;
     }
 
     @Override

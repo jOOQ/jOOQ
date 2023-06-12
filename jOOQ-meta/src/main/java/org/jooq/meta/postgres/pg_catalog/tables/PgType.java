@@ -342,28 +342,4 @@ public class PgType extends TableImpl<Record> {
     public PgType as(Table<?> alias) {
         return new PgType(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgType rename(String name) {
-        return new PgType(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgType rename(Name name) {
-        return new PgType(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgType rename(Table<?> name) {
-        return new PgType(name.getQualifiedName(), null);
-    }
 }

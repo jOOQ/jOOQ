@@ -4,8 +4,8 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -180,11 +180,11 @@ public class Domains extends TableImpl<Record> {
     public final TableField<Record, String> DTD_IDENTIFIER = createField(DSL.name("dtd_identifier"), SQLDataType.VARCHAR, this, "");
 
     private Domains(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Domains(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private Domains(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -206,10 +206,6 @@ public class Domains extends TableImpl<Record> {
      */
     public Domains() {
         this(DSL.name("domains"), null);
-    }
-
-    public <O extends Record> Domains(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, DOMAINS);
     }
 
     @Override
@@ -235,29 +231,5 @@ public class Domains extends TableImpl<Record> {
     @Override
     public Domains as(Table<?> alias) {
         return new Domains(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Domains rename(String name) {
-        return new Domains(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Domains rename(Name name) {
-        return new Domains(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Domains rename(Table<?> name) {
-        return new Domains(name.getQualifiedName(), null);
     }
 }

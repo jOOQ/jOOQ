@@ -7,9 +7,12 @@ package org.jooq.meta.postgres.information_schema.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,6 +23,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
 import org.jooq.meta.postgres.information_schema.Keys;
+import org.jooq.meta.postgres.information_schema.tables.Schemata.SchemataPath;
 
 
 /**
@@ -99,11 +103,11 @@ public class ReferentialConstraints extends TableImpl<Record> {
     public final TableField<Record, String> DELETE_RULE = createField(DSL.name("delete_rule"), SQLDataType.VARCHAR, this, "");
 
     private ReferentialConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private ReferentialConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private ReferentialConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -130,8 +134,14 @@ public class ReferentialConstraints extends TableImpl<Record> {
         this(DSL.name("referential_constraints"), null);
     }
 
-    public <O extends Record> ReferentialConstraints(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, REFERENTIAL_CONSTRAINTS);
+    public <O extends Record> ReferentialConstraints(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, REFERENTIAL_CONSTRAINTS);
+    }
+
+    public static class ReferentialConstraintsPath extends ReferentialConstraints implements Path<Record> {
+        public <O extends Record> ReferentialConstraintsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -144,15 +154,15 @@ public class ReferentialConstraints extends TableImpl<Record> {
         return Arrays.asList(Keys.REFERENTIAL_CONSTRAINTS__SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient Schemata _schemata;
+    private transient SchemataPath _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>information_schema.schemata</code> table.
      */
-    public Schemata schemata() {
+    public SchemataPath schemata() {
         if (_schemata == null)
-            _schemata = new Schemata(this, Keys.REFERENTIAL_CONSTRAINTS__SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA);
+            _schemata = new SchemataPath(this, Keys.REFERENTIAL_CONSTRAINTS__SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
@@ -170,29 +180,5 @@ public class ReferentialConstraints extends TableImpl<Record> {
     @Override
     public ReferentialConstraints as(Table<?> alias) {
         return new ReferentialConstraints(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public ReferentialConstraints rename(String name) {
-        return new ReferentialConstraints(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public ReferentialConstraints rename(Name name) {
-        return new ReferentialConstraints(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public ReferentialConstraints rename(Table<?> name) {
-        return new ReferentialConstraints(name.getQualifiedName(), null);
     }
 }

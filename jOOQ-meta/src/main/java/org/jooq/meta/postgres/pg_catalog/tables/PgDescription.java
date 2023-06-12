@@ -114,28 +114,4 @@ public class PgDescription extends TableImpl<Record> {
     public PgDescription as(Table<?> alias) {
         return new PgDescription(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgDescription rename(String name) {
-        return new PgDescription(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgDescription rename(Name name) {
-        return new PgDescription(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgDescription rename(Table<?> name) {
-        return new PgDescription(name.getQualifiedName(), null);
-    }
 }

@@ -283,28 +283,4 @@ public class PgConstraint extends TableImpl<Record> {
     public PgConstraint as(Table<?> alias) {
         return new PgConstraint(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgConstraint rename(String name) {
-        return new PgConstraint(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgConstraint rename(Name name) {
-        return new PgConstraint(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgConstraint rename(Table<?> name) {
-        return new PgConstraint(name.getQualifiedName(), null);
-    }
 }

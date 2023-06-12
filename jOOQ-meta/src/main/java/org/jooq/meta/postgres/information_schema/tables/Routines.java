@@ -8,9 +8,12 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
 import org.jooq.meta.postgres.information_schema.Keys;
+import org.jooq.meta.postgres.information_schema.tables.Schemata.SchemataPath;
 
 
 /**
@@ -487,11 +491,11 @@ public class Routines extends TableImpl<Record> {
     public final TableField<Record, String> RESULT_CAST_DTD_IDENTIFIER = createField(DSL.name("result_cast_dtd_identifier"), SQLDataType.VARCHAR, this, "");
 
     private Routines(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Routines(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private Routines(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -517,8 +521,14 @@ public class Routines extends TableImpl<Record> {
         this(DSL.name("routines"), null);
     }
 
-    public <O extends Record> Routines(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, ROUTINES);
+    public <O extends Record> Routines(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, ROUTINES);
+    }
+
+    public static class RoutinesPath extends Routines implements Path<Record> {
+        public <O extends Record> RoutinesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -531,15 +541,15 @@ public class Routines extends TableImpl<Record> {
         return Arrays.asList(Keys.ROUTINES__SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient Schemata _schemata;
+    private transient SchemataPath _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>information_schema.schemata</code> table.
      */
-    public Schemata schemata() {
+    public SchemataPath schemata() {
         if (_schemata == null)
-            _schemata = new Schemata(this, Keys.ROUTINES__SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA);
+            _schemata = new SchemataPath(this, Keys.ROUTINES__SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
@@ -557,29 +567,5 @@ public class Routines extends TableImpl<Record> {
     @Override
     public Routines as(Table<?> alias) {
         return new Routines(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Routines rename(String name) {
-        return new Routines(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Routines rename(Name name) {
-        return new Routines(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Routines rename(Table<?> name) {
-        return new Routines(name.getQualifiedName(), null);
     }
 }

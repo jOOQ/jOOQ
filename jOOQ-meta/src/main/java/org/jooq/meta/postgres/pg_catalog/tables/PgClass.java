@@ -376,28 +376,4 @@ public class PgClass extends TableImpl<Record> {
     public PgClass as(Table<?> alias) {
         return new PgClass(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgClass rename(String name) {
-        return new PgClass(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgClass rename(Name name) {
-        return new PgClass(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgClass rename(Table<?> name) {
-        return new PgClass(name.getQualifiedName(), null);
-    }
 }

@@ -153,28 +153,4 @@ public class PgEnum extends TableImpl<Record> {
     public PgEnum as(Table<?> alias) {
         return new PgEnum(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgEnum rename(String name) {
-        return new PgEnum(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgEnum rename(Name name) {
-        return new PgEnum(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgEnum rename(Table<?> name) {
-        return new PgEnum(name.getQualifiedName(), null);
-    }
 }

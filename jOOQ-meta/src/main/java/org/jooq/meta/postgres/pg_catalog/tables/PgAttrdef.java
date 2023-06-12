@@ -128,28 +128,4 @@ public class PgAttrdef extends TableImpl<Record> {
     public PgAttrdef as(Table<?> alias) {
         return new PgAttrdef(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgAttrdef rename(String name) {
-        return new PgAttrdef(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgAttrdef rename(Name name) {
-        return new PgAttrdef(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgAttrdef rename(Table<?> name) {
-        return new PgAttrdef(name.getQualifiedName(), null);
-    }
 }

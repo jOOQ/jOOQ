@@ -114,28 +114,4 @@ public class PgInherits extends TableImpl<Record> {
     public PgInherits as(Table<?> alias) {
         return new PgInherits(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgInherits rename(String name) {
-        return new PgInherits(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgInherits rename(Name name) {
-        return new PgInherits(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgInherits rename(Table<?> name) {
-        return new PgInherits(name.getQualifiedName(), null);
-    }
 }

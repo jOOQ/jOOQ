@@ -4,8 +4,8 @@
 package org.jooq.meta.postgres.information_schema.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -204,11 +204,11 @@ public class Attributes extends TableImpl<Record> {
     public final TableField<Record, String> IS_DERIVED_REFERENCE_ATTRIBUTE = createField(DSL.name("is_derived_reference_attribute"), SQLDataType.VARCHAR(3), this, "");
 
     private Attributes(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Attributes(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private Attributes(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -234,10 +234,6 @@ public class Attributes extends TableImpl<Record> {
         this(DSL.name("attributes"), null);
     }
 
-    public <O extends Record> Attributes(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, ATTRIBUTES);
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -256,29 +252,5 @@ public class Attributes extends TableImpl<Record> {
     @Override
     public Attributes as(Table<?> alias) {
         return new Attributes(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Attributes rename(String name) {
-        return new Attributes(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Attributes rename(Name name) {
-        return new Attributes(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Attributes rename(Table<?> name) {
-        return new Attributes(name.getQualifiedName(), null);
     }
 }

@@ -7,9 +7,12 @@ package org.jooq.meta.postgres.information_schema.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
 import org.jooq.meta.postgres.information_schema.Keys;
+import org.jooq.meta.postgres.information_schema.tables.Schemata.SchemataPath;
 
 
 /**
@@ -70,11 +74,11 @@ public class CheckConstraints extends TableImpl<Record> {
     public final TableField<Record, String> CHECK_CLAUSE = createField(DSL.name("check_clause"), SQLDataType.VARCHAR, this, "");
 
     private CheckConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private CheckConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private CheckConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -101,8 +105,14 @@ public class CheckConstraints extends TableImpl<Record> {
         this(DSL.name("check_constraints"), null);
     }
 
-    public <O extends Record> CheckConstraints(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, CHECK_CONSTRAINTS);
+    public <O extends Record> CheckConstraints(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, CHECK_CONSTRAINTS);
+    }
+
+    public static class CheckConstraintsPath extends CheckConstraints implements Path<Record> {
+        public <O extends Record> CheckConstraintsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
@@ -120,15 +130,15 @@ public class CheckConstraints extends TableImpl<Record> {
         return Arrays.asList(Keys.CHECK_CONSTRAINTS__SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient Schemata _schemata;
+    private transient SchemataPath _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>information_schema.schemata</code> table.
      */
-    public Schemata schemata() {
+    public SchemataPath schemata() {
         if (_schemata == null)
-            _schemata = new Schemata(this, Keys.CHECK_CONSTRAINTS__SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA);
+            _schemata = new SchemataPath(this, Keys.CHECK_CONSTRAINTS__SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
@@ -146,29 +156,5 @@ public class CheckConstraints extends TableImpl<Record> {
     @Override
     public CheckConstraints as(Table<?> alias) {
         return new CheckConstraints(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public CheckConstraints rename(String name) {
-        return new CheckConstraints(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public CheckConstraints rename(Name name) {
-        return new CheckConstraints(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public CheckConstraints rename(Table<?> name) {
-        return new CheckConstraints(name.getQualifiedName(), null);
     }
 }

@@ -309,28 +309,4 @@ public class PgProc extends TableImpl<Record> {
     public PgProc as(Table<?> alias) {
         return new PgProc(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgProc rename(String name) {
-        return new PgProc(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgProc rename(Name name) {
-        return new PgProc(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgProc rename(Table<?> name) {
-        return new PgProc(name.getQualifiedName(), null);
-    }
 }

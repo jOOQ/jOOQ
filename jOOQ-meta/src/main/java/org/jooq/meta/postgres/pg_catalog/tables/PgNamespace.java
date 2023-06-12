@@ -191,28 +191,4 @@ public class PgNamespace extends TableImpl<Record> {
     public PgNamespace as(Table<?> alias) {
         return new PgNamespace(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgNamespace rename(String name) {
-        return new PgNamespace(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgNamespace rename(Name name) {
-        return new PgNamespace(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgNamespace rename(Table<?> name) {
-        return new PgNamespace(name.getQualifiedName(), null);
-    }
 }

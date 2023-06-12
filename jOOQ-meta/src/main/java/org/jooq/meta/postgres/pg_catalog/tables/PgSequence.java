@@ -181,28 +181,4 @@ public class PgSequence extends TableImpl<Record> {
     public PgSequence as(Table<?> alias) {
         return new PgSequence(alias.getQualifiedName(), this);
     }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgSequence rename(String name) {
-        return new PgSequence(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgSequence rename(Name name) {
-        return new PgSequence(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public PgSequence rename(Table<?> name) {
-        return new PgSequence(name.getQualifiedName(), null);
-    }
 }

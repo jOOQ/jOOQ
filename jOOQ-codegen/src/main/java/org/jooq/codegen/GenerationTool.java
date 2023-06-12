@@ -96,6 +96,7 @@ import org.jooq.meta.jaxb.Target;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.tools.reflect.Reflect;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 
 
@@ -411,6 +412,14 @@ public class GenerationTool {
 
                     g.getStrategy().setName(null);
                 }
+            }
+            else if (!isBlank(g.getStrategy().getJava())) {
+                Object o = Reflect.compile(g.getStrategy().getName(), g.getStrategy().getJava()).create().get();
+
+                if (o instanceof GeneratorStrategy s)
+                    strategy = s;
+                else
+                    throw new GeneratorException("GeneratorStrategy must implement org.jooq.codegen.GeneratorStrategy");
             }
             else {
                 Class<GeneratorStrategy> strategyClass = (Class<GeneratorStrategy>) (!isBlank(g.getStrategy().getName())

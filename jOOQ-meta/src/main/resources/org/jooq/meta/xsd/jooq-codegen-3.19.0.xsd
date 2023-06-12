@@ -157,6 +157,10 @@
       <element name="name" type="string" minOccurs="0" maxOccurs="1" default="org.jooq.codegen.DefaultGeneratorStrategy">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="java" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A self-contained, inline implementation of {@link org.jooq.codegen.GeneratorStrategy} that will be compiled and class-loaded on the fly by the code generator.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="matchers" type="tns:Matchers" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>

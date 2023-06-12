@@ -924,6 +924,10 @@ public class GenerationTool {
                 generator.setGenerateTextBlocks(g.getGenerate().getTextBlocks());
             if (g.getGenerate().isWhereMethodOverrides() != null)
                 generator.setGenerateWhereMethodOverrides(g.getGenerate().isWhereMethodOverrides());
+            if (g.getGenerate().isRenameMethodOverrides() != null)
+                generator.setGenerateRenameMethodOverrides(g.getGenerate().isRenameMethodOverrides());
+            if (g.getGenerate().isAsMethodOverrides() != null)
+                generator.setGenerateAsMethodOverrides(g.getGenerate().isAsMethodOverrides());
 
 
             if (!isBlank(d.getSchemaVersionProvider()))

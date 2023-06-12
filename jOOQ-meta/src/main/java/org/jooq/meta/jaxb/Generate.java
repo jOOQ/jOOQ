@@ -246,6 +246,10 @@ public class Generate implements Serializable, XMLAppendable
     protected GeneratedTextBlocks textBlocks = GeneratedTextBlocks.DETECT_FROM_JDK;
     @XmlElement(defaultValue = "true")
     protected Boolean whereMethodOverrides = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean renameMethodOverrides = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean asMethodOverrides = true;
 
     /**
      * Generate index information.
@@ -2721,6 +2725,54 @@ public class Generate implements Serializable, XMLAppendable
         this.whereMethodOverrides = value;
     }
 
+    /**
+     * Whether to generate overrides (see <a href="https://github.com/jOOQ/jOOQ/issues/13937">https://github.com/jOOQ/jOOQ/issues/13937</a>) for {@link org.jooq.Table#rename(org.jooq.Name)} and related overloads.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRenameMethodOverrides() {
+        return renameMethodOverrides;
+    }
+
+    /**
+     * Sets the value of the renameMethodOverrides property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRenameMethodOverrides(Boolean value) {
+        this.renameMethodOverrides = value;
+    }
+
+    /**
+     * Whether to generate overrides for {@link org.jooq.Table#as(org.jooq.Name)} and related overloads.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isAsMethodOverrides() {
+        return asMethodOverrides;
+    }
+
+    /**
+     * Sets the value of the asMethodOverrides property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setAsMethodOverrides(Boolean value) {
+        this.asMethodOverrides = value;
+    }
+
     public Generate withIndexes(Boolean value) {
         setIndexes(value);
         return this;
@@ -3299,6 +3351,16 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withRenameMethodOverrides(Boolean value) {
+        setRenameMethodOverrides(value);
+        return this;
+    }
+
+    public Generate withAsMethodOverrides(Boolean value) {
+        setAsMethodOverrides(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("indexes", indexes);
@@ -3406,6 +3468,8 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("printMarginForBlockComment", printMarginForBlockComment);
         builder.append("textBlocks", textBlocks);
         builder.append("whereMethodOverrides", whereMethodOverrides);
+        builder.append("renameMethodOverrides", renameMethodOverrides);
+        builder.append("asMethodOverrides", asMethodOverrides);
     }
 
     @Override
@@ -4372,6 +4436,24 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (renameMethodOverrides == null) {
+            if (other.renameMethodOverrides!= null) {
+                return false;
+            }
+        } else {
+            if (!renameMethodOverrides.equals(other.renameMethodOverrides)) {
+                return false;
+            }
+        }
+        if (asMethodOverrides == null) {
+            if (other.asMethodOverrides!= null) {
+                return false;
+            }
+        } else {
+            if (!asMethodOverrides.equals(other.asMethodOverrides)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -4484,6 +4566,8 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((printMarginForBlockComment == null)? 0 :printMarginForBlockComment.hashCode()));
         result = ((prime*result)+((textBlocks == null)? 0 :textBlocks.hashCode()));
         result = ((prime*result)+((whereMethodOverrides == null)? 0 :whereMethodOverrides.hashCode()));
+        result = ((prime*result)+((renameMethodOverrides == null)? 0 :renameMethodOverrides.hashCode()));
+        result = ((prime*result)+((asMethodOverrides == null)? 0 :asMethodOverrides.hashCode()));
         return result;
     }
 

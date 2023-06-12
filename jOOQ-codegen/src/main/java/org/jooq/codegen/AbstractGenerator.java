@@ -173,6 +173,8 @@ abstract class AbstractGenerator implements Generator {
     int                                generatePrintMarginForBlockComment               = 80;
     GeneratedTextBlocks                generateTextBlocks                               = GeneratedTextBlocks.DETECT_FROM_JDK;
     boolean                            generateWhereMethodOverrides                     = true;
+    boolean                            generateRenameMethodOverrides                    = true;
+    boolean                            generateAsMethodOverrides                        = true;
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                                   = "UTF-8";
@@ -1380,6 +1382,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateWhereMethodOverrides(boolean whereMethodOverrides) {
         this.generateWhereMethodOverrides = whereMethodOverrides;
+    }
+
+    @Override
+    public boolean generateRenameMethodOverrides() {
+        return generateRenameMethodOverrides;
+    }
+
+    @Override
+    public void setGenerateRenameMethodOverrides(boolean renameMethodOverrides) {
+        this.generateRenameMethodOverrides = renameMethodOverrides;
+    }
+
+    @Override
+    public boolean generateAsMethodOverrides() {
+        return generateAsMethodOverrides;
+    }
+
+    @Override
+    public void setGenerateAsMethodOverrides(boolean asMethodOverrides) {
+        this.generateAsMethodOverrides = asMethodOverrides;
     }
 
     // ----

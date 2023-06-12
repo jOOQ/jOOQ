@@ -45,6 +45,7 @@ import org.jooq.Condition;
 import org.jooq.Constants;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.Name;
 import org.jooq.Path;
 import org.jooq.Spatial;
 import org.jooq.Table;
@@ -1300,6 +1301,32 @@ public interface Generator {
      * related overloads.
      */
     void setGenerateWhereMethodOverrides(boolean whereMethodOverrides);
+
+    /**
+     * Whether to generate overrides for {@link Table#rename(Name)} and related
+     * overloads (see <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/13937">https://github.com/jOOQ/jOOQ/issues/13937</a>).
+     */
+    boolean generateRenameMethodOverrides();
+
+    /**
+     * Whether to generate overrides for {@link Table#rename(Name)} and related
+     * overloads (see <a href=
+     * "https://github.com/jOOQ/jOOQ/issues/13937">https://github.com/jOOQ/jOOQ/issues/13937</a>).
+     */
+    void setGenerateRenameMethodOverrides(boolean renameMethodOverrides);
+
+    /**
+     * Whether to generate overrides for {@link Table#as(Name)} and related
+     * overloads.
+     */
+    boolean generateAsMethodOverrides();
+
+    /**
+     * Whether to generate overrides for {@link Table#as(Name)} and related
+     * overloads.
+     */
+    void setGenerateAsMethodOverrides(boolean asMethodOverrides);
 
     /**
      * The target directory

@@ -7034,114 +7034,118 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+        if (generateAsMethodOverrides()) {
+            if (scala) {
+                out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), String.class, className);
+
+                if (table.isTableValuedFunction())
+                    out.println("new %s(%s.name(alias), null, null, null, this, parameters, null)", className, DSL.class);
+                else
+                    out.println("new %s(%s.name(alias), this)", className, DSL.class);
+
+                out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), Name.class, className);
+
+                if (table.isTableValuedFunction())
+                    out.println("new %s(alias, null, null, null, this, parameters, null)", className);
+                else
+                    out.println("new %s(alias, this)", className);
+
+                out.print("%soverride def as(alias: %s[_]): %s = ", visibilityPublic(), Table.class, className);
+
+                if (table.isTableValuedFunction())
+                    out.println("new %s(alias.getQualifiedName(), null, null, null, this, parameters, null)", className);
+                else
+                    out.println("new %s(alias.getQualifiedName(), this)", className);
+            }
+            else if (kotlin) {
+                out.print("%soverride fun `as`(alias: %s): %s = ", visibilityPublic(), String.class, className);
+
+                if (table.isTableValuedFunction())
+                    out.println("%s(%s.name(alias), this, parameters)", className, DSL.class);
+                else
+                    out.println("%s(%s.name(alias), this)", className, DSL.class);
+
+                out.print("%soverride fun `as`(alias: %s): %s = ", visibilityPublic(), Name.class, className);
+
+                if (table.isTableValuedFunction())
+                    out.println("%s(alias, this, parameters)", className);
+                else
+                    out.println("%s(alias, this)", className);
+
+                out.print("%soverride fun `as`(alias: %s<*>): %s = ", visibilityPublic(), Table.class, className);
+
+                if (table.isTableValuedFunction())
+                    out.println("%s(alias.qualifiedName, this, parameters)", className);
+                else
+                    out.println("%s(alias.qualifiedName, this)", className);
+            }
+
+            // [#117] With instance fields, it makes sense to create a
+            // type-safe table alias
+            else if (generateInstanceFields()) {
+                out.overrideInherit();
+                printNonnullAnnotation(out);
+                out.println("%s%s as(%s alias) {", visibilityPublic(), className, String.class);
+
+                if (table.isTableValuedFunction())
+                    out.println("return new %s(%s.name(alias), this, parameters);", className, DSL.class);
+                else
+                    out.println("return new %s(%s.name(alias), this);", className, DSL.class);
+
+                out.println("}");
+
+
+                out.overrideInherit();
+                printNonnullAnnotation(out);
+                out.println("%s%s as(%s alias) {", visibilityPublic(), className, Name.class);
+
+                if (table.isTableValuedFunction())
+                    out.println("return new %s(alias, this, parameters);", className);
+                else
+                    out.println("return new %s(alias, this);", className);
+
+                out.println("}");
+
+
+                out.overrideInherit();
+                printNonnullAnnotation(out);
+                out.println("%s%s as(%s<?> alias) {", visibilityPublic(), className, Table.class);
+
+                if (table.isTableValuedFunction())
+                    out.println("return new %s(alias.getQualifiedName(), this, parameters);", className);
+                else
+                    out.println("return new %s(alias.getQualifiedName(), this);", className);
+
+                out.println("}");
+            }
+        }
+
         if (scala) {
-            out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), String.class, className);
+            if (generateRenameMethodOverrides()) {
+                out.javadoc("Rename this table");
+                out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), String.class, className);
 
-            if (table.isTableValuedFunction())
-                out.println("new %s(%s.name(alias), null, null, null, this, parameters, null)", className, DSL.class);
-            else
-                out.println("new %s(%s.name(alias), this)", className, DSL.class);
+                if (table.isTableValuedFunction())
+                    out.println("new %s(%s.name(name), null, null, null, null, parameters, null)", className, DSL.class);
+                else
+                    out.println("new %s(%s.name(name), null)", className, DSL.class);
 
-            out.print("%soverride def as(alias: %s): %s = ", visibilityPublic(), Name.class, className);
+                out.javadoc("Rename this table");
+                out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), Name.class, className);
 
-            if (table.isTableValuedFunction())
-                out.println("new %s(alias, null, null, null, this, parameters, null)", className);
-            else
-                out.println("new %s(alias, this)", className);
+                if (table.isTableValuedFunction())
+                    out.println("new %s(name, null, null, null, null, parameters, null)", className);
+                else
+                    out.println("new %s(name, null)", className);
 
-            out.print("%soverride def as(alias: %s[_]): %s = ", visibilityPublic(), Table.class, className);
+                out.javadoc("Rename this table");
+                out.print("%soverride def rename(name: %s[_]): %s = ", visibilityPublic(), Table.class, className);
 
-            if (table.isTableValuedFunction())
-                out.println("new %s(alias.getQualifiedName(), null, null, null, this, parameters, null)", className);
-            else
-                out.println("new %s(alias.getQualifiedName(), this)", className);
-        }
-        else if (kotlin) {
-            out.print("%soverride fun `as`(alias: %s): %s = ", visibilityPublic(), String.class, className);
-
-            if (table.isTableValuedFunction())
-                out.println("%s(%s.name(alias), this, parameters)", className, DSL.class);
-            else
-                out.println("%s(%s.name(alias), this)", className, DSL.class);
-
-            out.print("%soverride fun `as`(alias: %s): %s = ", visibilityPublic(), Name.class, className);
-
-            if (table.isTableValuedFunction())
-                out.println("%s(alias, this, parameters)", className);
-            else
-                out.println("%s(alias, this)", className);
-
-            out.print("%soverride fun `as`(alias: %s<*>): %s = ", visibilityPublic(), Table.class, className);
-
-            if (table.isTableValuedFunction())
-                out.println("%s(alias.qualifiedName, this, parameters)", className);
-            else
-                out.println("%s(alias.qualifiedName, this)", className);
-        }
-
-        // [#117] With instance fields, it makes sense to create a
-        // type-safe table alias
-        else if (generateInstanceFields()) {
-            out.overrideInherit();
-            printNonnullAnnotation(out);
-            out.println("%s%s as(%s alias) {", visibilityPublic(), className, String.class);
-
-            if (table.isTableValuedFunction())
-                out.println("return new %s(%s.name(alias), this, parameters);", className, DSL.class);
-            else
-                out.println("return new %s(%s.name(alias), this);", className, DSL.class);
-
-            out.println("}");
-
-
-            out.overrideInherit();
-            printNonnullAnnotation(out);
-            out.println("%s%s as(%s alias) {", visibilityPublic(), className, Name.class);
-
-            if (table.isTableValuedFunction())
-                out.println("return new %s(alias, this, parameters);", className);
-            else
-                out.println("return new %s(alias, this);", className);
-
-            out.println("}");
-
-
-            out.overrideInherit();
-            printNonnullAnnotation(out);
-            out.println("%s%s as(%s<?> alias) {", visibilityPublic(), className, Table.class);
-
-            if (table.isTableValuedFunction())
-                out.println("return new %s(alias.getQualifiedName(), this, parameters);", className);
-            else
-                out.println("return new %s(alias.getQualifiedName(), this);", className);
-
-            out.println("}");
-        }
-
-        if (scala) {
-            out.javadoc("Rename this table");
-            out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), String.class, className);
-
-            if (table.isTableValuedFunction())
-                out.println("new %s(%s.name(name), null, null, null, null, parameters, null)", className, DSL.class);
-            else
-                out.println("new %s(%s.name(name), null)", className, DSL.class);
-
-            out.javadoc("Rename this table");
-            out.print("%soverride def rename(name: %s): %s = ", visibilityPublic(), Name.class, className);
-
-            if (table.isTableValuedFunction())
-                out.println("new %s(name, null, null, null, null, parameters, null)", className);
-            else
-                out.println("new %s(name, null)", className);
-
-            out.javadoc("Rename this table");
-            out.print("%soverride def rename(name: %s[_]): %s = ", visibilityPublic(), Table.class, className);
-
-            if (table.isTableValuedFunction())
-                out.println("new %s(name.getQualifiedName(), null, null, null, null, parameters, null)", className);
-            else
-                out.println("new %s(name.getQualifiedName(), null)", className);
+                if (table.isTableValuedFunction())
+                    out.println("new %s(name.getQualifiedName(), null, null, null, null, parameters, null)", className);
+                else
+                    out.println("new %s(name.getQualifiedName(), null)", className);
+            }
 
             if (generateWhereMethodOverrides() && !table.isTableValuedFunction()) {
                 Consumer<Runnable> idt = r -> {
@@ -7165,29 +7169,31 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         else if (kotlin) {
-            out.javadoc("Rename this table");
-            out.print("%soverride fun rename(name: %s): %s = ", visibilityPublic(), String.class, className);
+            if (generateRenameMethodOverrides()) {
+                out.javadoc("Rename this table");
+                out.print("%soverride fun rename(name: %s): %s = ", visibilityPublic(), String.class, className);
 
-            if (table.isTableValuedFunction())
-                out.println("%s(%s.name(name), null, parameters)", className, DSL.class);
-            else
-                out.println("%s(%s.name(name), null)", className, DSL.class);
+                if (table.isTableValuedFunction())
+                    out.println("%s(%s.name(name), null, parameters)", className, DSL.class);
+                else
+                    out.println("%s(%s.name(name), null)", className, DSL.class);
 
-            out.javadoc("Rename this table");
-            out.print("%soverride fun rename(name: %s): %s = ", visibilityPublic(), Name.class, className);
+                out.javadoc("Rename this table");
+                out.print("%soverride fun rename(name: %s): %s = ", visibilityPublic(), Name.class, className);
 
-            if (table.isTableValuedFunction())
-                out.println("%s(name, null, parameters)", className);
-            else
-                out.println("%s(name, null)", className);
+                if (table.isTableValuedFunction())
+                    out.println("%s(name, null, parameters)", className);
+                else
+                    out.println("%s(name, null)", className);
 
-            out.javadoc("Rename this table");
-            out.print("%soverride fun rename(name: %s<*>): %s = ", visibilityPublic(), Table.class, className);
+                out.javadoc("Rename this table");
+                out.print("%soverride fun rename(name: %s<*>): %s = ", visibilityPublic(), Table.class, className);
 
-            if (table.isTableValuedFunction())
-                out.println("%s(name.qualifiedName, null, parameters)", className);
-            else
-                out.println("%s(name.qualifiedName, null)", className);
+                if (table.isTableValuedFunction())
+                    out.println("%s(name.qualifiedName, null, parameters)", className);
+                else
+                    out.println("%s(name.qualifiedName, null)", className);
+            }
 
             if (generateWhereMethodOverrides() && !table.isTableValuedFunction()) {
                 Consumer<Runnable> idt = r -> {
@@ -7210,41 +7216,43 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#2921] With instance fields, tables can be renamed.
         else if (generateInstanceFields()) {
-            out.javadoc("Rename this table");
-            out.override();
-            printNonnullAnnotation(out);
-            out.println("%s%s rename(%s name) {", visibilityPublic(), className, String.class);
+            if (generateRenameMethodOverrides()) {
+                out.javadoc("Rename this table");
+                out.override();
+                printNonnullAnnotation(out);
+                out.println("%s%s rename(%s name) {", visibilityPublic(), className, String.class);
 
-            if (table.isTableValuedFunction())
-                out.println("return new %s(%s.name(name), null, parameters);", className, DSL.class);
-            else
-                out.println("return new %s(%s.name(name), null);", className, DSL.class);
+                if (table.isTableValuedFunction())
+                    out.println("return new %s(%s.name(name), null, parameters);", className, DSL.class);
+                else
+                    out.println("return new %s(%s.name(name), null);", className, DSL.class);
 
-            out.println("}");
+                out.println("}");
 
-            out.javadoc("Rename this table");
-            out.override();
-            printNonnullAnnotation(out);
-            out.println("%s%s rename(%s name) {", visibilityPublic(), className, Name.class);
+                out.javadoc("Rename this table");
+                out.override();
+                printNonnullAnnotation(out);
+                out.println("%s%s rename(%s name) {", visibilityPublic(), className, Name.class);
 
-            if (table.isTableValuedFunction())
-                out.println("return new %s(name, null, parameters);", className);
-            else
-                out.println("return new %s(name, null);", className);
+                if (table.isTableValuedFunction())
+                    out.println("return new %s(name, null, parameters);", className);
+                else
+                    out.println("return new %s(name, null);", className);
 
-            out.println("}");
+                out.println("}");
 
-            out.javadoc("Rename this table");
-            out.override();
-            printNonnullAnnotation(out);
-            out.println("%s%s rename(%s<?> name) {", visibilityPublic(), className, Table.class);
+                out.javadoc("Rename this table");
+                out.override();
+                printNonnullAnnotation(out);
+                out.println("%s%s rename(%s<?> name) {", visibilityPublic(), className, Table.class);
 
-            if (table.isTableValuedFunction())
-                out.println("return new %s(name.getQualifiedName(), null, parameters);", className);
-            else
-                out.println("return new %s(name.getQualifiedName(), null);", className);
+                if (table.isTableValuedFunction())
+                    out.println("return new %s(name.getQualifiedName(), null, parameters);", className);
+                else
+                    out.println("return new %s(name.getQualifiedName(), null);", className);
 
-            out.println("}");
+                out.println("}");
+            }
 
             if (generateWhereMethodOverrides() && !table.isTableValuedFunction()) {
                 Consumer<Runnable> idt = r -> {

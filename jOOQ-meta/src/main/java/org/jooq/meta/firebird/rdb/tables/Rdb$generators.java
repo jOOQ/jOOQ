@@ -7,11 +7,10 @@ package org.jooq.meta.firebird.rdb.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -19,7 +18,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.meta.firebird.rdb.DefaultSchema;
 import org.jooq.meta.firebird.rdb.Keys;
 
 
@@ -47,7 +45,7 @@ public class Rdb$generators extends TableImpl<Record> {
     /**
      * The column <code>RDB$GENERATORS.RDB$GENERATOR_NAME</code>.
      */
-    public final TableField<Record, String> RDB$GENERATOR_NAME = createField(DSL.name("RDB$GENERATOR_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$GENERATOR_NAME = createField(DSL.name("RDB$GENERATOR_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$GENERATOR_ID</code>.
@@ -67,12 +65,12 @@ public class Rdb$generators extends TableImpl<Record> {
     /**
      * The column <code>RDB$GENERATORS.RDB$SECURITY_CLASS</code>.
      */
-    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$OWNER_NAME</code>.
      */
-    public final TableField<Record, String> RDB$OWNER_NAME = createField(DSL.name("RDB$OWNER_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$OWNER_NAME = createField(DSL.name("RDB$OWNER_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$GENERATORS.RDB$INITIAL_VALUE</code>.
@@ -85,11 +83,11 @@ public class Rdb$generators extends TableImpl<Record> {
     public final TableField<Record, Integer> RDB$GENERATOR_INCREMENT = createField(DSL.name("RDB$GENERATOR_INCREMENT"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private Rdb$generators(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Rdb$generators(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Rdb$generators(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -113,15 +111,6 @@ public class Rdb$generators extends TableImpl<Record> {
         this(DSL.name("RDB$GENERATORS"), null);
     }
 
-    public <O extends Record> Rdb$generators(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, RDB$GENERATORS);
-    }
-
-    @Override
-    public Schema getSchema() {
-        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
     @Override
     public List<UniqueKey<Record>> getUniqueKeys() {
         return Arrays.asList(Keys.RDB$INDEX_11, Keys.RDB$INDEX_46);
@@ -137,19 +126,8 @@ public class Rdb$generators extends TableImpl<Record> {
         return new Rdb$generators(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Rdb$generators rename(String name) {
-        return new Rdb$generators(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Rdb$generators rename(Name name) {
-        return new Rdb$generators(name, null);
+    public Rdb$generators as(Table<?> alias) {
+        return new Rdb$generators(alias.getQualifiedName(), this);
     }
 }

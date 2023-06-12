@@ -28,6 +28,6 @@ public class Domains {
     );
 
     private static final Schema schema() {
-        return new LazySchema(DSL.name(""), DSL.comment(""), () -> DefaultSchema.DEFAULT_SCHEMA);
+        return new LazySchema(DSL.name(""), DSL.comment(""), () -> null);
     }
 }

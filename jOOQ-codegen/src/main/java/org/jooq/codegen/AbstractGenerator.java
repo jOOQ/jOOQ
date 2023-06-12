@@ -48,7 +48,9 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.Database;
+import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 import org.jooq.meta.jaxb.GeneratedTextBlocks;
@@ -137,6 +139,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalLinkReferences                     = true;
     boolean                            generateGlobalKeyReferences                      = true;
     boolean                            generateGlobalIndexReferences                    = true;
+    boolean                            generateDefaultCatalog                           = true;
+    boolean                            generateDefaultSchema                            = true;
     boolean                            generateJavadoc                                  = true;
     boolean                            generateComments                                 = true;
     boolean                            generateCommentsOnAttributes                     = true;
@@ -956,6 +960,34 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGlobalIndexReferences(boolean globalIndexReferences) {
         this.generateGlobalIndexReferences = globalIndexReferences;
+    }
+
+    @Override
+    public boolean generateDefaultCatalog() {
+        return generateDefaultCatalog;
+    }
+
+    boolean generateDefaultCatalog(CatalogDefinition catalog) {
+        return generateDefaultCatalog() || !catalog.isDefaultCatalog();
+    }
+
+    @Override
+    public void setGenerateDefaultCatalog(boolean defaultCatalog) {
+        this.generateDefaultCatalog = defaultCatalog;
+    }
+
+    @Override
+    public boolean generateDefaultSchema() {
+        return generateDefaultSchema;
+    }
+
+    boolean generateDefaultSchema(SchemaDefinition schema) {
+        return generateDefaultSchema() || !schema.isDefaultSchema();
+    }
+
+    @Override
+    public void setGenerateDefaultSchema(boolean defaultSchema) {
+        this.generateDefaultSchema = defaultSchema;
     }
 
     @Override

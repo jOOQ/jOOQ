@@ -850,6 +850,10 @@ public class GenerationTool {
                 generator.setGenerateGlobalKeyReferences(g.getGenerate().isGlobalKeyReferences());
             if (g.getGenerate().isGlobalIndexReferences() != null)
                 generator.setGenerateGlobalIndexReferences(g.getGenerate().isGlobalIndexReferences());
+            if (g.getGenerate().isDefaultCatalog() != null)
+                generator.setGenerateDefaultCatalog(g.getGenerate().isDefaultCatalog());
+            if (g.getGenerate().isDefaultSchema() != null)
+                generator.setGenerateDefaultSchema(g.getGenerate().isDefaultSchema());
             if (g.getGenerate().isJavadoc() != null)
                 generator.setGenerateJavadoc(g.getGenerate().isJavadoc());
             if (g.getGenerate().isComments() != null)

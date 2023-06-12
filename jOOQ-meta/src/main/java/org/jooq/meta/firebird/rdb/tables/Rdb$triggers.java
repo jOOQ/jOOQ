@@ -7,11 +7,10 @@ package org.jooq.meta.firebird.rdb.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -19,7 +18,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.meta.firebird.rdb.DefaultSchema;
 import org.jooq.meta.firebird.rdb.Keys;
 
 
@@ -47,12 +45,12 @@ public class Rdb$triggers extends TableImpl<Record> {
     /**
      * The column <code>RDB$TRIGGERS.RDB$TRIGGER_NAME</code>.
      */
-    public final TableField<Record, String> RDB$TRIGGER_NAME = createField(DSL.name("RDB$TRIGGER_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$TRIGGER_NAME = createField(DSL.name("RDB$TRIGGER_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$RELATION_NAME</code>.
      */
-    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$TRIGGER_SEQUENCE</code>.
@@ -107,19 +105,30 @@ public class Rdb$triggers extends TableImpl<Record> {
     /**
      * The column <code>RDB$TRIGGERS.RDB$ENGINE_NAME</code>.
      */
-    public final TableField<Record, String> RDB$ENGINE_NAME = createField(DSL.name("RDB$ENGINE_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$ENGINE_NAME = createField(DSL.name("RDB$ENGINE_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$TRIGGERS.RDB$ENTRYPOINT</code>.
      */
     public final TableField<Record, String> RDB$ENTRYPOINT = createField(DSL.name("RDB$ENTRYPOINT"), SQLDataType.CHAR, this, "");
 
+    /**
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
+     */
+    @Deprecated
+    public final TableField<Record, Object> RDB$SQL_SECURITY = createField(DSL.name("RDB$SQL_SECURITY"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"RDB$SQL_SECURITY\""), this, "");
+
     private Rdb$triggers(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Rdb$triggers(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Rdb$triggers(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -143,15 +152,6 @@ public class Rdb$triggers extends TableImpl<Record> {
         this(DSL.name("RDB$TRIGGERS"), null);
     }
 
-    public <O extends Record> Rdb$triggers(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, RDB$TRIGGERS);
-    }
-
-    @Override
-    public Schema getSchema() {
-        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
     @Override
     public List<UniqueKey<Record>> getUniqueKeys() {
         return Arrays.asList(Keys.RDB$INDEX_8);
@@ -167,19 +167,8 @@ public class Rdb$triggers extends TableImpl<Record> {
         return new Rdb$triggers(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Rdb$triggers rename(String name) {
-        return new Rdb$triggers(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Rdb$triggers rename(Name name) {
-        return new Rdb$triggers(name, null);
+    public Rdb$triggers as(Table<?> alias) {
+        return new Rdb$triggers(alias.getQualifiedName(), this);
     }
 }

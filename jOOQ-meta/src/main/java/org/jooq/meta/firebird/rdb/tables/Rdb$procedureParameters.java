@@ -7,11 +7,10 @@ package org.jooq.meta.firebird.rdb.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -19,7 +18,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.meta.firebird.rdb.DefaultSchema;
 import org.jooq.meta.firebird.rdb.Keys;
 
 
@@ -47,12 +45,12 @@ public class Rdb$procedureParameters extends TableImpl<Record> {
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PARAMETER_NAME</code>.
      */
-    public final TableField<Record, String> RDB$PARAMETER_NAME = createField(DSL.name("RDB$PARAMETER_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$PARAMETER_NAME = createField(DSL.name("RDB$PARAMETER_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PROCEDURE_NAME</code>.
      */
-    public final TableField<Record, String> RDB$PROCEDURE_NAME = createField(DSL.name("RDB$PROCEDURE_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$PROCEDURE_NAME = createField(DSL.name("RDB$PROCEDURE_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PARAMETER_NUMBER</code>.
@@ -67,7 +65,7 @@ public class Rdb$procedureParameters extends TableImpl<Record> {
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$FIELD_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_SOURCE = createField(DSL.name("RDB$FIELD_SOURCE"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_SOURCE = createField(DSL.name("RDB$FIELD_SOURCE"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$DESCRIPTION</code>.
@@ -107,24 +105,24 @@ public class Rdb$procedureParameters extends TableImpl<Record> {
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$FIELD_NAME</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$RELATION_NAME</code>.
      */
-    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURE_PARAMETERS.RDB$PACKAGE_NAME</code>.
      */
-    public final TableField<Record, String> RDB$PACKAGE_NAME = createField(DSL.name("RDB$PACKAGE_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$PACKAGE_NAME = createField(DSL.name("RDB$PACKAGE_NAME"), SQLDataType.CHAR(63), this, "");
 
     private Rdb$procedureParameters(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Rdb$procedureParameters(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Rdb$procedureParameters(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -148,15 +146,6 @@ public class Rdb$procedureParameters extends TableImpl<Record> {
         this(DSL.name("RDB$PROCEDURE_PARAMETERS"), null);
     }
 
-    public <O extends Record> Rdb$procedureParameters(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, RDB$PROCEDURE_PARAMETERS);
-    }
-
-    @Override
-    public Schema getSchema() {
-        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
     @Override
     public List<UniqueKey<Record>> getUniqueKeys() {
         return Arrays.asList(Keys.RDB$INDEX_18);
@@ -172,19 +161,8 @@ public class Rdb$procedureParameters extends TableImpl<Record> {
         return new Rdb$procedureParameters(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Rdb$procedureParameters rename(String name) {
-        return new Rdb$procedureParameters(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Rdb$procedureParameters rename(Name name) {
-        return new Rdb$procedureParameters(name, null);
+    public Rdb$procedureParameters as(Table<?> alias) {
+        return new Rdb$procedureParameters(alias.getQualifiedName(), this);
     }
 }

@@ -828,6 +828,26 @@ public interface Generator {
     void setGenerateGlobalIndexReferences(boolean globalIndexReferences);
 
     /**
+     * Whether default catalog instances should be generated
+     */
+    boolean generateDefaultCatalog();
+
+    /**
+     * Whether default catalog instances should be generated
+     */
+    void setGenerateDefaultCatalog(boolean defaultCatalog);
+
+    /**
+     * Whether default schema instances should be generated
+     */
+    boolean generateDefaultSchema();
+
+    /**
+     * Whether default schema instances should be generated
+     */
+    void setGenerateDefaultSchema(boolean defaultSchema);
+
+    /**
      * Whether any Javadoc should be generated.
      */
     boolean generateJavadoc();

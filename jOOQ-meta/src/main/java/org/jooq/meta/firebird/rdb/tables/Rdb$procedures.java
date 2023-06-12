@@ -7,11 +7,10 @@ package org.jooq.meta.firebird.rdb.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -19,7 +18,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.meta.firebird.rdb.DefaultSchema;
 import org.jooq.meta.firebird.rdb.Keys;
 
 
@@ -47,7 +45,7 @@ public class Rdb$procedures extends TableImpl<Record> {
     /**
      * The column <code>RDB$PROCEDURES.RDB$PROCEDURE_NAME</code>.
      */
-    public final TableField<Record, String> RDB$PROCEDURE_NAME = createField(DSL.name("RDB$PROCEDURE_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$PROCEDURE_NAME = createField(DSL.name("RDB$PROCEDURE_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURES.RDB$PROCEDURE_ID</code>.
@@ -82,12 +80,12 @@ public class Rdb$procedures extends TableImpl<Record> {
     /**
      * The column <code>RDB$PROCEDURES.RDB$SECURITY_CLASS</code>.
      */
-    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURES.RDB$OWNER_NAME</code>.
      */
-    public final TableField<Record, String> RDB$OWNER_NAME = createField(DSL.name("RDB$OWNER_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$OWNER_NAME = createField(DSL.name("RDB$OWNER_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURES.RDB$RUNTIME</code>.
@@ -117,7 +115,7 @@ public class Rdb$procedures extends TableImpl<Record> {
     /**
      * The column <code>RDB$PROCEDURES.RDB$ENGINE_NAME</code>.
      */
-    public final TableField<Record, String> RDB$ENGINE_NAME = createField(DSL.name("RDB$ENGINE_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$ENGINE_NAME = createField(DSL.name("RDB$ENGINE_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURES.RDB$ENTRYPOINT</code>.
@@ -127,19 +125,30 @@ public class Rdb$procedures extends TableImpl<Record> {
     /**
      * The column <code>RDB$PROCEDURES.RDB$PACKAGE_NAME</code>.
      */
-    public final TableField<Record, String> RDB$PACKAGE_NAME = createField(DSL.name("RDB$PACKAGE_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$PACKAGE_NAME = createField(DSL.name("RDB$PACKAGE_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$PROCEDURES.RDB$PRIVATE_FLAG</code>.
      */
     public final TableField<Record, Short> RDB$PRIVATE_FLAG = createField(DSL.name("RDB$PRIVATE_FLAG"), SQLDataType.SMALLINT, this, "");
 
+    /**
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
+     */
+    @Deprecated
+    public final TableField<Record, Object> RDB$SQL_SECURITY = createField(DSL.name("RDB$SQL_SECURITY"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"RDB$SQL_SECURITY\""), this, "");
+
     private Rdb$procedures(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Rdb$procedures(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Rdb$procedures(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -163,15 +172,6 @@ public class Rdb$procedures extends TableImpl<Record> {
         this(DSL.name("RDB$PROCEDURES"), null);
     }
 
-    public <O extends Record> Rdb$procedures(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, RDB$PROCEDURES);
-    }
-
-    @Override
-    public Schema getSchema() {
-        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
     @Override
     public List<UniqueKey<Record>> getUniqueKeys() {
         return Arrays.asList(Keys.RDB$INDEX_21, Keys.RDB$INDEX_22);
@@ -187,19 +187,8 @@ public class Rdb$procedures extends TableImpl<Record> {
         return new Rdb$procedures(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Rdb$procedures rename(String name) {
-        return new Rdb$procedures(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Rdb$procedures rename(Name name) {
-        return new Rdb$procedures(name, null);
+    public Rdb$procedures as(Table<?> alias) {
+        return new Rdb$procedures(alias.getQualifiedName(), this);
     }
 }

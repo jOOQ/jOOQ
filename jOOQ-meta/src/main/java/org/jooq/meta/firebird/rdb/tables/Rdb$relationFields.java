@@ -7,11 +7,10 @@ package org.jooq.meta.firebird.rdb.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -19,7 +18,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.meta.firebird.rdb.DefaultSchema;
 import org.jooq.meta.firebird.rdb.Keys;
 
 
@@ -47,27 +45,27 @@ public class Rdb$relationFields extends TableImpl<Record> {
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$FIELD_NAME</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_NAME = createField(DSL.name("RDB$FIELD_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$RELATION_NAME</code>.
      */
-    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$FIELD_SOURCE</code>.
      */
-    public final TableField<Record, String> RDB$FIELD_SOURCE = createField(DSL.name("RDB$FIELD_SOURCE"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$FIELD_SOURCE = createField(DSL.name("RDB$FIELD_SOURCE"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$QUERY_NAME</code>.
      */
-    public final TableField<Record, String> RDB$QUERY_NAME = createField(DSL.name("RDB$QUERY_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$QUERY_NAME = createField(DSL.name("RDB$QUERY_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$BASE_FIELD</code>.
      */
-    public final TableField<Record, String> RDB$BASE_FIELD = createField(DSL.name("RDB$BASE_FIELD"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$BASE_FIELD = createField(DSL.name("RDB$BASE_FIELD"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$EDIT_STRING</code>.
@@ -117,12 +115,12 @@ public class Rdb$relationFields extends TableImpl<Record> {
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$SECURITY_CLASS</code>.
      */
-    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$SECURITY_CLASS = createField(DSL.name("RDB$SECURITY_CLASS"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$COMPLEX_NAME</code>.
      */
-    public final TableField<Record, String> RDB$COMPLEX_NAME = createField(DSL.name("RDB$COMPLEX_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$COMPLEX_NAME = createField(DSL.name("RDB$COMPLEX_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$NULL_FLAG</code>.
@@ -142,7 +140,7 @@ public class Rdb$relationFields extends TableImpl<Record> {
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$GENERATOR_NAME</code>.
      */
-    public final TableField<Record, String> RDB$GENERATOR_NAME = createField(DSL.name("RDB$GENERATOR_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$GENERATOR_NAME = createField(DSL.name("RDB$GENERATOR_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_FIELDS.RDB$IDENTITY_TYPE</code>.
@@ -150,11 +148,11 @@ public class Rdb$relationFields extends TableImpl<Record> {
     public final TableField<Record, Short> RDB$IDENTITY_TYPE = createField(DSL.name("RDB$IDENTITY_TYPE"), SQLDataType.SMALLINT, this, "");
 
     private Rdb$relationFields(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Rdb$relationFields(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Rdb$relationFields(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -178,15 +176,6 @@ public class Rdb$relationFields extends TableImpl<Record> {
         this(DSL.name("RDB$RELATION_FIELDS"), null);
     }
 
-    public <O extends Record> Rdb$relationFields(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, RDB$RELATION_FIELDS);
-    }
-
-    @Override
-    public Schema getSchema() {
-        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
     @Override
     public List<UniqueKey<Record>> getUniqueKeys() {
         return Arrays.asList(Keys.RDB$INDEX_15);
@@ -202,19 +191,8 @@ public class Rdb$relationFields extends TableImpl<Record> {
         return new Rdb$relationFields(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Rdb$relationFields rename(String name) {
-        return new Rdb$relationFields(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Rdb$relationFields rename(Name name) {
-        return new Rdb$relationFields(name, null);
+    public Rdb$relationFields as(Table<?> alias) {
+        return new Rdb$relationFields(alias.getQualifiedName(), this);
     }
 }

@@ -7,11 +7,10 @@ package org.jooq.meta.firebird.rdb.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -19,7 +18,6 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
-import org.jooq.meta.firebird.rdb.DefaultSchema;
 import org.jooq.meta.firebird.rdb.Keys;
 
 
@@ -47,7 +45,7 @@ public class Rdb$relationConstraints extends TableImpl<Record> {
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME</code>.
      */
-    public final TableField<Record, String> RDB$CONSTRAINT_NAME = createField(DSL.name("RDB$CONSTRAINT_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$CONSTRAINT_NAME = createField(DSL.name("RDB$CONSTRAINT_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_TYPE</code>.
@@ -57,7 +55,7 @@ public class Rdb$relationConstraints extends TableImpl<Record> {
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME</code>.
      */
-    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$RELATION_NAME = createField(DSL.name("RDB$RELATION_NAME"), SQLDataType.CHAR(63), this, "");
 
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$DEFERRABLE</code>.
@@ -72,14 +70,14 @@ public class Rdb$relationConstraints extends TableImpl<Record> {
     /**
      * The column <code>RDB$RELATION_CONSTRAINTS.RDB$INDEX_NAME</code>.
      */
-    public final TableField<Record, String> RDB$INDEX_NAME = createField(DSL.name("RDB$INDEX_NAME"), SQLDataType.CHAR(31), this, "");
+    public final TableField<Record, String> RDB$INDEX_NAME = createField(DSL.name("RDB$INDEX_NAME"), SQLDataType.CHAR(63), this, "");
 
     private Rdb$relationConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Rdb$relationConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Rdb$relationConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -103,15 +101,6 @@ public class Rdb$relationConstraints extends TableImpl<Record> {
         this(DSL.name("RDB$RELATION_CONSTRAINTS"), null);
     }
 
-    public <O extends Record> Rdb$relationConstraints(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, RDB$RELATION_CONSTRAINTS);
-    }
-
-    @Override
-    public Schema getSchema() {
-        return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
-    }
-
     @Override
     public List<UniqueKey<Record>> getUniqueKeys() {
         return Arrays.asList(Keys.RDB$INDEX_12);
@@ -127,19 +116,8 @@ public class Rdb$relationConstraints extends TableImpl<Record> {
         return new Rdb$relationConstraints(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Rdb$relationConstraints rename(String name) {
-        return new Rdb$relationConstraints(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Rdb$relationConstraints rename(Name name) {
-        return new Rdb$relationConstraints(name, null);
+    public Rdb$relationConstraints as(Table<?> alias) {
+        return new Rdb$relationConstraints(alias.getQualifiedName(), this);
     }
 }

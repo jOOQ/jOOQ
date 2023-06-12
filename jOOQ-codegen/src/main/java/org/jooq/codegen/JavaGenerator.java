@@ -619,7 +619,8 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        generateCatalog(catalog);
+        if (generateDefaultCatalog(catalog))
+            generateCatalog(catalog);
 
         if (generateSpringDao() && catalog.getSchemata().stream().anyMatch(s -> !s.getTables().isEmpty()))
             generateSpringDao(catalog);
@@ -667,7 +668,8 @@ public class JavaGenerator extends AbstractGenerator {
         // ----------------------------------------------------------------------
         // XXX Initialising
         // ----------------------------------------------------------------------
-        generateSchema(schema);
+        if (generateDefaultSchema(schema))
+            generateSchema(schema);
 
         if (generateGlobalSequenceReferences() && database.getSequences(schema).size() > 0)
             generateSequences(schema);
@@ -788,6 +790,10 @@ public class JavaGenerator extends AbstractGenerator {
             return true;
         }
     }
+
+
+
+
 
 
 
@@ -3172,7 +3178,9 @@ public class JavaGenerator extends AbstractGenerator {
         final String recordType = out.ref(getStrategy().getFullJavaClassName(udt, Mode.RECORD));
         final String classExtends = out.ref(getStrategy().getJavaClassExtends(udt, Mode.DEFAULT));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, Mode.DEFAULT));
-        final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+        final String schemaId = generateDefaultSchema(schema)
+            ? out.ref(getStrategy().getFullJavaIdentifier(schema), 2)
+            : null;
         final String packageId = pkg == null ? null : out.ref(getStrategy().getFullJavaIdentifier(pkg), 2);
         final String udtId = out.ref(getStrategy().getJavaIdentifier(udt), 2);
 
@@ -3278,19 +3286,21 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
-        if (scala) {
-            out.println();
-            out.println("%soverride def getSchema: %s = %s", visibilityPublic(), Schema.class, schemaId);
-        }
-        else if (kotlin) {
-            out.println();
-            out.println("%s override fun getSchema(): %s = %s", visibilityPublic(), Schema.class, schemaId);
-        }
-        else {
-            out.overrideInherit();
-            out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
-            out.println("return %s != null ? %s : new %s(%s.name(\"%s\"));", schemaId, schemaId, SchemaImpl.class, DSL.class, schema.getOutputName());
-            out.println("}");
+        if (schemaId != null) {
+            if (scala) {
+                out.println();
+                out.println("%soverride def getSchema: %s = %s", visibilityPublic(), Schema.class, schemaId);
+            }
+            else if (kotlin) {
+                out.println();
+                out.println("%s override fun getSchema(): %s = %s", visibilityPublic(), Schema.class, schemaId);
+            }
+            else {
+                out.overrideInherit();
+                out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
+                out.println("return %s != null ? %s : new %s(%s.name(\"%s\"));", schemaId, schemaId, SchemaImpl.class, DSL.class, schema.getOutputName());
+                out.println("}");
+            }
         }
 
         generateUDTClassFooter(udt, out);
@@ -3516,7 +3526,9 @@ public class JavaGenerator extends AbstractGenerator {
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getDomains(schema)));
         printGlobalReferencesPackage(out, schema, DomainDefinition.class);
 
-        final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+        final String schemaId = generateDefaultSchema(schema)
+            ? out.ref(getStrategy().getFullJavaIdentifier(schema), 2)
+            : null;
 
         if (!kotlin) {
             printClassJavadoc(out, "Convenience access to all Domains in " + schemaNameOrDefault(schema) + ".");
@@ -3543,7 +3555,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.println("%sval %s: %s[%s] = %s.createDomain(", visibility(), scalaWhitespaceSuffix(id), Domain.class, domainType, Internal.class);
-                out.println("  schema");
+                out.println("  %s", schemaId != null ? "schema" : null);
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
                 if (!converter.isEmpty() || !binding.isEmpty())
@@ -3556,7 +3568,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else if (kotlin) {
                 out.println("%sval %s: %s<%s> = %s.createDomain(", visibility(), id, Domain.class, domainType, Internal.class);
-                out.println("  schema()");
+                out.println("  %s", schemaId != null ? "schema()" : null);
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
                 if (!converter.isEmpty() || !binding.isEmpty())
@@ -3570,7 +3582,7 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 //
                 out.println("%sstatic final %s<%s> %s = %s.createDomain(", visibility(), Domain.class, domainType, id, Internal.class);
-                out.println("  schema()");
+                out.println("  %s", schemaId != null ? "schema()" : null);
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
                 out.println(", %s", domainTypeRef);
                 if (!converter.isEmpty() || !binding.isEmpty())
@@ -3583,19 +3595,21 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        if (scala) {
-            out.println();
-            out.println("private def schema: %s = new %s(%s.name(\"%s\"), %s.comment(\"\"), () => %s)", Schema.class, LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, schemaId);
-        }
-        else if (kotlin) {
-            out.println();
-            out.println("private fun schema(): %s = %s(%s.name(\"%s\"), %s.comment(\"\"), %s { %s })", Schema.class, LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, LazySupplier.class, schemaId);
-        }
-        else {
-            out.println();
-            out.println("private static final %s schema() {", Schema.class);
-            out.println("return new %s(%s.name(\"%s\"), %s.comment(\"\"), () -> %s);", LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, schemaId);
-            out.println("}");
+        if (schemaId != null) {
+            if (scala) {
+                out.println();
+                out.println("private def schema: %s = new %s(%s.name(\"%s\"), %s.comment(\"\"), () => %s)", Schema.class, LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, schemaId);
+            }
+            else if (kotlin) {
+                out.println();
+                out.println("private fun schema(): %s = %s(%s.name(\"%s\"), %s.comment(\"\"), %s { %s })", Schema.class, LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, LazySupplier.class, schemaId);
+            }
+            else {
+                out.println();
+                out.println("private static final %s schema() {", Schema.class);
+                out.println("return new %s(%s.name(\"%s\"), %s.comment(\"\"), () -> %s);", LazySchema.class, DSL.class, escapeString(schema.getOutputName()), DSL.class, schemaId);
+                out.println("}");
+            }
         }
 
         generateDomainReferencesClassFooter(schema, out);
@@ -3638,6 +3652,8 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void generateArray(ArrayDefinition array, JavaWriter out) {
+
+
 
 
 
@@ -3820,6 +3836,8 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, e, Mode.ENUM);
 
         boolean enumHasNoSchema = e.isSynthetic();
+        boolean noSchema = enumHasNoSchema || !generateDefaultSchema(e.getSchema());
+        boolean noCatalog = enumHasNoSchema || noSchema || !generateDefaultCatalog(e.getCatalog());
 
         if (scala) {
             out.println("object %s {", className);
@@ -3853,7 +3871,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
             out.println("sealed trait %s extends %s[[before= with ][%s]] {", className, EnumType.class, interfaces);
 
-            if (enumHasNoSchema)
+            if (noCatalog)
                 out.println("override def getCatalog: %s = null", Catalog.class);
             else
                 out.println("override def getCatalog: %s = if (getSchema == null) null else getSchema().getCatalog()", Catalog.class);
@@ -3861,7 +3879,7 @@ public class JavaGenerator extends AbstractGenerator {
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
             out.println("override def getSchema: %s = %s",
                 Schema.class,
-                enumHasNoSchema
+                noSchema
                     ? "null"
                     : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
             out.println("override def getName: %s = %s",
@@ -3888,11 +3906,11 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%s(\"%s\")%s", identifiers.get(i), literals.get(i), (i == literals.size() - 1) ? ";" : ",");
 
             out.println("%soverride fun getCatalog(): %s? = %s",
-                visibilityPublic(), Catalog.class, enumHasNoSchema ? "null" : "schema.catalog");
+                visibilityPublic(), Catalog.class, noCatalog ? "null" : "schema.catalog");
 
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
             out.println("%soverride fun getSchema(): %s%s = %s",
-                visibilityPublic(), Schema.class, enumHasNoSchema ? "?" : "", enumHasNoSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+                visibilityPublic(), Schema.class, noSchema ? "?" : "", noSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
 
             out.println("%soverride fun getName(): %s%s = %s",
                 visibilityPublic(), String.class, e.isSynthetic() ? "?" : "", e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
@@ -3921,7 +3939,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.overrideInherit();
             out.println("%s%s getCatalog() {", visibilityPublic(), Catalog.class);
 
-            if (enumHasNoSchema)
+            if (noCatalog)
                 out.println("return null;");
             else
                 out.println("return getSchema().getCatalog();");
@@ -3935,13 +3953,13 @@ public class JavaGenerator extends AbstractGenerator {
             // [#10998] The ScalaGenerator's schema reference is a method
             if (scalaConfigured) {
                 out.println("return %s%s;",
-                    enumHasNoSchema ? "null" : getStrategy().getFullJavaIdentifier(e.getSchema()).replaceFirst("^(.*)\\.(.*?)$", "$1\\$.MODULE\\$.$2"),
-                    enumHasNoSchema ? "" : "()"
+                    noSchema ? "null" : getStrategy().getFullJavaIdentifier(e.getSchema()).replaceFirst("^(.*)\\.(.*?)$", "$1\\$.MODULE\\$.$2"),
+                    noSchema ? "" : "()"
                 );
             }
             else {
                 out.println("return %s;",
-                    enumHasNoSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+                    noSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
             }
             out.println("}");
 
@@ -4145,6 +4163,8 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePackage(PackageDefinition pkg, JavaWriter out) {
+
+
 
 
 
@@ -6077,7 +6097,9 @@ public class JavaGenerator extends AbstractGenerator {
         final String recordType = out.ref(getStrategy().getFullJavaClassName(table.getReferencedTable(), Mode.RECORD));
         final String classExtends = out.ref(getStrategy().getJavaClassExtends(table, Mode.DEFAULT));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DEFAULT));
-        final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+        final String schemaId = generateDefaultSchema(schema)
+            ? out.ref(getStrategy().getFullJavaIdentifier(schema), 2)
+            : null;
         final String tableType = table.isTemporary()
             ? "temporaryTable"
             : table.isView()
@@ -6478,19 +6500,21 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        if (scala) {
-            out.println();
-            out.println("%soverride def getSchema: %s = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
-        }
-        else if (kotlin) {
-            out.println("%soverride fun getSchema(): %s? = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
-        }
-        else {
-            out.overrideInherit();
-            printNullableAnnotation(out);
-            out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
-            out.println("return aliased() ? null : %s;", schemaId);
-            out.println("}");
+        if (schemaId != null) {
+            if (scala) {
+                out.println();
+                out.println("%soverride def getSchema: %s = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
+            }
+            else if (kotlin) {
+                out.println("%soverride fun getSchema(): %s? = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
+            }
+            else {
+                out.overrideInherit();
+                printNullableAnnotation(out);
+                out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
+                out.println("return aliased() ? null : %s;", schemaId);
+                out.println("}");
+            }
         }
 
         // Add index information
@@ -7783,7 +7807,9 @@ public class JavaGenerator extends AbstractGenerator {
             final String seqType = out.ref(seqTypeFull);
             final String seqId = getStrategy().getJavaIdentifier(sequence);
             final String seqName = sequence.getOutputName();
-            final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+            final String schemaId = generateDefaultSchema(schema)
+                ? out.ref(getStrategy().getFullJavaIdentifier(schema), 2)
+                : null;
             final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType(resolver(out)), out);
 
             if (!printDeprecationIfUnknownType(out, seqTypeFull))
@@ -7935,7 +7961,7 @@ public class JavaGenerator extends AbstractGenerator {
                     fieldNames.add(getStrategy().getJavaIdentifier(schema));
 
             for (SchemaDefinition schema : catalog.getSchemata()) {
-                if (generateSchemaIfEmpty(schema)) {
+                if (generateSchemaIfEmpty(schema) && generateDefaultSchema(schema)) {
                     schemas.add(schema);
 
                     final String schemaClassName = out.ref(getStrategy().getFullJavaClassName(schema));
@@ -8013,7 +8039,9 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateSchema(SchemaDefinition schema, JavaWriter out) {
-        final String catalogId = out.ref(getStrategy().getFullJavaIdentifier(schema.getCatalog()), 2);
+        final String catalogId = generateDefaultCatalog(schema.getCatalog())
+            ? out.ref(getStrategy().getFullJavaIdentifier(schema.getCatalog()), 2)
+            : null;
         final String schemaId = getStrategy().getJavaIdentifier(schema);
         final String schemaName = !schema.getQualifiedOutputName().isEmpty() ? schema.getQualifiedOutputName() : schemaId;
         final String className = getStrategy().getJavaClassName(schema);
@@ -8094,19 +8122,21 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
-        out.println();
-        if (scala) {
-            out.println("%soverride def getCatalog: %s = %s", visibilityPublic(), Catalog.class, catalogId);
-        }
-        else if (kotlin) {
-            out.println("%soverride fun getCatalog(): %s = %s", visibilityPublic(),Catalog.class, catalogId);
-        }
-        else {
-            out.overrideInherit();
-            printNonnullAnnotation(out);
-            out.println("%s%s getCatalog() {", visibilityPublic(), Catalog.class);
-            out.println("return %s;", catalogId);
-            out.println("}");
+        if (catalogId != null) {
+            out.println();
+            if (scala) {
+                out.println("%soverride def getCatalog: %s = %s", visibilityPublic(), Catalog.class, catalogId);
+            }
+            else if (kotlin) {
+                out.println("%soverride fun getCatalog(): %s = %s", visibilityPublic(),Catalog.class, catalogId);
+            }
+            else {
+                out.overrideInherit();
+                printNonnullAnnotation(out);
+                out.println("%s%s getCatalog() {", visibilityPublic(), Catalog.class);
+                out.println("return %s;", catalogId);
+                out.println("}");
+            }
         }
 
         // [#2255] Avoid referencing sequence literals, if they're not generated
@@ -8721,7 +8751,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         final String classExtends = out.ref(getStrategy().getJavaClassExtends(routine));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(routine, Mode.DEFAULT));
-        final String schemaId = out.ref(getStrategy().getFullJavaIdentifier(schema), 2);
+        final String schemaId = generateDefaultSchema(schema)
+            ? out.ref(getStrategy().getFullJavaIdentifier(schema), 2)
+            : null;
         final List<String> packageId = out.ref(getStrategy().getFullJavaIdentifiers(routine.getPackage()), 2);
 
         printPackage(out, routine);

@@ -4,8 +4,8 @@
 package org.jooq.meta.mysql.information_schema.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -26,7 +26,7 @@ import org.jooq.types.ULong;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Parameters extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1211383875;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema.PARAMETERS</code>
@@ -77,12 +77,14 @@ public class Parameters extends TableImpl<Record> {
     public final TableField<Record, String> DATA_TYPE = createField(DSL.name("DATA_TYPE"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>information_schema.PARAMETERS.CHARACTER_MAXIMUM_LENGTH</code>.
+     * The column
+     * <code>information_schema.PARAMETERS.CHARACTER_MAXIMUM_LENGTH</code>.
      */
     public final TableField<Record, Long> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("CHARACTER_MAXIMUM_LENGTH"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>information_schema.PARAMETERS.CHARACTER_OCTET_LENGTH</code>.
+     * The column
+     * <code>information_schema.PARAMETERS.CHARACTER_OCTET_LENGTH</code>.
      */
     public final TableField<Record, Long> CHARACTER_OCTET_LENGTH = createField(DSL.name("CHARACTER_OCTET_LENGTH"), SQLDataType.BIGINT, this, "");
 
@@ -122,22 +124,24 @@ public class Parameters extends TableImpl<Record> {
     public final TableField<Record, String> ROUTINE_TYPE = createField(DSL.name("ROUTINE_TYPE"), SQLDataType.VARCHAR(9).nullable(false), this, "");
 
     private Parameters(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Parameters(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Parameters(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
-     * Create an aliased <code>information_schema.PARAMETERS</code> table reference
+     * Create an aliased <code>information_schema.PARAMETERS</code> table
+     * reference
      */
     public Parameters(String alias) {
         this(DSL.name(alias), PARAMETERS);
     }
 
     /**
-     * Create an aliased <code>information_schema.PARAMETERS</code> table reference
+     * Create an aliased <code>information_schema.PARAMETERS</code> table
+     * reference
      */
     public Parameters(Name alias) {
         this(alias, PARAMETERS);
@@ -150,13 +154,9 @@ public class Parameters extends TableImpl<Record> {
         this(DSL.name("PARAMETERS"), null);
     }
 
-    public <O extends Record> Parameters(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, PARAMETERS);
-    }
-
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
@@ -169,19 +169,8 @@ public class Parameters extends TableImpl<Record> {
         return new Parameters(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Parameters rename(String name) {
-        return new Parameters(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Parameters rename(Name name) {
-        return new Parameters(name, null);
+    public Parameters as(Table<?> alias) {
+        return new Parameters(alias.getQualifiedName(), this);
     }
 }

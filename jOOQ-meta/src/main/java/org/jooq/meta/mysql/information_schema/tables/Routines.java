@@ -8,20 +8,23 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
-import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.mysql.information_schema.InformationSchema;
 import org.jooq.meta.mysql.information_schema.Keys;
+import org.jooq.meta.mysql.information_schema.tables.Schemata.SchemataPath;
 import org.jooq.types.UInteger;
 
 
@@ -31,7 +34,7 @@ import org.jooq.types.UInteger;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 828988306;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema.ROUTINES</code>
@@ -77,12 +80,14 @@ public class Routines extends TableImpl<Record> {
     public final TableField<Record, String> DATA_TYPE = createField(DSL.name("DATA_TYPE"), SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>information_schema.ROUTINES.CHARACTER_MAXIMUM_LENGTH</code>.
+     * The column
+     * <code>information_schema.ROUTINES.CHARACTER_MAXIMUM_LENGTH</code>.
      */
     public final TableField<Record, Long> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("CHARACTER_MAXIMUM_LENGTH"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>information_schema.ROUTINES.CHARACTER_OCTET_LENGTH</code>.
+     * The column
+     * <code>information_schema.ROUTINES.CHARACTER_OCTET_LENGTH</code>.
      */
     public final TableField<Record, Long> CHARACTER_OCTET_LENGTH = createField(DSL.name("CHARACTER_OCTET_LENGTH"), SQLDataType.BIGINT, this, "");
 
@@ -202,22 +207,24 @@ public class Routines extends TableImpl<Record> {
     public final TableField<Record, String> DATABASE_COLLATION = createField(DSL.name("DATABASE_COLLATION"), SQLDataType.VARCHAR(64).nullable(false), this, "");
 
     private Routines(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Routines(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Routines(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
-     * Create an aliased <code>information_schema.ROUTINES</code> table reference
+     * Create an aliased <code>information_schema.ROUTINES</code> table
+     * reference
      */
     public Routines(String alias) {
         this(DSL.name(alias), ROUTINES);
     }
 
     /**
-     * Create an aliased <code>information_schema.ROUTINES</code> table reference
+     * Create an aliased <code>information_schema.ROUTINES</code> table
+     * reference
      */
     public Routines(Name alias) {
         this(alias, ROUTINES);
@@ -230,23 +237,37 @@ public class Routines extends TableImpl<Record> {
         this(DSL.name("ROUTINES"), null);
     }
 
-    public <O extends Record> Routines(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, ROUTINES);
+    public <O extends Record> Routines(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, ROUTINES);
+    }
+
+    public static class RoutinesPath extends Routines implements Path<Record> {
+        public <O extends Record> RoutinesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
-    public UniqueKey<Record> getPrimaryKey() {
-        return Keys.SYNTHETIC_PK_ROUTINES;
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.asList(Keys.SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA);
     }
 
-    @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_ROUTINES);
+    private transient SchemataPath _schemata;
+
+    /**
+     * Get the implicit join path to the
+     * <code>information_schema.SCHEMATA</code> table.
+     */
+    public SchemataPath schemata() {
+        if (_schemata == null)
+            _schemata = new SchemataPath(this, Keys.SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA, null);
+
+        return _schemata;
     }
 
     @Override
@@ -259,19 +280,8 @@ public class Routines extends TableImpl<Record> {
         return new Routines(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Routines rename(String name) {
-        return new Routines(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Routines rename(Name name) {
-        return new Routines(name, null);
+    public Routines as(Table<?> alias) {
+        return new Routines(alias.getQualifiedName(), this);
     }
 }

@@ -7,9 +7,12 @@ package org.jooq.meta.derby.sys.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,6 +23,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
+import org.jooq.meta.derby.sys.tables.Systables.SystablesPath;
 
 
 /**
@@ -28,7 +32,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysviews extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1865079473;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>SYS.SYSVIEWS</code>
@@ -64,11 +68,11 @@ public class Sysviews extends TableImpl<Record> {
     public final TableField<Record, String> COMPILATIONSCHEMAID = createField(DSL.name("COMPILATIONSCHEMAID"), SQLDataType.CHAR(36), this, "");
 
     private Sysviews(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Sysviews(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Sysviews(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -92,22 +96,36 @@ public class Sysviews extends TableImpl<Record> {
         this(DSL.name("SYSVIEWS"), null);
     }
 
-    public <O extends Record> Sysviews(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, SYSVIEWS);
+    public <O extends Record> Sysviews(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, SYSVIEWS);
+    }
+
+    public static class SysviewsPath extends Sysviews implements Path<Record> {
+        public <O extends Record> SysviewsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return Sys.SYS;
+        return aliased() ? null : Sys.SYS;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES);
+        return Arrays.asList(Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES);
     }
 
-    public Systables systables() {
-        return new Systables(this, Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES);
+    private transient SystablesPath _systables;
+
+    /**
+     * Get the implicit join path to the <code>SYS.SYSTABLES</code> table.
+     */
+    public SystablesPath systables() {
+        if (_systables == null)
+            _systables = new SystablesPath(this, Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES, null);
+
+        return _systables;
     }
 
     @Override
@@ -120,19 +138,8 @@ public class Sysviews extends TableImpl<Record> {
         return new Sysviews(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Sysviews rename(String name) {
-        return new Sysviews(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Sysviews rename(Name name) {
-        return new Sysviews(name, null);
+    public Sysviews as(Table<?> alias) {
+        return new Sysviews(alias.getQualifiedName(), this);
     }
 }

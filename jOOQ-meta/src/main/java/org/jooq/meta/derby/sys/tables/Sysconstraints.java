@@ -7,9 +7,12 @@ package org.jooq.meta.derby.sys.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,10 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
+import org.jooq.meta.derby.sys.tables.Syschecks.SyschecksPath;
+import org.jooq.meta.derby.sys.tables.Syskeys.SyskeysPath;
+import org.jooq.meta.derby.sys.tables.Sysschemas.SysschemasPath;
+import org.jooq.meta.derby.sys.tables.Systables.SystablesPath;
 
 
 /**
@@ -29,7 +36,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysconstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1457660597;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>SYS.SYSCONSTRAINTS</code>
@@ -80,11 +87,11 @@ public class Sysconstraints extends TableImpl<Record> {
     public final TableField<Record, Integer> REFERENCECOUNT = createField(DSL.name("REFERENCECOUNT"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private Sysconstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Sysconstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Sysconstraints(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -108,13 +115,19 @@ public class Sysconstraints extends TableImpl<Record> {
         this(DSL.name("SYSCONSTRAINTS"), null);
     }
 
-    public <O extends Record> Sysconstraints(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, SYSCONSTRAINTS);
+    public <O extends Record> Sysconstraints(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, SYSCONSTRAINTS);
+    }
+
+    public static class SysconstraintsPath extends Sysconstraints implements Path<Record> {
+        public <O extends Record> SysconstraintsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return Sys.SYS;
+        return aliased() ? null : Sys.SYS;
     }
 
     @Override
@@ -123,21 +136,57 @@ public class Sysconstraints extends TableImpl<Record> {
     }
 
     @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SYSCONSTRAINTS);
-    }
-
-    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSTABLES, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS);
+        return Arrays.asList(Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSTABLES, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS);
     }
 
-    public Systables systables() {
-        return new Systables(this, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSTABLES);
+    private transient SystablesPath _systables;
+
+    /**
+     * Get the implicit join path to the <code>SYS.SYSTABLES</code> table.
+     */
+    public SystablesPath systables() {
+        if (_systables == null)
+            _systables = new SystablesPath(this, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSTABLES, null);
+
+        return _systables;
     }
 
-    public Sysschemas sysschemas() {
-        return new Sysschemas(this, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS);
+    private transient SysschemasPath _sysschemas;
+
+    /**
+     * Get the implicit join path to the <code>SYS.SYSSCHEMAS</code> table.
+     */
+    public SysschemasPath sysschemas() {
+        if (_sysschemas == null)
+            _sysschemas = new SysschemasPath(this, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS, null);
+
+        return _sysschemas;
+    }
+
+    private transient SyschecksPath _syschecks;
+
+    /**
+     * Get the implicit to-many join path to the <code>SYS.SYSCHECKS</code>
+     * table
+     */
+    public SyschecksPath syschecks() {
+        if (_syschecks == null)
+            _syschecks = new SyschecksPath(this, null, Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS.getInverseKey());
+
+        return _syschecks;
+    }
+
+    private transient SyskeysPath _syskeys;
+
+    /**
+     * Get the implicit to-many join path to the <code>SYS.SYSKEYS</code> table
+     */
+    public SyskeysPath syskeys() {
+        if (_syskeys == null)
+            _syskeys = new SyskeysPath(this, null, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONSTRAINTS.getInverseKey());
+
+        return _syskeys;
     }
 
     @Override
@@ -150,19 +199,8 @@ public class Sysconstraints extends TableImpl<Record> {
         return new Sysconstraints(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Sysconstraints rename(String name) {
-        return new Sysconstraints(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Sysconstraints rename(Name name) {
-        return new Sysconstraints(name, null);
+    public Sysconstraints as(Table<?> alias) {
+        return new Sysconstraints(alias.getQualifiedName(), this);
     }
 }

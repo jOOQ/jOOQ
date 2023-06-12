@@ -7,7 +7,6 @@ package org.jooq.meta.mysql.information_schema;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.mysql.information_schema.tables.CheckConstraints;
@@ -29,7 +28,7 @@ import org.jooq.meta.mysql.information_schema.tables.Views;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1825826342;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>information_schema</code>
@@ -98,15 +97,9 @@ public class InformationSchema extends SchemaImpl {
         super("information_schema", null);
     }
 
-
-    @Override
-    public Catalog getCatalog() {
-        return DefaultCatalog.DEFAULT_CATALOG;
-    }
-
     @Override
     public final List<Table<?>> getTables() {
-        return Arrays.<Table<?>>asList(
+        return Arrays.asList(
             CheckConstraints.CHECK_CONSTRAINTS,
             Columns.COLUMNS,
             KeyColumnUsage.KEY_COLUMN_USAGE,
@@ -117,6 +110,7 @@ public class InformationSchema extends SchemaImpl {
             Statistics.STATISTICS,
             TableConstraints.TABLE_CONSTRAINTS,
             Tables.TABLES,
-            Views.VIEWS);
+            Views.VIEWS
+        );
     }
 }

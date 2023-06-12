@@ -7,7 +7,6 @@ package org.jooq.meta.hsqldb.information_schema;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
@@ -35,7 +34,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.Views;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class InformationSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = -1879387601;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA</code>
@@ -43,7 +42,8 @@ public class InformationSchema extends SchemaImpl {
     public static final InformationSchema INFORMATION_SCHEMA = new InformationSchema();
 
     /**
-     * one row for each domain constraint, table check constraint, and assertion.
+     * one row for each domain constraint, table check constraint, and
+     * assertion.
      */
     public final CheckConstraints CHECK_CONSTRAINTS = CheckConstraints.CHECK_CONSTRAINTS;
 
@@ -103,7 +103,8 @@ public class InformationSchema extends SchemaImpl {
     public final SystemColumns SYSTEM_COLUMNS = SystemColumns.SYSTEM_COLUMNS;
 
     /**
-     * information about the indices of each accessible table defined within this database
+     * information about the indices of each accessible table defined within
+     * this database
      */
     public final SystemIndexinfo SYSTEM_INDEXINFO = SystemIndexinfo.SYSTEM_INDEXINFO;
 
@@ -134,15 +135,9 @@ public class InformationSchema extends SchemaImpl {
         super("INFORMATION_SCHEMA", null);
     }
 
-
-    @Override
-    public Catalog getCatalog() {
-        return DefaultCatalog.DEFAULT_CATALOG;
-    }
-
     @Override
     public final List<Table<?>> getTables() {
-        return Arrays.<Table<?>>asList(
+        return Arrays.asList(
             CheckConstraints.CHECK_CONSTRAINTS,
             Columns.COLUMNS,
             DomainConstraints.DOMAIN_CONSTRAINTS,
@@ -159,6 +154,7 @@ public class InformationSchema extends SchemaImpl {
             SystemTables.SYSTEM_TABLES,
             TableConstraints.TABLE_CONSTRAINTS,
             Tables.TABLES,
-            Views.VIEWS);
+            Views.VIEWS
+        );
     }
 }

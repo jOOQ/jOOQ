@@ -7,9 +7,12 @@ package org.jooq.meta.hsqldb.information_schema.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,6 +23,8 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 import org.jooq.meta.hsqldb.information_schema.Keys;
+import org.jooq.meta.hsqldb.information_schema.tables.Schemata.SchemataPath;
+import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints.TableConstraintsPath;
 
 
 /**
@@ -28,10 +33,11 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ReferentialConstraints extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 331405816;
+    private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code>
+     * The reference instance of
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code>
      */
     public static final ReferentialConstraints REFERENTIAL_CONSTRAINTS = new ReferentialConstraints();
 
@@ -44,99 +50,150 @@ public class ReferentialConstraints extends TableImpl<Record> {
     }
 
     /**
-     * The column <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.CONSTRAINT_CATALOG</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.CONSTRAINT_CATALOG</code>.
      */
     public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("CONSTRAINT_CATALOG"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA</code>.
      */
     public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("CONSTRAINT_SCHEMA"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME</code>.
      */
     public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("CONSTRAINT_NAME"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_CATALOG</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_CATALOG</code>.
      */
     public final TableField<Record, String> UNIQUE_CONSTRAINT_CATALOG = createField(DSL.name("UNIQUE_CONSTRAINT_CATALOG"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA</code>.
      */
     public final TableField<Record, String> UNIQUE_CONSTRAINT_SCHEMA = createField(DSL.name("UNIQUE_CONSTRAINT_SCHEMA"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME</code>.
      */
     public final TableField<Record, String> UNIQUE_CONSTRAINT_NAME = createField(DSL.name("UNIQUE_CONSTRAINT_NAME"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.MATCH_OPTION</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.MATCH_OPTION</code>.
      */
     public final TableField<Record, String> MATCH_OPTION = createField(DSL.name("MATCH_OPTION"), SQLDataType.VARCHAR(65536), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.UPDATE_RULE</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.UPDATE_RULE</code>.
      */
     public final TableField<Record, String> UPDATE_RULE = createField(DSL.name("UPDATE_RULE"), SQLDataType.VARCHAR(65536), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.DELETE_RULE</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS.DELETE_RULE</code>.
      */
     public final TableField<Record, String> DELETE_RULE = createField(DSL.name("DELETE_RULE"), SQLDataType.VARCHAR(65536), this, "");
 
     private ReferentialConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private ReferentialConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each foreign key constraint"), TableOptions.table());
+    private ReferentialConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each foreign key constraint"), TableOptions.table(), where);
     }
 
     /**
-     * Create an aliased <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table reference
+     * Create an aliased <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code>
+     * table reference
      */
     public ReferentialConstraints(String alias) {
         this(DSL.name(alias), REFERENTIAL_CONSTRAINTS);
     }
 
     /**
-     * Create an aliased <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table reference
+     * Create an aliased <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code>
+     * table reference
      */
     public ReferentialConstraints(Name alias) {
         this(alias, REFERENTIAL_CONSTRAINTS);
     }
 
     /**
-     * Create a <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table reference
+     * Create a <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table
+     * reference
      */
     public ReferentialConstraints() {
         this(DSL.name("REFERENTIAL_CONSTRAINTS"), null);
     }
 
-    public <O extends Record> ReferentialConstraints(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, REFERENTIAL_CONSTRAINTS);
+    public <O extends Record> ReferentialConstraints(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, REFERENTIAL_CONSTRAINTS);
+    }
+
+    public static class ReferentialConstraintsPath extends ReferentialConstraints implements Path<Record> {
+        public <O extends Record> ReferentialConstraintsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.REFERENCING_CONSTRAINT, Keys.REFERENCED_CONSTRAINT);
+        return Arrays.asList(Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, Keys.REFERENCING_CONSTRAINT, Keys.REFERENCED_CONSTRAINT);
     }
 
-    public TableConstraints referencingConstraint() {
-        return new TableConstraints(this, Keys.REFERENCING_CONSTRAINT);
+    private transient SchemataPath _schemata;
+
+    /**
+     * Get the implicit join path to the
+     * <code>INFORMATION_SCHEMA.SCHEMATA</code> table.
+     */
+    public SchemataPath schemata() {
+        if (_schemata == null)
+            _schemata = new SchemataPath(this, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
+
+        return _schemata;
     }
 
-    public TableConstraints referencedConstraint() {
-        return new TableConstraints(this, Keys.REFERENCED_CONSTRAINT);
+    private transient TableConstraintsPath _referencingConstraint;
+
+    /**
+     * Get the implicit join path to the
+     * <code>INFORMATION_SCHEMA.TABLE_CONSTRAINTS</code> table, via the
+     * <code>REFERENCING_CONSTRAINT</code> key.
+     */
+    public TableConstraintsPath referencingConstraint() {
+        if (_referencingConstraint == null)
+            _referencingConstraint = new TableConstraintsPath(this, Keys.REFERENCING_CONSTRAINT, null);
+
+        return _referencingConstraint;
+    }
+
+    private transient TableConstraintsPath _referencedConstraint;
+
+    /**
+     * Get the implicit join path to the
+     * <code>INFORMATION_SCHEMA.TABLE_CONSTRAINTS</code> table, via the
+     * <code>REFERENCED_CONSTRAINT</code> key.
+     */
+    public TableConstraintsPath referencedConstraint() {
+        if (_referencedConstraint == null)
+            _referencedConstraint = new TableConstraintsPath(this, Keys.REFERENCED_CONSTRAINT, null);
+
+        return _referencedConstraint;
     }
 
     @Override
@@ -149,19 +206,8 @@ public class ReferentialConstraints extends TableImpl<Record> {
         return new ReferentialConstraints(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public ReferentialConstraints rename(String name) {
-        return new ReferentialConstraints(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public ReferentialConstraints rename(Name name) {
-        return new ReferentialConstraints(name, null);
+    public ReferentialConstraints as(Table<?> alias) {
+        return new ReferentialConstraints(alias.getQualifiedName(), this);
     }
 }

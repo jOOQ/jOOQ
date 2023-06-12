@@ -29,7 +29,8 @@ import org.jooq.meta.hsqldb.information_schema.tables.Views;
 public class Tables {
 
     /**
-     * one row for each domain constraint, table check constraint, and assertion.
+     * one row for each domain constraint, table check constraint, and
+     * assertion.
      */
     public static final CheckConstraints CHECK_CONSTRAINTS = CheckConstraints.CHECK_CONSTRAINTS;
 
@@ -89,7 +90,8 @@ public class Tables {
     public static final SystemColumns SYSTEM_COLUMNS = SystemColumns.SYSTEM_COLUMNS;
 
     /**
-     * information about the indices of each accessible table defined within this database
+     * information about the indices of each accessible table defined within
+     * this database
      */
     public static final SystemIndexinfo SYSTEM_INDEXINFO = SystemIndexinfo.SYSTEM_INDEXINFO;
 

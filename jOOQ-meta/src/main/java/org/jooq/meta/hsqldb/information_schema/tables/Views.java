@@ -7,9 +7,12 @@ package org.jooq.meta.hsqldb.information_schema.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,6 +23,8 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 import org.jooq.meta.hsqldb.information_schema.Keys;
+import org.jooq.meta.hsqldb.information_schema.tables.Schemata.SchemataPath;
+import org.jooq.meta.hsqldb.information_schema.tables.Tables.TablesPath;
 
 
 /**
@@ -28,7 +33,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Views extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 213426792;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.VIEWS</code>
@@ -89,16 +94,17 @@ public class Views extends TableImpl<Record> {
     public final TableField<Record, String> IS_TRIGGER_DELETABLE = createField(DSL.name("IS_TRIGGER_DELETABLE"), SQLDataType.VARCHAR(3), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.VIEWS.IS_TRIGGER_INSERTABLE_INTO</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.VIEWS.IS_TRIGGER_INSERTABLE_INTO</code>.
      */
     public final TableField<Record, String> IS_TRIGGER_INSERTABLE_INTO = createField(DSL.name("IS_TRIGGER_INSERTABLE_INTO"), SQLDataType.VARCHAR(3), this, "");
 
     private Views(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Views(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("the view descriptors of the accessible views defined within this database"), TableOptions.table());
+    private Views(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment("the view descriptors of the accessible views defined within this database"), TableOptions.table(), where);
     }
 
     /**
@@ -122,22 +128,50 @@ public class Views extends TableImpl<Record> {
         this(DSL.name("VIEWS"), null);
     }
 
-    public <O extends Record> Views(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, VIEWS);
+    public <O extends Record> Views(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, VIEWS);
+    }
+
+    public static class ViewsPath extends Views implements Path<Record> {
+        public <O extends Record> ViewsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
+        return Arrays.asList(Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
     }
 
-    public Tables tables() {
-        return new Tables(this, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
+    private transient SchemataPath _schemata;
+
+    /**
+     * Get the implicit join path to the
+     * <code>INFORMATION_SCHEMA.SCHEMATA</code> table.
+     */
+    public SchemataPath schemata() {
+        if (_schemata == null)
+            _schemata = new SchemataPath(this, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA, null);
+
+        return _schemata;
+    }
+
+    private transient TablesPath _tables;
+
+    /**
+     * Get the implicit join path to the <code>INFORMATION_SCHEMA.TABLES</code>
+     * table.
+     */
+    public TablesPath tables() {
+        if (_tables == null)
+            _tables = new TablesPath(this, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES, null);
+
+        return _tables;
     }
 
     @Override
@@ -150,19 +184,8 @@ public class Views extends TableImpl<Record> {
         return new Views(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Views rename(String name) {
-        return new Views(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Views rename(Name name) {
-        return new Views(name, null);
+    public Views as(Table<?> alias) {
+        return new Views(alias.getQualifiedName(), this);
     }
 }

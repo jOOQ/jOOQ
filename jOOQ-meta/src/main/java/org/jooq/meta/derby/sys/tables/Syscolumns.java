@@ -4,8 +4,8 @@
 package org.jooq.meta.derby.sys.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -24,7 +24,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syscolumns extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -62833438;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>SYS.SYSCOLUMNS</code>
@@ -90,11 +90,11 @@ public class Syscolumns extends TableImpl<Record> {
     public final TableField<Record, Boolean> AUTOINCREMENTCYCLE = createField(DSL.name("AUTOINCREMENTCYCLE"), SQLDataType.BOOLEAN, this, "");
 
     private Syscolumns(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Syscolumns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Syscolumns(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -118,13 +118,9 @@ public class Syscolumns extends TableImpl<Record> {
         this(DSL.name("SYSCOLUMNS"), null);
     }
 
-    public <O extends Record> Syscolumns(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, SYSCOLUMNS);
-    }
-
     @Override
     public Schema getSchema() {
-        return Sys.SYS;
+        return aliased() ? null : Sys.SYS;
     }
 
     @Override
@@ -137,19 +133,8 @@ public class Syscolumns extends TableImpl<Record> {
         return new Syscolumns(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Syscolumns rename(String name) {
-        return new Syscolumns(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Syscolumns rename(Name name) {
-        return new Syscolumns(name, null);
+    public Syscolumns as(Table<?> alias) {
+        return new Syscolumns(alias.getQualifiedName(), this);
     }
 }

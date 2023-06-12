@@ -7,9 +7,12 @@ package org.jooq.meta.derby.sys.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,8 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
+import org.jooq.meta.derby.sys.tables.Syskeys.SyskeysPath;
+import org.jooq.meta.derby.sys.tables.Systables.SystablesPath;
 
 
 /**
@@ -29,7 +34,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sysconglomerates extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 679295714;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>SYS.SYSCONGLOMERATES</code>
@@ -85,11 +90,11 @@ public class Sysconglomerates extends TableImpl<Record> {
     public final TableField<Record, String> CONGLOMERATEID = createField(DSL.name("CONGLOMERATEID"), SQLDataType.CHAR(36).nullable(false), this, "");
 
     private Sysconglomerates(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Sysconglomerates(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Sysconglomerates(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -113,13 +118,19 @@ public class Sysconglomerates extends TableImpl<Record> {
         this(DSL.name("SYSCONGLOMERATES"), null);
     }
 
-    public <O extends Record> Sysconglomerates(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, SYSCONGLOMERATES);
+    public <O extends Record> Sysconglomerates(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, SYSCONGLOMERATES);
+    }
+
+    public static class SysconglomeratesPath extends Sysconglomerates implements Path<Record> {
+        public <O extends Record> SysconglomeratesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return Sys.SYS;
+        return aliased() ? null : Sys.SYS;
     }
 
     @Override
@@ -128,17 +139,32 @@ public class Sysconglomerates extends TableImpl<Record> {
     }
 
     @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SYSCONGLOMERATES);
-    }
-
-    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES);
+        return Arrays.asList(Keys.SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES);
     }
 
-    public Systables systables() {
-        return new Systables(this, Keys.SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES);
+    private transient SystablesPath _systables;
+
+    /**
+     * Get the implicit join path to the <code>SYS.SYSTABLES</code> table.
+     */
+    public SystablesPath systables() {
+        if (_systables == null)
+            _systables = new SystablesPath(this, Keys.SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES, null);
+
+        return _systables;
+    }
+
+    private transient SyskeysPath _syskeys;
+
+    /**
+     * Get the implicit to-many join path to the <code>SYS.SYSKEYS</code> table
+     */
+    public SyskeysPath syskeys() {
+        if (_syskeys == null)
+            _syskeys = new SyskeysPath(this, null, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONGLOMERATES.getInverseKey());
+
+        return _syskeys;
     }
 
     @Override
@@ -151,19 +177,8 @@ public class Sysconglomerates extends TableImpl<Record> {
         return new Sysconglomerates(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Sysconglomerates rename(String name) {
-        return new Sysconglomerates(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Sysconglomerates rename(Name name) {
-        return new Sysconglomerates(name, null);
+    public Sysconglomerates as(Table<?> alias) {
+        return new Sysconglomerates(alias.getQualifiedName(), this);
     }
 }

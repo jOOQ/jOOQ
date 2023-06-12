@@ -7,9 +7,12 @@ package org.jooq.meta.hsqldb.information_schema.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +24,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 import org.jooq.meta.hsqldb.information_schema.Keys;
+import org.jooq.meta.hsqldb.information_schema.tables.Schemata.SchemataPath;
 
 
 /**
@@ -29,7 +33,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1642174316;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.SEQUENCES</code>
@@ -70,7 +74,8 @@ public class Sequences extends TableImpl<Record> {
     public final TableField<Record, Long> NUMERIC_PRECISION = createField(DSL.name("NUMERIC_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.SEQUENCES.NUMERIC_PRECISION_RADIX</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.SEQUENCES.NUMERIC_PRECISION_RADIX</code>.
      */
     public final TableField<Record, Long> NUMERIC_PRECISION_RADIX = createField(DSL.name("NUMERIC_PRECISION_RADIX"), SQLDataType.BIGINT, this, "");
 
@@ -110,12 +115,14 @@ public class Sequences extends TableImpl<Record> {
     public final TableField<Record, String> DECLARED_DATA_TYPE = createField(DSL.name("DECLARED_DATA_TYPE"), SQLDataType.VARCHAR(65536), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.SEQUENCES.DECLARED_NUMERIC_PRECISION</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.SEQUENCES.DECLARED_NUMERIC_PRECISION</code>.
      */
     public final TableField<Record, Long> DECLARED_NUMERIC_PRECISION = createField(DSL.name("DECLARED_NUMERIC_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.SEQUENCES.DECLARED_NUMERIC_SCALE</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.SEQUENCES.DECLARED_NUMERIC_SCALE</code>.
      */
     public final TableField<Record, Long> DECLARED_NUMERIC_SCALE = createField(DSL.name("DECLARED_NUMERIC_SCALE"), SQLDataType.BIGINT, this, "");
 
@@ -130,22 +137,24 @@ public class Sequences extends TableImpl<Record> {
     public final TableField<Record, String> NEXT_VALUE = createField(DSL.name("NEXT_VALUE"), SQLDataType.VARCHAR(65536), this, "");
 
     private Sequences(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Sequences(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each external sequence generator"), TableOptions.table());
+    private Sequences(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each external sequence generator"), TableOptions.table(), where);
     }
 
     /**
-     * Create an aliased <code>INFORMATION_SCHEMA.SEQUENCES</code> table reference
+     * Create an aliased <code>INFORMATION_SCHEMA.SEQUENCES</code> table
+     * reference
      */
     public Sequences(String alias) {
         this(DSL.name(alias), SEQUENCES);
     }
 
     /**
-     * Create an aliased <code>INFORMATION_SCHEMA.SEQUENCES</code> table reference
+     * Create an aliased <code>INFORMATION_SCHEMA.SEQUENCES</code> table
+     * reference
      */
     public Sequences(Name alias) {
         this(alias, SEQUENCES);
@@ -158,13 +167,19 @@ public class Sequences extends TableImpl<Record> {
         this(DSL.name("SEQUENCES"), null);
     }
 
-    public <O extends Record> Sequences(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, SEQUENCES);
+    public <O extends Record> Sequences(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, SEQUENCES);
+    }
+
+    public static class SequencesPath extends Sequences implements Path<Record> {
+        public <O extends Record> SequencesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
@@ -173,17 +188,21 @@ public class Sequences extends TableImpl<Record> {
     }
 
     @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_SEQUENCES);
-    }
-
-    @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
+        return Arrays.asList(Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
     }
 
-    public Schemata schemata() {
-        return new Schemata(this, Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA);
+    private transient SchemataPath _schemata;
+
+    /**
+     * Get the implicit join path to the
+     * <code>INFORMATION_SCHEMA.SCHEMATA</code> table.
+     */
+    public SchemataPath schemata() {
+        if (_schemata == null)
+            _schemata = new SchemataPath(this, Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA, null);
+
+        return _schemata;
     }
 
     @Override
@@ -196,19 +215,8 @@ public class Sequences extends TableImpl<Record> {
         return new Sequences(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Sequences rename(String name) {
-        return new Sequences(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Sequences rename(Name name) {
-        return new Sequences(name, null);
+    public Sequences as(Table<?> alias) {
+        return new Sequences(alias.getQualifiedName(), this);
     }
 }

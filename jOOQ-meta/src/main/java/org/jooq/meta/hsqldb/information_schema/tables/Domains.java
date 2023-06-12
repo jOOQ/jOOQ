@@ -4,12 +4,12 @@
 package org.jooq.meta.hsqldb.information_schema.tables;
 
 
-import java.util.Arrays;
-import java.util.List;
-
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,6 +21,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 import org.jooq.meta.hsqldb.information_schema.Keys;
+import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints.DomainConstraintsPath;
 
 
 /**
@@ -29,7 +30,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Domains extends TableImpl<Record> {
 
-    private static final long serialVersionUID = 1923709268;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.DOMAINS</code>
@@ -65,12 +66,14 @@ public class Domains extends TableImpl<Record> {
     public final TableField<Record, String> DATA_TYPE = createField(DSL.name("DATA_TYPE"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.DOMAINS.CHARACTER_MAXIMUM_LENGTH</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.DOMAINS.CHARACTER_MAXIMUM_LENGTH</code>.
      */
     public final TableField<Record, Long> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("CHARACTER_MAXIMUM_LENGTH"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.DOMAINS.CHARACTER_OCTET_LENGTH</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.DOMAINS.CHARACTER_OCTET_LENGTH</code>.
      */
     public final TableField<Record, Long> CHARACTER_OCTET_LENGTH = createField(DSL.name("CHARACTER_OCTET_LENGTH"), SQLDataType.BIGINT, this, "");
 
@@ -110,7 +113,8 @@ public class Domains extends TableImpl<Record> {
     public final TableField<Record, Long> NUMERIC_PRECISION = createField(DSL.name("NUMERIC_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.DOMAINS.NUMERIC_PRECISION_RADIX</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.DOMAINS.NUMERIC_PRECISION_RADIX</code>.
      */
     public final TableField<Record, Long> NUMERIC_PRECISION_RADIX = createField(DSL.name("NUMERIC_PRECISION_RADIX"), SQLDataType.BIGINT, this, "");
 
@@ -155,21 +159,23 @@ public class Domains extends TableImpl<Record> {
     public final TableField<Record, String> DECLARED_DATA_TYPE = createField(DSL.name("DECLARED_DATA_TYPE"), SQLDataType.VARCHAR(65536), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.DOMAINS.DECLARED_NUMERIC_PRECISION</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.DOMAINS.DECLARED_NUMERIC_PRECISION</code>.
      */
     public final TableField<Record, Long> DECLARED_NUMERIC_PRECISION = createField(DSL.name("DECLARED_NUMERIC_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.DOMAINS.DECLARED_NUMERIC_SCALE</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.DOMAINS.DECLARED_NUMERIC_SCALE</code>.
      */
     public final TableField<Record, Long> DECLARED_NUMERIC_SCALE = createField(DSL.name("DECLARED_NUMERIC_SCALE"), SQLDataType.BIGINT, this, "");
 
     private Domains(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Domains(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment("one row for each domain identified"), TableOptions.table());
+    private Domains(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment("one row for each domain identified"), TableOptions.table(), where);
     }
 
     /**
@@ -193,13 +199,19 @@ public class Domains extends TableImpl<Record> {
         this(DSL.name("DOMAINS"), null);
     }
 
-    public <O extends Record> Domains(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, DOMAINS);
+    public <O extends Record> Domains(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, DOMAINS);
+    }
+
+    public static class DomainsPath extends Domains implements Path<Record> {
+        public <O extends Record> DomainsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
@@ -207,9 +219,17 @@ public class Domains extends TableImpl<Record> {
         return Keys.SYNTHETIC_PK_DOMAINS;
     }
 
-    @Override
-    public List<UniqueKey<Record>> getKeys() {
-        return Arrays.<UniqueKey<Record>>asList(Keys.SYNTHETIC_PK_DOMAINS);
+    private transient DomainConstraintsPath _domainConstraints;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>INFORMATION_SCHEMA.DOMAIN_CONSTRAINTS</code> table
+     */
+    public DomainConstraintsPath domainConstraints() {
+        if (_domainConstraints == null)
+            _domainConstraints = new DomainConstraintsPath(this, null, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_DOMAINS.getInverseKey());
+
+        return _domainConstraints;
     }
 
     @Override
@@ -222,19 +242,8 @@ public class Domains extends TableImpl<Record> {
         return new Domains(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Domains rename(String name) {
-        return new Domains(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Domains rename(Name name) {
-        return new Domains(name, null);
+    public Domains as(Table<?> alias) {
+        return new Domains(alias.getQualifiedName(), this);
     }
 }

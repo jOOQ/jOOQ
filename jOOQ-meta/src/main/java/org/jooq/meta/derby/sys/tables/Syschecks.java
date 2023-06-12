@@ -7,9 +7,12 @@ package org.jooq.meta.derby.sys.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,6 +23,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
+import org.jooq.meta.derby.sys.tables.Sysconstraints.SysconstraintsPath;
 
 
 /**
@@ -28,7 +32,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syschecks extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1825970802;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>SYS.SYSCHECKS</code>
@@ -54,17 +58,22 @@ public class Syschecks extends TableImpl<Record> {
     public final TableField<Record, String> CHECKDEFINITION = createField(DSL.name("CHECKDEFINITION"), SQLDataType.LONGVARCHAR.nullable(false), this, "");
 
     /**
-     * @deprecated Unknown data type. Please define an explicit {@link org.jooq.Binding} to specify how this type should be handled. Deprecation can be turned off using {@literal <deprecationOnUnknownTypes/>} in your code generator configuration.
+     * @deprecated Unknown data type. If this is a qualified, user-defined type,
+     * it may have been excluded from code generation. If this is a built-in
+     * type, you can define an explicit {@link org.jooq.Binding} to specify how
+     * this type should be handled. Deprecation can be turned off using
+     * {@literal <deprecationOnUnknownTypes/>} in your code generator
+     * configuration.
      */
-    @java.lang.Deprecated
-    public final TableField<Record, Object> REFERENCEDCOLUMNS = createField(DSL.name("REFERENCEDCOLUMNS"), org.jooq.impl.SQLDataType.OTHER.nullable(false), this, "");
+    @Deprecated
+    public final TableField<Record, Object> REFERENCEDCOLUMNS = createField(DSL.name("REFERENCEDCOLUMNS"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"org.apache.derby.catalog.ReferencedColumns\"").nullable(false), this, "");
 
     private Syschecks(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Syschecks(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Syschecks(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -88,22 +97,36 @@ public class Syschecks extends TableImpl<Record> {
         this(DSL.name("SYSCHECKS"), null);
     }
 
-    public <O extends Record> Syschecks(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, SYSCHECKS);
+    public <O extends Record> Syschecks(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, SYSCHECKS);
+    }
+
+    public static class SyschecksPath extends Syschecks implements Path<Record> {
+        public <O extends Record> SyschecksPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return Sys.SYS;
+        return aliased() ? null : Sys.SYS;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS);
+        return Arrays.asList(Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS);
     }
 
-    public Sysconstraints sysconstraints() {
-        return new Sysconstraints(this, Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS);
+    private transient SysconstraintsPath _sysconstraints;
+
+    /**
+     * Get the implicit join path to the <code>SYS.SYSCONSTRAINTS</code> table.
+     */
+    public SysconstraintsPath sysconstraints() {
+        if (_sysconstraints == null)
+            _sysconstraints = new SysconstraintsPath(this, Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS, null);
+
+        return _sysconstraints;
     }
 
     @Override
@@ -116,19 +139,8 @@ public class Syschecks extends TableImpl<Record> {
         return new Syschecks(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Syschecks rename(String name) {
-        return new Syschecks(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Syschecks rename(Name name) {
-        return new Syschecks(name, null);
+    public Syschecks as(Table<?> alias) {
+        return new Syschecks(alias.getQualifiedName(), this);
     }
 }

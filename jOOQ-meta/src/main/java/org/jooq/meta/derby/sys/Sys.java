@@ -7,7 +7,6 @@ package org.jooq.meta.derby.sys;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.derby.sys.tables.Syschecks;
@@ -27,7 +26,7 @@ import org.jooq.meta.derby.sys.tables.Sysviews;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sys extends SchemaImpl {
 
-    private static final long serialVersionUID = -2021070810;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>SYS</code>
@@ -86,15 +85,9 @@ public class Sys extends SchemaImpl {
         super("SYS", null);
     }
 
-
-    @Override
-    public Catalog getCatalog() {
-        return DefaultCatalog.DEFAULT_CATALOG;
-    }
-
     @Override
     public final List<Table<?>> getTables() {
-        return Arrays.<Table<?>>asList(
+        return Arrays.asList(
             Syschecks.SYSCHECKS,
             Syscolumns.SYSCOLUMNS,
             Sysconglomerates.SYSCONGLOMERATES,
@@ -103,6 +96,7 @@ public class Sys extends SchemaImpl {
             Sysschemas.SYSSCHEMAS,
             Syssequences.SYSSEQUENCES,
             Systables.SYSTABLES,
-            Sysviews.SYSVIEWS);
+            Sysviews.SYSVIEWS
+        );
     }
 }

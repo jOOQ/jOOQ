@@ -4,8 +4,8 @@
 package org.jooq.meta.hsqldb.information_schema.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -24,7 +24,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ElementTypes extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -1012566751;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code>
@@ -60,7 +60,8 @@ public class ElementTypes extends TableImpl<Record> {
     public final TableField<Record, String> OBJECT_TYPE = createField(DSL.name("OBJECT_TYPE"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER</code>.
      */
     public final TableField<Record, String> COLLECTION_TYPE_IDENTIFIER = createField(DSL.name("COLLECTION_TYPE_IDENTIFIER"), SQLDataType.VARCHAR(128), this, "");
 
@@ -70,37 +71,44 @@ public class ElementTypes extends TableImpl<Record> {
     public final TableField<Record, String> DATA_TYPE = createField(DSL.name("DATA_TYPE"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH</code>.
      */
     public final TableField<Record, Long> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("CHARACTER_MAXIMUM_LENGTH"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_OCTET_LENGTH</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_OCTET_LENGTH</code>.
      */
     public final TableField<Record, Long> CHARACTER_OCTET_LENGTH = createField(DSL.name("CHARACTER_OCTET_LENGTH"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_SET_CATALOG</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_SET_CATALOG</code>.
      */
     public final TableField<Record, String> CHARACTER_SET_CATALOG = createField(DSL.name("CHARACTER_SET_CATALOG"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_SET_SCHEMA</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_SET_SCHEMA</code>.
      */
     public final TableField<Record, String> CHARACTER_SET_SCHEMA = createField(DSL.name("CHARACTER_SET_SCHEMA"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_SET_NAME</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.CHARACTER_SET_NAME</code>.
      */
     public final TableField<Record, String> CHARACTER_SET_NAME = createField(DSL.name("CHARACTER_SET_NAME"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.COLLATION_CATALOG</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.COLLATION_CATALOG</code>.
      */
     public final TableField<Record, String> COLLATION_CATALOG = createField(DSL.name("COLLATION_CATALOG"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.COLLATION_SCHEMA</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.COLLATION_SCHEMA</code>.
      */
     public final TableField<Record, String> COLLATION_SCHEMA = createField(DSL.name("COLLATION_SCHEMA"), SQLDataType.VARCHAR(128), this, "");
 
@@ -110,12 +118,14 @@ public class ElementTypes extends TableImpl<Record> {
     public final TableField<Record, String> COLLATION_NAME = createField(DSL.name("COLLATION_NAME"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.NUMERIC_PRECISION</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.NUMERIC_PRECISION</code>.
      */
     public final TableField<Record, Long> NUMERIC_PRECISION = createField(DSL.name("NUMERIC_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.NUMERIC_PRECISION_RADIX</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.NUMERIC_PRECISION_RADIX</code>.
      */
     public final TableField<Record, Long> NUMERIC_PRECISION_RADIX = createField(DSL.name("NUMERIC_PRECISION_RADIX"), SQLDataType.BIGINT, this, "");
 
@@ -125,7 +135,8 @@ public class ElementTypes extends TableImpl<Record> {
     public final TableField<Record, Long> NUMERIC_SCALE = createField(DSL.name("NUMERIC_SCALE"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.DATETIME_PRECISION</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.DATETIME_PRECISION</code>.
      */
     public final TableField<Record, Long> DATETIME_PRECISION = createField(DSL.name("DATETIME_PRECISION"), SQLDataType.BIGINT, this, "");
 
@@ -135,7 +146,8 @@ public class ElementTypes extends TableImpl<Record> {
     public final TableField<Record, String> INTERVAL_TYPE = createField(DSL.name("INTERVAL_TYPE"), SQLDataType.VARCHAR(65536), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.INTERVAL_PRECISION</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.INTERVAL_PRECISION</code>.
      */
     public final TableField<Record, Long> INTERVAL_PRECISION = createField(DSL.name("INTERVAL_PRECISION"), SQLDataType.BIGINT, this, "");
 
@@ -170,7 +182,8 @@ public class ElementTypes extends TableImpl<Record> {
     public final TableField<Record, String> SCOPE_NAME = createField(DSL.name("SCOPE_NAME"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.MAXIMUM_CARDINALITY</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.MAXIMUM_CARDINALITY</code>.
      */
     public final TableField<Record, Long> MAXIMUM_CARDINALITY = createField(DSL.name("MAXIMUM_CARDINALITY"), SQLDataType.BIGINT, this, "");
 
@@ -180,37 +193,42 @@ public class ElementTypes extends TableImpl<Record> {
     public final TableField<Record, String> DTD_IDENTIFIER = createField(DSL.name("DTD_IDENTIFIER"), SQLDataType.VARCHAR(128), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.DECLARED_DATA_TYPE</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.DECLARED_DATA_TYPE</code>.
      */
     public final TableField<Record, String> DECLARED_DATA_TYPE = createField(DSL.name("DECLARED_DATA_TYPE"), SQLDataType.VARCHAR(65536), this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.DECLARED_NUMERIC_PRECISION</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.DECLARED_NUMERIC_PRECISION</code>.
      */
     public final TableField<Record, Long> DECLARED_NUMERIC_PRECISION = createField(DSL.name("DECLARED_NUMERIC_PRECISION"), SQLDataType.BIGINT, this, "");
 
     /**
-     * The column <code>INFORMATION_SCHEMA.ELEMENT_TYPES.DECLARED_NUMERIC_SCALE</code>.
+     * The column
+     * <code>INFORMATION_SCHEMA.ELEMENT_TYPES.DECLARED_NUMERIC_SCALE</code>.
      */
     public final TableField<Record, Long> DECLARED_NUMERIC_SCALE = createField(DSL.name("DECLARED_NUMERIC_SCALE"), SQLDataType.BIGINT, this, "");
 
     private ElementTypes(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private ElementTypes(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private ElementTypes(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
-     * Create an aliased <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code> table reference
+     * Create an aliased <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code> table
+     * reference
      */
     public ElementTypes(String alias) {
         this(DSL.name(alias), ELEMENT_TYPES);
     }
 
     /**
-     * Create an aliased <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code> table reference
+     * Create an aliased <code>INFORMATION_SCHEMA.ELEMENT_TYPES</code> table
+     * reference
      */
     public ElementTypes(Name alias) {
         this(alias, ELEMENT_TYPES);
@@ -223,13 +241,9 @@ public class ElementTypes extends TableImpl<Record> {
         this(DSL.name("ELEMENT_TYPES"), null);
     }
 
-    public <O extends Record> ElementTypes(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, ELEMENT_TYPES);
-    }
-
     @Override
     public Schema getSchema() {
-        return InformationSchema.INFORMATION_SCHEMA;
+        return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
     }
 
     @Override
@@ -242,19 +256,8 @@ public class ElementTypes extends TableImpl<Record> {
         return new ElementTypes(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public ElementTypes rename(String name) {
-        return new ElementTypes(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public ElementTypes rename(Name name) {
-        return new ElementTypes(name, null);
+    public ElementTypes as(Table<?> alias) {
+        return new ElementTypes(alias.getQualifiedName(), this);
     }
 }

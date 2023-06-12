@@ -7,9 +7,12 @@ package org.jooq.meta.derby.sys.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,6 +23,7 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
+import org.jooq.meta.derby.sys.tables.Sysschemas.SysschemasPath;
 
 
 /**
@@ -28,7 +32,7 @@ import org.jooq.meta.derby.sys.Sys;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Syssequences extends TableImpl<Record> {
 
-    private static final long serialVersionUID = -530759919;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The reference instance of <code>SYS.SYSSEQUENCES</code>
@@ -94,11 +98,11 @@ public class Syssequences extends TableImpl<Record> {
     public final TableField<Record, String> CYCLEOPTION = createField(DSL.name("CYCLEOPTION"), SQLDataType.CHAR(1).nullable(false), this, "");
 
     private Syssequences(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Syssequences(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table());
+    private Syssequences(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.table(), where);
     }
 
     /**
@@ -122,22 +126,36 @@ public class Syssequences extends TableImpl<Record> {
         this(DSL.name("SYSSEQUENCES"), null);
     }
 
-    public <O extends Record> Syssequences(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, SYSSEQUENCES);
+    public <O extends Record> Syssequences(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, SYSSEQUENCES);
+    }
+
+    public static class SyssequencesPath extends Syssequences implements Path<Record> {
+        public <O extends Record> SyssequencesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+            super(path, childPath, parentPath);
+        }
     }
 
     @Override
     public Schema getSchema() {
-        return Sys.SYS;
+        return aliased() ? null : Sys.SYS;
     }
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.<ForeignKey<Record, ?>>asList(Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS);
+        return Arrays.asList(Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS);
     }
 
-    public Sysschemas sysschemas() {
-        return new Sysschemas(this, Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS);
+    private transient SysschemasPath _sysschemas;
+
+    /**
+     * Get the implicit join path to the <code>SYS.SYSSCHEMAS</code> table.
+     */
+    public SysschemasPath sysschemas() {
+        if (_sysschemas == null)
+            _sysschemas = new SysschemasPath(this, Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS, null);
+
+        return _sysschemas;
     }
 
     @Override
@@ -150,19 +168,8 @@ public class Syssequences extends TableImpl<Record> {
         return new Syssequences(alias, this);
     }
 
-    /**
-     * Rename this table
-     */
     @Override
-    public Syssequences rename(String name) {
-        return new Syssequences(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Syssequences rename(Name name) {
-        return new Syssequences(name, null);
+    public Syssequences as(Table<?> alias) {
+        return new Syssequences(alias.getQualifiedName(), this);
     }
 }

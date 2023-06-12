@@ -21,8 +21,7 @@ import org.jooq.meta.derby.sys.tables.Sysviews;
 
 
 /**
- * A class modelling foreign key relationships and constraints of tables in 
- * SYS.
+ * A class modelling foreign key relationships and constraints of tables in SYS.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {

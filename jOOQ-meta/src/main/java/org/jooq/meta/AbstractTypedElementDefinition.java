@@ -282,11 +282,22 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                     converter = resolver.ref(Converter.class) + ".of" + (!FALSE.equals(c.isNullable()) ? "Nullable" : "") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ", " + c.getFrom() + ", " + c.getTo() + ")";
                 }
                 else if (!StringUtils.isBlank(customType.getConverter())) {
-                    converter = customType.getConverter();
+                    if (TRUE.equals(customType.isGenericConverter())) {
+                        String tType = tType(db, resolver, definedType);
+                        converter = resolver.constructorCall(customType.getConverter() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
+                    }
+                    else
+                        converter = customType.getConverter();
                 }
 
-                if (!StringUtils.isBlank(customType.getBinding()))
-                    binding = customType.getBinding();
+                if (!StringUtils.isBlank(customType.getBinding())) {
+                    if (TRUE.equals(customType.isGenericBinding())) {
+                        String tType = tType(db, resolver, definedType);
+                        binding = resolver.constructorCall(customType.getBinding() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
+                    }
+                    else
+                        binding = customType.getBinding();
+                }
             }
 
 
@@ -415,7 +426,9 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         else {
             return new CustomType()
                 .withBinding(forcedType.getBinding())
+                .withGenericBinding(forcedType.isGenericBinding())
                 .withAutoConverter(forcedType.isAutoConverter())
+                .withGenericConverter(forcedType.isGenericConverter())
                 .withEnumConverter(forcedType.isEnumConverter())
                 .withXmlConverter(forcedType.isXmlConverter())
                 .withJsonConverter(forcedType.isJsonConverter())

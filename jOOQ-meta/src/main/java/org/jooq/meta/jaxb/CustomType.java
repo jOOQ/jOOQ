@@ -46,6 +46,7 @@ public class CustomType implements Serializable, XMLAppendable
     protected Boolean auditUpdateUser;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String converter;
+    protected Boolean genericConverter;
     protected Boolean autoConverter;
     protected Boolean enumConverter;
     protected Boolean xmlConverter;
@@ -53,6 +54,7 @@ public class CustomType implements Serializable, XMLAppendable
     protected LambdaConverter lambdaConverter;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String binding;
+    protected Boolean genericBinding;
 
     /**
      * @deprecated Use ForcedType only
@@ -257,6 +259,32 @@ public class CustomType implements Serializable, XMLAppendable
      *     
      */
     @Deprecated
+    public Boolean isGenericConverter() {
+        return genericConverter;
+    }
+
+    /**
+     * Sets the value of the genericConverter property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setGenericConverter(Boolean value) {
+        this.genericConverter = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
     public Boolean isAutoConverter() {
         return autoConverter;
     }
@@ -391,6 +419,32 @@ public class CustomType implements Serializable, XMLAppendable
     /**
      * @deprecated Use ForcedType only
      * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public Boolean isGenericBinding() {
+        return genericBinding;
+    }
+
+    /**
+     * Sets the value of the genericBinding property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setGenericBinding(Boolean value) {
+        this.genericBinding = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
      */
     @Deprecated
     public CustomType withName(String value) {
@@ -458,6 +512,11 @@ public class CustomType implements Serializable, XMLAppendable
         return this;
     }
 
+    public CustomType withGenericConverter(Boolean value) {
+        setGenericConverter(value);
+        return this;
+    }
+
     public CustomType withAutoConverter(Boolean value) {
         setAutoConverter(value);
         return this;
@@ -498,6 +557,11 @@ public class CustomType implements Serializable, XMLAppendable
         return this;
     }
 
+    public CustomType withGenericBinding(Boolean value) {
+        setGenericBinding(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("name", name);
@@ -509,12 +573,14 @@ public class CustomType implements Serializable, XMLAppendable
         builder.append("auditUpdateTimestamp", auditUpdateTimestamp);
         builder.append("auditUpdateUser", auditUpdateUser);
         builder.append("converter", converter);
+        builder.append("genericConverter", genericConverter);
         builder.append("autoConverter", autoConverter);
         builder.append("enumConverter", enumConverter);
         builder.append("xmlConverter", xmlConverter);
         builder.append("jsonConverter", jsonConverter);
         builder.append("lambdaConverter", lambdaConverter);
         builder.append("binding", binding);
+        builder.append("genericBinding", genericBinding);
     }
 
     @Override
@@ -617,6 +683,15 @@ public class CustomType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (genericConverter == null) {
+            if (other.genericConverter!= null) {
+                return false;
+            }
+        } else {
+            if (!genericConverter.equals(other.genericConverter)) {
+                return false;
+            }
+        }
         if (autoConverter == null) {
             if (other.autoConverter!= null) {
                 return false;
@@ -671,6 +746,15 @@ public class CustomType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (genericBinding == null) {
+            if (other.genericBinding!= null) {
+                return false;
+            }
+        } else {
+            if (!genericBinding.equals(other.genericBinding)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -687,12 +771,14 @@ public class CustomType implements Serializable, XMLAppendable
         result = ((prime*result)+((auditUpdateTimestamp == null)? 0 :auditUpdateTimestamp.hashCode()));
         result = ((prime*result)+((auditUpdateUser == null)? 0 :auditUpdateUser.hashCode()));
         result = ((prime*result)+((converter == null)? 0 :converter.hashCode()));
+        result = ((prime*result)+((genericConverter == null)? 0 :genericConverter.hashCode()));
         result = ((prime*result)+((autoConverter == null)? 0 :autoConverter.hashCode()));
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((xmlConverter == null)? 0 :xmlConverter.hashCode()));
         result = ((prime*result)+((jsonConverter == null)? 0 :jsonConverter.hashCode()));
         result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));
         result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
+        result = ((prime*result)+((genericBinding == null)? 0 :genericBinding.hashCode()));
         return result;
     }
 

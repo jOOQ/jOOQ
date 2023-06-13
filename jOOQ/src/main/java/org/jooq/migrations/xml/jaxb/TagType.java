@@ -2,29 +2,26 @@
 package org.jooq.migrations.xml.jaxb;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlType;
 import org.jooq.util.jaxb.tools.XMLAppendable;
 import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
- * <p>Java class for MigrationsType complex type.
+ * <p>Java class for TagType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="MigrationsType"&gt;
+ * &lt;complexType name="TagType"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="commits" type="{http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd}CommitsType" minOccurs="0"/&gt;
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -34,55 +31,50 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MigrationsType", propOrder = {
+@XmlType(name = "TagType", propOrder = {
 
 })
 @SuppressWarnings({
     "all"
 })
-public class MigrationsType implements Serializable, XMLAppendable
+public class TagType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31900L;
-    @XmlElementWrapper(name = "commits")
-    @XmlElement(name = "commit")
-    protected List<CommitType> commits;
+    @XmlElement(required = true)
+    protected String id;
+    protected String message;
 
-    public List<CommitType> getCommits() {
-        if (commits == null) {
-            commits = new ArrayList<CommitType>();
-        }
-        return commits;
+    public String getId() {
+        return id;
     }
 
-    public void setCommits(List<CommitType> commits) {
-        this.commits = commits;
+    public void setId(String value) {
+        this.id = value;
     }
 
-    public MigrationsType withCommits(CommitType... values) {
-        if (values!= null) {
-            for (CommitType value: values) {
-                getCommits().add(value);
-            }
-        }
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String value) {
+        this.message = value;
+    }
+
+    public TagType withId(String value) {
+        setId(value);
         return this;
     }
 
-    public MigrationsType withCommits(Collection<CommitType> values) {
-        if (values!= null) {
-            getCommits().addAll(values);
-        }
-        return this;
-    }
-
-    public MigrationsType withCommits(List<CommitType> commits) {
-        setCommits(commits);
+    public TagType withMessage(String value) {
+        setMessage(value);
         return this;
     }
 
     @Override
     public final void appendTo(XMLBuilder builder) {
-        builder.append("commits", "commit", commits);
+        builder.append("id", id);
+        builder.append("message", message);
     }
 
     @Override
@@ -103,13 +95,22 @@ public class MigrationsType implements Serializable, XMLAppendable
         if (getClass()!= that.getClass()) {
             return false;
         }
-        MigrationsType other = ((MigrationsType) that);
-        if (commits == null) {
-            if (other.commits!= null) {
+        TagType other = ((TagType) that);
+        if (id == null) {
+            if (other.id!= null) {
                 return false;
             }
         } else {
-            if (!commits.equals(other.commits)) {
+            if (!id.equals(other.id)) {
+                return false;
+            }
+        }
+        if (message == null) {
+            if (other.message!= null) {
+                return false;
+            }
+        } else {
+            if (!message.equals(other.message)) {
                 return false;
             }
         }
@@ -120,7 +121,8 @@ public class MigrationsType implements Serializable, XMLAppendable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = ((prime*result)+((commits == null)? 0 :commits.hashCode()));
+        result = ((prime*result)+((id == null)? 0 :id.hashCode()));
+        result = ((prime*result)+((message == null)? 0 :message.hashCode()));
         return result;
     }
 

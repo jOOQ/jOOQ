@@ -40,6 +40,7 @@ package org.jooq;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
@@ -62,7 +63,7 @@ public interface Node<N extends Node<N>> {
     /**
      * The message associated with the node.
      */
-    @NotNull
+    @Nullable
     String message();
 
     /**

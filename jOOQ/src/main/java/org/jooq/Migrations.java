@@ -37,8 +37,8 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.ApiStatus.Experimental;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The experimental migrations API.
@@ -81,7 +81,7 @@ public interface Migrations {
     Commit commit(String id);
 
     /**
-     * Initialise a {@link Commits} graph.
+     * Initialise an empty {@link Commits} graph.
      * <p>
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.

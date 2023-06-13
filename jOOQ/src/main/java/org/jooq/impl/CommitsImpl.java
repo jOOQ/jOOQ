@@ -37,26 +37,39 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableCollection;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.Tools.map;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import org.jooq.Commit;
 import org.jooq.Commits;
 import org.jooq.Configuration;
+import org.jooq.ContentType;
 import org.jooq.File;
+import org.jooq.Tag;
+import org.jooq.exception.DataMigrationValidationException;
 import org.jooq.migrations.xml.jaxb.ChangeType;
 import org.jooq.migrations.xml.jaxb.CommitType;
 import org.jooq.migrations.xml.jaxb.FileType;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
 import org.jooq.migrations.xml.jaxb.ParentType;
+import org.jooq.migrations.xml.jaxb.TagType;
 
 /**
  * @author Lukas Eder
@@ -65,11 +78,13 @@ final class CommitsImpl implements Commits {
 
     final Configuration       configuration;
     final Commit              root;
-    final Map<String, Commit> commits;
+    final Map<String, Commit> commitsById;
+    final Map<String, Commit> commitsByTag;
 
     CommitsImpl(Configuration configuration, Commit root) {
         this.configuration = configuration;
-        this.commits = new LinkedHashMap<>();
+        this.commitsById = new LinkedHashMap<>();
+        this.commitsByTag = new LinkedHashMap<>();
         this.root = root;
 
         add(root);
@@ -77,12 +92,24 @@ final class CommitsImpl implements Commits {
 
     @Override
     public void add(Commit commit) {
-        commits.put(commit.id(), commit);
+        Commit duplicate;
+
+        if ((duplicate = commitsById.get(commit.id())) != null)
+            throw new DataMigrationValidationException("Duplicate commit ID already present on commit: " + duplicate);
+
+        for (Tag tag : commit.tags())
+            if ((duplicate = commitsByTag.get(tag.id())) != null)
+                throw new DataMigrationValidationException("Duplicate tag " + tag + " already present on commit: " + duplicate);
+
+        commitsById.put(commit.id(), commit);
+
+        for (Tag tag : commit.tags())
+            commitsByTag.put(tag.id(), commit);
     }
 
     @Override
     public void addAll(Commit... c) {
-        addAll(Arrays.asList(c));
+        addAll(asList(c));
     }
 
     @Override
@@ -98,12 +125,123 @@ final class CommitsImpl implements Commits {
 
     @Override
     public final Commit get(String id) {
-        return commits.get(id);
+        Commit result = commitsById.get(id);
+        return result != null ? result : commitsByTag.get(id);
     }
 
     @Override
     public final Iterator<Commit> iterator() {
-        return commits.values().iterator();
+        return unmodifiableCollection(commitsById.values()).iterator();
+    }
+
+    // [#9506] TODO: Formalise this decoding, and make it part of the public API
+    static final class FileData {
+        final java.io.File file;
+        final String       basename;
+        final String       version;
+        final String       message;
+        final String       id;
+        final List<String> parentIds;
+
+        FileData(java.io.File file) {
+            this.file = file;
+
+            // [#9506] TODO: Other naming schemes?
+            this.basename = file.getName().replace(".sql", "");
+
+            /*
+             * An example:
+             * -----------
+             * v1-a
+             * v2-ab, v2-ac
+             * v3-acd
+             * v3-abc.v2-ab,v2-ac
+             * v4-abcd.v3-abc,v3-acd
+             */
+            String[] idAndParentsArray = basename.split("\\.");
+            this.id = idAndParentsArray[0];
+            this.parentIds = idAndParentsArray.length > 1 ? asList(idAndParentsArray[1].split(",")) : asList();
+
+            String[] idArray = this.id.split("-");
+            this.version = idArray[0];
+            this.message = idArray.length > 1 ? idArray[1] : null;
+        }
+    }
+
+    @Override
+    public final Commits load(java.io.File directory) throws IOException {
+
+        // [#9506] TODO: Turning a directory into a MigrationsType (and various other conversion)
+        //               could be made reusable. This is certainly very useful for testing and interop,
+        //               e.g. also to support other formats (Flyway, Liquibase) as source
+        TreeMap<String, List<String>> versionToId = new TreeMap<>();
+        Map<String, CommitType> idToCommit = new HashMap<>();
+
+        // [#9506] TODO: Offer this also using a different File abstraction, for better testing, etc. (?)
+        // [#9506] TODO: Recurse into subdirectories?
+        // [#9506] TODO: Other suffixes than .sql?
+        java.io.File[] files = directory.listFiles(f -> f.getName().endsWith(".sql"));
+
+        if (files != null) {
+            List<FileData> list = Stream.of(files).map(x -> {
+                return new FileData(x);
+            }).collect(toList());
+
+            /*
+             * An example:
+             * -----------
+             * v1-a
+             * v2-ab, v2-ac
+             * v3-acd
+             * v3-abc.v2-ab,v2-ac
+             * v4-abcd.v3-abc,v3-acd
+             */
+            for (FileData f : list)
+                versionToId.computeIfAbsent(f.version, k -> new ArrayList<>()).add(f.id);
+
+            for (FileData f : list)
+                idToCommit.put(f.id, new CommitType().withId(f.id));
+
+            for (FileData f : list) {
+                CommitType commit = idToCommit.get(f.id);
+
+                // Parents are implicit
+                // [#9506] TODO: What cases of implicit parents are possible. What edge cases aren't?
+                if (f.parentIds.isEmpty()) {
+                    Entry<String, List<String>> e = versionToId.lowerEntry(f.version);
+
+                    if (e != null) {
+                        if (e.getValue().size() > 1)
+                            throw new DataMigrationValidationException("Multiple predecessors for " + e.getKey() + ". Implicit parent cannot be detected: " + e.getValue());
+                        else
+                            commit.setParents(asList(new ParentType().withId(e.getValue().get(0))));
+                    }
+
+                }
+
+                // Parents are explicit
+                else {
+                    for (String parent : f.parentIds)
+                        if (idToCommit.containsKey(parent))
+                            commit.getParents().add(new ParentType().withId(parent));
+                        else
+                            throw new DataMigrationValidationException("Parent " + parent + " is not defined");
+                }
+
+                commit
+                    .withMessage(f.message)
+
+                    // [#9506] TODO: Better define paths, relative paths, etc.
+                    // [#9506] TOOD: Support other ContentType values than INCREMENT
+                    .withFiles(asList(new FileType()
+                        .withPath(f.basename)
+                        .withContentType(ContentType.INCREMENT)
+                        .withContent(Files.readString(f.file.toPath()))
+                    ));
+            }
+        }
+
+        return load(new MigrationsType().withCommits(idToCommit.values()));
     }
 
     @Override
@@ -120,7 +258,7 @@ final class CommitsImpl implements Commits {
     }
 
     private final Commit load(Map<String, CommitType> map, CommitType commit) {
-        Commit result = commits.get(commit.getId());
+        Commit result = commitsById.get(commit.getId());
 
         if (result != null)
             return result;
@@ -134,26 +272,29 @@ final class CommitsImpl implements Commits {
             CommitType c1 = map.get(parents.get(0).getId());
 
             if (c1 == null)
-                throw new UnsupportedOperationException("Parent not found: " + parents.get(0).getId());
+                throw new DataMigrationValidationException("Parent not found: " + parents.get(0).getId());
 
             p1 = load(map, c1);
             if (size == 2) {
                 CommitType c2 = map.get(parents.get(1).getId());
 
                 if (c2 == null)
-                    throw new UnsupportedOperationException("Parent not found: " + parents.get(0).getId());
+                    throw new DataMigrationValidationException("Parent not found: " + parents.get(0).getId());
 
                 p2 = load(map, c2);
             }
             else if (size > 2)
-                throw new UnsupportedOperationException("Merging more than two parents not yet supported");
+                throw new DataMigrationValidationException("Merging more than two parents not yet supported");
         }
 
         result = p2 == null
             ? p1.commit(commit.getId(), commit.getMessage(), files(commit))
             : p1.merge(commit.getId(), commit.getMessage(), p2, files(commit));
 
-        commits.put(commit.getId(), result);
+        for (TagType tag : commit.getTags())
+            result = result.tag(tag.getId(), tag.getMessage());
+
+        add(result);
         return result;
     }
 
@@ -167,6 +308,7 @@ final class CommitsImpl implements Commits {
             .withId(commit.id())
             .withMessage(commit.message())
             .withParents(map(commit.parents(), parent -> new ParentType().withId(parent.id())))
+            .withTags(map(commit.tags(), tag -> new TagType().withId(tag.id()).withMessage(tag.message())))
             .withFiles(map(commit.files(), file -> new FileType()
                 .withPath(file.path())
                 .withContent(file.content())
@@ -178,6 +320,6 @@ final class CommitsImpl implements Commits {
 
     @Override
     public String toString() {
-        return "" + commits.values();
+        return "" + commitsById.values();
     }
 }

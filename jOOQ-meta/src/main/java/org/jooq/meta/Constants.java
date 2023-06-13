@@ -119,7 +119,7 @@ public final class Constants {
     /**
      * The current jooq-migrations XSD file name.
      */
-    public static final String XSD_MIGRATIONS = "jooq-migrations-3.15.0.xsd";
+    public static final String XSD_MIGRATIONS = "jooq-migrations-3.19.0.xsd";
 
     /**
      * The current jooq-migrations XML namespace.

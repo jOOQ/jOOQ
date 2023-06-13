@@ -37,8 +37,10 @@
  */
 package org.jooq;
 
+import java.io.IOException;
 import java.util.Collection;
 
+import org.jooq.exception.DataMigrationValidationException;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
 
 import org.jetbrains.annotations.NotNull;
@@ -62,8 +64,10 @@ public interface Commits extends Iterable<Commit> {
     Commit root();
 
     /**
-     * Get a commit from the graph by ID, or <code>null</code>, if the ID was
-     * not found.
+     * Get a commit from the graph by {@link Commit#id()} or {@link Tag#id()}
+     *
+     * @return The resulting {@link Commit}, or <code>null</code>, if the ID was
+     *         not found.
      */
     @Nullable
     Commit get(String id);
@@ -84,10 +88,24 @@ public interface Commits extends Iterable<Commit> {
     void addAll(Collection<? extends Commit> commits);
 
     /**
-     * Load XML content into this commits graph.
+     * Load directory content into this commits graph.
+     *
+     * @throws IOException If anything goes wrong reading the directory
+     *             contents.
+     * @throws DataMigrationValidationException If the migration doesn't
+     *             validate.
      */
     @NotNull
-    Commits load(MigrationsType migrations);
+    Commits load(java.io.File directory) throws IOException, DataMigrationValidationException;
+
+    /**
+     * Load XML content into this commits graph.
+     *
+     * @throws DataMigrationValidationException If the migration doesn't
+     *             validate.
+     */
+    @NotNull
+    Commits load(MigrationsType migrations) throws DataMigrationValidationException;
 
     /**
      * Export XML content from this commits graph.

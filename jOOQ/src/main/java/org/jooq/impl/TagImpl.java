@@ -35,35 +35,25 @@
  *
  *
  */
-package org.jooq.exception;
+package org.jooq.impl;
 
-import org.jooq.Commits;
-import org.jooq.Migration;
+import static org.jooq.tools.StringUtils.isBlank;
+
+import org.jooq.Tag;
 
 /**
- * An error occurred while running {@link Migration#validate()} or
- * {@link Commits#load(java.io.File)}, etc.
- *
  * @author Lukas Eder
  */
-public class DataMigrationValidationException extends DataMigrationException {
+final record TagImpl(String id, String message) implements Tag {
 
-    /**
-     * Constructor for DataMigrationValidationException.
-     *
-     * @param message the detail message
-     */
-    public DataMigrationValidationException(String message) {
-        super(message);
-    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(id());
 
-    /**
-     * Constructor for DataMigrationValidationException.
-     *
-     * @param message the detail message
-     * @param cause the cause
-     */
-    public DataMigrationValidationException(String message, Throwable cause) {
-        super(message, cause);
+        if (!isBlank(message()))
+            sb.append(" - ").append(message());
+
+        return sb.toString();
     }
 }

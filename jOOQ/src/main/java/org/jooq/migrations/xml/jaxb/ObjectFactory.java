@@ -24,7 +24,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _Migrations_QNAME = new QName("http://www.jooq.org/xsd/jooq-migrations-3.15.0.xsd", "migrations");
+    private final static QName _Migrations_QNAME = new QName("http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd", "migrations");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.jooq.migrations.xml.jaxb
@@ -58,6 +58,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TagType }
+     * 
+     */
+    public TagType createTagType() {
+        return new TagType();
+    }
+
+    /**
      * Create an instance of {@link FileType }
      * 
      */
@@ -73,7 +81,7 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link MigrationsType }{@code >}
      */
-    @XmlElementDecl(namespace = "http://www.jooq.org/xsd/jooq-migrations-3.15.0.xsd", name = "migrations")
+    @XmlElementDecl(namespace = "http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd", name = "migrations")
     public JAXBElement<MigrationsType> createMigrations(MigrationsType value) {
         return new JAXBElement<MigrationsType>(_Migrations_QNAME, MigrationsType.class, null, value);
     }

@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static org.jooq.impl.Changelog.CHANGELOG;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
@@ -64,19 +65,13 @@ import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.ContextTransactionalRunnable;
-import org.jooq.Field;
 import org.jooq.Files;
 import org.jooq.Meta;
 import org.jooq.Migration;
 import org.jooq.MigrationListener;
-import org.jooq.Name;
 import org.jooq.Queries;
 import org.jooq.Query;
-import org.jooq.Record1;
 import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
 import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.conf.MigrationSchema;
 import org.jooq.exception.DataAccessException;
@@ -90,14 +85,11 @@ import org.jooq.tools.StopWatch;
  */
 final class MigrationImpl extends AbstractScope implements Migration {
 
-    private static final JooqLogger              log       = JooqLogger.getLogger(Migration.class);
-
-    // TODO: Make this table and its schema configurable
-    private static final JooqMigrationsChangelog CHANGELOG = JooqMigrationsChangelog.JOOQ_MIGRATIONS_CHANGELOG;
-    private final Commit                         to;
-    private Commit                               from;
-    private Queries                              queries;
-    private Commits                              commits;
+    private static final JooqLogger log       = JooqLogger.getLogger(Migration.class);
+    private final Commit            to;
+    private Commit                  from;
+    private Queries                 queries;
+    private Commits                 commits;
 
     MigrationImpl(Configuration configuration, Commit to) {
         super(configuration.derive(new ThreadLocalTransactionProvider(configuration.systemConnectionProvider())));
@@ -143,7 +135,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final void validate0(DefaultMigrationContext ctx) {
-        JooqMigrationsChangelogRecord currentRecord = currentChangelogRecord();
+        ChangelogRecord currentRecord = currentChangelogRecord();
 
         if (currentRecord != null) {
             Commit currentCommit = commits().get(currentRecord.getMigratedTo());
@@ -213,7 +205,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return existingMeta.migrateTo(currentMeta);
     }
 
-    private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, JooqMigrationsChangelogRecord currentRecord) {
+    private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, ChangelogRecord currentRecord) {
         if (ctx.revertUntrackedQueries.queries().length > 0)
             if (!TRUE.equals(dsl().settings().isMigrationRevertUntracked()))
                 throw new DataMigrationValidationException(
@@ -288,7 +280,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         for (Query query : queries())
                             log.debug("jOOQ Migrations", dsl().renderInlined(query));
 
-                    JooqMigrationsChangelogRecord record = createRecord(STARTING);
+                    ChangelogRecord record = createRecord(STARTING);
 
                     try {
                         log(watch, record, REVERTING);
@@ -310,8 +302,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 }
             }
 
-            private final JooqMigrationsChangelogRecord createRecord(Status status) {
-                JooqMigrationsChangelogRecord record = dsl().newRecord(CHANGELOG);
+            private final ChangelogRecord createRecord(Status status) {
+                ChangelogRecord record = dsl().newRecord(CHANGELOG);
 
                 record
                     .setJooqVersion(Constants.VERSION)
@@ -327,7 +319,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 return record;
             }
 
-            private final void log(StopWatch watch, JooqMigrationsChangelogRecord record, Status status) {
+            private final void log(StopWatch watch, ChangelogRecord record, Status status) {
                 record.setMigrationTime(watch.split() / 1000000L)
                       .setStatus(status)
                       .update();
@@ -377,7 +369,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return false;
     }
 
-    private final JooqMigrationsChangelogRecord currentChangelogRecord() {
+    private final ChangelogRecord currentChangelogRecord() {
         return existsChangelog()
             ? dsl().selectFrom(CHANGELOG)
 
@@ -390,7 +382,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final Commit currentCommit() {
-        JooqMigrationsChangelogRecord currentRecord = currentChangelogRecord();
+        ChangelogRecord currentRecord = currentChangelogRecord();
 
         if (currentRecord == null) {
             Commit result = TRUE.equals(settings().isMigrationAutoBaseline()) ? to() : to().root();
@@ -440,292 +432,5 @@ final class MigrationImpl extends AbstractScope implements Migration {
         MIGRATING,
         SUCCESS,
         FAILURE
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX: Generated code
-    // -------------------------------------------------------------------------
-
-    // TODO These classes have been generated and copied here. It would be desirable:
-    // - [#6948] To be able to generate package private classes directly inside of other classes
-    // - [#7444] Alternatively, have a simple public API replacing TableImpl
-    // -         If the above cannot be implemented, generate these in the org.jooq.impl package
-    //           and make them package private or @Internal
-
-    /**
-     * The migration log of jOOQ Migrations.
-     */
-    @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-    static class JooqMigrationsChangelog extends TableImpl<JooqMigrationsChangelogRecord> {
-
-        /**
-         * The reference instance of <code>JOOQ_MIGRATIONS_CHANGELOG</code>
-         */
-        public static final JooqMigrationsChangelog JOOQ_MIGRATIONS_CHANGELOG = new JooqMigrationsChangelog();
-
-        /**
-         * The class holding records for this type
-         */
-        @Override
-        public Class<JooqMigrationsChangelogRecord> getRecordType() {
-            return JooqMigrationsChangelogRecord.class;
-        }
-
-        /**
-         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.ID</code>. The database version ID.
-         */
-        public final TableField<JooqMigrationsChangelogRecord, Long> ID = createField(DSL.name("ID"), org.jooq.impl.SQLDataType.BIGINT.nullable(false).identity(true), this, "The database version ID.");
-
-        /**
-         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_FROM</code>. The previous database version ID.
-         */
-        public final TableField<JooqMigrationsChangelogRecord, String> MIGRATED_FROM = createField(DSL.name("MIGRATED_FROM"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "The previous database version ID.");
-
-        /**
-         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_TO</code>.
-         */
-        public final TableField<JooqMigrationsChangelogRecord, String> MIGRATED_TO = createField(DSL.name("MIGRATED_TO"), org.jooq.impl.SQLDataType.VARCHAR(255).nullable(false), this, "");
-
-        /**
-         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_AT</code>. The date/time when the database version was migrated to.
-         */
-        public final TableField<JooqMigrationsChangelogRecord, Timestamp> MIGRATED_AT = createField(DSL.name("MIGRATED_AT"), org.jooq.impl.SQLDataType.TIMESTAMP.precision(6).nullable(false), this, "The date/time when the database version was migrated to.");
-
-        /**
-         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATION_TIME</code>. The time in milliseconds it took to migrate to this database version.
-         */
-        public final TableField<JooqMigrationsChangelogRecord, Long> MIGRATION_TIME = createField(DSL.name("MIGRATION_TIME"), org.jooq.impl.SQLDataType.BIGINT, this, "The time in milliseconds it took to migrate to this database version.");
-
-        /**
-         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ version used to migrate to this database version.
-         */
-        public final TableField<JooqMigrationsChangelogRecord, String> JOOQ_VERSION = createField(DSL.name("JOOQ_VERSION"), org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "The jOOQ version used to migrate to this database version.");
-
-        /**
-         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.SQL</code>. The jOOQ version used to migrate to this database version.
-         */
-        public final TableField<JooqMigrationsChangelogRecord, String> SQL = createField(DSL.name("SQL"), org.jooq.impl.SQLDataType.CLOB, this, "The SQL statements that were run to install this database version.");
-
-        /**
-         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.SQL_COUNT</code>. The number of SQL statements that were run to install this database version.
-         */
-        public final TableField<JooqMigrationsChangelogRecord, Integer> SQL_COUNT = createField(DSL.name("SQL_COUNT"), org.jooq.impl.SQLDataType.INTEGER, this, "The number of SQL statements that were run to install this database version.");
-
-        /**
-         * The column <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ version used to migrate to this database version.
-         */
-        public final TableField<JooqMigrationsChangelogRecord, Status> STATUS = createField(DSL.name("STATUS"), org.jooq.impl.SQLDataType.VARCHAR(10).nullable(false).asConvertedDataType(new EnumConverter(String.class, Status.class)), this, "The database version installation status.");
-
-        /**
-         * Create a <code>JOOQ_MIGRATIONS_CHANGELOG</code> table reference
-         */
-        public JooqMigrationsChangelog() {
-            this(DSL.name("JOOQ_MIGRATIONS_CHANGELOG"), null);
-        }
-
-        /**
-         * Create an aliased <code>JOOQ_MIGRATIONS_CHANGELOG</code> table reference
-         */
-        public JooqMigrationsChangelog(String alias) {
-            this(DSL.name(alias), JOOQ_MIGRATIONS_CHANGELOG);
-        }
-
-        /**
-         * Create an aliased <code>JOOQ_MIGRATIONS_CHANGELOG</code> table reference
-         */
-        public JooqMigrationsChangelog(Name alias) {
-            this(alias, JOOQ_MIGRATIONS_CHANGELOG);
-        }
-
-        private JooqMigrationsChangelog(Name alias, Table<JooqMigrationsChangelogRecord> aliased) {
-            this(alias, aliased, null);
-        }
-
-        private JooqMigrationsChangelog(Name alias, Table<JooqMigrationsChangelogRecord> aliased, Field<?>[] parameters) {
-            super(alias, null, aliased, parameters, DSL.comment("The migration log of jOOQ Migrations."));
-        }
-
-        @Override
-        public UniqueKey<JooqMigrationsChangelogRecord> getPrimaryKey() {
-            return Internal.createUniqueKey(JOOQ_MIGRATIONS_CHANGELOG, "JOOQ_MIGRATIONS_CHANGELOG_PK", JOOQ_MIGRATIONS_CHANGELOG.ID);
-        }
-    }
-
-    /**
-     * The migration log of jOOQ Migrations.
-     */
-    @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-    static class JooqMigrationsChangelogRecord extends UpdatableRecordImpl<JooqMigrationsChangelogRecord> {
-
-        /**
-         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.ID</code>. The database version ID.
-         */
-        public JooqMigrationsChangelogRecord setId(Long value) {
-            set(0, value);
-            return this;
-        }
-
-        /**
-         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.ID</code>. The database version ID.
-         */
-        public Long getId() {
-            return (Long) get(0);
-        }
-
-        /**
-         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_FROM</code>. The previous database version ID.
-         */
-        public JooqMigrationsChangelogRecord setMigratedFrom(String value) {
-            set(1, value);
-            return this;
-        }
-
-        /**
-         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_FROM</code>. The previous database version ID.
-         */
-        public String getMigratedFrom() {
-            return (String) get(1);
-        }
-
-        /**
-         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_TO</code>.
-         */
-        public JooqMigrationsChangelogRecord setMigratedTo(String value) {
-            set(2, value);
-            return this;
-        }
-
-        /**
-         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_TO</code>.
-         */
-        public String getMigratedTo() {
-            return (String) get(2);
-        }
-
-        /**
-         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_AT</code>. The date/time when the database version was migrated to.
-         */
-        public JooqMigrationsChangelogRecord setMigratedAt(Timestamp value) {
-            set(3, value);
-            return this;
-        }
-
-        /**
-         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_AT</code>. The date/time when the database version was migrated to.
-         */
-        public Timestamp getMigratedAt() {
-            return (Timestamp) get(3);
-        }
-
-        /**
-         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATION_TIME</code>. The time in milliseconds it took to migrate to this database version.
-         */
-        public JooqMigrationsChangelogRecord setMigrationTime(Long value) {
-            set(4, value);
-            return this;
-        }
-
-        /**
-         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATION_TIME</code>. The time in milliseconds it took to migrate to this database version.
-         */
-        public Long getMigrationTime() {
-            return (Long) get(4);
-        }
-
-        /**
-         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ version used to migrate to this database version.
-         */
-        public JooqMigrationsChangelogRecord setJooqVersion(String value) {
-            set(5, value);
-            return this;
-        }
-
-        /**
-         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ version used to migrate to this database version.
-         */
-        public String getJooqVersion() {
-            return (String) get(5);
-        }
-
-        /**
-         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL</code>. The SQL statements that were run to install this database version.
-         */
-        public JooqMigrationsChangelogRecord setSql(String value) {
-            set(6, value);
-            return this;
-        }
-
-        /**
-         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL</code>. The SQL statements that were run to install this database version.
-         */
-        public String getSql() {
-            return (String) get(6);
-        }
-
-        /**
-         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL_COUNT</code>. The number of SQL statements that were run to install this database version.
-         */
-        public JooqMigrationsChangelogRecord setSqlCount(Integer value) {
-            set(7, value);
-            return this;
-        }
-
-        /**
-         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL_COUNT</code>. The number of SQL statements that were run to install this database version.
-         */
-        public Integer getSqlCount() {
-            return (Integer) get(7);
-        }
-
-        /**
-         * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database version installation status.
-         */
-        public JooqMigrationsChangelogRecord setStatus(Status value) {
-            set(8, value);
-            return this;
-        }
-
-        /**
-         * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database version installation status.
-         */
-        public Status getStatus() {
-            return (Status) get(8);
-        }
-
-        // -------------------------------------------------------------------------
-        // Primary key information
-        // -------------------------------------------------------------------------
-
-        @Override
-        public Record1<Long> key() {
-            return (Record1) super.key();
-        }
-
-        // -------------------------------------------------------------------------
-        // Constructors
-        // -------------------------------------------------------------------------
-
-        /**
-         * Create a detached JooqMigrationsChangelogRecord
-         */
-        public JooqMigrationsChangelogRecord() {
-            super(JooqMigrationsChangelog.JOOQ_MIGRATIONS_CHANGELOG);
-        }
-
-        /**
-         * Create a detached, initialised JooqMigrationsChangelogRecord
-         */
-        public JooqMigrationsChangelogRecord(Long id, String migratedFrom, String migratedTo, Timestamp migratedAt, Long migrationTime, String jooqVersion, String sql, String status) {
-            super(JooqMigrationsChangelog.JOOQ_MIGRATIONS_CHANGELOG);
-
-            set(0, id);
-            set(1, migratedFrom);
-            set(2, migratedTo);
-            set(3, migratedAt);
-            set(4, migrationTime);
-            set(5, jooqVersion);
-            set(6, sql);
-            set(7, status);
-        }
     }
 }

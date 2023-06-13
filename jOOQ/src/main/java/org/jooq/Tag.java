@@ -35,35 +35,28 @@
  *
  *
  */
-package org.jooq.exception;
+package org.jooq;
 
-import org.jooq.Commits;
-import org.jooq.Migration;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * An error occurred while running {@link Migration#validate()} or
- * {@link Commits#load(java.io.File)}, etc.
+ * A tag that is associated with a {@link Commit}.
  *
  * @author Lukas Eder
  */
-public class DataMigrationValidationException extends DataMigrationException {
+public interface Tag {
 
     /**
-     * Constructor for DataMigrationValidationException.
-     *
-     * @param message the detail message
+     * The ID of the tag, unique within a graph.
      */
-    public DataMigrationValidationException(String message) {
-        super(message);
-    }
+    @NotNull
+    String id();
 
     /**
-     * Constructor for DataMigrationValidationException.
-     *
-     * @param message the detail message
-     * @param cause the cause
+     * The message associated with the tag.
      */
-    public DataMigrationValidationException(String message, Throwable cause) {
-        super(message, cause);
-    }
+    @Nullable
+    String message();
+
 }

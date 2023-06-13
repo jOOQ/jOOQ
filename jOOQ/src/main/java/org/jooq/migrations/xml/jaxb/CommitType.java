@@ -24,10 +24,11 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="parents" type="{http://www.jooq.org/xsd/jooq-migrations-3.15.0.xsd}ParentsType" minOccurs="0"/&gt;
+ *         &lt;element name="parents" type="{http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd}ParentsType" minOccurs="0"/&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="files" type="{http://www.jooq.org/xsd/jooq-migrations-3.15.0.xsd}FilesType" minOccurs="0"/&gt;
+ *         &lt;element name="tags" type="{http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd}TagsType" minOccurs="0"/&gt;
+ *         &lt;element name="files" type="{http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd}FilesType" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -46,13 +47,16 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class CommitType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31500L;
+    private final static long serialVersionUID = 31900L;
     @XmlElement(required = true)
     protected String id;
     protected String message;
     @XmlElementWrapper(name = "parents")
     @XmlElement(name = "parent")
     protected List<ParentType> parents;
+    @XmlElementWrapper(name = "tags")
+    @XmlElement(name = "tag")
+    protected List<TagType> tags;
     @XmlElementWrapper(name = "files")
     @XmlElement(name = "file")
     protected List<FileType> files;
@@ -82,6 +86,17 @@ public class CommitType implements Serializable, XMLAppendable
 
     public void setParents(List<ParentType> parents) {
         this.parents = parents;
+    }
+
+    public List<TagType> getTags() {
+        if (tags == null) {
+            tags = new ArrayList<TagType>();
+        }
+        return tags;
+    }
+
+    public void setTags(List<TagType> tags) {
+        this.tags = tags;
     }
 
     public List<FileType> getFiles() {
@@ -126,6 +141,27 @@ public class CommitType implements Serializable, XMLAppendable
         return this;
     }
 
+    public CommitType withTags(TagType... values) {
+        if (values!= null) {
+            for (TagType value: values) {
+                getTags().add(value);
+            }
+        }
+        return this;
+    }
+
+    public CommitType withTags(Collection<TagType> values) {
+        if (values!= null) {
+            getTags().addAll(values);
+        }
+        return this;
+    }
+
+    public CommitType withTags(List<TagType> tags) {
+        setTags(tags);
+        return this;
+    }
+
     public CommitType withFiles(FileType... values) {
         if (values!= null) {
             for (FileType value: values) {
@@ -152,6 +188,7 @@ public class CommitType implements Serializable, XMLAppendable
         builder.append("id", id);
         builder.append("message", message);
         builder.append("parents", "parent", parents);
+        builder.append("tags", "tag", tags);
         builder.append("files", "file", files);
     }
 
@@ -201,6 +238,15 @@ public class CommitType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (tags == null) {
+            if (other.tags!= null) {
+                return false;
+            }
+        } else {
+            if (!tags.equals(other.tags)) {
+                return false;
+            }
+        }
         if (files == null) {
             if (other.files!= null) {
                 return false;
@@ -220,6 +266,7 @@ public class CommitType implements Serializable, XMLAppendable
         result = ((prime*result)+((id == null)? 0 :id.hashCode()));
         result = ((prime*result)+((message == null)? 0 :message.hashCode()));
         result = ((prime*result)+((parents == null)? 0 :parents.hashCode()));
+        result = ((prime*result)+((tags == null)? 0 :tags.hashCode()));
         result = ((prime*result)+((files == null)? 0 :files.hashCode()));
         return result;
     }

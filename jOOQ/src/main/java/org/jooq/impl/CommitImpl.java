@@ -65,6 +65,7 @@ import org.jooq.File;
 import org.jooq.Files;
 import org.jooq.Meta;
 import org.jooq.Source;
+import org.jooq.Tag;
 import org.jooq.Version;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.tools.StringUtils;
@@ -74,20 +75,33 @@ import org.jooq.tools.StringUtils;
  */
 final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
-    private final Configuration          configuration;
-    private final DSLContext             ctx;
-    private final List<? extends Commit> parents;
-    private final Map<String, File>      delta;
-    private final Map<String, File>      files;
+    private final Configuration     configuration;
+    private final DSLContext        ctx;
+    private final List<Commit>      parents;
+    private final List<Tag>         tags;
+    private final Map<String, File> delta;
+    private final Map<String, File> files;
 
-    CommitImpl(Configuration configuration, String id, String message, List<? extends Commit> parents, Collection<? extends File> delta) {
+    CommitImpl(Configuration configuration, String id, String message, List<Commit> parents, Collection<? extends File> delta) {
         super(id, message);
 
         this.configuration = configuration;
         this.ctx = configuration.dsl();
         this.parents = parents;
+        this.tags = new ArrayList<>();
         this.delta = map(delta, false);
         this.files = initFiles();
+    }
+
+    private CommitImpl(CommitImpl copy) {
+        super(copy.id(), copy.message());
+
+        this.configuration = copy.configuration;
+        this.ctx = copy.ctx;
+        this.parents = copy.parents;
+        this.tags = new ArrayList<>(copy.tags);
+        this.delta = copy.delta;
+        this.files = copy.files;
     }
 
     // TODO extract this Map<String, File> type to new type
@@ -123,6 +137,23 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     @Override
     public final List<Commit> parents() {
         return Collections.unmodifiableList(parents);
+    }
+
+    @Override
+    public final List<Tag> tags() {
+        return Collections.unmodifiableList(tags);
+    }
+
+    @Override
+    public final Commit tag(String id) {
+        return tag(id, null);
+    }
+
+    @Override
+    public final Commit tag(String id, String message) {
+        CommitImpl result = new CommitImpl(this);
+        result.tags.add(new TagImpl(id, message));
+        return result;
     }
 
     @Override
@@ -407,6 +438,15 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public String toString() {
-        return isBlank(message()) ? id() : id() + " - " + message();
+        StringBuilder sb = new StringBuilder();
+        sb.append(id());
+
+        if (!isBlank(message()))
+            sb.append(" - ").append(message());
+
+        if (!tags.isEmpty())
+            sb.append(' ').append(tags);
+
+        return sb.toString();
     }
 }

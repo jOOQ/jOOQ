@@ -39,7 +39,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class ParentType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31500L;
+    private final static long serialVersionUID = 31900L;
     @XmlElement(required = true)
     protected String id;
 

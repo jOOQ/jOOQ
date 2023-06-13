@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://www.jooq.org/xsd/jooq-migrations-3.15.0.xsd"
-    targetNamespace="http://www.jooq.org/xsd/jooq-migrations-3.15.0.xsd"
+    xmlns:tns="http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd"
     elementFormDefault="qualified">
 
     <element name="migrations" type="tns:MigrationsType"/>
@@ -23,6 +23,7 @@
             <element name="parents" type="tns:ParentsType" minOccurs="0" maxOccurs="1" />
             <element name="id" type="string" minOccurs="1" maxOccurs="1" />
             <element name="message" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="tags" type="tns:TagsType" minOccurs="0" maxOccurs="1" />
             <element name="files" type="tns:FilesType" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
@@ -33,10 +34,22 @@
         </sequence>
     </complexType>
    
-    <!-- TOD: This is a bit verbose. Can we make it simpler? MiniJAXB can't handle this yet, nor xs:list -->
     <complexType name="ParentType">
         <all>
             <element name="id" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <complexType name="TagsType">
+        <sequence>
+            <element name="tag" type="tns:TagType" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+    
+    <complexType name="TagType">
+        <all>
+            <element name="id" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="message" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
     
@@ -47,12 +60,12 @@
     </complexType>
     
     <complexType name="FileType">
-        <sequence>
+        <all>
             <element name="path" type="string" minOccurs="1" maxOccurs="1" />
             <element name="content" type="string" minOccurs="0" maxOccurs="1" />
             <element name="contentType" type="string" minOccurs="0" maxOccurs="1" />
             <element name="change" type="tns:ChangeType" minOccurs="1" maxOccurs="1" />
-        </sequence>
+        </all>
     </complexType>
     
     <simpleType name="ChangeType">

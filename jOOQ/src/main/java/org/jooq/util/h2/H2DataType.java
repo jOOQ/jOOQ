@@ -116,8 +116,8 @@ public class H2DataType {
     public static final DataType<Timestamp>         DATETIME                     = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "datetime(p)");
     public static final DataType<OffsetDateTime>    TIMESTAMPWITHTIMEZONE        = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamp(p) with time zone");
     public static final DataType<Instant>           INSTANT                      = new BuiltInDataType<>(FAMILY, SQLDataType.INSTANT, "timestamp(p) with time zone");
-    public static final DataType<byte[]>            BINARY                       = new BuiltInDataType<>(FAMILY, SQLDataType.BINARY, "binary(l)");
     public static final DataType<byte[]>            VARBINARY                    = new BuiltInDataType<>(FAMILY, SQLDataType.VARBINARY, "varbinary(l)");
+    public static final DataType<byte[]>            BINARY                       = new BuiltInDataType<>(FAMILY, SQLDataType.BINARY, "binary(l)");
     public static final DataType<byte[]>            BINARYVARYING                = new BuiltInDataType<>(FAMILY, SQLDataType.VARBINARY, "binary varying(l)");
     public static final DataType<byte[]>            LONGVARBINARY                = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "longvarbinary(l)");
     public static final DataType<byte[]>            BLOB                         = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "blob");

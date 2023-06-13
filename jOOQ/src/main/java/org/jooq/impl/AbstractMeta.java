@@ -587,13 +587,15 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     final Table<?> lookupTable(Table<?> table) {
+        Catalog c = table.getCatalog();
+        Schema s = table.getSchema();
 
         // TODO: This is a re-occurring pattern in Meta implementations. Should we have a more generic way to look up objects in a Catalog/Schema?
-        Catalog catalog = getCatalog(table.getCatalog().getName());
+        Catalog catalog = getCatalog(c == null ? "" : c.getName());
         if (catalog == null)
             return null;
 
-        Schema schema = catalog.getSchema(table.getSchema().getName());
+        Schema schema = catalog.getSchema(s == null ? "" : s.getName());
         if (schema == null)
             return null;
 

@@ -136,7 +136,7 @@ class Changelog extends TableImpl<ChangelogRecord> {
     @Override
     public List<Check<ChangelogRecord>> getChecks() {
         return Arrays.asList(
-            Internal.createCheck(this, DSL.name("JOOQ_MIGR_CHK1"), "\"STATUS\" IN('RUNNING', 'SUCCESS', 'FAILED')", true)
+            Internal.createCheck(this, DSL.name("JOOQ_MIGR_CHK1"), "\"STATUS\" IN('STARTING', 'REVERTING', 'MIGRATING', 'SUCCESS', 'FAILURE')", true)
         );
     }
 

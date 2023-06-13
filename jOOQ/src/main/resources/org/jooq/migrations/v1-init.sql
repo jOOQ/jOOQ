@@ -10,7 +10,7 @@ CREATE TABLE jooq_migrations_changelog (
   status         VARCHAR(10)  NOT NULL,
   
   CONSTRAINT jooq_migr_pk   PRIMARY KEY (id),
-  CONSTRAINT jooq_migr_chk1 CHECK (status IN ('RUNNING', 'SUCCESS', 'FAILED'))
+  CONSTRAINT jooq_migr_chk1 CHECK (status IN ('STARTING', 'REVERTING', 'MIGRATING', 'SUCCESS', 'FAILURE'))
 );
 
 CREATE INDEX jooq_migr_i1 ON jooq_migrations_changelog (migrated_at);

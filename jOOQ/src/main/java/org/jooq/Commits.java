@@ -64,6 +64,19 @@ public interface Commits extends Iterable<Commit> {
     Commit root();
 
     /**
+     * The current node.
+     * <p>
+     * The current node is the last node in the graph, if all branches have been
+     * merged successfully, or the last node of the default branch, in case a
+     * default branch has been specified.
+     *
+     * @throws DataMigrationValidationException In case there's no current node,
+     *             i.e. there's no default branch and branches haven't all been
+     *             merged yet.
+     */
+    Commit current() throws DataMigrationValidationException;
+
+    /**
      * Get a commit from the graph by {@link Commit#id()} or {@link Tag#id()}
      *
      * @return The resulting {@link Commit}, or <code>null</code>, if the ID was

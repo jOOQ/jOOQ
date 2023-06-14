@@ -60,6 +60,7 @@ import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.ContentType;
 import org.jooq.File;
+import org.jooq.Migrations;
 import org.jooq.Tag;
 import org.jooq.exception.DataMigrationValidationException;
 import org.jooq.migrations.xml.jaxb.ChangeType;
@@ -75,12 +76,14 @@ import org.jooq.migrations.xml.jaxb.TagType;
 final class CommitsImpl implements Commits {
 
     final Configuration       configuration;
+    final Migrations          migrations;
     final Commit              root;
     final Map<String, Commit> commitsById;
     final Map<String, Commit> commitsByTag;
 
     CommitsImpl(Configuration configuration, Commit root) {
         this.configuration = configuration;
+        this.migrations = configuration.dsl().migrations();
         this.commitsById = new LinkedHashMap<>();
         this.commitsByTag = new LinkedHashMap<>();
         this.root = root;
@@ -319,7 +322,7 @@ final class CommitsImpl implements Commits {
     }
 
     private final List<File> files(CommitType commit) {
-        return map(commit.getFiles(), f -> Migrations.file(f.getPath(), f.getChange() == ChangeType.DELETE ? null : f.getContent(), f.getContentType()));
+        return map(commit.getFiles(), f -> migrations.file(f.getPath(), f.getChange() == ChangeType.DELETE ? null : f.getContent(), f.getContentType()));
     }
 
     @Override

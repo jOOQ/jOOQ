@@ -47,7 +47,6 @@ import static org.jooq.ContentType.SCHEMA;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -62,7 +61,7 @@ import org.jooq.ContentType;
 import org.jooq.DSLContext;
 import org.jooq.File;
 import org.jooq.FilePattern;
-import org.jooq.impl.Migrations;
+import org.jooq.Migrations;
 import org.jooq.tools.JooqLogger;
 
 import org.eclipse.jgit.api.Git;
@@ -89,12 +88,14 @@ public final class GitCommitProvider implements CommitProvider {
     private static final JooqLogger log = JooqLogger.getLogger(GitCommitProvider.class);
 
     private final DSLContext        dsl;
+    private final Migrations        migrations;
     private final GitConfiguration  git;
     private final FilePattern       incrementFilePattern;
     private final FilePattern       schemaFilePattern;
 
     public GitCommitProvider(Configuration configuration, GitConfiguration git) {
         this.dsl = configuration.dsl();
+        this.migrations = dsl.migrations();
         this.git = git;
         this.incrementFilePattern = new FilePattern().pattern(git.incrementFilePattern());
         this.schemaFilePattern = new FilePattern().pattern(git.schemaFilePattern());
@@ -102,7 +103,7 @@ public final class GitCommitProvider implements CommitProvider {
 
     @Override
     public final Commits provide() {
-        Commits commits = Migrations.commits(dsl.configuration());
+        Commits commits = migrations.commits();
 
         try (
             Git g = Git.open(git.repository());
@@ -203,13 +204,13 @@ public final class GitCommitProvider implements CommitProvider {
             ContentType contentType = contentType(path);
 
             if (contentType != null)
-                files.add(Migrations.file(path, null, contentType));
+                files.add(migrations.file(path, null, contentType));
         }
     }
 
     private File read(String path, ContentType contentType) {
         try {
-            return Migrations.file(
+            return migrations.file(
                 path,
                 new String(java.nio.file.Files.readAllBytes(new java.io.File(git.repository(), path).toPath())),
                 contentType
@@ -252,16 +253,16 @@ public final class GitCommitProvider implements CommitProvider {
                     case ADD:
                     case MODIFY:
                     case COPY:
-                        files.add(Migrations.file(newPath, read(repository, revCommit, newPath), newType));
+                        files.add(migrations.file(newPath, read(repository, revCommit, newPath), newType));
                         break;
 
                     case RENAME:
-                        files.add(Migrations.file(oldPath, null, oldType));
-                        files.add(Migrations.file(newPath, read(repository, revCommit, newPath), newType));
+                        files.add(migrations.file(oldPath, null, oldType));
+                        files.add(migrations.file(newPath, read(repository, revCommit, newPath), newType));
                         break;
 
                     case DELETE:
-                        files.add(Migrations.file(oldPath, null, oldType));
+                        files.add(migrations.file(oldPath, null, oldType));
                         break;
 
                     default:
@@ -294,7 +295,7 @@ public final class GitCommitProvider implements CommitProvider {
                 ContentType contentType = contentType(treeWalk.getPathString());
 
                 if (contentType != null)
-                    files.add(Migrations.file(
+                    files.add(migrations.file(
                         treeWalk.getPathString(),
                         read(repository, revCommit, treeWalk.getPathString()),
                         contentType

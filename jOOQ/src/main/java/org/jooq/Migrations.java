@@ -51,6 +51,16 @@ import org.jetbrains.annotations.NotNull;
 public interface Migrations {
 
     /**
+     * Initialise a {@link File}
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
+     */
+    @Experimental
+    @NotNull
+    File file(String path, String content, ContentType type);
+
+    /**
      * Initialise a {@link Version}.
      * <p>
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ

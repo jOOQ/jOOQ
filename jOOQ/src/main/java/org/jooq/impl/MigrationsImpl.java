@@ -41,7 +41,9 @@ import static java.util.Collections.emptyList;
 
 import org.jooq.Commit;
 import org.jooq.Commits;
+import org.jooq.ContentType;
 import org.jooq.DSLContext;
+import org.jooq.File;
 import org.jooq.Migration;
 import org.jooq.Migrations;
 import org.jooq.Version;
@@ -56,6 +58,11 @@ final class MigrationsImpl implements Migrations {
 
     MigrationsImpl(DSLContext ctx) {
         this.ctx = ctx;
+    }
+
+    @Override
+    public final File file(String path, String content, ContentType type) {
+        return new FileImpl(path, content, type);
     }
 
     @Override

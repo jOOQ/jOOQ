@@ -122,6 +122,11 @@ final class CommitsImpl implements Commits {
     }
 
     @Override
+    public final Commit current() {
+        return new MigrationImpl(configuration, root).currentCommit();
+    }
+
+    @Override
     public final Commit latest() {
         Map<String, Commit> commits = new HashMap<>(commitsById);
 

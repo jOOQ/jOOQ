@@ -64,6 +64,20 @@ public interface Commits extends Iterable<Commit> {
     Commit root();
 
     /**
+     * The current node.
+     * <p>
+     * The current node is the node in the graph that has been installed in the
+     * database.
+     *
+     * @throws DataMigrationValidationException In case there's no current node
+     *             in the database, which can happen e.g. when no migration has
+     *             been initialised yet, or when the currently installed
+     *             {@link Commit#id()} is not part of this graph.
+     */
+    @NotNull
+    Commit current() throws DataMigrationValidationException;
+
+    /**
      * The latest node.
      * <p>
      * The latest node is the last node in the graph, if all branches have been
@@ -74,6 +88,7 @@ public interface Commits extends Iterable<Commit> {
      *             i.e. there's no default branch and branches haven't all been
      *             merged yet.
      */
+    @NotNull
     Commit latest() throws DataMigrationValidationException;
 
     /**

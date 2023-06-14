@@ -381,7 +381,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             : null;
     }
 
-    private final Commit currentCommit() {
+    final Commit currentCommit() {
         ChangelogRecord currentRecord = currentChangelogRecord();
 
         if (currentRecord == null) {

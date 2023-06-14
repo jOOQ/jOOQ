@@ -90,6 +90,9 @@ final class CommitsImpl implements Commits {
 
     @Override
     public void add(Commit commit) {
+        if (root != commit.root())
+            throw new DataMigrationValidationException("A Commits graph must contain a single graph whose commits all share the same root.");
+
         Commit duplicate;
 
         if ((duplicate = commitsById.get(commit.id())) != null)

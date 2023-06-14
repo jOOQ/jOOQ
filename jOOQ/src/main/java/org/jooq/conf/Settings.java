@@ -453,6 +453,11 @@ public class Settings
     protected Boolean metaIncludeSystemSequences = false;
     protected MigrationSchema migrationHistorySchema;
     @XmlElement(defaultValue = "false")
+    protected Boolean migrationHistorySchemaCreateSchemaIfNotExists = false;
+    protected MigrationSchema migrationDefaultSchema;
+    @XmlElement(defaultValue = "false")
+    protected Boolean migrationSchemataCreateSchemaIfNotExists = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean migrationAllowsUndo = false;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationRevertUntracked = false;
@@ -5286,6 +5291,70 @@ public class Settings
     }
 
     /**
+     * Whether {@link #getMigrationHistorySchema()} should be created if it doesn't exist.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationHistorySchemaCreateSchemaIfNotExists() {
+        return migrationHistorySchemaCreateSchemaIfNotExists;
+    }
+
+    /**
+     * Sets the value of the migrationHistorySchemaCreateSchemaIfNotExists property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationHistorySchemaCreateSchemaIfNotExists(Boolean value) {
+        this.migrationHistorySchemaCreateSchemaIfNotExists = value;
+    }
+
+    /**
+     * The default schema whose unqualified objects that are included in the migration.
+     * 
+     */
+    public MigrationSchema getMigrationDefaultSchema() {
+        return migrationDefaultSchema;
+    }
+
+    /**
+     * The default schema whose unqualified objects that are included in the migration.
+     * 
+     */
+    public void setMigrationDefaultSchema(MigrationSchema value) {
+        this.migrationDefaultSchema = value;
+    }
+
+    /**
+     * Whether {@link #getMigrationSchemata()} should be created if they don't exist.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationSchemataCreateSchemaIfNotExists() {
+        return migrationSchemataCreateSchemaIfNotExists;
+    }
+
+    /**
+     * Sets the value of the migrationSchemataCreateSchemaIfNotExists property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationSchemataCreateSchemaIfNotExists(Boolean value) {
+        this.migrationSchemataCreateSchemaIfNotExists = value;
+    }
+
+    /**
      * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
      * 
      * @return
@@ -7177,6 +7246,25 @@ public class Settings
         return this;
     }
 
+    public Settings withMigrationHistorySchemaCreateSchemaIfNotExists(Boolean value) {
+        setMigrationHistorySchemaCreateSchemaIfNotExists(value);
+        return this;
+    }
+
+    /**
+     * The default schema whose unqualified objects that are included in the migration.
+     * 
+     */
+    public Settings withMigrationDefaultSchema(MigrationSchema value) {
+        setMigrationDefaultSchema(value);
+        return this;
+    }
+
+    public Settings withMigrationSchemataCreateSchemaIfNotExists(Boolean value) {
+        setMigrationSchemataCreateSchemaIfNotExists(value);
+        return this;
+    }
+
     public Settings withMigrationAllowsUndo(Boolean value) {
         setMigrationAllowsUndo(value);
         return this;
@@ -7651,6 +7739,9 @@ public class Settings
         builder.append("metaIncludeSystemIndexes", metaIncludeSystemIndexes);
         builder.append("metaIncludeSystemSequences", metaIncludeSystemSequences);
         builder.append("migrationHistorySchema", migrationHistorySchema);
+        builder.append("migrationHistorySchemaCreateSchemaIfNotExists", migrationHistorySchemaCreateSchemaIfNotExists);
+        builder.append("migrationDefaultSchema", migrationDefaultSchema);
+        builder.append("migrationSchemataCreateSchemaIfNotExists", migrationSchemataCreateSchemaIfNotExists);
         builder.append("migrationAllowsUndo", migrationAllowsUndo);
         builder.append("migrationRevertUntracked", migrationRevertUntracked);
         builder.append("migrationAutoBaseline", migrationAutoBaseline);
@@ -9377,6 +9468,33 @@ public class Settings
                 return false;
             }
         }
+        if (migrationHistorySchemaCreateSchemaIfNotExists == null) {
+            if (other.migrationHistorySchemaCreateSchemaIfNotExists!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationHistorySchemaCreateSchemaIfNotExists.equals(other.migrationHistorySchemaCreateSchemaIfNotExists)) {
+                return false;
+            }
+        }
+        if (migrationDefaultSchema == null) {
+            if (other.migrationDefaultSchema!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationDefaultSchema.equals(other.migrationDefaultSchema)) {
+                return false;
+            }
+        }
+        if (migrationSchemataCreateSchemaIfNotExists == null) {
+            if (other.migrationSchemataCreateSchemaIfNotExists!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationSchemataCreateSchemaIfNotExists.equals(other.migrationSchemataCreateSchemaIfNotExists)) {
+                return false;
+            }
+        }
         if (migrationAllowsUndo == null) {
             if (other.migrationAllowsUndo!= null) {
                 return false;
@@ -9849,6 +9967,9 @@ public class Settings
         result = ((prime*result)+((metaIncludeSystemIndexes == null)? 0 :metaIncludeSystemIndexes.hashCode()));
         result = ((prime*result)+((metaIncludeSystemSequences == null)? 0 :metaIncludeSystemSequences.hashCode()));
         result = ((prime*result)+((migrationHistorySchema == null)? 0 :migrationHistorySchema.hashCode()));
+        result = ((prime*result)+((migrationHistorySchemaCreateSchemaIfNotExists == null)? 0 :migrationHistorySchemaCreateSchemaIfNotExists.hashCode()));
+        result = ((prime*result)+((migrationDefaultSchema == null)? 0 :migrationDefaultSchema.hashCode()));
+        result = ((prime*result)+((migrationSchemataCreateSchemaIfNotExists == null)? 0 :migrationSchemataCreateSchemaIfNotExists.hashCode()));
         result = ((prime*result)+((migrationAllowsUndo == null)? 0 :migrationAllowsUndo.hashCode()));
         result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
         result = ((prime*result)+((migrationAutoBaseline == null)? 0 :migrationAutoBaseline.hashCode()));

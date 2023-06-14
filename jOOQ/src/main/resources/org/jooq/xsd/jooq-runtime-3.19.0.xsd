@@ -1448,9 +1448,21 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
       <element name="migrationHistorySchema" type="jooq-runtime:MigrationSchema" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The database schema where the migration history is located.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+            
+      <element name="migrationHistorySchemaCreateSchemaIfNotExists" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether {@link #getMigrationHistorySchema()} should be created if it doesn't exist.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="migrationDefaultSchema" type="jooq-runtime:MigrationSchema" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default schema whose unqualified objects that are included in the migration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="migrationSchemata" type="jooq-runtime:MigrationSchemata" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The database objects that are included in the migration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="migrationSchemataCreateSchemaIfNotExists" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether {@link #getMigrationSchemata()} should be created if they don't exist.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="migrationAllowsUndo" type="boolean" minOccurs="0" maxOccurs="1" default="false">

@@ -70,6 +70,7 @@ import org.jooq.DSLContext;
 import org.jooq.Files;
 import org.jooq.Meta;
 import org.jooq.Migration;
+import org.jooq.MigrationContext;
 import org.jooq.MigrationListener;
 import org.jooq.Queries;
 import org.jooq.Query;
@@ -98,35 +99,36 @@ final class MigrationImpl extends AbstractScope implements Migration {
     Commits                 commits;
 
     MigrationImpl(Configuration configuration, Commit to) {
-        super(configuration.derive(new ThreadLocalTransactionProvider(configuration.systemConnectionProvider())));
+        super(initCtx(
+            configuration.derive(new ThreadLocalTransactionProvider(configuration.systemConnectionProvider())),
+            configuration.settings().getMigrationDefaultSchema()
+        ));
 
         this.to = to;
-        this.historyCtx = initHistoryCtx(configuration());
+        this.historyCtx = initCtx(configuration(), configuration.settings().getMigrationHistorySchema()).dsl();
     }
 
-    private static final DSLContext initHistoryCtx(Configuration configuration) {
-        MigrationSchema m = configuration.settings().getMigrationHistorySchema();
+    private static final Configuration initCtx(Configuration configuration, MigrationSchema defaultSchema) {
+        if (defaultSchema != null) {
+            Configuration result = configuration.derive();
 
-        if (m != null) {
-            DSLContext result = configuration.derive().dsl();
-
-            if (!isBlank(m.getCatalog())) {
+            if (!isBlank(defaultSchema.getCatalog())) {
                 result.settings().withRenderMapping(new RenderMapping()
                     .withCatalogs(new MappedCatalog()
                         .withInput("")
-                        .withOutput(m.getCatalog())
+                        .withOutput(defaultSchema.getCatalog())
                         .withSchemata(new MappedSchema()
                             .withInput("")
-                            .withOutput(m.getSchema())
+                            .withOutput(defaultSchema.getSchema())
                         )
                     )
                 );
             }
-            else if (!isBlank(m.getSchema())) {
+            else if (!isBlank(defaultSchema.getSchema())) {
                 result.settings().withRenderMapping(new RenderMapping()
                     .withSchemata(new MappedSchema()
                         .withInput("")
-                        .withOutput(m.getSchema())
+                        .withOutput(defaultSchema.getSchema())
                     )
                 );
             }
@@ -134,7 +136,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             return result;
         }
         else
-            return configuration.dsl();
+            return configuration;
     }
 
     @Override
@@ -273,9 +275,19 @@ final class MigrationImpl extends AbstractScope implements Migration {
         Set<Schema> set = new LinkedHashSet<>();
 
         for (MigrationSchema schema : configuration.settings().getMigrationSchemata())
-            set.addAll(lookup(asList(schema(name(schema.getCatalog(), schema.getSchema())))));
+            addSchema(set, schema);
+
+        if (configuration.settings().getMigrationDefaultSchema() != null) {
+            addSchema(set, configuration.settings().getMigrationDefaultSchema());
+            set.add(DSL.schema(""));
+        }
 
         return set;
+    }
+
+    private final void addSchema(Set<Schema> set, MigrationSchema schema) {
+        if (schema != null)
+            set.addAll(lookup(asList(schema(name(schema.getCatalog(), schema.getSchema())))));
     }
 
     @Override
@@ -388,18 +400,26 @@ final class MigrationImpl extends AbstractScope implements Migration {
      * Initialise the underlying {@link Configuration} with the jOOQ Migrations
      * History.
      */
-    public final void init() {
+    final void init() {
 
         // TODO: What to do when initialising jOOQ-migrations on an existing database?
         //       - Should there be init() commands that can be run explicitly by the user?
         //       - Will we reverse engineer the production Meta snapshot first?
         if (!existsHistory()) {
+
+            // TODO: [#9506] Make this schema creation vendor agnostic
             // TODO: [#15225] This CREATE SCHEMA statement should never be necessary.
-            if (historyCtx.settings().getMigrationHistorySchema() != null)
+            if (TRUE.equals(historyCtx.settings().isMigrationHistorySchemaCreateSchemaIfNotExists())
+                && historyCtx.settings().getMigrationHistorySchema() != null)
                 historyCtx.createSchemaIfNotExists("").execute();
 
             historyCtx.meta(HISTORY).ddl().executeBatch();
         }
+
+        MigrationContext ctx = migrationContext();
+        if (TRUE.equals(ctx.settings().isMigrationSchemataCreateSchemaIfNotExists()))
+            for (Schema schema : ctx.migratedSchemas())
+                dsl().createSchemaIfNotExists(schema).execute();
     }
 
     private final boolean existsHistory() {

@@ -42,6 +42,7 @@ import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 
 import java.io.File;
 
+import org.jooq.CommitProvider;
 import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.Migration;
@@ -75,7 +76,14 @@ public class MigrateMojo extends AbstractMigrationsMojo {
         // [#9506] TODO: Support loading **/*.sql style paths
         // [#9506] TODO: Support relative paths, absolute paths, etc.
         commits.load(file(directory));
-        Migration migration = migrations.migrateTo(commits.latest());
+
+        // [#9506] TODO: Having to use this CommitsProvider "trick" isn't really
+        //               user friendly. There must be a better way
+        Migration migration = configuration
+            .derive((CommitProvider) () -> commits)
+            .dsl()
+            .migrations()
+            .migrateTo(commits.latest());
 
         if (getLog().isInfoEnabled()) {
             getLog().info("Migration from version: " + migration.from());
@@ -86,6 +94,7 @@ public class MigrateMojo extends AbstractMigrationsMojo {
         migration.execute();
     }
 
+    // [#9506] TODO: Move this utility into the library
     private File file(String file) {
         getLog().info("Reading migrations directory: " + file);
         File f = new File(file);

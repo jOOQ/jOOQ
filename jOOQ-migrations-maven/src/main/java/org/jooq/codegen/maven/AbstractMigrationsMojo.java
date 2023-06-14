@@ -110,6 +110,12 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
     List<MigrationSchema> schemata;
 
     /**
+     * Whether to create a migration schema if it does not exist.
+     */
+    @Parameter(property = "jooq.migrate.schemataCreateSchemaIfNotExists")
+    boolean               schemataCreateSchemaIfNotExists;
+
+    /**
      * The default catalog among the migrated schemata.
      */
     @Parameter(property = "jooq.migrate.defaultCatalog")
@@ -133,6 +139,12 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
     @Parameter(property = "jooq.migrate.historySchema")
     String                historySchema;
 
+    /**
+     * Whether to create the history schema if it does not exist.
+     */
+    @Parameter(property = "jooq.migrate.historySchemaCreateSchemaIfNotExists")
+    boolean               historySchemaCreateSchemaIfNotExists;
+
     @Override
     public void execute() throws MojoExecutionException {
         if (skip) {
@@ -154,16 +166,27 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
             try (CloseableDSLContext ctx = DSL.using(jdbc.url, defaultIfNull(jdbc.user, jdbc.username), jdbc.password)) {
 
                 // Initialise Settings
-                List<MigrationSchema> s = ctx.settings().getMigrationSchemata();
-                s.addAll(schemata);
+                // ---------------------------------------------------------------------
+                ctx.settings().getMigrationSchemata().addAll(schemata);
 
                 if (defaultCatalog != null || defaultSchema != null)
-                    s.add(new MigrationSchema().withCatalog(defaultIfNull(defaultCatalog, "")).withSchema(defaultIfNull(defaultSchema, "")));
+                    ctx.settings().setMigrationDefaultSchema(new MigrationSchema()
+                        .withCatalog(defaultIfNull(defaultCatalog, ""))
+                        .withSchema(defaultIfNull(defaultSchema, ""))
+                    );
 
                 if (historyCatalog != null || historySchema != null)
-                    ctx.settings().setMigrationHistorySchema(new MigrationSchema().withCatalog(defaultIfNull(historyCatalog, "")).withSchema(defaultIfNull(historySchema, "")));
+                    ctx.settings().setMigrationHistorySchema(new MigrationSchema()
+                        .withCatalog(defaultIfNull(historyCatalog, ""))
+                        .withSchema(defaultIfNull(historySchema, ""))
+                    );
+
+
+                ctx.settings().setMigrationSchemataCreateSchemaIfNotExists(schemataCreateSchemaIfNotExists);
+                ctx.settings().setMigrationHistorySchemaCreateSchemaIfNotExists(historySchemaCreateSchemaIfNotExists);
 
                 // Initialise connection
+                // ---------------------------------------------------------------------
                 if (!isBlank(defaultCatalog))
                     ctx.setCatalog(defaultCatalog).execute();
 
@@ -171,6 +194,7 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
                     ctx.setSchema(defaultSchema).execute();
 
                 // Run migration
+                // ---------------------------------------------------------------------
                 if (setupScript != null)
                     ctx.execute(setupScript);
 

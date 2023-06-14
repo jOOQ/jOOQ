@@ -40,18 +40,19 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
-import static org.jooq.impl.Changelog.CHANGELOG;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
+import static org.jooq.impl.History.HISTORY;
 import static org.jooq.impl.MigrationImpl.Status.FAILURE;
 import static org.jooq.impl.MigrationImpl.Status.MIGRATING;
 import static org.jooq.impl.MigrationImpl.Status.REVERTING;
 import static org.jooq.impl.MigrationImpl.Status.STARTING;
 import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
+import static org.jooq.tools.StringUtils.isBlank;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -65,6 +66,7 @@ import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.ContextTransactionalRunnable;
+import org.jooq.DSLContext;
 import org.jooq.Files;
 import org.jooq.Meta;
 import org.jooq.Migration;
@@ -73,7 +75,10 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
 import org.jooq.conf.InterpreterSearchSchema;
+import org.jooq.conf.MappedCatalog;
+import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MigrationSchema;
+import org.jooq.conf.RenderMapping;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationValidationException;
@@ -85,16 +90,51 @@ import org.jooq.tools.StopWatch;
  */
 final class MigrationImpl extends AbstractScope implements Migration {
 
-    private static final JooqLogger log       = JooqLogger.getLogger(Migration.class);
-    private final Commit            to;
-    private Commit                  from;
-    private Queries                 queries;
-    private Commits                 commits;
+    static final JooqLogger log       = JooqLogger.getLogger(Migration.class);
+    final DSLContext        historyCtx;
+    final Commit            to;
+    Commit                  from;
+    Queries                 queries;
+    Commits                 commits;
 
     MigrationImpl(Configuration configuration, Commit to) {
         super(configuration.derive(new ThreadLocalTransactionProvider(configuration.systemConnectionProvider())));
 
         this.to = to;
+        this.historyCtx = initHistoryCtx(configuration());
+    }
+
+    private static final DSLContext initHistoryCtx(Configuration configuration) {
+        MigrationSchema m = configuration.settings().getMigrationHistorySchema();
+
+        if (m != null) {
+            DSLContext result = configuration.derive().dsl();
+
+            if (!isBlank(m.getCatalog())) {
+                result.settings().withRenderMapping(new RenderMapping()
+                    .withCatalogs(new MappedCatalog()
+                        .withInput("")
+                        .withOutput(m.getCatalog())
+                        .withSchemata(new MappedSchema()
+                            .withInput("")
+                            .withOutput(m.getSchema())
+                        )
+                    )
+                );
+            }
+            else if (!isBlank(m.getSchema())) {
+                result.settings().withRenderMapping(new RenderMapping()
+                    .withSchemata(new MappedSchema()
+                        .withInput("")
+                        .withOutput(m.getSchema())
+                    )
+                );
+            }
+
+            return result;
+        }
+        else
+            return configuration.dsl();
     }
 
     @Override
@@ -135,7 +175,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final void validate0(DefaultMigrationContext ctx) {
-        ChangelogRecord currentRecord = currentChangelogRecord();
+        HistoryRecord currentRecord = currentHistoryRecord();
 
         if (currentRecord != null) {
             Commit currentCommit = commits().get(currentRecord.getMigratedTo());
@@ -194,7 +234,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 continue schemaLoop;
 
             // TODO Why is this qualification necessary?
-            existingMeta = existingMeta.apply(dropTableIfExists(schema.getQualifiedName().append(CHANGELOG.getUnqualifiedName())).cascade());
+            existingMeta = existingMeta.apply(dropTableIfExists(schema.getQualifiedName().append(HISTORY.getUnqualifiedName())).cascade());
 
             if (!expectedSchemas.contains(schema))
                 existingMeta = existingMeta.apply(dropSchemaIfExists(schema).cascade());
@@ -205,7 +245,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return existingMeta.migrateTo(currentMeta);
     }
 
-    private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, ChangelogRecord currentRecord) {
+    private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, HistoryRecord currentRecord) {
         if (ctx.revertUntrackedQueries.queries().length > 0)
             if (!TRUE.equals(dsl().settings().isMigrationRevertUntracked()))
                 throw new DataMigrationValidationException(
@@ -264,11 +304,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     // TODO: Implement a listener with a variety of pro / oss features
                     // TODO: Implement additional out-of-the-box sanity checks
                     // TODO: Allow undo migrations only if enabled explicitly
-                    // TODO: Add some migration settings, e.g. whether CHANGELOG.SQL should be filled
-                    // TODO: Migrate the CHANGELOG table with the Migration API
-                    // TODO: Create an Enum for CHANGELOG.STATUS
-                    // TODO: Add CHANGELOG.USERNAME and HOSTNAME columns
-                    // TODO: Add CHANGELOG.COMMENTS column
+                    // TODO: Add some migration settings, e.g. whether HISTORY.SQL should be filled
+                    // TODO: Migrate the HISTORY table with the Migration API
+                    // TODO: Create an Enum for HISTORY.STATUS
+                    // TODO: Add HISTORY.USERNAME and HOSTNAME columns
+                    // TODO: Add HISTORY.COMMENTS column
                     // TODO: Replace (MIGRATED_AT, MIGRATION_TIME) by (MIGRATION_START, MIGRATION_END)
 
                     log.info("jOOQ Migrations", "Version " + from().id() + " is migrated to " + to().id());
@@ -280,7 +320,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         for (Query query : queries())
                             log.debug("jOOQ Migrations", dsl().renderInlined(query));
 
-                    ChangelogRecord record = createRecord(STARTING);
+                    HistoryRecord record = createRecord(STARTING);
 
                     try {
                         log(watch, record, REVERTING);
@@ -302,8 +342,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 }
             }
 
-            private final ChangelogRecord createRecord(Status status) {
-                ChangelogRecord record = dsl().newRecord(CHANGELOG);
+            private final HistoryRecord createRecord(Status status) {
+                HistoryRecord record = historyCtx.newRecord(HISTORY);
 
                 record
                     .setJooqVersion(Constants.VERSION)
@@ -319,7 +359,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 return record;
             }
 
-            private final void log(StopWatch watch, ChangelogRecord record, Status status) {
+            private final void log(StopWatch watch, HistoryRecord record, Status status) {
                 record.setMigrationTime(watch.split() / 1000000L)
                       .setStatus(status)
                       .update();
@@ -346,22 +386,27 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     /**
      * Initialise the underlying {@link Configuration} with the jOOQ Migrations
-     * Changelog.
+     * History.
      */
     public final void init() {
 
         // TODO: What to do when initialising jOOQ-migrations on an existing database?
         //       - Should there be init() commands that can be run explicitly by the user?
         //       - Will we reverse engineer the production Meta snapshot first?
-        if (!existsChangelog())
-            dsl().meta(CHANGELOG).ddl().executeBatch();
+        if (!existsHistory()) {
+            // TODO: [#15225] This CREATE SCHEMA statement should never be necessary.
+            if (historyCtx.settings().getMigrationHistorySchema() != null)
+                historyCtx.createSchemaIfNotExists("").execute();
+
+            historyCtx.meta(HISTORY).ddl().executeBatch();
+        }
     }
 
-    private final boolean existsChangelog() {
+    private final boolean existsHistory() {
 
         // [#8301] Find a better way to test if our table already exists
         try {
-            dsl().fetchExists(CHANGELOG);
+            historyCtx.fetchExists(HISTORY);
             return true;
         }
         catch (DataAccessException ignore) {}
@@ -369,20 +414,20 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return false;
     }
 
-    private final ChangelogRecord currentChangelogRecord() {
-        return existsChangelog()
-            ? dsl().selectFrom(CHANGELOG)
+    private final HistoryRecord currentHistoryRecord() {
+        return existsHistory()
+            ? historyCtx.selectFrom(HISTORY)
 
                    // TODO: How to recover from failure?
-                   .where(CHANGELOG.STATUS.eq(inline(SUCCESS)))
-                   .orderBy(CHANGELOG.MIGRATED_AT.desc(), CHANGELOG.ID.desc())
+                   .where(HISTORY.STATUS.eq(inline(SUCCESS)))
+                   .orderBy(HISTORY.MIGRATED_AT.desc(), HISTORY.ID.desc())
                    .limit(1)
                    .fetchOne()
             : null;
     }
 
     final Commit currentCommit() {
-        ChangelogRecord currentRecord = currentChangelogRecord();
+        HistoryRecord currentRecord = currentHistoryRecord();
 
         if (currentRecord == null) {
             Commit result = TRUE.equals(settings().isMigrationAutoBaseline()) ? to() : to().root();

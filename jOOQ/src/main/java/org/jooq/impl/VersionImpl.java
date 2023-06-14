@@ -70,12 +70,12 @@ import org.jooq.exception.DataDefinitionException;
  */
 final class VersionImpl extends AbstractNode<Version> implements Version {
 
-    private final DSLContext   ctx;
-    private final Meta         meta;
-    private final List<Parent> parents;
+    final DSLContext   ctx;
+    final Meta         meta;
+    final List<Parent> parents;
 
-    private VersionImpl(DSLContext ctx, String id, Meta meta, List<Parent> parents) {
-        super(id, null);
+    private VersionImpl(DSLContext ctx, String id, Meta meta, Version root, List<Parent> parents) {
+        super(id, null, root);
 
         this.ctx = ctx;
         this.meta = meta != null ? meta : init(ctx);
@@ -95,12 +95,12 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
         return result;
     }
 
-    VersionImpl(DSLContext ctx, String id, Meta meta, Version parent, Queries queries) {
-        this(ctx, id, meta, Arrays.asList(new Parent((VersionImpl) parent, queries)));
+    VersionImpl(DSLContext ctx, String id, Meta meta, Version root, Version parent, Queries queries) {
+        this(ctx, id, meta, root, Arrays.asList(new Parent((VersionImpl) parent, queries)));
     }
 
-    VersionImpl(DSLContext ctx, String id, Meta meta, Version[] parents) {
-        this(ctx, id, meta, wrap(parents));
+    VersionImpl(DSLContext ctx, String id, Meta meta, Version root, Version[] parents) {
+        this(ctx, id, meta, root, wrap(parents));
     }
 
     private static List<Parent> wrap(Version[] parents) {
@@ -144,7 +144,7 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
 
     @Override
     public final Version apply(String newId, Queries migration) {
-        return new VersionImpl(ctx, newId, meta().apply(migration), this, migration);
+        return new VersionImpl(ctx, newId, meta().apply(migration), root, this, migration);
     }
 
     @Override
@@ -173,7 +173,7 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
                 if (list == null)
                     list = new ArrayList<>();
 
-                list.add(new Parent(new VersionImpl(ctx, parent.version.id(), parent.version.meta, emptyList()), parent.queries));
+                list.add(new Parent(new VersionImpl(ctx, parent.version.id(), parent.version.meta, root, emptyList()), parent.queries));
             }
             else {
                 VersionImpl p = parent.version.subgraphTo(ancestor);
@@ -187,7 +187,7 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
             }
         }
 
-        return list == null ? null : new VersionImpl(ctx, id(), meta, list);
+        return list == null ? null : new VersionImpl(ctx, id(), meta, root, list);
     }
 
     private final Queries migrateTo(VersionImpl target, Queries result) {
@@ -222,13 +222,13 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
 
     @Override
     public final Version commit(String newId, Meta newMeta) {
-        return new VersionImpl(ctx, newId, newMeta, new Version[] { this });
+        return new VersionImpl(ctx, newId, newMeta, root, new Version[] { this });
     }
 
     @Override
     public final Version merge(String newId, Version with) {
         Meta m = commonAncestor(with).meta();
-        return new VersionImpl(ctx, newId, m.apply(m.migrateTo(meta()).concat(m.migrateTo(with.meta()))), new Version[] { this, with });
+        return new VersionImpl(ctx, newId, m.apply(m.migrateTo(meta()).concat(m.migrateTo(with.meta()))), root, new Version[] { this, with });
     }
 
     @Override

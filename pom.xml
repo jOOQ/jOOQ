@@ -133,6 +133,11 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
+                <artifactId>jooq-migrations-maven</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -882,10 +887,7 @@
 
 
 
-
         <module>jOOQ-checker</module>
-
-
         <module>jOOQ-jackson-extensions</module>
         <module>jOOQ-postgres-extensions</module>
 
@@ -895,9 +897,8 @@
         <module>jOOQ-meta-extensions-liquibase</module>
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
-
+        <module>jOOQ-migrations-maven</module>
         <module>jOOQ-migrations</module>
-
 
         <module>jOOQ-kotlin</module>
         <module>jOOQ-kotlin-coroutines</module>
@@ -907,6 +908,7 @@
 
 
         <module>jOOQ-xtend</module>
+
 
 
 

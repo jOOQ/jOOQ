@@ -102,22 +102,29 @@ public interface Commits extends Iterable<Commit> {
 
     /**
      * Add a commit to the graph.
+     *
+     * @return The same instance.
      */
-    void add(Commit commit);
+    Commits add(Commit commit);
 
     /**
      * Add all commits to the graph.
+     *
+     * @return The same instance.
      */
-    void addAll(Commit... commits);
+    Commits addAll(Commit... commits);
 
     /**
      * Add all commits to the graph.
+     *
+     * @return The same instance.
      */
-    void addAll(Collection<? extends Commit> commits);
+    Commits addAll(Collection<? extends Commit> commits);
 
     /**
      * Load directory content into this commits graph.
      *
+     * @return The same instance.
      * @throws IOException If anything goes wrong reading the directory
      *             contents.
      * @throws DataMigrationValidationException If the migration doesn't
@@ -129,6 +136,7 @@ public interface Commits extends Iterable<Commit> {
     /**
      * Load XML content into this commits graph.
      *
+     * @return The same instance.
      * @throws DataMigrationValidationException If the migration doesn't
      *             validate.
      */

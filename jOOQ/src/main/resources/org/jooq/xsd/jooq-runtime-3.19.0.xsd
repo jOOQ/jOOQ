@@ -1445,6 +1445,10 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated sequences, by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="migrationHistorySchema" type="jooq-runtime:MigrationSchema" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The database schema where the migration history is located.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="migrationSchemata" type="jooq-runtime:MigrationSchemata" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The database objects that are included in the migration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

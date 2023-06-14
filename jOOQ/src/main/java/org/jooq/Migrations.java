@@ -81,16 +81,6 @@ public interface Migrations {
     Versions versions();
 
     /**
-     * Initialise a {@link Version}.
-     * <p>
-     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
-     * versions.
-     */
-    @Experimental
-    @NotNull
-    Commit commit(String id);
-
-    /**
      * Initialise an empty {@link Commits} graph.
      * <p>
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ

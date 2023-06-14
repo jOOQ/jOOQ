@@ -1,4 +1,4 @@
-CREATE TABLE jooq_migrations_changelog (
+CREATE TABLE jooq_migration_history (
   id             BIGINT       NOT NULL IDENTITY,
   migrated_from  VARCHAR(255) NOT NULL,
   migrated_to    VARCHAR(255) NOT NULL,
@@ -9,18 +9,18 @@ CREATE TABLE jooq_migrations_changelog (
   sql_count      INT          NOT NULL,
   status         VARCHAR(10)  NOT NULL,
   
-  CONSTRAINT jooq_migr_pk   PRIMARY KEY (id),
-  CONSTRAINT jooq_migr_chk1 CHECK (status IN ('STARTING', 'REVERTING', 'MIGRATING', 'SUCCESS', 'FAILURE'))
+  CONSTRAINT jooq_migr_hist_pk   PRIMARY KEY (id),
+  CONSTRAINT jooq_migr_hist_chk1 CHECK (status IN ('STARTING', 'REVERTING', 'MIGRATING', 'SUCCESS', 'FAILURE'))
 );
 
-CREATE INDEX jooq_migr_i1 ON jooq_migrations_changelog (migrated_at);
+CREATE INDEX jooq_migr_hist_i1 ON jooq_migration_history (migrated_at);
 
-COMMENT ON TABLE  jooq_migrations_changelog                 IS 'The migration log of jOOQ Migrations.';
-COMMENT ON COLUMN jooq_migrations_changelog.id              IS 'The database version ID.';
-COMMENT ON COLUMN jooq_migrations_changelog.migrated_from   IS 'The previous database version ID.';
-COMMENT ON COLUMN jooq_migrations_changelog.migrated_at     IS 'The date/time when the database version was migrated to.';
-COMMENT ON COLUMN jooq_migrations_changelog.migration_time  IS 'The time in milliseconds it took to migrate to this database version.';
-COMMENT ON COLUMN jooq_migrations_changelog.jooq_version    IS 'The jOOQ version used to migrate to this database version.';
-COMMENT ON COLUMN jooq_migrations_changelog.sql_count       IS 'The number of SQL statements that were run to install this database version.';
-COMMENT ON COLUMN jooq_migrations_changelog.sql             IS 'The SQL statements that were run to install this database version.';
-COMMENT ON COLUMN jooq_migrations_changelog.status          IS 'The database version installation status.';
+COMMENT ON TABLE  jooq_migration_history                 IS 'The migration history of jOOQ Migrations.';
+COMMENT ON COLUMN jooq_migration_history.id              IS 'The database version ID.';
+COMMENT ON COLUMN jooq_migration_history.migrated_from   IS 'The previous database version ID.';
+COMMENT ON COLUMN jooq_migration_history.migrated_at     IS 'The date/time when the database version was migrated to.';
+COMMENT ON COLUMN jooq_migration_history.migration_time  IS 'The time in milliseconds it took to migrate to this database version.';
+COMMENT ON COLUMN jooq_migration_history.jooq_version    IS 'The jOOQ version used to migrate to this database version.';
+COMMENT ON COLUMN jooq_migration_history.sql_count       IS 'The number of SQL statements that were run to install this database version.';
+COMMENT ON COLUMN jooq_migration_history.sql             IS 'The SQL statements that were run to install this database version.';
+COMMENT ON COLUMN jooq_migration_history.status          IS 'The database version installation status.';

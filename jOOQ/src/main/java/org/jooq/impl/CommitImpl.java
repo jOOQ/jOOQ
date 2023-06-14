@@ -75,15 +75,15 @@ import org.jooq.tools.StringUtils;
  */
 final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
-    private final Configuration     configuration;
-    private final DSLContext        ctx;
-    private final List<Commit>      parents;
-    private final List<Tag>         tags;
-    private final Map<String, File> delta;
-    private final Map<String, File> files;
+    final Configuration     configuration;
+    final DSLContext        ctx;
+    final List<Commit>      parents;
+    final List<Tag>         tags;
+    final Map<String, File> delta;
+    final Map<String, File> files;
 
-    CommitImpl(Configuration configuration, String id, String message, List<Commit> parents, Collection<? extends File> delta) {
-        super(id, message);
+    CommitImpl(Configuration configuration, String id, String message, Commit root, List<Commit> parents, Collection<? extends File> delta) {
+        super(id, message, root);
 
         this.configuration = configuration;
         this.ctx = configuration.dsl();
@@ -94,7 +94,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     }
 
     private CommitImpl(CommitImpl copy) {
-        super(copy.id(), copy.message());
+        super(copy.id(), copy.message(), copy.root);
 
         this.configuration = copy.configuration;
         this.ctx = copy.ctx;
@@ -192,7 +192,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Commit commit(String newId, String newMessage, Collection<? extends File> newFiles) {
-        return new CommitImpl(configuration, newId, newMessage, Arrays.asList(this), newFiles);
+        return new CommitImpl(configuration, newId, newMessage, root, Arrays.asList(this), newFiles);
     }
 
     @Override
@@ -212,7 +212,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Commit merge(String newId, String newMessage, Commit with, Collection<? extends File> newFiles) {
-        return new CommitImpl(configuration, newId, newMessage, Arrays.asList(this, with), newFiles);
+        return new CommitImpl(configuration, newId, newMessage, root, Arrays.asList(this, with), newFiles);
     }
 
     @Override

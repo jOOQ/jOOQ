@@ -11,41 +11,41 @@ import org.jooq.impl.MigrationImpl.Status;
 
 
 /**
- * The migration log of jOOQ Migrations.
+ * The migration history of jOOQ Migrations.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-class ChangelogRecord extends UpdatableRecordImpl<ChangelogRecord> {
+class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.ID</code>. The database
-     * version ID.
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.ID</code>. The database version
+     * ID.
      */
-    ChangelogRecord setId(Integer value) {
+    HistoryRecord setId(Integer value) {
         set(0, value);
         return this;
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.ID</code>. The database
-     * version ID.
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.ID</code>. The database version
+     * ID.
      */
     Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_FROM</code>. The
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_FROM</code>. The
      * previous database version ID.
      */
-    ChangelogRecord setMigratedFrom(String value) {
+    HistoryRecord setMigratedFrom(String value) {
         set(1, value);
         return this;
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_FROM</code>. The
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_FROM</code>. The
      * previous database version ID.
      */
     String getMigratedFrom() {
@@ -53,65 +53,65 @@ class ChangelogRecord extends UpdatableRecordImpl<ChangelogRecord> {
     }
 
     /**
-     * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_TO</code>.
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO</code>.
      */
-    ChangelogRecord setMigratedTo(String value) {
+    HistoryRecord setMigratedTo(String value) {
         set(2, value);
         return this;
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_TO</code>.
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO</code>.
      */
     String getMigratedTo() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_AT</code>. The
-     * date/time when the database version was migrated to.
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_AT</code>. The date/time
+     * when the database version was migrated to.
      */
-    ChangelogRecord setMigratedAt(Timestamp value) {
+    HistoryRecord setMigratedAt(Timestamp value) {
         set(3, value);
         return this;
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATED_AT</code>. The
-     * date/time when the database version was migrated to.
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_AT</code>. The date/time
+     * when the database version was migrated to.
      */
     Timestamp getMigratedAt() {
         return (Timestamp) get(3);
     }
 
     /**
-     * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATION_TIME</code>. The
-     * time in milliseconds it took to migrate to this database version.
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.MIGRATION_TIME</code>. The time
+     * in milliseconds it took to migrate to this database version.
      */
-    ChangelogRecord setMigrationTime(Long value) {
+    HistoryRecord setMigrationTime(Long value) {
         set(4, value);
         return this;
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.MIGRATION_TIME</code>. The
-     * time in milliseconds it took to migrate to this database version.
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.MIGRATION_TIME</code>. The time
+     * in milliseconds it took to migrate to this database version.
      */
     Long getMigrationTime() {
         return (Long) get(4);
     }
 
     /**
-     * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.JOOQ_VERSION</code>. The jOOQ
      * version used to migrate to this database version.
      */
-    ChangelogRecord setJooqVersion(String value) {
+    HistoryRecord setJooqVersion(String value) {
         set(5, value);
         return this;
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.JOOQ_VERSION</code>. The jOOQ
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.JOOQ_VERSION</code>. The jOOQ
      * version used to migrate to this database version.
      */
     String getJooqVersion() {
@@ -119,16 +119,16 @@ class ChangelogRecord extends UpdatableRecordImpl<ChangelogRecord> {
     }
 
     /**
-     * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL</code>. The SQL statements
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.SQL</code>. The SQL statements
      * that were run to install this database version.
      */
-    ChangelogRecord setSql(String value) {
+    HistoryRecord setSql(String value) {
         set(6, value);
         return this;
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL</code>. The SQL statements
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.SQL</code>. The SQL statements
      * that were run to install this database version.
      */
     String getSql() {
@@ -136,33 +136,33 @@ class ChangelogRecord extends UpdatableRecordImpl<ChangelogRecord> {
     }
 
     /**
-     * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL_COUNT</code>. The number
-     * of SQL statements that were run to install this database version.
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.SQL_COUNT</code>. The number of
+     * SQL statements that were run to install this database version.
      */
-    ChangelogRecord setSqlCount(Integer value) {
+    HistoryRecord setSqlCount(Integer value) {
         set(7, value);
         return this;
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.SQL_COUNT</code>. The number
-     * of SQL statements that were run to install this database version.
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.SQL_COUNT</code>. The number of
+     * SQL statements that were run to install this database version.
      */
     Integer getSqlCount() {
         return (Integer) get(7);
     }
 
     /**
-     * Setter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.STATUS</code>. The database
      * version installation status.
      */
-    ChangelogRecord setStatus(Status value) {
+    HistoryRecord setStatus(Status value) {
         set(8, value);
         return this;
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATIONS_CHANGELOG.STATUS</code>. The database
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.STATUS</code>. The database
      * version installation status.
      */
     Status getStatus() {
@@ -183,17 +183,17 @@ class ChangelogRecord extends UpdatableRecordImpl<ChangelogRecord> {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a detached ChangelogRecord
+     * Create a detached HistoryRecord
      */
-    ChangelogRecord() {
-        super(Changelog.CHANGELOG);
+    HistoryRecord() {
+        super(History.HISTORY);
     }
 
     /**
-     * Create a detached, initialised ChangelogRecord
+     * Create a detached, initialised HistoryRecord
      */
-    ChangelogRecord(Integer id, String migratedFrom, String migratedTo, Timestamp migratedAt, Long migrationTime, String jooqVersion, String sql, Integer sqlCount, Status status) {
-        super(Changelog.CHANGELOG);
+    HistoryRecord(Integer id, String migratedFrom, String migratedTo, Timestamp migratedAt, Long migrationTime, String jooqVersion, String sql, Integer sqlCount, Status status) {
+        super(History.HISTORY);
 
         setId(id);
         setMigratedFrom(migratedFrom);

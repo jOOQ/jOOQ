@@ -51,10 +51,13 @@ import org.jooq.exception.DataDefinitionException;
  */
 abstract class AbstractNode<N extends Node<N>> implements Node<N> {
 
-    private final String id;
-    private final String message;
+    final N      root;
+    final String id;
+    final String message;
 
-    AbstractNode(String id, String message) {
+    @SuppressWarnings("unchecked")
+    AbstractNode(String id, String message, N root) {
+        this.root = root != null ? root : (N) this;
         this.id = id;
         this.message = defaultIfNull(message, "");
     }
@@ -70,14 +73,8 @@ abstract class AbstractNode<N extends Node<N>> implements Node<N> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public final N root() {
-        N node = (N) this;
-
-        while (!node.parents().isEmpty())
-            node = node.parents().get(0);
-
-        return node;
+        return root;
     }
 
     @SuppressWarnings("unchecked")

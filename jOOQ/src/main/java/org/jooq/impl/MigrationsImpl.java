@@ -67,7 +67,7 @@ final class MigrationsImpl implements Migrations {
 
     @Override
     public final Version version(String id) {
-        return new VersionImpl(ctx, id, null, new Version[0]);
+        return new VersionImpl(ctx, id, null, null, new Version[0]);
     }
 
     @Override
@@ -76,13 +76,8 @@ final class MigrationsImpl implements Migrations {
     }
 
     @Override
-    public final Commit commit(String id) {
-        return new CommitImpl(ctx.configuration(), id, null, emptyList(), emptyList());
-    }
-
-    @Override
     public final Commits commits() {
-        return new CommitsImpl(ctx.configuration(), commit("init"));
+        return new CommitsImpl(ctx.configuration(), new CommitImpl(ctx.configuration(), "init", null, null, emptyList(), emptyList()));
     }
 
     @Override

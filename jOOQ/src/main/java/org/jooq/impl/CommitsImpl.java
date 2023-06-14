@@ -69,17 +69,19 @@ import org.jooq.migrations.xml.jaxb.FileType;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
 import org.jooq.migrations.xml.jaxb.ParentType;
 import org.jooq.migrations.xml.jaxb.TagType;
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
  */
 final class CommitsImpl implements Commits {
 
-    final Configuration       configuration;
-    final Migrations          migrations;
-    final Commit              root;
-    final Map<String, Commit> commitsById;
-    final Map<String, Commit> commitsByTag;
+    private static final JooqLogger log = JooqLogger.getLogger(CommitsImpl.class);
+    final Configuration             configuration;
+    final Migrations                migrations;
+    final Commit                    root;
+    final Map<String, Commit>       commitsById;
+    final Map<String, Commit>       commitsByTag;
 
     CommitsImpl(Configuration configuration, Commit root) {
         this.configuration = configuration;
@@ -92,7 +94,7 @@ final class CommitsImpl implements Commits {
     }
 
     @Override
-    public void add(Commit commit) {
+    public final Commits add(Commit commit) {
         if (root != commit.root())
             throw new DataMigrationValidationException("A Commits graph must contain a single graph whose commits all share the same root.");
 
@@ -109,17 +111,24 @@ final class CommitsImpl implements Commits {
 
         for (Tag tag : commit.tags())
             commitsByTag.put(tag.id(), commit);
+
+        if (log.isDebugEnabled())
+            log.debug("Commit added", commit);
+
+        return this;
     }
 
     @Override
-    public void addAll(Commit... c) {
-        addAll(asList(c));
+    public final Commits addAll(Commit... c) {
+        return addAll(asList(c));
     }
 
     @Override
-    public void addAll(Collection<? extends Commit> c) {
+    public final Commits addAll(Collection<? extends Commit> c) {
         for (Commit commit : c)
             add(commit);
+
+        return this;
     }
 
     @Override
@@ -206,9 +215,10 @@ final class CommitsImpl implements Commits {
         java.io.File[] files = directory.listFiles(f -> f.getName().endsWith(".sql"));
 
         if (files != null) {
-            List<FileData> list = Stream.of(files).map(x -> {
-                return new FileData(x);
-            }).collect(toList());
+            List<FileData> list = Stream.of(files).map(FileData::new).collect(toList());
+
+            if (log.isDebugEnabled())
+                list.forEach(f -> log.debug("Reading file", f.basename));
 
             /*
              * An example:

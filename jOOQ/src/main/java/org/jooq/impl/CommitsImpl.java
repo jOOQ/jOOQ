@@ -122,7 +122,7 @@ final class CommitsImpl implements Commits {
     }
 
     @Override
-    public final Commit current() {
+    public final Commit latest() {
         Map<String, Commit> commits = new HashMap<>(commitsById);
 
         for (Entry<String, Commit> e : commitsById.entrySet())
@@ -132,7 +132,7 @@ final class CommitsImpl implements Commits {
         if (commits.size() == 1)
             return commits.values().iterator().next();
         else
-            throw new DataMigrationValidationException("No current commit available. There are " + commits.size() + " unmerged branches.");
+            throw new DataMigrationValidationException("No latest commit available. There are " + commits.size() + " unmerged branches.");
     }
 
     @Override

@@ -410,7 +410,9 @@ final class MigrationImpl extends AbstractScope implements Migration {
             // TODO: [#9506] Make this schema creation vendor agnostic
             // TODO: [#15225] This CREATE SCHEMA statement should never be necessary.
             if (TRUE.equals(historyCtx.settings().isMigrationHistorySchemaCreateSchemaIfNotExists())
-                && historyCtx.settings().getMigrationHistorySchema() != null)
+                && historyCtx.settings().getMigrationHistorySchema() != null
+                || TRUE.equals(historyCtx.settings().isMigrationSchemataCreateSchemaIfNotExists())
+                && historyCtx.settings().getMigrationDefaultSchema() != null)
                 historyCtx.createSchemaIfNotExists("").execute();
 
             historyCtx.meta(HISTORY).ddl().executeBatch();

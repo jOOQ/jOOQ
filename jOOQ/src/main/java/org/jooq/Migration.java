@@ -38,7 +38,7 @@
 package org.jooq;
 
 import org.jooq.exception.DataMigrationException;
-import org.jooq.exception.DataMigrationValidationException;
+import org.jooq.exception.DataMigrationVerificationException;
 
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
@@ -75,12 +75,12 @@ public interface Migration extends Scope {
     Queries queries();
 
     /**
-     * Validate a migration.
+     * Verify the correctness of a migration.
      *
-     * @throws DataMigrationValidationException When something went wrong during
-     *             the validation of the migration.
+     * @throws DataMigrationVerificationException When something went wrong during
+     *             the verification of the migration.
      */
-    void validate() throws DataMigrationValidationException;
+    void verify() throws DataMigrationVerificationException;
 
     /**
      * Apply the migration.

@@ -40,7 +40,7 @@ package org.jooq;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.jooq.exception.DataMigrationValidationException;
+import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.migrations.xml.jaxb.MigrationsType;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,13 +69,13 @@ public interface Commits extends Iterable<Commit> {
      * The current node is the node in the graph that has been installed in the
      * database.
      *
-     * @throws DataMigrationValidationException In case there's no current node
+     * @throws DataMigrationVerificationException In case there's no current node
      *             in the database, which can happen e.g. when no migration has
      *             been initialised yet, or when the currently installed
      *             {@link Commit#id()} is not part of this graph.
      */
     @NotNull
-    Commit current() throws DataMigrationValidationException;
+    Commit current() throws DataMigrationVerificationException;
 
     /**
      * The latest node.
@@ -84,12 +84,12 @@ public interface Commits extends Iterable<Commit> {
      * merged successfully, or the latest node of the default branch, in case a
      * default branch has been specified.
      *
-     * @throws DataMigrationValidationException In case there's no latest node,
+     * @throws DataMigrationVerificationException In case there's no latest node,
      *             i.e. there's no default branch and branches haven't all been
      *             merged yet.
      */
     @NotNull
-    Commit latest() throws DataMigrationValidationException;
+    Commit latest() throws DataMigrationVerificationException;
 
     /**
      * Get a commit from the graph by {@link Commit#id()} or {@link Tag#id()}
@@ -130,21 +130,21 @@ public interface Commits extends Iterable<Commit> {
      * @return The same instance.
      * @throws IOException If anything goes wrong reading the directory
      *             contents.
-     * @throws DataMigrationValidationException If the migration doesn't
-     *             validate.
+     * @throws DataMigrationVerificationException If the migration verification
+     *             fails.
      */
     @NotNull
-    Commits load(java.io.File directory) throws IOException, DataMigrationValidationException;
+    Commits load(java.io.File directory) throws IOException, DataMigrationVerificationException;
 
     /**
      * Load XML content into this commits graph.
      *
      * @return The same instance.
-     * @throws DataMigrationValidationException If the migration doesn't
-     *             validate.
+     * @throws DataMigrationVerificationException If the migration verification
+     *             fails.
      */
     @NotNull
-    Commits load(MigrationsType migrations) throws DataMigrationValidationException;
+    Commits load(MigrationsType migrations) throws DataMigrationVerificationException;
 
     /**
      * Export XML content from this commits graph.

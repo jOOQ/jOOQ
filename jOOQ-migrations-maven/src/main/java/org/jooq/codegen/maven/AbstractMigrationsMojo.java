@@ -57,7 +57,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 /**
- * A base class for migration mojos.
+ * A base class for jOOQ Migrations mojos.
  *
  * @author Lukas Eder
  */
@@ -146,7 +146,7 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
     boolean               historySchemaCreateSchemaIfNotExists;
 
     @Override
-    public void execute() throws MojoExecutionException {
+    public final void execute() throws MojoExecutionException {
         if (skip) {
             getLog().info("Skipping jOOQ migrations");
             return;

@@ -62,7 +62,7 @@ import org.jooq.ContentType;
 import org.jooq.File;
 import org.jooq.Migrations;
 import org.jooq.Tag;
-import org.jooq.exception.DataMigrationValidationException;
+import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.migrations.xml.jaxb.ChangeType;
 import org.jooq.migrations.xml.jaxb.CommitType;
 import org.jooq.migrations.xml.jaxb.FileType;
@@ -96,16 +96,16 @@ final class CommitsImpl implements Commits {
     @Override
     public final Commits add(Commit commit) {
         if (root != commit.root())
-            throw new DataMigrationValidationException("A Commits graph must contain a single graph whose commits all share the same root.");
+            throw new DataMigrationVerificationException("A Commits graph must contain a single graph whose commits all share the same root.");
 
         Commit duplicate;
 
         if ((duplicate = commitsById.get(commit.id())) != null)
-            throw new DataMigrationValidationException("Duplicate commit ID already present on commit: " + duplicate);
+            throw new DataMigrationVerificationException("Duplicate commit ID already present on commit: " + duplicate);
 
         for (Tag tag : commit.tags())
             if ((duplicate = commitsByTag.get(tag.id())) != null)
-                throw new DataMigrationValidationException("Duplicate tag " + tag + " already present on commit: " + duplicate);
+                throw new DataMigrationVerificationException("Duplicate tag " + tag + " already present on commit: " + duplicate);
 
         commitsById.put(commit.id(), commit);
 
@@ -152,7 +152,7 @@ final class CommitsImpl implements Commits {
         if (commits.size() == 1)
             return commits.values().iterator().next();
         else
-            throw new DataMigrationValidationException("No latest commit available. There are " + commits.size() + " unmerged branches.");
+            throw new DataMigrationVerificationException("No latest commit available. There are " + commits.size() + " unmerged branches.");
     }
 
     @Override
@@ -245,7 +245,7 @@ final class CommitsImpl implements Commits {
 
                     if (e != null) {
                         if (e.getValue().size() > 1)
-                            throw new DataMigrationValidationException("Multiple predecessors for " + e.getKey() + ". Implicit parent cannot be detected: " + e.getValue());
+                            throw new DataMigrationVerificationException("Multiple predecessors for " + e.getKey() + ". Implicit parent cannot be detected: " + e.getValue());
                         else
                             commit.setParents(asList(new ParentType().withId(e.getValue().get(0))));
                     }
@@ -258,7 +258,7 @@ final class CommitsImpl implements Commits {
                         if (idToCommit.containsKey(parent))
                             commit.getParents().add(new ParentType().withId(parent));
                         else
-                            throw new DataMigrationValidationException("Parent " + parent + " is not defined");
+                            throw new DataMigrationVerificationException("Parent " + parent + " is not defined");
                 }
 
                 commit
@@ -305,19 +305,19 @@ final class CommitsImpl implements Commits {
             CommitType c1 = map.get(parents.get(0).getId());
 
             if (c1 == null)
-                throw new DataMigrationValidationException("Parent not found: " + parents.get(0).getId());
+                throw new DataMigrationVerificationException("Parent not found: " + parents.get(0).getId());
 
             p1 = load(map, c1);
             if (size == 2) {
                 CommitType c2 = map.get(parents.get(1).getId());
 
                 if (c2 == null)
-                    throw new DataMigrationValidationException("Parent not found: " + parents.get(0).getId());
+                    throw new DataMigrationVerificationException("Parent not found: " + parents.get(0).getId());
 
                 p2 = load(map, c2);
             }
             else if (size > 2)
-                throw new DataMigrationValidationException("Merging more than two parents not yet supported");
+                throw new DataMigrationVerificationException("Merging more than two parents not yet supported");
         }
 
         result = p2 == null

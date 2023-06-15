@@ -82,7 +82,7 @@ import org.jooq.conf.MigrationSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
-import org.jooq.exception.DataMigrationValidationException;
+import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 
@@ -172,18 +172,18 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     @Override
-    public final void validate() {
-        validate0(migrationContext());
+    public final void verify() {
+        verify0(migrationContext());
     }
 
-    private final void validate0(DefaultMigrationContext ctx) {
+    private final void verify0(DefaultMigrationContext ctx) {
         HistoryRecord currentRecord = currentHistoryRecord();
 
         if (currentRecord != null) {
             Commit currentCommit = commits().get(currentRecord.getMigratedTo());
 
             if (currentCommit == null)
-                throw new DataMigrationValidationException("Version currently installed is not available from CommitProvider: " + currentRecord.getMigratedTo());
+                throw new DataMigrationVerificationException("Version currently installed is not available from CommitProvider: " + currentRecord.getMigratedTo());
         }
 
         validateCommitProvider(ctx, from());
@@ -193,11 +193,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     private final void validateCommitProvider(DefaultMigrationContext ctx, Commit commit) {
         if (commits().get(commit.id()) == null)
-            throw new DataMigrationValidationException("Commit is not available from CommitProvider: " + commit.id());
+            throw new DataMigrationVerificationException("Commit is not available from CommitProvider: " + commit.id());
 
         for (Schema schema : lookup(commit.meta().getSchemas()))
             if (!ctx.migratedSchemas().contains(schema))
-                throw new DataMigrationValidationException("Schema is referenced from commit, but not configured for migration: " + schema);
+                throw new DataMigrationVerificationException("Schema is referenced from commit, but not configured for migration: " + schema);
     }
 
     private final Collection<Schema> lookup(List<Schema> schemas) {
@@ -250,7 +250,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, HistoryRecord currentRecord) {
         if (ctx.revertUntrackedQueries.queries().length > 0)
             if (!TRUE.equals(dsl().settings().isMigrationRevertUntracked()))
-                throw new DataMigrationValidationException(
+                throw new DataMigrationVerificationException(
                     "Non-empty difference between actual schema and migration from schema: " + ctx.revertUntrackedQueries +
                     (currentRecord == null ? ("\n\nUse Settings.migrationAutoBaseline to automatically set a baseline") : "")
                 );
@@ -301,8 +301,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 DefaultMigrationContext ctx = migrationContext();
                 MigrationListener listener = new MigrationListeners(configuration);
 
-                if (!FALSE.equals(dsl().settings().isMigrationAutoValidation()))
-                    validate0(ctx);
+                if (!FALSE.equals(dsl().settings().isMigrationAutoVerification()))
+                    verify0(ctx);
 
                 try {
                     listener.migrationStart(ctx);
@@ -459,7 +459,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             Commit result = TRUE.equals(settings().isMigrationAutoBaseline()) ? to() : to().root();
 
             if (result == null)
-                throw new DataMigrationValidationException("CommitProvider did not provide a root version for " + to().id());
+                throw new DataMigrationVerificationException("CommitProvider did not provide a root version for " + to().id());
 
             return result;
         }
@@ -467,7 +467,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             Commit result = commits().get(currentRecord.getMigratedTo());
 
             if (result == null)
-                throw new DataMigrationValidationException("CommitProvider did not provide a version for " + currentRecord.getMigratedTo());
+                throw new DataMigrationVerificationException("CommitProvider did not provide a version for " + currentRecord.getMigratedTo());
 
             return result;
         }

@@ -45,20 +45,20 @@ import org.jooq.Migration;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * The jOOQ Migrations migrate mojo
+ * The jOOQ Migrations verify mojo
  *
  * @author Lukas Eder
  */
 @Mojo(
-    name = "migrate",
+    name = "verify",
     defaultPhase = GENERATE_SOURCES,
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class MigrateMojo extends AbstractMigrateMojo {
+public class VerifyMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
-        migration.execute();
+        migration.verify();
     }
 }

@@ -1477,8 +1477,8 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="migrationAutoValidation" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether a migration automatically runs a validation first.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="migrationAutoVerification" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether a migration automatically runs a verification first.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="migrationIgnoreDefaultTimestampPrecisionDiffs" type="boolean" minOccurs="0" maxOccurs="1" default="true">

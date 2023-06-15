@@ -35,30 +35,35 @@
  *
  *
  */
-package org.jooq.codegen.maven;
+package org.jooq.exception;
 
-import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
-import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
-
+import org.jooq.Commits;
 import org.jooq.Migration;
 
-import org.apache.maven.plugins.annotations.Mojo;
-
 /**
- * The jOOQ Migrations migrate mojo
+ * An error occurred while running {@link Migration#verify()} or
+ * {@link Commits#load(java.io.File)}, etc.
  *
  * @author Lukas Eder
  */
-@Mojo(
-    name = "migrate",
-    defaultPhase = GENERATE_SOURCES,
-    requiresDependencyResolution = TEST,
-    threadSafe = true
-)
-public class MigrateMojo extends AbstractMigrateMojo {
+public class DataMigrationVerificationException extends DataMigrationException {
 
-    @Override
-    final void execute1(Migration migration) throws Exception {
-        migration.execute();
+    /**
+     * Constructor for DataMigrationVerificationException.
+     *
+     * @param message the detail message
+     */
+    public DataMigrationVerificationException(String message) {
+        super(message);
+    }
+
+    /**
+     * Constructor for DataMigrationVerificationException.
+     *
+     * @param message the detail message
+     * @param cause the cause
+     */
+    public DataMigrationVerificationException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

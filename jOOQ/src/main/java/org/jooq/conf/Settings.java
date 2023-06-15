@@ -464,7 +464,7 @@ public class Settings
     @XmlElement(defaultValue = "false")
     protected Boolean migrationAutoBaseline = false;
     @XmlElement(defaultValue = "true")
-    protected Boolean migrationAutoValidation = true;
+    protected Boolean migrationAutoVerification = true;
     @XmlElement(defaultValue = "true")
     protected Boolean migrationIgnoreDefaultTimestampPrecisionDiffs = true;
     @XmlElement(type = String.class)
@@ -5427,27 +5427,27 @@ public class Settings
     }
 
     /**
-     * Whether a migration automatically runs a validation first.
+     * Whether a migration automatically runs a verification first.
      * 
      * @return
      *     possible object is
      *     {@link Boolean }
      *     
      */
-    public Boolean isMigrationAutoValidation() {
-        return migrationAutoValidation;
+    public Boolean isMigrationAutoVerification() {
+        return migrationAutoVerification;
     }
 
     /**
-     * Sets the value of the migrationAutoValidation property.
+     * Sets the value of the migrationAutoVerification property.
      * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *     
      */
-    public void setMigrationAutoValidation(Boolean value) {
-        this.migrationAutoValidation = value;
+    public void setMigrationAutoVerification(Boolean value) {
+        this.migrationAutoVerification = value;
     }
 
     /**
@@ -7280,8 +7280,8 @@ public class Settings
         return this;
     }
 
-    public Settings withMigrationAutoValidation(Boolean value) {
-        setMigrationAutoValidation(value);
+    public Settings withMigrationAutoVerification(Boolean value) {
+        setMigrationAutoVerification(value);
         return this;
     }
 
@@ -7745,7 +7745,7 @@ public class Settings
         builder.append("migrationAllowsUndo", migrationAllowsUndo);
         builder.append("migrationRevertUntracked", migrationRevertUntracked);
         builder.append("migrationAutoBaseline", migrationAutoBaseline);
-        builder.append("migrationAutoValidation", migrationAutoValidation);
+        builder.append("migrationAutoVerification", migrationAutoVerification);
         builder.append("migrationIgnoreDefaultTimestampPrecisionDiffs", migrationIgnoreDefaultTimestampPrecisionDiffs);
         builder.append("locale", locale);
         builder.append("parseDialect", parseDialect);
@@ -9522,12 +9522,12 @@ public class Settings
                 return false;
             }
         }
-        if (migrationAutoValidation == null) {
-            if (other.migrationAutoValidation!= null) {
+        if (migrationAutoVerification == null) {
+            if (other.migrationAutoVerification!= null) {
                 return false;
             }
         } else {
-            if (!migrationAutoValidation.equals(other.migrationAutoValidation)) {
+            if (!migrationAutoVerification.equals(other.migrationAutoVerification)) {
                 return false;
             }
         }
@@ -9973,7 +9973,7 @@ public class Settings
         result = ((prime*result)+((migrationAllowsUndo == null)? 0 :migrationAllowsUndo.hashCode()));
         result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
         result = ((prime*result)+((migrationAutoBaseline == null)? 0 :migrationAutoBaseline.hashCode()));
-        result = ((prime*result)+((migrationAutoValidation == null)? 0 :migrationAutoValidation.hashCode()));
+        result = ((prime*result)+((migrationAutoVerification == null)? 0 :migrationAutoVerification.hashCode()));
         result = ((prime*result)+((migrationIgnoreDefaultTimestampPrecisionDiffs == null)? 0 :migrationIgnoreDefaultTimestampPrecisionDiffs.hashCode()));
         result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));

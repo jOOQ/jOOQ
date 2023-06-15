@@ -35,35 +35,38 @@
  *
  *
  */
-package org.jooq.exception;
+package org.jooq.codegen.maven;
 
-import org.jooq.Commits;
+import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
+import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
+
 import org.jooq.Migration;
+import org.jooq.Query;
+import org.jooq.tools.StringUtils;
+
+import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * An error occurred while running {@link Migration#validate()} or
- * {@link Commits#load(java.io.File)}, etc.
+ * The jOOQ Migrations migrate mojo
  *
  * @author Lukas Eder
  */
-public class DataMigrationValidationException extends DataMigrationException {
+@Mojo(
+    name = "log",
+    defaultPhase = GENERATE_SOURCES,
+    requiresDependencyResolution = TEST,
+    threadSafe = true
+)
+public class LogMojo extends AbstractMigrateMojo {
 
-    /**
-     * Constructor for DataMigrationValidationException.
-     *
-     * @param message the detail message
-     */
-    public DataMigrationValidationException(String message) {
-        super(message);
-    }
+    @Override
+    final void execute1(Migration migration) throws Exception {
+        if (getLog().isInfoEnabled()) {
+            Query[] queries = migration.queries().queries();
+            int pad = ("" + queries.length).length();
 
-    /**
-     * Constructor for DataMigrationValidationException.
-     *
-     * @param message the detail message
-     * @param cause the cause
-     */
-    public DataMigrationValidationException(String message, Throwable cause) {
-        super(message, cause);
+            for (int i = 0; i < queries.length; i++)
+                getLog().info("  Query " + StringUtils.leftPad("" + (i + 1), pad) + ": " + queries[i]);
+        }
     }
 }

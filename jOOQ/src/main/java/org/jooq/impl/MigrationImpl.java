@@ -426,7 +426,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
         // [#8301] Find a better way to test if our table already exists
         try {
-            historyCtx.fetchExists(HISTORY);
+            Configuration c = historyCtx
+                .configuration()
+                .derive();
+            c.data("org.jooq.tools.LoggerListener.exception.mute", true);
+            c.dsl().fetchExists(HISTORY);
             return true;
         }
         catch (DataAccessException ignore) {}

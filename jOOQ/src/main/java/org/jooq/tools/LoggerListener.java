@@ -236,7 +236,10 @@ public class LoggerListener implements ExecuteListener {
 
     @Override
     public void exception(ExecuteContext ctx) {
-        if (log.isDebugEnabled())
+
+        // [#9506] An internal, undocumented flag that allows for muting exception logging of
+        //         "expected" exceptions.
+        if (log.isDebugEnabled() && ctx.configuration().data("org.jooq.tools.LoggerListener.exception.mute") == null)
             log.debug("Exception", ctx.exception());
     }
 

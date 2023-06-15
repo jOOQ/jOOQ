@@ -77,7 +77,7 @@ final class MigrationsImpl implements Migrations {
 
     @Override
     public final Commits commits() {
-        return new CommitsImpl(ctx.configuration(), new CommitImpl(ctx.configuration(), "init", null, null, emptyList(), emptyList()));
+        return new CommitsImpl(ctx.configuration(), new CommitImpl(ctx.configuration(), "init", "init", null, emptyList(), emptyList()));
     }
 
     @Override

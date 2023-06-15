@@ -423,6 +423,10 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         files.clear();
     }
 
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
     @Override
     public int hashCode() {
         return id().hashCode();

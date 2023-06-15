@@ -81,6 +81,17 @@ public interface Migrations {
     Commits commits();
 
     /**
+     * Retrieve the {@link History} of previously installed {@link Version}
+     * objects from the database.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
+     */
+    @Experimental
+    @NotNull
+    History history();
+
+    /**
      * Create a migration from the currently installed version to a new version.
      * <p>
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ

@@ -37,38 +37,50 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.NotNull;
+import org.jooq.exception.DataMigrationVerificationException;
+
 import org.jetbrains.annotations.ApiStatus.Experimental;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * A set of files that are in a specific order.
- * <p>
- * This type will help make sure that duplicate occurrences of the same file
- * (e.g. edits) are streamlined.
+ * The History of {@link Version} elements as installed by previous
+ * {@link Migrations}.
  * <p>
  * This is EXPERIMENTAL functionality and subject to change in future jOOQ
  * versions.
+ *
+ * @author Lukas Eder
  */
 @Experimental
-public interface Files extends Iterable<File> {
+public interface History extends Iterable<Version> {
 
     /**
-     * The from version from which this migration is done.
+     * The root {@link Version}.
+     * <p>
+     * This corresponds to the {@link Configuration#commitProvider()}'s
+     * {@link Commits#root()} if migrations have been initialised on the
+     * configured database.
      * <p>
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.
+     *
+     * @throws DataMigrationVerificationException If no root version is
+     *             available (e.g. because no migration has happened yet).
      */
     @NotNull
     @Experimental
-    Version from();
+    Version root() throws DataMigrationVerificationException;
 
     /**
-     * The to version to which this migration is done.
+     * The currently installed {@link Version}.
      * <p>
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.
+     *
+     * @throws DataMigrationVerificationException If no root version is
+     *             available (e.g. because no migration has happened yet).
      */
     @NotNull
     @Experimental
-    Version to();
+    Version current();
 }

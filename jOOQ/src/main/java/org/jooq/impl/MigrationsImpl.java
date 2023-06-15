@@ -41,9 +41,10 @@ import static java.util.Collections.emptyList;
 
 import org.jooq.Commit;
 import org.jooq.Commits;
+import org.jooq.Configuration;
 import org.jooq.ContentType;
-import org.jooq.DSLContext;
 import org.jooq.File;
+import org.jooq.History;
 import org.jooq.Migration;
 import org.jooq.Migrations;
 import org.jooq.Version;
@@ -51,12 +52,10 @@ import org.jooq.Version;
 /**
  * @author Lukas Eder
  */
-final class MigrationsImpl implements Migrations {
+final class MigrationsImpl extends AbstractScope implements Migrations {
 
-    final DSLContext ctx;
-
-    MigrationsImpl(DSLContext ctx) {
-        this.ctx = ctx;
+    MigrationsImpl(Configuration configuration) {
+        super(configuration);
     }
 
     @Override
@@ -65,17 +64,22 @@ final class MigrationsImpl implements Migrations {
     }
 
     @Override
+    public final History history() {
+        return new HistoryImpl(configuration());
+    }
+
+    @Override
     public final Version version(String id) {
-        return new VersionImpl(ctx, id);
+        return new VersionImpl(configuration(), id);
     }
 
     @Override
     public final Commits commits() {
-        return new CommitsImpl(ctx.configuration(), new CommitImpl(ctx.configuration(), "init", "init", null, emptyList(), emptyList()));
+        return new CommitsImpl(configuration(), new CommitImpl(configuration(), "init", "init", null, emptyList(), emptyList()));
     }
 
     @Override
     public final Migration migrateTo(Commit to) {
-        return new MigrationImpl(ctx.configuration(), to);
+        return new MigrationImpl(configuration(), to);
     }
 }

@@ -39,26 +39,19 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.History.HISTORY;
+import static org.jooq.impl.HistoryImpl.initCtx;
 import static org.jooq.impl.MigrationImpl.Status.FAILURE;
 import static org.jooq.impl.MigrationImpl.Status.MIGRATING;
 import static org.jooq.impl.MigrationImpl.Status.REVERTING;
 import static org.jooq.impl.MigrationImpl.Status.STARTING;
 import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
-import static org.jooq.tools.StringUtils.isBlank;
 
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.jooq.Commit;
@@ -66,7 +59,6 @@ import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.ContextTransactionalRunnable;
-import org.jooq.DSLContext;
 import org.jooq.Files;
 import org.jooq.Meta;
 import org.jooq.Migration;
@@ -75,11 +67,6 @@ import org.jooq.MigrationListener;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
-import org.jooq.conf.InterpreterSearchSchema;
-import org.jooq.conf.MappedCatalog;
-import org.jooq.conf.MappedSchema;
-import org.jooq.conf.MigrationSchema;
-import org.jooq.conf.RenderMapping;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationVerificationException;
@@ -92,7 +79,7 @@ import org.jooq.tools.StopWatch;
 final class MigrationImpl extends AbstractScope implements Migration {
 
     static final JooqLogger log       = JooqLogger.getLogger(Migration.class);
-    final DSLContext        historyCtx;
+    final HistoryImpl       history;
     final Commit            to;
     Commit                  from;
     Queries                 queries;
@@ -105,38 +92,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         ));
 
         this.to = to;
-        this.historyCtx = initCtx(configuration(), configuration.settings().getMigrationHistorySchema()).dsl();
-    }
-
-    private static final Configuration initCtx(Configuration configuration, MigrationSchema defaultSchema) {
-        if (defaultSchema != null) {
-            Configuration result = configuration.derive();
-
-            if (!isBlank(defaultSchema.getCatalog())) {
-                result.settings().withRenderMapping(new RenderMapping()
-                    .withCatalogs(new MappedCatalog()
-                        .withInput("")
-                        .withOutput(defaultSchema.getCatalog())
-                        .withSchemata(new MappedSchema()
-                            .withInput("")
-                            .withOutput(defaultSchema.getSchema())
-                        )
-                    )
-                );
-            }
-            else if (!isBlank(defaultSchema.getSchema())) {
-                result.settings().withRenderMapping(new RenderMapping()
-                    .withSchemata(new MappedSchema()
-                        .withInput("")
-                        .withOutput(defaultSchema.getSchema())
-                    )
-                );
-            }
-
-            return result;
-        }
-        else
-            return configuration;
+        this.history = new HistoryImpl(configuration());
     }
 
     @Override
@@ -177,7 +133,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final void verify0(DefaultMigrationContext ctx) {
-        HistoryRecord currentRecord = currentHistoryRecord();
+        HistoryRecord currentRecord = history.currentHistoryRecord();
 
         if (currentRecord != null) {
             Commit currentCommit = commits().get(currentRecord.getMigratedTo());
@@ -195,29 +151,9 @@ final class MigrationImpl extends AbstractScope implements Migration {
         if (commits().get(commit.id()) == null)
             throw new DataMigrationVerificationException("Commit is not available from CommitProvider: " + commit.id());
 
-        for (Schema schema : lookup(commit.meta().getSchemas()))
+        for (Schema schema : history.lookup(commit.meta().getSchemas()))
             if (!ctx.migratedSchemas().contains(schema))
                 throw new DataMigrationVerificationException("Schema is referenced from commit, but not configured for migration: " + schema);
-    }
-
-    private final Collection<Schema> lookup(List<Schema> schemas) {
-
-        // TODO: Refactor usages of getInterpreterSearchPath()
-        Collection<Schema> result = schemas;
-        List<InterpreterSearchSchema> searchPath = dsl().settings().getInterpreterSearchPath();
-
-        if (!searchPath.isEmpty()) {
-            result = new HashSet<>();
-            Schema defaultSchema = schema(name(searchPath.get(0).getCatalog(), searchPath.get(0).getSchema()));
-
-            for (Schema schema : schemas)
-                if (schema.getQualifiedName().empty())
-                    result.add(defaultSchema);
-                else
-                    result.add(schema);
-        }
-
-        return result;
     }
 
     private final Queries revertUntrackedQueries(Set<Schema> includedSchemas) {
@@ -226,8 +162,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
         Meta existingMeta = dsl().meta().filterSchemas(includedSchemas::contains);
 
         Set<Schema> expectedSchemas = new HashSet<>();
-        expectedSchemas.addAll(lookup(from().meta().getSchemas()));
-        expectedSchemas.addAll(lookup(to().meta().getSchemas()));
+        expectedSchemas.addAll(history.lookup(from().meta().getSchemas()));
+        expectedSchemas.addAll(history.lookup(to().meta().getSchemas()));
         expectedSchemas.retainAll(includedSchemas);
 
         schemaLoop:
@@ -258,8 +194,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 execute(ctx, listener, ctx.revertUntrackedQueries);
     }
 
-    private final DefaultMigrationContext migrationContext() {
-        Set<Schema> schemas = schemas();
+    final DefaultMigrationContext migrationContext() {
+        Set<Schema> schemas = history.schemas();
 
         return new DefaultMigrationContext(
             configuration(),
@@ -269,25 +205,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
             queries(),
             revertUntrackedQueries(schemas)
         );
-    }
-
-    private final Set<Schema> schemas() {
-        Set<Schema> set = new LinkedHashSet<>();
-
-        for (MigrationSchema schema : configuration.settings().getMigrationSchemata())
-            addSchema(set, schema);
-
-        if (configuration.settings().getMigrationDefaultSchema() != null) {
-            addSchema(set, configuration.settings().getMigrationDefaultSchema());
-            set.add(DSL.schema(""));
-        }
-
-        return set;
-    }
-
-    private final void addSchema(Set<Schema> set, MigrationSchema schema) {
-        if (schema != null)
-            set.addAll(lookup(asList(schema(name(schema.getCatalog(), schema.getSchema())))));
     }
 
     @Override
@@ -355,7 +272,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             }
 
             private final HistoryRecord createRecord(Status status) {
-                HistoryRecord record = historyCtx.newRecord(HISTORY);
+                HistoryRecord record = history.historyCtx.newRecord(HISTORY);
 
                 record
                     .setJooqVersion(Constants.VERSION)
@@ -401,22 +318,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
      * History.
      */
     final void init() {
-
-        // TODO: What to do when initialising jOOQ-migrations on an existing database?
-        //       - Should there be init() commands that can be run explicitly by the user?
-        //       - Will we reverse engineer the production Meta snapshot first?
-        if (!existsHistory()) {
-
-            // TODO: [#9506] Make this schema creation vendor agnostic
-            // TODO: [#15225] This CREATE SCHEMA statement should never be necessary.
-            if (TRUE.equals(historyCtx.settings().isMigrationHistorySchemaCreateSchemaIfNotExists())
-                && historyCtx.settings().getMigrationHistorySchema() != null
-                || TRUE.equals(historyCtx.settings().isMigrationSchemataCreateSchemaIfNotExists())
-                && historyCtx.settings().getMigrationDefaultSchema() != null)
-                historyCtx.createSchemaIfNotExists("").execute();
-
-            historyCtx.meta(HISTORY).ddl().executeBatch();
-        }
+        history.init();
 
         MigrationContext ctx = migrationContext();
         if (TRUE.equals(ctx.settings().isMigrationSchemataCreateSchemaIfNotExists()))
@@ -424,36 +326,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 dsl().createSchemaIfNotExists(schema).execute();
     }
 
-    private final boolean existsHistory() {
-
-        // [#8301] Find a better way to test if our table already exists
-        try {
-            Configuration c = historyCtx
-                .configuration()
-                .derive();
-            c.data("org.jooq.tools.LoggerListener.exception.mute", true);
-            c.dsl().fetchExists(HISTORY);
-            return true;
-        }
-        catch (DataAccessException ignore) {}
-
-        return false;
-    }
-
-    private final HistoryRecord currentHistoryRecord() {
-        return existsHistory()
-            ? historyCtx.selectFrom(HISTORY)
-
-                   // TODO: How to recover from failure?
-                   .where(HISTORY.STATUS.eq(inline(SUCCESS)))
-                   .orderBy(HISTORY.MIGRATED_AT.desc(), HISTORY.ID.desc())
-                   .limit(1)
-                   .fetchOne()
-            : null;
-    }
-
     final Commit currentCommit() {
-        HistoryRecord currentRecord = currentHistoryRecord();
+        HistoryRecord currentRecord = history.currentHistoryRecord();
 
         if (currentRecord == null) {
             Commit result = TRUE.equals(settings().isMigrationAutoBaseline()) ? to() : to().root();
@@ -486,6 +360,18 @@ final class MigrationImpl extends AbstractScope implements Migration {
         }
     }
 
+    enum Status {
+        STARTING,
+        REVERTING,
+        MIGRATING,
+        SUCCESS,
+        FAILURE
+    }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -495,13 +381,5 @@ final class MigrationImpl extends AbstractScope implements Migration {
           .append(queries());
 
         return sb.toString();
-    }
-
-    enum Status {
-        STARTING,
-        REVERTING,
-        MIGRATING,
-        SUCCESS,
-        FAILURE
     }
 }

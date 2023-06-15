@@ -43,6 +43,9 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * A source of migration content.
+ * <p>
+ * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+ * versions.
  *
  * @author Lukas Eder
  */
@@ -51,25 +54,41 @@ public interface File {
 
     /**
      * The path of the file within the repository.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
      */
+    @Experimental
     @NotNull
     String path();
 
     /**
      * The name of the file.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
      */
+    @Experimental
     @NotNull
     String name();
 
     /**
      * The file content.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
      */
+    @Experimental
     @Nullable
     String content();
 
     /**
      * The file type.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
      */
+    @Experimental
     @NotNull
     ContentType type();
 }

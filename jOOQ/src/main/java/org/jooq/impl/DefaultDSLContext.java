@@ -175,6 +175,7 @@ import org.jooq.MergeKeyStep9;
 import org.jooq.MergeKeyStepN;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
+import org.jooq.Migrations;
 import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Parser;
@@ -393,8 +394,8 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.Migrations migrations() {
-        return new MigrationsImpl(this);
+    public Migrations migrations() {
+        return new MigrationsImpl(configuration());
     }
 
     @Override

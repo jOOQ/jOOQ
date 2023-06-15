@@ -124,6 +124,11 @@ public class MySQLDataType {
     protected static final DataType<String>     __LONGVARCHAR   = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARCHAR, "varchar", "char");
     protected static final DataType<byte[]>     __LONGVARBINARY = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "varbinary", "binary");
 
+    protected static final DataType<BigDecimal> __DECIMALUNSIGNED = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "decimal unsigned", "decimal");
+    protected static final DataType<Double>     __DOUBLEUNSIGNED  = new BuiltInDataType<>(FAMILY, SQLDataType.DOUBLE, "double unsigned", "decimal");
+    protected static final DataType<Double>     __FLOATUNSIGNED   = new BuiltInDataType<>(FAMILY, SQLDataType.FLOAT, "float unsigned", "decimal");
+    protected static final DataType<Float>      __REALUNSIGNED    = new BuiltInDataType<>(FAMILY, SQLDataType.REAL, "real unsigned", "decimal");
+
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------

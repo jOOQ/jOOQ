@@ -71,16 +71,19 @@ public interface Commit extends Node<Commit> {
     /**
      * The tags associated with this commit, in no particular order.
      */
+    @NotNull
     Collection<Tag> tags();
 
     /**
      * Add a tag to this commit, returning a copy of the commit itself.
      */
+    @NotNull
     Commit tag(String id);
 
     /**
      * Add a tag to this commit, returning a copy of the commit itself.
      */
+    @NotNull
     Commit tag(String id, String message);
 
     /**

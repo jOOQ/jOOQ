@@ -105,6 +105,7 @@ public interface Commits extends Iterable<Commit> {
      *
      * @return The same instance.
      */
+    @NotNull
     Commits add(Commit commit);
 
     /**
@@ -112,6 +113,7 @@ public interface Commits extends Iterable<Commit> {
      *
      * @return The same instance.
      */
+    @NotNull
     Commits addAll(Commit... commits);
 
     /**
@@ -119,6 +121,7 @@ public interface Commits extends Iterable<Commit> {
      *
      * @return The same instance.
      */
+    @NotNull
     Commits addAll(Collection<? extends Commit> commits);
 
     /**

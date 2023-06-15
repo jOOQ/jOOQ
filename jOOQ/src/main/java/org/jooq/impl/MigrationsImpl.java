@@ -47,7 +47,6 @@ import org.jooq.File;
 import org.jooq.Migration;
 import org.jooq.Migrations;
 import org.jooq.Version;
-import org.jooq.Versions;
 
 /**
  * @author Lukas Eder
@@ -67,12 +66,7 @@ final class MigrationsImpl implements Migrations {
 
     @Override
     public final Version version(String id) {
-        return new VersionImpl(ctx, id, null, null, new Version[0]);
-    }
-
-    @Override
-    public final Versions versions() {
-        return new VersionsImpl(version("init"));
+        return new VersionImpl(ctx, id);
     }
 
     @Override

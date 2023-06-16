@@ -49,21 +49,28 @@ class History extends TableImpl<HistoryRecord> {
     final TableField<HistoryRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.nullable(false).identity(true), this, "The database version ID.");
 
     /**
+     * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_AT</code>. The date/time
+     * when the database version was migrated to.
+     */
+    final TableField<HistoryRecord, Timestamp> MIGRATED_AT = createField(DSL.name("MIGRATED_AT"), SQLDataType.TIMESTAMP(6).nullable(false), this, "The date/time when the database version was migrated to.");
+
+    /**
      * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_FROM</code>. The
      * previous database version ID.
      */
     final TableField<HistoryRecord, String> MIGRATED_FROM = createField(DSL.name("MIGRATED_FROM"), SQLDataType.VARCHAR(255).nullable(false), this, "The previous database version ID.");
 
     /**
-     * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO</code>.
+     * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO</code>. The current
+     * database version ID.
      */
-    final TableField<HistoryRecord, String> MIGRATED_TO = createField(DSL.name("MIGRATED_TO"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    final TableField<HistoryRecord, String> MIGRATED_TO = createField(DSL.name("MIGRATED_TO"), SQLDataType.VARCHAR(255).nullable(false), this, "The current database version ID.");
 
     /**
-     * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_AT</code>. The date/time
-     * when the database version was migrated to.
+     * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_TAGS</code>. The
+     * current database version tags, if any, in JSON array format.
      */
-    final TableField<HistoryRecord, Timestamp> MIGRATED_AT = createField(DSL.name("MIGRATED_AT"), SQLDataType.TIMESTAMP(6).nullable(false), this, "The date/time when the database version was migrated to.");
+    final TableField<HistoryRecord, String> MIGRATED_TO_TAGS = createField(DSL.name("MIGRATED_TO_TAGS"), SQLDataType.CLOB.nullable(false), this, "The current database version tags, if any, in JSON array format.");
 
     /**
      * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATION_TIME</code>. The time

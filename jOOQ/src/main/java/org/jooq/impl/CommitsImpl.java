@@ -168,12 +168,13 @@ final class CommitsImpl implements Commits {
 
     // [#9506] TODO: Formalise this decoding, and make it part of the public API
     static final class FileData {
-        final java.io.File file;
-        final String       basename;
-        final String       version;
-        final String       message;
-        final String       id;
-        final List<String> parentIds;
+        final java.io.File  file;
+        final String        basename;
+        final String        version;
+        final String        message;
+        final List<TagType> tags;
+        final String        id;
+        final List<String>  parentIds;
 
         FileData(java.io.File file) {
             this.file = file;
@@ -184,19 +185,27 @@ final class CommitsImpl implements Commits {
             /*
              * An example:
              * -----------
-             * v1-a
-             * v2-ab, v2-ac
+             * v1-a,tag1,tag2
+             * v2-ab
+             * v2-ac
              * v3-acd
              * v3-abc.v2-ab,v2-ac
-             * v4-abcd.v3-abc,v3-acd
+             * v4-abcd,tag4.v3-abc,v3-acd
              */
             String[] idAndParentsArray = basename.split("\\.");
-            this.id = idAndParentsArray[0];
+            String[] idAndTagsArray = idAndParentsArray[0].split(",");
+            this.id = idAndTagsArray[0];
             this.parentIds = idAndParentsArray.length > 1 ? asList(idAndParentsArray[1].split(",")) : asList();
 
             String[] idArray = this.id.split("-");
             this.version = idArray[0];
             this.message = idArray.length > 1 ? idArray[1] : null;
+
+            this.tags = new ArrayList<>();
+            for (int i = 1; i < idAndTagsArray.length; i++) {
+                String[] tagArray = idAndTagsArray[i].split("-");
+                this.tags.add(new TagType().withId(tagArray[0]).withMessage(tagArray.length > 1 ? tagArray[1] : null));
+            }
         }
     }
 
@@ -263,6 +272,7 @@ final class CommitsImpl implements Commits {
 
                 commit
                     .withMessage(f.message)
+                    .withTags(f.tags)
 
                     // [#9506] TODO: Better define paths, relative paths, etc.
                     // [#9506] TOOD: Support other ContentType values than INCREMENT

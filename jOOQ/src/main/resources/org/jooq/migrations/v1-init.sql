@@ -1,8 +1,9 @@
 CREATE TABLE jooq_migration_history (
   id                 BIGINT       NOT NULL IDENTITY,
+  migrated_at        TIMESTAMP    NOT NULL,
   migrated_from      VARCHAR(255) NOT NULL,
   migrated_to        VARCHAR(255) NOT NULL,
-  migrated_at        TIMESTAMP    NOT NULL,
+  migrated_to_tags   CLOB         NOT NULL,
   migration_time     BIGINT           NULL,
   jooq_version       VARCHAR(50)  NOT NULL,
   sql                CLOB             NULL,
@@ -21,8 +22,10 @@ CREATE INDEX jooq_migr_hist_i1 ON jooq_migration_history (migrated_at);
 
 COMMENT ON TABLE  jooq_migration_history                    IS 'The migration history of jOOQ Migrations.';
 COMMENT ON COLUMN jooq_migration_history.id                 IS 'The database version ID.';
-COMMENT ON COLUMN jooq_migration_history.migrated_from      IS 'The previous database version ID.';
 COMMENT ON COLUMN jooq_migration_history.migrated_at        IS 'The date/time when the database version was migrated to.';
+COMMENT ON COLUMN jooq_migration_history.migrated_from      IS 'The previous database version ID.';
+COMMENT ON COLUMN jooq_migration_history.migrated_to        IS 'The current database version ID.';
+COMMENT ON COLUMN jooq_migration_history.migrated_to_tags   IS 'The current database version tags, if any, in JSON array format.';
 COMMENT ON COLUMN jooq_migration_history.migration_time     IS 'The time in milliseconds it took to migrate to this database version.';
 COMMENT ON COLUMN jooq_migration_history.jooq_version       IS 'The jOOQ version used to migrate to this database version.';
 COMMENT ON COLUMN jooq_migration_history.sql_count          IS 'The number of SQL statements that were run to install this database version.';

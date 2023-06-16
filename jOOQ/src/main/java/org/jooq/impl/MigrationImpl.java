@@ -50,6 +50,7 @@ import static org.jooq.impl.MigrationImpl.Status.MIGRATING;
 import static org.jooq.impl.MigrationImpl.Status.REVERTING;
 import static org.jooq.impl.MigrationImpl.Status.STARTING;
 import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
+import static org.jooq.impl.Tools.map;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -70,12 +71,14 @@ import org.jooq.MigrationListener;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
+import org.jooq.Tag;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.json.JSONArray;
 
 /**
  * @author Lukas Eder
@@ -308,6 +311,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             .setMigratedAt(new Timestamp(dsl().configuration().clock().instant().toEpochMilli()))
             .setMigratedFrom(from().id())
             .setMigratedTo(to().id())
+            .setMigratedToTags(new JSONArray(map(to().tags(), Tag::id)).toString())
             .setMigrationTime(0L)
             .setSql(queries().toString())
             .setSqlCount(queries().queries().length)

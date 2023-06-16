@@ -39,6 +39,7 @@ package org.jooq.codegen.maven;
 
 public class Jdbc {
 
+    public String driver;
     public String url;
     public String user;
     public String username;

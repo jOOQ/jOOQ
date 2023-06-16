@@ -163,6 +163,9 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
             if (jdbc == null || jdbc.url == null)
                 throw new MojoExecutionException("JDBC URL is required");
 
+            if (jdbc.driver != null)
+                Class.forName(jdbc.driver);
+
             try (CloseableDSLContext ctx = DSL.using(jdbc.url, defaultIfNull(jdbc.user, jdbc.username), jdbc.password)) {
 
                 // Initialise Settings

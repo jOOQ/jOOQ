@@ -44,12 +44,15 @@ import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
 import static org.jooq.impl.History.HISTORY;
 import static org.jooq.impl.HistoryImpl.initCtx;
+import static org.jooq.impl.MigrationImpl.Resolution.OPEN;
 import static org.jooq.impl.MigrationImpl.Status.FAILURE;
 import static org.jooq.impl.MigrationImpl.Status.MIGRATING;
 import static org.jooq.impl.MigrationImpl.Status.REVERTING;
 import static org.jooq.impl.MigrationImpl.Status.STARTING;
 import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -72,13 +75,14 @@ import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
  */
 final class MigrationImpl extends AbstractScope implements Migration {
 
-    static final JooqLogger log       = JooqLogger.getLogger(Migration.class);
+    static final JooqLogger log = JooqLogger.getLogger(Migration.class);
     final HistoryImpl       history;
     final Commit            to;
     Commit                  from;
@@ -133,9 +137,19 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final void verify0(DefaultMigrationContext ctx) {
-        HistoryRecord currentRecord = history.currentHistoryRecord();
+        HistoryRecord currentRecord = history.currentHistoryRecord(false);
 
         if (currentRecord != null) {
+            switch (currentRecord.getStatus()) {
+                case FAILURE:
+                    throw new DataMigrationVerificationException("Previous migration attempt from " + currentRecord.getMigratedFrom() + " to " + currentRecord.getMigratedTo() + " has failed. Please resolve before migrating.");
+
+                case STARTING:
+                case REVERTING:
+                case MIGRATING:
+                    throw new DataMigrationVerificationException("Ongoing migration from " + currentRecord.getMigratedFrom() + " to " + currentRecord.getMigratedTo() + ". Please wait until it has finished.");
+            }
+
             Commit currentCommit = commits().get(currentRecord.getMigratedTo());
 
             if (currentCommit == null)
@@ -212,88 +226,107 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
         // TODO: Transactions don't really make sense in most dialects. In some, they do
         //       e.g. PostgreSQL supports transactional DDL. Check if we're getting this right.
-        run(new ContextTransactionalRunnable() {
-            @Override
-            public void run() {
-                DefaultMigrationContext ctx = migrationContext();
-                MigrationListener listener = new MigrationListeners(configuration);
+        run(() -> {
+            DefaultMigrationContext ctx = migrationContext();
+            MigrationListener listener = new MigrationListeners(configuration);
 
-                if (!FALSE.equals(dsl().settings().isMigrationAutoVerification()))
-                    verify0(ctx);
+            if (!FALSE.equals(dsl().settings().isMigrationAutoVerification()))
+                verify0(ctx);
+
+            try {
+                listener.migrationStart(ctx);
+
+                if (from().equals(to())) {
+                    log.info("jOOQ Migrations", "Version " + to().id() + " is already installed as the current version.");
+                    return;
+                }
+
+                // TODO: Implement preconditions
+                // TODO: Implement a listener with a variety of pro / oss features
+                // TODO: Implement additional out-of-the-box sanity checks
+                // TODO: Allow undo migrations only if enabled explicitly
+                // TODO: Add some migration settings, e.g. whether HISTORY.SQL should be filled
+                // TODO: Migrate the HISTORY table with the Migration API
+                // TODO: Create an Enum for HISTORY.STATUS
+                // TODO: Add HISTORY.USERNAME and HOSTNAME columns
+                // TODO: Add HISTORY.COMMENTS column
+                // TODO: Replace (MIGRATED_AT, MIGRATION_TIME) by (MIGRATION_START, MIGRATION_END)
+
+                log.info("jOOQ Migrations", "Version " + from().id() + " is being migrated to " + to().id());
+
+                StopWatch watch = new StopWatch();
+
+                // TODO: Make logging configurable
+                if (log.isDebugEnabled())
+                    for (Query query : queries())
+                        log.debug("jOOQ Migrations", dsl().renderInlined(query));
+
+                HistoryRecord record = createRecord(STARTING);
 
                 try {
-                    listener.migrationStart(ctx);
-
-                    if (from().equals(to())) {
-                        log.info("jOOQ Migrations", "Version " + to().id() + " is already installed as the current version.");
-                        return;
-                    }
-
-                    // TODO: Implement preconditions
-                    // TODO: Implement a listener with a variety of pro / oss features
-                    // TODO: Implement additional out-of-the-box sanity checks
-                    // TODO: Allow undo migrations only if enabled explicitly
-                    // TODO: Add some migration settings, e.g. whether HISTORY.SQL should be filled
-                    // TODO: Migrate the HISTORY table with the Migration API
-                    // TODO: Create an Enum for HISTORY.STATUS
-                    // TODO: Add HISTORY.USERNAME and HOSTNAME columns
-                    // TODO: Add HISTORY.COMMENTS column
-                    // TODO: Replace (MIGRATED_AT, MIGRATION_TIME) by (MIGRATION_START, MIGRATION_END)
-
-                    log.info("jOOQ Migrations", "Version " + from().id() + " is migrated to " + to().id());
-
-                    StopWatch watch = new StopWatch();
-
-                    // TODO: Make logging configurable
-                    if (log.isDebugEnabled())
-                        for (Query query : queries())
-                            log.debug("jOOQ Migrations", dsl().renderInlined(query));
-
-                    HistoryRecord record = createRecord(STARTING);
-
-                    try {
-                        log(watch, record, REVERTING);
-                        revertUntracked(ctx, listener, record);
-                        log(watch, record, MIGRATING);
-                        execute(ctx, listener, queries());
-                        log(watch, record, SUCCESS);
-                    }
-                    catch (DataAccessException e) {
-
-                        // TODO: Make sure this is committed, given that we're re-throwing the exception.
-                        // TODO: How can we recover from failure?
-                        log(watch, record, FAILURE);
-                        throw e;
-                    }
+                    log(watch, record, REVERTING);
+                    revertUntracked(ctx, listener, record);
+                    log(watch, record, MIGRATING);
+                    execute(ctx, listener, queries());
+                    log(watch, record, SUCCESS);
                 }
-                finally {
-                    listener.migrationEnd(ctx);
+                catch (Exception e) {
+                    StringWriter s = new StringWriter();
+                    e.printStackTrace(new PrintWriter(s));
+
+                    log.error("jOOQ Migrations", "Version " + from().id() + " migration to " + to().id() + " failed: " + e.getMessage());
+                    log(watch, record, FAILURE, OPEN, s.toString());
+                    throw new DataMigrationRedoLogException(record, e);
                 }
             }
-
-            private final HistoryRecord createRecord(Status status) {
-                HistoryRecord record = history.historyCtx.newRecord(HISTORY);
-
-                record
-                    .setJooqVersion(Constants.VERSION)
-                    .setMigratedAt(new Timestamp(dsl().configuration().clock().instant().toEpochMilli()))
-                    .setMigratedFrom(from().id())
-                    .setMigratedTo(to().id())
-                    .setMigrationTime(0L)
-                    .setSql(queries().toString())
-                    .setSqlCount(queries().queries().length)
-                    .setStatus(status)
-                    .insert();
-
-                return record;
-            }
-
-            private final void log(StopWatch watch, HistoryRecord record, Status status) {
-                record.setMigrationTime(watch.split() / 1000000L)
-                      .setStatus(status)
-                      .update();
+            finally {
+                listener.migrationEnd(ctx);
             }
         });
+    }
+
+    /**
+     * An internal wrapper class for exceptions that allows for re-creating the
+     * {@link HistoryRecord} in case it was rolled back.
+     */
+    static final class DataMigrationRedoLogException extends DataMigrationException {
+
+        final HistoryRecord record;
+
+        public DataMigrationRedoLogException(HistoryRecord record, Exception cause) {
+            super("Redo log", cause);
+
+            this.record = record;
+        }
+    }
+
+    private final HistoryRecord createRecord(Status status) {
+        HistoryRecord record = history.historyCtx.newRecord(HISTORY);
+
+        record
+            .setJooqVersion(Constants.VERSION)
+            .setMigratedAt(new Timestamp(dsl().configuration().clock().instant().toEpochMilli()))
+            .setMigratedFrom(from().id())
+            .setMigratedTo(to().id())
+            .setMigrationTime(0L)
+            .setSql(queries().toString())
+            .setSqlCount(queries().queries().length)
+            .setStatus(status)
+            .insert();
+
+        return record;
+    }
+
+    private final void log(StopWatch watch, HistoryRecord record, Status status) {
+        log(watch, record, status, null, null);
+    }
+
+    private final void log(StopWatch watch, HistoryRecord record, Status status, Resolution resolution, String message) {
+        record.setMigrationTime(watch.split() / 1000000L)
+              .setStatus(status)
+              .setStatusMessage(message)
+              .setResolution(resolution)
+              .update();
     }
 
     private final void execute(DefaultMigrationContext ctx, MigrationListener listener, Queries q) {
@@ -327,7 +360,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     final Commit currentCommit() {
-        HistoryRecord currentRecord = history.currentHistoryRecord();
+        HistoryRecord currentRecord = history.currentHistoryRecord(true);
 
         if (currentRecord == null) {
             Commit result = TRUE.equals(settings().isMigrationAutoBaseline()) ? to() : to().root();
@@ -352,6 +385,21 @@ final class MigrationImpl extends AbstractScope implements Migration {
             init();
             dsl().transaction(runnable);
         }
+        catch (DataMigrationRedoLogException e) {
+
+            // [#9506] Make sure history record is re-created in case it was rolled back.
+            HistoryRecord record = history.currentHistoryRecord(false);
+
+            if (record == null || !StringUtils.equals(e.record.getId(), record.getId())) {
+                e.record.changed(true);
+                e.record.insert();
+            }
+
+            if (e.getCause() instanceof DataMigrationException r)
+                throw r;
+            else
+                throw new DataMigrationException("Exception during migration", e);
+        }
         catch (DataMigrationException e) {
             throw e;
         }
@@ -366,6 +414,12 @@ final class MigrationImpl extends AbstractScope implements Migration {
         MIGRATING,
         SUCCESS,
         FAILURE
+    }
+
+    enum Resolution {
+        OPEN,
+        RESOLVED,
+        IGNORED
     }
 
     // -------------------------------------------------------------------------

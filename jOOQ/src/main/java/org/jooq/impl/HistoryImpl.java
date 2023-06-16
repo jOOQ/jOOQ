@@ -42,8 +42,11 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.History.HISTORY;
+import static org.jooq.impl.MigrationImpl.Resolution.OPEN;
+import static org.jooq.impl.MigrationImpl.Resolution.RESOLVED;
 import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.tools.StringUtils.isBlank;
@@ -70,8 +73,10 @@ import org.jooq.conf.MigrationSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationVerificationException;
+import org.jooq.impl.MigrationImpl.Resolution;
 
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * @author Lukas Eder
@@ -86,6 +91,8 @@ class HistoryImpl extends AbstractScope implements History {
     HistoryImpl(Configuration configuration) {
         super(configuration);
 
+        // [#9506] TODO: What's the best way to spawn a new JDBC connection from an existing one?
+        //         The history interactions should run in an autonomous transaction of the system connection provider
         this.ctx = configuration.dsl();
         this.historyCtx = initCtx(configuration, configuration.settings().getMigrationHistorySchema()).dsl();
         this.commits = configuration.commitProvider().provide();
@@ -184,12 +191,14 @@ class HistoryImpl extends AbstractScope implements History {
     }
 
     @Nullable
-    final HistoryRecord currentHistoryRecord() {
+    final HistoryRecord currentHistoryRecord(boolean successOnly) {
         return existsHistory()
             ? historyCtx.selectFrom(HISTORY)
 
                    // TODO: How to recover from failure?
-                   .where(HISTORY.STATUS.eq(inline(SUCCESS)))
+                   .where(successOnly
+                       ? HISTORY.STATUS.eq(inline(SUCCESS))
+                       : HISTORY.STATUS.eq(inline(SUCCESS)).or(HISTORY.RESOLUTION.eq(OPEN)))
                    .orderBy(HISTORY.MIGRATED_AT.desc(), HISTORY.ID.desc())
                    .limit(1)
                    .fetchOne()
@@ -252,6 +261,18 @@ class HistoryImpl extends AbstractScope implements History {
 
             historyCtx.meta(HISTORY).ddl().executeBatch();
         }
+    }
+
+    @Override
+    public final void resolve(String message) {
+        HistoryRecord h = currentHistoryRecord(false);
+
+        if (h != null)
+            h.setResolution(RESOLVED)
+             .setResolutionMessage(message)
+             .update();
+        else
+            throw new DataMigrationVerificationException("No current history record found to resolve");
     }
 
     // -------------------------------------------------------------------------

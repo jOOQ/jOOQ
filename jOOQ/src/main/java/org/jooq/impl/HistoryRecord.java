@@ -7,6 +7,7 @@ package org.jooq.impl;
 import java.sql.Timestamp;
 
 import org.jooq.Record1;
+import org.jooq.impl.MigrationImpl.Resolution;
 import org.jooq.impl.MigrationImpl.Status;
 
 
@@ -169,6 +170,57 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
         return (Status) get(8);
     }
 
+    /**
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.STATUS_MESSAGE</code>. Any info
+     * or error message explaining the status.
+     */
+    HistoryRecord setStatusMessage(String value) {
+        set(9, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.STATUS_MESSAGE</code>. Any info
+     * or error message explaining the status.
+     */
+    String getStatusMessage() {
+        return (String) get(9);
+    }
+
+    /**
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.RESOLUTION</code>. The error
+     * resolution, if any.
+     */
+    HistoryRecord setResolution(Resolution value) {
+        set(10, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.RESOLUTION</code>. The error
+     * resolution, if any.
+     */
+    Resolution getResolution() {
+        return (Resolution) get(10);
+    }
+
+    /**
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.RESOLUTION_MESSAGE</code>. Any
+     * info or error message explaining the resolution.
+     */
+    HistoryRecord setResolutionMessage(String value) {
+        set(11, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.RESOLUTION_MESSAGE</code>. Any
+     * info or error message explaining the resolution.
+     */
+    String getResolutionMessage() {
+        return (String) get(11);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -192,7 +244,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
     /**
      * Create a detached, initialised HistoryRecord
      */
-    HistoryRecord(Integer id, String migratedFrom, String migratedTo, Timestamp migratedAt, Long migrationTime, String jooqVersion, String sql, Integer sqlCount, Status status) {
+    HistoryRecord(Integer id, String migratedFrom, String migratedTo, Timestamp migratedAt, Long migrationTime, String jooqVersion, String sql, Integer sqlCount, Status status, String statusMessage, Resolution resolution, String resolutionMessage) {
         super(History.HISTORY);
 
         setId(id);
@@ -204,6 +256,9 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
         setSql(sql);
         setSqlCount(sqlCount);
         setStatus(status);
+        setStatusMessage(statusMessage);
+        setResolution(resolution);
+        setResolutionMessage(resolutionMessage);
         resetChangedOnNotNull();
     }
 }

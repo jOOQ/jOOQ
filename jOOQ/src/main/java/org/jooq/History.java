@@ -83,4 +83,14 @@ public interface History extends Iterable<Version> {
     @NotNull
     @Experimental
     Version current();
+
+    /**
+     * Resolve any previous failures in the {@link History}.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
+     */
+    @Experimental
+    void resolve(String message);
+
 }

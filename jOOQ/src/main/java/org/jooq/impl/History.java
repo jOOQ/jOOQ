@@ -17,6 +17,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
+import org.jooq.impl.MigrationImpl.Resolution;
 import org.jooq.impl.MigrationImpl.Status;
 
 
@@ -94,6 +95,24 @@ class History extends TableImpl<HistoryRecord> {
      */
     final TableField<HistoryRecord, Status> STATUS = createField(DSL.name("STATUS"), SQLDataType.VARCHAR(10).nullable(false), this, "The database version installation status.", new EnumConverter<String, Status>(String.class, Status.class));
 
+    /**
+     * The column <code>JOOQ_MIGRATION_HISTORY.STATUS_MESSAGE</code>. Any info
+     * or error message explaining the status.
+     */
+    final TableField<HistoryRecord, String> STATUS_MESSAGE = createField(DSL.name("STATUS_MESSAGE"), SQLDataType.CLOB, this, "Any info or error message explaining the status.");
+
+    /**
+     * The column <code>JOOQ_MIGRATION_HISTORY.RESOLUTION</code>. The error
+     * resolution, if any.
+     */
+    final TableField<HistoryRecord, Resolution> RESOLUTION = createField(DSL.name("RESOLUTION"), SQLDataType.VARCHAR(10), this, "The error resolution, if any.", new EnumConverter<String, Resolution>(String.class, Resolution.class));
+
+    /**
+     * The column <code>JOOQ_MIGRATION_HISTORY.RESOLUTION_MESSAGE</code>. Any
+     * info or error message explaining the resolution.
+     */
+    final TableField<HistoryRecord, String> RESOLUTION_MESSAGE = createField(DSL.name("RESOLUTION_MESSAGE"), SQLDataType.CLOB, this, "Any info or error message explaining the resolution.");
+
     private History(Name alias, Table<HistoryRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
@@ -136,7 +155,8 @@ class History extends TableImpl<HistoryRecord> {
     @Override
     public List<Check<HistoryRecord>> getChecks() {
         return Arrays.asList(
-            Internal.createCheck(this, DSL.name("JOOQ_MIGR_HIST_CHK1"), "\"STATUS\" IN('STARTING', 'REVERTING', 'MIGRATING', 'SUCCESS', 'FAILURE')", true)
+            Internal.createCheck(this, DSL.name("JOOQ_MIGR_HIST_CHK1"), "\"STATUS\" IN('STARTING', 'REVERTING', 'MIGRATING', 'SUCCESS', 'FAILURE')", true),
+            Internal.createCheck(this, DSL.name("JOOQ_MIGR_HIST_CHK2"), "\"RESOLUTION\" IN('OPEN', 'RESOLVED', 'IGNORED')", true)
         );
     }
 

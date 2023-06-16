@@ -49,8 +49,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.jooq.Commit;
@@ -73,10 +75,13 @@ import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link CommitProvider} that produces versions from a git repository.
@@ -107,9 +112,11 @@ public final class GitCommitProvider implements CommitProvider {
 
         try (
             Git g = Git.open(git.repository());
-            Repository r = g.getRepository()
+            Repository r = g.getRepository();
+            ObjectReader reader = r.newObjectReader()
         ) {
             List<RevCommit> revCommits = new ArrayList<>();
+            Map<String, List<RevTag>> tags = new HashMap<>();
             RevCommit last = null;
 
             try {
@@ -122,6 +129,11 @@ public final class GitCommitProvider implements CommitProvider {
             }
             catch (NoHeadException e) {
                 log.debug("No HEAD exists");
+            }
+
+            for (Ref ref : g.tagList().call()) {
+                RevTag tag = RevTag.parse(reader.open(ref.getObjectId()).getBytes());
+                tags.computeIfAbsent(tag.getObject().getName(), id -> new ArrayList<>()).add(tag);
             }
 
             // The commits seem to come in reverse order from jgit.
@@ -138,7 +150,7 @@ public final class GitCommitProvider implements CommitProvider {
                     RevCommit revCommit = it.next();
 
                     if (revCommit.getParents() == null || revCommit.getParents().length == 0) {
-                        commits.add(init.commit(revCommit.getName(), revCommit.getFullMessage(), editFiles(r, revCommit)));
+                        commits.add(tag(tags, init.commit(revCommit.getName(), revCommit.getFullMessage(), editFiles(r, revCommit))));
                         it.remove();
                     }
                     else {
@@ -153,9 +165,9 @@ public final class GitCommitProvider implements CommitProvider {
                                 continue commitLoop;
 
                         if (parents.length == 1)
-                            commits.add(parents[0].commit(revCommit.getName(), revCommit.getFullMessage(), editFiles(r, revCommit)));
+                            commits.add(tag(tags, parents[0].commit(revCommit.getName(), revCommit.getFullMessage(), editFiles(r, revCommit))));
                         else if (parents.length == 2)
-                            commits.add(parents[0].merge(revCommit.getName(), revCommit.getFullMessage(), parents[1], editFiles(r, revCommit)));
+                            commits.add(tag(tags, parents[0].merge(revCommit.getName(), revCommit.getFullMessage(), parents[1], editFiles(r, revCommit))));
                         else
                             throw new UnsupportedOperationException("Merging more than two parents not yet supported");
 
@@ -173,6 +185,17 @@ public final class GitCommitProvider implements CommitProvider {
         }
 
         return commits;
+    }
+
+    private static final Commit tag(Map<String, List<RevTag>> tags, Commit commit) {
+        Commit result = commit;
+        List<RevTag> list = tags.get(commit.id());
+
+        if (list != null)
+            for (RevTag tag : list)
+                result = result.tag(tag.getTagName(), tag.getFullMessage());
+
+        return result;
     }
 
     private static final Comparator<RevCommit> COMMIT_COMPARATOR = (o1, o2) -> o1.getCommitTime() - o2.getCommitTime();
@@ -199,7 +222,7 @@ public final class GitCommitProvider implements CommitProvider {
         }
     }
 
-    private void del(List<File> files, Set<String> paths) {
+    private final void del(List<File> files, Set<String> paths) {
         for (String path : paths) {
             ContentType contentType = contentType(path);
 
@@ -208,7 +231,7 @@ public final class GitCommitProvider implements CommitProvider {
         }
     }
 
-    private File read(String path, ContentType contentType) {
+    private final File read(String path, ContentType contentType) {
         try {
             return migrations.file(
                 path,

@@ -187,7 +187,7 @@ final class DDL {
             }
         }
         catch (ParserException e) {
-            log.info("Cannot parse view source: " + options.source(), e);
+            log.info("Cannot parse view source (to skip parsing, use Settings.parseMetaViewSources): " + options.source(), e);
         }
 
         return applyAsPlainSQL(q, options);

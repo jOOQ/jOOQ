@@ -1156,7 +1156,7 @@ final class MetaImpl extends AbstractMeta {
                                     );
                                 }
                                 catch (ParserException e) {
-                                    log.info("Cannot parse default expression: " + defaultValue, e);
+                                    log.info("Cannot parse default expression (to skip parsing, use Settings.parseMetaViewDefaultExpressions): " + defaultValue, e);
                                     type = type.defaultValue(DSL.field(defaultValue, type));
                                 }
                             }

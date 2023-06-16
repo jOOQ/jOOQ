@@ -35,7 +35,7 @@
  *
  *
  */
-package org.jooq.codegen.maven;
+package org.jooq.migrations.maven;
 
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isBlank;

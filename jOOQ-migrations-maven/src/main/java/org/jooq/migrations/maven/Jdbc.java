@@ -35,30 +35,13 @@
  *
  *
  */
-package org.jooq.codegen.maven;
+package org.jooq.migrations.maven;
 
-import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
-import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
+public class Jdbc {
 
-import org.jooq.Migration;
-
-import org.apache.maven.plugins.annotations.Mojo;
-
-/**
- * The jOOQ Migrations migrate mojo
- *
- * @author Lukas Eder
- */
-@Mojo(
-    name = "migrate",
-    defaultPhase = GENERATE_SOURCES,
-    requiresDependencyResolution = TEST,
-    threadSafe = true
-)
-public class MigrateMojo extends AbstractMigrateMojo {
-
-    @Override
-    final void execute1(Migration migration) throws Exception {
-        migration.execute();
-    }
+    public String driver;
+    public String url;
+    public String user;
+    public String username;
+    public String password;
 }

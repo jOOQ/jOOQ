@@ -35,30 +35,30 @@
  *
  *
  */
-package org.jooq.codegen.maven;
+package org.jooq.migrations.maven;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 
-import org.jooq.Configuration;
+import org.jooq.Migration;
 
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * The jOOQ Migrations resolve mojo
+ * The jOOQ Migrations verify mojo
  *
  * @author Lukas Eder
  */
 @Mojo(
-    name = "resolve",
+    name = "verify",
     defaultPhase = GENERATE_SOURCES,
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class ResolveMojo extends AbstractMigrationsMojo {
+public class VerifyMojo extends AbstractMigrateMojo {
 
     @Override
-    final void execute0(Configuration configuration) throws Exception {
-        configuration.dsl().migrations().history().resolve("Resolved");
+    final void execute1(Migration migration) throws Exception {
+        migration.verify();
     }
 }

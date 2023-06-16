@@ -35,7 +35,7 @@
  *
  *
  */
-package org.jooq.codegen.maven;
+package org.jooq.migrations.maven;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;

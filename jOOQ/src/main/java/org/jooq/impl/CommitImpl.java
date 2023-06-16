@@ -75,7 +75,6 @@ import org.jooq.tools.StringUtils;
  */
 final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
-    final Configuration     configuration;
     final DSLContext        ctx;
     final List<Commit>      parents;
     final List<Tag>         tags;
@@ -83,9 +82,8 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     final Map<String, File> files;
 
     CommitImpl(Configuration configuration, String id, String message, Commit root, List<Commit> parents, Collection<? extends File> delta) {
-        super(id, message, root);
+        super(configuration, id, message, root);
 
-        this.configuration = configuration;
         this.ctx = configuration.dsl();
         this.parents = parents;
         this.tags = new ArrayList<>();
@@ -94,9 +92,8 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     }
 
     private CommitImpl(CommitImpl copy) {
-        super(copy.id(), copy.message(), copy.root);
+        super(copy.configuration(), copy.id(), copy.message(), copy.root);
 
-        this.configuration = copy.configuration;
         this.ctx = copy.ctx;
         this.parents = copy.parents;
         this.tags = new ArrayList<>(copy.tags);
@@ -192,7 +189,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Commit commit(String newId, String newMessage, Collection<? extends File> newFiles) {
-        return new CommitImpl(configuration, newId, newMessage, root, Arrays.asList(this), newFiles);
+        return new CommitImpl(configuration(), newId, newMessage, root, Arrays.asList(this), newFiles);
     }
 
     @Override
@@ -212,7 +209,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Commit merge(String newId, String newMessage, Commit with, Collection<? extends File> newFiles) {
-        return new CommitImpl(configuration, newId, newMessage, root, Arrays.asList(this, with), newFiles);
+        return new CommitImpl(configuration(), newId, newMessage, root, Arrays.asList(this, with), newFiles);
     }
 
     @Override

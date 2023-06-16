@@ -43,20 +43,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.Configuration;
 import org.jooq.Node;
 import org.jooq.exception.DataDefinitionException;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractNode<N extends Node<N>> implements Node<N> {
+abstract class AbstractNode<N extends Node<N>> extends AbstractScope implements Node<N> {
 
     final N      root;
     final String id;
     final String message;
 
     @SuppressWarnings("unchecked")
-    AbstractNode(String id, String message, N root) {
+    AbstractNode(Configuration configuration, String id, String message, N root) {
+        super(configuration);
+
         this.root = root != null ? root : (N) this;
         this.id = id;
         this.message = defaultIfNull(message, "");

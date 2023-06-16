@@ -48,7 +48,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @Experimental
-public interface Migrations {
+public interface Migrations extends Scope {
 
     /**
      * Initialise a {@link File}

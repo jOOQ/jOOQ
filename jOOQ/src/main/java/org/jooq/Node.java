@@ -52,7 +52,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * @author Lukas Eder
  */
 @Experimental
-public interface Node<N extends Node<N>> {
+public interface Node<N extends Node<N>> extends Scope {
 
     /**
      * The ID of the node, unique within the graph.

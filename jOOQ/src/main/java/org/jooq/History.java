@@ -52,7 +52,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @Experimental
-public interface History extends Iterable<Version> {
+public interface History extends Iterable<Version>, Scope {
 
     /**
      * The root {@link Version}.

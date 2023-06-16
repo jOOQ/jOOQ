@@ -1581,6 +1581,10 @@ inside of queries (including procedural statements) are still not supported.]]><
       <element name="parseMetaDefaultExpressions" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="parseMetaViewSources" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8469] Whether to parse view sources retrieved from {@link java.sql.DatabaseMetaData}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="readonlyTableRecordInsert" type="jooq-runtime:WriteIfReadonly" minOccurs="0" maxOccurs="1" default="IGNORE">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>

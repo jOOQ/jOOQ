@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
 import static org.jooq.DDLFlag.CHECK;
 import static org.jooq.DDLFlag.COMMENT;
@@ -58,7 +59,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jooq.Check;
@@ -94,7 +94,6 @@ import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.json.ParseException;
 
 /**
  * @author Lukas Eder
@@ -172,29 +171,37 @@ final class DDL {
             return q.as("");
 
         try {
-            Query[] queries = ctx.parser().parse(options.source()).queries();
+            if (!FALSE.equals(ctx.settings().isParseMetaViewSources())) {
+                Query[] queries = ctx.parser().parse(options.source()).queries();
 
-            if (queries.length > 0) {
-                if (queries[0] instanceof CreateViewImpl<?> cv)
-                    return q.as(cv.$select());
-                else if (queries[0] instanceof Select<?> s)
-                    return q.as(s);
+                if (queries.length > 0) {
+                    if (queries[0] instanceof CreateViewImpl<?> cv)
+                        return q.as(cv.$select());
+                    else if (queries[0] instanceof Select<?> s)
+                        return q.as(s);
+                    else
+                        return q.as("");
+                }
                 else
                     return q.as("");
             }
-            else
-                return q.as("");
         }
         catch (ParserException e) {
             log.info("Cannot parse view source: " + options.source(), e);
-
-            // [#15238] If the command prefix is supplied, use a heursitic where the view
-            //          body is expected to start after the first "AS" keyword
-            if (options.source().toLowerCase().startsWith("create"))
-                return q.as(P_CREATE_VIEW.matcher(options.source()).replaceFirst("$1"));
-            else
-                return q.as(options.source());
         }
+
+        return applyAsPlainSQL(q, options);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private final Query applyAsPlainSQL(CreateViewAsStep q, TableOptions options) {
+
+        // [#15238] If the command prefix is supplied, use a heursitic where the view
+        //          body is expected to start after the first "AS" keyword
+        if (options.source().toLowerCase().startsWith("create"))
+            return q.as(P_CREATE_VIEW.matcher(options.source()).replaceFirst("$1"));
+        else
+            return q.as(options.source());
     }
 
     final Query createSequence(Sequence<?> sequence) {

@@ -511,6 +511,8 @@ public class Settings
     protected Boolean parseRetainCommentsBetweenQueries = false;
     @XmlElement(defaultValue = "true")
     protected Boolean parseMetaDefaultExpressions = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean parseMetaViewSources = true;
     @XmlElement(defaultValue = "IGNORE")
     @XmlSchemaType(name = "string")
     protected WriteIfReadonly readonlyTableRecordInsert = WriteIfReadonly.IGNORE;
@@ -5839,6 +5841,30 @@ public class Settings
     }
 
     /**
+     * [#8469] Whether to parse view sources retrieved from {@link java.sql.DatabaseMetaData}.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isParseMetaViewSources() {
+        return parseMetaViewSources;
+    }
+
+    /**
+     * Sets the value of the parseMetaViewSources property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setParseMetaViewSources(Boolean value) {
+        this.parseMetaViewSources = value;
+    }
+
+    /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.
      * 
      */
@@ -7447,6 +7473,11 @@ public class Settings
         return this;
     }
 
+    public Settings withParseMetaViewSources(Boolean value) {
+        setParseMetaViewSources(value);
+        return this;
+    }
+
     /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.
      * 
@@ -7765,6 +7796,7 @@ public class Settings
         builder.append("parseIgnoreCommentStop", parseIgnoreCommentStop);
         builder.append("parseRetainCommentsBetweenQueries", parseRetainCommentsBetweenQueries);
         builder.append("parseMetaDefaultExpressions", parseMetaDefaultExpressions);
+        builder.append("parseMetaViewSources", parseMetaViewSources);
         builder.append("readonlyTableRecordInsert", readonlyTableRecordInsert);
         builder.append("readonlyUpdatableRecordUpdate", readonlyUpdatableRecordUpdate);
         builder.append("readonlyInsert", readonlyInsert);
@@ -9702,6 +9734,15 @@ public class Settings
                 return false;
             }
         }
+        if (parseMetaViewSources == null) {
+            if (other.parseMetaViewSources!= null) {
+                return false;
+            }
+        } else {
+            if (!parseMetaViewSources.equals(other.parseMetaViewSources)) {
+                return false;
+            }
+        }
         if (readonlyTableRecordInsert == null) {
             if (other.readonlyTableRecordInsert!= null) {
                 return false;
@@ -9993,6 +10034,7 @@ public class Settings
         result = ((prime*result)+((parseIgnoreCommentStop == null)? 0 :parseIgnoreCommentStop.hashCode()));
         result = ((prime*result)+((parseRetainCommentsBetweenQueries == null)? 0 :parseRetainCommentsBetweenQueries.hashCode()));
         result = ((prime*result)+((parseMetaDefaultExpressions == null)? 0 :parseMetaDefaultExpressions.hashCode()));
+        result = ((prime*result)+((parseMetaViewSources == null)? 0 :parseMetaViewSources.hashCode()));
         result = ((prime*result)+((readonlyTableRecordInsert == null)? 0 :readonlyTableRecordInsert.hashCode()));
         result = ((prime*result)+((readonlyUpdatableRecordUpdate == null)? 0 :readonlyUpdatableRecordUpdate.hashCode()));
         result = ((prime*result)+((readonlyInsert == null)? 0 :readonlyInsert.hashCode()));

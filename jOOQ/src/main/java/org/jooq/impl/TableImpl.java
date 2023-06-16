@@ -250,7 +250,7 @@ implements
         }
         else if (aliased instanceof TableImpl t) {
             this.child = t.child;
-            this.childPath = t.childPath;
+            this.childPath = t.childPath == null ? null : Tools.aliasedKey(t.childPath, t.child, this);
         }
         else {
             this.child = null;

@@ -212,12 +212,12 @@ implements
      * @deprecated - [#13639] [#14985] [#15005] - 3.19.0 - Please re-generate your code.
      */
     @Deprecated
-    public TableImpl(Table<?> path, ForeignKey<?, R> childPath, Table<R> parent) {
-        this(path, childPath, null, parent);
+    public TableImpl(Table<?> path, ForeignKey<?, R> childPath, Table<R> aliased) {
+        this(path, childPath, null, aliased);
     }
 
-    public TableImpl(Table<?> path, ForeignKey<?, R> childPath, InverseForeignKey<?, R> parentPath, Table<R> parent) {
-        this(createPathAlias(path, childPath, parentPath), null, path, childPath, parentPath, parent, null, parent.getCommentPart());
+    public TableImpl(Table<?> path, ForeignKey<?, R> childPath, InverseForeignKey<?, R> parentPath, Table<R> aliased) {
+        this(createPathAlias(path, childPath, parentPath), null, path, childPath, parentPath, aliased, null, aliased.getCommentPart());
     }
 
     /**
@@ -287,8 +287,8 @@ implements
         }
         else if (aliased instanceof TableImpl t) {
             this.path = t.path;
-            this.childPath = t.childPath;
-            this.parentPath = t.parentPath;
+            this.childPath = t.childPath == null ? null : Tools.aliasedKey(t.childPath, t.path, this);
+            this.parentPath = t.parentPath == null ? null : Tools.aliasedKey(t.parentPath.getForeignKey(), this, t.path).getInverseKey();
         }
         else {
             this.path = null;

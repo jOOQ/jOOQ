@@ -88,7 +88,6 @@ import org.jooq.conf.Settings;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.reflect.Reflect;
-import org.jooq.tools.reflect.ReflectException;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -119,6 +118,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private Query                                         query;
     private final Routine<?>                              routine;
     private String                                        sql;
+    private int                                           skipUpdateCounts;
 
     private final BatchMode                               batchMode;
     private Query[]                                       batchQueries;
@@ -543,6 +543,16 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final String sql() {
         return sql;
+    }
+
+    @Override
+    public final int skipUpdateCounts() {
+        return this.skipUpdateCounts;
+    }
+
+    @Override
+    public void skipUpdateCounts(int skip) {
+        this.skipUpdateCounts = skip;
     }
 
     @Override

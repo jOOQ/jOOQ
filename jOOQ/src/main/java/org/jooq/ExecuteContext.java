@@ -48,6 +48,7 @@ import java.util.stream.Collector;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.CustomQueryPart;
 import org.jooq.impl.DSL;
 
 import org.jetbrains.annotations.NotNull;
@@ -241,6 +242,31 @@ public interface ExecuteContext extends Scope {
      * @see ExecuteListener#prepareStart(ExecuteContext)
      */
     void sql(String sql);
+
+    /**
+     * The number of user defined update counts that are going to be skipped
+     * when a statement batch is executed.
+     * <p>
+     * This is in <em>addition</em> to any skips added during the rendering of a
+     * {@link QueryPart} by jOOQ's internals or by user-defined query parts,
+     * such as {@link CustomQueryPart}.
+     */
+    int skipUpdateCounts();
+
+    /**
+     * Override the number of update counts that are going to be skipped when a
+     * statement batch is executed.
+     * <p>
+     * This is in <em>addition</em> to any skips added during the rendering of a
+     * {@link QueryPart} by jOOQ's internals or by user-defined query parts,
+     * such as {@link CustomQueryPart}.
+     * <p>
+     * This may have no effect, if called at the wrong moment.
+     *
+     * @see ExecuteListener#renderEnd(ExecuteContext)
+     * @see ExecuteListener#prepareStart(ExecuteContext)
+     */
+    void skipUpdateCounts(int skip);
 
     /**
      * The generated SQL statements that are being executed in batch mode, or

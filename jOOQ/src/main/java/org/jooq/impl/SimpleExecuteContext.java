@@ -151,6 +151,16 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
     }
 
     @Override
+    public final int skipUpdateCounts() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
+    public final void skipUpdateCounts(int skip) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
     public final String[] batchSQL() {
         throw new UnsupportedOperationException("Not implemented");
     }

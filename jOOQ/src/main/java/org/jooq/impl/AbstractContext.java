@@ -934,7 +934,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final int skipUpdateCounts() {
-        return skipUpdateCounts;
+        return skipUpdateCounts + (ctx != null ? ctx.skipUpdateCounts() : 0);
     }
 
     @Override

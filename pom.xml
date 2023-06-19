@@ -29,6 +29,9 @@
         <derby.version>10.14.2.0</derby.version>
         <hsqldb.version>2.7.2</hsqldb.version>
 
+        <!-- Checker Framework version -->
+        <checker-framework.version>3.35.0</checker-framework.version>
+
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.5.4</postgres.version>
         <sqlserver.version>12.2.0.jre11</sqlserver.version>
@@ -560,7 +563,23 @@
             <dependency>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>checker</artifactId>
-                <version>2.5.6</version>
+                <version>${checker-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker-qual</artifactId>
+                <version>${checker-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker-util</artifactId>
+                <version>${checker-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker-qual</artifactId>
+                <version>${checker-framework.version}</version>
+                <classifier>sources</classifier>
             </dependency>
 
             <dependency>
@@ -633,8 +652,8 @@
                              https://issues.apache.org/jira/browse/MCOMPILER-209 -->
                         <useIncrementalCompilation>false</useIncrementalCompilation>
                         <fork>true</fork>
-                        <maxmem>512m</maxmem>
-                        <meminitial>256m</meminitial>
+                        <maxmem>6000m</maxmem>
+                        <meminitial>1000m</meminitial>
                         <encoding>UTF-8</encoding>
 
                         <release>17</release>
@@ -649,7 +668,7 @@
                         <!-- [#2413] Make compiler warnings a bit more visible
                              But don't fail (yet) -->
                         <compilerArgs>
-                            <arg>-Xlint:varargs</arg>
+                        <!-- <arg>-Xlint:varargs</arg> -->
                         </compilerArgs>
                     </configuration>
                 </plugin>

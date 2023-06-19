@@ -28,6 +28,28 @@
 
     </licenses>
 
+    <properties>
+        <!-- Use -Dcheckerframework.checkers=checker to switch which checkers are run. -->
+        <!-- Running the Index Checker takes very long but is needed to put implicit annotations in class files. -->
+        <checkerframework.checkers>org.checkerframework.checker.index.IndexChecker,org.checkerframework.checker.nullness.NullnessChecker,org.checkerframework.checker.signedness.SignednessChecker</checkerframework.checkers>
+
+        <!-- Index checker warnings are disabled by default, because not all code is annotated by index checker annotations.
+             Use -Dcheckerframework.suppress=none to show index checker warnings.  -->
+        <checkerframework.suppress>index</checkerframework.suppress>
+
+        <!-- Additional argument passed to the java compiler. Use to pass additional arguments
+             to the checker framework. Example: -Ashowchecks -->
+        <checkerframework.extraargs></checkerframework.extraargs>
+
+        <!-- Additional argument passed to the java compiler. Use to pass additional arguments
+             to the checker framework. Example: -Aannotations -->
+        <checkerframework.extraargs2></checkerframework.extraargs2>
+
+        <!-- Use -Djavac.verbose=true to compile with the verbose option.
+             This is used when you want to see stub parser warnings. -->
+        <javac.verbose>false</javac.verbose>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -76,6 +98,63 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <compilerArguments>
+                        <Xmaxerrs>10000</Xmaxerrs>
+                        <Xmaxwarns>10000</Xmaxwarns>
+                    </compilerArguments>
+                    <showWarnings>true</showWarnings>
+                    <!-- Default is verbose off, so you won't see stub parser warnings. -->
+                    <verbose>${javac.verbose}</verbose>
+                    <annotationProcessors>
+                        <annotationProcessor>${checkerframework.checkers}</annotationProcessor>
+                    </annotationProcessors>
+                    <compilerArgs combine.children="append">
+                        <arg>${checkerframework.extraargs}</arg>
+                        <arg>${checkerframework.extraargs2}</arg>
+                        <!-- Default is supress all index checker warnings. -->
+                        <arg>-AsuppressWarnings=${checkerframework.suppress}</arg>
+                        <arg>-XDignore.symbol.file</arg>  <!-- suppress any warnings for using 'Unsafe' -->
+                        <arg>-AuseDefaultsForUncheckedCode=source,bytecode</arg>
+                        <arg>-AshowSuppressWarningsStrings</arg>
+                        <arg>-AwarnUnneededSuppressions</arg>
+                    </compilerArgs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <skipMain>${main-compile.skip}</skipMain>
+                            <compilerArgs combine.children="append">
+                                <arg>-Awarns</arg>  <!-- Treat checker errors as warnings. -->
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-help-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>show-profiles</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>active-profiles</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         
@@ -129,8 +208,18 @@
             <optional>true</optional>
         </dependency>
         
-
-
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker</artifactId>
+        </dependency>
 
 
 
@@ -144,4 +233,42 @@
 
 
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>jdk9plus</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <fork>true</fork>
+                            <maxmem>6000m</maxmem>
+                            <compilerArgs combine.children="append">
+                                <!-- -options: To not get a warning about missing bootstrap classpath for Java 8 (once we use Java 9) -->
+                                <arg>-Xlint:-options</arg>
+                                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
+                                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+                                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+                                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+                                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+                                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+                                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+                                <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+                                <arg>-Xlint:-removal</arg>
+                                <arg>-Xlint:-varargs</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+
 </project>

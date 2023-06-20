@@ -2865,7 +2865,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 c -> pgRenderEnumCast(c, dataType.getType(), enumValue),
 
                 // Postgres needs explicit casting for enum (array) types
-                () -> REQUIRE_ENUM_CAST.contains(ctx.dialect()) && enumValue.getSchema() != null
+                () -> REQUIRE_ENUM_CAST.contains(ctx.dialect()) && enumValue.getName() != null
             );
         }
 
@@ -2878,7 +2878,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 c -> pgRenderEnumCast(c, dataType.getType(), enumValue),
 
                 // Postgres needs explicit casting for enum (array) types
-                () -> REQUIRE_ENUM_CAST.contains(ctx.dialect()) && enumValue.getSchema() != null
+                () -> REQUIRE_ENUM_CAST.contains(ctx.dialect()) && enumValue.getName() != null
             );
         }
 
@@ -2929,9 +2929,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         static final void pgRenderEnumCast(Context<?> ctx, Class<?> type, EnumType value) {
-            Schema schema = value.getSchema();
-            if (schema != null) {
-                schema = using(ctx.configuration()).map(schema);
+            if (value.getName() != null) {
+                Schema schema = using(ctx.configuration()).map(value.getSchema());
+
                 if (schema != null && TRUE.equals(ctx.configuration().settings().isRenderSchema())) {
                     ctx.visit(schema);
                     ctx.sql('.');

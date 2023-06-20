@@ -3869,7 +3869,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
 
             out.println();
-            out.println("sealed trait %s extends %s[[before= with ][%s]] {", className, EnumType.class, interfaces);
+            out.println("sealed trait %s extends %s[[before= with ][separator= with ][%s]] {", className, EnumType.class, interfaces);
 
             if (noCatalog)
                 out.println("override def getCatalog: %s = null", Catalog.class);

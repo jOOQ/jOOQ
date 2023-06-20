@@ -6047,7 +6047,7 @@ final class Tools {
     }
 
     static final boolean storedEnumType(DataType<EnumType> enumType) {
-        return enumConstants(enumType)[0].getSchema() != null;
+        return enumConstants(enumType)[0].getName() != null;
     }
 
     private static final EnumType[] enumConstants(DataType<? extends EnumType> type) {

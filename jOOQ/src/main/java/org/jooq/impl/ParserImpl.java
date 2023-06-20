@@ -13096,7 +13096,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                   + "  private ").append(className).append("(String literal) { this.literal = literal; }\n"
                   + "  @Override\n"
                   + "  public String getName() {\n"
-                  + "    return getClass().getName();\n"
+                  + "    return null;\n"
                   + "  }\n"
                   + "  @Override\n"
                   + "  public String getLiteral() {\n"

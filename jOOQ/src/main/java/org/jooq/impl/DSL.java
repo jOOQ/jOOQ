@@ -12397,22 +12397,46 @@ public class DSL {
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
-     * Another example: <pre><code>
+     * Another example:
+     *
+     * <pre>
+     * <code>
      * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
      *       .from(table(name("T_BOOK")))
      *       .fetch();
      *
      * // ... will execute this SQL on SQL Server:
      * select length([TITLE]) from [T_BOOK]
-     * </code></pre>
+     * </code>
+     * </pre>
+     * <p>
+     * <b>NOTE</b>: A lot of things work less well in jOOQ if no
+     * {@link DataType} information is attached to a {@link Field} expression,
+     * including:
+     * <ul>
+     * <li>Some drivers may find it hard to bind <code>NULL</code> values.</li>
+     * <li>Some RDBMS may find it hard to infer a type from an expression
+     * alone.</li>
+     * <li>User defined types may not be supported.</li>
+     * <li>You don't get compile time type safety.</li>
+     * </ul>
+     * It is usually better to use {@link DSL#field(Name, DataType)}, instead,
+     * or even better, use code generation where possible: <a href=
+     * "https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/">https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/</a>,
+     * in case of which {@link DataType} information is attached to all
+     * {@link Field} expressions automatically.
      */
     @NotNull
     @Support
@@ -13815,16 +13839,35 @@ public class DSL {
     /**
      * Create a "plain SQL" field.
      * <p>
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * A plain SQL field is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
      * variables contained in the SQL.
      * <p>
      * Example:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </code></pre>
+     * </code>
+     * </pre>
+     * <p>
+     * <b>NOTE</b>: A lot of things work less well in jOOQ if no
+     * {@link DataType} information is attached to a {@link Field} expression,
+     * including:
+     * <ul>
+     * <li>Some drivers may find it hard to bind <code>NULL</code> values.</li>
+     * <li>Some RDBMS may find it hard to infer a type from an expression
+     * alone.</li>
+     * <li>User defined types may not be supported.</li>
+     * <li>You don't get compile time type safety.</li>
+     * </ul>
+     * It is usually better to use {@link DSL#field(SQL, DataType)}, instead, or
+     * even better, use code generation where possible: <a href=
+     * "https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/">https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/</a>,
+     * in case of which {@link DataType} information is attached to all
+     * {@link Field} expressions automatically.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13845,16 +13888,35 @@ public class DSL {
     /**
      * Create a "plain SQL" field.
      * <p>
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * A plain SQL field is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
      * variables contained in the SQL.
      * <p>
      * Example:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </code></pre>
+     * </code>
+     * </pre>
+     * <p>
+     * <b>NOTE</b>: A lot of things work less well in jOOQ if no
+     * {@link DataType} information is attached to a {@link Field} expression,
+     * including:
+     * <ul>
+     * <li>Some drivers may find it hard to bind <code>NULL</code> values.</li>
+     * <li>Some RDBMS may find it hard to infer a type from an expression
+     * alone.</li>
+     * <li>User defined types may not be supported.</li>
+     * <li>You don't get compile time type safety.</li>
+     * </ul>
+     * It is usually better to use {@link DSL#field(String, DataType)}, instead,
+     * or even better, use code generation where possible: <a href=
+     * "https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/">https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/</a>,
+     * in case of which {@link DataType} information is attached to all
+     * {@link Field} expressions automatically.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13875,16 +13937,35 @@ public class DSL {
     /**
      * Create a "plain SQL" field.
      * <p>
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * A plain SQL field is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must be as many binding
      * variables contained in the SQL, as passed in the bindings parameter
      * <p>
      * Example:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * String sql = "DECODE(MY_FIELD, ?, ?, ?)";
-     * Object[] bindings = new Object[] { 1, 100, 200 };</code></pre>
+     * Object[] bindings = new Object[] { 1, 100, 200 };</code>
+     * </pre>
+     * <p>
+     * <b>NOTE</b>: A lot of things work less well in jOOQ if no
+     * {@link DataType} information is attached to a {@link Field} expression,
+     * including:
+     * <ul>
+     * <li>Some drivers may find it hard to bind <code>NULL</code> values.</li>
+     * <li>Some RDBMS may find it hard to infer a type from an expression
+     * alone.</li>
+     * <li>User defined types may not be supported.</li>
+     * <li>You don't get compile time type safety.</li>
+     * </ul>
+     * It is usually better to use {@link DSL#field(String, DataType, Object...)}, instead,
+     * or even better, use code generation where possible: <a href=
+     * "https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/">https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/</a>,
+     * in case of which {@link DataType} information is attached to all
+     * {@link Field} expressions automatically.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -13907,7 +13988,7 @@ public class DSL {
     /**
      * Create a "plain SQL" field.
      * <p>
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * A plain SQL field is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
      * variables contained in the SQL.
@@ -13939,7 +14020,7 @@ public class DSL {
     /**
      * Create a "plain SQL" field.
      * <p>
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * A plain SQL field is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
      * variables contained in the SQL.
@@ -13971,7 +14052,7 @@ public class DSL {
     /**
      * Create a "plain SQL" field.
      * <p>
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * A plain SQL field is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must be as many binding
      * variables contained in the SQL, as passed in the bindings parameter
@@ -14005,7 +14086,7 @@ public class DSL {
     /**
      * Create a "plain SQL" field.
      * <p>
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * A plain SQL field is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
      * variables contained in the SQL.
@@ -14036,7 +14117,7 @@ public class DSL {
     /**
      * Create a "plain SQL" field.
      * <p>
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * A plain SQL field is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
      * variables contained in the SQL.
@@ -14067,7 +14148,7 @@ public class DSL {
     /**
      * Create a "plain SQL" field.
      * <p>
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
+     * A plain SQL field is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must be as many binding
      * variables contained in the SQL, as passed in the bindings parameter
@@ -14141,16 +14222,40 @@ public class DSL {
      * This is useful for constructing more complex SQL syntax elements wherever
      * <code>Field</code> types are expected. An example for this is MySQL's
      * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
-     * keywords that are hard to reflect in jOOQ's DSL: <pre><code>
+     * keywords that are hard to reflect in jOOQ's DSL:
+     *
+     * <pre>
+     * <code>
      * GROUP_CONCAT([DISTINCT] expr [,expr ...]
      *       [ORDER BY {unsigned_integer | col_name | expr}
      *           [ASC | DESC] [,col_name ...]]
      *       [SEPARATOR str_val])
-     *       </code></pre>
+     *       </code>
+     * </pre>
      * <p>
-     * The above MySQL function can be expressed as such: <pre><code>
+     * The above MySQL function can be expressed as such:
+     *
+     * <pre>
+     * <code>
      * field("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC SEPARATOR '-')", expr1, expr2);
-     * </code></pre>
+     * </code>
+     * </pre>
+     * <p>
+     * <b>NOTE</b>: A lot of things work less well in jOOQ if no
+     * {@link DataType} information is attached to a {@link Field} expression,
+     * including:
+     * <ul>
+     * <li>Some drivers may find it hard to bind <code>NULL</code> values.</li>
+     * <li>Some RDBMS may find it hard to infer a type from an expression
+     * alone.</li>
+     * <li>User defined types may not be supported.</li>
+     * <li>You don't get compile time type safety.</li>
+     * </ul>
+     * It is usually better to use {@link DSL#field(String, DataType, QueryPart...)}, instead,
+     * or even better, use code generation where possible: <a href=
+     * "https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/">https://blog.jooq.org/why-you-should-use-jooq-with-code-generation/</a>,
+     * in case of which {@link DataType} information is attached to all
+     * {@link Field} expressions automatically.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

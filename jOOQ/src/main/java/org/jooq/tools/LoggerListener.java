@@ -119,13 +119,6 @@ public class LoggerListener extends DefaultExecuteListener {
                 else
                     log.debug("Executing query", newline + ctx.sql());
             }
-
-            // [#2532] Log a complete BatchMultiple query
-            else if (batchSQL.length > 0) {
-                if (batchSQL[batchSQL.length - 1] != null)
-                    for (String sql : batchSQL)
-                        log.debug("Executing batch query", newline + sql);
-            }
         }
     }
 

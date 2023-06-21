@@ -211,6 +211,8 @@ final class CommitsImpl implements Commits {
 
     @Override
     public final Commits load(java.io.File directory) throws IOException {
+        if (log.isDebugEnabled())
+            log.debug("Reading directory", directory);
 
         // [#9506] TODO: Turning a directory into a MigrationsType (and various other conversion)
         //               could be made reusable. This is certainly very useful for testing and interop,

@@ -3418,7 +3418,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean wrapQueryExpressionBodyInDerivedTable(Context<?> ctx) {
-        return true
+        return false
 
 
 

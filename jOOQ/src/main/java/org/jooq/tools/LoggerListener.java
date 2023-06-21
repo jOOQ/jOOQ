@@ -111,14 +111,6 @@ public class LoggerListener implements ExecuteListener {
                     log.debug("-> with bind values", newline + inlined);
             }
 
-            // [#2532] Log a complete BatchMultiple query
-            else if (ctx.type() == ExecuteType.BATCH
-                    && batchSQL.length > 0
-                    && batchSQL[batchSQL.length - 1] != null) {
-                for (String sql : batchSQL)
-                    log.debug("Executing batch query", newline + sql);
-            }
-
             else if (!StringUtils.isBlank(ctx.sql())) {
 
                 // [#1529] Batch queries should be logged specially

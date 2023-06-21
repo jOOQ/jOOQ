@@ -108,9 +108,30 @@ public class Country extends TableImpl<CountryRecord> {
         super(path, childPath, parentPath, COUNTRY);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class CountryPath extends Country implements Path<CountryRecord> {
         public <O extends Record> CountryPath(Table<O> path, ForeignKey<O, CountryRecord> childPath, InverseForeignKey<O, CountryRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private CountryPath(Name alias, Table<CountryRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public CountryPath as(String alias) {
+            return new CountryPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public CountryPath as(Name alias) {
+            return new CountryPath(alias, this);
+        }
+
+        @Override
+        public CountryPath as(Table<?> alias) {
+            return new CountryPath(alias.getQualifiedName(), this);
         }
     }
 

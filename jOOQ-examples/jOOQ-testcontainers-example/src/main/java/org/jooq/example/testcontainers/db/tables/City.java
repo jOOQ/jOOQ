@@ -118,9 +118,30 @@ public class City extends TableImpl<CityRecord> {
         super(path, childPath, parentPath, CITY);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class CityPath extends City implements Path<CityRecord> {
         public <O extends Record> CityPath(Table<O> path, ForeignKey<O, CityRecord> childPath, InverseForeignKey<O, CityRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private CityPath(Name alias, Table<CityRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public CityPath as(String alias) {
+            return new CityPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public CityPath as(Name alias) {
+            return new CityPath(alias, this);
+        }
+
+        @Override
+        public CityPath as(Table<?> alias) {
+            return new CityPath(alias.getQualifiedName(), this);
         }
     }
 

@@ -126,9 +126,30 @@ public class Film extends TableImpl<FilmRecord> {
         super(path, childPath, parentPath, FILM);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class FilmPath extends Film implements Path<FilmRecord> {
         public <O extends Record> FilmPath(Table<O> path, ForeignKey<O, FilmRecord> childPath, InverseForeignKey<O, FilmRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private FilmPath(Name alias, Table<FilmRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public FilmPath as(String alias) {
+            return new FilmPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public FilmPath as(Name alias) {
+            return new FilmPath(alias, this);
+        }
+
+        @Override
+        public FilmPath as(Table<?> alias) {
+            return new FilmPath(alias.getQualifiedName(), this);
         }
     }
 

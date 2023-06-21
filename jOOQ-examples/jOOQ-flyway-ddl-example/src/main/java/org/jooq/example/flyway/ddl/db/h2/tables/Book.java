@@ -108,9 +108,30 @@ public class Book extends TableImpl<BookRecord> {
         super(path, childPath, parentPath, BOOK);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class BookPath extends Book implements Path<BookRecord> {
         public <O extends Record> BookPath(Table<O> path, ForeignKey<O, BookRecord> childPath, InverseForeignKey<O, BookRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private BookPath(Name alias, Table<BookRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public BookPath as(String alias) {
+            return new BookPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public BookPath as(Name alias) {
+            return new BookPath(alias, this);
+        }
+
+        @Override
+        public BookPath as(Table<?> alias) {
+            return new BookPath(alias.getQualifiedName(), this);
         }
     }
 

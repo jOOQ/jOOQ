@@ -130,7 +130,16 @@ open class Author(
 
     constructor(path: Table<out Record>, childPath: ForeignKey<out Record, AuthorRecord>?, parentPath: InverseForeignKey<out Record, AuthorRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, AUTHOR, null, null)
 
-    open class AuthorPath(path: Table<out Record>, childPath: ForeignKey<out Record, AuthorRecord>?, parentPath: InverseForeignKey<out Record, AuthorRecord>?) : Author(path, childPath, parentPath), Path<AuthorRecord>
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    open class AuthorPath : Author, Path<AuthorRecord> {
+        constructor(path: Table<out Record>, childPath: ForeignKey<out Record, AuthorRecord>?, parentPath: InverseForeignKey<out Record, AuthorRecord>?): super(path, childPath, parentPath)
+        private constructor(alias: Name, aliased: Table<AuthorRecord>): super(alias, aliased)
+        override fun `as`(alias: String): AuthorPath = AuthorPath(DSL.name(alias), this)
+        override fun `as`(alias: Name): AuthorPath = AuthorPath(alias, this)
+        override fun `as`(alias: Table<*>): AuthorPath = AuthorPath(alias.qualifiedName, this)
+    }
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getIdentity(): Identity<AuthorRecord, Int?> = super.getIdentity() as Identity<AuthorRecord, Int?>
     override fun getPrimaryKey(): UniqueKey<AuthorRecord> = PK_T_AUTHOR

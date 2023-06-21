@@ -159,7 +159,16 @@ open class Book(
 
     constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookRecord>?, parentPath: InverseForeignKey<out Record, BookRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, BOOK, null, null)
 
-    open class BookPath(path: Table<out Record>, childPath: ForeignKey<out Record, BookRecord>?, parentPath: InverseForeignKey<out Record, BookRecord>?) : Book(path, childPath, parentPath), Path<BookRecord>
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    open class BookPath : Book, Path<BookRecord> {
+        constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookRecord>?, parentPath: InverseForeignKey<out Record, BookRecord>?): super(path, childPath, parentPath)
+        private constructor(alias: Name, aliased: Table<BookRecord>): super(alias, aliased)
+        override fun `as`(alias: String): BookPath = BookPath(DSL.name(alias), this)
+        override fun `as`(alias: Name): BookPath = BookPath(alias, this)
+        override fun `as`(alias: Table<*>): BookPath = BookPath(alias.qualifiedName, this)
+    }
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getIdentity(): Identity<BookRecord, Int?> = super.getIdentity() as Identity<BookRecord, Int?>
     override fun getPrimaryKey(): UniqueKey<BookRecord> = PK_T_BOOK

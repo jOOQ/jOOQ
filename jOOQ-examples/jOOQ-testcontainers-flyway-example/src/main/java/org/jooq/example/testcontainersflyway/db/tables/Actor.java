@@ -118,9 +118,30 @@ public class Actor extends TableImpl<ActorRecord> {
         super(path, childPath, parentPath, ACTOR);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class ActorPath extends Actor implements Path<ActorRecord> {
         public <O extends Record> ActorPath(Table<O> path, ForeignKey<O, ActorRecord> childPath, InverseForeignKey<O, ActorRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private ActorPath(Name alias, Table<ActorRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public ActorPath as(String alias) {
+            return new ActorPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public ActorPath as(Name alias) {
+            return new ActorPath(alias, this);
+        }
+
+        @Override
+        public ActorPath as(Table<?> alias) {
+            return new ActorPath(alias.getQualifiedName(), this);
         }
     }
 

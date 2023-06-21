@@ -119,9 +119,30 @@ public class Inventory extends TableImpl<InventoryRecord> {
         super(path, childPath, parentPath, INVENTORY);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class InventoryPath extends Inventory implements Path<InventoryRecord> {
         public <O extends Record> InventoryPath(Table<O> path, ForeignKey<O, InventoryRecord> childPath, InverseForeignKey<O, InventoryRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private InventoryPath(Name alias, Table<InventoryRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public InventoryPath as(String alias) {
+            return new InventoryPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public InventoryPath as(Name alias) {
+            return new InventoryPath(alias, this);
+        }
+
+        @Override
+        public InventoryPath as(Table<?> alias) {
+            return new InventoryPath(alias.getQualifiedName(), this);
         }
     }
 

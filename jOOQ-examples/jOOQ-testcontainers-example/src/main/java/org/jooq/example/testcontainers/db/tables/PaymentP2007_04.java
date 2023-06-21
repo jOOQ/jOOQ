@@ -131,9 +131,30 @@ public class PaymentP2007_04 extends TableImpl<PaymentP2007_04Record> {
         super(path, childPath, parentPath, PAYMENT_P2007_04);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class PaymentP2007_04Path extends PaymentP2007_04 implements Path<PaymentP2007_04Record> {
         public <O extends Record> PaymentP2007_04Path(Table<O> path, ForeignKey<O, PaymentP2007_04Record> childPath, InverseForeignKey<O, PaymentP2007_04Record> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private PaymentP2007_04Path(Name alias, Table<PaymentP2007_04Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public PaymentP2007_04Path as(String alias) {
+            return new PaymentP2007_04Path(DSL.name(alias), this);
+        }
+
+        @Override
+        public PaymentP2007_04Path as(Name alias) {
+            return new PaymentP2007_04Path(alias, this);
+        }
+
+        @Override
+        public PaymentP2007_04Path as(Table<?> alias) {
+            return new PaymentP2007_04Path(alias.getQualifiedName(), this);
         }
     }
 

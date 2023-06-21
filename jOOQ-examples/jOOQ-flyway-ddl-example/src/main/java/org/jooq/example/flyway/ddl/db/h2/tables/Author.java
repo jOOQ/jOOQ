@@ -122,9 +122,30 @@ public class Author extends TableImpl<AuthorRecord> {
         super(path, childPath, parentPath, AUTHOR);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class AuthorPath extends Author implements Path<AuthorRecord> {
         public <O extends Record> AuthorPath(Table<O> path, ForeignKey<O, AuthorRecord> childPath, InverseForeignKey<O, AuthorRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private AuthorPath(Name alias, Table<AuthorRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public AuthorPath as(String alias) {
+            return new AuthorPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public AuthorPath as(Name alias) {
+            return new AuthorPath(alias, this);
+        }
+
+        @Override
+        public AuthorPath as(Table<?> alias) {
+            return new AuthorPath(alias.getQualifiedName(), this);
         }
     }
 

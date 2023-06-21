@@ -120,9 +120,30 @@ public class Store extends TableImpl<StoreRecord> {
         super(path, childPath, parentPath, STORE);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class StorePath extends Store implements Path<StoreRecord> {
         public <O extends Record> StorePath(Table<O> path, ForeignKey<O, StoreRecord> childPath, InverseForeignKey<O, StoreRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private StorePath(Name alias, Table<StoreRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public StorePath as(String alias) {
+            return new StorePath(DSL.name(alias), this);
+        }
+
+        @Override
+        public StorePath as(Name alias) {
+            return new StorePath(alias, this);
+        }
+
+        @Override
+        public StorePath as(Table<?> alias) {
+            return new StorePath(alias.getQualifiedName(), this);
         }
     }
 

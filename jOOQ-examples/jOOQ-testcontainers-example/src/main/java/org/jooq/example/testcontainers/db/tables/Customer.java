@@ -157,9 +157,30 @@ public class Customer extends TableImpl<CustomerRecord> {
         super(path, childPath, parentPath, CUSTOMER);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class CustomerPath extends Customer implements Path<CustomerRecord> {
         public <O extends Record> CustomerPath(Table<O> path, ForeignKey<O, CustomerRecord> childPath, InverseForeignKey<O, CustomerRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private CustomerPath(Name alias, Table<CustomerRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public CustomerPath as(String alias) {
+            return new CustomerPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public CustomerPath as(Name alias) {
+            return new CustomerPath(alias, this);
+        }
+
+        @Override
+        public CustomerPath as(Table<?> alias) {
+            return new CustomerPath(alias.getQualifiedName(), this);
         }
     }
 

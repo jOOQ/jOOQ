@@ -109,9 +109,30 @@ public class Category extends TableImpl<CategoryRecord> {
         super(path, childPath, parentPath, CATEGORY);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class CategoryPath extends Category implements Path<CategoryRecord> {
         public <O extends Record> CategoryPath(Table<O> path, ForeignKey<O, CategoryRecord> childPath, InverseForeignKey<O, CategoryRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private CategoryPath(Name alias, Table<CategoryRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public CategoryPath as(String alias) {
+            return new CategoryPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public CategoryPath as(Name alias) {
+            return new CategoryPath(alias, this);
+        }
+
+        @Override
+        public CategoryPath as(Table<?> alias) {
+            return new CategoryPath(alias.getQualifiedName(), this);
         }
     }
 

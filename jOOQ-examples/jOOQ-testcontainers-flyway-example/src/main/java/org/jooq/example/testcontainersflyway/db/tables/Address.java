@@ -140,9 +140,30 @@ public class Address extends TableImpl<AddressRecord> {
         super(path, childPath, parentPath, ADDRESS);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class AddressPath extends Address implements Path<AddressRecord> {
         public <O extends Record> AddressPath(Table<O> path, ForeignKey<O, AddressRecord> childPath, InverseForeignKey<O, AddressRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private AddressPath(Name alias, Table<AddressRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public AddressPath as(String alias) {
+            return new AddressPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public AddressPath as(Name alias) {
+            return new AddressPath(alias, this);
+        }
+
+        @Override
+        public AddressPath as(Table<?> alias) {
+            return new AddressPath(alias.getQualifiedName(), this);
         }
     }
 

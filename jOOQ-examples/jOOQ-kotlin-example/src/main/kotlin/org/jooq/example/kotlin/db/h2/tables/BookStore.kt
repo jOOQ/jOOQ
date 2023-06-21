@@ -103,7 +103,16 @@ open class BookStore(
 
     constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookStoreRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, BOOK_STORE, null, null)
 
-    open class BookStorePath(path: Table<out Record>, childPath: ForeignKey<out Record, BookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookStoreRecord>?) : BookStore(path, childPath, parentPath), Path<BookStoreRecord>
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    open class BookStorePath : BookStore, Path<BookStoreRecord> {
+        constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookStoreRecord>?): super(path, childPath, parentPath)
+        private constructor(alias: Name, aliased: Table<BookStoreRecord>): super(alias, aliased)
+        override fun `as`(alias: String): BookStorePath = BookStorePath(DSL.name(alias), this)
+        override fun `as`(alias: Name): BookStorePath = BookStorePath(alias, this)
+        override fun `as`(alias: Table<*>): BookStorePath = BookStorePath(alias.qualifiedName, this)
+    }
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<BookStoreRecord> = UK_T_BOOK_STORE_NAME
 

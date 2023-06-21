@@ -159,9 +159,30 @@ public class Staff extends TableImpl<StaffRecord> {
         super(path, childPath, parentPath, STAFF);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class StaffPath extends Staff implements Path<StaffRecord> {
         public <O extends Record> StaffPath(Table<O> path, ForeignKey<O, StaffRecord> childPath, InverseForeignKey<O, StaffRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private StaffPath(Name alias, Table<StaffRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public StaffPath as(String alias) {
+            return new StaffPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public StaffPath as(Name alias) {
+            return new StaffPath(alias, this);
+        }
+
+        @Override
+        public StaffPath as(Table<?> alias) {
+            return new StaffPath(alias.getQualifiedName(), this);
         }
     }
 

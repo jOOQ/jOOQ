@@ -108,9 +108,30 @@ public class Language extends TableImpl<LanguageRecord> {
         super(path, childPath, parentPath, LANGUAGE);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class LanguagePath extends Language implements Path<LanguageRecord> {
         public <O extends Record> LanguagePath(Table<O> path, ForeignKey<O, LanguageRecord> childPath, InverseForeignKey<O, LanguageRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private LanguagePath(Name alias, Table<LanguageRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public LanguagePath as(String alias) {
+            return new LanguagePath(DSL.name(alias), this);
+        }
+
+        @Override
+        public LanguagePath as(Name alias) {
+            return new LanguagePath(alias, this);
+        }
+
+        @Override
+        public LanguagePath as(Table<?> alias) {
+            return new LanguagePath(alias.getQualifiedName(), this);
         }
     }
 

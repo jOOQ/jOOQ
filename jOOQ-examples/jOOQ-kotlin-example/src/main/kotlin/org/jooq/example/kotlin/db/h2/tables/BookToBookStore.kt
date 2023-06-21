@@ -115,7 +115,16 @@ open class BookToBookStore(
 
     constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookToBookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookToBookStoreRecord>?): this(Internal.createPathAlias(path, childPath, parentPath), path, childPath, parentPath, BOOK_TO_BOOK_STORE, null, null)
 
-    open class BookToBookStorePath(path: Table<out Record>, childPath: ForeignKey<out Record, BookToBookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookToBookStoreRecord>?) : BookToBookStore(path, childPath, parentPath), Path<BookToBookStoreRecord>
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    open class BookToBookStorePath : BookToBookStore, Path<BookToBookStoreRecord> {
+        constructor(path: Table<out Record>, childPath: ForeignKey<out Record, BookToBookStoreRecord>?, parentPath: InverseForeignKey<out Record, BookToBookStoreRecord>?): super(path, childPath, parentPath)
+        private constructor(alias: Name, aliased: Table<BookToBookStoreRecord>): super(alias, aliased)
+        override fun `as`(alias: String): BookToBookStorePath = BookToBookStorePath(DSL.name(alias), this)
+        override fun `as`(alias: Name): BookToBookStorePath = BookToBookStorePath(alias, this)
+        override fun `as`(alias: Table<*>): BookToBookStorePath = BookToBookStorePath(alias.qualifiedName, this)
+    }
     override fun getSchema(): Schema? = if (aliased()) null else Public.PUBLIC
     override fun getPrimaryKey(): UniqueKey<BookToBookStoreRecord> = PK_B2BS
     override fun getReferences(): List<ForeignKey<BookToBookStoreRecord, *>> = listOf(FK_B2BS_BS_NAME, FK_B2BS_B_ID)

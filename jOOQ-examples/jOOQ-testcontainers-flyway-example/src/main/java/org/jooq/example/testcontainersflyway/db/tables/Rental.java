@@ -141,9 +141,30 @@ public class Rental extends TableImpl<RentalRecord> {
         super(path, childPath, parentPath, RENTAL);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class RentalPath extends Rental implements Path<RentalRecord> {
         public <O extends Record> RentalPath(Table<O> path, ForeignKey<O, RentalRecord> childPath, InverseForeignKey<O, RentalRecord> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private RentalPath(Name alias, Table<RentalRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public RentalPath as(String alias) {
+            return new RentalPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public RentalPath as(Name alias) {
+            return new RentalPath(alias, this);
+        }
+
+        @Override
+        public RentalPath as(Table<?> alias) {
+            return new RentalPath(alias.getQualifiedName(), this);
         }
     }
 

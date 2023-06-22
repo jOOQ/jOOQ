@@ -43,7 +43,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
- * A commit in a version control system.
+ * A change set describing the exact migration path between the
+ * {@link #parents()} versions and the {@link #version()} represented by this
+ * change.
  *
  * @author Lukas Eder
  */

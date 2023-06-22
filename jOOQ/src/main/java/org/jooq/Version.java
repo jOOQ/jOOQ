@@ -48,6 +48,14 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
 /**
  * A version ID attached to a {@link Meta} description of a database.
  * <p>
+ * Unlike a {@link Commit}, which describes a <em>change</em> between two
+ * versions of a database, this type just describes the version itself, not how
+ * to get to the version.
+ * <p>
+ * While it is possible to describe a path between versions using a migration
+ * (e.g. composed of {@link Queries}), the versions themselves do not expose
+ * this information.
+ * <p>
  * This is EXPERIMENTAL functionality and subject to change in future jOOQ
  * versions.
  *

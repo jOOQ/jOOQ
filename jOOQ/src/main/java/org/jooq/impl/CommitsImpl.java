@@ -281,7 +281,7 @@ final class CommitsImpl implements Commits {
                     .withFiles(asList(new FileType()
                         .withPath(f.basename)
                         .withContentType(ContentType.INCREMENT)
-                        .withContent(Files.readString(f.file.toPath()))
+                        .withContent(new String(Files.readAllBytes(f.file.toPath())))
                     ));
             }
         }

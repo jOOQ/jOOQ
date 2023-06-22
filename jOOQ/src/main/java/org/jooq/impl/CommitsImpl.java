@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableCollection;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 
 import java.io.IOException;
@@ -70,6 +71,9 @@ import org.jooq.migrations.xml.jaxb.MigrationsType;
 import org.jooq.migrations.xml.jaxb.ParentType;
 import org.jooq.migrations.xml.jaxb.TagType;
 import org.jooq.tools.JooqLogger;
+import org.jooq.util.jaxb.tools.MiniJAXB;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -214,79 +218,102 @@ final class CommitsImpl implements Commits {
         if (log.isDebugEnabled())
             log.debug("Reading directory", directory);
 
+        // [#9506] TODO: Offer this also using a different File abstraction, for better testing, etc. (?)
+        // [#9506] TODO: Recurse into subdirectories?
+        // [#9506] TODO: Other suffixes than .sql?
+        java.io.File[] sql = directory.listFiles(f -> f.getName().endsWith(".sql"));
+        java.io.File[] xml = directory.listFiles(f -> f.getName().endsWith(".xml"));
+
+        if (!isEmpty(sql) && !isEmpty(xml))
+            throw new DataMigrationVerificationException("A migration directory can only use either SQL files or XML files, not both.");
+
+        if (!isEmpty(sql))
+            return loadSQL(sql);
+        else if (!isEmpty(xml))
+            return loadXML(xml);
+        else
+            return this;
+    }
+
+    private final Commits loadSQL(java.io.File[] sql) throws IOException {
+
         // [#9506] TODO: Turning a directory into a MigrationsType (and various other conversion)
         //               could be made reusable. This is certainly very useful for testing and interop,
         //               e.g. also to support other formats (Flyway, Liquibase) as source
         TreeMap<String, List<String>> versionToId = new TreeMap<>();
         Map<String, CommitType> idToCommit = new HashMap<>();
 
-        // [#9506] TODO: Offer this also using a different File abstraction, for better testing, etc. (?)
-        // [#9506] TODO: Recurse into subdirectories?
-        // [#9506] TODO: Other suffixes than .sql?
-        java.io.File[] files = directory.listFiles(f -> f.getName().endsWith(".sql"));
+        List<FileData> list = Stream.of(sql).map(FileData::new).collect(toList());
 
-        if (files != null) {
-            List<FileData> list = Stream.of(files).map(FileData::new).collect(toList());
+        if (log.isDebugEnabled())
+            list.forEach(f -> log.debug("Reading file", f.basename));
 
-            if (log.isDebugEnabled())
-                list.forEach(f -> log.debug("Reading file", f.basename));
+        /*
+         * An example:
+         * -----------
+         * v1-a
+         * v2-ab, v2-ac
+         * v3-acd
+         * v3-abc.v2-ab,v2-ac
+         * v4-abcd.v3-abc,v3-acd
+         */
+        for (FileData f : list)
+            versionToId.computeIfAbsent(f.version, k -> new ArrayList<>()).add(f.id);
 
-            /*
-             * An example:
-             * -----------
-             * v1-a
-             * v2-ab, v2-ac
-             * v3-acd
-             * v3-abc.v2-ab,v2-ac
-             * v4-abcd.v3-abc,v3-acd
-             */
-            for (FileData f : list)
-                versionToId.computeIfAbsent(f.version, k -> new ArrayList<>()).add(f.id);
+        for (FileData f : list)
+            idToCommit.put(f.id, new CommitType().withId(f.id));
 
-            for (FileData f : list)
-                idToCommit.put(f.id, new CommitType().withId(f.id));
+        for (FileData f : list) {
+            CommitType commit = idToCommit.get(f.id);
 
-            for (FileData f : list) {
-                CommitType commit = idToCommit.get(f.id);
+            // Parents are implicit
+            // [#9506] TODO: What cases of implicit parents are possible. What edge cases aren't?
+            if (f.parentIds.isEmpty()) {
+                Entry<String, List<String>> e = versionToId.lowerEntry(f.version);
 
-                // Parents are implicit
-                // [#9506] TODO: What cases of implicit parents are possible. What edge cases aren't?
-                if (f.parentIds.isEmpty()) {
-                    Entry<String, List<String>> e = versionToId.lowerEntry(f.version);
-
-                    if (e != null) {
-                        if (e.getValue().size() > 1)
-                            throw new DataMigrationVerificationException("Multiple predecessors for " + e.getKey() + ". Implicit parent cannot be detected: " + e.getValue());
-                        else
-                            commit.setParents(asList(new ParentType().withId(e.getValue().get(0))));
-                    }
-
+                if (e != null) {
+                    if (e.getValue().size() > 1)
+                        throw new DataMigrationVerificationException("Multiple predecessors for " + e.getKey() + ". Implicit parent cannot be detected: " + e.getValue());
+                    else
+                        commit.setParents(asList(new ParentType().withId(e.getValue().get(0))));
                 }
 
-                // Parents are explicit
-                else {
-                    for (String parent : f.parentIds)
-                        if (idToCommit.containsKey(parent))
-                            commit.getParents().add(new ParentType().withId(parent));
-                        else
-                            throw new DataMigrationVerificationException("Parent " + parent + " is not defined");
-                }
-
-                commit
-                    .withMessage(f.message)
-                    .withTags(f.tags)
-
-                    // [#9506] TODO: Better define paths, relative paths, etc.
-                    // [#9506] TOOD: Support other ContentType values than INCREMENT
-                    .withFiles(asList(new FileType()
-                        .withPath(f.basename)
-                        .withContentType(ContentType.INCREMENT)
-                        .withContent(new String(Files.readAllBytes(f.file.toPath())))
-                    ));
             }
+
+            // Parents are explicit
+            else {
+                for (String parent : f.parentIds)
+                    if (idToCommit.containsKey(parent))
+                        commit.getParents().add(new ParentType().withId(parent));
+                    else
+                        throw new DataMigrationVerificationException("Parent " + parent + " is not defined");
+            }
+
+            commit
+                .withMessage(f.message)
+                .withTags(f.tags)
+
+                // [#9506] TODO: Better define paths, relative paths, etc.
+                // [#9506] TOOD: Support other ContentType values than INCREMENT
+                .withFiles(asList(new FileType()
+                    .withPath(f.basename)
+                    .withContentType(ContentType.INCREMENT)
+                    .withContent(new String(Files.readAllBytes(f.file.toPath())))
+                ));
         }
 
         return load(new MigrationsType().withCommits(idToCommit.values()));
+    }
+
+    private final Commits loadXML(java.io.File[] xml) {
+        MigrationsType m = new MigrationsType();
+
+        for (java.io.File f : xml) {
+            MigrationsType u = MiniJAXB.unmarshal(f, MigrationsType.class);
+            m = MiniJAXB.append(m, u);
+        }
+
+        return load(m);
     }
 
     @Override

@@ -41,8 +41,7 @@
         <xtend.version>2.30.0</xtend.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
-        <jaxb.version>3.0.0</jaxb.version>
-        <javax.activation.version>1.2.0</javax.activation.version>
+        <jaxb.version>4.0.0</jaxb.version>
 
         <!-- Scala versions -->
         <scala.version>2.13.9</scala.version>

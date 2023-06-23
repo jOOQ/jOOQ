@@ -1165,6 +1165,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic identity configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="enums" type="tns:SyntheticEnumsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic enum configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="primaryKeys" type="tns:SyntheticPrimaryKeysType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic primary key configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1275,6 +1279,47 @@ Use this along with the synthetic primary key feature to replace existing primar
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic identity.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
+  </complexType>
+  
+  <complexType name="SyntheticEnumsType">
+    <sequence>
+      <element name="enum" type="tns:SyntheticEnumType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticEnumType">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic enum configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="name" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The optional enum name. If provided, then literals must match for each table/field match (though matches are optional). If omitted, then the name is generated based on each table/field match.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic enum type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="fields" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic enum type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="literals" type="tns:SyntheticEnumLiteralsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A list of literals to be configured directly in the synthetic enum.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="literalSql" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A SQL query producing the literals.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="comment" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The enum comment.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="SyntheticEnumLiteralsType">
+    <sequence>
+      <element name="literal" type="string" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
   </complexType>
   
   <complexType name="SyntheticPrimaryKeysType">

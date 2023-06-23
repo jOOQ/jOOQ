@@ -52,6 +52,7 @@ import java.util.function.Supplier;
 import org.jooq.Binding;
 import org.jooq.Check;
 import org.jooq.Comment;
+import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.DDLExportConfiguration;
@@ -541,6 +542,14 @@ public final class Internal {
     public static final void requireCommercial(Supplier<String> logMessage) throws DataAccessException {
         CONFIG.get().requireCommercial(logMessage);
     }
+
+
+
+
+
+
+
+
 
 
 

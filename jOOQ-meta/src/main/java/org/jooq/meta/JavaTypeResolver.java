@@ -37,6 +37,8 @@
  */
 package org.jooq.meta;
 
+import org.jooq.Name;
+
 /**
  * A function that can be injected into jOOQ-meta elements to resolve Java types
  * from {@link DataTypeDefinition}.
@@ -52,6 +54,11 @@ public interface JavaTypeResolver {
      * Resolve a Java type from a {@link DataTypeDefinition}.
      */
     String resolve(DataTypeDefinition type);
+
+    /**
+     * Resolve a Java type from a qualified user type.
+     */
+    String resolve(Name qualifiedUserType);
 
     /**
      * Get a language dependent class literal for a type.

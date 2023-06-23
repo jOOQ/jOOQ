@@ -43,12 +43,16 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.Log.Level.ERROR;
+// ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.rowNumber;
@@ -75,6 +79,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -86,6 +91,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jooq.Condition;
@@ -99,20 +105,25 @@ import org.jooq.Meta;
 import org.jooq.MetaProvider;
 import org.jooq.Name;
 import org.jooq.Param;
+import org.jooq.Parser;
 // ...
 import org.jooq.Query;
 import org.jooq.Record;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
+// ...
 import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.ParserException;
+import org.jooq.impl.QOM;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CommentType;
@@ -128,6 +139,7 @@ import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.SyntheticColumnType;
 import org.jooq.meta.jaxb.SyntheticDaoType;
+import org.jooq.meta.jaxb.SyntheticEnumType;
 import org.jooq.meta.jaxb.SyntheticForeignKeyType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
@@ -233,6 +245,8 @@ public abstract class AbstractDatabase implements Database {
     private Set<SyntheticReadonlyRowidType>                                      unusedSyntheticReadonlyRowids           = new HashSet<>();
     private List<SyntheticIdentityType>                                          configuredSyntheticIdentities           = new ArrayList<>();
     private Set<SyntheticIdentityType>                                           unusedSyntheticIdentities               = new HashSet<>();
+    private List<SyntheticEnumType>                                              configuredSyntheticEnums                = new ArrayList<>();
+    private Set<SyntheticEnumType>                                               unusedSyntheticEnums                    = new HashSet<>();
     private List<SyntheticPrimaryKeyType>                                        configuredSyntheticPrimaryKeys          = new ArrayList<>();
     private Set<SyntheticPrimaryKeyType>                                         unusedSyntheticPrimaryKeys              = new HashSet<>();
     private List<SyntheticUniqueKeyType>                                         configuredSyntheticUniqueKeys           = new ArrayList<>();
@@ -2022,6 +2036,20 @@ public abstract class AbstractDatabase implements Database {
                 enums = sort(filterExcludeInclude(e));
                 enums.addAll(getConfiguredEnums());
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 log.info("Enums fetched", fetchedSize(e, enums));
             });
         }
@@ -2031,6 +2059,97 @@ public abstract class AbstractDatabase implements Database {
 
         return filterSchema(enums, schema, enumsBySchema);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final List<EnumDefinition> getConfiguredEnums() {
         List<EnumDefinition> result = new ArrayList<>(getConfiguredEnumTypes().size());
@@ -2291,6 +2410,27 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
         }
+    }
+
+    @SuppressWarnings("unused")
+    @Override
+    public final SyntheticEnumType getConfiguredSyntheticEnum(Definition definition) {
+        SyntheticEnumType result = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return result;
     }
 
     private boolean typeMatchesExcludeInclude(DataTypeDefinition type, String exclude, String include) {
@@ -3263,6 +3403,7 @@ public abstract class AbstractDatabase implements Database {
             getConfiguredSyntheticReadonlyColumns().addAll(configuredSyntheticObjects.getReadonlyColumns());
             getConfiguredSyntheticReadonlyRowids().addAll(configuredSyntheticObjects.getReadonlyRowids());
             getConfiguredSyntheticIdentities().addAll(configuredSyntheticObjects.getIdentities());
+            getConfiguredSyntheticEnums().addAll(configuredSyntheticObjects.getEnums());
             getConfiguredSyntheticPrimaryKeys().addAll(configuredSyntheticObjects.getPrimaryKeys());
             getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticObjects.getUniqueKeys());
             getConfiguredSyntheticForeignKeys().addAll(configuredSyntheticObjects.getForeignKeys());
@@ -3273,6 +3414,7 @@ public abstract class AbstractDatabase implements Database {
             unusedSyntheticReadonlyColumns.addAll(configuredSyntheticObjects.getReadonlyColumns());
             unusedSyntheticReadonlyRowids.addAll(configuredSyntheticObjects.getReadonlyRowids());
             unusedSyntheticIdentities.addAll(configuredSyntheticObjects.getIdentities());
+            unusedSyntheticEnums.addAll(configuredSyntheticObjects.getEnums());
             unusedSyntheticPrimaryKeys.addAll(configuredSyntheticObjects.getPrimaryKeys());
             unusedSyntheticUniqueKeys.addAll(configuredSyntheticObjects.getUniqueKeys());
             unusedSyntheticForeignKeys.addAll(configuredSyntheticObjects.getForeignKeys());
@@ -3285,6 +3427,8 @@ public abstract class AbstractDatabase implements Database {
 
             if (!configuredSyntheticObjects.getColumns().isEmpty())
                 log.info("Commercial feature", "Synthetic columns are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+            if (!configuredSyntheticObjects.getEnums().isEmpty())
+                log.info("Commercial feature", "Synthetic enums are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
             if (!configuredSyntheticObjects.getReadonlyColumns().isEmpty())
                 log.info("Commercial feature", "Synthetic read only columns are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
             if (!configuredSyntheticObjects.getReadonlyRowids().isEmpty())
@@ -3326,6 +3470,14 @@ public abstract class AbstractDatabase implements Database {
             configuredSyntheticIdentities = new ArrayList<>();
 
         return configuredSyntheticIdentities;
+    }
+
+    @Override
+    public List<SyntheticEnumType> getConfiguredSyntheticEnums() {
+        if (configuredSyntheticEnums == null)
+            configuredSyntheticEnums = new ArrayList<>();
+
+        return configuredSyntheticEnums;
     }
 
     @Override
@@ -3389,6 +3541,11 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public void markUsed(SyntheticEnumType e) {
+        unusedSyntheticEnums.remove(e);
+    }
+
+    @Override
     public void markUsed(SyntheticPrimaryKeyType primaryKey) {
         unusedSyntheticPrimaryKeys.remove(primaryKey);
     }
@@ -3426,6 +3583,11 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public List<SyntheticIdentityType> getUnusedSyntheticIdentities() {
         return new ArrayList<>(unusedSyntheticIdentities);
+    }
+
+    @Override
+    public List<SyntheticEnumType> getUnusedSyntheticEnums() {
+        return new ArrayList<>(unusedSyntheticEnums);
     }
 
     @Override

@@ -9848,6 +9848,25 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         @Override
+        public String resolve(Name name) {
+            return getType(
+                database,
+
+                // [#15276] TODO: Handle SQL Server catalogs
+                database.getSchema(name.qualifier().last()),
+                out,
+                name.last(),
+                0,
+                0,
+                name,
+                null,
+                Object.class.getName(),
+                mode == null ? Mode.RECORD : mode,
+                null
+            );
+        }
+
+        @Override
         public String classLiteral(String type) {
             String rawtype;
 

@@ -55,5 +55,6 @@ public interface EnumDefinition extends Definition {
      * @return Whether this enum type is "synthetic", i.e. not defined in the
      *         database, but in code generation configurations.
      */
+    @Override
     boolean isSynthetic();
 }

@@ -38,14 +38,13 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Convert.convert;
-import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.jooq.ConverterContext;
+import org.jooq.EnumType;
 
 /**
  * A base class for enum conversion.
@@ -65,6 +64,8 @@ public /* non-final */ class EnumConverter<T, U extends Enum<U>> extends Abstrac
             // [#8045] Also support Kotlin Int type (which translates to int.class)
             Number.class.isAssignableFrom(wrapper(fromType))
                 ? u -> convert(u.ordinal(), fromType)
+                : EnumType.class.isAssignableFrom(toType)
+                ? u -> convert(((EnumType) u).getLiteral(), fromType)
                 : u -> convert(u.name(), fromType)
         );
     }

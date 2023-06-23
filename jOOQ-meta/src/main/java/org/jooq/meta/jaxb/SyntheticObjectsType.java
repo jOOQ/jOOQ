@@ -43,6 +43,9 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "identities")
     @XmlElement(name = "identity")
     protected List<SyntheticIdentityType> identities;
+    @XmlElementWrapper(name = "enums")
+    @XmlElement(name = "enum")
+    protected List<SyntheticEnumType> enums;
     @XmlElementWrapper(name = "primaryKeys")
     @XmlElement(name = "primaryKey")
     protected List<SyntheticPrimaryKeyType> primaryKeys;
@@ -101,6 +104,17 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public void setIdentities(List<SyntheticIdentityType> identities) {
         this.identities = identities;
+    }
+
+    public List<SyntheticEnumType> getEnums() {
+        if (enums == null) {
+            enums = new ArrayList<SyntheticEnumType>();
+        }
+        return enums;
+    }
+
+    public void setEnums(List<SyntheticEnumType> enums) {
+        this.enums = enums;
     }
 
     public List<SyntheticPrimaryKeyType> getPrimaryKeys() {
@@ -242,6 +256,27 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         return this;
     }
 
+    public SyntheticObjectsType withEnums(SyntheticEnumType... values) {
+        if (values!= null) {
+            for (SyntheticEnumType value: values) {
+                getEnums().add(value);
+            }
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withEnums(Collection<SyntheticEnumType> values) {
+        if (values!= null) {
+            getEnums().addAll(values);
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withEnums(List<SyntheticEnumType> enums) {
+        setEnums(enums);
+        return this;
+    }
+
     public SyntheticObjectsType withPrimaryKeys(SyntheticPrimaryKeyType... values) {
         if (values!= null) {
             for (SyntheticPrimaryKeyType value: values) {
@@ -353,6 +388,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         builder.append("readonlyRowids", "readonlyRowid", readonlyRowids);
         builder.append("columns", "column", columns);
         builder.append("identities", "identity", identities);
+        builder.append("enums", "enum", enums);
         builder.append("primaryKeys", "primaryKey", primaryKeys);
         builder.append("uniqueKeys", "uniqueKey", uniqueKeys);
         builder.append("foreignKeys", "foreignKey", foreignKeys);
@@ -415,6 +451,15 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (enums == null) {
+            if (other.enums!= null) {
+                return false;
+            }
+        } else {
+            if (!enums.equals(other.enums)) {
+                return false;
+            }
+        }
         if (primaryKeys == null) {
             if (other.primaryKeys!= null) {
                 return false;
@@ -471,6 +516,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         result = ((prime*result)+((readonlyRowids == null)? 0 :readonlyRowids.hashCode()));
         result = ((prime*result)+((columns == null)? 0 :columns.hashCode()));
         result = ((prime*result)+((identities == null)? 0 :identities.hashCode()));
+        result = ((prime*result)+((enums == null)? 0 :enums.hashCode()));
         result = ((prime*result)+((primaryKeys == null)? 0 :primaryKeys.hashCode()));
         result = ((prime*result)+((uniqueKeys == null)? 0 :uniqueKeys.hashCode()));
         result = ((prime*result)+((foreignKeys == null)? 0 :foreignKeys.hashCode()));

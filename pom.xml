@@ -136,11 +136,6 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
-                <artifactId>jooq-migrations-maven</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jooq</groupId>
                 <artifactId>jooq-meta</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -565,22 +560,6 @@
                 <artifactId>checker</artifactId>
                 <version>${checker-framework.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.checkerframework</groupId>
-                <artifactId>checker-qual</artifactId>
-                <version>${checker-framework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.checkerframework</groupId>
-                <artifactId>checker-util</artifactId>
-                <version>${checker-framework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.checkerframework</groupId>
-                <artifactId>checker-qual</artifactId>
-                <version>${checker-framework.version}</version>
-                <classifier>sources</classifier>
-            </dependency>
 
             <dependency>
                 <groupId>com.google.errorprone</groupId>
@@ -652,8 +631,8 @@
                              https://issues.apache.org/jira/browse/MCOMPILER-209 -->
                         <useIncrementalCompilation>false</useIncrementalCompilation>
                         <fork>true</fork>
-                        <maxmem>6000m</maxmem>
-                        <meminitial>1000m</meminitial>
+                        <maxmem>512m</maxmem>
+                        <meminitial>256m</meminitial>
                         <encoding>UTF-8</encoding>
 
                         <release>17</release>
@@ -906,7 +885,10 @@
 
 
 
+
         <module>jOOQ-checker</module>
+
+
         <module>jOOQ-jackson-extensions</module>
         <module>jOOQ-postgres-extensions</module>
 
@@ -916,8 +898,9 @@
         <module>jOOQ-meta-extensions-liquibase</module>
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
-        <module>jOOQ-migrations-maven</module>
+
         <module>jOOQ-migrations</module>
+
 
         <module>jOOQ-kotlin</module>
         <module>jOOQ-kotlin-coroutines</module>
@@ -927,7 +910,6 @@
 
 
         <module>jOOQ-xtend</module>
-
 
 
 

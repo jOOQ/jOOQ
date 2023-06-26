@@ -43,6 +43,7 @@ import static java.util.Collections.singletonList;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.meta.jaxb.SyntheticEnumType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
 import org.jooq.tools.JooqLogger;
@@ -93,6 +94,12 @@ public class DefaultColumnDefinition
         if (type instanceof DefaultDataTypeDefinition dd) {
             dd.identity(this.identity);
             dd.readonly(this.readonly);
+
+
+
+
+
+
         }
     }
 

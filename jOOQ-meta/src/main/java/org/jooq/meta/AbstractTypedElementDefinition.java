@@ -220,23 +220,6 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         // [#677] Forced types for matching regular expressions
         ForcedType forcedType = db.getConfiguredForcedType(child, definedType);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         if (forcedType != null) {
             String uType = forcedType.getName();
             String generator = forcedType.getGenerator();

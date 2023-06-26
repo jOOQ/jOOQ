@@ -70,7 +70,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final Database         database;
     private final SchemaDefinition schema;
     private final String           type;
-    private final Name             userType;
+    private Name                   userType;
     private final String           javaType;
     private String                 generator;
     private final String           converter;
@@ -369,6 +369,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final Name getQualifiedUserType() {
         return userType;
+    }
+
+    public DefaultDataTypeDefinition qualifiedUserType(Name name) {
+        this.userType = name;
+        return this;
     }
 
     @Override

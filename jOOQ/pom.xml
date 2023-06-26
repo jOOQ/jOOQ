@@ -101,6 +101,19 @@
             </plugin>
 
             <plugin>
+                <!-- This plugin will set properties values using dependency information -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
@@ -108,6 +121,13 @@
                         <Xmaxerrs>10000</Xmaxerrs>
                         <Xmaxwarns>10000</Xmaxwarns>
                     </compilerArguments>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.checkerframework</groupId>
+                            <artifactId>checker</artifactId>
+                            <version>${checker-framework.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                     <showWarnings>true</showWarnings>
                     <!-- Default is verbose off, so you won't see stub parser warnings. -->
                     <verbose>${javac.verbose}</verbose>
@@ -211,14 +231,17 @@
         <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker-qual</artifactId>
+            <version>${checker-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker-util</artifactId>
+            <version>${checker-framework.version}</version>
         </dependency>
         <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker</artifactId>
+            <version>${checker-framework.version}</version>
         </dependency>
 
 

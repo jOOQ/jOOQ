@@ -35,6 +35,9 @@ module org.jooq {
     // Nullability annotations for better Kotlin interop
     requires static org.jetbrains.annotations;
 
+    // Needed for Checker Framework to work with modules.
+    requires org.checkerframework.checker.qual;
+
     requires transitive org.reactivestreams;
     requires transitive r2dbc.spi;
 

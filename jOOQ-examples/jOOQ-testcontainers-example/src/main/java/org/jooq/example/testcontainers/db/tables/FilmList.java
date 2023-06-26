@@ -86,7 +86,7 @@ public class FilmList extends TableImpl<FilmListRecord> {
     /**
      * The column <code>public.film_list.rating</code>.
      */
-    public final TableField<FilmListRecord, MpaaRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR.asEnumDataType(org.jooq.example.testcontainers.db.enums.MpaaRating.class), this, "");
+    public final TableField<FilmListRecord, MpaaRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR.asEnumDataType(MpaaRating.class), this, "");
 
     /**
      * The column <code>public.film_list.actors</code>.

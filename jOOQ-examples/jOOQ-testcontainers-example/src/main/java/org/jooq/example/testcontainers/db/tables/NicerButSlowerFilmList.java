@@ -86,7 +86,7 @@ public class NicerButSlowerFilmList extends TableImpl<NicerButSlowerFilmListReco
     /**
      * The column <code>public.nicer_but_slower_film_list.rating</code>.
      */
-    public final TableField<NicerButSlowerFilmListRecord, MpaaRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR.asEnumDataType(org.jooq.example.testcontainers.db.enums.MpaaRating.class), this, "");
+    public final TableField<NicerButSlowerFilmListRecord, MpaaRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR.asEnumDataType(MpaaRating.class), this, "");
 
     /**
      * The column <code>public.nicer_but_slower_film_list.actors</code>.

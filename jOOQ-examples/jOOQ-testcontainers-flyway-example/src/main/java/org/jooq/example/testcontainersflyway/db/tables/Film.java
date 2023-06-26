@@ -46,6 +46,7 @@ import org.jooq.example.testcontainersflyway.db.tables.Inventory.InventoryPath;
 import org.jooq.example.testcontainersflyway.db.tables.Language.LanguagePath;
 import org.jooq.example.testcontainersflyway.db.tables.records.FilmRecord;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -124,7 +125,7 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>public.film.rating</code>.
      */
-    public final TableField<FilmRecord, MpaaRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR.defaultValue(DSL.field(DSL.raw("'G'::mpaa_rating"), SQLDataType.VARCHAR)).asEnumDataType(org.jooq.example.testcontainersflyway.db.enums.MpaaRating.class), this, "");
+    public final TableField<FilmRecord, MpaaRating> RATING = createField(DSL.name("rating"), SQLDataType.VARCHAR.defaultValue(DSL.field(DSL.raw("'G'::mpaa_rating"), SQLDataType.VARCHAR)).asEnumDataType(MpaaRating.class), this, "");
 
     /**
      * The column <code>public.film.last_update</code>.
@@ -145,7 +146,7 @@ public class Film extends TableImpl<FilmRecord> {
      * configuration.
      */
     @Deprecated
-    public final TableField<FilmRecord, Object> FULLTEXT = createField(DSL.name("fulltext"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"tsvector\"").nullable(false), this, "");
+    public final TableField<FilmRecord, Object> FULLTEXT = createField(DSL.name("fulltext"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"tsvector\"").nullable(false), this, "");
 
     private Film(Name alias, Table<FilmRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

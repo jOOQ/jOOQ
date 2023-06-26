@@ -2151,6 +2151,13 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
+
+
+
+
+
+
     private final List<EnumDefinition> getConfiguredEnums() {
         List<EnumDefinition> result = new ArrayList<>(getConfiguredEnumTypes().size());
 

@@ -1,0 +1,29 @@
+name: Java CI
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: "JDK ${{ matrix.java }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ 17 ]
+    steps:
+    - name: 'Check out repository'
+      uses: actions/checkout@v3.1.0
+    - name: Set up JDK ${{ matrix.java }}
+      uses: actions/setup-java@v3.6.0
+      with:
+        distribution: 'temurin'
+        java-version: ${{ matrix.java }}
+    - name: check javac version
+      run: javac -version
+    - name: build with type checking
+      run: mvn -V -B -e compile -Dcheckerframework.checkers=org.checkerframework.checker.signedness.SignednessChecker -DskipTests=true -Dcheckerframework.suppress="type.anno.before"
+      working-directory: ./jOOQ
+

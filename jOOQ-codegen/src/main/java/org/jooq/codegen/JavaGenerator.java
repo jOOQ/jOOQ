@@ -929,6 +929,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, ConstraintDefinition.class));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getKeys(schema)));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getForeignKeys(schema)));
+
         printGlobalReferencesPackage(out, schema, ConstraintDefinition.class);
 
         if (!kotlin) {
@@ -1077,6 +1078,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, IndexDefinition.class));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getIndexes(schema)));
+
         printGlobalReferencesPackage(out, schema, IndexDefinition.class);
 
         if (!kotlin) {
@@ -3160,6 +3162,8 @@ public class JavaGenerator extends AbstractGenerator {
     @SuppressWarnings("unused")
     protected void generateUDT(SchemaDefinition schema, UDTDefinition udt) {
         JavaWriter out = newJavaWriter(getFile(udt));
+        out.refConflicts(getStrategy().getJavaIdentifiers(udt.getAttributes()));
+
         log.info("Generating UDT ", out.file().getName());
 
         if (log.isDebugEnabled())
@@ -3524,6 +3528,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating DOMAIN references");
         JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, DomainDefinition.class));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getDomains(schema)));
+
         printGlobalReferencesPackage(out, schema, DomainDefinition.class);
 
         final String schemaId = generateDefaultSchema(schema)
@@ -7809,6 +7814,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating sequences");
         JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, SequenceDefinition.class));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getSequences(schema)));
+
         printGlobalReferencesPackage(out, schema, SequenceDefinition.class);
 
         if (!kotlin) {

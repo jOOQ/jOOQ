@@ -10161,7 +10161,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             sb.append(getJavaTypeReference(db, array.getElementType(resolver(out)), out));
             sb.append(array.getIndexType() != null ? ".asAssociativeArrayDataType(" : ".asArrayDataType(");
-            sb.append(classOf(getStrategy().getFullJavaClassName(array, Mode.RECORD)));
+            sb.append(classOf(out.ref(getStrategy().getFullJavaClassName(array, Mode.RECORD))));
             sb.append(")");
         }
         else if (db.getDomain(schema, u) != null) {
@@ -10172,13 +10172,13 @@ public class JavaGenerator extends AbstractGenerator {
             appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef);
         }
         else if (db.getUDT(schema, u) != null) {
-            sb.append(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)));
+            sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u))));
             sb.append(".getDataType()");
         }
         // [#3942] [#7863] Dialects that support tables as UDTs
         // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
         else if (SUPPORT_TABLE_AS_UDT.contains(db.getDialect()) && db.getTable(schema, u) != null) {
-            sb.append(getStrategy().getFullJavaIdentifier(db.getTable(schema, u)));
+            sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getTable(schema, u))));
             sb.append(".getDataType()");
         }
         else if (db.getEnum(schema, u) != null) {
@@ -10189,7 +10189,7 @@ public class JavaGenerator extends AbstractGenerator {
                 l, p, s, n, r, g, d, i, (Name) null, ge, null, null, null
             ), out));
             sb.append(".asEnumDataType(");
-            sb.append(classOf(getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM)));
+            sb.append(classOf(out.ref(getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM))));
             sb.append(")");
         }
         else {
@@ -10206,7 +10206,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 sb = new StringBuilder();
 
-                sb.append(DefaultDataType.class.getName());
+                sb.append(out.ref(DefaultDataType.class));
                 sb.append(".getDefaultDataType(\"");
                 sb.append(escapeString(u != null ? u.toString() : t));
                 sb.append("\")");

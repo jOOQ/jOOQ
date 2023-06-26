@@ -39,20 +39,16 @@ package org.jooq.meta;
 
 public class DefaultCheckConstraintDefinition extends AbstractConstraintDefinition implements CheckConstraintDefinition {
 
-    private final String checkClause;
-
     public DefaultCheckConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, String checkClause) {
         this(schema, table, name, checkClause, true);
     }
 
     public DefaultCheckConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, String checkClause, boolean enforced) {
-        super(schema, table, name, enforced);
-
-        this.checkClause = checkClause;
+        super(schema, table, name, enforced, null, checkClause);
     }
 
     @Override
     public String getCheckClause() {
-        return checkClause;
+        return getSource();
     }
 }

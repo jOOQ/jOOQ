@@ -49,7 +49,11 @@ public class AbstractConstraintDefinition extends AbstractDefinition implements 
     private final boolean         enforced;
 
     public AbstractConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, boolean enforced) {
-        super(schema.getDatabase(), schema, name, null);
+        this(schema, table, name, enforced, null, null);
+    }
+
+    public AbstractConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, boolean enforced, String comment, String source) {
+        super(schema.getDatabase(), schema, null, name, comment, null, source);
 
         this.table = table;
         this.enforced = enforced;

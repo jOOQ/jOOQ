@@ -52,10 +52,12 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
@@ -2059,6 +2061,14 @@ public abstract class AbstractDatabase implements Database {
 
         return filterSchema(enums, schema, enumsBySchema);
     }
+
+
+
+
+
+
+
+
 
 
 

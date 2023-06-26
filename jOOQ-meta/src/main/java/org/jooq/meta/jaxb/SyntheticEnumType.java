@@ -31,6 +31,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="fields" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="literals" type="{http://www.jooq.org/xsd/jooq-codegen-3.19.0.xsd}SyntheticEnumLiteralsType" minOccurs="0"/&gt;
  *         &lt;element name="literalSql" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="literalsFromColumnContent" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="literalsFromCheckConstraints" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -59,6 +61,8 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
     protected String fields;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String literalSql;
+    protected Boolean literalsFromColumnContent;
+    protected Boolean literalsFromCheckConstraints;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
     @XmlElementWrapper(name = "literals")
@@ -130,6 +134,54 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
     }
 
     /**
+     * The matched column's content defines the literals (this is convenience for {@link #literalSql} being <code>SELECT DISTINCT matched_column FROM matched_table</code>).
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isLiteralsFromColumnContent() {
+        return literalsFromColumnContent;
+    }
+
+    /**
+     * Sets the value of the literalsFromColumnContent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setLiteralsFromColumnContent(Boolean value) {
+        this.literalsFromColumnContent = value;
+    }
+
+    /**
+     * The list of literals is parsed from the applicable <code>CHECK</code> constraints for the matched column, if possible.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isLiteralsFromCheckConstraints() {
+        return literalsFromCheckConstraints;
+    }
+
+    /**
+     * Sets the value of the literalsFromCheckConstraints property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setLiteralsFromCheckConstraints(Boolean value) {
+        this.literalsFromCheckConstraints = value;
+    }
+
+    /**
      * The enum comment.
      * 
      */
@@ -192,6 +244,16 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
         return this;
     }
 
+    public SyntheticEnumType withLiteralsFromColumnContent(Boolean value) {
+        setLiteralsFromColumnContent(value);
+        return this;
+    }
+
+    public SyntheticEnumType withLiteralsFromCheckConstraints(Boolean value) {
+        setLiteralsFromCheckConstraints(value);
+        return this;
+    }
+
     /**
      * The enum comment.
      * 
@@ -228,6 +290,8 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
         builder.append("tables", tables);
         builder.append("fields", fields);
         builder.append("literalSql", literalSql);
+        builder.append("literalsFromColumnContent", literalsFromColumnContent);
+        builder.append("literalsFromCheckConstraints", literalsFromCheckConstraints);
         builder.append("comment", comment);
         builder.append("literals", "literal", literals);
     }
@@ -287,6 +351,24 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (literalsFromColumnContent == null) {
+            if (other.literalsFromColumnContent!= null) {
+                return false;
+            }
+        } else {
+            if (!literalsFromColumnContent.equals(other.literalsFromColumnContent)) {
+                return false;
+            }
+        }
+        if (literalsFromCheckConstraints == null) {
+            if (other.literalsFromCheckConstraints!= null) {
+                return false;
+            }
+        } else {
+            if (!literalsFromCheckConstraints.equals(other.literalsFromCheckConstraints)) {
+                return false;
+            }
+        }
         if (comment == null) {
             if (other.comment!= null) {
                 return false;
@@ -316,6 +398,8 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         result = ((prime*result)+((literalSql == null)? 0 :literalSql.hashCode()));
+        result = ((prime*result)+((literalsFromColumnContent == null)? 0 :literalsFromColumnContent.hashCode()));
+        result = ((prime*result)+((literalsFromCheckConstraints == null)? 0 :literalsFromCheckConstraints.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         result = ((prime*result)+((literals == null)? 0 :literals.hashCode()));
         return result;

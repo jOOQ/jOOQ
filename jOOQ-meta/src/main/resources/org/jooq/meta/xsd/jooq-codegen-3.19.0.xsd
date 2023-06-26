@@ -1309,6 +1309,14 @@ Use this along with the synthetic primary key feature to replace existing primar
       <element name="literalSql" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A SQL query producing the literals.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="literalsFromColumnContent" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The matched column's content defines the literals (this is convenience for {@link #literalSql} being <code>SELECT DISTINCT matched_column FROM matched_table</code>).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="literalsFromCheckConstraints" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The list of literals is parsed from the applicable <code>CHECK</code> constraints for the matched column, if possible.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="comment" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The enum comment.]]></jxb:javadoc></jxb:property></appinfo></annotation>

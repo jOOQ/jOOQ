@@ -82,6 +82,7 @@ import java.util.function.Function;
 
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.types.Interval;
 // ...
 
@@ -323,6 +324,13 @@ extends
      * The actual cast may not be accurate as the {@link DataType} has to be
      * "guessed" from the jOOQ-configured data types. Use
      * {@link #cast(DataType)} for more accurate casts.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #cast(DataType)}.
      *
      * @param <Z> The generic type of the cast field
      * @param type The type that is used for the cast
@@ -421,6 +429,13 @@ extends
      * // after casting it to VARCHAR in the database
      * BOOK.ID.cast(String.class);
      * </code></pre>
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #coerce(DataType)}.
      *
      * @param <Z> The generic type of the coerced field
      * @param type The type that is used for the coercion

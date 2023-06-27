@@ -1605,6 +1605,10 @@ inside of queries (including procedural statements) are still not supported.]]><
       <element name="applyWorkaroundFor7962" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="warnOnStaticTypeRegistryAccess" type="jooq-runtime:Warning" minOccurs="0" maxOccurs="1" default="LOG_WARN">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#15286] The warning level when the deprecated static type registry was accessed by legacy code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -2079,6 +2083,26 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       <enumeration value="LOG_WARN"/>
 
       <!-- UPDATE and DELETE statements are not allowed to lack a WHERE clause -->
+      <enumeration value="THROW"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="Warning">
+    <restriction base="string">
+
+      <!-- Ignore a warning -->
+      <enumeration value="IGNORE"/>
+
+      <!-- Log a warning at DEBUG level -->
+      <enumeration value="LOG_DEBUG"/>
+
+      <!-- Log a warning at INFO level -->
+      <enumeration value="LOG_INFO"/>
+
+      <!-- Log a warning at WARN level -->
+      <enumeration value="LOG_WARN"/>
+
+      <!-- Throw an exception -->
       <enumeration value="THROW"/>
     </restriction>
   </simpleType>

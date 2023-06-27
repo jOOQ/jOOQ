@@ -118,6 +118,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.tools.JooqLogger;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -793,7 +794,26 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         return getDataType(dialect, type, null);
     }
 
+    private static final JooqLogger getDataType = JooqLogger.getLogger(DefaultDataType.class, "getDataType", 5);
+    private static final class DiscouragedStaticTypeRegistryUsage extends RuntimeException {}
+
     public static final <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type, DataType<T> fallbackDataType) {
+        return check(getDataType0(dialect, type, fallbackDataType));
+    }
+
+    private static final <T> DataType<T> check(DataType<T> result) {
+
+        // [#5713] [#15286] TODO: Move this to a dynamic type registry and make warning configurable
+        if (result instanceof ConvertedDataType || result instanceof LegacyConvertedDataType)
+            getDataType.warn("Static type registry", "The deprecated static type registry was being accessed for a non-built-in data type: " + result + ". It is strongly recommended not looking up DataType<T> references from Class<T> references by relying on the internal static type registry. See https://github.com/jOOQ/jOOQ/issues/15286 for details.", new DiscouragedStaticTypeRegistryUsage());
+
+        if (result instanceof ArrayDataType<?> a)
+            check(a.elementType);
+
+        return result;
+    }
+
+    private static final <T> DataType<T> getDataType0(SQLDialect dialect, Class<T> type, DataType<T> fallbackDataType) {
 
         // Treat primitive types the same way as their respective wrapper types
         type = wrapper(type);

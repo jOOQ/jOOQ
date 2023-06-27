@@ -527,6 +527,9 @@ public class Settings
     protected WriteIfReadonly readonlyUpdate = WriteIfReadonly.IGNORE;
     @XmlElement(defaultValue = "true")
     protected Boolean applyWorkaroundFor7962 = true;
+    @XmlElement(defaultValue = "LOG_WARN")
+    @XmlSchemaType(name = "string")
+    protected Warning warnOnStaticTypeRegistryAccess = Warning.LOG_WARN;
     @XmlElementWrapper(name = "interpreterSearchPath")
     @XmlElement(name = "schema")
     protected List<InterpreterSearchSchema> interpreterSearchPath;
@@ -5952,6 +5955,22 @@ public class Settings
         this.applyWorkaroundFor7962 = value;
     }
 
+    /**
+     * [#15286] The warning level when the deprecated static type registry was accessed by legacy code.
+     * 
+     */
+    public Warning getWarnOnStaticTypeRegistryAccess() {
+        return warnOnStaticTypeRegistryAccess;
+    }
+
+    /**
+     * [#15286] The warning level when the deprecated static type registry was accessed by legacy code.
+     * 
+     */
+    public void setWarnOnStaticTypeRegistryAccess(Warning value) {
+        this.warnOnStaticTypeRegistryAccess = value;
+    }
+
     public List<InterpreterSearchSchema> getInterpreterSearchPath() {
         if (interpreterSearchPath == null) {
             interpreterSearchPath = new ArrayList<InterpreterSearchSchema>();
@@ -7519,6 +7538,15 @@ public class Settings
         return this;
     }
 
+    /**
+     * [#15286] The warning level when the deprecated static type registry was accessed by legacy code.
+     * 
+     */
+    public Settings withWarnOnStaticTypeRegistryAccess(Warning value) {
+        setWarnOnStaticTypeRegistryAccess(value);
+        return this;
+    }
+
     public Settings withInterpreterSearchPath(InterpreterSearchSchema... values) {
         if (values!= null) {
             for (InterpreterSearchSchema value: values) {
@@ -7802,6 +7830,7 @@ public class Settings
         builder.append("readonlyInsert", readonlyInsert);
         builder.append("readonlyUpdate", readonlyUpdate);
         builder.append("applyWorkaroundFor7962", applyWorkaroundFor7962);
+        builder.append("warnOnStaticTypeRegistryAccess", warnOnStaticTypeRegistryAccess);
         builder.append("interpreterSearchPath", "schema", interpreterSearchPath);
         builder.append("migrationSchemata", "schema", migrationSchemata);
         builder.append("parseSearchPath", "schema", parseSearchPath);
@@ -9788,6 +9817,15 @@ public class Settings
                 return false;
             }
         }
+        if (warnOnStaticTypeRegistryAccess == null) {
+            if (other.warnOnStaticTypeRegistryAccess!= null) {
+                return false;
+            }
+        } else {
+            if (!warnOnStaticTypeRegistryAccess.equals(other.warnOnStaticTypeRegistryAccess)) {
+                return false;
+            }
+        }
         if (interpreterSearchPath == null) {
             if (other.interpreterSearchPath!= null) {
                 return false;
@@ -10040,6 +10078,7 @@ public class Settings
         result = ((prime*result)+((readonlyInsert == null)? 0 :readonlyInsert.hashCode()));
         result = ((prime*result)+((readonlyUpdate == null)? 0 :readonlyUpdate.hashCode()));
         result = ((prime*result)+((applyWorkaroundFor7962 == null)? 0 :applyWorkaroundFor7962 .hashCode()));
+        result = ((prime*result)+((warnOnStaticTypeRegistryAccess == null)? 0 :warnOnStaticTypeRegistryAccess.hashCode()));
         result = ((prime*result)+((interpreterSearchPath == null)? 0 :interpreterSearchPath.hashCode()));
         result = ((prime*result)+((migrationSchemata == null)? 0 :migrationSchemata.hashCode()));
         result = ((prime*result)+((parseSearchPath == null)? 0 :parseSearchPath.hashCode()));

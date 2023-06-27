@@ -10171,20 +10171,20 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(")");
         }
         else if (db.getDomain(schema, u) != null) {
-            final String sqlDataTypeRef = getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)) + ".getDataType()";
+            final String sqlDataTypeRef = out.ref(getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)), 2) + ".getDataType()";
             sb.append(sqlDataTypeRef);
 
             appendTypeReferenceNullability(db, out, sb, n);
             appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef);
         }
         else if (db.getUDT(schema, u) != null) {
-            sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u))));
+            sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)), 2));
             sb.append(".getDataType()");
         }
         // [#3942] [#7863] Dialects that support tables as UDTs
         // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
         else if (SUPPORT_TABLE_AS_UDT.contains(db.getDialect()) && db.getTable(schema, u) != null) {
-            sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getTable(schema, u))));
+            sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getTable(schema, u)), 2));
             sb.append(".getDataType()");
         }
         else if (db.getEnum(schema, u) != null) {

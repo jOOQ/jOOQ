@@ -164,6 +164,7 @@ import org.jooq.ArrayAggOrderByStep;
 // ...
 // ...
 import org.jooq.Asterisk;
+import org.jooq.Binding;
 import org.jooq.Block;
 import org.jooq.Case;
 import org.jooq.CaseConditionStep;
@@ -204,6 +205,7 @@ import org.jooq.ConstraintForeignKeyReferencesStep9;
 import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
 // ...
+import org.jooq.Converter;
 import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.DSLContext;
@@ -12208,6 +12210,13 @@ public class DSL {
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      * <p>
      * This is an alias for {@link #default_(Class)}.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * references of types supported by jOOQ internally, i.e. types from
+     * {@link SQLDataType}. If you're using any custom data types by means of a
+     * {@link Converter} or {@link Binding}, it's better to pass that converted
+     * {@link DataType} reference explicitly to
+     * {@link #defaultValue(DataType)}.
      *
      * @see #default_(Class)
      */
@@ -12263,6 +12272,13 @@ public class DSL {
     /**
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #default_(DataType)}.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
@@ -12358,6 +12374,12 @@ public class DSL {
      * In clauses that project fields to a given {@link Record} type, the
      * {@link #noField()} simply projects <code>NULL</code> and cannot be used
      * to avoid the clause.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class} references
+     * of types supported by jOOQ internally, i.e. types from
+     * {@link SQLDataType}. If you're using any custom data types by means of a
+     * {@link Converter} or {@link Binding}, it's better to pass that converted
+     * {@link DataType} reference explicitly to {@link #noField(DataType)}.
      *
      * @param type A class to derive the {@link Field#getDataType()} from.
      */
@@ -12531,13 +12553,24 @@ public class DSL {
      * <p>
      * This constructs a sequence reference given the sequence's qualified name.
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * // This sequence...
      * sequence(name("MY_SCHEMA", "MY_SEQUENCE"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_SEQUENCE]
-     * </code></pre>
+     * </code>
+     * </pre>
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * references of types supported by jOOQ internally, i.e. types from
+     * {@link SQLDataType}. If you're using any custom data types by means of a
+     * {@link Converter} or {@link Binding}, it's better to pass that converted
+     * {@link DataType} reference explicitly to
+     * {@link #sequence(Name, DataType)}.
      *
      * @param name The sequence name
      * @param type The sequence type (a type that is supported by
@@ -12674,22 +12707,37 @@ public class DSL {
      * <p>
      * This constructs a field reference given the field's qualified name. jOOQ
      * <p>
-     * Example: <pre><code>
+     * Example:
+     *
+     * <pre>
+     * <code>
      * // This field...
      * field(name("MY_SCHEMA", "MY_TABLE", "MY_FIELD"));
      *
      * // ... will render this SQL by default, using the SQL Server dialect
      * [MY_SCHEMA].[MY_TABLE].[MY_FIELD]
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
-     * Another example: <pre><code>
+     * Another example:
+     *
+     * <pre>
+     * <code>
      * create.select(field("length({1})", Integer.class, field(name("TITLE"))))
      *       .from(table(name("T_BOOK")))
      *       .fetch();
      *
      * // ... will execute this SQL on SQL Server:
      * select length([TITLE]) from [T_BOOK]
-     * </code></pre>
+     * </code>
+     * </pre>
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * references of types supported by jOOQ internally, i.e. types from
+     * {@link SQLDataType}. If you're using any custom data types by means of a
+     * {@link Converter} or {@link Binding}, it's better to pass that converted
+     * {@link DataType} reference explicitly to
+     * {@link #field(Name, DataType)}.
      *
      * @param name The field name
      * @param type The field type (a type that is supported by
@@ -12765,6 +12813,19 @@ public class DSL {
     public static Index index(Name name) {
         return new IndexImpl(name);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -14006,13 +14067,21 @@ public class DSL {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * references of types supported by jOOQ internally, i.e. types from
+     * {@link SQLDataType}. If you're using any custom data types by means of a
+     * {@link Converter} or {@link Binding}, it's better to pass that converted
+     * {@link DataType} reference explicitly to
+     * {@link #sequence(String, DataType)}.
      *
      * @param sql The sequence name
      * @param type The sequence type (a type that is supported by
      *            {@link SQLDataType})
      * @return A field wrapping the plain SQL
      * @see SQL
-     * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, Class)} instead.
+     * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, Class)}
+     *             instead.
      */
     @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
@@ -14048,6 +14117,13 @@ public class DSL {
     /**
      * Create the <code>VALUE</code> pseudo field for usage with
      * <code>DOMAIN</code> specifications.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * references of types supported by jOOQ internally, i.e. types from
+     * {@link SQLDataType}. If you're using any custom data types by means of a
+     * {@link Converter} or {@link Binding}, it's better to pass that converted
+     * {@link DataType} reference explicitly to
+     * {@link #value(DataType)}.
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
@@ -14085,6 +14161,13 @@ public class DSL {
 
     /**
      * Create a <code>DOMAIN</code> reference.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * references of types supported by jOOQ internally, i.e. types from
+     * {@link SQLDataType}. If you're using any custom data types by means of a
+     * {@link Converter} or {@link Binding}, it's better to pass that converted
+     * {@link DataType} reference explicitly to
+     * {@link #domain(String, DataType)}.
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
@@ -14094,6 +14177,13 @@ public class DSL {
 
     /**
      * Create a <code>DOMAIN</code> reference.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * references of types supported by jOOQ internally, i.e. types from
+     * {@link SQLDataType}. If you're using any custom data types by means of a
+     * {@link Converter} or {@link Binding}, it's better to pass that converted
+     * {@link DataType} reference explicitly to
+     * {@link #domain(Name, DataType)}.
      */
     @NotNull
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
@@ -14282,14 +14372,24 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * references of types supported by jOOQ internally, i.e. types from
+     * {@link SQLDataType}. If you're using any custom data types by means of a
+     * {@link Converter} or {@link Binding}, it's better to pass that converted
+     * {@link DataType} reference explicitly to
+     * {@link #field(SQL, DataType)}.
      *
      * @param sql The SQL
      * @param type The field type (a type that is supported by
@@ -14314,14 +14414,24 @@ public class DSL {
      * <p>
      * Example:
      * <p>
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #field(String, DataType)}.
      *
      * @param sql The SQL
      * @param type The field type (a type that is supported by
@@ -14354,6 +14464,13 @@ public class DSL {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #field(String, DataType, Object...)}.
      *
      * @param sql The SQL
      * @param type The field type (a type that is supported by
@@ -14587,6 +14704,13 @@ public class DSL {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
      * literals is to use {@link #name(String...)} and similar methods
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #field(String, DataType, QueryPart...)}.
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -14613,6 +14737,13 @@ public class DSL {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #function(String, DataType, Field...)}.
      *
      * @param name The function name (without parentheses)
      * @param type The function return type (a type that is supported by
@@ -14651,6 +14782,13 @@ public class DSL {
     /**
      * <code>function()</code> can be used to access native or user-defined
      * functions that are not yet or insufficiently supported by jOOQ.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #function(Name, DataType, Field...)}.
      *
      * @param name The function name (possibly qualified)
      * @param type The function return type (a type that is supported by
@@ -14699,6 +14837,13 @@ public class DSL {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #aggregate(String, DataType, Field...)}.
      *
      * @param name The aggregate function name (possibly qualified)
      * @param type The aggregate function return type (a type that is supported
@@ -14738,6 +14883,13 @@ public class DSL {
     /**
      * <code>aggregate()</code> can be used to access native or user-defined
      * aggregate functions that are not yet or insufficiently supported by jOOQ.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #aggregate(Name, DataType, Field...)}.
      *
      * @param name The aggregate function name (possibly qualified)
      * @param type The aggregate function return type (a type that is supported
@@ -14774,6 +14926,13 @@ public class DSL {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #aggregateDistinct(String, DataType, Field...)}.
      *
      * @param name The aggregate function name (possibly qualified)
      * @param type The aggregate function return type (a type that is supported
@@ -14814,6 +14973,13 @@ public class DSL {
      * <code>aggregateDistinct()</code> can be used to access native or
      * user-defined aggregate functions that are not yet or insufficiently
      * supported by jOOQ.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #aggregateDistinct(Name, DataType, Field...)}.
      *
      * @param name The aggregate function name (possibly qualified)
      * @param type The aggregate function return type (a type that is supported
@@ -15886,6 +16052,13 @@ public class DSL {
 
     /**
      * Coerce this field to another type.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #coerce(Object, DataType)}.
      *
      * @param value The value to be coerced
      * @param as The field type (a type that is supported by
@@ -15965,6 +16138,13 @@ public class DSL {
      * // after casting it to VARCHAR in the database
      * BOOK.ID.cast(String.class);
      * </code></pre>
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #coerce(Field, DataType)}.
      *
      * @param <T> The generic type of the coerced field
      * @param value The value to be coerced
@@ -16096,6 +16276,13 @@ public class DSL {
 
     /**
      * Cast a value to another type.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #cast(Object, DataType)}.
      *
      * @param <T> The generic type of the cast field
      * @param value The value to cast
@@ -16111,6 +16298,13 @@ public class DSL {
 
     /**
      * Cast a field to another type.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #cast(Field, DataType)}.
      *
      * @param <T> The generic type of the cast field
      * @param field The field to cast
@@ -16167,6 +16361,13 @@ public class DSL {
 
     /**
      * Cast null to a type.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #castNull(DataType)}.
      *
      * @param <T> The generic type of the cast field
      * @param type The type that is used for the cast
@@ -29259,6 +29460,20 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>mode(field)</code> aggregate function.
      */
@@ -30171,6 +30386,13 @@ public class DSL {
 
     /**
      * Create an unnamed parameter with a defined type and no initial value.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #param(DataType)}.
      *
      * @see #param(String, Object)
      */
@@ -30230,6 +30452,13 @@ public class DSL {
 
     /**
      * Create a named parameter with a defined type and no initial value.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #param(String, DataType)}.
      *
      * @param name The parameter name
      * @param type The type that is used for the parameter (a type that is
@@ -30751,6 +30980,13 @@ public class DSL {
     /**
      * A synonym for {@link #val(Object, Class)} to be used in Scala and Groovy,
      * where <code>val</code> is a reserved keyword.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #value(Object, DataType)}.
      *
      * @param value The bind value
      * @param type The type that is used for the bind value (a type that is
@@ -31727,6 +31963,13 @@ public class DSL {
      * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
      * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
      * </ul>
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #inline(Object, DataType)}.
      *
      * @param value The inline value
      * @param type The data type to enforce upon the value (a type that is
@@ -32235,6 +32478,13 @@ public class DSL {
 
     /**
      * Get a bind value with an associated type, taken from a field.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #val(Object, DataType)}.
      *
      * @param <T> The generic value type
      * @param value The constant value
@@ -34117,6 +34367,13 @@ public class DSL {
     /**
      * Get the default data type for the {@link DSLContext}'s underlying
      * {@link SQLDialect} and a given Java type.
+     * <p>
+     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #param(DataType)}.
      *
      * @param <T> The generic type
      * @param type The Java type. This must be a type supported by

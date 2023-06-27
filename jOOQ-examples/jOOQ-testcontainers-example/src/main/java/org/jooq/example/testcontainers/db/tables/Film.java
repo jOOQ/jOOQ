@@ -34,6 +34,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
+import org.jooq.example.testcontainers.db.Domains;
 import org.jooq.example.testcontainers.db.Indexes;
 import org.jooq.example.testcontainers.db.Keys;
 import org.jooq.example.testcontainers.db.Public;
@@ -90,7 +91,7 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>public.film.release_year</code>.
      */
-    public final TableField<FilmRecord, Integer> RELEASE_YEAR = createField(DSL.name("release_year"), org.jooq.example.testcontainers.db.Domains.YEAR.getDataType(), this, "");
+    public final TableField<FilmRecord, Integer> RELEASE_YEAR = createField(DSL.name("release_year"), Domains.YEAR.getDataType(), this, "");
 
     /**
      * The column <code>public.film.language_id</code>.

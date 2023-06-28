@@ -2823,6 +2823,10 @@ public class JavaGenerator extends AbstractGenerator {
         return 3;
     }
 
+    private int domainRefSegments() {
+        return kotlin ? 1 : 2;
+    }
+
     /**
      * Subclasses may override this method to provide record class footer code.
      */
@@ -10171,7 +10175,7 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(")");
         }
         else if (db.getDomain(schema, u) != null) {
-            final String sqlDataTypeRef = out.ref(getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)), 2) + ".getDataType()";
+            final String sqlDataTypeRef = out.ref(getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)), domainRefSegments()) + ".getDataType()";
             sb.append(sqlDataTypeRef);
 
             appendTypeReferenceNullability(db, out, sb, n);

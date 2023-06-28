@@ -49,6 +49,7 @@ import static org.jooq.DDLFlag.SCHEMA;
 import static org.jooq.DDLFlag.SEQUENCE;
 import static org.jooq.DDLFlag.TABLE;
 import static org.jooq.DDLFlag.UNIQUE;
+// ...
 import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
@@ -58,7 +59,9 @@ import static org.jooq.impl.Tools.map;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.jooq.Check;
@@ -82,11 +85,15 @@ import org.jooq.Index;
 import org.jooq.Key;
 import org.jooq.Meta;
 import org.jooq.Named;
+// ...
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.Record;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
+import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.OnCommit;
@@ -101,6 +108,11 @@ import org.jooq.tools.StringUtils;
 final class DDL {
 
     private static final JooqLogger      log = JooqLogger.getLogger(DDL.class);
+
+
+
+
+
     private final DSLContext             ctx;
     private final DDLExportConfiguration configuration;
 
@@ -398,36 +410,52 @@ final class DDL {
                 else
                     queries.add(ctx.createSchema(schema.getUnqualifiedName()));
 
+        // [#15291] There exist some corner cases where inline constraints don't work, including when there's an
+        //          explicit or implicit CONSTRAINT .. USING INDEX clause where an index has to be created before
+        //          the constraint.
+        Set<Table<?>> tablesWithInlineConstraints = new HashSet<>();
+
         if (configuration.flags().contains(TABLE)) {
             for (Schema schema : schemas) {
                 for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder())) {
                     List<Constraint> constraints = new ArrayList<>();
 
-                    constraints.addAll(primaryKeys(table));
-                    constraints.addAll(uniqueKeys(table));
-                    constraints.addAll(checks(table));
+                    if (!hasConstraintsUsingIndexes(table)) {
+                        tablesWithInlineConstraints.add(table);
+
+                        constraints.addAll(primaryKeys(table));
+                        constraints.addAll(uniqueKeys(table));
+                        constraints.addAll(checks(table));
+                    }
 
                     queries.addAll(createTableOrView(table, constraints));
                 }
             }
         }
-        else {
-            for (Schema schema : schemas) {
-                if (configuration.flags().contains(PRIMARY_KEY))
-                    for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+
+        if (configuration.flags().contains(INDEX))
+            for (Schema schema : schemas)
+                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+                    queries.addAll(createIndex(table));
+
+        for (Schema schema : schemas) {
+            if (configuration.flags().contains(PRIMARY_KEY))
+                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+                    if (!tablesWithInlineConstraints.contains(table))
                         for (Constraint constraint : sortIf(primaryKeys(table), !configuration.respectConstraintOrder()))
                             queries.add(ctx.alterTable(table).add(constraint));
 
-                if (configuration.flags().contains(UNIQUE))
-                    for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+            if (configuration.flags().contains(UNIQUE))
+                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+                    if (!tablesWithInlineConstraints.contains(table))
                         for (Constraint constraint : sortIf(uniqueKeys(table), !configuration.respectConstraintOrder()))
                             queries.add(ctx.alterTable(table).add(constraint));
 
-                if (configuration.flags().contains(CHECK))
-                    for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+            if (configuration.flags().contains(CHECK))
+                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
+                    if (!tablesWithInlineConstraints.contains(table))
                         for (Constraint constraint : sortIf(checks(table), !configuration.respectConstraintOrder()))
                             queries.add(ctx.alterTable(table).add(constraint));
-            }
         }
 
         if (configuration.flags().contains(FOREIGN_KEY))
@@ -451,12 +479,27 @@ final class DDL {
                 for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                     queries.addAll(commentOn(table));
 
-        if (configuration.flags().contains(INDEX))
-            for (Schema schema : schemas)
-                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
-                    queries.addAll(createIndex(table));
-
         return ctx.queries(queries);
+    }
+
+    private final <R extends Record> boolean hasConstraintsUsingIndexes(Table<R> table) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return false;
     }
 
     private final <K extends Key<?>> List<K> sortKeysIf(List<K> input, boolean sort) {

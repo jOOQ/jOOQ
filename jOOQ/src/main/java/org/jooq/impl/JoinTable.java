@@ -105,6 +105,7 @@ import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.TableImpl.path;
 import static org.jooq.impl.Tools.containsTable;
 import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.map;
@@ -212,6 +213,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
     @Override
     public final void accept(Context<?> ctx) {
+        boolean path = path(lhs) != null || path(rhs) != null;
 
 
 
@@ -220,10 +222,20 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
 
         // [#14985] APPLY or LATERAL with path joins
-        if ((this instanceof CrossApply || this instanceof OuterApply) && TableImpl.path(rhs) != null)
+        if ((this instanceof CrossApply || this instanceof OuterApply) && path)
             ctx.visit($table2(selectFrom(rhs).asTable(rhs)));
-        else if (rhs instanceof Lateral && TableImpl.path(((Lateral<?>) rhs).$arg1()) != null)
+        else if (rhs instanceof Lateral && path(((Lateral<?>) rhs).$arg1()) != null)
             ctx.visit($table2(lateral(selectFrom(((Lateral<?>) rhs).$arg1()).asTable(((Lateral<?>) rhs).$arg1()))));
+        else if (type == NATURAL_JOIN && path)
+            ctx.visit(lhs.join(rhs).on(naturalCondition()));
+        else if (type == NATURAL_LEFT_OUTER_JOIN && path)
+            ctx.visit(lhs.leftJoin(rhs).on(naturalCondition()));
+        else if (type == NATURAL_RIGHT_OUTER_JOIN && path)
+            ctx.visit(lhs.rightJoin(rhs).on(naturalCondition()));
+        else if (type == NATURAL_FULL_OUTER_JOIN && path)
+            ctx.visit(lhs.fullJoin(rhs).on(naturalCondition()));
+        else if (!using.isEmpty() && path)
+            ctx.visit(lhs.join(rhs, type).on(usingCondition()));
 
         // [#14988] Make sure APPLY table reference continues working by wrapping lateral(rhs)
         else if (this instanceof CrossApply && EMULATE_APPLY.contains(ctx.dialect()))

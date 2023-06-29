@@ -17,8 +17,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
-import org.jooq.impl.MigrationImpl.Resolution;
-import org.jooq.impl.MigrationImpl.Status;
 
 
 /**
@@ -100,7 +98,7 @@ class History extends TableImpl<HistoryRecord> {
      * The column <code>JOOQ_MIGRATION_HISTORY.STATUS</code>. The database
      * version installation status.
      */
-    final TableField<HistoryRecord, Status> STATUS = createField(DSL.name("STATUS"), SQLDataType.VARCHAR(10).nullable(false), this, "The database version installation status.", new EnumConverter<String, Status>(String.class, Status.class));
+    final TableField<HistoryRecord, HistoryStatus> STATUS = createField(DSL.name("STATUS"), SQLDataType.VARCHAR(10).nullable(false).asEnumDataType(HistoryStatus.class), this, "The database version installation status.");
 
     /**
      * The column <code>JOOQ_MIGRATION_HISTORY.STATUS_MESSAGE</code>. Any info
@@ -112,7 +110,7 @@ class History extends TableImpl<HistoryRecord> {
      * The column <code>JOOQ_MIGRATION_HISTORY.RESOLUTION</code>. The error
      * resolution, if any.
      */
-    final TableField<HistoryRecord, Resolution> RESOLUTION = createField(DSL.name("RESOLUTION"), SQLDataType.VARCHAR(10), this, "The error resolution, if any.", new EnumConverter<String, Resolution>(String.class, Resolution.class));
+    final TableField<HistoryRecord, HistoryResolution> RESOLUTION = createField(DSL.name("RESOLUTION"), SQLDataType.VARCHAR(10).asEnumDataType(HistoryResolution.class), this, "The error resolution, if any.");
 
     /**
      * The column <code>JOOQ_MIGRATION_HISTORY.RESOLUTION_MESSAGE</code>. Any

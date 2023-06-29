@@ -44,12 +44,12 @@ import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
 import static org.jooq.impl.History.HISTORY;
 import static org.jooq.impl.HistoryImpl.initCtx;
-import static org.jooq.impl.MigrationImpl.Resolution.OPEN;
-import static org.jooq.impl.MigrationImpl.Status.FAILURE;
-import static org.jooq.impl.MigrationImpl.Status.MIGRATING;
-import static org.jooq.impl.MigrationImpl.Status.REVERTING;
-import static org.jooq.impl.MigrationImpl.Status.STARTING;
-import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
+import static org.jooq.impl.HistoryResolution.OPEN;
+import static org.jooq.impl.HistoryStatus.FAILURE;
+import static org.jooq.impl.HistoryStatus.MIGRATING;
+import static org.jooq.impl.HistoryStatus.REVERTING;
+import static org.jooq.impl.HistoryStatus.STARTING;
+import static org.jooq.impl.HistoryStatus.SUCCESS;
 import static org.jooq.impl.Tools.map;
 
 import java.io.PrintWriter;
@@ -72,7 +72,6 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
 import org.jooq.Tag;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.tools.JooqLogger;
@@ -303,7 +302,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         }
     }
 
-    private final HistoryRecord createRecord(Status status) {
+    private final HistoryRecord createRecord(HistoryStatus status) {
         HistoryRecord record = history.historyCtx.newRecord(HISTORY);
 
         record
@@ -321,11 +320,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return record;
     }
 
-    private final void log(StopWatch watch, HistoryRecord record, Status status) {
+    private final void log(StopWatch watch, HistoryRecord record, HistoryStatus status) {
         log(watch, record, status, null, null);
     }
 
-    private final void log(StopWatch watch, HistoryRecord record, Status status, Resolution resolution, String message) {
+    private final void log(StopWatch watch, HistoryRecord record, HistoryStatus status, HistoryResolution resolution, String message) {
         record.setMigrationTime(watch.split() / 1000000L)
               .setStatus(status)
               .setStatusMessage(message)
@@ -410,20 +409,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
         catch (Exception e) {
             throw new DataMigrationException("Exception during migration", e);
         }
-    }
-
-    enum Status {
-        STARTING,
-        REVERTING,
-        MIGRATING,
-        SUCCESS,
-        FAILURE
-    }
-
-    enum Resolution {
-        OPEN,
-        RESOLVED,
-        IGNORED
     }
 
     // -------------------------------------------------------------------------

@@ -7,8 +7,6 @@ package org.jooq.impl;
 import java.sql.Timestamp;
 
 import org.jooq.Record1;
-import org.jooq.impl.MigrationImpl.Resolution;
-import org.jooq.impl.MigrationImpl.Status;
 
 
 /**
@@ -176,7 +174,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * Setter for <code>JOOQ_MIGRATION_HISTORY.STATUS</code>. The database
      * version installation status.
      */
-    HistoryRecord setStatus(Status value) {
+    HistoryRecord setStatus(HistoryStatus value) {
         set(9, value);
         return this;
     }
@@ -185,8 +183,8 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * Getter for <code>JOOQ_MIGRATION_HISTORY.STATUS</code>. The database
      * version installation status.
      */
-    Status getStatus() {
-        return (Status) get(9);
+    HistoryStatus getStatus() {
+        return (HistoryStatus) get(9);
     }
 
     /**
@@ -210,7 +208,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * Setter for <code>JOOQ_MIGRATION_HISTORY.RESOLUTION</code>. The error
      * resolution, if any.
      */
-    HistoryRecord setResolution(Resolution value) {
+    HistoryRecord setResolution(HistoryResolution value) {
         set(11, value);
         return this;
     }
@@ -219,8 +217,8 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * Getter for <code>JOOQ_MIGRATION_HISTORY.RESOLUTION</code>. The error
      * resolution, if any.
      */
-    Resolution getResolution() {
-        return (Resolution) get(11);
+    HistoryResolution getResolution() {
+        return (HistoryResolution) get(11);
     }
 
     /**
@@ -263,7 +261,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
     /**
      * Create a detached, initialised HistoryRecord
      */
-    HistoryRecord(Integer id, Timestamp migratedAt, String migratedFrom, String migratedTo, String migratedToTags, Long migrationTime, String jooqVersion, String sql, Integer sqlCount, Status status, String statusMessage, Resolution resolution, String resolutionMessage) {
+    HistoryRecord(Integer id, Timestamp migratedAt, String migratedFrom, String migratedTo, String migratedToTags, Long migrationTime, String jooqVersion, String sql, Integer sqlCount, HistoryStatus status, String statusMessage, HistoryResolution resolution, String resolutionMessage) {
         super(History.HISTORY);
 
         setId(id);

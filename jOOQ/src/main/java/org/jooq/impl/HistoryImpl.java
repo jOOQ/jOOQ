@@ -42,12 +42,11 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.History.HISTORY;
-import static org.jooq.impl.MigrationImpl.Resolution.OPEN;
-import static org.jooq.impl.MigrationImpl.Resolution.RESOLVED;
-import static org.jooq.impl.MigrationImpl.Status.SUCCESS;
+import static org.jooq.impl.HistoryResolution.OPEN;
+import static org.jooq.impl.HistoryResolution.RESOLVED;
+import static org.jooq.impl.HistoryStatus.SUCCESS;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.tools.StringUtils.isBlank;
 
@@ -73,10 +72,8 @@ import org.jooq.conf.MigrationSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationVerificationException;
-import org.jooq.impl.MigrationImpl.Resolution;
 
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * @author Lukas Eder

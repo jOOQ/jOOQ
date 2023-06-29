@@ -66,6 +66,7 @@ final class Keywords {
     static final Keyword K_AS                       = keyword("as");
     static final Keyword K_AS_OF                    = keyword("as of");
     static final Keyword K_ATOMIC                   = keyword("atomic");
+    static final Keyword K_AUTHENTICATION           = keyword("authentication");
     static final Keyword K_AUTO                     = keyword("auto");
     static final Keyword K_AUTOINCREMENT            = keyword("autoincrement");
     static final Keyword K_AUTO_INCREMENT           = keyword("auto_increment");
@@ -329,6 +330,7 @@ final class Keywords {
     static final Keyword K_PUBLIC                   = keyword("public");
     static final Keyword K_QUALIFY                  = keyword("qualify");
     static final Keyword K_QUERY                    = keyword("query");
+    static final Keyword K_QUOTA                    = keyword("quota");
     static final Keyword K_RAISE                    = keyword("raise");
     static final Keyword K_RAISERROR                = keyword("raiserror");
     static final Keyword K_RAW                      = keyword("raw");
@@ -428,12 +430,15 @@ final class Keywords {
     static final Keyword K_UNBOUNDED_FOLLOWING      = keyword("unbounded following");
     static final Keyword K_UNBOUNDED_PRECEDING      = keyword("unbounded preceding");
     static final Keyword K_UNIQUE                   = keyword("unique");
+    static final Keyword K_UNLIMITED                = keyword("unlimited");
     static final Keyword K_UNNEST                   = keyword("unnest");
     static final Keyword K_UNTIL                    = keyword("until");
     static final Keyword K_UPDATE                   = keyword("update");
     static final Keyword K_UPDLOCK                  = keyword("updlock");
     static final Keyword K_UPSERT                   = keyword("upsert");
     static final Keyword K_USE                      = keyword("use");
+    static final Keyword K_USER                     = keyword("user");
+    static final Keyword K_USERS                    = keyword("users");
     static final Keyword K_USING                    = keyword("using");
     static final Keyword K_USING_INDEX              = keyword("using index");
     static final Keyword K_VALUE                    = keyword("value");

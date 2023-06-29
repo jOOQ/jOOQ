@@ -101,6 +101,10 @@ implements
 
 
 
+
+
+
+
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
     }
@@ -157,13 +161,25 @@ implements
 
 
 
+
+
             ctx.sql(' ').visit(K_SCHEMA);
 
         if (ifNotExists && supportsIfNotExists(ctx))
             ctx.sql(' ').visit(K_IF_NOT_EXISTS);
 
-        ctx.sql(' ').visit(schema)
-           .end(Clause.CREATE_SCHEMA_NAME);
+        ctx.sql(' ').visit(schema);
+
+
+
+
+
+
+
+
+
+
+        ctx.end(Clause.CREATE_SCHEMA_NAME);
     }
 
     @Override

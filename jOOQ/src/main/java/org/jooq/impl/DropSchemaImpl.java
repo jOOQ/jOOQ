@@ -135,6 +135,10 @@ implements
 
 
 
+
+
+
+
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
     }
@@ -174,6 +178,8 @@ implements
 
 
 
+
+
             ctx.sql(' ').visit(K_SCHEMA);
 
         if (ifExists && supportsIfExists(ctx))
@@ -183,6 +189,9 @@ implements
 
         if (cascade == Cascade.CASCADE)
             ctx.sql(' ').visit(K_CASCADE);
+
+
+
         else if (cascade == Cascade.RESTRICT || REQUIRES_RESTRICT.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_RESTRICT);
 

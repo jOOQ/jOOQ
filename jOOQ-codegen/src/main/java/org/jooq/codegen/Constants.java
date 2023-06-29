@@ -72,6 +72,11 @@ public final class Constants {
     public static final String FULL_VERSION   = "3.19.0-SNAPSHOT";
 
     /**
+     * The build date of this version.
+     */
+    public static final String BUILD_DATE     = "0000-00-00 00:00:00";
+
+    /**
      * The current jooq-runtime XSD file name.
      */
     public static final String XSD_RUNTIME    = "jooq-runtime-3.19.0.xsd";

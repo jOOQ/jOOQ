@@ -105,6 +105,9 @@ final class Tips {
         "The most common jOOQ types like Field, Condition, Table are summarised in this blog post: https://blog.jooq.org/a-brief-overview-over-the-most-common-jooq-types/",
         "Sometimes, a native query can be the better choice than writing a jOOQ query. Here's when that happens: https://blog.jooq.org/when-to-use-jooq-and-when-to-use-native-sql/",
         "Thinking of building a query with jOOQ and executing it elsewhere? Think again: https://blog.jooq.org/why-you-should-execute-jooq-queries-with-jooq/",
+        "You can generate jOOQ code in a single package with package private visibility if this helps. Here's how: https://blog.jooq.org/how-to-generate-package-private-code-with-jooqs-code-generator/",
+        "Want to collect a flat representation of tree data into a hierarchy? Use this Collector based approach: https://blog.jooq.org/how-to-turn-a-list-of-flat-elements-into-a-hierarchy-in-java-sql-or-jooq/",
+        "When it comes to using Converter or Binding, only the first UNION subquery is relevant. Learn more about this here: https://blog.jooq.org/how-to-use-jooqs-converters-with-union-operations/",
         ""
     };
 

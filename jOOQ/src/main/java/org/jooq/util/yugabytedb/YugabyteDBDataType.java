@@ -153,6 +153,8 @@ public class YugabyteDBDataType {
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
+    public static final DataType<Short>      SMALLSERIAL                = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINT, "smallserial");
+    public static final DataType<Short>      SERIAL2                    = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINT, "serial2");
     public static final DataType<Integer>    SERIAL                     = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "serial");
     public static final DataType<Integer>    SERIAL4                    = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "serial4");
     public static final DataType<Long>       BIGSERIAL                  = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "bigserial");

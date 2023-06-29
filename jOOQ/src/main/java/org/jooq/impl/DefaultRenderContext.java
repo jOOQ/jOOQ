@@ -979,16 +979,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
          *
          * Hint: While a) - c) work, d) is the right answer :-)
          *
-         * But before you do any of a) - c), consider this. We give away this awesome software for free,
-         * and we'd love to continue giving it away for free, so all we would like to ask you is to
-         * continue to show your love and our brand to everyone involved in your software simply in the
-         * log files when you load jOOQ. Please don't remove our logo.
-         *
-         * Thank you very much! If you absolutely must remove this logo, and can live with the guilt
-         * and shame, below is the system property that deactivates it.
-         *
-         * Cheers from the jOOQ Team.
-         *
          * --------------------------------------------------
          * DEAR USER, PLEASE READ THE ABOVE BEFORE PROCEEDING
          */
@@ -996,7 +986,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             JooqLogger l = JooqLogger.getLogger(Constants.class);
             String message;
 
-            message = "Thank you for using jOOQ " + Constants.FULL_VERSION;
+            message = "Thank you for using jOOQ " + Constants.FULL_VERSION + " (Build date: " + Constants.BUILD_DATE + ")";
 
 
 

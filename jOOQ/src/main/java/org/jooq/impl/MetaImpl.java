@@ -1123,7 +1123,13 @@ final class MetaImpl extends AbstractMeta {
                     );
                 }
                 catch (SQLDialectNotSupportedException e) {
-                    type = SQLDataType.OTHER;
+
+                    // [#15303] Register unknown data types in the type registry, to at least maintain
+                    //          type information.
+                    if (log.isDebugEnabled())
+                        log.debug("Unknown type", "Registering unknown data type: " + typeName);
+
+                    type = new DefaultDataType(family(), Object.class, typeName);
                 }
 
                 // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL

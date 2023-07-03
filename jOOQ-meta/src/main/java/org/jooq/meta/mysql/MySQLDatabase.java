@@ -587,6 +587,9 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                     ROUTINES.ROUTINE_TYPE.coerce(PROC.TYPE).as(ROUTINES.ROUTINE_TYPE))
                 .from(ROUTINES)
                 .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
+
+                // [#9309] [#15319] Until we support MariaDB packages, we must exclude them here, explicitly
+                .and(ROUTINES.ROUTINE_TYPE.in(ProcType.FUNCTION.name(), ProcType.PROCEDURE.name()))
                 .orderBy(1, 2, 6)
                 .fetch()
 
@@ -599,6 +602,9 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                     PROC.TYPE.as(ROUTINES.ROUTINE_TYPE))
                 .from(PROC)
                 .where(PROC.DB.in(getInputSchemata()))
+
+                // [#9309] [#15319] Until we support MariaDB packages, we must exclude them here, explicitly
+                .and(PROC.TYPE.in(ProcType.FUNCTION, ProcType.PROCEDURE))
                 .orderBy(1, 2, 6)
                 .fetch();
 

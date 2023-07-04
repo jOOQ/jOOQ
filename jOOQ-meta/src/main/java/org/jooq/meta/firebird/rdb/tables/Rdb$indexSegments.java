@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -21,7 +20,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.Keys;
-import org.jooq.meta.firebird.rdb.tables.Rdb$indices.Rdb$indicesPath;
 
 
 /**
@@ -98,25 +96,19 @@ public class Rdb$indexSegments extends TableImpl<Record> {
         super(path, childPath, parentPath, RDB$INDEX_SEGMENTS);
     }
 
-    public static class Rdb$indexSegmentsPath extends Rdb$indexSegments implements Path<Record> {
-        public <O extends Record> Rdb$indexSegmentsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
         return Arrays.asList(Keys.SYNTHETIC_FK_RDB$INDEX_SEGMENTS__RDB$INDEX_5);
     }
 
-    private transient Rdb$indicesPath _rdb$indices;
+    private transient Rdb$indices _rdb$indices;
 
     /**
      * Get the implicit join path to the <code>RDB$INDICES</code> table.
      */
-    public Rdb$indicesPath rdb$indices() {
+    public Rdb$indices rdb$indices() {
         if (_rdb$indices == null)
-            _rdb$indices = new Rdb$indicesPath(this, Keys.SYNTHETIC_FK_RDB$INDEX_SEGMENTS__RDB$INDEX_5, null);
+            _rdb$indices = new Rdb$indices(this, Keys.SYNTHETIC_FK_RDB$INDEX_SEGMENTS__RDB$INDEX_5, null);
 
         return _rdb$indices;
     }

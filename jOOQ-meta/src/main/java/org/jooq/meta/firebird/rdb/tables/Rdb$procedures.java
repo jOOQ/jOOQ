@@ -16,8 +16,10 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.firebird.rdb.Domains;
 import org.jooq.meta.firebird.rdb.Keys;
 
 
@@ -55,12 +57,12 @@ public class Rdb$procedures extends TableImpl<Record> {
     /**
      * The column <code>RDB$PROCEDURES.RDB$PROCEDURE_INPUTS</code>.
      */
-    public final TableField<Record, Short> RDB$PROCEDURE_INPUTS = createField(DSL.name("RDB$PROCEDURE_INPUTS"), org.jooq.meta.firebird.rdb.Domains.RDB$PROCEDURE_PARAMETERS.getDataType(), this, "");
+    public final TableField<Record, Short> RDB$PROCEDURE_INPUTS = createField(DSL.name("RDB$PROCEDURE_INPUTS"), Domains.RDB$PROCEDURE_PARAMETERS.getDataType(), this, "");
 
     /**
      * The column <code>RDB$PROCEDURES.RDB$PROCEDURE_OUTPUTS</code>.
      */
-    public final TableField<Record, Short> RDB$PROCEDURE_OUTPUTS = createField(DSL.name("RDB$PROCEDURE_OUTPUTS"), org.jooq.meta.firebird.rdb.Domains.RDB$PROCEDURE_PARAMETERS.getDataType(), this, "");
+    public final TableField<Record, Short> RDB$PROCEDURE_OUTPUTS = createField(DSL.name("RDB$PROCEDURE_OUTPUTS"), Domains.RDB$PROCEDURE_PARAMETERS.getDataType(), this, "");
 
     /**
      * The column <code>RDB$PROCEDURES.RDB$DESCRIPTION</code>.
@@ -141,7 +143,7 @@ public class Rdb$procedures extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> RDB$SQL_SECURITY = createField(DSL.name("RDB$SQL_SECURITY"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"RDB$SQL_SECURITY\""), this, "");
+    public final TableField<Record, Object> RDB$SQL_SECURITY = createField(DSL.name("RDB$SQL_SECURITY"), DefaultDataType.getDefaultDataType("\"RDB$SQL_SECURITY\""), this, "");
 
     private Rdb$procedures(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

@@ -16,6 +16,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.firebird.rdb.Keys;
@@ -151,7 +152,7 @@ public class Rdb$functions extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> RDB$SQL_SECURITY = createField(DSL.name("RDB$SQL_SECURITY"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"RDB$SQL_SECURITY\""), this, "");
+    public final TableField<Record, Object> RDB$SQL_SECURITY = createField(DSL.name("RDB$SQL_SECURITY"), DefaultDataType.getDefaultDataType("\"RDB$SQL_SECURITY\""), this, "");
 
     private Rdb$functions(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

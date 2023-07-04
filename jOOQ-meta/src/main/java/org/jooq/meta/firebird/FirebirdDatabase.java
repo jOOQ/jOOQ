@@ -37,19 +37,26 @@
  */
 package org.jooq.meta.firebird;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.mapping;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DSL.any;
+import static org.jooq.impl.DSL.bitGet;
+import static org.jooq.impl.DSL.bitOr;
+import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nullif;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
@@ -61,10 +68,8 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$FIELDS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$FUNCTIONS;
-import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
-import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
-import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
-import static org.jooq.meta.firebird.rdb.Tables.*;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$FUNCTION_ARGUMENTS;
+import static org.jooq.meta.firebird.rdb.Tables.RDB$GENERATORS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDEX_SEGMENTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$INDICES;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$PROCEDURES;
@@ -77,8 +82,8 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$TRIGGERS;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -95,8 +100,10 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
 import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -108,6 +115,7 @@ import org.jooq.meta.DefaultDomainDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
+// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -196,9 +204,9 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
             .select(
                 inline(null, VARCHAR).as("catalog"),
                 inline(null, VARCHAR).as("schema"),
-                RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME.trim().as(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME),
-                RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.trim().as(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME),
-                RDB$INDEX_SEGMENTS.RDB$FIELD_NAME.trim().as(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME),
+                trim(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME).as(RDB$RELATION_CONSTRAINTS.RDB$RELATION_NAME),
+                trim(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME).as(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME),
+                trim(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME).as(RDB$INDEX_SEGMENTS.RDB$FIELD_NAME),
                 RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION.coerce(INTEGER))
             .from(RDB$RELATION_CONSTRAINTS)
             .join(RDB$INDEX_SEGMENTS)
@@ -219,11 +227,11 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
         for (Record record : create()
                 .selectDistinct(
-                    fk.RDB$CONSTRAINT_NAME.trim().as("fk"),
-                    fk.RDB$RELATION_NAME.trim().as("fkTable"),
-                    isf.RDB$FIELD_NAME.trim().as("fkField"),
-                    pk.RDB$CONSTRAINT_NAME.trim().as("pk"),
-                    pk.RDB$RELATION_NAME.trim().as("pkTable"))
+                    trim(fk.RDB$CONSTRAINT_NAME).as("fk"),
+                    trim(fk.RDB$RELATION_NAME).as("fkTable"),
+                    trim(isf.RDB$FIELD_NAME).as("fkField"),
+                    trim(pk.RDB$CONSTRAINT_NAME).as("pk"),
+                    trim(pk.RDB$RELATION_NAME).as("pkTable"))
                 .from(fk)
                 .join(rc).on(fk.RDB$CONSTRAINT_NAME.eq(rc.RDB$CONSTRAINT_NAME))
                 .join(pk).on(pk.RDB$CONSTRAINT_NAME.eq(rc.RDB$CONST_NAME_UQ))
@@ -266,9 +274,9 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
         //         for RDB$TRIGGER_TYPE 1 (before insert) and 3 (before update)
         for (Record record : create()
             .select(
-                r.RDB$RELATION_NAME.trim().as(r.RDB$RELATION_NAME),
-                r.RDB$CONSTRAINT_NAME.trim().as(r.RDB$CONSTRAINT_NAME),
-                max(t.RDB$TRIGGER_SOURCE.trim()).as(t.RDB$TRIGGER_SOURCE)
+                trim(r.RDB$RELATION_NAME).as(r.RDB$RELATION_NAME),
+                trim(r.RDB$CONSTRAINT_NAME).as(r.RDB$CONSTRAINT_NAME),
+                max(trim(t.RDB$TRIGGER_SOURCE)).as(t.RDB$TRIGGER_SOURCE)
             )
             .from(r)
             .join(c).on(r.RDB$CONSTRAINT_NAME.eq(c.RDB$CONSTRAINT_NAME))
@@ -307,10 +315,10 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
         Map<Record, Result<Record>> indexes = create()
             .select(
-                s.rdb$indices().RDB$RELATION_NAME.trim().as(i.RDB$RELATION_NAME),
-                s.rdb$indices().RDB$INDEX_NAME.trim().as(i.RDB$INDEX_NAME),
+                trim(s.rdb$indices().RDB$RELATION_NAME).as(i.RDB$RELATION_NAME),
+                trim(s.rdb$indices().RDB$INDEX_NAME).as(i.RDB$INDEX_NAME),
                 s.rdb$indices().RDB$UNIQUE_FLAG,
-                s.RDB$FIELD_NAME.trim().as(s.RDB$FIELD_NAME),
+                trim(s.RDB$FIELD_NAME).as(s.RDB$FIELD_NAME),
                 s.RDB$FIELD_POSITION)
             .from(s)
             .where(s.rdb$indices().RDB$INDEX_NAME.notIn(select(c.RDB$CONSTRAINT_NAME).from(c)))
@@ -392,11 +400,11 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
             .select(
                 inline(null, VARCHAR).as("catalog"),
                 inline(null, VARCHAR).as("schema"),
-                RDB$RELATIONS.RDB$RELATION_NAME.trim(),
-                when(RDB$RELATIONS.RDB$VIEW_SOURCE.lower().like(inline("create%")), RDB$RELATIONS.RDB$VIEW_SOURCE.trim())
-                .else_(inline("create view \"").concat(RDB$RELATIONS.RDB$RELATION_NAME.trim()).concat(inline("\" as ")).concat(RDB$RELATIONS.RDB$VIEW_SOURCE)).as("view_source"))
+                trim(RDB$RELATIONS.RDB$RELATION_NAME),
+                when(lower(RDB$RELATIONS.RDB$VIEW_SOURCE).like(inline("create%")), trim(RDB$RELATIONS.RDB$VIEW_SOURCE))
+                .else_(inline("create view \"").concat(trim(RDB$RELATIONS.RDB$RELATION_NAME)).concat(inline("\" as ")).concat(RDB$RELATIONS.RDB$VIEW_SOURCE)).as("view_source"))
             .from(RDB$RELATIONS)
-            .orderBy(RDB$RELATIONS.RDB$RELATION_NAME.trim());
+            .orderBy(trim(RDB$RELATIONS.RDB$RELATION_NAME));
     }
 
     @Override
@@ -467,18 +475,18 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
         for (Record4<String, String, String, String> record : create()
                 .select(
-                    RDB$RELATIONS.RDB$RELATION_NAME.trim(),
-                    RDB$RELATIONS.RDB$DESCRIPTION.trim(),
-                    when(RDB$RELATIONS.RDB$RELATION_TYPE.eq(inline((short) 1)), inline(TableType.VIEW.name()))
-                        .else_(inline(TableType.TABLE.name())).trim().as("table_type"),
-                    when(RDB$RELATIONS.RDB$VIEW_SOURCE.lower().like(inline("create%")), RDB$RELATIONS.RDB$VIEW_SOURCE.trim())
-                        .else_(inline("create view \"").concat(RDB$RELATIONS.RDB$RELATION_NAME.trim()).concat("\" as ").concat(RDB$RELATIONS.RDB$VIEW_SOURCE)).as("view_source"))
+                    trim(RDB$RELATIONS.RDB$RELATION_NAME),
+                    trim(RDB$RELATIONS.RDB$DESCRIPTION),
+                    trim(when(RDB$RELATIONS.RDB$RELATION_TYPE.eq(inline((short) 1)), inline(TableType.VIEW.name()))
+                        .else_(inline(TableType.TABLE.name()))).as("table_type"),
+                    when(lower(RDB$RELATIONS.RDB$VIEW_SOURCE).like(inline("create%")), trim(RDB$RELATIONS.RDB$VIEW_SOURCE))
+                        .else_(inline("create view \"").concat(trim(RDB$RELATIONS.RDB$RELATION_NAME)).concat("\" as ").concat(RDB$RELATIONS.RDB$VIEW_SOURCE)).as("view_source"))
                 .from(RDB$RELATIONS)
                 .unionAll(
                      select(
-                         RDB$PROCEDURES.RDB$PROCEDURE_NAME.trim(),
+                         trim(RDB$PROCEDURES.RDB$PROCEDURE_NAME),
                          inline(""),
-                         inline(TableType.FUNCTION.name()).trim(),
+                         trim(inline(TableType.FUNCTION.name())),
                          inline(""))
                     .from(RDB$PROCEDURES)
 
@@ -510,7 +518,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
         return
         create().select(
-                    p.RDB$PROCEDURE_NAME.trim(),
+                    trim(p.RDB$PROCEDURE_NAME),
                     inline(null, VARCHAR).as("t"),
                     inline(null, SMALLINT).as("p"),
                     inline(null, SMALLINT).as("s"))
@@ -576,7 +584,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 f.RDB$FIELD_PRECISION,
                 FIELD_SCALE(f).as("FIELD_SCALE"),
                 FIELD_TYPE(f).as("FIELD_TYPE"),
-                DSL.bitOr(f.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(f.RDB$NULL_FLAG),
+                bitOr(nvl(f.RDB$NULL_FLAG, (short) 0), nvl(f.RDB$NULL_FLAG, (short) 0)).as(f.RDB$NULL_FLAG),
                 trim(f.RDB$VALIDATION_SOURCE).as(f.RDB$VALIDATION_SOURCE),
                 trim(f.RDB$DEFAULT_SOURCE).as(f.RDB$DEFAULT_SOURCE))
             .from(f)
@@ -610,6 +618,64 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

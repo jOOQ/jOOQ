@@ -13,6 +13,7 @@ import org.jooq.meta.mysql.information_schema.tables.Routines;
 import org.jooq.meta.mysql.information_schema.tables.Schemata;
 import org.jooq.meta.mysql.information_schema.tables.Statistics;
 import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
+import org.jooq.meta.mysql.information_schema.tables.Triggers;
 import org.jooq.meta.mysql.information_schema.tables.Views;
 
 
@@ -71,6 +72,11 @@ public class Tables {
      * The table <code>information_schema.TABLES</code>.
      */
     public static final org.jooq.meta.mysql.information_schema.tables.Tables TABLES = org.jooq.meta.mysql.information_schema.tables.Tables.TABLES;
+
+    /**
+     * The table <code>information_schema.TRIGGERS</code>.
+     */
+    public static final Triggers TRIGGERS = Triggers.TRIGGERS;
 
     /**
      * The table <code>information_schema.VIEWS</code>.

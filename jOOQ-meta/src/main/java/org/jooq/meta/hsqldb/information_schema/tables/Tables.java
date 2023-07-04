@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -24,9 +23,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 import org.jooq.meta.hsqldb.information_schema.Keys;
-import org.jooq.meta.hsqldb.information_schema.tables.Columns.ColumnsPath;
-import org.jooq.meta.hsqldb.information_schema.tables.Schemata.SchemataPath;
-import org.jooq.meta.hsqldb.information_schema.tables.Views.ViewsPath;
 
 
 /**
@@ -146,12 +142,6 @@ public class Tables extends TableImpl<Record> {
         super(path, childPath, parentPath, TABLES);
     }
 
-    public static class TablesPath extends Tables implements Path<Record> {
-        public <O extends Record> TablesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -167,41 +157,54 @@ public class Tables extends TableImpl<Record> {
         return Arrays.asList(Keys.SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient SchemataPath _schemata;
+    private transient Schemata _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>INFORMATION_SCHEMA.SCHEMATA</code> table.
      */
-    public SchemataPath schemata() {
+    public Schemata schemata() {
         if (_schemata == null)
-            _schemata = new SchemataPath(this, Keys.SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA, null);
+            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
 
-    private transient ColumnsPath _columns;
+    private transient Columns _columns;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.COLUMNS</code> table
      */
-    public ColumnsPath columns() {
+    public Columns columns() {
         if (_columns == null)
-            _columns = new ColumnsPath(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES.getInverseKey());
+            _columns = new Columns(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES.getInverseKey());
 
         return _columns;
     }
 
-    private transient ViewsPath _views;
+    private transient Triggers _triggers;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>INFORMATION_SCHEMA.TRIGGERS</code> table
+     */
+    public Triggers triggers() {
+        if (_triggers == null)
+            _triggers = new Triggers(this, null, Keys.SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES.getInverseKey());
+
+        return _triggers;
+    }
+
+    private transient Views _views;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.VIEWS</code> table
      */
-    public ViewsPath views() {
+    public Views views() {
         if (_views == null)
-            _views = new ViewsPath(this, null, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES.getInverseKey());
+            _views = new Views(this, null, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES.getInverseKey());
 
         return _views;
     }

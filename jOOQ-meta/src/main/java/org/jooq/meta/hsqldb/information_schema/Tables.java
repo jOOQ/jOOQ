@@ -19,6 +19,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.SystemColumns;
 import org.jooq.meta.hsqldb.information_schema.tables.SystemIndexinfo;
 import org.jooq.meta.hsqldb.information_schema.tables.SystemTables;
 import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints;
+import org.jooq.meta.hsqldb.information_schema.tables.Triggers;
 import org.jooq.meta.hsqldb.information_schema.tables.Views;
 
 
@@ -109,6 +110,11 @@ public class Tables {
      * one row for each table or view
      */
     public static final org.jooq.meta.hsqldb.information_schema.tables.Tables TABLES = org.jooq.meta.hsqldb.information_schema.tables.Tables.TABLES;
+
+    /**
+     * one row for each trigger definition
+     */
+    public static final Triggers TRIGGERS = Triggers.TRIGGERS;
 
     /**
      * the view descriptors of the accessible views defined within this database

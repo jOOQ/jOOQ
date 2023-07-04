@@ -18,6 +18,7 @@ import org.jooq.meta.mysql.information_schema.tables.Routines;
 import org.jooq.meta.mysql.information_schema.tables.Schemata;
 import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
 import org.jooq.meta.mysql.information_schema.tables.Tables;
+import org.jooq.meta.mysql.information_schema.tables.Triggers;
 import org.jooq.meta.mysql.information_schema.tables.Views;
 
 
@@ -36,6 +37,7 @@ public class Keys {
     public static final UniqueKey<Record> SYNTHETIC_PK_SCHEMATA = Internal.createUniqueKey(Schemata.SCHEMATA, DSL.name("SYNTHETIC_PK_SCHEMATA"), new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final UniqueKey<Record> SYNTHETIC_PK_TABLE_CONSTRAINTS = Internal.createUniqueKey(TableConstraints.TABLE_CONSTRAINTS, DSL.name("SYNTHETIC_PK_TABLE_CONSTRAINTS"), new TableField[] { TableConstraints.TABLE_CONSTRAINTS.CONSTRAINT_CATALOG, TableConstraints.TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA, TableConstraints.TABLE_CONSTRAINTS.CONSTRAINT_NAME }, true);
     public static final UniqueKey<Record> SYNTHETIC_PK_TABLES = Internal.createUniqueKey(Tables.TABLES, DSL.name("SYNTHETIC_PK_TABLES"), new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA, Tables.TABLES.TABLE_NAME }, true);
+    public static final UniqueKey<Record> SYNTHETIC_PK_TRIGGERS = Internal.createUniqueKey(Triggers.TRIGGERS, DSL.name("SYNTHETIC_PK_TRIGGERS"), new TableField[] { Triggers.TRIGGERS.TRIGGER_CATALOG, Triggers.TRIGGERS.TRIGGER_SCHEMA, Triggers.TRIGGERS.TRIGGER_NAME }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -53,6 +55,7 @@ public class Keys {
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Routines.ROUTINES, DSL.name("SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA"), new TableField[] { Routines.ROUTINES.ROUTINE_CATALOG, Routines.ROUTINES.ROUTINE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(TableConstraints.TABLE_CONSTRAINTS, DSL.name("SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA"), new TableField[] { TableConstraints.TABLE_CONSTRAINTS.CONSTRAINT_CATALOG, TableConstraints.TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Tables.TABLES, DSL.name("SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA"), new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
+    public static final ForeignKey<Record, Record> SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES = Internal.createForeignKey(Triggers.TRIGGERS, DSL.name("SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES"), new TableField[] { Triggers.TRIGGERS.EVENT_OBJECT_CATALOG, Triggers.TRIGGERS.EVENT_OBJECT_SCHEMA }, Keys.SYNTHETIC_PK_TABLES, new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Views.VIEWS, DSL.name("SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA"), new TableField[] { Views.VIEWS.TABLE_CATALOG, Views.VIEWS.TABLE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES = Internal.createForeignKey(Views.VIEWS, DSL.name("SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES"), new TableField[] { Views.VIEWS.TABLE_CATALOG, Views.VIEWS.TABLE_SCHEMA, Views.VIEWS.TABLE_NAME }, Keys.SYNTHETIC_PK_TABLES, new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA, Tables.TABLES.TABLE_NAME }, true);
 }

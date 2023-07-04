@@ -9,7 +9,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,7 +20,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 import org.jooq.meta.hsqldb.information_schema.Keys;
-import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints.DomainConstraintsPath;
 
 
 /**
@@ -203,12 +201,6 @@ public class Domains extends TableImpl<Record> {
         super(path, childPath, parentPath, DOMAINS);
     }
 
-    public static class DomainsPath extends Domains implements Path<Record> {
-        public <O extends Record> DomainsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -219,15 +211,15 @@ public class Domains extends TableImpl<Record> {
         return Keys.SYNTHETIC_PK_DOMAINS;
     }
 
-    private transient DomainConstraintsPath _domainConstraints;
+    private transient DomainConstraints _domainConstraints;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.DOMAIN_CONSTRAINTS</code> table
      */
-    public DomainConstraintsPath domainConstraints() {
+    public DomainConstraints domainConstraints() {
         if (_domainConstraints == null)
-            _domainConstraints = new DomainConstraintsPath(this, null, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_DOMAINS.getInverseKey());
+            _domainConstraints = new DomainConstraints(this, null, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_DOMAINS.getInverseKey());
 
         return _domainConstraints;
     }

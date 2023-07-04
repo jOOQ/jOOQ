@@ -46,11 +46,14 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+import static org.jooq.impl.DSL.case_;
+import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.mysql.information_schema.Tables.CHECK_CONSTRAINTS;
@@ -62,13 +65,16 @@ import static org.jooq.meta.mysql.information_schema.Tables.SCHEMATA;
 import static org.jooq.meta.mysql.information_schema.Tables.STATISTICS;
 import static org.jooq.meta.mysql.information_schema.Tables.TABLES;
 import static org.jooq.meta.mysql.information_schema.Tables.TABLE_CONSTRAINTS;
+import static org.jooq.meta.mysql.information_schema.Tables.TRIGGERS;
 import static org.jooq.meta.mysql.information_schema.Tables.VIEWS;
 import static org.jooq.meta.mysql.mysql.Tables.PROC;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -86,7 +92,11 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -96,6 +106,7 @@ import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultEnumDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
+// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -110,6 +121,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.mariadb.MariaDBDatabase;
+import org.jooq.meta.mysql.information_schema.tables.Triggers;
 import org.jooq.meta.mysql.mysql.enums.ProcType;
 import org.jooq.tools.csv.CSVReader;
 
@@ -547,6 +559,60 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -19,6 +19,7 @@ import org.jooq.meta.mysql.information_schema.tables.Schemata;
 import org.jooq.meta.mysql.information_schema.tables.Statistics;
 import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
 import org.jooq.meta.mysql.information_schema.tables.Tables;
+import org.jooq.meta.mysql.information_schema.tables.Triggers;
 import org.jooq.meta.mysql.information_schema.tables.Views;
 
 
@@ -86,6 +87,11 @@ public class InformationSchema extends SchemaImpl {
     public final Tables TABLES = Tables.TABLES;
 
     /**
+     * The table <code>information_schema.TRIGGERS</code>.
+     */
+    public final Triggers TRIGGERS = Triggers.TRIGGERS;
+
+    /**
      * The table <code>information_schema.VIEWS</code>.
      */
     public final Views VIEWS = Views.VIEWS;
@@ -110,6 +116,7 @@ public class InformationSchema extends SchemaImpl {
             Statistics.STATISTICS,
             TableConstraints.TABLE_CONSTRAINTS,
             Tables.TABLES,
+            Triggers.TRIGGERS,
             Views.VIEWS
         );
     }

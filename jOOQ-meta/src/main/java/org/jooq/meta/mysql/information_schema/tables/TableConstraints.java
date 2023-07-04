@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -24,10 +23,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.mysql.information_schema.InformationSchema;
 import org.jooq.meta.mysql.information_schema.Keys;
-import org.jooq.meta.mysql.information_schema.tables.CheckConstraints.CheckConstraintsPath;
-import org.jooq.meta.mysql.information_schema.tables.KeyColumnUsage.KeyColumnUsagePath;
-import org.jooq.meta.mysql.information_schema.tables.ReferentialConstraints.ReferentialConstraintsPath;
-import org.jooq.meta.mysql.information_schema.tables.Schemata.SchemataPath;
 
 
 /**
@@ -128,12 +123,6 @@ public class TableConstraints extends TableImpl<Record> {
         super(path, childPath, parentPath, TABLE_CONSTRAINTS);
     }
 
-    public static class TableConstraintsPath extends TableConstraints implements Path<Record> {
-        public <O extends Record> TableConstraintsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -149,69 +138,69 @@ public class TableConstraints extends TableImpl<Record> {
         return Arrays.asList(Keys.SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient SchemataPath _schemata;
+    private transient Schemata _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>information_schema.SCHEMATA</code> table.
      */
-    public SchemataPath schemata() {
+    public Schemata schemata() {
         if (_schemata == null)
-            _schemata = new SchemataPath(this, Keys.SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
+            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
 
-    private transient CheckConstraintsPath _checkConstraints;
+    private transient CheckConstraints _checkConstraints;
 
     /**
      * Get the implicit to-many join path to the
      * <code>information_schema.CHECK_CONSTRAINTS</code> table
      */
-    public CheckConstraintsPath checkConstraints() {
+    public CheckConstraints checkConstraints() {
         if (_checkConstraints == null)
-            _checkConstraints = new CheckConstraintsPath(this, null, Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS.getInverseKey());
+            _checkConstraints = new CheckConstraints(this, null, Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS.getInverseKey());
 
         return _checkConstraints;
     }
 
-    private transient KeyColumnUsagePath _keyColumnUsage;
+    private transient KeyColumnUsage _keyColumnUsage;
 
     /**
      * Get the implicit to-many join path to the
      * <code>information_schema.KEY_COLUMN_USAGE</code> table
      */
-    public KeyColumnUsagePath keyColumnUsage() {
+    public KeyColumnUsage keyColumnUsage() {
         if (_keyColumnUsage == null)
-            _keyColumnUsage = new KeyColumnUsagePath(this, null, Keys.SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_TABLE_CONSTRAINTS.getInverseKey());
+            _keyColumnUsage = new KeyColumnUsage(this, null, Keys.SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_TABLE_CONSTRAINTS.getInverseKey());
 
         return _keyColumnUsage;
     }
 
-    private transient ReferentialConstraintsPath _referencingConstraint;
+    private transient ReferentialConstraints _referencingConstraint;
 
     /**
      * Get the implicit to-many join path to the
      * <code>information_schema.REFERENTIAL_CONSTRAINTS</code> table, via the
      * <code>REFERENCING_CONSTRAINT</code> key
      */
-    public ReferentialConstraintsPath referencingConstraint() {
+    public ReferentialConstraints referencingConstraint() {
         if (_referencingConstraint == null)
-            _referencingConstraint = new ReferentialConstraintsPath(this, null, Keys.REFERENCING_CONSTRAINT.getInverseKey());
+            _referencingConstraint = new ReferentialConstraints(this, null, Keys.REFERENCING_CONSTRAINT.getInverseKey());
 
         return _referencingConstraint;
     }
 
-    private transient ReferentialConstraintsPath _referencedConstraint;
+    private transient ReferentialConstraints _referencedConstraint;
 
     /**
      * Get the implicit to-many join path to the
      * <code>information_schema.REFERENTIAL_CONSTRAINTS</code> table, via the
      * <code>REFERENCED_CONSTRAINT</code> key
      */
-    public ReferentialConstraintsPath referencedConstraint() {
+    public ReferentialConstraints referencedConstraint() {
         if (_referencedConstraint == null)
-            _referencedConstraint = new ReferentialConstraintsPath(this, null, Keys.REFERENCED_CONSTRAINT.getInverseKey());
+            _referencedConstraint = new ReferentialConstraints(this, null, Keys.REFERENCED_CONSTRAINT.getInverseKey());
 
         return _referencedConstraint;
     }

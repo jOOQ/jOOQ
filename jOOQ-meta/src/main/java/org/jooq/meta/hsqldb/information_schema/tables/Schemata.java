@@ -9,7 +9,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,16 +20,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 import org.jooq.meta.hsqldb.information_schema.Keys;
-import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints.CheckConstraintsPath;
-import org.jooq.meta.hsqldb.information_schema.tables.Columns.ColumnsPath;
-import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints.DomainConstraintsPath;
-import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage.KeyColumnUsagePath;
-import org.jooq.meta.hsqldb.information_schema.tables.ReferentialConstraints.ReferentialConstraintsPath;
-import org.jooq.meta.hsqldb.information_schema.tables.Routines.RoutinesPath;
-import org.jooq.meta.hsqldb.information_schema.tables.Sequences.SequencesPath;
-import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints.TableConstraintsPath;
-import org.jooq.meta.hsqldb.information_schema.tables.Tables.TablesPath;
-import org.jooq.meta.hsqldb.information_schema.tables.Views.ViewsPath;
 
 
 /**
@@ -127,12 +116,6 @@ public class Schemata extends TableImpl<Record> {
         super(path, childPath, parentPath, SCHEMATA);
     }
 
-    public static class SchemataPath extends Schemata implements Path<Record> {
-        public <O extends Record> SchemataPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -143,132 +126,132 @@ public class Schemata extends TableImpl<Record> {
         return Keys.SYNTHETIC_PK_SCHEMATA;
     }
 
-    private transient CheckConstraintsPath _checkConstraints;
+    private transient CheckConstraints _checkConstraints;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.CHECK_CONSTRAINTS</code> table
      */
-    public CheckConstraintsPath checkConstraints() {
+    public CheckConstraints checkConstraints() {
         if (_checkConstraints == null)
-            _checkConstraints = new CheckConstraintsPath(this, null, Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _checkConstraints = new CheckConstraints(this, null, Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _checkConstraints;
     }
 
-    private transient DomainConstraintsPath _domainConstraints;
+    private transient DomainConstraints _domainConstraints;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.DOMAIN_CONSTRAINTS</code> table
      */
-    public DomainConstraintsPath domainConstraints() {
+    public DomainConstraints domainConstraints() {
         if (_domainConstraints == null)
-            _domainConstraints = new DomainConstraintsPath(this, null, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _domainConstraints = new DomainConstraints(this, null, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _domainConstraints;
     }
 
-    private transient KeyColumnUsagePath _keyColumnUsage;
+    private transient KeyColumnUsage _keyColumnUsage;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.KEY_COLUMN_USAGE</code> table
      */
-    public KeyColumnUsagePath keyColumnUsage() {
+    public KeyColumnUsage keyColumnUsage() {
         if (_keyColumnUsage == null)
-            _keyColumnUsage = new KeyColumnUsagePath(this, null, Keys.SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _keyColumnUsage = new KeyColumnUsage(this, null, Keys.SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _keyColumnUsage;
     }
 
-    private transient ReferentialConstraintsPath _referentialConstraints;
+    private transient ReferentialConstraints _referentialConstraints;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table
      */
-    public ReferentialConstraintsPath referentialConstraints() {
+    public ReferentialConstraints referentialConstraints() {
         if (_referentialConstraints == null)
-            _referentialConstraints = new ReferentialConstraintsPath(this, null, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _referentialConstraints = new ReferentialConstraints(this, null, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _referentialConstraints;
     }
 
-    private transient TableConstraintsPath _tableConstraints;
+    private transient TableConstraints _tableConstraints;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.TABLE_CONSTRAINTS</code> table
      */
-    public TableConstraintsPath tableConstraints() {
+    public TableConstraints tableConstraints() {
         if (_tableConstraints == null)
-            _tableConstraints = new TableConstraintsPath(this, null, Keys.SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _tableConstraints = new TableConstraints(this, null, Keys.SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _tableConstraints;
     }
 
-    private transient ColumnsPath _columns;
+    private transient Columns _columns;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.COLUMNS</code> table
      */
-    public ColumnsPath columns() {
+    public Columns columns() {
         if (_columns == null)
-            _columns = new ColumnsPath(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _columns = new Columns(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _columns;
     }
 
-    private transient TablesPath _tables;
+    private transient Tables _tables;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.TABLES</code> table
      */
-    public TablesPath tables() {
+    public Tables tables() {
         if (_tables == null)
-            _tables = new TablesPath(this, null, Keys.SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _tables = new Tables(this, null, Keys.SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _tables;
     }
 
-    private transient ViewsPath _views;
+    private transient Views _views;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.VIEWS</code> table
      */
-    public ViewsPath views() {
+    public Views views() {
         if (_views == null)
-            _views = new ViewsPath(this, null, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _views = new Views(this, null, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _views;
     }
 
-    private transient RoutinesPath _routines;
+    private transient Routines _routines;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.ROUTINES</code> table
      */
-    public RoutinesPath routines() {
+    public Routines routines() {
         if (_routines == null)
-            _routines = new RoutinesPath(this, null, Keys.SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _routines = new Routines(this, null, Keys.SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _routines;
     }
 
-    private transient SequencesPath _sequences;
+    private transient Sequences _sequences;
 
     /**
      * Get the implicit to-many join path to the
      * <code>INFORMATION_SCHEMA.SEQUENCES</code> table
      */
-    public SequencesPath sequences() {
+    public Sequences sequences() {
         if (_sequences == null)
-            _sequences = new SequencesPath(this, null, Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+            _sequences = new Sequences(this, null, Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _sequences;
     }

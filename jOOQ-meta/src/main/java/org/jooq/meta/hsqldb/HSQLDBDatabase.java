@@ -39,6 +39,7 @@
 package org.jooq.meta.hsqldb;
 
 import static org.jooq.Records.mapping;
+import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
@@ -65,16 +66,21 @@ import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_INDEXINFO;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_TABLES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.VIEWS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.TRIGGERS;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record4;
@@ -83,6 +89,9 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+// ...
+// ...
+// ...
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -97,6 +106,7 @@ import org.jooq.meta.DefaultDomainDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
+// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -114,6 +124,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Columns;
 import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
+import org.jooq.meta.hsqldb.information_schema.tables.Triggers;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -560,6 +571,60 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -23,9 +22,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 import org.jooq.meta.hsqldb.information_schema.Keys;
-import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints.CheckConstraintsPath;
-import org.jooq.meta.hsqldb.information_schema.tables.Domains.DomainsPath;
-import org.jooq.meta.hsqldb.information_schema.tables.Schemata.SchemataPath;
 
 
 /**
@@ -134,12 +130,6 @@ public class DomainConstraints extends TableImpl<Record> {
         super(path, childPath, parentPath, DOMAIN_CONSTRAINTS);
     }
 
-    public static class DomainConstraintsPath extends DomainConstraints implements Path<Record> {
-        public <O extends Record> DomainConstraintsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -150,41 +140,41 @@ public class DomainConstraints extends TableImpl<Record> {
         return Arrays.asList(Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_CHECK_CONSTRAINTS, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_DOMAINS);
     }
 
-    private transient SchemataPath _schemata;
+    private transient Schemata _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>INFORMATION_SCHEMA.SCHEMATA</code> table.
      */
-    public SchemataPath schemata() {
+    public Schemata schemata() {
         if (_schemata == null)
-            _schemata = new SchemataPath(this, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
+            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
 
-    private transient CheckConstraintsPath _checkConstraints;
+    private transient CheckConstraints _checkConstraints;
 
     /**
      * Get the implicit join path to the
      * <code>INFORMATION_SCHEMA.CHECK_CONSTRAINTS</code> table.
      */
-    public CheckConstraintsPath checkConstraints() {
+    public CheckConstraints checkConstraints() {
         if (_checkConstraints == null)
-            _checkConstraints = new CheckConstraintsPath(this, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_CHECK_CONSTRAINTS, null);
+            _checkConstraints = new CheckConstraints(this, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_CHECK_CONSTRAINTS, null);
 
         return _checkConstraints;
     }
 
-    private transient DomainsPath _domains;
+    private transient Domains _domains;
 
     /**
      * Get the implicit join path to the <code>INFORMATION_SCHEMA.DOMAINS</code>
      * table.
      */
-    public DomainsPath domains() {
+    public Domains domains() {
         if (_domains == null)
-            _domains = new DomainsPath(this, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_DOMAINS, null);
+            _domains = new Domains(this, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_DOMAINS, null);
 
         return _domains;
     }

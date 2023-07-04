@@ -183,6 +183,9 @@
                                 <database>
                                     <inputSchema>public</inputSchema>
                                 </database>
+                                <generate>
+                                    <triggers>false</triggers>
+                                </generate>
                                 <target>
                                     <packageName>org.jooq.example.testcontainersflyway.db</packageName>
                                     <directory>src/main/java</directory>

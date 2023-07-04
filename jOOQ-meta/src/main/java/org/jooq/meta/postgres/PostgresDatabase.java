@@ -92,6 +92,7 @@ import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.meta.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.meta.postgres.information_schema.Tables.TABLES;
+import static org.jooq.meta.postgres.information_schema.Tables.TRIGGERS;
 import static org.jooq.meta.postgres.information_schema.Tables.VIEWS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CONSTRAINT;
@@ -104,13 +105,16 @@ import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_PROC;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_SEQUENCE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -136,6 +140,9 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -154,6 +161,7 @@ import org.jooq.meta.DefaultEnumDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
+// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -164,12 +172,14 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
+// ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
+import org.jooq.meta.postgres.information_schema.tables.Triggers;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
@@ -903,6 +913,87 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {

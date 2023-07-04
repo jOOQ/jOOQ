@@ -78,6 +78,8 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean includeDomains = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean includeTriggers = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean includeSequences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean includeIndexes = true;
@@ -821,6 +823,32 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludeDomains(Boolean value) {
         this.includeDomains = value;
+    }
+
+    /**
+     * This flag indicates whether triggers should be included in output produced by this database.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeTriggers() {
+        return includeTriggers;
+    }
+
+    /**
+     * Sets the value of the includeTriggers property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeTriggers(Boolean value) {
+        this.includeTriggers = value;
     }
 
     /**
@@ -2282,6 +2310,11 @@ public class Database implements Serializable, XMLAppendable
         return this;
     }
 
+    public Database withIncludeTriggers(Boolean value) {
+        setIncludeTriggers(value);
+        return this;
+    }
+
     public Database withIncludeSequences(Boolean value) {
         setIncludeSequences(value);
         return this;
@@ -2854,6 +2887,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includeXMLSchemaCollections", includeXMLSchemaCollections);
         builder.append("includeUDTs", includeUDTs);
         builder.append("includeDomains", includeDomains);
+        builder.append("includeTriggers", includeTriggers);
         builder.append("includeSequences", includeSequences);
         builder.append("includeIndexes", includeIndexes);
         builder.append("includePrimaryKeys", includePrimaryKeys);
@@ -3113,6 +3147,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includeDomains.equals(other.includeDomains)) {
+                return false;
+            }
+        }
+        if (includeTriggers == null) {
+            if (other.includeTriggers!= null) {
+                return false;
+            }
+        } else {
+            if (!includeTriggers.equals(other.includeTriggers)) {
                 return false;
             }
         }
@@ -3612,6 +3655,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includeXMLSchemaCollections == null)? 0 :includeXMLSchemaCollections.hashCode()));
         result = ((prime*result)+((includeUDTs == null)? 0 :includeUDTs.hashCode()));
         result = ((prime*result)+((includeDomains == null)? 0 :includeDomains.hashCode()));
+        result = ((prime*result)+((includeTriggers == null)? 0 :includeTriggers.hashCode()));
         result = ((prime*result)+((includeSequences == null)? 0 :includeSequences.hashCode()));
         result = ((prime*result)+((includeIndexes == null)? 0 :includeIndexes.hashCode()));
         result = ((prime*result)+((includePrimaryKeys == null)? 0 :includePrimaryKeys.hashCode()));

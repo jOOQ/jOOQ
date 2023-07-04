@@ -152,6 +152,9 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
 
         else if (definition instanceof SequenceDefinition
             || definition instanceof DomainDefinition
+
+
+
             || definition instanceof IndexDefinition
             || definition instanceof IdentityDefinition
             || definition instanceof ConstraintDefinition

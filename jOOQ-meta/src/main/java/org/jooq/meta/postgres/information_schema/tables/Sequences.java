@@ -144,9 +144,30 @@ public class Sequences extends TableImpl<Record> {
         super(path, childPath, parentPath, SEQUENCES);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class SequencesPath extends Sequences implements Path<Record> {
         public <O extends Record> SequencesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private SequencesPath(Name alias, Table<Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public SequencesPath as(String alias) {
+            return new SequencesPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public SequencesPath as(Name alias) {
+            return new SequencesPath(alias, this);
+        }
+
+        @Override
+        public SequencesPath as(Table<?> alias) {
+            return new SequencesPath(alias.getQualifiedName(), this);
         }
     }
 

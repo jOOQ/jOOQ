@@ -47,6 +47,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Name;
 import org.jooq.Path;
+// ...
 import org.jooq.Spatial;
 import org.jooq.Table;
 import org.jooq.XML;
@@ -363,6 +364,20 @@ public interface Generator {
      * Whether Routines should be generated.
      */
     void setGenerateRoutines(boolean generateRoutines);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Whether Sequences should be generated.
@@ -786,6 +801,22 @@ public interface Generator {
      * Whether global domain references should be generated
      */
     void setGenerateGlobalDomainReferences(boolean globalDomainReferences);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Whether global queue references should be generated

@@ -245,6 +245,16 @@ public abstract class AbstractMetaDatabase extends AbstractDatabase {
         return result;
     }
 
+
+
+
+
+
+
+
+
+
+
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
         List<XMLSchemaCollectionDefinition> result = new ArrayList<>();

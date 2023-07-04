@@ -304,9 +304,30 @@ public class Columns extends TableImpl<Record> {
         super(path, childPath, parentPath, COLUMNS);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class ColumnsPath extends Columns implements Path<Record> {
         public <O extends Record> ColumnsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private ColumnsPath(Name alias, Table<Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public ColumnsPath as(String alias) {
+            return new ColumnsPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public ColumnsPath as(Name alias) {
+            return new ColumnsPath(alias, this);
+        }
+
+        @Override
+        public ColumnsPath as(Table<?> alias) {
+            return new ColumnsPath(alias.getQualifiedName(), this);
         }
     }
 

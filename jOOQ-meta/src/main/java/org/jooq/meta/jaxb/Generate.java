@@ -85,6 +85,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean sequences = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean triggers = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean udts = true;
     @XmlElement(defaultValue = "true")
     protected Boolean queues = true;
@@ -154,6 +156,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean globalSchemaReferences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean globalDomainReferences = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean globalTriggerReferences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean globalTableReferences = true;
     @XmlElement(defaultValue = "true")
@@ -863,6 +867,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setSequences(Boolean value) {
         this.sequences = value;
+    }
+
+    /**
+     * Generate Trigger classes. 
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTriggers() {
+        return triggers;
+    }
+
+    /**
+     * Sets the value of the triggers property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTriggers(Boolean value) {
+        this.triggers = value;
     }
 
     /**
@@ -1697,6 +1725,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setGlobalDomainReferences(Boolean value) {
         this.globalDomainReferences = value;
+    }
+
+    /**
+     * Turn off generation of global trigger references.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isGlobalTriggerReferences() {
+        return globalTriggerReferences;
+    }
+
+    /**
+     * Sets the value of the globalTriggerReferences property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setGlobalTriggerReferences(Boolean value) {
+        this.globalTriggerReferences = value;
     }
 
     /**
@@ -2972,6 +3024,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withTriggers(Boolean value) {
+        setTriggers(value);
+        return this;
+    }
+
     public Generate withUdts(Boolean value) {
         setUdts(value);
         return this;
@@ -3148,6 +3205,11 @@ public class Generate implements Serializable, XMLAppendable
 
     public Generate withGlobalDomainReferences(Boolean value) {
         setGlobalDomainReferences(value);
+        return this;
+    }
+
+    public Generate withGlobalTriggerReferences(Boolean value) {
+        setGlobalTriggerReferences(value);
         return this;
     }
 
@@ -3451,6 +3513,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("constructorPropertiesAnnotationOnRecords", constructorPropertiesAnnotationOnRecords);
         builder.append("routines", routines);
         builder.append("sequences", sequences);
+        builder.append("triggers", triggers);
         builder.append("udts", udts);
         builder.append("queues", queues);
         builder.append("links", links);
@@ -3486,6 +3549,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("globalCatalogReferences", globalCatalogReferences);
         builder.append("globalSchemaReferences", globalSchemaReferences);
         builder.append("globalDomainReferences", globalDomainReferences);
+        builder.append("globalTriggerReferences", globalTriggerReferences);
         builder.append("globalTableReferences", globalTableReferences);
         builder.append("globalSequenceReferences", globalSequenceReferences);
         builder.append("globalUDTReferences", globalUDTReferences);
@@ -3786,6 +3850,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!sequences.equals(other.sequences)) {
+                return false;
+            }
+        }
+        if (triggers == null) {
+            if (other.triggers!= null) {
+                return false;
+            }
+        } else {
+            if (!triggers.equals(other.triggers)) {
                 return false;
             }
         }
@@ -4101,6 +4174,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!globalDomainReferences.equals(other.globalDomainReferences)) {
+                return false;
+            }
+        }
+        if (globalTriggerReferences == null) {
+            if (other.globalTriggerReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalTriggerReferences.equals(other.globalTriggerReferences)) {
                 return false;
             }
         }
@@ -4569,6 +4651,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((constructorPropertiesAnnotationOnRecords == null)? 0 :constructorPropertiesAnnotationOnRecords.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
+        result = ((prime*result)+((triggers == null)? 0 :triggers.hashCode()));
         result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));
         result = ((prime*result)+((queues == null)? 0 :queues.hashCode()));
         result = ((prime*result)+((links == null)? 0 :links.hashCode()));
@@ -4604,6 +4687,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((globalCatalogReferences == null)? 0 :globalCatalogReferences.hashCode()));
         result = ((prime*result)+((globalSchemaReferences == null)? 0 :globalSchemaReferences.hashCode()));
         result = ((prime*result)+((globalDomainReferences == null)? 0 :globalDomainReferences.hashCode()));
+        result = ((prime*result)+((globalTriggerReferences == null)? 0 :globalTriggerReferences.hashCode()));
         result = ((prime*result)+((globalTableReferences == null)? 0 :globalTableReferences.hashCode()));
         result = ((prime*result)+((globalSequenceReferences == null)? 0 :globalSequenceReferences.hashCode()));
         result = ((prime*result)+((globalUDTReferences == null)? 0 :globalUDTReferences.hashCode()));

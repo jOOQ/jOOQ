@@ -201,6 +201,9 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                              includePackageConstants                 = true;
     private boolean                                                              includeUDTs                             = true;
     private boolean                                                              includeDomains                          = true;
+
+
+
     private boolean                                                              includeSequences                        = true;
     private boolean                                                              includeIndexes                          = true;
     private boolean                                                              includeCheckConstraints                 = true;
@@ -288,6 +291,9 @@ public abstract class AbstractDatabase implements Database {
     private List<EmbeddableDefinition>                                           embeddables;
     private List<EnumDefinition>                                                 enums;
     private List<DomainDefinition>                                               domains;
+
+
+
     private List<XMLSchemaCollectionDefinition>                                  xmlSchemaCollections;
     private List<UDTDefinition>                                                  udts;
     private List<ArrayDefinition>                                                arrays;
@@ -310,6 +316,9 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<TableDefinition, List<EmbeddableDefinition>>           embeddablesByReferencingTable;
     private transient Map<SchemaDefinition, List<EnumDefinition>>                enumsBySchema;
     private transient Map<SchemaDefinition, List<DomainDefinition>>              domainsBySchema;
+
+
+
     private transient Map<SchemaDefinition, List<XMLSchemaCollectionDefinition>> xmlSchemaCollectionsBySchema;
     private transient Map<SchemaDefinition, List<UDTDefinition>>                 udtsBySchema;
     private transient Map<PackageDefinition, List<UDTDefinition>>                udtsByPackage;
@@ -1245,6 +1254,20 @@ public abstract class AbstractDatabase implements Database {
     public final void setIncludeDomains(boolean includeDomains) {
         this.includeDomains = includeDomains;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final boolean getIncludeSequences() {
@@ -2878,6 +2901,58 @@ public abstract class AbstractDatabase implements Database {
         return getDefinition(getDomains(schema), name, ignoreCase);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final List<ArrayDefinition> getArrays(SchemaDefinition schema) {
         if (arrays == null) {
@@ -3952,6 +4027,17 @@ public abstract class AbstractDatabase implements Database {
      * {@link #getDomains(SchemaDefinition)}
      */
     protected abstract List<DomainDefinition> getDomains0() throws SQLException;
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Retrieve ALL XML schema collections from the database. This will be

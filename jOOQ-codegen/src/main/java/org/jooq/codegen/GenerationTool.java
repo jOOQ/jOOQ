@@ -600,6 +600,9 @@ public class GenerationTool {
             database.setIncludePrimaryKeys(!FALSE.equals(d.isIncludePrimaryKeys()));
             database.setIncludeRoutines(!FALSE.equals(d.isIncludeRoutines()));
             database.setIncludeDomains(!FALSE.equals(d.isIncludeDomains()));
+
+
+
             database.setIncludeSequences(!FALSE.equals(d.isIncludeSequences()));
             database.setIncludeTables(!FALSE.equals(d.isIncludeTables()));
             database.setIncludeEmbeddables(!FALSE.equals(d.isIncludeEmbeddables()));
@@ -769,6 +772,10 @@ public class GenerationTool {
                 generator.setGenerateConstructorPropertiesAnnotationOnRecords(g.getGenerate().isConstructorPropertiesAnnotationOnRecords());
             if (g.getGenerate().isRoutines() != null)
                 generator.setGenerateRoutines(g.getGenerate().isRoutines());
+
+
+
+
             if (g.getGenerate().isSequences() != null)
                 generator.setGenerateSequences(g.getGenerate().isSequences());
             if (g.getGenerate().isSequenceFlags() != null)
@@ -841,6 +848,10 @@ public class GenerationTool {
                 generator.setGenerateGlobalCatalogReferences(g.getGenerate().isGlobalCatalogReferences());
             if (g.getGenerate().isGlobalDomainReferences() != null)
                 generator.setGenerateGlobalDomainReferences(g.getGenerate().isGlobalDomainReferences());
+
+
+
+
             if (g.getGenerate().isGlobalSchemaReferences() != null)
                 generator.setGenerateGlobalSchemaReferences(g.getGenerate().isGlobalSchemaReferences());
             if (g.getGenerate().isGlobalRoutineReferences() != null)

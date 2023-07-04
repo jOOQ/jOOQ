@@ -47,6 +47,7 @@ import java.util.Properties;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Name;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -302,6 +303,46 @@ public interface Database extends AutoCloseable {
      * Get an domain UDT defined in this database by name.
      */
     DomainDefinition getDomain(SchemaDefinition schema, Name name, boolean ignoreCase);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The UDTs defined in this database.
@@ -637,6 +678,20 @@ public interface Database extends AutoCloseable {
      * whether domains should be included.
      */
     boolean getIncludeDomains();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * whether sequences should be included.

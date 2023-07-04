@@ -109,9 +109,30 @@ public class CheckConstraints extends TableImpl<Record> {
         super(path, childPath, parentPath, CHECK_CONSTRAINTS);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class CheckConstraintsPath extends CheckConstraints implements Path<Record> {
         public <O extends Record> CheckConstraintsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private CheckConstraintsPath(Name alias, Table<Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public CheckConstraintsPath as(String alias) {
+            return new CheckConstraintsPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public CheckConstraintsPath as(Name alias) {
+            return new CheckConstraintsPath(alias, this);
+        }
+
+        @Override
+        public CheckConstraintsPath as(Table<?> alias) {
+            return new CheckConstraintsPath(alias.getQualifiedName(), this);
         }
     }
 

@@ -132,9 +132,30 @@ public class Views extends TableImpl<Record> {
         super(path, childPath, parentPath, VIEWS);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class ViewsPath extends Views implements Path<Record> {
         public <O extends Record> ViewsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private ViewsPath(Name alias, Table<Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public ViewsPath as(String alias) {
+            return new ViewsPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public ViewsPath as(Name alias) {
+            return new ViewsPath(alias, this);
+        }
+
+        @Override
+        public ViewsPath as(Table<?> alias) {
+            return new ViewsPath(alias.getQualifiedName(), this);
         }
     }
 

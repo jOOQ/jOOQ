@@ -62,6 +62,7 @@ import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
+// ...
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.impl.QOM.UEmpty;
@@ -213,6 +214,20 @@ implements
         return find(name, getDomains());
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final Sequence<?> getSequence(String name) {
         return find(name, getSequences());
@@ -299,6 +314,20 @@ implements
         return Collections.emptyList();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * {@inheritDoc}
      * <p>
@@ -343,6 +372,15 @@ implements
     public final Stream<Domain<?>> domainStream() {
         return getDomains().stream();
     }
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Stream<Sequence<?>> sequenceStream() {

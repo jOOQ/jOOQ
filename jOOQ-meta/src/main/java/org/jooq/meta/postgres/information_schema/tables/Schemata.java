@@ -125,9 +125,30 @@ public class Schemata extends TableImpl<Record> {
         super(path, childPath, parentPath, SCHEMATA);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class SchemataPath extends Schemata implements Path<Record> {
         public <O extends Record> SchemataPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private SchemataPath(Name alias, Table<Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public SchemataPath as(String alias) {
+            return new SchemataPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public SchemataPath as(Name alias) {
+            return new SchemataPath(alias, this);
+        }
+
+        @Override
+        public SchemataPath as(Table<?> alias) {
+            return new SchemataPath(alias.getQualifiedName(), this);
         }
     }
 

@@ -134,9 +134,30 @@ public class KeyColumnUsage extends TableImpl<Record> {
         super(path, childPath, parentPath, KEY_COLUMN_USAGE);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class KeyColumnUsagePath extends KeyColumnUsage implements Path<Record> {
         public <O extends Record> KeyColumnUsagePath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private KeyColumnUsagePath(Name alias, Table<Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public KeyColumnUsagePath as(String alias) {
+            return new KeyColumnUsagePath(DSL.name(alias), this);
+        }
+
+        @Override
+        public KeyColumnUsagePath as(Name alias) {
+            return new KeyColumnUsagePath(alias, this);
+        }
+
+        @Override
+        public KeyColumnUsagePath as(Table<?> alias) {
+            return new KeyColumnUsagePath(alias.getQualifiedName(), this);
         }
     }
 

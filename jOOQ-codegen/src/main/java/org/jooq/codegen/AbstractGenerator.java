@@ -92,6 +92,9 @@ abstract class AbstractGenerator implements Generator {
     boolean                            useSchemaVersionProvider                         = false;
     boolean                            useCatalogVersionProvider                        = false;
     boolean                            generateRoutines                                 = true;
+
+
+
     boolean                            generateSequences                                = true;
     boolean                            generateSequenceFlags                            = true;
     boolean                            generateUDTs                                     = true;
@@ -134,6 +137,9 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalSequenceReferences                 = true;
     boolean                            generateGlobalTableReferences                    = true;
     boolean                            generateGlobalDomainReferences                   = true;
+
+
+
     boolean                            generateGlobalUDTReferences                      = true;
     boolean                            generateGlobalQueueReferences                    = true;
     boolean                            generateGlobalLinkReferences                     = true;
@@ -538,6 +544,20 @@ abstract class AbstractGenerator implements Generator {
         this.generateSequences = generateSequences;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public boolean generateSequenceFlags() {
         return generateSequenceFlags;
@@ -911,6 +931,20 @@ abstract class AbstractGenerator implements Generator {
     public void setGenerateGlobalDomainReferences(boolean globalDomainReferences) {
         this.generateGlobalDomainReferences = globalDomainReferences;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public boolean generateGlobalUDTReferences() {

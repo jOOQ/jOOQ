@@ -767,6 +767,12 @@ Excludes match before includes, i.e. excludes have a higher priority.]]></jxb:ja
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether domains should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="includeTriggers" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether triggers should be included in output produced by this database.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="includeSequences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether sequences should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -2182,6 +2188,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Sequence classes. ]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="triggers" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate Trigger classes. ]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="udts" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate UDT classes. ]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -2328,6 +2338,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
 
       <element name="globalDomainReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global domain references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="globalTriggerReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of global trigger references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="globalTableReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">

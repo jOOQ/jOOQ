@@ -525,9 +525,30 @@ public class Routines extends TableImpl<Record> {
         super(path, childPath, parentPath, ROUTINES);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class RoutinesPath extends Routines implements Path<Record> {
         public <O extends Record> RoutinesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private RoutinesPath(Name alias, Table<Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public RoutinesPath as(String alias) {
+            return new RoutinesPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public RoutinesPath as(Name alias) {
+            return new RoutinesPath(alias, this);
+        }
+
+        @Override
+        public RoutinesPath as(Table<?> alias) {
+            return new RoutinesPath(alias.getQualifiedName(), this);
         }
     }
 

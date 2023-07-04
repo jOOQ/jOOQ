@@ -87,6 +87,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.SyntheticDaoDefinition;
 import org.jooq.meta.TableDefinition;
+// ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
 // ...
@@ -396,6 +397,10 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return "Sequences";
         else if (TableDefinition.class.isAssignableFrom(objectType))
             return "Tables";
+
+
+
+
         else if (UDTDefinition.class.isAssignableFrom(objectType))
             return "UDTs";
         else

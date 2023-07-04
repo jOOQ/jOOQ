@@ -107,6 +107,9 @@
                                 <database>
                                     <inputSchema>public</inputSchema>
                                 </database>
+                                <generate>
+                                    <triggers>false</triggers>
+                                </generate>
                                 <target>
                                     <packageName>org.jooq.example.testcontainers.db</packageName>
                                     <directory>src/main/java</directory>

@@ -263,6 +263,36 @@ public interface Schema extends Named {
     @Nullable
     Domain<?> getDomain(Name name);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Stream all sequences contained in this schema.
      */

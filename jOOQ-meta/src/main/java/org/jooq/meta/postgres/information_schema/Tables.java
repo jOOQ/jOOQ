@@ -15,6 +15,7 @@ import org.jooq.meta.postgres.information_schema.tables.ReferentialConstraints;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
 import org.jooq.meta.postgres.information_schema.tables.Schemata;
 import org.jooq.meta.postgres.information_schema.tables.Sequences;
+import org.jooq.meta.postgres.information_schema.tables.Triggers;
 import org.jooq.meta.postgres.information_schema.tables.Views;
 
 
@@ -83,6 +84,11 @@ public class Tables {
      * The table <code>information_schema.tables</code>.
      */
     public static final org.jooq.meta.postgres.information_schema.tables.Tables TABLES = org.jooq.meta.postgres.information_schema.tables.Tables.TABLES;
+
+    /**
+     * The table <code>information_schema.triggers</code>.
+     */
+    public static final Triggers TRIGGERS = Triggers.TRIGGERS;
 
     /**
      * The table <code>information_schema.views</code>.

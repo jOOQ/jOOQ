@@ -55,6 +55,7 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 // ...
+// ...
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.QueryPart;
@@ -214,6 +215,25 @@ public final class LazySchema extends AbstractNamed implements Schema {
         return schema().getDomain(name);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final List<Sequence<?>> getSequences() {
         return schema().getSequences();
@@ -263,6 +283,15 @@ public final class LazySchema extends AbstractNamed implements Schema {
     public final Stream<Domain<?>> domainStream() {
         return schema().domainStream();
     }
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Stream<Sequence<?>> sequenceStream() {

@@ -46,12 +46,14 @@ import static org.jooq.tools.StringUtils.isBlank;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.jooq.Binding;
 import org.jooq.Check;
 import org.jooq.Comment;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
@@ -84,6 +86,10 @@ import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableField;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
@@ -288,6 +294,31 @@ public final class Internal {
 
         return new DomainImpl<>(schema, name, actualType, checks);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Factory method for path aliases.

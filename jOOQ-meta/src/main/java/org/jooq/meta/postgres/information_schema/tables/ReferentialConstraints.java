@@ -138,9 +138,30 @@ public class ReferentialConstraints extends TableImpl<Record> {
         super(path, childPath, parentPath, REFERENTIAL_CONSTRAINTS);
     }
 
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
     public static class ReferentialConstraintsPath extends ReferentialConstraints implements Path<Record> {
         public <O extends Record> ReferentialConstraintsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
             super(path, childPath, parentPath);
+        }
+        private ReferentialConstraintsPath(Name alias, Table<Record> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public ReferentialConstraintsPath as(String alias) {
+            return new ReferentialConstraintsPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public ReferentialConstraintsPath as(Name alias) {
+            return new ReferentialConstraintsPath(alias, this);
+        }
+
+        @Override
+        public ReferentialConstraintsPath as(Table<?> alias) {
+            return new ReferentialConstraintsPath(alias.getQualifiedName(), this);
         }
     }
 

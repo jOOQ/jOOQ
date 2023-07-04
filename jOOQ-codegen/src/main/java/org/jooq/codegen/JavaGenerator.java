@@ -75,6 +75,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
@@ -136,6 +137,10 @@ import org.jooq.Stringly;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
@@ -193,6 +198,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.SyntheticDaoDefinition;
 import org.jooq.meta.TableDefinition;
+// ...
 import org.jooq.meta.TypedElementDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
@@ -510,6 +516,9 @@ public class JavaGenerator extends AbstractGenerator {
               + ((!generateTables && generateRecords) ? " (forced to true because of <records/>)" :
                 ((!generateTables && generateDaos) ? " (forced to true because of <daos/>)" :
                 ((!generateTables && generateIndexes) ? " (forced to true because of <indexes/>)" : ""))));
+
+
+
         log.info("  udts", generateUDTs());
         log.info("  relations", generateRelations()
             + ((!generateRelations && generateTables) ? " (forced to true because of <tables/>)" :
@@ -584,6 +593,9 @@ public class JavaGenerator extends AbstractGenerator {
         return generateEmptySchemas()
                || !database.getArrays(schema).isEmpty()
                || !database.getDomains(schema).isEmpty()
+
+
+
                || !database.getEmbeddables(schema).isEmpty()
                || !database.getEnums(schema).isEmpty()
                || !database.getPackages(schema).isEmpty()
@@ -736,6 +748,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (generateUDTs() && database.getDomains(schema).size() > 0)
             generateDomainReferences(schema);
+
+
+
+
+
 
         if (generateRoutines() && (database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema)))
             generateRoutines(schema);
@@ -7917,6 +7934,89 @@ public class JavaGenerator extends AbstractGenerator {
     @SuppressWarnings("unused")
     protected void generateSequencesClassFooter(SchemaDefinition schema, JavaWriter out) {}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private String numberLiteral(Number n) {
         if (n instanceof BigInteger) {
             BigInteger bi = (BigInteger) n;
@@ -8025,7 +8125,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
-        printReferences(out, schemas, Schema.class, false);
+        printReferences(out, schemas, Schema.class);
 
         if (generateJooqVersionReference()) {
             String version = org.jooq.codegen.Constants.MINOR_VERSION.replace(".", "_");
@@ -8173,19 +8273,27 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#2255] Avoid referencing sequence literals, if they're not generated
         if (generateGlobalSequenceReferences())
-            printReferences(out, database.getSequences(schema), Sequence.class, true);
+            printReferences(out, database.getSequences(schema), Sequence.class);
 
         // [#681] Avoid referencing domain literals, if they're not generated
         if (generateGlobalDomainReferences())
-            printReferences(out, database.getDomains(schema), Domain.class, true);
+            printReferences(out, database.getDomains(schema), Domain.class);
+
+
+
+
+
+
+
+
 
         // [#9685] Avoid referencing table literals if they're not generated
         if (generateTables())
-            printReferences(out, database.getTables(schema), Table.class, true);
+            printReferences(out, database.getTables(schema), Table.class);
 
         // [#9685] Avoid referencing UDT literals if they're not generated
         if (generateUDTs())
-            printReferences(out, database.getUDTs(schema), UDT.class, true);
+            printReferences(out, database.getUDTs(schema), UDT.class);
 
         generateSchemaClassFooter(schema, out);
         out.println("}");
@@ -8314,9 +8422,13 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    protected void printReferences(JavaWriter out, List<? extends Definition> definitions, Class<?> type, boolean isGeneric) {
+    protected void printReferences(JavaWriter out, List<? extends Definition> definitions, Class<?> type) {
         if (out != null && !definitions.isEmpty()) {
-            final String generic = isGeneric ? (scala ? "[_]" : kotlin ? "<*>" : "<?>") : "";
+            final String generic = type.getTypeParameters().length > 0
+                ? Stream.of(type.getTypeParameters())
+                        .map(x -> scala ? "_" : kotlin ? "*" : "?")
+                        .collect(joining(", ", scala ? "[" : "<", scala ? "]" : ">"))
+                : "";
             final List<String> references = new ArrayList<>();
             final Definition first = definitions.get(0);
 

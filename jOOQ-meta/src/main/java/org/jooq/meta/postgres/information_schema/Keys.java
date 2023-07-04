@@ -19,6 +19,7 @@ import org.jooq.meta.postgres.information_schema.tables.Routines;
 import org.jooq.meta.postgres.information_schema.tables.Schemata;
 import org.jooq.meta.postgres.information_schema.tables.Sequences;
 import org.jooq.meta.postgres.information_schema.tables.Tables;
+import org.jooq.meta.postgres.information_schema.tables.Triggers;
 import org.jooq.meta.postgres.information_schema.tables.Views;
 
 
@@ -38,6 +39,7 @@ public class Keys {
     public static final UniqueKey<Record> SYNTHETIC_PK_SCHEMATA = Internal.createUniqueKey(Schemata.SCHEMATA, DSL.name("SYNTHETIC_PK_schemata"), new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final UniqueKey<Record> SYNTHETIC_PK_SEQUENCES = Internal.createUniqueKey(Sequences.SEQUENCES, DSL.name("SYNTHETIC_PK_sequences"), new TableField[] { Sequences.SEQUENCES.SEQUENCE_CATALOG, Sequences.SEQUENCES.SEQUENCE_SCHEMA, Sequences.SEQUENCES.SEQUENCE_NAME }, true);
     public static final UniqueKey<Record> SYNTHETIC_PK_TABLES = Internal.createUniqueKey(Tables.TABLES, DSL.name("SYNTHETIC_PK_tables"), new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA, Tables.TABLES.TABLE_NAME }, true);
+    public static final UniqueKey<Record> SYNTHETIC_PK_TRIGGERS = Internal.createUniqueKey(Triggers.TRIGGERS, DSL.name("SYNTHETIC_PK_triggers"), new TableField[] { Triggers.TRIGGERS.TRIGGER_CATALOG, Triggers.TRIGGERS.TRIGGER_SCHEMA, Triggers.TRIGGERS.TRIGGER_NAME }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -51,6 +53,7 @@ public class Keys {
     public static final ForeignKey<Record, Record> ROUTINES__SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Routines.ROUTINES, DSL.name("SYNTHETIC_FK_routines__SYNTHETIC_PK_schemata"), new TableField[] { Routines.ROUTINES.ROUTINE_CATALOG, Routines.ROUTINES.ROUTINE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final ForeignKey<Record, Record> SEQUENCES__SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Sequences.SEQUENCES, DSL.name("SYNTHETIC_FK_sequences__SYNTHETIC_PK_schemata"), new TableField[] { Sequences.SEQUENCES.SEQUENCE_CATALOG, Sequences.SEQUENCES.SEQUENCE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final ForeignKey<Record, Record> TABLES__SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Tables.TABLES, DSL.name("SYNTHETIC_FK_tables__SYNTHETIC_PK_schemata"), new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
+    public static final ForeignKey<Record, Record> TRIGGERS__SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES = Internal.createForeignKey(Triggers.TRIGGERS, DSL.name("SYNTHETIC_FK_triggers__SYNTHETIC_PK_tables"), new TableField[] { Triggers.TRIGGERS.EVENT_OBJECT_CATALOG, Triggers.TRIGGERS.EVENT_OBJECT_SCHEMA }, Keys.SYNTHETIC_PK_TABLES, new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA }, true);
     public static final ForeignKey<Record, Record> VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Views.VIEWS, DSL.name("SYNTHETIC_FK_views__SYNTHETIC_PK_schemata"), new TableField[] { Views.VIEWS.TABLE_CATALOG, Views.VIEWS.TABLE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final ForeignKey<Record, Record> VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES = Internal.createForeignKey(Views.VIEWS, DSL.name("SYNTHETIC_FK_views__SYNTHETIC_PK_tables"), new TableField[] { Views.VIEWS.TABLE_CATALOG, Views.VIEWS.TABLE_SCHEMA, Views.VIEWS.TABLE_NAME }, Keys.SYNTHETIC_PK_TABLES, new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA, Tables.TABLES.TABLE_NAME }, true);
 }

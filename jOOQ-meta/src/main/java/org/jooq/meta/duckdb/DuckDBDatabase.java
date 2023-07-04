@@ -85,6 +85,7 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
+// ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 
@@ -327,6 +328,16 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {

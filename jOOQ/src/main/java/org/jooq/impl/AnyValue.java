@@ -108,7 +108,6 @@ implements
             case CUBRID:
             case DERBY:
             case FIREBIRD:
-            case H2:
 
             case HSQLDB:
             case IGNITE:
@@ -122,6 +121,16 @@ implements
             case TRINO:
                 ctx.visit(N_ARBITRARY);
                 break;
+
+
+
+
+
+
+
+
+
+
 
 
 

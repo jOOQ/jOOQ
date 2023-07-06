@@ -109,6 +109,7 @@ import org.jooq.OrderField;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.SortField;
@@ -294,19 +295,6 @@ implements
             }
             else
                 u = using;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

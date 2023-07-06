@@ -41,6 +41,7 @@ import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.nullSafe;
+import static org.jooq.impl.Tools.qualify;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.lang.reflect.Array;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.jooq.Binding;
@@ -573,6 +575,49 @@ public final class Internal {
     public static final void requireCommercial(Supplier<String> logMessage) throws DataAccessException {
         CONFIG.get().requireCommercial(logMessage);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

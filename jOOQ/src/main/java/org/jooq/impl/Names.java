@@ -191,6 +191,7 @@ final class Names {
     static final Name N_MULTISET_AGG                = systemName("multiset_agg");
     static final Name N_NANO100_BETWEEN             = systemName("nano100_between");
     static final Name N_NEG                         = systemName("neg");
+    static final Name N_NEW                         = systemName("new");
     static final Name N_NEXTVAL                     = systemName("nextval");
     static final Name N_NOT                         = systemName("not");
     static final Name N_NOW                         = systemName("now");
@@ -202,6 +203,7 @@ final class Names {
     static final Name N_OBJECT_CONSTRUCT            = systemName("object_construct");
     static final Name N_OBJECT_CONSTRUCT_KEEP_NULL  = systemName("object_construct_keep_null");
     static final Name N_OFFSET                      = systemName("offset");
+    static final Name N_OLD                         = systemName("old");
     static final Name N_OPENJSON                    = systemName("openjson");
     static final Name N_OPENXML                     = systemName("openxml");
     static final Name N_ORDINAL                     = systemName("ordinal");

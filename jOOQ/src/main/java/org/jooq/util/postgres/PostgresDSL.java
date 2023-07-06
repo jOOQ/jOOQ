@@ -79,7 +79,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14352] - Use
+     * @deprecated - 3.18.0 - [#14352] - Use
      *             {@link DSL#arrayOverlap(Object[], Object[])} instead.
      */
     @Deprecated
@@ -121,7 +121,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14352] - Use
+     * @deprecated - 3.18.0 - [#14352] - Use
      *             {@link DSL#arrayOverlap(Field, Object[])} instead.
      */
     @Deprecated
@@ -142,7 +142,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14352] - Use
+     * @deprecated - 3.18.0 - [#14352] - Use
      *             {@link DSL#arrayOverlap(Field, Field)} instead.
      */
     @Deprecated
@@ -163,7 +163,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayAppend(Object[], Object)} instead.
      */
     @Deprecated
@@ -184,8 +184,8 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayPrepend(Object[], Field)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayAppend(Object[], Field)} instead.
      */
     @Deprecated
     @NotNull
@@ -205,8 +205,8 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayPrepend(Field, Object)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayAppend(Field, Object)} instead.
      */
     @Deprecated
     @NotNull
@@ -226,8 +226,8 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayPrepend(Field, Field)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayAppend(Field, Field)} instead.
      */
     @Deprecated
     @NotNull
@@ -253,7 +253,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayPrepend(Object, Object[])} instead.
      */
     @Deprecated
@@ -274,7 +274,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayPrepend(Field, Object[])} instead.
      */
     @Deprecated
@@ -291,7 +291,7 @@ public class PostgresDSL extends DSL {
      * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
      * </code></pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayPrepend(Object, Field)} instead.
      */
     @Deprecated
@@ -312,7 +312,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayPrepend(Field, Field)} instead.
      */
     @Deprecated
@@ -339,7 +339,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Object[], Object[])} instead.
      */
     @Deprecated
@@ -360,7 +360,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Object[], Field)} instead.
      */
     @Deprecated
@@ -381,7 +381,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Field, Object[])} instead.
      */
     @Deprecated
@@ -402,7 +402,7 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Field, Field)} instead.
      */
     @Deprecated
@@ -423,8 +423,8 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Object[], Object)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayRemove(Object[], Object)} instead.
      */
     @Deprecated
     @NotNull
@@ -444,8 +444,8 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Field, Object)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayRemove(Field, Object)} instead.
      */
     @Deprecated
     @NotNull
@@ -465,8 +465,8 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Object[], Field)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayRemove(Object[], Field)} instead.
      */
     @Deprecated
     @NotNull
@@ -486,8 +486,8 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Field, Field)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayRemove(Field, Field)} instead.
      */
     @Deprecated
     @NotNull

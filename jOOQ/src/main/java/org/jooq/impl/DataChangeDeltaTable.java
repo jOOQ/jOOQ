@@ -64,6 +64,7 @@ import org.jooq.DMLQuery;
 import org.jooq.Delete;
 import org.jooq.Insert;
 import org.jooq.Name;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
@@ -161,24 +162,31 @@ implements
         ctx.sql(' ').visit(K_TABLE)
            .sqlIndentStart(" (");
 
-        // [#12925] Workaround for https://github.com/h2database/h2database/issues/3398
-        if (requiresWorkaroundFor12925(ctx))
-            ctx.sql("/* [#12925] ").sql(UUID.randomUUID().toString()).sql(" */").formatSeparator();
+
+
+
+
+
 
         increment(ctx.data(), DATA_RENDERING_DATA_CHANGE_DELTA_TABLE, () -> ctx.visit(query).sqlIndentEnd(')'));
     }
 
-    private final boolean requiresWorkaroundFor12925(Context<?> ctx) {
-        if (ctx.family() == H2) {
-            if (query instanceof MergeImpl)
-                return true;
 
-            InsertQueryImpl<?> i = Tools.insertQueryImpl(query);
-            return i != null && (i.onDuplicateKeyIgnore || i.onDuplicateKeyUpdate);
-        }
 
-        return false;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: Table API

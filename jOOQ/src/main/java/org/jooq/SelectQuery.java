@@ -1125,7 +1125,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param seconds The number of seconds to wait for a lock
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     void setForLockModeWait(int seconds);
 
     /**
@@ -1140,7 +1140,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Depending on the dialect and lock mode this flag may or may not be
      * supported.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     void setForLockModeNoWait();
 
     /**
@@ -1155,7 +1155,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Depending on the dialect and lock mode this flag may or may not be
      * supported.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     void setForLockModeSkipLocked();
 
 

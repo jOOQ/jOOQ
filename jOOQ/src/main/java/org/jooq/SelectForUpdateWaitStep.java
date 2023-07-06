@@ -41,6 +41,7 @@ import org.jetbrains.annotations.*;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
@@ -123,7 +124,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      * @see SelectQuery#setForLockModeWait(int)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     SelectForStep<R> wait(int seconds);
 
     /**
@@ -133,7 +134,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      * @see SelectQuery#setForLockModeNoWait()
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     SelectForStep<R> noWait();
 
     /**
@@ -143,6 +144,6 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectForStep
      * @see SelectQuery#setForLockModeSkipLocked()
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     SelectForStep<R> skipLocked();
 }

@@ -12,18 +12,17 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
-import org.jooq.meta.derby.sys.tables.Sysconstraints.SysconstraintsPath;
 
 
 /**
@@ -66,7 +65,7 @@ public class Syschecks extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> REFERENCEDCOLUMNS = createField(DSL.name("REFERENCEDCOLUMNS"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"org.apache.derby.catalog.ReferencedColumns\"").nullable(false), this, "");
+    public final TableField<Record, Object> REFERENCEDCOLUMNS = createField(DSL.name("REFERENCEDCOLUMNS"), DefaultDataType.getDefaultDataType("\"org.apache.derby.catalog.ReferencedColumns\"").nullable(false), this, "");
 
     private Syschecks(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -101,12 +100,6 @@ public class Syschecks extends TableImpl<Record> {
         super(path, childPath, parentPath, SYSCHECKS);
     }
 
-    public static class SyschecksPath extends Syschecks implements Path<Record> {
-        public <O extends Record> SyschecksPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Sys.SYS;
@@ -117,14 +110,14 @@ public class Syschecks extends TableImpl<Record> {
         return Arrays.asList(Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS);
     }
 
-    private transient SysconstraintsPath _sysconstraints;
+    private transient Sysconstraints _sysconstraints;
 
     /**
      * Get the implicit join path to the <code>SYS.SYSCONSTRAINTS</code> table.
      */
-    public SysconstraintsPath sysconstraints() {
+    public Sysconstraints sysconstraints() {
         if (_sysconstraints == null)
-            _sysconstraints = new SysconstraintsPath(this, Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS, null);
+            _sysconstraints = new Sysconstraints(this, Keys.SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS, null);
 
         return _sysconstraints;
     }

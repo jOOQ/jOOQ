@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -23,8 +22,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
-import org.jooq.meta.derby.sys.tables.Sysconglomerates.SysconglomeratesPath;
-import org.jooq.meta.derby.sys.tables.Sysconstraints.SysconstraintsPath;
 
 
 /**
@@ -91,12 +88,6 @@ public class Syskeys extends TableImpl<Record> {
         super(path, childPath, parentPath, SYSKEYS);
     }
 
-    public static class SyskeysPath extends Syskeys implements Path<Record> {
-        public <O extends Record> SyskeysPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Sys.SYS;
@@ -107,27 +98,27 @@ public class Syskeys extends TableImpl<Record> {
         return Arrays.asList(Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONSTRAINTS, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONGLOMERATES);
     }
 
-    private transient SysconstraintsPath _sysconstraints;
+    private transient Sysconstraints _sysconstraints;
 
     /**
      * Get the implicit join path to the <code>SYS.SYSCONSTRAINTS</code> table.
      */
-    public SysconstraintsPath sysconstraints() {
+    public Sysconstraints sysconstraints() {
         if (_sysconstraints == null)
-            _sysconstraints = new SysconstraintsPath(this, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONSTRAINTS, null);
+            _sysconstraints = new Sysconstraints(this, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONSTRAINTS, null);
 
         return _sysconstraints;
     }
 
-    private transient SysconglomeratesPath _sysconglomerates;
+    private transient Sysconglomerates _sysconglomerates;
 
     /**
      * Get the implicit join path to the <code>SYS.SYSCONGLOMERATES</code>
      * table.
      */
-    public SysconglomeratesPath sysconglomerates() {
+    public Sysconglomerates sysconglomerates() {
         if (_sysconglomerates == null)
-            _sysconglomerates = new SysconglomeratesPath(this, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONGLOMERATES, null);
+            _sysconglomerates = new Sysconglomerates(this, Keys.SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONGLOMERATES, null);
 
         return _sysconglomerates;
     }

@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -23,7 +22,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
-import org.jooq.meta.derby.sys.tables.Sysschemas.SysschemasPath;
 
 
 /**
@@ -130,12 +128,6 @@ public class Syssequences extends TableImpl<Record> {
         super(path, childPath, parentPath, SYSSEQUENCES);
     }
 
-    public static class SyssequencesPath extends Syssequences implements Path<Record> {
-        public <O extends Record> SyssequencesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Sys.SYS;
@@ -146,14 +138,14 @@ public class Syssequences extends TableImpl<Record> {
         return Arrays.asList(Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS);
     }
 
-    private transient SysschemasPath _sysschemas;
+    private transient Sysschemas _sysschemas;
 
     /**
      * Get the implicit join path to the <code>SYS.SYSSCHEMAS</code> table.
      */
-    public SysschemasPath sysschemas() {
+    public Sysschemas sysschemas() {
         if (_sysschemas == null)
-            _sysschemas = new SysschemasPath(this, Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS, null);
+            _sysschemas = new Sysschemas(this, Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS, null);
 
         return _sysschemas;
     }

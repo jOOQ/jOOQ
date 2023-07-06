@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -24,10 +23,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
-import org.jooq.meta.derby.sys.tables.Sysconglomerates.SysconglomeratesPath;
-import org.jooq.meta.derby.sys.tables.Sysconstraints.SysconstraintsPath;
-import org.jooq.meta.derby.sys.tables.Sysschemas.SysschemasPath;
-import org.jooq.meta.derby.sys.tables.Sysviews.SysviewsPath;
 
 
 /**
@@ -109,12 +104,6 @@ public class Systables extends TableImpl<Record> {
         super(path, childPath, parentPath, SYSTABLES);
     }
 
-    public static class SystablesPath extends Systables implements Path<Record> {
-        public <O extends Record> SystablesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Sys.SYS;
@@ -130,52 +119,65 @@ public class Systables extends TableImpl<Record> {
         return Arrays.asList(Keys.SYNTHETIC_FK_SYSTABLES__SYNTHETIC_PK_SYSSCHEMAS);
     }
 
-    private transient SysschemasPath _sysschemas;
+    private transient Sysschemas _sysschemas;
 
     /**
      * Get the implicit join path to the <code>SYS.SYSSCHEMAS</code> table.
      */
-    public SysschemasPath sysschemas() {
+    public Sysschemas sysschemas() {
         if (_sysschemas == null)
-            _sysschemas = new SysschemasPath(this, Keys.SYNTHETIC_FK_SYSTABLES__SYNTHETIC_PK_SYSSCHEMAS, null);
+            _sysschemas = new Sysschemas(this, Keys.SYNTHETIC_FK_SYSTABLES__SYNTHETIC_PK_SYSSCHEMAS, null);
 
         return _sysschemas;
     }
 
-    private transient SysconglomeratesPath _sysconglomerates;
+    private transient Sysconglomerates _sysconglomerates;
 
     /**
      * Get the implicit to-many join path to the
      * <code>SYS.SYSCONGLOMERATES</code> table
      */
-    public SysconglomeratesPath sysconglomerates() {
+    public Sysconglomerates sysconglomerates() {
         if (_sysconglomerates == null)
-            _sysconglomerates = new SysconglomeratesPath(this, null, Keys.SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES.getInverseKey());
+            _sysconglomerates = new Sysconglomerates(this, null, Keys.SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES.getInverseKey());
 
         return _sysconglomerates;
     }
 
-    private transient SysconstraintsPath _sysconstraints;
+    private transient Sysconstraints _sysconstraints;
 
     /**
      * Get the implicit to-many join path to the <code>SYS.SYSCONSTRAINTS</code>
      * table
      */
-    public SysconstraintsPath sysconstraints() {
+    public Sysconstraints sysconstraints() {
         if (_sysconstraints == null)
-            _sysconstraints = new SysconstraintsPath(this, null, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSTABLES.getInverseKey());
+            _sysconstraints = new Sysconstraints(this, null, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSTABLES.getInverseKey());
 
         return _sysconstraints;
     }
 
-    private transient SysviewsPath _sysviews;
+    private transient Systriggers _systriggers;
+
+    /**
+     * Get the implicit to-many join path to the <code>SYS.SYSTRIGGERS</code>
+     * table
+     */
+    public Systriggers systriggers() {
+        if (_systriggers == null)
+            _systriggers = new Systriggers(this, null, Keys.SYNTHETIC_FK_SYSTRIGGERS__SYNTHETIC_PK_SYSTABLES.getInverseKey());
+
+        return _systriggers;
+    }
+
+    private transient Sysviews _sysviews;
 
     /**
      * Get the implicit to-many join path to the <code>SYS.SYSVIEWS</code> table
      */
-    public SysviewsPath sysviews() {
+    public Sysviews sysviews() {
         if (_sysviews == null)
-            _sysviews = new SysviewsPath(this, null, Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES.getInverseKey());
+            _sysviews = new Sysviews(this, null, Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES.getInverseKey());
 
         return _sysviews;
     }

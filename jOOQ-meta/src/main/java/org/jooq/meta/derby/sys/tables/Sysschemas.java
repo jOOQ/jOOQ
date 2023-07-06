@@ -9,7 +9,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -21,9 +20,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
-import org.jooq.meta.derby.sys.tables.Sysconstraints.SysconstraintsPath;
-import org.jooq.meta.derby.sys.tables.Syssequences.SyssequencesPath;
-import org.jooq.meta.derby.sys.tables.Systables.SystablesPath;
 
 
 /**
@@ -95,12 +91,6 @@ public class Sysschemas extends TableImpl<Record> {
         super(path, childPath, parentPath, SYSSCHEMAS);
     }
 
-    public static class SysschemasPath extends Sysschemas implements Path<Record> {
-        public <O extends Record> SysschemasPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Sys.SYS;
@@ -111,43 +101,56 @@ public class Sysschemas extends TableImpl<Record> {
         return Keys.SYNTHETIC_PK_SYSSCHEMAS;
     }
 
-    private transient SysconstraintsPath _sysconstraints;
+    private transient Sysconstraints _sysconstraints;
 
     /**
      * Get the implicit to-many join path to the <code>SYS.SYSCONSTRAINTS</code>
      * table
      */
-    public SysconstraintsPath sysconstraints() {
+    public Sysconstraints sysconstraints() {
         if (_sysconstraints == null)
-            _sysconstraints = new SysconstraintsPath(this, null, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS.getInverseKey());
+            _sysconstraints = new Sysconstraints(this, null, Keys.SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS.getInverseKey());
 
         return _sysconstraints;
     }
 
-    private transient SyssequencesPath _syssequences;
+    private transient Syssequences _syssequences;
 
     /**
      * Get the implicit to-many join path to the <code>SYS.SYSSEQUENCES</code>
      * table
      */
-    public SyssequencesPath syssequences() {
+    public Syssequences syssequences() {
         if (_syssequences == null)
-            _syssequences = new SyssequencesPath(this, null, Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS.getInverseKey());
+            _syssequences = new Syssequences(this, null, Keys.SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS.getInverseKey());
 
         return _syssequences;
     }
 
-    private transient SystablesPath _systables;
+    private transient Systables _systables;
 
     /**
      * Get the implicit to-many join path to the <code>SYS.SYSTABLES</code>
      * table
      */
-    public SystablesPath systables() {
+    public Systables systables() {
         if (_systables == null)
-            _systables = new SystablesPath(this, null, Keys.SYNTHETIC_FK_SYSTABLES__SYNTHETIC_PK_SYSSCHEMAS.getInverseKey());
+            _systables = new Systables(this, null, Keys.SYNTHETIC_FK_SYSTABLES__SYNTHETIC_PK_SYSSCHEMAS.getInverseKey());
 
         return _systables;
+    }
+
+    private transient Systriggers _systriggers;
+
+    /**
+     * Get the implicit to-many join path to the <code>SYS.SYSTRIGGERS</code>
+     * table
+     */
+    public Systriggers systriggers() {
+        if (_systriggers == null)
+            _systriggers = new Systriggers(this, null, Keys.SYNTHETIC_FK_SYSTRIGGERS__SYNTHETIC_PK_SYSSCHEMAS.getInverseKey());
+
+        return _systriggers;
     }
 
     @Override

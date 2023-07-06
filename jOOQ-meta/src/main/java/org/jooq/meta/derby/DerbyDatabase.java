@@ -38,6 +38,7 @@
 
 package org.jooq.meta.derby;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.DSL.case_;
@@ -55,7 +56,7 @@ import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.meta.derby.sys.Tables.SYSCHECKS;
+import static org.jooq.meta.derby.sys.Tables.*;
 import static org.jooq.meta.derby.sys.Tables.SYSCONGLOMERATES;
 import static org.jooq.meta.derby.sys.Tables.SYSCONSTRAINTS;
 import static org.jooq.meta.derby.sys.Tables.SYSKEYS;
@@ -67,6 +68,7 @@ import static org.jooq.meta.derby.sys.Tables.SYSVIEWS;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,6 +84,9 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+// ...
+// ...
+// ...
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -95,6 +100,7 @@ import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
+// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -108,6 +114,7 @@ import org.jooq.meta.TableDefinition;
 // ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
+import org.jooq.meta.derby.sys.tables.Systriggers;
 
 /**
  * @author Lukas Eder
@@ -476,6 +483,71 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

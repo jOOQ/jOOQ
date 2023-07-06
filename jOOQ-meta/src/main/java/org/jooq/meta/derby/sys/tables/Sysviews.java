@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -23,7 +22,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.derby.sys.Keys;
 import org.jooq.meta.derby.sys.Sys;
-import org.jooq.meta.derby.sys.tables.Systables.SystablesPath;
 
 
 /**
@@ -100,12 +98,6 @@ public class Sysviews extends TableImpl<Record> {
         super(path, childPath, parentPath, SYSVIEWS);
     }
 
-    public static class SysviewsPath extends Sysviews implements Path<Record> {
-        public <O extends Record> SysviewsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Sys.SYS;
@@ -116,14 +108,14 @@ public class Sysviews extends TableImpl<Record> {
         return Arrays.asList(Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES);
     }
 
-    private transient SystablesPath _systables;
+    private transient Systables _systables;
 
     /**
      * Get the implicit join path to the <code>SYS.SYSTABLES</code> table.
      */
-    public SystablesPath systables() {
+    public Systables systables() {
         if (_systables == null)
-            _systables = new SystablesPath(this, Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES, null);
+            _systables = new Systables(this, Keys.SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES, null);
 
         return _systables;
     }

@@ -17,6 +17,7 @@ import org.jooq.meta.derby.sys.tables.Syskeys;
 import org.jooq.meta.derby.sys.tables.Sysschemas;
 import org.jooq.meta.derby.sys.tables.Syssequences;
 import org.jooq.meta.derby.sys.tables.Systables;
+import org.jooq.meta.derby.sys.tables.Systriggers;
 import org.jooq.meta.derby.sys.tables.Sysviews;
 
 
@@ -34,6 +35,7 @@ public class Keys {
     public static final UniqueKey<Record> SYNTHETIC_PK_SYSCONSTRAINTS = Internal.createUniqueKey(Sysconstraints.SYSCONSTRAINTS, DSL.name("SYNTHETIC_PK_SYSCONSTRAINTS"), new TableField[] { Sysconstraints.SYSCONSTRAINTS.CONSTRAINTID }, true);
     public static final UniqueKey<Record> SYNTHETIC_PK_SYSSCHEMAS = Internal.createUniqueKey(Sysschemas.SYSSCHEMAS, DSL.name("SYNTHETIC_PK_SYSSCHEMAS"), new TableField[] { Sysschemas.SYSSCHEMAS.SCHEMAID }, true);
     public static final UniqueKey<Record> SYNTHETIC_PK_SYSTABLES = Internal.createUniqueKey(Systables.SYSTABLES, DSL.name("SYNTHETIC_PK_SYSTABLES"), new TableField[] { Systables.SYSTABLES.TABLEID }, true);
+    public static final UniqueKey<Record> SYNTHETIC_PK_SYSTRIGGERS = Internal.createUniqueKey(Systriggers.SYSTRIGGERS, DSL.name("SYNTHETIC_PK_SYSTRIGGERS"), new TableField[] { Systriggers.SYSTRIGGERS.TRIGGERID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -47,5 +49,7 @@ public class Keys {
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONSTRAINTS = Internal.createForeignKey(Syskeys.SYSKEYS, DSL.name("SYNTHETIC_FK_SYSKEYS__SYNTHETIC_PK_SYSCONSTRAINTS"), new TableField[] { Syskeys.SYSKEYS.CONSTRAINTID }, Keys.SYNTHETIC_PK_SYSCONSTRAINTS, new TableField[] { Sysconstraints.SYSCONSTRAINTS.CONSTRAINTID }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS = Internal.createForeignKey(Syssequences.SYSSEQUENCES, DSL.name("SYNTHETIC_FK_SYSSEQUENCES__SYNTHETIC_PK_SYSSCHEMAS"), new TableField[] { Syssequences.SYSSEQUENCES.SCHEMAID }, Keys.SYNTHETIC_PK_SYSSCHEMAS, new TableField[] { Sysschemas.SYSSCHEMAS.SCHEMAID }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSTABLES__SYNTHETIC_PK_SYSSCHEMAS = Internal.createForeignKey(Systables.SYSTABLES, DSL.name("SYNTHETIC_FK_SYSTABLES__SYNTHETIC_PK_SYSSCHEMAS"), new TableField[] { Systables.SYSTABLES.SCHEMAID }, Keys.SYNTHETIC_PK_SYSSCHEMAS, new TableField[] { Sysschemas.SYSSCHEMAS.SCHEMAID }, true);
+    public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSTRIGGERS__SYNTHETIC_PK_SYSSCHEMAS = Internal.createForeignKey(Systriggers.SYSTRIGGERS, DSL.name("SYNTHETIC_FK_SYSTRIGGERS__SYNTHETIC_PK_SYSSCHEMAS"), new TableField[] { Systriggers.SYSTRIGGERS.SCHEMAID }, Keys.SYNTHETIC_PK_SYSSCHEMAS, new TableField[] { Sysschemas.SYSSCHEMAS.SCHEMAID }, true);
+    public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSTRIGGERS__SYNTHETIC_PK_SYSTABLES = Internal.createForeignKey(Systriggers.SYSTRIGGERS, DSL.name("SYNTHETIC_FK_SYSTRIGGERS__SYNTHETIC_PK_SYSTABLES"), new TableField[] { Systriggers.SYSTRIGGERS.TABLEID }, Keys.SYNTHETIC_PK_SYSTABLES, new TableField[] { Systables.SYSTABLES.TABLEID }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES = Internal.createForeignKey(Sysviews.SYSVIEWS, DSL.name("SYNTHETIC_FK_SYSVIEWS__SYNTHETIC_PK_SYSTABLES"), new TableField[] { Sysviews.SYSVIEWS.TABLEID }, Keys.SYNTHETIC_PK_SYSTABLES, new TableField[] { Systables.SYSTABLES.TABLEID }, true);
 }

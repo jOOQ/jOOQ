@@ -12,6 +12,7 @@ import org.jooq.meta.derby.sys.tables.Syskeys;
 import org.jooq.meta.derby.sys.tables.Sysschemas;
 import org.jooq.meta.derby.sys.tables.Syssequences;
 import org.jooq.meta.derby.sys.tables.Systables;
+import org.jooq.meta.derby.sys.tables.Systriggers;
 import org.jooq.meta.derby.sys.tables.Sysviews;
 
 
@@ -60,6 +61,11 @@ public class Tables {
      * The table <code>SYS.SYSTABLES</code>.
      */
     public static final Systables SYSTABLES = Systables.SYSTABLES;
+
+    /**
+     * The table <code>SYS.SYSTRIGGERS</code>.
+     */
+    public static final Systriggers SYSTRIGGERS = Systriggers.SYSTRIGGERS;
 
     /**
      * The table <code>SYS.SYSVIEWS</code>.

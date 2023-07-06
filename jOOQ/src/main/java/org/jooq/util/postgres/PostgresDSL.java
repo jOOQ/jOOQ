@@ -79,10 +79,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14352] - Use
+     * @deprecated - 3.18.0 - [#14352] - Use
      *             {@link DSL#arrayOverlap(Object[], Object[])} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(T[] left, T[] right) {
@@ -103,7 +103,7 @@ public class PostgresDSL extends DSL {
      * @deprecated - 3.16.0 - [#14352] - Use
      *             {@link DSL#arrayOverlap(Object[], Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(T[] left, Field<T[]> right) {
@@ -121,10 +121,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14352] - Use
+     * @deprecated - 3.18.0 - [#14352] - Use
      *             {@link DSL#arrayOverlap(Field, Object[])} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(Field<T[]> left, T[] right) {
@@ -142,10 +142,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14352] - Use
+     * @deprecated - 3.18.0 - [#14352] - Use
      *             {@link DSL#arrayOverlap(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Condition arrayOverlap(Field<T[]> left, Field<T[]> right) {
@@ -163,10 +163,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayAppend(Object[], Object)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] array, T value) {
@@ -184,10 +184,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayPrepend(Object[], Field)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayAppend(Object[], Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] array, Field<T> value) {
@@ -205,10 +205,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayPrepend(Field, Object[])} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayAppend(Field, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> array, T value) {
@@ -226,10 +226,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayPrepend(Field, Field)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayAppend(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> array, Field<T> value) {
@@ -253,10 +253,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayPrepend(Object, Object[])} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T value, T[] array) {
@@ -274,10 +274,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayPrepend(Field, Object[])} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> value, T[] array) {
@@ -291,10 +291,10 @@ public class PostgresDSL extends DSL {
      * {1, 2, 3} = array_prepend(1, ARRAY[2, 3])
      * </code></pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayPrepend(Object, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T value, Field<T[]> array) {
@@ -312,10 +312,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayPrepend(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> value, Field<T[]> array) {
@@ -339,10 +339,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Object[], Object[])} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayCat(T[] array1, T[] array2) {
@@ -360,10 +360,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Object[], Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayCat(T[] array1, Field<T[]> array2) {
@@ -381,10 +381,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Field, Object[])} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayCat(Field<T[]> array1, T[] array2) {
@@ -402,10 +402,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
+     * @deprecated - 3.18.0 - [#14388] - Use
      *             {@link DSL#arrayConcat(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayCat(Field<T[]> array1, Field<T[]> array2) {
@@ -423,10 +423,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Object[], Object[])} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayRemove(Object[], Object)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(T[] array, T element) {
@@ -444,10 +444,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Field, Object[])} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayRemove(Field, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(Field<T[]> array, T element) {
@@ -465,10 +465,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Object[], Field)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayRemove(Object[], Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(T[] array, Field<T> element) {
@@ -486,10 +486,10 @@ public class PostgresDSL extends DSL {
      * </code>
      * </pre>
      *
-     * @deprecated - 3.16.0 - [#14388] - Use
-     *             {@link DSL#arrayConcat(Field, Field)} instead.
+     * @deprecated - 3.18.0 - [#14388] - Use
+     *             {@link DSL#arrayRemove(Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayRemove(Field<T[]> array, Field<T> element) {
@@ -517,7 +517,7 @@ public class PostgresDSL extends DSL {
      * @deprecated - 3.18.0 - [#11981] - Use
      *             {@link DSL#arrayReplace(Object[], Object, Object)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(T[] array, T search, T replace) {
@@ -539,7 +539,7 @@ public class PostgresDSL extends DSL {
      * @deprecated - 3.18.0 - [#11981] - Use
      *             {@link DSL#arrayReplace(Field, Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(T[] array, Field<T> search, Field<T> replace) {
@@ -561,7 +561,7 @@ public class PostgresDSL extends DSL {
      * @deprecated - 3.18.0 - [#11981] - Use
      *             {@link DSL#arrayReplace(Field, Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(Field<T[]> array, T search, T replace) {
@@ -583,7 +583,7 @@ public class PostgresDSL extends DSL {
      * @deprecated - 3.18.0 - [#11981] - Use
      *             {@link DSL#arrayReplace(Field, Field, Field)} instead.
      */
-    @Deprecated
+    @Deprecated(since = "3.18.0")
     @NotNull
     @Support({ POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(Field<T[]> array, Field<T> search, Field<T> replace) {

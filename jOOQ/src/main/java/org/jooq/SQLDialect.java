@@ -158,7 +158,15 @@ public enum SQLDialect {
     /**
      * The H2 dialect family.
      */
-    H2("H2", false, true, new RequiredVersion(2, 1, 214)),
+    H2("H2", false, true, new RequiredVersion(2, 2, 202)),
+
+
+
+
+
+
+
+
 
 
 

@@ -38,7 +38,6 @@
 package org.jooq.meta.sqlite;
 
 import static org.jooq.impl.DSL.all;
-import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -59,7 +58,7 @@ import static org.jooq.tools.StringUtils.isBlank;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -79,18 +78,18 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
-import org.jooq.Select;
-import org.jooq.SelectConditionStep;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
 import org.jooq.UniqueKey;
-import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.Internal;
 import org.jooq.impl.ParserException;
+import org.jooq.impl.QOM.CreateTrigger;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -98,6 +97,7 @@ import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
+// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -115,9 +115,6 @@ import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * SQLite implementation of {@link AbstractDatabase}
@@ -482,6 +479,98 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

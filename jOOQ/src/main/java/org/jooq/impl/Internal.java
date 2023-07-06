@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.field;
+// ...
 import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.configuration;
@@ -95,6 +97,7 @@ import org.jooq.TableField;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
+// ...
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.CreateTable;
 // ...
@@ -575,6 +578,24 @@ public final class Internal {
     public static final void requireCommercial(Supplier<String> logMessage) throws DataAccessException {
         CONFIG.get().requireCommercial(logMessage);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

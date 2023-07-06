@@ -48,6 +48,7 @@ import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Record;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UTransient;
 
 /**
@@ -106,7 +107,7 @@ implements
             getValues().put((K) field, (V) Tools.field(value, field));
     }
 
-    static class UnknownField<T> extends AbstractField<T> implements UTransient {
+    static class UnknownField<T> extends AbstractField<T> implements UEmpty {
         private final int index;
 
         @SuppressWarnings({ "rawtypes", "unchecked" })

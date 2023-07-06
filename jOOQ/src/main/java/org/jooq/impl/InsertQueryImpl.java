@@ -67,6 +67,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
@@ -107,13 +108,17 @@ import static org.jooq.impl.Tools.SimpleDataKey.DATA_ON_DUPLICATE_KEY_WHERE;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.Set;
 
+import org.jooq.CheckReturnValue;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -1135,7 +1140,8 @@ implements
             i.setReturning(returning);
 
         i.insertMaps.empty.putAll(insertMaps.empty);
-        i.insertMaps.values.putAll(insertMaps.values);
+        for (Entry<Field<?>, List<Field<?>>> e : insertMaps.values.entrySet())
+            i.insertMaps.values.put(e.getKey(), new ArrayList<>(e.getValue()));
         i.insertMaps.rows = insertMaps.rows;
         i.insertMaps.nextRow = insertMaps.nextRow;
         i.defaultValues = defaultValues;
@@ -1182,7 +1188,18 @@ implements
 
     @Override
     public final Insert<?> $columns(Collection<? extends Field<?>> columns) {
-        throw new QOM.NotYetImplementedException();
+        return copy(i -> {
+            Map<Field<?>, List<Field<?>>> v = new LinkedHashMap<>();
+
+            for (Field<?> c : columns)
+                if (i.insertMaps.values.get(c) == null)
+                    v.put(c, new ArrayList<>(nCopies(i.insertMaps.rows, inline(null, c))));
+                else
+                    v.put(c, i.insertMaps.values.get(c));
+
+            i.insertMaps.values.clear();
+            i.insertMaps.values.putAll(v);
+        });
     }
 
     @Override
@@ -1225,7 +1242,20 @@ implements
 
     @Override
     public final Insert<?> $values(Collection<? extends Row> values) {
-        throw new QOM.NotYetImplementedException();
+        return copy(i -> {
+            i.insertMaps.rows = values.size();
+            Iterator<Entry<Field<?>, List<Field<?>>>> it = i.insertMaps.values.entrySet().iterator();
+            int index = 0;
+
+            while (it.hasNext()) {
+                int c = index;
+                Entry<Field<?>, List<Field<?>>> e = it.next();
+                Field<?> n = inline(null, e.getKey());
+                e.getValue().clear();
+                e.getValue().addAll(map(values, v -> StringUtils.defaultIfNull(v.field(c), n)));
+                index++;
+            }
+        });
     }
 
     @Override
@@ -1305,6 +1335,41 @@ implements
         else
             return copy(i -> i.updateWhere.setWhere(newWhere));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

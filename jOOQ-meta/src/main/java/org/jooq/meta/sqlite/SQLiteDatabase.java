@@ -89,7 +89,7 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
-import org.jooq.impl.QOM.CreateTrigger;
+import org.jooq.impl.QOM;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;

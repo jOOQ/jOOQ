@@ -1252,7 +1252,7 @@ implements
                 Entry<Field<?>, List<Field<?>>> e = it.next();
                 Field<?> n = inline(null, e.getKey());
                 e.getValue().clear();
-                e.getValue().addAll(map(values, v -> StringUtils.defaultIfNull(v.field(c), n)));
+                e.getValue().addAll(map(values, v -> (Field<?>) StringUtils.defaultIfNull(v.field(c), n)));
                 index++;
             }
         });

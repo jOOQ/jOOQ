@@ -109,7 +109,6 @@ import org.jooq.Statement;
 // ...
 // ...
 import org.jooq.conf.ParamType;
-import org.jooq.impl.QOM.CreateFunction;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 import org.jooq.impl.Tools.ExtendedDataKey;

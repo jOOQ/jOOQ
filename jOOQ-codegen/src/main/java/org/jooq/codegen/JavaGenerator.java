@@ -2051,7 +2051,7 @@ public class JavaGenerator extends AbstractGenerator {
         // There are some edge cases for 0-degree record types, such as Oracle's XMLTYPE
         // While these types shouldn't have any auxiliary constructors accepting individual attributes
         // they can still have a pojoArgument constructor
-        if (pojoArgument || degree > 0 && degree < 256) {
+        if (pojoArgument || degree > 0 && degree < 255) {
             List<String> arguments = new ArrayList<>(degree);
             List<String> properties = new ArrayList<>(degree);
 
@@ -4692,7 +4692,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#3010] Invalid UDTs may have no attributes. Avoid generating this constructor in that case
         // [#3176] Avoid generating constructors for tables with more than 255 columns (Java's method argument limit)
         else if (getTypedElements(tableOrUDT).size() > 0 &&
-                 getTypedElements(tableOrUDT).size() < 256) {
+                 getTypedElements(tableOrUDT).size() < 255) {
             out.println();
 
             if (generateConstructorPropertiesAnnotationOnPojos())

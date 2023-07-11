@@ -297,7 +297,12 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
 
     @Override
     public String getGlobalReferencesJavaClassName(Definition container, Class<? extends Definition> objectType) {
-        return fixJavaClassName(delegate.getGlobalReferencesJavaClassName(container, objectType));
+        String name = delegate.getGlobalReferencesJavaClassName(container, objectType);
+
+        if (name.equals(delegate.getJavaClassName(container)))
+            name = name + "_";
+
+        return fixJavaClassName(name);
     }
 
     @Override

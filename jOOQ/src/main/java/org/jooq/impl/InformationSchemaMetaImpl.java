@@ -52,14 +52,19 @@ import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
+import org.jooq.Comment;
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Domain;
@@ -67,14 +72,20 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
+import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.GenerationOption;
@@ -86,6 +97,7 @@ import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
 import org.jooq.util.xml.jaxb.ReferentialConstraint;
 import org.jooq.util.xml.jaxb.TableConstraint;
+import org.jooq.util.xml.jaxb.TriggerActionOrientation;
 
 /**
  * @author Lukas Eder
@@ -110,6 +122,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     private final Map<Name, Name>                               referentialKeys;
     private final Map<Name, IndexImpl>                          indexesByName;
 
+
+
+
+
+
     InformationSchemaMetaImpl(Configuration configuration, InformationSchema source) {
         super(configuration);
 
@@ -130,6 +147,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         this.keysByName = new HashMap<>();
         this.referentialKeys = new HashMap<>();
         this.indexesByName = new HashMap<>();
+
+
+
+
+
 
         init(source);
     }
@@ -216,7 +238,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             domains.add(id);
             domainsByName.put(domainName, id);
         }
-
 
         // Tables
         // -------------------------------------------------------------------------------------------------------------
@@ -538,6 +559,57 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             sequences.add(is);
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Lookups
         // -------------------------------------------------------------------------------------------------------------
         for (Schema s : schemas)
@@ -549,8 +621,13 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         for (InformationSchemaTable t : tables)
             initLookup(tablesPerSchema, t.getSchema(), t);
 
-        for (Sequence<?> q : sequences)
-            initLookup(sequencesPerSchema, q.getSchema(), q);
+        for (Sequence<?> s : sequences)
+            initLookup(sequencesPerSchema, s.getSchema(), s);
+
+
+
+
+
 
         if (!errors.isEmpty())
             throw new IllegalArgumentException(errors.toString());
@@ -617,6 +694,16 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         return (List) domains;
     }
 
+
+
+
+
+
+
+
+
+
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final List<UniqueKey<?>> getPrimaryKeys0() {
@@ -655,6 +742,15 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         public final List<Sequence<?>> getSequences() {
             return InformationSchemaMetaImpl.unmodifiableList(sequencesPerSchema.get(this));
         }
+
+
+
+
+
+
+
+
+
     }
 
     private static final class InformationSchemaTable extends TableImpl<Record> {
@@ -701,6 +797,30 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             super(schema, name, type, checks);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static final class InformationSchemaSequence<N extends Number> extends SequenceImpl<N> {
 

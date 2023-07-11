@@ -46,7 +46,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class ReferentialConstraint implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31600L;
+    private final static long serialVersionUID = 31900L;
     @XmlElement(name = "constraint_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String constraintCatalog;

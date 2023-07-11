@@ -69,6 +69,7 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
@@ -95,6 +96,10 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     private Map<Name, List<UniqueKey<?>>>     cachedUnqualifiedUniqueKeys;
     private Map<Name, List<ForeignKey<?, ?>>> cachedUnqualifiedForeignKeys;
     private Map<Name, List<Index>>            cachedUnqualifiedIndexes;
+
+
+
+
 
     AbstractMeta(Configuration configuration) {
         super(configuration);
@@ -214,6 +219,39 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     List<Domain<?>> getDomains0() {
         return flatMap(getSchemas(), s -> s.getDomains());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final List<Sequence<?>> getSequences(String name) {
@@ -396,6 +434,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+
+
+
             null,
             null,
             null,
@@ -412,6 +453,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             filter,
             null,
             null,
+
+
+
             null,
             null,
             null,
@@ -428,6 +472,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             filter,
             null,
+
+
+
             null,
             null,
             null,
@@ -444,6 +491,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             filter,
+
+
+
             null,
             null,
             null,
@@ -451,6 +501,27 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public Meta filterSequences(Predicate<? super Sequence<?>> filter) {
@@ -460,6 +531,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+
+
+
             filter,
             null,
             null,
@@ -476,6 +550,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+
+
+
             null,
             filter,
             null,
@@ -492,6 +569,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+
+
+
             null,
             null,
             filter,
@@ -508,6 +588,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+
+
+
             null,
             null,
             null,
@@ -524,6 +607,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+
+
+
             null,
             null,
             null,

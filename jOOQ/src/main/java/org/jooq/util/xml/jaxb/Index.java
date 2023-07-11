@@ -48,7 +48,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Index implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31600L;
+    private final static long serialVersionUID = 31900L;
     @XmlElement(name = "index_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String indexCatalog;

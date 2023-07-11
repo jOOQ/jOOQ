@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd"
-    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd"
+    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd"
     elementFormDefault="qualified">
 
     <element name="information_schema">
@@ -24,6 +24,7 @@
                 <element name="routines" type="tns:Routines" minOccurs="0" maxOccurs="1" />
                 <element name="parameters" type="tns:Parameters" minOccurs="0" maxOccurs="1" />
                 <element name="element_types" type="tns:ElementTypes" minOccurs="0" maxOccurs="1" />
+                <element name="triggers" type="tns:Triggers" minOccurs="0" maxOccurs="1" />
             </all>
         </complexType>
     </element>
@@ -367,6 +368,56 @@
             <element name="view_definition" type="string" minOccurs="1" maxOccurs="1"/>
         </all>
     </complexType>
+    
+    <complexType name="Triggers">
+        <sequence>
+            <element name="trigger" type="tns:Trigger" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="Trigger">
+        <all>
+            <element name="trigger_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="trigger_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="trigger_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="event_manipulation" type="tns:TriggerEventManipulation" minOccurs="1" maxOccurs="1" />
+            <element name="event_object_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="event_object_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="event_object_table" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="action_order" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="action_condition" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="action_statement" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="action_orientation" type="tns:TriggerActionOrientation" minOccurs="1" maxOccurs="1" />
+            <element name="action_timing" type="tns:TriggerActionTiming" minOccurs="1" maxOccurs="1" />
+            <element name="action_reference_old_table" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="action_reference_new_table" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="action_reference_old_row" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="action_reference_new_row" type="string" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <simpleType name="TriggerEventManipulation">
+        <restriction base="string">
+            <enumeration value="INSERT"/>
+            <enumeration value="UPDATE"/>
+            <enumeration value="DELETE"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="TriggerActionOrientation">
+        <restriction base="string">
+            <enumeration value="ROW"/>
+            <enumeration value="STATEMENT"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="TriggerActionTiming">
+        <restriction base="string">
+            <enumeration value="BEFORE"/>
+            <enumeration value="AFTER"/>
+            <enumeration value="INSTEAD_OF"/>
+        </restriction>
+    </simpleType>
     
     <simpleType name="ObjectType">
         <restriction base="string">

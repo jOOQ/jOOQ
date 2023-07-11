@@ -50,6 +50,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.jooq.SortOrder;
+// ...
+// ...
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.CheckConstraintDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -64,6 +66,7 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
+// ...
 import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
@@ -86,6 +89,10 @@ import org.jooq.util.xml.jaxb.Sequence;
 import org.jooq.util.xml.jaxb.Table;
 import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableType;
+import org.jooq.util.xml.jaxb.Trigger;
+import org.jooq.util.xml.jaxb.TriggerActionOrientation;
+import org.jooq.util.xml.jaxb.TriggerActionTiming;
+import org.jooq.util.xml.jaxb.TriggerEventManipulation;
 import org.jooq.util.xml.jaxb.View;
 
 /**
@@ -398,6 +405,34 @@ public class XMLGenerator extends AbstractGenerator {
 
                 for (RoutineDefinition r : db.getRoutines(s))
                     exportRoutine(is, r, catalogName, schemaName);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             }
         }
 

@@ -39,6 +39,8 @@
 package org.jooq.meta.xml;
 
 import static java.lang.Boolean.FALSE;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -56,8 +58,10 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -80,7 +84,10 @@ import org.jooq.FilePattern.Sort;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+// ...
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
 import org.jooq.exception.IOException;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
@@ -94,6 +101,7 @@ import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
+// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -122,6 +130,8 @@ import org.jooq.util.xml.jaxb.Sequence;
 import org.jooq.util.xml.jaxb.Table;
 import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableConstraintType;
+import org.jooq.util.xml.jaxb.Trigger;
+import org.jooq.util.xml.jaxb.TriggerActionOrientation;
 import org.jooq.util.xml.jaxb.View;
 
 /**
@@ -584,6 +594,47 @@ public class XMLDatabase extends AbstractDatabase {
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -51,13 +51,13 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
-import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
 
@@ -74,6 +74,9 @@ final class FilteredMeta extends AbstractMeta {
     private final Predicate<? super Schema>           schemaFilter;
     private final Predicate<? super Table<?>>         tableFilter;
     private final Predicate<? super Domain<?>>        domainFilter;
+
+
+
     private final Predicate<? super Sequence<?>>      sequenceFilter;
     private final Predicate<? super UniqueKey<?>>     primaryKeyFilter;
     private final Predicate<? super UniqueKey<?>>     uniqueKeyFilter;
@@ -86,19 +89,25 @@ final class FilteredMeta extends AbstractMeta {
         Predicate<? super Schema> schemaFilter,
         Predicate<? super Table<?>> tableFilter,
         Predicate<? super Domain<?>> domainFilter,
-        Predicate<? super Sequence<?>> sequenceFilter,
-        Predicate<? super UniqueKey<?>> primaryKeyFilter,
-        Predicate<? super UniqueKey<?>> uniqueKeyFilter,
-        Predicate<? super ForeignKey<?, ?>> foreignKeyFilter,
-        Predicate<? super Index> indexFilter
-    ) {
-        super(meta.configuration());
 
-        this.meta = meta;
-        this.catalogFilter = catalogFilter;
-        this.schemaFilter = schemaFilter;
-        this.tableFilter = tableFilter;
-        this.domainFilter = domainFilter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         this.sequenceFilter = sequenceFilter;
         this.primaryKeyFilter = primaryKeyFilter;
         this.uniqueKeyFilter = uniqueKeyFilter;
@@ -125,6 +134,9 @@ final class FilteredMeta extends AbstractMeta {
             schemaFilter,
             tableFilter,
             domainFilter,
+
+
+
             sequenceFilter,
             primaryKeyFilter,
             uniqueKeyFilter,
@@ -141,6 +153,9 @@ final class FilteredMeta extends AbstractMeta {
             schemaFilter != null ? new And<>(schemaFilter, filter) : filter,
             tableFilter,
             domainFilter,
+
+
+
             sequenceFilter,
             primaryKeyFilter,
             uniqueKeyFilter,
@@ -157,6 +172,9 @@ final class FilteredMeta extends AbstractMeta {
             schemaFilter,
             tableFilter != null ? new And<>(tableFilter, filter) : filter,
             domainFilter,
+
+
+
             sequenceFilter,
             primaryKeyFilter,
             uniqueKeyFilter,
@@ -173,6 +191,9 @@ final class FilteredMeta extends AbstractMeta {
             schemaFilter,
             tableFilter,
             domainFilter != null ? new And<>(domainFilter, filter) : filter,
+
+
+
             sequenceFilter,
             primaryKeyFilter,
             uniqueKeyFilter,
@@ -180,6 +201,27 @@ final class FilteredMeta extends AbstractMeta {
             indexFilter
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Meta filterSequences(Predicate<? super Sequence<?>> filter) {
@@ -189,6 +231,9 @@ final class FilteredMeta extends AbstractMeta {
             schemaFilter,
             tableFilter,
             domainFilter,
+
+
+
             sequenceFilter != null ? new And<>(sequenceFilter, filter) : filter,
             primaryKeyFilter,
             uniqueKeyFilter,
@@ -205,6 +250,9 @@ final class FilteredMeta extends AbstractMeta {
             schemaFilter,
             tableFilter,
             domainFilter,
+
+
+
             sequenceFilter,
             primaryKeyFilter != null ? new And<>(primaryKeyFilter, filter) : filter,
             uniqueKeyFilter,
@@ -221,6 +269,9 @@ final class FilteredMeta extends AbstractMeta {
             schemaFilter,
             tableFilter,
             domainFilter,
+
+
+
             sequenceFilter,
             primaryKeyFilter,
             uniqueKeyFilter != null ? new And<>(uniqueKeyFilter, filter) : filter,
@@ -237,6 +288,9 @@ final class FilteredMeta extends AbstractMeta {
             schemaFilter,
             tableFilter,
             domainFilter,
+
+
+
             sequenceFilter,
             primaryKeyFilter,
             uniqueKeyFilter,
@@ -253,6 +307,9 @@ final class FilteredMeta extends AbstractMeta {
             schemaFilter,
             tableFilter,
             domainFilter,
+
+
+
             sequenceFilter,
             primaryKeyFilter,
             uniqueKeyFilter,
@@ -307,6 +364,9 @@ final class FilteredMeta extends AbstractMeta {
         private transient List<Table<?>>    tables;
         private transient List<Sequence<?>> sequences;
 
+
+
+
         private FilteredSchema(FilteredCatalog catalog, Schema delegate) {
             super(delegate.getQualifiedName(), catalog, delegate.getCommentPart());
 
@@ -359,6 +419,24 @@ final class FilteredMeta extends AbstractMeta {
             // TODO: [#8475] Add Meta.getUDTs
             return delegate.getUDTs();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     private class FilteredTable<R extends Record> extends TableImpl<R> {

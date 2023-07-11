@@ -43,17 +43,22 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -215,6 +220,43 @@ public interface Meta extends Scope {
     @NotNull
     @Support({ H2, POSTGRES })
     List<Domain<?>> getDomains(Name name) throws DataAccessException;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Get all sequence objects from the underlying meta data source.
@@ -389,6 +431,17 @@ public interface Meta extends Scope {
      */
     @NotNull
     Meta filterDomains(Predicate<? super Domain<?>> filter);
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Create a wrapper {@link Meta} instance filtering out some sequences.

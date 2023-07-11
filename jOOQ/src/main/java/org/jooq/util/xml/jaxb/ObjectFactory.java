@@ -173,4 +173,12 @@ public class ObjectFactory {
         return new View();
     }
 
+    /**
+     * Create an instance of {@link Trigger }
+     * 
+     */
+    public Trigger createTrigger() {
+        return new Trigger();
+    }
+
 }

@@ -26,7 +26,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="table_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="table_type" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}TableType" minOccurs="0"/&gt;
+ *         &lt;element name="table_type" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}TableType" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -46,7 +46,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Table implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31600L;
+    private final static long serialVersionUID = 31900L;
     @XmlElement(name = "table_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableCatalog;

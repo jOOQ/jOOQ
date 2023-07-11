@@ -25,23 +25,24 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="catalogs" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Catalogs" minOccurs="0"/&gt;
- *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Schemata" minOccurs="0"/&gt;
- *         &lt;element name="sequences" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Sequences" minOccurs="0"/&gt;
- *         &lt;element name="tables" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Tables" minOccurs="0"/&gt;
- *         &lt;element name="views" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Views" minOccurs="0"/&gt;
- *         &lt;element name="columns" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Columns" minOccurs="0"/&gt;
- *         &lt;element name="table_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}TableConstraints" minOccurs="0"/&gt;
- *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
- *         &lt;element name="referential_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}ReferentialConstraints" minOccurs="0"/&gt;
- *         &lt;element name="check_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}CheckConstraints" minOccurs="0"/&gt;
- *         &lt;element name="domains" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Domains" minOccurs="0"/&gt;
- *         &lt;element name="domain_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}DomainConstraints" minOccurs="0"/&gt;
- *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Indexes" minOccurs="0"/&gt;
- *         &lt;element name="index_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}IndexColumnUsages" minOccurs="0"/&gt;
- *         &lt;element name="routines" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Routines" minOccurs="0"/&gt;
- *         &lt;element name="parameters" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}Parameters" minOccurs="0"/&gt;
- *         &lt;element name="element_types" type="{http://www.jooq.org/xsd/jooq-meta-3.16.0.xsd}ElementTypes" minOccurs="0"/&gt;
+ *         &lt;element name="catalogs" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Catalogs" minOccurs="0"/&gt;
+ *         &lt;element name="schemata" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Schemata" minOccurs="0"/&gt;
+ *         &lt;element name="sequences" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Sequences" minOccurs="0"/&gt;
+ *         &lt;element name="tables" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Tables" minOccurs="0"/&gt;
+ *         &lt;element name="views" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Views" minOccurs="0"/&gt;
+ *         &lt;element name="columns" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Columns" minOccurs="0"/&gt;
+ *         &lt;element name="table_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}TableConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
+ *         &lt;element name="referential_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}ReferentialConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="check_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}CheckConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="domains" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Domains" minOccurs="0"/&gt;
+ *         &lt;element name="domain_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}DomainConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Indexes" minOccurs="0"/&gt;
+ *         &lt;element name="index_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}IndexColumnUsages" minOccurs="0"/&gt;
+ *         &lt;element name="routines" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Routines" minOccurs="0"/&gt;
+ *         &lt;element name="parameters" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Parameters" minOccurs="0"/&gt;
+ *         &lt;element name="element_types" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}ElementTypes" minOccurs="0"/&gt;
+ *         &lt;element name="triggers" type="{http://www.jooq.org/xsd/jooq-meta-3.19.0.xsd}Triggers" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -61,7 +62,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class InformationSchema implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31600L;
+    private final static long serialVersionUID = 31900L;
     @XmlElementWrapper(name = "catalogs")
     @XmlElement(name = "catalog")
     protected List<Catalog> catalogs;
@@ -113,6 +114,9 @@ public class InformationSchema implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "element_types")
     @XmlElement(name = "element_type")
     protected List<ElementType> elementTypes;
+    @XmlElementWrapper(name = "triggers")
+    @XmlElement(name = "trigger")
+    protected List<Trigger> triggers;
 
     public List<Catalog> getCatalogs() {
         if (catalogs == null) {
@@ -299,6 +303,17 @@ public class InformationSchema implements Serializable, XMLAppendable
 
     public void setElementTypes(List<ElementType> elementTypes) {
         this.elementTypes = elementTypes;
+    }
+
+    public List<Trigger> getTriggers() {
+        if (triggers == null) {
+            triggers = new ArrayList<Trigger>();
+        }
+        return triggers;
+    }
+
+    public void setTriggers(List<Trigger> triggers) {
+        this.triggers = triggers;
     }
 
     public InformationSchema withCatalogs(Catalog... values) {
@@ -658,6 +673,27 @@ public class InformationSchema implements Serializable, XMLAppendable
         return this;
     }
 
+    public InformationSchema withTriggers(Trigger... values) {
+        if (values!= null) {
+            for (Trigger value: values) {
+                getTriggers().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withTriggers(Collection<Trigger> values) {
+        if (values!= null) {
+            getTriggers().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withTriggers(List<Trigger> triggers) {
+        setTriggers(triggers);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("catalogs", "catalog", catalogs);
@@ -677,6 +713,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         builder.append("routines", "routine", routines);
         builder.append("parameters", "parameter", parameters);
         builder.append("element_types", "element_type", elementTypes);
+        builder.append("triggers", "trigger", triggers);
     }
 
     @Override
@@ -851,6 +888,15 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (triggers == null) {
+            if (other.triggers!= null) {
+                return false;
+            }
+        } else {
+            if (!triggers.equals(other.triggers)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -875,6 +921,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((parameters == null)? 0 :parameters.hashCode()));
         result = ((prime*result)+((elementTypes == null)? 0 :elementTypes.hashCode()));
+        result = ((prime*result)+((triggers == null)? 0 :triggers.hashCode()));
         return result;
     }
 

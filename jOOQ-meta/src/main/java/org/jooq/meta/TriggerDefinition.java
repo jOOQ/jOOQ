@@ -91,3 +91,13 @@ package org.jooq.meta;
 
 
 
+
+
+
+
+
+
+
+
+
+

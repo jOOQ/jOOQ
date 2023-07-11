@@ -92,19 +92,19 @@ final class FilteredMeta extends AbstractMeta {
 
 
 
+        Predicate<? super Sequence<?>> sequenceFilter,
+        Predicate<? super UniqueKey<?>> primaryKeyFilter,
+        Predicate<? super UniqueKey<?>> uniqueKeyFilter,
+        Predicate<? super ForeignKey<?, ?>> foreignKeyFilter,
+        Predicate<? super Index> indexFilter
+    ) {
+        super(meta.configuration());
 
-
-
-
-
-
-
-
-
-
-
-
-
+        this.meta = meta;
+        this.catalogFilter = catalogFilter;
+        this.schemaFilter = schemaFilter;
+        this.tableFilter = tableFilter;
+        this.domainFilter = domainFilter;
 
 
 
@@ -505,7 +505,6 @@ final class FilteredMeta extends AbstractMeta {
             return Collections.unmodifiableList(uniqueKeys);
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public final List<ForeignKey<R, ?>> getReferences() {
             if (references == null) {

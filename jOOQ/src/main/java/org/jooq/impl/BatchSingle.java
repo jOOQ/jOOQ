@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
+import static org.jooq.impl.AbstractQuery.connection;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitAll;
@@ -188,7 +189,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     private final int[] executePrepared() {
         ExecuteContext ctx = new DefaultExecuteContext(configuration, new Query[] { query });
         ExecuteListener listener = ExecuteListeners.get(ctx);
-        Connection connection = ctx.connection();
+        Connection connection = connection(ctx);
 
         Param<?>[] params = extractParams();
 

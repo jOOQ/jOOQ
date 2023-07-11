@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
 import static org.jooq.conf.SettingsTools.getBatchSize;
+import static org.jooq.impl.AbstractQuery.connection;
 import static org.jooq.impl.Tools.checkedFunction;
 import static org.jooq.impl.Tools.chunks;
 import static org.jooq.impl.Tools.fields;
@@ -208,7 +209,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
 
             listener.prepareStart(ctx);
             if (ctx.statement() == null)
-                ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
+                ctx.statement(connection(ctx).prepareStatement(ctx.sql()));
             listener.prepareEnd(ctx);
 
             // [#9295] use query timeout from settings

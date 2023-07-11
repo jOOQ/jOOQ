@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.AbstractQuery.connection;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.stream.IntStream;
@@ -111,7 +113,7 @@ final class BatchMultiple extends AbstractBatch {
             ctx.transformQueries(listener);
 
             if (ctx.statement() == null)
-                ctx.statement(new SettingsEnabledPreparedStatement(ctx.connection()));
+                ctx.statement(new SettingsEnabledPreparedStatement(connection(ctx)));
 
             // [#9295] use query timeout from settings
             int t = SettingsTools.getQueryTimeout(0, ctx.settings());

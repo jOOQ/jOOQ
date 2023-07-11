@@ -64,6 +64,7 @@ import static org.jooq.impl.Tools.consumeExceptions;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -304,19 +305,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
                     listener.renderEnd(ctx);
                     rendered.sql = ctx.sql();
 
-                    // [#3234] Defer initialising of a connection until the prepare step
-                    // This optimises unnecessary ConnectionProvider.acquire() calls when
-                    // ControlFlowSignals are thrown
-                    if (ctx.connection() == null)
-                        if (ctx.configuration().connectionFactory() instanceof NoConnectionFactory)
-                            throw new DetachedException("Cannot execute query. No JDBC Connection configured");
-                        else
-                            throw new DetachedException(
-                                "Attempt to execute a blocking method (e.g. Query.execute() or ResultQuery.fetch()) "
-                              + "when only an R2BDC ConnectionFactory was configured. jOOQ's RowCountQuery and ResultQuery "
-                              + "extend Publisher, which allows for reactive streams implementations to subscribe to the "
-                              + "results of a jOOQ query. Simply embed your query in the stream, e.g. using Flux.from(query). "
-                              + "See also: https://www.jooq.org/doc/latest/manual/sql-execution/fetching/reactive-fetching/");
+                    connection(ctx);
 
                     // [#7106] In some SQL dialects, starting a transaction requires JDBC interaction
                     if (this instanceof StartTransaction && SET_AUTOCOMMIT_ON_START_TRANSACTION.contains(ctx.dialect()))
@@ -393,6 +382,26 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
             return 0;
         }
+    }
+
+    static final Connection connection(DefaultExecuteContext ctx) {
+        Connection result = ctx.connection();
+
+        // [#3234] Defer initialising of a connection until the prepare step
+        // This optimises unnecessary ConnectionProvider.acquire() calls when
+        // ControlFlowSignals are thrown
+        if (result == null)
+            if (ctx.configuration().connectionFactory() instanceof NoConnectionFactory)
+                throw new DetachedException("Cannot execute query. No JDBC Connection configured");
+            else
+                throw new DetachedException(
+                    "Attempt to execute a blocking method (e.g. Query.execute() or ResultQuery.fetch()) "
+                  + "when only an R2BDC ConnectionFactory was configured. jOOQ's RowCountQuery and ResultQuery "
+                  + "extend Publisher, which allows for reactive streams implementations to subscribe to the "
+                  + "results of a jOOQ query. Simply embed your query in the stream, e.g. using Flux.from(query). "
+                  + "See also: https://www.jooq.org/doc/latest/manual/sql-execution/fetching/reactive-fetching/");
+        else
+            return result;
     }
 
     @Override

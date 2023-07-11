@@ -8038,8 +8038,6 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-
-
     private String numberLiteral(Number n) {
         if (n instanceof BigInteger) {
             BigInteger bi = (BigInteger) n;

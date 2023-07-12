@@ -198,6 +198,48 @@ final class MetaImpl extends AbstractMeta {
         }
     }
 
+    private static final <T, E extends Exception> T withCatalog(Catalog catalog, DSLContext ctx, ThrowingFunction<DSLContext, T, E> supplier) throws E {
+        String previous = null;
+        Exception e = null;
+
+        try {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return supplier.apply(ctx);
+        }
+        catch (Exception x) {
+            e = x;
+            throw (E) x;
+        }
+        finally {
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+    }
+
     @Override
     final List<Catalog> getCatalogs0() {
         List<Catalog> result = new ArrayList<>();
@@ -471,14 +513,18 @@ final class MetaImpl extends AbstractMeta {
             String sql = M_UNIQUE_KEYS(family());
 
             if (sql != null) {
-                Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(
-                    sql,
-                    NO_SUPPORT_SCHEMAS.contains(dialect())
-                        ? EMPTY_OBJECT
-                        : inverseSchemaCatalog
-                        ? new Object[] { catalog }
-                        : new Object[] { schema }
-                ).fetch());
+                Result<Record> result = meta(meta ->
+                    withCatalog(DSL.catalog(catalog), DSL.using(meta.getConnection(), family()), ctx ->
+                        ctx.resultQuery(
+                            sql,
+                            NO_SUPPORT_SCHEMAS.contains(dialect())
+                                ? EMPTY_OBJECT
+                                : inverseSchemaCatalog
+                                ? new Object[] { catalog }
+                                : new Object[] { schema }
+                        ).fetch()
+                    )
+                );
 
                 // TODO Support catalogs as well
                 Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
@@ -642,7 +688,11 @@ final class MetaImpl extends AbstractMeta {
                 String sql = M_SOURCES(family());
 
                 if (sql != null) {
-                    Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(sql, MetaSchema.this.getName()).fetch());
+                    Result<Record> result = meta(meta ->
+                        withCatalog(getCatalog(), DSL.using(meta.getConnection(), family()), ctx ->
+                            ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
+                        )
+                    );
 
                     // TODO Support catalogs as well
                     Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });

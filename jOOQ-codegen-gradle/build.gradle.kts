@@ -19,6 +19,7 @@ version = "3.19.0-SNAPSHOT"
 dependencies {
     implementation(gradleApi())
     implementation("$group:jooq-codegen:$version")
+    implementation("$group:jooq-meta-kotlin:$version")
 }
 
 tasks.withType<Javadoc> {

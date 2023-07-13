@@ -2,8 +2,10 @@ package org.jooq.kotlin
 
 import org.jetbrains.annotations.Blocking
 import org.jooq.*
-import org.jooq.SQLDialect.*
+import org.jooq.conf.*
 import org.jooq.impl.DSL.*
+import org.jooq.migrations.xml.jaxb.*
+import org.jooq.util.xml.jaxb.*
 import java.util.stream.Collector
 
 // ----------------------------------------------------------------------------
@@ -453,3 +455,371 @@ fun <T> Select<Record1<T>>.notIn(vararg values: T): Condition = field(this).notI
 
 @Support
 fun <T> Select<Record1<T>>.notIn(vararg values: Field<*>): Condition = field(this).notIn(values.asList())
+
+// ----------------------------------------------------------------------------
+// Extensions to the jOOQ Settings object hierarchy
+// ----------------------------------------------------------------------------
+
+fun settings(block: Settings.() -> Unit): Settings {
+    val e = Settings()
+    block(e)
+    return e
+}
+
+// [jooq-tools] START [settings]
+
+fun Settings.renderMapping(block: RenderMapping.() -> Unit) {
+    if (renderMapping == null)
+        renderMapping = RenderMapping()
+
+    block(renderMapping)
+}
+
+fun RenderMapping.catalogs(block: MutableList<MappedCatalog>.() -> Unit) {
+    block(catalogs)
+}
+
+@JvmName("mutableListMappedCatalog")
+fun MutableList<MappedCatalog>.catalog(block: MappedCatalog.() -> Unit) {
+    val e = MappedCatalog()
+    block(e)
+    add(e)
+}
+
+fun MappedCatalog.schemata(block: MutableList<MappedSchema>.() -> Unit) {
+    block(schemata)
+}
+
+@JvmName("mutableListMappedSchema")
+fun MutableList<MappedSchema>.schema(block: MappedSchema.() -> Unit) {
+    val e = MappedSchema()
+    block(e)
+    add(e)
+}
+
+fun MappedSchema.tables(block: MutableList<MappedTable>.() -> Unit) {
+    block(tables)
+}
+
+@JvmName("mutableListMappedTable")
+fun MutableList<MappedTable>.table(block: MappedTable.() -> Unit) {
+    val e = MappedTable()
+    block(e)
+    add(e)
+}
+
+fun RenderMapping.schemata(block: MutableList<MappedSchema>.() -> Unit) {
+    block(schemata)
+}
+
+fun Settings.renderFormatting(block: RenderFormatting.() -> Unit) {
+    if (renderFormatting == null)
+        renderFormatting = RenderFormatting()
+
+    block(renderFormatting)
+}
+
+fun Settings.migrationHistorySchema(block: MigrationSchema.() -> Unit) {
+    if (migrationHistorySchema == null)
+        migrationHistorySchema = MigrationSchema()
+
+    block(migrationHistorySchema)
+}
+
+fun Settings.interpreterSearchPath(block: MutableList<InterpreterSearchSchema>.() -> Unit) {
+    block(interpreterSearchPath)
+}
+
+@JvmName("mutableListInterpreterSearchSchema")
+fun MutableList<InterpreterSearchSchema>.interpreterSearchPath(block: InterpreterSearchSchema.() -> Unit) {
+    val e = InterpreterSearchSchema()
+    block(e)
+    add(e)
+}
+
+fun Settings.migrationSchemata(block: MutableList<MigrationSchema>.() -> Unit) {
+    block(migrationSchemata)
+}
+
+fun Settings.parseSearchPath(block: MutableList<ParseSearchSchema>.() -> Unit) {
+    block(parseSearchPath)
+}
+
+@JvmName("mutableListParseSearchSchema")
+fun MutableList<ParseSearchSchema>.parseSearchPath(block: ParseSearchSchema.() -> Unit) {
+    val e = ParseSearchSchema()
+    block(e)
+    add(e)
+}
+
+// [jooq-tools] END [settings]
+
+// ----------------------------------------------------------------------------
+// Extensions to the jOOQ InformationSchema object hierarchy
+// ----------------------------------------------------------------------------
+
+fun informationSchema(block: InformationSchema.() -> Unit): InformationSchema {
+    val e = InformationSchema()
+    block(e)
+    return e
+}
+
+// [jooq-tools] START [information-schema]
+
+fun InformationSchema.catalogs(block: MutableList<org.jooq.util.xml.jaxb.Catalog>.() -> Unit) {
+    block(catalogs)
+}
+
+@JvmName("mutableListCatalog")
+fun MutableList<org.jooq.util.xml.jaxb.Catalog>.catalog(block: org.jooq.util.xml.jaxb.Catalog.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Catalog()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.schemata(block: MutableList<org.jooq.util.xml.jaxb.Schema>.() -> Unit) {
+    block(schemata)
+}
+
+@JvmName("mutableListSchema")
+fun MutableList<org.jooq.util.xml.jaxb.Schema>.schema(block: org.jooq.util.xml.jaxb.Schema.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Schema()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.sequences(block: MutableList<org.jooq.util.xml.jaxb.Sequence>.() -> Unit) {
+    block(sequences)
+}
+
+@JvmName("mutableListSequence")
+fun MutableList<org.jooq.util.xml.jaxb.Sequence>.sequence(block: org.jooq.util.xml.jaxb.Sequence.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Sequence()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.tables(block: MutableList<org.jooq.util.xml.jaxb.Table>.() -> Unit) {
+    block(tables)
+}
+
+@JvmName("mutableListTable")
+fun MutableList<org.jooq.util.xml.jaxb.Table>.table(block: org.jooq.util.xml.jaxb.Table.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Table()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.views(block: MutableList<View>.() -> Unit) {
+    block(views)
+}
+
+@JvmName("mutableListView")
+fun MutableList<View>.view(block: View.() -> Unit) {
+    val e = View()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.columns(block: MutableList<Column>.() -> Unit) {
+    block(columns)
+}
+
+@JvmName("mutableListColumn")
+fun MutableList<Column>.column(block: Column.() -> Unit) {
+    val e = Column()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.tableConstraints(block: MutableList<TableConstraint>.() -> Unit) {
+    block(tableConstraints)
+}
+
+@JvmName("mutableListTableConstraint")
+fun MutableList<TableConstraint>.tableConstraint(block: TableConstraint.() -> Unit) {
+    val e = TableConstraint()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.keyColumnUsages(block: MutableList<KeyColumnUsage>.() -> Unit) {
+    block(keyColumnUsages)
+}
+
+@JvmName("mutableListKeyColumnUsage")
+fun MutableList<KeyColumnUsage>.keyColumnUsage(block: KeyColumnUsage.() -> Unit) {
+    val e = KeyColumnUsage()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.referentialConstraints(block: MutableList<ReferentialConstraint>.() -> Unit) {
+    block(referentialConstraints)
+}
+
+@JvmName("mutableListReferentialConstraint")
+fun MutableList<ReferentialConstraint>.referentialConstraint(block: ReferentialConstraint.() -> Unit) {
+    val e = ReferentialConstraint()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.checkConstraints(block: MutableList<CheckConstraint>.() -> Unit) {
+    block(checkConstraints)
+}
+
+@JvmName("mutableListCheckConstraint")
+fun MutableList<CheckConstraint>.checkConstraint(block: CheckConstraint.() -> Unit) {
+    val e = CheckConstraint()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.domains(block: MutableList<org.jooq.util.xml.jaxb.Domain>.() -> Unit) {
+    block(domains)
+}
+
+@JvmName("mutableListDomain")
+fun MutableList<org.jooq.util.xml.jaxb.Domain>.domain(block: org.jooq.util.xml.jaxb.Domain.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Domain()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.domainConstraints(block: MutableList<DomainConstraint>.() -> Unit) {
+    block(domainConstraints)
+}
+
+@JvmName("mutableListDomainConstraint")
+fun MutableList<DomainConstraint>.domainConstraint(block: DomainConstraint.() -> Unit) {
+    val e = DomainConstraint()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.indexes(block: MutableList<org.jooq.util.xml.jaxb.Index>.() -> Unit) {
+    block(indexes)
+}
+
+@JvmName("mutableListIndex")
+fun MutableList<org.jooq.util.xml.jaxb.Index>.indexe(block: org.jooq.util.xml.jaxb.Index.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Index()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.indexColumnUsages(block: MutableList<IndexColumnUsage>.() -> Unit) {
+    block(indexColumnUsages)
+}
+
+@JvmName("mutableListIndexColumnUsage")
+fun MutableList<IndexColumnUsage>.indexColumnUsage(block: IndexColumnUsage.() -> Unit) {
+    val e = IndexColumnUsage()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.routines(block: MutableList<org.jooq.util.xml.jaxb.Routine>.() -> Unit) {
+    block(routines)
+}
+
+@JvmName("mutableListRoutine")
+fun MutableList<org.jooq.util.xml.jaxb.Routine>.routine(block: org.jooq.util.xml.jaxb.Routine.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Routine()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.parameters(block: MutableList<org.jooq.util.xml.jaxb.Parameter>.() -> Unit) {
+    block(parameters)
+}
+
+@JvmName("mutableListParameter")
+fun MutableList<org.jooq.util.xml.jaxb.Parameter>.parameter(block: org.jooq.util.xml.jaxb.Parameter.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Parameter()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.elementTypes(block: MutableList<ElementType>.() -> Unit) {
+    block(elementTypes)
+}
+
+@JvmName("mutableListElementType")
+fun MutableList<ElementType>.elementType(block: ElementType.() -> Unit) {
+    val e = ElementType()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.triggers(block: MutableList<org.jooq.util.xml.jaxb.Trigger>.() -> Unit) {
+    block(triggers)
+}
+
+@JvmName("mutableListTrigger")
+fun MutableList<org.jooq.util.xml.jaxb.Trigger>.trigger(block: org.jooq.util.xml.jaxb.Trigger.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Trigger()
+    block(e)
+    add(e)
+}
+
+// [jooq-tools] END [information-schema]
+
+// ----------------------------------------------------------------------------
+// Extensions to the jOOQ MigrationType object hierarchy
+// ----------------------------------------------------------------------------
+
+fun migrationType(block: MigrationsType.() -> Unit): MigrationsType {
+    val e = MigrationsType()
+    block(e)
+    return e
+}
+
+// [jooq-tools] START [migrations-type]
+
+fun MigrationsType.commits(block: MutableList<CommitType>.() -> Unit) {
+    block(commits)
+}
+
+@JvmName("mutableListCommitType")
+fun MutableList<CommitType>.commit(block: CommitType.() -> Unit) {
+    val e = CommitType()
+    block(e)
+    add(e)
+}
+
+fun CommitType.parents(block: MutableList<ParentType>.() -> Unit) {
+    block(parents)
+}
+
+@JvmName("mutableListParentType")
+fun MutableList<ParentType>.parent(block: ParentType.() -> Unit) {
+    val e = ParentType()
+    block(e)
+    add(e)
+}
+
+fun CommitType.tags(block: MutableList<TagType>.() -> Unit) {
+    block(tags)
+}
+
+@JvmName("mutableListTagType")
+fun MutableList<TagType>.tag(block: TagType.() -> Unit) {
+    val e = TagType()
+    block(e)
+    add(e)
+}
+
+fun CommitType.files(block: MutableList<FileType>.() -> Unit) {
+    block(files)
+}
+
+@JvmName("mutableListFileType")
+fun MutableList<FileType>.file(block: FileType.() -> Unit) {
+    val e = FileType()
+    block(e)
+    add(e)
+}
+
+// [jooq-tools] END [migrations-type]

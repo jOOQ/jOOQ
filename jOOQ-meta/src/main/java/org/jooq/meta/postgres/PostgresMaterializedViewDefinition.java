@@ -106,10 +106,11 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
         PgNamespace nbt = PG_NAMESPACE.as("nbt");
         PgNamespace nco = PG_NAMESPACE.as("nco");
 
+        // [#8478] [#15414] CockroachDB can't use information_schema.sql_identifier
         for (Record record : create().select(
-                field("({0})::information_schema.sql_identifier", col.COLUMN_NAME.getDataType(), a.ATTNAME).as(col.COLUMN_NAME),
-                field("({0})::information_schema.cardinal_number", col.ORDINAL_POSITION.getDataType(), a.ATTNUM).as(col.ORDINAL_POSITION),
-                field("({0})::information_schema.character_data", col.DATA_TYPE.getDataType(),
+                field("({0})::varchar", col.COLUMN_NAME.getDataType(), a.ATTNAME).as(col.COLUMN_NAME),
+                field("({0})::int", col.ORDINAL_POSITION.getDataType(), a.ATTNUM).as(col.ORDINAL_POSITION),
+                field("({0})::varchar", col.DATA_TYPE.getDataType(),
                     when(t.TYPTYPE.eq(inline("d")),
                         when(bt.TYPELEM.ne(inline(0L)).and(bt.TYPLEN.eq(inline((short) -1))), inline("ARRAY"))
                        .when(nbt.NSPNAME.eq(inline("pg_catalog")), field("format_type({0}, NULL::integer)", String.class, t.TYPBASETYPE))
@@ -118,14 +119,14 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
                         when(t.TYPELEM.ne(inline(0L)).and(t.TYPLEN.eq(inline((short) -1))), inline("ARRAY"))
                        .when(nt.NSPNAME.eq(inline("pg_catalog")), field("format_type({0}, NULL::integer)", String.class, a.ATTTYPID))
                        .otherwise(inline("USER-DEFINED")))).as(col.DATA_TYPE),
-                field("(information_schema._pg_char_max_length(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::information_schema.cardinal_number", col.CHARACTER_MAXIMUM_LENGTH.getDataType()).as(col.CHARACTER_MAXIMUM_LENGTH),
-                field("(information_schema._pg_numeric_precision(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::information_schema.cardinal_number", col.NUMERIC_PRECISION.getDataType()).as(col.NUMERIC_PRECISION),
-                field("(information_schema._pg_numeric_scale(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::information_schema.cardinal_number", col.NUMERIC_SCALE.getDataType()).as(col.NUMERIC_SCALE),
-                field("({0})::information_schema.yes_or_no", col.IS_NULLABLE.getDataType(),
+                field("(information_schema._pg_char_max_length(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::integer", col.CHARACTER_MAXIMUM_LENGTH.getDataType()).as(col.CHARACTER_MAXIMUM_LENGTH),
+                field("(information_schema._pg_numeric_precision(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::integer", col.NUMERIC_PRECISION.getDataType()).as(col.NUMERIC_PRECISION),
+                field("(information_schema._pg_numeric_scale(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::integer", col.NUMERIC_SCALE.getDataType()).as(col.NUMERIC_SCALE),
+                field("({0})::varchar", col.IS_NULLABLE.getDataType(),
                     when(condition(a.ATTNOTNULL).or(t.TYPTYPE.eq(inline("d")).and(t.TYPNOTNULL)), inline("NO"))
                    .otherwise(inline("YES"))).as(col.IS_NULLABLE),
-                field("(pg_get_expr({0}, {1}))::information_schema.character_data", col.COLUMN_DEFAULT.getDataType(), ad.ADBIN, ad.ADRELID).as(col.COLUMN_DEFAULT),
-                field("({0})::information_schema.sql_identifier", col.UDT_SCHEMA.getDataType(),
+                field("(pg_get_expr({0}, {1}))::varchar", col.COLUMN_DEFAULT.getDataType(), ad.ADBIN, ad.ADRELID).as(col.COLUMN_DEFAULT),
+                field("({0})::varchar", col.UDT_SCHEMA.getDataType(),
                     nvl(nbt.NSPNAME, nt.NSPNAME)).as(col.UDT_SCHEMA),
                 field("({0})::information_schema.sql_identifier", col.UDT_NAME.getDataType(),
                     nvl(bt.TYPNAME, t.TYPNAME)).as(col.UDT_NAME),

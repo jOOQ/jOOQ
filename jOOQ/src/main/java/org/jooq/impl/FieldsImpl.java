@@ -301,13 +301,13 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         }
 
         if (aliasMatch2 != null && log.isInfoEnabled())
-            log.info("Ambiguous match found for " + fieldName + ". Both " + aliasMatch + " and " + aliasMatch2 + " match.", new SQLWarning());
+            log.info("Ambiguous match found for " + field + ". Both " + aliasMatch + " and " + aliasMatch2 + " match.", new SQLWarning());
 
         if (aliasMatch != null)
             return result.result(aliasMatch, aliasIndexMatch);
 
         if (columnOnlyMatch2 != null && log.isInfoEnabled())
-            log.info("Ambiguous match found for " + fieldName + ". Both " + columnOnlyMatch + " and " + columnOnlyMatch2 + " match.", new SQLWarning());
+            log.info("Ambiguous match found for " + field + ". Both " + columnOnlyMatch + " and " + columnOnlyMatch2 + " match.", new SQLWarning());
 
         return result.result(columnOnlyMatch, columnOnlyIndexMatch);
     }

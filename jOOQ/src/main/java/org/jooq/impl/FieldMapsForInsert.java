@@ -99,12 +99,15 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.BooleanDataKey;
+import org.jooq.impl.Tools.ExtendedDataKey;
+
 
 /**
  * @author Lukas Eder
  */
 final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImplemented {
-    static final Set<SQLDialect>        CASTS_NEEDED = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>        CASTS_NEEDED           = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>        CASTS_NEEDED_FOR_MERGE = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     final Table<?>                      table;
     final Map<Field<?>, Field<?>>       empty;
@@ -387,9 +390,12 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         Select<Record> select = null;
 
         Map<Field<?>, List<Field<?>>> v = valuesFlattened(ctx, statementType);
+        boolean needsCast = CASTS_NEEDED_FOR_MERGE.contains(ctx.dialect())
+            && ctx.data(ExtendedDataKey.DATA_INSERT_ON_DUPLICATE_KEY_UPDATE) != null;
+
         for (int i = 0; i < rows; i++) {
             int row = i;
-            Select<Record> iteration = DSL.select(Tools.map(v.values(), l -> l.get(row)));
+            Select<Record> iteration = DSL.select(Tools.map(v.values(), l -> castNullsIfNeeded(ctx, needsCast, l.get(row))));
 
             if (select == null)
                 select = iteration;
@@ -398,6 +404,21 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         }
 
         return select;
+    }
+
+    /**
+     * [#15412] The <code>SELECT</code> representation of the
+     * <code>VALUES</code> clause may need some extra casts in some RDBMS, when
+     * <code>INSERT … ON DUPLICATE KEY UPDATE</code> is emulated using
+     * <code>MERGE</code>.
+     */
+    final Field<?> castNullsIfNeeded(Context<?> ctx, boolean needsCast, Field<?> f) {
+        if (needsCast && f instanceof Val<?> val) {
+            if (val.isInline(ctx) && val.getValue() == null)
+                return f.cast(f.getDataType());
+        }
+
+        return f;
     }
 
     final void toSQL92Values(Context<?> ctx) {

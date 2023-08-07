@@ -25,7 +25,7 @@
         <!-- These in-memory DBs are used by jOOQ-meta-extensions and a variety of integration tests -->
         <h2.version>2.2.220</h2.version>
         <sqlite.version>3.42.0.0</sqlite.version>
-        <duckdb.version>0.8.0</duckdb.version>
+        <duckdb.version>0.8.1</duckdb.version>
         <derby.version>10.14.2.0</derby.version>
         <hsqldb.version>2.7.2</hsqldb.version>
 
@@ -166,12 +166,12 @@
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
-                <version>3.5.6</version>
+                <version>3.5.8</version>
             </dependency>
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-test</artifactId>
-                <version>3.5.6</version>
+                <version>3.5.8</version>
             </dependency>
 
             <!-- Data binding -->
@@ -596,7 +596,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.12.0</version>
+                <version>3.13.0</version>
             </dependency>
 
             <!-- Maven plugin dependencies -->

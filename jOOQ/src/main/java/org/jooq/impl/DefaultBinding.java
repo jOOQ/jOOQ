@@ -3944,6 +3944,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (object == null)
                 return null;
 
+            // [#15395] The ResultSet::getObject method returned a UDTRecord (i.e. it's a MockResultSet).
+            //          As such, we can skip the serialisation / deserialisation logic.
+            else if (object instanceof Record)
+                return (Record) object;
+
             String s = object.toString();
             List<String> values = PostgresUtils.toPGObject(s);
 

@@ -125,6 +125,11 @@ public interface InsertValuesStep5<R extends Record, T1, T2, T3, T4, T5> extends
      * <p>
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
+     * <p>
+     * <strong>Note</strong>: Irrespective of individual {@link Record#changed()}
+     * flag values, all record values are copied to the <code>VALUES</code> clause
+     * using {@link Record#intoArray()}, to match insert columns by position, not
+     * by name.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -136,6 +141,11 @@ public interface InsertValuesStep5<R extends Record, T1, T2, T3, T4, T5> extends
      * <p>
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
+     * <p>
+     * <strong>Note</strong>: Irrespective of individual {@link Record#changed()}
+     * flag values, all record values are copied to the <code>VALUES</code> clause
+     * using {@link Record#intoArray()}, to match insert columns by position, not
+     * by name.
      */
     @NotNull @CheckReturnValue
     @Support

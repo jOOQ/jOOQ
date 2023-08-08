@@ -125,6 +125,11 @@ public interface InsertValuesStep1<R extends Record, T1> extends InsertOnDuplica
      * <p>
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
+     * <p>
+     * <strong>Note</strong>: Irrespective of individual {@link Record#changed()}
+     * flag values, all record values are copied to the <code>VALUES</code> clause
+     * using {@link Record#intoArray()}, to match insert columns by position, not
+     * by name.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -136,6 +141,11 @@ public interface InsertValuesStep1<R extends Record, T1> extends InsertOnDuplica
      * <p>
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
+     * <p>
+     * <strong>Note</strong>: Irrespective of individual {@link Record#changed()}
+     * flag values, all record values are copied to the <code>VALUES</code> clause
+     * using {@link Record#intoArray()}, to match insert columns by position, not
+     * by name.
      */
     @NotNull @CheckReturnValue
     @Support

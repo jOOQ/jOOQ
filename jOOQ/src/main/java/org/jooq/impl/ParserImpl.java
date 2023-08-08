@@ -8650,6 +8650,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldDatePartIf()) != null)
                     return field;
+                else if (parseFunctionNameIf("DATE_PART_YEAR"))
+                    return year(parseFieldParenthesised());
 
                 else if ((field = parseFieldDenseRankIf()) != null)
                     return field;

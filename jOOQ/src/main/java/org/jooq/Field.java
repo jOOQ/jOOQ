@@ -347,7 +347,7 @@ extends
      * "guessed" from the jOOQ-configured data types. Use
      * {@link #cast(DataType)} for more accurate casts.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -452,7 +452,7 @@ extends
      * BOOK.ID.cast(String.class);
      * </code></pre>
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that

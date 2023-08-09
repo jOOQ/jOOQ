@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -23,8 +22,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
 import org.jooq.meta.postgres.information_schema.Keys;
-import org.jooq.meta.postgres.information_schema.tables.Schemata.SchemataPath;
-import org.jooq.meta.postgres.information_schema.tables.Tables.TablesPath;
 
 
 /**
@@ -132,33 +129,6 @@ public class Views extends TableImpl<Record> {
         super(path, childPath, parentPath, VIEWS);
     }
 
-    /**
-     * A subtype implementing {@link Path} for simplified path-based joins.
-     */
-    public static class ViewsPath extends Views implements Path<Record> {
-        public <O extends Record> ViewsPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-        private ViewsPath(Name alias, Table<Record> aliased) {
-            super(alias, aliased);
-        }
-
-        @Override
-        public ViewsPath as(String alias) {
-            return new ViewsPath(DSL.name(alias), this);
-        }
-
-        @Override
-        public ViewsPath as(Name alias) {
-            return new ViewsPath(alias, this);
-        }
-
-        @Override
-        public ViewsPath as(Table<?> alias) {
-            return new ViewsPath(alias.getQualifiedName(), this);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -169,28 +139,28 @@ public class Views extends TableImpl<Record> {
         return Arrays.asList(Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES);
     }
 
-    private transient SchemataPath _schemata;
+    private transient Schemata _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>information_schema.schemata</code> table.
      */
-    public SchemataPath schemata() {
+    public Schemata schemata() {
         if (_schemata == null)
-            _schemata = new SchemataPath(this, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA, null);
+            _schemata = new Schemata(this, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
 
-    private transient TablesPath _tables;
+    private transient Tables _tables;
 
     /**
      * Get the implicit join path to the <code>information_schema.tables</code>
      * table.
      */
-    public TablesPath tables() {
+    public Tables tables() {
         if (_tables == null)
-            _tables = new TablesPath(this, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES, null);
+            _tables = new Tables(this, Keys.VIEWS__SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES, null);
 
         return _tables;
     }

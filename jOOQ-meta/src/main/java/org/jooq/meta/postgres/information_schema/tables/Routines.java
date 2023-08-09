@@ -13,7 +13,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -24,7 +23,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
 import org.jooq.meta.postgres.information_schema.Keys;
-import org.jooq.meta.postgres.information_schema.tables.Schemata.SchemataPath;
 
 
 /**
@@ -525,33 +523,6 @@ public class Routines extends TableImpl<Record> {
         super(path, childPath, parentPath, ROUTINES);
     }
 
-    /**
-     * A subtype implementing {@link Path} for simplified path-based joins.
-     */
-    public static class RoutinesPath extends Routines implements Path<Record> {
-        public <O extends Record> RoutinesPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-        private RoutinesPath(Name alias, Table<Record> aliased) {
-            super(alias, aliased);
-        }
-
-        @Override
-        public RoutinesPath as(String alias) {
-            return new RoutinesPath(DSL.name(alias), this);
-        }
-
-        @Override
-        public RoutinesPath as(Name alias) {
-            return new RoutinesPath(alias, this);
-        }
-
-        @Override
-        public RoutinesPath as(Table<?> alias) {
-            return new RoutinesPath(alias.getQualifiedName(), this);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -562,15 +533,15 @@ public class Routines extends TableImpl<Record> {
         return Arrays.asList(Keys.ROUTINES__SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient SchemataPath _schemata;
+    private transient Schemata _schemata;
 
     /**
      * Get the implicit join path to the
      * <code>information_schema.schemata</code> table.
      */
-    public SchemataPath schemata() {
+    public Schemata schemata() {
         if (_schemata == null)
-            _schemata = new SchemataPath(this, Keys.ROUTINES__SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA, null);
+            _schemata = new Schemata(this, Keys.ROUTINES__SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }

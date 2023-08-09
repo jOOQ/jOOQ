@@ -13,7 +13,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -25,7 +24,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.information_schema.InformationSchema;
 import org.jooq.meta.postgres.information_schema.Keys;
-import org.jooq.meta.postgres.information_schema.tables.Tables.TablesPath;
 
 
 /**
@@ -173,33 +171,6 @@ public class Triggers extends TableImpl<Record> {
         super(path, childPath, parentPath, TRIGGERS);
     }
 
-    /**
-     * A subtype implementing {@link Path} for simplified path-based joins.
-     */
-    public static class TriggersPath extends Triggers implements Path<Record> {
-        public <O extends Record> TriggersPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-        private TriggersPath(Name alias, Table<Record> aliased) {
-            super(alias, aliased);
-        }
-
-        @Override
-        public TriggersPath as(String alias) {
-            return new TriggersPath(DSL.name(alias), this);
-        }
-
-        @Override
-        public TriggersPath as(Name alias) {
-            return new TriggersPath(alias, this);
-        }
-
-        @Override
-        public TriggersPath as(Table<?> alias) {
-            return new TriggersPath(alias.getQualifiedName(), this);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -215,15 +186,15 @@ public class Triggers extends TableImpl<Record> {
         return Arrays.asList(Keys.TRIGGERS__SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES);
     }
 
-    private transient TablesPath _tables;
+    private transient Tables _tables;
 
     /**
      * Get the implicit join path to the <code>information_schema.tables</code>
      * table.
      */
-    public TablesPath tables() {
+    public Tables tables() {
         if (_tables == null)
-            _tables = new TablesPath(this, Keys.TRIGGERS__SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES, null);
+            _tables = new Tables(this, Keys.TRIGGERS__SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES, null);
 
         return _tables;
     }

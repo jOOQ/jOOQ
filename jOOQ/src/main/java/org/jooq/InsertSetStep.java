@@ -341,6 +341,30 @@ public interface InsertSetStep<R extends Record> {
     InsertSetMoreStep<R> set(Record record);
 
     /**
+     * Set values in the <code>INSERT</code> statement.
+     * <p>
+     * This is convenience for multiple calls to {@link #set(Record)} and
+     * {@link InsertSetMoreStep#newRecord()}.
+     *
+     * @see #set(Record)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    InsertSetMoreStep<R> set(Record... records);
+
+    /**
+     * Set values in the <code>INSERT</code> statement.
+     * <p>
+     * This is convenience for multiple calls to {@link #set(Record)} and
+     * {@link InsertSetMoreStep#newRecord()}.
+     *
+     * @see #set(Record)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    InsertSetMoreStep<R> set(Collection<? extends Record> records);
+
+    /**
      * Add values to the insert statement with implicit field names.
      */
     @NotNull @CheckReturnValue

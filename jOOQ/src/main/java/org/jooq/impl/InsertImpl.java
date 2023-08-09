@@ -1243,6 +1243,25 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
+    public final InsertImpl set(Record... records) {
+        return set(Arrays.asList(records));
+    }
+
+    @Override
+    public final InsertImpl set(Collection<? extends Record> records) {
+        for (Record record : records)
+
+            // [#6373] [#7322] [#15455]
+            // A trailing newRecord() call is a no-op, but if users call set() twice with
+            // collections of records, then the expectation is for the two calls to be
+            // complete, i.e. no additional newRecord() calls should be needed in between
+            // the two
+            set(record).newRecord();
+
+        return this;
+    }
+
+    @Override
     public final InsertImpl setAllToExcluded() {
 
         // [#14599] Don't use this.fields here, because in the INSERT .. SET case, that

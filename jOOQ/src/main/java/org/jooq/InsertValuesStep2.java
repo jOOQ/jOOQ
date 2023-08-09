@@ -129,7 +129,9 @@ public interface InsertValuesStep2<R extends Record, T1, T2> extends InsertOnDup
      * <strong>Note</strong>: Irrespective of individual {@link Record#changed()}
      * flag values, all record values are copied to the <code>VALUES</code> clause
      * using {@link Record#intoArray()}, to match insert columns by position, not
-     * by name.
+     * by name. If you prefer omitting unchanged values and adding values by field
+     * name rather than by index, use {@link InsertSetStep#set(Record...)} instead.
+     * That syntax is available only if you omit the explicit insert columns list.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -145,7 +147,9 @@ public interface InsertValuesStep2<R extends Record, T1, T2> extends InsertOnDup
      * <strong>Note</strong>: Irrespective of individual {@link Record#changed()}
      * flag values, all record values are copied to the <code>VALUES</code> clause
      * using {@link Record#intoArray()}, to match insert columns by position, not
-     * by name.
+     * by name. If you prefer omitting unchanged values and adding values by field
+     * name rather than by index, use {@link InsertSetStep#set(Record...)} instead.
+     * That syntax is available only if you omit the explicit insert columns list.
      */
     @NotNull @CheckReturnValue
     @Support

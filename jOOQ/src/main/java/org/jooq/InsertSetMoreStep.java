@@ -37,9 +37,12 @@
  */
 package org.jooq;
 
+import org.jooq.CheckReturnValue;
+import org.jooq.Record;
+
 import org.jetbrains.annotations.*;
 
-
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -140,6 +143,30 @@ public interface InsertSetMoreStep<R extends Record> extends InsertOnDuplicateSt
     @NotNull @CheckReturnValue
     @Support
     InsertSetMoreStep<R> set(Record record);
+
+    /**
+     * Set values in the <code>INSERT</code> statement.
+     * <p>
+     * This is convenience for multiple calls to {@link #set(Record)} and
+     * {@link InsertSetMoreStep#newRecord()}.
+     *
+     * @see #set(Record)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    InsertSetMoreStep<R> set(Record... records);
+
+    /**
+     * Set values in the <code>INSERT</code> statement.
+     * <p>
+     * This is convenience for multiple calls to {@link #set(Record)} and
+     * {@link InsertSetMoreStep#newRecord()}.
+     *
+     * @see #set(Record)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    InsertSetMoreStep<R> set(Collection<? extends Record> records);
 
     /**
      * Add an additional record to the <code>INSERT</code> statement

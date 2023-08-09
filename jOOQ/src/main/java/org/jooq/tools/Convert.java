@@ -939,6 +939,8 @@ public final class Convert {
                         return (U) Time.valueOf((LocalTime) from);
                     else if (OffsetDateTime.class == fromClass && (Timestamp.class == toClass || Temporal.class.isAssignableFrom(toClass)))
                         return toDate(((OffsetDateTime) from).toInstant().toEpochMilli(), ((OffsetDateTime) from).getNano(), toClass);
+                    else if (Instant.class == fromClass && (Timestamp.class == toClass || Temporal.class.isAssignableFrom(toClass)))
+                        return toDate(((Instant) from).toEpochMilli(), ((Instant) from).getNano(), toClass);
                     else
                         return toDate(convert(from, Long.class), toClass);
                 }

@@ -12200,7 +12200,7 @@ public class DSL {
      * <p>
      * This is an alias for {@link #default_(Class)}.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only {@link Class}
      * references of types supported by jOOQ internally, i.e. types from
      * {@link SQLDataType}. If you're using any custom data types by means of a
      * {@link Converter} or {@link Binding}, it's better to pass that converted
@@ -12262,7 +12262,7 @@ public class DSL {
      * Create a <code>DEFAULT</code> keyword for use with <code>INSERT</code>,
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -12349,7 +12349,7 @@ public class DSL {
      * {@link #noField()} simply projects <code>NULL</code> and cannot be used
      * to avoid the clause.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class} references
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only {@link Class} references
      * of types supported by jOOQ internally, i.e. types from
      * {@link SQLDataType}. If you're using any custom data types by means of a
      * {@link Converter} or {@link Binding}, it's better to pass that converted
@@ -12539,7 +12539,7 @@ public class DSL {
      * </code>
      * </pre>
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only {@link Class}
      * references of types supported by jOOQ internally, i.e. types from
      * {@link SQLDataType}. If you're using any custom data types by means of a
      * {@link Converter} or {@link Binding}, it's better to pass that converted
@@ -12706,7 +12706,7 @@ public class DSL {
      * </code>
      * </pre>
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only {@link Class}
      * references of types supported by jOOQ internally, i.e. types from
      * {@link SQLDataType}. If you're using any custom data types by means of a
      * {@link Converter} or {@link Binding}, it's better to pass that converted
@@ -14042,7 +14042,7 @@ public class DSL {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only {@link Class}
      * references of types supported by jOOQ internally, i.e. types from
      * {@link SQLDataType}. If you're using any custom data types by means of a
      * {@link Converter} or {@link Binding}, it's better to pass that converted
@@ -14092,7 +14092,7 @@ public class DSL {
      * Create the <code>VALUE</code> pseudo field for usage with
      * <code>DOMAIN</code> specifications.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only {@link Class}
      * references of types supported by jOOQ internally, i.e. types from
      * {@link SQLDataType}. If you're using any custom data types by means of a
      * {@link Converter} or {@link Binding}, it's better to pass that converted
@@ -14308,7 +14308,7 @@ public class DSL {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only {@link Class}
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only {@link Class}
      * references of types supported by jOOQ internally, i.e. types from
      * {@link SQLDataType}. If you're using any custom data types by means of a
      * {@link Converter} or {@link Binding}, it's better to pass that converted
@@ -14350,7 +14350,7 @@ public class DSL {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -14389,7 +14389,7 @@ public class DSL {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -14629,7 +14629,7 @@ public class DSL {
      * escape literals when concatenated into SQL clauses! One way to escape
      * literals is to use {@link #name(String...)} and similar methods
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -14662,7 +14662,7 @@ public class DSL {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -14707,7 +14707,7 @@ public class DSL {
      * <code>function()</code> can be used to access native or user-defined
      * functions that are not yet or insufficiently supported by jOOQ.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -14762,7 +14762,7 @@ public class DSL {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -14808,7 +14808,7 @@ public class DSL {
      * <code>aggregate()</code> can be used to access native or user-defined
      * aggregate functions that are not yet or insufficiently supported by jOOQ.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -14851,7 +14851,7 @@ public class DSL {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -14898,7 +14898,7 @@ public class DSL {
      * user-defined aggregate functions that are not yet or insufficiently
      * supported by jOOQ.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -15977,7 +15977,7 @@ public class DSL {
     /**
      * Coerce this field to another type.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -16063,7 +16063,7 @@ public class DSL {
      * BOOK.ID.cast(String.class);
      * </code></pre>
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -16201,7 +16201,7 @@ public class DSL {
     /**
      * Cast a value to another type.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -16223,7 +16223,7 @@ public class DSL {
     /**
      * Cast a field to another type.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -16286,7 +16286,7 @@ public class DSL {
     /**
      * Cast null to a type.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -30301,7 +30301,7 @@ public class DSL {
     /**
      * Create an unnamed parameter with a defined type and no initial value.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -30367,7 +30367,7 @@ public class DSL {
     /**
      * Create a named parameter with a defined type and no initial value.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -30895,7 +30895,7 @@ public class DSL {
      * A synonym for {@link #val(Object, Class)} to be used in Scala and Groovy,
      * where <code>val</code> is a reserved keyword.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -31878,7 +31878,7 @@ public class DSL {
      * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
      * </ul>
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -32393,7 +32393,7 @@ public class DSL {
     /**
      * Get a bind value with an associated type, taken from a field.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
@@ -34282,7 +34282,7 @@ public class DSL {
      * Get the default data type for the {@link DSLContext}'s underlying
      * {@link SQLDialect} and a given Java type.
      * <p>
-     * <b>NOTE [#15268]</b>: It is strongly recommended to pass only
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that

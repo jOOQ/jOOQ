@@ -6154,9 +6154,11 @@ public class JavaGenerator extends AbstractGenerator {
 
             // [#14985] Scala nested classes have to be located in the object
             if (generateImplicitJoinPathTableSubtypes() && (supportsPathsToOne || supportsPathsToMany)) {
+                final String pathClassName = getStrategy().getJavaClassName(table, Mode.PATH);
+
                 out.javadoc("A subtype implementing {@link %s} for simplified path-based joins.", Path.class);
-                out.println("%sclass %sPath(path: %s[_ <: %s], childPath: %s[_ <: %s, %s], parentPath: %s[_ <: %s, %s]) extends %s(path, childPath, parentPath) with %s[%s]",
-                    visibility(), className, Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, className, Path.class, recordType);
+                out.println("%sclass %s(path: %s[_ <: %s], childPath: %s[_ <: %s, %s], parentPath: %s[_ <: %s, %s]) extends %s(path, childPath, parentPath) with %s[%s]",
+                    visibility(), pathClassName, Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, className, Path.class, recordType);
             }
 
             out.println("}");
@@ -6508,40 +6510,41 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             if (generateImplicitJoinPathTableSubtypes()) {
+                final String pathClassName = getStrategy().getJavaClassName(table, Mode.PATH);
 
                 // [#14985] Scala nested classes have to be located in the companion object
                 if (scala) {}
                 else if (kotlin) {
                     out.javadoc("A subtype implementing {@link %s} for simplified path-based joins.", Path.class);
-                    out.println("%sopen class %sPath : %s, %s<%s> {",
-                        visibility(), className, className, Path.class, recordType);
+                    out.println("%sopen class %s : %s, %s<%s> {",
+                        visibility(), pathClassName, className, Path.class, recordType);
                     out.println("%sconstructor(path: %s<out %s>, childPath: %s<out %s, %s>?, parentPath: %s<out %s, %s>?): super(path, childPath, parentPath)", visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType);
                     out.println("private constructor(alias: %s, aliased: %s<%s>): super(alias, aliased)", Name.class, Table.class, recordType);
-                    out.println("%soverride fun `as`(alias: %s): %sPath = %sPath(%s.name(alias), this)", visibilityPublic(), String.class, className, className, DSL.class);
-                    out.println("%soverride fun `as`(alias: %s): %sPath = %sPath(alias, this)", visibilityPublic(), Name.class, className, className);
-                    out.println("%soverride fun `as`(alias: %s<*>): %sPath = %sPath(alias.qualifiedName, this)", visibilityPublic(), Table.class, className, className);
+                    out.println("%soverride fun `as`(alias: %s): %s = %s(%s.name(alias), this)", visibilityPublic(), String.class, pathClassName, pathClassName, DSL.class);
+                    out.println("%soverride fun `as`(alias: %s): %s = %s(alias, this)", visibilityPublic(), Name.class, pathClassName, pathClassName);
+                    out.println("%soverride fun `as`(alias: %s<*>): %s = %s(alias.qualifiedName, this)", visibilityPublic(), Table.class, pathClassName, pathClassName);
                     out.println("}");
                 }
                 else {
                     out.javadoc("A subtype implementing {@link %s} for simplified path-based joins.", Path.class);
-                    out.println("%sstatic class %sPath extends %s implements %s<%s> {", visibility(), className, className, Path.class, recordType);
-                    out.println("%s<O extends %s> %sPath(%s<O> path, %s<O, %s> childPath, %s<O, %s> parentPath) {", visibility(), Record.class, className, Table.class, ForeignKey.class, recordType, InverseForeignKey.class, recordType);
+                    out.println("%sstatic class %s extends %s implements %s<%s> {", visibility(), pathClassName, className, Path.class, recordType);
+                    out.println("%s<O extends %s> %s(%s<O> path, %s<O, %s> childPath, %s<O, %s> parentPath) {", visibility(), Record.class, pathClassName, Table.class, ForeignKey.class, recordType, InverseForeignKey.class, recordType);
                     out.println("super(path, childPath, parentPath);");
                     out.println("}");
-                    out.println("private %sPath(%s alias, %s<%s> aliased) {", className, Name.class, Table.class, recordType);
+                    out.println("private %s(%s alias, %s<%s> aliased) {", pathClassName, Name.class, Table.class, recordType);
                     out.println("super(alias, aliased);");
                     out.println("}");
                     out.overrideInherit();
-                    out.println("%s%sPath as(%s alias) {", visibilityPublic(), className, String.class);
-                    out.println("return new %sPath(%s.name(alias), this);", className, DSL.class);
+                    out.println("%s%s as(%s alias) {", visibilityPublic(), pathClassName, String.class);
+                    out.println("return new %s(%s.name(alias), this);", pathClassName, DSL.class);
                     out.println("}");
                     out.overrideInherit();
-                    out.println("%s%sPath as(%s alias) {", visibilityPublic(), className, Name.class);
-                    out.println("return new %sPath(alias, this);", className);
+                    out.println("%s%s as(%s alias) {", visibilityPublic(), pathClassName, Name.class);
+                    out.println("return new %s(alias, this);", pathClassName);
                     out.println("}");
                     out.overrideInherit();
-                    out.println("%s%sPath as(%s<?> alias) {", visibilityPublic(), className, Table.class);
-                    out.println("return new %sPath(alias.getQualifiedName(), this);", className);
+                    out.println("%s%s as(%s<?> alias) {", visibilityPublic(), pathClassName, Table.class);
+                    out.println("return new %s(alias.getQualifiedName(), this);", pathClassName);
                     out.println("}");
                     out.println("}");
                 }

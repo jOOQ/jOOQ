@@ -541,6 +541,8 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             result.append("Dao");
         else if (mode == Mode.INTERFACE)
             result.insert(0, "I");
+        else if (mode == Mode.PATH)
+            result.append("Path");
 
         return result.toString();
     }

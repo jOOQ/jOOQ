@@ -48,6 +48,7 @@ import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
+import org.jooq.meta.InverseForeignKeyDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SyntheticDaoDefinition;
@@ -563,7 +564,14 @@ public interface GeneratorStrategy {
          * The domain mode. This is used when a {@link DomainDefinition}'s class
          * is being rendered
          */
-        DOMAIN
+        DOMAIN,
+
+        /**
+         * The path mode. This is used when a {@link ForeignKeyDefinition} or an
+         * {@link InverseForeignKeyDefinition} is used to generate a path
+         * expression.
+         */
+        PATH
 
     }
 }

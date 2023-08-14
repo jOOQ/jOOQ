@@ -369,10 +369,11 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             String result = null;
 
             switch (mode) {
-                case POJO: result = match(definition, tables.getExpression(), tables.getPojoExtends()); break;
-                case RECORD: result = match(definition, tables.getExpression(), tables.getRecordExtends()); break;
-                case DAO: result = match(definition, tables.getExpression(), tables.getDaoExtends()); break;
-                case DEFAULT: result = match(definition, tables.getExpression(), tables.getTableExtends()); break;
+                case POJO:    result = match(definition, tables.getExpression(), tables.getPojoExtends());   break;
+                case RECORD:  result = match(definition, tables.getExpression(), tables.getRecordExtends()); break;
+                case DAO:     result = match(definition, tables.getExpression(), tables.getDaoExtends());    break;
+                case PATH:    result = match(definition, tables.getExpression(), tables.getPathExtends());   break;
+                case DEFAULT: result = match(definition, tables.getExpression(), tables.getTableExtends());  break;
             }
 
             if (result != null)
@@ -427,6 +428,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 case INTERFACE: result = match(definition, tables.getExpression(), tables.getInterfaceImplements()); break;
                 case POJO:      result = match(definition, tables.getExpression(), tables.getPojoImplements());      break;
                 case RECORD:    result = match(definition, tables.getExpression(), tables.getRecordImplements());    break;
+                case PATH:      result = match(definition, tables.getExpression(), tables.getTableImplements());     break;
             }
 
             if (result != null)

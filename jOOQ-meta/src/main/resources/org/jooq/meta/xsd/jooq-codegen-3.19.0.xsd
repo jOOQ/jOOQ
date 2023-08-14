@@ -316,6 +316,14 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.Table} and {@link org.jooq.Path} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="pathExtends" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.Table} and {@link org.jooq.Path} object should extend.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pathImplements" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.Table} and {@link org.jooq.Path} object should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.TableRecord} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

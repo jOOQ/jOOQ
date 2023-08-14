@@ -37,6 +37,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableImplements;
     protected MatcherRule pathClass;
+    protected MatcherRule pathExtends;
+    protected MatcherRule pathImplements;
     protected MatcherRule recordClass;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String recordExtends;
@@ -158,6 +160,38 @@ public class MatchersTableType implements Serializable, XMLAppendable
      */
     public void setPathClass(MatcherRule value) {
         this.pathClass = value;
+    }
+
+    /**
+     * This string provides a super class that a generated {@link org.jooq.Table} and {@link org.jooq.Path} object should extend.
+     * 
+     */
+    public MatcherRule getPathExtends() {
+        return pathExtends;
+    }
+
+    /**
+     * This string provides a super class that a generated {@link org.jooq.Table} and {@link org.jooq.Path} object should extend.
+     * 
+     */
+    public void setPathExtends(MatcherRule value) {
+        this.pathExtends = value;
+    }
+
+    /**
+     * This string provides additional interfaces that a generated {@link org.jooq.Table} and {@link org.jooq.Path} object should implement.
+     * 
+     */
+    public MatcherRule getPathImplements() {
+        return pathImplements;
+    }
+
+    /**
+     * This string provides additional interfaces that a generated {@link org.jooq.Table} and {@link org.jooq.Path} object should implement.
+     * 
+     */
+    public void setPathImplements(MatcherRule value) {
+        this.pathImplements = value;
     }
 
     /**
@@ -411,6 +445,24 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
+     * This string provides a super class that a generated {@link org.jooq.Table} and {@link org.jooq.Path} object should extend.
+     * 
+     */
+    public MatchersTableType withPathExtends(MatcherRule value) {
+        setPathExtends(value);
+        return this;
+    }
+
+    /**
+     * This string provides additional interfaces that a generated {@link org.jooq.Table} and {@link org.jooq.Path} object should implement.
+     * 
+     */
+    public MatchersTableType withPathImplements(MatcherRule value) {
+        setPathImplements(value);
+        return this;
+    }
+
+    /**
      * This rule influences the naming of the generated {@link org.jooq.TableRecord} object.
      * 
      */
@@ -525,6 +577,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
         builder.append("tableExtends", tableExtends);
         builder.append("tableImplements", tableImplements);
         builder.append("pathClass", pathClass);
+        builder.append("pathExtends", pathExtends);
+        builder.append("pathImplements", pathImplements);
         builder.append("recordClass", recordClass);
         builder.append("recordExtends", recordExtends);
         builder.append("recordImplements", recordImplements);
@@ -608,6 +662,24 @@ public class MatchersTableType implements Serializable, XMLAppendable
             }
         } else {
             if (!pathClass.equals(other.pathClass)) {
+                return false;
+            }
+        }
+        if (pathExtends == null) {
+            if (other.pathExtends!= null) {
+                return false;
+            }
+        } else {
+            if (!pathExtends.equals(other.pathExtends)) {
+                return false;
+            }
+        }
+        if (pathImplements == null) {
+            if (other.pathImplements!= null) {
+                return false;
+            }
+        } else {
+            if (!pathImplements.equals(other.pathImplements)) {
                 return false;
             }
         }
@@ -723,6 +795,8 @@ public class MatchersTableType implements Serializable, XMLAppendable
         result = ((prime*result)+((tableExtends == null)? 0 :tableExtends.hashCode()));
         result = ((prime*result)+((tableImplements == null)? 0 :tableImplements.hashCode()));
         result = ((prime*result)+((pathClass == null)? 0 :pathClass.hashCode()));
+        result = ((prime*result)+((pathExtends == null)? 0 :pathExtends.hashCode()));
+        result = ((prime*result)+((pathImplements == null)? 0 :pathImplements.hashCode()));
         result = ((prime*result)+((recordClass == null)? 0 :recordClass.hashCode()));
         result = ((prime*result)+((recordExtends == null)? 0 :recordExtends.hashCode()));
         result = ((prime*result)+((recordImplements == null)? 0 :recordImplements.hashCode()));

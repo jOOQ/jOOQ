@@ -36,6 +36,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
     protected String tableExtends;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableImplements;
+    protected MatcherRule pathClass;
     protected MatcherRule recordClass;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String recordExtends;
@@ -141,6 +142,22 @@ public class MatchersTableType implements Serializable, XMLAppendable
      */
     public void setTableImplements(String value) {
         this.tableImplements = value;
+    }
+
+    /**
+     * This rule influences the naming of the generated {@link org.jooq.Table} and {@link org.jooq.Path} object.
+     * 
+     */
+    public MatcherRule getPathClass() {
+        return pathClass;
+    }
+
+    /**
+     * This rule influences the naming of the generated {@link org.jooq.Table} and {@link org.jooq.Path} object.
+     * 
+     */
+    public void setPathClass(MatcherRule value) {
+        this.pathClass = value;
     }
 
     /**
@@ -385,6 +402,15 @@ public class MatchersTableType implements Serializable, XMLAppendable
     }
 
     /**
+     * This rule influences the naming of the generated {@link org.jooq.Table} and {@link org.jooq.Path} object.
+     * 
+     */
+    public MatchersTableType withPathClass(MatcherRule value) {
+        setPathClass(value);
+        return this;
+    }
+
+    /**
      * This rule influences the naming of the generated {@link org.jooq.TableRecord} object.
      * 
      */
@@ -498,6 +524,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
         builder.append("tableIdentifier", tableIdentifier);
         builder.append("tableExtends", tableExtends);
         builder.append("tableImplements", tableImplements);
+        builder.append("pathClass", pathClass);
         builder.append("recordClass", recordClass);
         builder.append("recordExtends", recordExtends);
         builder.append("recordImplements", recordImplements);
@@ -572,6 +599,15 @@ public class MatchersTableType implements Serializable, XMLAppendable
             }
         } else {
             if (!tableImplements.equals(other.tableImplements)) {
+                return false;
+            }
+        }
+        if (pathClass == null) {
+            if (other.pathClass!= null) {
+                return false;
+            }
+        } else {
+            if (!pathClass.equals(other.pathClass)) {
                 return false;
             }
         }
@@ -686,6 +722,7 @@ public class MatchersTableType implements Serializable, XMLAppendable
         result = ((prime*result)+((tableIdentifier == null)? 0 :tableIdentifier.hashCode()));
         result = ((prime*result)+((tableExtends == null)? 0 :tableExtends.hashCode()));
         result = ((prime*result)+((tableImplements == null)? 0 :tableImplements.hashCode()));
+        result = ((prime*result)+((pathClass == null)? 0 :pathClass.hashCode()));
         result = ((prime*result)+((recordClass == null)? 0 :recordClass.hashCode()));
         result = ((prime*result)+((recordExtends == null)? 0 :recordExtends.hashCode()));
         result = ((prime*result)+((recordImplements == null)? 0 :recordImplements.hashCode()));

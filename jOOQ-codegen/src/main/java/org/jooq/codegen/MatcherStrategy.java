@@ -134,6 +134,7 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     private final String match(String name, String expression, String ruleExpression, MatcherTransformType ruleTransformType) {
         // [#3734] If users forget to specify the rule's expression but they use
         // a transformer (e.g. PASCAL), we should assume the "default" replacement
+        // [#15464] The default for Path classes is generated elsewhere
         if (ruleTransformType != null && ruleExpression == null)
             ruleExpression = "$0";
 
@@ -484,11 +485,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             String result = null;
 
             switch (mode) {
-                case DEFAULT:   result = match(definition, tables.getExpression(), tables.getTableClass());     break;
-                case DAO:       result = match(definition, tables.getExpression(), tables.getDaoClass());       break;
-                case INTERFACE: result = match(definition, tables.getExpression(), tables.getInterfaceClass()); break;
-                case POJO:      result = match(definition, tables.getExpression(), tables.getPojoClass());      break;
-                case RECORD:    result = match(definition, tables.getExpression(), tables.getRecordClass());    break;
+                case DEFAULT:   result = match(definition, tables.getExpression(), tables.getTableClass());             break;
+                case DAO:       result = match(definition, tables.getExpression(), tables.getDaoClass());               break;
+                case INTERFACE: result = match(definition, tables.getExpression(), tables.getInterfaceClass());         break;
+                case POJO:      result = match(definition, tables.getExpression(), tables.getPojoClass());              break;
+                case RECORD:    result = match(definition, tables.getExpression(), tables.getRecordClass());            break;
+                case PATH:      result = match(definition, tables.getExpression(), pathDefault(tables.getPathClass())); break;
             }
 
             if (result != null)
@@ -525,6 +527,21 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
         // Default to standard behaviour
         return super.getJavaClassName(definition, mode);
+    }
+
+    private final MatcherRule pathDefault(MatcherRule rule) {
+        if (rule == null)
+            return null;
+
+        if (!StringUtils.isBlank(rule.getExpression()))
+            return rule;
+
+        MatcherTransformType transform = rule.getTransform();
+
+        if (transform != null)
+            return new MatcherRule().withTransform(transform).withExpression("$0_PATH");
+        else
+            return rule;
     }
 
     @Override

@@ -6815,7 +6815,7 @@ public class JavaGenerator extends AbstractGenerator {
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
                         final String referencedTableClassName = out.ref(
                               getStrategy().getFullJavaClassName(foreignKey.getReferencedTable())
-                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(foreignKey.getReferencedTable()) + "Path") : "")
+                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(foreignKey.getReferencedTable(), Mode.PATH)) : "")
                         );
                         final String keyFullId = kotlin
                             ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
@@ -6898,7 +6898,7 @@ public class JavaGenerator extends AbstractGenerator {
                             : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
                         final String referencingTableClassName = out.ref(
                             getStrategy().getFullJavaClassName(foreignKey.getReferencingTable())
-                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(foreignKey.getReferencingTable()) + "Path") : "")
+                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(foreignKey.getReferencingTable(), Mode.PATH)) : "")
                         );
 
                         // [#13008] Prevent conflicts with the below leading underscore
@@ -6970,7 +6970,7 @@ public class JavaGenerator extends AbstractGenerator {
                         final TableDefinition referencedTable = manyToManyKey.getForeignKey2().getReferencedTable();
                         final String referencedTableClassName = out.ref(
                             getStrategy().getFullJavaClassName(referencedTable)
-                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(referencedTable) + "Path") : "")
+                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(referencedTable, Mode.PATH)) : "")
                         );
 
                         out.javadoc(

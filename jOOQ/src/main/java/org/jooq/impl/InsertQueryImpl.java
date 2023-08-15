@@ -545,11 +545,20 @@ implements
 
 
 
-
-                case FIREBIRD:
                 case IGNITE:
                 case TRINO: {
                     acceptInsertSelect(ctx);
+                    break;
+                }
+
+                case FIREBIRD: {
+
+
+
+
+
+                    acceptMerge(ctx);
+
                     break;
                 }
 
@@ -623,6 +632,7 @@ implements
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
+
 
 
 

@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -86,6 +87,7 @@ import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
+import static org.jooq.impl.Keywords.K_ROWS;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Tools.containsDeclaredTable;
@@ -137,7 +139,7 @@ implements
     private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX         = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     // LIMIT is not supported at all
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                 = SQLDialect.supportedUntil(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                 = SQLDialect.supportedUntil(CUBRID, DERBY, DUCKDB, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
 
     // LIMIT is supported but not ORDER BY
     private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT        = SQLDialect.supportedBy(IGNITE);
@@ -371,15 +373,24 @@ implements
                    .visit(K_ORDER_BY).sql(' ')
                    .visit(orderBy);
 
-            if (limit != null)
-                ctx.formatSeparator()
-                   .visit(K_LIMIT).sql(' ')
-                   .visit(limit);
+            acceptLimit(ctx, limit);
         }
 
         ctx.start(DELETE_RETURNING);
         toSQLReturning(ctx);
         ctx.end(DELETE_RETURNING);
+    }
+
+    static final void acceptLimit(Context<?> ctx, Field<? extends Number> limit) {
+        if (limit != null)
+            if (ctx.family() == FIREBIRD)
+                ctx.formatSeparator()
+                   .visit(K_ROWS).sql(' ')
+                   .visit(limit);
+            else
+                ctx.formatSeparator()
+                   .visit(K_LIMIT).sql(' ')
+                   .visit(limit);
     }
 
     @Override

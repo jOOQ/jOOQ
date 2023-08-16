@@ -59,17 +59,8 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
-import org.jooq.meta.jaxb.MatcherRule;
-import org.jooq.meta.jaxb.MatcherTransformType;
-import org.jooq.meta.jaxb.Matchers;
-import org.jooq.meta.jaxb.MatchersCatalogType;
+import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.meta.jaxb.*;
-import org.jooq.meta.jaxb.MatchersEnumType;
-import org.jooq.meta.jaxb.MatchersFieldType;
-import org.jooq.meta.jaxb.MatchersRoutineType;
-import org.jooq.meta.jaxb.MatchersSchemaType;
-import org.jooq.meta.jaxb.MatchersSequenceType;
-import org.jooq.meta.jaxb.MatchersTableType;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -195,6 +186,22 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return emptyList();
     }
 
+    private final List<MatchersPrimaryKeyType> primaryKeys(Definition definition) {
+        if (definition instanceof UniqueKeyDefinition u)
+            if (u.isPrimaryKey())
+                return matchers.getPrimaryKeys();
+
+        return emptyList();
+    }
+
+    private final List<MatchersUniqueKeyType> uniqueKeys(Definition definition) {
+        if (definition instanceof UniqueKeyDefinition u)
+            if (!u.isPrimaryKey())
+                return matchers.getUniqueKeys();
+
+        return emptyList();
+    }
+
     private final List<MatchersForeignKeyType> foreignKeys(Definition definition) {
         if (definition instanceof ForeignKeyDefinition)
             return matchers.getForeignKeys();
@@ -287,6 +294,30 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return result;
         }
 
+        for (MatchersPrimaryKeyType primaryKey : primaryKeys(definition)) {
+            String result = match(definition, primaryKey.getExpression(), primaryKey.getKeyIdentifier());
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersUniqueKeyType uniqueKey : uniqueKeys(definition)) {
+            String result = match(definition, uniqueKey.getExpression(), uniqueKey.getKeyIdentifier());
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersForeignKeyType foreignKey : foreignKeys(definition)) {
+            String result = match(definition, foreignKey.getExpression(), foreignKey.getKeyIdentifier());
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersForeignKeyType foreignKey : inverseForeignKeys(definition)) {
+            String result = match(definition, foreignKey.getExpression(), foreignKey.getKeyIdentifier());
+            if (result != null)
+                return result;
+        }
+
         // Default to standard behaviour
         return super.getJavaIdentifier(definition);
     }
@@ -325,21 +356,21 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         }
 
         for (MatchersForeignKeyType foreignKeys : foreignKeys(definition)) {
-            String result = match(definition, foreignKeys.getExpression(), foreignKeys.getMethodName());
+            String result = match(definition, foreignKeys.getExpression(), foreignKeys.getPathMethodName());
 
             if (result != null)
                 return result;
         }
 
         for (MatchersForeignKeyType inverseForeignKeys : inverseForeignKeys(definition)) {
-            String result = match(definition, inverseForeignKeys.getExpression(), inverseForeignKeys.getMethodNameInverse());
+            String result = match(definition, inverseForeignKeys.getExpression(), inverseForeignKeys.getPathMethodNameInverse());
 
             if (result != null)
                 return result;
         }
 
         for (MatchersForeignKeyType manyToManyKeys : manyToManyKeys(definition)) {
-            String result = match(definition, manyToManyKeys.getExpression(), manyToManyKeys.getMethodNameManyToMany());
+            String result = match(definition, manyToManyKeys.getExpression(), manyToManyKeys.getPathMethodNameManyToMany());
 
             if (result != null)
                 return result;

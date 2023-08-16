@@ -102,6 +102,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MatchersPrimaryKeyType }
+     * 
+     */
+    public MatchersPrimaryKeyType createMatchersPrimaryKeyType() {
+        return new MatchersPrimaryKeyType();
+    }
+
+    /**
+     * Create an instance of {@link MatchersUniqueKeyType }
+     * 
+     */
+    public MatchersUniqueKeyType createMatchersUniqueKeyType() {
+        return new MatchersUniqueKeyType();
+    }
+
+    /**
      * Create an instance of {@link MatchersForeignKeyType }
      * 
      */

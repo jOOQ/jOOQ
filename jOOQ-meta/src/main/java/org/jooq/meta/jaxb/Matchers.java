@@ -25,6 +25,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
     "catalogs",
     "schemas",
     "tables",
+    "primaryKeys",
+    "uniqueKeys",
     "foreignKeys",
     "fields",
     "routines",
@@ -48,6 +50,12 @@ public class Matchers implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "tables")
     @XmlElement(name = "table")
     protected List<MatchersTableType> tables;
+    @XmlElementWrapper(name = "primaryKeys")
+    @XmlElement(name = "table")
+    protected List<MatchersPrimaryKeyType> primaryKeys;
+    @XmlElementWrapper(name = "uniqueKeys")
+    @XmlElement(name = "table")
+    protected List<MatchersUniqueKeyType> uniqueKeys;
     @XmlElementWrapper(name = "foreignKeys")
     @XmlElement(name = "table")
     protected List<MatchersForeignKeyType> foreignKeys;
@@ -98,6 +106,28 @@ public class Matchers implements Serializable, XMLAppendable
 
     public void setTables(List<MatchersTableType> tables) {
         this.tables = tables;
+    }
+
+    public List<MatchersPrimaryKeyType> getPrimaryKeys() {
+        if (primaryKeys == null) {
+            primaryKeys = new ArrayList<MatchersPrimaryKeyType>();
+        }
+        return primaryKeys;
+    }
+
+    public void setPrimaryKeys(List<MatchersPrimaryKeyType> primaryKeys) {
+        this.primaryKeys = primaryKeys;
+    }
+
+    public List<MatchersUniqueKeyType> getUniqueKeys() {
+        if (uniqueKeys == null) {
+            uniqueKeys = new ArrayList<MatchersUniqueKeyType>();
+        }
+        return uniqueKeys;
+    }
+
+    public void setUniqueKeys(List<MatchersUniqueKeyType> uniqueKeys) {
+        this.uniqueKeys = uniqueKeys;
     }
 
     public List<MatchersForeignKeyType> getForeignKeys() {
@@ -226,6 +256,48 @@ public class Matchers implements Serializable, XMLAppendable
 
     public Matchers withTables(List<MatchersTableType> tables) {
         setTables(tables);
+        return this;
+    }
+
+    public Matchers withPrimaryKeys(MatchersPrimaryKeyType... values) {
+        if (values!= null) {
+            for (MatchersPrimaryKeyType value: values) {
+                getPrimaryKeys().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Matchers withPrimaryKeys(Collection<MatchersPrimaryKeyType> values) {
+        if (values!= null) {
+            getPrimaryKeys().addAll(values);
+        }
+        return this;
+    }
+
+    public Matchers withPrimaryKeys(List<MatchersPrimaryKeyType> primaryKeys) {
+        setPrimaryKeys(primaryKeys);
+        return this;
+    }
+
+    public Matchers withUniqueKeys(MatchersUniqueKeyType... values) {
+        if (values!= null) {
+            for (MatchersUniqueKeyType value: values) {
+                getUniqueKeys().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Matchers withUniqueKeys(Collection<MatchersUniqueKeyType> values) {
+        if (values!= null) {
+            getUniqueKeys().addAll(values);
+        }
+        return this;
+    }
+
+    public Matchers withUniqueKeys(List<MatchersUniqueKeyType> uniqueKeys) {
+        setUniqueKeys(uniqueKeys);
         return this;
     }
 
@@ -360,6 +432,8 @@ public class Matchers implements Serializable, XMLAppendable
         builder.append("catalogs", "catalog", catalogs);
         builder.append("schemas", "schema", schemas);
         builder.append("tables", "table", tables);
+        builder.append("primaryKeys", "table", primaryKeys);
+        builder.append("uniqueKeys", "table", uniqueKeys);
         builder.append("foreignKeys", "table", foreignKeys);
         builder.append("fields", "field", fields);
         builder.append("routines", "routine", routines);
@@ -411,6 +485,24 @@ public class Matchers implements Serializable, XMLAppendable
             }
         } else {
             if (!tables.equals(other.tables)) {
+                return false;
+            }
+        }
+        if (primaryKeys == null) {
+            if (other.primaryKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!primaryKeys.equals(other.primaryKeys)) {
+                return false;
+            }
+        }
+        if (uniqueKeys == null) {
+            if (other.uniqueKeys!= null) {
+                return false;
+            }
+        } else {
+            if (!uniqueKeys.equals(other.uniqueKeys)) {
                 return false;
             }
         }
@@ -478,6 +570,8 @@ public class Matchers implements Serializable, XMLAppendable
         result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
         result = ((prime*result)+((schemas == null)? 0 :schemas.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((primaryKeys == null)? 0 :primaryKeys.hashCode()));
+        result = ((prime*result)+((uniqueKeys == null)? 0 :uniqueKeys.hashCode()));
         result = ((prime*result)+((foreignKeys == null)? 0 :foreignKeys.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));

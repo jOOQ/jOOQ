@@ -30,9 +30,10 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
     private final static long serialVersionUID = 31900L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;
-    protected MatcherRule methodName;
-    protected MatcherRule methodNameInverse;
-    protected MatcherRule methodNameManyToMany;
+    protected MatcherRule keyIdentifier;
+    protected MatcherRule pathMethodName;
+    protected MatcherRule pathMethodNameInverse;
+    protected MatcherRule pathMethodNameManyToMany;
 
     /**
      * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
@@ -51,51 +52,67 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * This rule influences the naming of the generated to-one path join methods.
+     * This rule influences the naming of the generated key literal in the Keys class.
      * 
      */
-    public MatcherRule getMethodName() {
-        return methodName;
+    public MatcherRule getKeyIdentifier() {
+        return keyIdentifier;
+    }
+
+    /**
+     * This rule influences the naming of the generated key literal in the Keys class.
+     * 
+     */
+    public void setKeyIdentifier(MatcherRule value) {
+        this.keyIdentifier = value;
     }
 
     /**
      * This rule influences the naming of the generated to-one path join methods.
      * 
      */
-    public void setMethodName(MatcherRule value) {
-        this.methodName = value;
+    public MatcherRule getPathMethodName() {
+        return pathMethodName;
+    }
+
+    /**
+     * This rule influences the naming of the generated to-one path join methods.
+     * 
+     */
+    public void setPathMethodName(MatcherRule value) {
+        this.pathMethodName = value;
     }
 
     /**
      * This rule influences the naming of the generated to-many path join methods.
      * 
      */
-    public MatcherRule getMethodNameInverse() {
-        return methodNameInverse;
+    public MatcherRule getPathMethodNameInverse() {
+        return pathMethodNameInverse;
     }
 
     /**
      * This rule influences the naming of the generated to-many path join methods.
      * 
      */
-    public void setMethodNameInverse(MatcherRule value) {
-        this.methodNameInverse = value;
+    public void setPathMethodNameInverse(MatcherRule value) {
+        this.pathMethodNameInverse = value;
     }
 
     /**
      * This rule influences the naming of the generated many-to-many path join methods.
      * 
      */
-    public MatcherRule getMethodNameManyToMany() {
-        return methodNameManyToMany;
+    public MatcherRule getPathMethodNameManyToMany() {
+        return pathMethodNameManyToMany;
     }
 
     /**
      * This rule influences the naming of the generated many-to-many path join methods.
      * 
      */
-    public void setMethodNameManyToMany(MatcherRule value) {
-        this.methodNameManyToMany = value;
+    public void setPathMethodNameManyToMany(MatcherRule value) {
+        this.pathMethodNameManyToMany = value;
     }
 
     /**
@@ -108,11 +125,20 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
     }
 
     /**
+     * This rule influences the naming of the generated key literal in the Keys class.
+     * 
+     */
+    public MatchersForeignKeyType withKeyIdentifier(MatcherRule value) {
+        setKeyIdentifier(value);
+        return this;
+    }
+
+    /**
      * This rule influences the naming of the generated to-one path join methods.
      * 
      */
-    public MatchersForeignKeyType withMethodName(MatcherRule value) {
-        setMethodName(value);
+    public MatchersForeignKeyType withPathMethodName(MatcherRule value) {
+        setPathMethodName(value);
         return this;
     }
 
@@ -120,8 +146,8 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
      * This rule influences the naming of the generated to-many path join methods.
      * 
      */
-    public MatchersForeignKeyType withMethodNameInverse(MatcherRule value) {
-        setMethodNameInverse(value);
+    public MatchersForeignKeyType withPathMethodNameInverse(MatcherRule value) {
+        setPathMethodNameInverse(value);
         return this;
     }
 
@@ -129,17 +155,18 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
      * This rule influences the naming of the generated many-to-many path join methods.
      * 
      */
-    public MatchersForeignKeyType withMethodNameManyToMany(MatcherRule value) {
-        setMethodNameManyToMany(value);
+    public MatchersForeignKeyType withPathMethodNameManyToMany(MatcherRule value) {
+        setPathMethodNameManyToMany(value);
         return this;
     }
 
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("expression", expression);
-        builder.append("methodName", methodName);
-        builder.append("methodNameInverse", methodNameInverse);
-        builder.append("methodNameManyToMany", methodNameManyToMany);
+        builder.append("keyIdentifier", keyIdentifier);
+        builder.append("pathMethodName", pathMethodName);
+        builder.append("pathMethodNameInverse", pathMethodNameInverse);
+        builder.append("pathMethodNameManyToMany", pathMethodNameManyToMany);
     }
 
     @Override
@@ -170,30 +197,39 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (methodName == null) {
-            if (other.methodName!= null) {
+        if (keyIdentifier == null) {
+            if (other.keyIdentifier!= null) {
                 return false;
             }
         } else {
-            if (!methodName.equals(other.methodName)) {
+            if (!keyIdentifier.equals(other.keyIdentifier)) {
                 return false;
             }
         }
-        if (methodNameInverse == null) {
-            if (other.methodNameInverse!= null) {
+        if (pathMethodName == null) {
+            if (other.pathMethodName!= null) {
                 return false;
             }
         } else {
-            if (!methodNameInverse.equals(other.methodNameInverse)) {
+            if (!pathMethodName.equals(other.pathMethodName)) {
                 return false;
             }
         }
-        if (methodNameManyToMany == null) {
-            if (other.methodNameManyToMany!= null) {
+        if (pathMethodNameInverse == null) {
+            if (other.pathMethodNameInverse!= null) {
                 return false;
             }
         } else {
-            if (!methodNameManyToMany.equals(other.methodNameManyToMany)) {
+            if (!pathMethodNameInverse.equals(other.pathMethodNameInverse)) {
+                return false;
+            }
+        }
+        if (pathMethodNameManyToMany == null) {
+            if (other.pathMethodNameManyToMany!= null) {
+                return false;
+            }
+        } else {
+            if (!pathMethodNameManyToMany.equals(other.pathMethodNameManyToMany)) {
                 return false;
             }
         }
@@ -205,9 +241,10 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
         final int prime = 31;
         int result = 1;
         result = ((prime*result)+((expression == null)? 0 :expression.hashCode()));
-        result = ((prime*result)+((methodName == null)? 0 :methodName.hashCode()));
-        result = ((prime*result)+((methodNameInverse == null)? 0 :methodNameInverse.hashCode()));
-        result = ((prime*result)+((methodNameManyToMany == null)? 0 :methodNameManyToMany.hashCode()));
+        result = ((prime*result)+((keyIdentifier == null)? 0 :keyIdentifier.hashCode()));
+        result = ((prime*result)+((pathMethodName == null)? 0 :pathMethodName.hashCode()));
+        result = ((prime*result)+((pathMethodNameInverse == null)? 0 :pathMethodNameInverse.hashCode()));
+        result = ((prime*result)+((pathMethodNameManyToMany == null)? 0 :pathMethodNameManyToMany.hashCode()));
         return result;
     }
 

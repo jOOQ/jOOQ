@@ -183,6 +183,14 @@
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for table names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="primaryKeys" type="tns:MatchersPrimaryKeysType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for primary key names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="uniqueKeys" type="tns:MatchersUniqueKeysType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for unique key names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="foreignKeys" type="tns:MatchersForeignKeysType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for foreign key names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -378,10 +386,48 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
     </all>
   </complexType>
 
+  <complexType name="MatchersPrimaryKeysType">
+    <sequence>
+      <element name="table" type="tns:MatchersPrimaryKeyType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MatchersUniqueKeysType">
+    <sequence>
+      <element name="table" type="tns:MatchersUniqueKeyType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
   <complexType name="MatchersForeignKeysType">
     <sequence>
       <element name="table" type="tns:MatchersForeignKeyType" minOccurs="1" maxOccurs="unbounded"/>
     </sequence>
+  </complexType>
+
+  <complexType name="MatchersPrimaryKeyType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for primary key names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="keyIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated key literal in the Keys class.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="MatchersUniqueKeyType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for foreign key names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="keyIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated key literal in the Keys class.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
   </complexType>
 
   <complexType name="MatchersForeignKeyType">
@@ -390,16 +436,20 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
       <element name="expression" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="keyIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated key literal in the Keys class.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
-      <element name="methodName" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+      <element name="pathMethodName" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated to-one path join methods.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="methodNameInverse" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+      <element name="pathMethodNameInverse" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated to-many path join methods.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="methodNameManyToMany" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+      <element name="pathMethodNameManyToMany" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated many-to-many path join methods.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>

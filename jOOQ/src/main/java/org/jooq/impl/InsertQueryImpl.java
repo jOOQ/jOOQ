@@ -300,6 +300,14 @@ implements
         updateMap.set(map);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final void setRecordForUpdate(R record) {
+        for (int i = 0; i < record.size(); i++)
+            if (record.changed(i))
+                addValueForUpdate((Field) record.field(i), record.get(i));
+    }
+
     @Override
     public final void addConditions(Condition conditions) {
         updateWhere.addConditions(conditions);

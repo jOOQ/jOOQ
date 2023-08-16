@@ -105,10 +105,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
     void newRecord();
 
     /**
-     * Short for calling <code>
-     * newRecord();
-     * setRecord(record);
-     * </code>
+     * Short for calling {@link #newRecord()} and {@link #setRecord(Record)}.
      *
      * @param record The record to add to this insert statement.
      */
@@ -258,6 +255,17 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void addValuesForUpdate(Map<?, ?> map);
+
+    /**
+     * Add multiple values to the <code>ON DUPLICATE KEY UPDATE</code> clause of
+     * this <code>INSERT</code> statement, where this is supported.
+     * <p>
+     * This works like {@link #setRecord(Record)}.
+     *
+     * @param record The record to add to this insert statement.
+     */
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    void setRecordForUpdate(R record);
 
     /**
      * Adds a new condition the {@link #onConflict(Field...)} clause.

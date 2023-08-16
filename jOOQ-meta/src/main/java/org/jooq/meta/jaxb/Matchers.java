@@ -25,6 +25,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
     "catalogs",
     "schemas",
     "tables",
+    "indexes",
     "primaryKeys",
     "uniqueKeys",
     "foreignKeys",
@@ -50,14 +51,17 @@ public class Matchers implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "tables")
     @XmlElement(name = "table")
     protected List<MatchersTableType> tables;
+    @XmlElementWrapper(name = "indexes")
+    @XmlElement(name = "index")
+    protected List<MatchersIndexType> indexes;
     @XmlElementWrapper(name = "primaryKeys")
-    @XmlElement(name = "table")
+    @XmlElement(name = "primaryKey")
     protected List<MatchersPrimaryKeyType> primaryKeys;
     @XmlElementWrapper(name = "uniqueKeys")
-    @XmlElement(name = "table")
+    @XmlElement(name = "uniqueKey")
     protected List<MatchersUniqueKeyType> uniqueKeys;
     @XmlElementWrapper(name = "foreignKeys")
-    @XmlElement(name = "table")
+    @XmlElement(name = "foreignKey")
     protected List<MatchersForeignKeyType> foreignKeys;
     @XmlElementWrapper(name = "fields")
     @XmlElement(name = "field")
@@ -106,6 +110,17 @@ public class Matchers implements Serializable, XMLAppendable
 
     public void setTables(List<MatchersTableType> tables) {
         this.tables = tables;
+    }
+
+    public List<MatchersIndexType> getIndexes() {
+        if (indexes == null) {
+            indexes = new ArrayList<MatchersIndexType>();
+        }
+        return indexes;
+    }
+
+    public void setIndexes(List<MatchersIndexType> indexes) {
+        this.indexes = indexes;
     }
 
     public List<MatchersPrimaryKeyType> getPrimaryKeys() {
@@ -256,6 +271,27 @@ public class Matchers implements Serializable, XMLAppendable
 
     public Matchers withTables(List<MatchersTableType> tables) {
         setTables(tables);
+        return this;
+    }
+
+    public Matchers withIndexes(MatchersIndexType... values) {
+        if (values!= null) {
+            for (MatchersIndexType value: values) {
+                getIndexes().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Matchers withIndexes(Collection<MatchersIndexType> values) {
+        if (values!= null) {
+            getIndexes().addAll(values);
+        }
+        return this;
+    }
+
+    public Matchers withIndexes(List<MatchersIndexType> indexes) {
+        setIndexes(indexes);
         return this;
     }
 
@@ -432,9 +468,10 @@ public class Matchers implements Serializable, XMLAppendable
         builder.append("catalogs", "catalog", catalogs);
         builder.append("schemas", "schema", schemas);
         builder.append("tables", "table", tables);
-        builder.append("primaryKeys", "table", primaryKeys);
-        builder.append("uniqueKeys", "table", uniqueKeys);
-        builder.append("foreignKeys", "table", foreignKeys);
+        builder.append("indexes", "index", indexes);
+        builder.append("primaryKeys", "primaryKey", primaryKeys);
+        builder.append("uniqueKeys", "uniqueKey", uniqueKeys);
+        builder.append("foreignKeys", "foreignKey", foreignKeys);
         builder.append("fields", "field", fields);
         builder.append("routines", "routine", routines);
         builder.append("sequences", "sequence", sequences);
@@ -485,6 +522,15 @@ public class Matchers implements Serializable, XMLAppendable
             }
         } else {
             if (!tables.equals(other.tables)) {
+                return false;
+            }
+        }
+        if (indexes == null) {
+            if (other.indexes!= null) {
+                return false;
+            }
+        } else {
+            if (!indexes.equals(other.indexes)) {
                 return false;
             }
         }
@@ -570,6 +616,7 @@ public class Matchers implements Serializable, XMLAppendable
         result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
         result = ((prime*result)+((schemas == null)? 0 :schemas.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
+        result = ((prime*result)+((indexes == null)? 0 :indexes.hashCode()));
         result = ((prime*result)+((primaryKeys == null)? 0 :primaryKeys.hashCode()));
         result = ((prime*result)+((uniqueKeys == null)? 0 :uniqueKeys.hashCode()));
         result = ((prime*result)+((foreignKeys == null)? 0 :foreignKeys.hashCode()));

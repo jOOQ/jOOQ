@@ -94,6 +94,28 @@ fun MutableList<MatchersTableType>.table(block: MatchersTableType.() -> Unit) {
     add(e)
 }
 
+fun Matchers.primaryKeys(block: MutableList<MatchersPrimaryKeyType>.() -> Unit) {
+    block(primaryKeys)
+}
+
+@JvmName("mutableListMatchersPrimaryKeyType")
+fun MutableList<MatchersPrimaryKeyType>.primaryKey(block: MatchersPrimaryKeyType.() -> Unit) {
+    val e = MatchersPrimaryKeyType()
+    block(e)
+    add(e)
+}
+
+fun Matchers.uniqueKeys(block: MutableList<MatchersUniqueKeyType>.() -> Unit) {
+    block(uniqueKeys)
+}
+
+@JvmName("mutableListMatchersUniqueKeyType")
+fun MutableList<MatchersUniqueKeyType>.uniqueKey(block: MatchersUniqueKeyType.() -> Unit) {
+    val e = MatchersUniqueKeyType()
+    block(e)
+    add(e)
+}
+
 fun Matchers.foreignKeys(block: MutableList<MatchersForeignKeyType>.() -> Unit) {
     block(foreignKeys)
 }

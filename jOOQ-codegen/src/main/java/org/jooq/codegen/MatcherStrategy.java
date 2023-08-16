@@ -52,6 +52,7 @@ import org.jooq.meta.Definition;
 import org.jooq.meta.EmbeddableDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
+import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.InverseForeignKeyDefinition;
 import org.jooq.meta.ManyToManyKeyDefinition;
 import org.jooq.meta.Patterns;
@@ -186,6 +187,13 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return emptyList();
     }
 
+    private final List<MatchersIndexType> indexes(Definition definition) {
+        if (definition instanceof IndexDefinition)
+            return matchers.getIndexes();
+
+        return emptyList();
+    }
+
     private final List<MatchersPrimaryKeyType> primaryKeys(Definition definition) {
         if (definition instanceof UniqueKeyDefinition u)
             if (u.isPrimaryKey())
@@ -290,6 +298,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
         for (MatchersSequenceType sequences : sequences(definition)) {
             String result = match(definition, sequences.getExpression(), sequences.getSequenceIdentifier());
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersIndexType index : indexes(definition)) {
+            String result = match(definition, index.getExpression(), index.getKeyIdentifier());
             if (result != null)
                 return result;
         }

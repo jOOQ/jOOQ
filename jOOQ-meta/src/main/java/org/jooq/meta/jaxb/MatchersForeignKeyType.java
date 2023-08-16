@@ -36,7 +36,7 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
     protected MatcherRule pathMethodNameManyToMany;
 
     /**
-     * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
+     * This table matcher applies to all unqualified or qualified foreign key names matched by this expression. If left empty, this matcher applies to all foreign keys.
      * 
      */
     public String getExpression() {
@@ -44,7 +44,7 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
+     * This table matcher applies to all unqualified or qualified foreign key names matched by this expression. If left empty, this matcher applies to all foreign keys.
      * 
      */
     public void setExpression(String value) {
@@ -116,7 +116,7 @@ public class MatchersForeignKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
+     * This table matcher applies to all unqualified or qualified foreign key names matched by this expression. If left empty, this matcher applies to all foreign keys.
      * 
      */
     public MatchersForeignKeyType withExpression(String value) {

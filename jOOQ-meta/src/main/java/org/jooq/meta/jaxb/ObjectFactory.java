@@ -102,6 +102,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MatchersIndexType }
+     * 
+     */
+    public MatchersIndexType createMatchersIndexType() {
+        return new MatchersIndexType();
+    }
+
+    /**
      * Create an instance of {@link MatchersPrimaryKeyType }
      * 
      */

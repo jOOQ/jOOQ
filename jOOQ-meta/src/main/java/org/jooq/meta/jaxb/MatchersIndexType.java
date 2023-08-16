@@ -12,19 +12,19 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
- * Declarative naming strategy configuration for foreign key names.
+ * Declarative naming strategy configuration for index names.
  * 
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MatchersUniqueKeyType", propOrder = {
+@XmlType(name = "MatchersIndexType", propOrder = {
 
 })
 @SuppressWarnings({
     "all"
 })
-public class MatchersUniqueKeyType implements Serializable, XMLAppendable
+public class MatchersIndexType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 31900L;
@@ -33,7 +33,7 @@ public class MatchersUniqueKeyType implements Serializable, XMLAppendable
     protected MatcherRule keyIdentifier;
 
     /**
-     * This table matcher applies to all unqualified or qualified unique key names matched by this expression. If left empty, this matcher applies to all unique keys.
+     * This table matcher applies to all unqualified or qualified index names matched by this expression. If left empty, this matcher applies to all indexes.
      * 
      */
     public String getExpression() {
@@ -41,7 +41,7 @@ public class MatchersUniqueKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * This table matcher applies to all unqualified or qualified unique key names matched by this expression. If left empty, this matcher applies to all unique keys.
+     * This table matcher applies to all unqualified or qualified index names matched by this expression. If left empty, this matcher applies to all indexes.
      * 
      */
     public void setExpression(String value) {
@@ -49,7 +49,7 @@ public class MatchersUniqueKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * This rule influences the naming of the generated key literal in the Keys class.
+     * This rule influences the naming of the generated key literal in the Indexes class.
      * 
      */
     public MatcherRule getKeyIdentifier() {
@@ -57,7 +57,7 @@ public class MatchersUniqueKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * This rule influences the naming of the generated key literal in the Keys class.
+     * This rule influences the naming of the generated key literal in the Indexes class.
      * 
      */
     public void setKeyIdentifier(MatcherRule value) {
@@ -65,19 +65,19 @@ public class MatchersUniqueKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * This table matcher applies to all unqualified or qualified unique key names matched by this expression. If left empty, this matcher applies to all unique keys.
+     * This table matcher applies to all unqualified or qualified index names matched by this expression. If left empty, this matcher applies to all indexes.
      * 
      */
-    public MatchersUniqueKeyType withExpression(String value) {
+    public MatchersIndexType withExpression(String value) {
         setExpression(value);
         return this;
     }
 
     /**
-     * This rule influences the naming of the generated key literal in the Keys class.
+     * This rule influences the naming of the generated key literal in the Indexes class.
      * 
      */
-    public MatchersUniqueKeyType withKeyIdentifier(MatcherRule value) {
+    public MatchersIndexType withKeyIdentifier(MatcherRule value) {
         setKeyIdentifier(value);
         return this;
     }
@@ -106,7 +106,7 @@ public class MatchersUniqueKeyType implements Serializable, XMLAppendable
         if (getClass()!= that.getClass()) {
             return false;
         }
-        MatchersUniqueKeyType other = ((MatchersUniqueKeyType) that);
+        MatchersIndexType other = ((MatchersIndexType) that);
         if (expression == null) {
             if (other.expression!= null) {
                 return false;

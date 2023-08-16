@@ -33,7 +33,7 @@ public class MatchersPrimaryKeyType implements Serializable, XMLAppendable
     protected MatcherRule keyIdentifier;
 
     /**
-     * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
+     * This table matcher applies to all unqualified or qualified primary key names matched by this expression. If left empty, this matcher applies to all primary keys.
      * 
      */
     public String getExpression() {
@@ -41,7 +41,7 @@ public class MatchersPrimaryKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
+     * This table matcher applies to all unqualified or qualified primary key names matched by this expression. If left empty, this matcher applies to all primary keys.
      * 
      */
     public void setExpression(String value) {
@@ -65,7 +65,7 @@ public class MatchersPrimaryKeyType implements Serializable, XMLAppendable
     }
 
     /**
-     * This table matcher applies to all unqualified or qualified table names matched by this expression. If left empty, this matcher applies to all tables.
+     * This table matcher applies to all unqualified or qualified primary key names matched by this expression. If left empty, this matcher applies to all primary keys.
      * 
      */
     public MatchersPrimaryKeyType withExpression(String value) {

@@ -81,6 +81,8 @@ public final class JSONFormat {
     String[]                       indented;
     boolean                        header;
     RecordFormat                   recordFormat;
+    NullFormat                     objectNulls;
+    NullFormat                     arrayNulls;
     boolean                        wrapSingleColumnRecords;
     boolean                        quoteNested;
 
@@ -94,6 +96,8 @@ public final class JSONFormat {
             null,
             true,
             RecordFormat.ARRAY,
+            NullFormat.NULL_ON_NULL,
+            NullFormat.NULL_ON_NULL,
             true,
             false
         );
@@ -108,6 +112,8 @@ public final class JSONFormat {
         String[] indented,
         boolean header,
         RecordFormat recordFormat,
+        NullFormat objectNulls,
+        NullFormat arrayNulls,
         boolean wrapSingleColumnRecords,
         boolean quoteNested
     ) {
@@ -124,6 +130,8 @@ public final class JSONFormat {
         };
         this.header = header;
         this.recordFormat = recordFormat;
+        this.objectNulls = objectNulls;
+        this.arrayNulls = arrayNulls;
         this.wrapSingleColumnRecords = wrapSingleColumnRecords;
         this.quoteNested = quoteNested;
     }
@@ -150,6 +158,8 @@ public final class JSONFormat {
                 null,
                 header,
                 recordFormat,
+                objectNulls,
+                arrayNulls,
                 wrapSingleColumnRecords,
                 quoteNested
             );
@@ -176,6 +186,8 @@ public final class JSONFormat {
                 null,
                 header,
                 recordFormat,
+                objectNulls,
+                arrayNulls,
                 wrapSingleColumnRecords,
                 quoteNested
             );
@@ -207,6 +219,8 @@ public final class JSONFormat {
                 indented,
                 header,
                 recordFormat,
+                objectNulls,
+                arrayNulls,
                 wrapSingleColumnRecords,
                 quoteNested
             );
@@ -239,6 +253,8 @@ public final class JSONFormat {
                 null,
                 header,
                 recordFormat,
+                objectNulls,
+                arrayNulls,
                 wrapSingleColumnRecords,
                 quoteNested
             );
@@ -270,6 +286,8 @@ public final class JSONFormat {
                 null,
                 header,
                 recordFormat,
+                objectNulls,
+                arrayNulls,
                 wrapSingleColumnRecords,
                 quoteNested
             );
@@ -317,6 +335,8 @@ public final class JSONFormat {
                 indented,
                 newHeader,
                 recordFormat,
+                objectNulls,
+                arrayNulls,
                 wrapSingleColumnRecords,
                 quoteNested
             );
@@ -350,6 +370,8 @@ public final class JSONFormat {
                 indented,
                 header,
                 newRecordFormat,
+                objectNulls,
+                arrayNulls,
                 wrapSingleColumnRecords,
                 quoteNested
             );
@@ -362,6 +384,78 @@ public final class JSONFormat {
     @NotNull
     public final RecordFormat recordFormat() {
         return recordFormat;
+    }
+
+    /**
+     * The null format to be applied to objects, defaulting to
+     * {@link NullFormat#NULL_ON_NULL}.
+     */
+    @NotNull
+    public final JSONFormat objectNulls(NullFormat newObjectNulls) {
+        if (mutable) {
+            objectNulls = newObjectNulls;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                newObjectNulls,
+                arrayNulls,
+                wrapSingleColumnRecords,
+                quoteNested
+            );
+    }
+
+    /**
+     * The null format to be applied to objects, defaulting to
+     * {@link NullFormat#NULL_ON_NULL}.
+     */
+    @NotNull
+    public final NullFormat objectNulls() {
+        return objectNulls;
+    }
+
+    /**
+     * The null format to be applied to arrays, defaulting to
+     * {@link NullFormat#NULL_ON_NULL}.
+     */
+    @NotNull
+    public final JSONFormat arrayNulls(NullFormat newArrayNulls) {
+        if (mutable) {
+            arrayNulls = newArrayNulls;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                objectNulls,
+                newArrayNulls,
+                wrapSingleColumnRecords,
+                quoteNested
+            );
+    }
+
+    /**
+     * The null format to be applied to arrays, defaulting to
+     * {@link NullFormat#NULL_ON_NULL}.
+     */
+    @NotNull
+    public final NullFormat arrayNulls() {
+        return arrayNulls;
     }
 
     /**
@@ -383,6 +477,8 @@ public final class JSONFormat {
                 indented,
                 header,
                 recordFormat,
+                objectNulls,
+                arrayNulls,
                 newWrapSingleColumnRecords,
                 quoteNested
             );
@@ -415,6 +511,8 @@ public final class JSONFormat {
                 indented,
                 header,
                 recordFormat,
+                objectNulls,
+                arrayNulls,
                 wrapSingleColumnRecords,
                 newQuoteNested
             );
@@ -450,5 +548,24 @@ public final class JSONFormat {
          * names in each record.
          */
         OBJECT,
+    }
+
+    /**
+     * The format of <code>null</code> values in JSON objects or arrays.
+     */
+    public enum NullFormat {
+
+        /**
+         * A <code>null</code> value in source data is represented by an
+         * explicit <code>null</code> value in the JSON object (the key is
+         * present) or array.
+         */
+        NULL_ON_NULL,
+
+        /**
+         * A <code>null</code> value in source data is represented by an absent
+         * value in the JSON object (the key is absent) or array.
+         */
+        ABSENT_ON_NULL,
     }
 }

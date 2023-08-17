@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.stream.Collectors.joining;
+import static org.jooq.JSONFormat.NullFormat.ABSENT_ON_NULL;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.XMLFormat.RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE;
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -71,6 +72,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.jooq.CSVFormat;
 import org.jooq.ChartFormat;
 import org.jooq.ChartFormat.Display;
+import org.jooq.JSONFormat.NullFormat;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Cursor;
@@ -560,6 +562,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             switch (format.recordFormat()) {
                 case ARRAY:
                     for (Record record : this) {
+                        if (record == null && format.arrayNulls() == ABSENT_ON_NULL)
+                            continue;
+
                         hasRecords = true;
                         writer.append(separator);
 
@@ -573,6 +578,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     break;
                 case OBJECT:
                     for (Record record : this) {
+                        if (record == null && format.objectNulls() == ABSENT_ON_NULL)
+                            continue;
+
                         hasRecords = true;
                         writer.append(separator);
 
@@ -628,31 +636,32 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         else if (value instanceof Object[] array) {
             writer.append('[');
 
-            for (int i = 0; i < array.length; i++) {
-                if (i > 0)
+            boolean first = true;
+            for (Object o : array) {
+                if (o == null && format.arrayNulls() == ABSENT_ON_NULL)
+                    continue;
+
+                if (!first)
                     writer.append(',');
 
-                formatJSON0(array[i], writer, format);
+                formatJSON0(o, writer, format);
+                first = false;
             }
 
             writer.append(']');
         }
 
         // [#7782] Nested records should generate nested JSON data structures
-        else if (value instanceof Formattable f) {
+        else if (value instanceof Formattable f)
             f.formatJSON(writer, format);
-        }
 
-        else if (value instanceof JSON && !format.quoteNested()) {
+        // [#10744] TODO: Possibly parse and format JSON and JSONB content as well
+        else if (value instanceof JSON && !format.quoteNested())
             writer.write(((JSON) value).data());
-        }
-        else if (value instanceof JSONB && !format.quoteNested()) {
+        else if (value instanceof JSONB && !format.quoteNested())
             writer.write(((JSONB) value).data());
-        }
-
-        else {
+        else
             JSONValue.writeJSONString(value, writer);
-        }
     }
 
     static final void formatJSONMap0(
@@ -675,6 +684,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             writer.append('{');
 
         for (int index = 0; index < size; index++) {
+            Object value = record.get(index);
+
+            if (value == null && format.objectNulls() == ABSENT_ON_NULL)
+                continue;
+
             writer.append(separator);
 
             if (format.format())
@@ -692,7 +706,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             }
 
             int previous = format.globalIndent();
-            formatJSON0(record.get(index), writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 1)));
+            formatJSON0(value, writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 1)));
             format.globalIndent(previous);
 
             if (format.format() && format.wrapSingleColumnRecords() && size == 1)
@@ -728,6 +742,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             writer.append('[');
 
         for (int index = 0; index < size; index++) {
+            Object value = record.get(index);
+
+            if (value == null && format.arrayNulls() == ABSENT_ON_NULL)
+                continue;
+
             writer.append(separator);
 
             if (format.format())
@@ -737,7 +756,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     writer.append(' ');
 
             int previous = format.globalIndent();
-            formatJSON0(record.get(index), writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 1)));
+            formatJSON0(value, writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 1)));
             format.globalIndent(previous);
 
             if (format.format() && format.wrapSingleColumnRecords() && size == 1)

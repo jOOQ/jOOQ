@@ -53,8 +53,10 @@ import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONEntryImpl.jsonMerge;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DISTINCT;
+import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_CAST;
+import static org.jooq.impl.Names.N_FILTER;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
@@ -187,8 +189,14 @@ implements
                 acceptOverClause(ctx);
                 break;
 
-            case TRINO:
+            case TRINO: {
+                boolean noAggregateFilter = onNull == JSONOnNull.ABSENT_ON_NULL && !supportsFilter(ctx);
+
                 ctx.visit(N_CAST).sql('(');
+
+                if (noAggregateFilter)
+                    ctx.visit(N_FILTER).sql('(');
+
                 ctx.visit(N_ARRAY_AGG).sql('(');
                 acceptDistinct(ctx);
                 ctx.visit(jsonCast(ctx, arguments.get(0)));
@@ -201,9 +209,14 @@ implements
                     acceptFilterClause(ctx);
 
                 acceptOverClause(ctx);
+
+                if (noAggregateFilter)
+                    ctx.sql(", v -> v ").visit(K_IS_NOT_NULL).sql(')');
+
                 ctx.sql(' ').visit(K_AS).sql(' ').visit(JSON);
                 ctx.sql(')');
                 break;
+            }
 
             default:
                 acceptStandard(ctx);

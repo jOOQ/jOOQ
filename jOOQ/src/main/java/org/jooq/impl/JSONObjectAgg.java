@@ -157,7 +157,8 @@ implements
     private final void acceptTrino(Context<?> ctx) {
         ctx.visit(N_CAST).sql('(');
 
-        if (onNull == JSONOnNull.ABSENT_ON_NULL)
+        boolean noAggregateFilter = onNull == JSONOnNull.ABSENT_ON_NULL && !supportsFilter(ctx);
+        if (noAggregateFilter)
             ctx.visit(N_MAP_FILTER).sql('(');
 
         ctx.visit(N_MAP).sql('(');
@@ -166,7 +167,7 @@ implements
         acceptTrinoArrayAgg(ctx, entry.value(), entry.value());
         ctx.sql(')');
 
-        if (onNull == JSONOnNull.ABSENT_ON_NULL)
+        if (noAggregateFilter)
             ctx.sql(", (k, v) -> v ").visit(K_IS_NOT_NULL).sql(')');
 
         ctx.sql(' ').visit(K_AS).sql(' ').visit(JSON);

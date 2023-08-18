@@ -3319,7 +3319,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             int length;
 
             for (length = 0; length < maxLength && (pos + length) < string.length(); length++) {
-                int digit = string.charAt(pos + length) - '0';
+                char c = string.charAt(pos + length);
+
+                // [#11485] Some RDBMS seem to prepend + to large years, e.g. +10000-01-01
+                if (c == '+' && length == 0)
+                    continue;
+
+                int digit = c - '0';
 
                 if (digit >= 0 && digit < 10)
                     result = result * 10 + digit;

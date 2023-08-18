@@ -157,10 +157,17 @@ public class DataAccessException extends RuntimeException {
 
         if (e.getSQLState() != null)
             return SQLStateClass.fromCode(e.getSQLState());
-        else if (e.getSQLState() == null && "org.sqlite.SQLiteException".equals(e.getClass().getName()))
+        else if (e.getSQLState() == null && causePrefix(e, "org.sqlite"))
             return SQLStateClass.fromSQLiteVendorCode(e.getErrorCode());
+        else if (e.getSQLState() == null && causePrefix(e, "io.trino"))
+            return SQLStateClass.fromTrinoVendorCode(e.getErrorCode());
         else
             return SQLStateClass.NONE;
+    }
+
+    private static final boolean causePrefix(SQLException e, String prefix) {
+        return e.getClass().getName().startsWith(prefix)
+            || e.getCause() != null && e.getCause().getClass().getName().startsWith(prefix);
     }
 
     /**

@@ -201,6 +201,20 @@ public enum SQLStateClass {
         return SQLStateClass.OTHER;
     }
 
+    @NotNull
+    static SQLStateClass fromTrinoVendorCode(int errorCode) {
+
+        // See https://github.com/trinodb/trino/blob/master/core/trino-spi/src/main/java/io/trino/spi/StandardErrorCode.java
+        switch (errorCode) {
+            case 1:  return C42_SYNTAX_ERROR_OR_ACCESS_RULE_VIOLATION;
+            case 9:
+            case 19: return C22_DATA_EXCEPTION;
+            case 16: return C23_INTEGRITY_CONSTRAINT_VIOLATION;
+        }
+
+        return SQLStateClass.OTHER;
+    }
+
 
 
 

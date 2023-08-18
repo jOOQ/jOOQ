@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -242,7 +243,7 @@ final class JSONReader<R extends Record> {
         return result;
     }
 
-    private static final Set<SQLDialect> ENCODE_BINARY_AS_HEX  = SQLDialect.supportedBy(H2, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> ENCODE_BINARY_AS_HEX  = SQLDialect.supportedBy(H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     private static final Set<SQLDialect> ENCODE_BINARY_AS_TEXT = SQLDialect.supportedBy(MARIADB);
 
     private static final List<Object> patchRecord(DSLContext ctx, boolean multiset, Fields result, List<Object> record) {

@@ -64,6 +64,7 @@ import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_RAWTOHEX;
+import static org.jooq.impl.Names.N_TO_HEX;
 import static org.jooq.impl.Names.N_TO_VARIANT;
 import static org.jooq.impl.SQLDataType.BIT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
@@ -307,6 +308,8 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                 )
                     return field.cast(VARCHAR);
 
+                else if (type.isBinary())
+                    return function(N_TO_HEX, VARCHAR, field);
                 else
                     return field;
         }

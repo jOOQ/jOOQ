@@ -180,6 +180,7 @@ final class Names {
     static final Name N_LOGICAL_AND                 = systemName("logical_and");
     static final Name N_LOGICAL_OR                  = systemName("logical_or");
     static final Name N_MAP                         = systemName("map");
+    static final Name N_MAP_FILTER                  = systemName("map_filter");
     static final Name N_MAP_FROM_ENTRIES            = systemName("map_from_entries");
     static final Name N_MAXVALUE                    = systemName("maxvalue");
     static final Name N_MID                         = systemName("mid");

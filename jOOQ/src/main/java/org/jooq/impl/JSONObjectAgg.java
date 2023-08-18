@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_FIELD;
@@ -55,6 +56,7 @@ import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_MAP;
+import static org.jooq.impl.Names.N_MAP_FILTER;
 import static org.jooq.impl.Names.N_OBJECT_AGG;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
@@ -154,12 +156,20 @@ implements
 
     private final void acceptTrino(Context<?> ctx) {
         ctx.visit(N_CAST).sql('(');
+
+        if (onNull == JSONOnNull.ABSENT_ON_NULL)
+            ctx.visit(N_MAP_FILTER).sql('(');
+
         ctx.visit(N_MAP).sql('(');
         acceptTrinoArrayAgg(ctx, entry.key(), entry.value());
         ctx.sql(", ");
         acceptTrinoArrayAgg(ctx, entry.value(), entry.value());
-        ctx.sql(") ");
-        ctx.visit(K_AS).sql(' ').visit(JSON);
+        ctx.sql(')');
+
+        if (onNull == JSONOnNull.ABSENT_ON_NULL)
+            ctx.sql(", (k, v) -> v ").visit(K_IS_NOT_NULL).sql(')');
+
+        ctx.sql(' ').visit(K_AS).sql(' ').visit(JSON);
         ctx.sql(')');
     }
 

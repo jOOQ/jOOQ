@@ -299,11 +299,12 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             case TRINO:
 
                 // [#11485] CHAR types can't be cast to JSON: https://trino.io/docs/current/functions/json.html#cast-to-json
-                if (type.getSQLDataType() == SQLDataType.CHAR)
-                    return field.cast(VARCHAR);
-
                 // [#11485] UUID types neither: https://github.com/trinodb/trino/issues/16579
-                else if (type.isUUID())
+                // [#11485] No temporal types except TIMESTAMP can be cast to JSON: https://github.com/trinodb/trino/issues/18733
+                if (type.getSQLDataType() == SQLDataType.CHAR ||
+                    type.isUUID() ||
+                    type.isTemporal() && !type.isTimestamp()
+                )
                     return field.cast(VARCHAR);
 
                 else

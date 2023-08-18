@@ -3556,6 +3556,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (ctx.family()) {
                 // [#5895] HSQLDB derives the specific data type from the literal
                 case HSQLDB:
+                case TRINO:
                     ctx.render().visit(K_TIME).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
                     break;
 

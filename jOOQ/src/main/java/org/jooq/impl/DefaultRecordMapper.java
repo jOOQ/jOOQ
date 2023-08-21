@@ -59,6 +59,7 @@ import static org.jooq.impl.Tools.row0;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.beans.ConstructorProperties;
+import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
@@ -711,55 +712,15 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class ProxyMapper extends AbstractDelegateMapper<R, E> {
 
-        private Constructor<Lookup>     constructor;
         private final MutablePOJOMapper pojomapper;
 
         ProxyMapper() {
-            this.pojomapper = new MutablePOJOMapper(() -> proxy(), null);
+            this.pojomapper = new MutablePOJOMapper(() -> Reflect.on(new HashMap<>()).as(type), null);
         }
 
         @Override
         public final E map(R record) {
             return pojomapper.map(record);
-        }
-
-        private E proxy() {
-            final Object[] result = new Object[1];
-            final Map<String, Object> map = new HashMap<>();
-            final InvocationHandler handler = (proxy, method, args) -> {
-                String name = method.getName();
-
-                int length = (args == null ? 0 : args.length);
-
-                if (length == 0 && name.startsWith("get"))
-                    return map.get(name.substring(3));
-                else if (length == 0 && name.startsWith("is"))
-                    return map.get(name.substring(2));
-                else if (length == 1 && name.startsWith("set"))
-                    map.put(name.substring(3), args[0]);
-
-                // [#5442] Default methods should be invoked to run client implementation
-                else if (method.isDefault())
-                    try {
-                        if (constructor == null)
-                            constructor = accessible(Lookup.class.getDeclaredConstructor(Class.class, int.class));
-
-                        Class<?> declaringClass = method.getDeclaringClass();
-                        return constructor
-                            .newInstance(declaringClass, Lookup.PRIVATE)
-                            .unreflectSpecial(method, declaringClass)
-                            .bindTo(result[0])
-                            .invokeWithArguments(args);
-                    }
-                    catch (Throwable e) {
-                        throw new MappingException("Cannot invoke default method", e);
-                    }
-
-                return null;
-            };
-
-            result[0] = Proxy.newProxyInstance(type.getClassLoader(), new Class[] { type }, handler);
-            return (E) result[0];
         }
     }
 

@@ -95,8 +95,8 @@ import java.util.regex.Pattern;
 
 // ...
 import org.jooq.Converter;
-import org.jooq.ConverterProvider;
 import org.jooq.ConverterContext;
+import org.jooq.ConverterProvider;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
@@ -1613,6 +1613,11 @@ final class Convert {
     }
 
     static final String patchIso8601Timestamp(String string, boolean t) {
+
+        // [#11485] Trino produces a non-ISO 8601 "UTC" suffix, instead of "Z"
+        if (string.endsWith(" UTC"))
+            string = string.replace(" UTC", "Z");
+
         if (string.length() > 11)
             if (t && string.charAt(10) == ' ')
                 return string.substring(0, 10) + "T" + string.substring(11);

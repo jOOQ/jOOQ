@@ -89,12 +89,10 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import jakarta.xml.bind.JAXB;
-
 // ...
 import org.jooq.Converter;
-import org.jooq.ConverterProvider;
 import org.jooq.ConverterContext;
+import org.jooq.ConverterProvider;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -105,13 +103,10 @@ import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.ContextConverter;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.AbstractContextConverter;
 import org.jooq.impl.IdentityConverter;
-import org.jooq.impl.Internal;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.reflect.Reflect;
@@ -124,6 +119,8 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 import org.jooq.util.xml.jaxb.InformationSchema;
+
+import jakarta.xml.bind.JAXB;
 
 /**
  * Utility methods for type conversions
@@ -1337,6 +1334,11 @@ public final class Convert {
         }
 
         private static final String patchIso8601Timestamp(String string, boolean t) {
+
+            // [#11485] Trino produces a non-ISO 8601 "UTC" suffix, instead of "Z"
+            if (string.endsWith(" UTC"))
+                string = string.replace(" UTC", "Z");
+
             if (string.length() > 11)
                 if (t && string.charAt(10) == ' ')
                     return string.substring(0, 10) + "T" + string.substring(11);

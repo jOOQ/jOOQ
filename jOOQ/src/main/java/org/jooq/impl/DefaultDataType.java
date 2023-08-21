@@ -97,6 +97,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // ...
@@ -142,19 +143,25 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(HSQLDB, MARIADB);
     private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION  = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
     private static final Set<SQLDialect>                        SUPPORT_POSTGRES_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION   = SQLDialect.supportedBy(H2, HSQLDB);
+    private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION   = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>                        SUPPORT_TRINO_ARRAY_NOTATION    = SQLDialect.supportedBy(TRINO);
 
     /**
      * A pattern for data type name normalisation.
      */
-    private static final Pattern                                NORMALISE_PATTERN = Pattern.compile("\"|\\.|\\s|\\(\\w+(\\s*,\\s*\\w+)*\\)|(NOT\\s*NULL)?");
+    private static final Pattern                                P_NORMALISE                     = Pattern.compile("\"|\\.|\\s|\\(\\w+(\\s*,\\s*\\w+)*\\)|(NOT\\s*NULL)?");
 
     /**
      * A pattern to be used to replace all precision, scale, and length
      * information.
      */
-    private static final Pattern                                TYPE_NAME_PATTERN = Pattern.compile("\\([^)]*\\)");
+    private static final Pattern                                P_TYPE_NAME                     = Pattern.compile("\\([^)]*\\)");
+
+    /**
+     * A pattern to be used to extract all precision, scale, and length
+     * information.
+     */
+    private static final Pattern                                P_PRECISION_SCALE               = Pattern.compile("\\(\\s*(\\d+)(?:\\s*,\\s*(\\d+))?\\s*\\)");
 
     // -------------------------------------------------------------------------
     // Data type caches
@@ -357,10 +364,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         // [#858] [#11086] SQLDataTypes should reference themselves for more convenience
         this.sqlDataType = (dialect == null && sqlDataType == null) ? this : sqlDataType;
         this.uType = type;
-        this.typeName = TYPE_NAME_PATTERN.matcher(typeName).replaceAll("").trim();
+        this.typeName = P_TYPE_NAME.matcher(typeName).replaceAll("").trim();
         this.castTypeName = castTypeName == null ? this.typeName : castTypeName;
 
-        String[] split = TYPE_NAME_PATTERN.split(castTypeName == null ? typeName : castTypeName);
+        String[] split = P_TYPE_NAME.split(castTypeName == null ? typeName : castTypeName);
         this.castTypePrefix = split.length > 0 ? split[0] : "";
         this.castTypeSuffix = split.length > 1 ? split[1] : "";
 
@@ -674,9 +681,15 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         if (result == null) {
             result = TYPES_BY_NAME[ordinal].get(normalised = DefaultDataType.normalise(typeName));
 
-            // UDT data types and others are registered using DEFAULT
+            // UDT data types and built-in array data types are registered using DEFAULT
             if (result == null) {
                 result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get(normalised);
+
+                // [#13107] [#15476] ArrayDataType of BuiltInDataType are registered eagerly for
+                //                   historic reasons, so if the component data type has length,
+                //                   precision, or scale, we'll ignore the pre-registered data type.
+                boolean arrayCheck = result == null
+                    || result.isArray() && hasLengthPrecisionOrScale(result.getArrayComponentDataType());
 
                 // [#9797] INT = INTEGER alias in case dialect specific information is not available
                 // [#5713] TODO: A more generic type aliasing system would be useful, in general!
@@ -684,27 +697,25 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                     result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get("INTEGER");
 
                 // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
-                else if (result == null && SUPPORT_POSTGRES_ARRAY_NOTATION.contains(dialect) && normalised.charAt(0) == '_')
-                    result = getDataType(dialect, normalised.substring(1)).getArrayDataType();
+                else if (arrayCheck && SUPPORT_POSTGRES_ARRAY_NOTATION.contains(dialect) && typeName.charAt(0) == '_')
+                    result = getDataType(dialect, typeName.substring(1)).getArrayDataType();
+
+                // [#8545] CockroachDB is a little different from PostgreSQL. We're reading crdb_sql_type rather
+                //         than data_type / udt_name from information_schema.columns
+                else if (arrayCheck && SUPPORT_POSTGRES_ARRAY_NOTATION.contains(dialect) && typeName.endsWith("[]"))
+                    result = getDataType(dialect, typeName.substring(0, typeName.length() - 2)).getArrayDataType();
 
                 // [#6466] HSQLDB reports array types as XYZARRAY. H2 should, too
-                else if (result == null && SUPPORT_HSQLDB_ARRAY_NOTATION.contains(dialect) && upper.endsWith(" ARRAY"))
+                else if (arrayCheck && SUPPORT_HSQLDB_ARRAY_NOTATION.contains(dialect) && upper.endsWith(" ARRAY"))
                     result = getDataType(dialect, typeName.substring(0, typeName.length() - 6)).getArrayDataType();
 
                 // [#9609] H2 might still report an untyped array, too
-                else if (result == null && SUPPORT_HSQLDB_ARRAY_NOTATION.contains(dialect) && upper.equals("ARRAY"))
+                else if (arrayCheck && SUPPORT_HSQLDB_ARRAY_NOTATION.contains(dialect) && upper.equals("ARRAY"))
                     result = SQLDataType.OTHER.getArrayDataType();
 
                 // [#11485] Trino lists arrays as array(component_type)
-                else if (result == null && SUPPORT_TRINO_ARRAY_NOTATION.contains(dialect) && upper.startsWith("ARRAY("))
+                else if (arrayCheck && SUPPORT_TRINO_ARRAY_NOTATION.contains(dialect) && upper.startsWith("ARRAY("))
                     result = getDataType(dialect, typeName.substring(6, typeName.length() - 1)).getArrayDataType();
-
-
-
-
-
-
-
 
                 // [#366] Don't log a warning here. The warning is logged when
                 // catching the exception in jOOQ-codegen
@@ -713,7 +724,26 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             }
         }
 
+        // [#11311] [#15476] Support VARCHAR(10) or DECIMAL(20, 10) type names here
+        if (hasLengthPrecisionOrScale(result)) {
+            Matcher m = P_PRECISION_SCALE.matcher(typeName);
+
+            if (m.find()) {
+                String g1 = m.group(1);
+                String g2 = m.group(2);
+
+                int i1 = Integer.parseInt(g1);
+                int i2 = g2 != null ? Integer.parseInt(g2) : 0;
+
+                result = patchPrecisionAndScale(dialect, i1, i2, result);
+            }
+        }
+
         return result;
+    }
+
+    private static final boolean hasLengthPrecisionOrScale(DataType<?> result) {
+        return result.hasLength() || result.hasPrecision();
     }
 
     public static final DataType<?> getDataType(SQLDialect dialect, SQLType sqlType) {
@@ -877,7 +907,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
      * @return The type name without all special characters and white spaces
      */
     public static final String normalise(String typeName) {
-        return NORMALISE_PATTERN.matcher(typeName.toUpperCase()).replaceAll("");
+        return P_NORMALISE.matcher(typeName.toUpperCase()).replaceAll("");
     }
 
     /**
@@ -902,9 +932,29 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             result = DefaultDataType.getDataType(dialect, getNumericClass(p, s));
 
         // [#10809] Use dialect only for lookup, don't report the dialect-specific type
-        if (result.getSQLDataType() != null)
-            result = result.getSQLDataType();
+        // [#15476] Maintain any length, precision, or scale already defined on the type name, e.g. VARCHAR(20)
+        if (result.getSQLDataType() != null) {
+            if (result.lengthDefined())
+                result = result.getSQLDataType().length(result.length());
+            else if (result.scaleDefined())
+                result = result.getSQLDataType().precision(result.precision(), result.scale());
+            else if (result.precisionDefined())
+                result = result.getSQLDataType().precision(result.precision());
+            else
+                result = result.getSQLDataType();
+        }
 
+        // [#15476] Length, precision, or scale may already be defined based on the type name, e.g. VARCHAR(20)
+        if (!result.lengthDefined() && !result.precisionDefined() && !result.scaleDefined() || p > 0 || s > 0)
+            result = patchPrecisionAndScale(dialect, p, s, result);
+
+        if (array)
+            result = result.getArrayDataType();
+
+        return result;
+    }
+
+    private static final DataType<?> patchPrecisionAndScale(SQLDialect dialect, int p, int s, DataType<?> result) {
         if (result.hasPrecision() && result.hasScale())
             result = result.precision(p, s);
 
@@ -920,9 +970,6 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         else if (result.hasLength())
             result = result.length(p);
-
-        if (array)
-            result = result.getArrayDataType();
 
         return result;
     }

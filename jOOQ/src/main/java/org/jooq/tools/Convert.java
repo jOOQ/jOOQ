@@ -942,7 +942,7 @@ public final class Convert {
                 // [#1501] Strings can be converted to java.sql.Date
                 else if (fromClass == String.class && toClass == java.sql.Time.class) {
                     try {
-                        return (U) java.sql.Time.valueOf(patchIso8601Time((String) from));
+                        return (U) java.sql.Time.valueOf(patchFractionalSeconds(patchIso8601Time((String) from)));
                     }
                     catch (IllegalArgumentException e) {
                         return null;
@@ -1294,7 +1294,18 @@ public final class Convert {
             throw fail(from, toClass);
         }
 
+        static final Pattern P_FRACTIONAL_SECONDS = Pattern.compile("^(\\d+:\\d+:\\d+)\\.\\d+$");
+
+        static final String patchFractionalSeconds(String string) {
+
+            // [#15478] java.sql.Time doesn't support them
+            return string.length() > 8
+                 ? P_FRACTIONAL_SECONDS.matcher(string).replaceFirst("$1")
+                 : string;
+        }
+
         private static final String patchIso8601Time(String string) {
+
             // [#12158] Support Db2's 15.30.45 format
             return string.length() == 8
                  ? string.replace('.', ':')

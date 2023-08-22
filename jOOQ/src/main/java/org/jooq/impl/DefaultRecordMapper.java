@@ -79,9 +79,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -866,11 +869,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         Object value = record.get(i, mType);
 
                         // [#3082] [#10910] Try mapping nested collection types
-                        Object list = tryConvertToList(value, mType, method.getGenericParameterTypes()[0]);
+                        Object list = tryConvertToListOrSet(value, mType, method.getGenericParameterTypes()[0]);
                         if (list != null)
                             method.invoke(result, list);
                         else
-                            method.invoke(result, record.get(i, mType));
+                            method.invoke(result, value);
                     }
                 }
 
@@ -932,7 +935,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 Object value = record.get(index, mType);
 
                 // [#3082] [#10910] [#11213] Try mapping nested collection types
-                Object list = tryConvertToList(value, mType, member.getGenericType());
+                Object list = tryConvertToListOrSet(value, mType, member.getGenericType());
                 if (list != null)
                     member.set(result, list);
                 else
@@ -940,13 +943,21 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
-        private final List<?> tryConvertToList(Object value, Class<?> mType, Type genericType) {
-            if (value instanceof Collection && (mType == List.class || mType == ArrayList.class) && genericType instanceof ParameterizedType) {
-                Class<?> componentType = (Class<?>) ((ParameterizedType) genericType).getActualTypeArguments()[0];
-                return Convert.convert((Collection<?>) value, componentType);
+        private final Collection<?> tryConvertToListOrSet(Object value, Class<?> mType, Type genericType) {
+            if (value instanceof Collection<?> c) {
+                if (genericType instanceof ParameterizedType p) {
+                    Class<?> componentType = (Class<?>) p.getActualTypeArguments()[0];
+
+                    if (mType == List.class || mType == ArrayList.class)
+                        return Convert.convert(c, componentType);
+                    else if (mType == Set.class || mType == LinkedHashSet.class)
+                        return new LinkedHashSet<>(Convert.convert(c, componentType));
+                    else if (mType == HashSet.class)
+                        return new HashSet<>(Convert.convert(c, componentType));
+                }
             }
-            else
-                return null;
+
+            return null;
         }
 
         private final void map(Object value, Object result, java.lang.reflect.Field member) throws IllegalAccessException {

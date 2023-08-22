@@ -1264,20 +1264,9 @@ public final class Convert {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                else if (Collection.class.isAssignableFrom(fromClass) && Collection.class.isAssignableFrom(toClass)) {
+                    return copyCollection(fromClass, (Collection<?>) from);
+                }
 
                 // TODO [#2520] When RecordUnmappers are supported, they should also be considered here
 
@@ -1313,6 +1302,26 @@ public final class Convert {
             }
 
             throw fail(from, toClass);
+        }
+
+        @SuppressWarnings("unchecked")
+        private final U copyCollection(Class<?> fromClass, Collection<?> collection) {
+            try {
+                Collection<Object> c;
+
+                if (!toClass.isInterface())
+                    c = (Collection<Object>) toClass.newInstance();
+                else if (Set.class.isAssignableFrom(toClass))
+                    c = new LinkedHashSet<>();
+                else
+                    c = new ArrayList<>();
+
+                c.addAll(collection);
+                return (U) c;
+            }
+            catch (Exception e) {
+                throw new DataTypeException("Cannot convert from " + fromClass + " to " + toClass, e);
+            }
         }
 
         static final Pattern P_FRACTIONAL_SECONDS = Pattern.compile("^(\\d+:\\d+:\\d+)\\.\\d+$");

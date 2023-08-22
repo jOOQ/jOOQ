@@ -2305,7 +2305,7 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate TableRecord classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="recordsImplementingRecordN" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+      <element name="recordsImplementingRecordN" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate TableRecord classes that implement Record[N] super types]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       

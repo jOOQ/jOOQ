@@ -101,7 +101,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateTables                                   = true;
     boolean                            generateEmbeddables                              = true;
     boolean                            generateRecords                                  = true;
-    boolean                            generateRecordsImplementingRecordN               = true;
+    boolean                            generateRecordsImplementingRecordN               = false;
     boolean                            generateEnumsAsScalaSealedTraits                 = false;
     boolean                            generatePojos                                    = false;
     boolean                            generatePojosAsJavaRecordClasses                 = false;

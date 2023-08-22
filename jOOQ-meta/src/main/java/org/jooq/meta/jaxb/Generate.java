@@ -100,8 +100,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean embeddables = true;
     @XmlElement(defaultValue = "true")
     protected Boolean records = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean recordsImplementingRecordN = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean recordsImplementingRecordN = false;
     @XmlElement(defaultValue = "false")
     protected Boolean enumsAsScalaSealedTraits = false;
     @XmlElement(defaultValue = "false")

@@ -47,6 +47,7 @@ import static java.util.Collections.emptyList;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -690,7 +691,7 @@ final class MetaImpl extends AbstractMeta {
                 if (sql != null) {
                     Result<Record> result = meta(meta ->
                         withCatalog(getCatalog(), DSL.using(meta.getConnection(), family()), ctx ->
-                            ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
+                            ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
                         )
                     );
 
@@ -713,6 +714,15 @@ final class MetaImpl extends AbstractMeta {
                 return sourceCache.get(name(MetaSchema.this.getName(), tableName));
             else
                 return null;
+        }
+
+        private final String patchSchema(String sql) {
+
+
+
+
+
+            return sql;
         }
     }
 

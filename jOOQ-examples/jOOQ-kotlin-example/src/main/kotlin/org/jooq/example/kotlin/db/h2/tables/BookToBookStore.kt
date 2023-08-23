@@ -4,8 +4,6 @@
 package org.jooq.example.kotlin.db.h2.tables
 
 
-import java.util.function.Function
-
 import kotlin.collections.Collection
 import kotlin.collections.List
 
@@ -18,12 +16,9 @@ import org.jooq.Path
 import org.jooq.PlainSQL
 import org.jooq.QueryPart
 import org.jooq.Record
-import org.jooq.Records
-import org.jooq.Row3
 import org.jooq.SQL
 import org.jooq.Schema
 import org.jooq.Select
-import org.jooq.SelectField
 import org.jooq.Stringly
 import org.jooq.Table
 import org.jooq.TableField
@@ -226,20 +221,4 @@ open class BookToBookStore(
      * Create an inline derived table from this table
      */
     override fun whereNotExists(select: Select<*>): BookToBookStore = where(DSL.notExists(select))
-
-    // -------------------------------------------------------------------------
-    // Row3 type methods
-    // -------------------------------------------------------------------------
-    override fun fieldsRow(): Row3<String?, Int?, Int?> = super.fieldsRow() as Row3<String?, Int?, Int?>
-
-    /**
-     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
-     */
-    fun <U> mapping(from: (String?, Int?, Int?) -> U): SelectField<U> = convertFrom(Records.mapping(from))
-
-    /**
-     * Convenience mapping calling {@link SelectField#convertFrom(Class,
-     * Function)}.
-     */
-    fun <U> mapping(toType: Class<U>, from: (String?, Int?, Int?) -> U): SelectField<U> = convertFrom(toType, Records.mapping(from))
 }

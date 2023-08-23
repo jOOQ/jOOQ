@@ -5,7 +5,6 @@ package org.jooq.example.kotlin.db.h2.tables
 
 
 import java.time.LocalDateTime
-import java.util.function.Function
 
 import kotlin.collections.Collection
 import kotlin.collections.List
@@ -20,12 +19,9 @@ import org.jooq.Path
 import org.jooq.PlainSQL
 import org.jooq.QueryPart
 import org.jooq.Record
-import org.jooq.Records
-import org.jooq.Row11
 import org.jooq.SQL
 import org.jooq.Schema
 import org.jooq.Select
-import org.jooq.SelectField
 import org.jooq.Stringly
 import org.jooq.Table
 import org.jooq.TableField
@@ -296,20 +292,4 @@ open class Book(
      * Create an inline derived table from this table
      */
     override fun whereNotExists(select: Select<*>): Book = where(DSL.notExists(select))
-
-    // -------------------------------------------------------------------------
-    // Row11 type methods
-    // -------------------------------------------------------------------------
-    override fun fieldsRow(): Row11<Int?, Int?, Int?, Int?, String?, Int?, Int?, String?, ByteArray?, Int?, LocalDateTime?> = super.fieldsRow() as Row11<Int?, Int?, Int?, Int?, String?, Int?, Int?, String?, ByteArray?, Int?, LocalDateTime?>
-
-    /**
-     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
-     */
-    fun <U> mapping(from: (Int?, Int?, Int?, Int?, String?, Int?, Int?, String?, ByteArray?, Int?, LocalDateTime?) -> U): SelectField<U> = convertFrom(Records.mapping(from))
-
-    /**
-     * Convenience mapping calling {@link SelectField#convertFrom(Class,
-     * Function)}.
-     */
-    fun <U> mapping(toType: Class<U>, from: (Int?, Int?, Int?, Int?, String?, Int?, Int?, String?, ByteArray?, Int?, LocalDateTime?) -> U): SelectField<U> = convertFrom(toType, Records.mapping(from))
 }

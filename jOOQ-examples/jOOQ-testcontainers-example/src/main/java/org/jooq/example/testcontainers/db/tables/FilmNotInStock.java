@@ -4,16 +4,10 @@
 package org.jooq.example.testcontainers.db.tables;
 
 
-import java.util.function.Function;
-
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
-import org.jooq.Records;
-import org.jooq.Row1;
 import org.jooq.Schema;
-import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -130,15 +124,6 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
         return new FilmNotInStock(name.getQualifiedName(), null, parameters);
     }
 
-    // -------------------------------------------------------------------------
-    // Row1 type methods
-    // -------------------------------------------------------------------------
-
-    @Override
-    public Row1<Integer> fieldsRow() {
-        return (Row1) super.fieldsRow();
-    }
-
     /**
      * Call this table-valued function
      */
@@ -167,20 +152,5 @@ public class FilmNotInStock extends TableImpl<FilmNotInStockRecord> {
         });
 
         return aliased() ? result.as(getUnqualifiedName()) : result;
-    }
-
-    /**
-     * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
-     */
-    public <U> SelectField<U> mapping(Function1<? super Integer, ? extends U> from) {
-        return convertFrom(Records.mapping(from));
-    }
-
-    /**
-     * Convenience mapping calling {@link SelectField#convertFrom(Class,
-     * Function)}.
-     */
-    public <U> SelectField<U> mapping(Class<U> toType, Function1<? super Integer, ? extends U> from) {
-        return convertFrom(toType, Records.mapping(from));
     }
 }

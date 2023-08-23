@@ -131,6 +131,10 @@
       <element name="name" type="string" default="org.jooq.codegen.DefaultGenerator" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The class used to generate source code. This can be overridden with a custom code generator implementation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="java" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A self-contained, inline implementation of {@link org.jooq.codegen.Generator} that will be compiled and class-loaded on the fly by the code generator.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <!-- The naming strategy used for class and field names -->
       <element name="strategy" type="tns:Strategy" minOccurs="0" maxOccurs="1">
@@ -716,6 +720,10 @@ This value can be used to reverse-engineer JPA annotated entities
 <p>
 You can also provide your own org.jooq.meta.Database implementation
 here, if your database is currently not supported]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="java" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A self-contained, inline implementation of {@link org.jooq.meta.Database} that will be compiled and class-loaded on the fly by the code generator.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="properties" type="tns:Properties" minOccurs="0" maxOccurs="1">

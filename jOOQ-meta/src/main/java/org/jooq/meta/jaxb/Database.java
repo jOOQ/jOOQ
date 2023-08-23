@@ -36,6 +36,8 @@ public class Database implements Serializable, XMLAppendable
     private final static long serialVersionUID = 31900L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String java;
     @XmlList
     @XmlElement(defaultValue = "COMMENTS CASE_INSENSITIVE")
     protected List<RegexFlag> regexFlags;
@@ -300,6 +302,22 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setName(String value) {
         this.name = value;
+    }
+
+    /**
+     * A self-contained, inline implementation of {@link org.jooq.meta.Database} that will be compiled and class-loaded on the fly by the code generator.
+     * 
+     */
+    public String getJava() {
+        return java;
+    }
+
+    /**
+     * A self-contained, inline implementation of {@link org.jooq.meta.Database} that will be compiled and class-loaded on the fly by the code generator.
+     * 
+     */
+    public void setJava(String value) {
+        this.java = value;
     }
 
     /**
@@ -2102,6 +2120,15 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * A self-contained, inline implementation of {@link org.jooq.meta.Database} that will be compiled and class-loaded on the fly by the code generator.
+     * 
+     */
+    public Database withJava(String value) {
+        setJava(value);
+        return this;
+    }
+
+    /**
      * The flags that will be applied to all regular expressions from this configuration by default.
      * <p>
      * The default value is "COMMENTS CASE_INSENSITIVE"Gets the value of the regexFlags property.
@@ -2867,6 +2894,7 @@ public class Database implements Serializable, XMLAppendable
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("name", name);
+        builder.append("java", java);
         builder.append("regexFlags", "regexFlags", regexFlags);
         builder.append("regexMatchesPartialQualification", regexMatchesPartialQualification);
         builder.append("sqlMatchesPartialQualification", sqlMatchesPartialQualification);
@@ -2967,6 +2995,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!name.equals(other.name)) {
+                return false;
+            }
+        }
+        if (java == null) {
+            if (other.java!= null) {
+                return false;
+            }
+        } else {
+            if (!java.equals(other.java)) {
                 return false;
             }
         }
@@ -3635,6 +3672,7 @@ public class Database implements Serializable, XMLAppendable
         final int prime = 31;
         int result = 1;
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
+        result = ((prime*result)+((java == null)? 0 :java.hashCode()));
         result = ((prime*result)+((regexFlags == null)? 0 :regexFlags.hashCode()));
         result = ((prime*result)+((regexMatchesPartialQualification == null)? 0 :regexMatchesPartialQualification.hashCode()));
         result = ((prime*result)+((sqlMatchesPartialQualification == null)? 0 :sqlMatchesPartialQualification.hashCode()));

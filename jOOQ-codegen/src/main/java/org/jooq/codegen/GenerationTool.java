@@ -96,6 +96,7 @@ import org.jooq.meta.jaxb.Target;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
+import org.jooq.tools.reflect.CompileOptions;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 
@@ -391,9 +392,13 @@ public class GenerationTool {
 
             // Initialise generator
             // --------------------
-            Class<Generator> generatorClass = (Class<Generator>) (!isBlank(g.getName())
+            Class<Generator> generatorClass = (Class<Generator>) (
+                  !isBlank(g.getJava())
+                ? compile(g.getName(), g.getJava(), Generator.class)
+                : !isBlank(g.getName())
                 ? loadClass(trim(g.getName()))
-                : JavaGenerator.class);
+                : JavaGenerator.class
+            );
             Generator generator = generatorClass.newInstance();
 
             GeneratorStrategy strategy;
@@ -413,28 +418,29 @@ public class GenerationTool {
                     g.getStrategy().setName(null);
                 }
             }
-            else if (!isBlank(g.getStrategy().getJava())) {
-                Object o = Reflect.compile(g.getStrategy().getName(), g.getStrategy().getJava()).create().get();
-
-                if (o instanceof GeneratorStrategy s)
-                    strategy = s;
-                else
-                    throw new GeneratorException("GeneratorStrategy must implement org.jooq.codegen.GeneratorStrategy");
-            }
             else {
-                Class<GeneratorStrategy> strategyClass = (Class<GeneratorStrategy>) (!isBlank(g.getStrategy().getName())
+                Class<GeneratorStrategy> strategyClass = (Class<GeneratorStrategy>) (
+                      !isBlank(g.getStrategy().getJava())
+                    ? compile(g.getStrategy().getName(), g.getStrategy().getJava(), GeneratorStrategy.class)
+                    : !isBlank(g.getStrategy().getName())
                     ? loadClass(trim(g.getStrategy().getName()))
-                    : DefaultGeneratorStrategy.class);
+                    : DefaultGeneratorStrategy.class
+                );
+
                 strategy = strategyClass.newInstance();
             }
 
             generator.setStrategy(strategy);
 
-            Class<? extends Database> databaseClass = !isBlank(databaseName)
+            Class<? extends Database> databaseClass =
+                  !isBlank(d.getJava())
+                ? compile(databaseName, d.getJava(), Database.class)
+                : !isBlank(databaseName)
                 ? (Class<? extends Database>) loadClass(databaseName)
                 : connection != null
                 ? databaseClass(connection)
                 : databaseClass(j);
+
             database = databaseClass.newInstance();
 
 
@@ -1022,6 +1028,21 @@ public class GenerationTool {
                 }
             }
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> Class<T> compile(String name, String java, Class<T> type) {
+        if (isBlank(name))
+            throw new GeneratorException("Type " + type.getName() + " must have explicit name configured: " + java);
+
+        Class<?> result = Reflect.compile(name, java,
+            new CompileOptions().classLoader(Thread.currentThread().getContextClassLoader())
+        ).type();
+
+        if (type.isAssignableFrom(result))
+            return (Class<T>) result;
+        else
+            throw new GeneratorException("Type " + name + " must implement " + type.getName());
     }
 
     private <O> void set(

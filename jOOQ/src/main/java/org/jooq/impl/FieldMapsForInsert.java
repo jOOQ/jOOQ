@@ -51,6 +51,7 @@ import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
@@ -173,6 +174,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             switch (ctx.family()) {
 
                 // Some dialects don't support multi-record inserts
+
 
 
 
@@ -329,6 +331,10 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
     private final boolean supportsValues(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 

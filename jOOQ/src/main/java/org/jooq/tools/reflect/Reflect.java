@@ -23,8 +23,10 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -61,14 +63,14 @@ public class Reflect {
      * <p>
      * For example:
      * <pre><code>
-     * Supplier&lt;String&gt; supplier = Reflect.compile(
-     *   "org.joor.Test",
-     *   "package org.joor;\n" +
-     *   "class Test implements java.util.function.Supplier&lt;String&gt; {\n" +
-     *   "  public String get() {\n" +
-     *   "    return \"Hello World!\";\n" +
-     *   "  }\n" +
-     *   "}\n").create().get();
+     * Supplier&lt;String&gt; supplier = Reflect.compile("org.joor.Test", """
+     *   package org.joor;
+     *   class Test implements java.util.function.Supplier&lt;String&gt; {
+     *     public String get() {
+     *       return "Hello World!";
+     *     }
+     *   }
+     *   """).create().get();
      * </code></pre>
      *
      * @param name The qualified class name
@@ -85,14 +87,14 @@ public class Reflect {
      * <p>
      * For example:
      * <pre><code>
-     * Supplier&lt;String&gt; supplier = Reflect.compile(
-     *   "org.joor.Test",
-     *   "package org.joor;\n" +
-     *   "class Test implements java.util.function.Supplier&lt;String&gt; {\n" +
-     *   "  public String get() {\n" +
-     *   "    return \"Hello World!\";\n" +
-     *   "  }\n" +
-     *   "}\n").create().get();
+     * Supplier&lt;String&gt; supplier = Reflect.compile("org.joor.Test", """
+     *   package org.joor;
+     *   class Test implements java.util.function.Supplier&lt;String&gt; {
+     *     public String get() {
+     *       return "Hello World!";
+     *     }
+     *   }
+     *   """).create().get();
      * </code></pre>
      *
      * @param name The qualified class name
@@ -103,6 +105,70 @@ public class Reflect {
      */
     public static Reflect compile(String name, String content, CompileOptions options) throws ReflectException {
         return onClass(Compile.compile(name, content, options));
+    }
+
+    /**
+     * Annotation-process a class at runtime.
+     * <p>
+     * This works like {@link #compile(String, String)}, but adds the
+     * <code>-proc:only</code> {@link CompileOptions} and thus does not produce any
+     * compilation output.
+     * <p>
+     * For example:
+     * <pre><code>
+     * Supplier&lt;String&gt; supplier = Reflect.compile("org.joor.Test", """
+     *   package org.joor;
+     *   @MyAnnotation
+     *   class Test implements java.util.function.Supplier&lt;String&gt; {
+     *     public String get() {
+     *       return "Hello World!";
+     *     }
+     *   }
+     *   """).create().get();
+     * </code></pre>
+     *
+     * @param name    The qualified class name
+     * @param content The source code for the class
+     * @throws ReflectException if anything went wrong compiling the class.
+     */
+    public static void process(String name, String content) throws ReflectException {
+        process(name, content, new CompileOptions());
+    }
+
+    /**
+     * Annotation-process a class at runtime.
+     * <p>
+     * This works like {@link #compile(String, String)}, but adds the
+     * <code>-proc:only</code> {@link CompileOptions} and thus does not produce any
+     * compilation output.
+     * <p>
+     * For example:
+     * <pre><code>
+     * Supplier&lt;String&gt; supplier = Reflect.compile("org.joor.Test", """
+     *   package org.joor;
+     *   @MyAnnotation
+     *   class Test implements java.util.function.Supplier&lt;String&gt; {
+     *     public String get() {
+     *       return "Hello World!";
+     *     }
+     *   }
+     *   """).create().get();
+     * </code></pre>
+     *
+     * @param name The qualified class name
+     * @param content The source code for the class
+     * @param options compiler options
+     * @return A wrapped {@link Class}
+     * @throws ReflectException if anything went wrong compiling the class.
+     */
+    public static void process(String name, String content, CompileOptions options) throws ReflectException {
+        if (!options.hasOption("-proc:only")) {
+            List<String> o = new ArrayList<>(options.options);
+            o.add("-proc:only");
+            options = options.options(o);
+        }
+
+        Compile.compile(name, content, options, false);
     }
 
 
@@ -1013,3 +1079,4 @@ public class Reflect {
 
     private static class NULL {}
 }
+

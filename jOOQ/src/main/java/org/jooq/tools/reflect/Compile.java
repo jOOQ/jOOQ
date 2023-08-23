@@ -26,11 +26,12 @@ import java.lang.invoke.MethodHandles.Lookup;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Deque;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -53,14 +54,23 @@ import javax.tools.ToolProvider;
 class Compile {
 
     static Class<?> compile(String className, String content, CompileOptions compileOptions) {
+        return compile(className, content, compileOptions, true);
+    }
+
+    static Class<?> compile(String className, String content, CompileOptions compileOptions, boolean expectResult) {
         Lookup lookup = MethodHandles.lookup();
-        ClassLoader cl = lookup.lookupClass().getClassLoader();
+        ClassLoader cl = compileOptions.classLoader != null
+            ? compileOptions.classLoader
+            : lookup.lookupClass().getClassLoader();
 
         try {
             return cl.loadClass(className);
         }
         catch (ClassNotFoundException ignore) {
             JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+
+            if (compiler == null)
+                throw new ReflectException("No compiler was provided by ToolProvider.getSystemJavaCompiler(). Make sure the jdk.compiler module is available.");
 
             try {
                 ClassFileManager fileManager = new ClassFileManager(compiler.getStandardFileManager(null, null, null));
@@ -101,20 +111,21 @@ class Compile {
 
                 task.call();
 
-                if (fileManager.isEmpty())
+                if (fileManager.isEmpty()) {
+                    if (!expectResult)
+                        return null;
+
                     throw new ReflectException("Compilation error: " + out);
+                }
 
                 Class<?> result = null;
 
                 // This works if we have private-access to the interfaces in the class hierarchy
-
                 if (Reflect.CACHED_LOOKUP_CONSTRUCTOR != null) {
-
                     result = fileManager.loadAndReturnMainClass(className,
                         (name, bytes) -> Reflect.on(cl).call("defineClass", name, bytes, 0, bytes.length).get());
-
-
                 }
+
 
                 // Lookup.defineClass() has only been introduced in Java 9. It is
                 // required to get private-access to interfaces in the class hierarchy
@@ -217,7 +228,7 @@ class Compile {
         ClassFileManager(StandardJavaFileManager standardManager) {
             super(standardManager);
 
-            fileObjectMap = new HashMap<>();
+            fileObjectMap = new LinkedHashMap<>();
         }
 
         @Override
@@ -238,7 +249,7 @@ class Compile {
 
         Map<String, byte[]> classes() {
             if (classes == null) {
-                classes = new HashMap<>();
+                classes = new LinkedHashMap<>();
 
                 for (Entry<String, JavaFileObject> entry : fileObjectMap.entrySet())
                     classes.put(entry.getKey(), entry.getValue().getBytes());
@@ -250,10 +261,35 @@ class Compile {
         Class<?> loadAndReturnMainClass(String mainClassName, ThrowingBiFunction<String, byte[], Class<?>> definer) throws Exception {
             Class<?> result = null;
 
-            for (Entry<String, byte[]> entry : classes().entrySet()) {
-                Class<?> c = definer.apply(entry.getKey(), entry.getValue());
-                if (mainClassName.equals(entry.getKey()))
-                    result = c;
+            // [#117] We don't know the subclass hierarchy of the top level
+            //        classes in the compilation unit, and we can't find out
+            //        without either:
+            //
+            //        - class loading them (which fails due to NoClassDefFoundError)
+            //        - using a library like ASM (which is a big and painful dependency)
+            //
+            //        Simple workaround: try until it works, in O(n^2), where n
+            //        can be reasonably expected to be small.
+            Deque<Entry<String, byte[]>> queue = new ArrayDeque<>(classes().entrySet());
+            int n1 = queue.size();
+
+            // Try at most n times
+            for (int i1 = 0; i1 < n1 && !queue.isEmpty(); i1++) {
+                int n2 = queue.size();
+
+                for (int i2 = 0; i2 < n2; i2++) {
+                    Entry<String, byte[]> entry = queue.pop();
+
+                    try {
+                        Class<?> c = definer.apply(entry.getKey(), entry.getValue());
+
+                        if (mainClassName.equals(entry.getKey()))
+                            result = c;
+                    }
+                    catch (ReflectException e) {
+                        queue.offer(entry);
+                    }
+                }
             }
 
             return result;

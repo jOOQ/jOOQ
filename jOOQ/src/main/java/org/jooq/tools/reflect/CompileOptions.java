@@ -25,24 +25,38 @@ import javax.annotation.processing.Processor;
 /**
  * @author Lukas Eder
  */
+import java.util.Arrays;
+
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.processing.Processor;
+
+/**
+ * @author Lukas Eder
+ */
 public final class CompileOptions {
 
     final List<? extends Processor> processors;
-    final List<String> options;
+    final List<String>              options;
+    final ClassLoader               classLoader;
 
     public CompileOptions() {
         this(
             Collections.emptyList(),
-            Collections.emptyList()
+            Collections.emptyList(),
+            null
         );
     }
 
     private CompileOptions(
         List<? extends Processor> processors,
-        List<String> options
+        List<String> options,
+        ClassLoader classLoader
     ) {
         this.processors = processors;
         this.options = options;
+        this.classLoader = classLoader;
     }
 
     public final CompileOptions processors(Processor... newProcessors) {
@@ -50,7 +64,7 @@ public final class CompileOptions {
     }
 
     public final CompileOptions processors(List<? extends Processor> newProcessors) {
-        return new CompileOptions(newProcessors, options);
+        return new CompileOptions(newProcessors, options, classLoader);
     }
 
     public final CompileOptions options(String... newOptions) {
@@ -58,7 +72,19 @@ public final class CompileOptions {
     }
 
     public final CompileOptions options(List<String> newOptions) {
-        return new CompileOptions(processors, newOptions);
+        return new CompileOptions(processors, newOptions, classLoader);
+    }
+
+    final boolean hasOption(String opt) {
+        for (String option : options)
+            if (option.equalsIgnoreCase(opt))
+                return true;
+
+        return false;
+    }
+
+    public final CompileOptions classLoader(ClassLoader newClassLoader) {
+        return new CompileOptions(processors, options, newClassLoader);
     }
 }
 

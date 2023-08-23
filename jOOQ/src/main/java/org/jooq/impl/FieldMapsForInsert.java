@@ -49,6 +49,8 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
@@ -130,12 +132,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
         else if (rows == 1 ) {
-            ctx.formatSeparator()
-               .start(INSERT_VALUES)
-               .visit(K_VALUES)
-               .sql(' ');
-            toSQL92Values(ctx);
-            ctx.end(INSERT_VALUES);
+            toSQLValues(ctx);
         }
 
         // True SQL92 multi-record inserts aren't always supported
@@ -186,28 +183,40 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-                case FIREBIRD: {
-                    ctx.formatSeparator()
-                       .start(INSERT_SELECT)
-                       .visit(insertSelect(ctx))
-                       .end(INSERT_SELECT);
 
+                case FIREBIRD: {
+                    toSQLInsertSelect(ctx, insertSelect(ctx));
                     break;
                 }
 
                 default: {
-                    ctx.formatSeparator()
-                       .start(INSERT_VALUES)
-                       .visit(K_VALUES)
-                       .sql(' ');
-                    toSQL92Values(ctx);
-                    ctx.end(INSERT_VALUES);
-
+                    toSQLValues(ctx);
                     break;
                 }
             }
         }
     }
+
+    private final void toSQLValues(Context<?> ctx) {
+        ctx.formatSeparator()
+           .start(INSERT_VALUES)
+           .visit(K_VALUES)
+           .sql(' ');
+        toSQL92Values(ctx);
+        ctx.end(INSERT_VALUES);
+    }
+
+    static final void toSQLInsertSelect(Context<?> ctx, Select<?> select) {
+        ctx.formatSeparator()
+           .start(INSERT_SELECT)
+           .visit(select)
+           .end(INSERT_SELECT);
+    }
+
+
+
+
+
 
 
 

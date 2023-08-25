@@ -222,6 +222,14 @@
       <element name="embeddables" type="tns:MatchersEmbeddablesType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for embeddable names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="udts" type="tns:MatchersUDTsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for UDT names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="attributes" type="tns:MatchersAttributesType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for UDT attribute names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </sequence>
   </complexType>
 
@@ -641,6 +649,124 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
       <element name="pojoImplements" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated POJO should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="MatchersUDTsType">
+    <sequence>
+      <element name="udt" type="tns:MatchersUDTType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MatchersUDTType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for UDT names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This table matcher applies to all unqualified or qualified UDT names matched by this expression. If left empty, this matcher applies to all UDTs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="udtClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.UDT} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="udtIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.UDT} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="udtExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.UDT} should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.UDT} does, so to minimise
+unexpected behaviour, custom table super classes should extend {@link org.jooq.impl.UDTImpl}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="udtImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.UDT} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="pathClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated UDT path object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pathExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated UDT path object should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.UDTRecord} does, so to minimise
+unexpected behaviour, custom UDT record super classes should extend {@link org.jooq.impl.UDTPathTableFieldImpl}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pathImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated UDT path object should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.UDTRecord} object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated {@link org.jooq.UDTRecord} should extend.
+<p>        
+jOOQ internals make a few assumptions about what a {@link org.jooq.UDTRecord} does, so to minimise
+unexpected behaviour, custom UDT record super classes should extend {@link org.jooq.impl.UDTRecordImpl}
+and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this at your own risk.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.UDTRecord} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="interfaceClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated interface implemented by the {@link org.jooq.UDTRecord} and/or the POJO.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="interfaceImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated interface (which is implemented by the {@link org.jooq.UDTRecord} and/or POJO) should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojoClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated POJOs object.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojoExtends" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides a super class that a generated POJO should extend.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojoImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated POJO should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="MatchersAttributesType">
+    <sequence>
+      <element name="attribute" type="tns:MatchersAttributeType" minOccurs="1" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MatchersAttributeType">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration for UDT attribute names.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+    <all>
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This field matcher applies to all unqualified or qualified UDT attribute names matched by this expression. If left empty, this matcher applies to all fields.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="attributeIdentifier" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated {@link org.jooq.UDTField} identifier.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="attributeMember" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated members (e.g. in POJOs) corresponding to this {@link org.jooq.UDTField}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="attributeSetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated setters (e.g. in {@link org.jooq.UDTRecord} and/or POJOs) corresponding to this {@link org.jooq.UDTField}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="attributeGetter" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated getters (e.g. in {@link org.jooq.UDTRecord} and/or POJOs) corresponding to this {@link org.jooq.UDTField}]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

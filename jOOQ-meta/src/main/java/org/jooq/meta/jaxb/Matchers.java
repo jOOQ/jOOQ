@@ -33,7 +33,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
     "routines",
     "sequences",
     "enums",
-    "embeddables"
+    "embeddables",
+    "udts",
+    "attributes"
 })
 @SuppressWarnings({
     "all"
@@ -78,6 +80,12 @@ public class Matchers implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "embeddables")
     @XmlElement(name = "embeddable")
     protected List<MatchersEmbeddableType> embeddables;
+    @XmlElementWrapper(name = "udts")
+    @XmlElement(name = "udt")
+    protected List<MatchersUDTType> udts;
+    @XmlElementWrapper(name = "attributes")
+    @XmlElement(name = "attribute")
+    protected List<MatchersAttributeType> attributes;
 
     public List<MatchersCatalogType> getCatalogs() {
         if (catalogs == null) {
@@ -209,6 +217,28 @@ public class Matchers implements Serializable, XMLAppendable
 
     public void setEmbeddables(List<MatchersEmbeddableType> embeddables) {
         this.embeddables = embeddables;
+    }
+
+    public List<MatchersUDTType> getUdts() {
+        if (udts == null) {
+            udts = new ArrayList<MatchersUDTType>();
+        }
+        return udts;
+    }
+
+    public void setUdts(List<MatchersUDTType> udts) {
+        this.udts = udts;
+    }
+
+    public List<MatchersAttributeType> getAttributes() {
+        if (attributes == null) {
+            attributes = new ArrayList<MatchersAttributeType>();
+        }
+        return attributes;
+    }
+
+    public void setAttributes(List<MatchersAttributeType> attributes) {
+        this.attributes = attributes;
     }
 
     public Matchers withCatalogs(MatchersCatalogType... values) {
@@ -463,6 +493,48 @@ public class Matchers implements Serializable, XMLAppendable
         return this;
     }
 
+    public Matchers withUdts(MatchersUDTType... values) {
+        if (values!= null) {
+            for (MatchersUDTType value: values) {
+                getUdts().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Matchers withUdts(Collection<MatchersUDTType> values) {
+        if (values!= null) {
+            getUdts().addAll(values);
+        }
+        return this;
+    }
+
+    public Matchers withUdts(List<MatchersUDTType> udts) {
+        setUdts(udts);
+        return this;
+    }
+
+    public Matchers withAttributes(MatchersAttributeType... values) {
+        if (values!= null) {
+            for (MatchersAttributeType value: values) {
+                getAttributes().add(value);
+            }
+        }
+        return this;
+    }
+
+    public Matchers withAttributes(Collection<MatchersAttributeType> values) {
+        if (values!= null) {
+            getAttributes().addAll(values);
+        }
+        return this;
+    }
+
+    public Matchers withAttributes(List<MatchersAttributeType> attributes) {
+        setAttributes(attributes);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("catalogs", "catalog", catalogs);
@@ -477,6 +549,8 @@ public class Matchers implements Serializable, XMLAppendable
         builder.append("sequences", "sequence", sequences);
         builder.append("enums", "enum", enums);
         builder.append("embeddables", "embeddable", embeddables);
+        builder.append("udts", "udt", udts);
+        builder.append("attributes", "attribute", attributes);
     }
 
     @Override
@@ -606,6 +680,24 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (udts == null) {
+            if (other.udts!= null) {
+                return false;
+            }
+        } else {
+            if (!udts.equals(other.udts)) {
+                return false;
+            }
+        }
+        if (attributes == null) {
+            if (other.attributes!= null) {
+                return false;
+            }
+        } else {
+            if (!attributes.equals(other.attributes)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -625,6 +717,8 @@ public class Matchers implements Serializable, XMLAppendable
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
         result = ((prime*result)+((enums == null)? 0 :enums.hashCode()));
         result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));
+        result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));
+        result = ((prime*result)+((attributes == null)? 0 :attributes.hashCode()));
         return result;
     }
 

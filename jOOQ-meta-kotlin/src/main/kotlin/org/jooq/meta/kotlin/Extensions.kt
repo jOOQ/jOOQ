@@ -193,6 +193,28 @@ fun MutableList<MatchersEmbeddableType>.embeddable(block: MatchersEmbeddableType
     add(e)
 }
 
+fun Matchers.udts(block: MutableList<MatchersUDTType>.() -> Unit) {
+    block(udts)
+}
+
+@JvmName("mutableListMatchersUDTType")
+fun MutableList<MatchersUDTType>.udt(block: MatchersUDTType.() -> Unit) {
+    val e = MatchersUDTType()
+    block(e)
+    add(e)
+}
+
+fun Matchers.attributes(block: MutableList<MatchersAttributeType>.() -> Unit) {
+    block(attributes)
+}
+
+@JvmName("mutableListMatchersAttributeType")
+fun MutableList<MatchersAttributeType>.attribute(block: MatchersAttributeType.() -> Unit) {
+    val e = MatchersAttributeType()
+    block(e)
+    add(e)
+}
+
 fun Generator.database(block: Database.() -> Unit) {
     if (database == null)
         database = Database()

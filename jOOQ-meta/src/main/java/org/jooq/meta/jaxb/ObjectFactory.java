@@ -174,6 +174,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MatchersUDTType }
+     * 
+     */
+    public MatchersUDTType createMatchersUDTType() {
+        return new MatchersUDTType();
+    }
+
+    /**
+     * Create an instance of {@link MatchersAttributeType }
+     * 
+     */
+    public MatchersAttributeType createMatchersAttributeType() {
+        return new MatchersAttributeType();
+    }
+
+    /**
      * Create an instance of {@link MatcherRule }
      * 
      */

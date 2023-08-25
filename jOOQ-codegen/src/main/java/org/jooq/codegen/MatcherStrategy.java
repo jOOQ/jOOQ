@@ -46,6 +46,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
@@ -60,6 +61,7 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
+import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.meta.jaxb.*;
 import org.jooq.tools.StringUtils;
@@ -266,6 +268,20 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return emptyList();
     }
 
+    private final List<MatchersUDTType> udts(Definition definition) {
+        if (definition instanceof UDTDefinition)
+            return matchers.getUdts();
+
+        return emptyList();
+    }
+
+    private final List<MatchersAttributeType> attributes(Definition definition) {
+        if (definition instanceof AttributeDefinition)
+            return matchers.getAttributes();
+
+        return emptyList();
+    }
+
     private final List<String> split(String result) {
         return Stream.of(result.split(",")).map(String::trim).collect(toList());
     }
@@ -332,6 +348,18 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return result;
         }
 
+        for (MatchersUDTType udt : udts(definition)) {
+            String result = match(definition, udt.getExpression(), udt.getUdtIdentifier());
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersAttributeType attribute : attributes(definition)) {
+            String result = match(definition, attribute.getExpression(), attribute.getAttributeIdentifier());
+            if (result != null)
+                return result;
+        }
+
         // Default to standard behaviour
         return super.getJavaIdentifier(definition);
     }
@@ -344,6 +372,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return result;
         }
 
+        for (MatchersAttributeType attribute : attributes(definition)) {
+            String result = match(definition, attribute.getExpression(), attribute.getAttributeSetter());
+            if (result != null)
+                return result;
+        }
+
         // Default to standard behaviour
         return super.getJavaSetterName(definition, mode);
     }
@@ -352,6 +386,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     public String getJavaGetterName(Definition definition, Mode mode) {
         for (MatchersFieldType fields : fields(definition)) {
             String result = match(definition, fields.getExpression(), fields.getFieldGetter());
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersAttributeType attribute : attributes(definition)) {
+            String result = match(definition, attribute.getExpression(), attribute.getAttributeGetter());
             if (result != null)
                 return result;
         }
@@ -437,8 +477,22 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return result;
         }
 
-        for (MatchersRoutineType routines : routines(definition)) {
-            String result = match(definition, routines.getExpression(), routines.getRoutineExtends());
+        for (MatchersUDTType udt : udts(definition)) {
+            String result = null;
+
+            switch (mode) {
+                case POJO:    result = match(definition, udt.getExpression(), udt.getPojoExtends());   break;
+                case RECORD:  result = match(definition, udt.getExpression(), udt.getRecordExtends()); break;
+                case PATH:    result = match(definition, udt.getExpression(), udt.getPathExtends());   break;
+                case DEFAULT: result = match(definition, udt.getExpression(), udt.getUdtExtends());    break;
+            }
+
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersRoutineType routine : routines(definition)) {
+            String result = match(definition, routine.getExpression(), routine.getRoutineExtends());
 
             if (result != null)
                 return result;
@@ -488,6 +542,21 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 case POJO:      result = match(definition, embeddables.getExpression(), embeddables.getPojoImplements());      break;
                 case RECORD:
                 case DEFAULT:   result = match(definition, embeddables.getExpression(), embeddables.getRecordImplements());    break;
+            }
+
+            if (result != null)
+                return split(result);
+        }
+
+        for (MatchersUDTType udt : udts(definition)) {
+            String result = null;
+
+            switch (mode) {
+                case DEFAULT:   result = match(definition, udt.getExpression(), udt.getUdtImplements());       break;
+                case INTERFACE: result = match(definition, udt.getExpression(), udt.getInterfaceImplements()); break;
+                case POJO:      result = match(definition, udt.getExpression(), udt.getPojoImplements());      break;
+                case RECORD:    result = match(definition, udt.getExpression(), udt.getRecordImplements());    break;
+                case PATH:      result = match(definition, udt.getExpression(), udt.getPathImplements());      break;
             }
 
             if (result != null)
@@ -558,6 +627,21 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return result;
         }
 
+        for (MatchersUDTType udt : udts(definition)) {
+            String result = null;
+
+            switch (mode) {
+                case DEFAULT:   result = match(definition, udt.getExpression(), udt.getUdtClass());               break;
+                case INTERFACE: result = match(definition, udt.getExpression(), udt.getInterfaceClass());         break;
+                case POJO:      result = match(definition, udt.getExpression(), udt.getPojoClass());              break;
+                case RECORD:    result = match(definition, udt.getExpression(), udt.getRecordClass());            break;
+                case PATH:      result = match(definition, udt.getExpression(), udt.getPathClass());              break;
+            }
+
+            if (result != null)
+                return result;
+        }
+
         for (MatchersRoutineType routines : routines(definition)) {
             String result = match(definition, routines.getExpression(), routines.getRoutineClass());
 
@@ -616,6 +700,13 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     public String getJavaMemberName(Definition definition, Mode mode) {
         for (MatchersFieldType fields : fields(definition)) {
             String result = match(definition, fields.getExpression(), fields.getFieldMember());
+
+            if (result != null)
+                return result;
+        }
+
+        for (MatchersAttributeType attribute : attributes(definition)) {
+            String result = match(definition, attribute.getExpression(), attribute.getAttributeMember());
 
             if (result != null)
                 return result;

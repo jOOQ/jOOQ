@@ -329,7 +329,7 @@ public final class Internal {
     ) throws Exception {
 
         // [#228] This case only happens in generated UDTPath types, never in generated Table types
-        if (returnType == UDTField.class)
+        if (returnType == (Class) UDTField.class)
             return (P) new UDTPathFieldImpl<>(name, actualType, path.asQualifier(), path.getUDT(), DSL.comment(comment), actualBinding);
 
         // [#228] While it would be cleaner to pass around a Function5 constructor reference,

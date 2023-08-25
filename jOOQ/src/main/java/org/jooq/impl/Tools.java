@@ -658,8 +658,14 @@ final class Tools {
         DATA_PARSE_ON_CONFLICT,
 
         /**
-         * [#13808] We're in a store assignment context (e.g.
-         * <code>UPDATE</code> or assignment statement).
+         * [#228] [#13808] We're in a store assignment context.
+         * <p>
+         * This includes e.g.
+         * <ul>
+         * <li><code>INSERT</code> columns list.</li>
+         * <li><code>UPDATE … SET</code> clause.</li>
+         * <li>The procedural assignment statement.</li>
+         * </ul>
          */
         DATA_STORE_ASSIGNMENT,
 
@@ -668,7 +674,6 @@ final class Tools {
          * not the query itself.
          */
         DATA_RENDER_IMPLICIT_JOIN,
-
         ;
 
         private final boolean resetInSubqueryScope;

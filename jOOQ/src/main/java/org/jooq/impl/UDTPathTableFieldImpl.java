@@ -36,25 +36,41 @@
  *
  */
 
-package org.jooq;
+package org.jooq.impl;
 
-import org.jetbrains.annotations.Nullable;
+import org.jooq.Binding;
+import org.jooq.Comment;
+import org.jooq.DataType;
+import org.jooq.Name;
+import org.jooq.Record;
+import org.jooq.RecordQualifier;
+import org.jooq.Table;
+import org.jooq.UDT;
+import org.jooq.UDTPathField;
+import org.jooq.UDTPathTableField;
+import org.jooq.UDTRecord;
+
+import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
- * A field contained in a UDT.
- * <p>
- * Instances of this type cannot be created directly. They are available from
- * generated code.
+ * A common base type for table fields that are also {@link UDTPathField}.
  *
- * @param <R> The record type
- * @param <T> The field type
  * @author Lukas Eder
  */
-public interface UDTField<R extends UDTRecord<R>, T> extends Field<T> {
+@Internal
+public /* non-final */ class UDTPathTableFieldImpl<R extends Record, U extends UDTRecord<U>, T>
+extends
+    UDTPathFieldImpl<R, U, T>
+implements
+    UDTPathTableField<R, U, T>
+{
 
-    /**
-     * @return The UDT this field is contained in
-     */
-    @Nullable
-    UDT<R> getUDT();
+    public UDTPathTableFieldImpl(Name name, DataType<T> type, RecordQualifier<R> qualifier, UDT<U> udt, Comment comment, Binding<?, T> binding) {
+        super(name, type, qualifier, udt, comment, binding);
+    }
+
+    @Override
+    public final Table<R> getTable() {
+        return getQualifier() instanceof Table<R> t ? t : null;
+    }
 }

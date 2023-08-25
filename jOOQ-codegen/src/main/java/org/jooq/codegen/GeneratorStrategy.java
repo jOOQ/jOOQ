@@ -567,9 +567,9 @@ public interface GeneratorStrategy {
         DOMAIN,
 
         /**
-         * The path mode. This is used when a {@link ForeignKeyDefinition} or an
-         * {@link InverseForeignKeyDefinition} is used to generate a path
-         * expression.
+         * The path mode. This is used when a {@link ForeignKeyDefinition}, an
+         * {@link InverseForeignKeyDefinition}, or a {@link UDTDefinition} is
+         * used to generate a path expression.
          */
         PATH
 

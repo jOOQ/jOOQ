@@ -78,7 +78,7 @@ import org.jooq.tools.StringUtils;
  */
 final class TableFieldImpl<R extends Record, T>
 extends
-     AbstractField<T>
+    AbstractField<T>
 implements
     TableField<R, T>,
     SimpleQueryPart,
@@ -201,11 +201,15 @@ implements
     }
 
     private final void accept1(Context<?> ctx) {
-        ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
-            if (c.qualify() && getTable() != null && !FALSE.equals(ctx.data(DATA_RENDER_TABLE)))
-                c.visit(getTable()).sql('.');
+        accept2(ctx, getTable(), getUnqualifiedName());
+    }
 
-            c.visit(getUnqualifiedName());
+    static final void accept2(Context<?> ctx, Table<?> table, Name unqualifiedName) {
+        ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
+            if (c.qualify() && table != null && !FALSE.equals(ctx.data(DATA_RENDER_TABLE)))
+                c.visit(table).sql('.');
+
+            c.visit(unqualifiedName);
         });
     }
 

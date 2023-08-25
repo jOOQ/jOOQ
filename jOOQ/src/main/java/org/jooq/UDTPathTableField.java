@@ -38,10 +38,10 @@
 
 package org.jooq;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * A field contained in a UDT.
+ * A field dereferenced from a UDT path.
  * <p>
  * Instances of this type cannot be created directly. They are available from
  * generated code.
@@ -50,11 +50,12 @@ import org.jetbrains.annotations.Nullable;
  * @param <T> The field type
  * @author Lukas Eder
  */
-public interface UDTField<R extends UDTRecord<R>, T> extends Field<T> {
+public interface UDTPathTableField<R extends Record, U extends UDTRecord<U>, T> extends TableField<R, T>, UDTPathField<R, U, T> {
 
     /**
-     * @return The UDT this field is contained in
+     * @return The UDT path this field is contained in.
      */
-    @Nullable
-    UDT<R> getUDT();
+    @Override
+    @NotNull
+    RecordQualifier<R> getQualifier();
 }

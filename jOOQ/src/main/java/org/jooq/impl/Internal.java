@@ -67,6 +67,7 @@ import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Generator;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.InverseForeignKey;
@@ -79,6 +80,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.RecordQualifier;
 // ...
 // ...
 import org.jooq.Result;
@@ -95,11 +97,16 @@ import org.jooq.TableField;
 // ...
 // ...
 import org.jooq.UDT;
+import org.jooq.UDTField;
+import org.jooq.UDTPathField;
+import org.jooq.UDTPathTableField;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 // ...
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.CreateTable;
+import org.jooq.impl.QOM.GenerationLocation;
 // ...
 // ...
 
@@ -117,6 +124,222 @@ import org.reactivestreams.Subscription;
  */
 @org.jooq.Internal
 public final class Internal {
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, P extends UDTPathTableField<R, UR, T>> P createUDTPathTableField(
+        Name name,
+        DataType<T> type,
+        Table<R> table,
+        Class<P> returnType
+    ) {
+        return createUDTPathTableField(name, type, table, null, returnType, null, null, null);
+    }
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, P extends UDTPathTableField<R, UR, T>> P createUDTPathTableField(
+        Name name,
+        DataType<T> type,
+        Table<R> table,
+        String comment,
+        Class<P> returnType
+    ) {
+        return createUDTPathTableField(name, type, table, comment, returnType, null, null, null);
+    }
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+        Name name,
+        DataType<T> type,
+        Table<R> table,
+        String comment,
+        Class<P> returnType,
+        Converter<T, U> converter
+    ) {
+        return createUDTPathTableField(name, type, table, comment, returnType, converter, null, null);
+    }
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+        Name name,
+        DataType<T> type,
+        Table<R> table,
+        String comment,
+        Class<P> returnType,
+        Binding<T, U> binding
+    ) {
+        return createUDTPathTableField(name, type, table, comment, returnType, null, binding, null);
+    }
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, X, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+        Name name,
+        DataType<T> type,
+        Table<R> table,
+        String comment,
+        Class<P> returnType,
+        Converter<X, U> converter,
+        Binding<T, X> binding
+    ) {
+        return createUDTPathTableField(name, type, table, comment, returnType, converter, binding, null);
+    }
+
+    public static final <R extends Record, TR extends Table<R>, UR extends UDTRecord<UR>, T, P extends UDTPathTableField<R, UR, T>> P createUDTPathTableField(
+        Name name,
+        DataType<T> type,
+        TR table,
+        String comment,
+        Class<P> returnType,
+        Generator<R, TR, T> generator
+    ) {
+        return createUDTPathTableField(name, type, table, comment, returnType, null, null, generator);
+    }
+
+    public static final <R extends Record, TR extends Table<R>, UR extends UDTRecord<UR>, T, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+        Name name,
+        DataType<T> type,
+        TR table,
+        String comment,
+        Class<P> returnType,
+        Converter<T, U> converter,
+        Generator<R, TR, U> generator
+    ) {
+        return createUDTPathTableField(name, type, table, comment, returnType, converter, null, generator);
+    }
+
+    public static final <R extends Record, TR extends Table<R>, UR extends UDTRecord<UR>, T, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+        Name name,
+        DataType<T> type,
+        TR table,
+        String comment,
+        Class<P> returnType,
+        Binding<T, U> binding,
+        Generator<R, TR, U> generator
+    ) {
+        return createUDTPathTableField(name, type, table, comment, returnType, null, binding, generator);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static final <R extends Record, TR extends Table<R>, UR extends UDTRecord<UR>, T, X, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+        Name name,
+        DataType<T> type,
+        TR table,
+        String comment,
+        Class<P> returnType,
+        Converter<X, U> converter,
+        Binding<T, X> binding,
+        Generator<R, TR, U> generator
+    ) {
+        Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
+        DataType<U> actualType =
+            converter == null && binding == null
+          ? (DataType<U>) type
+          : type.asConvertedDataType(actualBinding);
+
+        if (generator != null)
+            actualType = actualType.generatedAlwaysAs(generator).generationLocation(GenerationLocation.CLIENT);
+
+        // [#5999] TODO: Allow for user-defined Names
+        try {
+            P tableField = newInstance(name, table, null, comment, returnType, actualBinding, actualType);
+
+            // [#1199] The public API of Table returns immutable field lists
+            if (table instanceof TableImpl<?> t)
+                t.fields.add(tableField);
+
+            return tableField;
+        }
+        catch (Exception e) {
+            throw new DataTypeException("Cannot instantiate " + returnType + ".", e);
+        }
+    }
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, P extends UDTField<UR, T>> P createUDTPathField(
+        Name name,
+        DataType<T> type,
+        UDTPathField<R, UR, ?> qualifier,
+        Class<P> returnType
+    ) {
+        return createUDTPathField(name, type, qualifier, null, returnType, null, null);
+    }
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, P extends UDTField<UR, T>> P createUDTPathField(
+        Name name,
+        DataType<T> type,
+        UDTPathField<R, UR, ?> qualifier,
+        String comment,
+        Class<P> returnType
+    ) {
+        return createUDTPathField(name, type, qualifier, comment, returnType, null, null);
+    }
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, U, P extends UDTField<UR, U>> P createUDTPathField(
+        Name name,
+        DataType<T> type,
+        UDTPathField<R, UR, ?> qualifier,
+        String comment,
+        Class<P> returnType,
+        Converter<T, U> converter
+    ) {
+        return createUDTPathField(name, type, qualifier, comment, returnType, converter, null);
+    }
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, U, P extends UDTField<UR, U>> P createUDTPathField(
+        Name name,
+        DataType<T> type,
+        UDTPathField<R, UR, ?> qualifier,
+        String comment,
+        Class<P> returnType,
+        Binding<T, U> binding
+    ) {
+        return createUDTPathField(name, type, qualifier, comment, returnType, null, binding);
+    }
+
+    public static final <R extends Record, UR extends UDTRecord<UR>, T, X, U, P extends UDTField<UR, U>> P createUDTPathField(
+        Name name,
+        DataType<T> type,
+        UDTPathField<R, UR, ?> qualifier,
+        String comment,
+        Class<P> returnType,
+        Converter<X, U> converter,
+        Binding<T, X> binding
+    ) {
+        Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
+        DataType<U> actualType =
+            converter == null && binding == null
+          ? (DataType<U>) type
+          : type.asConvertedDataType(actualBinding);
+
+        // [#5999] TODO: Allow for user-defined Names
+        try {
+
+            // [#228] While it would be cleaner to pass around a Function5 constructor reference,
+            //        chances are that the cost on compilation speed is significantly higher than
+            //        if we just use reflection
+            return newInstance(name, null, qualifier, comment, returnType, actualBinding, actualType);
+        }
+        catch (Exception e) {
+            throw new DataTypeException("Cannot instantiate " + returnType + ".", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <R extends Record, UR extends UDTRecord<UR>, T, X, U, P extends UDTField<UR, U>> P newInstance(
+        Name name,
+        RecordQualifier<R> qualifier,
+        UDTPathField<R, ?, ?> path,
+        String comment,
+        Class<P> returnType,
+        Binding<T, U> actualBinding,
+        DataType<U> actualType
+    ) throws Exception {
+
+        // [#228] This case only happens in generated UDTPath types, never in generated Table types
+        if (returnType == UDTField.class)
+            return (P) new UDTPathFieldImpl<>(name, actualType, path.asQualifier(), path.getUDT(), DSL.comment(comment), actualBinding);
+
+        // [#228] While it would be cleaner to pass around a Function5 constructor reference,
+        //        chances are that the cost on compilation speed is significantly higher than
+        //        if we just use reflection
+        else
+            return returnType
+                .getConstructor(Name.class, DataType.class, RecordQualifier.class, Comment.class, Binding.class)
+                .newInstance(name, actualType, qualifier == null ? path.asQualifier() : qualifier, DSL.comment(comment), actualBinding);
+    }
 
     /**
      * Factory method for embeddable types.

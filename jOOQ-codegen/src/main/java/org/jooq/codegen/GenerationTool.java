@@ -736,9 +736,11 @@ public class GenerationTool {
                 generator.setGenerateIndexes(g.getGenerate().isIndexes());
             if (g.getGenerate().isRelations() != null)
                 generator.setGenerateRelations(g.getGenerate().isRelations());
-            if (g.getGenerate().isImplicitJoinPathsToMany() != null)
-                generator.setGenerateImplicitJoinPathsToOne(g.getGenerate().isImplicitJoinPathsToOne());
+            if (g.getGenerate().isUdtPaths() != null)
+                generator.setGenerateUDTPaths(g.getGenerate().isUdtPaths());
             if (g.getGenerate().isImplicitJoinPathsToOne() != null)
+                generator.setGenerateImplicitJoinPathsToOne(g.getGenerate().isImplicitJoinPathsToOne());
+            if (g.getGenerate().isImplicitJoinPathsToMany() != null)
                 generator.setGenerateImplicitJoinPathsToMany(g.getGenerate().isImplicitJoinPathsToMany());
             if (g.getGenerate().isImplicitJoinPathTableSubtypes() != null)
                 generator.setGenerateImplicitJoinPathTableSubtypes(g.getGenerate().isImplicitJoinPathTableSubtypes());

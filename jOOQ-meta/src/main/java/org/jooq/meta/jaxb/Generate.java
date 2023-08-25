@@ -37,6 +37,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean sequenceFlags = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean udtPaths = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToOne = true;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToMany = true;
@@ -330,6 +332,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setSequenceFlags(Boolean value) {
         this.sequenceFlags = value;
+    }
+
+    /**
+     * Generate UDT path expressions on tables and on UDTs.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isUdtPaths() {
+        return udtPaths;
+    }
+
+    /**
+     * Sets the value of the udtPaths property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setUdtPaths(Boolean value) {
+        this.udtPaths = value;
     }
 
     /**
@@ -2892,6 +2918,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withUdtPaths(Boolean value) {
+        setUdtPaths(value);
+        return this;
+    }
+
     public Generate withImplicitJoinPathsToOne(Boolean value) {
         setImplicitJoinPathsToOne(value);
         return this;
@@ -3490,6 +3521,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("indexes", indexes);
         builder.append("relations", relations);
         builder.append("sequenceFlags", sequenceFlags);
+        builder.append("udtPaths", udtPaths);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
         builder.append("implicitJoinPathsToMany", implicitJoinPathsToMany);
         builder.append("implicitJoinPathTableSubtypes", implicitJoinPathTableSubtypes);
@@ -3643,6 +3675,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!sequenceFlags.equals(other.sequenceFlags)) {
+                return false;
+            }
+        }
+        if (udtPaths == null) {
+            if (other.udtPaths!= null) {
+                return false;
+            }
+        } else {
+            if (!udtPaths.equals(other.udtPaths)) {
                 return false;
             }
         }
@@ -4628,6 +4669,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((indexes == null)? 0 :indexes.hashCode()));
         result = ((prime*result)+((relations == null)? 0 :relations.hashCode()));
         result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
+        result = ((prime*result)+((udtPaths == null)? 0 :udtPaths.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToMany == null)? 0 :implicitJoinPathsToMany.hashCode()));
         result = ((prime*result)+((implicitJoinPathTableSubtypes == null)? 0 :implicitJoinPathTableSubtypes.hashCode()));

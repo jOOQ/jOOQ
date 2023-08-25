@@ -99,7 +99,7 @@ fun Matchers.indexes(block: MutableList<MatchersIndexType>.() -> Unit) {
 }
 
 @JvmName("mutableListMatchersIndexType")
-fun MutableList<MatchersIndexType>.indexe(block: MatchersIndexType.() -> Unit) {
+fun MutableList<MatchersIndexType>.index(block: MatchersIndexType.() -> Unit) {
     val e = MatchersIndexType()
     block(e)
     add(e)

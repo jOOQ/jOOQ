@@ -66,6 +66,7 @@ import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTImpl;
+import org.jooq.impl.UDTPathTableFieldImpl;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.meta.ArrayDefinition;
@@ -335,14 +336,15 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         }
         else if (definition instanceof TableDefinition t) {
             switch (mode) {
-                case DAO: return DAOImpl.class.getName();
-                case RECORD: return (t.getPrimaryKey() != null ? UpdatableRecordImpl.class : TableRecordImpl.class).getName();
+                case DAO:     return DAOImpl.class.getName();
+                case RECORD:  return (t.getPrimaryKey() != null ? UpdatableRecordImpl.class : TableRecordImpl.class).getName();
                 case DEFAULT: return TableImpl.class.getName();
             }
         }
         else if (definition instanceof UDTDefinition) {
             switch (mode) {
-                case RECORD: return UDTRecordImpl.class.getName();
+                case PATH:    return UDTPathTableFieldImpl.class.getName();
+                case RECORD:  return UDTRecordImpl.class.getName();
                 case DEFAULT: return UDTImpl.class.getName();
             }
         }
@@ -464,7 +466,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             if (!(definition instanceof SchemaDefinition)) {
 
                 // Some definitions have their dedicated subpackages, e.g. "tables", "routines"
-                String subPackage = getSubPackage(definition);
+                String subPackage = getSubPackage(definition, mode);
                 if (!StringUtils.isBlank(subPackage)) {
                     sb.append(".");
                     sb.append(subPackage);
@@ -547,7 +549,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         return result.toString();
     }
 
-    private String getSubPackage(Definition definition) {
+    private String getSubPackage(Definition definition, Mode mode) {
         if (definition instanceof TableDefinition)
             return "tables";
 
@@ -561,6 +563,8 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             // [#330] [#6529] A UDT inside of a package is a PL/SQL RECORD type
             if (u.getPackage() != null)
                 return "packages." + getJavaIdentifier(u.getPackage()).toLowerCase(targetLocale) + ".udt";
+            else if (mode == Mode.PATH)
+                return "udt.paths";
             else
                 return "udt";
         }

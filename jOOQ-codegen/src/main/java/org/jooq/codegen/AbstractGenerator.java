@@ -71,6 +71,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateDeprecationOnUnknownTypes                = true;
     boolean                            generateIndexes                                  = true;
     boolean                            generateRelations                                = true;
+    boolean                            generateUDTPaths                                 = true;
     boolean                            generateImplicitJoinPathsToOne                   = true;
     boolean                            generateImplicitJoinPathsToMany                  = true;
     boolean                            generateImplicitJoinPathTableSubtypes            = true;
@@ -304,6 +305,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateRelations(boolean generateRelations) {
         this.generateRelations = generateRelations;
+    }
+
+    @Override
+    public boolean generateUDTPaths() {
+        return generateUDTPaths;
+    }
+
+    @Override
+    public void setGenerateUDTPaths(boolean generateUDTPaths) {
+        this.generateUDTPaths = generateUDTPaths;
     }
 
     @Override

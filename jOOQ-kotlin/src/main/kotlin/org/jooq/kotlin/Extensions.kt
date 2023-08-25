@@ -703,7 +703,7 @@ fun InformationSchema.indexes(block: MutableList<org.jooq.util.xml.jaxb.Index>.(
 }
 
 @JvmName("mutableListIndex")
-fun MutableList<org.jooq.util.xml.jaxb.Index>.indexe(block: org.jooq.util.xml.jaxb.Index.() -> Unit) {
+fun MutableList<org.jooq.util.xml.jaxb.Index>.index(block: org.jooq.util.xml.jaxb.Index.() -> Unit) {
     val e = org.jooq.util.xml.jaxb.Index()
     block(e)
     add(e)

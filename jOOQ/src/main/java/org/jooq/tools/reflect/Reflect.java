@@ -118,7 +118,7 @@ public class Reflect {
      * <pre><code>
      * Supplier&lt;String&gt; supplier = Reflect.compile("org.joor.Test", """
      *   package org.joor;
-     *   @MyAnnotation
+     *   &#64;MyAnnotation
      *   class Test implements java.util.function.Supplier&lt;String&gt; {
      *     public String get() {
      *       return "Hello World!";
@@ -146,7 +146,7 @@ public class Reflect {
      * <pre><code>
      * Supplier&lt;String&gt; supplier = Reflect.compile("org.joor.Test", """
      *   package org.joor;
-     *   @MyAnnotation
+     *   &#64;MyAnnotation
      *   class Test implements java.util.function.Supplier&lt;String&gt; {
      *     public String get() {
      *       return "Hello World!";

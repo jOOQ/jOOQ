@@ -95,8 +95,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jooq.AggregateFunction;
+import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Check;
+import org.jooq.Comment;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constants;
@@ -122,6 +124,7 @@ import org.jooq.PlainSQL;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.RecordQualifier;
 import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -3171,6 +3174,10 @@ public class JavaGenerator extends AbstractGenerator {
         for (UDTDefinition udt : database.getUDTs(schema)) {
             try {
                 generateUDT(schema, udt);
+
+                // [#228] Package UDTs can't be used as path expressions in SQL
+                if (generateUDTPaths() && udt.getPackage() == null)
+                    generateUDTPath(schema, udt);
             }
             catch (Exception e) {
                 log.error("Error while generating udt " + udt, e);
@@ -3347,6 +3354,92 @@ public class JavaGenerator extends AbstractGenerator {
             printClassJavadoc(out, udt);
         else
             printClassJavadoc(out, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
+    }
+
+    @SuppressWarnings("unused")
+    protected void generateUDTPath(SchemaDefinition schema, UDTDefinition udt) {
+        JavaWriter out = newJavaWriter(getFile(udt, Mode.PATH));
+        out.refConflicts(getStrategy().getJavaIdentifiers(udt.getAttributes()));
+
+        log.info("Generating UDT Path", out.file().getName());
+
+        if (log.isDebugEnabled())
+            for (AttributeDefinition attribute : udt.getAttributes())
+                log.debug("With attribute", "name=" + attribute.getOutputName() + ", matching type names=" + attribute.getDefinedType().getMatchNames());
+
+        generateUDTPath(udt, out);
+        closeJavaWriter(out);
+    }
+
+    protected void generateUDTPath(UDTDefinition udt, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(udt, Mode.PATH);
+        final String recordType = out.ref(getStrategy().getFullJavaClassName(udt, Mode.RECORD));
+        final String classExtends = out.ref(getStrategy().getJavaClassExtends(udt, Mode.PATH));
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, Mode.PATH));
+        final String udtId = out.ref(getStrategy().getFullJavaIdentifier(udt), 2);
+
+        printPackage(out, udt, Mode.PATH);
+
+        generateUDTPathClassJavadoc(udt, out);
+        printClassAnnotations(out, udt, Mode.PATH);
+
+        out.println("%sclass %s<R extends %s, T> extends %s<R, %s, T>[[before= implements ][%s]] {",
+            visibility(), className, Record.class, classExtends, recordType, interfaces);
+        out.printSerial();
+
+        for (AttributeDefinition attribute : udt.getAttributes()) {
+            final String attrTypeFull = getJavaType(attribute.getType(resolver(out)), out);
+            final String attrType = out.ref(attrTypeFull);
+            final String attrTypeRef = getJavaTypeReference(attribute.getDatabase(), attribute.getType(resolver(out)), out);
+            final String attrId = out.ref(getStrategy().getJavaIdentifier(attribute), 2);
+            final String attrName = attribute.getName();
+            final List<String> converter = out.ref(list(attribute.getType(resolver(out)).getConverter()));
+            final List<String> binding = out.ref(list(attribute.getType(resolver(out)).getBinding()));
+
+            if (!printDeprecationIfUnknownType(out, attrTypeFull))
+                out.javadoc("The attribute <code>%s</code>.[[before= ][%s]]", attribute.getQualifiedOutputName(), list(escapeEntities(comment(attribute))));
+
+            if (attribute.getType().isUDT() && !attribute.getDatabase().isArrayType(attrTypeFull)) {
+                final SchemaDefinition attrUdtSchema = attribute.getDatabase().getSchema(attribute.getType().getQualifiedUserType().qualifier().last());
+                final UDTDefinition attrUdt = attribute.getDatabase().getUDT(attrUdtSchema, attribute.getType().getUserType());
+                final String attrPathType = out.ref(getStrategy().getFullJavaClassName(attrUdt, Mode.PATH));
+
+                out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                    visibility(), attrPathType, recordType, attrType, attrId, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
+            }
+            else {
+                final String attrPathType = out.ref(UDTField.class);
+
+                out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                    visibility(), attrPathType, recordType, attrType, attrId, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
+            }
+        }
+
+        out.println();
+        out.println("%s%s(%s name, %s<T> type, %s<R> qualifier, %s comment, %s<?, T> binding) {",
+            visibility(), className, Name.class, DataType.class, RecordQualifier.class, Comment.class, Binding.class);
+        out.println("super(name, type, qualifier, %s, comment, binding);", udtId);
+        out.println("}");
+
+        generateUDTPathClassFooter(udt, out);
+        out.println("}");
+        closeJavaWriter(out);
+    }
+
+    /**
+     * Subclasses may override this method to provide udt class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateUDTPathClassFooter(UDTDefinition udt, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateUDTPathClassJavadoc(UDTDefinition udt, JavaWriter out) {
+        if (generateCommentsOnUDTs())
+            printClassJavadoc(out, udt);
+        else
+            printClassJavadoc(out, "The udt path for <code>" + udt.getQualifiedInputName() + "</code>.");
     }
 
     protected void generateUDTPojos(SchemaDefinition schema) {
@@ -6316,8 +6409,21 @@ public class JavaGenerator extends AbstractGenerator {
                 String isStatic = generateInstanceFields() ? "" : "static ";
                 String tableRef = generateInstanceFields() ? "this" : out.ref(getStrategy().getJavaIdentifier(table), 2);
 
-                out.println("%s%sfinal %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ");",
-                    columnVisibility, isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(comment(column)), converter, binding, generator);
+                if (generateInstanceFields()
+                    && generateUDTPaths()
+                    && column.getType().isUDT()
+                    && !column.getDatabase().isArrayType(columnTypeFull)
+                ) {
+                    final SchemaDefinition columnUdtSchema = column.getDatabase().getSchema(column.getType().getQualifiedUserType().qualifier().last());
+                    final UDTDefinition columnUdt = column.getDatabase().getUDT(columnUdtSchema, column.getType().getUserType());
+                    final String columnPathType = out.ref(getStrategy().getFullJavaClassName(columnUdt, Mode.PATH));
+
+                    out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        visibility(), columnPathType, recordType, columnType, columnId, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, converter, binding);
+                }
+                else
+                    out.println("%s%sfinal %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ");",
+                        columnVisibility, isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(comment(column)), converter, binding, generator);
             }
         }
 

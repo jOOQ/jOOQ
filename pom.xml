@@ -44,7 +44,7 @@
         <jaxb.version>4.0.0</jaxb.version>
 
         <!-- Scala versions -->
-        <scala.version>2.13.9</scala.version>
+        <scala.version>2.13.11</scala.version>
 
         <!-- Kotlin versions -->
         <kotlin.version>1.8.0</kotlin.version>

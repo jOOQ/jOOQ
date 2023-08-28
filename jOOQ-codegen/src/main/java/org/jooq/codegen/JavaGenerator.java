@@ -10425,13 +10425,13 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (db.getUDT(schema, u) != null) {
             sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)), 2));
-            sb.append(".getDataType()");
+            appendGetDataTypeCall(sb);
         }
         // [#3942] [#7863] Dialects that support tables as UDTs
         // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
         else if (SUPPORT_TABLE_AS_UDT.contains(db.getDialect()) && db.getTable(schema, u) != null) {
             sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getTable(schema, u)), 2));
-            sb.append(".getDataType()");
+            appendGetDataTypeCall(sb);
         }
         else if (db.getEnum(schema, u) != null) {
             sb.append(getJavaTypeReference(db, new DefaultDataTypeDefinition(
@@ -10550,6 +10550,13 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         return sb.toString();
+    }
+
+    private void appendGetDataTypeCall(StringBuilder sb) {
+        if (language == KOTLIN)
+            sb.append(".dataType");
+        else
+            sb.append(".getDataType()");
     }
 
     private final void appendTypeReferenceNullability(Database db, JavaWriter out, StringBuilder sb, boolean n) {

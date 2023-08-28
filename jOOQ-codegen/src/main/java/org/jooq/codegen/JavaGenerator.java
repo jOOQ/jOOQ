@@ -3383,9 +3383,27 @@ public class JavaGenerator extends AbstractGenerator {
         generateUDTPathClassJavadoc(udt, out);
         printClassAnnotations(out, udt, Mode.PATH);
 
-        out.println("%sclass %s<R extends %s, T> extends %s<R, %s, T>[[before= implements ][%s]] {",
-            visibility(), className, Record.class, classExtends, recordType, interfaces);
-        out.printSerial();
+        if (scala) {
+            out.println("%sclass %s[R <: %s, T](", visibility(), className, Record.class);
+            out.println("name: %s,", Name.class);
+            out.println("klass: %s[T],", DataType.class);
+            out.println("qualifier: %s[R],", RecordQualifier.class);
+            out.println("comment: %s,", Comment.class);
+            out.println("binding: %s[_, T]", Binding.class);
+            out.println(")");
+            out.println("extends %s[R, %s, T](", classExtends, recordType);
+            out.println("name, klass, qualifier, %s, comment, binding", udtId);
+            if (interfaces.isEmpty())
+                out.println(") {");
+            else
+                out.println(")")
+                   .println("[[before= with ][separator= with ][%s]] {", interfaces);
+        }
+        else {
+            out.println("%sclass %s<R extends %s, T> extends %s<R, %s, T>[[before= implements ][%s]] {",
+                visibility(), className, Record.class, classExtends, recordType, interfaces);
+            out.printSerial();
+        }
 
         for (AttributeDefinition attribute : udt.getAttributes()) {
             final String attrTypeFull = getJavaType(attribute.getType(resolver(out)), out);
@@ -3395,31 +3413,45 @@ public class JavaGenerator extends AbstractGenerator {
             final String attrName = attribute.getName();
             final List<String> converter = out.ref(list(attribute.getType(resolver(out)).getConverter()));
             final List<String> binding = out.ref(list(attribute.getType(resolver(out)).getBinding()));
+            final boolean udtPath = attribute.getType().isUDT() && !attribute.getDatabase().isArrayType(attribute.getType().getType());
+
 
             if (!printDeprecationIfUnknownType(out, attrTypeFull))
                 out.javadoc("The attribute <code>%s</code>.[[before= ][%s]]", attribute.getQualifiedOutputName(), list(escapeEntities(comment(attribute))));
 
-            if (attribute.getType().isUDT() && !attribute.getDatabase().isArrayType(attrTypeFull)) {
+            if (udtPath) {
                 final SchemaDefinition attrUdtSchema = attribute.getDatabase().getSchema(attribute.getType().getQualifiedUserType().qualifier().last());
                 final UDTDefinition attrUdt = attribute.getDatabase().getUDT(attrUdtSchema, attribute.getType().getUserType());
                 final String attrPathType = out.ref(getStrategy().getFullJavaClassName(attrUdt, Mode.PATH));
 
-                out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                    visibility(), attrPathType, recordType, attrType, attrId, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
+                if (scala)
+                    out.println("%sval %s: %s[%s, %s] = %s.createUDTPathField[ %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        visibility(), scalaWhitespaceSuffix(attrId), attrPathType, recordType, attrType, Internal.class, attrType, attrPathType, recordType, attrType, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, recordType, attrType, converter, binding);
+                else
+                    out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        visibility(), attrPathType, recordType, attrType, attrId, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
             }
             else {
                 final String attrPathType = out.ref(UDTField.class);
 
-                out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                    visibility(), attrPathType, recordType, attrType, attrId, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
+                if (scala)
+                    out.println("%sval %s: %s[%s, %s] = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        visibility(), scalaWhitespaceSuffix(attrId), attrPathType, recordType, attrType, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, recordType, attrType, converter, binding);
+                else
+                    out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        visibility(), attrPathType, recordType, attrType, attrId, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
             }
         }
 
         out.println();
-        out.println("%s%s(%s name, %s<T> type, %s<R> qualifier, %s comment, %s<?, T> binding) {",
-            visibility(), className, Name.class, DataType.class, RecordQualifier.class, Comment.class, Binding.class);
-        out.println("super(name, type, qualifier, %s, comment, binding);", udtId);
-        out.println("}");
+
+        if (scala) {}
+        else {
+            out.println("%s%s(%s name, %s<T> type, %s<R> qualifier, %s comment, %s<?, T> binding) {",
+                visibility(), className, Name.class, DataType.class, RecordQualifier.class, Comment.class, Binding.class);
+            out.println("super(name, type, qualifier, %s, comment, binding);", udtId);
+            out.println("}");
+        }
 
         generateUDTPathClassFooter(udt, out);
         out.println("}");
@@ -6373,6 +6405,9 @@ public class JavaGenerator extends AbstractGenerator {
 
 
             final String columnVisibility;
+            final boolean udtPath = generateUDTPaths()
+                && column.getType().isUDT()
+                && !column.getDatabase().isArrayType(column.getType().getType());
 
 
 
@@ -6390,30 +6425,36 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("The column <code>%s</code>.[[before= ][%s]]", column.getQualifiedOutputName(), list(escapeEntities(comment(column))));
 
             if (scala) {
+                if (udtPath) {
+                    final SchemaDefinition columnUdtSchema = column.getDatabase().getSchema(column.getType().getQualifiedUserType().qualifier().last());
+                    final UDTDefinition columnUdt = column.getDatabase().getUDT(columnUdtSchema, column.getType().getUserType());
+                    final String columnPathType = out.ref(getStrategy().getFullJavaClassName(columnUdt, Mode.PATH));
+
+                    out.println("%sval %s: %s[%s, %s] = %s.createUDTPathTableField[ %s, %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        columnVisibility, scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, recordType, columnType, columnPathType, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
+                }
+
                 // [#9879] In scala, subclasses cannot call a superclass protected static method
                 //         only a superclass protected instance method. But to capture the Generator<?, TR, ?>
                 //         type variable, we need to pass it explicitly. The relevant createField0() method
                 //         can't be overloaded, so it has that "0" suffix...
-                if (generator.isEmpty())
+                // [#15505] TODO: Use Internal API instead
+                else if (generator.isEmpty())
                     out.println("%sval %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
                 else
                     out.println("%sval %s: %s[%s, %s] = createField0(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
             }
             else if (kotlin) {
                 out.println("%sval %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                    columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                    columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
             }
             else {
                 String isStatic = generateInstanceFields() ? "" : "static ";
                 String tableRef = generateInstanceFields() ? "this" : out.ref(getStrategy().getJavaIdentifier(table), 2);
 
-                if (generateInstanceFields()
-                    && generateUDTPaths()
-                    && column.getType().isUDT()
-                    && !column.getDatabase().isArrayType(columnTypeFull)
-                ) {
+                if (generateInstanceFields() && udtPath) {
                     final SchemaDefinition columnUdtSchema = column.getDatabase().getSchema(column.getType().getQualifiedUserType().qualifier().last());
                     final UDTDefinition columnUdt = column.getDatabase().getUDT(columnUdtSchema, column.getType().getUserType());
                     final String columnPathType = out.ref(getStrategy().getFullJavaClassName(columnUdt, Mode.PATH));
@@ -6423,7 +6464,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else
                     out.println("%s%sfinal %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ");",
-                        columnVisibility, isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(comment(column)), converter, binding, generator);
+                        columnVisibility, isStatic, TableField.class, recordType, columnType, columnId, DSL.class, escapeString(columnName), columnTypeRef, tableRef, escapeString(comment(column)), converter, binding, generator);
             }
         }
 
@@ -10553,8 +10594,10 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private void appendGetDataTypeCall(StringBuilder sb) {
-        if (language == KOTLIN)
+        if (kotlin)
             sb.append(".dataType");
+        else if (scala)
+            sb.append(".getDataType");
         else
             sb.append(".getDataType()");
     }

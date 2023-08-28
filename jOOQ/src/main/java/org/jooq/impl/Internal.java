@@ -125,7 +125,7 @@ import org.reactivestreams.Subscription;
 @org.jooq.Internal
 public final class Internal {
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, P extends UDTPathTableField<R, UR, T>> P createUDTPathTableField(
+    public static final <R extends Record, T, P extends UDTPathTableField<R, ?, T>> P createUDTPathTableField(
         Name name,
         DataType<T> type,
         Table<R> table,
@@ -134,7 +134,7 @@ public final class Internal {
         return createUDTPathTableField(name, type, table, null, returnType, null, null, null);
     }
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, P extends UDTPathTableField<R, UR, T>> P createUDTPathTableField(
+    public static final <R extends Record, T, P extends UDTPathTableField<R, ?, T>> P createUDTPathTableField(
         Name name,
         DataType<T> type,
         Table<R> table,
@@ -144,7 +144,7 @@ public final class Internal {
         return createUDTPathTableField(name, type, table, comment, returnType, null, null, null);
     }
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+    public static final <R extends Record, T, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
         DataType<T> type,
         Table<R> table,
@@ -155,7 +155,7 @@ public final class Internal {
         return createUDTPathTableField(name, type, table, comment, returnType, converter, null, null);
     }
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+    public static final <R extends Record, T, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
         DataType<T> type,
         Table<R> table,
@@ -166,7 +166,7 @@ public final class Internal {
         return createUDTPathTableField(name, type, table, comment, returnType, null, binding, null);
     }
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, X, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+    public static final <R extends Record, T, X, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
         DataType<T> type,
         Table<R> table,
@@ -178,7 +178,7 @@ public final class Internal {
         return createUDTPathTableField(name, type, table, comment, returnType, converter, binding, null);
     }
 
-    public static final <R extends Record, TR extends Table<R>, UR extends UDTRecord<UR>, T, P extends UDTPathTableField<R, UR, T>> P createUDTPathTableField(
+    public static final <R extends Record, TR extends Table<R>, T, P extends UDTPathTableField<R, ?, T>> P createUDTPathTableField(
         Name name,
         DataType<T> type,
         TR table,
@@ -189,7 +189,7 @@ public final class Internal {
         return createUDTPathTableField(name, type, table, comment, returnType, null, null, generator);
     }
 
-    public static final <R extends Record, TR extends Table<R>, UR extends UDTRecord<UR>, T, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+    public static final <R extends Record, TR extends Table<R>, T, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
         DataType<T> type,
         TR table,
@@ -201,7 +201,7 @@ public final class Internal {
         return createUDTPathTableField(name, type, table, comment, returnType, converter, null, generator);
     }
 
-    public static final <R extends Record, TR extends Table<R>, UR extends UDTRecord<UR>, T, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+    public static final <R extends Record, TR extends Table<R>, T, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
         DataType<T> type,
         TR table,
@@ -214,7 +214,7 @@ public final class Internal {
     }
 
     @SuppressWarnings("unchecked")
-    public static final <R extends Record, TR extends Table<R>, UR extends UDTRecord<UR>, T, X, U, P extends UDTPathTableField<R, UR, U>> P createUDTPathTableField(
+    public static final <R extends Record, TR extends Table<R>, T, X, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
         DataType<T> type,
         TR table,
@@ -248,29 +248,29 @@ public final class Internal {
         }
     }
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, P extends UDTField<UR, T>> P createUDTPathField(
+    public static final <T, P extends UDTField<?, T>> P createUDTPathField(
         Name name,
         DataType<T> type,
-        UDTPathField<R, UR, ?> qualifier,
+        UDTPathField<?, ?, ?> qualifier,
         Class<P> returnType
     ) {
         return createUDTPathField(name, type, qualifier, null, returnType, null, null);
     }
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, P extends UDTField<UR, T>> P createUDTPathField(
+    public static final <T, P extends UDTField<?, T>> P createUDTPathField(
         Name name,
         DataType<T> type,
-        UDTPathField<R, UR, ?> qualifier,
+        UDTPathField<?, ?, ?> qualifier,
         String comment,
         Class<P> returnType
     ) {
         return createUDTPathField(name, type, qualifier, comment, returnType, null, null);
     }
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, U, P extends UDTField<UR, U>> P createUDTPathField(
+    public static final <T, U, P extends UDTField<?, U>> P createUDTPathField(
         Name name,
         DataType<T> type,
-        UDTPathField<R, UR, ?> qualifier,
+        UDTPathField<?, ?, ?> qualifier,
         String comment,
         Class<P> returnType,
         Converter<T, U> converter
@@ -278,10 +278,10 @@ public final class Internal {
         return createUDTPathField(name, type, qualifier, comment, returnType, converter, null);
     }
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, U, P extends UDTField<UR, U>> P createUDTPathField(
+    public static final <T, U, P extends UDTField<?, U>> P createUDTPathField(
         Name name,
         DataType<T> type,
-        UDTPathField<R, UR, ?> qualifier,
+        UDTPathField<?, ?, ?> qualifier,
         String comment,
         Class<P> returnType,
         Binding<T, U> binding
@@ -289,10 +289,10 @@ public final class Internal {
         return createUDTPathField(name, type, qualifier, comment, returnType, null, binding);
     }
 
-    public static final <R extends Record, UR extends UDTRecord<UR>, T, X, U, P extends UDTField<UR, U>> P createUDTPathField(
+    public static final <T, X, U, P extends UDTField<?, U>> P createUDTPathField(
         Name name,
         DataType<T> type,
-        UDTPathField<R, UR, ?> qualifier,
+        UDTPathField<?, ?, ?> qualifier,
         String comment,
         Class<P> returnType,
         Converter<X, U> converter,
@@ -318,10 +318,10 @@ public final class Internal {
     }
 
     @SuppressWarnings("unchecked")
-    private static <R extends Record, UR extends UDTRecord<UR>, T, X, U, P extends UDTField<UR, U>> P newInstance(
+    private static <T, X, U, P extends UDTField<?, U>> P newInstance(
         Name name,
-        RecordQualifier<R> qualifier,
-        UDTPathField<R, ?, ?> path,
+        RecordQualifier<?> qualifier,
+        UDTPathField<?, ?, ?> path,
         String comment,
         Class<P> returnType,
         Binding<T, U> actualBinding,

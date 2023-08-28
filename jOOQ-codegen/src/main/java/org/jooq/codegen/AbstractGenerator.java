@@ -310,8 +310,8 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public boolean generateUDTPaths() {
 
-        // [#228] TODO: Support this also in Scala and Kotlin
-        return generateUDTPaths && language == Language.JAVA;
+        // [#228] TODO: Support this also in Kotlin
+        return generateUDTPaths && language != Language.KOTLIN;
     }
 
     @Override

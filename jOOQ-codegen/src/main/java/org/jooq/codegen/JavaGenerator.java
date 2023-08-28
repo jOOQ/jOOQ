@@ -3386,7 +3386,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {
             out.println("%sclass %s[R <: %s, T](", visibility(), className, Record.class);
             out.println("name: %s,", Name.class);
-            out.println("type: %s<T>,", DataType.class);
+            out.println("klass: %s<T>,", DataType.class);
             out.println("qualifier: %s[R],", RecordQualifier.class);
             out.println("comment: %s,", Comment.class);
             out.println("binding: %s[_, T]", Binding.class);

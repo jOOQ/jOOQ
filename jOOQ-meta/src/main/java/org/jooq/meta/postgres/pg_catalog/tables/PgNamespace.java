@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -24,10 +23,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
-import org.jooq.meta.postgres.pg_catalog.tables.PgClass.PgClassPath;
-import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint.PgConstraintPath;
-import org.jooq.meta.postgres.pg_catalog.tables.PgProc.PgProcPath;
-import org.jooq.meta.postgres.pg_catalog.tables.PgType.PgTypePath;
 
 
 /**
@@ -104,12 +99,6 @@ public class PgNamespace extends TableImpl<Record> {
         super(path, childPath, parentPath, PG_NAMESPACE);
     }
 
-    public static class PgNamespacePath extends PgNamespace implements Path<Record> {
-        public <O extends Record> PgNamespacePath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
@@ -125,54 +114,54 @@ public class PgNamespace extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_NAMESPACE_OID_INDEX, Keys.PG_NAMESPACE_NSPNAME_INDEX);
     }
 
-    private transient PgClassPath _pgClass;
+    private transient PgClass _pgClass;
 
     /**
      * Get the implicit to-many join path to the
      * <code>pg_catalog.pg_class</code> table
      */
-    public PgClassPath pgClass() {
+    public PgClass pgClass() {
         if (_pgClass == null)
-            _pgClass = new PgClassPath(this, null, Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE.getInverseKey());
+            _pgClass = new PgClass(this, null, Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE.getInverseKey());
 
         return _pgClass;
     }
 
-    private transient PgConstraintPath _pgConstraint;
+    private transient PgConstraint _pgConstraint;
 
     /**
      * Get the implicit to-many join path to the
      * <code>pg_catalog.pg_constraint</code> table
      */
-    public PgConstraintPath pgConstraint() {
+    public PgConstraint pgConstraint() {
         if (_pgConstraint == null)
-            _pgConstraint = new PgConstraintPath(this, null, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE.getInverseKey());
+            _pgConstraint = new PgConstraint(this, null, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE.getInverseKey());
 
         return _pgConstraint;
     }
 
-    private transient PgProcPath _pgProc;
+    private transient PgProc _pgProc;
 
     /**
      * Get the implicit to-many join path to the <code>pg_catalog.pg_proc</code>
      * table
      */
-    public PgProcPath pgProc() {
+    public PgProc pgProc() {
         if (_pgProc == null)
-            _pgProc = new PgProcPath(this, null, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE.getInverseKey());
+            _pgProc = new PgProc(this, null, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE.getInverseKey());
 
         return _pgProc;
     }
 
-    private transient PgTypePath _pgType;
+    private transient PgType _pgType;
 
     /**
      * Get the implicit to-many join path to the <code>pg_catalog.pg_type</code>
      * table
      */
-    public PgTypePath pgType() {
+    public PgType pgType() {
         if (_pgType == null)
-            _pgType = new PgTypePath(this, null, Keys.PG_TYPE__SYNTHETIC_FK_PG_TYPE__SYNTHETIC_PK_PG_NAMESPACE.getInverseKey());
+            _pgType = new PgType(this, null, Keys.PG_TYPE__SYNTHETIC_FK_PG_TYPE__SYNTHETIC_PK_PG_NAMESPACE.getInverseKey());
 
         return _pgType;
     }

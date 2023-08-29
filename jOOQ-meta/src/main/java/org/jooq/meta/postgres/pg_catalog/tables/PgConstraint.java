@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,12 +19,11 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
-import org.jooq.meta.postgres.pg_catalog.tables.PgClass.PgClassPath;
-import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace.PgNamespacePath;
 
 
 /**
@@ -183,7 +181,7 @@ public class PgConstraint extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> CONBIN = createField(DSL.name("conbin"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
+    public final TableField<Record, Object> CONBIN = createField(DSL.name("conbin"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     private PgConstraint(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -218,12 +216,6 @@ public class PgConstraint extends TableImpl<Record> {
         super(path, childPath, parentPath, PG_CONSTRAINT);
     }
 
-    public static class PgConstraintPath extends PgConstraint implements Path<Record> {
-        public <O extends Record> PgConstraintPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
@@ -244,27 +236,27 @@ public class PgConstraint extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS);
     }
 
-    private transient PgNamespacePath _pgNamespace;
+    private transient PgNamespace _pgNamespace;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_namespace</code>
      * table.
      */
-    public PgNamespacePath pgNamespace() {
+    public PgNamespace pgNamespace() {
         if (_pgNamespace == null)
-            _pgNamespace = new PgNamespacePath(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE, null);
+            _pgNamespace = new PgNamespace(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_NAMESPACE, null);
 
         return _pgNamespace;
     }
 
-    private transient PgClassPath _pgClass;
+    private transient PgClass _pgClass;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_class</code> table.
      */
-    public PgClassPath pgClass() {
+    public PgClass pgClass() {
         if (_pgClass == null)
-            _pgClass = new PgClassPath(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS, null);
+            _pgClass = new PgClass(this, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS, null);
 
         return _pgClass;
     }

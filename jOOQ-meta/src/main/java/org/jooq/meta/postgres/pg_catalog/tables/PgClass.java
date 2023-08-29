@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,15 +19,11 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
-import org.jooq.meta.postgres.pg_catalog.tables.PgAttribute.PgAttributePath;
-import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint.PgConstraintPath;
-import org.jooq.meta.postgres.pg_catalog.tables.PgIndex.PgIndexPath;
-import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace.PgNamespacePath;
-import org.jooq.meta.postgres.pg_catalog.tables.PgSequence.PgSequencePath;
 
 
 /**
@@ -221,7 +216,7 @@ public class PgClass extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> RELPARTBOUND = createField(DSL.name("relpartbound"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
+    public final TableField<Record, Object> RELPARTBOUND = createField(DSL.name("relpartbound"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     private PgClass(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -256,12 +251,6 @@ public class PgClass extends TableImpl<Record> {
         super(path, childPath, parentPath, PG_CLASS);
     }
 
-    public static class PgClassPath extends PgClass implements Path<Record> {
-        public <O extends Record> PgClassPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
@@ -282,82 +271,82 @@ public class PgClass extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE);
     }
 
-    private transient PgNamespacePath _pgNamespace;
+    private transient PgNamespace _pgNamespace;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_namespace</code>
      * table.
      */
-    public PgNamespacePath pgNamespace() {
+    public PgNamespace pgNamespace() {
         if (_pgNamespace == null)
-            _pgNamespace = new PgNamespacePath(this, Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE, null);
+            _pgNamespace = new PgNamespace(this, Keys.PG_CLASS__SYNTHETIC_FK_PG_CLASS__SYNTHETIC_PK_PG_NAMESPACE, null);
 
         return _pgNamespace;
     }
 
-    private transient PgAttributePath _pgAttribute;
+    private transient PgAttribute _pgAttribute;
 
     /**
      * Get the implicit to-many join path to the
      * <code>pg_catalog.pg_attribute</code> table
      */
-    public PgAttributePath pgAttribute() {
+    public PgAttribute pgAttribute() {
         if (_pgAttribute == null)
-            _pgAttribute = new PgAttributePath(this, null, Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS.getInverseKey());
+            _pgAttribute = new PgAttribute(this, null, Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS.getInverseKey());
 
         return _pgAttribute;
     }
 
-    private transient PgConstraintPath _pgConstraint;
+    private transient PgConstraint _pgConstraint;
 
     /**
      * Get the implicit to-many join path to the
      * <code>pg_catalog.pg_constraint</code> table
      */
-    public PgConstraintPath pgConstraint() {
+    public PgConstraint pgConstraint() {
         if (_pgConstraint == null)
-            _pgConstraint = new PgConstraintPath(this, null, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS.getInverseKey());
+            _pgConstraint = new PgConstraint(this, null, Keys.PG_CONSTRAINT__SYNTHETIC_FK_PG_CONSTRAINT__SYNTHETIC_PK_PG_CLASS.getInverseKey());
 
         return _pgConstraint;
     }
 
-    private transient PgIndexPath _indexClass;
+    private transient PgIndex _indexClass;
 
     /**
      * Get the implicit to-many join path to the
      * <code>pg_catalog.pg_index</code> table, via the <code>INDEX_CLASS</code>
      * key
      */
-    public PgIndexPath indexClass() {
+    public PgIndex indexClass() {
         if (_indexClass == null)
-            _indexClass = new PgIndexPath(this, null, Keys.PG_INDEX__INDEX_CLASS.getInverseKey());
+            _indexClass = new PgIndex(this, null, Keys.PG_INDEX__INDEX_CLASS.getInverseKey());
 
         return _indexClass;
     }
 
-    private transient PgIndexPath _tableClass;
+    private transient PgIndex _tableClass;
 
     /**
      * Get the implicit to-many join path to the
      * <code>pg_catalog.pg_index</code> table, via the <code>TABLE_CLASS</code>
      * key
      */
-    public PgIndexPath tableClass() {
+    public PgIndex tableClass() {
         if (_tableClass == null)
-            _tableClass = new PgIndexPath(this, null, Keys.PG_INDEX__TABLE_CLASS.getInverseKey());
+            _tableClass = new PgIndex(this, null, Keys.PG_INDEX__TABLE_CLASS.getInverseKey());
 
         return _tableClass;
     }
 
-    private transient PgSequencePath _pgSequence;
+    private transient PgSequence _pgSequence;
 
     /**
      * Get the implicit to-many join path to the
      * <code>pg_catalog.pg_sequence</code> table
      */
-    public PgSequencePath pgSequence() {
+    public PgSequence pgSequence() {
         if (_pgSequence == null)
-            _pgSequence = new PgSequencePath(this, null, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_CLASS.getInverseKey());
+            _pgSequence = new PgSequence(this, null, Keys.PG_SEQUENCE__SYNTHETIC_FK_PG_SEQUENCE__SYNTHETIC_PK_PG_CLASS.getInverseKey());
 
         return _pgSequence;
     }

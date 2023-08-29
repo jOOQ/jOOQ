@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,11 +19,11 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
-import org.jooq.meta.postgres.pg_catalog.tables.PgClass.PgClassPath;
 
 
 /**
@@ -126,22 +125,22 @@ public class PgIndex extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_index.indkey</code>.
      */
-    public final TableField<Record, Object[]> INDKEY = createField(DSL.name("indkey"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"nt2vector\"").nullable(false).array(), this, "");
+    public final TableField<Record, Object[]> INDKEY = createField(DSL.name("indkey"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"nt2vector\"").nullable(false).array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indcollation</code>.
      */
-    public final TableField<Record, Object[]> INDCOLLATION = createField(DSL.name("indcollation"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"idvector\"").nullable(false).array(), this, "");
+    public final TableField<Record, Object[]> INDCOLLATION = createField(DSL.name("indcollation"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"idvector\"").nullable(false).array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indclass</code>.
      */
-    public final TableField<Record, Object[]> INDCLASS = createField(DSL.name("indclass"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"idvector\"").nullable(false).array(), this, "");
+    public final TableField<Record, Object[]> INDCLASS = createField(DSL.name("indclass"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"idvector\"").nullable(false).array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_index.indoption</code>.
      */
-    public final TableField<Record, Object[]> INDOPTION = createField(DSL.name("indoption"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"nt2vector\"").nullable(false).array(), this, "");
+    public final TableField<Record, Object[]> INDOPTION = createField(DSL.name("indoption"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"nt2vector\"").nullable(false).array(), this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -152,7 +151,7 @@ public class PgIndex extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> INDEXPRS = createField(DSL.name("indexprs"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
+    public final TableField<Record, Object> INDEXPRS = createField(DSL.name("indexprs"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -163,7 +162,7 @@ public class PgIndex extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> INDPRED = createField(DSL.name("indpred"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
+    public final TableField<Record, Object> INDPRED = createField(DSL.name("indpred"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     private PgIndex(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -198,12 +197,6 @@ public class PgIndex extends TableImpl<Record> {
         super(path, childPath, parentPath, PG_INDEX);
     }
 
-    public static class PgIndexPath extends PgIndex implements Path<Record> {
-        public <O extends Record> PgIndexPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
@@ -219,28 +212,28 @@ public class PgIndex extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_INDEX__INDEX_CLASS, Keys.PG_INDEX__TABLE_CLASS);
     }
 
-    private transient PgClassPath _indexClass;
+    private transient PgClass _indexClass;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_class</code> table,
      * via the <code>INDEX_CLASS</code> key.
      */
-    public PgClassPath indexClass() {
+    public PgClass indexClass() {
         if (_indexClass == null)
-            _indexClass = new PgClassPath(this, Keys.PG_INDEX__INDEX_CLASS, null);
+            _indexClass = new PgClass(this, Keys.PG_INDEX__INDEX_CLASS, null);
 
         return _indexClass;
     }
 
-    private transient PgClassPath _tableClass;
+    private transient PgClass _tableClass;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_class</code> table,
      * via the <code>TABLE_CLASS</code> key.
      */
-    public PgClassPath tableClass() {
+    public PgClass tableClass() {
         if (_tableClass == null)
-            _tableClass = new PgClassPath(this, Keys.PG_INDEX__TABLE_CLASS, null);
+            _tableClass = new PgClass(this, Keys.PG_INDEX__TABLE_CLASS, null);
 
         return _tableClass;
     }

@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -24,7 +23,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
-import org.jooq.meta.postgres.pg_catalog.tables.PgClass.PgClassPath;
 
 
 /**
@@ -211,12 +209,6 @@ public class PgAttribute extends TableImpl<Record> {
         super(path, childPath, parentPath, PG_ATTRIBUTE);
     }
 
-    public static class PgAttributePath extends PgAttribute implements Path<Record> {
-        public <O extends Record> PgAttributePath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
@@ -234,19 +226,31 @@ public class PgAttribute extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.asList(Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS);
+        return Arrays.asList(Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS, Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_TYPE);
     }
 
-    private transient PgClassPath _pgClass;
+    private transient PgClass _pgClass;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_class</code> table.
      */
-    public PgClassPath pgClass() {
+    public PgClass pgClass() {
         if (_pgClass == null)
-            _pgClass = new PgClassPath(this, Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS, null);
+            _pgClass = new PgClass(this, Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_CLASS, null);
 
         return _pgClass;
+    }
+
+    private transient PgType _pgType;
+
+    /**
+     * Get the implicit join path to the <code>pg_catalog.pg_type</code> table.
+     */
+    public PgType pgType() {
+        if (_pgType == null)
+            _pgType = new PgType(this, Keys.PG_ATTRIBUTE__SYNTHETIC_FK_PG_ATTRIBUTE__SYNTHETIC_PK_PG_TYPE, null);
+
+        return _pgType;
     }
 
     @Override

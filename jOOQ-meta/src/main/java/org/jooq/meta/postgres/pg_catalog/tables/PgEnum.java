@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -24,7 +23,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
-import org.jooq.meta.postgres.pg_catalog.tables.PgType.PgTypePath;
 
 
 /**
@@ -101,12 +99,6 @@ public class PgEnum extends TableImpl<Record> {
         super(path, childPath, parentPath, PG_ENUM);
     }
 
-    public static class PgEnumPath extends PgEnum implements Path<Record> {
-        public <O extends Record> PgEnumPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
@@ -127,14 +119,14 @@ public class PgEnum extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE);
     }
 
-    private transient PgTypePath _pgType;
+    private transient PgType _pgType;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_type</code> table.
      */
-    public PgTypePath pgType() {
+    public PgType pgType() {
         if (_pgType == null)
-            _pgType = new PgTypePath(this, Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE, null);
+            _pgType = new PgType(this, Keys.PG_ENUM__SYNTHETIC_FK_PG_ENUM__SYNTHETIC_PK_PG_TYPE, null);
 
         return _pgType;
     }

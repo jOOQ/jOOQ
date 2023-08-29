@@ -12,7 +12,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -20,12 +19,11 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.postgres.pg_catalog.Keys;
 import org.jooq.meta.postgres.pg_catalog.PgCatalog;
-import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace.PgNamespacePath;
-import org.jooq.meta.postgres.pg_catalog.tables.PgType.PgTypePath;
 
 
 /**
@@ -147,7 +145,7 @@ public class PgProc extends TableImpl<Record> {
     /**
      * The column <code>pg_catalog.pg_proc.proargtypes</code>.
      */
-    public final TableField<Record, Object[]> PROARGTYPES = createField(DSL.name("proargtypes"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"idvector\"").nullable(false).array(), this, "");
+    public final TableField<Record, Object[]> PROARGTYPES = createField(DSL.name("proargtypes"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"idvector\"").nullable(false).array(), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proallargtypes</code>.
@@ -173,7 +171,7 @@ public class PgProc extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> PROARGDEFAULTS = createField(DSL.name("proargdefaults"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
+    public final TableField<Record, Object> PROARGDEFAULTS = createField(DSL.name("proargdefaults"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.protrftypes</code>.
@@ -199,7 +197,7 @@ public class PgProc extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> PROSQLBODY = createField(DSL.name("prosqlbody"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
+    public final TableField<Record, Object> PROSQLBODY = createField(DSL.name("prosqlbody"), DefaultDataType.getDefaultDataType("\"pg_catalog\".\"pg_node_tree\""), this, "");
 
     /**
      * The column <code>pg_catalog.pg_proc.proconfig</code>.
@@ -244,12 +242,6 @@ public class PgProc extends TableImpl<Record> {
         super(path, childPath, parentPath, PG_PROC);
     }
 
-    public static class PgProcPath extends PgProc implements Path<Record> {
-        public <O extends Record> PgProcPath(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-            super(path, childPath, parentPath);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : PgCatalog.PG_CATALOG;
@@ -270,27 +262,27 @@ public class PgProc extends TableImpl<Record> {
         return Arrays.asList(Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_TYPE);
     }
 
-    private transient PgNamespacePath _pgNamespace;
+    private transient PgNamespace _pgNamespace;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_namespace</code>
      * table.
      */
-    public PgNamespacePath pgNamespace() {
+    public PgNamespace pgNamespace() {
         if (_pgNamespace == null)
-            _pgNamespace = new PgNamespacePath(this, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE, null);
+            _pgNamespace = new PgNamespace(this, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_NAMESPACE, null);
 
         return _pgNamespace;
     }
 
-    private transient PgTypePath _pgType;
+    private transient PgType _pgType;
 
     /**
      * Get the implicit join path to the <code>pg_catalog.pg_type</code> table.
      */
-    public PgTypePath pgType() {
+    public PgType pgType() {
         if (_pgType == null)
-            _pgType = new PgTypePath(this, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_TYPE, null);
+            _pgType = new PgType(this, Keys.PG_PROC__SYNTHETIC_FK_PG_PROC__SYNTHETIC_PK_PG_TYPE, null);
 
         return _pgType;
     }

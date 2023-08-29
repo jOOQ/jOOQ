@@ -37,71 +37,94 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_CASCADE;
-import static org.jooq.impl.Keywords.K_DROP;
-import static org.jooq.impl.Keywords.K_IF_EXISTS;
-import static org.jooq.impl.Keywords.K_RESTRICT;
-import static org.jooq.impl.Keywords.K_TYPE;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Collection;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.DropTypeFinalStep;
-import org.jooq.DropTypeStep;
-import org.jooq.Field;
+import org.jooq.*;
 import org.jooq.Function1;
-import org.jooq.Name;
-import org.jooq.impl.QOM.Cascade;
-import org.jooq.impl.QOM.DropType;
-import org.jooq.impl.QOM.UnmodifiableList;
-import org.jooq.QueryPart;
-// ...
-// ...
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.impl.QOM.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>DROP TYPE</code> statement.
  */
+@SuppressWarnings({ "rawtypes", "unused" })
 final class DropTypeImpl
 extends
     AbstractDDLQuery
 implements
+    QOM.DropType,
     DropTypeStep,
-    DropType
+    DropTypeFinalStep
 {
 
-    private final QueryPartList<Name> type;
-    private final boolean             ifExists;
-    private Cascade                   cascade;
+    final QueryPartListView<? extends Type<?>> types;
+    final boolean                              ifExists;
+          Cascade                              cascade;
 
-    DropTypeImpl(Configuration configuration, Collection<?> type, boolean ifExists) {
-        super(configuration);
-
-        this.type = new QueryPartList<>(Tools.names(type));
-        this.ifExists = ifExists;
+    DropTypeImpl(
+        Configuration configuration,
+        Collection<? extends Type<?>> types,
+        boolean ifExists
+    ) {
+        this(
+            configuration,
+            types,
+            ifExists,
+            null
+        );
     }
 
-    // ------------------------------------------------------------------------
+    DropTypeImpl(
+        Configuration configuration,
+        Collection<? extends Type<?>> types,
+        boolean ifExists,
+        Cascade cascade
+    ) {
+        super(configuration);
+
+        this.types = new QueryPartList<>(types);
+        this.ifExists = ifExists;
+        this.cascade = cascade;
+    }
+
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     @Override
-    public final DropTypeFinalStep cascade() {
+    public final DropTypeImpl cascade() {
         this.cascade = Cascade.CASCADE;
         return this;
     }
 
     @Override
-    public final DropTypeFinalStep restrict() {
+    public final DropTypeImpl restrict() {
         this.cascade = Cascade.RESTRICT;
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -110,20 +133,23 @@ implements
         if (ifExists)
             ctx.sql(' ').visit(K_IF_EXISTS);
 
-        ctx.sql(' ').visit(type);
+        ctx.sql(' ').visit(types);
 
         if (cascade == Cascade.CASCADE)
             ctx.sql(' ').visit(K_CASCADE);
         else if (cascade == Cascade.RESTRICT)
             ctx.sql(' ').visit(K_RESTRICT);
     }
+
+
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
     @Override
-    public final UnmodifiableList<? extends Name> $names() {
-        return QOM.unmodifiable(type);
+    public final UnmodifiableList<? extends Type<?>> $types() {
+        return QOM.unmodifiable(types);
     }
 
     @Override
@@ -135,6 +161,30 @@ implements
     public final Cascade $cascade() {
         return cascade;
     }
+
+    @Override
+    public final QOM.DropType $types(Collection<? extends Type<?>> newValue) {
+        return $constructor().apply(newValue, $ifExists(), $cascade());
+    }
+
+    @Override
+    public final QOM.DropType $ifExists(boolean newValue) {
+        return $constructor().apply($types(), newValue, $cascade());
+    }
+
+    @Override
+    public final QOM.DropType $cascade(Cascade newValue) {
+        return $constructor().apply($types(), $ifExists(), newValue);
+    }
+
+    public final Function3<? super Collection<? extends Type<?>>, ? super Boolean, ? super Cascade, ? extends QOM.DropType> $constructor() {
+        return (a1, a2, a3) -> new DropTypeImpl(configuration(), (Collection<? extends Type<?>>) a1, a2, a3);
+    }
+
+
+
+
+
 
 
 

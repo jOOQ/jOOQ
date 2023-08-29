@@ -37,15 +37,17 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+import static org.jooq.impl.DSL.*;
+
+import java.util.*;
+
+import org.jooq.impl.DSL;
+
 import org.jetbrains.annotations.*;
 
-// ...
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTEDB;
-
 /**
- * A {@link Query} that can drop types.
+ * A step in the construction of the <code>DROP TYPE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -64,22 +66,21 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface DropTypeStep extends DropTypeFinalStep {
 
     /**
      * Add the <code>CASCADE</code> clause to the <code>DROP TYPE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
     DropTypeFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>DROP TYPE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
     DropTypeFinalStep restrict();
 }

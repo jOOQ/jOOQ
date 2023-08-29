@@ -37,17 +37,17 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.*;
+import static org.jooq.impl.DSL.*;
+
+import java.util.*;
+
+import org.jooq.impl.DSL;
+
 import org.jetbrains.annotations.*;
 
-// ...
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.YUGABYTEDB;
-
-import java.util.Collection;
-
 /**
- * A {@link Query} that can create types.
+ * A step in the construction of the <code>CREATE TYPE</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -66,37 +66,35 @@ import java.util.Collection;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CreateTypeStep {
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES, YUGABYTEDB })
-    CreateTypeFinalStep asEnum();
-
-    /**
-     * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
-     */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
     CreateTypeFinalStep asEnum(String... values);
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
-    @SuppressWarnings("unchecked")
-    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
     CreateTypeFinalStep asEnum(Field<String>... values);
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES, YUGABYTEDB })
-    CreateTypeFinalStep asEnum(Collection<?> values);
+    @NotNull @CheckReturnValue
+    CreateTypeFinalStep asEnum(Collection<? extends Field<String>> values);
+
+    /**
+     * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
+     */
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
+    CreateTypeFinalStep asEnum();
 }

@@ -3148,7 +3148,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     ;
                 else if (parseKeywordIf("TYPE"))
                     return parseCascadeRestrictIf(
-                        parseIfExists(this::parseIdentifiers, dsl::dropTypeIfExists, dsl::dropType),
+                        parseIfExists(this::parseIdentifiers,
+                            n -> dsl.dropTypeIfExists(n.toArray(EMPTY_NAME)),
+                            n -> dsl.dropType(n.toArray(EMPTY_NAME))
+                        ),
                         DropTypeStep::cascade,
                         DropTypeStep::restrict
                     );
@@ -5123,7 +5126,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else
             values = new ArrayList<>();
 
-        return dsl.createType(name).asEnum(values);
+        return dsl.createType(name).asEnum(values.toArray(EMPTY_STRING));
     }
 
     private final Index parseIndexSpecification(Table<?> table) {

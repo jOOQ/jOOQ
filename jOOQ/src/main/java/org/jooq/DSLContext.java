@@ -10275,6 +10275,33 @@ public interface DSLContext extends Scope {
 
 
     /**
+     * The <code>CREATE TYPE</code> statement.
+     *
+     * @see DSL#createType(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    CreateTypeStep createType(@Stringly.Name String type);
+
+    /**
+     * The <code>CREATE TYPE</code> statement.
+     *
+     * @see DSL#createType(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    CreateTypeStep createType(Name type);
+
+    /**
+     * The <code>CREATE TYPE</code> statement.
+     *
+     * @see DSL#createType(Type)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    CreateTypeStep createType(Type<?> type);
+
+    /**
      * The <code>CREATE SCHEMA</code> statement.
      *
      * @see DSL#createSchema(String)
@@ -10891,6 +10918,132 @@ public interface DSLContext extends Scope {
 
 
 
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropType(@Stringly.Name String types);
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropType(Name types);
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Type)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropType(Type<?> types);
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropType(String... types);
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropType(Name... types);
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Type...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropType(Type<?>... types);
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     *
+     * @see DSL#dropType(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropType(Collection<? extends Type<?>> types);
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropTypeIfExists(@Stringly.Name String types);
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropTypeIfExists(Name types);
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Type)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropTypeIfExists(Type<?> types);
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropTypeIfExists(String... types);
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropTypeIfExists(Name... types);
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Type...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropTypeIfExists(Type<?>... types);
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropTypeIfExists(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    DropTypeStep dropTypeIfExists(Collection<? extends Type<?>> types);
 
     /**
      * The <code>DROP VIEW</code> statement.
@@ -11724,114 +11877,6 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
-
-    /**
-     * Create a new DSL <code>CREATE TYPE</code> statement.
-     *
-     * @see DSL#createType(String)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    CreateTypeStep createType(String type);
-
-    /**
-     * Create a new DSL <code>CREATE TYPE</code> statement.
-     *
-     * @see DSL#createType(Name)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    CreateTypeStep createType(Name type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(String)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropType(String type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(Name)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropType(Name type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(String...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropType(String... type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(Name...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropType(Name... type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(Collection)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropType(Collection<?> type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(String)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropTypeIfExists(String type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(Name)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropTypeIfExists(Name type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(String...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropTypeIfExists(String... type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(Name...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropTypeIfExists(Name... type);
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(Collection)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropTypeIfExists(Collection<?> type);
 
     /**
      * Create a new DSL <code>ALTER TABLE</code> statement.

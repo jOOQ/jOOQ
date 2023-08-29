@@ -389,6 +389,7 @@ import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.True;
+import org.jooq.Type;
 import org.jooq.Update;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.User;
@@ -8769,6 +8770,51 @@ public class DSL {
 
 
     /**
+     * The <code>CREATE TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createType(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTypeStep createType(@Stringly.Name String type) {
+        return dsl().createType(type);
+    }
+
+    /**
+     * The <code>CREATE TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createType(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTypeStep createType(Name type) {
+        return dsl().createType(type);
+    }
+
+    /**
+     * The <code>CREATE TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createType(Type)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTypeStep createType(Type<?> type) {
+        return dsl().createType(type);
+    }
+
+    /**
      * The <code>CREATE SCHEMA</code> statement.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
@@ -9783,6 +9829,216 @@ public class DSL {
 
 
     /**
+     * The <code>DROP TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropType(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropType(@Stringly.Name String types) {
+        return dsl().dropType(types);
+    }
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropType(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropType(Name types) {
+        return dsl().dropType(types);
+    }
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropType(Type)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropType(Type<?> types) {
+        return dsl().dropType(types);
+    }
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropType(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropType(String... types) {
+        return dsl().dropType(types);
+    }
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropType(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropType(Name... types) {
+        return dsl().dropType(types);
+    }
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropType(Type...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropType(Type<?>... types) {
+        return dsl().dropType(types);
+    }
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropType(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropType(Collection<? extends Type<?>> types) {
+        return dsl().dropType(types);
+    }
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropTypeIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropTypeIfExists(@Stringly.Name String types) {
+        return dsl().dropTypeIfExists(types);
+    }
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropTypeIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropTypeIfExists(Name types) {
+        return dsl().dropTypeIfExists(types);
+    }
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropTypeIfExists(Type)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropTypeIfExists(Type<?> types) {
+        return dsl().dropTypeIfExists(types);
+    }
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropTypeIfExists(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropTypeIfExists(String... types) {
+        return dsl().dropTypeIfExists(types);
+    }
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropTypeIfExists(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropTypeIfExists(Name... types) {
+        return dsl().dropTypeIfExists(types);
+    }
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropTypeIfExists(Type...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropTypeIfExists(Type<?>... types) {
+        return dsl().dropTypeIfExists(types);
+    }
+
+    /**
+     * The <code>DROP TYPE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropTypeIfExists(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropTypeStep dropTypeIfExists(Collection<? extends Type<?>> types) {
+        return dsl().dropTypeIfExists(types);
+    }
+
+    /**
      * The <code>DROP VIEW</code> statement.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
@@ -10718,138 +10974,6 @@ public class DSL {
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createViewIfNotExists(view, fieldNameFunction);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TYPE</code> statement.
-     *
-     * @see DSLContext#createType(String)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static CreateTypeStep createType(String type) {
-        return dsl().createType(type);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE TYPE</code> statement.
-     *
-     * @see DSLContext#createType(Name)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static CreateTypeStep createType(Name type) {
-        return dsl().createType(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(String)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropType(String type) {
-        return dsl().dropType(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(Name)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropType(Name type) {
-        return dsl().dropType(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(String...)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropType(String... type) {
-        return dsl().dropType(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(Name...)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropType(Name... type) {
-        return dsl().dropType(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropType(Collection)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropType(Collection<?> type) {
-        return dsl().dropType(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(String)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropTypeIfExists(String type) {
-        return dsl().dropTypeIfExists(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(Name)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropTypeIfExists(Name type) {
-        return dsl().dropTypeIfExists(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(String...)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropTypeIfExists(String... type) {
-        return dsl().dropTypeIfExists(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(Name...)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropTypeIfExists(Name... type) {
-        return dsl().dropTypeIfExists(type);
-    }
-
-    /**
-     * Create a new DSL <code>DROP TYPE</code> statement.
-     *
-     * @see DSL#dropTypeIfExists(Collection)
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static DropTypeStep dropTypeIfExists(Collection<?> type) {
-        return dsl().dropTypeIfExists(type);
     }
 
     /**
@@ -12604,6 +12728,42 @@ public class DSL {
             type,
             false
         );
+    }
+
+    /**
+     * Create a qualified type, given its type name.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static Type<?> type(@Stringly.Name String name) {
+        return type(name(name));
+    }
+
+    /**
+     * Create a qualified type, given its type name.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static Type<?> type(Name name) {
+        return type(name, SQLDataType.OTHER);
+    }
+
+    /**
+     * Create a qualified type, given its type name.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static <T> Type<T> type(@Stringly.Name String name, DataType<T> type) {
+        return type(name(name), type);
+    }
+
+    /**
+     * Create a qualified type, given its type name.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static <T> Type<T> type(Name name, DataType<T> type) {
+        return new TypeImpl<>(name, CommentImpl.NO_COMMENT, type);
     }
 
     /**

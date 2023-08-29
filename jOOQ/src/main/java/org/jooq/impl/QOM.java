@@ -47,14 +47,12 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiPredicate;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
 
@@ -113,7 +111,6 @@ import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Privilege;
 // ...
-import org.jooq.QuantifiedSelect;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -138,14 +135,13 @@ import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableLike;
 // ...
-import org.jooq.UniqueKey;
+import org.jooq.Type;
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
 import org.jooq.conf.Settings;
-import org.jooq.impl.QOM.UCommutativeOperator;
 import org.jooq.types.DayToSecond;
 // ...
 
@@ -628,33 +624,6 @@ public final class QOM {
         @NotNull UnmodifiableList<? extends SelectFieldOrAsterisk> $returning();
         @CheckReturnValue
         @NotNull DeleteReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
-    }
-
-    /**
-     * The <code>CREATE TYPE</code> statement.
-     */
-    public /*sealed*/ interface CreateType
-        extends
-            DDLQuery
-        /*permits
-            CreateTypeImpl*/
-    {
-        @NotNull Name $name();
-        @NotNull UnmodifiableList<? extends Field<String>> $values();
-    }
-
-    /**
-     * The <code>DROP TYPE</code> statement.
-     */
-    public /*sealed*/ interface DropType
-        extends
-            DDLQuery
-        /*permits
-            DropTypeImpl*/
-    {
-        @NotNull UnmodifiableList<? extends Name> $names();
-        boolean $ifExists();
-        @Nullable Cascade $cascade();
     }
 
     /**
@@ -2290,6 +2259,23 @@ public final class QOM {
 
 
     /**
+     * The <code>CREATE TYPE</code> statement.
+     */
+    public /*sealed*/ interface CreateType
+        extends
+            DDLQuery
+        //permits
+        //    CreateTypeImpl
+    {
+        @NotNull Type<?> $type();
+        @NotNull UnmodifiableList<? extends Field<String>> $values();
+        @CheckReturnValue
+        @NotNull CreateType $type(Type<?> type);
+        @CheckReturnValue
+        @NotNull CreateType $values(Collection<? extends Field<String>> values);
+    }
+
+    /**
      * The <code>CREATE SCHEMA</code> statement.
      */
     public /*sealed*/ interface CreateSchema
@@ -2529,6 +2515,26 @@ public final class QOM {
 
 
 
+
+    /**
+     * The <code>DROP TYPE</code> statement.
+     */
+    public /*sealed*/ interface DropType
+        extends
+            DDLQuery
+        //permits
+        //    DropTypeImpl
+    {
+        @NotNull UnmodifiableList<? extends Type<?>> $types();
+        boolean $ifExists();
+        @Nullable Cascade $cascade();
+        @CheckReturnValue
+        @NotNull DropType $types(Collection<? extends Type<?>> types);
+        @CheckReturnValue
+        @NotNull DropType $ifExists(boolean ifExists);
+        @CheckReturnValue
+        @NotNull DropType $cascade(Cascade cascade);
+    }
 
     /**
      * The <code>DROP VIEW</code> statement.

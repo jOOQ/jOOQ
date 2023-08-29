@@ -108,7 +108,6 @@ import org.jooq.ConnectionProvider;
 import org.jooq.ConnectionRunnable;
 import org.jooq.ContextTransactionalCallable;
 import org.jooq.ContextTransactionalRunnable;
-import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.Cursor;
 import org.jooq.DDLExportConfiguration;
@@ -118,7 +117,6 @@ import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteUsingStep;
 import org.jooq.Domain;
-import org.jooq.DropTypeStep;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Explain;
@@ -234,6 +232,7 @@ import org.jooq.TransactionProvider;
 import org.jooq.TransactionalCallable;
 import org.jooq.TransactionalPublishable;
 import org.jooq.TransactionalRunnable;
+import org.jooq.Type;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
@@ -3420,6 +3419,21 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
     @Override
+    public org.jooq.CreateTypeStep createType(@Stringly.Name String type) {
+        return new CreateTypeImpl(configuration(), DSL.type(DSL.name(type)));
+    }
+
+    @Override
+    public org.jooq.CreateTypeStep createType(Name type) {
+        return new CreateTypeImpl(configuration(), DSL.type(type));
+    }
+
+    @Override
+    public org.jooq.CreateTypeStep createType(Type<?> type) {
+        return new CreateTypeImpl(configuration(), type);
+    }
+
+    @Override
     public org.jooq.CreateSchemaFinalStep createSchema(@Stringly.Name String schema) {
         return new CreateSchemaImpl(configuration(), DSL.schema(DSL.name(schema)), false);
     }
@@ -3772,6 +3786,76 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
+
+    @Override
+    public org.jooq.DropTypeStep dropType(@Stringly.Name String types) {
+        return new DropTypeImpl(configuration(), Arrays.asList(DSL.type(types)), false);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropType(Name types) {
+        return new DropTypeImpl(configuration(), Arrays.asList(DSL.type(types)), false);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropType(Type<?> types) {
+        return new DropTypeImpl(configuration(), Arrays.asList(types), false);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropType(String... types) {
+        return new DropTypeImpl(configuration(), Tools.map(types, e -> DSL.type(e)), false);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropType(Name... types) {
+        return new DropTypeImpl(configuration(), Tools.map(types, e -> DSL.type(e)), false);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropType(Type<?>... types) {
+        return new DropTypeImpl(configuration(), Arrays.asList(types), false);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropType(Collection<? extends Type<?>> types) {
+        return new DropTypeImpl(configuration(), new QueryPartList<>(types), false);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropTypeIfExists(@Stringly.Name String types) {
+        return new DropTypeImpl(configuration(), Arrays.asList(DSL.type(types)), true);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropTypeIfExists(Name types) {
+        return new DropTypeImpl(configuration(), Arrays.asList(DSL.type(types)), true);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropTypeIfExists(Type<?> types) {
+        return new DropTypeImpl(configuration(), Arrays.asList(types), true);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropTypeIfExists(String... types) {
+        return new DropTypeImpl(configuration(), Tools.map(types, e -> DSL.type(e)), true);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropTypeIfExists(Name... types) {
+        return new DropTypeImpl(configuration(), Tools.map(types, e -> DSL.type(e)), true);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropTypeIfExists(Type<?>... types) {
+        return new DropTypeImpl(configuration(), Arrays.asList(types), true);
+    }
+
+    @Override
+    public org.jooq.DropTypeStep dropTypeIfExists(Collection<? extends Type<?>> types) {
+        return new DropTypeImpl(configuration(), new QueryPartList<>(types), true);
+    }
 
     @Override
     public org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {
@@ -4197,66 +4281,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
         return new CreateViewImpl<>(configuration(), view, fieldNameFunction, true, false);
-    }
-
-    @Override
-    public CreateTypeStep createType(String type) {
-        return createType(name(type));
-    }
-
-    @Override
-    public CreateTypeStep createType(Name type) {
-        return new CreateTypeImpl(configuration(), type);
-    }
-
-    @Override
-    public DropTypeStep dropType(String type) {
-        return dropType(name(type));
-    }
-
-    @Override
-    public DropTypeStep dropType(Name type) {
-        return dropType(Arrays.asList(type));
-    }
-
-    @Override
-    public DropTypeStep dropType(String... type) {
-        return dropType(Tools.names(type));
-    }
-
-    @Override
-    public DropTypeStep dropType(Name... type) {
-        return dropType(Arrays.asList(type));
-    }
-
-    @Override
-    public DropTypeStep dropType(Collection<?> type) {
-        return new DropTypeImpl(configuration(), type, false);
-    }
-
-    @Override
-    public DropTypeStep dropTypeIfExists(String type) {
-        return dropTypeIfExists(name(type));
-    }
-
-    @Override
-    public DropTypeStep dropTypeIfExists(Name type) {
-        return dropTypeIfExists(Arrays.asList(type));
-    }
-
-    @Override
-    public DropTypeStep dropTypeIfExists(String... type) {
-        return dropTypeIfExists(Tools.names(type));
-    }
-
-    @Override
-    public DropTypeStep dropTypeIfExists(Name... type) {
-        return dropTypeIfExists(Arrays.asList(type));
-    }
-
-    @Override
-    public DropTypeStep dropTypeIfExists(Collection<?> type) {
-        return new DropTypeImpl(configuration(), type, true);
     }
 
     @Override

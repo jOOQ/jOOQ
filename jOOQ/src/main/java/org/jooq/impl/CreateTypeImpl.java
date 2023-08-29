@@ -37,83 +37,98 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CREATE;
-import static org.jooq.impl.Keywords.K_ENUM;
-import static org.jooq.impl.Keywords.K_TYPE;
-import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.CreateTypeFinalStep;
-import org.jooq.CreateTypeStep;
-import org.jooq.Field;
+import org.jooq.*;
 import org.jooq.Function1;
-import org.jooq.Name;
-import org.jooq.conf.ParamType;
-import org.jooq.impl.QOM.CreateType;
-import org.jooq.impl.QOM.UnmodifiableList;
-import org.jooq.QueryPart;
-// ...
-// ...
+import org.jooq.Record;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.impl.QOM.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>CREATE TYPE</code> statement.
  */
-final class CreateTypeImpl extends AbstractDDLQuery implements
-
-    // Cascading interface implementations for CREATE TYPE behaviour
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
+final class CreateTypeImpl
+extends
+    AbstractDDLQuery
+implements
+    QOM.CreateType,
     CreateTypeStep,
-    CreateTypeFinalStep,
-    CreateType
-
+    CreateTypeFinalStep
 {
 
-    private final Name                         type;
-    private final QueryPartList<Field<String>> values;
+    final Type<?>                                    type;
+          QueryPartListView<? extends Field<String>> values;
 
-    CreateTypeImpl(Configuration configuration, Name type) {
+    CreateTypeImpl(
+        Configuration configuration,
+        Type<?> type
+    ) {
+        this(
+            configuration,
+            type,
+            null
+        );
+    }
+
+    CreateTypeImpl(
+        Configuration configuration,
+        Type<?> type,
+        Collection<? extends Field<String>> values
+    ) {
         super(configuration);
 
         this.type = type;
-        this.values = new QueryPartList<>();
+        this.values = new QueryPartList<>(values);
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     @Override
-    public final CreateTypeFinalStep asEnum() {
-        return asEnum(Collections.emptyList());
+    public final CreateTypeImpl asEnum(String... values) {
+        return asEnum(Tools.fields(values));
     }
 
     @Override
-    public final CreateTypeFinalStep asEnum(String... v) {
-        return asEnum(Tools.map(v, s -> DSL.inline(s)));
-    }
-
-    @SafeVarargs
-    @Override
-    public final CreateTypeFinalStep asEnum(Field<String>... v) {
-        return asEnum(Arrays.asList(v));
+    public final CreateTypeImpl asEnum(Field<String>... values) {
+        return asEnum(Arrays.asList(values));
     }
 
     @Override
-    public final CreateTypeFinalStep asEnum(Collection<?> v) {
-        values.addAll(Tools.fields(v, VARCHAR));
+    public final CreateTypeImpl asEnum(Collection<? extends Field<String>> values) {
+        this.values = new QueryPartList<>(values);
         return this;
     }
 
-    // ------------------------------------------------------------------------
+    @Override
+    public final CreateTypeImpl asEnum() {
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -124,12 +139,14 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
            .sql(')');
     }
 
+
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
     @Override
-    public final Name $name() {
+    public final Type<?> $type() {
         return type;
     }
 
@@ -137,6 +154,29 @@ final class CreateTypeImpl extends AbstractDDLQuery implements
     public final UnmodifiableList<? extends Field<String>> $values() {
         return QOM.unmodifiable(values);
     }
+
+    @Override
+    public final QOM.CreateType $type(Type<?> newValue) {
+        return $constructor().apply(newValue, $values());
+    }
+
+    @Override
+    public final QOM.CreateType $values(Collection<? extends Field<String>> newValue) {
+        return $constructor().apply($type(), newValue);
+    }
+
+    public final Function2<? super Type<?>, ? super Collection<? extends Field<String>>, ? extends QOM.CreateType> $constructor() {
+        return (a1, a2) -> new CreateTypeImpl(configuration(), a1, (Collection<? extends Field<String>>) a2);
+    }
+
+
+
+
+
+
+
+
+
 
 
 

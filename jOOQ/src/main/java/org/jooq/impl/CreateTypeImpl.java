@@ -76,6 +76,7 @@ implements
 
     final Type<?>                                    type;
           QueryPartListView<? extends Field<String>> values;
+          QueryPartListView<? extends Field<?>>      attributes;
 
     CreateTypeImpl(
         Configuration configuration,
@@ -84,6 +85,7 @@ implements
         this(
             configuration,
             type,
+            null,
             null
         );
     }
@@ -91,12 +93,14 @@ implements
     CreateTypeImpl(
         Configuration configuration,
         Type<?> type,
-        Collection<? extends Field<String>> values
+        Collection<? extends Field<String>> values,
+        Collection<? extends Field<?>> attributes
     ) {
         super(configuration);
 
         this.type = type;
         this.values = new QueryPartList<>(values);
+        this.attributes = new QueryPartList<>(attributes);
     }
 
     // -------------------------------------------------------------------------
@@ -124,6 +128,17 @@ implements
         return this;
     }
 
+    @Override
+    public final CreateTypeImpl as(Field<?>... attributes) {
+        return as(Arrays.asList(attributes));
+    }
+
+    @Override
+    public final CreateTypeImpl as(Collection<? extends Field<?>> attributes) {
+        this.attributes = new QueryPartList<>(attributes);
+        return this;
+    }
+
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
@@ -134,9 +149,32 @@ implements
     public final void accept(Context<?> ctx) {
         ctx.visit(K_CREATE).sql(' ').visit(K_TYPE).sql(' ')
            .visit(type).sql(' ')
-           .visit(K_AS).sql(' ').visit(K_ENUM).sql(" (")
-           .visit(values, ParamType.INLINED)
-           .sql(')');
+           .visit(K_AS).sql(' ');
+
+        if (!values.isEmpty()) {
+            ctx.visit(K_ENUM).sql(" (")
+               .visit(values, ParamType.INLINED)
+               .sql(')');
+        }
+        else {
+
+
+
+
+
+            ctx.sql('(').visit(
+                new QueryPartList<Field<?>>(attributes).map(f -> declare(f)),
+                ParamType.INLINED
+            ).sql(')');
+        }
+    }
+
+    private static final <T> Field<T> declare(Field<T> f) {
+        return CustomField.of(f.getUnqualifiedName(), f.getDataType(), c -> {
+            c.visit(f.getUnqualifiedName());
+            c.sql(' ');
+            Tools.toSQLDDLTypeDeclarationForAddition(c, f.getDataType());
+        });
     }
 
 
@@ -156,18 +194,30 @@ implements
     }
 
     @Override
+    public final UnmodifiableList<? extends Field<?>> $attributes() {
+        return QOM.unmodifiable(attributes);
+    }
+
+    @Override
     public final QOM.CreateType $type(Type<?> newValue) {
-        return $constructor().apply(newValue, $values());
+        return $constructor().apply(newValue, $values(), $attributes());
     }
 
     @Override
     public final QOM.CreateType $values(Collection<? extends Field<String>> newValue) {
-        return $constructor().apply($type(), newValue);
+        return $constructor().apply($type(), newValue, $attributes());
     }
 
-    public final Function2<? super Type<?>, ? super Collection<? extends Field<String>>, ? extends QOM.CreateType> $constructor() {
-        return (a1, a2) -> new CreateTypeImpl(configuration(), a1, (Collection<? extends Field<String>>) a2);
+    @Override
+    public final QOM.CreateType $attributes(Collection<? extends Field<?>> newValue) {
+        return $constructor().apply($type(), $values(), newValue);
     }
+
+    public final Function3<? super Type<?>, ? super Collection<? extends Field<String>>, ? super Collection<? extends Field<?>>, ? extends QOM.CreateType> $constructor() {
+        return (a1, a2, a3) -> new CreateTypeImpl(configuration(), a1, (Collection<? extends Field<String>>) a2, (Collection<? extends Field<?>>) a3);
+    }
+
+
 
 
 

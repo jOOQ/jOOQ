@@ -126,11 +126,39 @@ implements
 
 
 
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedUntil();
+
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+        accept0(ctx);
+    }
+
+    private final boolean supportsIfExists(Context<?> ctx) {
+        return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
+    }
+
+    private final void accept0(Context<?> ctx) {
+        if (ifExists && !supportsIfExists(ctx))
+            tryCatch(ctx, DDLStatementType.DROP_TYPE, c -> accept1(c));
+        else
+            accept1(ctx);
+    }
+
+    private final void accept1(Context<?> ctx) {
         ctx.visit(K_DROP).sql(' ').visit(K_TYPE);
 
-        if (ifExists)
+        if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(types);

@@ -97,4 +97,18 @@ public interface CreateTypeStep {
     @Support({ H2, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTypeFinalStep asEnum();
+
+    /**
+     * Add the <code>AS</code> clause to the <code>CREATE TYPE</code> statement.
+     */
+    @Support({ POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
+    CreateTypeFinalStep as(Field<?>... attributes);
+
+    /**
+     * Add the <code>AS</code> clause to the <code>CREATE TYPE</code> statement.
+     */
+    @Support({ POSTGRES, YUGABYTEDB })
+    @NotNull @CheckReturnValue
+    CreateTypeFinalStep as(Collection<? extends Field<?>> attributes);
 }

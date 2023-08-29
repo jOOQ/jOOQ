@@ -5115,18 +5115,28 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final DDLQuery parseCreateType() {
         Name name = parseName();
-        parseKeyword("AS ENUM");
-        List<String> values;
-        parse('(');
+        parseKeyword("AS");
 
-        if (!parseIf(')')) {
-            values = parseList(',', ParseContext::parseStringLiteral);
-            parse(')');
+        if (parseKeywordIf("ENUM")) {
+            List<String> values;
+            parse('(');
+
+            if (!parseIf(')')) {
+                values = parseList(',', ParseContext::parseStringLiteral);
+                parse(')');
+            }
+            else
+                values = new ArrayList<>();
+
+            return dsl.createType(name).asEnum(values.toArray(EMPTY_STRING));
         }
-        else
-            values = new ArrayList<>();
-
-        return dsl.createType(name).asEnum(values.toArray(EMPTY_STRING));
+        else {
+            parseKeywordIf("OBJECT");
+            parse('(');
+            List<Field<?>> fields = parseList(',', ctx -> DSL.field(parseIdentifier(), parseDataType()));
+            parse(')');
+            return dsl.createType(name).as(fields);
+        }
     }
 
     private final Index parseIndexSpecification(Table<?> table) {

@@ -2269,10 +2269,13 @@ public final class QOM {
     {
         @NotNull Type<?> $type();
         @NotNull UnmodifiableList<? extends Field<String>> $values();
+        @NotNull UnmodifiableList<? extends Field<?>> $attributes();
         @CheckReturnValue
         @NotNull CreateType $type(Type<?> type);
         @CheckReturnValue
         @NotNull CreateType $values(Collection<? extends Field<String>> values);
+        @CheckReturnValue
+        @NotNull CreateType $attributes(Collection<? extends Field<?>> attributes);
     }
 
     /**

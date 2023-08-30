@@ -3146,7 +3146,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                     ;
-                else if (parseKeywordIf("TYPE"))
+                else if (parseKeywordIf("TYPE")) {
+
+
+
+
+
+
+
+
+
+
+
+
                     return parseCascadeRestrictIf(
                         parseIfExists(this::parseIdentifiers,
                             n -> dsl.dropTypeIfExists(n.toArray(EMPTY_NAME)),
@@ -3155,6 +3167,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         DropTypeStep::cascade,
                         DropTypeStep::restrict
                     );
+                }
                 else if (parseKeywordIf("TABLESPACE"))
                     throw notImplemented("DROP TABLESPACE");
 
@@ -5115,28 +5128,34 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final DDLQuery parseCreateType() {
         Name name = parseName();
-        parseKeyword("AS");
 
-        if (parseKeywordIf("ENUM")) {
-            List<String> values;
-            parse('(');
+        if (parseKeywordIf("AS")) {
+            if (parseKeywordIf("ENUM")) {
+                List<String> values;
+                parse('(');
 
-            if (!parseIf(')')) {
-                values = parseList(',', ParseContext::parseStringLiteral);
-                parse(')');
+                if (!parseIf(')')) {
+                    values = parseList(',', ParseContext::parseStringLiteral);
+                    parse(')');
+                }
+                else
+                    values = new ArrayList<>();
+
+                return dsl.createType(name).asEnum(values.toArray(EMPTY_STRING));
             }
-            else
-                values = new ArrayList<>();
-
-            return dsl.createType(name).asEnum(values.toArray(EMPTY_STRING));
+            else {
+                parseKeywordIf("OBJECT");
+                parse('(');
+                List<Field<?>> fields = parseList(',', ctx -> DSL.field(parseIdentifier(), parseDataType()));
+                parse(')');
+                return dsl.createType(name).as(fields);
+            }
         }
-        else {
-            parseKeywordIf("OBJECT");
-            parse('(');
-            List<Field<?>> fields = parseList(',', ctx -> DSL.field(parseIdentifier(), parseDataType()));
-            parse(')');
-            return dsl.createType(name).as(fields);
+        else if (parseKeywordIf("FROM")) {
+            return dsl.createDomain(name).as(parseDataType());
         }
+        else
+            throw expected("AS", "FROM");
     }
 
     private final Index parseIndexSpecification(Table<?> table) {

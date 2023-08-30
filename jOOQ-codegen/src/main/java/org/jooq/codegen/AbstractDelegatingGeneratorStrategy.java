@@ -136,6 +136,11 @@ public abstract class AbstractDelegatingGeneratorStrategy extends AbstractGenera
     }
 
     @Override
+    public String getGlobalNamesJavaClassExtends(Definition container, Class<? extends Definition> objectType) {
+        return delegate.getGlobalNamesJavaClassExtends(container, objectType);
+    }
+
+    @Override
     public String getGlobalReferencesJavaClassExtends(Definition container, Class<? extends Definition> objectType) {
         return delegate.getGlobalReferencesJavaClassExtends(container, objectType);
     }
@@ -146,6 +151,11 @@ public abstract class AbstractDelegatingGeneratorStrategy extends AbstractGenera
     }
 
     @Override
+    public List<String> getGlobalNamesJavaClassImplements(Definition container, Class<? extends Definition> objectType) {
+        return delegate.getGlobalNamesJavaClassImplements(container, objectType);
+    }
+
+    @Override
     public List<String> getGlobalReferencesJavaClassImplements(Definition container, Class<? extends Definition> objectType) {
         return delegate.getGlobalReferencesJavaClassImplements(container, objectType);
     }
@@ -153,6 +163,21 @@ public abstract class AbstractDelegatingGeneratorStrategy extends AbstractGenera
     @Override
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
         return delegate.getJavaClassImplements(definition, mode);
+    }
+
+    @Override
+    public String getGlobalNamesJavaClassName(Definition container, Class<? extends Definition> objectType) {
+        return delegate.getGlobalNamesJavaClassName(container, objectType);
+    }
+
+    @Override
+    public String getGlobalNamesJavaPackageName(Definition container, Class<? extends Definition> objectType) {
+        return delegate.getGlobalNamesJavaPackageName(container, objectType);
+    }
+
+    @Override
+    public String getGlobalNamesFileHeader(Definition container, Class<? extends Definition> objectType) {
+        return delegate.getGlobalNamesFileHeader(container, objectType);
     }
 
     @Override

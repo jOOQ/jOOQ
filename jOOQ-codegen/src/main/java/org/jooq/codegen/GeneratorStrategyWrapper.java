@@ -296,6 +296,16 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
     }
 
     @Override
+    public String getGlobalNamesJavaClassName(Definition container, Class<? extends Definition> objectType) {
+        String name = delegate.getGlobalNamesJavaClassName(container, objectType);
+
+        if (name.equals(delegate.getJavaClassName(container)))
+            name = name + "_";
+
+        return fixJavaClassName(name);
+    }
+
+    @Override
     public String getGlobalReferencesJavaClassName(Definition container, Class<? extends Definition> objectType) {
         String name = delegate.getGlobalReferencesJavaClassName(container, objectType);
 
@@ -328,6 +338,11 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
         className = escapeWindowsForbiddenNames(className);
 
         return className;
+    }
+
+    @Override
+    public String getGlobalNamesJavaPackageName(Definition container, Class<? extends Definition> objectType) {
+        return fixJavaPackageName(delegate.getGlobalNamesJavaPackageName(container, objectType));
     }
 
     @Override

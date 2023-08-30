@@ -131,6 +131,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateQueues                                   = true;
     boolean                            generateLinks                                    = true;
     boolean                            generateKeys                                     = true;
+    boolean                            generateGlobalObjectNames                        = true;
     boolean                            generateGlobalObjectReferences                   = true;
     boolean                            generateGlobalCatalogReferences                  = true;
     boolean                            generateGlobalSchemaReferences                   = true;
@@ -871,6 +872,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setMaxMembersPerInitialiser(int maxMembersPerInitialiser) {
         this.maxMembersPerInitialiser = maxMembersPerInitialiser;
+    }
+
+    @Override
+    public boolean generateGlobalObjectNames() {
+        return generateGlobalObjectNames;
+    }
+
+    @Override
+    public void setGenerateGlobalObjectNames(boolean generateGlobalObjectNames) {
+        this.generateGlobalObjectNames = generateGlobalObjectNames;
     }
 
     @Override

@@ -2547,6 +2547,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate non-nullable types on interface attributes, where column is not null.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="globalObjectNames" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn on generation of all global object names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="globalObjectReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all global object references.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

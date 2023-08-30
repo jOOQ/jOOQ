@@ -60,6 +60,11 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     // -------------------------------------------------------------------------
 
     @Override
+    public final String getGlobalNamesFileName(Definition container, Class<? extends Definition> objectType) {
+        return getGlobalNamesJavaClassName(container, objectType) + ".java";
+    }
+
+    @Override
     public final String getGlobalReferencesFileName(Definition container, Class<? extends Definition> objectType) {
         return getGlobalReferencesJavaClassName(container, objectType) + ".java";
     }
@@ -79,6 +84,13 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         String dir = getTargetDirectory();
         String pkg = patchPackageName(getTargetPackage().replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg);
+    }
+
+    @Override
+    public final File getGlobalNamesFile(Definition container, Class<? extends Definition> objectType) {
+        String dir = getTargetDirectory();
+        String pkg = patchPackageName(getGlobalNamesJavaPackageName(container, objectType).replaceAll("\\.", "/"));
+        return new File(dir + "/" + pkg, getGlobalNamesFileName(container, objectType));
     }
 
     @Override
@@ -220,6 +232,11 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     @Override
     public final String getJavaMemberName(Definition definition) {
         return getJavaMemberName(definition, Mode.DEFAULT);
+    }
+
+    @Override
+    public final String getGlobalNamesFullJavaClassName(Definition container, Class<? extends Definition> objectType) {
+        return getGlobalNamesJavaPackageName(container, objectType) + "." + getGlobalNamesJavaClassName(container, objectType);
     }
 
     @Override

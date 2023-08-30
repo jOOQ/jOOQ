@@ -850,6 +850,8 @@ public class GenerationTool {
                 generator.setGenerateLinks(g.getGenerate().isLinks());
             if (g.getGenerate().isKeys() != null)
                 generator.setGenerateKeys(g.getGenerate().isKeys());
+            if (g.getGenerate().isGlobalObjectNames() != null)
+                generator.setGenerateGlobalObjectNames(g.getGenerate().isGlobalObjectNames());
             if (g.getGenerate().isGlobalObjectReferences() != null)
                 generator.setGenerateGlobalObjectReferences(g.getGenerate().isGlobalObjectReferences());
             if (g.getGenerate().isGlobalCatalogReferences() != null)

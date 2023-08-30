@@ -733,6 +733,16 @@ public interface Generator {
     void setMaxMembersPerInitialiser(int maxMembersPerInitialiser);
 
     /**
+     * Whether global object names should be generated
+     */
+    boolean generateGlobalObjectNames();
+
+    /**
+     * Whether global object names should be generated
+     */
+    void setGenerateGlobalObjectNames(boolean generateGlobalObjectNames);
+
+    /**
      * Whether global object references should be generated
      */
     boolean generateGlobalObjectReferences();

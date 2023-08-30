@@ -637,6 +637,9 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateDefaultCatalog(catalog))
             generateCatalog(catalog);
 
+        if (generateGlobalObjectNames())
+            generateGlobalObjectNames(catalog, SchemaDefinition.class);
+
         if (generateSpringDao() && catalog.getSchemata().stream().anyMatch(s -> !s.getTables().isEmpty()))
             generateSpringDao(catalog);
 
@@ -686,79 +689,153 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateDefaultSchema(schema))
             generateSchema(schema);
 
-        if (generateGlobalSequenceReferences() && database.getSequences(schema).size() > 0)
-            generateSequences(schema);
+        boolean hasSequences = database.getSequences(schema).size() > 0;
+        boolean hasTables = database.getTables(schema).size() > 0;
+        boolean hasEmbeddables = database.getEmbeddables(schema).size() > 0;
+        boolean hasUDTs = database.getUDTs(schema).size() > 0;
+        boolean hasArrays = database.getArrays(schema).size() > 0;
+        boolean hasEnums = database.getEnums(schema).size() > 0;
+        boolean hasDomains = database.getDomains(schema).size() > 0;
+        boolean hasRoutines = database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema);
 
-        if (generateTables() && database.getTables(schema).size() > 0)
-            generateTables(schema);
 
-        if (generateEmbeddables() && database.getEmbeddables(schema).size() > 0)
-            generateEmbeddables(schema);
 
-        if (generateEmbeddables() && generateInterfaces() && database.getEmbeddables(schema).size() > 0)
-            generateEmbeddableInterfaces(schema);
 
-        if (generateEmbeddables() && generatePojos() && database.getEmbeddables(schema).size() > 0)
-            generateEmbeddablePojos(schema);
 
-        if (generatePojos() && database.getTables(schema).size() > 0)
-            generatePojos(schema);
+
+        if (hasSequences) {
+            if (generateGlobalSequenceReferences())
+                generateSequences(schema);
+
+            if (generateGlobalObjectNames())
+                generateGlobalObjectNames(schema, SequenceDefinition.class);
+        }
+
+        if (hasTables) {
+            if (generateTables() || generateGlobalObjectNames())
+                generateTables(schema);
+
+            if (generateTables()) {
+                if (generateRecords())
+                    generateRecords(schema);
+
+                if (generateDaos())
+                    generateDaos(schema);
+
+                if (generateGlobalTableReferences())
+                    generateTableReferences(schema);
+            }
+
+            if (generateInterfaces())
+                generateInterfaces(schema);
+
+            if (generatePojos())
+                generatePojos(schema);
+
+            if (generateGlobalObjectNames())
+                generateGlobalObjectNames(schema, TableDefinition.class);
+
+            if (generateRelations()) {
+                if (generateGlobalKeyReferences())
+                    generateRelations(schema);
+
+                if (generateGlobalObjectNames())
+                    generateGlobalObjectNames(schema, ForeignKeyDefinition.class);
+
+                if (generateGlobalObjectNames())
+                    generateGlobalObjectNames(schema, UniqueKeyDefinition.class);
+            }
+
+            if (generateGlobalIndexReferences())
+                generateIndexes(schema);
+
+            if (generateGlobalObjectNames())
+                generateGlobalObjectNames(schema, IndexDefinition.class);
+        }
+
+        if (hasEmbeddables) {
+            if (generateEmbeddables()) {
+                generateEmbeddables(schema);
+
+                if (generateInterfaces())
+                    generateEmbeddableInterfaces(schema);
+
+                if (generatePojos())
+                    generateEmbeddablePojos(schema);
+            }
+        }
+
+        if (hasUDTs) {
+            if (generateUDTs() || generateGlobalObjectNames())
+                generateUDTs(schema);
+
+            if (generateUDTs()) {
+                generateUDTRecords(schema);
+
+                if (generatePojos())
+                    generateUDTPojos(schema);
+
+                if (generateInterfaces())
+                    generateUDTInterfaces(schema);
+
+                if (generateRoutines())
+                    generateUDTRoutines(schema);
+
+                if (generateGlobalUDTReferences())
+                    generateUDTReferences(schema);
+            }
+
+            if (generateGlobalObjectNames())
+                generateGlobalObjectNames(schema, UDTDefinition.class);
+        }
+
+        if (hasArrays) {
+            if (generateUDTs())
+                generateArrays(schema);
+
+            if (generateGlobalObjectNames())
+                generateGlobalObjectNames(schema, ArrayDefinition.class);
+        }
+
+        if (hasEnums) {
+            if (generateUDTs())
+                generateEnums(schema);
+
+            if (generateGlobalObjectNames())
+                generateGlobalObjectNames(schema, EnumDefinition.class);
+        }
+
+        if (hasDomains) {
+            if (generateUDTs() && generateGlobalDomainReferences())
+                generateDomainReferences(schema);
+
+            if (generateGlobalObjectNames())
+                generateGlobalObjectNames(schema, DomainDefinition.class);
+        }
 
         if (database.getConfiguredSyntheticDaos().size() > 0)
             generateSyntheticDaos(schema);
 
-        if (generateDaos() && database.getTables(schema).size() > 0)
-            generateDaos(schema);
-
-        if (generateGlobalTableReferences() && database.getTables(schema).size() > 0)
-            generateTableReferences(schema);
-
-        if (generateGlobalKeyReferences() && generateRelations() && database.getTables(schema).size() > 0)
-            generateRelations(schema);
-
-        if (generateGlobalIndexReferences() && database.getTables(schema).size() > 0)
-            generateIndexes(schema);
-
-        if (generateRecords() && database.getTables(schema).size() > 0)
-            generateRecords(schema);
-
-        if (generateInterfaces() && database.getTables(schema).size() > 0)
-            generateInterfaces(schema);
-
-        if (generateUDTs() && database.getUDTs(schema).size() > 0)
-            generateUDTs(schema);
-
-        if (generateUDTs() && generatePojos() && database.getUDTs(schema).size() > 0)
-            generateUDTPojos(schema);
-
-        if (generateUDTs() && database.getUDTs(schema).size() > 0)
-            generateUDTRecords(schema);
-
-        if (generateUDTs() && generateInterfaces() && database.getUDTs(schema).size() > 0)
-            generateUDTInterfaces(schema);
-
-        if (generateUDTs() && generateRoutines() && database.getUDTs(schema).size() > 0)
-            generateUDTRoutines(schema);
-
-        if (generateUDTs() && generateGlobalUDTReferences() && database.getUDTs(schema).size() > 0)
-            generateUDTReferences(schema);
-
-        if (generateUDTs() && database.getArrays(schema).size() > 0)
-            generateArrays(schema);
-
-        if (generateUDTs() && database.getEnums(schema).size() > 0)
-            generateEnums(schema);
-
-        if (generateUDTs() && database.getDomains(schema).size() > 0)
-            generateDomainReferences(schema);
 
 
 
 
 
 
-        if (generateRoutines() && (database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema)))
-            generateRoutines(schema);
+
+
+
+
+        if (hasRoutines) {
+            if (generateRoutines() || generateGlobalObjectNames())
+                generateRoutines(schema);
+
+            if (generateGlobalObjectNames())
+                generateGlobalObjectNames(schema, RoutineDefinition.class);
+        }
+
+
+
 
 
 
@@ -3173,11 +3250,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
             try {
-                generateUDT(schema, udt);
+                if (generateUDTs()) {
+                    generateUDT(schema, udt);
 
-                // [#228] Package UDTs can't be used as path expressions in SQL
-                if (generateUDTPaths() && udt.getPackage() == null)
-                    generateUDTPath(schema, udt);
+                    // [#228] Package UDTs can't be used as path expressions in SQL
+                    if (generateUDTPaths() && udt.getPackage() == null)
+                        generateUDTPath(schema, udt);
+                }
+
+                if (generateGlobalObjectNames())
+                    generateGlobalObjectNames(udt, AttributeDefinition.class);
             }
             catch (Exception e) {
                 log.error("Error while generating udt " + udt, e);
@@ -4198,7 +4280,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (RoutineDefinition routine : database.getRoutines(schema)) {
             try {
-                generateRoutine(schema, routine);
+                if (generateRoutines())
+                    generateRoutine(schema, routine);
+
+                if (generateGlobalObjectNames())
+                    generateGlobalObjectNames(routine, ParameterDefinition.class);
             }
             catch (Exception e) {
                 log.error("Error while generating routine " + routine, e);
@@ -6220,7 +6306,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TableDefinition table : database.getTables(schema)) {
             try {
-                generateTable(schema, table);
+                if (generateTables())
+                    generateTable(schema, table);
+
+                if (generateGlobalObjectNames())
+                    generateGlobalObjectNames(table, ColumnDefinition.class);
             }
             catch (Exception e) {
                 log.error("Error while generating table " + table, e);
@@ -8224,6 +8314,102 @@ public class JavaGenerator extends AbstractGenerator {
         return "null";
     }
 
+    protected void generateGlobalObjectNames(Definition container, Class<? extends Definition> objectType) {
+        log.info("Names", "Generating " + objectType.getSimpleName() + " names for: " + container);
+        JavaWriter out = newJavaWriter(getStrategy().getGlobalNamesFile(container, objectType));
+        printGlobalNamesPackage(out, container, objectType);
+
+        if (!kotlin) {
+            printClassJavadoc(out, "Object names of all " + objectType.getClass() + " types in " + container + ".");
+            printClassAnnotations(out, container, Mode.DEFAULT);
+        }
+
+        final String namesClassName = getStrategy().getGlobalNamesJavaClassName(container, objectType);
+
+        if (scala)
+            out.println("%sobject %s {", visibility(), namesClassName);
+        else if (kotlin) {}
+        else
+            out.println("%sclass %s {", visibility(), namesClassName);
+
+        for (Definition child : children(container, objectType)) {
+            final String id = getStrategy().getJavaIdentifier(child);
+            final String comment = escapeEntities(comment(child));
+
+            out.javadoc(isBlank(comment) ? "The object <code>" + child.getQualifiedOutputName() + "</code>." : comment);
+
+            if (scala)
+                out.println("%sdef %s = \"%s\"", visibility(), id, escapeString(child.getOutputName()));
+            else if (kotlin)
+                out.println("%sval %s = \"%s\"", visibility(), id, escapeString(child.getOutputName()));
+            else
+                out.println("%sstatic final String %s = \"%s\";", visibility(), id, escapeString(child.getOutputName()));
+        }
+
+        generateObjectNameClassFooter(container, objectType, out);
+
+        if (!kotlin)
+            out.println("}");
+
+        closeJavaWriter(out);
+    }
+
+    /**
+     * Subclasses may override this method to provide object name class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateObjectNameClassFooter(Definition schema, Class<? extends Definition> objectType, JavaWriter out) {}
+
+    private List<? extends Definition> children(Definition container, Class<? extends Definition> objectType) {
+        if (container instanceof CatalogDefinition c) {
+            return c.getSchemata();
+        }
+        else if (container instanceof SchemaDefinition s) {
+            if (objectType == ArrayDefinition.class)
+                return s.getDatabase().getArrays(s);
+            else if (objectType == CheckConstraintDefinition.class)
+                return s.getDatabase().getCheckConstraints(s);
+            else if (objectType == DomainDefinition.class)
+                return s.getDatabase().getDomains(s);
+            else if (objectType == EnumDefinition.class)
+                return s.getDatabase().getEnums(s);
+            else if (objectType == ForeignKeyDefinition.class)
+                return s.getDatabase().getForeignKeys(s);
+            else if (objectType == IndexDefinition.class)
+                return s.getDatabase().getIndexes(s);
+            else if (objectType == PackageDefinition.class)
+                return s.getDatabase().getPackages(s);
+            else if (objectType == RoutineDefinition.class)
+                return s.getDatabase().getRoutines(s);
+            else if (objectType == SequenceDefinition.class)
+                return s.getDatabase().getSequences(s);
+            else if (objectType == TableDefinition.class)
+                return s.getTables();
+
+
+
+
+            else if (objectType == UDTDefinition.class)
+                return s.getDatabase().getUDTs(s);
+            else if (objectType == UniqueKeyDefinition.class)
+                return s.getDatabase().getKeys(s);
+        }
+        else if (container instanceof RoutineDefinition r) {
+            if (objectType == ParameterDefinition.class)
+                return r.getAllParameters();
+        }
+        else if (container instanceof TableDefinition t) {
+            if (objectType == ColumnDefinition.class)
+                return t.getColumns();
+        }
+        else if (container instanceof UDTDefinition u) {
+            if (objectType == AttributeDefinition.class)
+                return u.getAttributes();
+        }
+
+        log.info("No child objects of type " + objectType.getName() + " for container : " + container + " (" + container.getClass().getName() + ")");       return new ArrayList<>();
+    }
+
     protected void generateCatalog(CatalogDefinition catalog) {
         JavaWriter out = newJavaWriter(getFile(catalog));
         log.info("");
@@ -10052,6 +10238,15 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
     }
 
+    protected void printGlobalNamesPackage(JavaWriter out, Definition container, Class<? extends Definition> objectType) {
+        printGlobalNamesPackageComment(out, container, objectType);
+
+        out.printPackageSpecification(getStrategy().getGlobalNamesJavaPackageName(container, objectType));
+        out.println();
+        out.printImports();
+        out.println();
+    }
+
     protected void printGlobalReferencesPackage(JavaWriter out, Definition container, Class<? extends Definition> objectType) {
         printGlobalReferencesPackageComment(out, container, objectType);
 
@@ -10063,6 +10258,16 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected void printPackageComment(JavaWriter out, Definition definition, Mode mode) {
         String header = getStrategy().getFileHeader(definition, mode);
+
+        if (!StringUtils.isBlank(header)) {
+            out.println("/*");
+            out.println(JavaWriter.escapeJavadoc(header));
+            out.println(" */");
+        }
+    }
+
+    protected void printGlobalNamesPackageComment(JavaWriter out, Definition container, Class<? extends Definition> objectType) {
+        String header = getStrategy().getGlobalNamesFileHeader(container, objectType);
 
         if (!StringUtils.isBlank(header)) {
             out.println("/*");

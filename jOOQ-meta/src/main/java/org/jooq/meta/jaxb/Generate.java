@@ -150,6 +150,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean kotlinNotNullRecordAttributes = false;
     @XmlElement(defaultValue = "false")
     protected Boolean kotlinNotNullInterfaceAttributes = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean globalObjectNames = false;
     @XmlElement(defaultValue = "true")
     protected Boolean globalObjectReferences = true;
     @XmlElement(defaultValue = "true")
@@ -1655,6 +1657,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setKotlinNotNullInterfaceAttributes(Boolean value) {
         this.kotlinNotNullInterfaceAttributes = value;
+    }
+
+    /**
+     * Turn on generation of all global object names.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isGlobalObjectNames() {
+        return globalObjectNames;
+    }
+
+    /**
+     * Sets the value of the globalObjectNames property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setGlobalObjectNames(Boolean value) {
+        this.globalObjectNames = value;
     }
 
     /**
@@ -3219,6 +3245,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withGlobalObjectNames(Boolean value) {
+        setGlobalObjectNames(value);
+        return this;
+    }
+
     public Generate withGlobalObjectReferences(Boolean value) {
         setGlobalObjectReferences(value);
         return this;
@@ -3577,6 +3608,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("kotlinNotNullPojoAttributes", kotlinNotNullPojoAttributes);
         builder.append("kotlinNotNullRecordAttributes", kotlinNotNullRecordAttributes);
         builder.append("kotlinNotNullInterfaceAttributes", kotlinNotNullInterfaceAttributes);
+        builder.append("globalObjectNames", globalObjectNames);
         builder.append("globalObjectReferences", globalObjectReferences);
         builder.append("globalCatalogReferences", globalCatalogReferences);
         builder.append("globalSchemaReferences", globalSchemaReferences);
@@ -4182,6 +4214,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (globalObjectNames == null) {
+            if (other.globalObjectNames!= null) {
+                return false;
+            }
+        } else {
+            if (!globalObjectNames.equals(other.globalObjectNames)) {
+                return false;
+            }
+        }
         if (globalObjectReferences == null) {
             if (other.globalObjectReferences!= null) {
                 return false;
@@ -4725,6 +4766,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((kotlinNotNullPojoAttributes == null)? 0 :kotlinNotNullPojoAttributes.hashCode()));
         result = ((prime*result)+((kotlinNotNullRecordAttributes == null)? 0 :kotlinNotNullRecordAttributes.hashCode()));
         result = ((prime*result)+((kotlinNotNullInterfaceAttributes == null)? 0 :kotlinNotNullInterfaceAttributes.hashCode()));
+        result = ((prime*result)+((globalObjectNames == null)? 0 :globalObjectNames.hashCode()));
         result = ((prime*result)+((globalObjectReferences == null)? 0 :globalObjectReferences.hashCode()));
         result = ((prime*result)+((globalCatalogReferences == null)? 0 :globalCatalogReferences.hashCode()));
         result = ((prime*result)+((globalSchemaReferences == null)? 0 :globalSchemaReferences.hashCode()));

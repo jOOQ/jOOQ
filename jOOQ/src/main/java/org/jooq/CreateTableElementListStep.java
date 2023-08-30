@@ -89,7 +89,7 @@ public interface CreateTableElementListStep extends CreateTableAsStep {
      */
     @Support
     @NotNull @CheckReturnValue
-    CreateTableElementListStep columns(String... columns);
+    CreateTableElementListStep columns(@Stringly.Name String... columns);
 
     /**
      * Add the <code>COLUMNS</code> clause to the <code>CREATE TABLE</code> statement.
@@ -166,7 +166,7 @@ public interface CreateTableElementListStep extends CreateTableAsStep {
      */
     @Support
     @NotNull @CheckReturnValue
-    CreateTableElementListStep primaryKey(String... fields);
+    CreateTableElementListStep primaryKey(@Stringly.Name String... fields);
 
     /**
      * Add the <code>PRIMARY KEY</code> clause to the <code>CREATE TABLE</code> statement.
@@ -194,7 +194,7 @@ public interface CreateTableElementListStep extends CreateTableAsStep {
      */
     @Support
     @NotNull @CheckReturnValue
-    CreateTableElementListStep unique(String... fields);
+    CreateTableElementListStep unique(@Stringly.Name String... fields);
 
     /**
      * Add the <code>UNIQUE</code> clause to the <code>CREATE TABLE</code> statement.

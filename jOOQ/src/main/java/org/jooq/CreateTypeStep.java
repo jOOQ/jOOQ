@@ -75,7 +75,7 @@ public interface CreateTypeStep {
      */
     @Support({ H2, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateTypeFinalStep asEnum(String... values);
+    CreateTypeFinalStep asEnum(@Stringly.Param String... values);
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.

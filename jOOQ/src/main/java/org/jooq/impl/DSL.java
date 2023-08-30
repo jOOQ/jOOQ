@@ -9884,7 +9884,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static org.jooq.DropTypeStep dropType(String... types) {
+    public static org.jooq.DropTypeStep dropType(@Stringly.Name String... types) {
         return dsl().dropType(types);
     }
 
@@ -9989,7 +9989,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static org.jooq.DropTypeStep dropTypeIfExists(String... types) {
+    public static org.jooq.DropTypeStep dropTypeIfExists(@Stringly.Name String... types) {
         return dsl().dropTypeIfExists(types);
     }
 

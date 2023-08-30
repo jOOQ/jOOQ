@@ -78,7 +78,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateIndexWhereStep include(String... include);
+    CreateIndexWhereStep include(@Stringly.Name String... include);
 
     /**
      * Add the <code>INCLUDE</code> clause to the <code>CREATE INDEX</code> statement.

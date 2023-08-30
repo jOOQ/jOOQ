@@ -3803,7 +3803,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropTypeStep dropType(String... types) {
+    public org.jooq.DropTypeStep dropType(@Stringly.Name String... types) {
         return new DropTypeImpl(configuration(), Tools.map(types, e -> DSL.type(e)), false);
     }
 
@@ -3838,7 +3838,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropTypeStep dropTypeIfExists(String... types) {
+    public org.jooq.DropTypeStep dropTypeIfExists(@Stringly.Name String... types) {
         return new DropTypeImpl(configuration(), Tools.map(types, e -> DSL.type(e)), true);
     }
 

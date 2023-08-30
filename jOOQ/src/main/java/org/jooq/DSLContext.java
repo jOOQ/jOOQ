@@ -10953,7 +10953,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropType(String... types);
+    DropTypeStep dropType(@Stringly.Name String... types);
 
     /**
      * The <code>DROP TYPE</code> statement.
@@ -11016,7 +11016,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ H2, POSTGRES, YUGABYTEDB })
-    DropTypeStep dropTypeIfExists(String... types);
+    DropTypeStep dropTypeIfExists(@Stringly.Name String... types);
 
     /**
      * The <code>DROP TYPE IF EXISTS</code> statement.

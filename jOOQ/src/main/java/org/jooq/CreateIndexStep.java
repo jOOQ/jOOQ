@@ -75,7 +75,7 @@ public interface CreateIndexStep {
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateIndexIncludeStep on(@Stringly.Name String table, String... on);
+    CreateIndexIncludeStep on(@Stringly.Name String table, @Stringly.Name String... on);
 
     /**
      * Add the <code>ON</code> clause to the <code>CREATE INDEX</code> statement.

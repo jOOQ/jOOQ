@@ -98,6 +98,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     private static final JooqLogger                       log               = JooqLogger.getLogger(DefaultExecuteContext.class);
     private static final JooqLogger                       logVersionSupport = JooqLogger.getLogger(DefaultExecuteContext.class, "logVersionSupport", 1);
+    private static final JooqLogger                       logDefaultDialect = JooqLogger.getLogger(DefaultExecuteContext.class, "logDefaultDialect", 3);
 
     // Persistent attributes (repeatable)
     private final Configuration                           originalConfiguration;
@@ -724,6 +725,23 @@ class DefaultExecuteContext implements ExecuteContext {
     public final void sqlException(SQLException e) {
         this.sqlException = e;
         exception(Tools.translate(sql(), e));
+
+        if (family() == SQLDialect.DEFAULT && logDefaultDialect.isWarnEnabled())
+            logDefaultDialect.warn("Unsupported dialect",
+                ("" +
+                "An exception was thrown when executing a query with unsupported dialect: SQLDialect.DEFAULT.\n" +
+                "\n" +
+                "This is usually due to one of 2 reasons:\n" +
+                "- The dialect was configured by accident (e.g. through a wrong Spring Boot configuration).\n" +
+                "  In this case, the solution is to configure the correct dialect, e.g. SQLDialect.POSTGRES\n" +
+                "- SQLDialect.DEFAULT is used as a \"close enough\" approximation of an unsupported dialect.\n" +
+                "  Please beware that SQLDialect.DEFAULT is used mainly for DEBUG logging SQL strings, e.g.\n" +
+                "  when calling Query.toString(). It does not guarantee stability of generated SQL, i.e.\n" +
+                "  future versions of jOOQ may produce different SQL strings, which may break assumptions\n" +
+                "  about your unsupported dialect.\n" +
+                "  Please visit https://github.com/jOOQ/jOOQ/discussions/14059 for new dialect support.\n" +
+                "")
+            );
     }
 
     @Override

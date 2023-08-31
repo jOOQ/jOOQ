@@ -8390,7 +8390,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
             else if (objectType == UDTDefinition.class)
-                return s.getDatabase().getUDTs(s);
+                return s.getDatabase().getUDTs(s).stream().filter(u -> u.getPackage() == null).collect(toList());
             else if (objectType == UniqueKeyDefinition.class)
                 return s.getDatabase().getKeys(s);
         }
@@ -8406,6 +8406,14 @@ public class JavaGenerator extends AbstractGenerator {
             if (objectType == AttributeDefinition.class)
                 return u.getAttributes();
         }
+
+
+
+
+
+
+
+
 
         log.info("No child objects of type " + objectType.getName() + " for container : " + container + " (" + container.getClass().getName() + ")");       return new ArrayList<>();
     }

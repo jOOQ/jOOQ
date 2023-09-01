@@ -52,6 +52,7 @@ import static org.jooq.DDLFlag.UNIQUE;
 import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
+import static org.jooq.impl.Comparators.TABLE_VIEW_COMP;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.Tools.map;
 
@@ -405,7 +406,7 @@ final class DDL {
 
         if (configuration.flags().contains(TABLE)) {
             for (Schema schema : schemas) {
-                for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder())) {
+                for (Table<?> table : sortTablesIf(schema.getTables(), !configuration.respectTableOrder())) {
                     List<Constraint> constraints = new ArrayList<>();
 
                     if (!hasConstraintsUsingIndexes(table)) {
@@ -505,6 +506,20 @@ final class DDL {
         if (sort) {
             List<N> result = new ArrayList<>(input);
             result.sort(NAMED_COMP);
+            return result;
+        }
+
+        return input;
+    }
+
+    private final <T extends Table<?>> List<T> sortTablesIf(List<T> input, boolean sort) {
+
+        if (sort) {
+            List<T> result = new ArrayList<>(input);
+            result.sort(NAMED_COMP);
+
+            // [#15326] Tables should always appear before views
+            result.sort(TABLE_VIEW_COMP);
             return result;
         }
 

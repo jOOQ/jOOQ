@@ -50,6 +50,7 @@ import static org.jooq.DDLFlag.SEQUENCE;
 import static org.jooq.DDLFlag.TABLE;
 import static org.jooq.DDLFlag.UNIQUE;
 // ...
+import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
 import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
@@ -60,8 +61,11 @@ import static org.jooq.impl.Tools.map;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -99,6 +103,7 @@ import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.OnCommit;
 import org.jooq.TableOptions.TableType;
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -532,11 +537,73 @@ final class DDL {
 
             // [#15326] Tables should always appear before views
             result.sort(TABLE_VIEW_COMP);
+
+
+
+
+
             return result;
         }
 
         return input;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final Constraint enforced(ConstraintEnforcementStep check, boolean enforced) {
         return enforced ? check : check.notEnforced();

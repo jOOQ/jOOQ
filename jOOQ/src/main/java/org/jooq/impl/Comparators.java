@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.util.Comparator.comparing;
 import static org.jooq.SortOrder.ASC;
 import static org.jooq.SortOrder.DEFAULT;
+import static org.jooq.TableOptions.TableType.TABLE;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -53,6 +54,7 @@ import org.jooq.Key;
 import org.jooq.Named;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
+import org.jooq.Table;
 
 /**
  * Commonly used comparators and related utilities.
@@ -62,6 +64,7 @@ import org.jooq.SortOrder;
 final class Comparators {
 
     static final Comparator<Named>            NAMED_COMP       = comparing(Named::getQualifiedName);
+    static final Comparator<Table<?>>         TABLE_VIEW_COMP  = comparing(t -> t.getTableType() == TABLE ? 0 : 1);
     static final Comparator<Key<?>>           KEY_COMP         = new KeyComparator();
     static final Comparator<ForeignKey<?, ?>> FOREIGN_KEY_COMP = new ForeignKeyComparator();
     static final Comparator<Check<?>>         CHECK_COMP       = comparing(c -> c.condition().toString());

@@ -103,7 +103,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     private static final JooqLogger                       log               = JooqLogger.getLogger(DefaultExecuteContext.class);
     private static final JooqLogger                       logVersionSupport = JooqLogger.getLogger(DefaultExecuteContext.class, "logVersionSupport", 1);
-    private static final JooqLogger                       logDefaultDialect = JooqLogger.getLogger(DefaultExecuteContext.class, "logDefaultDialect", 3);
+    private static final JooqLogger                       logDefaultDialect = JooqLogger.getLogger(DefaultExecuteContext.class, "logDefaultDialect", 1);
 
     // Persistent attributes (repeatable)
     private final ConverterContext                        converterContext;

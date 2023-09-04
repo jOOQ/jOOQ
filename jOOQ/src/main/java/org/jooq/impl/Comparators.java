@@ -64,7 +64,7 @@ import org.jooq.Table;
 final class Comparators {
 
     static final Comparator<Named>            NAMED_COMP       = comparing(Named::getQualifiedName);
-    static final Comparator<Table<?>>         TABLE_VIEW_COMP  = comparing(t -> t.getTableType() == TABLE ? 0 : 1);
+    static final Comparator<Table<?>>         TABLE_VIEW_COMP  = comparing(t -> t.getType() == TABLE ? 0 : 1);
     static final Comparator<Key<?>>           KEY_COMP         = new KeyComparator();
     static final Comparator<ForeignKey<?, ?>> FOREIGN_KEY_COMP = new ForeignKeyComparator();
     static final Comparator<Check<?>>         CHECK_COMP       = comparing(c -> c.condition().toString());

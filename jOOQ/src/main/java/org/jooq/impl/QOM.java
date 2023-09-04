@@ -6011,6 +6011,40 @@ public final class QOM {
     }
 
     /**
+     * The <code>TRY CAST</code> function.
+     */
+    public /*sealed*/ interface TryCast<T>
+        extends
+            UOperator2<Field<?>, DataType<T>, TryCast<T>>,
+            org.jooq.Field<T>
+        //permits
+        //    TryCast
+    {
+
+        /**
+         * The value to be cast to a data type
+         */
+        @NotNull default Field<?> $value() { return $arg1(); }
+
+        /**
+         * The value to be cast to a data type
+         */
+        @CheckReturnValue
+        @NotNull default TryCast<T> $value(Field<?> newValue) { return $arg1(newValue); }
+
+        /**
+         * The data type to try to cast the value to
+         */
+        @NotNull default DataType<T> $dataType() { return $arg2(); }
+
+        /**
+         * The data type to try to cast the value to
+         */
+        @CheckReturnValue
+        @NotNull default TryCast<T> $dataType(DataType<T> newDataType) { return $arg2(newDataType); }
+    }
+
+    /**
      * The <code>CURRENT CATALOG</code> function.
      */
     public /*sealed*/ interface CurrentCatalog

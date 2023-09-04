@@ -233,6 +233,7 @@ final class Names {
     static final Name N_ROWID                       = systemName("rowid");
     static final Name N_ROWSFROM                    = systemName("rowsfrom");
     static final Name N_ROW_NUMBER                  = systemName("row_number");
+    static final Name N_SAFE_CAST                   = systemName("safe_cast");
     static final Name N_SCHEMA_NAME                 = systemName("schema_name");
     static final Name N_SECONDS_BETWEEN             = systemName("seconds_between");
     static final Name N_SEQ4                        = systemName("seq4");
@@ -573,6 +574,7 @@ final class Names {
     static final Name N_TRANSLATE                   = systemName("translate");
     static final Name N_TRIM                        = systemName("trim");
     static final Name N_TRUNC                       = systemName("trunc");
+    static final Name N_TRY_CAST                    = systemName("try_cast");
     static final Name N_UCASE                       = systemName("ucase");
     static final Name N_UNIQUE                      = systemName("unique");
     static final Name N_UPDATING                    = systemName("updating");

@@ -382,6 +382,7 @@ import static org.jooq.impl.DSL.translate;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.trunc;
+import static org.jooq.impl.DSL.tryCast;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.user;
@@ -9086,6 +9087,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shr(f1, f2));
                 else if ((field = parseFieldSysConnectByPathIf()) != null)
                     return field;
+                else if ((field = parseFieldCastIf()) != null)
+                    return field;
                 else if (!ignoreProEdition() && parseFunctionNameIf("ST_AREA") && requireProEdition()) {
 
 
@@ -9290,6 +9293,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("TIMESTAMPDIFF"))
                     return parseFunctionArgs2((f1, f2) -> DSL.timestampDiff(f1, f2));
                 else if ((field = parseFieldTruncIf()) != null)
+                    return field;
+                else if ((field = parseFieldCastIf()) != null)
                     return field;
 
                 break;
@@ -11557,15 +11562,24 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldCastIf() {
         boolean cast = parseFunctionNameIf("CAST");
         boolean coerce = !cast && parseFunctionNameIf("COERCE");
+        boolean tryCast = !cast && !coerce && parseFunctionNameIf("TRY_CAST", "SAFE_CAST");
 
-        if (cast || coerce) {
+        if (cast || coerce || tryCast) {
             parse('(');
             Field<?> field = parseField();
             parseKeyword("AS");
             DataType<?> type = parseCastDataType();
+
+            if (!tryCast)
+                tryCast = parseKeywordIf("DEFAULT NULL ON CONVERSION ERROR");
+
             parse(')');
 
-            return cast ? cast(field, type) : coerce(field, type);
+            return tryCast
+                 ? tryCast(field, type)
+                 : cast
+                 ? cast(field, type)
+                 : coerce(field, type);
         }
 
         return null;

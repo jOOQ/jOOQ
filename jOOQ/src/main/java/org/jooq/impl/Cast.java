@@ -40,12 +40,13 @@ package org.jooq.impl;
 // ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
-import static org.jooq.impl.Keywords.K_TRIM;
+import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.N_CAST;
+import static org.jooq.impl.Names.N_SAFE_CAST;
 import static org.jooq.impl.Names.N_TO_CLOB;
 import static org.jooq.impl.Names.N_TO_DATE;
 import static org.jooq.impl.Names.N_TO_TIMESTAMP;
+import static org.jooq.impl.Names.N_TRY_CAST;
 import static org.jooq.impl.Names.N_XMLTYPE;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.CHAR;
@@ -309,21 +310,31 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
 
 
 
+
+
+
     static class CastNative<T> extends AbstractQueryPart implements UTransient {
-        private final QueryPart   expression;
-        private final DataType<T> type;
-        private final Keyword     typeAsKeyword;
+        final QueryPart   expression;
+        final DataType<T> type;
+        final Keyword     typeAsKeyword;
+        final boolean     tryCast;
 
         CastNative(QueryPart expression, DataType<T> type) {
+            this(expression, type, false);
+        }
+
+        CastNative(QueryPart expression, DataType<T> type, boolean tryCast) {
             this.expression = expression;
             this.type = type;
             this.typeAsKeyword = null;
+            this.tryCast = tryCast;
         }
 
         CastNative(QueryPart expression, Keyword typeAsKeyword) {
             this.expression = expression;
             this.type = null;
             this.typeAsKeyword = typeAsKeyword;
+            this.tryCast = false;
         }
 
         @Override
@@ -340,7 +351,8 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
 
                     else
                         c.sql(type.getCastTypeName(c.configuration()));
-                }
+                },
+                tryCast
             );
         }
     }
@@ -350,20 +362,50 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
         ThrowingConsumer<? super Context<?>, E> expression,
         ThrowingConsumer<? super Context<?>, E> type
     ) throws E {
+        renderCast(ctx, expression, type, false);
+    }
+
+    static <E extends Throwable> void renderCast(
+        Context<?> ctx,
+        ThrowingConsumer<? super Context<?>, E> expression,
+        ThrowingConsumer<? super Context<?>, E> type,
+        boolean tryCast
+    ) throws E {
 
         // Avoid casting bind values inside an explicit cast...
         CastMode castMode = ctx.castMode();
 
-        // Default rendering, if no special case has applied yet
-        ctx.visit(K_CAST).sql('(')
-           .castMode(CastMode.NEVER);
+        if (tryCast) {
+            switch (ctx.family()) {
 
+
+
+
+
+
+
+
+
+
+                default:
+                    ctx.visit(N_TRY_CAST);
+                    break;
+            }
+        }
+        else
+            ctx.visit(K_CAST);
+
+        ctx.sql('(').castMode(CastMode.NEVER);
         expression.accept(ctx);
-
-        ctx.castMode(castMode)
-           .sql(' ').visit(K_AS).sql(' ');
+        ctx.castMode(castMode).sql(' ').visit(K_AS).sql(' ');
 
         type.accept(ctx);
+
+
+
+
+
+
         ctx.sql(')');
     }
 

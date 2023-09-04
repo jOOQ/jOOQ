@@ -20934,6 +20934,30 @@ public class DSL {
         return new Nullif<>(value, other);
     }
 
+    /**
+     * The <code>TRY_CAST</code> function.
+     *
+     * @param value The value to be cast to a data type
+     * @param dataType The data type to try to cast the value to
+     */
+    @NotNull
+    @Support({ DUCKDB, TRINO })
+    public static <T> Field<T> tryCast(Object value, DataType<T> dataType) {
+        return new TryCast<>(Tools.field(value), dataType);
+    }
+
+    /**
+     * The <code>TRY_CAST</code> function.
+     *
+     * @param value The value to be cast to a data type
+     * @param dataType The data type to try to cast the value to
+     */
+    @NotNull
+    @Support({ DUCKDB, TRINO })
+    public static <T> Field<T> tryCast(Field<?> value, DataType<T> dataType) {
+        return new TryCast<>(value, dataType);
+    }
+
     // -------------------------------------------------------------------------
     // System functions
     // -------------------------------------------------------------------------

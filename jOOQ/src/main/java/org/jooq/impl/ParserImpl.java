@@ -10477,12 +10477,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Timestamp parseTimestampLiteral() {
-        try {
-            return Timestamp.valueOf(parseStringLiteral());
-        }
-        catch (IllegalArgumentException e) {
+        Timestamp timestamp = Convert.convert(parseStringLiteral(), Timestamp.class);
+
+        if (timestamp == null)
             throw exception("Illegal timestamp literal");
-        }
+
+        return timestamp;
     }
 
     private final Field<?> parseFieldTimeLiteralIf() {
@@ -10510,12 +10510,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Time parseTimeLiteral() {
-        try {
-            return Time.valueOf(parseStringLiteral());
-        }
-        catch (IllegalArgumentException e) {
+        Time time = Convert.convert(parseStringLiteral(), Time.class);
+
+        if (time == null)
             throw exception("Illegal time literal");
-        }
+
+        return time;
     }
 
     private final Field<?> parseFieldIntervalLiteralIf() {

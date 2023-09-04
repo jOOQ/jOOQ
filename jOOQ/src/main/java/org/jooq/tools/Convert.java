@@ -1334,10 +1334,11 @@ public final class Convert {
                  : string;
         }
 
-        private static final String patchIso8601Time(String string) {
-
-            // [#12158] Support Db2's 15.30.45 format
-            return string.length() == 8
+        static final String patchIso8601Time(String string) {
+            return string.length() == 5
+                 ? (string + ":00")
+                 // [#12158] Support Db2's 15.30.45 format
+                 : string.length() == 8
                  ? string.replace('.', ':')
                  : string;
         }
@@ -1347,6 +1348,10 @@ public final class Convert {
             // [#11485] Trino produces a non-ISO 8601 "UTC" suffix, instead of "Z"
             if (string.endsWith(" UTC"))
                 string = string.replace(" UTC", "Z");
+
+            // [#13786] Be lenient with PostgreSQL style abbreviated time stamp literals
+            if (string.length() == 10)
+                return string + (t ? "T" : " ") + "00:00:00";
 
             if (string.length() > 11)
                 if (t && string.charAt(10) == ' ')

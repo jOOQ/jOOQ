@@ -156,7 +156,14 @@ implements
     }
 
     private final void accept1(Context<?> ctx) {
-        ctx.visit(K_DROP).sql(' ').visit(K_TYPE);
+        ctx.visit(K_DROP).sql(' ');
+
+
+
+
+
+
+        ctx.visit(K_TYPE);
 
         if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
@@ -167,6 +174,11 @@ implements
             ctx.sql(' ').visit(K_CASCADE);
         else if (cascade == Cascade.RESTRICT)
             ctx.sql(' ').visit(K_RESTRICT);
+
+
+
+
+
     }
 
 

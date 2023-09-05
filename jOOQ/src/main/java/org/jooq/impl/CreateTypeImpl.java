@@ -147,9 +147,20 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_CREATE).sql(' ').visit(K_TYPE).sql(' ')
-           .visit(type).sql(' ')
-           .visit(K_AS).sql(' ');
+        ctx.visit(K_CREATE).sql(' ');
+
+
+
+
+
+
+        ctx.visit(K_TYPE).sql(' ')
+           .visit(type).sql(' ');
+
+
+
+
+        ctx.visit(K_AS).sql(' ');
 
         if (!values.isEmpty()) {
             ctx.visit(K_ENUM).sql(" (")

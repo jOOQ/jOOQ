@@ -731,7 +731,7 @@ public abstract class AbstractDatabase implements Database {
             });
         }
 
-        return sources;
+        return comments;
     }
 
     @Override

@@ -106,6 +106,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
+import org.jooq.InverseForeignKey;
 import org.jooq.Meta;
 import org.jooq.Name;
 // ...
@@ -720,6 +721,10 @@ final class MetaImpl extends AbstractMeta {
                 return null;
         }
 
+        final String comment(String tableName) {
+            return comment(tableName, null);
+        }
+
         final String comment(String tableName, String columnName) {
             if (commentCache == null) {
                 String sql = M_COMMENTS(family());
@@ -824,7 +829,14 @@ final class MetaImpl extends AbstractMeta {
         private final Result<Record> uks;
 
         MetaTable(String name, MetaSchema schema, Result<Record> columns, Result<Record> uks, String remarks, TableType tableType) {
-            super(name(name), schema, null, (ForeignKey<?, Record>) null, null, null, comment(remarks), tableOption(dsl(), schema, name, tableType));
+            super(
+                name(name),
+                schema,
+                null, (ForeignKey<?, Record>) null, (InverseForeignKey<?, Record>) null, null, null,
+                comment(remarks != null ? remarks : schema.comment(name, null)),
+                tableOption(dsl(), schema, name, tableType),
+                null
+            );
 
             this.schema = schema;
             this.uks = uks;

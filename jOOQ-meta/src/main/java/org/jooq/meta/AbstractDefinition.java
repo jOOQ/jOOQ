@@ -163,33 +163,32 @@ public abstract class AbstractDefinition implements Definition {
 
     @Override
     public final String getComment() {
-        String c = getComment0();
-        return !isEmpty(c) ? c : defaultIfNull(getDatabase().getComments().get(this), "");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return getSchemaComment();
     }
 
-    private final String getComment0() {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        return schemaComment;
+    private final String getSchemaComment() {
+        return !isEmpty(schemaComment) ? schemaComment : defaultIfNull(getDatabase().getComments().get(this), "");
     }
 
     @Override

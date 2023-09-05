@@ -43,11 +43,12 @@ import java.util.List;
 import org.jooq.Meta;
 import org.jooq.Record12;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
 
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.ApiStatus.Internal;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An interface for all {@link AbstractDatabase} implementations that can
@@ -142,4 +143,22 @@ public interface ResultQueryDatabase extends Database {
     @Internal
     @Nullable
     ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas);
+
+    /**
+     * A query that produces comments for a set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Object name (e.g. table, view, function, package)</li>
+     * <li>Object sub name (e.g. column, package routine)</li>
+     * <li>Comment</li>
+     * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't support the query.
+     */
+    @Internal
+    @Nullable
+    ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas);
 }

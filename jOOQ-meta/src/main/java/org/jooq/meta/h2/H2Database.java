@@ -96,6 +96,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -650,6 +651,40 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME)
         ;
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        Table<?> c =
+            select(
+                TABLES.TABLE_CATALOG,
+                TABLES.TABLE_SCHEMA,
+                TABLES.TABLE_NAME,
+                inline(null, VARCHAR).as(COLUMNS.COLUMN_NAME),
+                TABLES.REMARKS)
+            .from(TABLES)
+            .where(TABLES.REMARKS.isNotNull())
+            .unionAll(
+                select(
+                    COLUMNS.TABLE_CATALOG,
+                    COLUMNS.TABLE_SCHEMA,
+                    COLUMNS.TABLE_NAME,
+                    COLUMNS.COLUMN_NAME,
+                    COLUMNS.REMARKS)
+                .from(COLUMNS)
+                .where(COLUMNS.REMARKS.isNotNull()))
+            .asTable("c");
+
+        return create()
+            .select(
+                c.field(TABLES.TABLE_CATALOG),
+                c.field(TABLES.TABLE_SCHEMA),
+                c.field(TABLES.TABLE_NAME),
+                c.field(COLUMNS.COLUMN_NAME),
+                c.field(TABLES.REMARKS))
+            .from(c)
+            .where(c.field(TABLES.TABLE_SCHEMA).in(schemas))
+            .orderBy(1, 2, 3, 4);
     }
 
     @Override

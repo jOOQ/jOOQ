@@ -54,6 +54,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -74,9 +75,6 @@ import org.jooq.meta.TableDefinition;
 // ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
-import org.jooq.meta.hsqldb.HSQLDBDatabase;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * The Trino database
@@ -164,6 +162,11 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
             .orderBy(
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME);
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        return null;
     }
 
     @Override

@@ -85,6 +85,11 @@ public interface Database extends AutoCloseable {
     Map<Definition, String> getSources();
 
     /**
+     * Get the comments for all objects that offer comments.
+     */
+    Map<Definition, String> getComments();
+
+    /**
      * The catalogs generated from this database.
      */
     List<CatalogDefinition> getCatalogs();

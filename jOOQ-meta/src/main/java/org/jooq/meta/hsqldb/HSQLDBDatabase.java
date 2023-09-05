@@ -62,39 +62,39 @@ import static org.jooq.meta.hsqldb.information_schema.Tables.REFERENTIAL_CONSTRA
 import static org.jooq.meta.hsqldb.information_schema.Tables.ROUTINES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SCHEMATA;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SEQUENCES;
+import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_INDEXINFO;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_TABLES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TABLE_CONSTRAINTS;
-import static org.jooq.meta.hsqldb.information_schema.Tables.VIEWS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TRIGGERS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.VIEWS;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
-import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
-// ...
-// ...
-// ...
+import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
 import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -417,6 +417,45 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME)
         ;
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        Table<?> c =
+            select(
+                SYSTEM_TABLES.TABLE_CAT,
+                SYSTEM_TABLES.TABLE_SCHEM,
+                SYSTEM_TABLES.TABLE_NAME,
+                inline(null, VARCHAR).as(COLUMNS.COLUMN_NAME),
+                SYSTEM_TABLES.REMARKS)
+            .from(SYSTEM_TABLES)
+            .where(SYSTEM_TABLES.REMARKS.isNotNull())
+            .unionAll(
+                select(
+                    COLUMNS.TABLE_CATALOG,
+                    COLUMNS.TABLE_SCHEMA,
+                    COLUMNS.TABLE_NAME,
+                    COLUMNS.COLUMN_NAME,
+                    SYSTEM_COLUMNS.REMARKS)
+                .from(COLUMNS)
+                    .join(SYSTEM_COLUMNS)
+                        .on(COLUMNS.TABLE_CATALOG.eq(SYSTEM_COLUMNS.TABLE_CAT))
+                        .and(COLUMNS.TABLE_SCHEMA.eq(SYSTEM_COLUMNS.TABLE_SCHEM))
+                        .and(COLUMNS.TABLE_NAME.eq(SYSTEM_COLUMNS.TABLE_NAME))
+                        .and(COLUMNS.COLUMN_NAME.eq(SYSTEM_COLUMNS.COLUMN_NAME))
+                .where(SYSTEM_COLUMNS.REMARKS.isNotNull()))
+            .asTable("c");
+
+        return create()
+            .select(
+                c.field(SYSTEM_TABLES.TABLE_CAT),
+                c.field(SYSTEM_TABLES.TABLE_SCHEM),
+                c.field(SYSTEM_TABLES.TABLE_NAME),
+                c.field(COLUMNS.COLUMN_NAME),
+                c.field(SYSTEM_TABLES.REMARKS))
+            .from(c)
+            .where(c.field(SYSTEM_TABLES.TABLE_SCHEM).in(schemas))
+            .orderBy(1, 2, 3, 4);
     }
 
     @Override

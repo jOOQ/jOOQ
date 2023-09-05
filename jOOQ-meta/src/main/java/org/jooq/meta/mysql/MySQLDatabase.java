@@ -84,6 +84,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -96,7 +97,6 @@ import org.jooq.TableOptions.TableType;
 // ...
 // ...
 import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -451,6 +451,11 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME)
         ;
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        return null;
     }
 
     @Override

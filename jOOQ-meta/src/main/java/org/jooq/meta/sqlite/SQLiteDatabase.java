@@ -74,6 +74,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record12;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -389,6 +390,11 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
                 SQLiteMaster.SQL)
             .from(SQLITE_MASTER)
             .orderBy(SQLiteMaster.NAME);
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        return null;
     }
 
     @Override

@@ -161,6 +161,11 @@ public abstract class AbstractDefinition implements Definition {
 
     @Override
     public final String getComment() {
+        String c = getComment0();
+        return c != null ? c : getDatabase().getComments().get(this);
+    }
+
+    private final String getComment0() {
 
 
 

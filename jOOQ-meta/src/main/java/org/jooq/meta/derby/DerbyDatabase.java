@@ -49,20 +49,19 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nullif;
-import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
-import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.meta.derby.sys.Tables.*;
+import static org.jooq.meta.derby.sys.Tables.SYSCHECKS;
 import static org.jooq.meta.derby.sys.Tables.SYSCONGLOMERATES;
 import static org.jooq.meta.derby.sys.Tables.SYSCONSTRAINTS;
 import static org.jooq.meta.derby.sys.Tables.SYSKEYS;
 import static org.jooq.meta.derby.sys.Tables.SYSSCHEMAS;
 import static org.jooq.meta.derby.sys.Tables.SYSSEQUENCES;
 import static org.jooq.meta.derby.sys.Tables.SYSTABLES;
+import static org.jooq.meta.derby.sys.Tables.SYSTRIGGERS;
 import static org.jooq.meta.derby.sys.Tables.SYSVIEWS;
 
 import java.math.BigDecimal;
@@ -84,12 +83,11 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
-// ...
-// ...
-// ...
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
 import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -378,6 +376,11 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
             .orderBy(
                 SYSTABLES.sysschemas().SCHEMANAME,
                 SYSTABLES.TABLENAME);
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        return null;
     }
 
     @Override

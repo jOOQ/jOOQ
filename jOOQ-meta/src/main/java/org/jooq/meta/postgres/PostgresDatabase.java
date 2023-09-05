@@ -677,6 +677,11 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
+    public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        return null;
+    }
+
+    @Override
     public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
         CommonTableExpression<Record1<String>> s = name("schemas").fields("schema").as(selectFrom(values(schemas.stream().collect(toRowArray(DSL::val)))));
 

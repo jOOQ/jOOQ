@@ -64,6 +64,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -211,6 +212,11 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
                 DUCKDB_VIEWS.SQL)
             .from("{0}()", DUCKDB_VIEWS)
             .where(DUCKDB_VIEWS.SCHEMA_NAME.in(schemas));
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        return null;
     }
 
     @Override

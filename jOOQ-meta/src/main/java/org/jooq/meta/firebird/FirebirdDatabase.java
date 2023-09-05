@@ -94,11 +94,13 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
+import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 // ...
 // ...
@@ -405,6 +407,39 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 .else_(inline("create view \"").concat(trim(RDB$RELATIONS.RDB$RELATION_NAME)).concat(inline("\" as ")).concat(RDB$RELATIONS.RDB$VIEW_SOURCE)).as("view_source"))
             .from(RDB$RELATIONS)
             .orderBy(trim(RDB$RELATIONS.RDB$RELATION_NAME));
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        Table<?> c =
+            select(
+                inline(null, VARCHAR).as("catalog"),
+                inline(null, VARCHAR).as("schema"),
+                trim(RDB$RELATIONS.RDB$RELATION_NAME).as(RDB$RELATIONS.RDB$RELATION_NAME),
+                inline(null, VARCHAR).as(RDB$RELATION_FIELDS.RDB$FIELD_NAME),
+                trim(RDB$RELATIONS.RDB$DESCRIPTION).as(RDB$RELATIONS.RDB$DESCRIPTION))
+            .from(RDB$RELATIONS)
+            .where(RDB$RELATIONS.RDB$DESCRIPTION.isNotNull())
+            .unionAll(
+                select(
+                    inline(null, VARCHAR),
+                    inline(null, VARCHAR),
+                    RDB$RELATION_FIELDS.RDB$RELATION_NAME,
+                    RDB$RELATION_FIELDS.RDB$FIELD_NAME,
+                    RDB$RELATION_FIELDS.RDB$DESCRIPTION)
+                .from(RDB$RELATION_FIELDS)
+                .where(RDB$RELATION_FIELDS.RDB$DESCRIPTION.isNotNull()))
+            .asTable("c");
+
+        return create()
+            .select(
+                c.field("catalog", VARCHAR),
+                c.field("schema", VARCHAR),
+                c.field(RDB$RELATIONS.RDB$RELATION_NAME),
+                c.field(RDB$RELATION_FIELDS.RDB$FIELD_NAME),
+                c.field(RDB$RELATIONS.RDB$DESCRIPTION))
+            .from(c)
+            .orderBy(1, 2, 3);
     }
 
     @Override

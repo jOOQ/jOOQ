@@ -64,6 +64,7 @@ import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isBlank;
+import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.File;
 import java.io.IOException;
@@ -274,6 +275,7 @@ public abstract class AbstractDatabase implements Database {
     // -------------------------------------------------------------------------
 
     private Map<Definition, String>                                              sources;
+    private Map<Definition, String>                                              comments;
     private List<String>                                                         inputCatalogs;
     private List<String>                                                         inputSchemata;
     private Map<String, List<String>>                                            inputSchemataPerCatalog;
@@ -712,7 +714,20 @@ public abstract class AbstractDatabase implements Database {
             sources = new LinkedHashMap<>();
             onError(ERROR, "Could not load sources", () -> {
                 sources = getSources0();
-                log.info("Sequences fetched", fetchedSize(sources.values(), sources.values()));
+                log.info("Sources fetched", fetchedSize(sources.values(), sources.values()));
+            });
+        }
+
+        return sources;
+    }
+
+    @Override
+    public final Map<Definition, String> getComments() {
+        if (comments == null) {
+            comments = new LinkedHashMap<>();
+            onError(ERROR, "Could not load comments", () -> {
+                comments = getComments0();
+                log.info("Comments fetched", fetchedSize(comments.values(), comments.values()));
             });
         }
 
@@ -3944,6 +3959,36 @@ public abstract class AbstractDatabase implements Database {
 
 
                             result.put(view, source);
+                        }
+                    }
+            }));
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieve ALL comments from the database.
+     */
+    protected Map<Definition, String> getComments0() throws SQLException {
+        Map<Definition, String> result = new LinkedHashMap<>();
+
+        if (this instanceof ResultQueryDatabase d) {
+            Optional
+                .ofNullable(d.comments(getInputSchemata()))
+                .ifPresent(q -> q.forEach(r -> {
+                    SchemaDefinition schema = getSchema(r.value2());
+
+                    if (schema != null) {
+                        String name = r.value3();
+                        Definition o = getTable(schema, name);
+
+                        if (o != null) {
+                            if (!isEmpty(r.value4()))
+                                if (o instanceof TableDefinition t)
+                                    o = t.getColumn(r.value4());
+
+                            result.put(o, r.value5());
                         }
                     }
             }));

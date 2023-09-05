@@ -68,6 +68,7 @@ import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.MetaSQL.M_COMMENTS;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SOURCES;
@@ -384,6 +385,7 @@ final class MetaImpl extends AbstractMeta {
         private transient volatile Map<Name, Result<Record>> ukCache;
         private transient volatile Map<Name, Result<Record>> sequenceCache;
         private transient volatile Map<Name, String>         sourceCache;
+        private transient volatile Map<Name, String>         commentCache;
 
         MetaSchema(String name, Catalog catalog) {
             super(name, catalog);
@@ -718,6 +720,34 @@ final class MetaImpl extends AbstractMeta {
                 return null;
         }
 
+        final String comment(String tableName, String columnName) {
+            if (commentCache == null) {
+                String sql = M_COMMENTS(family());
+
+                if (sql != null) {
+                    Result<Record> result = meta(meta ->
+                        withCatalog(getCatalog(), DSL.using(meta.getConnection(), family()), ctx ->
+                            ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
+                        )
+                    );
+
+                    // TODO Support catalogs as well
+                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2), result.field(3) });
+                    commentCache = new LinkedHashMap<>();
+
+                    groups.forEach((k, v) -> commentCache.put(
+                        name(k.get(1, String.class), k.get(2, String.class), k.get(3, String.class)),
+                        v.get(0).get(4, String.class)
+                    ));
+                }
+            }
+
+            if (commentCache != null)
+                return commentCache.get(name(MetaSchema.this.getName(), tableName, columnName));
+            else
+                return null;
+        }
+
         private final String patchSchema(String sql) {
 
 
@@ -790,17 +820,19 @@ final class MetaImpl extends AbstractMeta {
     }
 
     private final class MetaTable extends TableImpl<Record> {
+        private final MetaSchema     schema;
         private final Result<Record> uks;
 
         MetaTable(String name, MetaSchema schema, Result<Record> columns, Result<Record> uks, String remarks, TableType tableType) {
             super(name(name), schema, null, (ForeignKey<?, Record>) null, null, null, comment(remarks), tableOption(dsl(), schema, name, tableType));
 
+            this.schema = schema;
+            this.uks = uks;
+
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM
             if (columns != null)
                 initColumns(columns);
-
-            this.uks = uks;
         }
 
         @Override
@@ -1242,7 +1274,7 @@ final class MetaImpl extends AbstractMeta {
                     }
                 }
 
-                createField(name(columnName), type, this, remarks);
+                createField(name(columnName), type, this, remarks != null ? remarks : schema.comment(getName(), columnName));
             }
         }
     }

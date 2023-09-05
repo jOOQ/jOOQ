@@ -42,6 +42,8 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.tools.StringUtils.defaultIfNull;
+import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -162,7 +164,7 @@ public abstract class AbstractDefinition implements Definition {
     @Override
     public final String getComment() {
         String c = getComment0();
-        return c != null ? c : getDatabase().getComments().get(this);
+        return !isEmpty(c) ? c : defaultIfNull(getDatabase().getComments().get(this), "");
     }
 
     private final String getComment0() {

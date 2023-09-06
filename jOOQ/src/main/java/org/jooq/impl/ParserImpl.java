@@ -5128,7 +5128,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final DDLQuery parseCreateType() {
-        boolean notExists = parseKeywordIf("IF NOT EXISTS");
+        boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Name name = parseName();
 
         if (parseKeywordIf("AS")) {
@@ -5143,7 +5143,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else
                     values = new ArrayList<>();
 
-                return (notExists ? dsl.createTypeIfNotExists(name) : dsl.createType(name))
+                return (ifNotExists ? dsl.createTypeIfNotExists(name) : dsl.createType(name))
                     .asEnum(values.toArray(EMPTY_STRING));
             }
             else {
@@ -5151,12 +5151,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 parse('(');
                 List<Field<?>> fields = parseList(',', ctx -> DSL.field(parseIdentifier(), parseDataType()));
                 parse(')');
-                return (notExists ? dsl.createTypeIfNotExists(name) : dsl.createType(name))
+                return (ifNotExists ? dsl.createTypeIfNotExists(name) : dsl.createType(name))
                     .as(fields);
             }
         }
         else if (parseKeywordIf("FROM")) {
-            return dsl.createDomain(name).as(parseDataType());
+            return (ifNotExists ? dsl.createDomainIfNotExists(name) : dsl.createDomain(name))
+                .as(parseDataType());
         }
         else
             throw expected("AS", "FROM");

@@ -163,6 +163,8 @@ import static org.jooq.impl.Tools.convertHexToBytes;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.enums;
 // ...
+import static org.jooq.impl.Tools.getMappedTable;
+import static org.jooq.impl.Tools.getMappedUDT;
 import static org.jooq.impl.Tools.getMappedUDTName;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.isEmpty;
@@ -170,6 +172,7 @@ import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.uncoerce;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
@@ -258,6 +261,7 @@ import org.jooq.Param;
 // ...
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
+import org.jooq.RecordQualifier;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -4047,12 +4051,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         // -------------------------------------------------------------------------
 
         final void pgRenderRecordCast(Context<?> ctx) {
-            if (dataType instanceof UDTDataType<?> u)
-                ctx.visit(u.udt);
-            else if (dataType instanceof TableDataType<?> t)
-                ctx.visit(t.table);
-            else if (dataType.isUDT())
-                ctx.visit(getRecordQualifier(dataType));
+            if (dataType instanceof UDTDataType<?> u) {
+                ctx.visit(defaultIfNull(getMappedUDT(ctx, u.udt), u.udt));
+            }
+            else if (dataType instanceof TableDataType<?> t) {
+                ctx.visit(defaultIfNull(getMappedTable(ctx, t.table), t.table));
+            }
+            else if (dataType.isUDT()) {
+                RecordQualifier<?> q = getRecordQualifier(dataType);
+                ctx.visit(defaultIfNull(Tools.getMappedQualifier(ctx, q), q));
+            }
             else
                 ctx.visit(dataType.getQualifiedName());
         }

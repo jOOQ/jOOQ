@@ -3677,6 +3677,20 @@ final class Tools {
     }
 
     /**
+     * Map a {@link UDT} according to the configured {@link org.jooq.SchemaMapping}
+     */
+    static final RecordQualifier<?> getMappedQualifier(Scope scope, RecordQualifier<?> qualifier) {
+        if (scope != null) {
+            if (qualifier instanceof UDT<?> u)
+                return scope.configuration().schemaMapping().map(u);
+            else if (qualifier instanceof Table<?> t)
+                return scope.configuration().schemaMapping().map(t);
+        }
+
+        return qualifier;
+    }
+
+    /**
      * Map an {@link QualifiedRecord} according to the configured
      * {@link org.jooq.SchemaMapping}
      */
@@ -3691,13 +3705,10 @@ final class Tools {
      */
     static final String getMappedUDTName(Scope scope, QualifiedRecord<?> record) {
         RecordQualifier<?> udt = record.getQualifier();
+        RecordQualifier<?> mappedUDT = getMappedQualifier(scope, udt);
 
-        if (udt instanceof UDT<?> u) {
-            UDT<?> u2 = getMappedUDT(scope, u);
-
-            if (u2 != null && u2 != u)
-                return u2.getQualifiedName().unquotedName().toString();
-        }
+        if (mappedUDT != null && mappedUDT != udt)
+            return mappedUDT.getQualifiedName().unquotedName().toString();
 
         Schema mapped = getMappedSchema(scope, udt.getSchema());
         StringBuilder sb = new StringBuilder();

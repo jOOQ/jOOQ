@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.REQUIRE_RECORD_CAST;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Tools.getMappedQualifier;
 import static org.jooq.impl.Tools.getMappedUDTName;
 
 import org.jooq.BindContext;
@@ -154,7 +155,7 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
                             break;
 
                         default: {
-                            c.visit(qualifier);
+                            c.visit(mappedQualifier(ctx));
                             break;
                         }
                     }
@@ -173,12 +174,17 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
             },
 
             // [#13174] Need to cast inline UDT ROW expressions to the UDT type
-            c -> c.visit(qualifier),
+            c -> c.visit(mappedQualifier(ctx)),
             () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
 
 
 
         );
+    }
+
+    private final RecordQualifier<?> mappedQualifier(RenderContext ctx) {
+        RecordQualifier<?> mapped = getMappedQualifier(ctx, qualifier);
+        return mapped != null ? mapped : qualifier;
     }
 
     @Deprecated

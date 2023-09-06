@@ -595,6 +595,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (QualifiedRecord.class.isAssignableFrom(type)) {
                 Class<QualifiedRecord<?>> t = (Class<QualifiedRecord<?>>) type;
                 result.put(getMappedUDTName(scope, t), t);
+
+
+
+
+
+
+
+
+
+
+
+
                 for (Field<?> field : getRecordQualifier(t).fields())
                     typeMap(field.getType(), scope, result);
             }
@@ -3883,7 +3895,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultRecordBinding<U> extends InternalBinding<Record, U> {
-        static final Set<SQLDialect> REQUIRE_RECORD_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+
+
+
+
+
+
+
+        static final Set<SQLDialect> REQUIRE_RECORD_CAST        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
         DefaultRecordBinding(DataType<Record> dataType, Converter<Record, U> converter) {
             super(dataType, converter);

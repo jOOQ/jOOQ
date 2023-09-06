@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+// ...
 import static org.jooq.impl.DefaultExecuteContext.localExecuteContext;
 import static org.jooq.impl.Tools.fieldsArray;
 import static org.jooq.impl.Tools.getMappedUDTName;
@@ -52,6 +53,7 @@ import org.jooq.Field;
 import org.jooq.QualifiedRecord;
 import org.jooq.RecordQualifier;
 import org.jooq.Row;
+import org.jooq.SQLDialect;
 import org.jooq.Scope;
 
 /**
@@ -110,10 +112,22 @@ abstract class AbstractQualifiedRecord<R extends QualifiedRecord<R>> extends Abs
 
     @Override
     public final String getSQLTypeName() throws SQLException {
+        ExecuteContext ctx = localExecuteContext();
 
         // [#1693] This needs to return the fully qualified SQL type name, in
         // case the connected user is not the owner of the UDT
-        return getMappedUDTName(localExecuteContext(), this);
+        String result = getMappedUDTName(ctx, this);
+
+
+
+
+
+
+
+
+
+
+        return result;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

@@ -53,6 +53,7 @@ import org.jooq.RecordQualifier;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.DefaultBinding.DefaultRecordBinding;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
@@ -117,6 +118,7 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
 
 
 
+
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES:
@@ -143,6 +145,7 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
                 }
                 else {
                     switch (c.family()) {
+
 
 
                         case POSTGRES:
@@ -172,6 +175,9 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
             // [#13174] Need to cast inline UDT ROW expressions to the UDT type
             c -> c.visit(qualifier),
             () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
+
+
+
         );
     }
 

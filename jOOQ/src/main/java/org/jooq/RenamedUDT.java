@@ -37,19 +37,17 @@
  */
 package org.jooq;
 
-import static org.jooq.impl.DSL.name;
-
-import org.jooq.impl.TableImpl;
+import org.jooq.impl.UDTImpl;
 
 /**
  * A mapped table
  *
  * @author Lukas Eder
  */
-final class RenamedTable<R extends Record> extends TableImpl<R> {
+final class RenamedUDT<R extends UDTRecord<R>> extends UDTImpl<R> {
 
-    RenamedTable(Schema schema, Table<R> delegate, String rename) {
-        super(name(rename), schema);
+    RenamedUDT(Schema schema, UDT<R> delegate, String rename) {
+        super(rename, schema, delegate.getPackage(), delegate.isSynthetic());
 
         for (Field<?> field : delegate.fields())
             createField(field.getUnqualifiedName(), field.getDataType(), this);

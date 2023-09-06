@@ -329,6 +329,7 @@ import org.jooq.TableElement;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UDT;
+import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.WindowSpecification;
 import org.jooq.XML;
@@ -3666,6 +3667,16 @@ final class Tools {
     }
 
     /**
+     * Map a {@link UDT} according to the configured {@link org.jooq.SchemaMapping}
+     */
+    static final <R extends UDTRecord<R>> UDT<R> getMappedUDT(Scope scope, UDT<R> udt) {
+        if (scope != null)
+            return scope.configuration().schemaMapping().map(udt);
+
+        return udt;
+    }
+
+    /**
      * Map an {@link QualifiedRecord} according to the configured
      * {@link org.jooq.SchemaMapping}
      */
@@ -3680,6 +3691,14 @@ final class Tools {
      */
     static final String getMappedUDTName(Scope scope, QualifiedRecord<?> record) {
         RecordQualifier<?> udt = record.getQualifier();
+
+        if (udt instanceof UDT<?> u) {
+            UDT<?> u2 = getMappedUDT(scope, u);
+
+            if (u2 != null && u2 != u)
+                return u2.getQualifiedName().unquotedName().toString();
+        }
+
         Schema mapped = getMappedSchema(scope, udt.getSchema());
         StringBuilder sb = new StringBuilder();
 

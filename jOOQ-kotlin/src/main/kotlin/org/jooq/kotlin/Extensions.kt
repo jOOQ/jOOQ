@@ -508,6 +508,17 @@ fun MutableList<MappedTable>.table(block: MappedTable.() -> Unit) {
     add(e)
 }
 
+fun MappedSchema.udts(block: MutableList<MappedUDT>.() -> Unit) {
+    block(udts)
+}
+
+@JvmName("mutableListMappedUDT")
+fun MutableList<MappedUDT>.udt(block: MappedUDT.() -> Unit) {
+    val e = MappedUDT()
+    block(e)
+    add(e)
+}
+
 fun RenderMapping.schemata(block: MutableList<MappedSchema>.() -> Unit) {
     block(schemata)
 }

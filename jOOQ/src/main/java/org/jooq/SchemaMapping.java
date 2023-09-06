@@ -44,11 +44,15 @@ import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.jooq.conf.MappedCatalog;
 import org.jooq.conf.MappedSchema;
+import org.jooq.conf.MappedSchemaObject;
 import org.jooq.conf.MappedTable;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
@@ -96,6 +100,7 @@ public class SchemaMapping implements Serializable {
     private volatile transient Map<String, Catalog>  catalogs;
     private volatile transient Map<String, Schema>   schemata;
     private volatile transient Map<String, Table<?>> tables;
+    private volatile transient Map<String, UDT<?>>   udts;
 
     /**
      * Construct a mapping from a {@link Configuration} object
@@ -452,10 +457,31 @@ public class SchemaMapping implements Serializable {
      * @param table The generated table to be mapped
      * @return The configured table
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Nullable
     public <R extends Record> Table<R> map(Table<R> table) {
-        Table<R> result = table;
+        return map0(table, () -> (Map) getTables(), s -> s.getTables(), RenamedTable::new);
+    }
+
+    /**
+     * Apply mapping to a given UDT
+     *
+     * @param udt The generated udt to be mapped
+     * @return The configured udt
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Nullable
+    public <R extends UDTRecord<R>> UDT<R> map(UDT<R> udt) {
+        return map0(udt, () -> (Map) getUDTs(), s -> s.getUdts(), RenamedUDT::new);
+    }
+
+    private <Q extends Qualified> Q map0(
+        Q part,
+        Supplier<Map<String, Q>> map,
+        Function<MappedSchema, ? extends List<? extends MappedSchemaObject>> schemaObjects,
+        Function3<Schema, Q, String, Q> rename
+    ) {
+        Q result = part;
 
         // [#4652] Don't initialise table mapping if not necessary
         if (result != null && (!mapping().getSchemata().isEmpty() || !mapping().getCatalogs().isEmpty())) {
@@ -472,35 +498,35 @@ public class SchemaMapping implements Serializable {
 
             String catalogName = catalog.getName();
             String schemaName = schema.getName();
-            String tableName = result.getName();
+            String name = result.getName();
             String key = StringUtils.isEmpty(catalogName) ?
-                (StringUtils.isEmpty(schemaName) ? tableName : (schemaName + "." + tableName))
-                : (catalogName + '.' + schemaName + '.' + tableName);
+                (StringUtils.isEmpty(schemaName) ? name : (schemaName + "." + name))
+                : (catalogName + '.' + schemaName + '.' + name);
 
             // Lazy initialise table mapping
-            if (!getTables().containsKey(key)) {
+            if (!map.get().containsKey(key)) {
 
                 // [#1857] thread-safe lazy initialisation for those users who
                 // want to use Configuration and dependent objects in a "thread-safe" manner
                 synchronized (this) {
-                    if (!getTables().containsKey(key)) {
+                    if (!map.get().containsKey(key)) {
 
                         catalogLoop:
                         for (MappedCatalog c : mapping().getCatalogs()) {
                             if (matches(c, catalogName)) {
                                 for (MappedSchema s : c.getSchemata()) {
                                     if (matches(s, schemaName)) {
-                                        for (MappedTable t : s.getTables()) {
+                                        for (MappedSchemaObject t : schemaObjects.apply(s)) {
 
                                             // A configured mapping was found, add a renamed table
-                                            if (matches(t, tableName)) {
+                                            if (matches(t, name)) {
 
                                                 // Ignore self-mappings and void-mappings
                                                 if (!isBlank(t.getOutput()))
-                                                    if (t.getInput() != null && !t.getOutput().equals(tableName))
-                                                        result = new RenamedTable<>(map(schema), result, t.getOutput());
+                                                    if (t.getInput() != null && !t.getOutput().equals(name))
+                                                        result = rename.apply(map(schema), result, t.getOutput());
                                                     else if (t.getInputExpression() != null)
-                                                        result = new RenamedTable<>(map(schema), result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
+                                                        result = rename.apply(map(schema), result, t.getInputExpression().matcher(name).replaceAll(t.getOutput()));
 
                                                 break catalogLoop;
                                             }
@@ -509,7 +535,7 @@ public class SchemaMapping implements Serializable {
                                 }
 
                                 // [#7498] Even without table mapping configuration, we may still need to map the schema
-                                result = new RenamedTable<>(map(schema), result, tableName);
+                                result = rename.apply(map(schema), result, name);
                                 break catalogLoop;
                             }
                         }
@@ -518,35 +544,35 @@ public class SchemaMapping implements Serializable {
                             schemaLoop:
                             for (MappedSchema s : mapping().getSchemata()) {
                                 if (matches(s, schemaName)) {
-                                    for (MappedTable t : s.getTables()) {
+                                    for (MappedSchemaObject t : schemaObjects.apply(s)) {
 
                                         // A configured mapping was found, add a renamed table
-                                        if (matches(t, tableName)) {
+                                        if (matches(t, name)) {
 
                                             // Ignore self-mappings and void-mappings
                                             if (!isBlank(t.getOutput()))
-                                                if (t.getInput() != null && !t.getOutput().equals(tableName))
-                                                    result = new RenamedTable<>(map(schema), result, t.getOutput());
+                                                if (t.getInput() != null && !t.getOutput().equals(name))
+                                                    result = rename.apply(map(schema), result, t.getOutput());
                                                 else if (t.getInputExpression() != null)
-                                                    result = new RenamedTable<>(map(schema), result, t.getInputExpression().matcher(tableName).replaceAll(t.getOutput()));
+                                                    result = rename.apply(map(schema), result, t.getInputExpression().matcher(name).replaceAll(t.getOutput()));
 
                                             break schemaLoop;
                                         }
                                     }
 
                                     // [#7498] Even without table mapping configuration, we may still need to map the schema
-                                    result = new RenamedTable<>(map(schema), result, tableName);
+                                    result = rename.apply(map(schema), result, name);
                                     break schemaLoop;
                                 }
                             }
 
                         // Add mapped table or self if no mapping was found
-                        getTables().put(key, result);
+                        map.get().put(key, result);
                     }
                 }
             }
 
-            result = (Table<R>) getTables().get(key);
+            result = map.get().get(key);
         }
 
         return result;
@@ -562,7 +588,7 @@ public class SchemaMapping implements Serializable {
             || (s.getInputExpression() != null && s.getInputExpression().matcher(schemaName).matches());
     }
 
-    private final boolean matches(MappedTable t, String tableName) {
+    private final boolean matches(MappedSchemaObject t, String tableName) {
         return (t.getInput() != null && tableName.equals(t.getInput()))
             || (t.getInputExpression() != null && t.getInputExpression().matcher(tableName).matches());
     }
@@ -622,6 +648,20 @@ public class SchemaMapping implements Serializable {
             }
         }
         return tables;
+    }
+
+    private final Map<String, UDT<?>> getUDTs() {
+        if (udts == null) {
+
+            // [#1857] thread-safe lazy initialisation for those users who
+            // want to use Configuration and dependent objects in a "thread-safe" manner
+            synchronized (this) {
+                if (udts == null) {
+                    udts = new HashMap<>();
+                }
+            }
+        }
+        return udts;
     }
 
     // ------------------------------------------------------------------------

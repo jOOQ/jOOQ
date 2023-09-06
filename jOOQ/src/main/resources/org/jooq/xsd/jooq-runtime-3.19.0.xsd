@@ -1778,6 +1778,10 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       <element name="tables" type="jooq-runtime:MappedTables" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure table mapping for runtime table rewriting in generated SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="udts" type="jooq-runtime:MappedUDTs" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Configure table mapping for runtime UDT rewriting in generated SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1806,6 +1810,39 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
       <element name="output" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The output table as it will be rendered in SQL.
+<ul>
+<li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
+<li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
+</ul>]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="MappedUDTs">
+    <sequence>
+      <element name="udt" type="jooq-runtime:MappedUDT" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MappedUDT">
+    <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[A udt mapping configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
+
+    <all>
+
+      <element name="input" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The input UDT as defined in {@link org.jooq.UDT#getName()}
+<p>
+Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="inputExpression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching the input UDT name as defined in {@link org.jooq.UDT#getName()}
+<p>
+Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="output" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The output UDT as it will be rendered in SQL.
 <ul>
 <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
 <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>

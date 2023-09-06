@@ -35,23 +35,43 @@
  *
  *
  */
-package org.jooq;
+package org.jooq.conf;
 
-import static org.jooq.impl.DSL.name;
+import java.util.regex.Pattern;
 
-import org.jooq.impl.TableImpl;
+import org.jooq.Qualified;
 
 /**
- * A mapped table
+ * A common base type for objects contained in {@link MappedSchema}, such as
+ * {@link MappedTable} or {@link MappedUDT}.
  *
  * @author Lukas Eder
  */
-final class RenamedTable<R extends Record> extends TableImpl<R> {
+public interface MappedSchemaObject {
 
-    RenamedTable(Schema schema, Table<R> delegate, String rename) {
-        super(name(rename), schema);
+    /**
+     * The input name as defined in {@link Qualified#getName()}
+     * <p>
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
+     */
+    String getInput();
 
-        for (Field<?> field : delegate.fields())
-            createField(field.getUnqualifiedName(), field.getDataType(), this);
-    }
+    /**
+     * A regular expression matching the input name as defined in
+     * {@link Qualified#getName()}
+     * <p>
+     * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
+     */
+    Pattern getInputExpression();
+
+    /**
+     * The output name as it will be rendered in SQL.
+     * <ul>
+     * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant
+     * value.</li>
+     * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a
+     * replacement expression.</li>
+     * </ul>
+     */
+    String getOutput();
 }

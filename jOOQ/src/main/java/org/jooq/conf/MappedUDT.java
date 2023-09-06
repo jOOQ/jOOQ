@@ -13,19 +13,19 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 
 /**
- * A table mapping configuration.
+ * A udt mapping configuration.
  * 
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MappedTable", propOrder = {
+@XmlType(name = "MappedUDT", propOrder = {
 
 })
 @SuppressWarnings({
     "all"
 })
-public class MappedTable
+public class MappedUDT
     extends SettingsBase
     implements Serializable, Cloneable, MappedSchemaObject, XMLAppendable
 {
@@ -39,7 +39,7 @@ public class MappedTable
     protected String output;
 
     /**
-     * The input table as defined in {@link org.jooq.Table#getName()}
+     * The input UDT as defined in {@link org.jooq.UDT#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
      * 
@@ -49,7 +49,7 @@ public class MappedTable
     }
 
     /**
-     * The input table as defined in {@link org.jooq.Table#getName()}
+     * The input UDT as defined in {@link org.jooq.UDT#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
      * 
@@ -59,7 +59,7 @@ public class MappedTable
     }
 
     /**
-     * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+     * A regular expression matching the input UDT name as defined in {@link org.jooq.UDT#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      * 
@@ -69,7 +69,7 @@ public class MappedTable
     }
 
     /**
-     * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+     * A regular expression matching the input UDT name as defined in {@link org.jooq.UDT#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      * 
@@ -79,7 +79,7 @@ public class MappedTable
     }
 
     /**
-     * The output table as it will be rendered in SQL.
+     * The output UDT as it will be rendered in SQL.
      * <ul>
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
@@ -91,7 +91,7 @@ public class MappedTable
     }
 
     /**
-     * The output table as it will be rendered in SQL.
+     * The output UDT as it will be rendered in SQL.
      * <ul>
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
@@ -103,36 +103,36 @@ public class MappedTable
     }
 
     /**
-     * The input table as defined in {@link org.jooq.Table#getName()}
+     * The input UDT as defined in {@link org.jooq.UDT#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided.
      * 
      */
-    public MappedTable withInput(String value) {
+    public MappedUDT withInput(String value) {
         setInput(value);
         return this;
     }
 
     /**
-     * A regular expression matching the input table name as defined in {@link org.jooq.Table#getName()}
+     * A regular expression matching the input UDT name as defined in {@link org.jooq.UDT#getName()}
      * <p>
      * Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided
      * 
      */
-    public MappedTable withInputExpression(Pattern value) {
+    public MappedUDT withInputExpression(Pattern value) {
         setInputExpression(value);
         return this;
     }
 
     /**
-     * The output table as it will be rendered in SQL.
+     * The output UDT as it will be rendered in SQL.
      * <ul>
      * <li>When &lt;input/&gt; is provided, &lt;output/&gt; is a constant value.</li>
      * <li>When &lt;inputExpression/&gt; is provided, &lt;output/&gt; is a replacement expression.</li>
      * </ul>
      * 
      */
-    public MappedTable withOutput(String value) {
+    public MappedUDT withOutput(String value) {
         setOutput(value);
         return this;
     }
@@ -162,7 +162,7 @@ public class MappedTable
         if (getClass()!= that.getClass()) {
             return false;
         }
-        MappedTable other = ((MappedTable) that);
+        MappedUDT other = ((MappedUDT) that);
         if (input == null) {
             if (other.input!= null) {
                 return false;

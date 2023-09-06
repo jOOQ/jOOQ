@@ -98,6 +98,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link MappedUDT }
+     * 
+     */
+    public MappedUDT createMappedUDT() {
+        return new MappedUDT();
+    }
+
+    /**
      * Create an instance of {@link RenderFormatting }
      * 
      */

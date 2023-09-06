@@ -75,16 +75,19 @@ implements
 {
 
     final Type<?>                                    type;
+    final boolean                                    ifNotExists;
           QueryPartListView<? extends Field<String>> values;
           QueryPartListView<? extends Field<?>>      attributes;
 
     CreateTypeImpl(
         Configuration configuration,
-        Type<?> type
+        Type<?> type,
+        boolean ifNotExists
     ) {
         this(
             configuration,
             type,
+            ifNotExists,
             null,
             null
         );
@@ -93,12 +96,14 @@ implements
     CreateTypeImpl(
         Configuration configuration,
         Type<?> type,
+        boolean ifNotExists,
         Collection<? extends Field<String>> values,
         Collection<? extends Field<?>> attributes
     ) {
         super(configuration);
 
         this.type = type;
+        this.ifNotExists = ifNotExists;
         this.values = new QueryPartList<>(values);
         this.attributes = new QueryPartList<>(attributes);
     }
@@ -145,8 +150,21 @@ implements
 
 
 
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedUntil(POSTGRES, YUGABYTEDB);
+
+    private final boolean supportsIfNotExists(Context<?> ctx) {
+        return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        if (ifNotExists && !supportsIfNotExists(ctx))
+            tryCatch(ctx, DDLStatementType.CREATE_TYPE, c -> accept0(c));
+        else
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
         ctx.visit(K_CREATE).sql(' ');
 
 
@@ -154,8 +172,12 @@ implements
 
 
 
-        ctx.visit(K_TYPE).sql(' ')
-           .visit(type).sql(' ');
+        ctx.visit(K_TYPE).sql(' ');
+
+        if (ifNotExists && supportsIfNotExists(ctx))
+            ctx.visit(K_IF_NOT_EXISTS).sql(' ');
+
+        ctx.visit(type).sql(' ');
 
 
 
@@ -200,6 +222,11 @@ implements
     }
 
     @Override
+    public final boolean $ifNotExists() {
+        return ifNotExists;
+    }
+
+    @Override
     public final UnmodifiableList<? extends Field<String>> $values() {
         return QOM.unmodifiable(values);
     }
@@ -211,22 +238,28 @@ implements
 
     @Override
     public final QOM.CreateType $type(Type<?> newValue) {
-        return $constructor().apply(newValue, $values(), $attributes());
+        return $constructor().apply(newValue, $ifNotExists(), $values(), $attributes());
+    }
+
+    @Override
+    public final QOM.CreateType $ifNotExists(boolean newValue) {
+        return $constructor().apply($type(), newValue, $values(), $attributes());
     }
 
     @Override
     public final QOM.CreateType $values(Collection<? extends Field<String>> newValue) {
-        return $constructor().apply($type(), newValue, $attributes());
+        return $constructor().apply($type(), $ifNotExists(), newValue, $attributes());
     }
 
     @Override
     public final QOM.CreateType $attributes(Collection<? extends Field<?>> newValue) {
-        return $constructor().apply($type(), $values(), newValue);
+        return $constructor().apply($type(), $ifNotExists(), $values(), newValue);
     }
 
-    public final Function3<? super Type<?>, ? super Collection<? extends Field<String>>, ? super Collection<? extends Field<?>>, ? extends QOM.CreateType> $constructor() {
-        return (a1, a2, a3) -> new CreateTypeImpl(configuration(), a1, (Collection<? extends Field<String>>) a2, (Collection<? extends Field<?>>) a3);
+    public final Function4<? super Type<?>, ? super Boolean, ? super Collection<? extends Field<String>>, ? super Collection<? extends Field<?>>, ? extends QOM.CreateType> $constructor() {
+        return (a1, a2, a3, a4) -> new CreateTypeImpl(configuration(), a1, a2, (Collection<? extends Field<String>>) a3, (Collection<? extends Field<?>>) a4);
     }
+
 
 
 

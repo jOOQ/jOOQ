@@ -10302,6 +10302,33 @@ public interface DSLContext extends Scope {
     CreateTypeStep createType(Type<?> type);
 
     /**
+     * The <code>CREATE TYPE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTypeIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    CreateTypeStep createTypeIfNotExists(@Stringly.Name String type);
+
+    /**
+     * The <code>CREATE TYPE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTypeIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    CreateTypeStep createTypeIfNotExists(Name type);
+
+    /**
+     * The <code>CREATE TYPE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createTypeIfNotExists(Type)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    CreateTypeStep createTypeIfNotExists(Type<?> type);
+
+    /**
      * The <code>CREATE SCHEMA</code> statement.
      *
      * @see DSL#createSchema(String)

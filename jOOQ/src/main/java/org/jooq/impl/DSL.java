@@ -8815,6 +8815,51 @@ public class DSL {
     }
 
     /**
+     * The <code>CREATE TYPE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTypeIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTypeStep createTypeIfNotExists(@Stringly.Name String type) {
+        return dsl().createTypeIfNotExists(type);
+    }
+
+    /**
+     * The <code>CREATE TYPE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTypeIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTypeStep createTypeIfNotExists(Name type) {
+        return dsl().createTypeIfNotExists(type);
+    }
+
+    /**
+     * The <code>CREATE TYPE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createTypeIfNotExists(Type)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateTypeStep createTypeIfNotExists(Type<?> type) {
+        return dsl().createTypeIfNotExists(type);
+    }
+
+    /**
      * The <code>CREATE SCHEMA</code> statement.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this

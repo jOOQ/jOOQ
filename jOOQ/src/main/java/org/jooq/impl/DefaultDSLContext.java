@@ -3420,17 +3420,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateTypeStep createType(@Stringly.Name String type) {
-        return new CreateTypeImpl(configuration(), DSL.type(DSL.name(type)));
+        return new CreateTypeImpl(configuration(), DSL.type(DSL.name(type)), false);
     }
 
     @Override
     public org.jooq.CreateTypeStep createType(Name type) {
-        return new CreateTypeImpl(configuration(), DSL.type(type));
+        return new CreateTypeImpl(configuration(), DSL.type(type), false);
     }
 
     @Override
     public org.jooq.CreateTypeStep createType(Type<?> type) {
-        return new CreateTypeImpl(configuration(), type);
+        return new CreateTypeImpl(configuration(), type, false);
+    }
+
+    @Override
+    public org.jooq.CreateTypeStep createTypeIfNotExists(@Stringly.Name String type) {
+        return new CreateTypeImpl(configuration(), DSL.type(DSL.name(type)), true);
+    }
+
+    @Override
+    public org.jooq.CreateTypeStep createTypeIfNotExists(Name type) {
+        return new CreateTypeImpl(configuration(), DSL.type(type), true);
+    }
+
+    @Override
+    public org.jooq.CreateTypeStep createTypeIfNotExists(Type<?> type) {
+        return new CreateTypeImpl(configuration(), type, true);
     }
 
     @Override

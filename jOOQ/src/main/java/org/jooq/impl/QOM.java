@@ -2268,10 +2268,13 @@ public final class QOM {
         //    CreateTypeImpl
     {
         @NotNull Type<?> $type();
+        boolean $ifNotExists();
         @NotNull UnmodifiableList<? extends Field<String>> $values();
         @NotNull UnmodifiableList<? extends Field<?>> $attributes();
         @CheckReturnValue
         @NotNull CreateType $type(Type<?> type);
+        @CheckReturnValue
+        @NotNull CreateType $ifNotExists(boolean ifNotExists);
         @CheckReturnValue
         @NotNull CreateType $values(Collection<? extends Field<String>> values);
         @CheckReturnValue

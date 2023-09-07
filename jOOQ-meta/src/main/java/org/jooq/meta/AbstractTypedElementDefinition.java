@@ -179,10 +179,21 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
     }
 
     public static final DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType, JavaTypeResolver resolver) {
-        return resolver.resolveDefinedType(() -> mapDefinedType0(container, child, definedType, resolver));
+        if (resolver == null)
+            return mapDefinedType0(container, child, definedType, resolver);
+        else
+            return resolver.resolveDefinedType(() -> mapDefinedType0(container, child, definedType, resolver));
     }
 
-    static final DataTypeDefinition mapDefinedType0(Definition container, Definition child, DataTypeDefinition definedType, JavaTypeResolver resolver) {
+    static final DataTypeDefinition mapDefinedType0(
+        Definition container,
+        Definition child,
+        DataTypeDefinition definedType,
+        JavaTypeResolver resolver
+    ) {
+        if (resolver == null)
+            resolver = new DefaultJavaTypeResolver();
+
         DataTypeDefinition result = definedType;
         Database db = container.getDatabase();
 

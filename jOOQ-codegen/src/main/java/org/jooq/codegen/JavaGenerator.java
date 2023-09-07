@@ -52,6 +52,8 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.SortOrder.DESC;
+import static org.jooq.codegen.GeneratorStrategy.Mode.POJO;
+import static org.jooq.codegen.GeneratorStrategy.Mode.RECORD;
 import static org.jooq.codegen.Language.JAVA;
 import static org.jooq.codegen.Language.KOTLIN;
 import static org.jooq.codegen.Language.SCALA;
@@ -89,6 +91,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -1602,14 +1605,14 @@ public class JavaGenerator extends AbstractGenerator {
 
 
     protected void generateRecord(TableDefinition table) {
-        JavaWriter out = newJavaWriter(getFile(table, Mode.RECORD));
+        JavaWriter out = newJavaWriter(table, Mode.RECORD);
         log.info("Generating record", out.file().getName());
         generateRecord0(table, out);
         closeJavaWriter(out);
     }
 
     protected void generateUDTRecord(UDTDefinition udt) {
-        JavaWriter out = newJavaWriter(getFile(udt, Mode.RECORD));
+        JavaWriter out = newJavaWriter(udt, Mode.RECORD);
         log.info("Generating record", out.file().getName());
         generateRecord0(udt, out);
         closeJavaWriter(out);
@@ -2988,21 +2991,21 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateInterface(TableDefinition table) {
-        JavaWriter out = newJavaWriter(getFile(table, Mode.INTERFACE));
+        JavaWriter out = newJavaWriter(table, Mode.INTERFACE);
         log.info("Generating interface", out.file().getName());
         generateInterface(table, out);
         closeJavaWriter(out);
     }
 
     protected void generateUDTInterface(UDTDefinition udt) {
-        JavaWriter out = newJavaWriter(getFile(udt, Mode.INTERFACE));
+        JavaWriter out = newJavaWriter(udt, Mode.INTERFACE);
         log.info("Generating interface", out.file().getName());
         generateInterface0(udt, out);
         closeJavaWriter(out);
     }
 
     protected void generateEmbeddableInterface(EmbeddableDefinition embeddable) {
-        JavaWriter out = newJavaWriter(getFile(embeddable, Mode.INTERFACE));
+        JavaWriter out = newJavaWriter(embeddable, Mode.INTERFACE);
         log.info("Generating interface", out.file().getName());
         generateInterface0(embeddable, out);
         closeJavaWriter(out);
@@ -3271,7 +3274,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     @SuppressWarnings("unused")
     protected void generateUDT(SchemaDefinition schema, UDTDefinition udt) {
-        JavaWriter out = newJavaWriter(getFile(udt));
+        JavaWriter out = newJavaWriter(udt);
         out.refConflicts(getStrategy().getJavaIdentifiers(udt.getAttributes()));
 
         log.info("Generating UDT ", out.file().getName());
@@ -3440,7 +3443,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     @SuppressWarnings("unused")
     protected void generateUDTPath(SchemaDefinition schema, UDTDefinition udt) {
-        JavaWriter out = newJavaWriter(getFile(udt, Mode.PATH));
+        JavaWriter out = newJavaWriter(udt, Mode.PATH);
         out.refConflicts(getStrategy().getJavaIdentifiers(udt.getAttributes()));
 
         log.info("Generating UDT Path", out.file().getName());
@@ -3894,7 +3897,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     @SuppressWarnings("unused")
     protected void generateArray(SchemaDefinition schema, ArrayDefinition array) {
-        JavaWriter out = newJavaWriter(getFile(array, Mode.RECORD));
+        JavaWriter out = newJavaWriter(getFile(array, Mode.RECORD), Mode.RECORD);
         log.info("Generating ARRAY", out.file().getName());
         generateArray(array, out);
         closeJavaWriter(out);
@@ -4063,7 +4066,7 @@ public class JavaGenerator extends AbstractGenerator {
                 getStrategy().setTargetLanguage(language);
             }
 
-            JavaWriter out = newJavaWriter(getFile(e, Mode.ENUM));
+            JavaWriter out = newJavaWriter(e, Mode.ENUM);
             log.info("Generating ENUM", out.file().getName());
             generateEnum(e, out);
             closeJavaWriter(out);
@@ -4586,7 +4589,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateSyntheticDao(DefaultSyntheticDaoDefinition dao) {
-        JavaWriter out = newJavaWriter(getFile(dao, Mode.SYNTHETIC_DAO));
+        JavaWriter out = newJavaWriter(dao, Mode.SYNTHETIC_DAO);
         log.info("Generating Synthetic DAO", out.file().getName());
         generateSyntheticDao(dao, out);
         closeJavaWriter(out);
@@ -5043,7 +5046,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateSpringDaoClassFooter(CatalogDefinition catalog, JavaWriter out) {}
 
     protected void generateDao(TableDefinition table) {
-        JavaWriter out = newJavaWriter(getFile(table, Mode.DAO));
+        JavaWriter out = newJavaWriter(table, Mode.DAO);
         log.info("Generating DAO", out.file().getName());
         generateDao(table, out);
         closeJavaWriter(out);
@@ -5388,21 +5391,21 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePojo(TableDefinition table) {
-        JavaWriter out = newJavaWriter(getFile(table, Mode.POJO));
+        JavaWriter out = newJavaWriter(table, Mode.POJO);
         log.info("Generating POJO", out.file().getName());
         generatePojo(table, out);
         closeJavaWriter(out);
     }
 
     protected void generateEmbeddablePojo(EmbeddableDefinition embeddable) {
-        JavaWriter out = newJavaWriter(getFile(embeddable, Mode.POJO));
+        JavaWriter out = newJavaWriter(embeddable, Mode.POJO);
         log.info("Generating POJO", out.file().getName());
         generatePojo0(embeddable, out);
         closeJavaWriter(out);
     }
 
     protected void generateUDTPojo(UDTDefinition udt) {
-        JavaWriter out = newJavaWriter(getFile(udt, Mode.POJO));
+        JavaWriter out = newJavaWriter(udt, Mode.POJO);
         log.info("Generating POJO", out.file().getName());
         generatePojo0(udt, out);
         closeJavaWriter(out);
@@ -6322,7 +6325,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     @SuppressWarnings("unused")
     protected void generateTable(SchemaDefinition schema, TableDefinition table) {
-        JavaWriter out = newJavaWriter(getFile(table));
+        JavaWriter out = newJavaWriter(table);
         out.refConflicts(getStrategy().getJavaIdentifiers(table.getColumns()));
         out.refConflicts(getStrategy().getJavaIdentifiers(table.getReferencedEmbeddables()));
 
@@ -7865,7 +7868,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     @SuppressWarnings("unused")
     protected void generateEmbeddable(SchemaDefinition schema, EmbeddableDefinition embeddable) {
-        JavaWriter out = newJavaWriter(getFile(embeddable, Mode.RECORD));
+        JavaWriter out = newJavaWriter(embeddable, Mode.RECORD);
         log.info("Generating embeddable", out.file().getName());
         generateRecord0(embeddable, out);
         closeJavaWriter(out);
@@ -8419,7 +8422,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateCatalog(CatalogDefinition catalog) {
-        JavaWriter out = newJavaWriter(getFile(catalog));
+        JavaWriter out = newJavaWriter(catalog);
         log.info("");
         log.info("Generating catalog", out.file().getName());
         log.info("==========================================================");
@@ -8546,7 +8549,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateSchema(SchemaDefinition schema) {
-        JavaWriter out = newJavaWriter(getFile(schema));
+        JavaWriter out = newJavaWriter(schema);
         log.info("Generating schema", out.file().getName());
         log.info("----------------------------------------------------------");
         generateSchema(schema, out);
@@ -9244,7 +9247,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     @SuppressWarnings("unused")
     protected void generateRoutine(SchemaDefinition schema, RoutineDefinition routine) {
-        JavaWriter out = newJavaWriter(getFile(routine));
+        JavaWriter out = newJavaWriter(routine);
         log.info("Generating routine", out.file().getName());
 
         if (log.isDebugEnabled())
@@ -10449,6 +10452,27 @@ public class JavaGenerator extends AbstractGenerator {
         public String ref(Class<?> type) {
             return out.ref(type);
         }
+
+        @Override
+        public <T> T resolveDefinedType(Supplier<T> supplier) {
+
+            // [#15553] Converter and Binding related imports shouldn't appear here
+            if (ignoreImports(mode) || mode == null && ignoreImports(out.mode())) {
+                try {
+                    out.ignoreImports(true);
+                    return supplier.get();
+                }
+                finally {
+                    out.ignoreImports(false);
+                }
+            }
+            else
+                return supplier.get();
+        }
+
+        private boolean ignoreImports(Mode m) {
+            return m == POJO || m == RECORD;
+        }
     }
 
     protected JavaTypeResolver resolver(JavaWriter out) {
@@ -10968,8 +10992,22 @@ public class JavaGenerator extends AbstractGenerator {
 
     // [#3880] Users may need to call this method
     protected JavaWriter newJavaWriter(File file) {
+        return newJavaWriter(file, null);
+    }
+
+    // [#3880] Users may need to call this method
+    protected JavaWriter newJavaWriter(Definition definition) {
+        return newJavaWriter(getFile(definition));
+    }
+
+    // [#3880] Users may need to call this method
+    protected JavaWriter newJavaWriter(Definition definition, Mode mode) {
+        return newJavaWriter(getFile(definition, mode), mode);
+    }
+
+    protected JavaWriter newJavaWriter(File file, Mode mode) {
         file = fixSuffix(file);
-        JavaWriter result = new JavaWriter(file, generateFullyQualifiedTypes(), targetEncoding, generateJavadoc(), fileCache, generatedSerialVersionUID());
+        JavaWriter result = new JavaWriter(file, generateFullyQualifiedTypes(), targetEncoding, generateJavadoc(), fileCache, generatedSerialVersionUID(), mode);
 
         if (generateIndentation != null)
             result.tabString(generateIndentation);

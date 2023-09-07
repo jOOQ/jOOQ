@@ -19,6 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.jooq.codegen.GeneratorStrategy.Mode;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 import org.jooq.tools.StringUtils;
 
@@ -46,6 +47,8 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private final boolean                   isScala;
     private final boolean                   isKotlin;
     private final GeneratedSerialVersionUID generatedSerialVersionUID;
+    private final Mode                      mode;
+    private boolean                         ignoreImports;
 
     public JavaWriter(File file, String fullyQualifiedTypes) {
         this(file, fullyQualifiedTypes, null);
@@ -64,6 +67,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     }
 
     public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc, Files files, GeneratedSerialVersionUID generatedSerialVersionUID) {
+        this(file, fullyQualifiedTypes, encoding, javadoc, files, generatedSerialVersionUID, null);
+    }
+
+    public JavaWriter(File file, String fullyQualifiedTypes, String encoding, boolean javadoc, Files files, GeneratedSerialVersionUID generatedSerialVersionUID, Mode mode) {
         super(file, encoding, files);
 
         this.className = file.getName().replaceAll("\\.(java|scala|kt)$", "");
@@ -74,6 +81,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
         this.javadoc = javadoc;
         this.generatedSerialVersionUID = generatedSerialVersionUID;
+        this.mode = mode;
 
         if (isJava || isKotlin)
             tabString("    ");
@@ -129,6 +137,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             .replace("\\u002a/", "\\u002a /")
             .replace("*\\u002f", "* \\u002f")
             .replace("\\u002a\\u002f", "\\u002a \\u002f");
+    }
+
+    public Mode mode() {
+        return mode;
     }
 
     public JavaWriter header(String header, Object... args) {
@@ -261,6 +273,9 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     @Override
     protected List<String> ref(List<String> clazz, int keepSegments) {
+        if (ignoreImports)
+            return super.ref(clazz, keepSegments);
+
         List<String> result = new ArrayList<>(clazz == null ? 0 : clazz.size());
 
         if (clazz != null) {
@@ -357,5 +372,9 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         }
 
         return c;
+    }
+
+    public void ignoreImports(boolean ignoreImports) {
+        this.ignoreImports = ignoreImports;
     }
 }

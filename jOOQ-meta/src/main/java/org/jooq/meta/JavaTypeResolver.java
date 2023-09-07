@@ -37,6 +37,8 @@
  */
 package org.jooq.meta;
 
+import java.util.function.Supplier;
+
 import org.jooq.Name;
 
 /**
@@ -95,4 +97,10 @@ public interface JavaTypeResolver {
      * type, if necessary.
      */
     String ref(Class<?> type);
+
+    /**
+     * Map a defined type to a user type, resolving converters and bindings,
+     * which may not need imports in some output modes.
+     */
+    <T> T resolveDefinedType(Supplier<T> supplier);
 }

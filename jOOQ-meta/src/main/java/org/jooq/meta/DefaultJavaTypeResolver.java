@@ -37,6 +37,8 @@
  */
 package org.jooq.meta;
 
+import java.util.function.Supplier;
+
 import org.jooq.Name;
 
 final class DefaultJavaTypeResolver implements JavaTypeResolver {
@@ -71,5 +73,10 @@ final class DefaultJavaTypeResolver implements JavaTypeResolver {
     @Override
     public String constructorCall(String type) {
         return "new " + type;
+    }
+
+    @Override
+    public <T> T resolveDefinedType(Supplier<T> supplier) {
+        return supplier.get();
     }
 }

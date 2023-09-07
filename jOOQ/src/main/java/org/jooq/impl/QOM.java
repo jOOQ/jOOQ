@@ -2674,11 +2674,11 @@ public final class QOM {
         //permits
         //    TruncateImpl
     {
-        @NotNull Table<R> $table();
+        @NotNull UnmodifiableList<? extends Table<?>> $table();
         @Nullable IdentityRestartOption $restartIdentity();
         @Nullable Cascade $cascade();
         @CheckReturnValue
-        @NotNull Truncate<R> $table(Table<R> table);
+        @NotNull Truncate<R> $table(Collection<? extends Table<?>> table);
         @CheckReturnValue
         @NotNull Truncate<R> $restartIdentity(IdentityRestartOption restartIdentity);
         @CheckReturnValue

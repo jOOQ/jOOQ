@@ -3999,17 +3999,37 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.TruncateIdentityStep<Record> truncate(@Stringly.Name String table) {
-        return new TruncateImpl(configuration(), DSL.table(DSL.name(table)));
+        return new TruncateImpl(configuration(), Arrays.asList(DSL.table(table)));
     }
 
     @Override
     public org.jooq.TruncateIdentityStep<Record> truncate(Name table) {
-        return new TruncateImpl(configuration(), DSL.table(table));
+        return new TruncateImpl(configuration(), Arrays.asList(DSL.table(table)));
     }
 
     @Override
     public <R extends Record> org.jooq.TruncateIdentityStep<R> truncate(Table<R> table) {
-        return new TruncateImpl(configuration(), table);
+        return new TruncateImpl(configuration(), Arrays.asList(table));
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncate(@Stringly.Name String... table) {
+        return new TruncateImpl(configuration(), Tools.map(table, e -> DSL.table(e)));
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncate(Name... table) {
+        return new TruncateImpl(configuration(), Tools.map(table, e -> DSL.table(e)));
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncate(Table<?>... table) {
+        return new TruncateImpl(configuration(), Arrays.asList(table));
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncate(Collection<? extends Table<?>> table) {
+        return new TruncateImpl(configuration(), new QueryPartList<>(table));
     }
 
     @Override
@@ -4024,6 +4044,26 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> org.jooq.TruncateIdentityStep<R> truncateTable(Table<R> table) {
+        return truncate(table);
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncateTable(@Stringly.Name String... table) {
+        return truncate(table);
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncateTable(Name... table) {
+        return truncate(table);
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncateTable(Table<?>... table) {
+        return truncate(table);
+    }
+
+    @Override
+    public org.jooq.TruncateIdentityStep<Record> truncateTable(Collection<? extends Table<?>> table) {
         return truncate(table);
     }
 

@@ -10280,7 +10280,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createType(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     CreateTypeStep createType(@Stringly.Name String type);
 
     /**
@@ -10289,7 +10289,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createType(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     CreateTypeStep createType(Name type);
 
     /**
@@ -10298,7 +10298,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createType(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     CreateTypeStep createType(Type<?> type);
 
     /**
@@ -10307,7 +10307,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTypeIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     CreateTypeStep createTypeIfNotExists(@Stringly.Name String type);
 
     /**
@@ -10316,7 +10316,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTypeIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     CreateTypeStep createTypeIfNotExists(Name type);
 
     /**
@@ -10325,7 +10325,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTypeIfNotExists(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     CreateTypeStep createTypeIfNotExists(Type<?> type);
 
     /**
@@ -10952,7 +10952,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropType(@Stringly.Name String types);
 
     /**
@@ -10961,7 +10961,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropType(Name types);
 
     /**
@@ -10970,7 +10970,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropType(Type<?> types);
 
     /**
@@ -10979,7 +10979,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropType(@Stringly.Name String... types);
 
     /**
@@ -10988,7 +10988,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropType(Name... types);
 
     /**
@@ -10997,7 +10997,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(Type...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropType(Type<?>... types);
 
     /**
@@ -11006,7 +11006,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropType(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropType(Collection<? extends Type<?>> types);
 
     /**
@@ -11015,7 +11015,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropTypeIfExists(@Stringly.Name String types);
 
     /**
@@ -11024,7 +11024,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropTypeIfExists(Name types);
 
     /**
@@ -11033,7 +11033,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropTypeIfExists(Type<?> types);
 
     /**
@@ -11042,7 +11042,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropTypeIfExists(@Stringly.Name String... types);
 
     /**
@@ -11051,7 +11051,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropTypeIfExists(Name... types);
 
     /**
@@ -11060,7 +11060,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(Type...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropTypeIfExists(Type<?>... types);
 
     /**
@@ -11069,7 +11069,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTypeIfExists(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     DropTypeStep dropTypeIfExists(Collection<? extends Type<?>> types);
 
     /**
@@ -11345,6 +11345,42 @@ public interface DSLContext extends Scope {
     <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
 
     /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSL#truncate(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    TruncateIdentityStep<Record> truncate(@Stringly.Name String... table);
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSL#truncate(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    TruncateIdentityStep<Record> truncate(Name... table);
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSL#truncate(Table...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    TruncateIdentityStep<Record> truncate(Table<?>... table);
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     *
+     * @see DSL#truncate(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    TruncateIdentityStep<Record> truncate(Collection<? extends Table<?>> table);
+
+    /**
      * The <code>TRUNCATE TABLE</code> statement.
      *
      * @see DSL#truncateTable(String)
@@ -11370,6 +11406,42 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     <R extends Record> TruncateIdentityStep<R> truncateTable(Table<R> table);
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSL#truncateTable(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    TruncateIdentityStep<Record> truncateTable(@Stringly.Name String... table);
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSL#truncateTable(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    TruncateIdentityStep<Record> truncateTable(Name... table);
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSL#truncateTable(Table...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    TruncateIdentityStep<Record> truncateTable(Table<?>... table);
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     *
+     * @see DSL#truncateTable(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    TruncateIdentityStep<Record> truncateTable(Collection<? extends Table<?>> table);
 
 
 

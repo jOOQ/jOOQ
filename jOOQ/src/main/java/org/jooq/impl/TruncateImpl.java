@@ -64,7 +64,7 @@ import java.util.stream.*;
 /**
  * The <code>TRUNCATE</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class TruncateImpl<R extends Record>
 extends
     AbstractDDLQuery
@@ -76,13 +76,13 @@ implements
     org.jooq.Truncate<R>
 {
 
-    final Table<R>              table;
-          IdentityRestartOption restartIdentity;
-          Cascade               cascade;
+    final QueryPartListView<? extends Table<?>> table;
+          IdentityRestartOption                 restartIdentity;
+          Cascade                               cascade;
 
     TruncateImpl(
         Configuration configuration,
-        Table<R> table
+        Collection<? extends Table<?>> table
     ) {
         this(
             configuration,
@@ -94,13 +94,13 @@ implements
 
     TruncateImpl(
         Configuration configuration,
-        Table<R> table,
+        Collection<? extends Table<?>> table,
         IdentityRestartOption restartIdentity,
         Cascade cascade
     ) {
         super(configuration);
 
-        this.table = table;
+        this.table = new QueryPartList<>(table);
         this.restartIdentity = restartIdentity;
         this.cascade = cascade;
     }
@@ -152,7 +152,14 @@ implements
             case FIREBIRD:
             case IGNITE:
             case SQLITE: {
-                ctx.visit(delete(table));
+                if (table.size() == 1) {
+                    ctx.visit(delete(table.get(0)));
+                }
+                else {
+                    ctx.sql("[Cannot emulate multi-table truncate using DELETE yet]");
+                    log.warn("Multi table truncate", "Cannot emulate multi-table truncate using DELETE yet");
+                }
+
                 break;
             }
 
@@ -202,8 +209,8 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Table<R> $table() {
-        return table;
+    public final UnmodifiableList<? extends Table<?>> $table() {
+        return QOM.unmodifiable(table);
     }
 
     @Override
@@ -217,7 +224,7 @@ implements
     }
 
     @Override
-    public final QOM.Truncate<R> $table(Table<R> newValue) {
+    public final QOM.Truncate<R> $table(Collection<? extends Table<?>> newValue) {
         return $constructor().apply(newValue, $restartIdentity(), $cascade());
     }
 
@@ -231,8 +238,8 @@ implements
         return $constructor().apply($table(), $restartIdentity(), newValue);
     }
 
-    public final Function3<? super Table<R>, ? super IdentityRestartOption, ? super Cascade, ? extends QOM.Truncate<R>> $constructor() {
-        return (a1, a2, a3) -> new TruncateImpl(configuration(), a1, a2, a3);
+    public final Function3<? super Collection<? extends Table<?>>, ? super IdentityRestartOption, ? super Cascade, ? extends QOM.Truncate<R>> $constructor() {
+        return (a1, a2, a3) -> new TruncateImpl(configuration(), (Collection<? extends Table<?>>) a1, a2, a3);
     }
 
 

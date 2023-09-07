@@ -8779,7 +8779,7 @@ public class DSL {
      * @see DSLContext#createType(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTypeStep createType(@Stringly.Name String type) {
         return dsl().createType(type);
     }
@@ -8794,7 +8794,7 @@ public class DSL {
      * @see DSLContext#createType(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTypeStep createType(Name type) {
         return dsl().createType(type);
     }
@@ -8809,7 +8809,7 @@ public class DSL {
      * @see DSLContext#createType(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTypeStep createType(Type<?> type) {
         return dsl().createType(type);
     }
@@ -8824,7 +8824,7 @@ public class DSL {
      * @see DSLContext#createTypeIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTypeStep createTypeIfNotExists(@Stringly.Name String type) {
         return dsl().createTypeIfNotExists(type);
     }
@@ -8839,7 +8839,7 @@ public class DSL {
      * @see DSLContext#createTypeIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTypeStep createTypeIfNotExists(Name type) {
         return dsl().createTypeIfNotExists(type);
     }
@@ -8854,7 +8854,7 @@ public class DSL {
      * @see DSLContext#createTypeIfNotExists(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTypeStep createTypeIfNotExists(Type<?> type) {
         return dsl().createTypeIfNotExists(type);
     }
@@ -9883,7 +9883,7 @@ public class DSL {
      * @see DSLContext#dropType(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropType(@Stringly.Name String types) {
         return dsl().dropType(types);
     }
@@ -9898,7 +9898,7 @@ public class DSL {
      * @see DSLContext#dropType(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropType(Name types) {
         return dsl().dropType(types);
     }
@@ -9913,7 +9913,7 @@ public class DSL {
      * @see DSLContext#dropType(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropType(Type<?> types) {
         return dsl().dropType(types);
     }
@@ -9928,7 +9928,7 @@ public class DSL {
      * @see DSLContext#dropType(String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropType(@Stringly.Name String... types) {
         return dsl().dropType(types);
     }
@@ -9943,7 +9943,7 @@ public class DSL {
      * @see DSLContext#dropType(Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropType(Name... types) {
         return dsl().dropType(types);
     }
@@ -9958,7 +9958,7 @@ public class DSL {
      * @see DSLContext#dropType(Type...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropType(Type<?>... types) {
         return dsl().dropType(types);
     }
@@ -9973,7 +9973,7 @@ public class DSL {
      * @see DSLContext#dropType(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropType(Collection<? extends Type<?>> types) {
         return dsl().dropType(types);
     }
@@ -9988,7 +9988,7 @@ public class DSL {
      * @see DSLContext#dropTypeIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropTypeIfExists(@Stringly.Name String types) {
         return dsl().dropTypeIfExists(types);
     }
@@ -10003,7 +10003,7 @@ public class DSL {
      * @see DSLContext#dropTypeIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropTypeIfExists(Name types) {
         return dsl().dropTypeIfExists(types);
     }
@@ -10018,7 +10018,7 @@ public class DSL {
      * @see DSLContext#dropTypeIfExists(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropTypeIfExists(Type<?> types) {
         return dsl().dropTypeIfExists(types);
     }
@@ -10033,7 +10033,7 @@ public class DSL {
      * @see DSLContext#dropTypeIfExists(String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropTypeIfExists(@Stringly.Name String... types) {
         return dsl().dropTypeIfExists(types);
     }
@@ -10048,7 +10048,7 @@ public class DSL {
      * @see DSLContext#dropTypeIfExists(Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropTypeIfExists(Name... types) {
         return dsl().dropTypeIfExists(types);
     }
@@ -10063,7 +10063,7 @@ public class DSL {
      * @see DSLContext#dropTypeIfExists(Type...)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropTypeIfExists(Type<?>... types) {
         return dsl().dropTypeIfExists(types);
     }
@@ -10078,7 +10078,7 @@ public class DSL {
      * @see DSLContext#dropTypeIfExists(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTypeStep dropTypeIfExists(Collection<? extends Type<?>> types) {
         return dsl().dropTypeIfExists(types);
     }
@@ -10524,6 +10524,66 @@ public class DSL {
     }
 
     /**
+     * The <code>TRUNCATE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#truncate(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncate(@Stringly.Name String... table) {
+        return dsl().truncate(table);
+    }
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#truncate(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncate(Name... table) {
+        return dsl().truncate(table);
+    }
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#truncate(Table...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncate(Table<?>... table) {
+        return dsl().truncate(table);
+    }
+
+    /**
+     * The <code>TRUNCATE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#truncate(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncate(Collection<? extends Table<?>> table) {
+        return dsl().truncate(table);
+    }
+
+    /**
      * The <code>TRUNCATE TABLE</code> statement.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
@@ -10565,6 +10625,66 @@ public class DSL {
     @NotNull @CheckReturnValue
     @Support
     public static <R extends Record> org.jooq.TruncateIdentityStep<R> truncateTable(Table<R> table) {
+        return dsl().truncateTable(table);
+    }
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#truncateTable(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncateTable(@Stringly.Name String... table) {
+        return dsl().truncateTable(table);
+    }
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#truncateTable(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncateTable(Name... table) {
+        return dsl().truncateTable(table);
+    }
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#truncateTable(Table...)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncateTable(Table<?>... table) {
+        return dsl().truncateTable(table);
+    }
+
+    /**
+     * The <code>TRUNCATE TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#truncateTable(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    public static org.jooq.TruncateIdentityStep<Record> truncateTable(Collection<? extends Table<?>> table) {
         return dsl().truncateTable(table);
     }
 

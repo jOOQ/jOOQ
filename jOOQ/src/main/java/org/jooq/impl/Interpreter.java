@@ -117,6 +117,7 @@ import org.jooq.impl.ConstraintImpl.Action;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.CycleOption;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -784,17 +785,17 @@ final class Interpreter {
     }
 
     private final void accept0(TruncateImpl<?> query) {
-        Table<?> table = query.$table();
+        for (Table<?> table : query.$table()) {
+            MutableSchema schema = getSchema(table.getSchema());
+            MutableTable existing = schema.table(table);
 
-        MutableSchema schema = getSchema(table.getSchema());
-        MutableTable existing = schema.table(table);
-
-        if (existing == null)
-            throw notExists(table);
-        else if (!existing.options.type().isTable())
-            throw objectNotTable(table);
-        else if (query.$cascade() != Cascade.CASCADE && existing.hasReferencingKeys())
-            throw new DataDefinitionException("Cannot truncate table referenced by other tables. Use CASCADE: " + table);
+            if (existing == null)
+                throw notExists(table);
+            else if (!existing.options.type().isTable())
+                throw objectNotTable(table);
+            else if (query.$cascade() != Cascade.CASCADE && existing.hasReferencingKeys())
+                throw new DataDefinitionException("Cannot truncate table referenced by other tables. Use CASCADE: " + table);
+        }
     }
 
     private final void accept0(CreateViewImpl<?> query) {

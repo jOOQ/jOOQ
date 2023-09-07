@@ -446,6 +446,11 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
     }
 
     @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> enums(List<String> schemas) {
+        return null;
+    }
+
+    @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<>();
 

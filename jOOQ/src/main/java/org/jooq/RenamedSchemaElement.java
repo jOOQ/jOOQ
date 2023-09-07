@@ -37,19 +37,11 @@
  */
 package org.jooq;
 
-import org.jooq.impl.UDTImpl;
-
 /**
- * A mapped table
+ * A marker interface for renamed schema elements.
  *
  * @author Lukas Eder
  */
-final class RenamedUDT<R extends UDTRecord<R>> extends UDTImpl<R> implements RenamedSchemaElement {
+interface RenamedSchemaElement {
 
-    RenamedUDT(Schema schema, UDT<R> delegate, String rename) {
-        super(rename, schema, delegate.getPackage(), delegate.isSynthetic());
-
-        for (Field<?> field : delegate.fields())
-            createField(field.getUnqualifiedName(), field.getDataType(), this);
-    }
 }

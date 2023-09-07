@@ -757,6 +757,11 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
         return result;
     }
 
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> enums(List<String> schemas) {
+        return null;
+    }
+
     static record TableRecord(String schema, String table, TableType type, String comment) {}
 
     @Override

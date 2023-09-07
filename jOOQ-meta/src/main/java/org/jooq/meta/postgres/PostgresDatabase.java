@@ -779,6 +779,11 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         return result;
     }
 
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> enums(List<String> schemas) {
+        return null;
+    }
+
     static record Identifier(String schema, String name) {}
 
     @Override

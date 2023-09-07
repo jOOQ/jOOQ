@@ -403,6 +403,11 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
     }
 
     @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> enums(List<String> schemas) {
+        return null;
+    }
+
+    @Override
     public ResultQuery<Record6<String, String, String, String, String, Integer>> primaryKeys(List<String> schemas) {
         return null;
     }

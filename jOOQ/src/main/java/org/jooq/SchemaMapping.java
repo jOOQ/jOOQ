@@ -540,7 +540,7 @@ public class SchemaMapping implements Serializable {
                             }
                         }
 
-                        if (!(result instanceof RenamedTable))
+                        if (!(result instanceof RenamedSchemaElement))
                             schemaLoop:
                             for (MappedSchema s : mapping().getSchemata()) {
                                 if (matches(s, schemaName)) {

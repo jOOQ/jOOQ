@@ -11,6 +11,7 @@ final class MetaSQL {
     private static final EnumMap<SQLDialect, String> M_UNIQUE_KEYS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SEQUENCES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES = new EnumMap<>(SQLDialect.class);
+    private static final EnumMap<SQLDialect, String> M_ENUMS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SOURCES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_COMMENTS = new EnumMap<>(SQLDialect.class);
 
@@ -27,6 +28,11 @@ final class MetaSQL {
     static final String M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES(SQLDialect dialect) {
         String result = M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.get(dialect);
         return result != null ? result : M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.get(dialect.family());
+    }
+
+    static final String M_ENUMS(SQLDialect dialect) {
+        String result = M_ENUMS.get(dialect);
+        return result != null ? result : M_ENUMS.get(dialect.family());
     }
 
     static final String M_SOURCES(SQLDialect dialect) {
@@ -201,6 +207,30 @@ final class MetaSQL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        M_ENUMS.put(MARIADB, "with recursive e as (select information_schema.COLUMNS.TABLE_SCHEMA, information_schema.COLUMNS.TABLE_NAME, information_schema.COLUMNS.COLUMN_NAME, regexp_replace(information_schema.COLUMNS.COLUMN_TYPE, 'enum\\((.*)\\)', '$1') as e from information_schema.COLUMNS where information_schema.COLUMNS.DATA_TYPE = 'enum'), l as (select e.TABLE_SCHEMA, e.TABLE_NAME, e.COLUMN_NAME, e, cast('' as char(32767)) as l, 0 as p from e union all select e.TABLE_SCHEMA, e.TABLE_NAME, e.COLUMN_NAME, regexp_replace(e, '''.*?''(?:,|$)(.*)', '$1', 1, 1), replace(regexp_replace(e, '''(.*?)''(?:,|$).*', '$1', 1, 1), '''''', ''''), (p + 1) from l as e where char_length(e) > 0) select l.TABLE_SCHEMA, l.TABLE_NAME, l.COLUMN_NAME, null as DATA_TYPE, l.l, l.p from l where (p > 0 and l.TABLE_SCHEMA in (?)) order by l.TABLE_SCHEMA, l.TABLE_NAME, l.COLUMN_NAME, l.p");
+        M_ENUMS.put(MYSQL, "with recursive e as (select information_schema.COLUMNS.TABLE_SCHEMA, information_schema.COLUMNS.TABLE_NAME, information_schema.COLUMNS.COLUMN_NAME, regexp_replace(information_schema.COLUMNS.COLUMN_TYPE, 'enum\\((.*)\\)', '$1') as e from information_schema.COLUMNS where information_schema.COLUMNS.DATA_TYPE = 'enum'), l as (select e.TABLE_SCHEMA, e.TABLE_NAME, e.COLUMN_NAME, e, cast('' as char(32767)) as l, 0 as p from e union all select e.TABLE_SCHEMA, e.TABLE_NAME, e.COLUMN_NAME, regexp_replace(e, '''.*?''(?:,|$)(.*)', '$1', 1, 1), replace(regexp_replace(e, '''(.*?)''(?:,|$).*', '$1', 1, 1), '''''', ''''), (p + 1) from l as e where char_length(e) > 0) select l.TABLE_SCHEMA, l.TABLE_NAME, l.COLUMN_NAME, null as DATA_TYPE, l.l, l.p from l where (p > 0 and l.TABLE_SCHEMA in (?)) order by l.TABLE_SCHEMA, l.TABLE_NAME, l.COLUMN_NAME, l.p");
 
 
 

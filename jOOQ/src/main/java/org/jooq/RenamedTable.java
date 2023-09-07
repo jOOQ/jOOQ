@@ -46,7 +46,7 @@ import org.jooq.impl.TableImpl;
  *
  * @author Lukas Eder
  */
-final class RenamedTable<R extends Record> extends TableImpl<R> {
+final class RenamedTable<R extends Record> extends TableImpl<R> implements RenamedSchemaElement {
 
     RenamedTable(Schema schema, Table<R> delegate, String rename) {
         super(name(rename), schema);

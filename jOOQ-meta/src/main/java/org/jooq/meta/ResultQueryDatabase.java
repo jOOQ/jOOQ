@@ -128,6 +128,25 @@ public interface ResultQueryDatabase extends Database {
     ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas);
 
     /**
+     * A query that produces enum types and their literals for a set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Column name (if applicable, e.g. in MySQL style RDBMS)</li>
+     * <li>Enum type name (if applicable, e.g. in PostgreSQL style RDBMS)</li>
+     * <li>Literal value</li>
+     * <li>Literal position</li>
+     * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't support the query.
+     */
+    @Internal
+    @Nullable
+    ResultQuery<Record6<String, String, String, String, String, Integer>> enums(List<String> schemas);
+
+    /**
      * A query that produces source code for a set of input schemas.
      * <p>
      * The resulting columns are:

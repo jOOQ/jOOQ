@@ -48,11 +48,19 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.cast;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.length;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.regexpReplaceAll;
+import static org.jooq.impl.DSL.regexpReplaceFirst;
+import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.CHAR;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -79,6 +87,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.CommonTableExpression;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -121,6 +130,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.mariadb.MariaDBDatabase;
+import org.jooq.meta.mysql.information_schema.tables.Columns;
 import org.jooq.meta.mysql.information_schema.tables.Triggers;
 import org.jooq.meta.mysql.mysql.enums.ProcType;
 import org.jooq.tools.csv.CSVReader;
@@ -467,6 +477,71 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<>();
         return result;
+    }
+
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> enums(List<String> schemas) {
+
+        // Recursive query that works with MySQL 8+ only:
+        // https://stackoverflow.com/a/77057135/521799
+
+        Columns c = COLUMNS;
+
+        Field<String> e = field(name("e"), VARCHAR);
+        Field<String> l = field(name("l"), VARCHAR);
+        Field<Integer> p = field(name("p"), INTEGER);
+
+        CommonTableExpression<?> te = name("e").as(
+            select(
+                c.TABLE_SCHEMA,
+                c.TABLE_NAME,
+                c.COLUMN_NAME,
+                regexpReplaceAll(c.COLUMN_TYPE, inline("enum\\((.*)\\)"), inline("$1")).as(e))
+            .from(c)
+            .where(c.DATA_TYPE.eq(inline("enum")))
+        );
+
+        CommonTableExpression<?> tl = name("l").as(
+            select(
+                te.field(c.TABLE_SCHEMA),
+                te.field(c.TABLE_NAME),
+                te.field(c.COLUMN_NAME),
+                e, cast(inline(""), CHAR(32767)).as(l),
+                inline(0).as(p))
+            .from(te)
+            .unionAll(
+                select(
+                    te.field(c.TABLE_SCHEMA),
+                    te.field(c.TABLE_NAME),
+                    te.field(c.COLUMN_NAME),
+                    regexpReplaceFirst(e, inline("'.*?'(?:,|$)(.*)"), inline("$1")),
+                    replace(
+                        regexpReplaceFirst(e, inline("'(.*?)'(?:,|$).*"), inline("$1")),
+                        inline("''"), inline("'")
+                    ),
+                    p.plus(inline(1)))
+                .from(table(name("l")).as(te))
+                .where(length(e).gt(inline(0)))
+            )
+        );
+
+        return create()
+            .withRecursive(te, tl)
+            .select(
+                tl.field(c.TABLE_SCHEMA),
+                tl.field(c.TABLE_NAME),
+                tl.field(c.COLUMN_NAME),
+                inline(null, VARCHAR).as(c.DATA_TYPE),
+                tl.field(l),
+                tl.field(p))
+            .from(tl)
+            .where(p.gt(inline(0)))
+            .and(tl.field(c.TABLE_SCHEMA).in(schemas))
+            .orderBy(
+                tl.field(c.TABLE_SCHEMA),
+                tl.field(c.TABLE_NAME),
+                tl.field(c.COLUMN_NAME),
+                tl.field(p));
     }
 
     @Override

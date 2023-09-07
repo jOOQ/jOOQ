@@ -148,6 +148,11 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
     }
 
     @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> enums(List<String> schemas) {
+        return null;
+    }
+
+    @Override
     public final ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas) {
         return create()
             .select(

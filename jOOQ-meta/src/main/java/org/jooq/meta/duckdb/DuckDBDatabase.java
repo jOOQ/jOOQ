@@ -53,6 +53,7 @@ import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_CONSTRAINTS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_DATABASES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_SCHEMAS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TABLES;
+import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TYPES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_VIEWS;
 
 import java.math.BigDecimal;
@@ -285,11 +286,6 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
     }
 
     @Override
-    public ResultQuery<Record6<String, String, String, String, String, Integer>> enums(List<String> schemas) {
-        return null;
-    }
-
-    @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<>();
 
@@ -335,6 +331,11 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
     }
 
     @Override
+    public ResultQuery<Record6<String, String, String, String, String, Integer>> enums(List<String> schemas) {
+        return null;
+    }
+
+    @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
         List<DomainDefinition> result = new ArrayList<>();
         return result;
@@ -359,6 +360,22 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
     @Override
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<>();
+
+        for (Record r : create()
+            .select(
+                DUCKDB_TYPES.SCHEMA_NAME,
+                DUCKDB_TYPES.TYPE_NAME)
+            .from("{0}()", DUCKDB_TYPES)
+            .where(DUCKDB_TYPES.SCHEMA_NAME.in(getInputSchemata()))
+            .and(DUCKDB_TYPES.LOGICAL_TYPE.eq(inline("STRUCT")))
+            .andNot(DUCKDB_TYPES.INTERNAL)
+        ) {
+            SchemaDefinition schema = getSchema(r.get(DUCKDB_TYPES.SCHEMA_NAME));
+
+            if (schema != null)
+                result.add(new DuckDBUDTDefinition(schema, r.get(DUCKDB_TYPES.TYPE_NAME), ""));
+        }
+
         return result;
     }
 

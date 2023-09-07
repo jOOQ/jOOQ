@@ -7,8 +7,10 @@ package org.jooq.meta.duckdb.system.information_schema.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -99,7 +101,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * The column
@@ -127,7 +129,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> DATETIME_PRECISION = createField(DSL.name("datetime_precision"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> DATETIME_PRECISION = createField(DSL.name("datetime_precision"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -138,7 +140,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> INTERVAL_TYPE = createField(DSL.name("interval_type"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> INTERVAL_TYPE = createField(DSL.name("interval_type"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -149,7 +151,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> INTERVAL_PRECISION = createField(DSL.name("interval_precision"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> INTERVAL_PRECISION = createField(DSL.name("interval_precision"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -160,7 +162,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> CHARACTER_SET_CATALOG = createField(DSL.name("character_set_catalog"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> CHARACTER_SET_CATALOG = createField(DSL.name("character_set_catalog"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -171,7 +173,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> CHARACTER_SET_SCHEMA = createField(DSL.name("character_set_schema"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> CHARACTER_SET_SCHEMA = createField(DSL.name("character_set_schema"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -182,7 +184,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> CHARACTER_SET_NAME = createField(DSL.name("character_set_name"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> CHARACTER_SET_NAME = createField(DSL.name("character_set_name"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -193,7 +195,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> COLLATION_CATALOG = createField(DSL.name("collation_catalog"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> COLLATION_CATALOG = createField(DSL.name("collation_catalog"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -204,7 +206,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> COLLATION_SCHEMA = createField(DSL.name("collation_schema"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> COLLATION_SCHEMA = createField(DSL.name("collation_schema"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -215,7 +217,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> COLLATION_NAME = createField(DSL.name("collation_name"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> COLLATION_NAME = createField(DSL.name("collation_name"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -226,7 +228,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> DOMAIN_CATALOG = createField(DSL.name("domain_catalog"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> DOMAIN_CATALOG = createField(DSL.name("domain_catalog"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -237,7 +239,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> DOMAIN_SCHEMA = createField(DSL.name("domain_schema"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> DOMAIN_SCHEMA = createField(DSL.name("domain_schema"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -248,7 +250,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> DOMAIN_NAME = createField(DSL.name("domain_name"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> DOMAIN_NAME = createField(DSL.name("domain_name"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -259,7 +261,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> UDT_CATALOG = createField(DSL.name("udt_catalog"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> UDT_CATALOG = createField(DSL.name("udt_catalog"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -270,7 +272,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> UDT_SCHEMA = createField(DSL.name("udt_schema"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> UDT_SCHEMA = createField(DSL.name("udt_schema"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -281,7 +283,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> UDT_NAME = createField(DSL.name("udt_name"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> UDT_NAME = createField(DSL.name("udt_name"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -292,7 +294,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> SCOPE_CATALOG = createField(DSL.name("scope_catalog"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> SCOPE_CATALOG = createField(DSL.name("scope_catalog"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -303,7 +305,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> SCOPE_SCHEMA = createField(DSL.name("scope_schema"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> SCOPE_SCHEMA = createField(DSL.name("scope_schema"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -314,7 +316,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> SCOPE_NAME = createField(DSL.name("scope_name"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> SCOPE_NAME = createField(DSL.name("scope_name"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -325,7 +327,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> MAXIMUM_CARDINALITY = createField(DSL.name("maximum_cardinality"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> MAXIMUM_CARDINALITY = createField(DSL.name("maximum_cardinality"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -336,7 +338,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> DTD_IDENTIFIER = createField(DSL.name("dtd_identifier"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> DTD_IDENTIFIER = createField(DSL.name("dtd_identifier"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -347,7 +349,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IS_SELF_REFERENCING = createField(DSL.name("is_self_referencing"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IS_SELF_REFERENCING = createField(DSL.name("is_self_referencing"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -358,7 +360,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IS_IDENTITY = createField(DSL.name("is_identity"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IS_IDENTITY = createField(DSL.name("is_identity"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -369,7 +371,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IDENTITY_GENERATION = createField(DSL.name("identity_generation"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IDENTITY_GENERATION = createField(DSL.name("identity_generation"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -380,7 +382,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IDENTITY_START = createField(DSL.name("identity_start"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IDENTITY_START = createField(DSL.name("identity_start"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -391,7 +393,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IDENTITY_INCREMENT = createField(DSL.name("identity_increment"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IDENTITY_INCREMENT = createField(DSL.name("identity_increment"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -402,7 +404,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IDENTITY_MAXIMUM = createField(DSL.name("identity_maximum"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IDENTITY_MAXIMUM = createField(DSL.name("identity_maximum"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -413,7 +415,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IDENTITY_MINIMUM = createField(DSL.name("identity_minimum"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IDENTITY_MINIMUM = createField(DSL.name("identity_minimum"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -424,7 +426,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IDENTITY_CYCLE = createField(DSL.name("identity_cycle"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IDENTITY_CYCLE = createField(DSL.name("identity_cycle"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -435,7 +437,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IS_GENERATED = createField(DSL.name("is_generated"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IS_GENERATED = createField(DSL.name("is_generated"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -446,7 +448,7 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> GENERATION_EXPRESSION = createField(DSL.name("generation_expression"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> GENERATION_EXPRESSION = createField(DSL.name("generation_expression"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -457,14 +459,14 @@ public class Columns extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> IS_UPDATABLE = createField(DSL.name("is_updatable"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> IS_UPDATABLE = createField(DSL.name("is_updatable"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     private Columns(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private Columns(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -490,8 +492,8 @@ public class Columns extends TableImpl<Record> {
         this(DSL.name("columns"), null);
     }
 
-    public <O extends Record> Columns(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, COLUMNS);
+    public <O extends Record> Columns(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, COLUMNS);
     }
 
     @Override
@@ -505,7 +507,6 @@ public class Columns extends TableImpl<Record> {
     }
 
     private transient Tables _tables;
-    private transient Schemata _schemata;
 
     /**
      * Get the implicit join path to the
@@ -513,10 +514,12 @@ public class Columns extends TableImpl<Record> {
      */
     public Tables tables() {
         if (_tables == null)
-            _tables = new Tables(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES);
+            _tables = new Tables(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES, null);
 
         return _tables;
     }
+
+    private transient Schemata _schemata;
 
     /**
      * Get the implicit join path to the
@@ -524,7 +527,7 @@ public class Columns extends TableImpl<Record> {
      */
     public Schemata schemata() {
         if (_schemata == null)
-            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA);
+            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
     }
@@ -542,29 +545,5 @@ public class Columns extends TableImpl<Record> {
     @Override
     public Columns as(Table<?> alias) {
         return new Columns(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Columns rename(String name) {
-        return new Columns(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Columns rename(Name name) {
-        return new Columns(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Columns rename(Table<?> name) {
-        return new Columns(name.getQualifiedName(), null);
     }
 }

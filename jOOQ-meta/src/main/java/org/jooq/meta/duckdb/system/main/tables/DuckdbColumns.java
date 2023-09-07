@@ -4,8 +4,13 @@
 package org.jooq.meta.duckdb.system.main.tables;
 
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -15,6 +20,7 @@ import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
+import org.jooq.meta.duckdb.system.main.Keys;
 import org.jooq.meta.duckdb.system.main.Main;
 
 
@@ -127,11 +133,11 @@ public class DuckdbColumns extends TableImpl<Record> {
     public final TableField<Record, Integer> NUMERIC_SCALE = createField(DSL.name("numeric_scale"), SQLDataType.INTEGER, this, "");
 
     private DuckdbColumns(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private DuckdbColumns(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private DuckdbColumns(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -155,13 +161,44 @@ public class DuckdbColumns extends TableImpl<Record> {
         this(DSL.name("duckdb_columns"), null);
     }
 
-    public <O extends Record> DuckdbColumns(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, DUCKDB_COLUMNS);
+    public <O extends Record> DuckdbColumns(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, DUCKDB_COLUMNS);
     }
 
     @Override
     public Schema getSchema() {
         return aliased() ? null : Main.MAIN;
+    }
+
+    @Override
+    public List<ForeignKey<Record, ?>> getReferences() {
+        return Arrays.asList(Keys.SYNTHETIC_FK_DUCKDB_COLUMNS__SYNTHETIC_PK_DUCKDB_TABLES, Keys.SYNTHETIC_FK_DUCKDB_COLUMNS__SYNTHETIC_PK_DUCKDB_TYPES);
+    }
+
+    private transient DuckdbTables _duckdbTables;
+
+    /**
+     * Get the implicit join path to the <code>system.main.duckdb_tables</code>
+     * table.
+     */
+    public DuckdbTables duckdbTables() {
+        if (_duckdbTables == null)
+            _duckdbTables = new DuckdbTables(this, Keys.SYNTHETIC_FK_DUCKDB_COLUMNS__SYNTHETIC_PK_DUCKDB_TABLES, null);
+
+        return _duckdbTables;
+    }
+
+    private transient DuckdbTypes _duckdbTypes;
+
+    /**
+     * Get the implicit join path to the <code>system.main.duckdb_types</code>
+     * table.
+     */
+    public DuckdbTypes duckdbTypes() {
+        if (_duckdbTypes == null)
+            _duckdbTypes = new DuckdbTypes(this, Keys.SYNTHETIC_FK_DUCKDB_COLUMNS__SYNTHETIC_PK_DUCKDB_TYPES, null);
+
+        return _duckdbTypes;
     }
 
     @Override
@@ -177,29 +214,5 @@ public class DuckdbColumns extends TableImpl<Record> {
     @Override
     public DuckdbColumns as(Table<?> alias) {
         return new DuckdbColumns(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbColumns rename(String name) {
-        return new DuckdbColumns(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbColumns rename(Name name) {
-        return new DuckdbColumns(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbColumns rename(Table<?> name) {
-        return new DuckdbColumns(name.getQualifiedName(), null);
     }
 }

@@ -4,8 +4,8 @@
 package org.jooq.meta.duckdb.system.main.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -65,11 +65,11 @@ public class DuckdbDatabases extends TableImpl<Record> {
     public final TableField<Record, String> TYPE = createField(DSL.name("type"), SQLDataType.VARCHAR, this, "");
 
     private DuckdbDatabases(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private DuckdbDatabases(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private DuckdbDatabases(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -95,10 +95,6 @@ public class DuckdbDatabases extends TableImpl<Record> {
         this(DSL.name("duckdb_databases"), null);
     }
 
-    public <O extends Record> DuckdbDatabases(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, DUCKDB_DATABASES);
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Main.MAIN;
@@ -117,29 +113,5 @@ public class DuckdbDatabases extends TableImpl<Record> {
     @Override
     public DuckdbDatabases as(Table<?> alias) {
         return new DuckdbDatabases(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbDatabases rename(String name) {
-        return new DuckdbDatabases(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbDatabases rename(Name name) {
-        return new DuckdbDatabases(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbDatabases rename(Table<?> name) {
-        return new DuckdbDatabases(name.getQualifiedName(), null);
     }
 }

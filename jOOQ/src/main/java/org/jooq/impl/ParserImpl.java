@@ -5147,7 +5147,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     .asEnum(values.toArray(EMPTY_STRING));
             }
             else {
-                parseKeywordIf("OBJECT");
+                parseKeywordIf("OBJECT", "STRUCT");
                 parse('(');
                 List<Field<?>> fields = parseList(',', ctx -> DSL.field(parseIdentifier(), parseDataType()));
                 parse(')');

@@ -7,8 +7,10 @@ package org.jooq.meta.duckdb.system.information_schema.tables;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -73,7 +75,7 @@ public class Tables extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> SELF_REFERENCING_COLUMN_NAME = createField(DSL.name("self_referencing_column_name"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> SELF_REFERENCING_COLUMN_NAME = createField(DSL.name("self_referencing_column_name"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -84,7 +86,7 @@ public class Tables extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> REFERENCE_GENERATION = createField(DSL.name("reference_generation"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> REFERENCE_GENERATION = createField(DSL.name("reference_generation"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -95,7 +97,7 @@ public class Tables extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> USER_DEFINED_TYPE_CATALOG = createField(DSL.name("user_defined_type_catalog"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> USER_DEFINED_TYPE_CATALOG = createField(DSL.name("user_defined_type_catalog"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -106,7 +108,7 @@ public class Tables extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> USER_DEFINED_TYPE_SCHEMA = createField(DSL.name("user_defined_type_schema"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> USER_DEFINED_TYPE_SCHEMA = createField(DSL.name("user_defined_type_schema"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -117,7 +119,7 @@ public class Tables extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> USER_DEFINED_TYPE_NAME = createField(DSL.name("user_defined_type_name"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> USER_DEFINED_TYPE_NAME = createField(DSL.name("user_defined_type_name"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * The column
@@ -136,11 +138,11 @@ public class Tables extends TableImpl<Record> {
     public final TableField<Record, String> COMMIT_ACTION = createField(DSL.name("commit_action"), SQLDataType.VARCHAR, this, "");
 
     private Tables(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Tables(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private Tables(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -166,8 +168,8 @@ public class Tables extends TableImpl<Record> {
         this(DSL.name("tables"), null);
     }
 
-    public <O extends Record> Tables(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, TABLES);
+    public <O extends Record> Tables(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, TABLES);
     }
 
     @Override
@@ -193,9 +195,22 @@ public class Tables extends TableImpl<Record> {
      */
     public Schemata schemata() {
         if (_schemata == null)
-            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA);
+            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
+    }
+
+    private transient Columns _columns;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>system.information_schema.columns</code> table
+     */
+    public Columns columns() {
+        if (_columns == null)
+            _columns = new Columns(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES.getInverseKey());
+
+        return _columns;
     }
 
     @Override
@@ -211,29 +226,5 @@ public class Tables extends TableImpl<Record> {
     @Override
     public Tables as(Table<?> alias) {
         return new Tables(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Tables rename(String name) {
-        return new Tables(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Tables rename(Name name) {
-        return new Tables(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Tables rename(Table<?> name) {
-        return new Tables(name.getQualifiedName(), null);
     }
 }

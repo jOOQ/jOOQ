@@ -4,8 +4,8 @@
 package org.jooq.meta.duckdb.system.main.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -98,7 +98,7 @@ public class DuckdbConstraints extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> CONSTRAINT_COLUMN_INDEXES = createField(DSL.name("constraint_column_indexes"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"BIGINT[]\""), this, "");
+    public final TableField<Record, Object> CONSTRAINT_COLUMN_INDEXES = createField(DSL.name("constraint_column_indexes"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -109,14 +109,14 @@ public class DuckdbConstraints extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> CONSTRAINT_COLUMN_NAMES = createField(DSL.name("constraint_column_names"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"VARCHAR[]\""), this, "");
+    public final TableField<Record, Object> CONSTRAINT_COLUMN_NAMES = createField(DSL.name("constraint_column_names"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     private DuckdbConstraints(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private DuckdbConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private DuckdbConstraints(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -142,10 +142,6 @@ public class DuckdbConstraints extends TableImpl<Record> {
         this(DSL.name("duckdb_constraints"), null);
     }
 
-    public <O extends Record> DuckdbConstraints(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, DUCKDB_CONSTRAINTS);
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Main.MAIN;
@@ -164,29 +160,5 @@ public class DuckdbConstraints extends TableImpl<Record> {
     @Override
     public DuckdbConstraints as(Table<?> alias) {
         return new DuckdbConstraints(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbConstraints rename(String name) {
-        return new DuckdbConstraints(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbConstraints rename(Name name) {
-        return new DuckdbConstraints(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbConstraints rename(Table<?> name) {
-        return new DuckdbConstraints(name.getQualifiedName(), null);
     }
 }

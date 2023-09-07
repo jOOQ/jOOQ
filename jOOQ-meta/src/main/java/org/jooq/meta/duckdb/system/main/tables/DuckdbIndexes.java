@@ -4,8 +4,8 @@
 package org.jooq.meta.duckdb.system.main.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -100,11 +100,11 @@ public class DuckdbIndexes extends TableImpl<Record> {
     public final TableField<Record, String> SQL = createField(DSL.name("sql"), SQLDataType.VARCHAR, this, "");
 
     private DuckdbIndexes(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private DuckdbIndexes(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private DuckdbIndexes(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -128,10 +128,6 @@ public class DuckdbIndexes extends TableImpl<Record> {
         this(DSL.name("duckdb_indexes"), null);
     }
 
-    public <O extends Record> DuckdbIndexes(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, DUCKDB_INDEXES);
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Main.MAIN;
@@ -150,29 +146,5 @@ public class DuckdbIndexes extends TableImpl<Record> {
     @Override
     public DuckdbIndexes as(Table<?> alias) {
         return new DuckdbIndexes(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbIndexes rename(String name) {
-        return new DuckdbIndexes(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbIndexes rename(Name name) {
-        return new DuckdbIndexes(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbIndexes rename(Table<?> name) {
-        return new DuckdbIndexes(name.getQualifiedName(), null);
     }
 }

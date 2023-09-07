@@ -4,8 +4,8 @@
 package org.jooq.meta.duckdb.system.main.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -90,11 +90,11 @@ public class DuckdbViews extends TableImpl<Record> {
     public final TableField<Record, String> SQL = createField(DSL.name("sql"), SQLDataType.VARCHAR, this, "");
 
     private DuckdbViews(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private DuckdbViews(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private DuckdbViews(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -118,10 +118,6 @@ public class DuckdbViews extends TableImpl<Record> {
         this(DSL.name("duckdb_views"), null);
     }
 
-    public <O extends Record> DuckdbViews(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, DUCKDB_VIEWS);
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Main.MAIN;
@@ -140,29 +136,5 @@ public class DuckdbViews extends TableImpl<Record> {
     @Override
     public DuckdbViews as(Table<?> alias) {
         return new DuckdbViews(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbViews rename(String name) {
-        return new DuckdbViews(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbViews rename(Name name) {
-        return new DuckdbViews(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbViews rename(Table<?> name) {
-        return new DuckdbViews(name.getQualifiedName(), null);
     }
 }

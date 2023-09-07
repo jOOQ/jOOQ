@@ -73,42 +73,42 @@ public interface CreateTypeStep {
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTypeFinalStep asEnum(@Stringly.Param String... values);
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTypeFinalStep asEnum(Field<String>... values);
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTypeFinalStep asEnum(Collection<? extends Field<String>> values);
 
     /**
      * Add the <code>AS ENUM</code> clause to the <code>CREATE TYPE</code> statement.
      */
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTypeFinalStep asEnum();
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE TYPE</code> statement.
      */
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTypeFinalStep as(Field<?>... attributes);
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE TYPE</code> statement.
      */
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTypeFinalStep as(Collection<? extends Field<?>> attributes);
 }

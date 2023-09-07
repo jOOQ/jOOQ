@@ -4,8 +4,8 @@
 package org.jooq.meta.duckdb.system.main.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -70,11 +70,11 @@ public class DuckdbSchemas extends TableImpl<Record> {
     public final TableField<Record, String> SQL = createField(DSL.name("sql"), SQLDataType.VARCHAR, this, "");
 
     private DuckdbSchemas(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private DuckdbSchemas(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private DuckdbSchemas(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -98,10 +98,6 @@ public class DuckdbSchemas extends TableImpl<Record> {
         this(DSL.name("duckdb_schemas"), null);
     }
 
-    public <O extends Record> DuckdbSchemas(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, DUCKDB_SCHEMAS);
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Main.MAIN;
@@ -120,29 +116,5 @@ public class DuckdbSchemas extends TableImpl<Record> {
     @Override
     public DuckdbSchemas as(Table<?> alias) {
         return new DuckdbSchemas(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbSchemas rename(String name) {
-        return new DuckdbSchemas(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbSchemas rename(Name name) {
-        return new DuckdbSchemas(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public DuckdbSchemas rename(Table<?> name) {
-        return new DuckdbSchemas(name.getQualifiedName(), null);
     }
 }

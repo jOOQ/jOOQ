@@ -190,10 +190,17 @@ implements
                .sql(')');
         }
         else {
+            switch (ctx.family()) {
+                case DUCKDB:
+                    ctx.visit(K_STRUCT).sql(' ');
+                    break;
 
 
 
 
+
+
+            }
 
             ctx.sql('(').visit(
                 new QueryPartList<Field<?>>(attributes).map(f -> declare(f)),

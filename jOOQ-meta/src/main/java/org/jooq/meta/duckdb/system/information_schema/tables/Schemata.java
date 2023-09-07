@@ -4,8 +4,10 @@
 package org.jooq.meta.duckdb.system.information_schema.tables;
 
 
+import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -65,7 +67,7 @@ public class Schemata extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -76,7 +78,7 @@ public class Schemata extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * @deprecated Unknown data type. If this is a qualified, user-defined type,
@@ -87,7 +89,7 @@ public class Schemata extends TableImpl<Record> {
      * configuration.
      */
     @Deprecated
-    public final TableField<Record, Object> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), org.jooq.impl.DefaultDataType.getDefaultDataType("\"NULL\""), this, "");
+    public final TableField<Record, Object> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), org.jooq.impl.SQLDataType.OTHER, this, "");
 
     /**
      * The column <code>system.information_schema.schemata.sql_path</code>.
@@ -95,11 +97,11 @@ public class Schemata extends TableImpl<Record> {
     public final TableField<Record, String> SQL_PATH = createField(DSL.name("sql_path"), SQLDataType.VARCHAR, this, "");
 
     private Schemata(Name alias, Table<Record> aliased) {
-        this(alias, aliased, null);
+        this(alias, aliased, (Field<?>[]) null, null);
     }
 
-    private Schemata(Name alias, Table<Record> aliased, Field<?>[] parameters) {
-        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view());
+    private Schemata(Name alias, Table<Record> aliased, Field<?>[] parameters, Condition where) {
+        super(alias, null, aliased, parameters, DSL.comment(""), TableOptions.view(), where);
     }
 
     /**
@@ -125,8 +127,8 @@ public class Schemata extends TableImpl<Record> {
         this(DSL.name("schemata"), null);
     }
 
-    public <O extends Record> Schemata(Table<O> child, ForeignKey<O, Record> key) {
-        super(child, key, SCHEMATA);
+    public <O extends Record> Schemata(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
+        super(path, childPath, parentPath, SCHEMATA);
     }
 
     @Override
@@ -137,6 +139,32 @@ public class Schemata extends TableImpl<Record> {
     @Override
     public UniqueKey<Record> getPrimaryKey() {
         return Keys.SYNTHETIC_PK_SCHEMATA;
+    }
+
+    private transient Columns _columns;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>system.information_schema.columns</code> table
+     */
+    public Columns columns() {
+        if (_columns == null)
+            _columns = new Columns(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+
+        return _columns;
+    }
+
+    private transient Tables _tables;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>system.information_schema.tables</code> table
+     */
+    public Tables tables() {
+        if (_tables == null)
+            _tables = new Tables(this, null, Keys.SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+
+        return _tables;
     }
 
     @Override
@@ -152,29 +180,5 @@ public class Schemata extends TableImpl<Record> {
     @Override
     public Schemata as(Table<?> alias) {
         return new Schemata(alias.getQualifiedName(), this);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Schemata rename(String name) {
-        return new Schemata(DSL.name(name), null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Schemata rename(Name name) {
-        return new Schemata(name, null);
-    }
-
-    /**
-     * Rename this table
-     */
-    @Override
-    public Schemata rename(Table<?> name) {
-        return new Schemata(name.getQualifiedName(), null);
     }
 }

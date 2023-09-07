@@ -38,8 +38,11 @@
 
 package org.jooq.meta.duckdb;
 
-import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_COLUMNS;
-import static org.jooq.meta.hsqldb.information_schema.Tables.COLUMNS;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.when;
+import static org.jooq.meta.duckdb.system.main.Tables.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -80,9 +83,17 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
                 DUCKDB_COLUMNS.NUMERIC_PRECISION,
                 DUCKDB_COLUMNS.NUMERIC_SCALE,
                 DUCKDB_COLUMNS.IS_NULLABLE,
-                DUCKDB_COLUMNS.COLUMN_DEFAULT
+                DUCKDB_COLUMNS.COLUMN_DEFAULT,
+                when(
+                    DUCKDB_TYPES.LOGICAL_TYPE.eq(inline("STRUCT")),
+                    DUCKDB_TYPES.SCHEMA_NAME).as(DUCKDB_TYPES.SCHEMA_NAME),
+                when(
+                    DUCKDB_TYPES.LOGICAL_TYPE.eq(inline("STRUCT")),
+                    DUCKDB_TYPES.TYPE_NAME).as(DUCKDB_TYPES.TYPE_NAME)
             )
             .from("{0}()", DUCKDB_COLUMNS)
+                .leftJoin(DUCKDB_TYPES)
+                .on(DUCKDB_COLUMNS.DATA_TYPE_ID.eq(DUCKDB_TYPES.TYPE_OID))
             .where(DUCKDB_COLUMNS.DATABASE_NAME.eq(getCatalog().getInputName()))
             .and(DUCKDB_COLUMNS.SCHEMA_NAME.eq(getSchema().getInputName()))
             .and(DUCKDB_COLUMNS.TABLE_NAME.eq(getInputName()))
@@ -96,7 +107,11 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
                 record.get(DUCKDB_COLUMNS.NUMERIC_PRECISION),
                 record.get(DUCKDB_COLUMNS.NUMERIC_SCALE),
                 record.get(DUCKDB_COLUMNS.IS_NULLABLE),
-                record.get(DUCKDB_COLUMNS.COLUMN_DEFAULT)
+                record.get(DUCKDB_COLUMNS.COLUMN_DEFAULT),
+                name(
+                    record.get(DUCKDB_TYPES.SCHEMA_NAME),
+                    record.get(DUCKDB_TYPES.TYPE_NAME)
+                )
             );
 
             result.add(new DefaultColumnDefinition(

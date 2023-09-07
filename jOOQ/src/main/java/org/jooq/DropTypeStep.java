@@ -73,14 +73,14 @@ public interface DropTypeStep extends DropTypeFinalStep {
     /**
      * Add the <code>CASCADE</code> clause to the <code>DROP TYPE</code> statement.
      */
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     DropTypeFinalStep cascade();
 
     /**
      * Add the <code>RESTRICT</code> clause to the <code>DROP TYPE</code> statement.
      */
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     DropTypeFinalStep restrict();
 }

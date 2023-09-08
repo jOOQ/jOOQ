@@ -3205,7 +3205,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Truncate<?> parseTruncate() {
         parseKeyword("TRUNCATE");
         parseKeywordIf("TABLE");
-        Table<?> table = parseTableName();
+        List<Table<?>> table = parseList(',', ctx -> parseTableName());
         boolean continueIdentity = parseKeywordIf("CONTINUE IDENTITY");
         boolean restartIdentity = !continueIdentity && parseKeywordIf("RESTART IDENTITY");
         boolean cascade = parseKeywordIf("CASCADE");

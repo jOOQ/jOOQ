@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.cast;
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;

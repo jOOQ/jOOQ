@@ -847,7 +847,12 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
                         // See https://github.com/postgres/postgres/blob/master/src/backend/catalog/information_schema.sql
                         field("information_schema._pg_char_max_length({0}, {1})", INTEGER, d.TYPBASETYPE, d.TYPTYPMOD).as(DOMAINS.CHARACTER_MAXIMUM_LENGTH),
-                        field("information_schema._pg_numeric_precision({0}, {1})", INTEGER, d.TYPBASETYPE, d.TYPTYPMOD).as(DOMAINS.NUMERIC_PRECISION),
+
+                        // [#15555]
+                        coalesce(
+                            field("information_schema._pg_datetime_precision({0}, {1})", INTEGER, d.TYPBASETYPE, d.TYPTYPMOD),
+                            field("information_schema._pg_numeric_precision({0}, {1})", INTEGER, d.TYPBASETYPE, d.TYPTYPMOD)
+                        ).as(DOMAINS.NUMERIC_PRECISION),
                         field("information_schema._pg_numeric_scale({0}, {1})", INTEGER, d.TYPBASETYPE, d.TYPTYPMOD).as(DOMAINS.NUMERIC_SCALE),
                         src)
                     .from(d)

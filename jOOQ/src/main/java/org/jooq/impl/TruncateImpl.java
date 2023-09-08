@@ -152,49 +152,51 @@ implements
             case FIREBIRD:
             case IGNITE:
             case SQLITE: {
-                if (table.size() == 1) {
+
+                // [#2356] Only single table TRUNCATE can be emulated this way. By default
+                //         let the query fail in the database.
+                if (table.size() == 1)
                     ctx.visit(delete(table.get(0)));
-                }
-                else {
-                    ctx.sql("[Cannot emulate multi-table truncate using DELETE yet]");
-                    log.warn("Multi table truncate", "Cannot emulate multi-table truncate using DELETE yet");
-                }
+                else
+                    accept0(ctx);
 
                 break;
             }
 
-            // All other dialects do
-            default: {
-                ctx.start(Clause.TRUNCATE_TRUNCATE)
-                   .visit(K_TRUNCATE).sql(' ').visit(K_TABLE).sql(' ')
-                   .visit(table);
-
-
-
-
-
-
-                if (restartIdentity != null)
-                    ctx.formatSeparator()
-                       .visit(restartIdentity.keyword);
-
-                if (cascade != null)
-
-
-
-
-
-
-
-
-
-                        ctx.formatSeparator()
-                           .visit(cascade == Cascade.CASCADE ? K_CASCADE : K_RESTRICT);
-
-                ctx.end(Clause.TRUNCATE_TRUNCATE);
+            default:
+                accept0(ctx);
                 break;
-            }
         }
+    }
+
+    final void accept0(Context<?> ctx) {
+        ctx.start(Clause.TRUNCATE_TRUNCATE)
+           .visit(K_TRUNCATE).sql(' ').visit(K_TABLE).sql(' ')
+           .visit(table);
+
+
+
+
+
+
+        if (restartIdentity != null)
+            ctx.formatSeparator()
+               .visit(restartIdentity.keyword);
+
+        if (cascade != null)
+
+
+
+
+
+
+
+
+
+                ctx.formatSeparator()
+                   .visit(cascade == Cascade.CASCADE ? K_CASCADE : K_RESTRICT);
+
+        ctx.end(Clause.TRUNCATE_TRUNCATE);
     }
 
     @Override

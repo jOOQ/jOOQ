@@ -842,6 +842,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return Tools.newRecord(fetched, table, configuration()).operate(new TransferRecordState<>(table.fields()));
     }
 
+    final <R extends Record> R intoRecord(R record) {
+        return Tools.newRecord(fetched, () -> record, configuration()).operate(new TransferRecordState<>(null));
+    }
+
     final <R extends Record> R intoRecord(Class<R> type) {
         return (R) Tools.newRecord(fetched, type, fields, configuration()).operate(new TransferRecordState<>(null));
     }

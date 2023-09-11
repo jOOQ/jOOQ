@@ -928,11 +928,11 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * Map resulting records onto a custom type.
      * <p>
      * This is the same as {@link #into(Class)}, except that no new object is
-     * instantiated as a result. Instead, you can provide your own custom POJO
-     * instance.
+     * instantiated as a result. Instead, you can provide your own custom POJO,
+     * array, record, etc. instance.
      *
      * @param <E> The generic entity type.
-     * @param object The receiving bean.
+     * @param object The receiving POJO, array, record, etc.
      * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      * @throws NullPointerException if <code>object</code> is <code>null</code>

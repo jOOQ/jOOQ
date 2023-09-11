@@ -398,7 +398,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // [#2989] [#2836] Records are mapped
         if (AbstractRecord.class.isAssignableFrom(type)) {
-            delegate = (RecordMapper<R, E>) new RecordToRecordMapper();
+            delegate = (RecordMapper<R, E>) new RecordToRecordMapper<>((AbstractRecord) instance);
             return;
         }
 
@@ -732,13 +732,23 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     /**
      * Convert a record into another record type.
      */
-    private class RecordToRecordMapper extends AbstractDelegateMapper<R, AbstractRecord> {
+    private class RecordToRecordMapper<E extends AbstractRecord> extends AbstractDelegateMapper<R, AbstractRecord> {
+
+        private final E instance;
+
+        RecordToRecordMapper(E instance) {
+            this.instance = instance;
+        }
 
         @Override
         public final AbstractRecord map(R record) {
             try {
-                if (record instanceof AbstractRecord a)
-                    return a.intoRecord((Class<AbstractRecord>) type);
+                if (record instanceof AbstractRecord a) {
+                    if (instance != null)
+                        return a.intoRecord(instance);
+                    else
+                        return a.intoRecord((Class<AbstractRecord>) type);
+                }
 
                 throw new MappingException("Cannot map record " + record + " to type " + type);
             }

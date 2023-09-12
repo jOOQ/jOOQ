@@ -407,7 +407,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // [#1340] Allow for using non-public default constructors
         try {
-            MutablePOJOMapper m = new MutablePOJOMapper(new ConstructorCall<>(accessible(type.getDeclaredConstructor())), instance);
+            MutablePOJOMapper m = instance != null
+                ? new MutablePOJOMapper(null, instance)
+                : new MutablePOJOMapper(new ConstructorCall<>(accessible(type.getDeclaredConstructor())), null);
 
             // [#10194] Check if the POJO is really mutable. There might as well
             //          be a no-args constructor for other reasons, e.g. when

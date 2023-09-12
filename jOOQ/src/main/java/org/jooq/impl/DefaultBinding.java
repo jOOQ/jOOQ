@@ -3810,6 +3810,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @Override
+        void sqlInline0(BindingSQLContext<U> ctx, Object value) throws SQLException {
+            Binding<?, ?> b = binding(DefaultDataType.getDataType(
+                DEFAULT, (Class<Object>) value.getClass(), SQLDataType.OTHER
+            ));
+
+            if (b instanceof DefaultOtherBinding )
+                super.sqlInline0(ctx, value);
+            else if (b instanceof InternalBinding i)
+                i.sqlInline0(ctx, value);
+            else
+                super.sqlInline0(ctx, value);
+        }
+
         @Override
         final void set0(BindingSetSQLOutputContext<U> ctx, Object value) throws SQLException {
             throw new DataTypeException("Type " + dataType + " is not supported");

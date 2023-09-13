@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Tools.getMappedSchema;
-
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Context;
@@ -65,7 +63,7 @@ import org.jetbrains.annotations.ApiStatus.Internal;
  * @author Lukas Eder
  */
 @Internal
-public class UDTImpl<R extends UDTRecord<R>>
+public /* non-final */ class UDTImpl<R extends UDTRecord<R>>
 extends
     AbstractNamed
 implements
@@ -80,16 +78,40 @@ implements
     private final boolean         synthetic;
     private transient DataType<R> type;
 
+    /**
+     * @deprecated - [#15583] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
     public UDTImpl(String name, Schema schema) {
+        this(DSL.name(name), schema);
+    }
+
+    /**
+     * @deprecated - [#15583] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
+    public UDTImpl(String name, Schema schema, Package pkg) {
+        this(DSL.name(name), schema, pkg);
+    }
+
+    /**
+     * @deprecated - [#15583] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
+    public UDTImpl(String name, Schema schema, Package pkg, boolean synthetic) {
+        this(DSL.name(name), schema, pkg, synthetic);
+    }
+
+    public UDTImpl(Name name, Schema schema) {
         this(name, schema, null);
     }
 
-    public UDTImpl(String name, Schema schema, Package pkg) {
+    public UDTImpl(Name name, Schema schema, Package pkg) {
         this(name, schema, pkg, false);
     }
 
-    public UDTImpl(String name, Schema schema, Package pkg, boolean synthetic) {
-        super(qualify(pkg != null ? pkg : schema, DSL.name(name)), CommentImpl.NO_COMMENT);
+    public UDTImpl(Name name, Schema schema, Package pkg, boolean synthetic) {
+        super(qualify(pkg != null ? pkg : schema, name), CommentImpl.NO_COMMENT);
 
         this.fields = new FieldsImpl<>();
         this.schema = schema;

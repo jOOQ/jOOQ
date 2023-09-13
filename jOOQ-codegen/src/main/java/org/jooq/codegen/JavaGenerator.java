@@ -3328,10 +3328,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         if (scala) {
-            out.println("%sclass %s extends %s[%s](\"%s\", null, %s, %s)[[before= with ][separator= with ][%s]] {", visibility(), className, classExtends, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+            out.println("%sclass %s extends %s[%s](%s.name(\"%s\"), null, %s, %s)[[before= with ][separator= with ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
         }
         else if (kotlin) {
-            out.println("%sopen class %s : %s<%s>(\"%s\", null, %s, %s)[[before=, ][%s]] {", visibility(), className, classExtends, recordType, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+            out.println("%sopen class %s : %s<%s>(%s.name(\"%s\"), null, %s, %s)[[before=, ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
 
             out.println();
             out.println("public companion object {");
@@ -3399,7 +3399,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.println("private %s() {", className);
-            out.println("super(\"%s\", null, %s, %s);", udt.getOutputName(), packageId, synthetic);
+            out.println("super(%s.name(\"%s\"), null, %s, %s);", DSL.class, udt.getOutputName(), packageId, synthetic);
             out.println("}");
         }
 

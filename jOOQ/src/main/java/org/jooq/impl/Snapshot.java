@@ -270,7 +270,7 @@ final class Snapshot extends AbstractMeta {
 
     private class SnapshotUDT<R extends UDTRecord<R>> extends UDTImpl<R> {
         SnapshotUDT(SnapshotSchema schema, UDT<R> udt) {
-            super(udt.getName(), schema, udt.getPackage(), udt.isSynthetic());
+            super(udt.getUnqualifiedName(), schema, udt.getPackage(), udt.isSynthetic());
         }
     }
 }

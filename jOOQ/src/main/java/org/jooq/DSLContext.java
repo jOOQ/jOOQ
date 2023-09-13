@@ -9576,6 +9576,24 @@ public interface DSLContext extends Scope {
     AlterTypeStep alterType(Name type);
 
     /**
+     * The <code>ALTER TYPE IF EXISTS</code> statement.
+     *
+     * @see DSL#alterTypeIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    AlterTypeStep alterTypeIfExists(@Stringly.Name String type);
+
+    /**
+     * The <code>ALTER TYPE IF EXISTS</code> statement.
+     *
+     * @see DSL#alterTypeIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    AlterTypeStep alterTypeIfExists(Name type);
+
+    /**
      * The <code>ALTER VIEW</code> statement.
      *
      * @see DSL#alterView(String)

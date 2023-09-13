@@ -5137,6 +5137,7 @@ final class Tools {
                 break;
 
 
+
             case POSTGRES:
             case YUGABYTEDB:
                 if (increment(ctx.data(), DATA_BLOCK_NESTING))
@@ -5167,6 +5168,7 @@ final class Tools {
                 ctx.formatIndentEnd().formatSeparator()
                    .visit(K_END);
                 break;
+
 
 
             case POSTGRES:
@@ -5589,6 +5591,7 @@ final class Tools {
             }
 
 
+
             case POSTGRES:
             case YUGABYTEDB: {
                 begin(ctx, c -> {
@@ -5596,7 +5599,8 @@ final class Tools {
 
                     switch (type) {
                         case ALTER_DATABASE: sqlstate = "3D000"; break;
-                        case ALTER_DOMAIN  : sqlstate = "42704"; break;
+                        case ALTER_DOMAIN  :
+                        case ALTER_TYPE    : sqlstate = "42704"; break;
                         case CREATE_DOMAIN :
                         case CREATE_TYPE   : sqlstate = "42710"; break;
                         default            : sqlstate = "42P07"; break;

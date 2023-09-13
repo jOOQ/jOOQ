@@ -7621,6 +7621,36 @@ public class DSL {
     }
 
     /**
+     * The <code>ALTER TYPE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterTypeIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    public static org.jooq.AlterTypeStep alterTypeIfExists(@Stringly.Name String type) {
+        return dsl().alterTypeIfExists(type);
+    }
+
+    /**
+     * The <code>ALTER TYPE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterTypeIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    public static org.jooq.AlterTypeStep alterTypeIfExists(Name type) {
+        return dsl().alterTypeIfExists(type);
+    }
+
+    /**
      * The <code>ALTER VIEW</code> statement.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this

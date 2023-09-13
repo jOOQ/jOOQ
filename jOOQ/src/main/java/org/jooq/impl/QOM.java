@@ -1939,6 +1939,7 @@ public final class QOM {
         //    AlterTypeImpl
     {
         @NotNull Name $type();
+        boolean $ifExists();
         @Nullable Name $renameTo();
         @Nullable Schema $setSchema();
         @Nullable Field<String> $addValue();
@@ -1946,6 +1947,8 @@ public final class QOM {
         @Nullable Field<String> $renameValueTo();
         @CheckReturnValue
         @NotNull AlterType $type(Name type);
+        @CheckReturnValue
+        @NotNull AlterType $ifExists(boolean ifExists);
         @CheckReturnValue
         @NotNull AlterType $renameTo(Name renameTo);
         @CheckReturnValue

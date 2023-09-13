@@ -1623,9 +1623,9 @@ final class Convert {
             int c2 = s.indexOf(':', c1 + 1);
 
             if (c2 == -1)
-                return leftPad(s.substring(0, c1), 2, '0') + ':' + leftPad(s.substring(c1 + 1), 2, '0') + ":00";
+                return padLead2(s, c1) + ':' + padMid2(s, c1) + ":00";
             else if (l < 8 || c2 != l - 3 || c1 != l - 6)
-                return leftPad(s.substring(0, c1), 2, '0') + ':' + leftPad(s.substring(c1 + 1, c2), 2, '0') + ':' + leftPad(s.substring(c2 + 1), 2, '0');
+                return padLead2(s, c1) + ':' + padMid2(s, c1, c2) + ':' + padMid2(s, c2);
         }
 
         // [#12158] Support Db2's 15.30.45 format
@@ -1657,28 +1657,44 @@ final class Convert {
         // [#12547] Support year numbers with more or less than 4 digits
         // [#13786] Be lenient with PostgreSQL style abbreviated time stamp literals
         else if (sx == -1)
-            return leftPad(s.substring(0, d1), 4, '0') + '-'
-                 + leftPad(s.substring(d1 + 1, d2), 2, '0') + '-'
-                 + leftPad(s.substring(d2 + 1), 2, '0')
+            return padLead4(s, d1) + '-'
+                 + padMid2(s, d1, d2) + '-'
+                 + padMid2(s, d2)
                  + (t ? "T00:00:00" : " 00:00:00");
         else if (c2 == -1)
-            return leftPad(s.substring(0, d1), 4, '0') + '-'
-                 + leftPad(s.substring(d1 + 1, d2), 2, '0') + '-'
-                 + leftPad(s.substring(d2 + 1, sx), 2, '0')
+            return padLead4(s, d1) + '-'
+                 + padMid2(s, d1, d2) + '-'
+                 + padMid2(s, d2, sx)
                  + (t ? 'T' : ' ')
-                 + leftPad(s.substring(sx + 1, c1), 2, '0') + ':'
-                 + leftPad(s.substring(c1 + 1), 2, '0') + ":00";
+                 + padMid2(s, sx, c1) + ':'
+                 + padMid2(s, c1) + ":00";
 
         // [#13786] TODO: This doesn't pad seconds in the presence of fractional seconds or time zones
         else if (t == (st == -1) || l - c2 < 3 || c2 - c1 < 3 || c1 - sx < 3 || sx - d2 < 3 || d2 - d1 < 3)
-            return leftPad(s.substring(0, d1), 4, '0') + '-'
-                 + leftPad(s.substring(d1 + 1, d2), 2, '0') + '-'
-                 + leftPad(s.substring(d2 + 1, sx), 2, '0')
+            return padLead4(s, d1) + '-'
+                 + padMid2(s, d1, d2) + '-'
+                 + padMid2(s, d2, sx)
                  + (t ? 'T' : ' ')
-                 + leftPad(s.substring(sx + 1, c1), 2, '0') + ':'
-                 + leftPad(s.substring(c1 + 1, c2), 2, '0') + ':'
-                 + leftPad(s.substring(c2 + 1), 2, '0');
+                 + padMid2(s, sx, c1) + ':'
+                 + padMid2(s, c1, c2) + ':'
+                 + padMid2(s, c2);
         else
             return s;
+    }
+
+    private static final String padLead2(String s, int i1) {
+        return leftPad(s.substring(0, i1), 2, '0');
+    }
+
+    private static final String padLead4(String s, int i1) {
+        return leftPad(s.substring(0, i1), 4, '0');
+    }
+
+    private static final String padMid2(String s, int i1) {
+        return leftPad(s.substring(i1 + 1), 2, '0');
+    }
+
+    private static final String padMid2(String s, int i1, int i2) {
+        return leftPad(s.substring(i1 + 1, i2), 2, '0');
     }
 }

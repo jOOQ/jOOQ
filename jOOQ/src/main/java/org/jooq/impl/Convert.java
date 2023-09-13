@@ -45,6 +45,7 @@ import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.emulateMultiset;
+import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 import static org.jooq.types.Unsigned.ubyte;
@@ -113,6 +114,7 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.Longs;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.json.ContainerFactory;
@@ -1613,31 +1615,70 @@ final class Convert {
              : string;
     }
 
-    static final String patchIso8601Time(String string) {
-        return string.length() == 5
-             ? (string + ":00")
-             // [#12158] Support Db2's 15.30.45 format
-             : string.length() == 8
-             ? string.replace('.', ':')
-             : string;
+    static final String patchIso8601Time(String s) {
+        int l = s.length();
+        int c1 = s.indexOf(':');
+
+        if (c1 >= 0) {
+            int c2 = s.indexOf(':', c1 + 1);
+
+            if (c2 == -1)
+                return leftPad(s.substring(0, c1), 2, '0') + ':' + leftPad(s.substring(c1 + 1), 2, '0') + ":00";
+            else if (l < 8 || c2 != l - 3 || c1 != l - 6)
+                return leftPad(s.substring(0, c1), 2, '0') + ':' + leftPad(s.substring(c1 + 1, c2), 2, '0') + ':' + leftPad(s.substring(c2 + 1), 2, '0');
+        }
+
+        // [#12158] Support Db2's 15.30.45 format
+        else if ((c1 = s.indexOf('.')) >= 0) {
+            return patchIso8601Time(s.replace('.', ':'));
+        }
+
+        return s;
     }
 
-    static final String patchIso8601Timestamp(String string, boolean t) {
+    static final String patchIso8601Timestamp(String s, boolean t) {
 
         // [#11485] Trino produces a non-ISO 8601 "UTC" suffix, instead of "Z"
-        if (string.endsWith(" UTC"))
-            string = string.replace(" UTC", "Z");
+        if (s.endsWith(" UTC"))
+            s = s.replace(" UTC", "Z");
 
+        int l = s.length();
+        int d1 = s.indexOf('-');
+        int d2 = s.indexOf('-', d1 + 1);
+        int ss = s.indexOf(' ', d2 + 1);
+        int st = s.indexOf('T', d2 + 1);
+        int sx = Math.max(ss, st);
+        int c1 = s.indexOf(':', sx + 1);
+        int c2 = s.indexOf(':', c1 + 1);
+
+        if (d1 == -1 || d2 == -1)
+            return s;
+
+        // [#12547] Support year numbers with more or less than 4 digits
         // [#13786] Be lenient with PostgreSQL style abbreviated time stamp literals
-        if (string.length() == 10)
-            return string + (t ? "T" : " ") + "00:00:00";
+        else if (sx == -1)
+            return leftPad(s.substring(0, d1), 4, '0') + '-'
+                 + leftPad(s.substring(d1 + 1, d2), 2, '0') + '-'
+                 + leftPad(s.substring(d2 + 1), 2, '0')
+                 + (t ? "T00:00:00" : " 00:00:00");
+        else if (c2 == -1)
+            return leftPad(s.substring(0, d1), 4, '0') + '-'
+                 + leftPad(s.substring(d1 + 1, d2), 2, '0') + '-'
+                 + leftPad(s.substring(d2 + 1, sx), 2, '0')
+                 + (t ? 'T' : ' ')
+                 + leftPad(s.substring(sx + 1, c1), 2, '0') + ':'
+                 + leftPad(s.substring(c1 + 1), 2, '0') + ":00";
 
-        if (string.length() > 11)
-            if (t && string.charAt(10) == ' ')
-                return string.substring(0, 10) + "T" + string.substring(11);
-            else if (!t && string.charAt(10) == 'T')
-                return string.substring(0, 10) + " " + string.substring(11);
-
-        return string;
+        // [#13786] TODO: This doesn't pad seconds in the presence of fractional seconds or time zones
+        else if (t == (st == -1) || l - c2 < 3 || c2 - c1 < 3 || c1 - sx < 3 || sx - d2 < 3 || d2 - d1 < 3)
+            return leftPad(s.substring(0, d1), 4, '0') + '-'
+                 + leftPad(s.substring(d1 + 1, d2), 2, '0') + '-'
+                 + leftPad(s.substring(d2 + 1, sx), 2, '0')
+                 + (t ? 'T' : ' ')
+                 + leftPad(s.substring(sx + 1, c1), 2, '0') + ':'
+                 + leftPad(s.substring(c1 + 1, c2), 2, '0') + ':'
+                 + leftPad(s.substring(c2 + 1), 2, '0');
+        else
+            return s;
     }
 }

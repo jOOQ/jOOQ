@@ -74,16 +74,19 @@ implements
 {
 
     final Table<?> view;
+    final boolean  materialized;
     final boolean  ifExists;
 
     DropViewImpl(
         Configuration configuration,
         Table<?> view,
+        boolean materialized,
         boolean ifExists
     ) {
         super(configuration);
 
         this.view = view;
+        this.materialized = materialized;
         this.ifExists = ifExists;
     }
 
@@ -110,7 +113,12 @@ implements
 
     private void accept0(Context<?> ctx) {
         ctx.start(Clause.DROP_VIEW_TABLE)
-           .visit(K_DROP_VIEW).sql(' ');
+           .visit(K_DROP).sql(' ');
+
+        if (materialized)
+            ctx.visit(K_MATERIALIZED).sql(' ');
+
+        ctx.visit(K_VIEW).sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
@@ -142,23 +150,34 @@ implements
     }
 
     @Override
+    public final boolean $materialized() {
+        return materialized;
+    }
+
+    @Override
     public final boolean $ifExists() {
         return ifExists;
     }
 
     @Override
     public final QOM.DropView $view(Table<?> newValue) {
-        return $constructor().apply(newValue, $ifExists());
+        return $constructor().apply(newValue, $materialized(), $ifExists());
+    }
+
+    @Override
+    public final QOM.DropView $materialized(boolean newValue) {
+        return $constructor().apply($view(), newValue, $ifExists());
     }
 
     @Override
     public final QOM.DropView $ifExists(boolean newValue) {
-        return $constructor().apply($view(), newValue);
+        return $constructor().apply($view(), $materialized(), newValue);
     }
 
-    public final Function2<? super Table<?>, ? super Boolean, ? extends QOM.DropView> $constructor() {
-        return (a1, a2) -> new DropViewImpl(configuration(), a1, a2);
+    public final Function3<? super Table<?>, ? super Boolean, ? super Boolean, ? extends QOM.DropView> $constructor() {
+        return (a1, a2, a3) -> new DropViewImpl(configuration(), a1, a2, a3);
     }
+
 
 
 

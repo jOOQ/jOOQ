@@ -2195,8 +2195,9 @@ public final class QOM {
         @NotNull Table<?> $view();
         @NotNull UnmodifiableList<? extends Field<?>> $fields();
         boolean $orReplace();
+        boolean $materialized();
         boolean $ifNotExists();
-        @Nullable ResultQuery<? extends R> $as();
+        @Nullable ResultQuery<? extends R> $query();
         @CheckReturnValue
         @NotNull CreateView<R> $view(Table<?> view);
         @CheckReturnValue
@@ -2204,9 +2205,11 @@ public final class QOM {
         @CheckReturnValue
         @NotNull CreateView<R> $orReplace(boolean orReplace);
         @CheckReturnValue
+        @NotNull CreateView<R> $materialized(boolean materialized);
+        @CheckReturnValue
         @NotNull CreateView<R> $ifNotExists(boolean ifNotExists);
         @CheckReturnValue
-        @NotNull CreateView<R> $as(ResultQuery<? extends R> as);
+        @NotNull CreateView<R> $query(ResultQuery<? extends R> query);
     }
 
 
@@ -2565,9 +2568,12 @@ public final class QOM {
         //    DropViewImpl
     {
         @NotNull Table<?> $view();
+        boolean $materialized();
         boolean $ifExists();
         @CheckReturnValue
         @NotNull DropView $view(Table<?> view);
+        @CheckReturnValue
+        @NotNull DropView $materialized(boolean materialized);
         @CheckReturnValue
         @NotNull DropView $ifExists(boolean ifExists);
     }

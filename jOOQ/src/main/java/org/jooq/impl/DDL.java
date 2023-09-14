@@ -194,7 +194,7 @@ final class DDL {
 
                 if (queries.length > 0) {
                     if (queries[0] instanceof CreateViewImpl<?> cv)
-                        return q.as(cv.$as());
+                        return q.as(cv.$query());
                     else if (queries[0] instanceof Select<?> s)
                         return q.as(s);
                     else

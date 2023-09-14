@@ -150,14 +150,15 @@ implements
     private void accept0(Context<?> ctx) {
         ctx.start(Clause.DROP_TABLE_TABLE);
 
+        ctx.visit(K_DROP).sql(' ');
+
         // [#6371] [#9019] While many dialects do not require this keyword, in
         //                 some dialects (e.g. MySQL), there is a semantic
         //                 difference, e.g. with respect to transactions.
         if (temporary && TEMPORARY_SEMANTIC.contains(ctx.dialect()))
-            ctx.visit(K_DROP).sql(' ').visit(K_TEMPORARY).sql(' ').visit(K_TABLE).sql(' ');
-        else
-            ctx.visit(K_DROP_TABLE).sql(' ');
+            ctx.visit(K_TEMPORARY).sql(' ');
 
+        ctx.visit(K_TABLE).sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');

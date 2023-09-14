@@ -9001,6 +9001,186 @@ public class DSL {
         return dsl().createOrReplaceView(view, fields);
     }
 
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedView(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedView(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return dsl().createMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedView(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedView(Name view, Name... fields) {
+        return dsl().createMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedView(Table<?> view, Field<?>... fields) {
+        return dsl().createMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedView(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedView(@Stringly.Name String view, Collection<? extends String> fields) {
+        return dsl().createMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedView(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedView(Name view, Collection<? extends Name> fields) {
+        return dsl().createMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return dsl().createMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedViewIfNotExists(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return dsl().createMaterializedViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedViewIfNotExists(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(Name view, Name... fields) {
+        return dsl().createMaterializedViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedViewIfNotExists(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(Table<?> view, Field<?>... fields) {
+        return dsl().createMaterializedViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedViewIfNotExists(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(@Stringly.Name String view, Collection<? extends String> fields) {
+        return dsl().createMaterializedViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedViewIfNotExists(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(Name view, Collection<? extends Name> fields) {
+        return dsl().createMaterializedViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createMaterializedViewIfNotExists(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(Table<?> view, Collection<? extends Field<?>> fields) {
+        return dsl().createMaterializedViewIfNotExists(view, fields);
+    }
+
 
 
 
@@ -10471,6 +10651,96 @@ public class DSL {
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static org.jooq.DropViewFinalStep dropViewIfExists(Table<?> view) {
         return dsl().dropViewIfExists(view);
+    }
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropMaterializedView(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropViewFinalStep dropMaterializedView(@Stringly.Name String view) {
+        return dsl().dropMaterializedView(view);
+    }
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropMaterializedView(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropViewFinalStep dropMaterializedView(Name view) {
+        return dsl().dropMaterializedView(view);
+    }
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropMaterializedView(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropViewFinalStep dropMaterializedView(Table<?> view) {
+        return dsl().dropMaterializedView(view);
+    }
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropMaterializedViewIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropViewFinalStep dropMaterializedViewIfExists(@Stringly.Name String view) {
+        return dsl().dropMaterializedViewIfExists(view);
+    }
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropMaterializedViewIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropViewFinalStep dropMaterializedViewIfExists(Name view) {
+        return dsl().dropMaterializedViewIfExists(view);
+    }
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropMaterializedViewIfExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.DropViewFinalStep dropMaterializedViewIfExists(Table<?> view) {
+        return dsl().dropMaterializedViewIfExists(view);
     }
 
     /**

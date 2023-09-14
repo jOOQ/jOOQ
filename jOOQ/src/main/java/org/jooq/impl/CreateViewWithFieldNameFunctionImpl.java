@@ -125,7 +125,7 @@ final class CreateViewImplWithFieldNameFunctionImpl<R extends Record> extends Ab
 
     private final CreateViewImpl<?> delegate() {
         if (delegate == null)
-            delegate = new CreateViewImpl<>(configuration(), view, Arrays.asList(fields), orReplace, ifNotExists, select);
+            delegate = new CreateViewImpl<>(configuration(), view, Arrays.asList(fields), orReplace, ifNotExists, false, select);
 
         return delegate;
     }

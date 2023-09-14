@@ -75,7 +75,7 @@ public interface CreateViewAsStep<R extends Record> {
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateViewFinalStep as(ResultQuery<? extends R> as);
+    CreateViewFinalStep as(ResultQuery<? extends R> query);
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
@@ -85,7 +85,7 @@ public interface CreateViewAsStep<R extends Record> {
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     @NotNull @CheckReturnValue
-    CreateViewFinalStep as(@Stringly.SQL String as, QueryPart... parts);
+    CreateViewFinalStep as(@Stringly.SQL String query, QueryPart... parts);
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
@@ -95,7 +95,7 @@ public interface CreateViewAsStep<R extends Record> {
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     @NotNull @CheckReturnValue
-    CreateViewFinalStep as(@Stringly.SQL String as, Object... bindings);
+    CreateViewFinalStep as(@Stringly.SQL String query, Object... bindings);
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
@@ -105,7 +105,7 @@ public interface CreateViewAsStep<R extends Record> {
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     @NotNull @CheckReturnValue
-    CreateViewFinalStep as(@Stringly.SQL String as);
+    CreateViewFinalStep as(@Stringly.SQL String query);
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
@@ -115,5 +115,5 @@ public interface CreateViewAsStep<R extends Record> {
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     @NotNull @CheckReturnValue
-    CreateViewFinalStep as(SQL as);
+    CreateViewFinalStep as(SQL query);
 }

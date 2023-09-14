@@ -10410,6 +10410,114 @@ public interface DSLContext extends Scope {
     @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Collection<? extends Field<?>> fields);
 
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createMaterializedView(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedView(@Stringly.Name String view, @Stringly.Name String... fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createMaterializedView(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedView(Name view, Name... fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createMaterializedView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedView(Table<?> view, Field<?>... fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createMaterializedView(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedView(@Stringly.Name String view, Collection<? extends String> fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createMaterializedView(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedView(Name view, Collection<? extends Name> fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createMaterializedView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedView(Table<?> view, Collection<? extends Field<?>> fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createMaterializedViewIfNotExists(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedViewIfNotExists(@Stringly.Name String view, @Stringly.Name String... fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createMaterializedViewIfNotExists(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedViewIfNotExists(Name view, Name... fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createMaterializedViewIfNotExists(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedViewIfNotExists(Table<?> view, Field<?>... fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createMaterializedViewIfNotExists(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedViewIfNotExists(@Stringly.Name String view, Collection<? extends String> fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createMaterializedViewIfNotExists(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedViewIfNotExists(Name view, Collection<? extends Name> fields);
+
+    /**
+     * The <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createMaterializedViewIfNotExists(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CreateViewAsStep<Record> createMaterializedViewIfNotExists(Table<?> view, Collection<? extends Field<?>> fields);
+
 
 
 
@@ -11305,6 +11413,60 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropViewIfExists(Table<?> view);
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#dropMaterializedView(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    DropViewFinalStep dropMaterializedView(@Stringly.Name String view);
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#dropMaterializedView(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    DropViewFinalStep dropMaterializedView(Name view);
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#dropMaterializedView(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    DropViewFinalStep dropMaterializedView(Table<?> view);
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#dropMaterializedViewIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    DropViewFinalStep dropMaterializedViewIfExists(@Stringly.Name String view);
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#dropMaterializedViewIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    DropViewFinalStep dropMaterializedViewIfExists(Name view);
+
+    /**
+     * The <code>DROP MATERIALIZED VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#dropMaterializedViewIfExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    DropViewFinalStep dropMaterializedViewIfExists(Table<?> view);
 
     /**
      * The <code>GRANT</code> statement.

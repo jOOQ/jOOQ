@@ -146,11 +146,7 @@ final class Keywords {
     static final Keyword K_DROP_COLUMN              = keyword("drop column");
     static final Keyword K_DROP_CONSTRAINT          = keyword("drop constraint");
     static final Keyword K_DROP_DEFAULT             = keyword("drop default");
-    static final Keyword K_DROP_INDEX               = keyword("drop index");
     static final Keyword K_DROP_NOT_NULL            = keyword("drop not null");
-    static final Keyword K_DROP_SCHEMA              = keyword("drop schema");
-    static final Keyword K_DROP_TABLE               = keyword("drop table");
-    static final Keyword K_DROP_VIEW                = keyword("drop view");
     static final Keyword K_DUAL                     = keyword("dual");
     static final Keyword K_EACH                     = keyword("each");
     static final Keyword K_ELEMENTS                 = keyword("elements");

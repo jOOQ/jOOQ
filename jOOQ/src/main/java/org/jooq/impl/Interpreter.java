@@ -814,7 +814,7 @@ final class Interpreter {
                 return;
         }
 
-        if (query.$as() instanceof Select<?> s) {
+        if (query.$query() instanceof Select<?> s) {
             newTable(table, schema, query.$fields(), s, null, TableOptions.view(s));
         }
         else

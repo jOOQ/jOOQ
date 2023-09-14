@@ -164,7 +164,7 @@ implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.visit(K_DROP_INDEX).sql(' ');
+        ctx.visit(K_DROP).sql(' ').visit(K_INDEX).sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');

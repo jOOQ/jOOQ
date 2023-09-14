@@ -3404,92 +3404,152 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createView(@Stringly.Name String view, @Stringly.Name String... fields) {
-        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), false, false);
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), false, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createView(Name view, Name... fields) {
-        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), false, false);
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), false, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), false, false);
+        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), false, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createView(@Stringly.Name String view, Collection<? extends String> fields) {
-        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), false, false);
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), false, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createView(Name view, Collection<? extends Name> fields) {
-        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), false, false);
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), false, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createView(Table<?> view, Collection<? extends Field<?>> fields) {
-        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), false, false);
+        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), false, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, @Stringly.Name String... fields) {
-        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), false, true);
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), false, false, true);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields) {
-        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), false, true);
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), false, false, true);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), false, true);
+        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), false, false, true);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, Collection<? extends String> fields) {
-        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), false, true);
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), false, false, true);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Name view, Collection<? extends Name> fields) {
-        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), false, true);
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), false, false, true);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Collection<? extends Field<?>> fields) {
-        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), false, true);
+        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), false, false, true);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, @Stringly.Name String... fields) {
-        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), true, false);
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), true, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields) {
-        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), true, false);
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), true, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), true, false);
+        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), true, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, Collection<? extends String> fields) {
-        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), true, false);
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), true, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createOrReplaceView(Name view, Collection<? extends Name> fields) {
-        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), true, false);
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), true, false, false);
     }
 
     @Override
     public org.jooq.CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Collection<? extends Field<?>> fields) {
-        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), true, false);
+        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), true, false, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedView(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), false, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedView(Name view, Name... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), false, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedView(Table<?> view, Field<?>... fields) {
+        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), false, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedView(@Stringly.Name String view, Collection<? extends String> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), false, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedView(Name view, Collection<? extends Name> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), false, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), false, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), false, true, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(Name view, Name... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), false, true, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(Table<?> view, Field<?>... fields) {
+        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), false, true, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(@Stringly.Name String view, Collection<? extends String> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), false, true, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(Name view, Collection<? extends Name> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), false, true, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createMaterializedViewIfNotExists(Table<?> view, Collection<? extends Field<?>> fields) {
+        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), false, true, true);
     }
 
 
@@ -3976,32 +4036,62 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {
-        return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), false);
+        return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), false, false);
     }
 
     @Override
     public org.jooq.DropViewFinalStep dropView(Name view) {
-        return new DropViewImpl(configuration(), DSL.table(view), false);
+        return new DropViewImpl(configuration(), DSL.table(view), false, false);
     }
 
     @Override
     public org.jooq.DropViewFinalStep dropView(Table<?> view) {
-        return new DropViewImpl(configuration(), view, false);
+        return new DropViewImpl(configuration(), view, false, false);
     }
 
     @Override
     public org.jooq.DropViewFinalStep dropViewIfExists(@Stringly.Name String view) {
-        return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), true);
+        return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), false, true);
     }
 
     @Override
     public org.jooq.DropViewFinalStep dropViewIfExists(Name view) {
-        return new DropViewImpl(configuration(), DSL.table(view), true);
+        return new DropViewImpl(configuration(), DSL.table(view), false, true);
     }
 
     @Override
     public org.jooq.DropViewFinalStep dropViewIfExists(Table<?> view) {
-        return new DropViewImpl(configuration(), view, true);
+        return new DropViewImpl(configuration(), view, false, true);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropMaterializedView(@Stringly.Name String view) {
+        return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), true, false);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropMaterializedView(Name view) {
+        return new DropViewImpl(configuration(), DSL.table(view), true, false);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropMaterializedView(Table<?> view) {
+        return new DropViewImpl(configuration(), view, true, false);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropMaterializedViewIfExists(@Stringly.Name String view) {
+        return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), true, true);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropMaterializedViewIfExists(Name view) {
+        return new DropViewImpl(configuration(), DSL.table(view), true, true);
+    }
+
+    @Override
+    public org.jooq.DropViewFinalStep dropMaterializedViewIfExists(Table<?> view) {
+        return new DropViewImpl(configuration(), view, true, true);
     }
 
     @Override

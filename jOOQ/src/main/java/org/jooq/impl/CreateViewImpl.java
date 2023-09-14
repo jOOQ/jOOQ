@@ -77,14 +77,16 @@ implements
     final Table<?>                              view;
     final QueryPartListView<? extends Field<?>> fields;
     final boolean                               orReplace;
+    final boolean                               materialized;
     final boolean                               ifNotExists;
-          ResultQuery<? extends R>              as;
+          ResultQuery<? extends R>              query;
 
     CreateViewImpl(
         Configuration configuration,
         Table<?> view,
         Collection<? extends Field<?>> fields,
         boolean orReplace,
+        boolean materialized,
         boolean ifNotExists
     ) {
         this(
@@ -92,6 +94,7 @@ implements
             view,
             fields,
             orReplace,
+            materialized,
             ifNotExists,
             null
         );
@@ -102,16 +105,18 @@ implements
         Table<?> view,
         Collection<? extends Field<?>> fields,
         boolean orReplace,
+        boolean materialized,
         boolean ifNotExists,
-        ResultQuery<? extends R> as
+        ResultQuery<? extends R> query
     ) {
         super(configuration);
 
         this.view = view;
         this.fields = new QueryPartList<>(fields);
         this.orReplace = orReplace;
+        this.materialized = materialized;
         this.ifNotExists = ifNotExists;
-        this.as = as;
+        this.query = query;
     }
 
     // -------------------------------------------------------------------------
@@ -119,29 +124,29 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final CreateViewImpl<R> as(ResultQuery<? extends R> as) {
-        this.as = as;
+    public final CreateViewImpl<R> as(ResultQuery<? extends R> query) {
+        this.query = query;
         return this;
     }
 
     @Override
-    public final CreateViewImpl<R> as(String as, QueryPart... parts) {
-        return as((ResultQuery<R>) DSL.resultQuery(as, parts));
+    public final CreateViewImpl<R> as(String query, QueryPart... parts) {
+        return as((ResultQuery<R>) DSL.resultQuery(query, parts));
     }
 
     @Override
-    public final CreateViewImpl<R> as(String as, Object... bindings) {
-        return as((ResultQuery<R>) DSL.resultQuery(as, bindings));
+    public final CreateViewImpl<R> as(String query, Object... bindings) {
+        return as((ResultQuery<R>) DSL.resultQuery(query, bindings));
     }
 
     @Override
-    public final CreateViewImpl<R> as(String as) {
-        return as((ResultQuery<R>) DSL.resultQuery(as));
+    public final CreateViewImpl<R> as(String query) {
+        return as((ResultQuery<R>) DSL.resultQuery(query));
     }
 
     @Override
-    public final CreateViewImpl<R> as(SQL as) {
-        return as((ResultQuery<R>) DSL.resultQuery(as));
+    public final CreateViewImpl<R> as(SQL query) {
+        return as((ResultQuery<R>) DSL.resultQuery(query));
     }
 
     // -------------------------------------------------------------------------
@@ -202,6 +207,9 @@ implements
             }
         }
 
+        if (materialized)
+            ctx.sql(' ').visit(K_MATERIALIZED);
+
         ctx.sql(' ').visit(K_VIEW)
            .sql(' ');
 
@@ -228,7 +236,7 @@ implements
            .visit(
                rename && !renameSupported
              ? selectFrom(parsed().asTable(name("t"), map(f, Field::getUnqualifiedName, Name[]::new)))
-             : as,
+             : query,
                ParamType.INLINED
            )
            .end(Clause.CREATE_VIEW_AS);
@@ -238,11 +246,16 @@ implements
         if (parsed != null)
             return parsed;
 
-        if (as instanceof Select s)
+        if (query instanceof Select s)
             return parsed = s;
 
         DSLContext dsl = configuration().dsl();
-        return dsl.parser().parseSelect(dsl.renderInlined(as));
+        return dsl.parser().parseSelect(dsl.renderInlined(query));
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return CLAUSES;
     }
 
 
@@ -267,43 +280,54 @@ implements
     }
 
     @Override
+    public final boolean $materialized() {
+        return materialized;
+    }
+
+    @Override
     public final boolean $ifNotExists() {
         return ifNotExists;
     }
 
     @Override
-    public final ResultQuery<? extends R> $as() {
-        return as;
+    public final ResultQuery<? extends R> $query() {
+        return query;
     }
 
     @Override
     public final QOM.CreateView<R> $view(Table<?> newValue) {
-        return $constructor().apply(newValue, $fields(), $orReplace(), $ifNotExists(), $as());
+        return $constructor().apply(newValue, $fields(), $orReplace(), $materialized(), $ifNotExists(), $query());
     }
 
     @Override
     public final QOM.CreateView<R> $fields(Collection<? extends Field<?>> newValue) {
-        return $constructor().apply($view(), newValue, $orReplace(), $ifNotExists(), $as());
+        return $constructor().apply($view(), newValue, $orReplace(), $materialized(), $ifNotExists(), $query());
     }
 
     @Override
     public final QOM.CreateView<R> $orReplace(boolean newValue) {
-        return $constructor().apply($view(), $fields(), newValue, $ifNotExists(), $as());
+        return $constructor().apply($view(), $fields(), newValue, $materialized(), $ifNotExists(), $query());
+    }
+
+    @Override
+    public final QOM.CreateView<R> $materialized(boolean newValue) {
+        return $constructor().apply($view(), $fields(), $orReplace(), newValue, $ifNotExists(), $query());
     }
 
     @Override
     public final QOM.CreateView<R> $ifNotExists(boolean newValue) {
-        return $constructor().apply($view(), $fields(), $orReplace(), newValue, $as());
+        return $constructor().apply($view(), $fields(), $orReplace(), $materialized(), newValue, $query());
     }
 
     @Override
-    public final QOM.CreateView<R> $as(ResultQuery<? extends R> newValue) {
-        return $constructor().apply($view(), $fields(), $orReplace(), $ifNotExists(), newValue);
+    public final QOM.CreateView<R> $query(ResultQuery<? extends R> newValue) {
+        return $constructor().apply($view(), $fields(), $orReplace(), $materialized(), $ifNotExists(), newValue);
     }
 
-    public final Function5<? super Table<?>, ? super Collection<? extends Field<?>>, ? super Boolean, ? super Boolean, ? super ResultQuery<? extends R>, ? extends QOM.CreateView<R>> $constructor() {
-        return (a1, a2, a3, a4, a5) -> new CreateViewImpl(configuration(), a1, (Collection<? extends Field<?>>) a2, a3, a4, a5);
+    public final Function6<? super Table<?>, ? super Collection<? extends Field<?>>, ? super Boolean, ? super Boolean, ? super Boolean, ? super ResultQuery<? extends R>, ? extends QOM.CreateView<R>> $constructor() {
+        return (a1, a2, a3, a4, a5, a6) -> new CreateViewImpl(configuration(), a1, (Collection<? extends Field<?>>) a2, a3, a4, a5, a6);
     }
+
 
 
 

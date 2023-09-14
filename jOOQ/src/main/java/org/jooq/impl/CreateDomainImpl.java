@@ -190,14 +190,28 @@ implements
 
         Tools.toSQLDDLTypeDeclaration(ctx, dataType);
         if (default_ != null)
-            ctx.formatSeparator().visit(K_DEFAULT).sql(' ').visit(default_);
+            ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(default_);
 
-        if (!Tools.isEmpty(constraints))
-            if (ctx.family() == FIREBIRD)
+        if (!Tools.isEmpty(constraints)) {
+            if (ctx.family() == FIREBIRD) {
                 ctx.formatSeparator().visit(DSL.check(DSL.and(Tools.map(constraints, c -> ((ConstraintImpl) c).$check()))));
-            else
+            }
+            else {
+                boolean indent = constraints.size() > 1;
+
+                if (indent)
+                    ctx.formatSeparator().formatIndentStart();
+
                 for (Constraint constraint : constraints)
-                    ctx.formatSeparator().visit(constraint);
+                    if (indent)
+                        ctx.formatSeparator().visit(constraint);
+                    else
+                        ctx.sql(' ').visit(constraint);
+
+                if (indent)
+                    ctx.formatIndentEnd();
+            }
+        }
     }
 
 

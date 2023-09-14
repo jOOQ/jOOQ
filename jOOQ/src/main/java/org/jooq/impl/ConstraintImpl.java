@@ -210,11 +210,9 @@ implements
         else {
             boolean qualify = ctx.qualify();
 
-            if (named ) {
-                ctx.visit(K_CONSTRAINT)
-                   .sql(' ')
-                   .visit(getUnqualifiedName());
-            }
+            if (named )
+                ctx.visit(K_CONSTRAINT).sql(' ')
+                   .visit(getUnqualifiedName()).sql(' ');
 
             if (unique != null) {
                 ctx.visit(K_UNIQUE)

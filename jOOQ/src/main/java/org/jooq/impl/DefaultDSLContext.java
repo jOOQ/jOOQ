@@ -58,7 +58,9 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
 import static org.jooq.impl.Tools.EMPTY_UPDATABLE_RECORD;
@@ -3400,6 +3402,96 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new CreateTableImpl(configuration(), table, true, true);
     }
 
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createView(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createView(Name view, Name... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
+        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createView(@Stringly.Name String view, Collection<? extends String> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createView(Name view, Collection<? extends Name> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), false, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
+        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, Collection<? extends String> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Name view, Collection<? extends Name> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Collection<? extends Field<?>> fields) {
+        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), false, true);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields) {
+        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, Collection<? extends String> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceView(Name view, Collection<? extends Name> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), true, false);
+    }
+
 
 
 
@@ -4214,21 +4306,6 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     // -------------------------------------------------------------------------
 
     @Override
-    public CreateViewAsStep<Record> createView(String view, String... fields) {
-        return createView(table(name(view)), Tools.fieldsByName(view, fields));
-    }
-
-    @Override
-    public CreateViewAsStep<Record> createView(Name view, Name... fields) {
-        return createView(table(view), Tools.fieldsByName(fields));
-    }
-
-    @Override
-    public CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl<>(configuration(), view, fields, false, false);
-    }
-
-    @Override
     public CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction) {
         return createView(table(name(view)), (f, i) -> field(name(fieldNameFunction.apply(f))));
     }
@@ -4255,22 +4332,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
-        return new CreateViewImpl<>(configuration(), view, fieldNameFunction, false, false);
-    }
-
-    @Override
-    public CreateViewAsStep<Record> createOrReplaceView(String view, String... fields) {
-        return createOrReplaceView(table(name(view)), Tools.fieldsByName(view, fields));
-    }
-
-    @Override
-    public CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields) {
-        return createOrReplaceView(table(view), Tools.fieldsByName(fields));
-    }
-
-    @Override
-    public CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl<>(configuration(), view, fields, false, true);
+        return new CreateViewImplWithFieldNameFunctionImpl<>(configuration(), view, fieldNameFunction, false, false);
     }
 
     @Override
@@ -4300,22 +4362,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
-        return new CreateViewImpl<>(configuration(), view, fieldNameFunction, false, true);
-    }
-
-    @Override
-    public CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields) {
-        return createViewIfNotExists(table(name(view)), Tools.fieldsByName(view, fields));
-    }
-
-    @Override
-    public CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields) {
-        return createViewIfNotExists(table(view), Tools.fieldsByName(fields));
-    }
-
-    @Override
-    public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
-        return new CreateViewImpl<>(configuration(), view, fields, true, false);
+        return new CreateViewImplWithFieldNameFunctionImpl<>(configuration(), view, fieldNameFunction, false, true);
     }
 
     @Override
@@ -4345,7 +4392,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction) {
-        return new CreateViewImpl<>(configuration(), view, fieldNameFunction, true, false);
+        return new CreateViewImplWithFieldNameFunctionImpl<>(configuration(), view, fieldNameFunction, true, false);
     }
 
     @Override

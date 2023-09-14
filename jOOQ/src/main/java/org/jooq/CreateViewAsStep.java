@@ -37,44 +37,17 @@
  */
 package org.jooq;
 
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.DUCKDB;
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.TRINO;
-// ...
-import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.SQLDialect.*;
+import static org.jooq.impl.DSL.*;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.*;
 
+import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.*;
 
 /**
- * A {@link Query} that can create views.
+ * A step in the construction of the <code>CREATE VIEW</code> statement.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -93,79 +66,54 @@ import org.jetbrains.annotations.NotNull;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
- * @author Lukas Eder
  */
+@SuppressWarnings({ "unused" })
 public interface CreateViewAsStep<R extends Record> {
 
     /**
-     * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
+     * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      */
-    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    CreateViewFinalStep as(Select<? extends R> select);
+    @NotNull @CheckReturnValue
+    CreateViewFinalStep as(ResultQuery<? extends R> as);
 
     /**
-     * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      *
-     * @param sql The SQL
      * @see SQL
      */
-    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    CreateViewFinalStep as(SQL sql);
+    @NotNull @CheckReturnValue
+    CreateViewFinalStep as(@Stringly.SQL String as, QueryPart... parts);
 
     /**
-     * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      *
-     * @param sql The SQL
      * @see SQL
      */
-    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    CreateViewFinalStep as(String sql);
+    @NotNull @CheckReturnValue
+    CreateViewFinalStep as(@Stringly.SQL String as, Object... bindings);
 
     /**
-     * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      *
-     * @param sql The SQL
      * @see SQL
      */
-    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    CreateViewFinalStep as(String sql, Object... bindings);
+    @NotNull @CheckReturnValue
+    CreateViewFinalStep as(@Stringly.SQL String as);
 
     /**
-     * Add an <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
+     * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      *
-     * @param sql The SQL
      * @see SQL
      */
-    @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    CreateViewFinalStep as(String sql, QueryPart... parts);
+    @NotNull @CheckReturnValue
+    CreateViewFinalStep as(SQL as);
 }

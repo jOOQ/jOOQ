@@ -10248,6 +10248,168 @@ public interface DSLContext extends Scope {
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table);
 
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createView(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createView(@Stringly.Name String view, @Stringly.Name String... fields);
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createView(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createView(Name view, Name... fields);
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createView(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createView(@Stringly.Name String view, Collection<? extends String> fields);
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createView(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createView(Name view, Collection<? extends Name> fields);
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     *
+     * @see DSL#createView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createView(Table<?> view, Collection<? extends Field<?>> fields);
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createViewIfNotExists(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, @Stringly.Name String... fields);
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createViewIfNotExists(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields);
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createViewIfNotExists(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields);
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createViewIfNotExists(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, Collection<? extends String> fields);
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createViewIfNotExists(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateViewAsStep<Record> createViewIfNotExists(Name view, Collection<? extends Name> fields);
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createViewIfNotExists(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Collection<? extends Field<?>> fields);
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceView(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, @Stringly.Name String... fields);
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceView(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields);
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceView(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, Collection<? extends String> fields);
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceView(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createOrReplaceView(Name view, Collection<? extends Name> fields);
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Collection<? extends Field<?>> fields);
+
 
 
 
@@ -11574,33 +11736,6 @@ public interface DSLContext extends Scope {
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
-     *
-     * @see DSL#createView(String, String...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    CreateViewAsStep<Record> createView(String view, String... fields);
-
-    /**
-     * Create a new DSL <code>CREATE VIEW</code> statement.
-     *
-     * @see DSL#createView(Name, Name...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    CreateViewAsStep<Record> createView(Name view, Name... fields);
-
-    /**
-     * Create a new DSL <code>CREATE VIEW</code> statement.
-     *
-     * @see DSL#createView(Table, Field...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
-
-    /**
-     * Create a new DSL <code>CREATE VIEW</code> statement.
      * <p>
      * This works like {@link #createView(String, String...)} except that the
      * view's field names are derived from the view's {@link Select} statement
@@ -11715,33 +11850,6 @@ public interface DSLContext extends Scope {
 
     /**
      * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
-     *
-     * @see DSL#createOrReplaceView(String, String...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    CreateViewAsStep<Record> createOrReplaceView(String view, String... fields);
-
-    /**
-     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
-     *
-     * @see DSL#createOrReplaceView(Name, Name...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields);
-
-    /**
-     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
-     *
-     * @see DSL#createOrReplaceView(Table, Field...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
-
-    /**
-     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
      * <p>
      * This works like {@link #createOrReplaceView(String, String...)} except that the
      * view's field names are derived from the view's {@link Select} statement
@@ -11853,33 +11961,6 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
-
-    /**
-     * Create a new DSL <code>CREATE VIEW</code> statement.
-     *
-     * @see DSL#createViewIfNotExists(String, String...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields);
-
-    /**
-     * Create a new DSL <code>CREATE VIEW</code> statement.
-     *
-     * @see DSL#createViewIfNotExists(Name, Name...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields);
-
-    /**
-     * Create a new DSL <code>CREATE VIEW</code> statement.
-     *
-     * @see DSL#createViewIfNotExists(Table, Field...)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields);
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.

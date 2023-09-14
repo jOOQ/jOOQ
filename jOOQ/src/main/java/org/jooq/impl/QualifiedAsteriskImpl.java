@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Keywords.K_EXCEPT;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -115,10 +116,14 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
 
     @Override
     public final QualifiedAsterisk except(Field<?>... f) {
+        return except(Arrays.asList(f));
+    }
+
+    final QualifiedAsterisk except(Collection<? extends Field<?>> f) {
         QueryPartList<Field<?>> list = new QueryPartList<>();
 
         list.addAll(fields);
-        list.addAll(Arrays.asList(f));
+        list.addAll(f);
 
         return new QualifiedAsteriskImpl(table, list);
     }

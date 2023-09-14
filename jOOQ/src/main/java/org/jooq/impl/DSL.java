@@ -8731,6 +8731,276 @@ public class DSL {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }
 
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createView(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createView(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return dsl().createView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createView(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createView(Name view, Name... fields) {
+        return dsl().createView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
+        return dsl().createView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createView(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createView(@Stringly.Name String view, Collection<? extends String> fields) {
+        return dsl().createView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createView(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createView(Name view, Collection<? extends Name> fields) {
+        return dsl().createView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return dsl().createView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createViewIfNotExists(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return dsl().createViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createViewIfNotExists(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields) {
+        return dsl().createViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createViewIfNotExists(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
+        return dsl().createViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createViewIfNotExists(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, Collection<? extends String> fields) {
+        return dsl().createViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createViewIfNotExists(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Name view, Collection<? extends Name> fields) {
+        return dsl().createViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE VIEW IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createViewIfNotExists(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Collection<? extends Field<?>> fields) {
+        return dsl().createViewIfNotExists(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceView(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return dsl().createOrReplaceView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceView(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields) {
+        return dsl().createOrReplaceView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields) {
+        return dsl().createOrReplaceView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceView(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, Collection<? extends String> fields) {
+        return dsl().createOrReplaceView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceView(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceView(Name view, Collection<? extends Name> fields) {
+        return dsl().createOrReplaceView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return dsl().createOrReplaceView(view, fields);
+    }
+
 
 
 
@@ -10885,39 +11155,6 @@ public class DSL {
 
     /**
      * Create a new DSL <code>CREATE VIEW</code> statement.
-     *
-     * @see DSLContext#createView(String, String...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static CreateViewAsStep<Record> createView(String view, String... fields) {
-        return dsl().createView(view, fields);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE VIEW</code> statement.
-     *
-     * @see DSLContext#createView(Name, Name...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static CreateViewAsStep<Record> createView(Name view, Name... fields) {
-        return dsl().createView(view, fields);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE VIEW</code> statement.
-     *
-     * @see DSLContext#createView(Table, Field...)
-     */
-    @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields) {
-        return dsl().createView(view, fields);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE VIEW</code> statement.
      * <p>
      * This works like {@link #createView(Table, Field...)} except that the
      * view's field names are derived from the view's {@link Select} statement
@@ -10981,39 +11218,6 @@ public class DSL {
 
     /**
      * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
-     *
-     * @see DSLContext#createOrReplaceView(String, String...)
-     */
-    @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    public static CreateViewAsStep<Record> createOrReplaceView(String view, String... fields) {
-        return dsl().createOrReplaceView(view, fields);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
-     *
-     * @see DSLContext#createOrReplaceView(Name, Name...)
-     */
-    @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    public static CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields) {
-        return dsl().createOrReplaceView(view, fields);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
-     *
-     * @see DSLContext#createOrReplaceView(Table, Field...)
-     */
-    @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    public static CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields) {
-        return dsl().createOrReplaceView(view, fields);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE OR REPLACE VIEW</code> statement.
      * <p>
      * This works like {@link #createOrReplaceView(Table, Field...)} except that the
      * view's field names are derived from the view's {@link Select} statement
@@ -11073,39 +11277,6 @@ public class DSL {
     @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction) {
         return dsl().createOrReplaceView(view, fieldNameFunction);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE VIEW IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createViewIfNotExists(String, String...)
-     */
-    @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep<Record> createViewIfNotExists(String view, String... fields) {
-        return dsl().createViewIfNotExists(view, fields);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE VIEW IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createViewIfNotExists(Name, Name...)
-     */
-    @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields) {
-        return dsl().createViewIfNotExists(view, fields);
-    }
-
-    /**
-     * Create a new DSL <code>CREATE VIEW IF NOT EXISTS</code> statement.
-     *
-     * @see DSLContext#createViewIfNotExists(Table, Field...)
-     */
-    @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields) {
-        return dsl().createViewIfNotExists(view, fields);
     }
 
     /**

@@ -814,7 +814,11 @@ final class Interpreter {
                 return;
         }
 
-        newTable(table, schema, query.$fields(), query.$select(), null, TableOptions.view(query.$select()));
+        if (query.$as() instanceof Select<?> s) {
+            newTable(table, schema, query.$fields(), s, null, TableOptions.view(s));
+        }
+        else
+            newTable(table, schema, query.$fields(), null, null, TableOptions.view());
     }
 
     private final void accept0(AlterViewImpl query) {

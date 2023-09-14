@@ -37,152 +37,123 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CREATE_VIEW;
-import static org.jooq.Clause.CREATE_VIEW_AS;
-import static org.jooq.Clause.CREATE_VIEW_NAME;
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.TRINO;
-import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.selectFrom;
-import static org.jooq.impl.Keywords.K_ALTER;
-import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CREATE;
-import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
-import static org.jooq.impl.Keywords.K_OR;
-import static org.jooq.impl.Keywords.K_REPLACE;
-import static org.jooq.impl.Keywords.K_VIEW;
-import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.tryCatch;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Set;
-import java.util.function.BiFunction;
-
-import org.jooq.Clause;
-import org.jooq.Configuration;
-import org.jooq.Context;
-import org.jooq.CreateViewAsStep;
-import org.jooq.CreateViewFinalStep;
-import org.jooq.DSLContext;
-import org.jooq.Field;
-import org.jooq.Name;
-import org.jooq.QueryPart;
+import org.jooq.*;
+import org.jooq.Function1;
 import org.jooq.Record;
-// ...
-import org.jooq.ResultQuery;
-import org.jooq.SQL;
-import org.jooq.SQLDialect;
-import org.jooq.Select;
-import org.jooq.Table;
-// ...
-import org.jooq.impl.QOM.CreateView;
-import org.jooq.impl.QOM.UnmodifiableList;
+import org.jooq.conf.*;
+import org.jooq.impl.*;
+import org.jooq.impl.QOM.*;
+import org.jooq.tools.*;
+
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
+
 
 /**
- * @author Lukas Eder
+ * The <code>CREATE VIEW</code> statement.
  */
-final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
-
-    // Cascading interface implementations for CREATE VIEW behaviour
+@SuppressWarnings({ "hiding", "rawtypes", "unused" })
+final class CreateViewImpl<R extends Record>
+extends
+    AbstractDDLQuery
+implements
+    QOM.CreateView<R>,
     CreateViewAsStep<R>,
-    CreateViewFinalStep,
-    CreateView<R>
-
+    CreateViewFinalStep
 {
 
-    private static final Clause[]                                                   CLAUSES                  = { CREATE_VIEW };
-    private static final Set<SQLDialect>                                            NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>                                            NO_SUPPORT_COLUMN_RENAME = SQLDialect.supportedBy(TRINO);
+    final Table<?>                              view;
+    final QueryPartListView<? extends Field<?>> fields;
+    final boolean                               orReplace;
+    final boolean                               ifNotExists;
+          ResultQuery<? extends R>              as;
 
-    private final boolean                                                           ifNotExists;
-    private final boolean                                                           orReplace;
-    private final Table<?>                                                          view;
-    private final BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction;
-    private Field<?>[]                                                              fields;
-    private ResultQuery<?>                                                          select;
-    private transient Select<?>                                                     parsed;
+    CreateViewImpl(
+        Configuration configuration,
+        Table<?> view,
+        Collection<? extends Field<?>> fields,
+        boolean orReplace,
+        boolean ifNotExists
+    ) {
+        this(
+            configuration,
+            view,
+            fields,
+            orReplace,
+            ifNotExists,
+            null
+        );
+    }
 
-    CreateViewImpl(Configuration configuration, Table<?> view, Field<?>[] fields, boolean ifNotExists, boolean orReplace) {
+    CreateViewImpl(
+        Configuration configuration,
+        Table<?> view,
+        Collection<? extends Field<?>> fields,
+        boolean orReplace,
+        boolean ifNotExists,
+        ResultQuery<? extends R> as
+    ) {
         super(configuration);
 
         this.view = view;
-        this.fields = fields;
-        this.fieldNameFunction = null;
-        this.ifNotExists = ifNotExists;
+        this.fields = new QueryPartList<>(fields);
         this.orReplace = orReplace;
+        this.ifNotExists = ifNotExists;
+        this.as = as;
     }
 
-    CreateViewImpl(Configuration configuration, Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction, boolean ifNotExists, boolean orReplace) {
-        super(configuration);
-
-        this.view = view;
-        this.fields = null;
-        this.fieldNameFunction = fieldNameFunction;
-        this.ifNotExists = ifNotExists;
-        this.orReplace = orReplace;
-    }
-
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: DSL API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     @Override
-    public final CreateViewFinalStep as(Select<? extends R> s) {
-        this.select = s;
-
-        if (fieldNameFunction != null)
-            fields = map(s.getSelect(), fieldNameFunction::apply, Field[]::new);
-
+    public final CreateViewImpl<R> as(ResultQuery<? extends R> as) {
+        this.as = as;
         return this;
     }
 
     @Override
-    public final CreateViewFinalStep as(SQL sql) {
-        this.select = DSL.resultQuery(sql);
-
-        if (fieldNameFunction != null)
-            fields = map(parsed().getSelect(), fieldNameFunction::apply, Field[]::new);
-
-        return this;
+    public final CreateViewImpl<R> as(String as, QueryPart... parts) {
+        return as((ResultQuery<R>) DSL.resultQuery(as, parts));
     }
 
     @Override
-    public final CreateViewFinalStep as(String sql) {
-        return as(DSL.sql(sql));
+    public final CreateViewImpl<R> as(String as, Object... bindings) {
+        return as((ResultQuery<R>) DSL.resultQuery(as, bindings));
     }
 
     @Override
-    public final CreateViewFinalStep as(String sql, Object... bindings) {
-        return as(DSL.sql(sql, bindings));
+    public final CreateViewImpl<R> as(String as) {
+        return as((ResultQuery<R>) DSL.resultQuery(as));
     }
 
     @Override
-    public final CreateViewFinalStep as(String sql, QueryPart... parts) {
-        return as(DSL.sql(sql, parts));
+    public final CreateViewImpl<R> as(SQL as) {
+        return as((ResultQuery<R>) DSL.resultQuery(as));
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // XXX: QueryPart API
-    // ------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+
+
+    private static final Clause[]        CLAUSES                  = { Clause.CREATE_VIEW };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_COLUMN_RENAME = SQLDialect.supportedBy(TRINO);
+    private transient Select<?>          parsed;
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
@@ -197,10 +168,10 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     }
 
     private final void accept0(Context<?> ctx) {
-        Field<?>[] f = fields;
+        List<? extends Field<?>> f = fields;
 
         // [#2059] [#11485] Some dialects don't support column aliases at the view level
-        boolean rename = f != null && f.length > 0;
+        boolean rename = f != null && f.size() > 0;
         boolean renameSupported = !NO_SUPPORT_COLUMN_RENAME.contains(ctx.dialect());
         boolean replaceSupported = false ;
 
@@ -212,7 +183,7 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
 
 
 
-        ctx.start(CREATE_VIEW_NAME)
+        ctx.start(Clause.CREATE_VIEW_NAME)
            .visit(replaceSupported && orReplace ? K_REPLACE : K_CREATE);
 
         if (orReplace && !replaceSupported) {
@@ -246,52 +217,39 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
         ctx.visit(view);
 
         if (rename && renameSupported)
-            ctx.sql('(').visit(wrap(f).qualify(false)).sql(')');
+            ctx.sql('(').visit(QueryPartListView.wrap(f).qualify(false)).sql(')');
 
-        ctx.end(CREATE_VIEW_NAME)
+        ctx.end(Clause.CREATE_VIEW_NAME)
            .formatSeparator()
            .visit(K_AS)
            .formatSeparator()
-           .start(CREATE_VIEW_AS)
+           .start(Clause.CREATE_VIEW_AS)
            // [#4806] CREATE VIEW doesn't accept parameters in most databases
            .visit(
                rename && !renameSupported
              ? selectFrom(parsed().asTable(name("t"), map(f, Field::getUnqualifiedName, Name[]::new)))
-             : select,
-               INLINED
+             : as,
+               ParamType.INLINED
            )
-           .end(CREATE_VIEW_AS);
+           .end(Clause.CREATE_VIEW_AS);
     }
 
-    private final Select<?> parsed() {
+    final Select<?> parsed() {
         if (parsed != null)
             return parsed;
 
-        if (select instanceof Select)
-            return parsed = (Select<?>) select;
+        if (as instanceof Select s)
+            return parsed = s;
 
         DSLContext dsl = configuration().dsl();
-        return dsl.parser().parseSelect(dsl.renderInlined(select));
+        return dsl.parser().parseSelect(dsl.renderInlined(as));
     }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
+
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
-
-    @Override
-    public final boolean $ifNotExists() {
-        return ifNotExists;
-    }
-
-    @Override
-    public final boolean $orReplace() {
-        return orReplace;
-    }
 
     @Override
     public final Table<?> $view() {
@@ -304,13 +262,57 @@ final class CreateViewImpl<R extends Record> extends AbstractDDLQuery implements
     }
 
     @Override
-    public final ResultQuery<R> $query() {
-        return (ResultQuery<R>) select;
+    public final boolean $orReplace() {
+        return orReplace;
     }
 
-    final Select<?> $select() {
-        return parsed();
+    @Override
+    public final boolean $ifNotExists() {
+        return ifNotExists;
     }
+
+    @Override
+    public final ResultQuery<? extends R> $as() {
+        return as;
+    }
+
+    @Override
+    public final QOM.CreateView<R> $view(Table<?> newValue) {
+        return $constructor().apply(newValue, $fields(), $orReplace(), $ifNotExists(), $as());
+    }
+
+    @Override
+    public final QOM.CreateView<R> $fields(Collection<? extends Field<?>> newValue) {
+        return $constructor().apply($view(), newValue, $orReplace(), $ifNotExists(), $as());
+    }
+
+    @Override
+    public final QOM.CreateView<R> $orReplace(boolean newValue) {
+        return $constructor().apply($view(), $fields(), newValue, $ifNotExists(), $as());
+    }
+
+    @Override
+    public final QOM.CreateView<R> $ifNotExists(boolean newValue) {
+        return $constructor().apply($view(), $fields(), $orReplace(), newValue, $as());
+    }
+
+    @Override
+    public final QOM.CreateView<R> $as(ResultQuery<? extends R> newValue) {
+        return $constructor().apply($view(), $fields(), $orReplace(), $ifNotExists(), newValue);
+    }
+
+    public final Function5<? super Table<?>, ? super Collection<? extends Field<?>>, ? super Boolean, ? super Boolean, ? super ResultQuery<? extends R>, ? extends QOM.CreateView<R>> $constructor() {
+        return (a1, a2, a3, a4, a5) -> new CreateViewImpl(configuration(), a1, (Collection<? extends Field<?>>) a2, a3, a4, a5);
+    }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -626,22 +626,6 @@ public final class QOM {
         @NotNull DeleteReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
     }
 
-    /**
-     * The <code>CREATE VIEW</code> statement.
-     */
-    public /*sealed*/ interface CreateView<R extends Record>
-        extends
-            DDLQuery
-        /*permits
-            CreateViewImpl*/
-    {
-        boolean $ifNotExists();
-        boolean $orReplace();
-        @NotNull Table<?> $view();
-        @NotNull UnmodifiableList<? extends Field<?>> $fields();
-        @NotNull ResultQuery<R> $query();
-    }
-
     // -------------------------------------------------------------------------
     // XXX: Schema
     // -------------------------------------------------------------------------
@@ -2197,6 +2181,32 @@ public final class QOM {
         @NotNull CreateTable $comment(Comment comment);
         @CheckReturnValue
         @NotNull CreateTable $storage(SQL storage);
+    }
+
+    /**
+     * The <code>CREATE VIEW</code> statement.
+     */
+    public /*sealed*/ interface CreateView<R extends Record>
+        extends
+            DDLQuery
+        //permits
+        //    CreateViewImpl
+    {
+        @NotNull Table<?> $view();
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        boolean $orReplace();
+        boolean $ifNotExists();
+        @Nullable ResultQuery<? extends R> $as();
+        @CheckReturnValue
+        @NotNull CreateView<R> $view(Table<?> view);
+        @CheckReturnValue
+        @NotNull CreateView<R> $fields(Collection<? extends Field<?>> fields);
+        @CheckReturnValue
+        @NotNull CreateView<R> $orReplace(boolean orReplace);
+        @CheckReturnValue
+        @NotNull CreateView<R> $ifNotExists(boolean ifNotExists);
+        @CheckReturnValue
+        @NotNull CreateView<R> $as(ResultQuery<? extends R> as);
     }
 
 

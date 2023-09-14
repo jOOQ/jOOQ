@@ -2549,7 +2549,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Condition on = parseCondition();
         boolean update = false;
         boolean insert = false;
-        Field<?>[] insertColumns = null;
+        List<Field<?>> insertColumns = null;
         List<Field<?>> insertValues = null;
         Condition insertWhere = null;
         Map<Field<?>, Object> updateSet;
@@ -2605,8 +2605,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 insertValues = parseList(',', c -> c.parseKeywordIf("DEFAULT") ? default_() : c.parseField());
                 parse(')');
 
-                if (insertColumns.length != insertValues.size())
-                    throw exception("Insert column size (" + insertColumns.length + ") must match values size (" + insertValues.size() + ")");
+                if (insertColumns.size() != insertValues.size())
+                    throw exception("Insert column size (" + insertColumns.size() + ") must match values size (" + insertValues.size() + ")");
 
                 if (insertWhere == null && parseKeywordIf("WHERE"))
                     insertWhere = parseCondition();

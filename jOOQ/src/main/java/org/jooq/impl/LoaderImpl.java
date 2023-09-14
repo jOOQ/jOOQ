@@ -705,7 +705,7 @@ final class LoaderImpl<R extends Record> implements
         try {
             if (ignoreRows == 1) {
                 reader = new CSVReader(input.reader(), separator, quote, 0);
-                source = Tools.fieldsByName(reader.next());
+                source = Tools.fieldsByName(reader.next()).toArray(EMPTY_FIELD);
             }
             else {
                 reader = new CSVReader(input.reader(), separator, quote, ignoreRows);

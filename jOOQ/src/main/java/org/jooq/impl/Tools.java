@@ -1766,7 +1766,7 @@ final class Tools {
         return map(fields, (f, i) -> f.as(fieldName(i)));
     }
 
-    static final Field<?>[] fieldsByName(String[] fieldNames) {
+    static final List<Field<?>> fieldsByName(String[] fieldNames) {
         return fieldsByName(null, fieldNames);
     }
 
@@ -1791,22 +1791,22 @@ final class Tools {
             return map(fieldNames, n -> (TableField<R, ?>) DSL.field(tableName.getQualifiedName().append(n.getUnqualifiedName()), n.getDataType()), TableField[]::new);
     }
 
-    static final Field<?>[] fieldsByName(Name tableName, Name[] fieldNames) {
+    static final List<Field<?>> fieldsByName(Name tableName, Name[] fieldNames) {
         if (tableName == null)
-            return map(fieldNames, n -> DSL.field(n), Field[]::new);
+            return map(fieldNames, n -> DSL.field(n));
         else
-            return map(fieldNames, n -> DSL.field(name(tableName, n)), Field[]::new);
+            return map(fieldNames, n -> DSL.field(name(tableName, n)));
     }
 
-    static final Field<?>[] fieldsByName(String tableName, String[] fieldNames) {
+    static final List<Field<?>> fieldsByName(String tableName, String[] fieldNames) {
         if (StringUtils.isEmpty(tableName))
-            return map(fieldNames, n -> DSL.field(name(n)), Field[]::new);
+            return map(fieldNames, n -> DSL.field(name(n)));
         else
-            return map(fieldNames, n -> DSL.field(name(tableName, n)), Field[]::new);
+            return map(fieldNames, n -> DSL.field(name(tableName, n)));
     }
 
-    static final Field<?>[] fieldsByName(Name[] names) {
-        return map(names, n -> DSL.field(n), Field[]::new);
+    static final List<Field<?>> fieldsByName(Name[] names) {
+        return map(names, n -> DSL.field(n));
     }
 
     static final Name[] names(String[] names) {

@@ -53,6 +53,7 @@ import static org.jooq.impl.Keywords.K_EXCEPT;
 import static org.jooq.impl.Keywords.K_EXCLUDE;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 
 import org.jooq.Asterisk;
@@ -132,10 +133,14 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
 
     @Override
     public final Asterisk except(Field<?>... f) {
+        return except(Arrays.asList(f));
+    }
+
+    final Asterisk except(Collection<? extends Field<?>> f) {
         QueryPartList<Field<?>> list = new QueryPartList<>();
 
         list.addAll(fields);
-        list.addAll(Arrays.asList(f));
+        list.addAll(f);
 
         return new AsteriskImpl(list);
     }

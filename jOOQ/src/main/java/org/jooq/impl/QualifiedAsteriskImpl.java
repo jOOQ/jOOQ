@@ -119,7 +119,8 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
         return except(Arrays.asList(f));
     }
 
-    final QualifiedAsterisk except(Collection<? extends Field<?>> f) {
+    @Override
+    public final QualifiedAsterisk except(Collection<? extends Field<?>> f) {
         QueryPartList<Field<?>> list = new QueryPartList<>();
 
         list.addAll(fields);

@@ -40,6 +40,8 @@ package org.jooq;
 import org.jetbrains.annotations.*;
 import org.jetbrains.annotations.ApiStatus.Experimental;
 
+import java.util.Collection;
+
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.UnmodifiableList;
@@ -105,6 +107,17 @@ public non-sealed interface Asterisk extends SelectFieldOrAsterisk {
     @NotNull
     @Support
     Asterisk except(Field<?>... fields);
+
+    /**
+     * The asterisk (<code>*</code>) to be used in <code>SELECT</code> clauses.
+     * <p>
+     * This expression is a convenient way to select "all but some fields". Some
+     * dialects (e.g. {@link SQLDialect#H2}) implement this feature natively. In
+     * other dialects, jOOQ expands the asterisk if possible.
+     */
+    @NotNull
+    @Support
+    Asterisk except(Collection<? extends Field<?>> fields);
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

@@ -136,7 +136,8 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
         return except(Arrays.asList(f));
     }
 
-    final Asterisk except(Collection<? extends Field<?>> f) {
+    @Override
+    public final Asterisk except(Collection<? extends Field<?>> f) {
         QueryPartList<Field<?>> list = new QueryPartList<>();
 
         list.addAll(fields);

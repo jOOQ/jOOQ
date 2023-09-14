@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import java.util.Collection;
+
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -186,6 +188,11 @@ implements
 
     @Override
     public final QualifiedAsterisk except(Field<?>... fields) {
+        return new QualifiedAsteriskProxy((QualifiedAsteriskImpl) delegate.except(fields), position);
+    }
+
+    @Override
+    public final QualifiedAsterisk except(Collection<? extends Field<?>> fields) {
         return new QualifiedAsteriskProxy((QualifiedAsteriskImpl) delegate.except(fields), position);
     }
 

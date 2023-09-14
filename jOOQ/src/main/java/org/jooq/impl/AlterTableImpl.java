@@ -1187,10 +1187,8 @@ implements
             if (ifExists && supportsIfExists(ctx))
                 ctx.sql(' ').visit(K_IF_EXISTS);
 
-            ctx.sql(' ').visit(table)
-               .end(ALTER_TABLE_TABLE)
-               .formatIndentStart()
-               .formatSeparator();
+            ctx.sql(' ').visit(table).sql(' ')
+               .end(ALTER_TABLE_TABLE);
         }
 
         if (comment != null) {
@@ -1220,37 +1218,23 @@ implements
 
 
                 case DERBY:
-                    ctx.visit(K_RENAME_COLUMN).sql(' ')
-                       .visit(renameColumn)
-                       .formatSeparator()
-                       .visit(K_TO).sql(' ')
-                       .qualify(false, c -> c.visit(renameColumnTo));
+                    ctx.visit(K_RENAME_COLUMN).sql(' ').visit(renameColumn).sql(' ')
+                       .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;
 
                 case H2:
                 case HSQLDB:
-                    ctx.visit(K_ALTER_COLUMN).sql(' ')
-                       .qualify(false, c -> c.visit(renameColumn))
-                       .formatSeparator()
-                       .visit(K_RENAME_TO).sql(' ')
-                       .qualify(false, c -> c.visit(renameColumnTo));
+                    ctx.visit(K_ALTER_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumn)).sql(' ')
+                       .visit(K_RENAME_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;
 
                 case FIREBIRD:
-                    ctx.visit(K_ALTER_COLUMN).sql(' ')
-                       .qualify(false, c -> c.visit(renameColumn))
-                       .formatSeparator()
-                       .visit(K_TO).sql(' ')
-                       .qualify(false, c -> c.visit(renameColumnTo));
+                    ctx.visit(K_ALTER_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumn)).sql(' ')
+                       .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;
-
-
-
-
-
 
 
 
@@ -1268,11 +1252,8 @@ implements
 
 
                 default:
-                    ctx.visit(K_RENAME_COLUMN).sql(' ')
-                       .qualify(false, c -> c.visit(renameColumn))
-                       .formatSeparator()
-                       .visit(K_TO).sql(' ')
-                       .qualify(false, c -> c.visit(renameColumnTo));
+                    ctx.visit(K_RENAME_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumn)).sql(' ')
+                       .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;
             }
@@ -1281,28 +1262,20 @@ implements
         }
         else if (renameIndex != null) {
             ctx.start(ALTER_TABLE_RENAME_INDEX)
-               .visit(K_RENAME_INDEX).sql(' ')
-               .qualify(false, c -> c.visit(renameIndex))
-               .formatSeparator()
-               .visit(K_TO).sql(' ')
-               .qualify(false, c -> c.visit(renameIndexTo))
+               .visit(K_RENAME_INDEX).sql(' ').qualify(false, c -> c.visit(renameIndex)).sql(' ')
+               .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameIndexTo))
                .end(ALTER_TABLE_RENAME_INDEX);
         }
         else if (renameConstraint != null) {
             ctx.start(ALTER_TABLE_RENAME_CONSTRAINT);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true, c1 -> {
                 if (family == HSQLDB)
-                    c1.visit(K_ALTER_CONSTRAINT).sql(' ')
-                      .qualify(false, c2 -> c2.visit(renameConstraint))
-                      .formatSeparator()
-                      .visit(K_RENAME_TO).sql(' ')
-                      .qualify(false, c2 -> c2.visit(renameConstraintTo));
+                    c1.visit(K_ALTER_CONSTRAINT).sql(' ').qualify(false, c2 -> c2.visit(renameConstraint)).sql(' ')
+                      .visit(K_RENAME_TO).sql(' ').qualify(false, c2 -> c2.visit(renameConstraintTo));
                 else
                     c1.visit( K_RENAME_CONSTRAINT).sql(' ')
-                      .qualify(false, c2 -> c2.visit(renameConstraint))
-                      .formatSeparator()
-                      .visit(K_TO).sql(' ')
-                      .qualify(false, c2 -> c2.visit(renameConstraintTo));
+                      .qualify(false, c2 -> c2.visit(renameConstraint)).sql(' ')
+                      .visit(K_TO).sql(' ').qualify(false, c2 -> c2.visit(renameConstraintTo));
             });
 
             ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
@@ -1653,7 +1626,6 @@ implements
 
 
 
-
             ctx.end(ALTER_TABLE_DROP);
         }
         else if (dropConstraint != null) {
@@ -1689,9 +1661,6 @@ implements
             ctx.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
             ctx.end(ALTER_TABLE_DROP);
         }
-
-        if (!omitAlterTable)
-            ctx.formatIndentEnd();
     }
 
     private final boolean unqualifyRenameTo(Context<?> ctx) {

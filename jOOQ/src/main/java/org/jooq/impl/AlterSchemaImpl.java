@@ -172,17 +172,13 @@ implements
                 ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(schema)
-           .end(Clause.ALTER_SCHEMA_SCHEMA)
-           .formatIndentStart()
-           .formatSeparator();
+           .end(Clause.ALTER_SCHEMA_SCHEMA);
 
         if (renameTo != null)
             ctx.start(Clause.ALTER_SCHEMA_RENAME)
                .visit(supportRename ? K_TO : K_RENAME_TO).sql(' ')
                .qualify(false, c -> c.visit(renameTo))
                .end(Clause.ALTER_SCHEMA_RENAME);
-
-        ctx.formatIndentEnd();
     }
 
     @Override

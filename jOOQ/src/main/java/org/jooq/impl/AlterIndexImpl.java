@@ -226,9 +226,7 @@ implements
                 else
                     ctx.visit(index);
 
-                ctx.end(Clause.ALTER_INDEX_INDEX)
-                   .formatIndentStart()
-                   .formatSeparator();
+                ctx.end(Clause.ALTER_INDEX_INDEX);
 
                 if (renameTo != null)
                     ctx.start(Clause.ALTER_INDEX_RENAME)
@@ -236,7 +234,6 @@ implements
                        .qualify(false, c -> c.visit(renameTo))
                        .end(Clause.ALTER_INDEX_RENAME);
 
-                ctx.formatIndentEnd();
                 break;
             }
         }

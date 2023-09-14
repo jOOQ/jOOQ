@@ -326,17 +326,13 @@ implements
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(view)
-           .end(Clause.ALTER_VIEW_VIEW)
-           .formatIndentStart()
-           .formatSeparator();
+           .end(Clause.ALTER_VIEW_VIEW);
 
         if (renameTo != null)
             ctx.start(Clause.ALTER_VIEW_RENAME)
                .visit(K_RENAME_TO).sql(' ')
                .qualify(false, c -> c.visit(renameTo))
                .end(Clause.ALTER_VIEW_RENAME);
-
-        ctx.formatIndentEnd();
     }
 
     @Override

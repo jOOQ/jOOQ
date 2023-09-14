@@ -213,9 +213,7 @@ implements
             if (named ) {
                 ctx.visit(K_CONSTRAINT)
                    .sql(' ')
-                   .visit(getUnqualifiedName())
-                   .formatIndentStart()
-                   .formatSeparator();
+                   .visit(getUnqualifiedName());
             }
 
             if (unique != null) {
@@ -244,11 +242,8 @@ implements
             }
             else if (foreignKey != null) {
                 ctx.visit(K_FOREIGN_KEY)
-                   .sql(" (").visit(wrap(foreignKey).qualify(false)).sql(')')
-                   .formatSeparator()
-                   .visit(K_REFERENCES)
-                   .sql(' ')
-                   .visit(referencesTable);
+                   .sql(" (").visit(wrap(foreignKey).qualify(false)).sql(") ")
+                   .visit(K_REFERENCES).sql(' ').visit(referencesTable);
 
                 if (references.length > 0)
                     ctx.sql(" (").visit(wrap(references).qualify(false)).sql(')');
@@ -275,7 +270,6 @@ implements
             if (!enforced)
                 acceptEnforced(ctx, enforced);
 
-            if (named) {
 
 
 
@@ -283,11 +277,6 @@ implements
 
 
 
-
-
-
-                ctx.formatIndentEnd();
-            }
         }
     }
 

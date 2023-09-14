@@ -5137,7 +5137,6 @@ final class Tools {
                 break;
 
 
-
             case POSTGRES:
             case YUGABYTEDB:
                 if (increment(ctx.data(), DATA_BLOCK_NESTING))
@@ -5168,7 +5167,6 @@ final class Tools {
                 ctx.formatIndentEnd().formatSeparator()
                    .visit(K_END);
                 break;
-
 
 
             case POSTGRES:
@@ -5589,7 +5587,6 @@ final class Tools {
                 });
                 break;
             }
-
 
 
             case POSTGRES:

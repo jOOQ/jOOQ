@@ -1137,7 +1137,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     else if (!parseResultQuery && parseKeywordIf("CT"))
                         return result = metaLookupsForceIgnore(true).parseCreateTable(false);
                     else if (!parseResultQuery && parseKeywordIf("CV"))
-                        return result = metaLookupsForceIgnore(true).parseCreateView(false);
+                        return result = metaLookupsForceIgnore(true).parseCreateView(false, false);
                     else if (!ignoreProEdition() && peekKeyword("CALL") && requireProEdition())
 
 
@@ -2839,7 +2839,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'F':
                 if (parseKeywordIf("FORCE VIEW"))
-                    return parseCreateView(false);
+                    return parseCreateView(false, false);
+                else if (parseKeywordIf("FORCE MATERIALIZED VIEW"))
+                    return parseCreateView(false, true);
                 else if (parseKeywordIf("FULLTEXT INDEX") && requireUnsupportedSyntax())
                     return parseCreateIndex(false);
                 else if (!ignoreProEdition() && parseKeywordIf("FUNCTION") && requireProEdition())
@@ -2867,6 +2869,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'M':
                 if (parseKeywordIf("MEMORY TABLE"))
                     return parseCreateTable(false);
+                else if (parseKeywordIf("MATERIALIZED VIEW"))
+                    return parseCreateView(false, true);
 
                 break;
 
@@ -2880,7 +2884,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                         ;
                     else if (parseKeywordIf("VIEW", "FORCE VIEW"))
-                        return parseCreateView(true);
+                        return parseCreateView(true, false);
                     else if (!ignoreProEdition() && parseKeywordIf("FUNCTION") && requireProEdition())
 
 
@@ -2955,7 +2959,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'V':
                 if (parseKeywordIf("VIEW"))
-                    return parseCreateView(false);
+                    return parseCreateView(false, false);
                 else if (parseKeywordIf("VIRTUAL") && parseKeyword("TABLE"))
                     return parseCreateTable(false);
 
@@ -3108,6 +3112,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 break;
 
+            case 'M':
+                if (parseKeywordIf("MATERIALIZED VIEW"))
+                    return parseDropView(true);
+
+                break;
+
             case 'P':
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("DROP PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
@@ -3182,7 +3192,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'V':
                 if (parseKeywordIf("VIEW"))
-                    return parseDropView();
+                    return parseDropView(false);
 
                 break;
         }
@@ -4191,7 +4201,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return user(parseName());
     }
 
-    private final DDLQuery parseCreateView(boolean orReplace) {
+    private final DDLQuery parseCreateView(boolean orReplace, boolean materialized) {
         boolean ifNotExists = !orReplace && parseKeywordIf("IF NOT EXISTS");
         Table<?> view = parseTableName();
         Field<?>[] fields = EMPTY_FIELD;
@@ -4208,11 +4218,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (fields.length > 0 && fields.length != degree)
             throw exception("Select list size (" + degree + ") must match declared field size (" + fields.length + ")");
 
-        return ifNotExists
-            ? dsl.createViewIfNotExists(view, fields).as(select)
+        return (ifNotExists
+            ? materialized
+                ? dsl.createMaterializedViewIfNotExists(view, fields)
+                : dsl.createViewIfNotExists(view, fields)
             : orReplace
-            ? dsl.createOrReplaceView(view, fields).as(select)
-            : dsl.createView(view, fields).as(select);
+            ? dsl.createOrReplaceView(view, fields)
+            : materialized
+                ? dsl.createMaterializedView(view, fields)
+                : dsl.createView(view, fields)
+        ).as(select);
     }
 
     private final DDLQuery parseCreateExtension() {
@@ -4291,8 +4306,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return comment;
     }
 
-    private final DDLQuery parseDropView() {
-        return parseIfExists(this::parseTableName, dsl::dropViewIfExists, dsl::dropView);
+    private final DDLQuery parseDropView(boolean materialized) {
+        return materialized
+             ? parseIfExists(this::parseTableName, dsl::dropMaterializedViewIfExists, dsl::dropMaterializedView)
+             : parseIfExists(this::parseTableName, dsl::dropViewIfExists, dsl::dropView);
     }
 
     private final DDLQuery parseCreateSequence() {

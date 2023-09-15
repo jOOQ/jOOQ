@@ -1988,12 +1988,15 @@ public final class QOM {
     {
         @Nullable Table<?> $table();
         boolean $isView();
+        boolean $isMaterializedView();
         @Nullable Field<?> $field();
         @NotNull Comment $comment();
         @CheckReturnValue
         @NotNull CommentOn $table(Table<?> table);
         @CheckReturnValue
         @NotNull CommentOn $isView(boolean isView);
+        @CheckReturnValue
+        @NotNull CommentOn $isMaterializedView(boolean isMaterializedView);
         @CheckReturnValue
         @NotNull CommentOn $field(Field<?> field);
         @CheckReturnValue

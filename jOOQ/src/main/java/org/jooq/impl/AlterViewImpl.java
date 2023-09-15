@@ -259,7 +259,7 @@ implements
         }
 
         if (comment != null) {
-            ctx.visit(commentOnView(view).is(comment));
+            ctx.visit((materialized ? commentOnMaterializedView(view) : commentOnView(view)).is(comment));
             return;
         }
 

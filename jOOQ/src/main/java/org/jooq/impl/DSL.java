@@ -7951,6 +7951,51 @@ public class DSL {
     }
 
     /**
+     * The <code>COMMENT ON MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#commentOnMaterializedView(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CommentOnIsStep commentOnMaterializedView(@Stringly.Name String view) {
+        return dsl().commentOnMaterializedView(view);
+    }
+
+    /**
+     * The <code>COMMENT ON MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#commentOnMaterializedView(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CommentOnIsStep commentOnMaterializedView(Name view) {
+        return dsl().commentOnMaterializedView(view);
+    }
+
+    /**
+     * The <code>COMMENT ON MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#commentOnMaterializedView(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.CommentOnIsStep commentOnMaterializedView(Table<?> view) {
+        return dsl().commentOnMaterializedView(view);
+    }
+
+    /**
      * The <code>COMMENT ON COLUMN</code> statement.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this

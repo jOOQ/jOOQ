@@ -76,6 +76,7 @@ implements
 
     final Table<?> table;
     final boolean  isView;
+    final boolean  isMaterializedView;
     final Field<?> field;
           Comment  comment;
 
@@ -83,12 +84,14 @@ implements
         Configuration configuration,
         Table<?> table,
         boolean isView,
+        boolean isMaterializedView,
         Field<?> field
     ) {
         this(
             configuration,
             table,
             isView,
+            isMaterializedView,
             field,
             null
         );
@@ -97,12 +100,14 @@ implements
     CommentOnImpl(
         Configuration configuration,
         Table<?> table,
-        boolean isView
+        boolean isView,
+        boolean isMaterializedView
     ) {
         this(
             configuration,
             table,
             isView,
+            isMaterializedView,
             null
         );
     }
@@ -111,6 +116,7 @@ implements
         Configuration configuration,
         Table<?> table,
         boolean isView,
+        boolean isMaterializedView,
         Field<?> field,
         Comment comment
     ) {
@@ -118,6 +124,7 @@ implements
 
         this.table = table;
         this.isView = isView;
+        this.isMaterializedView = isMaterializedView;
         this.field = field;
         this.comment = comment;
     }
@@ -143,7 +150,8 @@ implements
 
 
 
-    private static final Set<SQLDialect> SUPPORTS_COMMENT_ON_VIEW = SQLDialect.supportedBy(FIREBIRD, POSTGRES, TRINO, YUGABYTEDB);
+    private static final Set<SQLDialect> SUPPORTS_COMMENT_ON_VIEW              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, TRINO, YUGABYTEDB);
+    private static final Set<SQLDialect> SUPPORTS_COMMENT_ON_MATERIALIZED_VIEW = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -240,6 +248,16 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
     private final void acceptMySQL(Context<?> ctx) {
         ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_COMMENT).sql(" = ").visit(comment);
     }
@@ -247,10 +265,16 @@ implements
     private final void acceptDefault(Context<?> ctx) {
         ctx.visit(K_COMMENT).sql(' ').visit(K_ON).sql(' ');
 
-        if (table != null)
-            ctx.visit(isView && SUPPORTS_COMMENT_ON_VIEW.contains(ctx.dialect()) ? K_VIEW : K_TABLE)
-               .sql(' ')
-               .visit(table);
+        if (table != null) {
+            if (isView && SUPPORTS_COMMENT_ON_VIEW.contains(ctx.dialect()))
+                ctx.visit(K_VIEW).sql(' ');
+            else if (isMaterializedView && SUPPORTS_COMMENT_ON_MATERIALIZED_VIEW.contains(ctx.dialect()))
+                ctx.visit(K_MATERIALIZED).sql(' ').visit(K_VIEW).sql(' ');
+            else
+                ctx.visit(K_TABLE).sql(' ');
+
+            ctx.visit(table);
+        }
         else if (field != null)
             ctx.visit(K_COLUMN).sql(' ').visit(field);
         else
@@ -276,6 +300,11 @@ implements
     }
 
     @Override
+    public final boolean $isMaterializedView() {
+        return isMaterializedView;
+    }
+
+    @Override
     public final Field<?> $field() {
         return field;
     }
@@ -287,27 +316,33 @@ implements
 
     @Override
     public final QOM.CommentOn $table(Table<?> newValue) {
-        return $constructor().apply(newValue, $isView(), $field(), $comment());
+        return $constructor().apply(newValue, $isView(), $isMaterializedView(), $field(), $comment());
     }
 
     @Override
     public final QOM.CommentOn $isView(boolean newValue) {
-        return $constructor().apply($table(), newValue, $field(), $comment());
+        return $constructor().apply($table(), newValue, $isMaterializedView(), $field(), $comment());
+    }
+
+    @Override
+    public final QOM.CommentOn $isMaterializedView(boolean newValue) {
+        return $constructor().apply($table(), $isView(), newValue, $field(), $comment());
     }
 
     @Override
     public final QOM.CommentOn $field(Field<?> newValue) {
-        return $constructor().apply($table(), $isView(), newValue, $comment());
+        return $constructor().apply($table(), $isView(), $isMaterializedView(), newValue, $comment());
     }
 
     @Override
     public final QOM.CommentOn $comment(Comment newValue) {
-        return $constructor().apply($table(), $isView(), $field(), newValue);
+        return $constructor().apply($table(), $isView(), $isMaterializedView(), $field(), newValue);
     }
 
-    public final Function4<? super Table<?>, ? super Boolean, ? super Field<?>, ? super Comment, ? extends QOM.CommentOn> $constructor() {
-        return (a1, a2, a3, a4) -> new CommentOnImpl(configuration(), a1, a2, a3, a4);
+    public final Function5<? super Table<?>, ? super Boolean, ? super Boolean, ? super Field<?>, ? super Comment, ? extends QOM.CommentOn> $constructor() {
+        return (a1, a2, a3, a4, a5) -> new CommentOnImpl(configuration(), a1, a2, a3, a4, a5);
     }
+
 
 
 

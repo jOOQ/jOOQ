@@ -9774,6 +9774,33 @@ public interface DSLContext extends Scope {
     CommentOnIsStep commentOnView(Table<?> view);
 
     /**
+     * The <code>COMMENT ON MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#commentOnMaterializedView(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CommentOnIsStep commentOnMaterializedView(@Stringly.Name String view);
+
+    /**
+     * The <code>COMMENT ON MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#commentOnMaterializedView(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CommentOnIsStep commentOnMaterializedView(Name view);
+
+    /**
+     * The <code>COMMENT ON MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#commentOnMaterializedView(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    CommentOnIsStep commentOnMaterializedView(Table<?> view);
+
+    /**
      * The <code>COMMENT ON COLUMN</code> statement.
      *
      * @see DSL#commentOnColumn(String)

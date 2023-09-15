@@ -9648,6 +9648,60 @@ public interface DSLContext extends Scope {
     AlterViewStep alterViewIfExists(Table<?> view);
 
     /**
+     * The <code>ALTER MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#alterMaterializedView(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    AlterViewStep alterMaterializedView(@Stringly.Name String view);
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#alterMaterializedView(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    AlterViewStep alterMaterializedView(Name view);
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#alterMaterializedView(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    AlterViewStep alterMaterializedView(Table<?> view);
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#alterMaterializedViewIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    AlterViewStep alterMaterializedViewIfExists(@Stringly.Name String view);
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#alterMaterializedViewIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    AlterViewStep alterMaterializedViewIfExists(Name view);
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW IF EXISTS</code> statement.
+     *
+     * @see DSL#alterMaterializedViewIfExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    AlterViewStep alterMaterializedViewIfExists(Table<?> view);
+
+    /**
      * The <code>ALTER VIEW</code> statement.
      *
      * @see DSL#alterView(Table, Field...)

@@ -7741,6 +7741,96 @@ public class DSL {
     }
 
     /**
+     * The <code>ALTER MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterMaterializedView(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.AlterViewStep alterMaterializedView(@Stringly.Name String view) {
+        return dsl().alterMaterializedView(view);
+    }
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterMaterializedView(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.AlterViewStep alterMaterializedView(Name view) {
+        return dsl().alterMaterializedView(view);
+    }
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterMaterializedView(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.AlterViewStep alterMaterializedView(Table<?> view) {
+        return dsl().alterMaterializedView(view);
+    }
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterMaterializedViewIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.AlterViewStep alterMaterializedViewIfExists(@Stringly.Name String view) {
+        return dsl().alterMaterializedViewIfExists(view);
+    }
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterMaterializedViewIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.AlterViewStep alterMaterializedViewIfExists(Name view) {
+        return dsl().alterMaterializedViewIfExists(view);
+    }
+
+    /**
+     * The <code>ALTER MATERIALIZED VIEW IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#alterMaterializedViewIfExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.AlterViewStep alterMaterializedViewIfExists(Table<?> view) {
+        return dsl().alterMaterializedViewIfExists(view);
+    }
+
+    /**
      * The <code>ALTER VIEW</code> statement.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this

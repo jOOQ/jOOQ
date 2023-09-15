@@ -3017,6 +3017,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 break;
 
+            case 'M':
+                if (parseKeywordIf("MATERIALIZED VIEW"))
+                    return parseAlterView(true);
+
+                break;
             case 'P':
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("ALTER PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
@@ -3063,7 +3068,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'V':
                 if (parseKeywordIf("VIEW"))
-                    return parseAlterView();
+                    return parseAlterView(false);
 
                 break;
         }
@@ -4259,7 +4264,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return IGNORE.get();
     }
 
-    private final DDLQuery parseAlterView() {
+    private final DDLQuery parseAlterView(boolean materialized) {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Table<?> oldName = parseTableName();
         Field<?>[] fields = EMPTY_FIELD;
@@ -4287,14 +4292,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseKeyword("AS", "TO");
             Table<?> newName = parseTableName();
 
-            return ifExists
-                ? dsl.alterViewIfExists(oldName).renameTo(newName)
-                : dsl.alterView(oldName).renameTo(newName);
+            return (
+                  ifExists
+                ? materialized
+                    ? dsl.alterMaterializedViewIfExists(oldName)
+                    : dsl.alterViewIfExists(oldName)
+                : materialized
+                    ? dsl.alterMaterializedView(oldName)
+                    : dsl.alterView(oldName)
+            ).renameTo(newName);
         }
         else if (parseKeywordIf("OWNER TO") && parseUser() != null)
             return IGNORE.get();
         else if (parseKeywordIf("SET"))
-            return dsl.alterView(oldName).comment(parseOptionsDescription());
+            return (materialized
+                ? dsl.alterMaterializedView(oldName)
+                : dsl.alterView(oldName)).comment(parseOptionsDescription());
         else
             throw expected("AS", "OWNER TO", "RENAME", "SET");
     }

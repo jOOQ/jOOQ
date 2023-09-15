@@ -76,6 +76,7 @@ implements
 
     final Table<?>                              view;
     final QueryPartListView<? extends Field<?>> fields;
+    final boolean                               materialized;
     final boolean                               ifExists;
           Comment                               comment;
           Table<?>                              renameTo;
@@ -85,12 +86,14 @@ implements
         Configuration configuration,
         Table<?> view,
         Collection<? extends Field<?>> fields,
+        boolean materialized,
         boolean ifExists
     ) {
         this(
             configuration,
             view,
             fields,
+            materialized,
             ifExists,
             null,
             null,
@@ -101,12 +104,14 @@ implements
     AlterViewImpl(
         Configuration configuration,
         Table<?> view,
+        boolean materialized,
         boolean ifExists
     ) {
         this(
             configuration,
             view,
             null,
+            materialized,
             ifExists
         );
     }
@@ -115,6 +120,7 @@ implements
         Configuration configuration,
         Table<?> view,
         Collection<? extends Field<?>> fields,
+        boolean materialized,
         boolean ifExists,
         Comment comment,
         Table<?> renameTo,
@@ -124,6 +130,7 @@ implements
 
         this.view = view;
         this.fields = new QueryPartList<>(fields);
+        this.materialized = materialized;
         this.ifExists = ifExists;
         this.comment = comment;
         this.renameTo = renameTo;
@@ -226,11 +233,20 @@ implements
                 case POSTGRES:
                 case SQLITE:
                 case YUGABYTEDB:
-                    ctx.visit(begin(dropView(view), createView(view, fields.toArray(Tools.EMPTY_FIELD)).as(as)));
+                    if (materialized)
+                        ctx.visit(begin(dropMaterializedView(view), createMaterializedView(view, fields.toArray(Tools.EMPTY_FIELD)).as(as)));
+                    else
+                        ctx.visit(begin(dropView(view), createView(view, fields.toArray(Tools.EMPTY_FIELD)).as(as)));
+
                     break;
 
                 default:
-                    ctx.visit(K_ALTER).sql(' ').visit(K_VIEW).sql(' ').visit(view);
+                    ctx.visit(K_ALTER).sql(' ');
+
+                    if (materialized)
+                        ctx.visit(K_MATERIALIZED).sql(' ');
+
+                    ctx.visit(K_VIEW).sql(' ').visit(view);
 
                     if (!fields.isEmpty())
                         ctx.sql(" (").visit(QueryPartCollectionView.wrap(fields).qualify(false)).sql(')');
@@ -319,13 +335,19 @@ implements
 
     private final void accept1(Context<?> ctx) {
         ctx.start(Clause.ALTER_VIEW_VIEW)
-           .visit(K_ALTER).sql(' ')
-           .visit(SUPPORT_ALTER_TABLE_RENAME.contains(ctx.dialect()) ? K_TABLE : K_VIEW);
+           .visit(K_ALTER).sql(' ');
+
+        if (SUPPORT_ALTER_TABLE_RENAME.contains(ctx.dialect()))
+            ctx.visit(K_TABLE).sql(' ');
+        else if (materialized)
+            ctx.visit(K_MATERIALIZED).sql(' ').visit(K_VIEW).sql(' ');
+        else
+            ctx.visit(K_VIEW).sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
-        ctx.sql(' ').visit(view)
+        ctx.sql(' ').visit(view).sql(' ')
            .end(Clause.ALTER_VIEW_VIEW);
 
         if (renameTo != null)
@@ -357,6 +379,11 @@ implements
     }
 
     @Override
+    public final boolean $materialized() {
+        return materialized;
+    }
+
+    @Override
     public final boolean $ifExists() {
         return ifExists;
     }
@@ -378,37 +405,43 @@ implements
 
     @Override
     public final QOM.AlterView $view(Table<?> newValue) {
-        return $constructor().apply(newValue, $fields(), $ifExists(), $comment(), $renameTo(), $as());
+        return $constructor().apply(newValue, $fields(), $materialized(), $ifExists(), $comment(), $renameTo(), $as());
     }
 
     @Override
     public final QOM.AlterView $fields(Collection<? extends Field<?>> newValue) {
-        return $constructor().apply($view(), newValue, $ifExists(), $comment(), $renameTo(), $as());
+        return $constructor().apply($view(), newValue, $materialized(), $ifExists(), $comment(), $renameTo(), $as());
+    }
+
+    @Override
+    public final QOM.AlterView $materialized(boolean newValue) {
+        return $constructor().apply($view(), $fields(), newValue, $ifExists(), $comment(), $renameTo(), $as());
     }
 
     @Override
     public final QOM.AlterView $ifExists(boolean newValue) {
-        return $constructor().apply($view(), $fields(), newValue, $comment(), $renameTo(), $as());
+        return $constructor().apply($view(), $fields(), $materialized(), newValue, $comment(), $renameTo(), $as());
     }
 
     @Override
     public final QOM.AlterView $comment(Comment newValue) {
-        return $constructor().apply($view(), $fields(), $ifExists(), newValue, $renameTo(), $as());
+        return $constructor().apply($view(), $fields(), $materialized(), $ifExists(), newValue, $renameTo(), $as());
     }
 
     @Override
     public final QOM.AlterView $renameTo(Table<?> newValue) {
-        return $constructor().apply($view(), $fields(), $ifExists(), $comment(), newValue, $as());
+        return $constructor().apply($view(), $fields(), $materialized(), $ifExists(), $comment(), newValue, $as());
     }
 
     @Override
     public final QOM.AlterView $as(Select<?> newValue) {
-        return $constructor().apply($view(), $fields(), $ifExists(), $comment(), $renameTo(), newValue);
+        return $constructor().apply($view(), $fields(), $materialized(), $ifExists(), $comment(), $renameTo(), newValue);
     }
 
-    public final Function6<? super Table<?>, ? super Collection<? extends Field<?>>, ? super Boolean, ? super Comment, ? super Table<?>, ? super Select<?>, ? extends QOM.AlterView> $constructor() {
-        return (a1, a2, a3, a4, a5, a6) -> new AlterViewImpl(configuration(), a1, (Collection<? extends Field<?>>) a2, a3, a4, a5, a6);
+    public final Function7<? super Table<?>, ? super Collection<? extends Field<?>>, ? super Boolean, ? super Boolean, ? super Comment, ? super Table<?>, ? super Select<?>, ? extends QOM.AlterView> $constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7) -> new AlterViewImpl(configuration(), a1, (Collection<? extends Field<?>>) a2, a3, a4, a5, a6, a7);
     }
+
 
 
 

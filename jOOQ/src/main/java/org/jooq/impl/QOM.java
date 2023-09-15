@@ -1956,6 +1956,7 @@ public final class QOM {
     {
         @NotNull Table<?> $view();
         @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        boolean $materialized();
         boolean $ifExists();
         @Nullable Comment $comment();
         @Nullable Table<?> $renameTo();
@@ -1964,6 +1965,8 @@ public final class QOM {
         @NotNull AlterView $view(Table<?> view);
         @CheckReturnValue
         @NotNull AlterView $fields(Collection<? extends Field<?>> fields);
+        @CheckReturnValue
+        @NotNull AlterView $materialized(boolean materialized);
         @CheckReturnValue
         @NotNull AlterView $ifExists(boolean ifExists);
         @CheckReturnValue

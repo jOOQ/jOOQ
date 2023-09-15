@@ -838,8 +838,10 @@ final class Interpreter {
 
             return;
         }
-        else if (!existing.options.type().isView())
+        else if (existing.options.type() != VIEW && !query.$materialized())
             throw objectNotView(table);
+        else if (existing.options.type() != MATERIALIZED_VIEW && query.$materialized())
+            throw objectNotMaterializedView(table);
 
         if (query.$renameTo() != null && checkNotExists(schema, query.$renameTo()))
             existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());

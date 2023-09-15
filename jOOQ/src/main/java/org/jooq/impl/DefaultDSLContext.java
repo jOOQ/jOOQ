@@ -3033,42 +3033,72 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.AlterViewStep alterView(@Stringly.Name String view) {
-        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), null, false);
+        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), null, false, false);
     }
 
     @Override
     public org.jooq.AlterViewStep alterView(Name view) {
-        return new AlterViewImpl(configuration(), DSL.table(view), null, false);
+        return new AlterViewImpl(configuration(), DSL.table(view), null, false, false);
     }
 
     @Override
     public org.jooq.AlterViewStep alterView(Table<?> view) {
-        return new AlterViewImpl(configuration(), view, null, false);
+        return new AlterViewImpl(configuration(), view, null, false, false);
     }
 
     @Override
     public org.jooq.AlterViewStep alterViewIfExists(@Stringly.Name String view) {
-        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), null, true);
+        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), null, false, true);
     }
 
     @Override
     public org.jooq.AlterViewStep alterViewIfExists(Name view) {
-        return new AlterViewImpl(configuration(), DSL.table(view), null, true);
+        return new AlterViewImpl(configuration(), DSL.table(view), null, false, true);
     }
 
     @Override
     public org.jooq.AlterViewStep alterViewIfExists(Table<?> view) {
-        return new AlterViewImpl(configuration(), view, null, true);
+        return new AlterViewImpl(configuration(), view, null, false, true);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterMaterializedView(@Stringly.Name String view) {
+        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), null, true, false);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterMaterializedView(Name view) {
+        return new AlterViewImpl(configuration(), DSL.table(view), null, true, false);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterMaterializedView(Table<?> view) {
+        return new AlterViewImpl(configuration(), view, null, true, false);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterMaterializedViewIfExists(@Stringly.Name String view) {
+        return new AlterViewImpl(configuration(), DSL.table(DSL.name(view)), null, true, true);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterMaterializedViewIfExists(Name view) {
+        return new AlterViewImpl(configuration(), DSL.table(view), null, true, true);
+    }
+
+    @Override
+    public org.jooq.AlterViewStep alterMaterializedViewIfExists(Table<?> view) {
+        return new AlterViewImpl(configuration(), view, null, true, true);
     }
 
     @Override
     public org.jooq.AlterViewStep alterView(Table<?> view, Field<?>... fields) {
-        return new AlterViewImpl(configuration(), view, Arrays.asList(fields), false);
+        return new AlterViewImpl(configuration(), view, Arrays.asList(fields), false, false);
     }
 
     @Override
     public org.jooq.AlterViewStep alterView(Table<?> view, Collection<? extends Field<?>> fields) {
-        return new AlterViewImpl(configuration(), view, new QueryPartList<>(fields), false);
+        return new AlterViewImpl(configuration(), view, new QueryPartList<>(fields), false, false);
     }
 
     @Override

@@ -91,7 +91,11 @@ import jakarta.persistence.Column;
 
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.Converter;
+import org.jooq.ConverterProvider;
 import org.jooq.Field;
+import org.jooq.JSON;
+import org.jooq.JSONB;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.RecordMapper;
@@ -101,6 +105,7 @@ import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
+import org.jooq.XML;
 import org.jooq.conf.Settings;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.StringUtils;
@@ -122,26 +127,13 @@ import org.jooq.tools.reflect.ReflectException;
  * specific arrays fails, a {@link MappingException} is thrown, wrapping
  * conversion exceptions.
  * <p>
- * <h5>If <code>&lt;E&gt;</code> is a field "value type" and
- * <code>&lt;R extends Record1&lt;?&gt;&gt;</code>, i.e. it has exactly one
- * column:</h5>
+ * <h5>If the supplied type is an interface or an abstract class</h5>
  * <p>
- * Any Java type available from {@link SQLDataType} qualifies as a well-known
- * "value type" that can be converted from a single-field {@link Record1}. The
- * following rules apply:
- * <p>
- * <ul>
- * <li>If <code>&lt;E&gt;</code> is a reference type like {@link String},
- * {@link Integer}, {@link Long}, {@link Timestamp}, etc., then converting from
- * <code>&lt;R&gt;</code> to <code>&lt;E&gt;</code> is mere convenience for
- * calling {@link Record#getValue(int, Class)} with
- * <code>fieldIndex = 0</code></li>
- * <li>If <code>&lt;E&gt;</code> is a primitive type, the mapping result will be
- * the corresponding wrapper type. <code>null</code> will map to the primitive
- * type's initialisation value, e.g. <code>0</code> for <code>int</code>,
- * <code>0.0</code> for <code>double</code>, <code>false</code> for
- * <code>boolean</code>.</li>
- * </ul>
+ * Abstract types are instantiated using Java reflection {@link Proxy}
+ * mechanisms. The returned proxy will wrap a {@link HashMap} containing
+ * properties mapped by getters and setters of the supplied type. Methods (even
+ * JPA-annotated ones) other than standard POJO getters and setters are not
+ * supported. Details can be seen in {@link Reflect#as(Class)}.
  * <p>
  * <h5>If <code>&lt;E&gt;</code> is a {@link TableRecord} type (e.g. from a
  * generated record), then its meta data are used:</h5>
@@ -151,6 +143,25 @@ import org.jooq.tools.reflect.ReflectException;
  * {@link Table#fields()}. All target {@link Record#fields()} are looked up in
  * the source table via {@link Table#indexOf(Field)} and their values are
  * mapped. Excess source values and missing target values are ignored.
+ * <p>
+ * <h5>If <code>&lt;E&gt;</code> is a field "value type" and
+ * <code>&lt;R extends Record1&lt;T1&gt;&gt;</code>, i.e. it has exactly one
+ * column:</h5>
+ * <p>
+ * The configured {@link ConverterProvider} is used to look up a
+ * {@link Converter} between <code>T1</code> and <code>E</code>. By default, the
+ * {@link DefaultConverterProvider} is used, which can (among other things):
+ * <ul>
+ * <li>Map between built-in types</li>
+ * <li>Map between {@link Record} types and custom types by delegating to the
+ * {@link Record}'s attached {@link RecordMapperProvider}</li>
+ * <li>Map between {@link JSON} or {@link JSONB} and custom types by delegating
+ * to Jackson or Gson (if found on the classpath)</li>
+ * <li>Map between {@link XML} and custom types by delegating to JAXB (if found
+ * on the classpath)</li>
+ * </ul>
+ * If such a {@link Converter} is found, that one is used to map to
+ * <code>E</code>.
  * <p>
  * <h5>If a default constructor is available and any JPA {@link Column}
  * annotations are found on the provided <code>&lt;E&gt;</code>, only those are
@@ -267,14 +278,6 @@ import org.jooq.tools.reflect.ReflectException;
  * <li>When invoking that constructor, values are converted onto constructor
  * argument types</li>
  * </ul>
- * <p>
- * <h5>If the supplied type is an interface or an abstract class</h5>
- * <p>
- * Abstract types are instantiated using Java reflection {@link Proxy}
- * mechanisms. The returned proxy will wrap a {@link HashMap} containing
- * properties mapped by getters and setters of the supplied type. Methods (even
- * JPA-annotated ones) other than standard POJO getters and setters are not
- * supported. Details can be seen in {@link Reflect#as(Class)}.
  * <p>
  * <h5>Other restrictions</h5>
  * <p>

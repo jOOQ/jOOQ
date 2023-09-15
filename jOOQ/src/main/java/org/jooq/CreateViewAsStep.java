@@ -79,11 +79,11 @@ public interface CreateViewAsStep<R extends Record> {
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
-     <p>
-     <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     guarantee syntax integrity. You may also create the possibility of
-     malicious SQL injection. Be sure to properly use bind variables and/or
-     escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      *
      * @see SQL
      */
@@ -94,11 +94,11 @@ public interface CreateViewAsStep<R extends Record> {
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
-     <p>
-     <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     guarantee syntax integrity. You may also create the possibility of
-     malicious SQL injection. Be sure to properly use bind variables and/or
-     escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      *
      * @see SQL
      */
@@ -109,11 +109,11 @@ public interface CreateViewAsStep<R extends Record> {
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
-     <p>
-     <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     guarantee syntax integrity. You may also create the possibility of
-     malicious SQL injection. Be sure to properly use bind variables and/or
-     escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      *
      * @see SQL
      */
@@ -124,11 +124,11 @@ public interface CreateViewAsStep<R extends Record> {
 
     /**
      * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
-     <p>
-     <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     guarantee syntax integrity. You may also create the possibility of
-     malicious SQL injection. Be sure to properly use bind variables and/or
-     escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      *
      * @see SQL
      */

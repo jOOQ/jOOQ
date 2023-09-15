@@ -100,11 +100,11 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
-     <p>
-     <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     guarantee syntax integrity. You may also create the possibility of
-     malicious SQL injection. Be sure to properly use bind variables and/or
-     escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      *
      * @see SQL
      */
@@ -115,11 +115,11 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
-     <p>
-     <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     guarantee syntax integrity. You may also create the possibility of
-     malicious SQL injection. Be sure to properly use bind variables and/or
-     escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      *
      * @see SQL
      */
@@ -130,11 +130,11 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
-     <p>
-     <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     guarantee syntax integrity. You may also create the possibility of
-     malicious SQL injection. Be sure to properly use bind variables and/or
-     escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      *
      * @see SQL
      */
@@ -145,11 +145,11 @@ public interface CreateIndexWhereStep extends CreateIndexFinalStep {
 
     /**
      * Add the <code>WHERE</code> clause to the <code>CREATE INDEX</code> statement.
-     <p>
-     <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     guarantee syntax integrity. You may also create the possibility of
-     malicious SQL injection. Be sure to properly use bind variables and/or
-     escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
      *
      * @see SQL
      */

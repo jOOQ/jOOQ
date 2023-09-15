@@ -129,6 +129,7 @@ final class DDL {
 
     final List<Query> createTableOrView(Table<?> table, Collection<? extends Constraint> constraints) {
         boolean temporary = table.getTableType() == TableType.TEMPORARY;
+        boolean materialized = table.getTableType() == MATERIALIZED_VIEW;
         boolean view = table.getTableType().isView();
         OnCommit onCommit = table.getOptions().onCommit();
 
@@ -136,11 +137,20 @@ final class DDL {
             List<Query> result = new ArrayList<>();
 
             result.add(
-                applyAs((configuration.createViewIfNotExists()
-                        ? ctx.createViewIfNotExists(table, table.fields())
-                        : configuration.createOrReplaceView()
-                        ? ctx.createOrReplaceView(table, table.fields())
-                        : ctx.createView(table, table.fields())), table.getOptions())
+                applyAs(
+                      configuration.createViewIfNotExists()
+                    ? materialized
+                        ? ctx.createMaterializedViewIfNotExists(table, table.fields())
+                        : ctx.createViewIfNotExists(table, table.fields())
+                    : configuration.createOrReplaceView()
+                    ? materialized
+                        ? ctx.createOrReplaceMaterializedView(table, table.fields())
+                        : ctx.createOrReplaceView(table, table.fields())
+                    : materialized
+                        ? ctx.createMaterializedView(table, table.fields())
+                        : ctx.createView(table, table.fields()),
+                    table.getOptions()
+                )
             );
 
             if (!constraints.isEmpty() && configuration.includeConstraintsOnViews())

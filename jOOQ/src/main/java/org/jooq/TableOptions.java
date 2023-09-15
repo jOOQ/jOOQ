@@ -317,7 +317,7 @@ public final class TableOptions implements Serializable {
         UNKNOWN;
 
         /**
-         * Whether the type is a view.
+         * Whether the type is a view or a materialized view.
          */
         public final boolean isView() {
             return this == VIEW || this == MATERIALIZED_VIEW;
@@ -331,7 +331,7 @@ public final class TableOptions implements Serializable {
         }
 
         /**
-         * Whether the type is a view.
+         * Whether the type is a table or a temporary table.
          */
         public final boolean isTable() {
             return this == TABLE || this == TEMPORARY;

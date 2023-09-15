@@ -10518,6 +10518,60 @@ public interface DSLContext extends Scope {
     @Support({ POSTGRES, YUGABYTEDB })
     CreateViewAsStep<Record> createMaterializedViewIfNotExists(Table<?> view, Collection<? extends Field<?>> fields);
 
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceMaterializedView(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceMaterializedView(@Stringly.Name String view, @Stringly.Name String... fields);
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceMaterializedView(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceMaterializedView(Name view, Name... fields);
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceMaterializedView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceMaterializedView(Table<?> view, Field<?>... fields);
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceMaterializedView(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceMaterializedView(@Stringly.Name String view, Collection<? extends String> fields);
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceMaterializedView(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceMaterializedView(Name view, Collection<? extends Name> fields);
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     *
+     * @see DSL#createOrReplaceMaterializedView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    CreateViewAsStep<Record> createOrReplaceMaterializedView(Table<?> view, Collection<? extends Field<?>> fields);
+
 
 
 

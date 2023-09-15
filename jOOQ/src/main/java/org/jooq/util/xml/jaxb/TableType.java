@@ -15,6 +15,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *     &lt;enumeration value="BASE TABLE"/&gt;
  *     &lt;enumeration value="VIEW"/&gt;
+ *     &lt;enumeration value="MATERIALIZED VIEW"/&gt;
  *     &lt;enumeration value="GLOBAL TEMPORARY"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
@@ -28,6 +29,8 @@ public enum TableType {
     @XmlEnumValue("BASE TABLE")
     BASE_TABLE("BASE TABLE"),
     VIEW("VIEW"),
+    @XmlEnumValue("MATERIALIZED VIEW")
+    MATERIALIZED_VIEW("MATERIALIZED VIEW"),
     @XmlEnumValue("GLOBAL TEMPORARY")
     GLOBAL_TEMPORARY("GLOBAL TEMPORARY");
     private final String value;
@@ -54,6 +57,8 @@ public enum TableType {
         switch (this) {
             case BASE_TABLE:
                 return "BASE TABLE";
+            case MATERIALIZED_VIEW:
+                return "MATERIALIZED VIEW";
             case GLOBAL_TEMPORARY:
                 return "GLOBAL TEMPORARY";
             default:

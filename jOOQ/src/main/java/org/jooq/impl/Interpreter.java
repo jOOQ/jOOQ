@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.Name.Quoted.QUOTED;
+import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
+import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.conf.SettingsTools.interpreterLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.QOM.Cascade.CASCADE;
@@ -815,10 +817,14 @@ final class Interpreter {
         }
 
         if (query.$query() instanceof Select<?> s) {
-            newTable(table, schema, query.$fields(), s, null, TableOptions.view(s));
+            newTable(table, schema, query.$fields(), s, null,
+                query.$materialized() ? TableOptions.materializedView(s) : TableOptions.view(s)
+            );
         }
         else
-            newTable(table, schema, query.$fields(), null, null, TableOptions.view());
+            newTable(table, schema, query.$fields(), null, null,
+                query.$materialized() ? TableOptions.view() : TableOptions.materializedView()
+            );
     }
 
     private final void accept0(AlterViewImpl query) {
@@ -854,8 +860,10 @@ final class Interpreter {
 
             return;
         }
-        else if (!existing.options.type().isView())
+        else if (existing.options.type() != VIEW && !query.$materialized())
             throw objectNotView(table);
+        else if (existing.options.type() != MATERIALIZED_VIEW && query.$materialized())
+            throw objectNotMaterializedView(table);
 
         drop(schema.tables, existing, RESTRICT);
     }
@@ -1169,6 +1177,10 @@ final class Interpreter {
 
     private static final DataDefinitionException objectNotView(Table<?> table) {
         return new DataDefinitionException("Object is not a view: " + table.getQualifiedName());
+    }
+
+    private static final DataDefinitionException objectNotMaterializedView(Table<?> table) {
+        return new DataDefinitionException("Object is not a materialized view: " + table.getQualifiedName());
     }
 
     private static final DataDefinitionException viewNotExists(Table<?> view) {

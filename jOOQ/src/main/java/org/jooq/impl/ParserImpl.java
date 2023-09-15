@@ -2885,6 +2885,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         ;
                     else if (parseKeywordIf("VIEW", "FORCE VIEW"))
                         return parseCreateView(true, false);
+                    else if (parseKeywordIf("MATERIALIZED VIEW"))
+                        return parseCreateView(true, true);
                     else if (!ignoreProEdition() && parseKeywordIf("FUNCTION") && requireProEdition())
 
 
@@ -4223,7 +4225,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 ? dsl.createMaterializedViewIfNotExists(view, fields)
                 : dsl.createViewIfNotExists(view, fields)
             : orReplace
-            ? dsl.createOrReplaceView(view, fields)
+            ? materialized
+                ? dsl.createOrReplaceMaterializedView(view, fields)
+                : dsl.createOrReplaceView(view, fields)
             : materialized
                 ? dsl.createMaterializedView(view, fields)
                 : dsl.createView(view, fields)

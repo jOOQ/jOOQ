@@ -3552,6 +3552,36 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), false, true, true);
     }
 
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields), true, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(Name view, Name... fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields), true, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(Table<?> view, Field<?>... fields) {
+        return new CreateViewImpl(configuration(), view, Arrays.asList(fields), true, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(@Stringly.Name String view, Collection<? extends String> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(DSL.name(view)), Tools.fieldsByName(fields.toArray(EMPTY_STRING)), true, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(Name view, Collection<? extends Name> fields) {
+        return new CreateViewImpl(configuration(), DSL.table(view), Tools.fieldsByName(fields.toArray(EMPTY_NAME)), true, true, false);
+    }
+
+    @Override
+    public org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return new CreateViewImpl(configuration(), view, new QueryPartList<>(fields), true, true, false);
+    }
+
 
 
 

@@ -301,7 +301,7 @@ final class InformationSchemaExport {
             it.setTableSchema(schemaName);
 
         switch (t.getOptions().type()) {
-            case MATERIALIZED_VIEW:
+            case MATERIALIZED_VIEW: it.setTableType(TableType.MATERIALIZED_VIEW); break;
             case VIEW:              it.setTableType(TableType.VIEW); break;
             case TEMPORARY:         it.setTableType(TableType.GLOBAL_TEMPORARY); break;
             case FUNCTION:

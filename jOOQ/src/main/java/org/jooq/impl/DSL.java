@@ -9181,6 +9181,96 @@ public class DSL {
         return dsl().createMaterializedViewIfNotExists(view, fields);
     }
 
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceMaterializedView(String, String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(@Stringly.Name String view, @Stringly.Name String... fields) {
+        return dsl().createOrReplaceMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceMaterializedView(Name, Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(Name view, Name... fields) {
+        return dsl().createOrReplaceMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceMaterializedView(Table, Field...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(Table<?> view, Field<?>... fields) {
+        return dsl().createOrReplaceMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceMaterializedView(String, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(@Stringly.Name String view, Collection<? extends String> fields) {
+        return dsl().createOrReplaceMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceMaterializedView(Name, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(Name view, Collection<? extends Name> fields) {
+        return dsl().createOrReplaceMaterializedView(view, fields);
+    }
+
+    /**
+     * The <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createOrReplaceMaterializedView(Table, Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    public static org.jooq.CreateViewAsStep<Record> createOrReplaceMaterializedView(Table<?> view, Collection<? extends Field<?>> fields) {
+        return dsl().createOrReplaceMaterializedView(view, fields);
+    }
+
 
 
 

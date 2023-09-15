@@ -160,6 +160,8 @@ public class XMLGenerator extends AbstractGenerator {
                     table.setTableType(
                         t.isView()
                       ? TableType.VIEW
+                      : t.isMaterializedView()
+                      ? TableType.MATERIALIZED_VIEW
                       : t.isTemporary()
                       ? TableType.GLOBAL_TEMPORARY
                       : TableType.BASE_TABLE
@@ -170,7 +172,7 @@ public class XMLGenerator extends AbstractGenerator {
 
                     is.getTables().add(table);
 
-                    if (t.isView()) {
+                    if (t.isView() || t.isMaterializedView()) {
                         View view = new View();
 
                         view.setTableCatalog(catalogName);

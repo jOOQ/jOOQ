@@ -456,6 +456,7 @@
         <restriction base="string">
             <enumeration value="BASE TABLE"/>
             <enumeration value="VIEW"/>
+            <enumeration value="MATERIALIZED VIEW"/>
             <enumeration value="GLOBAL TEMPORARY"/>
         </restriction>
     </simpleType>

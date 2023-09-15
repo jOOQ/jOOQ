@@ -1130,8 +1130,16 @@ final class Interpreter {
     }
 
     private final void accept0(CommentOnImpl query) {
-        if (query.$table() != null)
-            table(query.$table()).comment(query.$comment());
+        if (query.$table() != null) {
+            MutableTable existing = table(query.$table());
+
+            if (query.$isView() && existing.options.type() != VIEW)
+                throw objectNotView(query.$table());
+            else if (query.$isMaterializedView() && existing.options.type() != MATERIALIZED_VIEW)
+                throw objectNotMaterializedView(query.$table());
+            else
+                table(query.$table()).comment(query.$comment());
+        }
         else if (query.$field() != null)
             field(query.$field()).comment(query.$comment());
         else

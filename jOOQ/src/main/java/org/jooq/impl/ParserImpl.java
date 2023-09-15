@@ -2727,6 +2727,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else if (parseKeywordIf("VIEW")) {
             s1 = dsl.commentOnView(parseTableName());
         }
+        else if (parseKeywordIf("MATERIALIZED VIEW")) {
+            s1 = dsl.commentOnMaterializedView(parseTableName());
+        }
 
         // Ignored no-arg object comments
         // https://www.postgresql.org/docs/10/static/sql-comment.html
@@ -2747,7 +2750,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             "INDEXTYPE",
             "LANGUAGE",
             "LARGE OBJECT",
-            "MATERIALIZED VIEW",
             "MINING MODEL",
             "OPERATOR",
             "PROCEDURAL LANGUAGE",

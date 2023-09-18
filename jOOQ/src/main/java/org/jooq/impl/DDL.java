@@ -399,7 +399,9 @@ final class DDL {
             Comment tComment = table.getCommentPart();
 
             if (!StringUtils.isEmpty(tComment.getComment()))
-                if (table.getTableType().isView())
+                if (table.getTableType() == MATERIALIZED_VIEW)
+                    result.add(ctx.commentOnMaterializedView(table).is(tComment));
+                else if (table.getTableType() == VIEW)
                     result.add(ctx.commentOnView(table).is(tComment));
                 else
                     result.add(ctx.commentOnTable(table).is(tComment));

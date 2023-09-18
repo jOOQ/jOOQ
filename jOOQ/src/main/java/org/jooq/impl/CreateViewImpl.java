@@ -155,9 +155,10 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES                  = { Clause.CREATE_VIEW };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect> NO_SUPPORT_COLUMN_RENAME = SQLDialect.supportedBy(TRINO);
+    private static final Clause[]        CLAUSES                        = { Clause.CREATE_VIEW };
+    private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = SQLDialect.supportedUntil(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_COLUMN_RENAME       = SQLDialect.supportedBy(TRINO);
+    private static final Set<SQLDialect> NO_SUPPORT_COLUMN_RENAME_MVIEW = SQLDialect.supportedBy(H2);
     private transient Select<?>          parsed;
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
@@ -173,11 +174,65 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                acceptDefault(ctx);
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final void acceptDefault(Context<?> ctx) {
         List<? extends Field<?>> f = fields;
 
         // [#2059] [#11485] Some dialects don't support column aliases at the view level
         boolean rename = f != null && f.size() > 0;
-        boolean renameSupported = !NO_SUPPORT_COLUMN_RENAME.contains(ctx.dialect());
+        boolean renameSupported =
+            materialized && !NO_SUPPORT_COLUMN_RENAME_MVIEW.contains(ctx.dialect())
+        || !materialized && !NO_SUPPORT_COLUMN_RENAME.contains(ctx.dialect());
         boolean replaceSupported = false ;
 
 

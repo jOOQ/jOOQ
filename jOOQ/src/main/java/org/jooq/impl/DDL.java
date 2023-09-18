@@ -138,17 +138,17 @@ final class DDL {
 
             result.add(
                 applyAs(
-                      configuration.createViewIfNotExists()
-                    ? materialized
+                      materialized
+                    ? configuration.createMaterializedViewIfNotExists()
                         ? ctx.createMaterializedViewIfNotExists(table, table.fields())
-                        : ctx.createViewIfNotExists(table, table.fields())
-                    : configuration.createOrReplaceView()
-                    ? materialized
+                        : configuration.createOrReplaceMaterializedView()
                         ? ctx.createOrReplaceMaterializedView(table, table.fields())
-                        : ctx.createOrReplaceView(table, table.fields())
-                    : materialized
-                        ? ctx.createMaterializedView(table, table.fields())
-                        : ctx.createView(table, table.fields()),
+                        : ctx.createMaterializedView(table, table.fields())
+                    : configuration.createViewIfNotExists()
+                    ? ctx.createViewIfNotExists(table, table.fields())
+                    : configuration.createOrReplaceView()
+                    ? ctx.createOrReplaceView(table, table.fields())
+                    : ctx.createView(table, table.fields()),
                     table.getOptions()
                 )
             );

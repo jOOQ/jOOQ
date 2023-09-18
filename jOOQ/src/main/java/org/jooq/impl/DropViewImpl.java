@@ -115,10 +115,25 @@ implements
         ctx.start(Clause.DROP_VIEW_TABLE)
            .visit(K_DROP).sql(' ');
 
-        if (materialized)
-            ctx.visit(K_MATERIALIZED).sql(' ');
+        if (materialized) {
+            switch (ctx.family()) {
 
-        ctx.visit(K_VIEW).sql(' ');
+
+
+
+
+
+
+
+
+
+                default:
+                    ctx.visit(K_MATERIALIZED).sql(' ').visit(K_VIEW).sql(' ');
+                    break;
+            }
+        }
+        else
+            ctx.visit(K_VIEW).sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');

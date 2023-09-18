@@ -58,7 +58,9 @@ public final class DDLExportConfiguration {
     private final boolean          createDomainIfNotExists;
     private final boolean          createSequenceIfNotExists;
     private final boolean          createViewIfNotExists;
+    private final boolean          createMaterializedViewIfNotExists;
     private final boolean          createOrReplaceView;
+    private final boolean          createOrReplaceMaterializedView;
 
     private final boolean          respectCatalogOrder;
     private final boolean          respectSchemaOrder;
@@ -80,6 +82,8 @@ public final class DDLExportConfiguration {
         this(
             EnumSet.allOf(DDLFlag.class),
 
+            false,
+            false,
             false,
             false,
             false,
@@ -112,7 +116,9 @@ public final class DDLExportConfiguration {
         boolean createDomainIfNotExists,
         boolean createSequenceIfNotExists,
         boolean createViewIfNotExists,
+        boolean createMaterializedViewIfNotExists,
         boolean createOrReplaceView,
+        boolean createOrReplaceMaterializedView,
 
         boolean respectCatalogOrder,
         boolean respectSchemaOrder,
@@ -135,7 +141,9 @@ public final class DDLExportConfiguration {
         this.createDomainIfNotExists = createDomainIfNotExists;
         this.createSequenceIfNotExists = createSequenceIfNotExists;
         this.createViewIfNotExists = createViewIfNotExists;
+        this.createMaterializedViewIfNotExists = createMaterializedViewIfNotExists;
         this.createOrReplaceView = createOrReplaceView;
+        this.createOrReplaceMaterializedView = createOrReplaceMaterializedView;
 
         this.respectCatalogOrder = respectCatalogOrder;
         this.respectSchemaOrder = respectSchemaOrder;
@@ -177,7 +185,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -214,7 +224,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -251,7 +263,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -288,7 +302,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -325,7 +341,9 @@ public final class DDLExportConfiguration {
             newCreateDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -362,7 +380,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             newCreateSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -399,7 +419,48 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             newCreateViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectDomainOrder,
+            respectSequenceOrder,
+            defaultSequenceFlags,
+            includeConstraintsOnViews
+        );
+    }
+
+    /**
+     * Whether to generate <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statements.
+     * <p>
+     * Not all RDBMS support this flag. Check
+     * {@link DSLContext#createMaterializedViewIfNotExists(Table, Field...)} to see if your
+     * {@link SQLDialect} supports the clause.
+     */
+    public final boolean createMaterializedViewIfNotExists() {
+        return createMaterializedViewIfNotExists;
+    }
+
+    /**
+     * Whether to generate <code>CREATE MATERIALIZED VIEW IF NOT EXISTS</code> statements.
+     */
+    public final DDLExportConfiguration createMaterializedViewIfNotExists(boolean newCreateMaterializedViewIfNotExists) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createDomainIfNotExists,
+            createSequenceIfNotExists,
+            createViewIfNotExists,
+            newCreateMaterializedViewIfNotExists,
+            createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -436,7 +497,48 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             newCreateOrReplaceView,
+            createOrReplaceMaterializedView,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectDomainOrder,
+            respectSequenceOrder,
+            defaultSequenceFlags,
+            includeConstraintsOnViews
+        );
+    }
+
+    /**
+     * Whether to generate <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statements.
+     * <p>
+     * Not all RDBMS support this flag. Check
+     * {@link DSLContext#createOrReplaceMaterializedView(Table, Field...)} to see if your
+     * {@link SQLDialect} supports the clause.
+     */
+    public final boolean createOrReplaceMaterializedView() {
+        return createOrReplaceMaterializedView;
+    }
+
+    /**
+     * Whether to generate <code>CREATE OR REPLACE MATERIALIZED VIEW</code> statements.
+     */
+    public final DDLExportConfiguration createOrReplaceMaterializedView(boolean newCreateOrReplaceMaterializedView) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createDomainIfNotExists,
+            createSequenceIfNotExists,
+            createViewIfNotExists,
+            createMaterializedViewIfNotExists,
+            createOrReplaceView,
+            newCreateOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -471,7 +573,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             newRespectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -506,7 +610,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             newRespectSchemaOrder,
             respectTableOrder,
@@ -541,7 +647,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             newRespectTableOrder,
@@ -576,7 +684,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -611,7 +721,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -646,7 +758,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -681,7 +795,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -716,7 +832,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -751,7 +869,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -784,7 +904,9 @@ public final class DDLExportConfiguration {
             createDomainIfNotExists,
             createSequenceIfNotExists,
             createViewIfNotExists,
+            createMaterializedViewIfNotExists,
             createOrReplaceView,
+            createOrReplaceMaterializedView,
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,

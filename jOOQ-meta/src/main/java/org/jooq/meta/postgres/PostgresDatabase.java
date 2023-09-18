@@ -665,44 +665,24 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     public ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas) {
-        Select<Record4<String, String, String, String>> s =
-            select(
-                VIEWS.TABLE_CATALOG,
-                VIEWS.TABLE_SCHEMA,
-                VIEWS.TABLE_NAME,
-                when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
-                .else_(inline("create view \"").concat(VIEWS.TABLE_NAME).concat(inline("\" as ")).concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION))
-            .from(VIEWS);
 
         // [#9483] Some dialects include materialized views in the INFORMATION_SCHEMA.VIEWS view
-        if (!informationSchemaViewsContainsMaterializedViews()) {
-            s = s.unionAll(
-                select(
-                    currentCatalog(),
-                    PG_CLASS.pgNamespace().NSPNAME,
-                    PG_CLASS.RELNAME,
-                    inline("create materialized view \"").concat(PG_CLASS.RELNAME).concat(inline("\" as ")).concat(field("pg_get_viewdef({0})", VARCHAR, PG_CLASS.OID)))
-                .from(PG_CLASS)
-                .where(PG_CLASS.RELKIND.eq(inline("m")))
-            );
-        }
-
-        Table<?> t = s.asTable("t");
+        PgClass c = PG_CLASS.as("c");
 
         return create()
             .select(
-                t.field(VIEWS.TABLE_CATALOG),
-                t.field(VIEWS.TABLE_SCHEMA),
-                t.field(VIEWS.TABLE_NAME),
-                t.field(VIEWS.VIEW_DEFINITION))
-            .from(t)
-            .where(t.field(VIEWS.TABLE_SCHEMA).in(schemas))
-            .orderBy(1, 2, 3)
-        ;
-    }
-
-    protected boolean informationSchemaViewsContainsMaterializedViews() {
-        return false;
+                currentCatalog(),
+                c.pgNamespace().NSPNAME,
+                c.RELNAME,
+                when(c.RELKIND.eq(inline("m")), inline("create materialized view \""))
+                    .else_(inline("create view \""))
+                    .concat(c.RELNAME)
+                    .concat(inline("\" as "))
+                    .concat(field("pg_get_viewdef({0})", VARCHAR, c.OID)))
+            .from(c)
+            .where(c.RELKIND.in(inline("v"), inline("m")))
+            .and(c.pgNamespace().NSPNAME.in(schemas))
+            .orderBy(1, 2, 3);
     }
 
     @Override

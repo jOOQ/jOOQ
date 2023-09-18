@@ -130,6 +130,7 @@ final class Keywords {
     static final Keyword K_DECLARE                  = keyword("declare");
     static final Keyword K_DEFAULT                  = keyword("default");
     static final Keyword K_DEFAULT_VALUES           = keyword("default values");
+    static final Keyword K_DEFERRED                 = keyword("deferred");
     static final Keyword K_DEFINE                   = keyword("define");
     static final Keyword K_DELETE                   = keyword("delete");
     static final Keyword K_DENSE_RANK               = keyword("dense_rank");
@@ -218,6 +219,7 @@ final class Keywords {
     static final Keyword K_INCLUDE_NULL_VALUES      = keyword("include_null_values");
     static final Keyword K_INCREMENT_BY             = keyword("increment by");
     static final Keyword K_INDEX                    = keyword("index");
+    static final Keyword K_INITIALLY                = keyword("initially");
     static final Keyword K_INLINE                   = keyword("inline");
     static final Keyword K_INOUT                    = keyword("inout");
     static final Keyword K_INSERT                   = keyword("insert");
@@ -340,6 +342,7 @@ final class Keywords {
     static final Keyword K_REF                      = keyword("ref");
     static final Keyword K_REFERENCES               = keyword("references");
     static final Keyword K_REFERENCING              = keyword("referencing");
+    static final Keyword K_REFRESH                  = keyword("refresh");
     static final Keyword K_REGEXP                   = keyword("regexp");
     static final Keyword K_RELEASE                  = keyword("release");
     static final Keyword K_REMOVE                   = keyword("remove");

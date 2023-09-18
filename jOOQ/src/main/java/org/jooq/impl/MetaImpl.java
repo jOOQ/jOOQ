@@ -690,7 +690,7 @@ final class MetaImpl extends AbstractMeta {
                 return null;
         }
 
-        final String source(String tableName) {
+        final String source(TableType type, String tableName) {
             if (sourceCache == null) {
                 String sql = M_SOURCES(family());
 
@@ -710,7 +710,8 @@ final class MetaImpl extends AbstractMeta {
                         Tools.apply(v.get(0).get(3, String.class), s ->
                               s.toLowerCase().startsWith("create")
                             ? s
-                            : "create view " + dsl().render(name(k.get(2, String.class))) + " as " + s
+                            : (type == MATERIALIZED_VIEW ? "create materialized view " : "create view ")
+                              + dsl().render(name(k.get(2, String.class))) + " as " + s
                         )
                     ));
                 }
@@ -820,9 +821,9 @@ final class MetaImpl extends AbstractMeta {
 
             if (sql != null)
                 if (tableType == MATERIALIZED_VIEW)
-                    return TableOptions.materializedView(schema.source(tableName));
+                    return TableOptions.materializedView(schema.source(tableType, tableName));
                 else
-                    return TableOptions.view(schema.source(tableName));
+                    return TableOptions.view(schema.source(tableType, tableName));
         }
 
         return TableOptions.of(tableType);

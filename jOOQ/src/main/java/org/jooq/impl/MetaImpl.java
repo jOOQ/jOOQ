@@ -63,6 +63,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.condition;
@@ -814,11 +815,14 @@ final class MetaImpl extends AbstractMeta {
     };
 
     private static final TableOptions tableOption(DSLContext ctx, MetaSchema schema, String tableName, TableType tableType) {
-        if (tableType == TableType.VIEW) {
+        if (tableType.isView()) {
             String sql = M_SOURCES(ctx.dialect());
 
             if (sql != null)
-                return TableOptions.view(schema.source(tableName));
+                if (tableType == MATERIALIZED_VIEW)
+                    return TableOptions.materializedView(schema.source(tableName));
+                else
+                    return TableOptions.view(schema.source(tableName));
         }
 
         return TableOptions.of(tableType);

@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.currentCatalog;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
@@ -137,6 +138,7 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.SelectOrderByStep;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -187,6 +189,8 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -661,19 +665,44 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     public ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas) {
-        return create()
-            .select(
+        Select<Record4<String, String, String, String>> s =
+            select(
                 VIEWS.TABLE_CATALOG,
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME,
                 when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
                 .else_(inline("create view \"").concat(VIEWS.TABLE_NAME).concat(inline("\" as ")).concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION))
-            .from(VIEWS)
-            .where(VIEWS.TABLE_SCHEMA.in(schemas))
-            .orderBy(
-                VIEWS.TABLE_SCHEMA,
-                VIEWS.TABLE_NAME)
+            .from(VIEWS);
+
+        // [#9483] Some dialects include materialized views in the INFORMATION_SCHEMA.VIEWS view
+        if (!informationSchemaViewsContainsMaterializedViews()) {
+            s = s.unionAll(
+                select(
+                    currentCatalog(),
+                    PG_CLASS.pgNamespace().NSPNAME,
+                    PG_CLASS.RELNAME,
+                    inline("create materialized view \"").concat(PG_CLASS.RELNAME).concat(inline("\" as ")).concat(field("pg_get_viewdef({0})", VARCHAR, PG_CLASS.OID)))
+                .from(PG_CLASS)
+                .where(PG_CLASS.RELKIND.eq(inline("m")))
+            );
+        }
+
+        Table<?> t = s.asTable("t");
+
+        return create()
+            .select(
+                t.field(VIEWS.TABLE_CATALOG),
+                t.field(VIEWS.TABLE_SCHEMA),
+                t.field(VIEWS.TABLE_NAME),
+                t.field(VIEWS.VIEW_DEFINITION))
+            .from(t)
+            .where(t.field(VIEWS.TABLE_SCHEMA).in(schemas))
+            .orderBy(1, 2, 3)
         ;
+    }
+
+    protected boolean informationSchemaViewsContainsMaterializedViews() {
+        return false;
     }
 
     @Override

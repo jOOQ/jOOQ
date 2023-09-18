@@ -61,7 +61,7 @@ public final class TableOptions implements Serializable {
 
     private static final TableOptions C_EXPRESSION        = new TableOptions(TableType.EXPRESSION);
     private static final TableOptions C_FUNCTION          = new TableOptions(TableType.FUNCTION);
-    private static final TableOptions C_MATERIALIZED_VIEW = materializedView(null);
+    private static final TableOptions C_MATERIALIZED_VIEW = materializedView((String) null);
     private static final TableOptions C_TABLE             = new TableOptions(TableType.TABLE);
     private static final TableOptions C_TEMPORARY         = new TableOptions(TableType.TEMPORARY);
     private static final TableOptions C_VIEW              = view((String) null);
@@ -203,6 +203,16 @@ public final class TableOptions implements Serializable {
     public static final TableOptions materializedView(Select<?> select) {
         return new TableOptions(TableType.MATERIALIZED_VIEW, select);
     }
+
+    /**
+     * Create a new {@link TableOptions} object for a
+     * {@link TableType#MATERIALIZED_VIEW} of unknown content.
+     */
+    @NotNull
+    public static final TableOptions materializedView(String source) {
+        return new TableOptions(TableType.MATERIALIZED_VIEW, source);
+    }
+
 
     /**
      * Create a new {@link TableOptions} object for a {@link TableType#EXPRESSION}.

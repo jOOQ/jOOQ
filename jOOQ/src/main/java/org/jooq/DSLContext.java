@@ -9725,7 +9725,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnColumn(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(@Stringly.Name String field);
 
     /**
@@ -9734,7 +9734,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnColumn(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(Name field);
 
     /**
@@ -9743,7 +9743,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnColumn(Field)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(Field<?> field);
 
     /**

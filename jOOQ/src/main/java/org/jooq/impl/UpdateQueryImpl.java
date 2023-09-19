@@ -566,7 +566,13 @@ implements
             acceptFromAsMerge(ctx);
             return;
         }
-        else if (!returning.isEmpty() && EMULATE_RETURNING_WITH_UPSERT.contains(ctx.dialect())) {
+        else if (!returning.isEmpty()
+                && EMULATE_RETURNING_WITH_UPSERT.contains(ctx.dialect())
+                && table instanceof TableImpl
+
+                // [#15582] This implementation should be done only for plain SQL templates
+                //          or generated code with at least one known unique key
+                && (((TableImpl<?>) table).fields.fields.length == 0 || !table.getKeys().isEmpty())) {
             acceptReturningAsUpsert(ctx);
             return;
         }

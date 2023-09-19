@@ -806,8 +806,10 @@ final class Interpreter {
 
         MutableTable existing = schema.table(table);
         if (existing != null) {
-            if (!existing.options.type().isView())
+            if (existing.options.type() != VIEW && !query.$materialized())
                 throw objectNotView(table);
+            else if (existing.options.type() != MATERIALIZED_VIEW && query.$materialized())
+                throw objectNotMaterializedView(table);
             else if (query.$orReplace())
                 drop(schema.tables, existing, RESTRICT);
             else if (!query.$ifNotExists())
@@ -834,7 +836,10 @@ final class Interpreter {
         MutableTable existing = schema.table(table);
         if (existing == null) {
             if (!query.$ifExists())
-                throw viewNotExists(table);
+                if (query.$materialized())
+                    throw materializedViewNotExists(table);
+                else
+                    throw viewNotExists(table);
 
             return;
         }
@@ -858,7 +863,10 @@ final class Interpreter {
         MutableTable existing = schema.table(table);
         if (existing == null) {
             if (!query.$ifExists())
-                throw viewNotExists(table);
+                if (query.$materialized())
+                    throw materializedViewNotExists(table);
+                else
+                    throw viewNotExists(table);
 
             return;
         }
@@ -1197,8 +1205,16 @@ final class Interpreter {
         return new DataDefinitionException("View does not exist: " + view.getQualifiedName());
     }
 
+    private static final DataDefinitionException materializedViewNotExists(Table<?> view) {
+        return new DataDefinitionException("Materialized view does not exist: " + view.getQualifiedName());
+    }
+
     private static final DataDefinitionException viewAlreadyExists(Table<?> view) {
         return new DataDefinitionException("View already exists: " + view.getQualifiedName());
+    }
+
+    private static final DataDefinitionException materializedViewAlreadyExists(Table<?> view) {
+        return new DataDefinitionException("Materialized view already exists: " + view.getQualifiedName());
     }
 
     private static final DataDefinitionException columnAlreadyExists(Name name) {
@@ -1363,8 +1379,10 @@ final class Interpreter {
     }
 
     private static final DataDefinitionException alreadyExists(Table<?> t, MutableTable mt) {
-        if (mt.options.type().isView())
+        if (mt.options.type() == VIEW)
             return viewAlreadyExists(t);
+        else if (mt.options.type() == MATERIALIZED_VIEW)
+            return materializedViewAlreadyExists(t);
         else
             return alreadyExists(t);
     }

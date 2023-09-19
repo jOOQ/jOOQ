@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
+import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.Comparators.CHECK_COMP;
 import static org.jooq.impl.Comparators.FOREIGN_KEY_COMP;
 import static org.jooq.impl.Comparators.INDEX_COMP;
@@ -114,7 +116,10 @@ final class Diff {
 
     Diff(Configuration configuration, MigrationConfiguration migrateConf, Meta meta1, Meta meta2) {
         this.migrateConf = migrateConf;
-        this.exportConf = new DDLExportConfiguration().createOrReplaceView(migrateConf.createOrReplaceView());
+        this.exportConf = new DDLExportConfiguration()
+            .createOrReplaceView(migrateConf.createOrReplaceView())
+            .createOrReplaceMaterializedView(migrateConf.createOrReplaceMaterializedView());
+
         this.ctx = configuration.dsl();
         this.meta1 = meta1;
         this.meta2 = meta2;
@@ -255,8 +260,10 @@ final class Diff {
                     if (r.droppedFks.add(fk) && !migrateConf.dropTableCascade())
                         r.queries.add(ctx.alterTable(fk.getTable()).dropForeignKey(fk.constraint()));
 
-            if (t.getTableType().isView())
+            if (t.getTableType() == VIEW)
                 r.queries.add(ctx.dropView(t));
+            else if (t.getTableType() == MATERIALIZED_VIEW)
+                r.queries.add(ctx.dropMaterializedView(t));
             else if (t.getTableType() == TableType.TEMPORARY)
                 r.queries.add(ctx.dropTemporaryTable(t));
             else
@@ -269,19 +276,21 @@ final class Diff {
     private final Merge<Table<?>> MERGE_TABLE = new Merge<Table<?>>() {
         @Override
         public void merge(DiffResult r, Table<?> t1, Table<?> t2) {
-            boolean v1 = t1.getTableType().isView();
-            boolean v2 = t2.getTableType().isView();
+            boolean m1 = t1.getTableType() == MATERIALIZED_VIEW;
+            boolean m2 = t2.getTableType() == MATERIALIZED_VIEW;
+            boolean v1 = t1.getTableType() == VIEW;
+            boolean v2 = t2.getTableType() == VIEW;
 
-            if (v1 && v2) {
+            if (v1 && v2 || m1 && m2) {
                 if (!Arrays.equals(t1.fields(), t2.fields())
                       || t2.getOptions().select() != null && !t2.getOptions().select().equals(t1.getOptions().select())
                       || t2.getOptions().source() != null && !t2.getOptions().source().equals(t1.getOptions().source())) {
-                    replaceView(r, t1, t2);
+                    replaceView(r, t1, t2, true);
                     return;
                 }
             }
-            else if (v1 != v2) {
-                replaceView(r, t1, t2);
+            else if (v1 != v2 || m1 != m2) {
+                replaceView(r, t1, t2, false);
                 return;
             }
             else {
@@ -306,8 +315,10 @@ final class Diff {
                     r.queries.add(ctx.commentOnTable(t2).is(c2));
         }
 
-        private void replaceView(DiffResult r, Table<?> v1, Table<?> v2) {
-            if (!migrateConf.createOrReplaceView())
+        private void replaceView(DiffResult r, Table<?> v1, Table<?> v2, boolean canReplace) {
+            if (!canReplace
+                    || v2.getTableType() == VIEW && !migrateConf.createOrReplaceView()
+                    || v2.getTableType() == MATERIALIZED_VIEW && !migrateConf.createOrReplaceMaterializedView())
                 dropTable().drop(r, v1);
 
             createTable().create(r, v2);

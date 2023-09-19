@@ -64,6 +64,8 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
+import static org.jooq.TableOptions.TableType.TABLE;
+import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
 import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.condition;
@@ -710,8 +712,8 @@ final class MetaImpl extends AbstractMeta {
                         Tools.apply(v.get(0).get(3, String.class), s ->
                               s.toLowerCase().startsWith("create")
                             ? s
-                            : (type == MATERIALIZED_VIEW ? "create materialized view " : "create view ")
-                              + dsl().render(name(k.get(2, String.class))) + " as " + s
+                            : (type == VIEW ? "create view " : "create materialized view ")
+                                + dsl().render(name(k.get(2, String.class))) + " as " + s
                         )
                     ));
                 }
@@ -816,14 +818,19 @@ final class MetaImpl extends AbstractMeta {
     };
 
     private static final TableOptions tableOption(DSLContext ctx, MetaSchema schema, String tableName, TableType tableType) {
-        if (tableType.isView()) {
-            String sql = M_SOURCES(ctx.dialect());
+        String sql = M_SOURCES(ctx.dialect());
 
-            if (sql != null)
-                if (tableType == MATERIALIZED_VIEW)
-                    return TableOptions.materializedView(schema.source(tableType, tableName));
-                else
-                    return TableOptions.view(schema.source(tableType, tableName));
+        if (sql != null) {
+
+
+
+
+
+
+            if (tableType == MATERIALIZED_VIEW)
+                return TableOptions.materializedView(schema.source(tableType, tableName));
+            else if (tableType == VIEW);
+                return TableOptions.view(schema.source(tableType, tableName));
         }
 
         return TableOptions.of(tableType);

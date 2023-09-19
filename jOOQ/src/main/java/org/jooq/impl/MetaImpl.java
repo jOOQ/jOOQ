@@ -829,7 +829,7 @@ final class MetaImpl extends AbstractMeta {
 
             if (tableType == MATERIALIZED_VIEW)
                 return TableOptions.materializedView(schema.source(tableType, tableName));
-            else if (tableType == VIEW);
+            else if (tableType == VIEW)
                 return TableOptions.view(schema.source(tableType, tableName));
         }
 

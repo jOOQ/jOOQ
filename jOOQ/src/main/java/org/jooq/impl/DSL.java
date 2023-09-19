@@ -7835,7 +7835,7 @@ public class DSL {
      * @see DSLContext#commentOnColumn(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnColumn(@Stringly.Name String field) {
         return dsl().commentOnColumn(field);
     }
@@ -7850,7 +7850,7 @@ public class DSL {
      * @see DSLContext#commentOnColumn(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnColumn(Name field) {
         return dsl().commentOnColumn(field);
     }
@@ -7865,7 +7865,7 @@ public class DSL {
      * @see DSLContext#commentOnColumn(Field)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static org.jooq.CommentOnIsStep commentOnColumn(Field<?> field) {
         return dsl().commentOnColumn(field);
     }

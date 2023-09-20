@@ -312,7 +312,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             // [#11367] TODO: Move this logic into a ScopeMarker as well
             //          TODO: subqueryLevel() is lower than scopeLevel if we use implicit join in procedural logic
             else if (e1.joinNode != null && e1.joinNode.hasJoinPaths()) {
-                RenderContext ctx = configuration.dsl().renderContext();
+                DefaultRenderContext ctx = new DefaultRenderContext(this, false);
                 ctx.data(DATA_RENDER_IMPLICIT_JOIN, true);
                 replacedSQL = ctx
                     .declareTables(true)
@@ -324,6 +324,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     .formatNewLine()
                     .sql(')')
                     .render();
+
+                insertedBindValues = ctx.bindValues();
             }
             else {
 

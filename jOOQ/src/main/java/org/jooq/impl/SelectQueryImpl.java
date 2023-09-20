@@ -156,7 +156,6 @@ import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 // ...
-import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.unquotedName;
@@ -167,7 +166,6 @@ import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.JSONArrayAgg.EMULATE_WITH_GROUP_CONCAT;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
 import static org.jooq.impl.JSONNull.NO_SUPPORT_ABSENT_ON_NULL;
-import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_CONNECT_BY;
 import static org.jooq.impl.Keywords.K_DISTINCT;
@@ -218,6 +216,7 @@ import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
+import static org.jooq.impl.Tools.unwrap;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
@@ -266,7 +265,6 @@ import java.util.function.Function;
 
 import org.jooq.Asterisk;
 import org.jooq.Clause;
-import org.jooq.Comment;
 import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -277,7 +275,6 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.GeneratorStatementType;
 import org.jooq.GroupField;
-import org.jooq.InverseForeignKey;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONObjectReturningStep;
@@ -288,14 +285,16 @@ import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
+// ...
+// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
+// ...
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
-import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectField;
@@ -312,7 +311,6 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
-import org.jooq.TableOptions;
 import org.jooq.TablePartitionByStep;
 // ...
 // ...
@@ -2506,7 +2504,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-            tablelist = transformInlineDerivedTables(tablelist, where);
+            tablelist = transformInlineDerivedTables(context, tablelist, where);
 
             context.formatSeparator()
                    .visit(K_FROM)
@@ -2761,7 +2759,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return result;
     }
 
-    private static TableImpl<?> prependToManyPaths(Context<?> ctx, TableList result, TableImpl<?> ti) {
+    private static final TableImpl<?> prependToManyPaths(Context<?> ctx, TableList result, TableImpl<?> ti) {
         TableImpl<?> r = null;
 
         if (ti.path instanceof TableImpl<?> p) {
@@ -2784,7 +2782,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return r;
     }
 
-    private static final <R extends Record> Table<R> inlineDerivedTable(Table<R> t) {
+    private static final <R extends Record> Table<R> inlineDerivedTable(Context<?> ctx, Table<R> t) {
+
+
+
+
+
+
         if (t instanceof InlineDerivedTable<R> i) {
             return i;
         }
@@ -2814,13 +2818,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return null;
     }
 
-    private static final boolean hasInlineDerivedTables(Table<?> t) {
-        return inlineDerivedTable(t) != null
-            || t instanceof JoinTable && (hasInlineDerivedTables(((JoinTable<?>) t).lhs) || hasInlineDerivedTables(((JoinTable<?>) t).rhs));
+    private static final boolean hasInlineDerivedTables(Context<?> ctx, Table<?> t) {
+        return inlineDerivedTable(ctx, t) != null
+            || t instanceof JoinTable && (hasInlineDerivedTables(ctx, ((JoinTable<?>) t).lhs) || hasInlineDerivedTables(ctx, ((JoinTable<?>) t).rhs));
     }
 
-    private static final boolean hasInlineDerivedTables(TableList tablelist) {
-        return anyMatch(tablelist, t -> hasInlineDerivedTables(t));
+    private static final boolean hasInlineDerivedTables(Context<?> ctx, TableList tablelist) {
+        return anyMatch(tablelist, t -> hasInlineDerivedTables(ctx, t));
     }
 
 
@@ -2856,20 +2860,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private static final TableList transformInlineDerivedTables(TableList tablelist, ConditionProviderImpl where) {
-        if (!hasInlineDerivedTables(tablelist))
+    private static final TableList transformInlineDerivedTables(Context<?> ctx, TableList tablelist, ConditionProviderImpl where) {
+        if (!hasInlineDerivedTables(ctx, tablelist))
             return tablelist;
 
         TableList result = new TableList();
 
         for (Table<?> table : tablelist)
-            transformInlineDerivedTable0(table, result, where);
+            transformInlineDerivedTable0(ctx, table, result, where);
 
         return result;
     }
 
-    private static final void transformInlineDerivedTable0(Table<?> table, TableList result, ConditionProviderImpl where) {
-        Table<?> t = inlineDerivedTable(table);
+    private static final void transformInlineDerivedTable0(Context<?> ctx, Table<?> table, TableList result, ConditionProviderImpl where) {
+        Table<?> t = inlineDerivedTable(ctx, table);
 
         if (t != null) {
             if (t instanceof InlineDerivedTable<?> i) {
@@ -2880,13 +2884,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 result.add(t);
         }
         else if (table instanceof JoinTable)
-            result.add(transformInlineDerivedTables0(table, where, false));
+            result.add(transformInlineDerivedTables0(ctx, table, where, false));
         else
             result.add(table);
     }
 
-    private static final Table<?> transformInlineDerivedTables0(Table<?> table, ConditionProviderImpl where, boolean keepDerivedTable) {
-        Table<?> t = inlineDerivedTable(table);
+    private static final Table<?> transformInlineDerivedTables0(Context<?> ctx, Table<?> table, ConditionProviderImpl where, boolean keepDerivedTable) {
+        Table<?> t = inlineDerivedTable(ctx, table);
 
         if (t != null) {
             if (t instanceof InlineDerivedTable<?> i) {
@@ -2911,25 +2915,25 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 case CROSS_APPLY:
                 case OUTER_APPLY:
                 case NATURAL_LEFT_OUTER_JOIN:
-                    lhs = transformInlineDerivedTables0(j.lhs, where, keepDerivedTable);
-                    rhs = transformInlineDerivedTables0(j.rhs, where, true);
+                    lhs = transformInlineDerivedTables0(ctx, j.lhs, where, keepDerivedTable);
+                    rhs = transformInlineDerivedTables0(ctx, j.rhs, where, true);
                     break;
 
                 case RIGHT_OUTER_JOIN:
                 case NATURAL_RIGHT_OUTER_JOIN:
-                    lhs = transformInlineDerivedTables0(j.lhs, where, true);
-                    rhs = transformInlineDerivedTables0(j.rhs, where, keepDerivedTable);
+                    lhs = transformInlineDerivedTables0(ctx, j.lhs, where, true);
+                    rhs = transformInlineDerivedTables0(ctx, j.rhs, where, keepDerivedTable);
                     break;
 
                 case FULL_OUTER_JOIN:
                 case NATURAL_FULL_OUTER_JOIN:
-                    lhs = transformInlineDerivedTables0(j.lhs, where, true);
-                    rhs = transformInlineDerivedTables0(j.rhs, where, true);
+                    lhs = transformInlineDerivedTables0(ctx, j.lhs, where, true);
+                    rhs = transformInlineDerivedTables0(ctx, j.rhs, where, true);
                     break;
 
                 default:
-                    lhs = transformInlineDerivedTables0(j.lhs, where, keepDerivedTable);
-                    rhs = transformInlineDerivedTables0(j.rhs, where, keepDerivedTable);
+                    lhs = transformInlineDerivedTables0(ctx, j.lhs, where, keepDerivedTable);
+                    rhs = transformInlineDerivedTables0(ctx, j.rhs, where, keepDerivedTable);
                     break;
             }
 

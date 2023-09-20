@@ -73,6 +73,7 @@ import org.jooq.MigrationListenerProvider;
 // ...
 // ...
 // ...
+// ...
 import org.jooq.Record;
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
@@ -146,6 +147,8 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
+
     // [#7062] Apart from the possibility of containing user defined objects, the data
     //         map also contains the reflection cache, which isn't serializable (and
     //         should not be serialized anyway).
@@ -207,6 +210,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             null,
             dialect,
             settings,
@@ -245,6 +249,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             configuration.charsetProvider,
             configuration.converterProvider,
             configuration.formattingProvider,
+
 
 
 
@@ -292,6 +297,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
         Clock clock,
         SQLDialect dialect,
         Settings settings,
@@ -318,6 +324,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         set(charsetProvider);
         set(converterProvider);
         set(formattingProvider);
+
 
 
 
@@ -389,6 +396,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -420,6 +428,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -461,6 +470,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -492,6 +502,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -538,6 +549,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -574,6 +586,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -605,6 +618,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -651,6 +665,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -692,6 +707,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -723,6 +739,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -764,6 +781,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -795,6 +813,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -836,6 +855,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -872,6 +892,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -903,6 +924,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -949,6 +971,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -980,6 +1003,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             newCharsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -1021,6 +1045,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
@@ -1057,12 +1082,52 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             dialect,
             settings,
             data
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1202,6 +1267,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             newClock,
             dialect,
             settings,
@@ -1238,6 +1304,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
             clock,
             newDialect,
             settings,
@@ -1269,6 +1336,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+
 
 
 
@@ -1474,6 +1542,12 @@ public class DefaultConfiguration extends AbstractConfiguration {
         this.formattingProvider = newFormattingProvider;
         return this;
     }
+
+
+
+
+
+
 
 
 
@@ -1753,6 +1827,14 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
+
+
+
+
+
+
+
     /**
      * @see #set(Unwrapper)
      */
@@ -1970,6 +2052,13 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
+
+
+
+
+
+
     @Override
     public final Clock clock() {
         return clock;
@@ -2071,6 +2160,9 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
+
+
         oos.writeObject(unwrapperProvider instanceof Serializable
             ? unwrapperProvider
             : null);
@@ -2128,6 +2220,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         visitListenerProviders = (VisitListenerProvider[]) ois.readObject();
         transactionListenerProviders = (TransactionListenerProvider[]) ois.readObject();
         diagnosticsListenerProviders = (DiagnosticsListenerProvider[]) ois.readObject();
+
 
 
 

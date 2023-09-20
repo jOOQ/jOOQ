@@ -898,7 +898,10 @@
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-migrations-maven</module>
+
+        <!-- The transitive egit dependency has a Java 11 baseline -->
         <module>jOOQ-migrations</module>
+
 
         <module>jOOQ-kotlin</module>
         <module>jOOQ-kotlin-coroutines</module>

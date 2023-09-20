@@ -568,7 +568,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 .where(p.RDB$PROCEDURE_TYPE.eq((short) 2))
                 .union(is30()
                     ? select(
-                        fu.RDB$FUNCTION_NAME.trim(),
+                        trim(fu.RDB$FUNCTION_NAME),
                         FIELD_TYPE(fi).as("t"),
                         coalesce(CHARACTER_LENGTH(fi), fi.RDB$FIELD_PRECISION).as("p"),
                         FIELD_SCALE(fi).as("s"))

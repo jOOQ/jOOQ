@@ -53,6 +53,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nullif;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -590,7 +591,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 COLUMNS.CHECK_CONSTRAINT
             )
             .from(COLUMNS)
-            .where(COLUMNS.CHECK_CONSTRAINT.nvl("").ne(""))
+            .where(nvl(COLUMNS.CHECK_CONSTRAINT, inline("")).ne(inline("")))
             .and(COLUMNS.TABLE_SCHEMA.in(getInputSchemata()));
 
         for (Record record : create()

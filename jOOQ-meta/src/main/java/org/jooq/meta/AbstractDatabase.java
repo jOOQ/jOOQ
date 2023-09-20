@@ -43,7 +43,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 import static org.jooq.Log.Level.ERROR;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -82,7 +81,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -94,7 +92,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jooq.Condition;
@@ -112,14 +109,12 @@ import org.jooq.Parser;
 // ...
 import org.jooq.Query;
 import org.jooq.Record;
-// ...
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
-// ...
 import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.exception.DataAccessException;

@@ -45,7 +45,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
 

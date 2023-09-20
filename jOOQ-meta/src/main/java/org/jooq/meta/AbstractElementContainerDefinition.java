@@ -51,8 +51,6 @@ import java.util.regex.Pattern;
 
 import org.jooq.DataType;
 // ...
-import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.ParserException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.SyntheticColumnType;

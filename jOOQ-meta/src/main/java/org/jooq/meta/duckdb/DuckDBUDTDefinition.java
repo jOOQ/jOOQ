@@ -38,6 +38,7 @@
 package org.jooq.meta.duckdb;
 
 import static org.jooq.impl.DSL.name;
+import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_COLUMNS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,7 +48,6 @@ import java.util.Random;
 
 import org.jooq.Field;
 import org.jooq.Name;
-import org.jooq.Record;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.QOM;
 import org.jooq.meta.AbstractUDTDefinition;
@@ -57,7 +57,6 @@ import org.jooq.meta.DefaultAttributeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
-import static org.jooq.meta.duckdb.system.main.Tables.*;
 
 public class DuckDBUDTDefinition extends AbstractUDTDefinition {
 

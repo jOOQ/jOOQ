@@ -41,7 +41,6 @@ package org.jooq.meta;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.tools.Convert.convert;
-import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.math.BigDecimal;
@@ -56,11 +55,9 @@ import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
-// ...
 import org.jooq.exception.SQLDialectNotSupportedException;
 // ...
 import org.jooq.impl.AutoConverter;
-import org.jooq.impl.DSL;
 import org.jooq.impl.DateAsTimestampBinding;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.EnumConverter;
@@ -70,7 +67,6 @@ import org.jooq.impl.XMLtoJAXBConverter;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.LambdaConverter;
-import org.jooq.meta.jaxb.SyntheticEnumType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -84,7 +80,6 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
     private final T                      container;
     private final DataTypeDefinition     definedType;
     private transient DataTypeDefinition type;
-    private transient DataTypeDefinition resolvedType;
 
     public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment) {
         this(container, name, position, definedType, comment, null);

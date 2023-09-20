@@ -41,10 +41,10 @@ import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
-import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.meta.h2.information_schema.Tables.COLUMNS;
@@ -215,8 +215,8 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 ).as(COLUMNS.TYPE_NAME),
                 choose().when(COLUMNS.NUMERIC_PRECISION.eq(maxP).and(COLUMNS.NUMERIC_SCALE.eq(maxS)), inline(0L))
                         .otherwise(COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
-                COLUMNS.NUMERIC_PRECISION.decode(maxP, inline(0L), COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
-                COLUMNS.NUMERIC_SCALE.decode(maxS, inline(0L), COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
+                decode(COLUMNS.NUMERIC_PRECISION, maxP, inline(0L), COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
+                decode(COLUMNS.NUMERIC_SCALE, maxS, inline(0L), COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.IS_COMPUTED.as(COLUMNS.IS_COMPUTED),
                 COLUMNS.COLUMN_DEFAULT.as("GENERATION_EXPRESSION"),

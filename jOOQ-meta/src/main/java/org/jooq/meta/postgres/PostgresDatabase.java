@@ -138,7 +138,6 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
-import org.jooq.SelectOrderByStep;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -189,8 +188,6 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships

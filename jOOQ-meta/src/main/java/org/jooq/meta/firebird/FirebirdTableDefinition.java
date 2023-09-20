@@ -37,7 +37,9 @@
  */
 package org.jooq.meta.firebird;
 
+import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
@@ -90,7 +92,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     trim(r.RDB$FIELD_NAME).as(r.RDB$FIELD_NAME),
                     r.RDB$DESCRIPTION,
                     r.RDB$DEFAULT_VALUE,
-                    DSL.bitOr(r.RDB$NULL_FLAG.nvl(inline((short) 0)), f.RDB$NULL_FLAG.nvl(inline((short) 0))).as(r.RDB$NULL_FLAG),
+                    bitOr(nvl(r.RDB$NULL_FLAG, inline((short) 0)), nvl(f.RDB$NULL_FLAG, inline((short) 0))).as(r.RDB$NULL_FLAG),
                     r.RDB$DEFAULT_SOURCE,
                     f.RDB$COMPUTED_SOURCE,
                     r.RDB$FIELD_POSITION,

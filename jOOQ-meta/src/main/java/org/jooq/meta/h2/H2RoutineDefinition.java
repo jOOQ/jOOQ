@@ -39,11 +39,9 @@ package org.jooq.meta.h2;
 
 
 import static org.jooq.impl.DSL.concat;
-import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
-import static org.jooq.impl.DSL.val;
 import static org.jooq.meta.h2.information_schema.Tables.FUNCTION_COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.PARAMETERS;

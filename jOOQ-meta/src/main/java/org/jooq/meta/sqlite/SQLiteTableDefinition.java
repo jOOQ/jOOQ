@@ -40,6 +40,7 @@ package org.jooq.meta.sqlite;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
@@ -236,7 +237,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
             existsSqliteSequence = create()
                 .selectCount()
                 .from(SQLITE_MASTER)
-                .where(SQLiteMaster.NAME.lower().eq("sqlite_sequence"))
+                .where(lower(SQLiteMaster.NAME).eq("sqlite_sequence"))
                 .fetchOne(0, boolean.class);
         }
 

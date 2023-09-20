@@ -37,7 +37,10 @@
  */
 package org.jooq.meta.firebird;
 
+import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.trim;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
@@ -48,7 +51,6 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$PROCEDURE_PARAMETERS;
 import java.sql.SQLException;
 
 import org.jooq.Record;
-import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractRoutineDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -101,12 +103,12 @@ public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
                     .select(
                         p.RDB$PARAMETER_NUMBER,
                         p.RDB$PARAMETER_TYPE,
-                        p.RDB$PARAMETER_NAME.trim().as(p.RDB$PARAMETER_NAME),
+                        trim(p.RDB$PARAMETER_NAME).as(p.RDB$PARAMETER_NAME),
                         FIELD_TYPE(f).as("FIELD_TYPE"),
                         CHARACTER_LENGTH(f).as("CHAR_LEN"),
                         f.RDB$FIELD_PRECISION,
                         FIELD_SCALE(f).as("FIELD_SCALE"),
-                        DSL.bitOr(p.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(p.RDB$NULL_FLAG),
+                        bitOr(nvl(p.RDB$NULL_FLAG, inline((short) 0)), nvl(f.RDB$NULL_FLAG, inline((short) 0))).as(p.RDB$NULL_FLAG),
                         p.RDB$DEFAULT_SOURCE)
                     .from(p)
                     .leftOuterJoin(f).on(p.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
@@ -118,12 +120,12 @@ public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
                     .select(
                         a.RDB$ARGUMENT_POSITION.as(p.RDB$PARAMETER_NUMBER),
                         inline(0).as(p.RDB$PARAMETER_TYPE),
-                        a.RDB$ARGUMENT_NAME.trim().as(p.RDB$PARAMETER_NAME),
+                        trim(a.RDB$ARGUMENT_NAME).as(p.RDB$PARAMETER_NAME),
                         FIELD_TYPE(f).as("FIELD_TYPE"),
                         CHARACTER_LENGTH(f).as("CHAR_LEN"),
                         f.RDB$FIELD_PRECISION,
                         FIELD_SCALE(f).as("FIELD_SCALE"),
-                        DSL.bitOr(a.RDB$NULL_FLAG.nvl((short) 0), f.RDB$NULL_FLAG.nvl((short) 0)).as(p.RDB$NULL_FLAG),
+                        bitOr(nvl(a.RDB$NULL_FLAG, inline((short) 0)), nvl(f.RDB$NULL_FLAG, inline((short) 0))).as(p.RDB$NULL_FLAG),
                         a.RDB$DEFAULT_SOURCE)
                     .from(a)
                     .leftOuterJoin(f).on(a.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))

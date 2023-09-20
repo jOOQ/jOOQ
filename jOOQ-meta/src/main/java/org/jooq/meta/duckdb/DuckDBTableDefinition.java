@@ -40,9 +40,9 @@ package org.jooq.meta.duckdb;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.meta.duckdb.system.main.Tables.*;
+import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_COLUMNS;
+import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TYPES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -40,7 +40,6 @@ package org.jooq.meta.xml;
 
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptySet;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -57,7 +56,6 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,8 +82,8 @@ import org.jooq.FilePattern.Sort;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
-// ...
 import org.jooq.TableOptions.TableType;
+// ...
 // ...
 // ...
 import org.jooq.exception.IOException;

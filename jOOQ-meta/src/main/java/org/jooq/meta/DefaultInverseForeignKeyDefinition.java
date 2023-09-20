@@ -39,8 +39,6 @@ package org.jooq.meta;
 
 import java.util.List;
 
-import org.jooq.Name;
-
 /**
  * @author Lukas Eder
  */

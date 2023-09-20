@@ -63,5 +63,6 @@ public interface ParameterDefinition extends TypedElementDefinition<RoutineDefin
     /**
      * Whether the parameter is synthetic.
      */
+    @Override
     boolean isSynthetic();
 }

@@ -56,7 +56,6 @@ import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
 import static org.jooq.tools.StringUtils.defaultString;
-import static org.jooq.util.postgres.PostgresDSL.oid;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -79,8 +78,6 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgCollation;
 import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder

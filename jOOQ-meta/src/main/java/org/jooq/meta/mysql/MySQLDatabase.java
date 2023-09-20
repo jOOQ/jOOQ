@@ -51,6 +51,7 @@ import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.length;
+import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.regexpReplaceAll;
@@ -453,7 +454,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                 VIEWS.TABLE_CATALOG,
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME,
-                when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
+                when(lower(VIEWS.VIEW_DEFINITION).like(inline("create%")), VIEWS.VIEW_DEFINITION)
                 .else_(inline("create view `").concat(VIEWS.TABLE_NAME).concat(inline("` as ")).concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION))
             .from(VIEWS)
             .where(VIEWS.TABLE_SCHEMA.in(schemas))
@@ -795,12 +796,12 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     protected boolean exists0(TableField<?, ?> field) {
-        return exists1(field, COLUMNS.COLUMNS, COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, COLUMNS.COLUMN_NAME);
+        return exists1(field, COLUMNS, COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, COLUMNS.COLUMN_NAME);
     }
 
     @Override
     protected boolean exists0(Table<?> table) {
-        return exists1(table, TABLES.TABLES, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
+        return exists1(table, TABLES, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
     }
 
     private List<Field<String>> workaroundFor5213(List<String> inputSchemata) {

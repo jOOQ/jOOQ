@@ -44,10 +44,12 @@ import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -516,9 +518,9 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
                     SYSTEM_TABLES.TABLE_NAME,
                     inline("").as(ROUTINES.SPECIFIC_NAME),
                     SYSTEM_TABLES.REMARKS,
-                    when(SYSTEM_TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                        .else_(inline(TableType.TABLE.name())).trim().as("table_type"),
-                    when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
+                    trim(when(SYSTEM_TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
+                        .else_(inline(TableType.TABLE.name()))).as("table_type"),
+                    when(lower(VIEWS.VIEW_DEFINITION).like(inline("create%")), VIEWS.VIEW_DEFINITION)
                         .else_(inline("create view \"").concat(SYSTEM_TABLES.TABLE_NAME).concat("\" as ").concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION)
                 )
                 .from(SYSTEM_TABLES)

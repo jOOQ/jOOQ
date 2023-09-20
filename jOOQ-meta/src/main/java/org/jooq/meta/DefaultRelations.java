@@ -40,7 +40,6 @@ package org.jooq.meta;
 import static java.util.Collections.emptyList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;

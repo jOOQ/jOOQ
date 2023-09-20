@@ -40,6 +40,8 @@ package org.jooq.meta.trino;
 
 import static org.jooq.Records.mapping;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.lower;
+import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SCHEMATA;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TABLES;
@@ -96,8 +98,8 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
                 .select(
                     TABLES.TABLE_SCHEMA,
                     TABLES.TABLE_NAME,
-                    when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                        .else_(inline(TableType.TABLE.name())).trim().as("table_type")
+                    trim(when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
+                        .else_(inline(TableType.TABLE.name()))).as("table_type")
                 )
                 .from(TABLES)
                 .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
@@ -159,7 +161,7 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
                 inline("").as(VIEWS.TABLE_CATALOG),
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME,
-                when(VIEWS.VIEW_DEFINITION.lower().like(inline("create%")), VIEWS.VIEW_DEFINITION)
+                when(lower(VIEWS.VIEW_DEFINITION).like(inline("create%")), VIEWS.VIEW_DEFINITION)
                     .else_(inline("create view \"").concat(VIEWS.TABLE_NAME).concat(inline("\" as ")).concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION)
             )
             .from(VIEWS)

@@ -73,7 +73,6 @@ import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.SchemaDefinition;
-import org.jooq.meta.TableDefinition;
 import org.jooq.meta.postgres.information_schema.tables.Columns;
 import org.jooq.meta.postgres.information_schema.tables.Parameters;
 import org.jooq.meta.postgres.information_schema.tables.Routines;

@@ -40,14 +40,10 @@ package org.jooq.meta.postgres;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
-import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.DOMAINS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
-import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
-import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -58,17 +54,13 @@ import org.jooq.Record;
 import org.jooq.meta.AbstractUDTDefinition;
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.DataTypeDefinition;
-import org.jooq.meta.Database;
 import org.jooq.meta.DefaultAttributeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.postgres.information_schema.tables.Attributes;
 import org.jooq.meta.postgres.information_schema.tables.Domains;
-import org.jooq.meta.postgres.pg_catalog.Tables;
 import org.jooq.meta.postgres.pg_catalog.tables.PgAttribute;
-import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
-import org.jooq.meta.postgres.pg_catalog.tables.PgNamespace;
 
 public class PostgresUDTDefinition extends AbstractUDTDefinition {
 

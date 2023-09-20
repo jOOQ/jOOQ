@@ -41,6 +41,8 @@ package org.jooq.meta;
 import java.util.List;
 
 import org.jooq.Name;
+// ...
+import org.jooq.meta.jaxb.CommentType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
 
 /**
@@ -96,6 +98,16 @@ public interface Definition {
      * @return The comment of this object
      */
     String getComment();
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @return A path of definitions for this definition, e.g.

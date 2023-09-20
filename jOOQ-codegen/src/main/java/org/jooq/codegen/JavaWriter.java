@@ -1,5 +1,6 @@
 package org.jooq.codegen;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.codegen.GenerationUtil.PLAIN_GENERIC_TYPE_PATTERN;
 import static org.jooq.codegen.GenerationUtil.TYPE_REFERENCE_PATTERN;
@@ -17,9 +18,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.jooq.codegen.GeneratorStrategy.Mode;
+import org.jooq.meta.Definition;
+import org.jooq.meta.jaxb.CommentType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 import org.jooq.tools.StringUtils;
 
@@ -96,6 +98,27 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     public JavaWriter printClass(String clazz) {
         print(ref(clazz));
+        return this;
+    }
+
+    public JavaWriter javadocAndAnnotations(Definition definition, String string, Object... args) {
+        javadoc(string, args);
+        annotations(definition);
+
+        return this;
+    }
+
+    public JavaWriter annotations(Definition definition) {
+
+
+
+
+
+
+
+
+
+
         return this;
     }
 

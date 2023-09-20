@@ -51,6 +51,7 @@ import java.util.List;
 
 import org.jooq.DSLContext;
 import org.jooq.Name;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.meta.jaxb.CommentType;
 import org.jooq.tools.StringUtils;
@@ -182,10 +183,32 @@ public abstract class AbstractDefinition implements Definition {
 
 
 
-
-
         return getSchemaComment();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final String getSchemaComment() {
         return !isEmpty(schemaComment) ? schemaComment : defaultIfNull(getDatabase().getComments().get(this), "");

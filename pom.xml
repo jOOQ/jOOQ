@@ -37,8 +37,8 @@
         <!-- R2DBC SPI version and some matching driver versions -->
         <io.r2dbc.version>1.0.0.RELEASE</io.r2dbc.version>
 
-        <!-- From JDK 19 onwards, this is the required version of Xtend -->
-        <xtend.version>2.30.0</xtend.version>
+        <!-- From JDK 21 onwards, this is the required version of Xtend -->
+        <xtend.version>2.32.0</xtend.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
         <jaxb.version>4.0.0</jaxb.version>

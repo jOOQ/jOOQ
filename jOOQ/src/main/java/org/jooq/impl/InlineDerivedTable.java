@@ -45,6 +45,7 @@ import org.jooq.Condition;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
+import org.jooq.Select;
 import org.jooq.Table;
 // ...
 
@@ -65,6 +66,36 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
 
         this.table = table;
         this.condition = condition;
+    }
+
+    static final <R extends Record> Table<R> derivedTable(Table<R> t) {
+        if (t instanceof InlineDerivedTable<R> i) {
+            return i;
+        }
+        else if (t instanceof TableImpl<R> i) {
+            if (i.where != null)
+                return new InlineDerivedTable<>(i);
+
+            Table<R> unaliased = Tools.unalias(i);
+            if (unaliased instanceof TableImpl<R> u) {
+                if (u.where != null)
+                    return new InlineDerivedTable<>(u).query().asTable(i);
+            }
+        }
+        else if (t instanceof TableAlias<R> a) {
+            if (a.$aliased() instanceof TableImpl<R> u) {
+                if (u.where != null) {
+                    Select<R> q = new InlineDerivedTable<>(u).query();
+
+                    if (a.hasFieldAliases())
+                        return q.asTable(a.getUnqualifiedName(), a.alias.fieldAliases);
+                    else
+                        return q.asTable(a);
+                }
+            }
+        }
+
+        return null;
     }
 
     private static final <R extends Record> Table<R> removeWhere(Table<R> t) {

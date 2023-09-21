@@ -338,8 +338,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
 
-    @Override
-    public final void accept(Context<?> ctx) {
+    final void accept0(Context<?> ctx) {
         WithImpl w = with;
 
         ctx.scopeStart();
@@ -668,7 +667,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
         else
-            accept0(ctx);
+            accept1(ctx);
 
 
 
@@ -760,7 +759,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-    abstract void accept0(Context<?> ctx);
+    abstract void accept1(Context<?> ctx);
 
     /**
      * [#6771] Handle the case where a statement is executed without a WHERE clause.

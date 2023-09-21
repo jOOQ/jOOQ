@@ -118,6 +118,7 @@ import org.jooq.FieldOrRowOrSelect;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 // ...
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -561,7 +562,20 @@ implements
     }
 
     @Override
-    final void accept0(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+        accept0(ctx);
+    }
+
+    @Override
+    final void accept1(Context<?> ctx) {
         if (!from.isEmpty() && EMULATE_FROM_WITH_MERGE.contains(ctx.dialect())) {
             acceptFromAsMerge(ctx);
             return;
@@ -588,7 +602,7 @@ implements
 
 
 
-        accept1(ctx);
+        accept2(ctx);
     }
 
     private final void acceptReturningAsUpsert(Context<?> ctx) {
@@ -674,8 +688,22 @@ implements
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    final void accept1(Context<?> ctx) {
+    final void accept2(Context<?> ctx) {
         boolean declareTables = ctx.declareTables();
+
+        // [#14011] Additional predicates that are added for various reasons
+        Condition moreWhere = noCondition();
+        Table<?> t = table(ctx);
+
+
+
+
+
+
+
+
+
+
         ctx.start(UPDATE_UPDATE)
            .visit(K_UPDATE)
            .sql(' ')
@@ -689,7 +717,7 @@ implements
 
 
            )
-           .visit(table(ctx))
+           .visit(t)
            .declareTables(declareTables)
            .end(UPDATE_UPDATE);
 

@@ -108,6 +108,7 @@ import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 // ...
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
@@ -116,9 +117,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.SortField;
 import org.jooq.Table;
-import org.jooq.TableField;
 import org.jooq.TableLike;
-// ...
 // ...
 import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.Delete;
@@ -250,9 +249,22 @@ implements
         limit = numberOfRows;
     }
 
+    @Override
+    public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+        accept0(ctx);
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    final void accept0(Context<?> ctx) {
+    final void accept1(Context<?> ctx) {
         ctx.start(DELETE_DELETE)
            .visit(K_DELETE).sql(' ');
 

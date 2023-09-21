@@ -372,7 +372,12 @@ implements
     }
 
     @Override
-    final void accept0(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
+        accept0(ctx);
+    }
+
+    @Override
+    final void accept1(Context<?> ctx) {
 
 
 

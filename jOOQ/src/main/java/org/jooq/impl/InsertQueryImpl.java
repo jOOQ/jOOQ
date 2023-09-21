@@ -135,8 +135,10 @@ import org.jooq.MergeOnConditionStep;
 import org.jooq.Name;
 import org.jooq.Operator;
 // ...
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 // ...
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -373,6 +375,24 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         accept0(ctx);
     }
 

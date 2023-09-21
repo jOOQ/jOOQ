@@ -432,7 +432,10 @@ implements
         r.condition.addConditions(extractCondition(condition));
         r.orderBy.addAll(orderBy);
         r.limit = limit;
-        r.setReturning(returning);
+
+        if (!returning.isEmpty())
+            r.setReturning(returning);
+
         finisher.accept(r);
         return r;
     }

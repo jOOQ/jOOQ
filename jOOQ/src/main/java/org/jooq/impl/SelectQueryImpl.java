@@ -156,6 +156,7 @@ import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 // ...
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.unquotedName;
@@ -2846,7 +2847,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return result;
     }
 
-    private static final void transformInlineDerivedTable0(Context<?> ctx, Table<?> table, TableList result, ConditionProviderImpl where) {
+    private static final void transformInlineDerivedTable0(
+        Context<?> ctx,
+        Table<?> table,
+        TableList result,
+        ConditionProviderImpl where
+    ) {
         Table<?> t = inlineDerivedTable(ctx, table);
 
         if (t != null) {
@@ -2863,13 +2869,26 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             result.add(table);
     }
 
-    private static final Table<?> transformInlineDerivedTables0(Context<?> ctx, Table<?> table, ConditionProviderImpl where, boolean keepDerivedTable) {
+    private static final Table<?> transformInlineDerivedTables0(
+        Context<?> ctx,
+        Table<?> table,
+        ConditionProviderImpl where,
+        boolean keepDerivedTable
+    ) {
         Table<?> t = inlineDerivedTable(ctx, table);
 
         if (t != null) {
             if (t instanceof InlineDerivedTable<?> i) {
-                if (keepDerivedTable)
-                    return i.query().asTable(i.table);
+                if (keepDerivedTable) {
+
+                    // [#2682] An explicit path join that produces an InlineDerivedTable (e.g. due to a Policy)
+                    if (TableImpl.path(i.table) != null) {
+                        where.addConditions(((TableImpl<?>) i.table).pathCondition());
+                        return selectFrom(Tools.unwrap(i.table).as(i.table)).asTable(i.table);
+                    }
+                    else
+                        return i.query().asTable(i.table);
+                }
 
                 where.addConditions(i.condition);
                 return i.table;
@@ -2880,6 +2899,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else if (table instanceof JoinTable<?> j) {
             Table<?> lhs;
             Table<?> rhs;
+            ConditionProviderImpl w = new ConditionProviderImpl();
 
             switch (j.type) {
                 case LEFT_OUTER_JOIN:
@@ -2888,30 +2908,34 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 case STRAIGHT_JOIN:
                 case CROSS_APPLY:
                 case OUTER_APPLY:
-                case NATURAL_LEFT_OUTER_JOIN:
+                case NATURAL_LEFT_OUTER_JOIN: {
                     lhs = transformInlineDerivedTables0(ctx, j.lhs, where, keepDerivedTable);
-                    rhs = transformInlineDerivedTables0(ctx, j.rhs, where, true);
+                    rhs = transformInlineDerivedTables0(ctx, j.rhs, w, true);
                     break;
+                }
 
                 case RIGHT_OUTER_JOIN:
-                case NATURAL_RIGHT_OUTER_JOIN:
-                    lhs = transformInlineDerivedTables0(ctx, j.lhs, where, true);
+                case NATURAL_RIGHT_OUTER_JOIN: {
+                    lhs = transformInlineDerivedTables0(ctx, j.lhs, w, true);
                     rhs = transformInlineDerivedTables0(ctx, j.rhs, where, keepDerivedTable);
                     break;
+                }
 
                 case FULL_OUTER_JOIN:
-                case NATURAL_FULL_OUTER_JOIN:
-                    lhs = transformInlineDerivedTables0(ctx, j.lhs, where, true);
-                    rhs = transformInlineDerivedTables0(ctx, j.rhs, where, true);
+                case NATURAL_FULL_OUTER_JOIN: {
+                    lhs = transformInlineDerivedTables0(ctx, j.lhs, w, true);
+                    rhs = transformInlineDerivedTables0(ctx, j.rhs, w, true);
                     break;
+                }
 
-                default:
+                default: {
                     lhs = transformInlineDerivedTables0(ctx, j.lhs, where, keepDerivedTable);
                     rhs = transformInlineDerivedTables0(ctx, j.rhs, where, keepDerivedTable);
                     break;
+                }
             }
 
-            return j.transform(lhs, rhs);
+            return j.transform(lhs, rhs, w.hasWhere() ? w : j.condition);
         }
         else
             return table;

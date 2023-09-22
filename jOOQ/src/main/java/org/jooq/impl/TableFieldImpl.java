@@ -62,6 +62,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.RowId;
 import org.jooq.Table;
@@ -206,14 +207,22 @@ implements
 
     static final void accept2(Context<?> ctx, Table<?> table, Name unqualifiedName) {
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
-            if (c.qualify() && table != null && !FALSE.equals(ctx.data(DATA_RENDER_TABLE)))
+            if (c.qualify() && table != null && !FALSE.equals(ctx.data(DATA_RENDER_TABLE))) {
 
                 // [#15629] In some cases (e.g. outer joins), where an InlineDerivedTable can't be
                 //          inlined and must generate a derived table, we mustn't fully qualify fields.
                 if (table instanceof TableImpl && ((TableImpl<?>) table).where != null)
                     c.qualify(false, c2 -> c2.visit(table).sql('.'));
+
+
+
+
+
+
+
                 else
                     c.visit(table).sql('.');
+            }
 
             c.visit(unqualifiedName);
         });

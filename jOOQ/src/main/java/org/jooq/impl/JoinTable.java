@@ -187,13 +187,18 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         this.using = new QueryPartList<>();
     }
 
-    @SuppressWarnings("unchecked")
     @Deprecated
     final J transform(Table<?> newLhs, Table<?> newRhs) {
-        if (lhs == newLhs && rhs == newRhs)
+        return transform(newLhs, newRhs, condition);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Deprecated
+    final J transform(Table<?> newLhs, Table<?> newRhs, ConditionProviderImpl newCondition) {
+        if (lhs == newLhs && rhs == newRhs && condition == newCondition)
             return (J) this;
 
-        return construct(newLhs, lhsPartitionBy, rhsPartitionBy, newRhs, condition, using);
+        return construct(newLhs, lhsPartitionBy, rhsPartitionBy, newRhs, newCondition, using);
     }
 
     // ------------------------------------------------------------------------

@@ -105,8 +105,8 @@ import org.jooq.conf.RenderImplicitJoinType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.Tools.DataKey;
-import org.jooq.impl.Tools.ScopeStackPart;
 
 
 /**
@@ -233,7 +233,14 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             ? CastMode.NEVER
             : CastMode.DEFAULT;
         this.languageContext = LanguageContext.QUERY;
-        this.scopeStack = new ScopeStack<QueryPart, ScopeStackElement>(ScopeStackElement::new);
+        this.scopeStack = new ScopeStack<QueryPart, ScopeStackElement>((k, v) -> {
+            if (k == DataKeyScopeStackPart.INSTANCE)
+                return new DataKeyScopeStackElement(k, v);
+            else if (k == ScopeDefinerScopeStackPart.INSTANCE)
+                return new ScopeDefinerScopeStackElement(k, v);
+            else
+                return new DefaultScopeStackElement(k, v);
+        });
     }
 
     // ------------------------------------------------------------------------
@@ -824,17 +831,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final C scopeStart(QueryPart part) {
         scopeStack.scopeStart();
-        ScopeStackElement e = scopeStack.getOrCreate(ScopeStackPart.INSTANCE);
-        e.scopeDefiner = part;
+        if (part != null)
+            ((ScopeDefinerScopeStackElement) scopeStack.getOrCreate(ScopeDefinerScopeStackPart.INSTANCE)).scopeDefiner = part;
         scopeStart0();
-        resetDataKeys(e);
+        resetDataKeys((DataKeyScopeStackElement) scopeStack.getOrCreate(DataKeyScopeStackPart.INSTANCE));
 
         return (C) this;
     }
 
     @Override
     public final QueryPart scopePart() {
-        ScopeStackElement e = scopeStack.get(ScopeStackPart.INSTANCE);
+        ScopeDefinerScopeStackElement e = ((ScopeDefinerScopeStackElement) scopeStack.get(ScopeDefinerScopeStackPart.INSTANCE));
         return e != null ? e.scopeDefiner : null;
     }
 
@@ -886,7 +893,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C scopeEnd() {
-        restoreDataKeys(scopeStack.getOrCreate(ScopeStackPart.INSTANCE));
+        restoreDataKeys((DataKeyScopeStackElement) scopeStack.getOrCreate(DataKeyScopeStackPart.INSTANCE));
 
         scopeEnd0();
         scopeStack.scopeEnd();
@@ -899,7 +906,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     void scopeMarkEnd0(@SuppressWarnings("unused") QueryPart part) {}
     void scopeEnd0() {}
 
-    final void resetDataKeys(ScopeStackElement e) {
+    final void resetDataKeys(DataKeyScopeStackElement e) {
         for (int i = 0; i < DATAKEY_RESET_IN_SUBQUERY_SCOPE.length; i++) {
             DataKey key = DATAKEY_RESET_IN_SUBQUERY_SCOPE[i];
 
@@ -908,7 +915,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
     }
 
-    final void restoreDataKeys(ScopeStackElement e) {
+    final void restoreDataKeys(DataKeyScopeStackElement e) {
         for (int i = 0; i < DATAKEY_RESET_IN_SUBQUERY_SCOPE.length; i++) {
             DataKey key = DATAKEY_RESET_IN_SUBQUERY_SCOPE[i];
 
@@ -1302,21 +1309,82 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
     }
 
-    static class ScopeStackElement {
+    abstract static class ScopeStackElement {
         final int       scopeLevel;
         final QueryPart part;
-        QueryPart       scopeDefiner;
         QueryPart       mapped;
         int[]           positions;
         int             bindIndex;
         int             indent;
         JoinNode        joinNode;
-        List<Object>    restoreDataKeys;
 
         ScopeStackElement(QueryPart part, int scopeLevel) {
             this.part = part;
             this.mapped = part;
             this.scopeLevel = scopeLevel;
+        }
+    }
+
+    static abstract class AbstractScopeStackPart extends AbstractQueryPart implements UEmpty {
+
+        @Override
+        public final void accept(Context<?> ctx) {}
+
+        @Override
+        public boolean equals(Object that) {
+            return this == that;
+        }
+
+        @Override
+        public int hashCode() {
+            return 0;
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName();
+        }
+    }
+
+    static final class DataKeyScopeStackPart extends AbstractScopeStackPart {
+        static final DataKeyScopeStackPart INSTANCE = new DataKeyScopeStackPart();
+        private DataKeyScopeStackPart() {}
+    }
+
+    static final class ScopeDefinerScopeStackPart extends AbstractScopeStackPart {
+        static final ScopeDefinerScopeStackPart INSTANCE = new ScopeDefinerScopeStackPart();
+        private ScopeDefinerScopeStackPart() {}
+    }
+
+    static final class DataKeyScopeStackElement extends ScopeStackElement {
+        List<Object> restoreDataKeys;
+
+        DataKeyScopeStackElement(QueryPart part, int scopeLevel) {
+            super(part, scopeLevel);
+        }
+
+        @Override
+        public String toString() {
+            return "RestoreDataKeys [" + restoreDataKeys + "]";
+        }
+    }
+
+    static final class ScopeDefinerScopeStackElement extends ScopeStackElement {
+        QueryPart scopeDefiner;
+
+        ScopeDefinerScopeStackElement(QueryPart part, int scopeLevel) {
+            super(part, scopeLevel);
+        }
+
+        @Override
+        public String toString() {
+            return "" + scopeDefiner;
+        }
+    }
+
+    static final class DefaultScopeStackElement extends ScopeStackElement {
+        DefaultScopeStackElement(QueryPart part, int scopeLevel) {
+            super(part, scopeLevel);
         }
 
         @Override
@@ -1326,15 +1394,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             if (positions != null)
                 sb.append(Arrays.toString(positions));
 
-            if (part instanceof ScopeStackPart) {
-                sb.append(scopeDefiner);
-            }
-            else {
-                sb.append(part);
+            sb.append(part);
 
-                if (mapped != null)
-                    sb.append(" (" + mapped + ")");
-            }
+            if (mapped != null)
+                sb.append(" (" + mapped + ")");
 
             return sb.toString();
         }

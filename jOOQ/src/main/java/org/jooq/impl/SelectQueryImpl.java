@@ -2335,7 +2335,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     '(',
                     alternativeFields != null ? alternativeFields : getSelect(),
                     derivedTableRequired(context, this),
-                    unionParensRequired = unionOpNesting || unionParensRequired(context)
+                    unionParensRequired = unionOpNesting || unionParensRequired(context),
+                    null
                 );
             }
         }
@@ -2678,7 +2679,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // SET operations like UNION, EXCEPT, INTERSECT
         // --------------------------------------------
         if (unionOpSize > 0) {
-            unionParenthesis(context, ')', null, derivedTableRequired(context, this), unionParensRequired);
+            unionParenthesis(context, ')', null, derivedTableRequired(context, this), unionParensRequired, null);
 
             for (int i = 0; i < unionOpSize; i++) {
                 CombineOperator op = unionOp.get(i);
@@ -2695,14 +2696,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     else
                         context.formatSeparator();
 
-                    unionParenthesis(context, '(', other.getSelect(), derivedTableRequired, otherUnionParensRequired);
+                    unionParenthesis(context, '(', other.getSelect(), derivedTableRequired, otherUnionParensRequired, other);
                     context.visit(other);
-                    unionParenthesis(context, ')', null, derivedTableRequired, otherUnionParensRequired);
+                    unionParenthesis(context, ')', null, derivedTableRequired, otherUnionParensRequired, null);
                 }
 
                 // [#1658] Close parentheses opened previously
                 if (i < unionOpSize - 1)
-                    unionParenthesis(context, ')', null, derivedTableRequired(context, this), unionParensRequired);
+                    unionParenthesis(context, ')', null, derivedTableRequired(context, this), unionParensRequired, null);
 
                 switch (unionOp.get(i)) {
                     case EXCEPT:        context.end(SELECT_EXCEPT);        break;
@@ -3563,10 +3564,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         char parenthesis,
         List<Field<?>> fields,
         boolean derivedTableRequired,
-        boolean parensRequired
+        boolean parensRequired,
+        QueryPart subquery
     ) {
         if ('(' == parenthesis)
-            ((AbstractContext<?>) ctx).subquery0(true, true, null);
+            ((AbstractContext<?>) ctx).subquery0(true, true, subquery);
         else if (')' == parenthesis)
             ((AbstractContext<?>) ctx).subquery0(false, true, null);
 

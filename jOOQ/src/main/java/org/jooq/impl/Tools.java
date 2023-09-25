@@ -421,31 +421,6 @@ final class Tools {
     // Some constants for use with Context.data()
     // ------------------------------------------------------------------------
 
-    static final class ScopeStackPart extends AbstractQueryPart implements UEmpty {
-
-        static final ScopeStackPart INSTANCE = new ScopeStackPart();
-
-        private ScopeStackPart() {}
-
-        @Override
-        public final void accept(Context<?> ctx) {}
-
-        @Override
-        public boolean equals(Object that) {
-            return this == that;
-        }
-
-        @Override
-        public int hashCode() {
-            return 0;
-        }
-
-        @Override
-        public String toString() {
-            return "SCOPE_STACK_PART";
-        }
-    }
-
     /**
      * A common super types for {@link BooleanDataKey}, {@link SimpleDataKey} and {@link ExtendedDataKey}
      */

@@ -331,8 +331,6 @@ implements
     }
 
     private final void acceptRenameTable(Context<?> ctx) {
-        boolean qualify = ctx.qualify();
-
         ctx.start(Clause.ALTER_SEQUENCE_SEQUENCE)
            .start(Clause.ALTER_SEQUENCE_RENAME)
            .visit(K_ALTER_TABLE)
@@ -341,7 +339,7 @@ implements
            .sql(' ')
            .visit(K_RENAME_TO)
            .sql(' ')
-           .qualify(false, c -> c.visit(renameTo))
+           .qualifySchema(false, c -> c.visit(renameTo))
            .end(Clause.ALTER_SEQUENCE_RENAME)
            .end(Clause.ALTER_SEQUENCE_SEQUENCE);
     }

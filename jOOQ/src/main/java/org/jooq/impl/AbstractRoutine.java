@@ -1618,7 +1618,7 @@ implements
     private final Name getQualifiedName(Context<?> ctx) {
         List<Name> list = new ArrayList<>();
 
-        if (ctx.qualify()) {
+        if (ctx.qualifySchema()) {
             Schema mapped = Tools.getMappedSchema(ctx, getSchema());
 
             if (mapped != null && !"".equals(mapped.getName()))

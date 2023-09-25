@@ -469,7 +469,7 @@ implements
         if (ctx.declareTables())
             ctx.scopeMarkStart(this);
 
-        if (ctx.qualify() && (ctx.declareTables()
+        if (ctx.qualifySchema() && (ctx.declareTables()
             || (!NO_SUPPORT_QUALIFIED_TVF_CALLS.contains(ctx.dialect()) || parameters == null)
 
 

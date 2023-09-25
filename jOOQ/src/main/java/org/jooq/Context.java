@@ -800,8 +800,6 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
 
     /**
      * Set the new context value for {@link #qualify()}.
-     * <p>
-     * This is the same as {@link #qualifySchema(boolean)}.
      */
     @NotNull
     C qualify(boolean qualify);
@@ -814,9 +812,7 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C qualify(boolean qualify, Consumer<? super C> consumer);
 
     /**
-     * Whether query parts should render qualified names or not.
-     * <p>
-     * This is the same as {@link #qualifySchema()}.
+     * Whether query parts should render {@link Schema}-qualified names or not.
      */
     boolean qualifySchema();
 
@@ -834,18 +830,12 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C qualifySchema(boolean qualifySchema, Consumer<? super C> consumer);
 
     /**
-     * Whether query parts should render qualified names or not.
-     * <p>
-     * The catalog can only be qualified when {@link #qualifySchema()} is
-     * <code>true</code> as well.
+     * Whether query parts should render {@link Catalog}-qualified names or not.
      */
     boolean qualifyCatalog();
 
     /**
      * Set the new context value for {@link #qualifyCatalog()}.
-     * <p>
-     * The catalog can only be qualified when {@link #qualifySchema()} is
-     * <code>true</code> as well.
      */
     @NotNull
     C qualifyCatalog(boolean qualifyCatalog);
@@ -853,9 +843,6 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     /**
      * Set the new context value for {@link #qualifyCatalog()} for the scope of
      * a {@link Consumer}.
-     * <p>
-     * The catalog can only be qualified when {@link #qualifySchema()} is
-     * <code>true</code> as well.
      */
     @NotNull
     C qualifyCatalog(boolean qualifyCatalog, Consumer<? super C> consumer);

@@ -208,8 +208,6 @@ implements
             ctx.visit(getQualifiedName());
         }
         else {
-            boolean qualify = ctx.qualify();
-
             if (named )
                 ctx.visit(K_CONSTRAINT).sql(' ')
                    .visit(getUnqualifiedName()).sql(' ');

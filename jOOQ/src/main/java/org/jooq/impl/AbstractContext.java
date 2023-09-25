@@ -161,6 +161,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     LanguageContext                                languageContext;
     ParamType                                      paramType                   = ParamType.INDEXED;
     boolean                                        quote                       = true;
+    boolean                                        qualify                     = true;
     boolean                                        qualifySchema               = true;
     boolean                                        qualifyCatalog              = true;
     QueryPart                                      topLevel;
@@ -1027,12 +1028,13 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final boolean qualify() {
-        return qualifySchema();
+        return qualify;
     }
 
     @Override
     public final C qualify(boolean q) {
-        return qualifySchema(q);
+        this.qualify = q;
+        return (C) this;
     }
 
     @Override
@@ -1042,7 +1044,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final boolean qualifySchema() {
-        return qualifySchema;
+        return qualify && qualifySchema;
     }
 
     @Override
@@ -1058,7 +1060,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final boolean qualifyCatalog() {
-        return qualifyCatalog;
+        return qualify && qualifyCatalog;
     }
 
     @Override

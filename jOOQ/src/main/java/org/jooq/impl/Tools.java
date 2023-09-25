@@ -421,11 +421,11 @@ final class Tools {
     // Some constants for use with Context.data()
     // ------------------------------------------------------------------------
 
-    static final class DataKeyScopeStackPart extends AbstractQueryPart implements UEmpty {
+    static final class ScopeStackPart extends AbstractQueryPart implements UEmpty {
 
-        static final DataKeyScopeStackPart INSTANCE = new DataKeyScopeStackPart();
+        static final ScopeStackPart INSTANCE = new ScopeStackPart();
 
-        private DataKeyScopeStackPart() {}
+        private ScopeStackPart() {}
 
         @Override
         public final void accept(Context<?> ctx) {}
@@ -438,6 +438,11 @@ final class Tools {
         @Override
         public int hashCode() {
             return 0;
+        }
+
+        @Override
+        public String toString() {
+            return "SCOPE_STACK_PART";
         }
     }
 
@@ -2913,7 +2918,7 @@ final class Tools {
         boolean previousDerivedTableSubquery = ctx.derivedTableSubquery();
         boolean previousSetOperationSubquery = ctx.setOperationSubquery();
 
-        ctx.subquery(true)
+        ctx.subquery(true, query)
            .predicandSubquery((characteristics & PREDICAND) != 0)
            .derivedTableSubquery((characteristics & DERIVED_TABLE) != 0)
            .setOperationSubquery((characteristics & SET_OPERATION) != 0)

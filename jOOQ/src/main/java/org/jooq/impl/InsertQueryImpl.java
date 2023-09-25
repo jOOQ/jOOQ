@@ -375,6 +375,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        ctx.scopeStart(this);
 
         // [#2682] [#15632] Apply inline derived tables to the target table (TODO: Apply also to FROM, etc.)
         // [#15632] TODO: Check if this behaves correctly with aliases
@@ -385,8 +386,8 @@ implements
                     if (!d.insertMaps.values.isEmpty())
                         d.select =
                             selectFrom(
-                                d.insertMaps.insertSelect(ctx, null)
-                                    .asTable(i.table, d.insertMaps.keysFlattened(ctx, GeneratorStatementType.INSERT)))
+                                (d.select != null ? d.select : d.insertMaps.insertSelect(ctx, null))
+                                .asTable(i.table, d.insertMaps.keysFlattened(ctx, GeneratorStatementType.INSERT)))
                             .where(CustomCondition.of(c1 -> c1.qualifySchema(false, c2 -> c2.visit(i.condition))));
                 },
                 i.table
@@ -394,6 +395,8 @@ implements
         }
         else
             accept0(ctx);
+
+        ctx.scopeEnd();
     }
 
     @Override

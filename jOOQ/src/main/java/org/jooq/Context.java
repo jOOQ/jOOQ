@@ -310,6 +310,12 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C subquery(boolean subquery);
 
     /**
+     * Set the new context value for {@link #subquery()} as well as {@link #scopePart()} a
+     */
+    @NotNull
+    C subquery(boolean subquery, QueryPart part);
+
+    /**
      * Whether the current context is rendering a derived table subquery.
      */
     boolean derivedTableSubquery();
@@ -360,6 +366,24 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
      */
     @NotNull
     C scopeStart();
+
+    /**
+     * Start a new scope, passing the current {@link QueryPart} as the
+     * {@link #scopePart()}.
+     * <p>
+     * If the new scope doesn't have such a {@link QueryPart}, then
+     * {@link #scopeStart()} can be called instead.
+     */
+    @NotNull
+    C scopeStart(QueryPart part);
+
+    /**
+     * Return the {@link QueryPart} that defines the current
+     * {@link #scopeStart(QueryPart)}, if any, or <code>null</code> if there is
+     * no such {@link QueryPart}.
+     */
+    @Nullable
+    QueryPart scopePart();
 
     /**
      * Mark the beginning of a scoped query part.

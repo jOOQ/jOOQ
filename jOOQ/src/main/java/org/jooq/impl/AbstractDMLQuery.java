@@ -341,7 +341,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     final void accept0(Context<?> ctx) {
         WithImpl w = with;
 
-        ctx.scopeStart();
         ctx.data(DATA_DML_TARGET_TABLE, table);
         ctx.data(DATA_DML_USING_TABLES, this instanceof DeleteQueryImpl<?> d ? d.$using() : null);
 
@@ -676,7 +675,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
         ctx.data().remove(DATA_DML_USING_TABLES);
         ctx.data().remove(DATA_DML_TARGET_TABLE);
-        ctx.scopeEnd();
     }
 
 

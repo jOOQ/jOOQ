@@ -48,7 +48,6 @@ import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 // ...
 import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.conf.ParamType.INDEXED;
-import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.JoinTable.onKey0;
 import static org.jooq.impl.Tools.DATAKEY_RESET_IN_SUBQUERY_SCOPE;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
@@ -91,7 +90,6 @@ import org.jooq.JoinType;
 import org.jooq.LanguageContext;
 // ...
 // ...
-// ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -108,8 +106,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.impl.Tools.DataKey;
-import org.jooq.impl.Tools.DataKeyScopeStackPart;
-import org.jooq.tools.StringUtils;
+import org.jooq.impl.Tools.ScopeStackPart;
 
 
 /**
@@ -771,7 +768,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         return subquery > 0;
     }
 
-    final C subquery0(boolean s, boolean setOperation) {
+    final C subquery0(boolean s, boolean setOperation, QueryPart part) {
         setOperationSubquery(setOperation);
 
         if (s) {
@@ -791,7 +788,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 subqueryScopedNestedSetOperations.set(subquery);
             }
 
-            scopeStart();
+            scopeStart(part);
         }
         else {
             scopeEnd();
@@ -811,16 +808,34 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C subquery(boolean s) {
-        return subquery0(s, false);
+        return subquery(s, null);
+    }
+
+    @Override
+    public final C subquery(boolean s, QueryPart part) {
+        return subquery0(s, false, part);
     }
 
     @Override
     public final C scopeStart() {
+        return scopeStart(null);
+    }
+
+    @Override
+    public final C scopeStart(QueryPart part) {
         scopeStack.scopeStart();
+        ScopeStackElement e = scopeStack.getOrCreate(ScopeStackPart.INSTANCE);
+        e.scopeDefiner = part;
         scopeStart0();
-        resetDataKeys(scopeStack.getOrCreate(DataKeyScopeStackPart.INSTANCE));
+        resetDataKeys(e);
 
         return (C) this;
+    }
+
+    @Override
+    public final QueryPart scopePart() {
+        ScopeStackElement e = scopeStack.get(ScopeStackPart.INSTANCE);
+        return e != null ? e.scopeDefiner : null;
     }
 
     @Override
@@ -871,7 +886,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C scopeEnd() {
-        restoreDataKeys(scopeStack.getOrCreate(DataKeyScopeStackPart.INSTANCE));
+        restoreDataKeys(scopeStack.getOrCreate(ScopeStackPart.INSTANCE));
 
         scopeEnd0();
         scopeStack.scopeEnd();
@@ -1290,6 +1305,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     static class ScopeStackElement {
         final int       scopeLevel;
         final QueryPart part;
+        QueryPart       scopeDefiner;
         QueryPart       mapped;
         int[]           positions;
         int             bindIndex;
@@ -1305,9 +1321,22 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         @Override
         public String toString() {
-            return (positions != null ? Arrays.toString(positions) + ": " : "")
-                 + part
-                 + (mapped != null ? " (" + mapped + ")" : "");
+            StringBuilder sb = new StringBuilder();
+
+            if (positions != null)
+                sb.append(Arrays.toString(positions));
+
+            if (part instanceof ScopeStackPart) {
+                sb.append(scopeDefiner);
+            }
+            else {
+                sb.append(part);
+
+                if (mapped != null)
+                    sb.append(" (" + mapped + ")");
+            }
+
+            return sb.toString();
         }
     }
 }

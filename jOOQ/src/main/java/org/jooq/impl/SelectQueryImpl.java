@@ -1687,7 +1687,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // Subquery scopes are started in AbstractContext
         if (context.subqueryLevel() == 0) {
-            context.scopeStart();
+            context.scopeStart(this);
 
             if (topLevelCte |= (context.data(DATA_TOP_LEVEL_CTE) == null))
                 context.data(DATA_TOP_LEVEL_CTE, new TopLevelCte());
@@ -3566,9 +3566,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         boolean parensRequired
     ) {
         if ('(' == parenthesis)
-            ((AbstractContext<?>) ctx).subquery0(true, true);
+            ((AbstractContext<?>) ctx).subquery0(true, true, null);
         else if (')' == parenthesis)
-            ((AbstractContext<?>) ctx).subquery0(false, true);
+            ((AbstractContext<?>) ctx).subquery0(false, true, null);
 
         derivedTableRequired |= derivedTableRequired
 

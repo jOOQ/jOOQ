@@ -77,11 +77,6 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
 
 
 
-
-
-
-
-
         return InlineDerivedTable.derivedTable(t);
     }
 

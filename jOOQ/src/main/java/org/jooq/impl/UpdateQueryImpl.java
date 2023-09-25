@@ -563,6 +563,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        ctx.scopeStart(this);
 
         // [#2682] [#15632] Apply inline derived tables to the target table (TODO: Apply also to FROM, etc.)
         // [#15632] TODO: Check if this behaves correctly with aliases
@@ -572,6 +573,8 @@ implements
         }
         else
             accept0(ctx);
+
+        ctx.scopeEnd();
     }
 
     @Override

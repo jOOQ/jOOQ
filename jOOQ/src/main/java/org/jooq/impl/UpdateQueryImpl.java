@@ -564,14 +564,13 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
 
-
-
-
-
-
-
-
-        accept0(ctx);
+        // [#2682] [#15632] Apply inline derived tables to the target table (TODO: Apply also to USING, etc.)
+        Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table(ctx));
+        if (t instanceof InlineDerivedTable<?> i) {
+            copy(d -> d.addConditions(i.condition), i.table).accept0(ctx);
+        }
+        else
+            accept0(ctx);
     }
 
     @Override

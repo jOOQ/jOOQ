@@ -42,6 +42,8 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 
 import org.jooq.Condition;
+import org.jooq.Context;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
@@ -66,6 +68,21 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
 
         this.table = table;
         this.condition = condition;
+    }
+
+    static final <R extends Record> Table<R> inlineDerivedTable(Context<?> ctx, Table<R> t) {
+
+
+
+
+
+
+
+
+
+
+
+        return InlineDerivedTable.derivedTable(t);
     }
 
     static final <R extends Record> Table<R> derivedTable(Table<R> t) {

@@ -1184,14 +1184,14 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     static class JoinNode {
-        final Configuration                          configuration;
+        final Context<?>                             ctx;
         final Table<?>                               table;
         final Map<ForeignKey<?, ?>, JoinNode>        pathsToOne;
         final Map<InverseForeignKey<?, ?>, JoinNode> pathsToMany;
         int                                          references;
 
-        JoinNode(Configuration configuration, Table<?> table) {
-            this.configuration = configuration;
+        JoinNode(Context<?> ctx, Table<?> table) {
+            this.ctx = ctx;
             this.table = table;
             this.pathsToOne = new LinkedHashMap<>();
             this.pathsToMany = new LinkedHashMap<>();
@@ -1199,7 +1199,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         Table<?> joinTree() {
             Table<?> result = table;
-
 
 
 
@@ -1265,7 +1264,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
 
         private final JoinType joinType(JoinType onDefault) {
-            switch (defaultIfNull(Tools.settings(configuration).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT)) {
+            switch (defaultIfNull(Tools.settings(ctx.configuration()).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT)) {
                 case INNER_JOIN:
                     return JOIN;
                 case LEFT_JOIN:

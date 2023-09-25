@@ -2783,18 +2783,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return r;
     }
 
-    private static final <R extends Record> Table<R> inlineDerivedTable(Context<?> ctx, Table<R> t) {
-
-
-
-
-
-
-        return InlineDerivedTable.derivedTable(t);
-    }
-
     private static final boolean hasInlineDerivedTables(Context<?> ctx, Table<?> t) {
-        return inlineDerivedTable(ctx, t) != null
+        return InlineDerivedTable.inlineDerivedTable(ctx, t) != null
             || t instanceof JoinTable && (hasInlineDerivedTables(ctx, ((JoinTable<?>) t).lhs) || hasInlineDerivedTables(ctx, ((JoinTable<?>) t).rhs));
     }
 
@@ -2853,7 +2843,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         TableList result,
         ConditionProviderImpl where
     ) {
-        Table<?> t = inlineDerivedTable(ctx, table);
+        Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table);
 
         if (t != null) {
             if (t instanceof InlineDerivedTable<?> i) {
@@ -2875,7 +2865,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         ConditionProviderImpl where,
         boolean keepDerivedTable
     ) {
-        Table<?> t = inlineDerivedTable(ctx, table);
+        Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table);
 
         if (t != null) {
             if (t instanceof InlineDerivedTable<?> i) {

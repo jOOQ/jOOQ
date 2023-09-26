@@ -41,6 +41,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -126,13 +127,17 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
             if (t instanceof InlineDerivedTable<?> i) {
                 if (keepDerivedTable) {
 
+                    // [#15632] SchemaMapping could produce a different table than the one contained
+                    //          in the inline derived table specification, and the alias must reflect that
+                    Table<?> m = DSL.table(defaultIfNull(ctx.dsl().map(i.table), i.table).getUnqualifiedName());
+
                     // [#2682] An explicit path join that produces an InlineDerivedTable (e.g. due to a Policy)
                     if (TableImpl.path(i.table) != null) {
                         where.addConditions(((TableImpl<?>) i.table).pathCondition());
-                        return selectFrom(Tools.unwrap(i.table).as(i.table)).asTable(i.table);
+                        return selectFrom(Tools.unwrap(i.table).as(m)).asTable(m);
                     }
                     else
-                        return i.query().asTable(i.table);
+                        return i.query().asTable(m);
                 }
 
                 where.addConditions(i.condition);

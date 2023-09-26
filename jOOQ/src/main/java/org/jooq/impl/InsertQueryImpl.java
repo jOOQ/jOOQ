@@ -104,6 +104,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MANDATORY_WHERE_CLAUSE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_ON_DUPLICATE_KEY_WHERE;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,6 +116,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.Set;
 
@@ -383,12 +385,23 @@ implements
         if (t instanceof InlineDerivedTable<?> i) {
             copy(
                 d -> {
-                    if (!d.insertMaps.values.isEmpty())
+                    if (!d.insertMaps.values.isEmpty()) {
+
+                        // [#15632] SchemaMapping could produce a different table than the one contained
+                        //          in the inline derived table specification, and the alias must reflect that
+                        Table<?> m = DSL.table(defaultIfNull(ctx.dsl().map(i.table), i.table).getUnqualifiedName());
+
                         d.select =
                             selectFrom(
                                 (d.select != null ? d.select : d.insertMaps.insertSelect(ctx, null))
-                                .asTable(i.table, d.insertMaps.keysFlattened(ctx, GeneratorStatementType.INSERT)))
-                            .where(CustomCondition.of(c1 -> c1.qualifySchema(false, c2 -> c2.visit(i.condition))));
+                                .asTable(m, d.insertMaps.keysFlattened(ctx, GeneratorStatementType.INSERT)))
+                            .where(CustomCondition.of(c1 -> c1
+
+                                // [#15632] Map the original table reference to the derived table alias
+                                //          to prevent schema mapping in the condition.
+                                .scopeRegister(i.table, false, m).visit(i.condition)
+                            ));
+                    }
                 },
                 i.table
             ).accept0(ctx);

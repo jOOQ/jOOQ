@@ -82,6 +82,7 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
 import static org.jooq.impl.Internal.hash;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_FROM;
@@ -253,11 +254,28 @@ implements
     public final void accept(Context<?> ctx) {
         ctx.scopeStart(this);
 
-        // [#2682] [#15632] Apply inline derived tables to the target table (TODO: Apply also to USING, etc.)
+        // [#2682] [#15632] Apply inline derived tables to the target table
         // [#15632] TODO: Check if this behaves correctly with aliases
-        Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table(ctx));
-        if (t instanceof InlineDerivedTable<?> i) {
-            copy(d -> d.addConditions(i.condition), i.table).accept0(ctx);
+        Table<?> t = table(ctx);
+        Table<?> i = InlineDerivedTable.inlineDerivedTable(ctx, t);
+        InlineDerivedTable<?> j = i instanceof InlineDerivedTable ? (InlineDerivedTable<?>) i : null;
+        ConditionProviderImpl where = new ConditionProviderImpl();
+        TableList u = transformInlineDerivedTables(ctx, using, where);
+
+        if (j != null || u != using) {
+            copy(
+                d -> {
+                    if (j != null) {
+                        d.addConditions(j.condition);
+                    }
+                    if (u != using) {
+                        d.addConditions(where);
+                        d.using.clear();
+                        d.using.addAll(u);
+                    }
+                },
+                (Table<?>) (j != null ? j.table : t)
+            ).accept0(ctx);
         }
         else
             accept0(ctx);
@@ -437,11 +455,11 @@ implements
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    final DeleteQueryImpl<R> copy(Consumer<? super DeleteQueryImpl<R>> finisher) {
+    final DeleteQueryImpl<R> copy(Consumer<? super DeleteQueryImpl<?>> finisher) {
         return copy(finisher, table);
     }
 
-    final <O extends Record> DeleteQueryImpl<O> copy(Consumer<? super DeleteQueryImpl<O>> finisher, Table<O> t) {
+    final <O extends Record> DeleteQueryImpl<O> copy(Consumer<? super DeleteQueryImpl<?>> finisher, Table<O> t) {
         DeleteQueryImpl<O> r = new DeleteQueryImpl<>(configuration(), with, t);
         r.using.addAll(using);
         r.condition.addConditions(extractCondition(condition));

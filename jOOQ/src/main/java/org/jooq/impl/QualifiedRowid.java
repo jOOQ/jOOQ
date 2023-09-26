@@ -99,11 +99,11 @@ implements
 
 
             case H2:
-                ctx.visit(table.getQualifiedName().append(systemName("_rowid_")));
+                TableFieldImpl.accept2(ctx, table, systemName("_rowid_"));
                 break;
 
             case POSTGRES:
-                ctx.visit(table.getQualifiedName().append(systemName("ctid")));
+                TableFieldImpl.accept2(ctx, table, systemName("ctid"));
                 break;
 
 
@@ -113,7 +113,7 @@ implements
 
 
             default:
-                ctx.visit(table.getQualifiedName().append(systemName("rowid")));
+                TableFieldImpl.accept2(ctx, table, systemName("rowid"));
                 break;
         }
     }

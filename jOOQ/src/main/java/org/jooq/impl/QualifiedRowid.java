@@ -98,13 +98,16 @@ implements
 
 
 
-            case H2:
+            case H2: {
                 TableFieldImpl.accept2(ctx, table, systemName("_rowid_"));
                 break;
+            }
 
-            case POSTGRES:
+            case POSTGRES: {
                 TableFieldImpl.accept2(ctx, table, systemName("ctid"));
                 break;
+            }
+
 
 
 

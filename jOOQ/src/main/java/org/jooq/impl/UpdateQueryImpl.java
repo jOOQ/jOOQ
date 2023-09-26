@@ -89,6 +89,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
@@ -565,11 +566,29 @@ implements
     public final void accept(Context<?> ctx) {
         ctx.scopeStart(this);
 
-        // [#2682] [#15632] Apply inline derived tables to the target table (TODO: Apply also to FROM, etc.)
+        // [#2682] [#15632] Apply inline derived tables to the target table
         // [#15632] TODO: Check if this behaves correctly with aliases
-        Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table(ctx));
-        if (t instanceof InlineDerivedTable<?> i) {
-            copy(d -> d.addConditions(i.condition), i.table).accept0(ctx);
+        // [#15632] TODO: Refactor this logic with DeleteQueryImpl
+        Table<?> t = table(ctx);
+        Table<?> i = InlineDerivedTable.inlineDerivedTable(ctx, t);
+        InlineDerivedTable<?> j = i instanceof InlineDerivedTable ? (InlineDerivedTable<?>) i : null;
+        ConditionProviderImpl where = new ConditionProviderImpl();
+        TableList f = transformInlineDerivedTables(ctx, from, where);
+
+        if (j != null || f != from) {
+            copy(
+                d -> {
+                    if (j != null) {
+                        d.addConditions(j.condition);
+                    }
+                    if (f != from) {
+                        d.addConditions(where);
+                        d.from.clear();
+                        d.from.addAll(f);
+                    }
+                },
+                (Table<?>) (j != null ? j.table : t)
+            ).accept0(ctx);
         }
         else
             accept0(ctx);

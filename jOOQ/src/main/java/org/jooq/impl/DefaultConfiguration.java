@@ -1575,6 +1575,9 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
+
+
     @Override
     public final Configuration set(Clock newClock) {
 
@@ -2057,8 +2060,6 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
-
-
     @Override
     public final Clock clock() {
         return clock;
@@ -2156,8 +2157,6 @@ public class DefaultConfiguration extends AbstractConfiguration {
         oos.writeObject(cloneSerializables(visitListenerProviders));
         oos.writeObject(cloneSerializables(transactionListenerProviders));
         oos.writeObject(cloneSerializables(diagnosticsListenerProviders));
-
-
 
 
 

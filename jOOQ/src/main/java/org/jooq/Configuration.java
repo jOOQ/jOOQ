@@ -1978,6 +1978,18 @@ public interface Configuration extends Serializable {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Create a derived configuration from this one, with a new dialect.
      *

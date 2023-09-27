@@ -51,6 +51,7 @@ import org.jooq.MigrationListenerProvider;
 // ...
 // ...
 // ...
+// ...
 import org.jooq.RecordListener;
 import org.jooq.RecordListenerProvider;
 import org.jooq.TransactionListener;
@@ -270,6 +271,11 @@ public abstract class AbstractConfiguration implements Configuration {
     public final Configuration deriveAppending(DiagnosticsListenerProvider... newDiagnosticsListenerProviders) {
         return derive(combine(diagnosticsListenerProviders(), newDiagnosticsListenerProviders));
     }
+
+
+
+
+
 
 
 

@@ -37,6 +37,21 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.noCondition;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

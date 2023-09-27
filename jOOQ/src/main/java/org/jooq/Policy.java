@@ -37,6 +37,13 @@
  */
 package org.jooq;
 
+import java.util.List;
+
+
+
+
+
+
 
 
 

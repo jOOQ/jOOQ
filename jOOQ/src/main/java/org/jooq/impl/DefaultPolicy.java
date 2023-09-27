@@ -49,3 +49,25 @@ package org.jooq.impl;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

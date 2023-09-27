@@ -60,6 +60,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.getMappedTable;
+import static org.jooq.impl.Tools.unwrap;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;
@@ -76,6 +77,7 @@ import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Name;
+import org.jooq.Path;
 // ...
 import org.jooq.Record;
 import org.jooq.Row;

@@ -318,8 +318,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-        else
-            return table();
+
+        return table();
     }
 
     // @Override

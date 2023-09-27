@@ -50,8 +50,14 @@ import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.Clause.INSERT_RETURNING;
 // ...
 // ...
+// ...
+// ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
@@ -60,9 +66,11 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.constraint;
@@ -75,6 +83,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
+import static org.jooq.impl.InlineDerivedTable.inlineDerivedTable;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
@@ -90,6 +99,7 @@ import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.QueryPartListView.wrap;
+import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
@@ -182,6 +192,7 @@ implements
     static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
     static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect> REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION          = SQLDialect.supportedBy(MYSQL);
+    static final Set<SQLDialect> NO_SUPPORT_INSERT_ALIASED_TABLE               = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, TRINO);
 
     final FieldMapsForInsert     insertMaps;
     Select<?>                    select;
@@ -764,7 +775,15 @@ implements
 
         ctx.visit(K_INTO)
            .sql(' ')
-           .declareTables(true, c -> c.visit(table(c)));
+           .declareTables(true, c -> {
+               Table<?> t = table(c);
+
+               // [#8382] [#8384] Table might be aliased and dialect doesn't like that
+               if (NO_SUPPORT_INSERT_ALIASED_TABLE.contains(ctx.dialect()))
+                   ctx.visit(defaultIfNull(Tools.aliased(t), t));
+               else
+                   c.visit(t);
+           });
 
         Set<Field<?>> fields = insertMaps.toSQLReferenceKeys(ctx);
         ctx.end(INSERT_INSERT_INTO);

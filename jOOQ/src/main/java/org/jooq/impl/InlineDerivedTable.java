@@ -45,7 +45,6 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import org.jooq.Condition;
 import org.jooq.Context;
-// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...

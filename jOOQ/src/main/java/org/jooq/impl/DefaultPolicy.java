@@ -49,4 +49,3 @@ package org.jooq.impl;
 
 
 
-

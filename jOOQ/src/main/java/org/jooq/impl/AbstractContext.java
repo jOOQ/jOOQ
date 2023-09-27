@@ -89,7 +89,6 @@ import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.LanguageContext;
 // ...
-// ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -1223,7 +1222,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         Table<?> joinTree() {
             Table<?> result = table;
-
 
 
 

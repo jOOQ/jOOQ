@@ -64,9 +64,3 @@ package org.jooq;
 
 
 
-
-
-
-
-
-

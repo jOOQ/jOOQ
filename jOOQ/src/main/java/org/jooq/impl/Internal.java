@@ -87,6 +87,8 @@ import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.CreateTable;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 // ...
 // ...
 
@@ -664,5 +666,37 @@ public final class Internal {
 
     public static final ConverterContext converterContext() {
         return CONVERTER_SCOPE.get();
+    }
+
+    private static final Lazy<Integer> JAVA_VERSION = Lazy.of(() -> {
+        try {
+
+            return Reflect.onClass(Runtime.class)
+
+                // Since Java 9
+                .call("version")
+
+                // Since Java 10
+                .call("feature")
+                .get();
+        }
+        catch (ReflectException e) {
+            return 8;
+        }
+    });
+
+    /**
+     * Get the Java version (relevant to jOOQ) as an int.
+     * <p>
+     * Supported versions are:
+     * <ul>
+     * <li>8</li>
+     * <li>11</li>
+     * <li>17</li>
+     * <li>21</li>
+     * </ul>
+     */
+    public static final int javaVersion() {
+        return JAVA_VERSION.get();
     }
 }

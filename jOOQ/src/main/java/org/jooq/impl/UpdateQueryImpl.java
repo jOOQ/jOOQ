@@ -578,10 +578,10 @@ implements
             copy(
                 d -> {
                     if (j != null) {
-                        d.addConditions(j.condition);
+                        d.addConditionsForInlineDerivedTable(j.condition);
                     }
                     if (f != from) {
-                        d.addConditions(where);
+                        d.addConditionsForInlineDerivedTable(where);
                         d.from.clear();
                         d.from.addAll(f);
                     }
@@ -593,6 +593,24 @@ implements
             accept0(ctx);
 
         ctx.scopeEnd();
+    }
+
+    private final void addConditionsForInlineDerivedTable(Condition c) {
+        addConditions(c);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     @Override

@@ -59,16 +59,18 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
 
     final Table<R>  table;
     final Condition condition;
+    final boolean   policyGenerated;
 
     InlineDerivedTable(TableImpl<R> t) {
-        this(removeWhere(t), t.where);
+        this(removeWhere(t), t.where, false);
     }
 
-    InlineDerivedTable(Table<R> table, Condition condition) {
+    InlineDerivedTable(Table<R> table, Condition condition, boolean policyGenerated) {
         super(Lazy.of(() -> selectFrom(table).where(condition)), table.getUnqualifiedName());
 
         this.table = table;
         this.condition = condition;
+        this.policyGenerated = policyGenerated;
     }
 
     static final boolean hasInlineDerivedTables(Context<?> ctx, Table<?> t) {
@@ -131,10 +133,19 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
                     Table<?> m = DSL.table(defaultIfNull(ctx.dsl().map(i.table), i.table).getUnqualifiedName());
 
                     // [#2682] An explicit path join that produces an InlineDerivedTable (e.g. due to a Policy)
+                    //         The InlineDerivedTable.condition is appended by the join tree logic
                     if (TableImpl.path(i.table) != null) {
                         where.addConditions(((TableImpl<?>) i.table).pathCondition());
                         return selectFrom(Tools.unwrap(i.table).as(m)).asTable(m);
                     }
+
+
+
+
+
+
+
+
                     else
                         return i.query().asTable(m);
                 }

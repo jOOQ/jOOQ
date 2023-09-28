@@ -189,7 +189,8 @@ implements
             table,
             f1.length == 1
                 ? ((Field<Object>) f1[0]).in(extractValues(records, f2[0]))
-                : row(f1).in(extractRows(records, f2))
+                : row(f1).in(extractRows(records, f2)),
+            false
         );
     }
 

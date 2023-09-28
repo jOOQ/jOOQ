@@ -395,7 +395,7 @@ implements
         //         sure we produce the proper qualification of fields also when
         //         dereferencing a field using Table.field(String), for example
         if (where != null)
-            return new InlineDerivedTable<>(this, where).fields0();
+            return new InlineDerivedTable<>(this, where, false).fields0();
         else
             return fields;
     }

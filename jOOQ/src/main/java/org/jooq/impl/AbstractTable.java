@@ -1303,7 +1303,7 @@ implements
 
     @Override
     public /* non-final */ Table<R> where(Condition condition) {
-        return new InlineDerivedTable<>(this, condition);
+        return new InlineDerivedTable<>(this, condition, false);
     }
 
     @Override

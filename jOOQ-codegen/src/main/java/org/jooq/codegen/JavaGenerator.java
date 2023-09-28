@@ -8434,6 +8434,8 @@ public class JavaGenerator extends AbstractGenerator {
         if (scala) {}
         else if (kotlin)
             out.println("@Suppress(\"UNCHECKED_CAST\")");
+        else if (Internal.javaVersion() >= 21)
+            out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\", \"this-escape\" })", out.ref("java.lang.SuppressWarnings"));
         else
             out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\" })", out.ref("java.lang.SuppressWarnings"));
     }

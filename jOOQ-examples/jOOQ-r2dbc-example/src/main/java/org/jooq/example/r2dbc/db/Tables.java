@@ -11,7 +11,7 @@ import org.jooq.example.r2dbc.db.tables.Book;
 /**
  * Convenience access to all tables in R2DBC_EXAMPLE.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
 
     /**

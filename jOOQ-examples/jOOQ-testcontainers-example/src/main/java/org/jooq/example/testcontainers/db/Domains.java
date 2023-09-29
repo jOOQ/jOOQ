@@ -15,7 +15,7 @@ import org.jooq.impl.SQLDataType;
 /**
  * Convenience access to all Domains in public.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Domains {
 
     /**

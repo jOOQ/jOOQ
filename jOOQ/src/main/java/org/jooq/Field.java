@@ -914,9 +914,9 @@ extends
      * Create a condition to case-insensitively pattern-check this field against
      * a value.
      * <p>
-     * This translates to <code>this not ilike value</code> in
+     * This translates to <code>this ilike value</code> in
      * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     * <code>lower(this) like lower(value)</code> in all other dialects.
      *
      * @param pattern is wrapped as {@link #val(Object)}.
      */
@@ -930,9 +930,9 @@ extends
      * Create a condition to case-insensitively pattern-check this field against
      * a value.
      * <p>
-     * This translates to <code>this not ilike value</code> in
+     * This translates to <code>this ilike value</code> in
      * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(value)</code> in all other dialects.
+     * <code>lower(this) like lower(value)</code> in all other dialects.
      */
     @NotNull
     @Support
@@ -1442,7 +1442,7 @@ extends
      * This translates to
      * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code> in
      * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
+     * <code>lower(this) like lower(('%' || escape(value, '\') || '%') escape '\')</code>
      * in all other dialects.
      *
      * @param content is wrapped as {@link #val(Object)}.
@@ -1460,7 +1460,7 @@ extends
      * This translates to
      * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code> in
      * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(('%' || escape(value, '\') || '%') escape '\')</code>
+     * <code>lower(this) like lower(('%' || escape(value, '\') || '%') escape '\')</code>
      * in all other dialects.
      */
     @NotNull

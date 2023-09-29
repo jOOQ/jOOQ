@@ -254,7 +254,6 @@ implements
         ctx.scopeStart(this);
 
         // [#2682] [#15632] Apply inline derived tables to the target table
-        // [#15632] TODO: Check if this behaves correctly with aliases
         // [#15632] TODO: Refactor this logic with UpdateQueryImpl
         Table<?> t = table(ctx);
         Table<?> i = InlineDerivedTable.inlineDerivedTable(ctx, t);

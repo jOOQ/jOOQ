@@ -66,7 +66,6 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -83,7 +82,6 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
-import static org.jooq.impl.InlineDerivedTable.inlineDerivedTable;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
@@ -99,7 +97,6 @@ import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
@@ -108,6 +105,7 @@ import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.orElse;
 import static org.jooq.impl.Tools.qualify;
+import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
@@ -119,18 +117,15 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.Set;
+import java.util.function.Consumer;
 
-import org.jooq.CheckReturnValue;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -150,7 +145,6 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
-// ...
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
@@ -158,21 +152,16 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 // ...
+// ...
 import org.jooq.UniqueKey;
-import org.jooq.conf.ParamType;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.Insert;
-import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.UnmodifiableMap;
-import org.jooq.impl.QOM.With;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -385,12 +374,12 @@ implements
         insertMaps.set(map);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void accept(Context<?> ctx) {
         ctx.scopeStart(this);
 
-        // [#2682] [#15632] Apply inline derived tables to the target table (TODO: Apply also to FROM, etc.)
-        // [#15632] TODO: Check if this behaves correctly with aliases
+        // [#2682] [#15632] Apply inline derived tables to the target table
         Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table(ctx));
         if (t instanceof InlineDerivedTable<?> i) {
             copy(
@@ -399,7 +388,36 @@ implements
 
                         // [#15632] SchemaMapping could produce a different table than the one contained
                         //          in the inline derived table specification, and the alias must reflect that
-                        Table<?> m = DSL.table(defaultIfNull(ctx.dsl().map(i.table), i.table).getUnqualifiedName());
+                        Table<?> m = DSL.table(name("t"));
+
+                        if ((onDuplicateKeyIgnore || onDuplicateKeyUpdate) && ctx.configuration().requireCommercial(() -> "InlineDerivedTable emulation for INSERT .. ON DUPLICATE KEY clauses is available in the commercial jOOQ editions only")) {
+
+                            // [pro] */
+                            // [#15632] The i.condition may reference columns that aren't part of d.insertMaps, so
+                            //          we have to synthetically add explicit defaults for any known fields.
+                            List<Field<?>> fields = (List) i.condition.$traverse(Traversers.findingAll(p -> p instanceof TableField<?, ?> tf
+                                ? tf.getTable() == null || unalias(i.table).equals(unalias(tf.getTable()))
+                                : false
+                            ));
+                            for (Field<?> f : fields) {
+                                if (!d.insertMaps.values.containsKey(f))
+                                    d.addValue(f, (Field) f.getDataType().default_());
+                            }
+
+                            // [#15632] Don't allow for values to be created that don't match the InlineDerivedTable or policy
+                            Condition c, c2;
+                            c = c2 = i.condition;
+                            for (Entry<?, ?> e : d.updateMap.entrySet()) {
+                                c2 = (Condition) c2.$replace(q -> e.getKey().equals(q)
+                                    ? (QueryPart) e.getValue()
+                                    : q
+                                );
+                            }
+
+                            if (c2 != c)
+                                d.addConditions(c2);
+                            /* [/pro] */
+                        }
 
                         d.select =
                             selectFrom(
@@ -409,7 +427,9 @@ implements
 
                                 // [#15632] Map the original table reference to the derived table alias
                                 //          to prevent schema mapping in the condition.
-                                .scopeRegister(i.table, false, m).visit(i.condition)
+                                .scopeRegister(i.table, false, m)
+                                .visit(i.condition)
+                                .scopeRegister(i.table, false, null)
                             ));
                     }
                 },

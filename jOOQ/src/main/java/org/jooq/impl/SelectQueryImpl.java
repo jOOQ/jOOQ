@@ -156,7 +156,6 @@ import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.rowNumber;
 // ...
-import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.unquotedName;
@@ -218,7 +217,6 @@ import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
-import static org.jooq.impl.Tools.unwrap;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
@@ -287,11 +285,9 @@ import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
-// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-// ...
 // ...
 import org.jooq.Result;
 import org.jooq.Row;

@@ -43,14 +43,25 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.util.List;
+
+import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Context;
+import org.jooq.ForeignKey;
+import org.jooq.Identity;
+import org.jooq.Index;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableField;
 // ...
+import org.jooq.UniqueKey;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -62,7 +73,7 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
     final boolean   policyGenerated;
 
     InlineDerivedTable(TableImpl<R> t) {
-        this(removeWhere(t), t.where, false);
+        this(t.where((Condition) null), t.where, false);
     }
 
     InlineDerivedTable(Table<R> table, Condition condition, boolean policyGenerated) {
@@ -239,25 +250,6 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
         }
 
         return null;
-    }
-
-    private static final <R extends Record> Table<R> removeWhere(Table<R> t) {
-        if (t instanceof TableImpl<R> i) {
-            return new TableImpl<>(
-                i.getQualifiedName(),
-                i.getSchema(),
-                i.path,
-                i.childPath,
-                i.parentPath,
-                i.alias != null ? removeWhere(i.alias.wrapped) : null,
-                i.parameters,
-                i.getCommentPart(),
-                i.getOptions(),
-                null
-            );
-        }
-        else
-            return t;
     }
 
     @Override

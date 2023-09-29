@@ -91,9 +91,7 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
 import static org.jooq.impl.Keywords.K_FROM;
-import static org.jooq.impl.Keywords.K_LIMIT;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
-import static org.jooq.impl.Keywords.K_ROWS;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
@@ -566,7 +564,6 @@ implements
         ctx.scopeStart(this);
 
         // [#2682] [#15632] Apply inline derived tables to the target table
-        // [#15632] TODO: Check if this behaves correctly with aliases
         // [#15632] TODO: Refactor this logic with DeleteQueryImpl
         Table<?> t = table(ctx);
         Table<?> i = InlineDerivedTable.inlineDerivedTable(ctx, t);

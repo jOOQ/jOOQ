@@ -123,4 +123,16 @@ final class Cache {
      * A 2-value key for caching.
      */
     private static record Key2(Object key1, Object key2) implements Serializable {}
+
+    /**
+     * Create a single-value or multi-value key for caching.
+     */
+    static final Object key(Object key1, Object key2, Object key3) {
+        return new Key3(key1, key2, key3);
+    }
+
+    /**
+     * A 3-value key for caching.
+     */
+    private static record Key3(Object key1, Object key2, Object key3) implements Serializable {}
 }

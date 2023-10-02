@@ -24,7 +24,7 @@
 
         <!-- These in-memory DBs are used by jOOQ-meta-extensions and a variety of integration tests -->
         <h2.version>2.2.224</h2.version>
-        <sqlite.version>3.42.0.0</sqlite.version>
+        <sqlite.version>3.43.0.0</sqlite.version>
         <duckdb.version>0.8.1</duckdb.version>
         <derby.version>10.14.2.0</derby.version>
         <hsqldb.version>2.7.2</hsqldb.version>
@@ -60,7 +60,7 @@
         <spring.boot.version>2.6.1</spring.boot.version>
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
         <errorprone.version>2.11.0</errorprone.version>
-        <testcontainers.version>1.18.3</testcontainers.version>
+        <testcontainers.version>1.19.0</testcontainers.version>
         <jackson.version>2.15.2</jackson.version>
         <jackson.version.databind>2.15.2</jackson.version.databind>
     </properties>
@@ -341,7 +341,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>2.0.7</version>
+                <version>2.0.9</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>

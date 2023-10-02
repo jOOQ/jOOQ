@@ -408,33 +408,42 @@ final class R2DBC {
         @Override
         final void onNext0(Connection c) {
             try {
-                Rendered rendered = rendered(configuration, query);
-                Statement stmt = c.createStatement(sql = rendered.sql);
-                new DefaultBindContext(configuration, null, new R2DBCPreparedStatement(configuration, stmt)).visit(rendered.bindValues);
+                if (query.isExecutable()) {
+                    Rendered rendered = rendered(configuration, query);
+                    Statement stmt = c.createStatement(sql = rendered.sql);
+                    new DefaultBindContext(configuration, null, new R2DBCPreparedStatement(configuration, stmt)).visit(rendered.bindValues);
 
-                // TODO: Reuse org.jooq.impl.Tools.setFetchSize(ExecuteContext ctx, int fetchSize)
-                AbstractResultQuery<?> q1 = abstractResultQuery(query);
-                if (q1 != null) {
-                    int f = SettingsTools.getFetchSize(q1.fetchSize(), configuration.settings());
+                    // TODO: Reuse org.jooq.impl.Tools.setFetchSize(ExecuteContext ctx, int fetchSize)
+                    AbstractResultQuery<?> q1 = abstractResultQuery(query);
+                    if (q1 != null) {
+                        int f = SettingsTools.getFetchSize(q1.fetchSize(), configuration.settings());
 
-                    if (f != 0) {
-                        if (log.isDebugEnabled())
-                            log.debug("Setting fetch size", f);
+                        if (f != 0) {
+                            if (log.isDebugEnabled())
+                                log.debug("Setting fetch size", f);
 
-                        stmt.fetchSize(f);
+                            stmt.fetchSize(f);
+                        }
                     }
+
+                    AbstractDMLQuery<?> q2 = abstractDMLQuery(query);
+                    if (q2 != null
+                            && !q2.returning.isEmpty()
+
+
+
+                            && !q2.nativeSupportReturningOrDataChangeDeltaTable(configuration.dsl()))
+                        stmt.returnGeneratedValues(Tools.map(q2.returningResolvedAsterisks, Field::getName, String[]::new));
+
+                    stmt.execute().subscribe(resultSubscriber.apply(query, downstream));
                 }
+                else {
+                    if (log.isDebugEnabled())
+                        log.debug("Query is not executable", query);
 
-                AbstractDMLQuery<?> q2 = abstractDMLQuery(query);
-                if (q2 != null
-                        && !q2.returning.isEmpty()
-
-
-
-                        && !q2.nativeSupportReturningOrDataChangeDeltaTable(configuration.dsl()))
-                    stmt.returnGeneratedValues(Tools.map(q2.returningResolvedAsterisks, Field::getName, String[]::new));
-
-                stmt.execute().subscribe(resultSubscriber.apply(query, downstream));
+                    Subscriber<Result> s = resultSubscriber.apply(query, downstream);
+                    s.onSubscribe(new NoOpSubscription(s));
+                }
             }
 
             // [#13343] Cancel the downstream in case of a rendering bug in jOOQ
@@ -442,6 +451,18 @@ final class R2DBC {
                 downstream.cancel();
                 onError(t);
             }
+        }
+    }
+
+    static final record NoOpSubscription(Subscriber<?> subscriber) implements Subscription {
+        @Override
+        public void request(long n) {
+            subscriber.onComplete();
+        }
+
+        @Override
+        public void cancel() {
+            subscriber.onComplete();
         }
     }
 
@@ -1545,7 +1566,11 @@ final class R2DBC {
         @Override
         final void request0() {
             try {
-                subscriber.onNext(query.execute());
+                if (query.isExecutable())
+                    subscriber.onNext(query.execute());
+                else if (log.isDebugEnabled())
+                    log.debug("Query is not executable", query);
+
                 subscriber.onComplete();
             }
             catch (Throwable t) {

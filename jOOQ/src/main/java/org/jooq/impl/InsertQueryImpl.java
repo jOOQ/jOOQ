@@ -392,31 +392,31 @@ implements
 
                         if ((onDuplicateKeyIgnore || onDuplicateKeyUpdate) && ctx.configuration().requireCommercial(() -> "InlineDerivedTable emulation for INSERT .. ON DUPLICATE KEY clauses is available in the commercial jOOQ editions only")) {
 
-                            // [pro] */
-                            // [#15632] The i.condition may reference columns that aren't part of d.insertMaps, so
-                            //          we have to synthetically add explicit defaults for any known fields.
-                            List<Field<?>> fields = (List) i.condition.$traverse(Traversers.findingAll(p -> p instanceof TableField<?, ?> tf
-                                ? tf.getTable() == null || unalias(i.table).equals(unalias(tf.getTable()))
-                                : false
-                            ));
-                            for (Field<?> f : fields) {
-                                if (!d.insertMaps.values.containsKey(f))
-                                    d.addValue(f, (Field) f.getDataType().default_());
-                            }
 
-                            // [#15632] Don't allow for values to be created that don't match the InlineDerivedTable or policy
-                            Condition c, c2;
-                            c = c2 = i.condition;
-                            for (Entry<?, ?> e : d.updateMap.entrySet()) {
-                                c2 = (Condition) c2.$replace(q -> e.getKey().equals(q)
-                                    ? (QueryPart) e.getValue()
-                                    : q
-                                );
-                            }
 
-                            if (c2 != c)
-                                d.addConditions(c2);
-                            /* [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
 
                         d.select =

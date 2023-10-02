@@ -869,7 +869,8 @@ final class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> impl
             Set<Field<?>> k = insertMaps.keysFlattened(ctx);
             Collection<Field<?>> f = null;
 
-            if (!NO_SUPPORT_SUBQUERY_IN_MERGE_USING.contains(ctx.dialect())) {
+            // [#15668] The no-subquery-in-MERGE-USING emulation only applies to single row INSERTs
+            if (!NO_SUPPORT_SUBQUERY_IN_MERGE_USING.contains(ctx.dialect()) || select != null || insertMaps.rows > 1) {
                 f = k.isEmpty() ? asList(table().fields()) : k;
 
                 // [#10461]          Multi row inserts need to be emulated using select

@@ -71,12 +71,17 @@ import static org.jooq.meta.hsqldb.information_schema.Tables.VIEWS;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record6;
@@ -499,7 +504,7 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
-        List<DomainDefinition> result = new ArrayList<>();
+        Map<Name, DefaultDomainDefinition> result = new LinkedHashMap<>();
 
         Domains d = DOMAINS.as("d");
         DomainConstraints dc = DOMAIN_CONSTRAINTS.as("dc");
@@ -520,34 +525,42 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
                 .and(d.DOMAIN_SCHEMA.eq(dc.DOMAIN_SCHEMA))
                 .and(d.DOMAIN_NAME.eq(dc.DOMAIN_NAME))
             .where(d.DOMAIN_SCHEMA.in(getInputSchemata()))
-            .orderBy(d.DOMAIN_SCHEMA, d.DOMAIN_NAME)
+            .orderBy(
+                d.DOMAIN_SCHEMA,
+                d.DOMAIN_NAME,
+                dc.checkConstraints().CONSTRAINT_NAME
+            )
         ) {
-            SchemaDefinition schema = getSchema(record.get(d.DOMAIN_SCHEMA));
+            String schemaName = record.get(d.DOMAIN_SCHEMA);
+            String domainName = record.get(d.DOMAIN_NAME);
+            String check = record.get(dc.checkConstraints().CHECK_CLAUSE);
 
-            DataTypeDefinition baseType = new DefaultDataTypeDefinition(
-                this,
-                schema,
-                record.get(d.DATA_TYPE),
-                record.get(d.CHARACTER_MAXIMUM_LENGTH),
-                record.get(d.NUMERIC_PRECISION),
-                record.get(d.NUMERIC_SCALE),
-                true,
-                record.get(d.DOMAIN_DEFAULT)
-            );
+            DefaultDomainDefinition domain = result.computeIfAbsent(name(schemaName, domainName), k -> {
+                SchemaDefinition schema = getSchema(schemaName);
 
-            DefaultDomainDefinition domain = new DefaultDomainDefinition(
-                schema,
-                record.get(d.DOMAIN_NAME),
-                baseType
-            );
+                DataTypeDefinition baseType = new DefaultDataTypeDefinition(
+                    this,
+                    schema,
+                    record.get(d.DATA_TYPE),
+                    record.get(d.CHARACTER_MAXIMUM_LENGTH),
+                    record.get(d.NUMERIC_PRECISION),
+                    record.get(d.NUMERIC_SCALE),
+                    true,
+                    record.get(d.DOMAIN_DEFAULT)
+                );
 
-            if (!StringUtils.isBlank(record.get(dc.checkConstraints().CHECK_CLAUSE)))
-                domain.addCheckClause(record.get(dc.checkConstraints().CHECK_CLAUSE));
+                return new DefaultDomainDefinition(
+                    schema,
+                    domainName,
+                    baseType
+                );
+            });
 
-            result.add(domain);
+            if (!StringUtils.isBlank(check))
+                domain.addCheckClause(check);
         }
 
-        return result;
+        return new ArrayList<>(result.values());
     }
 
     @Override

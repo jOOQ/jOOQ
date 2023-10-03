@@ -109,6 +109,7 @@ import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -793,7 +794,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
-        List<DomainDefinition> result = new ArrayList<>();
+        Map<Name, DefaultDomainDefinition> result = new LinkedHashMap<>();
 
         if (existAll(PG_CONSTRAINT, PG_TYPE)) {
             PgNamespace n = PG_NAMESPACE.as("n");
@@ -869,35 +870,40 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     .and(n.NSPNAME.in(getInputSchemata()))
                     .orderBy(n.NSPNAME, d.TYPNAME)) {
 
-                SchemaDefinition schema = getSchema(record.get(n.NSPNAME));
+                String schemaName = record.get(n.NSPNAME);
+                String domainName = record.get(d.TYPNAME);
+                String[] check = record.get(src);
 
-                DataTypeDefinition baseType = new DefaultDataTypeDefinition(
-                    this,
-                    schema,
-                    record.get(b.TYPNAME),
-                    record.get(DOMAINS.CHARACTER_MAXIMUM_LENGTH),
-                    record.get(DOMAINS.NUMERIC_PRECISION),
-                    record.get(DOMAINS.NUMERIC_SCALE),
-                   !record.get(d.TYPNOTNULL, boolean.class),
-                    record.get(d.TYPDEFAULT),
-                    name(
-                        record.get(n.NSPNAME),
-                        record.get(b.TYPNAME)
-                    )
-                );
+                DefaultDomainDefinition domain = result.computeIfAbsent(name(schemaName, domainName), k -> {
+                    SchemaDefinition schema = getSchema(schemaName);
 
-                DefaultDomainDefinition domain = new DefaultDomainDefinition(
-                    schema,
-                    record.get(d.TYPNAME),
-                    baseType
-                );
+                    DataTypeDefinition baseType = new DefaultDataTypeDefinition(
+                        this,
+                        schema,
+                        record.get(b.TYPNAME),
+                        record.get(DOMAINS.CHARACTER_MAXIMUM_LENGTH),
+                        record.get(DOMAINS.NUMERIC_PRECISION),
+                        record.get(DOMAINS.NUMERIC_SCALE),
+                       !record.get(d.TYPNOTNULL, boolean.class),
+                        record.get(d.TYPDEFAULT),
+                        name(
+                            record.get(n.NSPNAME),
+                            record.get(b.TYPNAME)
+                        )
+                    );
 
-                domain.addCheckClause(record.get(src));
-                result.add(domain);
+                    return new DefaultDomainDefinition(
+                        schema,
+                        domainName,
+                        baseType
+                    );
+                });
+
+                domain.addCheckClause(check);
             }
         }
 
-        return result;
+        return new ArrayList<>(result.values());
     }
 
     @Override

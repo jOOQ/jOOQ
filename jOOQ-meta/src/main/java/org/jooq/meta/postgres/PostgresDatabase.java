@@ -828,6 +828,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         "domain_id",
                         "base_id",
                         "typbasetype",
+                        "conname",
                         "src"
                     )
                     .as(
@@ -835,6 +836,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                              d.OID,
                              d.OID,
                              d.TYPBASETYPE,
+                             c.CONNAME,
                              when(c.OID.isNotNull(), array(constraintDef))
                          )
                         .from(d)
@@ -847,6 +849,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                              field(name("domains", "domain_id"), Long.class),
                              d.OID,
                              d.TYPBASETYPE,
+                             c.CONNAME,
                              decode()
                                  .when(c.CONBIN.isNull(), src)
                                  .otherwise(arrayAppend(src, constraintDef))
@@ -882,7 +885,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         .on(field(name("domains", "base_id")).eq(b.OID))
                     .where(d.TYPTYPE.eq("d"))
                     .and(d.pgNamespace().NSPNAME.in(getInputSchemata()))
-                    .orderBy(d.pgNamespace().NSPNAME, d.TYPNAME)
+                    .orderBy(d.pgNamespace().NSPNAME, d.TYPNAME, field(name("domains", "conname")))
             ) {
 
                 String schemaName = record.get(d.pgNamespace().NSPNAME);

@@ -834,7 +834,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected List<DomainDefinition> getDomains0() throws SQLException {
-        List<DomainDefinition> result = new ArrayList<>();
+        Map<Name, DefaultDomainDefinition> result = new LinkedHashMap<>();
 
         if (existAll(PG_CONSTRAINT, PG_TYPE)) {
             PgConstraint c = PG_CONSTRAINT.as("c");
@@ -905,35 +905,41 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     .and(d.pgNamespace().NSPNAME.in(getInputSchemata()))
                     .orderBy(d.pgNamespace().NSPNAME, d.TYPNAME)
             ) {
-                SchemaDefinition schema = getSchema(record.get(d.pgNamespace().NSPNAME));
 
-                DataTypeDefinition baseType = new DefaultDataTypeDefinition(
-                    this,
-                    schema,
-                    record.get(b.TYPNAME),
-                    record.get(DOMAINS.CHARACTER_MAXIMUM_LENGTH),
-                    record.get(DOMAINS.NUMERIC_PRECISION),
-                    record.get(DOMAINS.NUMERIC_SCALE),
-                   !record.get(d.TYPNOTNULL, boolean.class),
-                    record.get(d.TYPDEFAULT),
-                    name(
-                        record.get(d.pgNamespace().NSPNAME),
-                        record.get(b.TYPNAME)
-                    )
-                );
+                String schemaName = record.get(d.pgNamespace().NSPNAME);
+                String domainName = record.get(d.TYPNAME);
+                String[] check = record.get(src);
 
-                DefaultDomainDefinition domain = new DefaultDomainDefinition(
-                    schema,
-                    record.get(d.TYPNAME),
-                    baseType
-                );
+                DefaultDomainDefinition domain = result.computeIfAbsent(name(schemaName, domainName), k -> {
+                    SchemaDefinition schema = getSchema(record.get(d.pgNamespace().NSPNAME));
 
-                domain.addCheckClause(record.get(src));
-                result.add(domain);
+                    DataTypeDefinition baseType = new DefaultDataTypeDefinition(
+                        this,
+                        schema,
+                        record.get(b.TYPNAME),
+                        record.get(DOMAINS.CHARACTER_MAXIMUM_LENGTH),
+                        record.get(DOMAINS.NUMERIC_PRECISION),
+                        record.get(DOMAINS.NUMERIC_SCALE),
+                       !record.get(d.TYPNOTNULL, boolean.class),
+                        record.get(d.TYPDEFAULT),
+                        name(
+                            record.get(d.pgNamespace().NSPNAME),
+                            record.get(b.TYPNAME)
+                        )
+                    );
+
+                    return new DefaultDomainDefinition(
+                        schema,
+                        record.get(d.TYPNAME),
+                        baseType
+                    );
+                });
+
+                domain.addCheckClause(check);
             }
         }
 
-        return result;
+        return new ArrayList<>(result.values());
     }
 
 

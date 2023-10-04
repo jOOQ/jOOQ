@@ -9428,7 +9428,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterIndexIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     AlterIndexOnStep alterIndexIfExists(@Stringly.Name String index);
 
     /**
@@ -9437,7 +9437,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterIndexIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     AlterIndexOnStep alterIndexIfExists(Name index);
 
     /**
@@ -9446,7 +9446,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterIndexIfExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     AlterIndexOnStep alterIndexIfExists(Index index);
 
     /**
@@ -9626,7 +9626,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterViewIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterViewStep alterViewIfExists(@Stringly.Name String view);
 
     /**
@@ -9635,7 +9635,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterViewIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterViewStep alterViewIfExists(Name view);
 
     /**
@@ -9644,7 +9644,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterViewIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterViewStep alterViewIfExists(Table<?> view);
 
     /**
@@ -10021,7 +10021,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndexIfNotExists(@Stringly.Name String index);
 
     /**
@@ -10030,7 +10030,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndexIfNotExists(Name index);
 
     /**
@@ -10039,7 +10039,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndexIfNotExists(Index index);
 
     /**
@@ -10048,7 +10048,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists()
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndexIfNotExists();
 
     /**
@@ -10093,7 +10093,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createUniqueIndexIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createUniqueIndexIfNotExists(@Stringly.Name String index);
 
     /**
@@ -10102,7 +10102,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createUniqueIndexIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createUniqueIndexIfNotExists(Name index);
 
     /**
@@ -10111,7 +10111,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createUniqueIndexIfNotExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createUniqueIndexIfNotExists(Index index);
 
     /**
@@ -10120,7 +10120,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createUniqueIndexIfNotExists()
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createUniqueIndexIfNotExists();
 
 
@@ -11044,7 +11044,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndexIfExists(@Stringly.Name String index);
 
     /**
@@ -11053,7 +11053,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndexIfExists(Name index);
 
     /**
@@ -11062,7 +11062,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndexIfExists(Index index);
 
 

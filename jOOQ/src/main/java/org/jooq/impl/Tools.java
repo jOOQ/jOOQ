@@ -5536,35 +5536,15 @@ final class Tools {
                 break;
             }
 
+            case MYSQL: {
+
+
+
+
+            }
+
             case MARIADB: {
-                List<String> sqlstates = new ArrayList<>();
-
-//                if (type == CREATE_SCHEMA)
-//                    sqlstates.add("42710");
-//                else if (type == CREATE_SEQUENCE)
-//                    sqlstates.add("42710");
-//                else if (type == CREATE_VIEW)
-//                    sqlstates.add("42710");
-//                else
-//                    if (type == ALTER_TABLE) {
-//                    if (TRUE.equals(container))
-//                        sqlstates.add("42704");
-//
-//                    if (TRUE.equals(element))
-//                        sqlstates.add("42703");
-//                    else if (FALSE.equals(element))
-//                        sqlstates.add("42711");
-//                }
-//                else
-                    sqlstates.add("42S02");
-
-                begin(ctx, c -> {
-                    for (String sqlstate : sqlstates)
-                        c.visit(keyword("declare continue handler for sqlstate")).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_BEGIN).sql(' ').visit(K_END).sql(';').formatSeparator();
-
-                    runnable.accept(c);
-                    c.sql(';');
-                });
+                tryCatchMySQL(ctx, type, runnable);
                 break;
             }
 
@@ -5596,6 +5576,49 @@ final class Tools {
                 runnable.accept(ctx);
                 break;
         }
+    }
+
+    private static final void tryCatchMySQL(Context<?> ctx, DDLStatementType type, Consumer<? super Context<?>> runnable) {
+        List<String> sqlstates = new ArrayList<>();
+
+        switch (ctx.family()) {
+            case MARIADB:
+                switch (type) {
+                    case ALTER_INDEX:
+                    case CREATE_INDEX:
+                    case DROP_INDEX:
+                        sqlstates.add("42000");
+                        break;
+                }
+
+                sqlstates.add("42S02");
+                break;
+
+            case MYSQL:
+                switch (type) {
+                    case ALTER_INDEX:
+                    case CREATE_INDEX:
+                    case DROP_INDEX:
+                        sqlstates.add("42000");
+                        break;
+
+                    case ALTER_VIEW:
+                    case CREATE_VIEW:
+                    case DROP_VIEW:
+                        sqlstates.add("42S01");
+                        break;
+                }
+
+                break;
+        }
+
+        begin(ctx, c -> {
+            for (String sqlstate : sqlstates)
+                c.visit(keyword("declare continue handler for sqlstate")).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_BEGIN).sql(' ').visit(K_END).sql(';').formatSeparator();
+
+            runnable.accept(c);
+            c.sql(';');
+        });
     }
 
     static final void toSQLDDLTypeDeclarationForAddition(Context<?> ctx, DataType<?> type) {

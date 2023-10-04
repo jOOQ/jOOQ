@@ -2263,8 +2263,10 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (nn)
                         arguments.add(columnMember + ": " + type);
-                    else
+                    else if (generateKotlinDefaultedNullableRecordAttributes())
                         arguments.add(columnMember + ": " + type + "? = null");
+                    else
+                        arguments.add(columnMember + ": " + type + "?");
                 }
                 else {
                     final String nullableAnnotation = column instanceof EmbeddableDefinition
@@ -5481,7 +5483,11 @@ public class JavaGenerator extends AbstractGenerator {
                     member,
                     out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
                     nullability,
-                    nullability.isEmpty() ? "" : " = null",
+                    nullability.isEmpty()
+                        ? ""
+                        : generateKotlinDefaultedNullablePojoAttributes()
+                        ? " = null"
+                        : "",
                     separator
                 );
             });

@@ -840,6 +840,10 @@ public class GenerationTool {
                 generator.setGenerateKotlinNotNullRecordAttributes(g.getGenerate().isKotlinNotNullRecordAttributes());
             if (g.getGenerate().isKotlinNotNullInterfaceAttributes() != null)
                 generator.setGenerateKotlinNotNullInterfaceAttributes(g.getGenerate().isKotlinNotNullInterfaceAttributes());
+            if (g.getGenerate().isKotlinDefaultedNullablePojoAttributes() != null)
+                generator.setGenerateKotlinDefaultedNullablePojoAttributes(g.getGenerate().isKotlinDefaultedNullablePojoAttributes());
+            if (g.getGenerate().isKotlinDefaultedNullableRecordAttributes() != null)
+                generator.setGenerateKotlinDefaultedNullableRecordAttributes(g.getGenerate().isKotlinDefaultedNullableRecordAttributes());
             if (g.getGenerate().getGeneratedSerialVersionUID() != null)
                 generator.setGenerateGeneratedSerialVersionUID(g.getGenerate().getGeneratedSerialVersionUID());
             if (g.getGenerate().getMaxMembersPerInitialiser() != null)

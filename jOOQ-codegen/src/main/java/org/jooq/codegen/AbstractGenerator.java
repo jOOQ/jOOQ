@@ -126,6 +126,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateKotlinNotNullPojoAttributes              = false;
     boolean                            generateKotlinNotNullRecordAttributes            = false;
     boolean                            generateKotlinNotNullInterfaceAttributes         = false;
+    boolean                            generateKotlinDefaultedNullablePojoAttributes    = true;
+    boolean                            generateKotlinDefaultedNullableRecordAttributes  = true;
     GeneratedSerialVersionUID          generatedSerialVersionUID                        = GeneratedSerialVersionUID.CONSTANT;
     int                                maxMembersPerInitialiser                         = 500;
     boolean                            generateQueues                                   = true;
@@ -852,6 +854,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateKotlinNotNullInterfaceAttributes(boolean generateKotlinNotNullInterfaceAttributes) {
         this.generateKotlinNotNullInterfaceAttributes = generateKotlinNotNullInterfaceAttributes;
+    }
+
+    @Override
+    public boolean generateKotlinDefaultedNullablePojoAttributes() {
+        return generateKotlinDefaultedNullablePojoAttributes;
+    }
+
+    @Override
+    public void setGenerateKotlinDefaultedNullablePojoAttributes(boolean generateKotlinDefaultedNullablePojoAttributes) {
+        this.generateKotlinDefaultedNullablePojoAttributes = generateKotlinDefaultedNullablePojoAttributes;
+    }
+
+    @Override
+    public boolean generateKotlinDefaultedNullableRecordAttributes() {
+        return generateKotlinDefaultedNullableRecordAttributes;
+    }
+
+    @Override
+    public void setGenerateKotlinDefaultedNullableRecordAttributes(boolean generateKotlinDefaultedNullableRecordAttributes) {
+        this.generateKotlinDefaultedNullableRecordAttributes = generateKotlinDefaultedNullableRecordAttributes;
     }
 
     @Override

@@ -13185,7 +13185,7 @@ public class DSL {
      * @see #default_()
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Object> defaultValue() {
         return default_();
     }
@@ -13206,7 +13206,7 @@ public class DSL {
      * @see #default_(Class)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T> Field<T> defaultValue(Class<T> type) {
         return default_(type);
     }
@@ -13220,7 +13220,7 @@ public class DSL {
      * @see #default_(DataType)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T> Field<T> defaultValue(DataType<T> type) {
         return default_(type);
     }
@@ -13234,7 +13234,7 @@ public class DSL {
      * @see #default_(Field)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T> Field<T> defaultValue(Field<T> field) {
         return default_(field);
     }
@@ -13249,7 +13249,7 @@ public class DSL {
      * {@link #defaultValue(Class)} or {@link #defaultValue(DataType)} instead.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Object> default_() {
         return default_(Object.class);
     }
@@ -13266,7 +13266,7 @@ public class DSL {
      * {@link #default_(DataType)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T> Field<T> default_(Class<T> type) {
         return default_(getDataType(type));
     }
@@ -13276,7 +13276,7 @@ public class DSL {
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T> Field<T> default_(DataType<T> type) {
         return new Default<T>(type);
     }
@@ -13286,7 +13286,7 @@ public class DSL {
      * <code>UPDATE</code>, or <code>MERGE</code> statements.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static <T> Field<T> default_(Field<T> field) {
         return default_(field.getDataType());
     }

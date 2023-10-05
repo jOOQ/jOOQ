@@ -44,9 +44,15 @@ import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
 // ...
+// ...
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.TRINO;
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
@@ -62,6 +68,7 @@ import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.flattenFieldOrRows;
 import static org.jooq.impl.Tools.lazy;
+import static org.jooq.impl.Tools.orElse;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
 
@@ -107,8 +114,12 @@ import org.jooq.impl.Tools.ExtendedDataKey;
  * @author Lukas Eder
  */
 final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImplemented {
-    static final Set<SQLDialect>        CASTS_NEEDED           = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect>        CASTS_NEEDED_FOR_MERGE = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>        CASTS_NEEDED                  = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>        CASTS_NEEDED_FOR_MERGE        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+
+
+
+
 
     final Table<?>                      table;
     final Map<Field<?>, Field<?>>       empty;
@@ -450,7 +461,8 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 ctx.formatIndentStart();
 
             String separator = "";
-            for (List<Field<?>> list : valuesFlattened(ctx, GeneratorStatementType.INSERT).values()) {
+            for (Entry<Field<?>, List<Field<?>>> e : valuesFlattened(ctx, GeneratorStatementType.INSERT).entrySet()) {
+                List<Field<?>> list = e.getValue();
                 ctx.sql(separator);
 
                 if (indent)
@@ -469,7 +481,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-                ctx.visit(list.get(row));
+                ctx.visit(patchDefault(ctx, list.get(row), e.getKey()));
                 separator = ", ";
             }
 
@@ -483,6 +495,16 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
         if (!CASTS_NEEDED.contains(ctx.dialect()))
             ctx.castMode(previous);
+    }
+
+    private final Field<?> patchDefault(Context<?> ctx, Field<?> d, Field<?> f) {
+
+
+
+
+
+
+        return d;
     }
 
 

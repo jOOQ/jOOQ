@@ -149,6 +149,7 @@ implements
 
 
 
+
                 default:
                     ctx.visit(
                         DSL.case_(DSL.position(DSL.substring(in, startIndex), search))
@@ -164,6 +165,7 @@ implements
                 case DERBY:
                     ctx.visit(N_LOCATE).sql('(').visit(search).sql(", ").visit(in).sql(')');
                     break;
+
 
 
 

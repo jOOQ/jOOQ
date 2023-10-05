@@ -41,25 +41,16 @@ import static org.jooq.Clause.FIELD;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.GREATER;
 import static org.jooq.Comparator.GREATER_OR_EQUAL;
-import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.LESS;
 import static org.jooq.Comparator.LESS_OR_EQUAL;
 import static org.jooq.Comparator.LIKE;
-import static org.jooq.Comparator.LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_EQUALS;
-import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.Comparator.NOT_LIKE;
-import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
-import static org.jooq.Comparator.NOT_SIMILAR_TO;
-import static org.jooq.Comparator.SIMILAR_TO;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.ExpressionOperator.ADD;
-import static org.jooq.impl.ExpressionOperator.DIVIDE;
-import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.castIfNeeded;
-import static org.jooq.impl.Tools.fieldsArray;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.nullSafeList;
@@ -336,7 +327,7 @@ abstract class AbstractField<T> extends AbstractTypedNamed<T> implements Field<T
     public final SortField<Integer> sortDesc(Collection<T> sortList) {
         Map<T, Integer> map = new LinkedHashMap<>();
 
-        int i = 0;
+        int i = sortList.size();
         for (T value : sortList)
             map.put(value, i--);
 

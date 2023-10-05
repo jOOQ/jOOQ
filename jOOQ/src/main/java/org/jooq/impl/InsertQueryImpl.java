@@ -73,6 +73,7 @@ import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.constraint;
+import static org.jooq.impl.DSL.default_;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -883,6 +884,18 @@ implements
                     break;
 
                 default:
+
+
+
+
+
+
+
+
+
+
+
+
                     ctx.formatSeparator()
                        .visit(K_DEFAULT_VALUES);
 

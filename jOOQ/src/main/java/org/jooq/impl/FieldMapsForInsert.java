@@ -412,7 +412,9 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
         for (int i = 0; i < rows; i++) {
             int row = i;
-            Select<Record> iteration = DSL.select(Tools.map(v.values(), l -> castNullsIfNeeded(ctx, needsCast, l.get(row))));
+            Select<Record> iteration = DSL.select(Tools.map(
+                v.entrySet(), e -> patchDefault0(castNullsIfNeeded(ctx, needsCast, e.getValue().get(row)), e.getKey())
+            ));
 
             if (select == null)
                 select = iteration;
@@ -503,6 +505,13 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
+        return d;
+    }
+
+    private final Field<?> patchDefault0(Field<?> d, Field<?> f) {
+        if (d instanceof Default)
+            return orElse(f.getDataType().default_(), () -> DSL.inline(null, f));
 
         return d;
     }

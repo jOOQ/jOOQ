@@ -391,23 +391,20 @@ implements
                         //          in the inline derived table specification, and the alias must reflect that
                         Table<?> m = DSL.table(name("t"));
 
+
+
+
+
+
+
+
+
+
+
+
+
+
                         if ((onDuplicateKeyIgnore || onDuplicateKeyUpdate) && ctx.configuration().requireCommercial(() -> "InlineDerivedTable emulation for INSERT .. ON DUPLICATE KEY clauses is available in the commercial jOOQ editions only")) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

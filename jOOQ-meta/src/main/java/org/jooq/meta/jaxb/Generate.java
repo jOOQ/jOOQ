@@ -150,6 +150,10 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean kotlinNotNullRecordAttributes = false;
     @XmlElement(defaultValue = "false")
     protected Boolean kotlinNotNullInterfaceAttributes = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean kotlinDefaultedNullablePojoAttributes = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean kotlinDefaultedNullableRecordAttributes = true;
     @XmlElement(defaultValue = "false")
     protected Boolean globalObjectNames = false;
     @XmlElement(defaultValue = "true")
@@ -1657,6 +1661,54 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setKotlinNotNullInterfaceAttributes(Boolean value) {
         this.kotlinNotNullInterfaceAttributes = value;
+    }
+
+    /**
+     * Generate defaulted nullable POJO attributes.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isKotlinDefaultedNullablePojoAttributes() {
+        return kotlinDefaultedNullablePojoAttributes;
+    }
+
+    /**
+     * Sets the value of the kotlinDefaultedNullablePojoAttributes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setKotlinDefaultedNullablePojoAttributes(Boolean value) {
+        this.kotlinDefaultedNullablePojoAttributes = value;
+    }
+
+    /**
+     * Generate defaulted nullable Record attributes.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isKotlinDefaultedNullableRecordAttributes() {
+        return kotlinDefaultedNullableRecordAttributes;
+    }
+
+    /**
+     * Sets the value of the kotlinDefaultedNullableRecordAttributes property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setKotlinDefaultedNullableRecordAttributes(Boolean value) {
+        this.kotlinDefaultedNullableRecordAttributes = value;
     }
 
     /**
@@ -3245,6 +3297,16 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    public Generate withKotlinDefaultedNullablePojoAttributes(Boolean value) {
+        setKotlinDefaultedNullablePojoAttributes(value);
+        return this;
+    }
+
+    public Generate withKotlinDefaultedNullableRecordAttributes(Boolean value) {
+        setKotlinDefaultedNullableRecordAttributes(value);
+        return this;
+    }
+
     public Generate withGlobalObjectNames(Boolean value) {
         setGlobalObjectNames(value);
         return this;
@@ -3608,6 +3670,8 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("kotlinNotNullPojoAttributes", kotlinNotNullPojoAttributes);
         builder.append("kotlinNotNullRecordAttributes", kotlinNotNullRecordAttributes);
         builder.append("kotlinNotNullInterfaceAttributes", kotlinNotNullInterfaceAttributes);
+        builder.append("kotlinDefaultedNullablePojoAttributes", kotlinDefaultedNullablePojoAttributes);
+        builder.append("kotlinDefaultedNullableRecordAttributes", kotlinDefaultedNullableRecordAttributes);
         builder.append("globalObjectNames", globalObjectNames);
         builder.append("globalObjectReferences", globalObjectReferences);
         builder.append("globalCatalogReferences", globalCatalogReferences);
@@ -4214,6 +4278,24 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (kotlinDefaultedNullablePojoAttributes == null) {
+            if (other.kotlinDefaultedNullablePojoAttributes!= null) {
+                return false;
+            }
+        } else {
+            if (!kotlinDefaultedNullablePojoAttributes.equals(other.kotlinDefaultedNullablePojoAttributes)) {
+                return false;
+            }
+        }
+        if (kotlinDefaultedNullableRecordAttributes == null) {
+            if (other.kotlinDefaultedNullableRecordAttributes!= null) {
+                return false;
+            }
+        } else {
+            if (!kotlinDefaultedNullableRecordAttributes.equals(other.kotlinDefaultedNullableRecordAttributes)) {
+                return false;
+            }
+        }
         if (globalObjectNames == null) {
             if (other.globalObjectNames!= null) {
                 return false;
@@ -4766,6 +4848,8 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((kotlinNotNullPojoAttributes == null)? 0 :kotlinNotNullPojoAttributes.hashCode()));
         result = ((prime*result)+((kotlinNotNullRecordAttributes == null)? 0 :kotlinNotNullRecordAttributes.hashCode()));
         result = ((prime*result)+((kotlinNotNullInterfaceAttributes == null)? 0 :kotlinNotNullInterfaceAttributes.hashCode()));
+        result = ((prime*result)+((kotlinDefaultedNullablePojoAttributes == null)? 0 :kotlinDefaultedNullablePojoAttributes.hashCode()));
+        result = ((prime*result)+((kotlinDefaultedNullableRecordAttributes == null)? 0 :kotlinDefaultedNullableRecordAttributes.hashCode()));
         result = ((prime*result)+((globalObjectNames == null)? 0 :globalObjectNames.hashCode()));
         result = ((prime*result)+((globalObjectReferences == null)? 0 :globalObjectReferences.hashCode()));
         result = ((prime*result)+((globalCatalogReferences == null)? 0 :globalCatalogReferences.hashCode()));

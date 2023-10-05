@@ -711,6 +711,26 @@ public interface Generator {
     void setGenerateKotlinNotNullInterfaceAttributes(boolean generateKotlinNotNullInterfaceAttributes);
 
     /**
+     * Generate defaulted nullable POJO attributes.
+     */
+    boolean generateKotlinDefaultedNullablePojoAttributes();
+
+    /**
+     * Generate defaulted nullable POJO attributes.
+     */
+    void setGenerateKotlinDefaultedNullablePojoAttributes(boolean generateKotlinDefaultedNullablePojoAttributes);
+
+    /**
+     * Generate defaulted nullable Record attributes.
+     */
+    boolean generateKotlinDefaultedNullableRecordAttributes();
+
+    /**
+     * Generate defaulted nullable Record attributes.
+     */
+    void setGenerateKotlinDefaultedNullableRecordAttributes(boolean generateKotlinDefaultedNullableRecordAttributes);
+
+    /**
      * The type of <code>serialVersionUID</code> that should be generated.
      */
     GeneratedSerialVersionUID generatedSerialVersionUID();

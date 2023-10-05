@@ -7375,7 +7375,7 @@ public class DSL {
      * @see DSLContext#alterIndexIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.AlterIndexOnStep alterIndexIfExists(@Stringly.Name String index) {
         return dsl().alterIndexIfExists(index);
     }
@@ -7390,7 +7390,7 @@ public class DSL {
      * @see DSLContext#alterIndexIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.AlterIndexOnStep alterIndexIfExists(Name index) {
         return dsl().alterIndexIfExists(index);
     }
@@ -7405,7 +7405,7 @@ public class DSL {
      * @see DSLContext#alterIndexIfExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES })
+    @Support({ H2, MARIADB, MYSQL, POSTGRES })
     public static org.jooq.AlterIndexOnStep alterIndexIfExists(Index index) {
         return dsl().alterIndexIfExists(index);
     }
@@ -7705,7 +7705,7 @@ public class DSL {
      * @see DSLContext#alterViewIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterViewIfExists(@Stringly.Name String view) {
         return dsl().alterViewIfExists(view);
     }
@@ -7720,7 +7720,7 @@ public class DSL {
      * @see DSLContext#alterViewIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterViewIfExists(Name view) {
         return dsl().alterViewIfExists(view);
     }
@@ -7735,7 +7735,7 @@ public class DSL {
      * @see DSLContext#alterViewIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterViewIfExists(Table<?> view) {
         return dsl().alterViewIfExists(view);
     }
@@ -8358,7 +8358,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(@Stringly.Name String index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -8373,7 +8373,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(Name index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -8388,7 +8388,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createIndexIfNotExists(Index index) {
         return dsl().createIndexIfNotExists(index);
     }
@@ -8403,7 +8403,7 @@ public class DSL {
      * @see DSLContext#createIndexIfNotExists()
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createIndexIfNotExists() {
         return dsl().createIndexIfNotExists();
     }
@@ -8478,7 +8478,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndexIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(@Stringly.Name String index) {
         return dsl().createUniqueIndexIfNotExists(index);
     }
@@ -8493,7 +8493,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndexIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Name index) {
         return dsl().createUniqueIndexIfNotExists(index);
     }
@@ -8508,7 +8508,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndexIfNotExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists(Index index) {
         return dsl().createUniqueIndexIfNotExists(index);
     }
@@ -8523,7 +8523,7 @@ public class DSL {
      * @see DSLContext#createUniqueIndexIfNotExists()
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.CreateIndexStep createUniqueIndexIfNotExists() {
         return dsl().createUniqueIndexIfNotExists();
     }
@@ -10047,7 +10047,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(@Stringly.Name String index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -10062,7 +10062,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(Name index) {
         return dsl().dropIndexIfExists(index);
     }
@@ -10077,7 +10077,7 @@ public class DSL {
      * @see DSLContext#dropIndexIfExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static org.jooq.DropIndexOnStep dropIndexIfExists(Index index) {
         return dsl().dropIndexIfExists(index);
     }

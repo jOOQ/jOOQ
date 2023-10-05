@@ -2546,6 +2546,14 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
       <element name="kotlinNotNullInterfaceAttributes" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate non-nullable types on interface attributes, where column is not null.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="kotlinDefaultedNullablePojoAttributes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate defaulted nullable POJO attributes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="kotlinDefaultedNullableRecordAttributes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate defaulted nullable Record attributes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="globalObjectNames" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn on generation of all global object names.]]></jxb:javadoc></jxb:property></appinfo></annotation>

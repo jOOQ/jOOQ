@@ -47,6 +47,7 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -10877,15 +10878,18 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(".nullable(false)");
     }
 
+    private static final Pattern P_TS_EXPRESSION = Pattern.compile("^(?i:current_(date|timestamp).*)$");
+
     private final void appendTypeReferenceDefault(Database db, JavaWriter out, StringBuilder sb, String d, String sqlDataTypeRef) {
         if (d != null) {
             sb.append(".defaultValue(");
 
-            if (asList(MYSQL).contains(db.getDialect().family()))
+            if (asList(MYSQL).contains(db.getDialect().family())) {
 
                 // [#5574] While MySQL usually reports actual values, it does report
                 //         a CURRENT_TIMESTAMP expression, inconsistently
-                if (d != null && d.toLowerCase(getStrategy().getTargetLocale()).startsWith("current_timestamp"))
+                // [#15686] Same for HANA
+                if (d != null && P_TS_EXPRESSION.matcher(d).matches())
                     sb.append(out.ref(DSL.class))
                       .append(".field(")
                       .append(out.ref(DSL.class))
@@ -10897,6 +10901,7 @@ public class JavaGenerator extends AbstractGenerator {
                       .append(".inline(\"")
                       .append(escapeString(d))
                       .append("\"");
+            }
             else
                 sb.append(out.ref(DSL.class))
                   .append(".field(")

@@ -729,24 +729,38 @@ final class R2DBC {
                         subscriber::onError,
 
                         // [#13502] Implement Savepoint logic for nested transactions
-                        () -> transactional.run(c instanceof NonClosingConnection
-                                ? configuration
-                                : configuration.derive(new DefaultConnectionFactory(c))).subscribe(subscriber(
-                            s1 -> s1.request(Long.MAX_VALUE),
-                            subscriber::onNext,
-                            e -> c.rollbackTransaction().subscribe(subscriber(
-                                s2 -> s2.request(1),
-                                v -> {},
-                                t -> cancel0(true, () -> subscriber.onError(t)),
-                                () -> cancel0(true, () -> subscriber.onError(e))
-                            )),
-                            () -> c.commitTransaction().subscribe(subscriber(
-                                s2 -> s2.request(1),
-                                v -> {},
-                                t -> cancel0(true, () -> subscriber.onError(t)),
-                                () -> cancel0(true, () -> subscriber.onComplete())
-                            ))
-                        ))
+                        () -> {
+                            try {
+                                transactional.run(c instanceof NonClosingConnection
+                                        ? configuration
+                                        : configuration.derive(new DefaultConnectionFactory(c))).subscribe(subscriber(
+                                    s1 -> s1.request(Long.MAX_VALUE),
+                                    subscriber::onNext,
+                                    e -> rollback(subscriber, c, e),
+                                    () -> c.commitTransaction().subscribe(subscriber(
+                                        s2 -> s2.request(1),
+                                        v -> {},
+                                        t -> cancel0(true, () -> subscriber.onError(t)),
+                                        () -> cancel0(true, () -> subscriber.onComplete())
+                                    ))
+                                ));
+                            }
+
+                            // [#15702] The TransactionalPublishable might throw exceptions
+                            //          while initialising a Publisher
+                            catch (Exception e) {
+                                rollback(subscriber, c, e);
+                            }
+                        }
+                    ));
+                }
+
+                private final void rollback(Subscriber<? super T> s, Connection c, Throwable e) {
+                    c.rollbackTransaction().subscribe(subscriber(
+                        s2 -> s2.request(1),
+                        v -> {},
+                        t -> cancel0(true, () -> s.onError(t)),
+                        () -> cancel0(true, () -> s.onError(e))
                     ));
                 }
             };

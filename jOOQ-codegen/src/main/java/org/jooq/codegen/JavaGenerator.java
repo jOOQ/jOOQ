@@ -5527,18 +5527,18 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.println("%sval %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
+                    columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding);
             }
             else if (kotlin) {
                 out.println("%sval %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding);
+                    columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding);
             }
             else {
                 String isStatic = generateInstanceFields() ? "" : "static ";
                 String tableRef = generateInstanceFields() ? "this" : out.ref(getStrategy().getJavaIdentifier(table), 2);
 
                 out.println("%s%sfinal %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                    columnVisibility, isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(comment(column)), converter, binding);
+                    columnVisibility, isStatic, TableField.class, recordType, columnType, columnId, DSL.class, escapeString(columnName), columnTypeRef, tableRef, escapeString(comment(column)), converter, binding);
             }
         }
 

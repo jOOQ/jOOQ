@@ -6116,21 +6116,21 @@ public class JavaGenerator extends AbstractGenerator {
                 //         can't be overloaded, so it has that "0" suffix...
                 if (generator.isEmpty())
                     out.println("%sval %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
                 else
                     out.println("%sval %s: %s[%s, %s] = createField0(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                        columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
             }
             else if (kotlin) {
                 out.println("%sval %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                    columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, columnName, columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                    columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
             }
             else {
                 String isStatic = generateInstanceFields() ? "" : "static ";
                 String tableRef = generateInstanceFields() ? "this" : out.ref(getStrategy().getJavaIdentifier(table), 2);
 
                 out.println("%s%sfinal %s<%s, %s> %s = createField(%s.name(\"%s\"), %s, %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ");",
-                    columnVisibility, isStatic, TableField.class, recordType, columnType, columnId, DSL.class, columnName, columnTypeRef, tableRef, escapeString(comment(column)), converter, binding, generator);
+                    columnVisibility, isStatic, TableField.class, recordType, columnType, columnId, DSL.class, escapeString(columnName), columnTypeRef, tableRef, escapeString(comment(column)), converter, binding, generator);
             }
         }
 

@@ -323,7 +323,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
                     listener.bindStart(ctx);
                     if (rendered.bindValues != null)
-                        using(c).bindContext(ctx.statement()).visit(rendered.bindValues);
+                        new DefaultBindContext(c, ctx, ctx.statement()).visit(rendered.bindValues);
                     listener.bindEnd(ctx);
                 }
 

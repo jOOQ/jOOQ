@@ -62,9 +62,14 @@ final class DefaultBindContext extends AbstractBindContext {
         int nextIndex = nextIndex();
 
         try {
-            ((Field<Object>) field).getBinding().set(
-                new DefaultBindingSetStatementContext<>(new SimpleExecuteContext(configuration(), data()), stmt, nextIndex, value)
-            );
+            ((Field<Object>) field).getBinding().set(new DefaultBindingSetStatementContext<>(
+                executeContext() != null
+                    ? executeContext()
+                    : new SimpleExecuteContext(configuration(), data()),
+                stmt,
+                nextIndex,
+                value
+            ));
         }
 
         // [#14696] Maintain SQLState and ErrorCode if the exception is from the driver

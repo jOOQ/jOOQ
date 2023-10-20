@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.DataKey.DATA_EXECUTE_CONTEXT;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -62,9 +64,14 @@ final class DefaultBindContext extends AbstractBindContext {
         int nextIndex = nextIndex();
 
         try {
-            ((Field<Object>) field).getBinding().set(
-                new DefaultBindingSetStatementContext<>(new SimpleExecuteContext(configuration(), data()), stmt, nextIndex, value)
-            );
+            ((Field<Object>) field).getBinding().set(new DefaultBindingSetStatementContext<>(
+                data(DATA_EXECUTE_CONTEXT) != null
+                    ? (ExecuteContext) data(DATA_EXECUTE_CONTEXT)
+                    : new SimpleExecuteContext(configuration(), data()),
+                stmt,
+                nextIndex,
+                value
+            ));
         }
 
         // [#14696] Maintain SQLState and ErrorCode if the exception is from the driver

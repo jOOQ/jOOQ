@@ -942,6 +942,12 @@ final class Tools {
 
 
 
+
+
+
+
+
+
         /**
          * [#9017] We've already transformed ROWNUM expressions to LIMIT.
          */

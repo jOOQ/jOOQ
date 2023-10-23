@@ -108,7 +108,7 @@ final class Tips {
         "You can generate jOOQ code in a single package with package private visibility if this helps. Here's how: https://blog.jooq.org/how-to-generate-package-private-code-with-jooqs-code-generator/",
         "Want to collect a flat representation of tree data into a hierarchy? Use this Collector based approach: https://blog.jooq.org/how-to-turn-a-list-of-flat-elements-into-a-hierarchy-in-java-sql-or-jooq/",
         "When it comes to using Converter or Binding, only the first UNION subquery is relevant. Learn more about this here: https://blog.jooq.org/how-to-use-jooqs-converters-with-union-operations/",
-        "Want to upgrade your jOOQ experience? Check out these commercial only features of the jOOQ Professional and Enterprise Editions: https://www.jooq.org/doc/latest/manual/reference/commercial-only-features/",
+        "Want to upgrade your jOOQ experience? Check out these commercial only features of the jOOQ Professional and Enterprise Editions: https://www.jooq.org/commercial-only-features/",
         ""
     };
 

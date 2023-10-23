@@ -92,6 +92,7 @@ import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
+import static org.jooq.impl.Tools.DataKey.DATA_EXECUTE_CONTEXT;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -108,6 +109,7 @@ import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.MergeKeyStep1;
 import org.jooq.MergeKeyStep10;

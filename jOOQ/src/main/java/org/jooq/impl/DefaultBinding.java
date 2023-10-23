@@ -254,7 +254,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.Cast.CastNative;
 import org.jooq.impl.R2DBC.R2DBCPreparedStatement;
-import org.jooq.impl.Tools.ExtendedDataKey;
+import org.jooq.impl.Tools.DataExtendedKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.Longs;
 import org.jooq.tools.StringUtils;

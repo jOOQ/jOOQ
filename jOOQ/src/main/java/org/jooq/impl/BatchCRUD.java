@@ -37,8 +37,11 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
 
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -111,7 +114,9 @@ final class BatchCRUD extends AbstractBatch {
     }
 
     private final int[] executePrepared() {
+        boolean optimisticLocking = TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking());
         Map<String, List<Query>> queries = new LinkedHashMap<>();
+        List<QueryCollectorSignal> signals = new ArrayList<>();
         QueryCollector collector = new QueryCollector();
 
         // Add the QueryCollector to intercept query execution after rendering
@@ -123,8 +128,14 @@ final class BatchCRUD extends AbstractBatch {
             try {
                 records[i].attach(local);
                 executeAction(i);
+
+                if (optimisticLocking)
+                    signals.add(null);
             }
             catch (QueryCollectorSignal e) {
+                if (optimisticLocking)
+                    signals.add(e);
+
                 Query query = e.getQuery();
                 String sql = e.getSQL();
 
@@ -159,12 +170,18 @@ final class BatchCRUD extends AbstractBatch {
         for (int i = 0; i < result.size(); i++)
             array[i] = result.get(i);
 
+        // [#8283] Store back optimistic locking values to updated records
+        if (optimisticLocking)
+            updateRecordVersionsAndTimestamps(signals, array);
+
         updateChangedFlag();
         return array;
     }
 
     private final int[] executeStatic() {
+        boolean optimisticLocking = TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking());
         List<Query> queries = new ArrayList<>();
+        List<QueryCollectorSignal> signals = new ArrayList<>();
         QueryCollector collector = new QueryCollector();
         Configuration local = deriveConfiguration(collector);
 
@@ -174,8 +191,14 @@ final class BatchCRUD extends AbstractBatch {
             try {
                 records[i].attach(local);
                 executeAction(i);
+
+                if (optimisticLocking)
+                    signals.add(null);
             }
             catch (QueryCollectorSignal e) {
+                if (optimisticLocking)
+                    signals.add(e);
+
                 Query query = e.getQuery();
 
                 if (query.isExecutable())
@@ -188,11 +211,25 @@ final class BatchCRUD extends AbstractBatch {
 
         // Resulting statements can be batch executed in their requested order
         int[] result = dsl.batch(queries).execute();
+
+        // [#8283] Store back optimistic locking values to updated records
+        if (optimisticLocking)
+            updateRecordVersionsAndTimestamps(signals, result);
+
         updateChangedFlag();
         return result;
     }
 
-    private void executeAction(int i) {
+    private final void updateRecordVersionsAndTimestamps(List<QueryCollectorSignal> signals, int[] array) {
+        for (int i = 0; i < records.length && i < array.length; i++) {
+            QueryCollectorSignal signal = signals.get(i);
+
+            if (signal != null && array[i] > 0)
+                ((TableRecordImpl<?>) records[i]).setRecordVersionAndTimestamp(signal.version, signal.timestamp);
+        }
+    }
+
+    private final void executeAction(int i) {
         switch (action) {
             case STORE:
                 ((UpdatableRecord<?>) records[i]).store();
@@ -278,9 +315,11 @@ final class BatchCRUD extends AbstractBatch {
      * This exception is used as a signal for jOOQ's internals to abort query
      * execution, and return generated SQL back to batch execution.
      */
-    private static class QueryCollectorSignal extends ControlFlowSignal {
-        private final String      sql;
-        private final Query       query;
+    static class QueryCollectorSignal extends ControlFlowSignal {
+        final String sql;
+        final Query  query;
+        BigInteger   version;
+        Timestamp    timestamp;
 
         QueryCollectorSignal(String sql, Query query) {
             this.sql = sql;

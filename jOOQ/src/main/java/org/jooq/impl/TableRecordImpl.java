@@ -97,8 +97,8 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.BatchCRUD.QueryCollectorSignal;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StringUtils;
 
 /**
  * A record implementation for a record originating from a single table
@@ -194,22 +194,31 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
         // [#1002] Consider also identity columns of non-updatable records
         // [#1537] Avoid refreshing identity columns on batch inserts
         Collection<Field<?>> key = setReturningIfNeeded(insert);
-        int result = insert.execute();
+        try {
+            int result = insert.execute();
 
-        if (result > 0) {
-            for (Field<?> changedField : changedFields)
-                changed(changedField, false);
+            if (result > 0) {
+                for (Field<?> changedField : changedFields)
+                    changed(changedField, false);
 
-            // [#1596] If insert was successful, update timestamp and/or version columns
-            setRecordVersionAndTimestamp(version, timestamp);
+                // [#1596] If insert was successful, update timestamp and/or version columns
+                setRecordVersionAndTimestamp(version, timestamp);
 
-            // [#1859] If an insert was successful try fetching the generated values.
-            getReturningIfNeeded(insert, key);
+                // [#1859] If an insert was successful try fetching the generated values.
+                getReturningIfNeeded(insert, key);
 
-            fetched = true;
+                fetched = true;
+            }
+
+            return result;
         }
 
-        return result;
+        // [#8283] Pass optimistic locking information on to BatchCRUD, if applicable
+        catch (QueryCollectorSignal e) {
+            e.version = version;
+            e.timestamp = timestamp;
+            throw e;
+        }
     }
 
     final void getReturningIfNeeded(StoreQuery<R> query, Collection<Field<?>> key) {

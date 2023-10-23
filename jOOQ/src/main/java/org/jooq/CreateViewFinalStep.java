@@ -58,9 +58,8 @@ package org.jooq;
  * <li>They're less readable</li>
  * <li>They might have binary incompatible changes between minor releases</li>
  * </ul>
- *
+ * <p>
  * @deprecated - [#11329] - 3.15.0 - This type will be removed in the future. Do not reference it directly
- * @author Lukas Eder
  */
 @Deprecated(forRemoval = true, since = "3.15")
 public interface CreateViewFinalStep extends DDLQuery {

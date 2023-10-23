@@ -93,6 +93,7 @@ final class Tips {
         "Need to frequently calculate the same expressions based on other columns from the same table? Many dialects support computed columns: https://www.jooq.org/doc/latest/manual/sql-building/column-expressions/computed-columns/",
         "Kotlin users can profit from a variety of convenient extension functions available from the jooq-kotlin module",
         "A list of common anti patterns in jOOQ or SQL is available here: https://www.jooq.org/doc/latest/manual/reference/dont-do-this/",
+        "Want to upgrade your jOOQ experience? Check out these commercial only features of the jOOQ Professional and Enterprise Editions: https://www.jooq.org/doc/latest/manual/reference/commercial-only-features/",
         ""
     };
 

@@ -42,6 +42,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Table;
+import org.jooq.TableOptions;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -174,6 +175,11 @@ public interface TableDefinition extends Definition {
      * This TableDefinition as a {@link Table}.
      */
     Table<Record> getTable();
+
+    /**
+     * The {@link TableOptions} providing additional information about the table.
+     */
+    TableOptions getTableOptions();
 
     /**
      * The parameters of this table if this is a table-valued function.

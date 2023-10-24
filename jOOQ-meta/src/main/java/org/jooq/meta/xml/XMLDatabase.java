@@ -555,13 +555,14 @@ public class XMLDatabase extends AbstractDatabase {
                 switch (table.getTableType()) {
                     case GLOBAL_TEMPORARY: tableType = TableType.TEMPORARY; break;
                     case VIEW:             tableType = TableType.VIEW; break;
+                    case MATERIALIZED_VIEW:tableType = TableType.MATERIALIZED_VIEW; break;
                     case BASE_TABLE:
                     default:               tableType = TableType.TABLE; break;
                 }
 
                 String source = null;
 
-                if (tableType == TableType.VIEW) {
+                if (tableType == TableType.VIEW || tableType == TableType.MATERIALIZED_VIEW) {
 
                     viewLoop:
                     for (View view : info().getViews()) {

@@ -38,8 +38,6 @@
 
 package org.jooq.meta;
 
-import static org.jooq.impl.DSL.table;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +47,10 @@ import java.util.Set;
 
 import org.jooq.Record;
 import org.jooq.Table;
+import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 /**
  * A base implementation for table definitions.
@@ -260,7 +261,21 @@ implements
 
     @Override
     public final Table<Record> getTable() {
-        return table(getQualifiedName());
+        return new TableImpl<>(getQualifiedNamePart(), null, null, null, DSL.comment(getComment()), getTableOptions());
+    }
+
+    @Override
+    public final TableOptions getTableOptions() {
+        if (isTableValuedFunction())
+            return TableOptions.function(getSource());
+        else if (isMaterializedView())
+            return TableOptions.materializedView(getSource());
+        else if (isView())
+            return TableOptions.view(getSource());
+        else if (isTemporary())
+            return TableOptions.temporaryTable();
+        else
+            return TableOptions.table();
     }
 
     @Override

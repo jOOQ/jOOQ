@@ -437,6 +437,7 @@ public class XMLDatabase extends AbstractDatabase {
                                     foreignKeyTable.getColumn(foreignKeyColumn),
                                     uniqueKey,
                                     uniqueKeyTable,
+                                    usage.getPositionInUniqueConstraint(),
                                     !FALSE.equals(fktc.isEnforced())
                                 );
                         }

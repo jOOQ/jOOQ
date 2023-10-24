@@ -246,6 +246,42 @@ public class DefaultRelations implements Relations {
         ColumnDefinition foreignKeyColumn,
         String uniqueKeyName,
         TableDefinition uniqueKeyTable,
+        Integer positionInUniqueKey,
+        boolean enforced
+    ) {
+        if (positionInUniqueKey == null) {
+            addForeignKey(
+                foreignKeyName,
+                foreignKeyTable,
+                foreignKeyColumn,
+                uniqueKeyName,
+                uniqueKeyTable,
+                enforced
+            );
+        }
+        else {
+            UniqueKeyDefinition uniqueKey = keys.get(key(uniqueKeyTable, uniqueKeyName));
+
+            if (uniqueKey != null) {
+                addForeignKey(
+                    foreignKeyName,
+                    foreignKeyTable,
+                    foreignKeyColumn,
+                    uniqueKeyName,
+                    uniqueKeyTable,
+                    uniqueKey.getKeyColumns().get(positionInUniqueKey - 1),
+                    enforced
+                );
+            }
+        }
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
         ColumnDefinition uniqueKeyColumn,
         boolean enforced
     ) {

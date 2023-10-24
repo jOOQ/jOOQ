@@ -201,6 +201,7 @@
             <element name="constraint_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="constraint_name" type="string" minOccurs="1" maxOccurs="1" />
             <element name="ordinal_position" type="int" minOccurs="1" maxOccurs="1" />
+            <element name="position_in_unique_constraint" type="int" minOccurs="0" maxOccurs="1" />
             <element name="table_catalog" type="string" minOccurs="0" maxOccurs="1" />
             <element name="table_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />

@@ -27,6 +27,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="constraint_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="constraint_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="ordinal_position" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="position_in_unique_constraint" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="table_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
@@ -63,6 +64,8 @@ public class KeyColumnUsage implements Serializable, XMLAppendable
     protected String constraintName;
     @XmlElement(name = "ordinal_position")
     protected int ordinalPosition;
+    @XmlElement(name = "position_in_unique_constraint")
+    protected Integer positionInUniqueConstraint;
     @XmlElement(name = "table_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableCatalog;
@@ -111,6 +114,14 @@ public class KeyColumnUsage implements Serializable, XMLAppendable
 
     public void setOrdinalPosition(int value) {
         this.ordinalPosition = value;
+    }
+
+    public Integer getPositionInUniqueConstraint() {
+        return positionInUniqueConstraint;
+    }
+
+    public void setPositionInUniqueConstraint(Integer value) {
+        this.positionInUniqueConstraint = value;
     }
 
     public String getTableCatalog() {
@@ -162,6 +173,11 @@ public class KeyColumnUsage implements Serializable, XMLAppendable
         return this;
     }
 
+    public KeyColumnUsage withPositionInUniqueConstraint(Integer value) {
+        setPositionInUniqueConstraint(value);
+        return this;
+    }
+
     public KeyColumnUsage withTableCatalog(String value) {
         setTableCatalog(value);
         return this;
@@ -184,6 +200,7 @@ public class KeyColumnUsage implements Serializable, XMLAppendable
         builder.append("constraint_schema", constraintSchema);
         builder.append("constraint_name", constraintName);
         builder.append("ordinal_position", ordinalPosition);
+        builder.append("position_in_unique_constraint", positionInUniqueConstraint);
         builder.append("table_catalog", tableCatalog);
         builder.append("table_schema", tableSchema);
         builder.append("table_name", tableName);
@@ -247,6 +264,15 @@ public class KeyColumnUsage implements Serializable, XMLAppendable
         if (ordinalPosition!= other.ordinalPosition) {
             return false;
         }
+        if (positionInUniqueConstraint == null) {
+            if (other.positionInUniqueConstraint!= null) {
+                return false;
+            }
+        } else {
+            if (!positionInUniqueConstraint.equals(other.positionInUniqueConstraint)) {
+                return false;
+            }
+        }
         if (tableCatalog == null) {
             if (other.tableCatalog!= null) {
                 return false;
@@ -286,6 +312,7 @@ public class KeyColumnUsage implements Serializable, XMLAppendable
         result = ((prime*result)+((constraintSchema == null)? 0 :constraintSchema.hashCode()));
         result = ((prime*result)+((constraintName == null)? 0 :constraintName.hashCode()));
         result = ((prime*result)+ ordinalPosition);
+        result = ((prime*result)+((positionInUniqueConstraint == null)? 0 :positionInUniqueConstraint.hashCode()));
         result = ((prime*result)+((tableCatalog == null)? 0 :tableCatalog.hashCode()));
         result = ((prime*result)+((tableSchema == null)? 0 :tableSchema.hashCode()));
         result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));

@@ -43,6 +43,7 @@ import static java.util.stream.Collectors.joining;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
+import static org.jooq.conf.RenderImplicitJoinType.SCALAR_SUBQUERY;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
@@ -133,6 +134,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        TableImpl<?> t;
         Table<?> root;
 
 
@@ -172,19 +174,11 @@ implements
 
 
 
-        // [#7508] Implicit join path references inside of DML queries have to
-        //         be emulated differently
-        if (ctx.topLevelForLanguageContext() instanceof DMLQuery
-            && table instanceof TableImpl
-            && (root = ((TableImpl<?>) table).pathRoot()) != null
 
-            // [#7508] Apply the emulation only in the DML statement itself, or
-            //         when the root child is the DML target table. Implicit
-            //         joins declared in a subquery without correlation to the
-            //         DML statement can be generated normally.
-            && (!ctx.subquery() || root.equals(ctx.data(SimpleDataKey.DATA_DML_TARGET_TABLE)))
+        if (table instanceof TableImpl
+            && (root = (t = (TableImpl<?>) table).pathRoot()) != null
+            && implicitJoinAsScalarSubquery(ctx, t, root)
         ) {
-            TableImpl<?> t = (TableImpl<?>) table;
 
             // [#7508]  MySQL supports UPDATE .. JOIN, so the default implicit
             //          JOIN emulation works out of the box.
@@ -205,6 +199,20 @@ implements
         }
         else
             accept1(ctx);
+    }
+
+    private final boolean implicitJoinAsScalarSubquery(Context<?> ctx, TableImpl<?> t, Table<?> root) {
+        return (t.childPath != null && ctx.settings().getRenderImplicitJoinType() == SCALAR_SUBQUERY)
+
+            // [#7508] Implicit join path references inside of DML queries have to
+            //         be emulated differently
+            || (ctx.topLevelForLanguageContext() instanceof DMLQuery
+
+            // [#7508] Apply the emulation only in the DML statement itself, or
+            //         when the root child is the DML target table. Implicit
+            //         joins declared in a subquery without correlation to the
+            //         DML statement can be generated normally.
+                && (!ctx.subquery() || root.equals(ctx.data(SimpleDataKey.DATA_DML_TARGET_TABLE))));
     }
 
     private final void accept1(Context<?> ctx) {

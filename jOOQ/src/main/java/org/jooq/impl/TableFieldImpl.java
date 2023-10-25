@@ -56,6 +56,7 @@ import java.util.stream.Stream;
 import org.jooq.Binding;
 import org.jooq.Clause;
 import org.jooq.Comment;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DMLQuery;
 import org.jooq.DataType;
@@ -183,17 +184,23 @@ implements
             //         DML statement can be generated normally.
             && (!ctx.subquery() || root.equals(ctx.data(SimpleDataKey.DATA_DML_TARGET_TABLE)))
         ) {
+            TableImpl<?> t = (TableImpl<?>) table;
 
-            // [#7508] MySQL supports UPDATE .. JOIN, so the default implicit
-            //         JOIN emulation works out of the box.
-            if (ctx.topLevelForLanguageContext() instanceof Update && !NO_SUPPORT_UPDATE_JOIN.contains(ctx.dialect())) {
+            // [#7508]  MySQL supports UPDATE .. JOIN, so the default implicit
+            //          JOIN emulation works out of the box.
+            // [#13639] But do this for to-one paths only
+            if (ctx.topLevelForLanguageContext() instanceof Update
+                    && !NO_SUPPORT_UPDATE_JOIN.contains(ctx.dialect())
+                    && t.childPath != null) {
                 accept1(ctx);
             }
             else {
-                TableImpl<?> t = (TableImpl<?>) table;
                 Table<?> parent = t.alias.wrapped;
                 Field<T> parentField = parent.field(this);
-                ctx.visit(DSL.field(select(parentField).from(parent).where(JoinTable.onKey0(t.childPath, t.path, parent))));
+                Condition c = t.childPath != null
+                    ? JoinTable.onKey0(t.childPath, t.path, parent)
+                    : JoinTable.onKey0(t.parentPath.getForeignKey(), parent, t.path);
+                ctx.visit(DSL.field(select(parentField).from(parent).where(c)));
             }
         }
         else

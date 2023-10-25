@@ -43,6 +43,7 @@ import static java.util.stream.Collectors.joining;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
+import static org.jooq.conf.RenderImplicitJoinType.DEFAULT;
 import static org.jooq.conf.RenderImplicitJoinType.SCALAR_SUBQUERY;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
@@ -69,6 +70,7 @@ import org.jooq.RowId;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.Update;
+import org.jooq.conf.RenderImplicitJoinType;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.StringUtils;
@@ -202,7 +204,13 @@ implements
     }
 
     private final boolean implicitJoinAsScalarSubquery(Context<?> ctx, TableImpl<?> t, Table<?> root) {
-        return (t.childPath != null && ctx.settings().getRenderImplicitJoinType() == SCALAR_SUBQUERY)
+        return
+
+            // [#15754] Explicit scalar subqueries can be configured for implicit to-one paths
+            (t.childPath != null && ctx.settings().getRenderImplicitJoinType() == SCALAR_SUBQUERY && !ctx.inScope(t))
+
+            // [#15755] The default is to render scalar subqueries for implicit to-many paths
+            || (t.parentPath != null && (ctx.settings().getRenderImplicitJoinToManyType() == DEFAULT || ctx.settings().getRenderImplicitJoinToManyType() == SCALAR_SUBQUERY) && !ctx.inScope(t))
 
             // [#7508] Implicit join path references inside of DML queries have to
             //         be emulated differently

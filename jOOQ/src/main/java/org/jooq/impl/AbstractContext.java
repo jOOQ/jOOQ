@@ -1261,7 +1261,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 Table<?> t = e.getValue().joinTree();
 
                 result = result
-                    .join(t, node.joinType(LEFT_OUTER_JOIN))
+                    .join(t, node.joinToManyType())
                     .on(onKey0(e.getKey().getForeignKey(), t, result));
             }
 
@@ -1295,6 +1295,15 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 case DEFAULT:
                 default:
                     return onDefault;
+            }
+        }
+
+        private final JoinType joinToManyType() {
+            switch (defaultIfNull(Tools.settings(ctx.configuration()).getRenderImplicitJoinToManyType(), RenderImplicitJoinType.DEFAULT)) {
+                case INNER_JOIN:
+                    return JOIN;
+                default:
+                    return LEFT_OUTER_JOIN;
             }
         }
 

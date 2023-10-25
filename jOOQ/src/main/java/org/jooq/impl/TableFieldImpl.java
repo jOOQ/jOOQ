@@ -191,7 +191,7 @@ implements
             }
             else {
                 TableImpl<?> t = (TableImpl<?>) table;
-                Table<?> parent = t.alias.wrapped;
+                Table<?> parent = t.alias.wrapped.as(t);
                 Field<T> parentField = parent.field(this);
                 ctx.visit(DSL.field(select(parentField).from(parent).where(JoinTable.onKey0(t.childPath, t.child, parent))));
             }

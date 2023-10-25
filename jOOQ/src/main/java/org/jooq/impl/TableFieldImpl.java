@@ -195,7 +195,7 @@ implements
                 accept1(ctx);
             }
             else {
-                Table<?> parent = t.alias.wrapped;
+                Table<?> parent = t.alias.wrapped.as(t);
                 Field<T> parentField = parent.field(this);
                 Condition c = t.childPath != null
                     ? JoinTable.onKey0(t.childPath, t.path, parent)

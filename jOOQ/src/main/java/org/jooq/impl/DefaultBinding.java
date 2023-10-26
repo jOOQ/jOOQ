@@ -1072,6 +1072,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @SuppressWarnings("unused")
         /* non-final */ void sqlInline0(BindingSQLContext<U> ctx, T value) throws SQLException {
+            sqlInline1(ctx, value);
+        }
+
+        @SuppressWarnings("unused")
+        final void sqlInline1(BindingSQLContext<U> ctx, Object value) throws SQLException {
 
             // Known fall-through types:
             // - Blob, Clob
@@ -5520,9 +5525,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 bytes(ctx.configuration()).sqlInline0(ctx, bytesConverter(ctx.configuration()).to(value));
             }
             else {
-                super.sqlInline0(ctx, value);
+                super.sqlInline1(ctx, value.data());
 
-                if (ctx.family() == H2 && value != null)
+                if (ctx.family() == H2)
                     ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
             }
         }

@@ -6818,8 +6818,10 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (schemaId != null) {
             if (scala) {
+
+                // [#15760] super.aliased() is necessary in Scala 3
                 out.println();
-                out.println("%soverride def getSchema: %s = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
+                out.println("%soverride def getSchema: %s = if (super.aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
             }
             else if (kotlin) {
                 out.println("%soverride fun getSchema(): %s? = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
@@ -7493,7 +7495,8 @@ public class JavaGenerator extends AbstractGenerator {
                     r.run();
                 };
 
-                idt.accept(() -> out.println("%soverride def where(condition: %s): %s = new %s(getQualifiedName(), if (aliased()) this else null, condition)", visibilityPublic(), Condition.class, className, className));
+                // [#15760] super.aliased() is necessary in Scala 3
+                idt.accept(() -> out.println("%soverride def where(condition: %s): %s = new %s(getQualifiedName(), if (super.aliased()) this else null, condition)", visibilityPublic(), Condition.class, className, className));
                 idt.accept(() -> out.println("%soverride def where(conditions: %s[_ <: %s]): %s = where(%s.and(conditions))", visibilityPublic(), Collection.class, Condition.class, className, DSL.class));
                 idt.accept(() -> out.println("%soverride def where(conditions: %s*): %s = where(%s.and(conditions:_*))", visibilityPublic(), Condition.class, className, DSL.class));
                 idt.accept(() -> out.println("%soverride def where(condition: %s[%s]): %s = where(%s.condition(condition))", visibilityPublic(), Field.class, Boolean.class, className, DSL.class));
@@ -7743,7 +7746,8 @@ public class JavaGenerator extends AbstractGenerator {
                             out.println("%s.value(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")%s", DSL.class, paramArgName, paramTypeRef, converter, binding, separator);
                     });
 
-                    out.println("), null)).map(r => if (aliased()) r.as(getUnqualifiedName) else r).get");
+                    // [#15760] super.aliased() is necessary in Scala 3
+                    out.println("), null)).map(r => if (super.aliased()) r.as(getUnqualifiedName) else r).get");
                 }
                 else if (kotlin) {
                     out.print("%sfun call(", visibility()).printlnIf(!parameters.isEmpty());
@@ -7802,8 +7806,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Convenience mapping calling {@link %s#convertFrom(%s)}.", SelectField.class, Function.class);
 
             if (scala) {
-                out.println("%sdef mapping[U](from: (" + rowType + ") => U): %s[U] = convertFrom(r => from.apply(" + rangeClosed(1, degree).mapToObj(i -> "r.value" + i + "()").collect(joining(", ")) + "))",
-                    visibility(), SelectField.class);
+
+                // [#15760] Scala 3 has a type inference regression here, which is why we have to hint
+                //          the lambda's r parameter type.
+                out.println("%sdef mapping[U](from: (" + rowType + ") => U): %s[U] = convertFrom((r: %s[" + rowType + "]) => from.apply(" + rangeClosed(1, degree).mapToObj(i -> "r.value" + i + "()").collect(joining(", ")) + "))",
+                    visibility(), SelectField.class, out.ref("org.jooq.Record" + degree));
             }
             else if (kotlin) {
                 out.println("%sfun <U> mapping(from: (" + rowType + ") -> U): %s<U> = convertFrom(%s.mapping(from))",
@@ -7819,8 +7826,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Convenience mapping calling {@link %s#convertFrom(%s, %s)}.", SelectField.class, Class.class, Function.class);
 
             if (scala) {
-                out.println("%sdef mapping[U](toType: %s[U], from: (" + rowType + ") => U): %s[U] = convertFrom(toType,r => from.apply(" + rangeClosed(1, degree).mapToObj(i -> "r.value" + i + "()").collect(joining(", ")) + "))",
-                    visibility(), Class.class, SelectField.class);
+
+                // [#15760] Scala 3 has a type inference regression here, which is why we have to hint
+                //          the lambda's r parameter type.
+                out.println("%sdef mapping[U](toType: %s[U], from: (" + rowType + ") => U): %s[U] = convertFrom(toType, (r: %s[" + rowType + "]) => from.apply(" + rangeClosed(1, degree).mapToObj(i -> "r.value" + i + "()").collect(joining(", ")) + "))",
+                    visibility(), Class.class, SelectField.class, out.ref("org.jooq.Record" + degree));
             }
             else if (kotlin) {
                 out.println("%sfun <U> mapping(toType: %s<U>, from: (" + rowType + ") -> U): %s<U> = convertFrom(toType, %s.mapping(from))",

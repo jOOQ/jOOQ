@@ -45,6 +45,7 @@
 
         <!-- Scala versions -->
         <scala.version>2.13.11</scala.version>
+        <scala3.version>3.3.1</scala3.version>
 
         <!-- Kotlin versions -->
         <kotlin.version>1.8.0</kotlin.version>
@@ -397,6 +398,12 @@
                 <groupId>org.scalatest</groupId>
                 <artifactId>scalatest_2.13</artifactId>
                 <version>3.0.8</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest_3</artifactId>
+                <version>3.2.14</version>
                 <scope>test</scope>
             </dependency>
 

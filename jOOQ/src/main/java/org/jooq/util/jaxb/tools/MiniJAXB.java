@@ -143,6 +143,7 @@ public final class MiniJAXB {
                 builder.append(object);
 
             builder.appendTo(out);
+            out.flush();
         }
         catch (Exception e) {
             throw new ConfigurationException("Cannot print object", e);

@@ -5716,8 +5716,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (scala) {
+
+            // [#15760] super.aliased() is necessary in Scala 3
             out.println();
-            out.println("%soverride def getSchema: %s = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
+            out.println("%soverride def getSchema: %s = if (super.aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
         }
         else if (kotlin) {
             out.println("%soverride fun getSchema(): %s? = if (aliased()) null else %s", visibilityPublic(), Schema.class, schemaId);
@@ -6337,7 +6339,8 @@ public class JavaGenerator extends AbstractGenerator {
                             out.println("%s.value(%s, %s" + converterTemplateForTableValuedFunction(converter) + converterTemplateForTableValuedFunction(binding) + ")%s", DSL.class, paramArgName, paramTypeRef, converter, binding, separator);
                     });
 
-                    out.println("))).map(r => if (aliased()) r.as(getUnqualifiedName) else r).get");
+                    // [#15760] super.aliased() is necessary in Scala 3
+                    out.println("))).map(r => if (super.aliased()) r.as(getUnqualifiedName) else r).get");
                 }
                 else if (kotlin) {
                     out.print("%sfun call(", visibility()).printlnIf(!parameters.isEmpty());

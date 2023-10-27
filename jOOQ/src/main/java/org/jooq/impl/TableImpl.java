@@ -61,6 +61,7 @@ import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.getMappedTable;
 import static org.jooq.impl.Tools.unwrap;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;
@@ -326,11 +327,19 @@ implements
 
     final Condition pathCondition() {
         if (childPath != null)
-            return new Join(path, this).onKey(childPath).condition.getWhere();
+            return wrapForImplicitJoin(new Join(path, this).onKey(childPath).condition.getWhere());
         else if (parentPath != null)
-            return new Join(this, path).onKey(parentPath.getForeignKey()).condition.getWhere();
+            return wrapForImplicitJoin(new Join(this, path).onKey(parentPath.getForeignKey()).condition.getWhere());
         else
             return noCondition();
+    }
+
+    private final Condition wrapForImplicitJoin(Condition condition) {
+
+        // [#15755] Omit SCALAR_SUBQUERY rendering of TableFieldImpl for to-many path joins
+        return CustomCondition.of(c -> {
+            c.data(DATA_RENDER_IMPLICIT_JOIN, true, c1 -> c1.visit(condition));
+        });
     }
 
     /**

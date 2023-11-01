@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DSL;
+
 import org.jetbrains.annotations.*;
 
 
@@ -70,6 +72,31 @@ public interface BatchBindStep extends Batch {
      * <ul>
      * <li><code>:N+1</code> -&gt; unmodified</li>
      * <li><code>:N+2</code> -&gt; unmodified</li>
+     * </ul>
+     * <h3>Bind index order</h3> The 1-based parameter index describes a
+     * parameter in <em>rendering order</em>, not in input order. For example,
+     * if a query contains a {@link DSL#log(Field, Field)} call, where the first
+     * argument is the <code>value</code> and the second argument is the
+     * <code>base</code>, this may produce different dialect specific
+     * renderings:
+     * <ul>
+     * <li>Db2: <code>ln(value) / ln(base)</code></li>
+     * <li>Oracle: <code>log(base, value)</code></li>
+     * <li>SQL Server: <code>log(value, base)</code></li>
+     * </ul>
+     * <p>
+     * Some bind values may even be repeated by a dialect specific emulation,
+     * leading to duplication and index-shifting.
+     * <p>
+     * As such, it is usually better to supply bind values directly with the
+     * input of an expression, e.g.:
+     * <ul>
+     * <li>Directly with the {@link DSL} method, such as
+     * {@link DSL#log(Field, Field)}, for example.</li>
+     * <li>With the plain SQL template constructor, e.g.
+     * {@link DSL#field(String, Object...)}</li>
+     * <li>With the parser method, e.g.
+     * {@link Parser#parseField(String, Object...)}</li>
      * </ul>
      */
     @NotNull @CheckReturnValue

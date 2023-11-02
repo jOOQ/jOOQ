@@ -174,13 +174,16 @@ public final class JSONB implements Serializable {
      * <p>
      * <h3>{@link JSONB} specifics:</h3>
      * <p>
-     * The {@link JSONB} type uses a normalised representation of the JSON
-     * content, meaning that two equivalent JSON documents are considered equal
-     * (see {@link JSONB} for details). This impacts both behaviour and
-     * performance!
+     * While the {@link JSONB} type uses a normalised representation of the JSON
+     * content to compare contents with {@link #equals(Object)} or
+     * {@link #hashCode()}, the {@link #toString()} method is exempt from this
+     * normalisation as the {@link #data()} value might be different despite two
+     * values being considered equal. Examples of such differences include
+     * numeric precision of values <code>2.0</code> or <code>2.00</code>, which
+     * are considered equal, but aren't the same.
      */
     @Override
     public String toString() {
-        return JSONValue.toJSONString(parsed());
+        return data();
     }
 }

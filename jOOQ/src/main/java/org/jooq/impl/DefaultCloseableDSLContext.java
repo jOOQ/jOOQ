@@ -83,7 +83,7 @@ public class DefaultCloseableDSLContext extends DefaultDSLContext implements Clo
 
         if (cf instanceof DefaultConnectionFactory dcf) {
             if (dcf.finalize) {
-                R2DBC.block(dcf.connection.close());
+                R2DBC.blockWrappingExceptions(dcf.connection.close());
                 dcf.connection = null;
             }
         }

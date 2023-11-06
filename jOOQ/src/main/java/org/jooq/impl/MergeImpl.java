@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
+import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.insertInto;
@@ -103,6 +104,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 import java.util.Set;
 
 import org.jooq.Clause;
@@ -260,6 +262,8 @@ implements
 
 
 
+
+
     private static final Set<SQLDialect> NO_SUPPORT_MULTI                        = SQLDialect.supportedBy(HSQLDB);
     private static final Set<SQLDialect> REQUIRE_NEGATION                        = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect> NO_SUPPORT_CONDITION_AFTER_NO_CONDITION = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
@@ -271,9 +275,9 @@ implements
     private boolean                      usingDual;
 
     // Flags to keep track of DSL object creation state
-    private boolean                      matchedClause;
+    private transient boolean            matchedClause;
     private final List<MatchedClause>    matched;
-    private boolean                      notMatchedClause;
+    private transient boolean            notMatchedClause;
     private final List<NotMatchedClause> notMatched;
 
     // Objects for the UPSERT syntax (including H2 MERGE, HANA UPSERT, etc.)
@@ -927,7 +931,7 @@ implements
     @Override
     public final MergeImpl whenMatchedAnd(Condition condition) {
         matchedClause = true;
-        matched.add(new MatchedClause(condition));
+        matched.add(new MatchedClause(table, condition));
 
         notMatchedClause = false;
         return this;
@@ -1166,7 +1170,7 @@ implements
     @Override
     public final MergeImpl whenNotMatchedThenInsert(Collection<? extends Field<?>> fields) {
         notMatchedClause = true;
-        notMatched.add(new NotMatchedClause(noCondition()));
+        notMatched.add(new NotMatchedClause(table, noCondition()));
         getLastNotMatched().insertMap.addFields(fields);
 
         matchedClause = false;
@@ -1196,7 +1200,7 @@ implements
         // constraint violations that may occur from updates, otherwise.
         // See https://github.com/jOOQ/jOOQ/issues/7291#issuecomment-610833303
         if (matchedClause)
-            matched.add(matched.size() - 1, new MatchedClause(condition, true));
+            matched.add(matched.size() - 1, new MatchedClause(table, condition, true));
         else
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
 
@@ -1303,8 +1307,69 @@ implements
                   .set(insert);
     }
 
+    final MergeImpl<R, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> copy(Consumer<? super MergeImpl<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> finisher) {
+        return copy(finisher, table);
+    }
+
+    final <O extends Record> MergeImpl<O, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> copy(Consumer<? super MergeImpl<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> finisher, Table<O> t) {
+        MergeImpl<O, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> r
+            = new MergeImpl<>(configuration(), with, t);
+
+        r.using = using;
+        r.usingDual = usingDual;
+        r.on.addConditions(extractCondition(on));
+        for (MatchedClause m : matched) {
+            MatchedClause m2 = new MatchedClause(t, m.condition, m.delete, new FieldMapForUpdate(t, m.updateMap.setClause, m.updateMap.assignmentClause));
+            m2.updateMap.putAll(m.updateMap);
+            r.matched.add(m2);
+        }
+        for (NotMatchedClause m : notMatched) {
+            NotMatchedClause m2 = new NotMatchedClause(t, m.condition);
+            m2.insertMap.from(m.insertMap);
+            r.notMatched.add(m2);
+        }
+
+        finisher.accept(r);
+        return r;
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
+        Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table);
+
+        if (t instanceof InlineDerivedTable<?> i) {
+            ctx.configuration().requireCommercial(() -> "InlineDerivedTable emulation for MERGE clauses is available in the commercial jOOQ editions only");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+        else
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
 
 
 
@@ -1496,6 +1561,8 @@ implements
 
 
     private final void toSQLStandard(Context<?> ctx) {
+        Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table);
+
         ctx.start(MERGE_MERGE_INTO)
            .visit(K_MERGE_INTO).sql(' ')
            .declareTables(true, c -> c.visit(table))
@@ -1560,15 +1627,25 @@ implements
             }
         }
 
-        boolean onParentheses = false;
         ctx.end(MERGE_USING)
            .formatSeparator()
            .start(MERGE_ON)
-           // Oracle ON ( ... ) parentheses are a mandatory syntax element
-           .visit(K_ON).sql(onParentheses ? " (" : " ")
-           .visit(on)
-           .sql(onParentheses ? ")" : "")
-           .end(MERGE_ON)
+           .visit(K_ON).sql(' ');
+
+
+
+
+
+
+
+        ctx.visit(on);
+
+
+
+
+
+
+        ctx.end(MERGE_ON)
            .start(MERGE_WHEN_MATCHED_THEN_UPDATE)
            .start(MERGE_SET);
 
@@ -1624,13 +1701,13 @@ implements
 
                 if (m.delete) {
                     if (delete == null)
-                        delete = new MatchedClause(noCondition(), true);
+                        delete = new MatchedClause(table, noCondition(), true);
 
                     delete.condition = delete.condition.or(condition);
                 }
                 else {
                     if (update == null)
-                        update = new MatchedClause(noCondition());
+                        update = new MatchedClause(table, noCondition());
 
                     for (Entry<FieldOrRow, FieldOrRowOrSelect> e : m.updateMap.entrySet()) {
                         FieldOrRowOrSelect exp = update.updateMap.get(e.getKey());
@@ -1677,7 +1754,7 @@ implements
             Condition negate = noCondition();
 
             for (MatchedClause m : matched) {
-                toSQLMatched(ctx, new MatchedClause(negate.and(m.condition), m.delete, m.updateMap), requireMatchedConditions);
+                toSQLMatched(ctx, new MatchedClause(table, negate.and(m.condition), m.delete, m.updateMap), requireMatchedConditions);
                 negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
             }
         }
@@ -1788,33 +1865,33 @@ implements
         return CLAUSES;
     }
 
-    private final class MatchedClause implements Serializable {
+    private static final class MatchedClause implements Serializable {
 
         FieldMapForUpdate         updateMap;
         boolean                   delete;
         Condition                 condition;
 
-        MatchedClause(Condition condition) {
-            this(condition, false);
+        MatchedClause(Table<?> table, Condition condition) {
+            this(table, condition, false);
         }
 
-        MatchedClause(Condition condition, boolean delete) {
-            this(condition, delete, new FieldMapForUpdate(table, SetClause.MERGE, MERGE_SET_ASSIGNMENT));
+        MatchedClause(Table<?> table, Condition condition, boolean delete) {
+            this(table, condition, delete, new FieldMapForUpdate(table, SetClause.MERGE, MERGE_SET_ASSIGNMENT));
         }
 
-        MatchedClause(Condition condition, boolean delete, FieldMapForUpdate updateMap) {
+        MatchedClause(Table<?> table, Condition condition, boolean delete, FieldMapForUpdate updateMap) {
             this.updateMap = updateMap;
             this.condition = condition == null ? noCondition() : condition;
             this.delete = delete;
         }
     }
 
-    private final class NotMatchedClause implements Serializable {
+    private static final class NotMatchedClause implements Serializable {
 
         FieldMapsForInsert        insertMap;
         Condition                 condition;
 
-        NotMatchedClause(Condition condition) {
+        NotMatchedClause(Table<?> table, Condition condition) {
             this.insertMap = new FieldMapsForInsert(table);
             this.condition = condition == null ? noCondition() : condition;
         }

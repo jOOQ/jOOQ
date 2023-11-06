@@ -410,11 +410,6 @@ implements
 
 
 
-
-
-
-
-
                         }
 
                         d.select =
@@ -1247,11 +1242,7 @@ implements
         if (!returning.isEmpty())
             i.setReturning(returning);
 
-        i.insertMaps.empty.putAll(insertMaps.empty);
-        for (Entry<Field<?>, List<Field<?>>> e : insertMaps.values.entrySet())
-            i.insertMaps.values.put(e.getKey(), new ArrayList<>(e.getValue()));
-        i.insertMaps.rows = insertMaps.rows;
-        i.insertMaps.nextRow = insertMaps.nextRow;
+        i.insertMaps.from(insertMaps);
         i.defaultValues = defaultValues;
         i.select = select;
 

@@ -96,6 +96,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.jooq.Clause;
@@ -392,6 +394,20 @@ extends
         else
             return super.put(key, value);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

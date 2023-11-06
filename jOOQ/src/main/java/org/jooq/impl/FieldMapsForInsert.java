@@ -143,6 +143,14 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         nextRow = -1;
     }
 
+    final void from(FieldMapsForInsert i) {
+        empty.putAll(i.empty);
+        for (Entry<Field<?>, List<Field<?>>> e : i.values.entrySet())
+            values.put(e.getKey(), new ArrayList<>(e.getValue()));
+        rows = i.rows;
+        nextRow = i.nextRow;
+    }
+
     // -------------------------------------------------------------------------
     // The QueryPart API
     // -------------------------------------------------------------------------

@@ -70,6 +70,7 @@ import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -80,6 +81,8 @@ import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.fieldName;
+import static org.jooq.impl.Tools.fieldNameString;
+import static org.jooq.impl.Tools.fieldNameStrings;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.flattenEntrySet;
 import static org.jooq.impl.Tools.map;
@@ -394,6 +397,15 @@ extends
         else
             return super.put(key, value);
     }
+
+
+
+
+
+
+
+
+
 
 
 

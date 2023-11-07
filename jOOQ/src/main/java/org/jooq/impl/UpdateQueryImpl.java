@@ -89,7 +89,9 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.InlineDerivedTable.hasInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
+import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables0;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_SET;
@@ -566,24 +568,21 @@ implements
         // [#2682] [#15632] Apply inline derived tables to the target table
         // [#15632] TODO: Refactor this logic with DeleteQueryImpl
         Table<?> t = table(ctx);
-        Table<?> i = InlineDerivedTable.inlineDerivedTable(ctx, t);
-        InlineDerivedTable<?> j = i instanceof InlineDerivedTable ? (InlineDerivedTable<?>) i : null;
-        ConditionProviderImpl where = new ConditionProviderImpl();
-        TableList f = transformInlineDerivedTables(ctx, from, where);
+        if (hasInlineDerivedTables(ctx, t) || hasInlineDerivedTables(ctx, from)) {
+            ConditionProviderImpl where = new ConditionProviderImpl();
+            TableList f = transformInlineDerivedTables(ctx, from, where);
 
-        if (j != null || f != from) {
             copy(
                 d -> {
-                    if (j != null) {
-                        d.addConditionsForInlineDerivedTable(j.condition);
-                    }
                     if (f != from) {
-                        d.addConditionsForInlineDerivedTable(where);
                         d.from.clear();
                         d.from.addAll(f);
                     }
+
+                    if (where.hasWhere())
+                        d.addConditionsForInlineDerivedTable(where);
                 },
-                (Table<?>) (j != null ? j.table : t)
+                transformInlineDerivedTables0(ctx, t, where, false)
             ).accept0(ctx);
         }
         else

@@ -340,6 +340,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Clause[]        CLAUSES                         = { SELECT };
     static final Set<SQLDialect>         EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> SUPPORT_ORACLE_STYLE_JOIN_HINTS = SQLDialect.supportedBy(MYSQL, YUGABYTEDB);
 
 
 
@@ -2364,6 +2365,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (!StringUtils.isBlank(hint))
             context.sql(' ').sql(hint).separatorRequired(true);
 
+        toSQLJoinHints(context, tablelist);
+
 
 
 
@@ -2737,6 +2740,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
             true, unionOrderBy, unionLimit
         ));
+    }
+
+    private static final void toSQLJoinHints(Context<?> ctx, TableList tablelist) {
+        if (SUPPORT_ORACLE_STYLE_JOIN_HINTS.contains(ctx.dialect())) {
+            traverseJoins(tablelist, null);
+            // ctx.sql(' ').sql(hint).separatorRequired(true);
+        }
     }
 
     private static final TableList prependToManyPaths(Context<?> ctx, TableList tablelist) {

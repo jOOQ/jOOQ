@@ -88,4 +88,9 @@ abstract class AbstractParamX<T> extends AbstractField<T> implements Param<T> {
     }
 
     abstract void setInline0(boolean inline);
+
+    @Override
+    public final boolean generatesCast() {
+        return true;
+    }
 }

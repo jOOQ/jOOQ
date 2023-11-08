@@ -2699,7 +2699,7 @@ extends
      *      href="http://dev.mysql.com/doc/refman/5.7/en/index-hints.html">http://dev.mysql.com/doc/refman/5.7/en/index-hints.html</a>
      */
     @NotNull
-    @Support({ MARIADB, MYSQL })
+    @Support({ H2, MARIADB, MYSQL })
     Table<R> useIndex(String... indexes);
 
     /**

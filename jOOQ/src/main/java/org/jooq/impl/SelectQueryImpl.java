@@ -102,6 +102,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -262,6 +263,8 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.jooq.Asterisk;
 import org.jooq.Clause;
@@ -340,7 +343,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Clause[]        CLAUSES                         = { SELECT };
     static final Set<SQLDialect>         EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect> SUPPORT_ORACLE_STYLE_JOIN_HINTS = SQLDialect.supportedBy(MYSQL, YUGABYTEDB);
 
 
 
@@ -348,6 +350,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final Set<SQLDialect> OPTIONAL_FROM_CLAUSE            = SQLDialect.supportedBy(DEFAULT, DUCKDB, H2, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedUntil(MYSQL);
     private static final Set<SQLDialect> NO_IMPLICIT_GROUP_BY_ON_HAVING  = SQLDialect.supportedBy(SQLITE);
+
+
 
 
 
@@ -2742,12 +2746,86 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         ));
     }
 
-    private static final void toSQLJoinHints(Context<?> ctx, TableList tablelist) {
-        if (SUPPORT_ORACLE_STYLE_JOIN_HINTS.contains(ctx.dialect())) {
-            traverseJoins(tablelist, null);
-            // ctx.sql(' ').sql(hint).separatorRequired(true);
-        }
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static final TableList prependToManyPaths(Context<?> ctx, TableList tablelist) {
         TableList result = new TableList(tablelist);

@@ -238,4 +238,3 @@ package org.jooq;
 
 
 
-

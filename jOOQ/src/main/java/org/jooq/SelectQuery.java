@@ -85,6 +85,7 @@ import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.JoinHint;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -225,6 +226,66 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     @Support
     void addJoin(TableLike<?> table, JoinType type, Condition... conditions);
 
+    /**
+     * Joins the existing table product to a new table using a condition,
+     * connecting them with each other with {@link Operator#AND}.
+     *
+     * @param table The joined table
+     * @param type The type of join
+     * @param hint The hint to apply to the join
+     * @param condition The joining condition
+     */
+    @Support
+    void addJoin(TableLike<?> table, JoinType type, JoinHint hint, Condition condition);
+
+    /**
+     * Joins the existing table product to a new table using a condition,
+     * connecting them with each other with {@link Operator#AND}.
+     *
+     * @param table The joined table
+     * @param type The type of join
+     * @param hint The hint to apply to the join
+     * @param conditions The joining conditions
+     */
+    @Support
+    void addJoin(TableLike<?> table, JoinType type, JoinHint hint, Condition... conditions);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -289,6 +350,21 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addJoinUsing(TableLike<?> table, JoinType type, Collection<? extends Field<?>> fields);
 
     /**
+     * Joins the existing table product to a new table with a <code>USING</code>
+     * clause.
+     * <p>
+     * If this is not supported by your RDBMS, then jOOQ will try to emulate
+     * this behaviour using the information provided in this query.
+     *
+     * @param table The joined table
+     * @param type The type of join
+     * @param hint The hint to apply to the join
+     * @param fields The fields for the <code>USING</code> clause
+     */
+    @Support
+    void addJoinUsing(TableLike<?> table, JoinType type, JoinHint hint, Collection<? extends Field<?>> fields);
+
+    /**
      * Joins the existing table product to a new table using a foreign key.
      *
      * @param table The joined table
@@ -324,11 +400,56 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param table The joined table
      * @param type The type of join
+     * @param hint The hint to apply to the join
+     * @see TableOnStep#onKey(ForeignKey)
+     * @throws DataAccessException If there is no non-ambiguous key definition
+     *             known to jOOQ. <em>Please note that if you evolve your
+     *             schema, a previously non-ambiguous <code>ON KEY</code> clause
+     *             can suddenly become ambiguous on an existing query, so use
+     *             this clause with care.</em>
+     */
+    @Support
+    void addJoinOnKey(TableLike<?> table, JoinType type, JoinHint hint) throws DataAccessException;
+
+    /**
+     * Joins the existing table product to a new table using a foreign key.
+     *
+     * @param table The joined table
+     * @param type The type of join
+     * @param hint The hint to apply to the join
+     * @param keyFields The foreign key fields
+     * @see TableOnStep#onKey(ForeignKey)
+     * @throws DataAccessException If there is no non-ambiguous key definition
+     *             known to jOOQ. <em>Please note that if you evolve your
+     *             schema, a previously non-ambiguous <code>ON KEY</code> clause
+     *             can suddenly become ambiguous on an existing query, so use
+     *             this clause with care.</em>
+     */
+    @Support
+    void addJoinOnKey(TableLike<?> table, JoinType type, JoinHint hint, TableField<?, ?>... keyFields) throws DataAccessException;
+
+    /**
+     * Joins the existing table product to a new table using a foreign key.
+     *
+     * @param table The joined table
+     * @param type The type of join
      * @param key The foreign key
      * @see TableOnStep#onKey(ForeignKey)
      */
     @Support
     void addJoinOnKey(TableLike<?> table, JoinType type, ForeignKey<?, ?> key);
+
+    /**
+     * Joins the existing table product to a new table using a foreign key.
+     *
+     * @param table The joined table
+     * @param type The type of join
+     * @param hint The hint to apply to the join
+     * @param key The foreign key
+     * @see TableOnStep#onKey(ForeignKey)
+     */
+    @Support
+    void addJoinOnKey(TableLike<?> table, JoinType type, JoinHint hint, ForeignKey<?, ?> key);
 
     /**
      * Adds grouping fields.

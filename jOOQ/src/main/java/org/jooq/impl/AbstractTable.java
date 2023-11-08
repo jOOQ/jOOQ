@@ -60,6 +60,9 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.QOM.JoinHint.HASH;
+import static org.jooq.impl.QOM.JoinHint.LOOP;
+import static org.jooq.impl.QOM.JoinHint.MERGE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.map;
@@ -1371,11 +1374,11 @@ implements
         if (this instanceof NoTable)
             return new NoTableJoin(table.asTable());
         else if (this instanceof NoTableJoin n)
-            return n.table.join(table, type);
+            return n.table.join(table, type, hint);
         else if (table instanceof NoTable)
             return new NoTableJoin(this);
         else if (table instanceof NoTableJoin n)
-            return join(n.table, type);
+            return join(n.table, type, hint);
 
         switch (type) {
             case CROSS_APPLY:
@@ -1417,8 +1420,38 @@ implements
     }
 
     @Override
+    public final TableOnStep<Record> hashJoin(TableLike<?> table) {
+        return innerHashJoin(table);
+    }
+
+    @Override
+    public final TableOnStep<Record> loopJoin(TableLike<?> table) {
+        return innerLoopJoin(table);
+    }
+
+    @Override
+    public final TableOnStep<Record> mergeJoin(TableLike<?> table) {
+        return innerMergeJoin(table);
+    }
+
+    @Override
     public final TableOptionalOnStep<Record> join(Path<?> path) {
         return innerJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> hashJoin(Path<?> path) {
+        return innerHashJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> loopJoin(Path<?> path) {
+        return innerLoopJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> mergeJoin(Path<?> path) {
+        return innerMergeJoin(path);
     }
 
     @Override
@@ -1452,8 +1485,38 @@ implements
     }
 
     @Override
+    public final TableOnStep<Record> innerHashJoin(TableLike<?> table) {
+        return join(table, JOIN, HASH);
+    }
+
+    @Override
+    public final TableOnStep<Record> innerLoopJoin(TableLike<?> table) {
+        return join(table, JOIN, LOOP);
+    }
+
+    @Override
+    public final TableOnStep<Record> innerMergeJoin(TableLike<?> table) {
+        return join(table, JOIN, MERGE);
+    }
+
+    @Override
     public final TableOptionalOnStep<Record> innerJoin(Path<?> path) {
         return join(path, JOIN);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> innerHashJoin(Path<?> path) {
+        return join(path, JOIN, HASH);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> innerLoopJoin(Path<?> path) {
+        return join(path, JOIN, LOOP);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> innerMergeJoin(Path<?> path) {
+        return join(path, JOIN, MERGE);
     }
 
     @Override
@@ -1501,8 +1564,38 @@ implements
     }
 
     @Override
+    public final TablePartitionByStep<Record> leftHashJoin(TableLike<?> table) {
+        return leftOuterHashJoin(table);
+    }
+
+    @Override
+    public final TablePartitionByStep<Record> leftLoopJoin(TableLike<?> table) {
+        return leftOuterLoopJoin(table);
+    }
+
+    @Override
+    public final TablePartitionByStep<Record> leftMergeJoin(TableLike<?> table) {
+        return leftOuterMergeJoin(table);
+    }
+
+    @Override
     public final TableOptionalOnStep<Record> leftJoin(Path<?> path) {
         return leftOuterJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> leftHashJoin(Path<?> path) {
+        return leftOuterHashJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> leftLoopJoin(Path<?> path) {
+        return leftOuterLoopJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> leftMergeJoin(Path<?> path) {
+        return leftOuterMergeJoin(path);
     }
 
     @Override
@@ -1536,9 +1629,42 @@ implements
         return (TablePartitionByStep<Record>) join(table, LEFT_OUTER_JOIN);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TablePartitionByStep<Record> leftOuterHashJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, LEFT_OUTER_JOIN, HASH);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TablePartitionByStep<Record> leftOuterLoopJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, LEFT_OUTER_JOIN, LOOP);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TablePartitionByStep<Record> leftOuterMergeJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, LEFT_OUTER_JOIN, MERGE);
+    }
+
     @Override
     public final TableOptionalOnStep<Record> leftOuterJoin(Path<?> path) {
         return join(path, LEFT_OUTER_JOIN);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> leftOuterHashJoin(Path<?> path) {
+        return join(path, LEFT_OUTER_JOIN, HASH);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> leftOuterLoopJoin(Path<?> path) {
+        return join(path, LEFT_OUTER_JOIN, LOOP);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> leftOuterMergeJoin(Path<?> path) {
+        return join(path, LEFT_OUTER_JOIN, MERGE);
     }
 
     @Override
@@ -1572,8 +1698,38 @@ implements
     }
 
     @Override
+    public final TablePartitionByStep<Record> rightHashJoin(TableLike<?> table) {
+        return rightOuterHashJoin(table);
+    }
+
+    @Override
+    public final TablePartitionByStep<Record> rightLoopJoin(TableLike<?> table) {
+        return rightOuterLoopJoin(table);
+    }
+
+    @Override
+    public final TablePartitionByStep<Record> rightMergeJoin(TableLike<?> table) {
+        return rightOuterMergeJoin(table);
+    }
+
+    @Override
     public final TableOptionalOnStep<Record> rightJoin(Path<?> path) {
         return rightOuterJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> rightHashJoin(Path<?> path) {
+        return rightOuterHashJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> rightLoopJoin(Path<?> path) {
+        return rightOuterLoopJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> rightMergeJoin(Path<?> path) {
+        return rightOuterMergeJoin(path);
     }
 
     @Override
@@ -1607,9 +1763,42 @@ implements
         return (TablePartitionByStep<Record>) join(table, RIGHT_OUTER_JOIN);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TablePartitionByStep<Record> rightOuterHashJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, RIGHT_OUTER_JOIN, HASH);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TablePartitionByStep<Record> rightOuterLoopJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, RIGHT_OUTER_JOIN, LOOP);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TablePartitionByStep<Record> rightOuterMergeJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, RIGHT_OUTER_JOIN, MERGE);
+    }
+
     @Override
     public final TableOptionalOnStep<Record> rightOuterJoin(Path<?> path) {
         return join(path, RIGHT_OUTER_JOIN);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> rightOuterHashJoin(Path<?> path) {
+        return join(path, RIGHT_OUTER_JOIN, HASH);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> rightOuterLoopJoin(Path<?> path) {
+        return join(path, RIGHT_OUTER_JOIN, LOOP);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> rightOuterMergeJoin(Path<?> path) {
+        return join(path, RIGHT_OUTER_JOIN, MERGE);
     }
 
     @Override
@@ -1643,9 +1832,42 @@ implements
         return (TablePartitionByStep<Record>) join(table, FULL_OUTER_JOIN);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TablePartitionByStep<Record> fullOuterHashJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, FULL_OUTER_JOIN, HASH);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TablePartitionByStep<Record> fullOuterLoopJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, FULL_OUTER_JOIN, LOOP);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TablePartitionByStep<Record> fullOuterMergeJoin(TableLike<?> table) {
+        return (TablePartitionByStep<Record>) join(table, FULL_OUTER_JOIN, MERGE);
+    }
+
     @Override
     public final TableOptionalOnStep<Record> fullOuterJoin(Path<?> path) {
         return join(path, FULL_OUTER_JOIN);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> fullOuterHashJoin(Path<?> path) {
+        return join(path, FULL_OUTER_JOIN, HASH);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> fullOuterLoopJoin(Path<?> path) {
+        return join(path, FULL_OUTER_JOIN, LOOP);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> fullOuterMergeJoin(Path<?> path) {
+        return join(path, FULL_OUTER_JOIN, MERGE);
     }
 
     @Override
@@ -1679,8 +1901,38 @@ implements
     }
 
     @Override
+    public final TablePartitionByStep<Record> fullHashJoin(TableLike<?> table) {
+        return fullOuterHashJoin(table);
+    }
+
+    @Override
+    public final TablePartitionByStep<Record> fullLoopJoin(TableLike<?> table) {
+        return fullOuterLoopJoin(table);
+    }
+
+    @Override
+    public final TablePartitionByStep<Record> fullMergeJoin(TableLike<?> table) {
+        return fullOuterMergeJoin(table);
+    }
+
+    @Override
     public final TableOptionalOnStep<Record> fullJoin(Path<?> path) {
         return fullOuterJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> fullHashJoin(Path<?> path) {
+        return fullOuterHashJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> fullLoopJoin(Path<?> path) {
+        return fullOuterLoopJoin(path);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> fullMergeJoin(Path<?> path) {
+        return fullOuterMergeJoin(path);
     }
 
     @Override

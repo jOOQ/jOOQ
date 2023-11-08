@@ -42,6 +42,9 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.QOM.JoinHint.HASH;
+import static org.jooq.impl.QOM.JoinHint.LOOP;
+import static org.jooq.impl.QOM.JoinHint.MERGE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.map;
 
@@ -133,6 +136,7 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
 import org.jooq.WindowDefinition;
+import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 
@@ -218,6 +222,11 @@ implements
      * A temporary member holding a join type
      */
     private transient JoinType                joinType;
+
+    /**
+     * A temporary member holding a join hint
+     */
+    private transient JoinHint                joinHint;
 
     /**
      * A temporary member holding a join condition
@@ -2155,11 +2164,12 @@ implements
 
 
 
-                getQuery().addJoin(joinTable, joinType, joinConditions);
+                getQuery().addJoin(joinTable, joinType, joinHint, joinConditions);
 
             joinTable = null;
             joinPartitionBy = null;
             joinType = null;
+            joinHint = null;
         }
 
         return this;
@@ -2181,11 +2191,12 @@ implements
 
 
 
-                getQuery().addJoin(joinTable, joinType, new Condition[] { joinConditions });
+                getQuery().addJoin(joinTable, joinType, joinHint, new Condition[] { joinConditions });
 
             joinTable = null;
             joinPartitionBy = null;
             joinType = null;
+            joinHint = null;
         }
 
         return this;
@@ -2221,12 +2232,13 @@ implements
         conditionStep = ConditionStep.ON;
 
         if (joinTable != null) {
-            getQuery().addJoinOnKey(joinTable, joinType);
+            getQuery().addJoinOnKey(joinTable, joinType, joinHint);
 
             joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
             joinTable = null;
             joinPartitionBy = null;
             joinType = null;
+            joinHint = null;
         }
 
         return this;
@@ -2237,12 +2249,13 @@ implements
         conditionStep = ConditionStep.ON;
 
         if (joinTable != null) {
-            getQuery().addJoinOnKey(joinTable, joinType, keyFields);
+            getQuery().addJoinOnKey(joinTable, joinType, joinHint, keyFields);
 
             joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
             joinTable = null;
             joinPartitionBy = null;
             joinType = null;
+            joinHint = null;
         }
 
         return this;
@@ -2253,12 +2266,13 @@ implements
         conditionStep = ConditionStep.ON;
 
         if (joinTable != null) {
-            getQuery().addJoinOnKey(joinTable, joinType, key);
+            getQuery().addJoinOnKey(joinTable, joinType, joinHint, key);
 
             joinConditions = ((JoinTable) getDelegate().getFrom().get(getDelegate().getFrom().size() - 1)).condition;
             joinTable = null;
             joinPartitionBy = null;
             joinType = null;
+            joinHint = null;
         }
 
         return this;
@@ -2272,10 +2286,11 @@ implements
     @Override
     public final SelectImpl using(Collection<? extends Field<?>> fields) {
         if (joinTable != null) {
-            getQuery().addJoinUsing(joinTable, joinType, fields);
+            getQuery().addJoinUsing(joinTable, joinType, joinHint, fields);
             joinTable = null;
             joinPartitionBy = null;
             joinType = null;
+            joinHint = null;
         }
 
         return this;
@@ -2287,8 +2302,38 @@ implements
     }
 
     @Override
+    public final SelectImpl hashJoin(TableLike<?> table) {
+        return innerHashJoin(table);
+    }
+
+    @Override
+    public final SelectImpl loopJoin(TableLike<?> table) {
+        return innerLoopJoin(table);
+    }
+
+    @Override
+    public final SelectImpl mergeJoin(TableLike<?> table) {
+        return innerMergeJoin(table);
+    }
+
+    @Override
     public final SelectImpl join(Path<?> path) {
         return innerJoin(path);
+    }
+
+    @Override
+    public final SelectImpl hashJoin(Path<?> path) {
+        return innerHashJoin(path);
+    }
+
+    @Override
+    public final SelectImpl mergeJoin(Path<?> path) {
+        return innerMergeJoin(path);
+    }
+
+    @Override
+    public final SelectImpl loopJoin(Path<?> path) {
+        return innerLoopJoin(path);
     }
 
     @Override
@@ -2297,8 +2342,38 @@ implements
     }
 
     @Override
+    public final SelectImpl innerHashJoin(TableLike<?> table) {
+        return join(table, JoinType.JOIN, HASH);
+    }
+
+    @Override
+    public final SelectImpl innerLoopJoin(TableLike<?> table) {
+        return join(table, JoinType.JOIN, LOOP);
+    }
+
+    @Override
+    public final SelectImpl innerMergeJoin(TableLike<?> table) {
+        return join(table, JoinType.JOIN, MERGE);
+    }
+
+    @Override
     public final SelectImpl innerJoin(Path<?> path) {
         return join(path, JoinType.JOIN).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl innerHashJoin(Path<?> path) {
+        return join(path, JoinType.JOIN, HASH).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl innerLoopJoin(Path<?> path) {
+        return join(path, JoinType.JOIN, LOOP).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl innerMergeJoin(Path<?> path) {
+        return join(path, JoinType.JOIN, MERGE).on(noCondition());
     }
 
     @Override
@@ -2307,8 +2382,38 @@ implements
     }
 
     @Override
+    public final SelectImpl leftHashJoin(TableLike<?> table) {
+        return leftOuterHashJoin(table);
+    }
+
+    @Override
+    public final SelectImpl leftLoopJoin(TableLike<?> table) {
+        return leftOuterLoopJoin(table);
+    }
+
+    @Override
+    public final SelectImpl leftMergeJoin(TableLike<?> table) {
+        return leftOuterMergeJoin(table);
+    }
+
+    @Override
     public final SelectImpl leftJoin(Path<?> path) {
         return leftOuterJoin(path);
+    }
+
+    @Override
+    public final SelectImpl leftHashJoin(Path<?> path) {
+        return leftOuterHashJoin(path);
+    }
+
+    @Override
+    public final SelectImpl leftLoopJoin(Path<?> path) {
+        return leftOuterLoopJoin(path);
+    }
+
+    @Override
+    public final SelectImpl leftMergeJoin(Path<?> path) {
+        return leftOuterMergeJoin(path);
     }
 
     @Override
@@ -2317,8 +2422,38 @@ implements
     }
 
     @Override
+    public final SelectImpl leftOuterHashJoin(TableLike<?> table) {
+        return join(table, JoinType.LEFT_OUTER_JOIN, HASH);
+    }
+
+    @Override
+    public final SelectImpl leftOuterLoopJoin(TableLike<?> table) {
+        return join(table, JoinType.LEFT_OUTER_JOIN, LOOP);
+    }
+
+    @Override
+    public final SelectImpl leftOuterMergeJoin(TableLike<?> table) {
+        return join(table, JoinType.LEFT_OUTER_JOIN, MERGE);
+    }
+
+    @Override
     public final SelectImpl leftOuterJoin(Path<?> path) {
         return join(path, JoinType.LEFT_OUTER_JOIN).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl leftOuterHashJoin(Path<?> path) {
+        return join(path, JoinType.LEFT_OUTER_JOIN, HASH).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl leftOuterLoopJoin(Path<?> path) {
+        return join(path, JoinType.LEFT_OUTER_JOIN, LOOP).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl leftOuterMergeJoin(Path<?> path) {
+        return join(path, JoinType.LEFT_OUTER_JOIN, MERGE).on(noCondition());
     }
 
     @Override
@@ -2327,8 +2462,38 @@ implements
     }
 
     @Override
+    public final SelectImpl rightHashJoin(TableLike<?> table) {
+        return rightOuterHashJoin(table);
+    }
+
+    @Override
+    public final SelectImpl rightLoopJoin(TableLike<?> table) {
+        return rightOuterLoopJoin(table);
+    }
+
+    @Override
+    public final SelectImpl rightMergeJoin(TableLike<?> table) {
+        return rightOuterMergeJoin(table);
+    }
+
+    @Override
     public final SelectImpl rightJoin(Path<?> path) {
         return rightOuterJoin(path);
+    }
+
+    @Override
+    public final SelectImpl rightHashJoin(Path<?> path) {
+        return rightOuterHashJoin(path);
+    }
+
+    @Override
+    public final SelectImpl rightLoopJoin(Path<?> path) {
+        return rightOuterLoopJoin(path);
+    }
+
+    @Override
+    public final SelectImpl rightMergeJoin(Path<?> path) {
+        return rightOuterMergeJoin(path);
     }
 
     @Override
@@ -2337,8 +2502,38 @@ implements
     }
 
     @Override
+    public final SelectImpl rightOuterHashJoin(TableLike<?> table) {
+        return join(table, JoinType.RIGHT_OUTER_JOIN, HASH);
+    }
+
+    @Override
+    public final SelectImpl rightOuterLoopJoin(TableLike<?> table) {
+        return join(table, JoinType.RIGHT_OUTER_JOIN, LOOP);
+    }
+
+    @Override
+    public final SelectImpl rightOuterMergeJoin(TableLike<?> table) {
+        return join(table, JoinType.RIGHT_OUTER_JOIN, MERGE);
+    }
+
+    @Override
     public final SelectImpl rightOuterJoin(Path<?> path) {
         return join(path, JoinType.RIGHT_OUTER_JOIN).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl rightOuterHashJoin(Path<?> path) {
+        return join(path, JoinType.RIGHT_OUTER_JOIN, HASH).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl rightOuterLoopJoin(Path<?> path) {
+        return join(path, JoinType.RIGHT_OUTER_JOIN, LOOP).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl rightOuterMergeJoin(Path<?> path) {
+        return join(path, JoinType.RIGHT_OUTER_JOIN, MERGE).on(noCondition());
     }
 
     @Override
@@ -2347,8 +2542,38 @@ implements
     }
 
     @Override
+    public final SelectImpl fullHashJoin(TableLike<?> table) {
+        return fullOuterHashJoin(table);
+    }
+
+    @Override
+    public final SelectImpl fullLoopJoin(TableLike<?> table) {
+        return fullOuterLoopJoin(table);
+    }
+
+    @Override
+    public final SelectImpl fullMergeJoin(TableLike<?> table) {
+        return fullOuterMergeJoin(table);
+    }
+
+    @Override
     public final SelectImpl fullJoin(Path<?> path) {
         return fullOuterJoin(path);
+    }
+
+    @Override
+    public final SelectImpl fullHashJoin(Path<?> path) {
+        return fullOuterHashJoin(path);
+    }
+
+    @Override
+    public final SelectImpl fullLoopJoin(Path<?> path) {
+        return fullOuterLoopJoin(path);
+    }
+
+    @Override
+    public final SelectImpl fullMergeJoin(Path<?> path) {
+        return fullOuterMergeJoin(path);
     }
 
     @Override
@@ -2357,12 +2582,47 @@ implements
     }
 
     @Override
+    public final SelectImpl fullOuterHashJoin(TableLike<?> table) {
+        return join(table, JoinType.FULL_OUTER_JOIN, HASH);
+    }
+
+    @Override
+    public final SelectImpl fullOuterLoopJoin(TableLike<?> table) {
+        return join(table, JoinType.FULL_OUTER_JOIN, LOOP);
+    }
+
+    @Override
+    public final SelectImpl fullOuterMergeJoin(TableLike<?> table) {
+        return join(table, JoinType.FULL_OUTER_JOIN, MERGE);
+    }
+
+    @Override
     public final SelectImpl fullOuterJoin(Path<?> path) {
         return join(path, JoinType.FULL_OUTER_JOIN).on(noCondition());
     }
 
     @Override
+    public final SelectImpl fullOuterHashJoin(Path<?> path) {
+        return join(path, JoinType.FULL_OUTER_JOIN, HASH).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl fullOuterLoopJoin(Path<?> path) {
+        return join(path, JoinType.FULL_OUTER_JOIN, LOOP).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl fullOuterMergeJoin(Path<?> path) {
+        return join(path, JoinType.FULL_OUTER_JOIN, MERGE).on(noCondition());
+    }
+
+    @Override
     public final SelectImpl join(TableLike<?> table, JoinType type) {
+        return join(table, type, null);
+    }
+
+    @Override
+    public final SelectImpl join(TableLike<?> table, JoinType type, JoinHint hint) {
         switch (type) {
             case CROSS_JOIN:
             case NATURAL_JOIN:
@@ -2371,10 +2631,11 @@ implements
             case NATURAL_FULL_OUTER_JOIN:
             case CROSS_APPLY:
             case OUTER_APPLY: {
-                getQuery().addJoin(table, type);
+                getQuery().addJoin(table, type, hint);
                 joinTable = null;
                 joinPartitionBy = null;
                 joinType = null;
+                joinHint = null;
 
                 return this;
             }
@@ -2383,6 +2644,7 @@ implements
                 conditionStep = ConditionStep.ON;
                 joinTable = table;
                 joinType = type;
+                joinHint = hint;
                 joinPartitionBy = null;
                 joinConditions = null;
 

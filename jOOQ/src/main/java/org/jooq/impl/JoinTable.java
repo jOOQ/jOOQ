@@ -235,15 +235,15 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         else if (rhs instanceof Lateral && path(((Lateral<?>) rhs).$arg1()) != null)
             ctx.visit($table2(lateral(selectFrom(((Lateral<?>) rhs).$arg1()).asTable(((Lateral<?>) rhs).$arg1()))));
         else if (type == NATURAL_JOIN && path)
-            ctx.visit(lhs.join(rhs).on(naturalCondition()));
+            ctx.visit(lhs.join(rhs, JOIN, hint).on(naturalCondition()));
         else if (type == NATURAL_LEFT_OUTER_JOIN && path)
-            ctx.visit(lhs.leftJoin(rhs).on(naturalCondition()));
+            ctx.visit(lhs.join(rhs, LEFT_OUTER_JOIN, hint).on(naturalCondition()));
         else if (type == NATURAL_RIGHT_OUTER_JOIN && path)
-            ctx.visit(lhs.rightJoin(rhs).on(naturalCondition()));
+            ctx.visit(lhs.join(rhs, RIGHT_OUTER_JOIN, hint).on(naturalCondition()));
         else if (type == NATURAL_FULL_OUTER_JOIN && path)
-            ctx.visit(lhs.fullJoin(rhs).on(naturalCondition()));
+            ctx.visit(lhs.join(rhs, FULL_OUTER_JOIN, hint).on(naturalCondition()));
         else if (!using.isEmpty() && path)
-            ctx.visit(lhs.join(rhs, type).on(usingCondition()));
+            ctx.visit(lhs.join(rhs, type, hint).on(usingCondition()));
 
         // [#14988] Make sure APPLY table reference continues working by wrapping lateral(rhs)
         else if (this instanceof CrossApply && EMULATE_APPLY.contains(ctx.dialect()))
@@ -420,6 +420,10 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
 
 
+
+
+
+
                 else
                     keyword = translatedType.toKeyword();
 
@@ -450,8 +454,43 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
                 break;
         }
 
+
+
+
+
         return keyword;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void toSQLTable(Context<?> ctx, Table<?> table) {
 

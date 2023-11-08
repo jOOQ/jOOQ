@@ -317,6 +317,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.QOM.CompareCondition;
+import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.Materialized;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
@@ -4681,12 +4682,22 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addJoin(TableLike<?> table, JoinType type, Condition conditions) {
-        addJoin0(table, type, conditions, null);
+        addJoin0(table, type, null, conditions, null);
     }
 
     @Override
     public final void addJoin(TableLike<?> table, JoinType type, Condition... conditions) {
-        addJoin0(table, type, conditions, null);
+        addJoin0(table, type, null, conditions, null);
+    }
+
+    @Override
+    public final void addJoin(TableLike<?> table, JoinType type, JoinHint hint, Condition conditions) {
+        addJoin0(table, type, hint, conditions, null);
+    }
+
+    @Override
+    public final void addJoin(TableLike<?> table, JoinType type, JoinHint hint, Condition... conditions) {
+        addJoin0(table, type, hint, conditions, null);
     }
 
 
@@ -4703,7 +4714,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private final void addJoin0(TableLike<?> table, JoinType type, Object conditions, Field<?>[] partitionBy) {
+
+
+
+
+
+
+
+
+
+
+
+
+    private final void addJoin0(TableLike<?> table, JoinType type, JoinHint hint, Object conditions, Field<?>[] partitionBy) {
 
         // TODO: This and similar methods should be refactored, patterns extracted...
         int index = getFrom().size() - 1;
@@ -4715,7 +4738,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
             case FULL_OUTER_JOIN: {
-                TableOptionalOnStep<Record> o = getFrom().get(index).join(table, type);
+                TableOptionalOnStep<Record> o = getFrom().get(index).join(table, type, hint);
 
                 if (conditions instanceof Condition c)
                     joined = o.on(c);
@@ -4727,7 +4750,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             case LEFT_OUTER_JOIN:
             case RIGHT_OUTER_JOIN: {
-                TablePartitionByStep<?> p = (TablePartitionByStep<?>) getFrom().get(index).join(table, type);
+                TablePartitionByStep<?> p = (TablePartitionByStep<?>) getFrom().get(index).join(table, type, hint);
                 TableOnStep<?> o = p;
 
 
@@ -4749,7 +4772,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             case NATURAL_FULL_OUTER_JOIN:
             case CROSS_APPLY:
             case OUTER_APPLY:
-                joined = getFrom().get(index).join(table, type);
+                joined = getFrom().get(index).join(table, type, hint);
                 break;
 
             default: throw new IllegalArgumentException("Bad join type: " + type);
@@ -4760,6 +4783,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addJoinOnKey(TableLike<?> table, JoinType type) throws DataAccessException {
+        addJoinOnKey(table, type, (JoinHint) null);
+    }
+
+    @Override
+    public final void addJoinOnKey(TableLike<?> table, JoinType type, JoinHint hint) throws DataAccessException {
+
         // TODO: This and similar methods should be refactored, patterns extracted...
 
         int index = getFrom().size() - 1;
@@ -4772,7 +4801,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             case FULL_OUTER_JOIN:
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
-                joined = getFrom().get(index).join(table, type).onKey();
+                joined = getFrom().get(index).join(table, type, hint).onKey();
                 break;
 
             default:
@@ -4784,6 +4813,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addJoinOnKey(TableLike<?> table, JoinType type, TableField<?, ?>... keyFields) throws DataAccessException {
+        addJoinOnKey(table, type, null, keyFields);
+    }
+
+    @Override
+    public final void addJoinOnKey(TableLike<?> table, JoinType type, JoinHint hint, TableField<?, ?>... keyFields) throws DataAccessException {
+
         // TODO: This and similar methods should be refactored, patterns extracted...
 
         int index = getFrom().size() - 1;
@@ -4796,7 +4831,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             case FULL_OUTER_JOIN:
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
-                joined = getFrom().get(index).join(table, type).onKey(keyFields);
+                joined = getFrom().get(index).join(table, type, hint).onKey(keyFields);
                 break;
 
             default:
@@ -4808,6 +4843,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addJoinOnKey(TableLike<?> table, JoinType type, ForeignKey<?, ?> key) {
+        addJoinOnKey(table, type, null, key);
+    }
+
+    @Override
+    public final void addJoinOnKey(TableLike<?> table, JoinType type, JoinHint hint, ForeignKey<?, ?> key) {
         // TODO: This and similar methods should be refactored, patterns extracted...
 
         int index = getFrom().size() - 1;
@@ -4820,7 +4860,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             case FULL_OUTER_JOIN:
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
-                joined = getFrom().get(index).join(table, type).onKey(key);
+                joined = getFrom().get(index).join(table, type, hint).onKey(key);
                 break;
 
             default:
@@ -4837,6 +4877,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final void addJoinUsing(TableLike<?> table, JoinType type, Collection<? extends Field<?>> fields) {
+        addJoinUsing(table, type, null, fields);
+    }
+
+    @Override
+    public final void addJoinUsing(TableLike<?> table, JoinType type, JoinHint hint, Collection<? extends Field<?>> fields) {
         // TODO: This and similar methods should be refactored, patterns extracted...
 
         int index = getFrom().size() - 1;
@@ -4849,7 +4894,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             case FULL_OUTER_JOIN:
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
-                joined = getFrom().get(index).join(table, type).using(fields);
+                joined = getFrom().get(index).join(table, type, hint).using(fields);
                 break;
 
             default:

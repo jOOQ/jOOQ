@@ -153,10 +153,6 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         return CLAUSES;
     }
 
-    @Override
-    public final boolean generatesCast() {
-        return true;
-    }
 
     // ------------------------------------------------------------------------
     // XXX: Param API

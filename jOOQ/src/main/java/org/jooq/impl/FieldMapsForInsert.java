@@ -581,12 +581,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         initNextRow();
         for (Object field : fields) {
             Field<?> f = Tools.tableField(table, field);
-            Field<?> e = empty.get(f);
-
-            if (e == null) {
-                e = new LazyVal<>((Field<Object>) f);
-                empty.put(f, e);
-            }
+            Field<?> e = empty.computeIfAbsent(f, LazyVal::new);
 
             if (!values.containsKey(f)) {
                 values.put(f, rows > 0

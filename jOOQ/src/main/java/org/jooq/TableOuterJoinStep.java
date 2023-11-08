@@ -37,12 +37,12 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.*;
-
-// ...
 // ...
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.JoinHint;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An intermediate type for the construction of a partitioned
@@ -75,6 +75,17 @@ import org.jooq.impl.DSL;
  * @author Lukas Eder
  */
 public interface TableOuterJoinStep<R extends Record> {
+
+
+
+
+
+
+
+
+
+
+
 
 
 

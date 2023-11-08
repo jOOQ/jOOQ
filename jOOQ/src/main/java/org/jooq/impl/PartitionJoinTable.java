@@ -55,11 +55,18 @@ import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.impl.QOM.JoinHint;
 
 /**
  * @author Lukas Eder
  */
 final class PartitionJoinTable implements TableOuterJoinStep<Record> {
+
+
+
+
+
+
 
 
 

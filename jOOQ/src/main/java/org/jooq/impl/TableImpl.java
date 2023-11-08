@@ -78,7 +78,6 @@ import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Name;
-import org.jooq.Path;
 // ...
 import org.jooq.Record;
 import org.jooq.Row;
@@ -89,6 +88,7 @@ import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
+import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.tools.StringUtils;
 
@@ -327,9 +327,9 @@ implements
 
     final Condition pathCondition() {
         if (childPath != null)
-            return wrapForImplicitJoin(new Join(path, this).onKey(childPath).condition.getWhere());
+            return wrapForImplicitJoin(new Join(path, this, null).onKey(childPath).condition.getWhere());
         else if (parentPath != null)
-            return wrapForImplicitJoin(new Join(this, path).onKey(parentPath.getForeignKey()).condition.getWhere());
+            return wrapForImplicitJoin(new Join(this, path, null).onKey(parentPath.getForeignKey()).condition.getWhere());
         else
             return noCondition();
     }
@@ -568,6 +568,11 @@ implements
     @Override
     public final TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type) {
         return super.join(table, type);
+    }
+
+    @Override
+    public final TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type, JoinHint hint) {
+        return super.join(table, type, hint);
     }
 
     // -------------------------------------------------------------------------

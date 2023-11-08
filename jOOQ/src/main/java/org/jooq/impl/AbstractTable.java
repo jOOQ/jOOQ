@@ -124,6 +124,7 @@ import org.jooq.UniqueKey;
 // ...
 import org.jooq.impl.QOM.Aliasable;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.JoinHint;
 import org.jooq.tools.JooqLogger;
 
 
@@ -1359,6 +1360,14 @@ implements
     //          this only internally, to prevent leaking JoinTable into client code
     @Override
     public /* non-final */ TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type) {
+        return join(table, type, null);
+    }
+
+    // [#14906] Declare public API return type, allowing for JoinTable to override
+    //          this only internally, to prevent leaking JoinTable into client code
+    @Override
+    public /* non-final */ TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type, JoinHint hint) {
+
         if (this instanceof NoTable)
             return new NoTableJoin(table.asTable());
         else if (this instanceof NoTableJoin n)
@@ -1374,29 +1383,29 @@ implements
             case CROSS_JOIN:
                 return new CrossJoin(this, table);
             case FULL_OUTER_JOIN:
-                return new FullJoin(this, table);
+                return new FullJoin(this, table, hint);
             case JOIN:
-                return new Join(this, table);
+                return new Join(this, table, hint);
             case LEFT_ANTI_JOIN:
                 return new LeftAntiJoin(this, table);
             case LEFT_OUTER_JOIN:
-                return new LeftJoin(this, table);
+                return new LeftJoin(this, table, hint);
             case LEFT_SEMI_JOIN:
                 return new LeftSemiJoin(this, table);
             case NATURAL_FULL_OUTER_JOIN:
-                return new NaturalFullJoin(this, table);
+                return new NaturalFullJoin(this, table, hint);
             case NATURAL_JOIN:
-                return new NaturalJoin(this, table);
+                return new NaturalJoin(this, table, hint);
             case NATURAL_LEFT_OUTER_JOIN:
-                return new NaturalLeftJoin(this, table);
+                return new NaturalLeftJoin(this, table, hint);
             case NATURAL_RIGHT_OUTER_JOIN:
-                return new NaturalRightJoin(this, table);
+                return new NaturalRightJoin(this, table, hint);
             case OUTER_APPLY:
                 return new OuterApply(this, table);
             case RIGHT_OUTER_JOIN:
-                return new RightJoin(this, table);
+                return new RightJoin(this, table, hint);
             case STRAIGHT_JOIN:
-                return new StraightJoin(this, table);
+                return new StraightJoin(this, table, hint);
             default:
                 throw new IllegalArgumentException("Unsupported join type: " + type);
         }

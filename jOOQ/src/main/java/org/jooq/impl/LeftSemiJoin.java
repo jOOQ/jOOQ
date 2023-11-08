@@ -45,6 +45,7 @@ import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.impl.QOM.JoinHint;
 
 /**
  * @author Lukas Eder
@@ -57,7 +58,7 @@ implements
 {
 
     LeftSemiJoin(TableLike<?> lhs, TableLike<?> rhs) {
-        super(lhs, rhs, JoinType.LEFT_SEMI_JOIN);
+        super(lhs, rhs, JoinType.LEFT_SEMI_JOIN, null);
     }
 
     // -------------------------------------------------------------------------
@@ -71,7 +72,8 @@ implements
         Collection<? extends Field<?>> partitionBy2,
         Table<?> table2,
         Condition o,
-        Collection<? extends Field<?>> u
+        Collection<? extends Field<?>> u,
+        JoinHint h
     ) {
         return o != null ? new LeftSemiJoin(table1, table2).on(o) : new LeftSemiJoin(table1, table2).using(u);
     }

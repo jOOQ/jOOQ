@@ -1041,8 +1041,10 @@ public final class QOM {
     {
         @NotNull Table<?> $table1();
         @NotNull Table<?> $table2();
+        @Nullable JoinHint $hint();
         @NotNull J $table1(Table<?> table1);
         @NotNull J $table2(Table<?> table2);
+        @NotNull J $hint(JoinHint hint);
     }
 
     public sealed interface CrossJoin<R extends org.jooq.Record>
@@ -6063,6 +6065,7 @@ public final class QOM {
         /**
          * The data type to try to cast the value to
          */
+        @Override
         @NotNull default DataType<T> $dataType() { return $arg2(); }
 
         /**
@@ -8582,6 +8585,24 @@ public final class QOM {
         final Keyword keyword;
 
         private Quantifier(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>JoinHint</code> type.
+     * <p>
+     * A hint for join algorithms.
+     */
+    public enum JoinHint {
+        HASH(keyword("hash")),
+        LOOP(keyword("loop")),
+        MERGE(keyword("merge")),
+        ;
+
+        final Keyword keyword;
+
+        private JoinHint(Keyword keyword) {
             this.keyword = keyword;
         }
     }

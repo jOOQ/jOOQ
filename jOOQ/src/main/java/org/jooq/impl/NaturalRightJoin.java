@@ -47,6 +47,7 @@ import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.impl.QOM.JoinHint;
 
 /**
  * @author Lukas Eder
@@ -58,12 +59,12 @@ implements
     QOM.NaturalRightJoin<Record>
 {
 
-    NaturalRightJoin(TableLike<?> lhs, TableLike<?> rhs) {
-        super(lhs, rhs, JoinType.NATURAL_RIGHT_OUTER_JOIN, emptyList());
+    NaturalRightJoin(TableLike<?> lhs, TableLike<?> rhs, JoinHint hint) {
+        super(lhs, rhs, JoinType.NATURAL_RIGHT_OUTER_JOIN, hint, emptyList());
     }
 
-    NaturalRightJoin(TableLike<?> lhs, TableLike<?> rhs, Collection<? extends Field<?>> lhsPartitionBy) {
-        super(lhs, rhs, JoinType.NATURAL_RIGHT_OUTER_JOIN, lhsPartitionBy);
+    NaturalRightJoin(TableLike<?> lhs, TableLike<?> rhs, JoinHint hint, Collection<? extends Field<?>> lhsPartitionBy) {
+        super(lhs, rhs, JoinType.NATURAL_RIGHT_OUTER_JOIN, hint, lhsPartitionBy);
     }
 
     // -------------------------------------------------------------------------
@@ -77,8 +78,9 @@ implements
         Collection<? extends Field<?>> partitionBy2,
         Table<?> table2,
         Condition o,
-        Collection<? extends Field<?>> u
+        Collection<? extends Field<?>> u,
+        JoinHint h
     ) {
-        return new NaturalRightJoin(table1, table2, partitionBy1).partitionBy0(partitionBy2);
+        return new NaturalRightJoin(table1, table2, h, partitionBy1).partitionBy0(partitionBy2);
     }
 }

@@ -45,6 +45,7 @@ import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.impl.QOM.JoinHint;
 
 /**
  * @author Lukas Eder
@@ -56,12 +57,12 @@ implements
     QOM.RightJoin<Record>
 {
 
-    RightJoin(TableLike<?> lhs, TableLike<?> rhs) {
-        super(lhs, rhs, JoinType.RIGHT_OUTER_JOIN);
+    RightJoin(TableLike<?> lhs, TableLike<?> rhs, JoinHint hint) {
+        super(lhs, rhs, JoinType.RIGHT_OUTER_JOIN, hint);
     }
 
-    RightJoin(TableLike<?> lhs, TableLike<?> rhs, Collection<? extends Field<?>> lhsPartitionBy) {
-        super(lhs, rhs, JoinType.RIGHT_OUTER_JOIN, lhsPartitionBy);
+    RightJoin(TableLike<?> lhs, TableLike<?> rhs, JoinHint hint, Collection<? extends Field<?>> lhsPartitionBy) {
+        super(lhs, rhs, JoinType.RIGHT_OUTER_JOIN, hint, lhsPartitionBy);
     }
 
     // -------------------------------------------------------------------------
@@ -75,10 +76,11 @@ implements
         Collection<? extends Field<?>> partitionBy2,
         Table<?> table2,
         Condition o,
-        Collection<? extends Field<?>> u
+        Collection<? extends Field<?>> u,
+        JoinHint h
     ) {
         return o != null
-            ? new RightJoin(table1, table2, partitionBy1).partitionBy0(partitionBy2).on(o)
-            : new RightJoin(table1, table2, partitionBy1).partitionBy0(partitionBy2).using(u);
+            ? new RightJoin(table1, table2, h, partitionBy1).partitionBy0(partitionBy2).on(o)
+            : new RightJoin(table1, table2, h, partitionBy1).partitionBy0(partitionBy2).using(u);
     }
 }

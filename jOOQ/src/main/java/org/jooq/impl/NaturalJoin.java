@@ -45,6 +45,7 @@ import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.impl.QOM.JoinHint;
 
 /**
  * @author Lukas Eder
@@ -56,8 +57,8 @@ implements
     QOM.NaturalJoin<Record>
 {
 
-    NaturalJoin(TableLike<?> lhs, TableLike<?> rhs) {
-        super(lhs, rhs, JoinType.NATURAL_JOIN);
+    NaturalJoin(TableLike<?> lhs, TableLike<?> rhs, JoinHint hint) {
+        super(lhs, rhs, JoinType.NATURAL_JOIN, hint);
     }
 
     // -------------------------------------------------------------------------
@@ -71,8 +72,9 @@ implements
         Collection<? extends Field<?>> partitionBy2,
         Table<?> table2,
         Condition o,
-        Collection<? extends Field<?>> u
+        Collection<? extends Field<?>> u,
+        JoinHint h
     ) {
-        return new NaturalJoin(table1, table2);
+        return new NaturalJoin(table1, table2, h);
     }
 }

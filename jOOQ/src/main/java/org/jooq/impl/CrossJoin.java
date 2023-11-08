@@ -45,6 +45,7 @@ import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.impl.QOM.JoinHint;
 
 /**
  * @author Lukas Eder
@@ -57,7 +58,7 @@ implements
 {
 
     CrossJoin(TableLike<?> lhs, TableLike<?> rhs) {
-        super(lhs, rhs, JoinType.CROSS_JOIN);
+        super(lhs, rhs, JoinType.CROSS_JOIN, null);
     }
 
     // -------------------------------------------------------------------------
@@ -71,7 +72,8 @@ implements
         Collection<? extends Field<?>> partitionBy2,
         Table<?> table2,
         Condition o,
-        Collection<? extends Field<?>> u
+        Collection<? extends Field<?>> u,
+        JoinHint h
     ) {
         return new CrossJoin(table1, table2);
     }

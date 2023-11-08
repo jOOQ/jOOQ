@@ -90,6 +90,7 @@ import java.util.function.Function;
 import org.jooq.TableOptions.TableType;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.JoinHint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -1008,7 +1009,7 @@ extends
     // -------------------------------------------------------------------------
 
     /**
-     * Join a table to this table using a {@link JoinType}
+     * Join a table to this table using a {@link JoinType}.
      * <p>
      * Depending on the <code>JoinType</code>, a subsequent
      * {@link TableOnStep#on(Condition)} or
@@ -1019,6 +1020,19 @@ extends
     @NotNull
     @Support
     TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type);
+
+    /**
+     * Join a table to this table using a {@link JoinType} and {@link JoinHint}.
+     * <p>
+     * Depending on the <code>JoinType</code>, a subsequent
+     * {@link TableOnStep#on(Condition)} or
+     * {@link TableOnStep#using(Field...)} clause is required. If it is required
+     * but omitted, a {@link DSL#trueCondition()}, i.e. <code>1 = 1</code>
+     * condition will be rendered
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<Record> join(TableLike<?> table, JoinType type, JoinHint hint);
 
     /**
      * <code>INNER JOIN</code> a table to this table.

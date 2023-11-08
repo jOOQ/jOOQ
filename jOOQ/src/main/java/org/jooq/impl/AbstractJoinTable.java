@@ -52,13 +52,13 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Select;
-import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableOnConditionStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.impl.QOM.JoinHint;
 
 /**
  * A base implementation for actual join tables and dummy join tables.
@@ -247,6 +247,14 @@ implements
     @Override
     public final J join(TableLike<?> table, JoinType type) {
         return (J) super.join(table, type);
+    }
+
+    // [#14906] Re-declare internal-type-returning method here, to prevent J
+    //          from leaking into client code.
+    @SuppressWarnings("unchecked")
+    @Override
+    public final J join(TableLike<?> table, JoinType type, JoinHint hint) {
+        return (J) super.join(table, type, hint);
     }
 
 }

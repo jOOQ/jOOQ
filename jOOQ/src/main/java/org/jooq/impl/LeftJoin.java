@@ -45,6 +45,7 @@ import org.jooq.JoinType;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.impl.QOM.JoinHint;
 
 /**
  * @author Lukas Eder
@@ -56,12 +57,12 @@ implements
     QOM.LeftJoin<Record>
 {
 
-    LeftJoin(TableLike<?> lhs, TableLike<?> rhs) {
-        super(lhs, rhs, JoinType.LEFT_OUTER_JOIN);
+    LeftJoin(TableLike<?> lhs, TableLike<?> rhs, JoinHint hint) {
+        super(lhs, rhs, JoinType.LEFT_OUTER_JOIN, hint);
     }
 
-    LeftJoin(TableLike<?> lhs, TableLike<?> rhs, Collection<? extends Field<?>> lhsPartitionBy) {
-        super(lhs, rhs, JoinType.LEFT_OUTER_JOIN, lhsPartitionBy);
+    LeftJoin(TableLike<?> lhs, TableLike<?> rhs, JoinHint hint, Collection<? extends Field<?>> lhsPartitionBy) {
+        super(lhs, rhs, JoinType.LEFT_OUTER_JOIN, hint, lhsPartitionBy);
     }
 
     // -------------------------------------------------------------------------
@@ -75,10 +76,11 @@ implements
         Collection<? extends Field<?>> partitionBy2,
         Table<?> table2,
         Condition o,
-        Collection<? extends Field<?>> u
+        Collection<? extends Field<?>> u,
+        JoinHint h
     ) {
         return o != null
-            ? new LeftJoin(table1, table2, partitionBy1).partitionBy0(partitionBy2).on(o)
-            : new LeftJoin(table1, table2, partitionBy1).partitionBy0(partitionBy2).using(u);
+            ? new LeftJoin(table1, table2, h, partitionBy1).partitionBy0(partitionBy2).on(o)
+            : new LeftJoin(table1, table2, h, partitionBy1).partitionBy0(partitionBy2).using(u);
     }
 }

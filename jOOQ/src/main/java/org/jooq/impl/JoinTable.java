@@ -140,6 +140,7 @@ import org.jooq.TableOptions;
 // ...
 import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.Lateral;
 import org.jooq.impl.QOM.UnmodifiableList;
 
@@ -168,14 +169,15 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     final QueryPartList<Field<?>> rhsPartitionBy;
 
     final JoinType                type;
+    final JoinHint                hint;
     final ConditionProviderImpl   condition;
     final QueryPartList<Field<?>> using;
 
-    JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type) {
-        this(lhs, rhs, type, emptyList());
+    JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type, JoinHint hint) {
+        this(lhs, rhs, type, hint, emptyList());
     }
 
-    JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type, Collection<? extends Field<?>> lhsPartitionBy) {
+    JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type, JoinHint hint, Collection<? extends Field<?>> lhsPartitionBy) {
         super(TableOptions.expression(), N_JOIN);
 
         this.lhs = lhs.asTable();
@@ -183,6 +185,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         this.lhsPartitionBy = new QueryPartList<>(lhsPartitionBy);
         this.rhsPartitionBy = new QueryPartList<>();
         this.type = type;
+        this.hint = hint;
         this.condition = new ConditionProviderImpl();
         this.using = new QueryPartList<>();
     }
@@ -198,7 +201,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         if (lhs == newLhs && rhs == newRhs && condition == newCondition)
             return (J) this;
 
-        return construct(newLhs, lhsPartitionBy, rhsPartitionBy, newRhs, newCondition, using);
+        return construct(newLhs, lhsPartitionBy, rhsPartitionBy, newRhs, newCondition, using, hint);
     }
 
     // ------------------------------------------------------------------------
@@ -823,7 +826,8 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         Collection<? extends Field<?>> partitionBy2,
         Table<?> table2,
         Condition on,
-        Collection<? extends Field<?>> using
+        Collection<? extends Field<?>> using,
+        JoinHint hint
     );
 
     public final Table<?> $table1() {
@@ -831,7 +835,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $table1(Table<?> t1) {
-        return construct(t1, $partitionBy1(), $partitionBy2(), $table2(), $on(), $using());
+        return construct(t1, $partitionBy1(), $partitionBy2(), $table2(), $on(), $using(), $hint());
     }
 
     public final UnmodifiableList<Field<?>> $partitionBy1() {
@@ -839,7 +843,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $partitionBy1(Collection<? extends Field<?>> p1) {
-        return construct($table1(), p1, $partitionBy2(), $table2(), $on(), $using());
+        return construct($table1(), p1, $partitionBy2(), $table2(), $on(), $using(), $hint());
     }
 
     public final UnmodifiableList<Field<?>> $partitionBy2() {
@@ -847,7 +851,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $partitionBy2(Collection<? extends Field<?>> p2) {
-        return construct($table1(), $partitionBy1(), p2, $table2(), $on(), $using());
+        return construct($table1(), $partitionBy1(), p2, $table2(), $on(), $using(), $hint());
     }
 
     public final Table<?> $table2() {
@@ -855,7 +859,15 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $table2(Table<?> t2) {
-        return construct($table1(), $partitionBy1(), $partitionBy2(), t2, $on(), $using());
+        return construct($table1(), $partitionBy1(), $partitionBy2(), t2, $on(), $using(), $hint());
+    }
+
+    public final JoinHint $hint() {
+        return hint;
+    }
+
+    public final J $hint(JoinHint newHint) {
+        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), $on(), $using(), newHint);
     }
 
     public final Condition $on() {
@@ -863,7 +875,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $on(Condition o) {
-        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), o, emptyList());
+        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), o, emptyList(), $hint());
     }
 
     public final UnmodifiableList<Field<?>> $using() {
@@ -871,8 +883,9 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $using(Collection<? extends Field<?>> u) {
-        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), null, u);
+        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), null, u, $hint());
     }
+
 
 
 

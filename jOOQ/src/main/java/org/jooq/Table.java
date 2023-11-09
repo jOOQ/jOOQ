@@ -1403,17 +1403,16 @@ extends
     @Support
     TablePartitionByStep<Record> leftJoin(TableLike<?> table);
 
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * <code>LEFT OUTER JOIN</code> a path to this table.
+     * <p>
+     * A synonym for {@link #leftOuterJoin(Path)}.
+     *
+     * @see #leftOuterJoin(Path)
+     */
+    @NotNull
+    @Support
+    TableOptionalOnStep<Record> leftJoin(Path<?> path);
 
 
 

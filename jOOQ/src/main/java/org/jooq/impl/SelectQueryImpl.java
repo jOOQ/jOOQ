@@ -2817,16 +2817,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
-
-
-
-
-
-
     private static final TableList prependToManyPaths(Context<?> ctx, TableList tablelist) {
         TableList result = new TableList(tablelist);
 

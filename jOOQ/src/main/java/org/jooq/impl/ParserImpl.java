@@ -724,6 +724,7 @@ import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.QOM.DocumentOrContent;
 import org.jooq.impl.QOM.JSONOnNull;
+import org.jooq.impl.QOM.JoinHint;
 // ...
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.XMLPassingMechanism;
@@ -7705,19 +7706,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         }
 
-        JoinType joinType = parseJoinTypeIf();
+        Join join = parseJoinTypeIf();
 
-        if (joinType == null)
+        if (join == null)
             return null;
 
-        Table<?> right = joinType.qualified() ? parseJoinedTable(forbiddenKeywords) : parseLateral(forbiddenKeywords);
+        Table<?> right = join.type.qualified() ? parseJoinedTable(forbiddenKeywords) : parseLateral(forbiddenKeywords);
 
         TableOptionalOnStep<?> s0;
         TablePartitionByStep<?> s1;
         TableOnStep<?> s2;
-        s2 = s1 = (TablePartitionByStep<?>) (s0 = left.join(right, joinType));
+        s2 = s1 = (TablePartitionByStep<?>) (s0 = left.join(right, join.type, join.hint));
 
-        switch (joinType) {
+        switch (join.type) {
             case LEFT_OUTER_JOIN:
             case FULL_OUTER_JOIN:
             case RIGHT_OUTER_JOIN:
@@ -7741,7 +7742,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseJoinUsing(s2);
 
                 // [#9476] MySQL treats INNER JOIN and CROSS JOIN as the same
-                else if (joinType == JOIN)
+                else if (join.type == JOIN)
                     return s0;
                 else
                     throw expected("ON", "USING");
@@ -13654,7 +13655,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
     }
 
-    private void parseDigits() {
+    private final void parseDigits() {
         for (;;) {
             char c = character();
 
@@ -13791,46 +13792,61 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return Long.valueOf(s);
     }
 
-    private final JoinType parseJoinTypeIf() {
+    private static final record Join(JoinType type, JoinHint hint) {}
+
+    private final Join parseJoinTypeIf() {
+        JoinHint hint;
+
         if (parseKeywordIf("CROSS")) {
             if (parseKeywordIf("JOIN"))
-                return JoinType.CROSS_JOIN;
+                return new Join(JoinType.CROSS_JOIN, null);
             else if (parseKeywordIf("APPLY"))
-                return JoinType.CROSS_APPLY;
+                return new Join(JoinType.CROSS_APPLY, null);
         }
-        else if (parseKeywordIf("INNER") && parseKeyword("JOIN"))
-            return JoinType.JOIN;
-        else if (parseKeywordIf("JOIN"))
-            return JoinType.JOIN;
+        else if (parseKeywordIf("INNER") && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
+            return new Join(JoinType.JOIN, hint);
+        else if (parseKeywordIf("JOIN") && asTrue(hint = parseJoinHintIf()))
+            return new Join(JoinType.JOIN, hint);
         else if (parseKeywordIf("LEFT")) {
             if (parseKeywordIf("SEMI") && parseKeyword("JOIN"))
-                return JoinType.LEFT_SEMI_JOIN;
+                return new Join(JoinType.LEFT_SEMI_JOIN, null);
             else if (parseKeywordIf("ANTI") && parseKeyword("JOIN"))
-                return JoinType.LEFT_ANTI_JOIN;
-            else if ((parseKeywordIf("OUTER") || true) && parseKeyword("JOIN"))
-                return JoinType.LEFT_OUTER_JOIN;
+                return new Join(JoinType.LEFT_ANTI_JOIN, null);
+            else if ((parseKeywordIf("OUTER") || true) && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
+                return new Join(JoinType.LEFT_OUTER_JOIN, hint);
         }
-        else if (parseKeywordIf("RIGHT") && (parseKeywordIf("OUTER") || true) && parseKeyword("JOIN"))
-            return JoinType.RIGHT_OUTER_JOIN;
-        else if (parseKeywordIf("FULL") && (parseKeywordIf("OUTER") || true) && parseKeyword("JOIN"))
-            return JoinType.FULL_OUTER_JOIN;
+        else if (parseKeywordIf("RIGHT") && (parseKeywordIf("OUTER") || true) && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
+            return new Join(JoinType.RIGHT_OUTER_JOIN, hint);
+        else if (parseKeywordIf("FULL") && (parseKeywordIf("OUTER") || true) && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
+            return new Join(JoinType.FULL_OUTER_JOIN, hint);
         else if (parseKeywordIf("OUTER APPLY"))
-            return JoinType.OUTER_APPLY;
+            return new Join(JoinType.OUTER_APPLY, null);
         else if (parseKeywordIf("NATURAL")) {
             if (parseKeywordIf("LEFT") && (parseKeywordIf("OUTER") || true) && parseKeyword("JOIN"))
-                return JoinType.NATURAL_LEFT_OUTER_JOIN;
+                return new Join(JoinType.NATURAL_LEFT_OUTER_JOIN, null);
             else if (parseKeywordIf("RIGHT") && (parseKeywordIf("OUTER") || true) && parseKeyword("JOIN"))
-                return JoinType.NATURAL_RIGHT_OUTER_JOIN;
+                return new Join(JoinType.NATURAL_RIGHT_OUTER_JOIN, null);
             else if (parseKeywordIf("FULL") && (parseKeywordIf("OUTER") || true) && parseKeyword("JOIN"))
-                return JoinType.NATURAL_FULL_OUTER_JOIN;
+                return new Join(JoinType.NATURAL_FULL_OUTER_JOIN, null);
             else if ((parseKeywordIf("INNER") || true) && parseKeyword("JOIN"))
-                return JoinType.NATURAL_JOIN;
+                return new Join(JoinType.NATURAL_JOIN, null);
         }
         else if (parseKeywordIf("STRAIGHT_JOIN"))
-            return JoinType.STRAIGHT_JOIN;
+            return new Join(JoinType.STRAIGHT_JOIN, null);
 
         return null;
         // TODO partitioned join
+    }
+
+    private final JoinHint parseJoinHintIf() {
+        if (parseKeywordIf("HASH"))
+            return JoinHint.HASH;
+        else if (parseKeywordIf("LOOP", "LOOKUP"))
+            return JoinHint.LOOP;
+        else if (parseKeywordIf("MERGE"))
+            return JoinHint.MERGE;
+        else
+            return null;
     }
 
     private final TruthValue parseTruthValueIf() {
@@ -14623,12 +14639,32 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "CROSS APPLY",
         "CROSS JOIN",
         "FULL JOIN",
+        "FULL HASH JOIN",
+        "FULL LOOP JOIN",
+        "FULL LOOKUP JOIN",
+        "FULL MERGE JOIN",
         "FULL OUTER JOIN",
+        "FULL OUTER HASH JOIN",
+        "FULL OUTER LOOP JOIN",
+        "FULL OUTER LOOKUP JOIN",
+        "FULL OUTER MERGE JOIN",
         "INNER JOIN",
+        "INNER HASH JOIN",
+        "INNER LOOP JOIN",
+        "INNER LOOKUP JOIN",
+        "INNER MERGE JOIN",
         "JOIN",
         "LEFT ANTI JOIN",
         "LEFT JOIN",
+        "LEFT HASH JOIN",
+        "LEFT LOOP JOIN",
+        "LEFT LOOKUP JOIN",
+        "LEFT MERGE JOIN",
         "LEFT OUTER JOIN",
+        "LEFT OUTER HASH JOIN",
+        "LEFT OUTER LOOP JOIN",
+        "LEFT OUTER LOOKUP JOIN",
+        "LEFT OUTER MERGE JOIN",
         "LEFT SEMI JOIN",
         "NATURAL FULL JOIN",
         "NATURAL FULL OUTER JOIN",
@@ -14643,7 +14679,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "PARTITION BY",
         "RIGHT ANTI JOIN",
         "RIGHT JOIN",
+        "RIGHT HASH JOIN",
+        "RIGHT LOOP JOIN",
+        "RIGHT LOOKUP JOIN",
+        "RIGHT MERGE JOIN",
         "RIGHT OUTER JOIN",
+        "RIGHT OUTER HASH JOIN",
+        "RIGHT OUTER LOOP JOIN",
+        "RIGHT OUTER LOOKUP JOIN",
+        "RIGHT OUTER MERGE JOIN",
         "RIGHT SEMI JOIN",
         "STRAIGHT_JOIN",
         "USING"

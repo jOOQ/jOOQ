@@ -2370,7 +2370,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (!StringUtils.isBlank(hint))
             context.sql(' ').sql(hint).separatorRequired(true);
 
-        toSQLJoinHints(context, tablelist);
+
 
 
 

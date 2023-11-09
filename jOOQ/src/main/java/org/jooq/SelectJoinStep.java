@@ -156,12 +156,16 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
 
     /**
      * Convenience method to join a table to the last table added to the
-     * <code>FROM</code> clause using {@link Table#join(TableLike, JoinType, JoinHint)}
+     * <code>FROM</code> clause using
+     * {@link Table#join(TableLike, JoinType, JoinHint)}
      * <p>
      * Depending on the <code>JoinType</code>, a subsequent
      * {@link SelectOnStep#on(Condition)} or
      * {@link SelectOnStep#using(Field...)} clause is required. If it is
-     * required but omitted, the JOIN clause will be ignored
+     * required but omitted, the JOIN clause will be ignored.
+     * <p>
+     * {@link JoinHint} are a commercial only feature and are ignored in the
+     * jOOQ Open Source Edition.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -181,45 +185,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> join(TableLike<?> table);
 
     /**
-     * Convenience method to <code>INNER JOIN</code> a table to the last table
-     * added to the <code>FROM</code> clause using {@link Table#hashJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #innerHashJoin(TableLike)}.
-     *
-     * @see Table#hashJoin(TableLike)
-     * @see #innerHashJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOnStep<R> hashJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>INNER JOIN</code> a table to the last table
-     * added to the <code>FROM</code> clause using {@link Table#loopJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #innerLoopJoin(TableLike)}.
-     *
-     * @see Table#loopJoin(TableLike)
-     * @see #innerLoopJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOnStep<R> loopJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>INNER JOIN</code> a table to the last table
-     * added to the <code>FROM</code> clause using {@link Table#mergeJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #innerMergeJoin(TableLike)}.
-     *
-     * @see Table#mergeJoin(TableLike)
-     * @see #innerMergeJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOnStep<R> mergeJoin(TableLike<?> table);
-
-    /**
      * Convenience method to <code>INNER JOIN</code> a path to the last table
      * added to the <code>FROM</code> clause using {@link Table#join(Path)}.
      * <p>
@@ -232,44 +197,93 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support
     SelectOptionalOnStep<R> join(Path<?> path);
 
-    /**
-     * Convenience method to <code>INNER JOIN</code> a path to the last table
-     * added to the <code>FROM</code> clause using {@link Table#hashJoin(Path)}.
-     * <p>
-     * A synonym for {@link #innerHashJoin(Path)}.
-     *
-     * @see Table#hashJoin(Path)
-     * @see #innerHashJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> hashJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>INNER JOIN</code> a path to the last table
-     * added to the <code>FROM</code> clause using {@link Table#loopJoin(Path)}.
-     * <p>
-     * A synonym for {@link #innerLoopJoin(Path)}.
-     *
-     * @see Table#loopJoin(Path)
-     * @see #innerLoopJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> loopJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>INNER JOIN</code> a path to the last table
-     * added to the <code>FROM</code> clause using {@link Table#mergeJoin(Path)}.
-     * <p>
-     * A synonym for {@link #innerMergeJoin(Path)}.
-     *
-     * @see Table#mergeJoin(Path)
-     * @see #innerMergeJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> mergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -386,36 +400,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> innerJoin(TableLike<?> table);
 
     /**
-     * Convenience method to <code>INNER JOIN</code> a table to the last table
-     * added to the <code>FROM</code> clause using {@link Table#innerHashJoin(TableLike)}.
-     *
-     * @see Table#innerHashJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOnStep<R> innerHashJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>INNER JOIN</code> a table to the last table
-     * added to the <code>FROM</code> clause using {@link Table#innerLoopJoin(TableLike)}.
-     *
-     * @see Table#innerLoopJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOnStep<R> innerLoopJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>INNER JOIN</code> a table to the last table
-     * added to the <code>FROM</code> clause using {@link Table#innerMergeJoin(TableLike)}.
-     *
-     * @see Table#innerMergeJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOnStep<R> innerMergeJoin(TableLike<?> table);
-
-    /**
      * Convenience method to <code>INNER JOIN</code> a path to the last table
      * added to the <code>FROM</code> clause using {@link Table#join(Path)}.
      *
@@ -425,35 +409,75 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support
     SelectOptionalOnStep<R> innerJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>INNER JOIN</code> a path to the last table
-     * added to the <code>FROM</code> clause using {@link Table#innerHashJoin(Path)}.
-     *
-     * @see Table#innerHashJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> innerHashJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>INNER JOIN</code> a path to the last table
-     * added to the <code>FROM</code> clause using {@link Table#innerLoopJoin(Path)}.
-     *
-     * @see Table#innerLoopJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> innerLoopJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>INNER JOIN</code> a path to the last table
-     * added to the <code>FROM</code> clause using {@link Table#innerMergeJoin(Path)}.
-     *
-     * @see Table#innerMergeJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> innerMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -701,48 +725,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinPartitionByStep<R> leftJoin(TableLike<?> table);
 
     /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterHashJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #leftOuterHashJoin(TableLike)}.
-     *
-     * @see Table#leftOuterHashJoin(TableLike)
-     * @see #leftOuterHashJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> leftHashJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterLoopJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #leftOuterLoopJoin(TableLike)}.
-     *
-     * @see Table#leftOuterLoopJoin(TableLike)
-     * @see #leftOuterLoopJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> leftLoopJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterMergeJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #leftOuterMergeJoin(TableLike)}.
-     *
-     * @see Table#leftOuterMergeJoin(TableLike)
-     * @see #leftOuterMergeJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> leftMergeJoin(TableLike<?> table);
-
-    /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#leftOuterJoin(Path)}.
@@ -756,47 +738,99 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support
     SelectOptionalOnStep<R> leftJoin(Path<?> table);
 
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterHashJoin(Path)}.
-     * <p>
-     * A synonym for {@link #leftOuterHashJoin(Path)}.
-     *
-     * @see Table#leftOuterHashJoin(Path)
-     * @see #leftOuterHashJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> leftHashJoin(Path<?> table);
 
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterLoopJoin(Path)}.
-     * <p>
-     * A synonym for {@link #leftOuterLoopJoin(Path)}.
-     *
-     * @see Table#leftOuterLoopJoin(Path)
-     * @see #leftOuterLoopJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> leftLoopJoin(Path<?> table);
 
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterMergeJoin(Path)}.
-     * <p>
-     * A synonym for {@link #leftOuterMergeJoin(Path)}.
-     *
-     * @see Table#leftOuterMergeJoin(Path)
-     * @see #leftOuterMergeJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> leftMergeJoin(Path<?> table);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -915,39 +949,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinPartitionByStep<R> leftOuterJoin(TableLike<?> table);
 
     /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterHashJoin(TableLike)}
-     *
-     * @see Table#leftOuterHashJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> leftOuterHashJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterLoopJoin(TableLike)}
-     *
-     * @see Table#leftOuterLoopJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> leftOuterLoopJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterMergeJoin(TableLike)}
-     *
-     * @see Table#leftOuterMergeJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> leftOuterMergeJoin(TableLike<?> table);
-
-    /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#leftOuterJoin(Path)}
@@ -958,38 +959,81 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support
     SelectOptionalOnStep<R> leftOuterJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterHashJoin(Path)}
-     *
-     * @see Table#leftOuterHashJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> leftOuterHashJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterLoopJoin(Path)}
-     *
-     * @see Table#leftOuterLoopJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> leftOuterLoopJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>LEFT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#leftOuterMergeJoin(Path)}
-     *
-     * @see Table#leftOuterMergeJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> leftOuterMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -1096,48 +1140,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinPartitionByStep<R> rightJoin(TableLike<?> table);
 
     /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterHashJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #rightOuterHashJoin(TableLike)}.
-     *
-     * @see Table#rightOuterHashJoin(TableLike)
-     * @see #rightOuterHashJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> rightHashJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterLoopJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #rightOuterLoopJoin(TableLike)}.
-     *
-     * @see Table#rightOuterLoopJoin(TableLike)
-     * @see #rightOuterLoopJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> rightLoopJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterMergeJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #rightOuterMergeJoin(TableLike)}.
-     *
-     * @see Table#rightOuterMergeJoin(TableLike)
-     * @see #rightOuterMergeJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> rightMergeJoin(TableLike<?> table);
-
-    /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(Path)}.
@@ -1151,47 +1153,99 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support
     SelectOptionalOnStep<R> rightJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterHashJoin(Path)}.
-     * <p>
-     * A synonym for {@link #rightOuterHashJoin(Path)}.
-     *
-     * @see Table#rightOuterHashJoin(Path)
-     * @see #rightOuterHashJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> rightHashJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterLoopJoin(Path)}.
-     * <p>
-     * A synonym for {@link #rightOuterLoopJoin(Path)}.
-     *
-     * @see Table#rightOuterLoopJoin(Path)
-     * @see #rightOuterLoopJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> rightLoopJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterMergeJoin(Path)}.
-     * <p>
-     * A synonym for {@link #rightOuterMergeJoin(Path)}.
-     *
-     * @see Table#rightOuterMergeJoin(Path)
-     * @see #rightOuterMergeJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> rightMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -1310,39 +1364,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectJoinPartitionByStep<R> rightOuterJoin(TableLike<?> table);
 
     /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterHashJoin(TableLike)}
-     *
-     * @see Table#rightOuterHashJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> rightOuterHashJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterLoopJoin(TableLike)}
-     *
-     * @see Table#rightOuterLoopJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> rightOuterLoopJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterMergeJoin(TableLike)}
-     *
-     * @see Table#rightOuterMergeJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectJoinPartitionByStep<R> rightOuterMergeJoin(TableLike<?> table);
-
-    /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#rightOuterJoin(Path)}
@@ -1353,38 +1374,81 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support
     SelectOptionalOnStep<R> rightOuterJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterHashJoin(Path)}
-     *
-     * @see Table#rightOuterHashJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> rightOuterHashJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterLoopJoin(Path)}
-     *
-     * @see Table#rightOuterLoopJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> rightOuterLoopJoin(Path<?> path);
 
-    /**
-     * Convenience method to <code>RIGHT OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#rightOuterMergeJoin(Path)}
-     *
-     * @see Table#rightOuterMergeJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    SelectOptionalOnStep<R> rightOuterMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -1488,39 +1552,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> fullJoin(TableLike<?> table);
 
     /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterHashJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #fullOuterHashJoin(TableLike)}.
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOnStep<R> fullHashJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterLoopJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #fullOuterLoopJoin(TableLike)}.
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOnStep<R> fullLoopJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterMergeJoin(TableLike)}.
-     * <p>
-     * A synonym for {@link #fullOuterMergeJoin(TableLike)}.
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOnStep<R> fullMergeJoin(TableLike<?> table);
-
-    /**
      * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(Path)}.
@@ -1531,38 +1562,81 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectOptionalOnStep<R> fullJoin(Path<?> table);
 
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterHashJoin(Path)}.
-     * <p>
-     * A synonym for {@link #fullOuterHashJoin(Path)}.
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOptionalOnStep<R> fullHashJoin(Path<?> table);
 
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterLoopJoin(Path)}.
-     * <p>
-     * A synonym for {@link #fullOuterLoopJoin(Path)}.
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOptionalOnStep<R> fullLoopJoin(Path<?> table);
 
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterMergeJoin(Path)}.
-     * <p>
-     * A synonym for {@link #fullOuterMergeJoin(Path)}.
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOptionalOnStep<R> fullMergeJoin(Path<?> table);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -1655,39 +1729,6 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> fullOuterJoin(TableLike<?> table);
 
     /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterHashJoin(TableLike)}
-     *
-     * @see Table#fullOuterHashJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOnStep<R> fullOuterHashJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterLoopJoin(TableLike)}
-     *
-     * @see Table#fullOuterLoopJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOnStep<R> fullOuterLoopJoin(TableLike<?> table);
-
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterMergeJoin(TableLike)}
-     *
-     * @see Table#fullOuterMergeJoin(TableLike)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOnStep<R> fullOuterMergeJoin(TableLike<?> table);
-
-    /**
      * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(Path)}
@@ -1698,38 +1739,81 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     SelectOptionalOnStep<R> fullOuterJoin(Path<?> table);
 
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterHashJoin(Path)}
-     *
-     * @see Table#fullOuterHashJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOptionalOnStep<R> fullOuterHashJoin(Path<?> table);
 
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterLoopJoin(Path)}
-     *
-     * @see Table#fullOuterLoopJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOptionalOnStep<R> fullOuterLoopJoin(Path<?> table);
 
-    /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a path to the last
-     * table added to the <code>FROM</code> clause using
-     * {@link Table#fullOuterMergeJoin(Path)}
-     *
-     * @see Table#fullOuterMergeJoin(Path)
-     */
-    @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    SelectOptionalOnStep<R> fullOuterMergeJoin(Path<?> table);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last

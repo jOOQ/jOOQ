@@ -229,6 +229,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Joins the existing table product to a new table using a condition,
      * connecting them with each other with {@link Operator#AND}.
+     * <p>
+     * {@link JoinHint} are a commercial only feature and are ignored in the
+     * jOOQ Open Source Edition.
      *
      * @param table The joined table
      * @param type The type of join
@@ -241,6 +244,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Joins the existing table product to a new table using a condition,
      * connecting them with each other with {@link Operator#AND}.
+     * <p>
+     * {@link JoinHint} are a commercial only feature and are ignored in the
+     * jOOQ Open Source Edition.
      *
      * @param table The joined table
      * @param type The type of join
@@ -249,6 +255,12 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support
     void addJoin(TableLike<?> table, JoinType type, JoinHint hint, Condition... conditions);
+
+
+
+
+
+
 
 
 
@@ -355,6 +367,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to emulate
      * this behaviour using the information provided in this query.
+     * <p>
+     * {@link JoinHint} are a commercial only feature and are ignored in the
+     * jOOQ Open Source Edition.
      *
      * @param table The joined table
      * @param type The type of join
@@ -397,6 +412,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /**
      * Joins the existing table product to a new table using a foreign key.
+     * <p>
+     * {@link JoinHint} are a commercial only feature and are ignored in the
+     * jOOQ Open Source Edition.
      *
      * @param table The joined table
      * @param type The type of join
@@ -413,6 +431,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /**
      * Joins the existing table product to a new table using a foreign key.
+     * <p>
+     * {@link JoinHint} are a commercial only feature and are ignored in the
+     * jOOQ Open Source Edition.
      *
      * @param table The joined table
      * @param type The type of join
@@ -441,6 +462,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
 
     /**
      * Joins the existing table product to a new table using a foreign key.
+     * <p>
+     * {@link JoinHint} are a commercial only feature and are ignored in the
+     * jOOQ Open Source Edition.
      *
      * @param table The joined table
      * @param type The type of join

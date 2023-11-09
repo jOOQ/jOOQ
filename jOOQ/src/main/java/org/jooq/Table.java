@@ -1027,10 +1027,13 @@ extends
      * Join a table to this table using a {@link JoinType} and {@link JoinHint}.
      * <p>
      * Depending on the <code>JoinType</code>, a subsequent
-     * {@link TableOnStep#on(Condition)} or
-     * {@link TableOnStep#using(Field...)} clause is required. If it is required
-     * but omitted, a {@link DSL#trueCondition()}, i.e. <code>1 = 1</code>
-     * condition will be rendered
+     * {@link TableOnStep#on(Condition)} or {@link TableOnStep#using(Field...)}
+     * clause is required. If it is required but omitted, a
+     * {@link DSL#trueCondition()}, i.e. <code>1 = 1</code> condition will be
+     * rendered.
+     * <p>
+     * {@link JoinHint} are a commercial only feature and are ignored in the
+     * jOOQ Open Source Edition.
      */
     @NotNull
     @Support
@@ -1048,42 +1051,6 @@ extends
     TableOnStep<Record> join(TableLike<?> table);
 
     /**
-     * <code>INNER JOIN</code> a table to this table with a
-     * {@link JoinHint#HASH} hint.
-     * <p>
-     * A synonym for {@link #innerHashJoin(TableLike)}.
-     *
-     * @see #innerHashJoin(TableLike)
-     */
-    @NotNull
-    @Support
-    TableOnStep<Record> hashJoin(TableLike<?> table);
-
-    /**
-     * <code>INNER JOIN</code> a table to this table with a
-     * {@link JoinHint#LOOP} hint.
-     * <p>
-     * A synonym for {@link #innerLoopJoin(TableLike)}.
-     *
-     * @see #innerLoopJoin(TableLike)
-     */
-    @NotNull
-    @Support
-    TableOnStep<Record> loopJoin(TableLike<?> table);
-
-    /**
-     * <code>INNER JOIN</code> a table to this table with a
-     * {@link JoinHint#MERGE} hint.
-     * <p>
-     * A synonym for {@link #innerMergeJoin(TableLike)}.
-     *
-     * @see #innerMergeJoin(TableLike)
-     */
-    @NotNull
-    @Support
-    TableOnStep<Record> mergeJoin(TableLike<?> table);
-
-    /**
      * <code>INNER JOIN</code> a path to this table.
      * <p>
      * A synonym for {@link #innerJoin(Path)}.
@@ -1092,35 +1059,80 @@ extends
     @Support
     TableOptionalOnStep<Record> join(Path<?> path);
 
-    /**
-     * <code>INNER JOIN</code> a path to this table with a
-     * {@link JoinHint#HASH} hint.
-     * <p>
-     * A synonym for {@link #innerHashJoin(Path)}.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> hashJoin(Path<?> path);
 
-    /**
-     * <code>INNER JOIN</code> a path to this table with a
-     * {@link JoinHint#LOOP} hint.
-     * <p>
-     * A synonym for {@link #innerLoopJoin(Path)}.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> loopJoin(Path<?> path);
 
-    /**
-     * <code>INNER JOIN</code> a path to this table with a
-     * {@link JoinHint#MERGE} hint.
-     * <p>
-     * A synonym for {@link #innerMergeJoin(Path)}.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> mergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -1221,59 +1233,69 @@ extends
     TableOnStep<Record> innerJoin(TableLike<?> table);
 
     /**
-     * <code>INNER JOIN</code> a table to this table with a
-     * {@link JoinHint#HASH} hint.
-     */
-    @NotNull
-    @Support
-    TableOnStep<Record> innerHashJoin(TableLike<?> table);
-
-    /**
-     * <code>INNER JOIN</code> a table to this table with a
-     * {@link JoinHint#LOOP} hint.
-     */
-    @NotNull
-    @Support
-    TableOnStep<Record> innerLoopJoin(TableLike<?> table);
-
-    /**
-     * <code>INNER JOIN</code> a table to this table with a
-     * {@link JoinHint#MERGE} hint.
-     */
-    @NotNull
-    @Support
-    TableOnStep<Record> innerMergeJoin(TableLike<?> table);
-
-    /**
      * <code>INNER JOIN</code> a path to this table.
      */
     @NotNull
     @Support
     TableOptionalOnStep<Record> innerJoin(Path<?> path);
 
-    /**
-     * <code>INNER JOIN</code> a path to this table with a
-     * {@link JoinHint#HASH} hint.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> innerHashJoin(Path<?> path);
 
-    /**
-     * <code>INNER JOIN</code> a path to this table with a
-     * {@link JoinHint#LOOP} hint.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> innerLoopJoin(Path<?> path);
 
-    /**
-     * <code>INNER JOIN</code> a path to this table with a
-     * {@link JoinHint#MERGE} hint.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> innerMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -1381,88 +1403,99 @@ extends
     @Support
     TablePartitionByStep<Record> leftJoin(TableLike<?> table);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#HASH} hint.
-     * <p>
-     * A synonym for {@link #leftOuterHashJoin(TableLike)}.
-     *
-     * @see #leftOuterHashJoin(TableLike)
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> leftHashJoin(TableLike<?> table);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#LOOP} hint.
-     * <p>
-     * A synonym for {@link #leftOuterLoopJoin(TableLike)}.
-     *
-     * @see #leftOuterLoopJoin(TableLike)
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> leftLoopJoin(TableLike<?> table);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#MERGE} hint.
-     * <p>
-     * A synonym for {@link #leftOuterMergeJoin(TableLike)}.
-     *
-     * @see #leftOuterMergeJoin(TableLike)
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> leftMergeJoin(TableLike<?> table);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a path to this table.
-     * <p>
-     * A synonym for {@link #leftOuterJoin(Path)}.
-     *
-     * @see #leftOuterJoin(Path)
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> leftJoin(Path<?> path);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#HASH} hint.
-     * <p>
-     * A synonym for {@link #leftOuterHashJoin(Path)}.
-     *
-     * @see #leftOuterHashJoin(Path)
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> leftHashJoin(Path<?> path);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#LOOP} hint.
-     * <p>
-     * A synonym for {@link #leftOuterLoopJoin(Path)}.
-     *
-     * @see #leftOuterLoopJoin(Path)
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> leftLoopJoin(Path<?> path);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#MERGE} hint.
-     * <p>
-     * A synonym for {@link #leftOuterMergeJoin(Path)}.
-     *
-     * @see #leftOuterMergeJoin(Path)
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> leftMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -1562,59 +1595,69 @@ extends
     TablePartitionByStep<Record> leftOuterJoin(TableLike<?> table);
 
     /**
-     * <code>LEFT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#HASH} hint.
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> leftOuterHashJoin(TableLike<?> table);
-
-    /**
-     * <code>LEFT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#LOOP} hint.
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> leftOuterLoopJoin(TableLike<?> table);
-
-    /**
-     * <code>LEFT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#MERGE} hint.
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> leftOuterMergeJoin(TableLike<?> table);
-
-    /**
      * <code>LEFT OUTER JOIN</code> a path to this table.
      */
     @NotNull
     @Support
     TableOptionalOnStep<Record> leftOuterJoin(Path<?> path);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#HASH} hint.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> leftOuterHashJoin(Path<?> path);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#LOOP} hint.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> leftOuterLoopJoin(Path<?> path);
 
-    /**
-     * <code>LEFT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#MERGE} hint.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> leftOuterMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -1704,42 +1747,6 @@ extends
     TablePartitionByStep<Record> rightJoin(TableLike<?> table);
 
     /**
-     * <code>RIGHT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#HASH} hint.
-     * <p>
-     * A synonym for {@link #rightOuterHashJoin(TableLike)}.
-     *
-     * @see #rightOuterHashJoin(TableLike)
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> rightHashJoin(TableLike<?> table);
-
-    /**
-     * <code>RIGHT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#LOOP} hint.
-     * <p>
-     * A synonym for {@link #rightOuterLoopJoin(TableLike)}.
-     *
-     * @see #rightOuterLoopJoin(TableLike)
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> rightLoopJoin(TableLike<?> table);
-
-    /**
-     * <code>RIGHT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#MERGE} hint.
-     * <p>
-     * A synonym for {@link #rightOuterMergeJoin(TableLike)}.
-     *
-     * @see #rightOuterMergeJoin(TableLike)
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> rightMergeJoin(TableLike<?> table);
-
-    /**
      * <code>RIGHT OUTER JOIN</code> a path to this table.
      * <p>
      * A synonym for {@link #rightOuterJoin(Path)}.
@@ -1750,41 +1757,87 @@ extends
     @Support
     TableOptionalOnStep<Record> rightJoin(Path<?> path);
 
-    /**
-     * <code>RIGHT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#HASH} hint.
-     * <p>
-     * A synonym for {@link #rightOuterHashJoin(Path)}.
-     *
-     * @see #rightOuterHashJoin(Path)
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> rightHashJoin(Path<?> path);
 
-    /**
-     * <code>RIGHT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#LOOP} hint.
-     * <p>
-     * A synonym for {@link #rightOuterLoopJoin(Path)}.
-     *
-     * @see #rightOuterLoopJoin(Path)
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> rightLoopJoin(Path<?> path);
 
-    /**
-     * <code>RIGHT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#MERGE} hint.
-     * <p>
-     * A synonym for {@link #rightOuterMergeJoin(Path)}.
-     *
-     * @see #rightOuterMergeJoin(Path)
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> rightMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -1884,59 +1937,69 @@ extends
     TablePartitionByStep<Record> rightOuterJoin(TableLike<?> table);
 
     /**
-     * <code>RIGHT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#HASH} hint.
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> rightOuterHashJoin(TableLike<?> table);
-
-    /**
-     * <code>RIGHT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#LOOP} hint.
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> rightOuterLoopJoin(TableLike<?> table);
-
-    /**
-     * <code>RIGHT OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#MERGE} hint.
-     */
-    @NotNull
-    @Support
-    TablePartitionByStep<Record> rightOuterMergeJoin(TableLike<?> table);
-
-    /**
      * <code>RIGHT OUTER JOIN</code> a path to this table.
      */
     @NotNull
     @Support
     TableOptionalOnStep<Record> rightOuterJoin(Path<?> path);
 
-    /**
-     * <code>RIGHT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#HASH} hint.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> rightOuterHashJoin(Path<?> path);
 
-    /**
-     * <code>RIGHT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#LOOP} hint.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> rightOuterLoopJoin(Path<?> path);
 
-    /**
-     * <code>RIGHT OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#MERGE} hint.
-     */
-    @NotNull
-    @Support
-    TableOptionalOnStep<Record> rightOuterMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -2023,36 +2086,6 @@ extends
     TablePartitionByStep<Record> fullJoin(TableLike<?> table);
 
     /**
-     * <code>FULL OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#HASH} hint.
-     * <p>
-     * A synonym for {@link #fullOuterHashJoin(TableLike)}.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TablePartitionByStep<Record> fullHashJoin(TableLike<?> table);
-
-    /**
-     * <code>FULL OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#LOOP} hint.
-     * <p>
-     * A synonym for {@link #fullOuterLoopJoin(TableLike)}.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TablePartitionByStep<Record> fullLoopJoin(TableLike<?> table);
-
-    /**
-     * <code>FULL OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#MERGE} hint.
-     * <p>
-     * A synonym for {@link #fullOuterMergeJoin(TableLike)}.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TablePartitionByStep<Record> fullMergeJoin(TableLike<?> table);
-
-    /**
      * <code>FULL OUTER JOIN</code> a path to this table.
      * <p>
      * A synonym for {@link #fullOuterJoin(Path)}.
@@ -2061,35 +2094,75 @@ extends
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TableOptionalOnStep<Record> fullJoin(Path<?> path);
 
-    /**
-     * <code>FULL OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#HASH} hint.
-     * <p>
-     * A synonym for {@link #fullOuterHashJoin(Path)}.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TableOptionalOnStep<Record> fullHashJoin(Path<?> path);
 
-    /**
-     * <code>FULL OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#LOOP} hint.
-     * <p>
-     * A synonym for {@link #fullOuterLoopJoin(Path)}.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TableOptionalOnStep<Record> fullLoopJoin(Path<?> path);
 
-    /**
-     * <code>FULL OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#MERGE} hint.
-     * <p>
-     * A synonym for {@link #fullOuterMergeJoin(Path)}.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TableOptionalOnStep<Record> fullMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -2168,59 +2241,69 @@ extends
     TablePartitionByStep<Record> fullOuterJoin(TableLike<?> table);
 
     /**
-     * <code>FULL OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#HASH} hint.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TablePartitionByStep<Record> fullOuterHashJoin(TableLike<?> table);
-
-    /**
-     * <code>FULL OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#LOOP} hint.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TablePartitionByStep<Record> fullOuterLoopJoin(TableLike<?> table);
-
-    /**
-     * <code>FULL OUTER JOIN</code> a table to this table with a
-     * {@link JoinHint#MERGE} hint.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TablePartitionByStep<Record> fullOuterMergeJoin(TableLike<?> table);
-
-    /**
      * <code>FULL OUTER JOIN</code> a path to this table.
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TableOptionalOnStep<Record> fullOuterJoin(Path<?> path);
 
-    /**
-     * <code>FULL OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#HASH} hint.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TableOptionalOnStep<Record> fullOuterHashJoin(Path<?> path);
 
-    /**
-     * <code>FULL OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#LOOP} hint.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TableOptionalOnStep<Record> fullOuterLoopJoin(Path<?> path);
 
-    /**
-     * <code>FULL OUTER JOIN</code> a path to this table with a
-     * {@link JoinHint#MERGE} hint.
-     */
-    @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    TableOptionalOnStep<Record> fullOuterMergeJoin(Path<?> path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.

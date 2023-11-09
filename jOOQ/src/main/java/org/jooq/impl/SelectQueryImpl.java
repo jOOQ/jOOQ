@@ -314,6 +314,7 @@ import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 // ...
 // ...
+// ...
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
 import org.jooq.exception.DataAccessException;
@@ -2745,6 +2746,44 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             true, unionOrderBy, unionLimit
         ));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -79,7 +80,7 @@ import org.jooq.SQLDialect;
 final class CurrentTimestamp<T> extends AbstractField<T> implements QOM.CurrentTimestamp<T> {
 
     private static final Set<SQLDialect> NO_SUPPORT_PRECISION      = SQLDialect.supportedBy(CUBRID, DERBY, SQLITE);
-    private static final Set<SQLDialect> NO_SUPPORT_PRECISION_BIND = SQLDialect.supportedBy(FIREBIRD, H2, POSTGRES);
+    private static final Set<SQLDialect> NO_SUPPORT_PRECISION_BIND = SQLDialect.supportedBy(FIREBIRD, H2, HSQLDB, POSTGRES);
 
     private final Field<Integer>         precision;
 

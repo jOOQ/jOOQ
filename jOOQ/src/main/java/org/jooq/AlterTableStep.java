@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.IGNITE;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -703,7 +704,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropIfExists(Constraint constraint);
 
     /**
@@ -713,7 +714,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropConstraintIfExists(Constraint constraint);
 
     /**
@@ -723,7 +724,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropConstraintIfExists(Name constraint);
 
     /**
@@ -733,7 +734,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropConstraintIfExists(String constraint);
 
     /**

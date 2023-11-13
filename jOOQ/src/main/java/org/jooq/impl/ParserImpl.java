@@ -12250,7 +12250,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final OrderedAggregateFunction<String> parseListaggFunctionIf() {
         OrderedAggregateFunction<String> ordered;
 
-        if (parseFunctionNameIf("LISTAGG")) {
+        if (parseFunctionNameIf("LISTAGG", "STRING_AGG")) {
             parse('(');
             boolean distinct = parseSetQuantifier();
             Field<?> field = parseField();

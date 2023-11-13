@@ -8768,6 +8768,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseKeywordIf("DEFAULT"))
                     return default_();
 
+                else if ((field = parseFieldSubstringIf()) != null)
+                    return field;
+                else if (!ignoreProEdition() && parseFunctionNameIf("DBMS_LOB.INSTR") && requireProEdition()) {
+
+
+
+                }
+                else if (!ignoreProEdition() && parseFunctionNameIf("DBMS_LOB.GETLENGTH") && requireProEdition()) {
+
+
+
+                }
+
                 break;
 
             case 'E':
@@ -11423,6 +11436,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldSubstringIf() {
         boolean substring = parseFunctionNameIf("SUBSTRING");
         boolean substr = !substring && parseFunctionNameIf("SUBSTR");
+        boolean dbmslob = !substr && !ignoreProEdition() && parseFunctionNameIf("DBMS_LOB.SUBSTR") && requireProEdition();
 
         if (substring || substr) {
             boolean keywords = !substr;
@@ -11441,6 +11455,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 ? DSL.substring(f1, f2)
                 : DSL.substring(f1, f2, f3);
         }
+
+
+
+
+
+
+
+
+
 
         return null;
     }

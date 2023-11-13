@@ -61,6 +61,7 @@ import org.jooq.RecordQualifier;
 import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableField;
 // ...
 import org.jooq.UDT;
 import org.jooq.UDTPathField;
@@ -223,10 +224,15 @@ implements
 
     @Override
     public int hashCode() {
-        return defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName()
-            .append(getQualifier().getUnqualifiedName())
-            .append(getUDT().getUnqualifiedName())
-            .append(getUnqualifiedName()).hashCode();
+        if (getQualifier() instanceof Table)
+            return defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName()
+                .append(getQualifier().getUnqualifiedName())
+                .append(getUnqualifiedName()).hashCode();
+        else
+            return defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName()
+                .append(getQualifier().getUnqualifiedName())
+                .append(getUDT().getUnqualifiedName())
+                .append(getUnqualifiedName()).hashCode();
     }
 
     @Override
@@ -234,9 +240,15 @@ implements
         if (this == that)
             return true;
 
+        if (getQualifier() instanceof Table && that instanceof TableField<?, ?> other) {
+            return
+                StringUtils.equals(getQualifier(), other.getTable()) &&
+                StringUtils.equals(getName(), other.getName());
+        }
+
         // [#2144] UDTPathFieldImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
-        if (that instanceof UDTPathField<?, ?, ?> other) {
+        else if (that instanceof UDTPathField<?, ?, ?> other) {
             return
                 StringUtils.equals(getQualifier(), other.getQualifier()) &&
                 StringUtils.equals(getUDT(), other.getUDT()) &&

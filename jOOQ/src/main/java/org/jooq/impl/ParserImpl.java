@@ -1435,6 +1435,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 throw expected("SIBLINGS BY", "BY");
         }
 
+        boolean limit = false;
+        boolean for_ = false;
+        boolean offset = false;
+
         if (orderBy != null && parseKeywordIf("SEEK")) {
             boolean before = parseKeywordIf("BEFORE");
             if (!before)
@@ -1449,15 +1453,36 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else
                 result.addSeekAfter(seek);
 
-            if (!result.getLimit().isApplicable())
-                parseLimit(result, false);
-        }
-        else if (!result.getLimit().isApplicable()) {
-            parseLimit(result, true);
+            offset = true;
         }
 
+        while ((!limit && (limit = parseSelectLimit(result, offset)))
+            || (!for_ && (for_ = parseSelectFor(result))))
+            ;
+
+        if (parseKeywordIf("WITH CHECK OPTION"))
+            result.setWithCheckOption();
+        else if (parseKeywordIf("WITH READ ONLY"))
+            result.setWithReadOnly();
+
+        scope.scopeEnd(result);
+        return result;
+    }
+
+    private final boolean parseSelectLimit(SelectQueryImpl<Record> result, boolean offset) {
+        boolean limit = result.getLimit().isApplicable();
+
+        if (!limit)
+            parseLimit(result, !offset);
+
+        return limit;
+    }
+
+    private final boolean parseSelectFor(SelectQueryImpl<Record> result) {
+        boolean for_;
+
         forClause:
-        if (parseKeywordIf("FOR")) {
+        if (for_ = parseKeywordIf("FOR")) {
             boolean jsonb;
 
             if (parseKeywordIf("KEY SHARE"))
@@ -1566,20 +1591,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 result.setForUpdateSkipLocked();
         }
 
-        if (parseKeywordIf("WITH CHECK OPTION"))
-            result.setWithCheckOption();
-        else if (parseKeywordIf("WITH READ ONLY"))
-            result.setWithReadOnly();
-
-        scope.scopeEnd(result);
-        return result;
+        return for_;
     }
 
-    private final void parseLimit(SelectQueryImpl<Record> result, boolean offset) {
+    private final void parseLimit(SelectQueryImpl<Record> result, boolean allowOffset) {
         boolean offsetStandard = false;
         boolean offsetPostgres = false;
 
-        if (offset && parseKeywordIf("OFFSET")) {
+        if (allowOffset && parseKeywordIf("OFFSET")) {
             result.addOffset((Field) parseField());
 
             if (parseKeywordIf("ROWS", "ROW"))
@@ -1604,7 +1623,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("WITH TIES"))
                     result.setWithTies(true);
             }
-            else if (offset && parseIf(',')) {
+            else if (allowOffset && parseIf(',')) {
                 result.addLimit(limit, (Field) parseField());
             }
             else {
@@ -1614,7 +1633,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("WITH TIES"))
                     result.setWithTies(true);
 
-                if (offset && parseKeywordIf("OFFSET"))
+                if (allowOffset && parseKeywordIf("OFFSET"))
                     result.addLimit((Field) parseField(), limit);
                 else
                     result.addLimit(limit);

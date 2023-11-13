@@ -8845,7 +8845,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'I':
-                if ((field = parseFieldIntervalLiteralIf()) != null)
+
+                // [#8792] TODO: Support parsing interval expressions
+                if ((field = parseFieldIntervalLiteralIf(true)) != null)
                     return field;
                 else if (parseFunctionNameIf("ISO_DAY_OF_WEEK"))
                     return isoDayOfWeek(parseFieldParenthesised());
@@ -10572,7 +10574,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return time;
     }
 
-    private final Field<?> parseFieldIntervalLiteralIf() {
+    private final Field<?> parseFieldIntervalLiteralIf(boolean parseUnknownSyntaxAsIdentifier) {
         int p = position();
 
         if (parseKeywordIf("INTERVAL")) {
@@ -10615,9 +10617,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else {
                     position(p);
-                    return field(parseIdentifier());
+
+                    if (parseUnknownSyntaxAsIdentifier)
+                        return field(parseIdentifier());
                 }
             }
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseFieldMySQLIntervalLiteralIf(BiFunction<? super Field<?>, ? super DatePart, ? extends Field<?>> f) {
+        if (parseKeywordIf("INTERVAL")) {
+            Field<?> interval = parseField();
+            DatePart part = parseIntervalDatePart();
+            return f.apply(interval, part);
         }
 
         return null;
@@ -10895,6 +10909,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         // MySQL style
         else if (parseFunctionNameIf("DATE_ADD") || (sub = parseFunctionNameIf("DATE_SUB"))) {
+            boolean s = sub;
+
             parse('(');
             Field<?> d = parseField();
 
@@ -10903,10 +10919,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(',');
 
             // [#8792] TODO: Support parsing interval expressions
-            Field<?> interval = parseFieldIntervalLiteralIf();
-            parse(')');
+            Field<?> interval = parseFieldIntervalLiteralIf(false);
 
-            return sub ? DSL.dateSub((Field) date, (Field) interval) : DSL.dateAdd((Field) date, (Field) interval);
+            if (interval == null) {
+                interval = parseFieldMySQLIntervalLiteralIf((i, p) -> s ? DSL.dateSub((Field) date, (Field) i, p) : DSL.dateAdd((Field) date, (Field) i, p));
+
+                if (interval != null) {
+                    parse(')');
+                    return interval;
+                }
+            }
+            else {
+                parse(')');
+                return s ? DSL.dateSub((Field) date, (Field) interval) : DSL.dateAdd((Field) date, (Field) interval);
+            }
         }
 
         return null;

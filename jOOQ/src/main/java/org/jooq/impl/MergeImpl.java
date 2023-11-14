@@ -64,9 +64,11 @@ import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_AND;
@@ -174,6 +176,7 @@ import org.jooq.Record1;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UniqueKey;
@@ -1631,6 +1634,21 @@ implements
            .formatSeparator()
            .start(MERGE_ON)
            .visit(K_ON).sql(' ');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -50,6 +50,7 @@ import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.TRINO;
 // ...
@@ -116,10 +117,7 @@ import org.jooq.impl.Tools.ExtendedDataKey;
 final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImplemented {
     static final Set<SQLDialect>        CASTS_NEEDED                  = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>        CASTS_NEEDED_FOR_MERGE        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-
-
-
-
+    static final Set<SQLDialect>        NO_SUPPORT_DEFAULT_EXPRESSION = SQLDialect.supportedBy(SQLITE);
 
     final Table<?>                      table;
     final Map<Field<?>, Field<?>>       empty;
@@ -507,17 +505,14 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             ctx.castMode(previous);
     }
 
-    private final Field<?> patchDefault(Context<?> ctx, Field<?> d, Field<?> f) {
-
-
-
-
-
+    static final Field<?> patchDefault(Context<?> ctx, Field<?> d, Field<?> f) {
+        if (NO_SUPPORT_DEFAULT_EXPRESSION.contains(ctx.dialect()))
+            return patchDefault0(d, f);
 
         return d;
     }
 
-    private final Field<?> patchDefault0(Field<?> d, Field<?> f) {
+    static final Field<?> patchDefault0(Field<?> d, Field<?> f) {
         if (d instanceof Default)
             return orElse(f.getDataType().default_(), () -> DSL.inline(null, f));
 

@@ -5452,6 +5452,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s%sclass %s(", visibility(), (generatePojosAsScalaCaseClasses() ? "case " : ""), className);
 
             forEach(getTypedElements(tableUdtOrEmbeddable), (column, separator) -> {
+                out.javadoc("[[%s]]", list(escapeEntities(comment(column))));
                 out.println("%s%s %s: %s%s",
                     visibility(generateInterfaces()),
                     generateImmutablePojos() ? "val" : "var",
@@ -5467,6 +5468,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s%sclass %s(", visibility(), (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
 
             forEach(getTypedElements(tableUdtOrEmbeddable), (column, separator) -> {
+                out.javadoc("[[%s]]", list(escapeEntities(comment(column))));
                 final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String nullability = kotlinNullability(out, column, Mode.POJO);
 

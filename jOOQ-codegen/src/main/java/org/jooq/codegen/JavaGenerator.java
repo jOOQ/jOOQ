@@ -5519,11 +5519,15 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
 
             if (!generatePojosAsJavaRecordClasses())
-                for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable))
+                for (TypedElementDefinition<?> column : getTypedElements(tableUdtOrEmbeddable)){
+                    //add column's comment to pojo's field
+                    out.javadoc("[[%s]]", list(escapeEntities(comment(column))));
                     out.println("private %s%s %s;",
-                        generateImmutablePojos() ? "final " : "",
-                        out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
-                        getStrategy().getJavaMemberName(column, Mode.POJO));
+                            generateImmutablePojos() ? "final " : "",
+                            out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
+                            getStrategy().getJavaMemberName(column, Mode.POJO));
+                }
+
         }
 
         // Constructors

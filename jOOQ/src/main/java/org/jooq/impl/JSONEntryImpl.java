@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+// ...
 import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.coalesce;
@@ -245,6 +246,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                     return function(N_JSON, SQLDataType.JSON, field);
 
                 break;
+
 
 
 

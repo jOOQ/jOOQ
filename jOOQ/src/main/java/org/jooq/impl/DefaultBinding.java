@@ -75,6 +75,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -1943,7 +1944,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultBooleanBinding<U> extends InternalBinding<Boolean, U> {
-        private static final Set<SQLDialect> BIND_AS_1_0        = SQLDialect.supportedBy(FIREBIRD, SQLITE);
+        private static final Set<SQLDialect> BIND_AS_1_0        = SQLDialect.supportedUntil(FIREBIRD, SQLITE);
 
 
 
@@ -1984,6 +1985,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Boolean value) throws SQLException {
             switch (ctx.family()) {
+
+
+
+
+
+
+
 
 
 

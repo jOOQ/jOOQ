@@ -67,6 +67,8 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -124,6 +126,8 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     static final Set<SQLDialect>  SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect>  SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
     static final Set<SQLDialect>  SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedUntil(IGNITE, MARIADB, SQLITE);
+
+
 
 
 
@@ -240,6 +244,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
         else if (fieldAliases != null && (
                 emulatedDerivedColumnList
              || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(dialect)
+
 
 
 

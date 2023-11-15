@@ -3943,6 +3943,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             );
         }
 
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Record value) throws SQLException {
             Cast.renderCastIf(ctx.render(),
@@ -3950,7 +3951,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     if (REQUIRE_RECORD_CAST.contains(ctx.dialect()))
                         ctx.render().visit(inline(PostgresUtils.toPGString(value)));
                     else
-                        ctx.render().sql("[UDT]");
+                        ctx.render().visit(new QualifiedRecordConstant((QualifiedRecord) value, getRecordQualifier(dataType)));
                 },
                 c -> pgRenderRecordCast(ctx.render()),
                 () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())

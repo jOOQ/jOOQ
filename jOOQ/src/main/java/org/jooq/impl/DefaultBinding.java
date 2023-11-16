@@ -1944,7 +1944,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultBooleanBinding<U> extends InternalBinding<Boolean, U> {
-        private static final Set<SQLDialect> BIND_AS_1_0        = SQLDialect.supportedUntil(FIREBIRD, SQLITE);
+        static final Set<SQLDialect> BIND_AS_1_0        = SQLDialect.supportedUntil(FIREBIRD, SQLITE);
 
 
 

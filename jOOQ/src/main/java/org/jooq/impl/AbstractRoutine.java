@@ -62,6 +62,7 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DefaultBinding.DefaultBooleanBinding.BIND_AS_1_0;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BOOLEAN;
 import static org.jooq.impl.Keywords.K_CASE;
@@ -157,10 +158,13 @@ import org.jooq.UDTRecord;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.DefaultBinding.DefaultBooleanBinding;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.reflect.Reflect;
+
+// ...
 
 /**
  * A common base class for stored procedures
@@ -1124,6 +1128,10 @@ implements
         else
             context.sql("{ ");
     }
+
+
+
+
 
 
 

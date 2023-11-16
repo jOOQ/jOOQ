@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -1197,6 +1198,17 @@ final class Tools {
     static final List<Row> rows(Result<?> result) {
         return map(result, r -> r.valuesRow());
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

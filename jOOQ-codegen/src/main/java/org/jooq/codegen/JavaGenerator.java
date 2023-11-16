@@ -39,6 +39,7 @@ package org.jooq.codegen;
 
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -79,6 +80,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -1263,6 +1265,17 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println("%s", semicolon);
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -20,6 +20,12 @@ First and foremost, from our experience, most contributors are overlooking a ton
 - thinking about the many places in the manual that need to be updated
 - thinking about the fact that jOOQ is dual licensed, and your contribution won't work on commercial database (but it has to, so that'll be our job again)
 
+Plus:
+
+- the tests aren't open source, so you can't validate your own contribution, nor prove that it is sound, via tests
+- the manual isn't open source, so you can't contribute that
+- the commercial distributions aren't open source, and perhaps, the implementation there needs to be different
+
 Often, workarounds are good enough
 ----------------------------------
 

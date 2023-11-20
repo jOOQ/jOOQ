@@ -2968,7 +2968,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         printValidationAnnotation(out, column);
         printNullableOrNonnullAnnotation(out, column);
-        if (kotlin)
+        if (kotlin && !generateImmutableInterfaces())
             printKotlinSetterAnnotation(out, column, Mode.INTERFACE);
 
         if (scala)
@@ -7397,7 +7397,9 @@ public class JavaGenerator extends AbstractGenerator {
         if (kotlin
                 && generateKotlinSetterJvmNameAnnotationsOnIsPrefix()
                 && column instanceof ColumnDefinition
-                && P_IS.matcher(getStrategy().getJavaMemberName(column, mode)).matches()) {
+
+                // TODO: The Mode should be INTERFACE
+                && P_IS.matcher(getStrategy().getJavaMemberName(column, Mode.POJO)).matches()) {
 
             // [#12440] And if we have interfaces, we'll run into https://youtrack.jetbrains.com/issue/KT-31420
             if (generateInterfaces())

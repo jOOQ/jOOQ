@@ -664,8 +664,7 @@ public class GenerationTool {
             if (d.getEnumTypes().size() > 0)
                 log.warn("DEPRECATED", "The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
             if (Boolean.TRUE.equals(d.isDateAsTimestamp()))
-                log.warn("DEPRECATED", "The configuration property /configuration/generator/database/dateAsTimestamp is deprecated as it is superseded by custom bindings and converters. It will thus be removed in the future.");
-
+                log.warn("DEPRECATED", "The configuration property /configuration/generator/database/dateAsTimestamp is deprecated as it is superseded by custom bindings and converters. It will thus be removed in the future. More information here: https://www.jooq.org/doc/latest/manual/reference/reference-data-types/data-types-oracle-date/");
             if (d.isDateAsTimestamp() != null)
                 database.setDateAsTimestamp(d.isDateAsTimestamp());
             if (g.getGenerate().isJavaTimeTypes() != null)

@@ -43,25 +43,15 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
-import java.util.List;
-
-import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.ForeignKey;
-import org.jooq.Identity;
-import org.jooq.Index;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
+import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableField;
 // ...
-import org.jooq.UniqueKey;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -212,7 +202,7 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
             return table;
     }
 
-    static final <R extends Record> Table<R> inlineDerivedTable(Context<?> ctx, Table<R> t) {
+    static final <R extends Record> Table<R> inlineDerivedTable(Scope ctx, Table<R> t) {
 
 
 

@@ -291,7 +291,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         return table;
     }
 
-    final Table<?> table(Context<?> ctx) {
+    final Table<?> table(Scope ctx) {
 
 
 

@@ -7920,7 +7920,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala)
                 out.println("%s(from.%s)", setter, getter);
             else if (kotlin)
-                out.println("%s = from.%s", member, member);
+                out.println("this.%s = from.%s", member, member);
             else
                 out.println("%s(from.%s());", setter, getter);
         }

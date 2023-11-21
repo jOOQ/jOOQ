@@ -76,6 +76,7 @@
         <dependency>
             <groupId>io.r2dbc</groupId>
             <artifactId>r2dbc-h2</artifactId>
+            <version>${io.r2dbc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

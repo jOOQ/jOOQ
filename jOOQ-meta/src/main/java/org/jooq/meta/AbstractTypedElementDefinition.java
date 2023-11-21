@@ -228,7 +228,8 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
         ForcedType forcedType = db.getConfiguredForcedType(child, definedType);
 
         if (forcedType != null) {
-            String uType = forcedType.getName();
+            String uType = forcedType.getUserType();
+            String name = forcedType.getName();
             String generator = forcedType.getGenerator();
             String converter = null;
             String binding = result.getBinding();
@@ -239,11 +240,62 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
 
 
+            boolean n = result.isNullable();
+            String d = result.getDefaultValue();
+            boolean i = result.isIdentity();
+            boolean r = result.isReadonly();
+            String g = result.getGeneratedAlwaysAs();
+
+            int l = 0;
+            int p = 0;
+            int s = 0;
+
             CustomType customType = customType(db, forcedType);
+
+            // [#2486] Allow users to override length, precision, and scale
+            if (name != null) {
+                DataType<?> forcedDataType = null;
+
+                Matcher matcher = LENGTH_PRECISION_SCALE_PATTERN.matcher(name);
+                if (matcher.find()) {
+                    if (!isEmpty(matcher.group(1))) {
+                        l = p = convert(matcher.group(1), int.class);
+                    }
+                    else {
+                        p = convert(matcher.group(2), int.class);
+                        s = convert(matcher.group(3), int.class);
+                    }
+                }
+
+                try {
+                    forcedDataType = getDataType(db, name, p, s);
+
+                    // [#677] SQLDataType matches are actual type-rewrites
+                    if (forcedDataType != null)
+                        result = new DefaultDataTypeDefinition(db, child.getSchema(), name, l, p, s, n, r, g, d, i, (Name) null, generator, converter, binding, null);
+
+                }
+                catch (SQLDialectNotSupportedException e) {
+
+                    if (!db.getConfiguredCustomTypes().isEmpty()) {
+                        if (customType != null)
+                            db.markUsed(forcedType);
+
+                        // [#7373] [#10944] Refer to <customType/> only if someone is still using the feature
+                        else
+                            log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + forcedType);
+                    }
+                }
+            }
+
             if (customType != null) {
+
+                // [#7373] [#10944] Historically, configured custom types could have a userType declaration in their names
+                //                  This is no longer documented, but should be maintained, still
                 uType = (!StringUtils.isBlank(customType.getType()))
                     ? customType.getType()
                     : customType.getName();
+                name = customType.getName();
 
                 if (generator == null)
                     generator = customType.getGenerator();
@@ -258,14 +310,14 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 // [#13791] AutoConverters profit from simplified configuration
                 if (TRUE.equals(customType.isAutoConverter()) ||
                     AutoConverter.class.getName().equals(customType.getConverter())) {
-                    String tType = tType(db, resolver, definedType);
+                    String tType = tType(db, resolver, result);
                     converter = resolver.constructorCall(AutoConverter.class.getName() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
                 }
 
                 // [#5877] [#6567] ... so do EnumConverters
                 else if (TRUE.equals(customType.isEnumConverter()) ||
                     EnumConverter.class.getName().equals(customType.getConverter())) {
-                    String tType = tType(db, resolver, definedType);
+                    String tType = tType(db, resolver, result);
                     converter = resolver.constructorCall(EnumConverter.class.getName() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
                 }
 
@@ -275,7 +327,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                     converter = resolver.constructorCall(XMLtoJAXBConverter.class.getName() + "<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
                 }
                 else if (TRUE.equals(customType.isJsonConverter())) {
-                    if (tType(db, resolver, definedType).endsWith("JSONB"))
+                    if (tType(db, resolver, result).endsWith("JSONB"))
                         converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
                     else
                         converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
@@ -289,12 +341,12 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
                 else if (customType.getLambdaConverter() != null) {
                     LambdaConverter c = customType.getLambdaConverter();
-                    String tType = tType(db, resolver, definedType);
+                    String tType = tType(db, resolver, result);
                     converter = resolver.ref(Converter.class) + ".of" + (!FALSE.equals(c.isNullable()) ? "Nullable" : "") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ", " + c.getFrom() + ", " + c.getTo() + ")";
                 }
                 else if (!StringUtils.isBlank(customType.getConverter())) {
                     if (TRUE.equals(customType.isGenericConverter())) {
-                        String tType = tType(db, resolver, definedType);
+                        String tType = tType(db, resolver, result);
                         converter = resolver.constructorCall(customType.getConverter() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
                     }
                     else
@@ -303,7 +355,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
                 if (!StringUtils.isBlank(customType.getBinding())) {
                     if (TRUE.equals(customType.isGenericBinding())) {
-                        String tType = tType(db, resolver, definedType);
+                        String tType = tType(db, resolver, result);
                         binding = resolver.constructorCall(customType.getBinding() + "<" + resolver.ref(tType) + ", " + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(tType) + ", " + resolver.classLiteral(uType) + ")";
                     }
                     else
@@ -324,68 +376,17 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
 
 
-            if (uType != null) {
+            if (name != null || uType != null) {
                 db.markUsed(forcedType);
                 log.info("Forcing type", child + " to " + forcedType);
 
-                DataType<?> forcedDataType = null;
-
-                boolean n = result.isNullable();
-                String d = result.getDefaultValue();
-                boolean i = result.isIdentity();
-                boolean r = result.isReadonly();
-                String g = result.getGeneratedAlwaysAs();
-
-                int l = 0;
-                int p = 0;
-                int s = 0;
-
-                // [#2486] Allow users to override length, precision, and scale
-                Matcher matcher = LENGTH_PRECISION_SCALE_PATTERN.matcher(uType);
-                if (matcher.find()) {
-                    if (!isEmpty(matcher.group(1))) {
-                        l = p = convert(matcher.group(1), int.class);
-                    }
-                    else {
-                        p = convert(matcher.group(2), int.class);
-                        s = convert(matcher.group(3), int.class);
-                    }
-                }
-
-                try {
-                    forcedDataType = getDataType(db, uType, p, s);
-                } catch (SQLDialectNotSupportedException ignore) {}
-
-                // [#677] SQLDataType matches are actual type-rewrites
-                if (forcedDataType != null) {
-
-                    // [#3704] When <forcedType/> matches a custom type AND a data type rewrite, the rewrite was usually accidental.
-                    if (customType != null)
-                        log.warn("Custom type conflict", child + " has custom type " + customType + " forced by " + forcedType + " but a data type rewrite applies");
-
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), uType, l, p, s, n, r, g, d, i, (Name) null, generator, converter, binding, null);
-                }
-
-                // Other forced types are UDT's, enums, etc.
-                else if (customType != null) {
+                if (customType != null) {
                     l = result.getLength();
                     p = result.getPrecision();
                     s = result.getScale();
                     String t = result.getType();
                     Name u = result.getQualifiedUserType();
                     result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, l, p, s, n, r, g, d, i, u, generator, converter, binding, uType);
-                }
-
-                // [#4597] If we don't have a type-rewrite (forcedDataType) or a
-                //         matching customType, the user probably malconfigured
-                //         their <forcedTypes/> or <customTypes/>
-                else {
-
-                    // [#7373] [#10944] Refer to <customType/> only if someone is still using the feature
-                    if (db.getConfiguredCustomTypes().isEmpty())
-                        log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching SQLDataType found: " + forcedType);
-                    else
-                        log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + forcedType);
                 }
             }
 

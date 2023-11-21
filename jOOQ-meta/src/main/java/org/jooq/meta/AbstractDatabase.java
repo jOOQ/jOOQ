@@ -1583,85 +1583,49 @@ public abstract class AbstractDatabase implements Database {
                 log.warn("DEPRECATED", "The <types/> element in <forcedType/> is deprecated. Use <includeTypes/> instead: " + type);
             }
 
-            if (StringUtils.isBlank(type.getName())) {
-                if (StringUtils.isBlank(type.getUserType())) {
-                    if (type.getVisibilityModifier() == null
-                            && StringUtils.isBlank(type.getGenerator())
-                            && !TRUE.equals(type.isAuditInsertTimestamp())
-                            && !TRUE.equals(type.isAuditInsertUser())
-                            && !TRUE.equals(type.isAuditUpdateTimestamp())
-                            && !TRUE.equals(type.isAuditUpdateUser())) {
-                        log.warn("Bad configuration for <forcedType/>. Any of <name/>, <userType/>, <generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, or <visibilityModifier/> is required: " + type);
+            if (StringUtils.isBlank(type.getUserType())) {
+                if (type.getVisibilityModifier() == null
+                        && StringUtils.isBlank(type.getGenerator())
+                        && StringUtils.isBlank(type.getName())
+                        && !TRUE.equals(type.isAuditInsertTimestamp())
+                        && !TRUE.equals(type.isAuditInsertUser())
+                        && !TRUE.equals(type.isAuditUpdateTimestamp())
+                        && !TRUE.equals(type.isAuditUpdateUser())) {
+                    log.warn("Bad configuration for <forcedType/>. Any of <name/>, <userType/>, <generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, or <visibilityModifier/> is required: " + type);
 
-                        it2.remove();
-                        continue;
-                    }
-                    else if (!commercial()) {
-                        log.warn("<generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
+                    it2.remove();
+                    continue;
+                }
+                else if (!commercial()) {
+                    log.warn("<generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
 
-                        it2.remove();
-                        continue;
-                    }
-                }
-
-                if (StringUtils.isBlank(type.getBinding())
-                    && StringUtils.isBlank(type.getConverter())
-                    && StringUtils.isBlank(type.getGenerator())
-                    && !TRUE.equals(type.isAuditInsertTimestamp())
-                    && !TRUE.equals(type.isAuditInsertUser())
-                    && !TRUE.equals(type.isAuditUpdateTimestamp())
-                    && !TRUE.equals(type.isAuditUpdateUser())
-                    && type.getVisibilityModifier() == null
-                    && !Boolean.TRUE.equals(type.isAutoConverter())
-                    && !Boolean.TRUE.equals(type.isEnumConverter())
-                    && !Boolean.TRUE.equals(type.isXmlConverter())
-                    && !Boolean.TRUE.equals(type.isJsonConverter())
-                    && type.getLambdaConverter() == null
-                ) {
-                    type.setAutoConverter(true);
-
-                    if (log.isDebugEnabled())
-                        log.debug("<autoConverter/> is implicit for <forcedType/>: " + type);
-                }
-            }
-            else {
-                if (!StringUtils.isBlank(type.getUserType())) {
-                    log.warn("Bad configuration for <forcedType/>. <userType/> is not allowed when <name/> is provided: " + type);
-                    type.setUserType(null);
-                }
-                if (!StringUtils.isBlank(type.getBinding())) {
-                    log.warn("Bad configuration for <forcedType/>. <binding/> is not allowed when <name/> is provided: " + type);
-                    type.setBinding(null);
-                }
-                if (!StringUtils.isBlank(type.getConverter())) {
-                    log.warn("Bad configuration for <forcedType/>. <converter/> is not allowed when <name/> is provided: " + type);
-                    type.setConverter(null);
-                }
-                if (Boolean.TRUE.equals(type.isAutoConverter())) {
-                    log.warn("Bad configuration for <forcedType/>. <autoConverter/> is not allowed when <name/> is provided: " + type);
-                    type.setEnumConverter(null);
-                }
-                if (Boolean.TRUE.equals(type.isEnumConverter())) {
-                    log.warn("Bad configuration for <forcedType/>. <enumConverter/> is not allowed when <name/> is provided: " + type);
-                    type.setEnumConverter(null);
-                }
-                if (Boolean.TRUE.equals(type.isXmlConverter())) {
-                    log.warn("Bad configuration for <forcedType/>. <xmlConverter/> is not allowed when <name/> is provided: " + type);
-                    type.setXmlConverter(null);
-                }
-                if (Boolean.TRUE.equals(type.isJsonConverter())) {
-                    log.warn("Bad configuration for <forcedType/>. <jsonConverter/> is not allowed when <name/> is provided: " + type);
-                    type.setJsonConverter(null);
-                }
-                if (type.getLambdaConverter() != null) {
-                    log.warn("Bad configuration for <forcedType/>. <lambdaConverter/> is not allowed when <name/> is provided: " + type);
-                    type.setLambdaConverter(null);
+                    it2.remove();
+                    continue;
                 }
             }
 
-            if (type.getUserType() != null && StringUtils.equals(type.getUserType(), typeName)) {
+            if (StringUtils.isBlank(type.getBinding())
+                && StringUtils.isBlank(type.getConverter())
+                && StringUtils.isBlank(type.getGenerator())
+                && !TRUE.equals(type.isAuditInsertTimestamp())
+                && !TRUE.equals(type.isAuditInsertUser())
+                && !TRUE.equals(type.isAuditUpdateTimestamp())
+                && !TRUE.equals(type.isAuditUpdateUser())
+                && type.getVisibilityModifier() == null
+                && !Boolean.TRUE.equals(type.isAutoConverter())
+                && !Boolean.TRUE.equals(type.isEnumConverter())
+                && !Boolean.TRUE.equals(type.isXmlConverter())
+                && !Boolean.TRUE.equals(type.isJsonConverter())
+                && type.getLambdaConverter() == null
+            ) {
+                type.setAutoConverter(true);
+
+                if (log.isDebugEnabled())
+                    log.debug("<autoConverter/> is implicit for <forcedType/>: " + type);
+            }
+
+            if (type.getUserType() != null && StringUtils.equals(type.getUserType(), typeName))
                 return customType(this, type);
-            }
         }
 
         return null;

@@ -57,6 +57,7 @@ import static org.jooq.conf.ParamType.INLINED;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.Keywords.K_ALIAS;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_ATOMIC;
@@ -83,20 +84,19 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import org.jooq.Block;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DDLQuery;
-import org.jooq.Function1;
 import org.jooq.Keyword;
 import org.jooq.LanguageContext;
 import org.jooq.Name;

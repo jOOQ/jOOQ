@@ -6593,6 +6593,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final QueryPart parsePredicate() {
+        int p1 = position();
         Condition condition;
 
 
@@ -6631,6 +6632,28 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'J':
                 if ((condition = parsePredicateJSONExistsIf()) != null)
                     return condition;
+
+                break;
+
+            case 'P':
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 break;
 
@@ -6716,7 +6739,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         boolean notOp = false;
         FieldOrRow left = parseConcat();
-        int p = position();
+        int p2 = position();
         boolean not = parseKeywordIf("NOT");
         boolean isField = left instanceof Field;
         Comparator comp;
@@ -6956,7 +6979,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return leftRow2.overlaps(rightRow2);
         }
         else {
-            position(p);
+            position(p2);
             return left;
         }
     }

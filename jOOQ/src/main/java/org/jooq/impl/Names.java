@@ -269,6 +269,7 @@ final class Names {
     static final Name N_SYSUUID                     = systemName("sysuuid");
     static final Name N_SYS_GUID                    = systemName("sys_guid");
     static final Name N_T                           = systemName("t");
+    static final Name N_TG_OP                       = systemName("tg_op");
     static final Name N_TIMESTAMPADD                = systemName("timestampadd");
     static final Name N_TIMESTAMPDIFF               = systemName("timestampdiff");
     static final Name N_TIMESTAMPSUB                = systemName("timestampsub");

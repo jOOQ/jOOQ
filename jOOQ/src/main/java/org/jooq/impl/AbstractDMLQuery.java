@@ -68,6 +68,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -182,9 +184,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
     private static final JooqLogger              log                                    = JooqLogger.getLogger(AbstractQuery.class);
 
-    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_INSERT_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);
-    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_UPDATE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);
-    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_DELETE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, SQLITE, TRINO);
+    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_INSERT_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, TRINO);
+    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_UPDATE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, TRINO);
+    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_DELETE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, TRINO);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE = SQLDialect.supportedBy(H2);
     private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(IGNITE, TRINO);
     private static final Set<SQLDialect>         NO_SUPPORT_RETURNING_ASTERISK          = SQLDialect.supportedUntil(MARIADB);
@@ -675,7 +677,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         ctx.data().remove(DATA_DML_TARGET_TABLE);
     }
 
-    @Pro
     private final boolean fetchTriggerValuesAfterReturning(Scope ctx) {
         if (this instanceof Delete)
             return false;
@@ -937,9 +938,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     }
 
     final boolean nativeSupportReturning(Scope ctx) {
-        return this instanceof Insert && !NO_NATIVE_SUPPORT_INSERT_RETURNING.contains(ctx.dialect())
-            || this instanceof Update && !NO_NATIVE_SUPPORT_UPDATE_RETURNING.contains(ctx.dialect())
-            || this instanceof Delete && !NO_NATIVE_SUPPORT_DELETE_RETURNING.contains(ctx.dialect());
+        return !(ctx.family() == SQLITE && fetchTriggerValuesAfterReturning(ctx))
+            && (this instanceof Insert && !NO_NATIVE_SUPPORT_INSERT_RETURNING.contains(ctx.dialect())
+            ||  this instanceof Update && !NO_NATIVE_SUPPORT_UPDATE_RETURNING.contains(ctx.dialect())
+            ||  this instanceof Delete && !NO_NATIVE_SUPPORT_DELETE_RETURNING.contains(ctx.dialect()));
     }
 
     final boolean nativeSupportReturningOrDataChangeDeltaTable(Scope ctx) {
@@ -1069,20 +1071,26 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
-                    listener.executeStart(ctx);
-                    result = executeImmediate(ctx.statement()).executeUpdate();
-                    ctx.rows(result);
-                    listener.executeEnd(ctx);
+                    if (!nativeSupportReturning(ctx)) {
+                        listener.executeStart(ctx);
+                        result = executeImmediate(ctx.statement()).executeUpdate();
+                        ctx.rows(result);
+                        listener.executeEnd(ctx);
 
-                    DSLContext create = ctx.dsl();
-                    returnedResult =
-                    create.select(returning)
-                          .from(table)
-                          .where(rowid().eq(DSL.field("last_insert_rowid()", rowid().getDataType())))
-                          .fetch();
+                        DSLContext create = ctx.dsl();
+                        returnedResult =
+                        create.select(returning)
+                              .from(table)
+                              .where(rowid().eq(DSL.field("last_insert_rowid()", rowid().getDataType())))
+                              .fetch();
 
-                    returnedResult.attach(((DefaultExecuteContext) ctx).originalConfiguration());
-                    return result;
+                        returnedResult.attach(((DefaultExecuteContext) ctx).originalConfiguration());
+                        return result;
+                    }
+                    else
+                        executeReturningQuery(ctx, listener);
+
+                    break;
                 }
 
 

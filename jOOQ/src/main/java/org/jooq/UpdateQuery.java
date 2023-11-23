@@ -54,11 +54,13 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
+import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 // ...
 // ...
 // ...
@@ -460,7 +462,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     void setReturning();
 
     /**
@@ -470,7 +472,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     void setReturning(Identity<R, ?> identity);
 
     /**
@@ -480,7 +482,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     void setReturning(SelectFieldOrAsterisk... fields);
 
     /**
@@ -490,7 +492,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      * SQL dialects
      */
     @Override
-    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     void setReturning(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -501,7 +503,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Override
     @Nullable
-    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     R getReturnedRecord();
 
     /**
@@ -512,7 +514,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Override
     @NotNull
-    @Support({ FIREBIRD, H2, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     Result<R> getReturnedRecords();
 
 }

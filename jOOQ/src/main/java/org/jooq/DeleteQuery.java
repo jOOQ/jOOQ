@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -166,7 +167,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *
      * @see #getReturnedRecords()
      */
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     void setReturning();
 
     /**
@@ -176,7 +177,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * @param fields Fields to be returned
      * @see #getReturnedRecords()
      */
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     void setReturning(SelectFieldOrAsterisk... fields);
 
     /**
@@ -186,7 +187,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * @param fields Fields to be returned
      * @see #getReturnedRecords()
      */
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     void setReturning(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -209,7 +210,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      * @see #getReturnedRecords()
      */
     @Nullable
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     R getReturnedRecord();
 
     /**
@@ -235,7 +236,7 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
      *         </ul>
      */
     @NotNull
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, SQLITE, YUGABYTEDB })
     Result<R> getReturnedRecords();
 
 }

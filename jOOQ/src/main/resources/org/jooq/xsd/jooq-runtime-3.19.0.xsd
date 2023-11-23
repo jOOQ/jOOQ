@@ -215,7 +215,7 @@ to revert to jOOQ calling {@code java.sql.Statement#getGeneratedKeys()} instead,
 is only supported for single row inserts.
 <p>
 This <code>OUTPUT</code> clause does not support fetching trigger generated values. In order
-to fetch trigger generated values, {@link #fetchTriggerValuesAfterSQLServerOutput} needs to
+to fetch trigger generated values, {@link #fetchTriggerValuesAfterReturning} needs to
 be enabled as well.
 <p>
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -308,12 +308,36 @@ For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://gith
       </element>
       
       <element name="fetchTriggerValuesAfterSQLServerOutput" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
 <p>
 SQL Server <code>OUTPUT</code> statements do not support fetching trigger generated values.
 This is a limitation of the {@link #renderOutputForSQLServerReturningClause}. An additional
 <code>MERGE</code> statement can run a second query if (and only if) the primary key has been
 included in the <code>OUTPUT</code> clause.
+<p>
+For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+<p>
+@deprecated - 3.18.0 - [#13912] [#15316] - Use {@link #fetchTriggerValuesAfterReturning} instead.]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
+      </element>
+      
+      <element name="fetchTriggerValuesAfterReturning" type="jooq-runtime:FetchTriggerValuesAfterReturning" minOccurs="0" maxOccurs="1" default="WHEN_NEEDED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fetch trigger values after a <code>RETURNING</code> clause in dialects that don't have native support for this.
+<p>
+SQL Server <code>OUTPUT</code> clauses do not support fetching trigger generated values.
+Neither do SQLite <code>RETURNING</code> clauses. An additional
+<code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+included in the <code>OUTPUT</code> clause.
+<p>
+Trigger meta data is only available in jOOQ's commercial editions. If setting this flag to
+<code>WHEN_NEEDED</code> in the jOOQ Open Source Edition, jOOQ will assume triggers are present.
 <p>
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -2410,6 +2434,21 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       
       <!-- Throw an exception when writing to readonly fields -->
       <enumeration value="THROW"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="FetchTriggerValuesAfterReturning">
+    <restriction base="string">
+    
+      <!-- Never fetch trigger values after returning. -->
+      <enumeration value="NEVER"/>
+      
+      <!-- Fetch trigger values only when triggers are known to be present.
+           Trigger meta data is only available in jOOQ's commercial editions -->
+      <enumeration value="WHEN_NEEDED"/>
+      
+      <!-- Always fetch trigger values. -->
+      <enumeration value="ALWAYS"/>
     </restriction>
   </simpleType>
 </schema>

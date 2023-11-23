@@ -122,6 +122,7 @@ import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
+// ...
 import org.jooq.UniqueKey;
 // ...
 // ...
@@ -623,6 +624,20 @@ implements
     public List<Check<R>> getChecks() {
         return Collections.emptyList();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Subclasses may call this method to create {@link TableField} objects that

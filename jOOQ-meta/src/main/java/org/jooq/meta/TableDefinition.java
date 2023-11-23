@@ -40,6 +40,7 @@ package org.jooq.meta;
 
 import java.util.List;
 
+// ...
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
@@ -154,6 +155,16 @@ public interface TableDefinition extends Definition {
      * Get the <code>CHECK</code> constraints for this table.
      */
     List<CheckConstraintDefinition> getCheckConstraints();
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Get the <code>IDENTITY</code> column of this table, or <code>null</code>,

@@ -98,6 +98,7 @@ import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.containsDeclaredTable;
 import static org.jooq.impl.Tools.findAny;
 
@@ -693,6 +694,14 @@ implements
         }
 
         ctx.visit(mergeInto(table).using(s).on(c).whenMatchedThenUpdate().set(um));
+    }
+
+    final boolean updatesField(Field<?> field) {
+        return anyMatch(updateMap.keySet(), fr -> field.equals(fr) || fr instanceof Row && ((Row) fr).field(field) != null);
+    }
+
+    final boolean updatesAnyField(Collection<? extends Field<?>> fields) {
+        return anyMatch(fields, this::updatesField);
     }
 
     final UpdateQueryImpl<R> copy(Consumer<? super UpdateQueryImpl<R>> finisher) {

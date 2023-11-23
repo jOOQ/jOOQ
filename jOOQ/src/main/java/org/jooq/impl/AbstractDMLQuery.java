@@ -45,10 +45,8 @@ import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
-// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 // ...
@@ -77,7 +75,6 @@ import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
-import static org.jooq.impl.InlineDerivedTable.inlineDerivedTable;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BULK_COLLECT_INTO;
 import static org.jooq.impl.Keywords.K_DECLARE;
@@ -98,7 +95,6 @@ import static org.jooq.impl.Names.N_DELETED;
 import static org.jooq.impl.Names.N_INSERTED;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
-import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.flattenCollection;
@@ -107,11 +103,13 @@ import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.reference;
 import static org.jooq.impl.Tools.removeGenerator;
 import static org.jooq.impl.Tools.unalias;
+import static org.jooq.impl.Tools.updateQueryImpl;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_USING_TABLES;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_RENDERING_DATA_CHANGE_DELTA_TABLE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.CallableStatement;
@@ -123,6 +121,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -160,9 +159,12 @@ import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.Update;
 import org.jooq.conf.ExecuteWithoutWhere;
+import org.jooq.conf.FetchTriggerValuesAfterReturning;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
@@ -673,6 +675,44 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         ctx.data().remove(DATA_DML_TARGET_TABLE);
     }
 
+    @Pro
+    private final boolean fetchTriggerValuesAfterReturning(Scope ctx) {
+        if (this instanceof Delete)
+            return false;
+
+        if (FALSE.equals(ctx.settings().isFetchTriggerValuesAfterSQLServerOutput()))
+            return false;
+
+        switch (defaultIfNull(ctx.settings().getFetchTriggerValuesAfterReturning(), FetchTriggerValuesAfterReturning.WHEN_NEEDED)) {
+            case ALWAYS:
+                return true;
+            case NEVER:
+                return false;
+            case WHEN_NEEDED:
+                if (ctx.configuration().commercial()) {
+
+
+
+                }
+
+                return true;
+            default:
+                throw new IllegalStateException("Unsupported value: " + ctx.settings().getFetchTriggerValuesAfterReturning());
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -777,6 +817,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 throw new DataAccessException("A statement is executed without WHERE clause");
         }
     }
+
+
+
+
 
 
 

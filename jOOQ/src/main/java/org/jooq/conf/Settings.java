@@ -127,6 +127,9 @@ public class Settings
     protected Boolean bindOffsetTimeType = false;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchTriggerValuesAfterSQLServerOutput = true;
+    @XmlElement(defaultValue = "WHEN_NEEDED")
+    @XmlSchemaType(name = "string")
+    protected FetchTriggerValuesAfterReturning fetchTriggerValuesAfterReturning = FetchTriggerValuesAfterReturning.WHEN_NEEDED;
     @XmlElement(defaultValue = "WHEN_RESULT_REQUESTED")
     @XmlSchemaType(name = "string")
     protected FetchIntermediateResult fetchIntermediateResult = FetchIntermediateResult.WHEN_RESULT_REQUESTED;
@@ -1145,7 +1148,7 @@ public class Settings
      * is only supported for single row inserts.
      * <p>
      * This <code>OUTPUT</code> clause does not support fetching trigger generated values. In order
-     * to fetch trigger generated values, {@link #fetchTriggerValuesAfterSQLServerOutput} needs to
+     * to fetch trigger generated values, {@link #fetchTriggerValuesAfterReturning} needs to
      * be enabled as well.
      * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
@@ -1461,12 +1464,15 @@ public class Settings
      * included in the <code>OUTPUT</code> clause.
      * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * <p>
+     * @deprecated - 3.18.0 - [#13912] [#15316] - Use {@link #fetchTriggerValuesAfterReturning} instead.
      * 
      * @return
      *     possible object is
      *     {@link Boolean }
      *     
      */
+    @Deprecated
     public Boolean isFetchTriggerValuesAfterSQLServerOutput() {
         return fetchTriggerValuesAfterSQLServerOutput;
     }
@@ -1479,8 +1485,45 @@ public class Settings
      *     {@link Boolean }
      *     
      */
+    @Deprecated
     public void setFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         this.fetchTriggerValuesAfterSQLServerOutput = value;
+    }
+
+    /**
+     * Fetch trigger values after a <code>RETURNING</code> clause in dialects that don't have native support for this.
+     * <p>
+     * SQL Server <code>OUTPUT</code> clauses do not support fetching trigger generated values.
+     * Neither do SQLite <code>RETURNING</code> clauses. An additional
+     * <code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+     * included in the <code>OUTPUT</code> clause.
+     * <p>
+     * Trigger meta data is only available in jOOQ's commercial editions. If setting this flag to
+     * <code>WHEN_NEEDED</code> in the jOOQ Open Source Edition, jOOQ will assume triggers are present.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * 
+     */
+    public FetchTriggerValuesAfterReturning getFetchTriggerValuesAfterReturning() {
+        return fetchTriggerValuesAfterReturning;
+    }
+
+    /**
+     * Fetch trigger values after a <code>RETURNING</code> clause in dialects that don't have native support for this.
+     * <p>
+     * SQL Server <code>OUTPUT</code> clauses do not support fetching trigger generated values.
+     * Neither do SQLite <code>RETURNING</code> clauses. An additional
+     * <code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+     * included in the <code>OUTPUT</code> clause.
+     * <p>
+     * Trigger meta data is only available in jOOQ's commercial editions. If setting this flag to
+     * <code>WHEN_NEEDED</code> in the jOOQ Open Source Edition, jOOQ will assume triggers are present.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * 
+     */
+    public void setFetchTriggerValuesAfterReturning(FetchTriggerValuesAfterReturning value) {
+        this.fetchTriggerValuesAfterReturning = value;
     }
 
     /**
@@ -6374,6 +6417,25 @@ public class Settings
     }
 
     /**
+     * Fetch trigger values after a <code>RETURNING</code> clause in dialects that don't have native support for this.
+     * <p>
+     * SQL Server <code>OUTPUT</code> clauses do not support fetching trigger generated values.
+     * Neither do SQLite <code>RETURNING</code> clauses. An additional
+     * <code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+     * included in the <code>OUTPUT</code> clause.
+     * <p>
+     * Trigger meta data is only available in jOOQ's commercial editions. If setting this flag to
+     * <code>WHEN_NEEDED</code> in the jOOQ Open Source Edition, jOOQ will assume triggers are present.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * 
+     */
+    public Settings withFetchTriggerValuesAfterReturning(FetchTriggerValuesAfterReturning value) {
+        setFetchTriggerValuesAfterReturning(value);
+        return this;
+    }
+
+    /**
      * Whether to fetch data into intermediate {@link org.jooq.Result} instances.
      * <p>
      * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result} 
@@ -7705,6 +7767,7 @@ public class Settings
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
+        builder.append("fetchTriggerValuesAfterReturning", fetchTriggerValuesAfterReturning);
         builder.append("fetchIntermediateResult", fetchIntermediateResult);
         builder.append("diagnosticsDuplicateStatements", diagnosticsDuplicateStatements);
         builder.append("diagnosticsDuplicateStatementsUsingTransformPatterns", diagnosticsDuplicateStatementsUsingTransformPatterns);
@@ -8250,6 +8313,15 @@ public class Settings
             }
         } else {
             if (!fetchTriggerValuesAfterSQLServerOutput.equals(other.fetchTriggerValuesAfterSQLServerOutput)) {
+                return false;
+            }
+        }
+        if (fetchTriggerValuesAfterReturning == null) {
+            if (other.fetchTriggerValuesAfterReturning!= null) {
+                return false;
+            }
+        } else {
+            if (!fetchTriggerValuesAfterReturning.equals(other.fetchTriggerValuesAfterReturning)) {
                 return false;
             }
         }
@@ -9963,6 +10035,7 @@ public class Settings
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
+        result = ((prime*result)+((fetchTriggerValuesAfterReturning == null)? 0 :fetchTriggerValuesAfterReturning.hashCode()));
         result = ((prime*result)+((fetchIntermediateResult == null)? 0 :fetchIntermediateResult.hashCode()));
         result = ((prime*result)+((diagnosticsDuplicateStatements == null)? 0 :diagnosticsDuplicateStatements.hashCode()));
         result = ((prime*result)+((diagnosticsDuplicateStatementsUsingTransformPatterns == null)? 0 :diagnosticsDuplicateStatementsUsingTransformPatterns.hashCode()));

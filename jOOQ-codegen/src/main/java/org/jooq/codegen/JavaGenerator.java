@@ -7312,6 +7312,34 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // [#1596] Updatable tables can provide fields for optimistic locking if properly configured.
         // [#7904] Records being updatable isn't a strict requirement. Version and timestamp values
         //         can still be generated

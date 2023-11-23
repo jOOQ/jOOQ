@@ -89,6 +89,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -313,6 +314,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<TableDefinition, List<EmbeddableDefinition>>           embeddablesByReferencingTable;
     private transient Map<SchemaDefinition, List<EnumDefinition>>                enumsBySchema;
     private transient Map<SchemaDefinition, List<DomainDefinition>>              domainsBySchema;
+
 
 
 
@@ -2927,6 +2929,14 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
+
+
+
+
+
+
+
     @Override
     public final List<ArrayDefinition> getArrays(SchemaDefinition schema) {
         if (arrays == null) {
@@ -3069,16 +3079,26 @@ public abstract class AbstractDatabase implements Database {
         if (indexesByTable == null)
             indexesByTable = new HashMap<>();
 
-        List<IndexDefinition> list = indexesByTable.get(table);
+        return getTableObjects(table, indexesByTable, this::getIndexes, IndexDefinition::getTable);
+    }
+
+    private final <D extends Definition> List<D> getTableObjects(
+        TableDefinition table,
+        Map<TableDefinition, List<D>> map,
+        Function<? super SchemaDefinition, ? extends List<D>> f,
+        Function<? super D, ? extends TableDefinition> t
+    ) {
+        List<D> list = map.get(table);
+
         if (list == null) {
-            indexesByTable.put(table, list = new ArrayList<>());
+            map.put(table, list = new ArrayList<>());
 
             for (TableDefinition otherTable : getTables(table.getSchema()))
-                if (!indexesByTable.containsKey(otherTable))
-                    indexesByTable.put(otherTable, new ArrayList<>());
+                if (!map.containsKey(otherTable))
+                    map.put(otherTable, new ArrayList<>());
 
-            for (IndexDefinition index : getIndexes(table.getSchema()))
-                indexesByTable.computeIfAbsent(index.getTable(), k -> new ArrayList<>()).add(index);
+            for (D d : f.apply(table.getSchema()))
+                map.computeIfAbsent(t.apply(d), k -> new ArrayList<>()).add(d);
         }
 
         return list;

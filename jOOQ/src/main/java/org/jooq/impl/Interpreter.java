@@ -68,6 +68,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -76,6 +77,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
@@ -97,6 +99,7 @@ import org.jooq.Name;
 import org.jooq.Named;
 import org.jooq.Nullability;
 import org.jooq.OrderField;
+// ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -104,11 +107,16 @@ import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
+import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.Update;
 import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
@@ -146,6 +154,10 @@ final class Interpreter {
     private final Map<Name, Index>                               interpretedIndexes     = new HashMap<>();
     private final Map<Name, MutableDomain.InterpretedDomain>     interpretedDomains     = new HashMap<>();
     private final Map<Name, MutableSequence.InterpretedSequence> interpretedSequences   = new HashMap<>();
+
+
+
+
 
     Interpreter(Configuration configuration) {
         this.configuration = configuration;
@@ -224,6 +236,13 @@ final class Interpreter {
         else if (query instanceof DropDomainImpl q)
             accept0(q);
 
+
+
+
+
+
+
+
         else if (query instanceof CommentOnImpl q)
             accept0(q);
 
@@ -264,6 +283,9 @@ final class Interpreter {
         interpretedForeignKeys.clear();
         interpretedIndexes.clear();
         interpretedSequences.clear();
+
+
+
     }
 
     private final void accept0(CreateSchemaImpl query) {
@@ -420,6 +442,21 @@ final class Interpreter {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void dropColumns(MutableTable table, List<MutableField> fields, Cascade cascade) {
         Iterator<MutableIndex> it1 = table.indexes.iterator();
@@ -972,6 +1009,64 @@ final class Interpreter {
         schema.sequences.remove(existing);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final void accept0(CreateIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$table();
@@ -982,7 +1077,6 @@ final class Interpreter {
             throw notExists(table);
 
         MutableIndex existing = find(mt.indexes, index);
-        List<MutableSortField> mtf = mt.sortFields(query.$on());
 
         if (existing != null) {
             if (!query.$ifNotExists())
@@ -991,17 +1085,18 @@ final class Interpreter {
             return;
         }
 
+        List<MutableSortField> mtf = mt.sortFields(query.$on());
         mt.indexes.add(new MutableIndex((UnqualifiedName) index.getUnqualifiedName(), mt, mtf, query.$unique(), query.$where()));
     }
 
     private final void accept0(AlterIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$on() != null ? query.$on() : index.getTable();
-        MutableIndex existing = index(index, table, query.$ifExists(), true);
+        MutableIndex existing = index(table, index, query.$ifExists(), true);
 
         if (existing != null) {
             if (query.$renameTo() != null)
-                if (index(query.$renameTo(), table, false, false) == null)
+                if (index(table, query.$renameTo(), false, false) == null)
                     existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
                 else
                     throw alreadyExists(query.$renameTo());
@@ -1013,7 +1108,7 @@ final class Interpreter {
     private final void accept0(DropIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$on() != null ? query.$on() : index.getTable();
-        MutableIndex existing = index(index, table, query.$ifExists(), true);
+        MutableIndex existing = index(table, index, query.$ifExists(), true);
 
         if (existing != null)
             existing.table.indexes.remove(existing);
@@ -1339,10 +1434,20 @@ final class Interpreter {
         return result;
     }
 
-    private final MutableIndex index(Index index, Table<?> table, boolean ifExists, boolean throwIfNotExists) {
+    private final MutableIndex index(Table<?> table, Index index, boolean ifExists, boolean throwIfNotExists) {
+        return tableElement(table, index, mt -> mt.indexes, ifExists, throwIfNotExists);
+    }
+
+    private final <N extends MutableNamed> N tableElement(
+        Table<?> table,
+        Named element,
+        Function<? super MutableTable, ? extends List<N>> mutableElements,
+        boolean ifExists,
+        boolean throwIfNotExists
+    ) {
         MutableSchema ms;
         MutableTable mt = null;
-        MutableIndex mi = null;
+        N mn = null;
 
         if (table != null) {
             ms = getSchema(table.getSchema());
@@ -1350,7 +1455,7 @@ final class Interpreter {
         }
         else {
             for (MutableTable mt1 : tables()) {
-                if ((mi = find(mt1.indexes, index)) != null) {
+                if ((mn = find(mutableElements.apply(mt1), element)) != null) {
                     mt = mt1;
                     ms = mt1.schema;
                     break;
@@ -1359,15 +1464,24 @@ final class Interpreter {
         }
 
         if (mt != null)
-            mi = find(mt.indexes, index);
+            mn = find(mutableElements.apply(mt), element);
         else if (table != null && throwIfNotExists)
             throw notExists(table);
 
-        if (mi == null && !ifExists && throwIfNotExists)
-            throw notExists(index);
+        if (mn == null && !ifExists && throwIfNotExists)
+            throw notExists(element);
 
-        return mi;
+        return mn;
     }
+
+
+
+
+
+
+
+
+
 
     private static final boolean checkNotExists(MutableSchema schema, Table<?> table) {
         MutableTable mt = schema.table(table);
@@ -1659,13 +1773,16 @@ final class Interpreter {
 
     private final class MutableTable extends MutableNamed  {
         MutableSchema           schema;
+        TableOptions            options;
         List<MutableField>      fields      = new MutableNamedList<>();
         MutableUniqueKey        primaryKey;
         List<MutableUniqueKey>  uniqueKeys  = new MutableNamedList<>();
         List<MutableForeignKey> foreignKeys = new MutableNamedList<>();
         List<MutableCheck>      checks      = new MutableNamedList<>();
         List<MutableIndex>      indexes     = new MutableNamedList<>();
-        TableOptions            options;
+
+
+
 
         MutableTable(UnqualifiedName name, MutableSchema schema, Comment comment, TableOptions options) {
             super(name, comment);
@@ -1685,6 +1802,9 @@ final class Interpreter {
             checks.clear();
             indexes.clear();
             fields.clear();
+
+
+
         }
 
         @Override
@@ -1810,6 +1930,15 @@ final class Interpreter {
             public final List<Index> getIndexes() {
                 return map(MutableTable.this.indexes, i -> i.interpretedIndex());
             }
+
+
+
+
+
+
+
+
+
         }
     }
 
@@ -1894,6 +2023,63 @@ final class Interpreter {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private abstract class MutableConstraint extends MutableNamed {
         MutableTable table;

@@ -591,6 +591,7 @@ import org.jooq.DropIndexCascadeStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
 import org.jooq.DropTableStep;
+// ...
 import org.jooq.DropTypeStep;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
@@ -5861,6 +5862,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
            ? s1.restrict()
            : s1;
     }
+
+
+
+
+
 
 
 

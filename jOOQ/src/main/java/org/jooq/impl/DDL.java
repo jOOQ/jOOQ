@@ -58,9 +58,11 @@ import static org.jooq.impl.Comparators.TABLE_VIEW_COMP;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.Tools.map;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -79,6 +81,8 @@ import org.jooq.CreateDomainDefaultStep;
 import org.jooq.CreateIndexIncludeStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableOnCommitStep;
+// ...
+// ...
 import org.jooq.CreateViewAsStep;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLFlag;
@@ -103,6 +107,9 @@ import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.OnCommit;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
 // ...
 import org.jooq.UniqueKey;
 import org.jooq.tools.JooqLogger;
@@ -221,7 +228,7 @@ final class DDL {
         return applyAsPlainSQL(q, options);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
     private final Query applyAsPlainSQL(CreateViewAsStep q, TableOptions options) {
 
         // [#15238] If the command prefix is supplied, use a heursitic where the view
@@ -315,6 +322,58 @@ final class DDL {
         return i.getWhere() != null ? s1.where(i.getWhere()) : s1;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     final List<Query> alterTableAddConstraints(Table<?> table) {
         return alterTableAddConstraints(table, constraints(table));
     }
@@ -387,6 +446,9 @@ final class DDL {
 
             queries.addAll(createIndex(table));
             queries.addAll(commentOn(table));
+
+
+
         }
 
         return ctx.queries(queries);
@@ -496,6 +558,14 @@ final class DDL {
             for (Schema schema : schemas)
                 for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                     queries.addAll(commentOn(table));
+
+
+
+
+
+
+
+
 
         return ctx.queries(queries);
     }

@@ -44,24 +44,36 @@ import static org.jooq.impl.Tools.map;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
+import org.jooq.Comment;
+import org.jooq.Condition;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
+import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
+import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An implementation of {@code Meta} which can be used to create fully
@@ -118,6 +130,9 @@ final class Snapshot extends AbstractMeta {
         private final List<SnapshotSequence<?>> sequences;
         private final List<SnapshotUDT<?>>      udts;
 
+
+
+
         SnapshotSchema(SnapshotCatalog catalog, Schema schema) {
             super(schema.getQualifiedName(), catalog, schema.getCommentPart());
 
@@ -125,6 +140,9 @@ final class Snapshot extends AbstractMeta {
             tables = map(schema.getTables(), t -> new SnapshotTable<>(this, t));
             sequences = map(schema.getSequences(), s -> new SnapshotSequence<>(this, s));
             udts = map(schema.getUDTs(), u -> new SnapshotUDT<>(this, u));
+
+
+
         }
 
         final void resolveReferences() {
@@ -151,6 +169,15 @@ final class Snapshot extends AbstractMeta {
         public final List<UDT<?>> getUDTs() {
             return unmodifiableList(udts);
         }
+
+
+
+
+
+
+
+
+
     }
 
     private class SnapshotDomain<T> extends DomainImpl<T> {
@@ -165,6 +192,9 @@ final class Snapshot extends AbstractMeta {
         private UniqueKey<R>                 primaryKey;
         private final List<ForeignKey<R, ?>> foreignKeys;
         private final List<Check<R>>         checks;
+
+
+
 
         SnapshotTable(SnapshotSchema schema, Table<R> table) {
             super(table.getQualifiedName(), schema, null, null, table.getCommentPart(), table.getOptions());
@@ -196,6 +226,9 @@ final class Snapshot extends AbstractMeta {
 
             foreignKeys = new ArrayList<>(table.getReferences());
             checks = new ArrayList<>(table.getChecks());
+
+
+
         }
 
         @SuppressWarnings("unchecked")
@@ -249,6 +282,15 @@ final class Snapshot extends AbstractMeta {
         public final List<Check<R>> getChecks() {
             return Collections.unmodifiableList(checks);
         }
+
+
+
+
+
+
+
+
+
     }
 
     private class SnapshotSequence<T extends Number> extends SequenceImpl<T> {
@@ -267,6 +309,29 @@ final class Snapshot extends AbstractMeta {
             );
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private class SnapshotUDT<R extends UDTRecord<R>> extends UDTImpl<R> {
         SnapshotUDT(SnapshotSchema schema, UDT<R> udt) {

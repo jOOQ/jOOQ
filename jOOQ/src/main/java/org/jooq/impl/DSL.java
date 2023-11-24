@@ -388,6 +388,7 @@ import org.jooq.Stringly;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
+// ...
 import org.jooq.True;
 import org.jooq.Type;
 import org.jooq.Update;
@@ -9474,6 +9475,38 @@ public class DSL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>CREATE TYPE</code> statement.
      * <p>
@@ -10509,6 +10542,38 @@ public class DSL {
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -13834,6 +13899,26 @@ public class DSL {
     public static Index index(Name name) {
         return new IndexImpl(name);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

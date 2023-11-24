@@ -92,4 +92,13 @@ public enum DDLFlag {
      * Whether <code>COMMENT</code> statements should be generated.
      */
     COMMENT,
+
+
+
+
+
+
+
+
+
 }

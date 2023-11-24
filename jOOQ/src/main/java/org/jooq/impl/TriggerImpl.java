@@ -37,6 +37,26 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptySet;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

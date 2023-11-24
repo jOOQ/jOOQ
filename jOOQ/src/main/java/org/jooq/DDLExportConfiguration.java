@@ -62,6 +62,9 @@ public final class DDLExportConfiguration {
     private final boolean          createOrReplaceView;
     private final boolean          createOrReplaceMaterializedView;
 
+
+
+
     private final boolean          respectCatalogOrder;
     private final boolean          respectSchemaOrder;
     private final boolean          respectTableOrder;
@@ -70,6 +73,9 @@ public final class DDLExportConfiguration {
     private final boolean          respectIndexOrder;
     private final boolean          respectDomainOrder;
     private final boolean          respectSequenceOrder;
+
+
+
 
     private final boolean          defaultSequenceFlags;
 
@@ -92,6 +98,9 @@ public final class DDLExportConfiguration {
             false,
             false,
 
+
+
+
             false,
             false,
             false,
@@ -100,6 +109,9 @@ public final class DDLExportConfiguration {
             false,
             false,
             false,
+
+
+
 
             false,
 
@@ -120,6 +132,9 @@ public final class DDLExportConfiguration {
         boolean createOrReplaceView,
         boolean createOrReplaceMaterializedView,
 
+
+
+
         boolean respectCatalogOrder,
         boolean respectSchemaOrder,
         boolean respectTableOrder,
@@ -128,6 +143,9 @@ public final class DDLExportConfiguration {
         boolean respectIndexOrder,
         boolean respectDomainOrder,
         boolean respectSequenceOrder,
+
+
+
 
         boolean defaultSequenceFlags,
 
@@ -145,6 +163,9 @@ public final class DDLExportConfiguration {
         this.createOrReplaceView = createOrReplaceView;
         this.createOrReplaceMaterializedView = createOrReplaceMaterializedView;
 
+
+
+
         this.respectCatalogOrder = respectCatalogOrder;
         this.respectSchemaOrder = respectSchemaOrder;
         this.respectTableOrder = respectTableOrder;
@@ -153,6 +174,9 @@ public final class DDLExportConfiguration {
         this.respectIndexOrder = respectIndexOrder;
         this.respectDomainOrder = respectDomainOrder;
         this.respectSequenceOrder = respectSequenceOrder;
+
+
+
 
         this.defaultSequenceFlags = defaultSequenceFlags;
 
@@ -188,6 +212,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -196,6 +223,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -227,6 +257,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -235,6 +268,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -266,6 +302,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -274,6 +313,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -305,6 +347,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -313,6 +358,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -344,6 +392,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -352,6 +403,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -383,6 +437,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -391,6 +448,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -422,6 +482,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -430,6 +493,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -461,6 +527,9 @@ public final class DDLExportConfiguration {
             newCreateMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -469,6 +538,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -500,6 +572,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             newCreateOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -508,6 +583,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -539,6 +617,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             newCreateOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -547,10 +628,60 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Whether to respect the catalog order produced by the {@link Meta} source
@@ -576,6 +707,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             newRespectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -584,6 +718,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -613,6 +750,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             newRespectSchemaOrder,
             respectTableOrder,
@@ -621,6 +761,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -650,6 +793,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             newRespectTableOrder,
@@ -658,6 +804,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -687,6 +836,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -695,6 +847,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -724,6 +879,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -732,6 +890,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -761,6 +922,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -769,6 +933,9 @@ public final class DDLExportConfiguration {
             newRespectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -798,6 +965,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -806,6 +976,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             newRespectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -835,6 +1008,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -843,10 +1019,58 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             newRespectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             includeConstraintsOnViews
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Whether to explicitly produce defaults for all sequence flags, when
@@ -872,6 +1096,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -880,6 +1107,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             newDefaultSequenceFlags,
             includeConstraintsOnViews
         );
@@ -907,6 +1137,9 @@ public final class DDLExportConfiguration {
             createMaterializedViewIfNotExists,
             createOrReplaceView,
             createOrReplaceMaterializedView,
+
+
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -915,6 +1148,9 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
+
+
             defaultSequenceFlags,
             newIncludeConstraintsOnViews
         );

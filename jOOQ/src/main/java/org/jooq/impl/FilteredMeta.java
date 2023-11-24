@@ -446,6 +446,9 @@ final class FilteredMeta extends AbstractMeta {
         private transient List<UniqueKey<R>>     uniqueKeys;
         private transient List<ForeignKey<R, ?>> references;
 
+
+
+
         private FilteredTable(FilteredSchema schema, Table<R> delegate) {
             super(delegate.getQualifiedName(), schema, null, null, delegate.getCommentPart(), delegate.getOptions());
 
@@ -534,5 +537,22 @@ final class FilteredMeta extends AbstractMeta {
         public final List<Check<R>> getChecks() {
             return delegate.getChecks();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

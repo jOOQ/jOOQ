@@ -10697,6 +10697,26 @@ public interface DSLContext extends Scope {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>CREATE TYPE</code> statement.
      *
@@ -11324,6 +11344,26 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTableIfExists(Table<?> table);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

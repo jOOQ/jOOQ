@@ -234,6 +234,7 @@ import org.jooq.TransactionProvider;
 import org.jooq.TransactionalCallable;
 import org.jooq.TransactionalPublishable;
 import org.jooq.TransactionalRunnable;
+// ...
 import org.jooq.Type;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -3655,6 +3656,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public org.jooq.CreateTypeStep createType(@Stringly.Name String type) {
         return new CreateTypeImpl(configuration(), DSL.type(DSL.name(type)), false);
@@ -4010,6 +4023,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
         return new DropTableImpl(configuration(), true, table, true);
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

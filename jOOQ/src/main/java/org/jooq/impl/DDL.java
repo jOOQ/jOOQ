@@ -83,6 +83,10 @@ import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableOnCommitStep;
 // ...
 // ...
+// ...
+// ...
+// ...
+// ...
 import org.jooq.CreateViewAsStep;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLFlag;
@@ -107,6 +111,7 @@ import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.OnCommit;
 import org.jooq.TableOptions.TableType;
+// ...
 // ...
 // ...
 // ...
@@ -321,6 +326,35 @@ final class DDL {
 
         return i.getWhere() != null ? s1.where(i.getWhere()) : s1;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

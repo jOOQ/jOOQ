@@ -938,7 +938,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     }
 
     final boolean nativeSupportReturning(Scope ctx) {
-        return !(ctx.family() == SQLITE && fetchTriggerValuesAfterReturning(ctx))
+
+        // [#15316] The historic RETURNING emulation of SQLite was available for INSERT only, using
+        //          _rowid_ = last_insert_rowid() checks, which obviously doesn't work for UPDATE and DELETE
+        return !(ctx.family() == SQLITE && this instanceof Insert && fetchTriggerValuesAfterReturning(ctx))
+
             && (this instanceof Insert && !NO_NATIVE_SUPPORT_INSERT_RETURNING.contains(ctx.dialect())
             ||  this instanceof Update && !NO_NATIVE_SUPPORT_UPDATE_RETURNING.contains(ctx.dialect())
             ||  this instanceof Delete && !NO_NATIVE_SUPPORT_DELETE_RETURNING.contains(ctx.dialect()));

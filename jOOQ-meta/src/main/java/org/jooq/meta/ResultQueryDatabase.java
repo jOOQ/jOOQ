@@ -42,10 +42,13 @@ import java.util.List;
 
 import org.jooq.Meta;
 import org.jooq.Record12;
+import org.jooq.Record14;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
+// ...
+// ...
 
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.Nullable;
@@ -180,4 +183,36 @@ public interface ResultQueryDatabase extends Database {
     @Internal
     @Nullable
     ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

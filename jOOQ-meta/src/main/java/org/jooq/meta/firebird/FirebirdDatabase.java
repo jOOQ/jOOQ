@@ -37,9 +37,9 @@
  */
 package org.jooq.meta.firebird;
 
-import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.bitGet;
@@ -83,16 +83,17 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
+import org.jooq.Record14;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -102,7 +103,6 @@ import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
-// ...
 // ...
 // ...
 import org.jooq.impl.DSL;
@@ -117,7 +117,6 @@ import org.jooq.meta.DefaultDomainDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
-// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -128,7 +127,6 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
-// ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.firebird.rdb.tables.Rdb$checkConstraints;
@@ -658,37 +656,6 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
         return result;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

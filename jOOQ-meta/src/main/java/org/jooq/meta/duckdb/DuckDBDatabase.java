@@ -64,12 +64,15 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record12;
+import org.jooq.Record14;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.ArrayDefinition;
@@ -219,6 +222,15 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
     public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
         return null;
     }
+
+
+
+
+
+
+
+
+
 
     @Override
     public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {

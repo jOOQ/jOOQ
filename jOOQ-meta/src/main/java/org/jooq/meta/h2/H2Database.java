@@ -98,6 +98,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record12;
+import org.jooq.Record14;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -108,6 +109,8 @@ import org.jooq.Select;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
+// ...
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
@@ -729,6 +732,15 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 SEQUENCES.SEQUENCE_NAME);
     }
 
+
+
+
+
+
+
+
+
+
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<>();
@@ -1212,16 +1224,6 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
         return result;
     }
-
-
-
-
-
-
-
-
-
-
 
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {

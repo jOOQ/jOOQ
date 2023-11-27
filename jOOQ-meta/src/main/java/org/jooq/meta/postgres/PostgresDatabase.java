@@ -130,6 +130,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record12;
+import org.jooq.Record14;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -188,6 +189,8 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -944,37 +947,6 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         return new ArrayList<>(result.values());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -49,9 +49,11 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
@@ -59,6 +61,7 @@ import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
+import static org.jooq.meta.hsqldb.information_schema.Tables.TRIGGERS;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -77,6 +80,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -110,11 +114,15 @@ import org.jooq.Parser;
 // ...
 import org.jooq.Query;
 import org.jooq.Record;
+import org.jooq.Record14;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
+// ...
+// ...
+// ...
 import org.jooq.TableOptions.TableType;
 import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.conf.RenderQuotedNames;
@@ -124,6 +132,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
 import org.jooq.impl.QOM;
 import org.jooq.impl.SQLDataType;
+import org.jooq.meta.hsqldb.information_schema.tables.Triggers;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CommentType;
 import org.jooq.meta.jaxb.CustomType;
@@ -808,7 +817,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final SchemaDefinition getSchema(String inputName) {
         for (SchemaDefinition schema : getSchemata())
-            if (schema.getName().equals(inputName))
+            if (schema.getName().equals(defaultIfNull(inputName, "")))
                 return schema;
 
         return null;
@@ -1585,35 +1594,33 @@ public abstract class AbstractDatabase implements Database {
                 log.warn("DEPRECATED", "The <types/> element in <forcedType/> is deprecated. Use <includeTypes/> instead: " + type);
             }
 
-            if (StringUtils.isBlank(type.getUserType())) {
-                if (type.getVisibilityModifier() == null
-                        && StringUtils.isBlank(type.getGenerator())
-                        && StringUtils.isBlank(type.getName())
-                        && !TRUE.equals(type.isAuditInsertTimestamp())
-                        && !TRUE.equals(type.isAuditInsertUser())
-                        && !TRUE.equals(type.isAuditUpdateTimestamp())
-                        && !TRUE.equals(type.isAuditUpdateUser())) {
-                    log.warn("Bad configuration for <forcedType/>. Any of <name/>, <userType/>, <generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, or <visibilityModifier/> is required: " + type);
 
-                    it2.remove();
-                    continue;
-                }
-                else if (!commercial()) {
-                    log.warn("<generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
+            boolean commercialFlags =
+                   type.getVisibilityModifier() != null
+                || !StringUtils.isBlank(type.getGenerator())
+                || TRUE.equals(type.isAuditInsertTimestamp())
+                || TRUE.equals(type.isAuditInsertUser())
+                || TRUE.equals(type.isAuditUpdateTimestamp())
+                || TRUE.equals(type.isAuditUpdateUser());
 
-                    it2.remove();
-                    continue;
-                }
+            if (StringUtils.isBlank(type.getUserType())
+                    && StringUtils.isBlank(type.getName())
+                    && !commercialFlags) {
+                log.warn("Bad configuration for <forcedType/>. Any of <name/>, <userType/>, <generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, or <visibilityModifier/> is required: " + type);
+
+                it2.remove();
+                continue;
+            }
+            else if (commercialFlags && !commercial()) {
+                log.warn("<generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
+
+                it2.remove();
+                continue;
             }
 
             if (StringUtils.isBlank(type.getBinding())
                 && StringUtils.isBlank(type.getConverter())
-                && StringUtils.isBlank(type.getGenerator())
-                && !TRUE.equals(type.isAuditInsertTimestamp())
-                && !TRUE.equals(type.isAuditInsertUser())
-                && !TRUE.equals(type.isAuditUpdateTimestamp())
-                && !TRUE.equals(type.isAuditUpdateUser())
-                && type.getVisibilityModifier() == null
+                && !commercialFlags
                 && !Boolean.TRUE.equals(type.isAutoConverter())
                 && !Boolean.TRUE.equals(type.isEnumConverter())
                 && !Boolean.TRUE.equals(type.isXmlConverter())
@@ -3976,6 +3983,72 @@ public abstract class AbstractDatabase implements Database {
         return result;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Retrieve ALL indexes from the database
      */
@@ -4051,17 +4124,6 @@ public abstract class AbstractDatabase implements Database {
      * {@link #getDomains(SchemaDefinition)}
      */
     protected abstract List<DomainDefinition> getDomains0() throws SQLException;
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Retrieve ALL XML schema collections from the database. This will be

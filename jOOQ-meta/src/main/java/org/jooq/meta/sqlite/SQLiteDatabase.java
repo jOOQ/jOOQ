@@ -73,6 +73,7 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record12;
+import org.jooq.Record14;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -116,6 +117,8 @@ import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * SQLite implementation of {@link AbstractDatabase}
@@ -490,6 +493,11 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
+
+
+
+
+
 
 
 

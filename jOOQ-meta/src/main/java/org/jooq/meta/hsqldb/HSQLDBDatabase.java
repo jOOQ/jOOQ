@@ -41,14 +41,17 @@ package org.jooq.meta.hsqldb;
 import static org.jooq.Records.mapping;
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
+import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.when;
@@ -79,17 +82,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record12;
+import org.jooq.Record14;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -637,31 +639,6 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
         return new ArrayList<>(result.values());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

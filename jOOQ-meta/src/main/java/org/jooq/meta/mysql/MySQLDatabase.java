@@ -48,10 +48,12 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.cast;
+import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.length;
 import static org.jooq.impl.DSL.lower;
+import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.regexpReplaceAll;
@@ -93,6 +95,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
+import org.jooq.Record14;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -135,6 +138,8 @@ import org.jooq.meta.mysql.information_schema.tables.Columns;
 import org.jooq.meta.mysql.information_schema.tables.Triggers;
 import org.jooq.meta.mysql.mysql.enums.ProcType;
 import org.jooq.tools.csv.CSVReader;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -640,31 +645,6 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

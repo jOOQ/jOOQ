@@ -91,6 +91,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -124,6 +125,10 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.exception.DataAccessException;
@@ -391,6 +396,9 @@ final class MetaImpl extends AbstractMeta {
         private transient volatile Map<Name, String>         sourceCache;
         private transient volatile Map<Name, String>         commentCache;
 
+
+
+
         MetaSchema(String name, Catalog catalog) {
             super(name, catalog);
         }
@@ -493,6 +501,9 @@ final class MetaImpl extends AbstractMeta {
                     this,
                     getColumns(catalog, schema, name),
                     getUks(catalog, schema, name),
+
+
+
                     remarks,
                     tableType
                 );
@@ -598,6 +609,52 @@ final class MetaImpl extends AbstractMeta {
                      }
                  });
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         @SuppressWarnings("unchecked")
         private final Result<Record> getColumns(String catalog, String schema, String table) {
@@ -840,7 +897,21 @@ final class MetaImpl extends AbstractMeta {
         private final MetaSchema     schema;
         private final Result<Record> uks;
 
-        MetaTable(String name, MetaSchema schema, Result<Record> columns, Result<Record> uks, String remarks, TableType tableType) {
+
+
+
+
+        MetaTable(
+            String name,
+            MetaSchema schema,
+            Result<Record> columns,
+            Result<Record> uks,
+
+
+
+            String remarks,
+            TableType tableType
+        ) {
             super(
                 name(name),
                 schema,
@@ -852,6 +923,9 @@ final class MetaImpl extends AbstractMeta {
 
             this.schema = schema;
             this.uks = uks;
+
+
+
 
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM
@@ -1084,6 +1158,46 @@ final class MetaImpl extends AbstractMeta {
             log.info("Could not look up key field : " + fieldName + " in table : " + table);
             return null;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

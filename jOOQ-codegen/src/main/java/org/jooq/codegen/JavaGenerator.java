@@ -39,6 +39,7 @@ package org.jooq.codegen;
 
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
@@ -1247,13 +1248,27 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private void printCreateNonEmbeddableUniqueKey(JavaWriter out, UniqueKeyDefinition uniqueKey) {
+        List<Definition> keyColumns = new ArrayList<>(uniqueKey.getKeyColumns());
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (scala)
             out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, _] ] ], %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 DSL.class,
                 escapeString(uniqueKey.getOutputName()),
-                out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)),
+                out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null)),
                 TableField.class,
                 out.ref(getStrategy().getJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                 uniqueKey.enforced());
@@ -1263,7 +1278,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 DSL.class,
                 escapeString(uniqueKey.getOutputName()),
-                out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)),
+                out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null)),
                 uniqueKey.enforced());
         else
             out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s)",
@@ -1272,7 +1287,7 @@ public class JavaGenerator extends AbstractGenerator {
                 DSL.class,
                 escapeString(uniqueKey.getOutputName()),
                 TableField.class,
-                out.ref(getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()), colRefSegments(null)),
+                out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null)),
                 uniqueKey.enforced());
     }
 

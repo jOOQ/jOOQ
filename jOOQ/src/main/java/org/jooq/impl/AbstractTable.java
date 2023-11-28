@@ -65,6 +65,8 @@ import static org.jooq.impl.QOM.JoinHint.LOOP;
 import static org.jooq.impl.QOM.JoinHint.MERGE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.EMPTY_TABLE_FIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.unwrap;
@@ -73,7 +75,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -523,6 +527,59 @@ implements
     @Override
     public UniqueKey<R> getPrimaryKey() {
         return null;
+    }
+
+    static final record PrimaryKeyWithEmbeddables<R extends Record>(UniqueKey<R> primaryKey) {}
+
+    transient PrimaryKeyWithEmbeddables<R> primaryKeyWithEmbeddables;
+
+    /**
+     * [#15873] [#15875] Embeddable keys are currently listing their embedded
+     * columns, which may have been replaced.
+     */
+    @SuppressWarnings("unchecked")
+    final UniqueKey<R> getPrimaryKeyWithEmbeddables() {
+        if (primaryKeyWithEmbeddables == null) {
+            UniqueKey<R> uniqueKey = getPrimaryKey();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            primaryKeyWithEmbeddables = new PrimaryKeyWithEmbeddables<>(uniqueKey);
+        }
+
+        return primaryKeyWithEmbeddables.primaryKey;
     }
 
     /**

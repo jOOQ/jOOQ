@@ -61,6 +61,9 @@ import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.EMPTY_TABLE_FIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.unwrap;
@@ -69,7 +72,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -373,6 +378,59 @@ abstract class AbstractTable<R extends Record> extends AbstractNamed implements 
     @Override
     public UniqueKey<R> getPrimaryKey() {
         return null;
+    }
+
+    static final /* record */ class PrimaryKeyWithEmbeddables<R extends Record> { private final UniqueKey<R> primaryKey; public PrimaryKeyWithEmbeddables(UniqueKey<R> primaryKey) { this.primaryKey = primaryKey; } public UniqueKey<R> primaryKey() { return primaryKey; } @Override public boolean equals(Object o) { if (!(o instanceof PrimaryKeyWithEmbeddables)) return false; PrimaryKeyWithEmbeddables other = (PrimaryKeyWithEmbeddables) o; if (!java.util.Objects.equals(this.primaryKey, other.primaryKey)) return false; return true; } @Override public int hashCode() { return java.util.Objects.hash(this.primaryKey); } @Override public String toString() { return new StringBuilder("PrimaryKeyWithEmbeddables[").append("primaryKey=").append(this.primaryKey).append("]").toString(); } }
+
+    transient PrimaryKeyWithEmbeddables<R> primaryKeyWithEmbeddables;
+
+    /**
+     * [#15873] [#15875] Embeddable keys are currently listing their embedded
+     * columns, which may have been replaced.
+     */
+    @SuppressWarnings("unchecked")
+    final UniqueKey<R> getPrimaryKeyWithEmbeddables() {
+        if (primaryKeyWithEmbeddables == null) {
+            UniqueKey<R> uniqueKey = getPrimaryKey();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            primaryKeyWithEmbeddables = new PrimaryKeyWithEmbeddables<>(uniqueKey);
+        }
+
+        return primaryKeyWithEmbeddables.primaryKey;
     }
 
     /**

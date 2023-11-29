@@ -1366,7 +1366,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                                         .from(table)
 
                                         // [#5050] [#9946] Table.getIdentity() doesn't produce aliased fields yet
-                                        .where(table.field(returnIdentity).in(ids))
+                                        // [#14771] A plain SQL table doesn't list its fields, but that isn't necessary
+                                        //          if users provide the correct identity column.
+                                        .where(defaultIfNull(table.field(returnIdentity), returnIdentity).in(ids))
                                         .fetch();
 
                     returnedResult.attach(originalConfiguration);

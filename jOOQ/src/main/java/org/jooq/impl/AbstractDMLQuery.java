@@ -102,6 +102,7 @@ import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.orElse;
 import static org.jooq.impl.Tools.reference;
 import static org.jooq.impl.Tools.removeGenerator;
 import static org.jooq.impl.Tools.unalias;
@@ -174,6 +175,7 @@ import org.jooq.impl.QOM.ResultOption;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 
@@ -1398,7 +1400,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                                         .from(table)
 
                                         // [#5050] [#9946] Table.getIdentity() doesn't produce aliased fields yet
-                                        .where(table.field(returnIdentity).in(ids))
+                                        // [#14771] A plain SQL table doesn't list its fields, but that isn't necessary
+                                        //          if users provide the correct identity column.
+                                        .where(defaultIfNull(table.field(returnIdentity), returnIdentity).in(ids))
                                         .fetch();
 
                     returnedResult.attach(originalConfiguration);

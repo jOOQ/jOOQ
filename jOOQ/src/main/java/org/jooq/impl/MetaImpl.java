@@ -99,6 +99,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
 import org.jooq.Catalog;
@@ -530,7 +533,28 @@ final class MetaImpl extends AbstractMeta {
         }
 
         private final void initUks(String catalog, String schema) {
-            String sql = M_UNIQUE_KEYS(family());
+            init0(
+                c -> ukCache = c,
+                () -> ukCache,
+                catalog, schema,
+                MetaSQL::M_UNIQUE_KEYS,
+                r -> r.field(0),
+                r -> r.field(1),
+                r -> r.field(2)
+            );
+        }
+
+        private final void init0(
+            Consumer<? super Map<Name, Result<Record>>> cacheInit,
+            Supplier<? extends Map<Name, Result<Record>>> cache,
+            String catalog,
+            String schema,
+            Function<? super SQLDialect, ? extends String> sqlF,
+            Function<? super Result<?>, ? extends Field<?>> objectCatalog,
+            Function<? super Result<?>, ? extends Field<?>> objectSchema,
+            Function<? super Result<?>, ? extends Field<?>> objectName
+        ) {
+            String sql = sqlF.apply(family());
 
             if (sql != null) {
                 Result<Record> result = meta(meta ->
@@ -547,11 +571,15 @@ final class MetaImpl extends AbstractMeta {
                 );
 
                 // TODO Support catalogs as well
-                Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
-                ukCache = new LinkedHashMap<>();
+                Map<Record, Result<Record>> groups = result.intoGroups(new Field<?>[] {
+                    objectCatalog.apply(result),
+                    objectSchema.apply(result),
+                    objectName.apply(result)
+                });
 
+                cacheInit.accept(new LinkedHashMap<>());
                 groups.forEach((k, v) -> {
-                    ukCache.put(name(
+                    cache.get().put(name(
                         catalog == null ? null : k.get(0, String.class),
                         k.get(1, String.class),
                         k.get(2, String.class)
@@ -609,26 +637,6 @@ final class MetaImpl extends AbstractMeta {
                      }
                  });
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -50,6 +50,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.impl.CallbackExecuteListener;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.tools.LoggerListener;
 
 import org.reactivestreams.Subscriber;
@@ -63,11 +64,16 @@ import org.reactivestreams.Subscriber;
  * using the {@link Configuration#executeListenerProviders()} property, passing
  * <code>Settings</code> to
  * {@link DSL#using(java.sql.Connection, SQLDialect, Settings)}. jOOQ will use
- * that configuration at the beginning of a query execution event to instantiate
- * all the provided listeners. In other words, listeners have the same lifetime
- * as a single query execution, and can thus be used to store state between the
- * moment when a query execution starts, and the moment when a query execution
- * finishes. Advanced <code>ExecuteListeners</code> can also provide custom
+ * that configuration at the beginning of a query execution event to get a hold
+ * of all provided listeners via {@link ExecuteListenerProvider#provide()}. The
+ * {@link DefaultExecuteListenerProvider} will always return the same
+ * {@link ExecuteListener} instance, but user defined providers can define any
+ * custom listener lifecycle, e.g. one instance per execution to store state
+ * between the moment when a query execution starts, and the moment when a query
+ * execution finishes in the listener. Alternatively, such data can be stored in
+ * {@link ExecuteContext#data()}.
+ * <p>
+ * Advanced <code>ExecuteListeners</code> can also provide custom
  * implementations of {@link Connection}, {@link PreparedStatement},
  * {@link ResultSet}, {@link SQLException} or {@link RuntimeException} to jOOQ
  * in appropriate methods.

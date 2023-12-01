@@ -2897,7 +2897,8 @@ public final class QOM {
         //    Ge
     {
         @Override
-        default Le<T> $converse() {
+        @CheckReturnValue
+        @NotNull default Le<T> $converse() {
             return new org.jooq.impl.Le<>($arg2(), $arg1());
         }
     }
@@ -2926,7 +2927,8 @@ public final class QOM {
         //    Gt
     {
         @Override
-        default Lt<T> $converse() {
+        @CheckReturnValue
+        @NotNull default Lt<T> $converse() {
             return new org.jooq.impl.Lt<>($arg2(), $arg1());
         }
     }
@@ -3028,7 +3030,8 @@ public final class QOM {
         //    Le
     {
         @Override
-        default Ge<T> $converse() {
+        @CheckReturnValue
+        @NotNull default Ge<T> $converse() {
             return new org.jooq.impl.Ge<>($arg2(), $arg1());
         }
     }
@@ -3130,7 +3133,8 @@ public final class QOM {
         //    Lt
     {
         @Override
-        default Gt<T> $converse() {
+        @CheckReturnValue
+        @NotNull default Gt<T> $converse() {
             return new org.jooq.impl.Gt<>($arg2(), $arg1());
         }
     }
@@ -3469,7 +3473,8 @@ public final class QOM {
         //    RowGt
     {
         @Override
-        default RowLt<T> $converse() {
+        @CheckReturnValue
+        @NotNull default RowLt<T> $converse() {
             return new org.jooq.impl.RowLt<>($arg2(), $arg1());
         }
     }
@@ -3486,7 +3491,8 @@ public final class QOM {
         //    RowGe
     {
         @Override
-        default RowLe<T> $converse() {
+        @CheckReturnValue
+        @NotNull default RowLe<T> $converse() {
             return new org.jooq.impl.RowLe<>($arg2(), $arg1());
         }
     }
@@ -3503,7 +3509,8 @@ public final class QOM {
         //    RowLt
     {
         @Override
-        default RowGt<T> $converse() {
+        @CheckReturnValue
+        @NotNull default RowGt<T> $converse() {
             return new org.jooq.impl.RowGt<>($arg2(), $arg1());
         }
     }
@@ -3520,7 +3527,8 @@ public final class QOM {
         //    RowLe
     {
         @Override
-        default RowGe<T> $converse() {
+        @CheckReturnValue
+        @NotNull default RowGe<T> $converse() {
             return new org.jooq.impl.RowGe<>($arg2(), $arg1());
         }
     }
@@ -8841,8 +8849,8 @@ public final class QOM {
          * Create a new expression with swapped operands, using the converse
          * operator.
          */
-        @NotNull
-        C $converse();
+        @CheckReturnValue
+        @NotNull C $converse();
     }
 
     /**
@@ -8854,13 +8862,14 @@ public final class QOM {
         /**
          * Create a new expression with swapped operands.
          */
-        @NotNull
-        default R $swap() {
+        @CheckReturnValue
+        @NotNull default R $swap() {
             return $constructor().apply($arg2(), $arg1());
         }
 
         @Override
-        default R $converse() {
+        @CheckReturnValue
+        @NotNull default R $converse() {
             return $swap();
         }
     }

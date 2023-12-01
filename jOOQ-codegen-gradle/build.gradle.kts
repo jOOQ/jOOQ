@@ -1,11 +1,16 @@
 plugins {
     id("java")
+    kotlin("jvm") version "1.9.20"
     id("com.gradle.plugin-publish") version "1.2.0"
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 repositories {

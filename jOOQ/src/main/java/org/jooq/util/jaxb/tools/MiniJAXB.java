@@ -484,8 +484,8 @@ public final class MiniJAXB {
             return first;
 
         Class<T> klass = (Class<T>) first.getClass();
-        if (klass != second.getClass())
-            throw new IllegalArgumentException("Can only append identical types");
+        if (!klass.isAssignableFrom(second.getClass()) && !second.getClass().isAssignableFrom(klass))
+            throw new IllegalArgumentException("Can only append compatible types");
         // [#8527] support enum types
         else if (klass.isEnum())
             return first;

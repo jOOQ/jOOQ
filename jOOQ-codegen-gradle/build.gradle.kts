@@ -1,5 +1,8 @@
+import org.gradle.kotlin.dsl.groovy
+
 plugins {
     id("java")
+    id("groovy")
     kotlin("jvm") version "1.9.20"
     id("com.gradle.plugin-publish") version "1.2.0"
 }

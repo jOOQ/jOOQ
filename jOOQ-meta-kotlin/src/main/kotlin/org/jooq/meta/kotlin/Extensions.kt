@@ -176,7 +176,7 @@ fun Matchers.enums(block: MutableList<MatchersEnumType>.() -> Unit) {
 }
 
 @JvmName("mutableListMatchersEnumType")
-fun MutableList<MatchersEnumType>.enum(block: MatchersEnumType.() -> Unit) {
+fun MutableList<MatchersEnumType>.enum_(block: MatchersEnumType.() -> Unit) {
     val e = MatchersEnumType()
     block(e)
     add(e)
@@ -278,7 +278,7 @@ fun SyntheticObjectsType.enums(block: MutableList<SyntheticEnumType>.() -> Unit)
 }
 
 @JvmName("mutableListSyntheticEnumType")
-fun MutableList<SyntheticEnumType>.enum(block: SyntheticEnumType.() -> Unit) {
+fun MutableList<SyntheticEnumType>.enum_(block: SyntheticEnumType.() -> Unit) {
     val e = SyntheticEnumType()
     block(e)
     add(e)

@@ -585,7 +585,7 @@ public class JavaGenerator extends AbstractGenerator {
               + "Possible means to prevent this:\n"
               + "- Use manual code generation and check in generated sources: https://www.jooq.org/doc/latest/manual/code-generation/codegen-version-control/\n"
               + "- Use schema version providers: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-version-providers/\n"
-              + "- Use gradle tasks and inputs: https://github.com/etiennestuder/gradle-jooq-plugin/blob/master/README.md");
+              + "- Use gradle tasks and inputs: https://docs.gradle.org/current/userguide/incremental_build.html");
         }
 
         // [#5556] Clean up common parent directory

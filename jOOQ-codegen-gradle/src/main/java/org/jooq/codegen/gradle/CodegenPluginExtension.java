@@ -76,7 +76,7 @@ public class CodegenPluginExtension {
         MiniJAXB.append(this.configuration, configuration);
     }
 
-    public void configuration(Closure<?> closure) {
+    public void configuration(@DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = MetaExtensions.ConfigurationExtension.class) Closure<?> closure) {
         MetaExtensions.ConfigurationExtension c = new MetaExtensions.ConfigurationExtension();
         closure = (Closure<?>) closure.clone();
         closure.setResolveStrategy(Closure.DELEGATE_FIRST);

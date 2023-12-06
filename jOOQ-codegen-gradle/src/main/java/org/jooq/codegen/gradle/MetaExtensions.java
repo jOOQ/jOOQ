@@ -50,6 +50,7 @@ public class MetaExtensions {
     public static class ConfigurationExtension extends Configuration {
         public void jdbc(Closure<?> closure) {
             JdbcExtension o = new JdbcExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);
@@ -57,6 +58,7 @@ public class MetaExtensions {
         }
         public void generator(Closure<?> closure) {
             GeneratorExtension o = new GeneratorExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);
@@ -70,12 +72,14 @@ public class MetaExtensions {
             ArrayList<Property> l = new ArrayList<Property>() {
                 public void property(Closure<?> c) {
                     PropertyExtension o = new PropertyExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -89,6 +93,7 @@ public class MetaExtensions {
     public static class GeneratorExtension extends Generator {
         public void strategy(Closure<?> closure) {
             StrategyExtension o = new StrategyExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);
@@ -96,6 +101,7 @@ public class MetaExtensions {
         }
         public void database(Closure<?> closure) {
             DatabaseExtension o = new DatabaseExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);
@@ -103,6 +109,7 @@ public class MetaExtensions {
         }
         public void generate(Closure<?> closure) {
             GenerateExtension o = new GenerateExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);
@@ -110,6 +117,7 @@ public class MetaExtensions {
         }
         public void target(Closure<?> closure) {
             TargetExtension o = new TargetExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);
@@ -120,6 +128,7 @@ public class MetaExtensions {
     public static class StrategyExtension extends Strategy {
         public void matchers(Closure<?> closure) {
             MatchersExtension o = new MatchersExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);
@@ -133,12 +142,14 @@ public class MetaExtensions {
             ArrayList<MatchersCatalogType> l = new ArrayList<MatchersCatalogType>() {
                 public void catalog(Closure<?> c) {
                     MatchersCatalogTypeExtension o = new MatchersCatalogTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -149,12 +160,14 @@ public class MetaExtensions {
             ArrayList<MatchersSchemaType> l = new ArrayList<MatchersSchemaType>() {
                 public void schema(Closure<?> c) {
                     MatchersSchemaTypeExtension o = new MatchersSchemaTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -165,12 +178,14 @@ public class MetaExtensions {
             ArrayList<MatchersTableType> l = new ArrayList<MatchersTableType>() {
                 public void table(Closure<?> c) {
                     MatchersTableTypeExtension o = new MatchersTableTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -181,12 +196,14 @@ public class MetaExtensions {
             ArrayList<MatchersIndexType> l = new ArrayList<MatchersIndexType>() {
                 public void index(Closure<?> c) {
                     MatchersIndexTypeExtension o = new MatchersIndexTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -197,12 +214,14 @@ public class MetaExtensions {
             ArrayList<MatchersPrimaryKeyType> l = new ArrayList<MatchersPrimaryKeyType>() {
                 public void primaryKey(Closure<?> c) {
                     MatchersPrimaryKeyTypeExtension o = new MatchersPrimaryKeyTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -213,12 +232,14 @@ public class MetaExtensions {
             ArrayList<MatchersUniqueKeyType> l = new ArrayList<MatchersUniqueKeyType>() {
                 public void uniqueKey(Closure<?> c) {
                     MatchersUniqueKeyTypeExtension o = new MatchersUniqueKeyTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -229,12 +250,14 @@ public class MetaExtensions {
             ArrayList<MatchersForeignKeyType> l = new ArrayList<MatchersForeignKeyType>() {
                 public void foreignKey(Closure<?> c) {
                     MatchersForeignKeyTypeExtension o = new MatchersForeignKeyTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -245,12 +268,14 @@ public class MetaExtensions {
             ArrayList<MatchersFieldType> l = new ArrayList<MatchersFieldType>() {
                 public void field(Closure<?> c) {
                     MatchersFieldTypeExtension o = new MatchersFieldTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -261,12 +286,14 @@ public class MetaExtensions {
             ArrayList<MatchersRoutineType> l = new ArrayList<MatchersRoutineType>() {
                 public void routine(Closure<?> c) {
                     MatchersRoutineTypeExtension o = new MatchersRoutineTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -277,12 +304,14 @@ public class MetaExtensions {
             ArrayList<MatchersSequenceType> l = new ArrayList<MatchersSequenceType>() {
                 public void sequence(Closure<?> c) {
                     MatchersSequenceTypeExtension o = new MatchersSequenceTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -293,12 +322,14 @@ public class MetaExtensions {
             ArrayList<MatchersEnumType> l = new ArrayList<MatchersEnumType>() {
                 public void enum_(Closure<?> c) {
                     MatchersEnumTypeExtension o = new MatchersEnumTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -309,12 +340,14 @@ public class MetaExtensions {
             ArrayList<MatchersEmbeddableType> l = new ArrayList<MatchersEmbeddableType>() {
                 public void embeddable(Closure<?> c) {
                     MatchersEmbeddableTypeExtension o = new MatchersEmbeddableTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -325,12 +358,14 @@ public class MetaExtensions {
             ArrayList<MatchersUDTType> l = new ArrayList<MatchersUDTType>() {
                 public void udt(Closure<?> c) {
                     MatchersUDTTypeExtension o = new MatchersUDTTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -341,12 +376,14 @@ public class MetaExtensions {
             ArrayList<MatchersAttributeType> l = new ArrayList<MatchersAttributeType>() {
                 public void attribute(Closure<?> c) {
                     MatchersAttributeTypeExtension o = new MatchersAttributeTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -357,6 +394,7 @@ public class MetaExtensions {
     public static class MatchersCatalogTypeExtension extends MatchersCatalogType {
         public void catalogClass(Closure<?> closure) {
             MatcherRuleExtension o = new MatcherRuleExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);
@@ -409,6 +447,7 @@ public class MetaExtensions {
     public static class DatabaseExtension extends Database {
         public void syntheticObjects(Closure<?> closure) {
             SyntheticObjectsTypeExtension o = new SyntheticObjectsTypeExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);
@@ -419,12 +458,14 @@ public class MetaExtensions {
             ArrayList<Property> l = new ArrayList<Property>() {
                 public void property(Closure<?> c) {
                     PropertyExtension o = new PropertyExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -435,12 +476,14 @@ public class MetaExtensions {
             ArrayList<CommentType> l = new ArrayList<CommentType>() {
                 public void comment(Closure<?> c) {
                     CommentTypeExtension o = new CommentTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -451,12 +494,14 @@ public class MetaExtensions {
             ArrayList<CatalogMappingType> l = new ArrayList<CatalogMappingType>() {
                 public void catalog(Closure<?> c) {
                     CatalogMappingTypeExtension o = new CatalogMappingTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -467,12 +512,14 @@ public class MetaExtensions {
             ArrayList<SchemaMappingType> l = new ArrayList<SchemaMappingType>() {
                 public void schema(Closure<?> c) {
                     SchemaMappingTypeExtension o = new SchemaMappingTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -483,12 +530,14 @@ public class MetaExtensions {
             ArrayList<EmbeddableDefinitionType> l = new ArrayList<EmbeddableDefinitionType>() {
                 public void embeddable(Closure<?> c) {
                     EmbeddableDefinitionTypeExtension o = new EmbeddableDefinitionTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -499,12 +548,14 @@ public class MetaExtensions {
             ArrayList<CustomType> l = new ArrayList<CustomType>() {
                 public void customType(Closure<?> c) {
                     CustomTypeExtension o = new CustomTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -515,12 +566,14 @@ public class MetaExtensions {
             ArrayList<EnumType> l = new ArrayList<EnumType>() {
                 public void enumType(Closure<?> c) {
                     EnumTypeExtension o = new EnumTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -531,12 +584,14 @@ public class MetaExtensions {
             ArrayList<ForcedType> l = new ArrayList<ForcedType>() {
                 public void forcedType(Closure<?> c) {
                     ForcedTypeExtension o = new ForcedTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -550,12 +605,14 @@ public class MetaExtensions {
             ArrayList<SyntheticReadonlyColumnType> l = new ArrayList<SyntheticReadonlyColumnType>() {
                 public void readonlyColumn(Closure<?> c) {
                     SyntheticReadonlyColumnTypeExtension o = new SyntheticReadonlyColumnTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -566,12 +623,14 @@ public class MetaExtensions {
             ArrayList<SyntheticReadonlyRowidType> l = new ArrayList<SyntheticReadonlyRowidType>() {
                 public void readonlyRowid(Closure<?> c) {
                     SyntheticReadonlyRowidTypeExtension o = new SyntheticReadonlyRowidTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -582,12 +641,14 @@ public class MetaExtensions {
             ArrayList<SyntheticColumnType> l = new ArrayList<SyntheticColumnType>() {
                 public void column(Closure<?> c) {
                     SyntheticColumnTypeExtension o = new SyntheticColumnTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -598,12 +659,14 @@ public class MetaExtensions {
             ArrayList<SyntheticIdentityType> l = new ArrayList<SyntheticIdentityType>() {
                 public void identity(Closure<?> c) {
                     SyntheticIdentityTypeExtension o = new SyntheticIdentityTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -614,12 +677,14 @@ public class MetaExtensions {
             ArrayList<SyntheticEnumType> l = new ArrayList<SyntheticEnumType>() {
                 public void enum_(Closure<?> c) {
                     SyntheticEnumTypeExtension o = new SyntheticEnumTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -630,12 +695,14 @@ public class MetaExtensions {
             ArrayList<SyntheticPrimaryKeyType> l = new ArrayList<SyntheticPrimaryKeyType>() {
                 public void primaryKey(Closure<?> c) {
                     SyntheticPrimaryKeyTypeExtension o = new SyntheticPrimaryKeyTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -646,12 +713,14 @@ public class MetaExtensions {
             ArrayList<SyntheticUniqueKeyType> l = new ArrayList<SyntheticUniqueKeyType>() {
                 public void uniqueKey(Closure<?> c) {
                     SyntheticUniqueKeyTypeExtension o = new SyntheticUniqueKeyTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -662,12 +731,14 @@ public class MetaExtensions {
             ArrayList<SyntheticForeignKeyType> l = new ArrayList<SyntheticForeignKeyType>() {
                 public void foreignKey(Closure<?> c) {
                     SyntheticForeignKeyTypeExtension o = new SyntheticForeignKeyTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -678,12 +749,14 @@ public class MetaExtensions {
             ArrayList<SyntheticViewType> l = new ArrayList<SyntheticViewType>() {
                 public void view(Closure<?> c) {
                     SyntheticViewTypeExtension o = new SyntheticViewTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -694,12 +767,14 @@ public class MetaExtensions {
             ArrayList<SyntheticDaoType> l = new ArrayList<SyntheticDaoType>() {
                 public void dao(Closure<?> c) {
                     SyntheticDaoTypeExtension o = new SyntheticDaoTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -740,12 +815,14 @@ public class MetaExtensions {
             ArrayList<SyntheticDaoMethodType> l = new ArrayList<SyntheticDaoMethodType>() {
                 public void method(Closure<?> c) {
                     SyntheticDaoMethodTypeExtension o = new SyntheticDaoMethodTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -765,12 +842,14 @@ public class MetaExtensions {
             ArrayList<SchemaMappingType> l = new ArrayList<SchemaMappingType>() {
                 public void schema(Closure<?> c) {
                     SchemaMappingTypeExtension o = new SchemaMappingTypeExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -787,12 +866,14 @@ public class MetaExtensions {
             ArrayList<EmbeddableField> l = new ArrayList<EmbeddableField>() {
                 public void field(Closure<?> c) {
                     EmbeddableFieldExtension o = new EmbeddableFieldExtension();
+                    c = (Closure<?>) c.clone();
                     c.setResolveStrategy(Closure.DELEGATE_FIRST);
                     c.setDelegate(o);
                     c.call(o);
                     add(o);
                 }
             };
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(l);
             closure.call(l);
@@ -806,6 +887,7 @@ public class MetaExtensions {
     public static class CustomTypeExtension extends CustomType {
         public void lambdaConverter(Closure<?> closure) {
             LambdaConverterExtension o = new LambdaConverterExtension();
+            closure = (Closure<?>) closure.clone();
             closure.setResolveStrategy(Closure.DELEGATE_FIRST);
             closure.setDelegate(o);
             closure.call(o);

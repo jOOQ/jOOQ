@@ -87,6 +87,7 @@ public class NamedConfiguration {
 
     public void configuration(Closure<?> closure) {
         MetaExtensions.ConfigurationExtension c = new MetaExtensions.ConfigurationExtension();
+        closure = (Closure<?>) closure.clone();
         closure.setResolveStrategy(Closure.DELEGATE_FIRST);
         closure.setDelegate(c);
         closure.call(c);

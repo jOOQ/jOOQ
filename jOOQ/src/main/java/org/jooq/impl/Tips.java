@@ -109,6 +109,7 @@ final class Tips {
         "Want to collect a flat representation of tree data into a hierarchy? Use this Collector based approach: https://blog.jooq.org/how-to-turn-a-list-of-flat-elements-into-a-hierarchy-in-java-sql-or-jooq/",
         "When it comes to using Converter or Binding, only the first UNION subquery is relevant. Learn more about this here: https://blog.jooq.org/how-to-use-jooqs-converters-with-union-operations/",
         "Want to upgrade your jOOQ experience? Check out these commercial only features of the jOOQ Professional and Enterprise Editions: https://www.jooq.org/commercial-only-features/",
+        "Should you use jOOQ's DAOs? They're convenient, but don't overuse them. SQL is often more powerful: https://blog.jooq.org/to-dao-or-not-to-dao/",
         ""
     };
 

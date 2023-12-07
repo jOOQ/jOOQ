@@ -1571,10 +1571,43 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        Iterator<ForcedType> it2 = configuredForcedTypes.iterator();
+        for (ForcedType type : configuredForcedTypes)
+            if (type.getUserType() != null && StringUtils.equals(type.getUserType(), typeName))
+                return customType(this, type);
 
-        while (it2.hasNext()) {
-            ForcedType type = it2.next();
+        return null;
+    }
+
+    @Override
+    public void markUsed(ForcedType forcedType) {
+        unusedForcedTypes.remove(forcedType);
+    }
+
+    @Override
+    public List<ForcedType> getUnusedForcedTypes() {
+        return new ArrayList<>(unusedForcedTypes);
+    }
+
+    @Override
+    public final void setConfiguredForcedTypes(List<ForcedType> configuredForcedTypes) {
+
+        // [#8512] Some implementation of this database may have already configured
+        //         a forced type programmatically, so we must not set the list but
+        //         append it.
+        getConfiguredForcedTypes().addAll(configuredForcedTypes);
+
+        // [#15918] This logic used to be delayed until we look up forced types, but that would mean
+        //          that hashCode() and equals() behaviour is inconsistent when adding the forced
+        //          types to unusedForcedTypes.
+        patchConfiguredForcedTypes();
+        unusedForcedTypes.addAll(getConfiguredForcedTypes());
+    }
+
+    private final void patchConfiguredForcedTypes() {
+        Iterator<ForcedType> it = configuredForcedTypes.iterator();
+
+        while (it.hasNext()) {
+            ForcedType type = it.next();
 
             if (type.getExpressions() != null) {
                 type.setIncludeExpression(type.getExpressions());
@@ -1608,13 +1641,13 @@ public abstract class AbstractDatabase implements Database {
                     && !commercialFlags) {
                 log.warn("Bad configuration for <forcedType/>. Any of <name/>, <userType/>, <generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, or <visibilityModifier/> is required: " + type);
 
-                it2.remove();
+                it.remove();
                 continue;
             }
             else if (commercialFlags && !commercial()) {
                 log.warn("<generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
 
-                it2.remove();
+                it.remove();
                 continue;
             }
 
@@ -1632,32 +1665,7 @@ public abstract class AbstractDatabase implements Database {
                 if (log.isDebugEnabled())
                     log.debug("<autoConverter/> is implicit for <forcedType/>: " + type);
             }
-
-            if (type.getUserType() != null && StringUtils.equals(type.getUserType(), typeName))
-                return customType(this, type);
         }
-
-        return null;
-    }
-
-    @Override
-    public void markUsed(ForcedType forcedType) {
-        unusedForcedTypes.remove(forcedType);
-    }
-
-    @Override
-    public List<ForcedType> getUnusedForcedTypes() {
-        return new ArrayList<>(unusedForcedTypes);
-    }
-
-    @Override
-    public final void setConfiguredForcedTypes(List<ForcedType> configuredForcedTypes) {
-
-        // [#8512] Some implementation of this database may have already configured
-        //         a forced type programmatically, so we must not set the list but
-        //         append it.
-        getConfiguredForcedTypes().addAll(configuredForcedTypes);
-        unusedForcedTypes.addAll(configuredForcedTypes);
     }
 
     @Override

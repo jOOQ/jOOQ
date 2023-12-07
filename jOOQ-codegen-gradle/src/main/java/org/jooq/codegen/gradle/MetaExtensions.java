@@ -48,6 +48,11 @@ import org.jooq.meta.jaxb.*;
 public class MetaExtensions {
 
     static void call(Closure<?> closure, Object delegate) {
+        // Explicit Closure support seems to still be needed in Gradle 8.5
+        // For GeneratedClosure types (which is what the gradle/groovy implementation does),
+        // it seems that the ClosureBackedAction is instantiated with Closure.OWNER_ONLY,
+        // which is a weird and undesirable flag value for most DSLs.
+        // See: https://github.com/jOOQ/jOOQ/issues/12985#issuecomment-1845084003
         closure = (Closure<?>) closure.clone();
         closure.setResolveStrategy(Closure.DELEGATE_FIRST);
         closure.setDelegate(delegate);

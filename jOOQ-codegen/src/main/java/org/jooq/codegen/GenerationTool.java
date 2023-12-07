@@ -1136,7 +1136,7 @@ public class GenerationTool {
                 + "- regular expressions depending on whitespace (Pattern.COMMENTS is turned on!)\n"
                 + "- missing or inadequate object qualification\n"
                 + "- the object to which the configuration was applied in the past has been dropped\n"
-                + "Try turning on DEBUG logging (-X in Maven, and <logging/> in jOOQ) to get additional info about the schema"
+                + "Try turning on DEBUG logging (-X in Maven, --debug in Gradle, and <logging/> in jOOQ) to get additional info about the schema"
             );
 
             for (Object o : list)

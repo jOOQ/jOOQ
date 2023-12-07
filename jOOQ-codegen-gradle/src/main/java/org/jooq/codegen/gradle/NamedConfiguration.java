@@ -37,6 +37,7 @@
  */
 package org.jooq.codegen.gradle;
 
+import org.gradle.api.Action;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Generator;
 import org.jooq.meta.jaxb.Target;
@@ -81,8 +82,14 @@ public class NamedConfiguration {
         return configuration;
     }
 
-    public void configuration(Configuration configuration) {
+    void configuration0(Configuration configuration) {
         MiniJAXB.append(this.configuration, configuration);
+    }
+
+    public void configuration(Action<MetaExtensions.ConfigurationExtension> action) {
+        MetaExtensions.ConfigurationExtension c = new MetaExtensions.ConfigurationExtension();
+        action.execute(c);
+        configuration0(c);
     }
 
     public void configuration(@DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = MetaExtensions.ConfigurationExtension.class) Closure<?> closure) {
@@ -91,7 +98,7 @@ public class NamedConfiguration {
         closure.setResolveStrategy(Closure.DELEGATE_FIRST);
         closure.setDelegate(c);
         closure.call(c);
-        configuration(c);
+        configuration0(c);
     }
 
     @Override

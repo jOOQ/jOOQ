@@ -37,13 +37,12 @@
  */
 package org.jooq.codegen.gradle;
 
+import org.gradle.api.Action;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ProviderFactory;
 import org.jooq.meta.jaxb.Configuration;
-import org.jooq.meta.jaxb.Generator;
-import org.jooq.meta.jaxb.Target;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 
 import javax.inject.Inject;
@@ -53,7 +52,6 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 import groovy.lang.*;
-import org.codehaus.groovy.runtime.*;
 
 /**
  * The configuration object of the jooq plugin extension.
@@ -72,8 +70,14 @@ public class CodegenPluginExtension {
         );
     }
 
-    public void configuration(Configuration configuration) {
+    void configuration0(Configuration configuration) {
         MiniJAXB.append(this.configuration, configuration);
+    }
+
+    public void configuration(Action<MetaExtensions.ConfigurationExtension> action) {
+        MetaExtensions.ConfigurationExtension c = new MetaExtensions.ConfigurationExtension();
+        action.execute(c);
+        configuration0(c);
     }
 
     public void configuration(@DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = MetaExtensions.ConfigurationExtension.class) Closure<?> closure) {
@@ -82,7 +86,7 @@ public class CodegenPluginExtension {
         closure.setResolveStrategy(Closure.DELEGATE_FIRST);
         closure.setDelegate(c);
         closure.call(c);
-        configuration(c);
+        configuration0(c);
     }
 
     public NamedDomainObjectContainer<NamedConfiguration> getExecutions() {

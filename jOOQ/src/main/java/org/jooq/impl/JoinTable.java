@@ -223,7 +223,9 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
     @Override
     public final void accept(Context<?> ctx) {
-        boolean path = path(lhs) != null || path(rhs) != null;
+        boolean lpath = path(lhs) != null;
+        boolean rpath = path(rhs) != null;
+        boolean path = lpath || rpath;
 
 
 
@@ -232,7 +234,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
 
         // [#14985] APPLY or LATERAL with path joins
-        if ((this instanceof CrossApply || this instanceof OuterApply) && path)
+        if ((this instanceof CrossApply || this instanceof OuterApply) && rpath)
             ctx.visit($table2(selectFrom(rhs).asTable(rhs)));
         else if (rhs instanceof Lateral && path(((Lateral<?>) rhs).$arg1()) != null)
             ctx.visit($table2(lateral(selectFrom(((Lateral<?>) rhs).$arg1()).asTable(((Lateral<?>) rhs).$arg1()))));

@@ -49,12 +49,15 @@ import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.JoinTable.onKey0;
+import static org.jooq.impl.TableImpl.wrapForImplicitJoin;
 import static org.jooq.impl.Tools.DATAKEY_RESET_IN_SUBQUERY_SCOPE;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.lazy;
+import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.sql.PreparedStatement;
@@ -71,8 +74,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.jooq.BindContext;
@@ -104,8 +110,13 @@ import org.jooq.conf.RenderImplicitJoinType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
+import org.jooq.exception.DataAccessException;
+import org.jooq.impl.AbstractContext.JoinNode;
 import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -865,6 +876,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final boolean inCurrentScope(QueryPart part) {
+        return scopeStack.getCurrentScope(part) != null;
+    }
+
+    @Override
     public /* non-final */ QueryPart scopeMapping(QueryPart part) {
         return part;
     }
@@ -1220,7 +1236,36 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             this.pathsToMany = new LinkedHashMap<>();
         }
 
+        static final JoinNode create(
+            Context<?> ctx,
+            JoinNode result,
+            Table<?> root,
+            List<TableImpl<?>> tables
+        ) {
+            if (result == null)
+                result = new JoinNode(ctx, root);
+
+            JoinNode node = result;
+            for (int i = tables.size() - 1; i >= 0; i--) {
+                TableImpl<?> t = tables.get(i);
+
+                if (t.childPath != null)
+                    node = node.pathsToOne.computeIfAbsent(t.childPath, k -> new JoinNode(ctx, t));
+                else
+                    node = node.pathsToMany.computeIfAbsent(t.parentPath, k -> new JoinNode(ctx, t));
+
+                if (i == 0)
+                    node.references++;
+            }
+
+            return result;
+        }
+
         Table<?> joinTree() {
+            return joinTree(null);
+        }
+
+        Table<?> joinTree(JoinType joinType) {
             Table<?> result = table;
 
 
@@ -1238,30 +1283,33 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
 
 
+            if (ctx.data(DATA_RENDER_IMPLICIT_JOIN) != null && TableImpl.path(result) != null)
+                result = Tools.unwrap(result).as(result);
+
             for (Entry<ForeignKey<?, ?>, JoinNode> e : pathsToOne.entrySet()) {
-                Table<?> t = e.getValue().joinTree();
+                Table<?> t = e.getValue().joinTree(joinType);
 
                 // [#14992] Eliminate to-one -> to-many hops if there are no projection references
                 if (skippable(e.getKey(), e.getValue()))
 
                     // [#14992] TODO: Currently, skippable JoinNodes have no outgoing to-one
                     //          relationships, but that might change in the future.
-                    result = appendToManyPaths(result, e.getValue());
+                    result = appendToManyPaths(result, e.getValue(), joinType);
                 else
                     result = result
-                        .join(t, joinType(e.getKey().nullable() ? LEFT_OUTER_JOIN : JOIN))
+                        .join(t, joinType != null ? joinType : joinType(t, e.getKey().nullable() ? LEFT_OUTER_JOIN : JOIN))
                         .on(onKey0(e.getKey(), result, t));
             }
 
-            return appendToManyPaths(result, this);
+            return appendToManyPaths(result, this, joinType);
         }
 
-        private static final Table<?> appendToManyPaths(Table<?> result, JoinNode node) {
+        private static final Table<?> appendToManyPaths(Table<?> result, JoinNode node, JoinType joinType) {
             for (Entry<InverseForeignKey<?, ?>, JoinNode> e : node.pathsToMany.entrySet()) {
                 Table<?> t = e.getValue().joinTree();
 
                 result = result
-                    .join(t, node.joinToManyType())
+                    .join(t, joinType != null ? joinType : node.joinToManyType(t))
                     .on(onKey0(e.getKey().getForeignKey(), t, result));
             }
 
@@ -1286,25 +1334,61 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             return false;
         }
 
-        private final JoinType joinType(JoinType onDefault) {
-            switch (defaultIfNull(Tools.settings(ctx.configuration()).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT)) {
+        private final JoinType joinType(Table<?> t, JoinType onDefault) {
+            RenderImplicitJoinType type = defaultIfNull(Tools.settings(ctx.configuration()).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT);
+
+            switch (type) {
+
+                // SCALAR_SUBQUERY is handled elsewhere
                 case INNER_JOIN:
                     return JOIN;
                 case LEFT_JOIN:
                     return LEFT_OUTER_JOIN;
+                case THROW:
+
+                    // [#15755] Throw exceptions only if the to-many join is done to a table
+                    //          that isn't in any explicit scope
+                    if (!allInScope(t))
+                        throw new DataAccessException("Implicit to-one JOIN of " + ctx.dsl().renderContext().declareTables(true).render(table) + " isn't supported with Settings.renderImplicitJoinType = " + type + ". Either change Settings value, or use explicit path join, see https://www.jooq.org/doc/latest/manual/sql-building/sql-statements/select-statement/explicit-path-join/");
+                    else
+                        return LEFT_OUTER_JOIN;
+
                 case DEFAULT:
                 default:
                     return onDefault;
             }
         }
 
-        private final JoinType joinToManyType() {
-            switch (defaultIfNull(Tools.settings(ctx.configuration()).getRenderImplicitJoinToManyType(), RenderImplicitJoinType.DEFAULT)) {
+        private final JoinType joinToManyType(Table<?> t) {
+            RenderImplicitJoinType type = defaultIfNull(Tools.settings(ctx.configuration()).getRenderImplicitJoinToManyType(), RenderImplicitJoinType.DEFAULT);
+
+            switch (type) {
+
+                // SCALAR_SUBQUERY is handled elsewhere
                 case INNER_JOIN:
                     return JOIN;
-                default:
+                case LEFT_JOIN:
                     return LEFT_OUTER_JOIN;
+                case DEFAULT:
+                case THROW:
+                default:
+
+                    // [#15755] Throw exceptions only if the to-many join is done to a table
+                    //          that isn't in any explicit scope
+                    if (!allInScope(t))
+                        throw new DataAccessException("Implicit to-many JOIN of " + ctx.dsl().renderContext().declareTables(true).render(table) + " isn't supported with Settings.renderImplicitJoinToManyType = " + type + ". Either change Settings value, or use explicit path join, see https://www.jooq.org/doc/latest/manual/sql-building/sql-statements/select-statement/explicit-path-join/");
+                    else
+                        return LEFT_OUTER_JOIN;
             }
+        }
+
+        private final boolean allInScope(Table<?> t) {
+            if (t instanceof TableImpl<?> ti)
+                return ctx.inScope(t);
+            else if (t instanceof JoinTable<?> j)
+                return traverseJoins(j, true, b -> !b, (b, x) -> b && ctx.inScope(x));
+            else
+                return false;
         }
 
         final boolean hasJoinPaths() {

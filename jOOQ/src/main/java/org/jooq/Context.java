@@ -429,9 +429,14 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C scopeRegister(QueryPart part, boolean forceNew, QueryPart mapped);
 
     /**
-     * Check whether a query part is registered in the current scope.
+     * Check whether a query part is registered in the current scope or higher.
      */
     boolean inScope(QueryPart part);
+
+    /**
+     * Check whether a query part is registered in the current scope.
+     */
+    boolean inCurrentScope(QueryPart part);
 
     /**
      * Retrieve the registered mapping for a query part in the current scope.

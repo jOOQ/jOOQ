@@ -2195,6 +2195,9 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       
       <!-- Always render a scalar subquery -->
       <enumeration value="SCALAR_SUBQUERY"/>
+      
+      <!-- Always throw an exception (effectively disallowing the type of implicit joins) -->
+      <enumeration value="THROW"/>
     </restriction>
   </simpleType>
   

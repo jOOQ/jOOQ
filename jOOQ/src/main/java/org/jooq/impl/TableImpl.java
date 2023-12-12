@@ -334,7 +334,7 @@ implements
             return noCondition();
     }
 
-    private final Condition wrapForImplicitJoin(Condition condition) {
+    static final Condition wrapForImplicitJoin(Condition condition) {
 
         // [#15755] Omit SCALAR_SUBQUERY rendering of TableFieldImpl for to-many path joins
         return CustomCondition.of(c -> {

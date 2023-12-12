@@ -220,7 +220,7 @@ implements
 
                 // [#15755] The default is to render scalar subqueries for implicit to-many paths
                 || (t.parentPath != null
-                    && (ctx.settings().getRenderImplicitJoinToManyType() == DEFAULT || ctx.settings().getRenderImplicitJoinToManyType() == SCALAR_SUBQUERY)
+                    && (ctx.settings().getRenderImplicitJoinToManyType() == SCALAR_SUBQUERY)
                     && !ctx.inScope(t))
 
                 // [#7508] Implicit join path references inside of DML queries have to

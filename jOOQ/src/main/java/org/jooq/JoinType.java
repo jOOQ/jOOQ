@@ -91,98 +91,98 @@ public enum JoinType {
      */
     @NotNull
     @Support
-    JOIN("join", "inner join", "join", true),
+    JOIN("join", "inner join", "join", true, false),
 
     /**
      * <code>CROSS JOIN</code> two tables.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    CROSS_JOIN("cross join", false),
+    CROSS_JOIN("cross join", false, false),
 
     /**
      * <code>LEFT OUTER JOIN</code> two tables.
      */
     @NotNull
     @Support
-    LEFT_OUTER_JOIN("left outer join", "left outer join", "left join", true),
+    LEFT_OUTER_JOIN("left outer join", "left outer join", "left join", true, false),
 
     /**
      * <code>RIGHT OUTER JOIN</code> two tables.
      */
     @NotNull
     @Support
-    RIGHT_OUTER_JOIN("right outer join", "right outer join", "right join", true),
+    RIGHT_OUTER_JOIN("right outer join", "right outer join", "right join", true, false),
 
     /**
      * <code>FULL OUTER JOIN</code> two tables.
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    FULL_OUTER_JOIN("full outer join", "full outer join", "full join", true),
+    FULL_OUTER_JOIN("full outer join", "full outer join", "full join", true, false),
 
     /**
      * <code>NATURAL INNER JOIN</code> two tables.
      */
     @NotNull
     @Support
-    NATURAL_JOIN("natural join", "natural inner join", "natural join", false),
+    NATURAL_JOIN("natural join", "natural inner join", "natural join", false, false),
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> two tables.
      */
     @NotNull
     @Support
-    NATURAL_LEFT_OUTER_JOIN("natural left outer join", "natural left outer join", "natural left join", false),
+    NATURAL_LEFT_OUTER_JOIN("natural left outer join", "natural left outer join", "natural left join", false, false),
 
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> two tables.
      */
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    NATURAL_RIGHT_OUTER_JOIN("natural right outer join", "natural right outer join", "natural right join", false),
+    NATURAL_RIGHT_OUTER_JOIN("natural right outer join", "natural right outer join", "natural right join", false, false),
 
     /**
      * <code>NATURAL FULL OUTER JOIN</code> two tables.
      */
     @NotNull
     @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    NATURAL_FULL_OUTER_JOIN("natural full outer join", "natural full outer join", "natural full join", false),
+    NATURAL_FULL_OUTER_JOIN("natural full outer join", "natural full outer join", "natural full join", false, false),
 
     /**
      * <code>CROSS APPLY</code> two tables.
      */
     @NotNull
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
-    CROSS_APPLY("cross apply", false),
+    CROSS_APPLY("cross apply", false, true),
 
     /**
      * <code>OUTER APPLY</code> two tables.
      */
     @NotNull
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
-    OUTER_APPLY("outer apply", false),
+    OUTER_APPLY("outer apply", false, true),
 
     /**
      * <code>STRAIGHT_JOIN</code> two tables.
      */
     @NotNull
     @Support({ MARIADB, MYSQL })
-    STRAIGHT_JOIN("straight_join", true),
+    STRAIGHT_JOIN("straight_join", true, false),
 
     /**
      * <code>LEFT SEMI JOIN</code> two tables.
      */
     @NotNull
     @Support
-    LEFT_SEMI_JOIN("left semi join", true),
+    LEFT_SEMI_JOIN("left semi join", true, false),
 
     /**
      * <code>LEFT ANTI JOIN</code> two tables.
      */
     @NotNull
     @Support
-    LEFT_ANTI_JOIN("left anti join", true)
+    LEFT_ANTI_JOIN("left anti join", true, false)
 
     ;
 
@@ -191,17 +191,25 @@ public enum JoinType {
     private final Keyword includingOptionalKeywords;
     private final Keyword excludingOptionalKeywords;
     private final boolean qualified;
+    private final boolean correlated;
 
-    private JoinType(String sql, boolean qualified) {
-        this(sql, sql, sql, qualified);
+    private JoinType(String sql, boolean qualified, boolean correlated) {
+        this(sql, sql, sql, qualified, correlated);
     }
 
-    private JoinType(String defaultSql, String includingOptionalKeywords, String excludingOptionalKeywords, boolean qualified) {
+    private JoinType(
+        String defaultSql,
+        String includingOptionalKeywords,
+        String excludingOptionalKeywords,
+        boolean qualified,
+        boolean correlated
+    ) {
         this.defaultSql = defaultSql;
         this.includingOptionalKeywords = DSL.keyword(includingOptionalKeywords);
         this.excludingOptionalKeywords = DSL.keyword(excludingOptionalKeywords);
         this.defaultKeyword = DSL.keyword(defaultSql);
         this.qualified = qualified;
+        this.correlated = correlated;
     }
 
     public final String toSQL() {
@@ -222,5 +230,12 @@ public enum JoinType {
      */
     public final boolean qualified() {
         return qualified;
+    }
+
+    /**
+     * Whether a <code>JOIN</code> operation of this type can be correlated.
+     */
+    public final boolean correlated() {
+        return correlated;
     }
 }

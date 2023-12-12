@@ -16,6 +16,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="INNER_JOIN"/&gt;
  *     &lt;enumeration value="LEFT_JOIN"/&gt;
  *     &lt;enumeration value="SCALAR_SUBQUERY"/&gt;
+ *     &lt;enumeration value="THROW"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -28,7 +29,8 @@ public enum RenderImplicitJoinType {
     DEFAULT,
     INNER_JOIN,
     LEFT_JOIN,
-    SCALAR_SUBQUERY;
+    SCALAR_SUBQUERY,
+    THROW;
 
     public String value() {
         return name();

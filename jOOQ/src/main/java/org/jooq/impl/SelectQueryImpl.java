@@ -59,6 +59,7 @@ import static org.jooq.Clause.SELECT_UNION;
 import static org.jooq.Clause.SELECT_UNION_ALL;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.SELECT_WINDOW;
+import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
@@ -225,6 +226,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSE
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_INTO_CLAUSE;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
@@ -318,6 +320,7 @@ import org.jooq.TablePartitionByStep;
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.AbstractContext.JoinNode;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.QOM.CompareCondition;
@@ -2349,7 +2352,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (t instanceof TableImpl)
                 context.scopeRegister(t, true);
         });
-        tablelist = prependToManyPaths(context, tablelist);
+        ConditionProviderImpl where = new ConditionProviderImpl();
+
+        // [#14985] [#15755] Add skipped join segments from path joins
+        tablelist = prependPathJoins(context, where, tablelist);
 
         if (with != null && transformInlineCTE(context.configuration())) {
 
@@ -2461,7 +2467,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // FROM and JOIN clauses
         // ---------------------
-        ConditionProviderImpl where = getWhere(context, tablelist);
+        where = getWhere(context, tablelist, where);
 
         context.start(SELECT_FROM)
                .declareTables(true);
@@ -2856,43 +2862,82 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    private static final TableList prependToManyPaths(Context<?> ctx, TableList tablelist) {
+    private static final TableList prependPathJoins(Context<?> ctx, ConditionProviderImpl where, TableList tablelist) {
         TableList result = new TableList(tablelist);
 
-        for (int i = result.size() - 1; i >= 0; i--) {
-            Table<?> t = result.get(i);
+        for (int i = 0; i < result.size(); i++) {
+            Table<?> t0 = result.get(i);
+            Table<?> t1 = prependPathJoins(ctx, where, t0, CROSS_JOIN);
 
-            if (t instanceof TableImpl<?> ti) {
-                TableImpl<?> r = prependToManyPaths(ctx, result, ti);
-
-                if (r != null) {
-                    result.add(i, r);
-                    ctx.scopeRegister(r, true);
-                }
-            }
+            if (t0 != t1)
+                result.set(i, t1);
         }
 
         return result;
     }
 
-    private static final TableImpl<?> prependToManyPaths(Context<?> ctx, TableList result, TableImpl<?> ti) {
-        TableImpl<?> r = null;
+    private static final Table<?> prependPathJoins(Context<?> ctx, ConditionProviderImpl where, Table<?> t, JoinType joinType) {
+        if (t instanceof TableImpl<?> ti)
+            return prependPathJoins(ctx, where, ti, joinType);
+        else if (t instanceof JoinTable<?> j)
+            return prependPathJoins(ctx, where, j);
+        else
+            return t;
+    }
 
-        if (ti.path instanceof TableImpl<?> p) {
+    private static final JoinTable<?> prependPathJoins(Context<?> ctx, ConditionProviderImpl where, JoinTable<?> j) {
+        if (j.type.qualified())
+            where = new ConditionProviderImpl();
 
-            // [#13639] Recurse if previous path segment declaration isn't in scope
-            if (!ctx.inScope(p)) {
-                if (ti.parentPath != null)
-                    r = p;
+        Table<?> lhs0 = j.lhs;
+        Table<?> rhs0 = j.rhs;
+        Table<?> lhs1 = lhs0;
+        Table<?> rhs1 = rhs0;
 
-                r = defaultIfNull(prependToManyPaths(ctx, result, p), r);
+        // [#13639] [#14985] [#15755] If path segments are skipped, create them recursively,
+        // in a left associative way, as the user would have created them, e.g.
+        // A ⋈ A.B.C.D -> ((A ⋈ A.B) ⋈ A.B.C) ⋈ A.B.C.D
+        if (rhs0 instanceof TableImpl<?> ti) {
+            if (ti.path != null && !ctx.inScope(ti.path)) {
+                lhs1 = j.transform(lhs0, ti.path);
+                ctx.scopeRegister(ti.path, true);
+            }
+        }
+
+        lhs1 = prependPathJoins(ctx, where, lhs1, j.type);
+        rhs1 = prependPathJoins(ctx, where, rhs1, j.type);
+
+        if (lhs0 != lhs1 || rhs0 != rhs1)
+            j = j.transform(lhs1, rhs1);
+
+        if (j.type.qualified() && where.hasWhere())
+            j.condition.addConditions(where.getWhere());
+
+        return j;
+    }
+
+    private static final Table<?> prependPathJoins(Context<?> ctx, ConditionProviderImpl where, TableImpl<?> ti, JoinType joinType) {
+        Table<?> r = ti;
+
+        if (ti.path != null && !ctx.inScope(ti.path)) {
+            Table<?> curr = ti;
+            Table<?> next = curr;
+            List<Table<?>> tables = new ArrayList<>();
+            while ((next = TableImpl.path(curr)) != null) {
+                tables.add(curr);
+
+                if (ctx.inScope(next))
+                    break;
+
+                ctx.scopeRegister(next, true);
+                curr = next;
             }
 
-            // [#13639] If previous path segment declaration is in scope (e.g. outer query)
-            //          but is referenced from a to-many relationship, then put child in scope
-            else if (!ctx.inScope(ti) && ti.parentPath != null) {
-                r = ti;
-            }
+            Table<?> result = null;
+            for (int i = tables.size() - 1; i >= 0; i--)
+                result = result == null ? tables.get(i) : result.join(tables.get(i), joinType);
+
+            return result;
         }
 
         return r;
@@ -4261,9 +4306,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return from;
     }
 
+    /**
+     * @deprecated - [#15871] don't reuse this, cache where clause instead.
+     */
+    @Deprecated
     final ConditionProviderImpl getWhere(Context<?> ctx, TableList tablelist) {
-        ConditionProviderImpl result = new ConditionProviderImpl();
+        return getWhere(ctx, tablelist, new ConditionProviderImpl());
+    }
 
+    final ConditionProviderImpl getWhere(Context<?> ctx, TableList tablelist, ConditionProviderImpl result) {
         if (condition.hasWhere())
             result.addConditions(condition.getWhere());
 
@@ -4301,7 +4352,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return result;
     }
 
-    private final void addPathConditions(Context<?> ctx, ConditionProviderImpl result, Table<?> t) {
+    private static final void addPathConditions(Context<?> ctx, ConditionProviderImpl result, Table<?> t) {
         if (t instanceof TableImpl<?> ti) {
 
             // [#14985] TODO: Should we check whether ti.child is in scope, or leave that to the user?

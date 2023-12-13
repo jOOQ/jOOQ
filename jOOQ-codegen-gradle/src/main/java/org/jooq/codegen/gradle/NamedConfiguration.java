@@ -38,10 +38,12 @@
 package org.jooq.codegen.gradle;
 
 import org.gradle.api.Action;
+import org.gradle.api.model.ObjectFactory;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Generator;
 import org.jooq.meta.jaxb.Target;
 import org.jooq.util.jaxb.tools.MiniJAXB;
+import org.jooq.codegen.gradle.MetaExtensions.*;
 
 import javax.inject.Inject;
 
@@ -53,16 +55,18 @@ import org.codehaus.groovy.runtime.*;
  */
 public class NamedConfiguration {
 
+    final ObjectFactory objects;
     final String        name;
     final boolean       unnamed;
     final Configuration configuration;
 
     @Inject
-    public NamedConfiguration(String name) {
-        this(name, false, newConfiguration());
+    public NamedConfiguration(ObjectFactory objects, String name) {
+        this(objects, name, false, newConfiguration());
     }
 
-    NamedConfiguration(String name, boolean unnamed, Configuration configuration) {
+    NamedConfiguration(ObjectFactory objects, String name, boolean unnamed, Configuration configuration) {
+        this.objects = objects;
         this.name = name;
         this.unnamed = unnamed;
         this.configuration = configuration;
@@ -86,18 +90,9 @@ public class NamedConfiguration {
         MiniJAXB.append(this.configuration, configuration);
     }
 
-    public void configuration(Action<MetaExtensions.ConfigurationExtension> action) {
-        MetaExtensions.ConfigurationExtension c = new MetaExtensions.ConfigurationExtension();
+    public void configuration(Action<ConfigurationExtension> action) {
+        ConfigurationExtension c = objects.newInstance(ConfigurationExtension.class, objects);
         action.execute(c);
-        configuration0(c);
-    }
-
-    public void configuration(@DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = MetaExtensions.ConfigurationExtension.class) Closure<?> closure) {
-        MetaExtensions.ConfigurationExtension c = new MetaExtensions.ConfigurationExtension();
-        closure = (Closure<?>) closure.clone();
-        closure.setResolveStrategy(Closure.DELEGATE_FIRST);
-        closure.setDelegate(c);
-        closure.call(c);
         configuration0(c);
     }
 

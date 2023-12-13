@@ -44,6 +44,7 @@ import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ProviderFactory;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.util.jaxb.tools.MiniJAXB;
+import org.jooq.codegen.gradle.MetaExtensions.*;
 
 import javax.inject.Inject;
 import java.util.Arrays;
@@ -58,15 +59,17 @@ import groovy.lang.*;
  */
 public class CodegenPluginExtension {
 
+    final             ObjectFactory                                  objects;
     final             Configuration                                  configuration;
     final             NamedDomainObjectContainer<NamedConfiguration> executions;
     private transient List<NamedConfiguration>                       configurations;
 
     @Inject
     public CodegenPluginExtension(ObjectFactory objects, ProviderFactory providers, ProjectLayout layout) {
-        configuration = NamedConfiguration.newConfiguration();
-        executions = objects.domainObjectContainer(NamedConfiguration.class,
-            name -> objects.newInstance(NamedConfiguration.class, name)
+        this.objects = objects;
+        this.configuration = NamedConfiguration.newConfiguration();
+        this.executions = objects.domainObjectContainer(NamedConfiguration.class,
+            name -> objects.newInstance(NamedConfiguration.class, objects, name)
         );
     }
 
@@ -74,18 +77,9 @@ public class CodegenPluginExtension {
         MiniJAXB.append(this.configuration, configuration);
     }
 
-    public void configuration(Action<MetaExtensions.ConfigurationExtension> action) {
-        MetaExtensions.ConfigurationExtension c = new MetaExtensions.ConfigurationExtension();
+    public void configuration(Action<ConfigurationExtension> action) {
+        ConfigurationExtension c = objects.newInstance(ConfigurationExtension.class, objects);
         action.execute(c);
-        configuration0(c);
-    }
-
-    public void configuration(@DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = MetaExtensions.ConfigurationExtension.class) Closure<?> closure) {
-        MetaExtensions.ConfigurationExtension c = new MetaExtensions.ConfigurationExtension();
-        closure = (Closure<?>) closure.clone();
-        closure.setResolveStrategy(Closure.DELEGATE_FIRST);
-        closure.setDelegate(c);
-        closure.call(c);
         configuration0(c);
     }
 
@@ -96,10 +90,10 @@ public class CodegenPluginExtension {
     List<NamedConfiguration> configurations() {
         if (configurations == null) {
             if (executions.isEmpty())
-                configurations = Arrays.asList(new NamedConfiguration("main", true, configuration));
+                configurations = Arrays.asList(new NamedConfiguration(objects, "main", true, configuration));
             else
                 configurations = executions.stream().map(c -> new NamedConfiguration(
-                    c.name, false, MiniJAXB.append(
+                    objects, c.name, false, MiniJAXB.append(
                         MiniJAXB.append(new Configuration(), copy(configuration)),
                         copy(c.configuration)
                     )

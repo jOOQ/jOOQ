@@ -37,6 +37,7 @@
  */
 package org.jooq.meta;
 
+import org.jooq.Row;
 
 /**
  * Some publicly available constants used in jOOQ
@@ -53,7 +54,7 @@ public final class Constants {
     /**
      * The latest jOOQ minor version.
      */
-    public static final String MINOR_VERSION  = "3.19";
+    public static final String MINOR_VERSION  = "3.20";
 
     /**
      * The latest jOOQ version.
@@ -61,7 +62,7 @@ public final class Constants {
      * This is the same as {@link #MINOR_VERSION}, but it may include patch
      * version suffixes.
      */
-    public static final String VERSION        = "3.19.1-SNAPSHOT";
+    public static final String VERSION        = "3.20.0-SNAPSHOT";
 
     /**
      * The latest jOOQ full version.
@@ -69,7 +70,7 @@ public final class Constants {
      * This is the same as {@link #VERSION}, but it may include release
      * candidate and other suffixes.
      */
-    public static final String FULL_VERSION   = "3.19.1-SNAPSHOT";
+    public static final String FULL_VERSION   = "3.20.0-SNAPSHOT";
 
     /**
      * The build date of this version.
@@ -154,7 +155,7 @@ public final class Constants {
 
 
     /**
-     * The maximum degree of {@link org.jooq.Row} and {@link org.jooq.Record} subtypes
+     * The maximum degree of {@link Row} and {@link Record} subtypes
      */
     public static final int    MAX_ROW_DEGREE = 22;
 
@@ -184,6 +185,11 @@ public final class Constants {
      * The minor release 3.19.
      */
     public static final String VERSION_3_19   = "3.19";
+
+    /**
+     * The minor release 3.20.
+     */
+    public static final String VERSION_3_20   = "3.20";
 
     /**
      * No further instances

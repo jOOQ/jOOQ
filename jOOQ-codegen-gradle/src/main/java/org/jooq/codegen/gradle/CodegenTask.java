@@ -51,6 +51,7 @@ import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.work.InputChanges;
 import org.jooq.codegen.GenerationTool;
+import org.jooq.meta.jaxb.Target;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -83,10 +84,16 @@ public class CodegenTask extends DefaultTask {
         this.classpath = new ArrayList<>();
         this.classpath.addAll(codegenClasspath.getFiles());
 
-        // TODO: Support basedir configuration
-        this.outputDirectory = layout.getProjectDirectory().dir(
-            configuration.configuration.getGenerator().getTarget().getDirectory()
-        );
+        // [#15944] Override default target directory
+        Target target = configuration.configuration.getGenerator().getTarget();
+
+        if (configuration.configuration.getBasedir() == null)
+            configuration.configuration.setBasedir(layout.getProjectDirectory().getAsFile().getAbsolutePath());
+
+        if (target.getDirectory() == null || GenerationTool.DEFAULT_TARGET_DIRECTORY.equals(target.getDirectory()))
+            target.setDirectory("build/generated-sources/jooq");
+
+        this.outputDirectory = layout.getProjectDirectory().dir(target.getDirectory());
 
         // TODO: Can we optimise this without using internals?
         getOutputs().upToDateWhen(task -> false);

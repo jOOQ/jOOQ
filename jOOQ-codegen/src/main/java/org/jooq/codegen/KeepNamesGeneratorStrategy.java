@@ -69,7 +69,33 @@ public class KeepNamesGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
-        return definition.getOutputName();
+        if (mode == Mode.PATH)
+            switch (getCase(definition.getOutputName())) {
+                case MIXED:
+                    return definition.getOutputName() + "Path";
+                case LOWER:
+                    return definition.getOutputName() + "_path";
+                case UPPER:
+                default:
+                    return definition.getOutputName() + "_PATH";
+            }
+        else
+            return definition.getOutputName();
+    }
+
+    private Case getCase(String name) {
+        if (name.toUpperCase().equals(name))
+            return Case.UPPER;
+        else if (name.toLowerCase().equals(name))
+            return Case.LOWER;
+        else
+            return Case.MIXED;
+    }
+
+    enum Case {
+        UPPER,
+        LOWER,
+        MIXED
     }
 
     @Override

@@ -35,7 +35,9 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private static final String             SERIAL_STATEMENT = "__SERIAL_STATEMENT__";
     private static final String             IMPORT_STATEMENT = "__IMPORT_STATEMENT__";
 
-    private final Pattern                   fullyQualifiedTypes;
+    private Set<String>                     fullyQualifiedTypesPatterns;
+    private String                          fullyQualifiedTypes;
+    private Pattern                         fullyQualifiedTypesPattern;
     private final boolean                   javadoc;
     private final Set<String>               refConflicts;
     private final Set<String>               qualifiedTypes   = new TreeSet<>(qualifiedTypeComparator());
@@ -71,7 +73,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         this.isScala = file.getName().endsWith(".scala");
         this.isKotlin = file.getName().endsWith(".kt");
         this.refConflicts = new HashSet<>();
-        this.fullyQualifiedTypes = fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
+        this.fullyQualifiedTypes = fullyQualifiedTypes;
+        this.fullyQualifiedTypesPattern = fullyQualifiedTypesPattern();
+        this.fullyQualifiedTypesPatterns = new HashSet<>();
+        this.fullyQualifiedTypesPatterns.add(fullyQualifiedTypes);
         this.javadoc = javadoc;
         this.generatedSerialVersionUID = generatedSerialVersionUID;
 
@@ -79,6 +84,19 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             tabString("    ");
         else if (isScala)
             tabString("  ");
+    }
+
+    public JavaWriter addFullyQualifiedTypes(String moreTypes) {
+        if (fullyQualifiedTypesPatterns.add(moreTypes)) {
+            fullyQualifiedTypes = fullyQualifiedTypes + "|" + moreTypes;
+            fullyQualifiedTypesPattern = fullyQualifiedTypesPattern();
+        }
+
+        return this;
+    }
+
+    private Pattern fullyQualifiedTypesPattern() {
+        return fullyQualifiedTypes == null ? null : Pattern.compile(fullyQualifiedTypes);
     }
 
     public JavaWriter print(Class<?> clazz) {
@@ -274,7 +292,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                     c = patchKotlinClasses(c);
 
                     // com.example.Table.TABLE.COLUMN (with keepSegments = 3)
-                    if (fullyQualifiedTypes != null && fullyQualifiedTypes.matcher(c).matches())
+                    if (fullyQualifiedTypesPattern != null && fullyQualifiedTypesPattern.matcher(c).matches())
                         break checks;
 
                     Matcher m = TYPE_REFERENCE_PATTERN.matcher(c);

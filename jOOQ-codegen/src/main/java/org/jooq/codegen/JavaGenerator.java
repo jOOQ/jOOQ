@@ -6566,6 +6566,18 @@ public class JavaGenerator extends AbstractGenerator {
             // Foreign keys
             List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
 
+            // [#1234] Avoid compilation errors when FK identifiers clash with generated path names
+            if (kotlin && generateGlobalKeyReferences()) {
+                if (generateImplicitJoinPathsToOne()) {
+                    for (ForeignKeyDefinition foreignKey : foreignKeys) {
+                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+
+                        if (keyMethodName.equals(getStrategy().getJavaIdentifier(foreignKey)))
+                            out.addFullyQualifiedTypes(Pattern.quote(getStrategy().getFullJavaIdentifier(foreignKey)));
+                    }
+                }
+            }
+
             // [#7554] [#8028] Not yet supported with global key references turned off
             if (foreignKeys.size() > 0 && generateGlobalKeyReferences()) {
                 final List<String> keyFullIds = kotlin

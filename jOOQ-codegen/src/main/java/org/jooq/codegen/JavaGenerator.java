@@ -7076,7 +7076,29 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Foreign keys
             List<ForeignKeyDefinition> outboundFKs = table.getForeignKeys();
+            List<InverseForeignKeyDefinition> inboundFKs = table.getInverseForeignKeys();
             Set<String> outboundKeyMethodNames = new HashSet<>();
+
+            // [#1234] Avoid compilation errors when FK identifiers clash with generated path names
+            if (kotlin && generateGlobalKeyReferences()) {
+                if (generateImplicitJoinPathsToOne()) {
+                    for (ForeignKeyDefinition foreignKey : outboundFKs) {
+                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+
+                        if (keyMethodName.equals(getStrategy().getJavaIdentifier(foreignKey)))
+                            out.addFullyQualifiedTypes(Pattern.quote(getStrategy().getFullJavaIdentifier(foreignKey)));
+                    }
+                }
+
+                if (generateImplicitJoinPathsToMany()) {
+                    for (InverseForeignKeyDefinition foreignKey : inboundFKs) {
+                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+
+                        if (keyMethodName.equals(getStrategy().getJavaIdentifier(foreignKey.getForeignKey())))
+                            out.addFullyQualifiedTypes(Pattern.quote(getStrategy().getFullJavaIdentifier(foreignKey.getForeignKey())));
+                    }
+                }
+            }
 
             // [#7554] [#8028] Not yet supported with global key references turned off
             if (outboundFKs.size() > 0 && generateGlobalKeyReferences()) {
@@ -7167,8 +7189,6 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             if (generateImplicitJoinPathsToMany() && generateGlobalKeyReferences()) {
-                List<InverseForeignKeyDefinition> inboundFKs = table.getInverseForeignKeys();
-
                 if (inboundFKs.size() > 0) {
                     Map<TableDefinition, Long> pathCounts = inboundFKs.stream().collect(groupingBy(InverseForeignKeyDefinition::getReferencingTable, counting()));
 

@@ -986,6 +986,7 @@ final class Tools {
     static final Set<SQLDialect>         DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect>         DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
+    static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT     = SQLDialect.supportedBy(SQLITE);
 
 
 
@@ -5424,8 +5425,18 @@ final class Tools {
 
 
     private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
-        if (type.defaulted())
-            ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(type.defaultValue());
+        if (type.defaulted()) {
+            Field<?> v = type.defaultValue();
+            ctx.sql(' ').visit(K_DEFAULT).sql(' ');
+
+            // [#15943] Some dialects require parentheses around expressions. We can't use AbstractField::parenthesised
+            //          as that just declares whether an expression requires additional parentheses in operator
+            //          expressions, not if actual parentheses are rendered.
+            if (REQUIRES_PARENTHESISED_DEFAULT.contains(ctx.dialect()))
+                ctx.sql('(').visit(v).sql(')');
+            else
+                ctx.visit(v);
+        }
     }
 
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {

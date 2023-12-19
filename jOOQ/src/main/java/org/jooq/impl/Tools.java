@@ -5329,7 +5329,8 @@ final class Tools {
 
                     switch (type) {
                         case ALTER_DATABASE: sqlstate = "3D000"; break;
-                        case ALTER_DOMAIN  : sqlstate = "42704"; break;
+                        case ALTER_DOMAIN  :
+                        case ALTER_TABLE   : sqlstate = "42704"; break;
                         case CREATE_DOMAIN : sqlstate = "42710"; break;
                         default            : sqlstate = "42P07"; break;
                     }

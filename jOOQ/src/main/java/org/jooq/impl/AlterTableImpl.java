@@ -229,7 +229,7 @@ implements
     private static final Clause[]        CLAUSES                               = { ALTER_TABLE };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect> SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(DERBY);
@@ -973,13 +973,21 @@ implements
         return !NO_SUPPORT_IF_EXISTS_COLUMN.contains(ctx.dialect());
     }
 
+    private final boolean supportsIfExistsConstraint(Context<?> ctx) {
+        return !NO_SUPPORT_IF_EXISTS_CONSTRAINT.contains(ctx.dialect());
+    }
+
     private final boolean supportsIfNotExistsColumn(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS_COLUMN.contains(ctx.dialect());
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        if ((ifExists && !supportsIfExists(ctx)) || ((ifExistsColumn || ifExistsConstraint || ifNotExistsColumn) && !supportsIfExistsColumn(ctx)))
+        if ((ifExists && !supportsIfExists(ctx))
+            || (ifExistsColumn && !supportsIfExistsColumn(ctx))
+            || (ifExistsConstraint && !supportsIfExistsConstraint(ctx))
+            || (ifNotExistsColumn && !supportsIfNotExistsColumn(ctx))
+        ) {
             tryCatch(
                 ctx,
                 DDLStatementType.ALTER_TABLE,
@@ -987,6 +995,7 @@ implements
                 ifExistsColumn || ifExistsConstraint ? TRUE : ifNotExistsColumn ? FALSE : null,
                 c -> accept0(c)
             );
+        }
         else
             accept0(ctx);
     }

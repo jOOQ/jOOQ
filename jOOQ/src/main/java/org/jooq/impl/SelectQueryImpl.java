@@ -2926,10 +2926,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             while ((next = TableImpl.path(curr)) != null) {
                 tables.add(curr);
 
+                // [#14985] [#15967] In some edge cases, users may have chosen to use a path in the FROM
+                //                   clause, whose path root isn't in scope. We mustn't put it in scope here!
+                if (!ctx.inScope(curr))
+                    ctx.scopeRegister(curr, true);
+
                 if (ctx.inScope(next))
                     break;
 
-                ctx.scopeRegister(next, true);
                 curr = next;
             }
 
@@ -4355,8 +4359,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private static final void addPathConditions(Context<?> ctx, ConditionProviderImpl result, Table<?> t) {
         if (t instanceof TableImpl<?> ti) {
 
-            // [#14985] TODO: Should we check whether ti.child is in scope, or leave that to the user?
-            if (ti.path != null)
+            // [#14985] [#15967] In some edge cases, users may have chosen to use a path in the FROM
+            //                   clause, whose path root isn't in scope. In that case, we must ignore
+            //                   the path.
+            if (ti.path != null && ctx.inScope(ti.path))
                 result.addConditions(ti.pathCondition());
         }
     }

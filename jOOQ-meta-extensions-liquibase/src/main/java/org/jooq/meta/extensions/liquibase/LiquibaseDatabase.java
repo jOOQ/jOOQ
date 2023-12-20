@@ -148,7 +148,8 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
         databaseChangeLogLockTableName = database.getDatabaseChangeLogLockTableName();
         databaseLiquibaseSchemaName = database.getLiquibaseSchemaName();
 
-        create().createSchemaIfNotExists(unquotedName(databaseLiquibaseSchemaName)).execute();
+        if (!StringUtils.isBlank(databaseLiquibaseSchemaName))
+            create().createSchemaIfNotExists(unquotedName(databaseLiquibaseSchemaName)).execute();
 
         // [#9866] Allow for loading included files from the classpath or using absolute paths.
         // [#12872] [#13021] The decision is made based on the presence of the rootPath property

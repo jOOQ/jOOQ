@@ -4091,9 +4091,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final SelectFieldList<SelectFieldOrAsterisk> getSelectResolveSomeAsterisks0(Scope ctx, boolean resolveSupported) {
         SelectFieldList<SelectFieldOrAsterisk> result = new SelectFieldList<>();
 
+        boolean knownTableSource = knownTableSource();
+
         // [#7921] Only H2 supports the * EXCEPT (..) syntax
-        boolean resolveExcept = resolveSupported || !SUPPORT_NATIVE_EXCEPT.contains(ctx.dialect());
-        boolean resolveUnqualifiedCombined = resolveSupported || NO_SUPPORT_UNQUALIFIED_COMBINED.contains(ctx.dialect());
+        boolean resolveExcept = resolveSupported || knownTableSource && !SUPPORT_NATIVE_EXCEPT.contains(ctx.dialect());
+        boolean resolveUnqualifiedCombined = resolveSupported || knownTableSource && NO_SUPPORT_UNQUALIFIED_COMBINED.contains(ctx.dialect());
 
         // [#7921] TODO Find a better, more efficient way to resolve asterisks
         SelectFieldList<SelectFieldOrAsterisk> list = getSelectResolveImplicitAsterisks();

@@ -10646,24 +10646,8 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    /**
-     * @deprecated - 3.9.0 - [#330]  - Use {@link #getType(Database, SchemaDefinition, String, int, int, Name, String, String)} instead.
-     */
-    @Deprecated
-    protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, String u, String javaType, String defaultType) {
-        return getType(db, schema, out, t, p, s, name(u), javaType, defaultType);
-    }
-
     protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType) {
         return getType(db, schema, out, t, p, s, u, javaType, defaultType, Mode.RECORD);
-    }
-
-    /**
-     * @deprecated - 3.9.0 - [#330]  - Use {@link #getType(Database, SchemaDefinition, String, int, int, Name, String, String, Mode)} instead.
-     */
-    @Deprecated
-    protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, String u, String javaType, String defaultType, Mode udtMode) {
-        return getType(db, schema, out, t, p, s, name(u), javaType, defaultType, udtMode);
     }
 
     protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType, Mode udtMode) {

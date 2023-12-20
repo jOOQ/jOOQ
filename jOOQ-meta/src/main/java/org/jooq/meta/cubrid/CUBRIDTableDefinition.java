@@ -38,6 +38,7 @@
 
 package org.jooq.meta.cubrid;
 
+import static org.jooq.impl.DSL.name;
 import static org.jooq.meta.cubrid.dba.Tables.DB_ATTRIBUTE;
 import static org.jooq.meta.cubrid.dba.Tables.DB_SERIAL;
 
@@ -94,7 +95,7 @@ public class CUBRIDTableDefinition extends AbstractTableDefinition {
                 record.get(DB_ATTRIBUTE.SCALE),
                 record.get(DB_ATTRIBUTE.IS_NULLABLE, boolean.class),
                 record.get(DB_ATTRIBUTE.DEFAULT_VALUE),
-                getName() + "_" + record.get(DB_ATTRIBUTE.ATTR_NAME)
+                name(getName() + "_" + record.get(DB_ATTRIBUTE.ATTR_NAME))
             );
 
 			result.add(new DefaultColumnDefinition(

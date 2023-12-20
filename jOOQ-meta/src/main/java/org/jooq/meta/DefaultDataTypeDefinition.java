@@ -86,68 +86,24 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final int              precision;
     private final int              scale;
 
-    private static final String defaultValue(Boolean defaultable) {
-        return defaultable != null && defaultable ? "NULL" : null;
-    }
-
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName) {
         this(database, schema, typeName, null, null, null, null, (String) null, (Name) null);
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, typeName, null);
-    }
-
-    /**
-     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name)}  instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, name(userType));
-    }
-
-    /**
-     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name)}  instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultValue, Name userType) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultValue(defaultValue), userType);
+        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, name(typeName), null);
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, null);
     }
 
-    /**
-     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String)}  instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, name(userType), converter);
-    }
-
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, converter, null);
     }
 
-    /**
-     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String, String)}  instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter, String binding) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, name(userType), converter, binding, null);
-    }
-
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, converter, binding, null);
-    }
-
-    /**
-     * @deprecated - [#330] - 3.9.0 - Use {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, Name, String, String, String)} instead.
-     */
-    @Deprecated
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, String userType, String converter, String binding, String javaType) {
-        this(database, schema, typeName, length, precision, scale, nullable, defaultValue, name(userType), converter, binding, javaType);
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding, String javaType) {

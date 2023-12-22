@@ -111,7 +111,7 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
                     c -> {
                         DataType<?> type = (DataType<?>) c.data(DATA_EMPTY_ARRAY_BASE_TYPE);
 
-                        if (type != null && !type.isOther())
+                        if (type != null && type.getType() != Object.class)
                             c.sql(type.getCastTypeName(ctx.configuration())).sql("[]");
                         else
                             c.visit(K_INT).sql("[]");

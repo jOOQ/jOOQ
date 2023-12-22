@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Tools.CONFIG;
 
 import java.io.IOException;
@@ -53,6 +54,7 @@ import org.jooq.DSLContext;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
+import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
@@ -185,11 +187,15 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
     @Override
     public String toString() {
-        try {
 
-            // [#8355] Subtypes may have null configuration
-            Configuration configuration = Tools.configuration(configuration());
-            return create(configuration.deriveSettings(s -> s.withRenderFormatted(true))).renderInlined(this);
+        // [#8355] Subtypes may have null configuration
+        Configuration configuration = Tools.configuration(configuration());
+        return toString0(create(configuration.deriveSettings(s -> s.withRenderFormatted(true))).renderContext().paramType(INLINED));
+    }
+
+    String toString0(RenderContext ctx) {
+        try {
+            return ctx.visit(this).render();
         }
         catch (SQLDialectNotSupportedException e) {
             return "[ ... " + e.getMessage() + " ... ]";

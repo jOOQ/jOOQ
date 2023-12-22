@@ -131,6 +131,7 @@ import org.jooq.Operator;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -961,4 +962,12 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
 
 
+    // -------------------------------------------------------------------------
+    // XXX: Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    String toString0(RenderContext ctx) {
+        return super.toString0(ctx.declareTables(true));
+    }
 }

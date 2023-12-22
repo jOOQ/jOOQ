@@ -15,7 +15,7 @@
     <licenses>
         <license>
             <name>jOOQ license</name>
-            <url>http://www.jooq.org/inc/LICENSE.txt</url>
+            <url>https://www.jooq.org/inc/LICENSE.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>

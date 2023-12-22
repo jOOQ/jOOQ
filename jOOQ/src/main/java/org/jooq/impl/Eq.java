@@ -151,6 +151,10 @@ implements
 
 
 
+        else if (arg1 instanceof Array && ((Array<?>) arg1).fields.fields.length == 0)
+            ctx.data(ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE, arg2.getDataType().getArrayComponentDataType(), c -> acceptDefault.apply(c, arg1, arg2));
+        else if (arg2 instanceof Array && ((Array<?>) arg2).fields.fields.length == 0)
+            ctx.data(ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE, arg1.getDataType().getArrayComponentDataType(), c -> acceptDefault.apply(c, arg1, arg2));
         else
             acceptDefault.apply(ctx, arg1, arg2);
     }

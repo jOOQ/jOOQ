@@ -46,6 +46,7 @@ import static org.jooq.impl.Cast.renderCastIf;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Names.N_ARRAY;
+import static org.jooq.impl.Tools.ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE;
 
 import java.util.Collection;
 import java.util.Set;
@@ -107,7 +108,14 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
                                 break;
                         }
                     },
-                    c -> c.visit(K_INT).sql("[]"),
+                    c -> {
+                        DataType<?> type = (DataType<?>) c.data(DATA_EMPTY_ARRAY_BASE_TYPE);
+
+                        if (type != null && !type.isOther())
+                            c.sql(type.getCastTypeName(ctx.configuration())).sql("[]");
+                        else
+                            c.visit(K_INT).sql("[]");
+                    },
                     () -> fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect())
                 );
 

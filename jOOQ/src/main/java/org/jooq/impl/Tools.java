@@ -966,6 +966,11 @@ final class Tools {
          */
         DATA_RENDER_TABLE(true, null, 0),
 
+        /**
+         * [#15982] The base type of an empty array in the current scope.
+         */
+        DATA_EMPTY_ARRAY_BASE_TYPE
+
         ;
 
         private final boolean resetInSubqueryScope;

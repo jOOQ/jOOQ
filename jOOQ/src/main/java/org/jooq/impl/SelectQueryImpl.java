@@ -1708,7 +1708,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
 
             case WHEN_MULTIPLE_TABLES: {
-                if (knownTableSource() && getFrom().size() < 2)
+                int s = getFrom().size();
+
+                if (knownTableSource() && (s == 0 || s == 1 && !(getFrom().get(0) instanceof JoinTable)))
                     context.data(DATA_RENDER_TABLE, false);
 
                 break;

@@ -38,6 +38,7 @@
 package org.jooq.codegen.gradle;
 
 import org.gradle.api.Action;
+import org.gradle.api.Project;
 import org.gradle.api.model.ObjectFactory;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Generator;
@@ -56,17 +57,19 @@ import org.codehaus.groovy.runtime.*;
 public class NamedConfiguration {
 
     final ObjectFactory objects;
+    final Project       project;
     final String        name;
-    final boolean       unnamed;
-    final Configuration configuration;
+    boolean             unnamed;
+    Configuration       configuration;
 
     @Inject
-    public NamedConfiguration(ObjectFactory objects, String name) {
-        this(objects, name, false, newConfiguration());
+    public NamedConfiguration(ObjectFactory objects, Project project, String name) {
+        this(objects, project, name, false, newConfiguration());
     }
 
-    NamedConfiguration(ObjectFactory objects, String name, boolean unnamed, Configuration configuration) {
+    NamedConfiguration(ObjectFactory objects, Project project, String name, boolean unnamed, Configuration configuration) {
         this.objects = objects;
+        this.project = project;
         this.name = name;
         this.unnamed = unnamed;
         this.configuration = configuration;
@@ -87,6 +90,9 @@ public class NamedConfiguration {
     }
 
     void configuration0(Configuration configuration) {
+        if (!unnamed)
+            MiniJAXB.append(this.configuration, project.getExtensions().getByType(CodegenPluginExtension.class).configuration);
+
         MiniJAXB.append(this.configuration, configuration);
     }
 

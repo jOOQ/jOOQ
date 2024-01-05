@@ -29,7 +29,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Generate implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 31902L;
     @XmlElement(defaultValue = "true")
     protected Boolean indexes = true;
     @XmlElement(defaultValue = "true")

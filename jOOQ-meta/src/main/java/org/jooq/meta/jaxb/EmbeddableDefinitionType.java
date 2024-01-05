@@ -32,7 +32,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class EmbeddableDefinitionType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 31902L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String catalog;
     @XmlJavaTypeAdapter(StringAdapter.class)

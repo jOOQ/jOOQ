@@ -38,10 +38,14 @@
 package org.jooq.codegen.gradle;
 
 import org.gradle.api.Action;
+import org.gradle.api.Named;
 import org.gradle.api.NamedDomainObjectContainer;
+import org.gradle.api.Project;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ProviderFactory;
+import org.gradle.internal.service.scopes.Scope;
+import org.gradle.internal.service.scopes.ServiceScope;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.codegen.gradle.MetaExtensions.*;
@@ -59,14 +63,15 @@ import groovy.lang.*;
  */
 public class CodegenPluginExtension {
 
-    final             ObjectFactory                                  objects;
-    final             Configuration                                  configuration;
-    final             NamedDomainObjectContainer<NamedConfiguration> executions;
-    private transient List<NamedConfiguration>                       configurations;
+    final ObjectFactory                                  objects;
+    final Project                                        project;
+    final Configuration                                  configuration;
+    final NamedDomainObjectContainer<NamedConfiguration> executions;
 
     @Inject
-    public CodegenPluginExtension(ObjectFactory objects, ProviderFactory providers, ProjectLayout layout) {
+    public CodegenPluginExtension(ObjectFactory objects, Project project, ProviderFactory providers, ProjectLayout layout) {
         this.objects = objects;
+        this.project = project;
         this.configuration = NamedConfiguration.newConfiguration();
         this.executions = objects.domainObjectContainer(NamedConfiguration.class,
             name -> objects.newInstance(NamedConfiguration.class, objects, name)
@@ -75,6 +80,7 @@ public class CodegenPluginExtension {
 
     void configuration0(Configuration configuration) {
         MiniJAXB.append(this.configuration, configuration);
+        executions.getByName("").configuration0(configuration);
     }
 
     public void configuration(Action<ConfigurationExtension> action) {
@@ -87,23 +93,7 @@ public class CodegenPluginExtension {
         return executions;
     }
 
-    List<NamedConfiguration> configurations() {
-        if (configurations == null) {
-            if (executions.isEmpty())
-                configurations = Arrays.asList(new NamedConfiguration(objects, "main", true, configuration));
-            else
-                configurations = executions.stream().map(c -> new NamedConfiguration(
-                    objects, c.name, false, MiniJAXB.append(
-                        MiniJAXB.append(new Configuration(), copy(configuration)),
-                        copy(c.configuration)
-                    )
-                )).collect(toList());
-        }
-
-        return configurations;
-    }
-
-    Configuration copy(Configuration configuration) {
+    static Configuration copy(Configuration configuration) {
         return MiniJAXB.unmarshal(MiniJAXB.marshal(configuration), Configuration.class);
     }
 }

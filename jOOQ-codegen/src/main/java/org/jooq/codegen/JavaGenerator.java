@@ -8414,7 +8414,7 @@ public class JavaGenerator extends AbstractGenerator {
                     if (scala)
                         out.println("setSyntheticReturnParameter(%s.%s)", className, paramId);
                     else if (kotlin)
-                        out.println("setSyntheticReturnParameter(%s)", paramId);
+                        out.println("setSyntheticReturnParameter(%s.%s)", className, paramId);
                     else
                         out.println("setSyntheticReturnParameter(%s);", paramId);
                 }
@@ -8422,7 +8422,7 @@ public class JavaGenerator extends AbstractGenerator {
                     if (scala)
                         out.println("setReturnParameter(%s.%s)", className, paramId);
                     else if (kotlin)
-                        out.println("returnParameter = %s", paramId);
+                        out.println("returnParameter = %s.%s", className, paramId);
                     else
                         out.println("setReturnParameter(%s);", paramId);
                 }
@@ -8432,7 +8432,7 @@ public class JavaGenerator extends AbstractGenerator {
                     if (scala)
                         out.println("addInOutParameter(%s.%s)", className, paramId);
                     else if (kotlin)
-                        out.println("addInOutParameter(%s)", paramId);
+                        out.println("addInOutParameter(%s.%s)", className, paramId);
                     else
                         out.println("addInOutParameter(%s);", paramId);
                 }
@@ -8440,7 +8440,7 @@ public class JavaGenerator extends AbstractGenerator {
                     if (scala)
                         out.println("addInParameter(%s.%s)", className, paramId);
                     else if (kotlin)
-                        out.println("addInParameter(%s)", paramId);
+                        out.println("addInParameter(%s.%s)", className, paramId);
                     else
                         out.println("addInParameter(%s);", paramId);
                 }
@@ -8449,7 +8449,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala)
                     out.println("addOutParameter(%s.%s)", className, paramId);
                 else if (kotlin)
-                    out.println("addOutParameter(%s)", paramId);
+                    out.println("addOutParameter(%s.%s)", className, paramId);
                 else
                     out.println("addOutParameter(%s);", paramId);
             }
@@ -8497,8 +8497,8 @@ public class JavaGenerator extends AbstractGenerator {
                     visibility(), setter, scalaWhitespaceSuffix(paramName), refNumberType(out, parameter.getType(resolver(out))), numberValue, className, paramId, paramName);
             }
             else if (kotlin) {
-                out.println("%sfun %s(%s: %s?): Unit = set%s(%s, %s)",
-                    visibility(), setter, paramName, refNumberType(out, parameter.getType(resolver(out))), numberValue, paramId, paramName);
+                out.println("%sfun %s(%s: %s?): Unit = set%s(%s.%s, %s)",
+                    visibility(), setter, paramName, refNumberType(out, parameter.getType(resolver(out))), numberValue, className, paramId, paramName);
             }
             else {
                 out.println("%svoid %s(%s %s) {", visibility(), setter, varargsIfArray(refNumberType(out, parameter.getType(resolver(out)))), paramName);
@@ -8520,7 +8520,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else if (kotlin) {
                     out.println("%sfun %s(field: %s<%s?>): %s {", visibility(), setter, Field.class, refExtendsNumberType(out, parameter.getType(resolver(out))), setterReturnType);
-                    out.println("set%s(%s, field)", numberField, paramId);
+                    out.println("set%s(%s.%s, field)", numberField, className, paramId);
 
                     if (generateFluentSetters())
                         out.println("return this");
@@ -8557,7 +8557,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("%sdef %s: %s = get(%s.%s)", visibility(), scalaWhitespaceSuffix(paramGetter), paramType, className, paramId);
                 }
                 else if (kotlin) {
-                    out.println("%sfun %s(): %s? = get(%s)", visibility(), paramGetter, paramType, paramId);
+                    out.println("%sfun %s(): %s? = get(%s.%s)", visibility(), paramGetter, paramType, className, paramId);
                 }
                 else {
                     out.println("%s%s %s() {", visibility(), paramType, paramGetter);

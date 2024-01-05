@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.19.0.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.19.2.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.19.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.19.2.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -235,7 +235,7 @@
 
   <complexType name="MatchersCatalogsType">
     <sequence>
-      <element name="catalog" type="tns:MatchersCatalogType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="catalog" type="tns:MatchersCatalogType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -270,7 +270,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersSchemasType">
     <sequence>
-      <element name="schema" type="tns:MatchersSchemaType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="schema" type="tns:MatchersSchemaType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -305,7 +305,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersTablesType">
     <sequence>
-      <element name="table" type="tns:MatchersTableType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="table" type="tns:MatchersTableType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -404,7 +404,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersIndexesType">
     <sequence>
-      <element name="index" type="tns:MatchersIndexType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="index" type="tns:MatchersIndexType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -423,7 +423,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersPrimaryKeysType">
     <sequence>
-      <element name="primaryKey" type="tns:MatchersPrimaryKeyType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="primaryKey" type="tns:MatchersPrimaryKeyType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -442,7 +442,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersUniqueKeysType">
     <sequence>
-      <element name="uniqueKey" type="tns:MatchersUniqueKeyType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="uniqueKey" type="tns:MatchersUniqueKeyType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -461,7 +461,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersForeignKeysType">
     <sequence>
-      <element name="foreignKey" type="tns:MatchersForeignKeyType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="foreignKey" type="tns:MatchersForeignKeyType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -492,7 +492,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersFieldsType">
     <sequence>
-      <element name="field" type="tns:MatchersFieldType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="field" type="tns:MatchersFieldType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -523,7 +523,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersRoutinesType">
     <sequence>
-      <element name="routine" type="tns:MatchersRoutineType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="routine" type="tns:MatchersRoutineType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -558,7 +558,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersSequencesType">
     <sequence>
-      <element name="sequence" type="tns:MatchersSequenceType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="sequence" type="tns:MatchersSequenceType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -577,7 +577,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersEnumsType">
     <sequence>
-      <element name="enum" type="tns:MatchersEnumType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="enum" type="tns:MatchersEnumType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -604,7 +604,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersEmbeddablesType">
     <sequence>
-      <element name="embeddable" type="tns:MatchersEmbeddableType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="embeddable" type="tns:MatchersEmbeddableType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -655,7 +655,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersUDTsType">
     <sequence>
-      <element name="udt" type="tns:MatchersUDTType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="udt" type="tns:MatchersUDTType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -742,7 +742,7 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <complexType name="MatchersAttributesType">
     <sequence>
-      <element name="attribute" type="tns:MatchersAttributeType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="attribute" type="tns:MatchersAttributeType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -1344,7 +1344,7 @@ for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
   
   <complexType name="CommentsType">
     <sequence>
-      <element name="comment" type="tns:CommentType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="comment" type="tns:CommentType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -1422,7 +1422,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   
   <complexType name="SyntheticReadonlyColumnsType">
     <sequence>
-      <element name="readonlyColumn" type="tns:SyntheticReadonlyColumnType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="readonlyColumn" type="tns:SyntheticReadonlyColumnType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1441,7 +1441,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   
   <complexType name="SyntheticReadonlyRowidsType">
     <sequence>
-      <element name="readonlyRowid" type="tns:SyntheticReadonlyRowidType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="readonlyRowid" type="tns:SyntheticReadonlyRowidType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1462,7 +1462,7 @@ Use this along with the synthetic primary key feature to replace existing primar
   
   <complexType name="SyntheticColumnsType">
     <sequence>
-      <element name="column" type="tns:SyntheticColumnType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="column" type="tns:SyntheticColumnType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1489,7 +1489,7 @@ Use this along with the synthetic primary key feature to replace existing primar
   
   <complexType name="SyntheticIdentitiesType">
     <sequence>
-      <element name="identity" type="tns:SyntheticIdentityType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="identity" type="tns:SyntheticIdentityType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1508,7 +1508,7 @@ Use this along with the synthetic primary key feature to replace existing primar
   
   <complexType name="SyntheticEnumsType">
     <sequence>
-      <element name="enum" type="tns:SyntheticEnumType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="enum" type="tns:SyntheticEnumType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1551,13 +1551,13 @@ Use this along with the synthetic primary key feature to replace existing primar
   
   <complexType name="SyntheticEnumLiteralsType">
     <sequence>
-      <element name="literal" type="string" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="literal" type="string" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
   <complexType name="SyntheticPrimaryKeysType">
     <sequence>
-      <element name="primaryKey" type="tns:SyntheticPrimaryKeyType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="primaryKey" type="tns:SyntheticPrimaryKeyType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1584,7 +1584,7 @@ Use this along with the synthetic primary key feature to replace existing primar
   
   <complexType name="SyntheticUniqueKeysType">
     <sequence>
-      <element name="uniqueKey" type="tns:SyntheticUniqueKeyType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="uniqueKey" type="tns:SyntheticUniqueKeyType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1609,7 +1609,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   
   <complexType name="SyntheticForeignKeysType">
     <sequence>
-      <element name="foreignKey" type="tns:SyntheticForeignKeyType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="foreignKey" type="tns:SyntheticForeignKeyType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1646,7 +1646,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   
   <complexType name="SyntheticKeyFieldsType">
     <sequence>
-      <element name="field" type="string" minOccurs="1" maxOccurs="unbounded">
+      <element name="field" type="string" minOccurs="0" maxOccurs="unbounded">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching a key field that is referenced by a synthetic key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </sequence>
@@ -1654,7 +1654,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   
   <complexType name="SyntheticViewsType">
     <sequence>
-      <element name="view" type="tns:SyntheticViewType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="view" type="tns:SyntheticViewType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1685,7 +1685,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   
   <complexType name="SyntheticDaosType">
     <sequence>
-      <element name="view" type="tns:SyntheticDaoType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="view" type="tns:SyntheticDaoType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1716,7 +1716,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   
   <complexType name="SyntheticDaoMethodsType">
     <sequence>
-      <element name="method" type="tns:SyntheticDaoMethodType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="method" type="tns:SyntheticDaoMethodType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   
@@ -1743,7 +1743,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
   
   <complexType name="CatalogMappingsType">
     <sequence>
-      <element name="catalog" type="tns:CatalogMappingType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="catalog" type="tns:CatalogMappingType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 
@@ -1770,7 +1770,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 
   <complexType name="SchemaMappingsType">
     <sequence>
-      <element name="schema" type="tns:SchemaMappingType" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="schema" type="tns:SchemaMappingType" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
 

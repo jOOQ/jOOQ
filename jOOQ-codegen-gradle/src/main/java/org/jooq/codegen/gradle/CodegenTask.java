@@ -67,6 +67,8 @@ import java.util.List;
 public class CodegenTask extends DefaultTask {
 
     private final NamedConfiguration configuration;
+    private final FileCollection     runtimeClasspath;
+    private final FileCollection     codegenClasspath;
     private final ProviderFactory    providers;
     private final List<File>         classpath;
     private final Directory          outputDirectory;
@@ -82,7 +84,8 @@ public class CodegenTask extends DefaultTask {
         this.configuration = configuration;
         this.providers = providers;
         this.classpath = new ArrayList<>();
-        this.classpath.addAll(codegenClasspath.getFiles());
+        this.runtimeClasspath = runtimeClasspath;
+        this.codegenClasspath = codegenClasspath;
 
         // [#15944] Override default target directory
         Target target = configuration.configuration.getGenerator().getTarget();
@@ -127,6 +130,9 @@ public class CodegenTask extends DefaultTask {
 
     @Classpath
     public Iterable<File> getClasspath() {
+        if (classpath.isEmpty())
+            classpath.addAll(codegenClasspath.getFiles());
+
         return classpath;
     }
 

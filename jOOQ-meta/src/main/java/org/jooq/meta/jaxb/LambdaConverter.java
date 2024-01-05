@@ -28,7 +28,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class LambdaConverter implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 31902L;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String from;

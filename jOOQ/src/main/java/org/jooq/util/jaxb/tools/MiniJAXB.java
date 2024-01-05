@@ -483,33 +483,59 @@ public final class MiniJAXB {
         if (second == null)
             return first;
 
-        Class<T> klass = (Class<T>) first.getClass();
-        if (!klass.isAssignableFrom(second.getClass()) && !second.getClass().isAssignableFrom(klass))
+        Class<T> firstClass = (Class<T>) first.getClass();
+        Class<T> secondClass = (Class<T>) second.getClass();
+
+        if (!firstClass.isAssignableFrom(secondClass) && !secondClass.isAssignableFrom(firstClass))
             throw new IllegalArgumentException("Can only append compatible types");
         // [#8527] support enum types
-        else if (klass.isEnum())
+        else if (firstClass.isEnum())
             return first;
 
         // We're assuming that XJC generated objects are all in the same package
-        Package pkg = klass.getPackage();
+        Package pkg = firstClass.getPackage();
         try {
-            T defaults = klass.getDeclaredConstructor().newInstance();
 
-            for (Method setter : klass.getMethods()) {
-                if (setter.getName().startsWith("set")) {
-                    Method getter;
+            // [#12985] [#15974] [#15966] Gradle generates a subclass for our configuration extensions, which
+            //                            will accept an injected argument. We shouldn't use that subclass here.
+            Class<T> defaultsClass = firstClass;
+            while (defaultsClass.getName().startsWith("org.jooq.codegen.gradle"))
+                defaultsClass = (Class<T>) defaultsClass.getSuperclass();
 
+            T defaults = defaultsClass.getDeclaredConstructor().newInstance();
+
+            methodLoop:
+            for (Method setter : firstClass.getMethods()) {
+                if (setter.getName().startsWith("set") && setter.getParameterCount() == 1) {
+
+                    // [#12985] [#15974] [#15966] Don't call any gradle specific setters.
                     try {
-                        getter = klass.getMethod("get" + setter.getName().substring(3));
+                        defaultsClass.getMethod(setter.getName(), setter.getParameterTypes());
                     }
                     catch (NoSuchMethodException e) {
-                        getter = klass.getMethod("is" + setter.getName().substring(3));
+                        continue methodLoop;
+                    }
+
+
+                    Method defaultsGetter;
+                    Method firstGetter;
+                    Method secondGetter;
+
+                    try {
+                        defaultsGetter = defaultsClass.getMethod("get" + setter.getName().substring(3));
+                        firstGetter = firstClass.getMethod("get" + setter.getName().substring(3));
+                        secondGetter = secondClass.getMethod("get" + setter.getName().substring(3));
+                    }
+                    catch (NoSuchMethodException e) {
+                        defaultsGetter = defaultsClass.getMethod("is" + setter.getName().substring(3));
+                        firstGetter = firstClass.getMethod("is" + setter.getName().substring(3));
+                        secondGetter = firstClass.getMethod("is" + setter.getName().substring(3));
                     }
 
                     Class<?> childType = setter.getParameterTypes()[0];
-                    Object firstChild = getter.invoke(first);
-                    Object secondChild = getter.invoke(second);
-                    Object defaultChild = getter.invoke(defaults);
+                    Object firstChild = firstGetter.invoke(first);
+                    Object secondChild = secondGetter.invoke(second);
+                    Object defaultChild = defaults != null ? defaultsGetter.invoke(defaults) : null;
 
                     if (Collection.class.isAssignableFrom(childType))
                         ((List) firstChild).addAll((List) secondChild);

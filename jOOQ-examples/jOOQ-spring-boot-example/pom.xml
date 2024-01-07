@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-examples</artifactId>
-        <version>3.19.0-SNAPSHOT</version>
+        <version>3.20.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>jooq-spring-boot-example</artifactId>
@@ -195,10 +195,13 @@
                                     <deprecated>false</deprecated>
                                     <instanceFields>true</instanceFields>
                                     <pojos>true</pojos>
+                                    <daos>true</daos>
+                                    <springAnnotations>true</springAnnotations>
+                                    <springDao>true</springDao>
                                 </generate>
                                 <target>
                                     <packageName>org.jooq.example.db.h2</packageName>
-                                    <directory>target/generated-sources/jooq-h2</directory>
+                                    <directory>src/main/java</directory>
                                 </target>
                             </generator>
                         </configuration>

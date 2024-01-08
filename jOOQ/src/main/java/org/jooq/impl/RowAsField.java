@@ -68,6 +68,7 @@ import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_CONTENT;
 
 import java.util.Set;
 
@@ -129,7 +130,7 @@ final class RowAsField<ROW extends Row, REC extends Record> extends AbstractRowA
         // [#11812] RowField is mainly used for projections, in case of which an
         //          explicit ROW keyword helps disambiguate (1) from ROW(1)
         else
-            ctx.visit(K_ROW).sql(' ').visit(row);
+            ctx.data(DATA_ROW_CONTENT, true, c -> c.visit(K_ROW).sql(' ').visit(row));
     }
 
     @Override

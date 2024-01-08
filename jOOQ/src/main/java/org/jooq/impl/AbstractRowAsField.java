@@ -53,6 +53,7 @@ import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.sanitiseName;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_CONTENT;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
@@ -135,6 +136,14 @@ implements
                     && !ctx.derivedTableSubquery()
                     && !ctx.setOperationSubquery()
                     && degreeCheck.getAsBoolean();
+    }
+
+    static final boolean forceRowContent(Context<?> ctx) {
+        return
+
+            // [#15991] All types of row expressions must be emulated using ROW
+            // emulations if nested in some sort of ROW content
+            TRUE.equals(ctx.data(DATA_ROW_CONTENT));
     }
 
     static final void acceptMultisetContent(Context<?> ctx, Row row, Field<?> field, Consumer<? super Context<?>> acceptDefault) {

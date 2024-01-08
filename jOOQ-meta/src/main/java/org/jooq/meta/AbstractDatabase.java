@@ -46,6 +46,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static org.jooq.Log.Level.ERROR;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
@@ -448,6 +449,11 @@ public abstract class AbstractDatabase implements Database {
                             "Slow SQL",
                             "jOOQ Meta executed a slow query (slower than " + s + " seconds, configured by configuration/generator/database/logSlowQueriesAfterSeconds)"
                           + "\n\n"
+                          + "In some RDBMS, this can be caused by outdated statistics on the information schema / dictionary / meta data views.\n"
+
+
+
+                          + "\n"
                           + "If you think this is a bug in jOOQ, please report it here: https://jooq.org/bug"
                           + "\n\n```sql\n"
                           + formatted(ctx.query())

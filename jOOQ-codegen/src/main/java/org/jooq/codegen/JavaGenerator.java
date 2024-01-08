@@ -6686,7 +6686,7 @@ public class JavaGenerator extends AbstractGenerator {
                 Name.class, Table.class, recordType, Field.class);
 
             if (generateWhereMethodOverrides() && !table.isTableValuedFunction())
-                out.println("private constructor(alias: %s, aliased: %s<%s>?, where: %s): this(alias, null, null, null, aliased, null, where)",
+                out.println("private constructor(alias: %s, aliased: %s<%s>?, where: %s?): this(alias, null, null, null, aliased, null, where)",
                     Name.class, Table.class, recordType, Condition.class);
         }
         else {
@@ -7620,10 +7620,10 @@ public class JavaGenerator extends AbstractGenerator {
                     r.run();
                 };
 
-                idt.accept(() -> out.println("%soverride fun where(condition: %s): %s = %s(qualifiedName, if (aliased()) this else null, condition)", visibilityPublic(), Condition.class, className, className));
+                idt.accept(() -> out.println("%soverride fun where(condition: %s?): %s = %s(qualifiedName, if (aliased()) this else null, condition)", visibilityPublic(), Condition.class, className, className));
                 idt.accept(() -> out.println("%soverride fun where(conditions: %s<%s>): %s = where(%s.and(conditions))", visibilityPublic(), out.ref("kotlin.collections.Collection"), Condition.class, className, DSL.class));
-                idt.accept(() -> out.println("%soverride fun where(vararg conditions: %s): %s = where(%s.and(*conditions))", visibilityPublic(), Condition.class, className, DSL.class));
-                idt.accept(() -> out.println("%soverride fun where(condition: %s<%s?>): %s = where(%s.condition(condition))", visibilityPublic(), Field.class, Boolean.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride fun where(vararg conditions: %s?): %s = where(%s.and(*conditions))", visibilityPublic(), Condition.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride fun where(condition: %s<%s?>?): %s = where(%s.condition(condition))", visibilityPublic(), Field.class, Boolean.class, className, DSL.class));
                 idt.accept(() -> out.println("@%s %soverride fun where(condition: %s): %s = where(%s.condition(condition))", PlainSQL.class, visibilityPublic(), SQL.class, className, DSL.class));
                 idt.accept(() -> out.println("@%s %soverride fun where(@%s.SQL condition: %s): %s = where(%s.condition(condition))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, className, DSL.class));
                 idt.accept(() -> out.println("@%s %soverride fun where(@%s.SQL condition: %s, vararg binds: Any?): %s = where(%s.condition(condition, *binds))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, className, DSL.class));

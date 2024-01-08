@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.AbstractRowAsField.acceptMultisetContent;
 import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
+import static org.jooq.impl.AbstractRowAsField.forceRowContent;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
@@ -98,6 +99,8 @@ implements
         //          the MULTISET emulation as well, here
         if (forceMultisetContent(ctx, () -> getDataType().getRow().size() > 1))
             acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptDefault);
+        else if (forceRowContent(ctx))
+            ctx.visit(((AbstractRow<?>) getDataType().getRow()).rf());
         else
             acceptDefault(ctx);
     }

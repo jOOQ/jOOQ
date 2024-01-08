@@ -40,6 +40,7 @@ package org.jooq;
 import java.util.stream.Stream;
 
 import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -156,11 +157,18 @@ public interface Fields {
 
     /**
      * Get a field known to this type by unqualified name coerced to
-     * <code>type</code>, or <code>null</code> if no field is known to this type
-     * by this name.
+     * <code>type</code> using {@link Field#coerce(Class)}, or <code>null</code>
+     * if no field is known to this type by this name.
      * <p>
      * If several fields have the same ambiguous name, the first one is returned
      * and a warning is logged.
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #cast(DataType)}.
      *
      * @param name The unqualified name of the field
      * @param type The type to coerce the resulting field to
@@ -170,8 +178,8 @@ public interface Fields {
 
     /**
      * Get a field known to this type by unqualified name coerced to
-     * <code>dataType</code>, or <code>null</code> if no field is known to this
-     * type by this name.
+     * <code>dataType</code> using {@link Field#coerce(DataType)}, or
+     * <code>null</code> if no field is known to this type by this name.
      * <p>
      * If several fields have the same ambiguous name, the first one is returned
      * and a warning is logged.
@@ -207,8 +215,8 @@ public interface Fields {
 
     /**
      * Get a field known to this type by qualified name coerced to
-     * <code>type</code>, or <code>null</code> if no field is known to this type
-     * by this name.
+     * <code>type</code> using {@link Field#coerce(Class)}, or <code>null</code>
+     * if no field is known to this type by this name.
      * <p>
      * This will return:
      * <ul>
@@ -223,6 +231,13 @@ public interface Fields {
      * <p>
      * If several fields have the same ambiguous name, the first one is returned
      * and a warning is logged.
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #cast(DataType)}.
      *
      * @param name The qualified name of the field
      * @param type The type to coerce the resulting field to
@@ -232,8 +247,8 @@ public interface Fields {
 
     /**
      * Get a field known to this type by qualified name coerced to
-     * <code>dataType</code>, or <code>null</code> if no field is known to this
-     * type by this name.
+     * <code>dataType</code> using {@link Field#coerce(DataType)}, or
+     * <code>null</code> if no field is known to this type by this name.
      * <p>
      * This will return:
      * <ul>
@@ -265,8 +280,16 @@ public interface Fields {
     Field<?> field(int index);
 
     /**
-     * Get a field known to this type by index coerced to <code>type</code>, or
-     * <code>null</code> if no field is available at the index.
+     * Get a field known to this type by index coerced to <code>type</code>
+     * using {@link Field#coerce(Class)}, or <code>null</code> if no field is
+     * available at the index.
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #cast(DataType)}.
      *
      * @param index The 0-based index of the field
      * @param type The type to coerce the resulting field to
@@ -275,8 +298,9 @@ public interface Fields {
     <T> Field<T> field(int index, Class<T> type);
 
     /**
-     * Get a field known to this type by index coerced to <code>dataType</code>,
-     * or <code>null</code> if no field is available at the index.
+     * Get a field known to this type by index coerced to <code>dataType</code>
+     * using {@link Field#coerce(DataType)}, or <code>null</code> if no field is
+     * available at the index.
      *
      * @param index The 0-based index of the field
      * @param dataType The data type to coerce the resulting field to

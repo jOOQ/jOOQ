@@ -79,7 +79,7 @@ open class BookStore(
 
     private constructor(alias: Name, aliased: Table<BookStoreRecord>?): this(alias, null, null, null, aliased, null, null)
     private constructor(alias: Name, aliased: Table<BookStoreRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters, null)
-    private constructor(alias: Name, aliased: Table<BookStoreRecord>?, where: Condition): this(alias, null, null, null, aliased, null, where)
+    private constructor(alias: Name, aliased: Table<BookStoreRecord>?, where: Condition?): this(alias, null, null, null, aliased, null, where)
 
     /**
      * Create an aliased <code>PUBLIC.BOOK_STORE</code> table reference
@@ -155,7 +155,7 @@ open class BookStore(
     /**
      * Create an inline derived table from this table
      */
-    override fun where(condition: Condition): BookStore = BookStore(qualifiedName, if (aliased()) this else null, condition)
+    override fun where(condition: Condition?): BookStore = BookStore(qualifiedName, if (aliased()) this else null, condition)
 
     /**
      * Create an inline derived table from this table
@@ -165,12 +165,12 @@ open class BookStore(
     /**
      * Create an inline derived table from this table
      */
-    override fun where(vararg conditions: Condition): BookStore = where(DSL.and(*conditions))
+    override fun where(vararg conditions: Condition?): BookStore = where(DSL.and(*conditions))
 
     /**
      * Create an inline derived table from this table
      */
-    override fun where(condition: Field<Boolean?>): BookStore = where(DSL.condition(condition))
+    override fun where(condition: Field<Boolean?>?): BookStore = where(DSL.condition(condition))
 
     /**
      * Create an inline derived table from this table

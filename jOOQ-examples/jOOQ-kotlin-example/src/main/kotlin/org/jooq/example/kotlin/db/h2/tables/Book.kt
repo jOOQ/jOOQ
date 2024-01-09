@@ -136,7 +136,7 @@ open class Book(
 
     private constructor(alias: Name, aliased: Table<BookRecord>?): this(alias, null, null, null, aliased, null, null)
     private constructor(alias: Name, aliased: Table<BookRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, null, aliased, parameters, null)
-    private constructor(alias: Name, aliased: Table<BookRecord>?, where: Condition): this(alias, null, null, null, aliased, null, where)
+    private constructor(alias: Name, aliased: Table<BookRecord>?, where: Condition?): this(alias, null, null, null, aliased, null, where)
 
     /**
      * Create an aliased <code>PUBLIC.BOOK</code> table reference
@@ -246,7 +246,7 @@ open class Book(
     /**
      * Create an inline derived table from this table
      */
-    override fun where(condition: Condition): Book = Book(qualifiedName, if (aliased()) this else null, condition)
+    override fun where(condition: Condition?): Book = Book(qualifiedName, if (aliased()) this else null, condition)
 
     /**
      * Create an inline derived table from this table
@@ -256,12 +256,12 @@ open class Book(
     /**
      * Create an inline derived table from this table
      */
-    override fun where(vararg conditions: Condition): Book = where(DSL.and(*conditions))
+    override fun where(vararg conditions: Condition?): Book = where(DSL.and(*conditions))
 
     /**
      * Create an inline derived table from this table
      */
-    override fun where(condition: Field<Boolean?>): Book = where(DSL.condition(condition))
+    override fun where(condition: Field<Boolean?>?): Book = where(DSL.condition(condition))
 
     /**
      * Create an inline derived table from this table

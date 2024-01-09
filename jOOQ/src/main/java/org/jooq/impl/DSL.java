@@ -28139,6 +28139,13 @@ public class DSL {
     /**
      * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * instances of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #value(Object, DataType)}.
      *
      * @see #val(Object)
      */
@@ -28694,6 +28701,13 @@ public class DSL {
      * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
      * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
      * </ul>
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * instances of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #inline(Object, DataType)}.
      *
      * @see #val(Object)
      */
@@ -29668,6 +29682,13 @@ public class DSL {
      * If you need more type-safety, please use {@link #val(Object, DataType)}
      * instead, and provide the precise RDMBS-specific data type, that is
      * needed.
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * instances of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #val(Object, DataType)}.
      *
      * @param <T> The generic value type
      * @param value The constant value

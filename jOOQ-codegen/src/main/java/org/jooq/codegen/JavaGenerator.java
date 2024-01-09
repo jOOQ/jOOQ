@@ -2366,17 +2366,22 @@ public class JavaGenerator extends AbstractGenerator {
                     }
                     else {
                         if (pojoArgument) {
+
+                            // [#16039] Make sure we reuse this where needed
+                            final String getterName = generatePojosAsJavaRecordClasses()
+                                ? getStrategy().getJavaMemberName(column, Mode.POJO)
+                                : getStrategy().getJavaGetterName(column, Mode.POJO);
+
                             if (isUDTArray) {
                                 if (indexTypeFull == null) {
                                     out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(%s::new).collect(%s.toList())));",
                                         getStrategy().getJavaSetterName(column, Mode.RECORD),
-                                        getStrategy().getJavaGetterName(column, Mode.POJO),
+                                        getterName,
                                         udtType,
-                                        generatePojosAsJavaRecordClasses()
-                                            ? getStrategy().getJavaMemberName(column, Mode.POJO)
-                                            : getStrategy().getJavaGetterName(column, Mode.POJO),
+                                        getterName,
                                         udtArrayElementType,
-                                        Collectors.class);
+                                        Collectors.class
+                                    );
                                 }
                                 else {
                                     out.println("if (true)");
@@ -2398,30 +2403,27 @@ public class JavaGenerator extends AbstractGenerator {
 
                                 out.println("%s(value.%s() == null ? null : %s.of(value.%s()).map(%s).toArray(%s%s::new));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
-                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    getterName,
                                     Stream.class,
-                                    generatePojosAsJavaRecordClasses()
-                                        ? getStrategy().getJavaMemberName(column, Mode.POJO)
-                                        : getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    getterName,
                                     mapping,
                                     udtArrayElementType,
-                                    brackets);
+                                    brackets
+                                );
                             }
                             else if (isUDT || isArray) {
                                 out.println("%s(value.%s() == null ? null : new %s(value.%s()));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
-                                    getStrategy().getJavaGetterName(column, Mode.POJO),
+                                    getterName,
                                     udtType,
-                                    generatePojosAsJavaRecordClasses()
-                                        ? getStrategy().getJavaMemberName(column, Mode.POJO)
-                                        : getStrategy().getJavaGetterName(column, Mode.POJO));
+                                    getterName
+                                );
                             }
                             else {
                                 out.println("%s(value.%s());",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
-                                    generatePojosAsJavaRecordClasses()
-                                        ? getStrategy().getJavaMemberName(column, Mode.POJO)
-                                        : getStrategy().getJavaGetterName(column, Mode.POJO));
+                                    getterName
+                                );
                             }
                         }
                         else

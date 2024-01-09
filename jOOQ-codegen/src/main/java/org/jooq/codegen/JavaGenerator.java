@@ -7141,11 +7141,11 @@ public class JavaGenerator extends AbstractGenerator {
                         // [#13008] Prevent conflicts with the below leading underscore
                         final String unquotedKeyMethodName = keyMethodName.replace("`", "");
 
+                        outboundKeyMethodNames.add(keyMethodName);
+
                         if (scala) {}
                         else {
                             out.println();
-
-                            outboundKeyMethodNames.add(keyMethodName);
 
                             if (kotlin)
                                 out.println("private lateinit var _%s: %s", unquotedKeyMethodName, referencedTableClassName);

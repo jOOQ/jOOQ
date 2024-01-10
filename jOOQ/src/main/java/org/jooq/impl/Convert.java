@@ -114,7 +114,6 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.Longs;
-import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.json.ContainerFactory;
@@ -1014,7 +1013,7 @@ final class Convert {
                 // [#1501] Strings can be converted to java.sql.Date
                 else if (fromClass == String.class && toClass == java.sql.Date.class) {
                     try {
-                        return (U) java.sql.Date.valueOf((String) from);
+                        return (U) java.sql.Date.valueOf(patchIso8601Date((String) from));
                     }
                     catch (IllegalArgumentException e) {
                         return null;
@@ -1041,14 +1040,15 @@ final class Convert {
                     }
                 }
                 else if (fromClass == String.class && toClass == LocalDate.class) {
+                    String s = patchIso8601Date((String) from);
 
                     // Try "lenient" ISO date formats first
                     try {
-                        return (U) java.sql.Date.valueOf((String) from).toLocalDate();
+                        return (U) java.sql.Date.valueOf(s).toLocalDate();
                     }
                     catch (IllegalArgumentException e1) {
                         try {
-                            return (U) LocalDate.parse((String) from);
+                            return (U) LocalDate.parse(s);
                         }
                         catch (DateTimeParseException e2) {
                             return null;
@@ -1680,6 +1680,38 @@ final class Convert {
                  + padMid2(s, c2);
         else
             return s;
+    }
+
+    static final String patchIso8601Date(String s) {
+
+        // [#11485] Trino produces a non-ISO 8601 "UTC" suffix, instead of "Z"
+        if (s.endsWith(" UTC"))
+            s = s.replace(" UTC", "Z");
+
+        int l = s.length();
+        int d1 = s.indexOf('-');
+        int d2 = s.indexOf('-', d1 + 1);
+        int ss = s.indexOf(' ', d2 + 1);
+        int st = s.indexOf('T', d2 + 1);
+        int sx = Math.max(ss, st);
+
+        if (d1 == -1 || d2 == -1)
+            return s;
+
+        // [#12547] Support year numbers with more or less than 4 digits
+        // [#13786] Be lenient with PostgreSQL style abbreviated time stamp literals
+        else if (sx == -1)
+            if (l - d2 < 3 || d2 - d1 < 3)
+                return padLead4(s, d1) + '-'
+                     + padMid2(s, d1, d2) + '-'
+                     + padMid2(s, d2);
+            else
+                return s;
+
+        else
+            return padLead4(s, d1) + '-'
+                 + padMid2(s, d1, d2) + '-'
+                 + padMid2(s, d2, sx);
     }
 
     private static final String padLead2(String s, int i1) {

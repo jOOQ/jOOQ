@@ -42,16 +42,14 @@ import org.gradle.api.GradleException;
 import org.gradle.api.file.Directory;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.ProjectLayout;
+import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.ProviderFactory;
-import org.gradle.api.tasks.CacheableTask;
-import org.gradle.api.tasks.Classpath;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.*;
 import org.gradle.work.InputChanges;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Target;
+import org.jooq.tools.StringUtils;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -59,6 +57,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * The code generation task.
@@ -70,33 +69,19 @@ public class CodegenTask extends DefaultTask {
     private final FileCollection     runtimeClasspath;
     private final FileCollection     codegenClasspath;
     private final ProviderFactory    providers;
-    private final List<File>         classpath;
-    private final Directory          outputDirectory;
+    AtomicBoolean allTask = new AtomicBoolean();
 
     @Inject
     public CodegenTask(
         NamedConfiguration configuration,
         FileCollection runtimeClasspath,
         FileCollection codegenClasspath,
-        ProviderFactory providers,
-        ProjectLayout layout
+        ProviderFactory providers
     ) {
         this.configuration = configuration;
         this.providers = providers;
-        this.classpath = new ArrayList<>();
         this.runtimeClasspath = runtimeClasspath;
         this.codegenClasspath = codegenClasspath;
-
-        // [#15944] Override default target directory
-        Target target = configuration.configuration.getGenerator().getTarget();
-
-        if (configuration.configuration.getBasedir() == null)
-            configuration.configuration.setBasedir(layout.getProjectDirectory().getAsFile().getAbsolutePath());
-
-        if (target.getDirectory() == null || GenerationTool.DEFAULT_TARGET_DIRECTORY.equals(target.getDirectory()))
-            target.setDirectory("build/generated-sources/jooq");
-
-        this.outputDirectory = layout.getProjectDirectory().dir(target.getDirectory());
 
         // TODO: Can we optimise this without using internals?
         getOutputs().upToDateWhen(task -> false);
@@ -104,20 +89,22 @@ public class CodegenTask extends DefaultTask {
 
     @TaskAction
     public void execute(InputChanges changes) throws Exception {
-        ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
-        URLClassLoader pluginClassLoader = getClassLoader();
+        if (!allTask.get()) {
+            ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
+            URLClassLoader pluginClassLoader = getClassLoader();
 
-        try {
-            // [#2886] Add the surrounding project's dependencies to the current classloader
-            //         This is the approach that worked well for the Maven plugin.
-            //         There's probably a better way in Gradle.
-            Thread.currentThread().setContextClassLoader(pluginClassLoader);
-            GenerationTool.generate(configuration.configuration);
-        }
-        finally {
+            try {
+                // [#2886] Add the surrounding project's dependencies to the current classloader
+                //         This is the approach that worked well for the Maven plugin.
+                //         There's probably a better way in Gradle.
+                Thread.currentThread().setContextClassLoader(pluginClassLoader);
+                GenerationTool.generate(configuration.configuration);
+            }
+            finally {
 
-            // [#2886] Restore old class loader
-            Thread.currentThread().setContextClassLoader(oldCL);
+                // [#2886] Restore old class loader
+                Thread.currentThread().setContextClassLoader(oldCL);
+            }
         }
     }
 
@@ -129,19 +116,18 @@ public class CodegenTask extends DefaultTask {
     }
 
     @Classpath
-    public Iterable<File> getClasspath() {
-        if (classpath.isEmpty())
-            classpath.addAll(codegenClasspath.getFiles());
-
-        return classpath;
+    public FileCollection getClasspath() {
+        return codegenClasspath;
     }
 
-    @OutputDirectory
+    @OutputDirectory @Optional
     public Directory getOutputDirectory() {
-        return outputDirectory;
+        return configuration.outputDirectory;
     }
 
     private URLClassLoader getClassLoader() {
+        List<File> classpath = new ArrayList<>(getClasspath().getFiles());
+
         try {
             URL urls[] = new URL[classpath.size()];
 
@@ -153,6 +139,10 @@ public class CodegenTask extends DefaultTask {
         catch (Exception e) {
             throw new GradleException("Couldn't create a classloader.", e);
         }
+    }
+
+    static String taskName(NamedConfiguration configuration) {
+        return "jooqCodegen" + (configuration.unnamed ? "" : StringUtils.toUC(configuration.name));
     }
 }
 

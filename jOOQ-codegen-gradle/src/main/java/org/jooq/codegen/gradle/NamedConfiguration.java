@@ -39,7 +39,10 @@ package org.jooq.codegen.gradle;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.file.Directory;
+import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
+import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Generator;
 import org.jooq.meta.jaxb.Target;
@@ -58,21 +61,25 @@ public class NamedConfiguration {
 
     final ObjectFactory objects;
     final Project       project;
+    final ProjectLayout layout;
     final String        name;
     boolean             unnamed;
     Configuration       configuration;
+    Directory           outputDirectory;
 
     @Inject
-    public NamedConfiguration(ObjectFactory objects, Project project, String name) {
-        this(objects, project, name, false, newConfiguration());
-    }
-
-    NamedConfiguration(ObjectFactory objects, Project project, String name, boolean unnamed, Configuration configuration) {
+    public NamedConfiguration(
+        ObjectFactory objects,
+        Project project,
+        ProjectLayout layout,
+        String name
+    ) {
         this.objects = objects;
         this.project = project;
+        this.layout = layout;
         this.name = name;
-        this.unnamed = unnamed;
-        this.configuration = configuration;
+        this.unnamed = false;
+        this.configuration = newConfiguration();
     }
 
     static final Configuration newConfiguration() {
@@ -91,7 +98,7 @@ public class NamedConfiguration {
 
     void configuration0(Configuration configuration) {
         if (!unnamed)
-            MiniJAXB.append(this.configuration, project.getExtensions().getByType(CodegenPluginExtension.class).configuration);
+            MiniJAXB.append(this.configuration, project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration().configuration);
 
         MiniJAXB.append(this.configuration, configuration);
     }
@@ -100,6 +107,24 @@ public class NamedConfiguration {
         ConfigurationExtension c = objects.newInstance(ConfigurationExtension.class, objects);
         action.execute(c);
         configuration0(c);
+
+        if (configuration.getBasedir() == null)
+            configuration.setBasedir(layout.getProjectDirectory().getAsFile().getAbsolutePath());
+
+        // [#15944] Override default target directory
+        Target target = configuration.getGenerator().getTarget();
+
+        if (defaultTarget())
+            configuration.getGenerator().getTarget().setDirectory("build/generated-sources/jooq");
+
+        outputDirectory = layout.getProjectDirectory().dir(target.getDirectory());
+    }
+
+    boolean defaultTarget() {
+
+        // [#15944] Override default target directory
+        Target target = configuration.getGenerator().getTarget();
+        return target.getDirectory() == null || GenerationTool.DEFAULT_TARGET_DIRECTORY.equals(target.getDirectory());
     }
 
     @Override

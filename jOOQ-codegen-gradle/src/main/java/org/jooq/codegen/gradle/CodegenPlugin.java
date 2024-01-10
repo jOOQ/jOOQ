@@ -37,12 +37,14 @@
  */
 package org.jooq.codegen.gradle;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskProvider;
+import org.jetbrains.annotations.NotNull;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 
@@ -50,6 +52,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -77,50 +80,46 @@ public class CodegenPlugin implements Plugin<Project> {
 
         jooq.getExecutions().create("", configuration -> {
             configuration.unnamed = true;
-            configuration.configuration = CodegenPluginExtension.copy(jooq.configuration);
+            configuration.configuration = NamedConfiguration.newConfiguration();
         });
 
-        AtomicReference<Task> all = new AtomicReference<>();
+        AtomicReference<CodegenTask> all = new AtomicReference<>();
 
         jooq.getExecutions().configureEach(configuration -> {
-            configuration.configuration = MiniJAXB.append(
-                MiniJAXB.append(new org.jooq.meta.jaxb.Configuration(), CodegenPluginExtension.copy(jooq.configuration)),
-                CodegenPluginExtension.copy(configuration.configuration)
-            );
+            if (configuration.unnamed) {
+                all.set(project.getTasks().create(
+                    CodegenTask.taskName(configuration),
+                    CodegenTask.class,
+                    configuration,
+                    runtimeClasspath,
+                    codegenClasspath
+                ));
+                configureTask(source, configuration).execute(all.get());
+            }
+            else {
+                project.getTasks().register(
+                    CodegenTask.taskName(configuration),
+                    CodegenTask.class,
+                    configuration,
+                    runtimeClasspath,
+                    codegenClasspath
+                ).configure(configureTask(source, configuration));
 
-            // [#15966] [#15974] TODO: The default, unnamed execution only makes sense in the absence of executions, but how to add it conditionally?
-            CodegenTask task = project.getTasks().create(
-                "jooqCodegen" + (configuration.unnamed ? "" : StringUtils.toUC(configuration.name)),
-                CodegenTask.class,
-                configuration,
-                runtimeClasspath,
-                codegenClasspath
-            );
+                all.get().dependsOn(CodegenTask.taskName(configuration));
+                all.get().allTask.set(true);
+            }
+        });
+    }
 
-            task.setDescription("jOOQ code generation" + (configuration.unnamed ? "" : " for the " + configuration.name + " execution"));
+    private static Action<CodegenTask> configureTask(SourceSetContainer source, NamedConfiguration configuration) {
+        return task -> {
+            task.setDescription("jOOQ code generation" + (configuration.unnamed ? " for all executions" : " for the " + configuration.name + " execution"));
             task.setGroup("jOOQ");
 
             source.configureEach(sourceSet -> {
-                if (configuration.unnamed && sourceSet.getName().equals("main") ||
-                        sourceSet.getName().equals(configuration.name)) {
+                if (sourceSet.getName().equals("main") && task.getOutputDirectory() != null)
                     sourceSet.getJava().srcDir(task.getOutputDirectory());
-                }
             });
-
-            if (!configuration.unnamed) {
-                if (all.get() != null) {
-                    all.get().dependsOn(task);
-                }
-                else {
-                    all.set(project.getTasks().create("jooqCodegenAll",
-                        t -> {
-                            t.setDescription("jOOQ code generation for all executions");
-                            t.setGroup("jOOQ");
-                            t.dependsOn(task);
-                        }
-                    ));
-                }
-            }
-        });
+        };
     }
 }

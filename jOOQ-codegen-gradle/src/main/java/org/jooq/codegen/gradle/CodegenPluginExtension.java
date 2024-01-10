@@ -65,35 +65,31 @@ public class CodegenPluginExtension {
 
     final ObjectFactory                                  objects;
     final Project                                        project;
-    final Configuration                                  configuration;
     final NamedDomainObjectContainer<NamedConfiguration> executions;
 
     @Inject
-    public CodegenPluginExtension(ObjectFactory objects, Project project, ProviderFactory providers, ProjectLayout layout) {
+    public CodegenPluginExtension(
+        ObjectFactory objects,
+        Project project,
+        ProviderFactory providers,
+        ProjectLayout layout
+    ) {
         this.objects = objects;
         this.project = project;
-        this.configuration = NamedConfiguration.newConfiguration();
         this.executions = objects.domainObjectContainer(NamedConfiguration.class,
             name -> objects.newInstance(NamedConfiguration.class, objects, name)
         );
     }
 
-    void configuration0(Configuration configuration) {
-        MiniJAXB.append(this.configuration, configuration);
-        executions.getByName("").configuration0(configuration);
+    NamedConfiguration defaultConfiguration() {
+        return executions.getByName("");
     }
 
     public void configuration(Action<ConfigurationExtension> action) {
-        ConfigurationExtension c = objects.newInstance(ConfigurationExtension.class, objects);
-        action.execute(c);
-        configuration0(c);
+        defaultConfiguration().configuration(action);
     }
 
     public NamedDomainObjectContainer<NamedConfiguration> getExecutions() {
         return executions;
-    }
-
-    static Configuration copy(Configuration configuration) {
-        return MiniJAXB.unmarshal(MiniJAXB.marshal(configuration), Configuration.class);
     }
 }

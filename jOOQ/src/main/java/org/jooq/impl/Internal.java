@@ -45,6 +45,7 @@ import static org.jooq.tools.StringUtils.isBlank;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -85,6 +86,7 @@ import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.CreateTable;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
@@ -691,5 +693,95 @@ public final class Internal {
      */
     public static final int javaVersion() {
         return JAVA_VERSION.get();
+    }
+
+    /**
+     * [#11898] [#16044] This method just acts as a bridge to internal API from
+     * the deprecated-for-removal {@link org.jooq.tools.Convert} utility. Do not
+     * reuse these methods.
+     */
+    @Deprecated(forRemoval = true)
+    public static final Object[] convert(Object[] values, Field<?>[] fields) {
+        return Convert.convert(values, fields);
+    }
+
+    /**
+     * [#11898] [#16044] This method just acts as a bridge to internal API from
+     * the deprecated-for-removal {@link org.jooq.tools.Convert} utility. Do not
+     * reuse these methods.
+     */
+    @Deprecated(forRemoval = true)
+    public static final Object[] convert(Object[] values, Class<?>[] types) {
+        return Convert.convert(values, types);
+    }
+
+    /**
+     * [#11898] [#16044] This method just acts as a bridge to internal API from
+     * the deprecated-for-removal {@link org.jooq.tools.Convert} utility. Do not
+     * reuse these methods.
+     */
+    @Deprecated(forRemoval = true)
+    public static final <U> U[] convertArray(Object[] from, Converter<?, ? extends U> converter) throws DataTypeException {
+        return Convert.convertArray(from, converter);
+    }
+
+    /**
+     * [#11898] [#16044] This method just acts as a bridge to internal API from
+     * the deprecated-for-removal {@link org.jooq.tools.Convert} utility. Do not
+     * reuse these methods.
+     */
+    @Deprecated(forRemoval = true)
+    public static final Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
+        return Convert.convertArray(from, toClass);
+    }
+
+    /**
+     * [#11898] [#16044] This method just acts as a bridge to internal API from
+     * the deprecated-for-removal {@link org.jooq.tools.Convert} utility. Do not
+     * reuse these methods.
+     */
+    @Deprecated(forRemoval = true)
+    public static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to) {
+        return Convert.convertCollection(from, to);
+    }
+
+    /**
+     * [#11898] [#16044] This method just acts as a bridge to internal API from
+     * the deprecated-for-removal {@link org.jooq.tools.Convert} utility. Do not
+     * reuse these methods.
+     */
+    @Deprecated(forRemoval = true)
+    public static final <U> U convert(Object from, Converter<?, ? extends U> converter) throws DataTypeException {
+        return Convert.convert(from, converter);
+    }
+
+    /**
+     * [#11898] [#16044] This method just acts as a bridge to internal API from
+     * the deprecated-for-removal {@link org.jooq.tools.Convert} utility. Do not
+     * reuse these methods.
+     */
+    @Deprecated(forRemoval = true)
+    public static final <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
+        return Convert.convert(from, toClass);
+    }
+
+    /**
+     * [#11898] [#16044] This method just acts as a bridge to internal API from
+     * the deprecated-for-removal {@link org.jooq.tools.Convert} utility. Do not
+     * reuse these methods.
+     */
+    @Deprecated(forRemoval = true)
+    public static final <T> List<T> convert(Collection<?> collection, Class<? extends T> type) throws DataTypeException {
+        return Convert.convert(collection, type);
+    }
+
+    /**
+     * [#11898] [#16044] This method just acts as a bridge to internal API from
+     * the deprecated-for-removal {@link org.jooq.tools.Convert} utility. Do not
+     * reuse these methods.
+     */
+    @Deprecated(forRemoval = true)
+    public static final <U> List<U> convert(Collection<?> collection, Converter<?, ? extends U> converter) throws DataTypeException {
+        return Convert.convert(collection, converter);
     }
 }

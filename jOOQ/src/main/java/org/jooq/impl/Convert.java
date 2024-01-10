@@ -1012,7 +1012,7 @@ final class Convert {
                 // [#1501] Strings can be converted to java.sql.Date
                 else if (fromClass == String.class && toClass == java.sql.Date.class) {
                     try {
-                        return (U) java.sql.Date.valueOf((String) from);
+                        return (U) java.sql.Date.valueOf(patchIso8601Date((String) from));
                     }
                     catch (IllegalArgumentException e) {
                         return null;
@@ -1039,14 +1039,15 @@ final class Convert {
                     }
                 }
                 else if (fromClass == String.class && toClass == LocalDate.class) {
+                    String s = patchIso8601Date((String) from);
 
                     // Try "lenient" ISO date formats first
                     try {
-                        return (U) java.sql.Date.valueOf((String) from).toLocalDate();
+                        return (U) java.sql.Date.valueOf(s).toLocalDate();
                     }
                     catch (IllegalArgumentException e1) {
                         try {
-                            return (U) LocalDate.parse((String) from);
+                            return (U) LocalDate.parse(s);
                         }
                         catch (DateTimeParseException e2) {
                             return null;
@@ -1618,6 +1619,16 @@ final class Convert {
                 return string.substring(0, 10) + "T" + string.substring(11);
             else if (!t && string.charAt(10) == 'T')
                 return string.substring(0, 10) + " " + string.substring(11);
+
+        return string;
+    }
+
+    static final String patchIso8601Date(String string) {
+        if (string.length() > 10)
+            if (string.charAt(10) == ' ')
+                return string.substring(0, 10);
+            else if (string.charAt(10) == 'T')
+                return string.substring(0, 10);
 
         return string;
     }

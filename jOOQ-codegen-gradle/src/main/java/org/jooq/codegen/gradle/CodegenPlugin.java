@@ -83,41 +83,40 @@ public class CodegenPlugin implements Plugin<Project> {
             configuration.configuration = NamedConfiguration.newConfiguration();
         });
 
-        AtomicReference<CodegenTask> all = new AtomicReference<>();
+        List<NamedConfiguration> named = new ArrayList<>();
 
         jooq.getExecutions().configureEach(configuration -> {
-            if (configuration.unnamed) {
-                all.set(project.getTasks().create(
-                    CodegenTask.taskName(configuration),
-                    CodegenTask.class,
-                    configuration,
-                    runtimeClasspath,
-                    codegenClasspath
-                ));
-                configureTask(source, configuration).execute(all.get());
-            }
-            else {
-                project.getTasks().register(
-                    CodegenTask.taskName(configuration),
-                    CodegenTask.class,
-                    configuration,
-                    runtimeClasspath,
-                    codegenClasspath
-                ).configure(configureTask(source, configuration));
+            if (!configuration.unnamed)
+                named.add(configuration);
 
-                all.get().dependsOn(CodegenTask.taskName(configuration));
-                all.get().allTask.set(true);
-            }
+            project.getTasks().register(
+                CodegenTask.taskName(configuration),
+                CodegenTask.class,
+                configuration,
+                runtimeClasspath,
+                codegenClasspath
+            ).configure(configureTask(named, source, configuration));
         });
     }
 
-    private static Action<CodegenTask> configureTask(SourceSetContainer source, NamedConfiguration configuration) {
+    private static Action<CodegenTask> configureTask(
+        List<NamedConfiguration> named,
+        SourceSetContainer source,
+        NamedConfiguration configuration
+    ) {
         return task -> {
+            if (configuration.unnamed) {
+                task.named.addAll(named);
+
+                for (NamedConfiguration other : named)
+                    task.dependsOn(CodegenTask.taskName(other));
+            }
+
             task.setDescription("jOOQ code generation" + (configuration.unnamed ? " for all executions" : " for the " + configuration.name + " execution"));
             task.setGroup("jOOQ");
 
             source.configureEach(sourceSet -> {
-                if (sourceSet.getName().equals("main") && task.getOutputDirectory() != null)
+                if (sourceSet.getName().equals("main"))
                     sourceSet.getJava().srcDir(task.getOutputDirectory());
             });
         };

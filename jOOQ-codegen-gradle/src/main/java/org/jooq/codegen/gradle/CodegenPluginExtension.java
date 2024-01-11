@@ -37,10 +37,7 @@
  */
 package org.jooq.codegen.gradle;
 
-import org.gradle.api.Action;
-import org.gradle.api.Named;
-import org.gradle.api.NamedDomainObjectContainer;
-import org.gradle.api.Project;
+import org.gradle.api.*;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ProviderFactory;

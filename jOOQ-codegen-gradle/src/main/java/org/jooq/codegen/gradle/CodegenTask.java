@@ -65,11 +65,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @CacheableTask
 public class CodegenTask extends DefaultTask {
 
-    private final NamedConfiguration configuration;
-    private final FileCollection     runtimeClasspath;
-    private final FileCollection     codegenClasspath;
-    private final ProviderFactory    providers;
-    AtomicBoolean allTask = new AtomicBoolean();
+    final NamedConfiguration       configuration;
+    final FileCollection           runtimeClasspath;
+    final FileCollection           codegenClasspath;
+    final ProviderFactory          providers;
+    final List<NamedConfiguration> named;
 
     @Inject
     public CodegenTask(
@@ -82,6 +82,7 @@ public class CodegenTask extends DefaultTask {
         this.providers = providers;
         this.runtimeClasspath = runtimeClasspath;
         this.codegenClasspath = codegenClasspath;
+        this.named = new ArrayList<>();
 
         // TODO: Can we optimise this without using internals?
         getOutputs().upToDateWhen(task -> false);
@@ -89,7 +90,7 @@ public class CodegenTask extends DefaultTask {
 
     @TaskAction
     public void execute(InputChanges changes) throws Exception {
-        if (!allTask.get()) {
+        if (named.isEmpty()) {
             ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
             URLClassLoader pluginClassLoader = getClassLoader();
 
@@ -121,7 +122,7 @@ public class CodegenTask extends DefaultTask {
     }
 
     @OutputDirectory @Optional
-    public Directory getOutputDirectory() {
+    public Property<Directory> getOutputDirectory() {
         return configuration.outputDirectory;
     }
 

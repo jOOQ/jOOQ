@@ -42,6 +42,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.Directory;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
+import org.gradle.api.provider.Property;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Generator;
@@ -65,7 +66,7 @@ public class NamedConfiguration {
     final String        name;
     boolean             unnamed;
     Configuration       configuration;
-    Directory           outputDirectory;
+    Property<Directory> outputDirectory;
 
     @Inject
     public NamedConfiguration(
@@ -80,6 +81,7 @@ public class NamedConfiguration {
         this.name = name;
         this.unnamed = false;
         this.configuration = newConfiguration();
+        this.outputDirectory = objects.directoryProperty();
     }
 
     static final Configuration newConfiguration() {
@@ -98,9 +100,13 @@ public class NamedConfiguration {
 
     void configuration0(Configuration configuration) {
         if (!unnamed)
-            MiniJAXB.append(this.configuration, project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration().configuration);
+            MiniJAXB.append(this.configuration, copy(project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration().configuration));
 
         MiniJAXB.append(this.configuration, configuration);
+    }
+
+    static Configuration copy(Configuration configuration) {
+        return MiniJAXB.unmarshal(MiniJAXB.marshal(configuration), Configuration.class);
     }
 
     public void configuration(Action<ConfigurationExtension> action) {
@@ -117,7 +123,7 @@ public class NamedConfiguration {
         if (defaultTarget())
             configuration.getGenerator().getTarget().setDirectory("build/generated-sources/jooq");
 
-        outputDirectory = layout.getProjectDirectory().dir(target.getDirectory());
+        outputDirectory.value(layout.getProjectDirectory().dir(target.getDirectory()));
     }
 
     boolean defaultTarget() {

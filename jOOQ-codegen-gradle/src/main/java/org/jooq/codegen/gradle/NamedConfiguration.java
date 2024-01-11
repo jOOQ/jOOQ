@@ -100,9 +100,13 @@ public class NamedConfiguration {
 
     void configuration0(Configuration configuration) {
         if (!unnamed)
-            MiniJAXB.append(this.configuration, project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration().configuration);
+            MiniJAXB.append(this.configuration, copy(project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration().configuration));
 
         MiniJAXB.append(this.configuration, configuration);
+    }
+
+    static Configuration copy(Configuration configuration) {
+        return MiniJAXB.unmarshal(MiniJAXB.marshal(configuration), Configuration.class);
     }
 
     public void configuration(Action<ConfigurationExtension> action) {

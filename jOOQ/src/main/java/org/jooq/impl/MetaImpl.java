@@ -514,11 +514,11 @@ final class MetaImpl extends AbstractMeta {
         }
 
         private final void initUks(String catalog, String schema) {
-            String sql = M_UNIQUE_KEYS(family());
+            String sql = M_UNIQUE_KEYS(dialect());
 
             if (sql != null) {
                 Result<Record> result = meta(meta ->
-                    withCatalog(DSL.catalog(catalog), DSL.using(meta.getConnection(), family()), ctx ->
+                    withCatalog(DSL.catalog(catalog), DSL.using(meta.getConnection(), dialect()), ctx ->
                         ctx.resultQuery(
                             sql,
                             NO_SUPPORT_SCHEMAS.contains(dialect())
@@ -665,11 +665,11 @@ final class MetaImpl extends AbstractMeta {
         private final Result<Record> getSequences0() {
             if (sequenceCache == null) {
                 final String sql = TRUE.equals(settings().isMetaIncludeSystemSequences())
-                    ? M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES(family())
-                    : M_SEQUENCES(family());
+                    ? M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES(dialect())
+                    : M_SEQUENCES(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), family()).resultQuery(sql, MetaSchema.this.getName()).fetch());
+                    Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), dialect()).resultQuery(sql, MetaSchema.this.getName()).fetch());
 
                     // TODO Support catalogs as well
                     Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });

@@ -280,7 +280,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the indexes property.
+     * Generate index information.
      * 
      * @param value
      *     allowed object is
@@ -305,7 +305,8 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the relations property.
+     * Primary key / foreign key relations should be generated and used.
+     * This is a prerequisite for various advanced features
      * 
      * @param value
      *     allowed object is
@@ -329,7 +330,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the sequenceFlags property.
+     * Sequence flags should be generated and used.
      * 
      * @param value
      *     allowed object is
@@ -353,7 +354,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the udtPaths property.
+     * Generate UDT path expressions on tables and on UDTs.
      * 
      * @param value
      *     allowed object is
@@ -377,7 +378,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the implicitJoinPathsToOne property.
+     * Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)
      * 
      * @param value
      *     allowed object is
@@ -401,7 +402,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the implicitJoinPathsToMany property.
+     * Generate implicit join path constructors on generated tables for incoming foreign key relationships (to-many relationships)
      * 
      * @param value
      *     allowed object is
@@ -425,7 +426,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the implicitJoinPathTableSubtypes property.
+     * Generate implicit join path table subtypes implementing {@link org.jooq.Path} for increased JOIN convenience.
      * 
      * @param value
      *     allowed object is
@@ -449,7 +450,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the implicitJoinPathUnusedConstructors property.
+     * Generate implicit join path constructors also if there isn't any outgoing or incoming foreign key relationship.
      * 
      * @param value
      *     allowed object is
@@ -483,7 +484,17 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the implicitJoinPathsUseTableNameForUnambiguousFKs property.
+     * Whether names of unambiguous {@link org.jooq.meta.ForeignKeyDefinition} should be based
+     * on the referenced {@link org.jooq.meta.TableDefinition}.
+     * <p>
+     * When a child table has only one {@link org.jooq.meta.ForeignKeyDefinition} towards a
+     * parent table, then that path is "unambiguous." In that case, some
+     * {@link GeneratorStrategy} implementations may choose to use the parent
+     * table's {@link org.jooq.meta.TableDefinition} for implementations of
+     * {@link org.jooq.codegen.GeneratorStrategy#getJavaMethodName(Definition)}, instead of the
+     * {@link org.jooq.meta.ForeignKeyDefinition}, e.g. for implicit join paths.
+     * <p>
+     * This flag allows for turning off this default behaviour.
      * 
      * @param value
      *     allowed object is
@@ -507,7 +518,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the implicitJoinPathsAsKotlinProperties property.
+     * Whether implicit join path constructors should be offered as properties in Kotlin.
      * 
      * @param value
      *     allowed object is
@@ -531,7 +542,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the deprecated property.
+     * Generate deprecated code for backwards compatibility
      * 
      * @param value
      *     allowed object is
@@ -557,7 +568,9 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the deprecationOnUnknownTypes property.
+     * Generate deprecation annotations on references to unknown data types.
+     * This helps to identify columns, attributes, and parameters, which may not be usable through
+     * jOOQ API, without adding custom data type bindings to them.
      * 
      * @param value
      *     allowed object is
@@ -582,7 +595,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the instanceFields property.
+     * @deprecated
      * 
      * @param value
      *     allowed object is
@@ -624,7 +637,8 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the generatedAnnotation property.
+     * Generate the {@link javax.annotation.processing.Generated} annotation to indicate
+     * jOOQ version used for source code.
      * 
      * @param value
      *     allowed object is
@@ -666,7 +680,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the generatedAnnotationDate property.
+     * Whether the {@link javax.annotation.processing.Generated} annotation should include the <code>date</code> attribute.
      * 
      * @param value
      *     allowed object is
@@ -690,7 +704,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the generatedAnnotationJooqVersion property.
+     * Whether the {@link javax.annotation.processing.Generated} annotation should include the jOOQ version.
      * 
      * @param value
      *     allowed object is
@@ -714,7 +728,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the nonnullAnnotation property.
+     * Whether non-nullable items should be annotated with the annotation type specified in {@link #nonnullAnnotationType}. In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed statically. There may still be some cases (e.g. after unions, outer joins, etc.) where a normally non-null value turns out to be null!
      * 
      * @param value
      *     allowed object is
@@ -754,7 +768,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the nullableAnnotation property.
+     * Whether nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.
      * 
      * @param value
      *     allowed object is
@@ -794,7 +808,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the constructorPropertiesAnnotation property.
+     * Generate the {@link java.beans.ConstructorProperties} annotation on generated POJOs and/or records.
      * 
      * @param value
      *     allowed object is
@@ -818,7 +832,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the constructorPropertiesAnnotationOnPojos property.
+     * Generate the {@link java.beans.ConstructorProperties} annotation on generated POJOs (defaults to <code>true</code> if {@link #constructorPropertiesAnnotation} is active).
      * 
      * @param value
      *     allowed object is
@@ -842,7 +856,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the constructorPropertiesAnnotationOnRecords property.
+     * Generate the {@link java.beans.ConstructorProperties} annotation on generated records (defaults to <code>true</code> if {@link #constructorPropertiesAnnotation} is active).
      * 
      * @param value
      *     allowed object is
@@ -866,7 +880,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the routines property.
+     * Generate Routine classes.
      * 
      * @param value
      *     allowed object is
@@ -890,7 +904,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the sequences property.
+     * Generate Sequence classes. 
      * 
      * @param value
      *     allowed object is
@@ -914,7 +928,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the triggers property.
+     * Generate Trigger classes. 
      * 
      * @param value
      *     allowed object is
@@ -938,7 +952,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the udts property.
+     * Generate UDT classes. 
      * 
      * @param value
      *     allowed object is
@@ -962,7 +976,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the queues property.
+     * Generate Queue classes.
      * 
      * @param value
      *     allowed object is
@@ -986,7 +1000,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the links property.
+     * Generate database Link classes.
      * 
      * @param value
      *     allowed object is
@@ -1010,7 +1024,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the keys property.
+     * Generate Key classes.
      * 
      * @param value
      *     allowed object is
@@ -1034,7 +1048,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the tables property.
+     * Generate Table classes.
      * 
      * @param value
      *     allowed object is
@@ -1058,7 +1072,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the embeddables property.
+     * Generate embeddable classes.
      * 
      * @param value
      *     allowed object is
@@ -1082,7 +1096,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the records property.
+     * Generate TableRecord classes.
      * 
      * @param value
      *     allowed object is
@@ -1106,7 +1120,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the recordsImplementingRecordN property.
+     * Generate TableRecord classes that implement Record[N] super types
      * 
      * @param value
      *     allowed object is
@@ -1131,7 +1145,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the enumsAsScalaSealedTraits property.
+     * @deprecated Activate the legacy Scala sealed trait enum emulation
      * 
      * @param value
      *     allowed object is
@@ -1156,7 +1170,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the pojos property.
+     * Generate POJOs.
      * 
      * @param value
      *     allowed object is
@@ -1180,7 +1194,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the pojosEqualsAndHashCode property.
+     * Generate basic equals() and hashCode() methods in POJOs.
      * 
      * @param value
      *     allowed object is
@@ -1204,7 +1218,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the pojosToString property.
+     * Generate basic toString() methods in POJOs.
      * 
      * @param value
      *     allowed object is
@@ -1228,7 +1242,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the pojosAsJavaRecordClasses property.
+     * Generate POJOs as records, when using the JavaGenerator.
      * 
      * @param value
      *     allowed object is
@@ -1252,7 +1266,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the pojosAsScalaCaseClasses property.
+     * Generate POJOs as case classes, when using the ScalaGenerator.
      * 
      * @param value
      *     allowed object is
@@ -1276,7 +1290,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the pojosAsKotlinDataClasses property.
+     * Generate POJOs as data classes, when using the KotlinGenerator.
      * 
      * @param value
      *     allowed object is
@@ -1300,7 +1314,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the immutablePojos property.
+     * Generate immutable POJOs.
      * 
      * @param value
      *     allowed object is
@@ -1324,7 +1338,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the serializablePojos property.
+     * Generate serializable POJOs.
      * 
      * @param value
      *     allowed object is
@@ -1348,7 +1362,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the interfaces property.
+     * Generated interfaces to be implemented by records and/or POJOs.
      * 
      * @param value
      *     allowed object is
@@ -1372,7 +1386,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the immutableInterfaces property.
+     * Generate immutable interfaces.
      * 
      * @param value
      *     allowed object is
@@ -1396,7 +1410,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the serializableInterfaces property.
+     * Generate serializable interfaces.
      * 
      * @param value
      *     allowed object is
@@ -1420,7 +1434,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the daos property.
+     * Generate DAOs.
      * 
      * @param value
      *     allowed object is
@@ -1444,7 +1458,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the jooqVersionReference property.
+     * Generate references to the most up to date minor release in {@link org.jooq.Constants} to produce compilation errors if an outdated runtime library is being used.
      * 
      * @param value
      *     allowed object is
@@ -1468,7 +1482,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the jpaAnnotations property.
+     * Annotate POJOs and Records with JPA annotations.
      * 
      * @param value
      *     allowed object is
@@ -1508,7 +1522,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the validationAnnotations property.
+     * Annotate POJOs and Records with JSR-303 validation annotations
      * 
      * @param value
      *     allowed object is
@@ -1532,7 +1546,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the springAnnotations property.
+     * Annotate DAOs with useful spring annotations such as @Repository or @Autowired.
      * 
      * @param value
      *     allowed object is
@@ -1556,7 +1570,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the springDao property.
+     * Generate an AbstractSpringDAOImpl as a base class for other DAO classes, containing @Transactional annotations, etc.
      * 
      * @param value
      *     allowed object is
@@ -1580,7 +1594,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the kotlinSetterJvmNameAnnotationsOnIsPrefix property.
+     * Workaround for Kotlin generating <code>setX()</code> setters instead of <code>setIsX()</code> in byte code for mutable properties called <code>isX</code>.
      * 
      * @param value
      *     allowed object is
@@ -1604,7 +1618,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the kotlinNotNullPojoAttributes property.
+     * Generate non-nullable types on POJO attributes, where column is not null.
      * 
      * @param value
      *     allowed object is
@@ -1628,7 +1642,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the kotlinNotNullRecordAttributes property.
+     * Generate non-nullable types on Record attributes, where column is not null.
      * 
      * @param value
      *     allowed object is
@@ -1652,7 +1666,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the kotlinNotNullInterfaceAttributes property.
+     * Generate non-nullable types on interface attributes, where column is not null.
      * 
      * @param value
      *     allowed object is
@@ -1676,7 +1690,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the kotlinDefaultedNullablePojoAttributes property.
+     * Generate defaulted nullable POJO attributes.
      * 
      * @param value
      *     allowed object is
@@ -1700,7 +1714,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the kotlinDefaultedNullableRecordAttributes property.
+     * Generate defaulted nullable Record attributes.
      * 
      * @param value
      *     allowed object is
@@ -1724,7 +1738,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalObjectNames property.
+     * Turn on generation of all global object names.
      * 
      * @param value
      *     allowed object is
@@ -1748,7 +1762,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalObjectReferences property.
+     * Turn off generation of all global object references.
      * 
      * @param value
      *     allowed object is
@@ -1772,7 +1786,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalCatalogReferences property.
+     * Turn off generation of global catalog references.
      * 
      * @param value
      *     allowed object is
@@ -1796,7 +1810,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalSchemaReferences property.
+     * Turn off generation of global schema references.
      * 
      * @param value
      *     allowed object is
@@ -1820,7 +1834,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalDomainReferences property.
+     * Turn off generation of global domain references.
      * 
      * @param value
      *     allowed object is
@@ -1844,7 +1858,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalTriggerReferences property.
+     * Turn off generation of global trigger references.
      * 
      * @param value
      *     allowed object is
@@ -1868,7 +1882,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalTableReferences property.
+     * Turn off generation of global table references.
      * 
      * @param value
      *     allowed object is
@@ -1892,7 +1906,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalSequenceReferences property.
+     * Turn off generation of global sequence references.
      * 
      * @param value
      *     allowed object is
@@ -1916,7 +1930,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalUDTReferences property.
+     * Turn off generation of global UDT references.
      * 
      * @param value
      *     allowed object is
@@ -1940,7 +1954,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalRoutineReferences property.
+     * Turn off generation of global routine references.
      * 
      * @param value
      *     allowed object is
@@ -1964,7 +1978,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalQueueReferences property.
+     * Turn off generation of global queue references.
      * 
      * @param value
      *     allowed object is
@@ -1988,7 +2002,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalLinkReferences property.
+     * Turn off generation of global database link references.
      * 
      * @param value
      *     allowed object is
@@ -2012,7 +2026,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalKeyReferences property.
+     * Turn off generation of global key references.
      * 
      * @param value
      *     allowed object is
@@ -2036,7 +2050,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the globalIndexReferences property.
+     * Turn off generation of global index references.
      * 
      * @param value
      *     allowed object is
@@ -2060,7 +2074,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the defaultCatalog property.
+     * Turn off generation of a <code>DefaultCatalog</code> object, which is generated by default in the absence of catalogs.
      * 
      * @param value
      *     allowed object is
@@ -2084,7 +2098,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the defaultSchema property.
+     * Turn off generation of a <code>DefaultSchema</code> object, which is generated by default in the absence of schemas.
      * 
      * @param value
      *     allowed object is
@@ -2108,7 +2122,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the javadoc property.
+     * Turn off generation of Javadoc on all objects.
      * 
      * @param value
      *     allowed object is
@@ -2132,7 +2146,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the comments property.
+     * Turn off generation of all SQL comments as Javadoc on all objects.
      * 
      * @param value
      *     allowed object is
@@ -2156,7 +2170,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnCatalogs property.
+     * Turn off generation of all SQL comments as Javadoc on all catalogs.
      * 
      * @param value
      *     allowed object is
@@ -2180,7 +2194,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnSchemas property.
+     * Turn off generation of all SQL comments as Javadoc on all schemas.
      * 
      * @param value
      *     allowed object is
@@ -2204,7 +2218,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnTables property.
+     * Turn off generation of all SQL comments as Javadoc on all tables.
      * 
      * @param value
      *     allowed object is
@@ -2228,7 +2242,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnColumns property.
+     * Turn off generation of all SQL comments as Javadoc on all columns.
      * 
      * @param value
      *     allowed object is
@@ -2252,7 +2266,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnEmbeddables property.
+     * Turn off generation of all SQL comments as Javadoc on all embeddables.
      * 
      * @param value
      *     allowed object is
@@ -2276,7 +2290,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnUDTs property.
+     * Turn off generation of all SQL comments as Javadoc on all UDTs.
      * 
      * @param value
      *     allowed object is
@@ -2300,7 +2314,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnAttributes property.
+     * Turn off generation of all SQL comments as Javadoc on all attributes.
      * 
      * @param value
      *     allowed object is
@@ -2324,7 +2338,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnPackages property.
+     * Turn off generation of all SQL comments as Javadoc on all packages.
      * 
      * @param value
      *     allowed object is
@@ -2348,7 +2362,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnRoutines property.
+     * Turn off generation of all SQL comments as Javadoc on all routines.
      * 
      * @param value
      *     allowed object is
@@ -2372,7 +2386,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnParameters property.
+     * Turn off generation of all SQL comments as Javadoc on all parameters.
      * 
      * @param value
      *     allowed object is
@@ -2396,7 +2410,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnSequences property.
+     * Turn off generation of all SQL comments as Javadoc on all sequences.
      * 
      * @param value
      *     allowed object is
@@ -2420,7 +2434,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnLinks property.
+     * Turn off generation of all SQL comments as Javadoc on all links.
      * 
      * @param value
      *     allowed object is
@@ -2444,7 +2458,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnQueues property.
+     * Turn off generation of all SQL comments as Javadoc on all queues.
      * 
      * @param value
      *     allowed object is
@@ -2468,7 +2482,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the commentsOnKeys property.
+     * Turn off generation of all SQL comments as Javadoc on all keys.
      * 
      * @param value
      *     allowed object is
@@ -2492,7 +2506,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the sources property.
+     * Turn off generation of all source code on all object types.
      * 
      * @param value
      *     allowed object is
@@ -2516,7 +2530,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the sourcesOnViews property.
+     * Turn off generation of all source code on all views.
      * 
      * @param value
      *     allowed object is
@@ -2540,7 +2554,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the fluentSetters property.
+     * Generate fluent setters in records, POJOs, interfaces.
      * 
      * @param value
      *     allowed object is
@@ -2581,7 +2595,24 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the javaBeansGettersAndSetters property.
+     * Modify DefaultGeneratorStrategy behaviour to generate getters and setters in JavaBeans style in records, POJOs, interfaces.
+     * <p>
+     * If this flag is set to false, then:
+     * <p>
+     * <ul>
+     * <li>Column name   : X_INDEX</li>
+     * <li>Attribute name: xIndex</li>
+     * <li>Getter name   : getXIndex()</li>
+     * <li>Setter name   : setXIndex()</li>
+     * </ul>
+     * <p>
+     * If this flag is set to true, then:
+     * <ul>
+     * <li>Getter name   : getxIndex()</li>
+     * <li>Setter name   : setxIndex()</li>
+     * </ul>
+     * <p>
+     * Custom GeneratorStrategy implementations are unaffected
      * 
      * @param value
      *     allowed object is
@@ -2607,7 +2638,9 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the varargSetters property.
+     * Generate varargs setters for array types for convenience.
+     * <p>
+     * This may lead to compilation warnings in current Java versions.
      * 
      * @param value
      *     allowed object is
@@ -2687,7 +2720,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the emptyCatalogs property.
+     * Whether empty catalogs (e.g. empty because of <excludes/> configurations) should still be generated.
      * 
      * @param value
      *     allowed object is
@@ -2711,7 +2744,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the emptySchemas property.
+     * Whether empty schemas (e.g. empty because of <excludes/> configurations) should still be generated.
      * 
      * @param value
      *     allowed object is
@@ -2738,7 +2771,10 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the javaTimeTypes property.
+     * A flag indicating whether Java 8's java.time types should be used by the
+     * source code generator, rather than JDBC's java.sql types.
+     * <p>
+     * This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ 
      * 
      * @param value
      *     allowed object is
@@ -2762,7 +2798,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the spatialTypes property.
+     * A flag indicating whether the spatial type support should be enabled.
      * 
      * @param value
      *     allowed object is
@@ -2786,7 +2822,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the xmlTypes property.
+     * A flag indicating whether the XML type support should be enabled.
      * 
      * @param value
      *     allowed object is
@@ -2810,7 +2846,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the jsonTypes property.
+     * A flag indicating whether the JSON type support should be enabled.
      * 
      * @param value
      *     allowed object is
@@ -2834,7 +2870,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the intervalTypes property.
+     * A flag indicating whether the INTERVAL type support should be enabled.
      * 
      * @param value
      *     allowed object is
@@ -2922,7 +2958,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the whereMethodOverrides property.
+     * Whether to generate overrides for {@link org.jooq.Table#where(org.jooq.Condition)} and related overloads.
      * 
      * @param value
      *     allowed object is
@@ -2946,7 +2982,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the renameMethodOverrides property.
+     * Whether to generate overrides (see <a href="https://github.com/jOOQ/jOOQ/issues/13937">https://github.com/jOOQ/jOOQ/issues/13937</a>) for {@link org.jooq.Table#rename(org.jooq.Name)} and related overloads.
      * 
      * @param value
      *     allowed object is
@@ -2970,7 +3006,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the asMethodOverrides property.
+     * Whether to generate overrides for {@link org.jooq.Table#as(org.jooq.Name)} and related overloads.
      * 
      * @param value
      *     allowed object is
@@ -2981,66 +3017,131 @@ public class Generate implements Serializable, XMLAppendable
         this.asMethodOverrides = value;
     }
 
+    /**
+     * Generate index information.
+     * 
+     */
     public Generate withIndexes(Boolean value) {
         setIndexes(value);
         return this;
     }
 
+    /**
+     * Primary key / foreign key relations should be generated and used.
+     * This is a prerequisite for various advanced features
+     * 
+     */
     public Generate withRelations(Boolean value) {
         setRelations(value);
         return this;
     }
 
+    /**
+     * Sequence flags should be generated and used.
+     * 
+     */
     public Generate withSequenceFlags(Boolean value) {
         setSequenceFlags(value);
         return this;
     }
 
+    /**
+     * Generate UDT path expressions on tables and on UDTs.
+     * 
+     */
     public Generate withUdtPaths(Boolean value) {
         setUdtPaths(value);
         return this;
     }
 
+    /**
+     * Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)
+     * 
+     */
     public Generate withImplicitJoinPathsToOne(Boolean value) {
         setImplicitJoinPathsToOne(value);
         return this;
     }
 
+    /**
+     * Generate implicit join path constructors on generated tables for incoming foreign key relationships (to-many relationships)
+     * 
+     */
     public Generate withImplicitJoinPathsToMany(Boolean value) {
         setImplicitJoinPathsToMany(value);
         return this;
     }
 
+    /**
+     * Generate implicit join path table subtypes implementing {@link org.jooq.Path} for increased JOIN convenience.
+     * 
+     */
     public Generate withImplicitJoinPathTableSubtypes(Boolean value) {
         setImplicitJoinPathTableSubtypes(value);
         return this;
     }
 
+    /**
+     * Generate implicit join path constructors also if there isn't any outgoing or incoming foreign key relationship.
+     * 
+     */
     public Generate withImplicitJoinPathUnusedConstructors(Boolean value) {
         setImplicitJoinPathUnusedConstructors(value);
         return this;
     }
 
+    /**
+     * Whether names of unambiguous {@link org.jooq.meta.ForeignKeyDefinition} should be based
+     * on the referenced {@link org.jooq.meta.TableDefinition}.
+     * <p>
+     * When a child table has only one {@link org.jooq.meta.ForeignKeyDefinition} towards a
+     * parent table, then that path is "unambiguous." In that case, some
+     * {@link GeneratorStrategy} implementations may choose to use the parent
+     * table's {@link org.jooq.meta.TableDefinition} for implementations of
+     * {@link org.jooq.codegen.GeneratorStrategy#getJavaMethodName(Definition)}, instead of the
+     * {@link org.jooq.meta.ForeignKeyDefinition}, e.g. for implicit join paths.
+     * <p>
+     * This flag allows for turning off this default behaviour.
+     * 
+     */
     public Generate withImplicitJoinPathsUseTableNameForUnambiguousFKs(Boolean value) {
         setImplicitJoinPathsUseTableNameForUnambiguousFKs(value);
         return this;
     }
 
+    /**
+     * Whether implicit join path constructors should be offered as properties in Kotlin.
+     * 
+     */
     public Generate withImplicitJoinPathsAsKotlinProperties(Boolean value) {
         setImplicitJoinPathsAsKotlinProperties(value);
         return this;
     }
 
+    /**
+     * Generate deprecated code for backwards compatibility
+     * 
+     */
     public Generate withDeprecated(Boolean value) {
         setDeprecated(value);
         return this;
     }
 
+    /**
+     * Generate deprecation annotations on references to unknown data types.
+     * This helps to identify columns, attributes, and parameters, which may not be usable through
+     * jOOQ API, without adding custom data type bindings to them.
+     * 
+     */
     public Generate withDeprecationOnUnknownTypes(Boolean value) {
         setDeprecationOnUnknownTypes(value);
         return this;
     }
 
+    /**
+     * @deprecated
+     * 
+     */
     public Generate withInstanceFields(Boolean value) {
         setInstanceFields(value);
         return this;
@@ -3055,6 +3156,11 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Generate the {@link javax.annotation.processing.Generated} annotation to indicate
+     * jOOQ version used for source code.
+     * 
+     */
     public Generate withGeneratedAnnotation(Boolean value) {
         setGeneratedAnnotation(value);
         return this;
@@ -3070,16 +3176,28 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether the {@link javax.annotation.processing.Generated} annotation should include the <code>date</code> attribute.
+     * 
+     */
     public Generate withGeneratedAnnotationDate(Boolean value) {
         setGeneratedAnnotationDate(value);
         return this;
     }
 
+    /**
+     * Whether the {@link javax.annotation.processing.Generated} annotation should include the jOOQ version.
+     * 
+     */
     public Generate withGeneratedAnnotationJooqVersion(Boolean value) {
         setGeneratedAnnotationJooqVersion(value);
         return this;
     }
 
+    /**
+     * Whether non-nullable items should be annotated with the annotation type specified in {@link #nonnullAnnotationType}. In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed statically. There may still be some cases (e.g. after unions, outer joins, etc.) where a normally non-null value turns out to be null!
+     * 
+     */
     public Generate withNonnullAnnotation(Boolean value) {
         setNonnullAnnotation(value);
         return this;
@@ -3094,6 +3212,10 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.
+     * 
+     */
     public Generate withNullableAnnotation(Boolean value) {
         setNullableAnnotation(value);
         return this;
@@ -3108,146 +3230,262 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Generate the {@link java.beans.ConstructorProperties} annotation on generated POJOs and/or records.
+     * 
+     */
     public Generate withConstructorPropertiesAnnotation(Boolean value) {
         setConstructorPropertiesAnnotation(value);
         return this;
     }
 
+    /**
+     * Generate the {@link java.beans.ConstructorProperties} annotation on generated POJOs (defaults to <code>true</code> if {@link #constructorPropertiesAnnotation} is active).
+     * 
+     */
     public Generate withConstructorPropertiesAnnotationOnPojos(Boolean value) {
         setConstructorPropertiesAnnotationOnPojos(value);
         return this;
     }
 
+    /**
+     * Generate the {@link java.beans.ConstructorProperties} annotation on generated records (defaults to <code>true</code> if {@link #constructorPropertiesAnnotation} is active).
+     * 
+     */
     public Generate withConstructorPropertiesAnnotationOnRecords(Boolean value) {
         setConstructorPropertiesAnnotationOnRecords(value);
         return this;
     }
 
+    /**
+     * Generate Routine classes.
+     * 
+     */
     public Generate withRoutines(Boolean value) {
         setRoutines(value);
         return this;
     }
 
+    /**
+     * Generate Sequence classes. 
+     * 
+     */
     public Generate withSequences(Boolean value) {
         setSequences(value);
         return this;
     }
 
+    /**
+     * Generate Trigger classes. 
+     * 
+     */
     public Generate withTriggers(Boolean value) {
         setTriggers(value);
         return this;
     }
 
+    /**
+     * Generate UDT classes. 
+     * 
+     */
     public Generate withUdts(Boolean value) {
         setUdts(value);
         return this;
     }
 
+    /**
+     * Generate Queue classes.
+     * 
+     */
     public Generate withQueues(Boolean value) {
         setQueues(value);
         return this;
     }
 
+    /**
+     * Generate database Link classes.
+     * 
+     */
     public Generate withLinks(Boolean value) {
         setLinks(value);
         return this;
     }
 
+    /**
+     * Generate Key classes.
+     * 
+     */
     public Generate withKeys(Boolean value) {
         setKeys(value);
         return this;
     }
 
+    /**
+     * Generate Table classes.
+     * 
+     */
     public Generate withTables(Boolean value) {
         setTables(value);
         return this;
     }
 
+    /**
+     * Generate embeddable classes.
+     * 
+     */
     public Generate withEmbeddables(Boolean value) {
         setEmbeddables(value);
         return this;
     }
 
+    /**
+     * Generate TableRecord classes.
+     * 
+     */
     public Generate withRecords(Boolean value) {
         setRecords(value);
         return this;
     }
 
+    /**
+     * Generate TableRecord classes that implement Record[N] super types
+     * 
+     */
     public Generate withRecordsImplementingRecordN(Boolean value) {
         setRecordsImplementingRecordN(value);
         return this;
     }
 
+    /**
+     * @deprecated Activate the legacy Scala sealed trait enum emulation
+     * 
+     */
     public Generate withEnumsAsScalaSealedTraits(Boolean value) {
         setEnumsAsScalaSealedTraits(value);
         return this;
     }
 
+    /**
+     * Generate POJOs.
+     * 
+     */
     public Generate withPojos(Boolean value) {
         setPojos(value);
         return this;
     }
 
+    /**
+     * Generate basic equals() and hashCode() methods in POJOs.
+     * 
+     */
     public Generate withPojosEqualsAndHashCode(Boolean value) {
         setPojosEqualsAndHashCode(value);
         return this;
     }
 
+    /**
+     * Generate basic toString() methods in POJOs.
+     * 
+     */
     public Generate withPojosToString(Boolean value) {
         setPojosToString(value);
         return this;
     }
 
+    /**
+     * Generate POJOs as records, when using the JavaGenerator.
+     * 
+     */
     public Generate withPojosAsJavaRecordClasses(Boolean value) {
         setPojosAsJavaRecordClasses(value);
         return this;
     }
 
+    /**
+     * Generate POJOs as case classes, when using the ScalaGenerator.
+     * 
+     */
     public Generate withPojosAsScalaCaseClasses(Boolean value) {
         setPojosAsScalaCaseClasses(value);
         return this;
     }
 
+    /**
+     * Generate POJOs as data classes, when using the KotlinGenerator.
+     * 
+     */
     public Generate withPojosAsKotlinDataClasses(Boolean value) {
         setPojosAsKotlinDataClasses(value);
         return this;
     }
 
+    /**
+     * Generate immutable POJOs.
+     * 
+     */
     public Generate withImmutablePojos(Boolean value) {
         setImmutablePojos(value);
         return this;
     }
 
+    /**
+     * Generate serializable POJOs.
+     * 
+     */
     public Generate withSerializablePojos(Boolean value) {
         setSerializablePojos(value);
         return this;
     }
 
+    /**
+     * Generated interfaces to be implemented by records and/or POJOs.
+     * 
+     */
     public Generate withInterfaces(Boolean value) {
         setInterfaces(value);
         return this;
     }
 
+    /**
+     * Generate immutable interfaces.
+     * 
+     */
     public Generate withImmutableInterfaces(Boolean value) {
         setImmutableInterfaces(value);
         return this;
     }
 
+    /**
+     * Generate serializable interfaces.
+     * 
+     */
     public Generate withSerializableInterfaces(Boolean value) {
         setSerializableInterfaces(value);
         return this;
     }
 
+    /**
+     * Generate DAOs.
+     * 
+     */
     public Generate withDaos(Boolean value) {
         setDaos(value);
         return this;
     }
 
+    /**
+     * Generate references to the most up to date minor release in {@link org.jooq.Constants} to produce compilation errors if an outdated runtime library is being used.
+     * 
+     */
     public Generate withJooqVersionReference(Boolean value) {
         setJooqVersionReference(value);
         return this;
     }
 
+    /**
+     * Annotate POJOs and Records with JPA annotations.
+     * 
+     */
     public Generate withJpaAnnotations(Boolean value) {
         setJpaAnnotations(value);
         return this;
@@ -3262,231 +3500,434 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Annotate POJOs and Records with JSR-303 validation annotations
+     * 
+     */
     public Generate withValidationAnnotations(Boolean value) {
         setValidationAnnotations(value);
         return this;
     }
 
+    /**
+     * Annotate DAOs with useful spring annotations such as @Repository or @Autowired.
+     * 
+     */
     public Generate withSpringAnnotations(Boolean value) {
         setSpringAnnotations(value);
         return this;
     }
 
+    /**
+     * Generate an AbstractSpringDAOImpl as a base class for other DAO classes, containing @Transactional annotations, etc.
+     * 
+     */
     public Generate withSpringDao(Boolean value) {
         setSpringDao(value);
         return this;
     }
 
+    /**
+     * Workaround for Kotlin generating <code>setX()</code> setters instead of <code>setIsX()</code> in byte code for mutable properties called <code>isX</code>.
+     * 
+     */
     public Generate withKotlinSetterJvmNameAnnotationsOnIsPrefix(Boolean value) {
         setKotlinSetterJvmNameAnnotationsOnIsPrefix(value);
         return this;
     }
 
+    /**
+     * Generate non-nullable types on POJO attributes, where column is not null.
+     * 
+     */
     public Generate withKotlinNotNullPojoAttributes(Boolean value) {
         setKotlinNotNullPojoAttributes(value);
         return this;
     }
 
+    /**
+     * Generate non-nullable types on Record attributes, where column is not null.
+     * 
+     */
     public Generate withKotlinNotNullRecordAttributes(Boolean value) {
         setKotlinNotNullRecordAttributes(value);
         return this;
     }
 
+    /**
+     * Generate non-nullable types on interface attributes, where column is not null.
+     * 
+     */
     public Generate withKotlinNotNullInterfaceAttributes(Boolean value) {
         setKotlinNotNullInterfaceAttributes(value);
         return this;
     }
 
+    /**
+     * Generate defaulted nullable POJO attributes.
+     * 
+     */
     public Generate withKotlinDefaultedNullablePojoAttributes(Boolean value) {
         setKotlinDefaultedNullablePojoAttributes(value);
         return this;
     }
 
+    /**
+     * Generate defaulted nullable Record attributes.
+     * 
+     */
     public Generate withKotlinDefaultedNullableRecordAttributes(Boolean value) {
         setKotlinDefaultedNullableRecordAttributes(value);
         return this;
     }
 
+    /**
+     * Turn on generation of all global object names.
+     * 
+     */
     public Generate withGlobalObjectNames(Boolean value) {
         setGlobalObjectNames(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all global object references.
+     * 
+     */
     public Generate withGlobalObjectReferences(Boolean value) {
         setGlobalObjectReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global catalog references.
+     * 
+     */
     public Generate withGlobalCatalogReferences(Boolean value) {
         setGlobalCatalogReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global schema references.
+     * 
+     */
     public Generate withGlobalSchemaReferences(Boolean value) {
         setGlobalSchemaReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global domain references.
+     * 
+     */
     public Generate withGlobalDomainReferences(Boolean value) {
         setGlobalDomainReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global trigger references.
+     * 
+     */
     public Generate withGlobalTriggerReferences(Boolean value) {
         setGlobalTriggerReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global table references.
+     * 
+     */
     public Generate withGlobalTableReferences(Boolean value) {
         setGlobalTableReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global sequence references.
+     * 
+     */
     public Generate withGlobalSequenceReferences(Boolean value) {
         setGlobalSequenceReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global UDT references.
+     * 
+     */
     public Generate withGlobalUDTReferences(Boolean value) {
         setGlobalUDTReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global routine references.
+     * 
+     */
     public Generate withGlobalRoutineReferences(Boolean value) {
         setGlobalRoutineReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global queue references.
+     * 
+     */
     public Generate withGlobalQueueReferences(Boolean value) {
         setGlobalQueueReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global database link references.
+     * 
+     */
     public Generate withGlobalLinkReferences(Boolean value) {
         setGlobalLinkReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global key references.
+     * 
+     */
     public Generate withGlobalKeyReferences(Boolean value) {
         setGlobalKeyReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of global index references.
+     * 
+     */
     public Generate withGlobalIndexReferences(Boolean value) {
         setGlobalIndexReferences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of a <code>DefaultCatalog</code> object, which is generated by default in the absence of catalogs.
+     * 
+     */
     public Generate withDefaultCatalog(Boolean value) {
         setDefaultCatalog(value);
         return this;
     }
 
+    /**
+     * Turn off generation of a <code>DefaultSchema</code> object, which is generated by default in the absence of schemas.
+     * 
+     */
     public Generate withDefaultSchema(Boolean value) {
         setDefaultSchema(value);
         return this;
     }
 
+    /**
+     * Turn off generation of Javadoc on all objects.
+     * 
+     */
     public Generate withJavadoc(Boolean value) {
         setJavadoc(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all objects.
+     * 
+     */
     public Generate withComments(Boolean value) {
         setComments(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all catalogs.
+     * 
+     */
     public Generate withCommentsOnCatalogs(Boolean value) {
         setCommentsOnCatalogs(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all schemas.
+     * 
+     */
     public Generate withCommentsOnSchemas(Boolean value) {
         setCommentsOnSchemas(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all tables.
+     * 
+     */
     public Generate withCommentsOnTables(Boolean value) {
         setCommentsOnTables(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all columns.
+     * 
+     */
     public Generate withCommentsOnColumns(Boolean value) {
         setCommentsOnColumns(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all embeddables.
+     * 
+     */
     public Generate withCommentsOnEmbeddables(Boolean value) {
         setCommentsOnEmbeddables(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all UDTs.
+     * 
+     */
     public Generate withCommentsOnUDTs(Boolean value) {
         setCommentsOnUDTs(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all attributes.
+     * 
+     */
     public Generate withCommentsOnAttributes(Boolean value) {
         setCommentsOnAttributes(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all packages.
+     * 
+     */
     public Generate withCommentsOnPackages(Boolean value) {
         setCommentsOnPackages(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all routines.
+     * 
+     */
     public Generate withCommentsOnRoutines(Boolean value) {
         setCommentsOnRoutines(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all parameters.
+     * 
+     */
     public Generate withCommentsOnParameters(Boolean value) {
         setCommentsOnParameters(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all sequences.
+     * 
+     */
     public Generate withCommentsOnSequences(Boolean value) {
         setCommentsOnSequences(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all links.
+     * 
+     */
     public Generate withCommentsOnLinks(Boolean value) {
         setCommentsOnLinks(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all queues.
+     * 
+     */
     public Generate withCommentsOnQueues(Boolean value) {
         setCommentsOnQueues(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all keys.
+     * 
+     */
     public Generate withCommentsOnKeys(Boolean value) {
         setCommentsOnKeys(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all source code on all object types.
+     * 
+     */
     public Generate withSources(Boolean value) {
         setSources(value);
         return this;
     }
 
+    /**
+     * Turn off generation of all source code on all views.
+     * 
+     */
     public Generate withSourcesOnViews(Boolean value) {
         setSourcesOnViews(value);
         return this;
     }
 
+    /**
+     * Generate fluent setters in records, POJOs, interfaces.
+     * 
+     */
     public Generate withFluentSetters(Boolean value) {
         setFluentSetters(value);
         return this;
     }
 
+    /**
+     * Modify DefaultGeneratorStrategy behaviour to generate getters and setters in JavaBeans style in records, POJOs, interfaces.
+     * <p>
+     * If this flag is set to false, then:
+     * <p>
+     * <ul>
+     * <li>Column name   : X_INDEX</li>
+     * <li>Attribute name: xIndex</li>
+     * <li>Getter name   : getXIndex()</li>
+     * <li>Setter name   : setXIndex()</li>
+     * </ul>
+     * <p>
+     * If this flag is set to true, then:
+     * <ul>
+     * <li>Getter name   : getxIndex()</li>
+     * <li>Setter name   : setxIndex()</li>
+     * </ul>
+     * <p>
+     * Custom GeneratorStrategy implementations are unaffected
+     * 
+     */
     public Generate withJavaBeansGettersAndSetters(Boolean value) {
         setJavaBeansGettersAndSetters(value);
         return this;
     }
 
+    /**
+     * Generate varargs setters for array types for convenience.
+     * <p>
+     * This may lead to compilation warnings in current Java versions.
+     * 
+     */
     public Generate withVarargSetters(Boolean value) {
         setVarargSetters(value);
         return this;
@@ -3523,36 +3964,67 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether empty catalogs (e.g. empty because of <excludes/> configurations) should still be generated.
+     * 
+     */
     public Generate withEmptyCatalogs(Boolean value) {
         setEmptyCatalogs(value);
         return this;
     }
 
+    /**
+     * Whether empty schemas (e.g. empty because of <excludes/> configurations) should still be generated.
+     * 
+     */
     public Generate withEmptySchemas(Boolean value) {
         setEmptySchemas(value);
         return this;
     }
 
+    /**
+     * A flag indicating whether Java 8's java.time types should be used by the
+     * source code generator, rather than JDBC's java.sql types.
+     * <p>
+     * This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ 
+     * 
+     */
     public Generate withJavaTimeTypes(Boolean value) {
         setJavaTimeTypes(value);
         return this;
     }
 
+    /**
+     * A flag indicating whether the spatial type support should be enabled.
+     * 
+     */
     public Generate withSpatialTypes(Boolean value) {
         setSpatialTypes(value);
         return this;
     }
 
+    /**
+     * A flag indicating whether the XML type support should be enabled.
+     * 
+     */
     public Generate withXmlTypes(Boolean value) {
         setXmlTypes(value);
         return this;
     }
 
+    /**
+     * A flag indicating whether the JSON type support should be enabled.
+     * 
+     */
     public Generate withJsonTypes(Boolean value) {
         setJsonTypes(value);
         return this;
     }
 
+    /**
+     * A flag indicating whether the INTERVAL type support should be enabled.
+     * 
+     */
     public Generate withIntervalTypes(Boolean value) {
         setIntervalTypes(value);
         return this;
@@ -3594,16 +4066,28 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether to generate overrides for {@link org.jooq.Table#where(org.jooq.Condition)} and related overloads.
+     * 
+     */
     public Generate withWhereMethodOverrides(Boolean value) {
         setWhereMethodOverrides(value);
         return this;
     }
 
+    /**
+     * Whether to generate overrides (see <a href="https://github.com/jOOQ/jOOQ/issues/13937">https://github.com/jOOQ/jOOQ/issues/13937</a>) for {@link org.jooq.Table#rename(org.jooq.Name)} and related overloads.
+     * 
+     */
     public Generate withRenameMethodOverrides(Boolean value) {
         setRenameMethodOverrides(value);
         return this;
     }
 
+    /**
+     * Whether to generate overrides for {@link org.jooq.Table#as(org.jooq.Name)} and related overloads.
+     * 
+     */
     public Generate withAsMethodOverrides(Boolean value) {
         setAsMethodOverrides(value);
         return this;

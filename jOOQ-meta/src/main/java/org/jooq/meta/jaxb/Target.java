@@ -126,7 +126,7 @@ public class Target implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the clean property.
+     * Whether the target package should be cleaned to contain only generated code after a generation run.
      * 
      * @param value
      *     allowed object is
@@ -176,6 +176,10 @@ public class Target implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether the target package should be cleaned to contain only generated code after a generation run.
+     * 
+     */
     public Target withClean(Boolean value) {
         setClean(value);
         return this;

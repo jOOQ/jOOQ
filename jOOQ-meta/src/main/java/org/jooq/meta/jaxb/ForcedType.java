@@ -194,7 +194,11 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the auditInsertTimestamp property.
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#INSERT} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -222,7 +226,11 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the auditInsertUser property.
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#INSERT} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -250,7 +258,11 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the auditUpdateTimestamp property.
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#UPDATE} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -278,7 +290,11 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the auditUpdateUser property.
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#UPDATE} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -318,7 +334,7 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the enumConverter property.
+     * Whether the converter is an {@link org.jooq.impl.EnumConverter}.
      * 
      * @param value
      *     allowed object is
@@ -342,7 +358,7 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the xmlConverter property.
+     * Whether the converter is an {@link org.jooq.impl.XMLtoJAXBConverter}.
      * 
      * @param value
      *     allowed object is
@@ -366,7 +382,7 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the jsonConverter property.
+     * Whether the converter is an {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter} or a {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}.
      * 
      * @param value
      *     allowed object is
@@ -639,21 +655,53 @@ public class ForcedType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#INSERT} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public ForcedType withAuditInsertTimestamp(Boolean value) {
         setAuditInsertTimestamp(value);
         return this;
     }
 
+    /**
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#INSERT} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public ForcedType withAuditInsertUser(Boolean value) {
         setAuditInsertUser(value);
         return this;
     }
 
+    /**
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#UPDATE} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public ForcedType withAuditUpdateTimestamp(Boolean value) {
         setAuditUpdateTimestamp(value);
         return this;
     }
 
+    /**
+     * Whether this column acts as an audit {@link org.jooq.GeneratorStatementType#UPDATE} timestamp.
+     * <p>
+     * This flag produces a {@link #generator} configuration, so it cannot be combined with a custom generator. The different audit flags are mutually exclusive.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public ForcedType withAuditUpdateUser(Boolean value) {
         setAuditUpdateUser(value);
         return this;
@@ -668,16 +716,28 @@ public class ForcedType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether the converter is an {@link org.jooq.impl.EnumConverter}.
+     * 
+     */
     public ForcedType withEnumConverter(Boolean value) {
         setEnumConverter(value);
         return this;
     }
 
+    /**
+     * Whether the converter is an {@link org.jooq.impl.XMLtoJAXBConverter}.
+     * 
+     */
     public ForcedType withXmlConverter(Boolean value) {
         setXmlConverter(value);
         return this;
     }
 
+    /**
+     * Whether the converter is an {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter} or a {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}.
+     * 
+     */
     public ForcedType withJsonConverter(Boolean value) {
         setJsonConverter(value);
         return this;

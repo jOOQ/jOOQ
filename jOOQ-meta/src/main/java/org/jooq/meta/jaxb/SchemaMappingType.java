@@ -82,7 +82,7 @@ public class SchemaMappingType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the outputSchemaToDefault property.
+     * See also {@link Database#isOutputSchemaToDefault()}
      * 
      * @param value
      *     allowed object is
@@ -111,6 +111,10 @@ public class SchemaMappingType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * See also {@link Database#isOutputSchemaToDefault()}
+     * 
+     */
     public SchemaMappingType withOutputSchemaToDefault(Boolean value) {
         setOutputSchemaToDefault(value);
         return this;

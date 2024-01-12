@@ -86,7 +86,7 @@ public class CommentType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the deprecated property.
+     * Whether the comment is a deprecation notice.
      * 
      * @param value
      *     allowed object is
@@ -110,7 +110,7 @@ public class CommentType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the includeSchemaComment property.
+     * Whether the schema comment (if available) should be included and prepended to the message.
      * 
      * @param value
      *     allowed object is
@@ -139,11 +139,19 @@ public class CommentType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether the comment is a deprecation notice.
+     * 
+     */
     public CommentType withDeprecated(Boolean value) {
         setDeprecated(value);
         return this;
     }
 
+    /**
+     * Whether the schema comment (if available) should be included and prepended to the message.
+     * 
+     */
     public CommentType withIncludeSchemaComment(Boolean value) {
         setIncludeSchemaComment(value);
         return this;

@@ -20,9 +20,9 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 
 /**
  * Settings that influence the way jOOQ renders SQL code.
- *
- *
- *
+ * 
+ * 
+ * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Settings", propOrder = {
@@ -417,23 +417,23 @@ public class Settings
 
     /**
      * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). The same behaviour is replicated in the {@link org.jooq.Meta} API. This flag allows for turning off this feature.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isForceIntegerTypesOnZeroScaleDecimals() {
         return forceIntegerTypesOnZeroScaleDecimals;
     }
 
     /**
-     * Sets the value of the forceIntegerTypesOnZeroScaleDecimals property.
-     *
+     * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). The same behaviour is replicated in the {@link org.jooq.Meta} API. This flag allows for turning off this feature.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         this.forceIntegerTypesOnZeroScaleDecimals = value;
@@ -444,23 +444,26 @@ public class Settings
      * <p>
      * Use this for single-catalog environments, or when all objects are made
      * available using synonyms
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRenderCatalog() {
         return renderCatalog;
     }
 
     /**
-     * Sets the value of the renderCatalog property.
-     *
+     * Whether any catalog name should be rendered at all.
+     * <p>
+     * Use this for single-catalog environments, or when all objects are made
+     * available using synonyms
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRenderCatalog(Boolean value) {
         this.renderCatalog = value;
@@ -473,23 +476,28 @@ public class Settings
      * <p>
      * Use this for single-schema environments, or when all objects are made
      * available using synonyms
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRenderSchema() {
         return renderSchema;
     }
 
     /**
-     * Sets the value of the renderSchema property.
-     *
+     * Whether any schema name should be rendered at all.
+     * <p>
+     * Setting this to false also implicitly sets "renderCatalog" to false.
+     * <p>
+     * Use this for single-schema environments, or when all objects are made
+     * available using synonyms
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRenderSchema(Boolean value) {
         this.renderSchema = value;
@@ -498,7 +506,7 @@ public class Settings
     /**
      * Configure render mapping for runtime schema / table rewriting in
      * generated SQL.
-     *
+     * 
      */
     public RenderMapping getRenderMapping() {
         return renderMapping;
@@ -507,7 +515,7 @@ public class Settings
     /**
      * Configure render mapping for runtime schema / table rewriting in
      * generated SQL.
-     *
+     * 
      */
     public void setRenderMapping(RenderMapping value) {
         this.renderMapping = value;
@@ -519,7 +527,7 @@ public class Settings
      * This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
      * <p>
      * This setting does not affect any plain SQL usage.
-     *
+     * 
      */
     public RenderQuotedNames getRenderQuotedNames() {
         return renderQuotedNames;
@@ -531,7 +539,7 @@ public class Settings
      * This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
      * <p>
      * This setting does not affect any plain SQL usage.
-     *
+     * 
      */
     public void setRenderQuotedNames(RenderQuotedNames value) {
         this.renderQuotedNames = value;
@@ -543,7 +551,7 @@ public class Settings
      * Names are modified irrespective of the {@link #getRenderQuotedNames()} setting.
      * <p>
      * This setting does not affect any plain SQL usage.
-     *
+     * 
      */
     public RenderNameCase getRenderNameCase() {
         return renderNameCase;
@@ -555,7 +563,7 @@ public class Settings
      * Names are modified irrespective of the {@link #getRenderQuotedNames()} setting.
      * <p>
      * This setting does not affect any plain SQL usage.
-     *
+     * 
      */
     public void setRenderNameCase(RenderNameCase value) {
         this.renderNameCase = value;
@@ -568,7 +576,7 @@ public class Settings
      * This is set to "QUOTED" by default for backwards-compatibility.
      * <p>
      * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
-     *
+     * 
      */
     @Deprecated
     public RenderNameStyle getRenderNameStyle() {
@@ -582,7 +590,7 @@ public class Settings
      * This is set to "QUOTED" by default for backwards-compatibility.
      * <p>
      * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
-     *
+     * 
      */
     @Deprecated
     public void setRenderNameStyle(RenderNameStyle value) {
@@ -592,14 +600,14 @@ public class Settings
     /**
      * The prefix to use for named parameters in generated SQL.
      * <p>
-     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
      * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
-     *
+     * 
      */
     public String getRenderNamedParamPrefix() {
         return renderNamedParamPrefix;
@@ -608,14 +616,14 @@ public class Settings
     /**
      * The prefix to use for named parameters in generated SQL.
      * <p>
-     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
      * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
-     *
+     * 
      */
     public void setRenderNamedParamPrefix(String value) {
         this.renderNamedParamPrefix = value;
@@ -623,7 +631,7 @@ public class Settings
 
     /**
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
-     *
+     * 
      */
     public RenderKeywordCase getRenderKeywordCase() {
         return renderKeywordCase;
@@ -631,7 +639,7 @@ public class Settings
 
     /**
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
-     *
+     * 
      */
     public void setRenderKeywordCase(RenderKeywordCase value) {
         this.renderKeywordCase = value;
@@ -641,7 +649,7 @@ public class Settings
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
      * <p>
      * @deprecated - 3.12.0 - [#5909] - Use {@link RenderKeywordCase} instead.
-     *
+     * 
      */
     @Deprecated
     public RenderKeywordStyle getRenderKeywordStyle() {
@@ -652,7 +660,7 @@ public class Settings
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
      * <p>
      * @deprecated - 3.12.0 - [#5909] - Use {@link RenderKeywordCase} instead.
-     *
+     * 
      */
     @Deprecated
     public void setRenderKeywordStyle(RenderKeywordStyle value) {
@@ -661,7 +669,7 @@ public class Settings
 
     /**
      * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
-     *
+     * 
      */
     public Locale getRenderLocale() {
         return renderLocale;
@@ -669,7 +677,7 @@ public class Settings
 
     /**
      * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
-     *
+     * 
      */
     public void setRenderLocale(Locale value) {
         this.renderLocale = value;
@@ -677,23 +685,23 @@ public class Settings
 
     /**
      * Whether rendered SQL should be pretty-printed.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRenderFormatted() {
         return renderFormatted;
     }
 
     /**
-     * Sets the value of the renderFormatted property.
-     *
+     * Whether rendered SQL should be pretty-printed.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRenderFormatted(Boolean value) {
         this.renderFormatted = value;
@@ -701,7 +709,7 @@ public class Settings
 
     /**
      * All sorts of formatting flags / settings.
-     *
+     * 
      */
     public RenderFormatting getRenderFormatting() {
         return renderFormatting;
@@ -709,7 +717,7 @@ public class Settings
 
     /**
      * All sorts of formatting flags / settings.
-     *
+     * 
      */
     public void setRenderFormatting(RenderFormatting value) {
         this.renderFormatting = value;
@@ -717,7 +725,7 @@ public class Settings
 
     /**
      * Whether to render optional parentheses to make associativity explicit, e.g. <code>((a + b) + c)</code> instead of (a + b + c).
-     *
+     * 
      */
     public RenderOptionalKeyword getRenderOptionalAssociativityParentheses() {
         return renderOptionalAssociativityParentheses;
@@ -725,7 +733,7 @@ public class Settings
 
     /**
      * Whether to render optional parentheses to make associativity explicit, e.g. <code>((a + b) + c)</code> instead of (a + b + c).
-     *
+     * 
      */
     public void setRenderOptionalAssociativityParentheses(RenderOptionalKeyword value) {
         this.renderOptionalAssociativityParentheses = value;
@@ -733,7 +741,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect. This is ignored if the keyword is not supported (e.g. in Oracle)
-     *
+     * 
      */
     public RenderOptionalKeyword getRenderOptionalAsKeywordForTableAliases() {
         return renderOptionalAsKeywordForTableAliases;
@@ -741,7 +749,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect. This is ignored if the keyword is not supported (e.g. in Oracle)
-     *
+     * 
      */
     public void setRenderOptionalAsKeywordForTableAliases(RenderOptionalKeyword value) {
         this.renderOptionalAsKeywordForTableAliases = value;
@@ -749,7 +757,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect.
-     *
+     * 
      */
     public RenderOptionalKeyword getRenderOptionalAsKeywordForFieldAliases() {
         return renderOptionalAsKeywordForFieldAliases;
@@ -757,7 +765,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect.
-     *
+     * 
      */
     public void setRenderOptionalAsKeywordForFieldAliases(RenderOptionalKeyword value) {
         this.renderOptionalAsKeywordForFieldAliases = value;
@@ -765,7 +773,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.
-     *
+     * 
      */
     public RenderOptionalKeyword getRenderOptionalInnerKeyword() {
         return renderOptionalInnerKeyword;
@@ -773,7 +781,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.
-     *
+     * 
      */
     public void setRenderOptionalInnerKeyword(RenderOptionalKeyword value) {
         this.renderOptionalInnerKeyword = value;
@@ -781,7 +789,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>OUTER</code> keyword in <code>OUTER JOIN</code>, if it is optional in the output dialect.
-     *
+     * 
      */
     public RenderOptionalKeyword getRenderOptionalOuterKeyword() {
         return renderOptionalOuterKeyword;
@@ -789,7 +797,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>OUTER</code> keyword in <code>OUTER JOIN</code>, if it is optional in the output dialect.
-     *
+     * 
      */
     public void setRenderOptionalOuterKeyword(RenderOptionalKeyword value) {
         this.renderOptionalOuterKeyword = value;
@@ -797,7 +805,7 @@ public class Settings
 
     /**
      * Whether to render an explicit window <code>RANGE</code> clause when an implicit clause is applied.
-     *
+     * 
      */
     public RenderImplicitWindowRange getRenderImplicitWindowRange() {
         return renderImplicitWindowRange;
@@ -805,7 +813,7 @@ public class Settings
 
     /**
      * Whether to render an explicit window <code>RANGE</code> clause when an implicit clause is applied.
-     *
+     * 
      */
     public void setRenderImplicitWindowRange(RenderImplicitWindowRange value) {
         this.renderImplicitWindowRange = value;
@@ -816,23 +824,26 @@ public class Settings
      * <p>
      * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
      * set to true, users can automatically profit from this feature in all SQL statements.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRenderScalarSubqueriesForStoredFunctions() {
         return renderScalarSubqueriesForStoredFunctions;
     }
 
     /**
-     * Sets the value of the renderScalarSubqueriesForStoredFunctions property.
-     *
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRenderScalarSubqueriesForStoredFunctions(Boolean value) {
         this.renderScalarSubqueriesForStoredFunctions = value;
@@ -840,7 +851,7 @@ public class Settings
 
     /**
      * The join type to be generated by implicit joins.
-     *
+     * 
      */
     public RenderImplicitJoinType getRenderImplicitJoinType() {
         return renderImplicitJoinType;
@@ -848,7 +859,7 @@ public class Settings
 
     /**
      * The join type to be generated by implicit joins.
-     *
+     * 
      */
     public void setRenderImplicitJoinType(RenderImplicitJoinType value) {
         this.renderImplicitJoinType = value;
@@ -856,7 +867,7 @@ public class Settings
 
     /**
      * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
-     *
+     * 
      */
     public RenderDefaultNullability getRenderDefaultNullability() {
         return renderDefaultNullability;
@@ -864,7 +875,7 @@ public class Settings
 
     /**
      * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
-     *
+     * 
      */
     public void setRenderDefaultNullability(RenderDefaultNullability value) {
         this.renderDefaultNullability = value;
@@ -877,23 +888,28 @@ public class Settings
      * set to true, users can automatically profit from this feature in all SQL statements.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRenderCoalesceToEmptyStringInConcat() {
         return renderCoalesceToEmptyStringInConcat;
     }
 
     /**
-     * Sets the value of the renderCoalesceToEmptyStringInConcat property.
-     *
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRenderCoalesceToEmptyStringInConcat(Boolean value) {
         this.renderCoalesceToEmptyStringInConcat = value;
@@ -903,31 +919,41 @@ public class Settings
      * Whether an additional <code>ORDER BY rn</code> clause should be rendered on emulated paginated queries.
      * <p>
      * Older databases did not support OFFSET .. FETCH pagination, so jOOQ emulates it using derived
-     * tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2,
-     * SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not
-     * <em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle,
-     * it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess
-     * <code>ORDER BY</code> clause may add some additional performance overhead. This setting forces
+     * tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2, 
+     * SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not 
+     * <em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle, 
+     * it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess 
+     * <code>ORDER BY</code> clause may add some additional performance overhead. This setting forces 
      * jOOQ to not generate the additional <code>ORDER BY</code> clause.
      * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRenderOrderByRownumberForEmulatedPagination() {
         return renderOrderByRownumberForEmulatedPagination;
     }
 
     /**
-     * Sets the value of the renderOrderByRownumberForEmulatedPagination property.
-     *
+     * Whether an additional <code>ORDER BY rn</code> clause should be rendered on emulated paginated queries.
+     * <p>
+     * Older databases did not support OFFSET .. FETCH pagination, so jOOQ emulates it using derived
+     * tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2, 
+     * SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not 
+     * <em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle, 
+     * it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess 
+     * <code>ORDER BY</code> clause may add some additional performance overhead. This setting forces 
+     * jOOQ to not generate the additional <code>ORDER BY</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRenderOrderByRownumberForEmulatedPagination(Boolean value) {
         this.renderOrderByRownumberForEmulatedPagination = value;
@@ -947,23 +973,35 @@ public class Settings
      * be enabled as well.
      * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRenderOutputForSQLServerReturningClause() {
         return renderOutputForSQLServerReturningClause;
     }
 
     /**
-     * Sets the value of the renderOutputForSQLServerReturningClause property.
-     *
+     * Whether the jOOQ <code>RETURNING</code> clause should map to SQL Server's <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server supports an <code>OUTPUT</code> clause in most DML statements, whose behaviour
+     * is almost identical to <code>RETURNING</code> in Firebird, Oracle, PostgreSQL. Users who
+     * want to prevent jOOQ from rendering this <code>OUTPUT</code> clause can deactivate this flag
+     * to revert to jOOQ calling {@code java.sql.Statement#getGeneratedKeys()} instead, which
+     * is only supported for single row inserts.
+     * <p>
+     * This <code>OUTPUT</code> clause does not support fetching trigger generated values. In order
+     * to fetch trigger generated values, {@link #fetchTriggerValuesAfterSQLServerOutput} needs to
+     * be enabled as well.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRenderOutputForSQLServerReturningClause(Boolean value) {
         this.renderOutputForSQLServerReturningClause = value;
@@ -978,23 +1016,30 @@ public class Settings
      * query containing <code>GROUP_CONCAT</code>. This flag can be used to opt out of this.
      * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/12092">https://github.com/jOOQ/jOOQ/issues/12092</a>.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRenderGroupConcatMaxLenSessionVariable() {
         return renderGroupConcatMaxLenSessionVariable;
     }
 
     /**
-     * Sets the value of the renderGroupConcatMaxLenSessionVariable property.
-     *
+     * Whether the jOOQ <code>GROUP_CONCAT</code> function should be overflow-protected by setting the <code>@@group_concat_max_len</code> session variable in MySQL style database systems.
+     * <p>
+     * MySQL truncates <code>GROUP_CONCAT</code> results after a certain length, which may be way
+     * too small for jOOQ's usage, especially when using the <code>MULTISET</code> emulation. By
+     * default, jOOQ sets a session variable to the highest possible value prior to executing a
+     * query containing <code>GROUP_CONCAT</code>. This flag can be used to opt out of this.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/12092">https://github.com/jOOQ/jOOQ/issues/12092</a>.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRenderGroupConcatMaxLenSessionVariable(Boolean value) {
         this.renderGroupConcatMaxLenSessionVariable = value;
@@ -1009,23 +1054,30 @@ public class Settings
      * When this setting is set to <code>true</code> the queries combined with set operators will always be surrounded by a parenthesis pair.
      * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isRenderParenthesisAroundSetOperationQueries() {
         return renderParenthesisAroundSetOperationQueries;
     }
 
     /**
-     * Sets the value of the renderParenthesisAroundSetOperationQueries property.
-     *
+     * Whether queries combined with set operators (e.g. UNION and UNION ALL) should always be surrounded by a parenthesis pair.
+     * <p>
+     * By default (i.e. when this setting is set to <code>false</code> jOOQ will only render parenthesis pairs around queries combined with set operators when required.
+     * This is for example the case when set operators are nested, when non-associative operators like EXCEPT are used, or when the queries are rendered as derived tables.
+     * <p>
+     * When this setting is set to <code>true</code> the queries combined with set operators will always be surrounded by a parenthesis pair.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setRenderParenthesisAroundSetOperationQueries(Boolean value) {
         this.renderParenthesisAroundSetOperationQueries = value;
@@ -1037,14 +1089,14 @@ public class Settings
      * A few hierarchical mapping features work with paths encoded in names (specifically field aliases), such as the reflective mapping of nested values when aliasing fields as:
      * <p>
      * <pre><code>
-     * SELECT
+     * SELECT 
      *   a.first_name AS "book.author.firstName"
      *   a.last_name AS "book.author.lastName"
      * FROM ...
      * </code></pre>
      * <p>
      * Not all dialects support "." in identifiers. This setting allows for specifying an alternative String to use as separator, e.g. "__".
-     *
+     * 
      */
     public String getNamePathSeparator() {
         return namePathSeparator;
@@ -1056,14 +1108,14 @@ public class Settings
      * A few hierarchical mapping features work with paths encoded in names (specifically field aliases), such as the reflective mapping of nested values when aliasing fields as:
      * <p>
      * <pre><code>
-     * SELECT
+     * SELECT 
      *   a.first_name AS "book.author.firstName"
      *   a.last_name AS "book.author.lastName"
      * FROM ...
      * </code></pre>
      * <p>
      * Not all dialects support "." in identifiers. This setting allows for specifying an alternative String to use as separator, e.g. "__".
-     *
+     * 
      */
     public void setNamePathSeparator(String value) {
         this.namePathSeparator = value;
@@ -1077,23 +1129,29 @@ public class Settings
      * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
      * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isBindOffsetDateTimeType() {
         return bindOffsetDateTimeType;
     }
 
     /**
-     * Sets the value of the bindOffsetDateTimeType property.
-     *
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetDateTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setBindOffsetDateTimeType(Boolean value) {
         this.bindOffsetDateTimeType = value;
@@ -1107,23 +1165,29 @@ public class Settings
      * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
      * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isBindOffsetTimeType() {
         return bindOffsetTimeType;
     }
 
     /**
-     * Sets the value of the bindOffsetTimeType property.
-     *
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setBindOffsetTimeType(Boolean value) {
         this.bindOffsetTimeType = value;
@@ -1138,23 +1202,30 @@ public class Settings
      * included in the <code>OUTPUT</code> clause.
      * <p>
      * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isFetchTriggerValuesAfterSQLServerOutput() {
         return fetchTriggerValuesAfterSQLServerOutput;
     }
 
     /**
-     * Sets the value of the fetchTriggerValuesAfterSQLServerOutput property.
-     *
+     * Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server <code>OUTPUT</code> statements do not support fetching trigger generated values.
+     * This is a limitation of the {@link #renderOutputForSQLServerReturningClause}. An additional
+     * <code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+     * included in the <code>OUTPUT</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         this.fetchTriggerValuesAfterSQLServerOutput = value;
@@ -1163,7 +1234,7 @@ public class Settings
     /**
      * Whether to fetch data into intermediate {@link org.jooq.Result} instances.
      * <p>
-     * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result}
+     * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result} 
      * instances if they are not explicitly requested by the caller, e.g. by calling
      * {@link org.jooq.ResultQuery#fetch()}, or in the presence of {@link org.jooq.ExecuteListener}
      * instances, which may require access to {@link org.jooq.ExecuteContext#result()}.
@@ -1171,7 +1242,7 @@ public class Settings
      * <p>
      * Using this flag, fetching of intermediate results can be turned off even when execute listeners
      * are present, or turned on even if they're absent.
-     *
+     * 
      */
     public FetchIntermediateResult getFetchIntermediateResult() {
         return fetchIntermediateResult;
@@ -1180,7 +1251,7 @@ public class Settings
     /**
      * Whether to fetch data into intermediate {@link org.jooq.Result} instances.
      * <p>
-     * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result}
+     * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result} 
      * instances if they are not explicitly requested by the caller, e.g. by calling
      * {@link org.jooq.ResultQuery#fetch()}, or in the presence of {@link org.jooq.ExecuteListener}
      * instances, which may require access to {@link org.jooq.ExecuteContext#result()}.
@@ -1188,7 +1259,7 @@ public class Settings
      * <p>
      * Using this flag, fetching of intermediate results can be turned off even when execute listeners
      * are present, or turned on even if they're absent.
-     *
+     * 
      */
     public void setFetchIntermediateResult(FetchIntermediateResult value) {
         this.fetchIntermediateResult = value;
@@ -1203,23 +1274,30 @@ public class Settings
      * default.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatterns() {
         return transformPatterns;
     }
 
     /**
-     * Sets the value of the transformPatterns property.
-     *
+     * Transform various syntax patterns to better versions, if possible.
+     * <p>
+     * This flag enables the pattern transformation feature, which consists of several sub-flags that are
+     * all prefixed with "transformPatterns", e.g. {@link #transformPatternsTrim}. While the sub-flags default
+     * to being enabled, and can be disabled on an individual basis, the global feature itself is disabled by
+     * default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatterns(Boolean value) {
         this.transformPatterns = value;
@@ -1227,23 +1305,23 @@ public class Settings
 
     /**
      * Activate debug logging of the {@link #transformPatterns} feature.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsLogging() {
         return transformPatternsLogging;
     }
 
     /**
-     * Sets the value of the transformPatternsLogging property.
-     *
+     * Activate debug logging of the {@link #transformPatterns} feature.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsLogging(Boolean value) {
         this.transformPatternsLogging = value;
@@ -1259,23 +1337,31 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsTrim() {
         return transformPatternsTrim;
     }
 
     /**
-     * Sets the value of the transformPatternsTrim property.
-     *
+     * Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>.
+     * <p>
+     * Historically, a few dialects did not implement <code>TRIM(x)</code> or <code>TRIM(BOTH FROM x)</code>,
+     * so users worked around this by wrapping <code>LTRIM()</code> and <code>RTRIM()</code> with each other.
+     * Maintaining this is usually undesirable, so this transformation helps remove the unwanted wrapping.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsTrim(Boolean value) {
         this.transformPatternsTrim = value;
@@ -1289,23 +1375,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsNotNot() {
         return transformPatternsNotNot;
     }
 
     /**
-     * Sets the value of the transformPatternsNotNot property.
-     *
+     * Transform <code>NOT(NOT(x))</code> to <code>x</code>.
+     * <p>
+     * This transformation removes a redundant logic negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsNotNot(Boolean value) {
         this.transformPatternsNotNot = value;
@@ -1319,23 +1411,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsNotComparison() {
         return transformPatternsNotComparison;
     }
 
     /**
-     * Sets the value of the transformPatternsNotComparison property.
-     *
+     * Transform <code>NOT (a != b)</code> to <code>a = b</code>, and similar comparisons.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsNotComparison(Boolean value) {
         this.transformPatternsNotComparison = value;
@@ -1349,23 +1447,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsNotNotDistinct() {
         return transformPatternsNotNotDistinct;
     }
 
     /**
-     * Sets the value of the transformPatternsNotNotDistinct property.
-     *
+     * Transform <code>NOT (a IS NOT DISTINCT FROM b)</code> to <code>a IS DISTINCT FROM b</code>.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsNotNotDistinct(Boolean value) {
         this.transformPatternsNotNotDistinct = value;
@@ -1380,23 +1484,30 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsNormaliseAssociativeOps() {
         return transformPatternsNormaliseAssociativeOps;
     }
 
     /**
-     * Sets the value of the transformPatternsNormaliseAssociativeOps property.
-     *
+     * Transform <code>(a + b) + (c + d)</code> to <code>((a + b) + c) + d</code>.
+     * <p>
+     * This transformation turns trees into lists, which greatly simplifies other tree traversal transformations.
+     * Some of those other transformations currently rely on this flag to be active.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsNormaliseAssociativeOps(Boolean value) {
         this.transformPatternsNormaliseAssociativeOps = value;
@@ -1408,23 +1519,27 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsNormaliseInListSingleElementToComparison() {
         return transformPatternsNormaliseInListSingleElementToComparison;
     }
 
     /**
-     * Sets the value of the transformPatternsNormaliseInListSingleElementToComparison property.
-     *
+     * Transform <code>x IN (a)</code> to <code>x = a</code> and <code>x NOT IN (a)</code> to <code>x != a</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsNormaliseInListSingleElementToComparison(Boolean value) {
         this.transformPatternsNormaliseInListSingleElementToComparison = value;
@@ -1438,23 +1553,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsNormaliseFieldCompareValue() {
         return transformPatternsNormaliseFieldCompareValue;
     }
 
     /**
-     * Sets the value of the transformPatternsNormaliseFieldCompareValue property.
-     *
+     * Transform <code>1 = a</code> to <code>a = 1</code>.
+     * <p>
+     * This transformation inverses {@link TableField} [op] {@link org.jooq.impl.QOM.Val} comparisons, if they're not in that order.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsNormaliseFieldCompareValue(Boolean value) {
         this.transformPatternsNormaliseFieldCompareValue = value;
@@ -1468,23 +1589,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsOrEqToIn() {
         return transformPatternsOrEqToIn;
     }
 
     /**
-     * Sets the value of the transformPatternsOrEqToIn property.
-     *
+     * Transform <code>x = c1 OR x = c2</code> to <code>x IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>OR</code> predicates into simpler <code>IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsOrEqToIn(Boolean value) {
         this.transformPatternsOrEqToIn = value;
@@ -1498,23 +1625,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsAndNeToNotIn() {
         return transformPatternsAndNeToNotIn;
     }
 
     /**
-     * Sets the value of the transformPatternsAndNeToNotIn property.
-     *
+     * Transform <code>x != c1 AND x != c2</code> to <code>x NOT IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>AND</code> predicates into simpler <code>NOT IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsAndNeToNotIn(Boolean value) {
         this.transformPatternsAndNeToNotIn = value;
@@ -1528,23 +1661,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsMergeOrComparison() {
         return transformPatternsMergeOrComparison;
     }
 
     /**
-     * Sets the value of the transformPatternsMergeOrComparison property.
-     *
+     * Transform <code>x = a OR x > a</code> to <code>x >= a</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsMergeOrComparison(Boolean value) {
         this.transformPatternsMergeOrComparison = value;
@@ -1558,23 +1697,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsMergeAndComparison() {
         return transformPatternsMergeAndComparison;
     }
 
     /**
-     * Sets the value of the transformPatternsMergeAndComparison property.
-     *
+     * Transform <code>x >= a AND x <= a</code> to <code>x = a</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsMergeAndComparison(Boolean value) {
         this.transformPatternsMergeAndComparison = value;
@@ -1588,23 +1733,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsMergeInLists() {
         return transformPatternsMergeInLists;
     }
 
     /**
-     * Sets the value of the transformPatternsMergeInLists property.
-     *
+     * Transform <code>x IN (a, b, c) AND x IN (b, c, d)</code> to <code>x IN (b, c)</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsMergeInLists(Boolean value) {
         this.transformPatternsMergeInLists = value;
@@ -1618,23 +1769,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsMergeRangePredicates() {
         return transformPatternsMergeRangePredicates;
     }
 
     /**
-     * Sets the value of the transformPatternsMergeRangePredicates property.
-     *
+     * Transform <code>x >= a AND x <= b</code> to <code>x BETWEEN a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected range predicates to a single comparison using <code>BETWEEN</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsMergeRangePredicates(Boolean value) {
         this.transformPatternsMergeRangePredicates = value;
@@ -1648,23 +1805,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsMergeBetweenSymmetricPredicates() {
         return transformPatternsMergeBetweenSymmetricPredicates;
     }
 
     /**
-     * Sets the value of the transformPatternsMergeBetweenSymmetricPredicates property.
-     *
+     * Transform <code>x BETWEEN a AND b OR x BETWEEN b AND a</code> to <code>x BETWEEN SYMMETRIC a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected <code>BETWEEN</code> predicates to a single comparison using <code>BETWEEN SYMMETRIC</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsMergeBetweenSymmetricPredicates(Boolean value) {
         this.transformPatternsMergeBetweenSymmetricPredicates = value;
@@ -1677,23 +1840,28 @@ public class Settings
      * <code>COALESCE()</code>, <code>NULLIF()</code>, etc.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsTrivialCaseAbbreviation() {
         return transformPatternsTrivialCaseAbbreviation;
     }
 
     /**
-     * Sets the value of the transformPatternsTrivialCaseAbbreviation property.
-     *
+     * Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.
+     * <p>
+     * This transformation removes any trivial case abbreviations, such as <code>NVL()</code>,
+     * <code>COALESCE()</code>, <code>NULLIF()</code>, etc.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsTrivialCaseAbbreviation(Boolean value) {
         this.transformPatternsTrivialCaseAbbreviation = value;
@@ -1705,23 +1873,27 @@ public class Settings
      * This transformation removes any trivial predicates.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsTrivialPredicates() {
         return transformPatternsTrivialPredicates;
     }
 
     /**
-     * Sets the value of the transformPatternsTrivialPredicates property.
-     *
+     * Transform trivial predicates like <code>1 = 1</code> to <code>TRUE</code>.
+     * <p>
+     * This transformation removes any trivial predicates.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsTrivialPredicates(Boolean value) {
         this.transformPatternsTrivialPredicates = value;
@@ -1733,23 +1905,27 @@ public class Settings
      * Scalar subqueries that count rows and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsScalarSubqueryCountAsteriskGtZero() {
         return transformPatternsScalarSubqueryCountAsteriskGtZero;
     }
 
     /**
-     * Sets the value of the transformPatternsScalarSubqueryCountAsteriskGtZero property.
-     *
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(*) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 …)</code>.
+     * <p>
+     * Scalar subqueries that count rows and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsScalarSubqueryCountAsteriskGtZero(Boolean value) {
         this.transformPatternsScalarSubqueryCountAsteriskGtZero = value;
@@ -1761,23 +1937,27 @@ public class Settings
      * Scalar subqueries that count non-null expressions and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsScalarSubqueryCountExpressionGtZero() {
         return transformPatternsScalarSubqueryCountExpressionGtZero;
     }
 
     /**
-     * Sets the value of the transformPatternsScalarSubqueryCountExpressionGtZero property.
-     *
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(expr) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 … WHERE expr IS NOT NULL)</code>.
+     * <p>
+     * Scalar subqueries that count non-null expressions and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsScalarSubqueryCountExpressionGtZero(Boolean value) {
         this.transformPatternsScalarSubqueryCountExpressionGtZero = value;
@@ -1789,23 +1969,27 @@ public class Settings
      * Scalar subqueries that are guaranteed to produce no results can be replaced by a <code>NULL</code> value.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsEmptyScalarSubquery() {
         return transformPatternsEmptyScalarSubquery;
     }
 
     /**
-     * Sets the value of the transformPatternsEmptyScalarSubquery property.
-     *
+     * Transform empty scalar subqueries like <code>(SELECT 1 WHERE FALSE)</code> to <code>NULL</code>.
+     * <p>
+     * Scalar subqueries that are guaranteed to produce no results can be replaced by a <code>NULL</code> value.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsEmptyScalarSubquery(Boolean value) {
         this.transformPatternsEmptyScalarSubquery = value;
@@ -1819,23 +2003,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsNegNeg() {
         return transformPatternsNegNeg;
     }
 
     /**
-     * Sets the value of the transformPatternsNegNeg property.
-     *
+     * Transform <code>-(-(x))</code> to <code>x</code>
+     * <p>
+     * This transformation removes a redundant arithmetic negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsNegNeg(Boolean value) {
         this.transformPatternsNegNeg = value;
@@ -1849,23 +2039,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsBitNotBitNot() {
         return transformPatternsBitNotBitNot;
     }
 
     /**
-     * Sets the value of the transformPatternsBitNotBitNot property.
-     *
+     * Transform <code>~(~(x))</code> to <code>x</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsBitNotBitNot(Boolean value) {
         this.transformPatternsBitNotBitNot = value;
@@ -1879,23 +2075,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsBitNotBitNand() {
         return transformPatternsBitNotBitNand;
     }
 
     /**
-     * Sets the value of the transformPatternsBitNotBitNand property.
-     *
+     * Transform <code>~(bitnand(x, y))</code> to <code>bitand(x, y)</code> and <code>~(bitand(x, y)</code> to <code>bitnand(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsBitNotBitNand(Boolean value) {
         this.transformPatternsBitNotBitNand = value;
@@ -1909,23 +2111,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsBitNotBitNor() {
         return transformPatternsBitNotBitNor;
     }
 
     /**
-     * Sets the value of the transformPatternsBitNotBitNor property.
-     *
+     * Transform <code>~(bitnor(x, y))</code> to <code>bitor(x, y)</code> and <code>~(bitor(x, y)</code> to <code>bitnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsBitNotBitNor(Boolean value) {
         this.transformPatternsBitNotBitNor = value;
@@ -1939,23 +2147,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsBitNotBitXNor() {
         return transformPatternsBitNotBitXNor;
     }
 
     /**
-     * Sets the value of the transformPatternsBitNotBitXNor property.
-     *
+     * Transform <code>~(bitxnor(x, y))</code> to <code>bitxor(x, y)</code> and <code>~(bitxor(x, y)</code> to <code>bitxnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsBitNotBitXNor(Boolean value) {
         this.transformPatternsBitNotBitXNor = value;
@@ -1979,23 +2193,39 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsIdempotentFunctionRepetition() {
         return transformPatternsIdempotentFunctionRepetition;
     }
 
     /**
-     * Sets the value of the transformPatternsIdempotentFunctionRepetition property.
-     *
+     * Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>.
+     * <p>
+     * Idempotent functions that are covered so far, include:
+     * <ul>
+     * <li><code>LTRIM(LTRIM(s))</code> to <code>LTRIM(s)</code></li>
+     * <li><code>LTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>RTRIM(RTRIM(s))</code> to <code>RTRIM(s)</code></li>
+     * <li><code>RTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(LTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(RTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code></li>
+     * <li><code>LOWER(LOWER(s))</code> to <code>LOWER(s)</code></li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsIdempotentFunctionRepetition(Boolean value) {
         this.transformPatternsIdempotentFunctionRepetition = value;
@@ -2009,23 +2239,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsArithmeticExpressions() {
         return transformPatternsArithmeticExpressions;
     }
 
     /**
-     * Sets the value of the transformPatternsArithmeticExpressions property.
-     *
+     * Transform <code>1 / y * x</code> to <code>x / y</code>, and other transformations.
+     * <p>
+     * This transformation simplifies arithmetic expressions.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsArithmeticExpressions(Boolean value) {
         this.transformPatternsArithmeticExpressions = value;
@@ -2039,23 +2275,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsTrigonometricFunctions() {
         return transformPatternsTrigonometricFunctions;
     }
 
     /**
-     * Sets the value of the transformPatternsTrigonometricFunctions property.
-     *
+     * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsTrigonometricFunctions(Boolean value) {
         this.transformPatternsTrigonometricFunctions = value;
@@ -2069,23 +2311,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsLogarithmicFunctions() {
         return transformPatternsLogarithmicFunctions;
     }
 
     /**
-     * Sets the value of the transformPatternsLogarithmicFunctions property.
-     *
+     * Transform <code>LN(value) / LN(base)</code> to <code>LOG(base, value)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded logarithmic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsLogarithmicFunctions(Boolean value) {
         this.transformPatternsLogarithmicFunctions = value;
@@ -2099,23 +2347,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsHyperbolicFunctions() {
         return transformPatternsHyperbolicFunctions;
     }
 
     /**
-     * Sets the value of the transformPatternsHyperbolicFunctions property.
-     *
+     * Transform <code>(EXP(x) - EXP(-x)) / 2</code> to <code>SINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsHyperbolicFunctions(Boolean value) {
         this.transformPatternsHyperbolicFunctions = value;
@@ -2129,23 +2383,29 @@ public class Settings
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformPatternsInverseHyperbolicFunctions() {
         return transformPatternsInverseHyperbolicFunctions;
     }
 
     /**
-     * Sets the value of the transformPatternsInverseHyperbolicFunctions property.
-     *
+     * Transform <code>LN(x + SQRT(SQUARE(x) + 1))</code> to <code>ASINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded inverse hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformPatternsInverseHyperbolicFunctions(Boolean value) {
         this.transformPatternsInverseHyperbolicFunctions = value;
@@ -2153,9 +2413,9 @@ public class Settings
 
     /**
      * Transform {@link org.jooq.impl.QOM.CompareCondition} and a few other types of condition to inline their bind values, in case they match
-     *
+     *          
      * <p>
-     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
      * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
      * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
      * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
@@ -2165,23 +2425,35 @@ public class Settings
      * (only for simple comparison predicates).
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformInlineBindValuesForFieldComparisons() {
         return transformInlineBindValuesForFieldComparisons;
     }
 
     /**
-     * Sets the value of the transformInlineBindValuesForFieldComparisons property.
-     *
+     * Transform {@link org.jooq.impl.QOM.CompareCondition} and a few other types of condition to inline their bind values, in case they match
+     *          
+     * <p>
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+     * converted to equivalent table lists in generated SQL using this flag.
+     * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformInlineBindValuesForFieldComparisons(Boolean value) {
         this.transformInlineBindValuesForFieldComparisons = value;
@@ -2190,7 +2462,7 @@ public class Settings
     /**
      * Transform ANSI join to table lists if possible.
      * <p>
-     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
      * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
      * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
      * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
@@ -2200,23 +2472,34 @@ public class Settings
      * (only for simple comparison predicates).
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformAnsiJoinToTableLists() {
         return transformAnsiJoinToTableLists;
     }
 
     /**
-     * Sets the value of the transformAnsiJoinToTableLists property.
-     *
+     * Transform ANSI join to table lists if possible.
+     * <p>
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+     * converted to equivalent table lists in generated SQL using this flag.
+     * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformAnsiJoinToTableLists(Boolean value) {
         this.transformAnsiJoinToTableLists = value;
@@ -2228,7 +2511,7 @@ public class Settings
      * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public Transformation getTransformInConditionSubqueryWithLimitToDerivedTable() {
         return transformInConditionSubqueryWithLimitToDerivedTable;
@@ -2240,7 +2523,7 @@ public class Settings
      * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public void setTransformInConditionSubqueryWithLimitToDerivedTable(Transformation value) {
         this.transformInConditionSubqueryWithLimitToDerivedTable = value;
@@ -2250,7 +2533,7 @@ public class Settings
      * Transform the <code>QUALIFY</code> clause to an equivalent derived table to filter on window functions.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public Transformation getTransformQualify() {
         return transformQualify;
@@ -2260,7 +2543,7 @@ public class Settings
      * Transform the <code>QUALIFY</code> clause to an equivalent derived table to filter on window functions.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public void setTransformQualify(Transformation value) {
         this.transformQualify = value;
@@ -2269,30 +2552,38 @@ public class Settings
     /**
      * Transform table lists to ANSI join if possible.
      * <p>
-     * (Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in
+     * (Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in 
      * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
      * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
      * support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
      * this flag enables the transformation to ANSI join syntax.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isTransformTableListsToAnsiJoin() {
         return transformTableListsToAnsiJoin;
     }
 
     /**
-     * Sets the value of the transformTableListsToAnsiJoin property.
-     *
+     * Transform table lists to ANSI join if possible.
+     * <p>
+     * (Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
+     * this flag enables the transformation to ANSI join syntax.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setTransformTableListsToAnsiJoin(Boolean value) {
         this.transformTableListsToAnsiJoin = value;
@@ -2307,7 +2598,7 @@ public class Settings
      * equivalent SQL, if possible.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public Transformation getTransformRownum() {
         return transformRownum;
@@ -2322,7 +2613,7 @@ public class Settings
      * equivalent SQL, if possible.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public void setTransformRownum(Transformation value) {
         this.transformRownum = value;
@@ -2335,7 +2626,7 @@ public class Settings
      * Expressions on literals and bind variables could be evaluated in the client prior to generating SQL.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public TransformUnneededArithmeticExpressions getTransformUnneededArithmeticExpressions() {
         return transformUnneededArithmeticExpressions;
@@ -2348,7 +2639,7 @@ public class Settings
      * Expressions on literals and bind variables could be evaluated in the client prior to generating SQL.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public void setTransformUnneededArithmeticExpressions(TransformUnneededArithmeticExpressions value) {
         this.transformUnneededArithmeticExpressions = value;
@@ -2356,7 +2647,7 @@ public class Settings
 
     /**
      * Whether string literals should be escaped with backslash.
-     *
+     * 
      */
     public BackslashEscaping getBackslashEscaping() {
         return backslashEscaping;
@@ -2364,7 +2655,7 @@ public class Settings
 
     /**
      * Whether string literals should be escaped with backslash.
-     *
+     * 
      */
     public void setBackslashEscaping(BackslashEscaping value) {
         this.backslashEscaping = value;
@@ -2374,15 +2665,15 @@ public class Settings
      * Specify how bind variables are to be rendered.
      * <p>
      * Possibilities include:
-     *
+     * 
      * - question marks
      * - named parameters
      * - named or inlined parameters
      * - inlined parameters
-     *
+     * 
      * This value is overridden by statementType == STATIC_STATEMENT, in
      * case of which, this defaults to INLINED
-     *
+     * 
      */
     public ParamType getParamType() {
         return paramType;
@@ -2392,15 +2683,15 @@ public class Settings
      * Specify how bind variables are to be rendered.
      * <p>
      * Possibilities include:
-     *
+     * 
      * - question marks
      * - named parameters
      * - named or inlined parameters
      * - inlined parameters
-     *
+     * 
      * This value is overridden by statementType == STATIC_STATEMENT, in
      * case of which, this defaults to INLINED
-     *
+     * 
      */
     public void setParamType(ParamType value) {
         this.paramType = value;
@@ -2408,7 +2699,7 @@ public class Settings
 
     /**
      * Whether rendered bind values should be cast to their respective type.
-     *
+     * 
      */
     public ParamCastMode getParamCastMode() {
         return paramCastMode;
@@ -2416,7 +2707,7 @@ public class Settings
 
     /**
      * Whether rendered bind values should be cast to their respective type.
-     *
+     * 
      */
     public void setParamCastMode(ParamCastMode value) {
         this.paramCastMode = value;
@@ -2424,7 +2715,7 @@ public class Settings
 
     /**
      * The type of statement that is to be executed.
-     *
+     * 
      */
     public StatementType getStatementType() {
         return statementType;
@@ -2432,7 +2723,7 @@ public class Settings
 
     /**
      * The type of statement that is to be executed.
-     *
+     * 
      */
     public void setStatementType(StatementType value) {
         this.statementType = value;
@@ -2448,7 +2739,7 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
      * </ul>
-     *
+     * 
      */
     public Integer getInlineThreshold() {
         return inlineThreshold;
@@ -2464,7 +2755,7 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
      * </ul>
-     *
+     * 
      */
     public void setInlineThreshold(Integer value) {
         this.inlineThreshold = value;
@@ -2472,7 +2763,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.TransactionListener}s.
-     *
+     * 
      */
     public InvocationOrder getTransactionListenerStartInvocationOrder() {
         return transactionListenerStartInvocationOrder;
@@ -2480,7 +2771,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.TransactionListener}s.
-     *
+     * 
      */
     public void setTransactionListenerStartInvocationOrder(InvocationOrder value) {
         this.transactionListenerStartInvocationOrder = value;
@@ -2488,7 +2779,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.TransactionListener}s.
-     *
+     * 
      */
     public InvocationOrder getTransactionListenerEndInvocationOrder() {
         return transactionListenerEndInvocationOrder;
@@ -2496,7 +2787,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.TransactionListener}s.
-     *
+     * 
      */
     public void setTransactionListenerEndInvocationOrder(InvocationOrder value) {
         this.transactionListenerEndInvocationOrder = value;
@@ -2504,7 +2795,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.MigrationListener}s.
-     *
+     * 
      */
     public InvocationOrder getMigrationListenerStartInvocationOrder() {
         return migrationListenerStartInvocationOrder;
@@ -2512,7 +2803,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.MigrationListener}s.
-     *
+     * 
      */
     public void setMigrationListenerStartInvocationOrder(InvocationOrder value) {
         this.migrationListenerStartInvocationOrder = value;
@@ -2520,7 +2811,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.MigrationListener}s.
-     *
+     * 
      */
     public InvocationOrder getMigrationListenerEndInvocationOrder() {
         return migrationListenerEndInvocationOrder;
@@ -2528,7 +2819,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.MigrationListener}s.
-     *
+     * 
      */
     public void setMigrationListenerEndInvocationOrder(InvocationOrder value) {
         this.migrationListenerEndInvocationOrder = value;
@@ -2536,7 +2827,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.VisitListener}s.
-     *
+     * 
      */
     public InvocationOrder getVisitListenerStartInvocationOrder() {
         return visitListenerStartInvocationOrder;
@@ -2544,7 +2835,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.VisitListener}s.
-     *
+     * 
      */
     public void setVisitListenerStartInvocationOrder(InvocationOrder value) {
         this.visitListenerStartInvocationOrder = value;
@@ -2552,7 +2843,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.VisitListener}s.
-     *
+     * 
      */
     public InvocationOrder getVisitListenerEndInvocationOrder() {
         return visitListenerEndInvocationOrder;
@@ -2560,7 +2851,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.VisitListener}s.
-     *
+     * 
      */
     public void setVisitListenerEndInvocationOrder(InvocationOrder value) {
         this.visitListenerEndInvocationOrder = value;
@@ -2568,7 +2859,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.RecordListener}s.
-     *
+     * 
      */
     public InvocationOrder getRecordListenerStartInvocationOrder() {
         return recordListenerStartInvocationOrder;
@@ -2576,7 +2867,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.RecordListener}s.
-     *
+     * 
      */
     public void setRecordListenerStartInvocationOrder(InvocationOrder value) {
         this.recordListenerStartInvocationOrder = value;
@@ -2584,7 +2875,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.RecordListener}s.
-     *
+     * 
      */
     public InvocationOrder getRecordListenerEndInvocationOrder() {
         return recordListenerEndInvocationOrder;
@@ -2592,7 +2883,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.RecordListener}s.
-     *
+     * 
      */
     public void setRecordListenerEndInvocationOrder(InvocationOrder value) {
         this.recordListenerEndInvocationOrder = value;
@@ -2600,7 +2891,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.ExecuteListener}s.
-     *
+     * 
      */
     public InvocationOrder getExecuteListenerStartInvocationOrder() {
         return executeListenerStartInvocationOrder;
@@ -2608,7 +2899,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.ExecuteListener}s.
-     *
+     * 
      */
     public void setExecuteListenerStartInvocationOrder(InvocationOrder value) {
         this.executeListenerStartInvocationOrder = value;
@@ -2616,7 +2907,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.ExecuteListener}s.
-     *
+     * 
      */
     public InvocationOrder getExecuteListenerEndInvocationOrder() {
         return executeListenerEndInvocationOrder;
@@ -2624,7 +2915,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.ExecuteListener}s.
-     *
+     * 
      */
     public void setExecuteListenerEndInvocationOrder(InvocationOrder value) {
         this.executeListenerEndInvocationOrder = value;
@@ -2632,23 +2923,23 @@ public class Settings
 
     /**
      * When set to true, this will add jOOQ's default logging ExecuteListeners.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isExecuteLogging() {
         return executeLogging;
     }
 
     /**
-     * Sets the value of the executeLogging property.
-     *
+     * When set to true, this will add jOOQ's default logging ExecuteListeners.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setExecuteLogging(Boolean value) {
         this.executeLogging = value;
@@ -2656,23 +2947,23 @@ public class Settings
 
     /**
      * Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isUpdateRecordVersion() {
         return updateRecordVersion;
     }
 
     /**
-     * Sets the value of the updateRecordVersion property.
-     *
+     * Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setUpdateRecordVersion(Boolean value) {
         this.updateRecordVersion = value;
@@ -2680,23 +2971,23 @@ public class Settings
 
     /**
      * Whether store(), insert(), and update() methods should update the record timestamp prior to the operation, for use with {@link #executeWithOptimisticLocking}.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isUpdateRecordTimestamp() {
         return updateRecordTimestamp;
     }
 
     /**
-     * Sets the value of the updateRecordTimestamp property.
-     *
+     * Whether store(), insert(), and update() methods should update the record timestamp prior to the operation, for use with {@link #executeWithOptimisticLocking}.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setUpdateRecordTimestamp(Boolean value) {
         this.updateRecordTimestamp = value;
@@ -2704,23 +2995,23 @@ public class Settings
 
     /**
      * Whether store() and delete() methods should be executed with optimistic locking.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isExecuteWithOptimisticLocking() {
         return executeWithOptimisticLocking;
     }
 
     /**
-     * Sets the value of the executeWithOptimisticLocking property.
-     *
+     * Whether store() and delete() methods should be executed with optimistic locking.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setExecuteWithOptimisticLocking(Boolean value) {
         this.executeWithOptimisticLocking = value;
@@ -2731,23 +3022,26 @@ public class Settings
      * i.e. on tables that do not have a version and/or timestamp column.
      * <p>
      * This flag has no effect when "executeWithOptimisticLocking" is turned off.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isExecuteWithOptimisticLockingExcludeUnversioned() {
         return executeWithOptimisticLockingExcludeUnversioned;
     }
 
     /**
-     * Sets the value of the executeWithOptimisticLockingExcludeUnversioned property.
-     *
+     * Whether store() and delete() methods should be executed with optimistic locking also on "unversioned" tables,
+     * i.e. on tables that do not have a version and/or timestamp column.
+     * <p>
+     * This flag has no effect when "executeWithOptimisticLocking" is turned off.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setExecuteWithOptimisticLockingExcludeUnversioned(Boolean value) {
         this.executeWithOptimisticLockingExcludeUnversioned = value;
@@ -2755,23 +3049,23 @@ public class Settings
 
     /**
      * Whether fetched records should be attached to the fetching configuration.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isAttachRecords() {
         return attachRecords;
     }
 
     /**
-     * Sets the value of the attachRecords property.
-     *
+     * Whether fetched records should be attached to the fetching configuration.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setAttachRecords(Boolean value) {
         this.attachRecords = value;
@@ -2779,23 +3073,23 @@ public class Settings
 
     /**
      * Whether {@link org.jooq.TableRecord#insert()} calls should be executed if the record is unchanged. This also affects the <code>INSERT</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isInsertUnchangedRecords() {
         return insertUnchangedRecords;
     }
 
     /**
-     * Sets the value of the insertUnchangedRecords property.
-     *
+     * Whether {@link org.jooq.TableRecord#insert()} calls should be executed if the record is unchanged. This also affects the <code>INSERT</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setInsertUnchangedRecords(Boolean value) {
         this.insertUnchangedRecords = value;
@@ -2803,7 +3097,7 @@ public class Settings
 
     /**
      * Whether {@link org.jooq.UpdatableRecord#update()} calls should be executed if the record is unchanged. This also affects the <code>UPDATE</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
-     *
+     * 
      */
     public UpdateUnchangedRecords getUpdateUnchangedRecords() {
         return updateUnchangedRecords;
@@ -2811,7 +3105,7 @@ public class Settings
 
     /**
      * Whether {@link org.jooq.UpdatableRecord#update()} calls should be executed if the record is unchanged. This also affects the <code>UPDATE</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
-     *
+     * 
      */
     public void setUpdateUnchangedRecords(UpdateUnchangedRecords value) {
         this.updateUnchangedRecords = value;
@@ -2822,23 +3116,26 @@ public class Settings
      * <p>
      * Setting this to "true" will allow for updating primary key values through
      * UpdatableRecord.store() and UpdatableRecord.update().
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isUpdatablePrimaryKeys() {
         return updatablePrimaryKeys;
     }
 
     /**
-     * Sets the value of the updatablePrimaryKeys property.
-     *
+     * Whether primary key values are deemed to be "updatable" in jOOQ.
+     * <p>
+     * Setting this to "true" will allow for updating primary key values through
+     * UpdatableRecord.store() and UpdatableRecord.update().
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setUpdatablePrimaryKeys(Boolean value) {
         this.updatablePrimaryKeys = value;
@@ -2846,23 +3143,23 @@ public class Settings
 
     /**
      * Whether reflection information should be cached in the configuration.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isReflectionCaching() {
         return reflectionCaching;
     }
 
     /**
-     * Sets the value of the reflectionCaching property.
-     *
+     * Whether reflection information should be cached in the configuration.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setReflectionCaching(Boolean value) {
         this.reflectionCaching = value;
@@ -2870,23 +3167,23 @@ public class Settings
 
     /**
      * Whether record mappers should be cached in the configuration.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCacheRecordMappers() {
         return cacheRecordMappers;
     }
 
     /**
-     * Sets the value of the cacheRecordMappers property.
-     *
+     * Whether record mappers should be cached in the configuration.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCacheRecordMappers(Boolean value) {
         this.cacheRecordMappers = value;
@@ -2894,23 +3191,23 @@ public class Settings
 
     /**
      * Whether parsing connection translations should be cached in the configuration.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCacheParsingConnection() {
         return cacheParsingConnection;
     }
 
     /**
-     * Sets the value of the cacheParsingConnection property.
-     *
+     * Whether parsing connection translations should be cached in the configuration.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCacheParsingConnection(Boolean value) {
         this.cacheParsingConnection = value;
@@ -2918,7 +3215,7 @@ public class Settings
 
     /**
      * The default implementation of the ParsingConnection cache's LRU cache size.
-     *
+     * 
      */
     public Integer getCacheParsingConnectionLRUCacheSize() {
         return cacheParsingConnectionLRUCacheSize;
@@ -2926,7 +3223,7 @@ public class Settings
 
     /**
      * The default implementation of the ParsingConnection cache's LRU cache size.
-     *
+     * 
      */
     public void setCacheParsingConnectionLRUCacheSize(Integer value) {
         this.cacheParsingConnectionLRUCacheSize = value;
@@ -2934,23 +3231,23 @@ public class Settings
 
     /**
      * Whether JDBC {@link java.sql.PreparedStatement} instances should be cached in loader API.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isCachePreparedStatementInLoader() {
         return cachePreparedStatementInLoader;
     }
 
     /**
-     * Sets the value of the cachePreparedStatementInLoader property.
-     *
+     * Whether JDBC {@link java.sql.PreparedStatement} instances should be cached in loader API.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setCachePreparedStatementInLoader(Boolean value) {
         this.cachePreparedStatementInLoader = value;
@@ -2958,7 +3255,7 @@ public class Settings
 
     /**
      * A strategy defining how exceptions from the database / JDBC driver should be propagated
-     *
+     * 
      */
     public ThrowExceptions getThrowExceptions() {
         return throwExceptions;
@@ -2966,7 +3263,7 @@ public class Settings
 
     /**
      * A strategy defining how exceptions from the database / JDBC driver should be propagated
-     *
+     * 
      */
     public void setThrowExceptions(ThrowExceptions value) {
         this.throwExceptions = value;
@@ -2974,23 +3271,23 @@ public class Settings
 
     /**
      * Whether warnings should be fetched after each query execution.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isFetchWarnings() {
         return fetchWarnings;
     }
 
     /**
-     * Sets the value of the fetchWarnings property.
-     *
+     * Whether warnings should be fetched after each query execution.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setFetchWarnings(Boolean value) {
         this.fetchWarnings = value;
@@ -2998,7 +3295,7 @@ public class Settings
 
     /**
      * Whether server output should be fetched after each query execution.
-     *
+     * 
      */
     public Integer getFetchServerOutputSize() {
         return fetchServerOutputSize;
@@ -3006,7 +3303,7 @@ public class Settings
 
     /**
      * Whether server output should be fetched after each query execution.
-     *
+     * 
      */
     public void setFetchServerOutputSize(Integer value) {
         this.fetchServerOutputSize = value;
@@ -3014,23 +3311,23 @@ public class Settings
 
     /**
      * Whether calls to store(), insert() and update() should return the identity column.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isReturnIdentityOnUpdatableRecord() {
         return returnIdentityOnUpdatableRecord;
     }
 
     /**
-     * Sets the value of the returnIdentityOnUpdatableRecord property.
-     *
+     * Whether calls to store(), insert() and update() should return the identity column.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setReturnIdentityOnUpdatableRecord(Boolean value) {
         this.returnIdentityOnUpdatableRecord = value;
@@ -3041,23 +3338,26 @@ public class Settings
      * <p>
      * Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
      * RETURNING clause is fully supported, also for non-IDENTITY columns.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isReturnAllOnUpdatableRecord() {
         return returnAllOnUpdatableRecord;
     }
 
     /**
-     * Sets the value of the returnAllOnUpdatableRecord property.
-     *
+     * Whether calls to store(), insert() and update() should return all columns, not just identity columns.
+     * <p>
+     * Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
+     * RETURNING clause is fully supported, also for non-IDENTITY columns.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setReturnAllOnUpdatableRecord(Boolean value) {
         this.returnAllOnUpdatableRecord = value;
@@ -3067,23 +3367,25 @@ public class Settings
      * Whether calls to store(), insert(), update(), and delete() that are called on an UpdatableRecord
      * that is created from a POJO (e.g. in a DAO) should return all Record values to the POJO, including
      * IDENTITY values, and if {@link #returnAllOnUpdatableRecord} is active, also other values.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isReturnRecordToPojo() {
         return returnRecordToPojo;
     }
 
     /**
-     * Sets the value of the returnRecordToPojo property.
-     *
+     * Whether calls to store(), insert(), update(), and delete() that are called on an UpdatableRecord
+     * that is created from a POJO (e.g. in a DAO) should return all Record values to the POJO, including
+     * IDENTITY values, and if {@link #returnAllOnUpdatableRecord} is active, also other values.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setReturnRecordToPojo(Boolean value) {
         this.returnRecordToPojo = value;
@@ -3091,23 +3393,23 @@ public class Settings
 
     /**
      * Whether JPA annotations should be considered by the DefaultRecordMapper.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMapJPAAnnotations() {
         return mapJPAAnnotations;
     }
 
     /**
-     * Sets the value of the mapJPAAnnotations property.
-     *
+     * Whether JPA annotations should be considered by the DefaultRecordMapper.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMapJPAAnnotations(Boolean value) {
         this.mapJPAAnnotations = value;
@@ -3115,23 +3417,23 @@ public class Settings
 
     /**
      * Whether constructor parameter names obtained from the {@link java.lang.Record} component names should be considered by the DefaultRecordMapper.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMapRecordComponentParameterNames() {
         return mapRecordComponentParameterNames;
     }
 
     /**
-     * Sets the value of the mapRecordComponentParameterNames property.
-     *
+     * Whether constructor parameter names obtained from the {@link java.lang.Record} component names should be considered by the DefaultRecordMapper.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMapRecordComponentParameterNames(Boolean value) {
         this.mapRecordComponentParameterNames = value;
@@ -3139,23 +3441,23 @@ public class Settings
 
     /**
      * Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMapConstructorPropertiesParameterNames() {
         return mapConstructorPropertiesParameterNames;
     }
 
     /**
-     * Sets the value of the mapConstructorPropertiesParameterNames property.
-     *
+     * Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMapConstructorPropertiesParameterNames(Boolean value) {
         this.mapConstructorPropertiesParameterNames = value;
@@ -3163,23 +3465,23 @@ public class Settings
 
     /**
      * Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMapConstructorParameterNames() {
         return mapConstructorParameterNames;
     }
 
     /**
-     * Sets the value of the mapConstructorParameterNames property.
-     *
+     * Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMapConstructorParameterNames(Boolean value) {
         this.mapConstructorParameterNames = value;
@@ -3187,23 +3489,23 @@ public class Settings
 
     /**
      * Whether constructor parameter names obtained via reflection in Kotlin should be considered by the DefaultRecordMapper. This flag has no effect in Java.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMapConstructorParameterNamesInKotlin() {
         return mapConstructorParameterNamesInKotlin;
     }
 
     /**
-     * Sets the value of the mapConstructorParameterNamesInKotlin property.
-     *
+     * Whether constructor parameter names obtained via reflection in Kotlin should be considered by the DefaultRecordMapper. This flag has no effect in Java.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMapConstructorParameterNamesInKotlin(Boolean value) {
         this.mapConstructorParameterNamesInKotlin = value;
@@ -3212,7 +3514,7 @@ public class Settings
     /**
      * The default JDBC poolable property that should be applied to all
      * jOOQ queries, for which no specific poolable flag was specified.
-     *
+     * 
      */
     public QueryPoolable getQueryPoolable() {
         return queryPoolable;
@@ -3221,7 +3523,7 @@ public class Settings
     /**
      * The default JDBC poolable property that should be applied to all
      * jOOQ queries, for which no specific poolable flag was specified.
-     *
+     * 
      */
     public void setQueryPoolable(QueryPoolable value) {
         this.queryPoolable = value;
@@ -3230,7 +3532,7 @@ public class Settings
     /**
      * The default JDBC queryTimeout property that should be applied to all
      * jOOQ queries, for which no specific queryTimeout was specified.
-     *
+     * 
      */
     public Integer getQueryTimeout() {
         return queryTimeout;
@@ -3239,7 +3541,7 @@ public class Settings
     /**
      * The default JDBC queryTimeout property that should be applied to all
      * jOOQ queries, for which no specific queryTimeout was specified.
-     *
+     * 
      */
     public void setQueryTimeout(Integer value) {
         this.queryTimeout = value;
@@ -3248,7 +3550,7 @@ public class Settings
     /**
      * The default JDBC maxRows property that should be applied to all
      * jOOQ queries, for which no specific maxRows value was specified.
-     *
+     * 
      */
     public Integer getMaxRows() {
         return maxRows;
@@ -3257,7 +3559,7 @@ public class Settings
     /**
      * The default JDBC maxRows property that should be applied to all
      * jOOQ queries, for which no specific maxRows value was specified.
-     *
+     * 
      */
     public void setMaxRows(Integer value) {
         this.maxRows = value;
@@ -3266,7 +3568,7 @@ public class Settings
     /**
      * The default JDBC fetchSize property that should be applied to all
      * jOOQ queries, for which no specific fetchSize value was specified.
-     *
+     * 
      */
     public Integer getFetchSize() {
         return fetchSize;
@@ -3275,7 +3577,7 @@ public class Settings
     /**
      * The default JDBC fetchSize property that should be applied to all
      * jOOQ queries, for which no specific fetchSize value was specified.
-     *
+     * 
      */
     public void setFetchSize(Integer value) {
         this.fetchSize = value;
@@ -3283,7 +3585,7 @@ public class Settings
 
     /**
      * A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.
-     *
+     * 
      */
     public Integer getBatchSize() {
         return batchSize;
@@ -3291,7 +3593,7 @@ public class Settings
 
     /**
      * A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.
-     *
+     * 
      */
     public void setBatchSize(Integer value) {
         this.batchSize = value;
@@ -3299,23 +3601,23 @@ public class Settings
 
     /**
      * [#5570] Whether exception stack traces should be enhanced with additional debug information.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isDebugInfoOnStackTrace() {
         return debugInfoOnStackTrace;
     }
 
     /**
-     * Sets the value of the debugInfoOnStackTrace property.
-     *
+     * [#5570] Whether exception stack traces should be enhanced with additional debug information.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setDebugInfoOnStackTrace(Boolean value) {
         this.debugInfoOnStackTrace = value;
@@ -3323,23 +3625,23 @@ public class Settings
 
     /**
      * [#5600] Whether IN lists in IN predicates should be padded to powers of inListPadBase (default 2).
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isInListPadding() {
         return inListPadding;
     }
 
     /**
-     * Sets the value of the inListPadding property.
-     *
+     * [#5600] Whether IN lists in IN predicates should be padded to powers of inListPadBase (default 2).
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setInListPadding(Boolean value) {
         this.inListPadding = value;
@@ -3347,7 +3649,7 @@ public class Settings
 
     /**
      * [#7095] The base to use to calculate the powers of when applying in list padding.
-     *
+     * 
      */
     public Integer getInListPadBase() {
         return inListPadBase;
@@ -3355,7 +3657,7 @@ public class Settings
 
     /**
      * [#7095] The base to use to calculate the powers of when applying in list padding.
-     *
+     * 
      */
     public void setInListPadBase(Integer value) {
         this.inListPadBase = value;
@@ -3363,7 +3665,7 @@ public class Settings
 
     /**
      * [#5826] The delimiter character to be used to delimit statements in batches.
-     *
+     * 
      */
     public String getDelimiter() {
         return delimiter;
@@ -3371,7 +3673,7 @@ public class Settings
 
     /**
      * [#5826] The delimiter character to be used to delimit statements in batches.
-     *
+     * 
      */
     public void setDelimiter(String value) {
         this.delimiter = value;
@@ -3379,23 +3681,23 @@ public class Settings
 
     /**
      * [#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly() {
         return emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly;
     }
 
     /**
-     * Sets the value of the emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly property.
-     *
+     * [#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(Boolean value) {
         this.emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly = value;
@@ -3403,7 +3705,7 @@ public class Settings
 
     /**
      * [#3884] How <code>MULTISET</code> support should be emulated.
-     *
+     * 
      */
     public NestedCollectionEmulation getEmulateMultiset() {
         return emulateMultiset;
@@ -3411,7 +3713,7 @@ public class Settings
 
     /**
      * [#3884] How <code>MULTISET</code> support should be emulated.
-     *
+     * 
      */
     public void setEmulateMultiset(NestedCollectionEmulation value) {
         this.emulateMultiset = value;
@@ -3419,7 +3721,7 @@ public class Settings
 
     /**
      * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
-     *
+     * 
      */
     public ExecuteWithoutWhere getExecuteUpdateWithoutWhere() {
         return executeUpdateWithoutWhere;
@@ -3427,7 +3729,7 @@ public class Settings
 
     /**
      * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
-     *
+     * 
      */
     public void setExecuteUpdateWithoutWhere(ExecuteWithoutWhere value) {
         this.executeUpdateWithoutWhere = value;
@@ -3435,7 +3737,7 @@ public class Settings
 
     /**
      * [#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
-     *
+     * 
      */
     public ExecuteWithoutWhere getExecuteDeleteWithoutWhere() {
         return executeDeleteWithoutWhere;
@@ -3443,7 +3745,7 @@ public class Settings
 
     /**
      * [#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
-     *
+     * 
      */
     public void setExecuteDeleteWithoutWhere(ExecuteWithoutWhere value) {
         this.executeDeleteWithoutWhere = value;
@@ -3451,7 +3753,7 @@ public class Settings
 
     /**
      * [#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.
-     *
+     * 
      */
     public SQLDialect getInterpreterDialect() {
         return interpreterDialect;
@@ -3459,7 +3761,7 @@ public class Settings
 
     /**
      * [#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.
-     *
+     * 
      */
     public void setInterpreterDialect(SQLDialect value) {
         this.interpreterDialect = value;
@@ -3467,7 +3769,7 @@ public class Settings
 
     /**
      * [#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.
-     *
+     * 
      */
     public InterpreterNameLookupCaseSensitivity getInterpreterNameLookupCaseSensitivity() {
         return interpreterNameLookupCaseSensitivity;
@@ -3475,7 +3777,7 @@ public class Settings
 
     /**
      * [#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.
-     *
+     * 
      */
     public void setInterpreterNameLookupCaseSensitivity(InterpreterNameLookupCaseSensitivity value) {
         this.interpreterNameLookupCaseSensitivity = value;
@@ -3483,7 +3785,7 @@ public class Settings
 
     /**
      * The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.
-     *
+     * 
      */
     public Locale getInterpreterLocale() {
         return interpreterLocale;
@@ -3491,7 +3793,7 @@ public class Settings
 
     /**
      * The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.
-     *
+     * 
      */
     public void setInterpreterLocale(Locale value) {
         this.interpreterLocale = value;
@@ -3499,23 +3801,23 @@ public class Settings
 
     /**
      * Using this flag, the interpreter will be able to delay the addition of foreign key declarations until the end of the interpretation run.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isInterpreterDelayForeignKeyDeclarations() {
         return interpreterDelayForeignKeyDeclarations;
     }
 
     /**
-     * Sets the value of the interpreterDelayForeignKeyDeclarations property.
-     *
+     * Using this flag, the interpreter will be able to delay the addition of foreign key declarations until the end of the interpretation run.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setInterpreterDelayForeignKeyDeclarations(Boolean value) {
         this.interpreterDelayForeignKeyDeclarations = value;
@@ -3523,23 +3825,23 @@ public class Settings
 
     /**
      * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMetaIncludeSystemIndexes() {
         return metaIncludeSystemIndexes;
     }
 
     /**
-     * Sets the value of the metaIncludeSystemIndexes property.
-     *
+     * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMetaIncludeSystemIndexes(Boolean value) {
         this.metaIncludeSystemIndexes = value;
@@ -3547,23 +3849,23 @@ public class Settings
 
     /**
      * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated sequences, by default.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMetaIncludeSystemSequences() {
         return metaIncludeSystemSequences;
     }
 
     /**
-     * Sets the value of the metaIncludeSystemSequences property.
-     *
+     * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated sequences, by default.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMetaIncludeSystemSequences(Boolean value) {
         this.metaIncludeSystemSequences = value;
@@ -3571,23 +3873,23 @@ public class Settings
 
     /**
      * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMigrationAllowsUndo() {
         return migrationAllowsUndo;
     }
 
     /**
-     * Sets the value of the migrationAllowsUndo property.
-     *
+     * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMigrationAllowsUndo(Boolean value) {
         this.migrationAllowsUndo = value;
@@ -3595,23 +3897,23 @@ public class Settings
 
     /**
      * Whether migrations revert any untracked changes in the schemas that are being migrated.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly revert any elements created in a development environment. This feature is available only in commercial distributions.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMigrationRevertUntracked() {
         return migrationRevertUntracked;
     }
 
     /**
-     * Sets the value of the migrationRevertUntracked property.
-     *
+     * Whether migrations revert any untracked changes in the schemas that are being migrated.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly revert any elements created in a development environment. This feature is available only in commercial distributions.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMigrationRevertUntracked(Boolean value) {
         this.migrationRevertUntracked = value;
@@ -3619,23 +3921,23 @@ public class Settings
 
     /**
      * Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMigrationAutoBaseline() {
         return migrationAutoBaseline;
     }
 
     /**
-     * Sets the value of the migrationAutoBaseline property.
-     *
+     * Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMigrationAutoBaseline(Boolean value) {
         this.migrationAutoBaseline = value;
@@ -3643,23 +3945,23 @@ public class Settings
 
     /**
      * Whether a migration automatically runs a validation first.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMigrationAutoValidation() {
         return migrationAutoValidation;
     }
 
     /**
-     * Sets the value of the migrationAutoValidation property.
-     *
+     * Whether a migration automatically runs a validation first.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMigrationAutoValidation(Boolean value) {
         this.migrationAutoValidation = value;
@@ -3667,23 +3969,23 @@ public class Settings
 
     /**
      * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the difference between <code>TIMESTAMP</code> and <code>TIMESTAMP(6)</code>, if 6 is the default precision for timestamps on the configured dialect.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isMigrationIgnoreDefaultTimestampPrecisionDiffs() {
         return migrationIgnoreDefaultTimestampPrecisionDiffs;
     }
 
     /**
-     * Sets the value of the migrationIgnoreDefaultTimestampPrecisionDiffs property.
-     *
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the difference between <code>TIMESTAMP</code> and <code>TIMESTAMP(6)</code>, if 6 is the default precision for timestamps on the configured dialect.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setMigrationIgnoreDefaultTimestampPrecisionDiffs(Boolean value) {
         this.migrationIgnoreDefaultTimestampPrecisionDiffs = value;
@@ -3691,7 +3993,7 @@ public class Settings
 
     /**
      * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
-     *
+     * 
      */
     public Locale getLocale() {
         return locale;
@@ -3699,7 +4001,7 @@ public class Settings
 
     /**
      * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
-     *
+     * 
      */
     public void setLocale(Locale value) {
         this.locale = value;
@@ -3707,7 +4009,7 @@ public class Settings
 
     /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
-     *
+     * 
      */
     public SQLDialect getParseDialect() {
         return parseDialect;
@@ -3715,7 +4017,7 @@ public class Settings
 
     /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
-     *
+     * 
      */
     public void setParseDialect(SQLDialect value) {
         this.parseDialect = value;
@@ -3723,7 +4025,7 @@ public class Settings
 
     /**
      * The Locale to be used with any parser locale dependent logic, defaulting to {@link #getLocale()}.
-     *
+     * 
      */
     public Locale getParseLocale() {
         return parseLocale;
@@ -3731,7 +4033,7 @@ public class Settings
 
     /**
      * The Locale to be used with any parser locale dependent logic, defaulting to {@link #getLocale()}.
-     *
+     * 
      */
     public void setParseLocale(Locale value) {
         this.parseLocale = value;
@@ -3739,7 +4041,7 @@ public class Settings
 
     /**
      * The date format to use when parsing functions whose behaviour depends on some session date format, such as NLS_DATE_FORMAT in Oracle
-     *
+     * 
      */
     public String getParseDateFormat() {
         return parseDateFormat;
@@ -3747,7 +4049,7 @@ public class Settings
 
     /**
      * The date format to use when parsing functions whose behaviour depends on some session date format, such as NLS_DATE_FORMAT in Oracle
-     *
+     * 
      */
     public void setParseDateFormat(String value) {
         this.parseDateFormat = value;
@@ -3755,7 +4057,7 @@ public class Settings
 
     /**
      * The timestamp format to use when parsing functions whose behaviour depends on some session date format, such as NLS_TIMESTAMP_FORMAT in Oracle
-     *
+     * 
      */
     public String getParseTimestampFormat() {
         return parseTimestampFormat;
@@ -3763,7 +4065,7 @@ public class Settings
 
     /**
      * The timestamp format to use when parsing functions whose behaviour depends on some session date format, such as NLS_TIMESTAMP_FORMAT in Oracle
-     *
+     * 
      */
     public void setParseTimestampFormat(String value) {
         this.parseTimestampFormat = value;
@@ -3772,14 +4074,14 @@ public class Settings
     /**
      * The prefix to use for named parameters in parsed SQL.
      * <p>
-     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
      * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code> when parsing SQL.
      * <p>
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
-     *
+     * 
      */
     public String getParseNamedParamPrefix() {
         return parseNamedParamPrefix;
@@ -3788,14 +4090,14 @@ public class Settings
     /**
      * The prefix to use for named parameters in parsed SQL.
      * <p>
-     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
      * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code> when parsing SQL.
      * <p>
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
-     *
+     * 
      */
     public void setParseNamedParamPrefix(String value) {
         this.parseNamedParamPrefix = value;
@@ -3803,7 +4105,7 @@ public class Settings
 
     /**
      * [#7337] The default name case for parsed identifiers.
-     *
+     * 
      */
     public ParseNameCase getParseNameCase() {
         return parseNameCase;
@@ -3811,7 +4113,7 @@ public class Settings
 
     /**
      * [#7337] The default name case for parsed identifiers.
-     *
+     * 
      */
     public void setParseNameCase(ParseNameCase value) {
         this.parseNameCase = value;
@@ -3819,7 +4121,7 @@ public class Settings
 
     /**
      * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
-     *
+     * 
      */
     public ParseWithMetaLookups getParseWithMetaLookups() {
         return parseWithMetaLookups;
@@ -3827,7 +4129,7 @@ public class Settings
 
     /**
      * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
-     *
+     * 
      */
     public void setParseWithMetaLookups(ParseWithMetaLookups value) {
         this.parseWithMetaLookups = value;
@@ -3842,7 +4144,7 @@ public class Settings
      * when the input dialect supports this syntax.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public Transformation getParseAppendMissingTableReferences() {
         return parseAppendMissingTableReferences;
@@ -3857,7 +4159,7 @@ public class Settings
      * when the input dialect supports this syntax.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public void setParseAppendMissingTableReferences(Transformation value) {
         this.parseAppendMissingTableReferences = value;
@@ -3865,23 +4167,23 @@ public class Settings
 
     /**
      * [#9780] Whether commands of the type <code>SET key = value</code> should be parsed rather than ignored.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isParseSetCommands() {
         return parseSetCommands;
     }
 
     /**
-     * Sets the value of the parseSetCommands property.
-     *
+     * [#9780] Whether commands of the type <code>SET key = value</code> should be parsed rather than ignored.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setParseSetCommands(Boolean value) {
         this.parseSetCommands = value;
@@ -3889,7 +4191,7 @@ public class Settings
 
     /**
      * [#5917] Whether the parser should accept unsupported (but known) syntax.
-     *
+     * 
      */
     public ParseUnsupportedSyntax getParseUnsupportedSyntax() {
         return parseUnsupportedSyntax;
@@ -3897,7 +4199,7 @@ public class Settings
 
     /**
      * [#5917] Whether the parser should accept unsupported (but known) syntax.
-     *
+     * 
      */
     public void setParseUnsupportedSyntax(ParseUnsupportedSyntax value) {
         this.parseUnsupportedSyntax = value;
@@ -3905,7 +4207,7 @@ public class Settings
 
     /**
      * [#7344] Whether the parser should accept unknown functions.
-     *
+     * 
      */
     public ParseUnknownFunctions getParseUnknownFunctions() {
         return parseUnknownFunctions;
@@ -3913,7 +4215,7 @@ public class Settings
 
     /**
      * [#7344] Whether the parser should accept unknown functions.
-     *
+     * 
      */
     public void setParseUnknownFunctions(ParseUnknownFunctions value) {
         this.parseUnknownFunctions = value;
@@ -3921,23 +4223,23 @@ public class Settings
 
     /**
      * [#13109] Whether the parser of the jOOQ Open Source Edition should ignore commercial only features, rather than failing.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isParseIgnoreCommercialOnlyFeatures() {
         return parseIgnoreCommercialOnlyFeatures;
     }
 
     /**
-     * Sets the value of the parseIgnoreCommercialOnlyFeatures property.
-     *
+     * [#13109] Whether the parser of the jOOQ Open Source Edition should ignore commercial only features, rather than failing.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setParseIgnoreCommercialOnlyFeatures(Boolean value) {
         this.parseIgnoreCommercialOnlyFeatures = value;
@@ -3945,23 +4247,23 @@ public class Settings
 
     /**
      * [#8325] Whether the parser should ignore content between ignore comment tokens.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isParseIgnoreComments() {
         return parseIgnoreComments;
     }
 
     /**
-     * Sets the value of the parseIgnoreComments property.
-     *
+     * [#8325] Whether the parser should ignore content between ignore comment tokens.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setParseIgnoreComments(Boolean value) {
         this.parseIgnoreComments = value;
@@ -3969,7 +4271,7 @@ public class Settings
 
     /**
      * [#8325] The ignore comment start token
-     *
+     * 
      */
     public String getParseIgnoreCommentStart() {
         return parseIgnoreCommentStart;
@@ -3977,7 +4279,7 @@ public class Settings
 
     /**
      * [#8325] The ignore comment start token
-     *
+     * 
      */
     public void setParseIgnoreCommentStart(String value) {
         this.parseIgnoreCommentStart = value;
@@ -3985,7 +4287,7 @@ public class Settings
 
     /**
      * [#8325] The ignore comment stop token
-     *
+     * 
      */
     public String getParseIgnoreCommentStop() {
         return parseIgnoreCommentStop;
@@ -3993,7 +4295,7 @@ public class Settings
 
     /**
      * [#8325] The ignore comment stop token
-     *
+     * 
      */
     public void setParseIgnoreCommentStop(String value) {
         this.parseIgnoreCommentStop = value;
@@ -4007,23 +4309,29 @@ public class Settings
      * However, it may be desirable to retain comments before or in between top
      * level queries, when parsing multiple such queries in a script. Comments
      * inside of queries (including procedural statements) are still not supported.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isParseRetainCommentsBetweenQueries() {
         return parseRetainCommentsBetweenQueries;
     }
 
     /**
-     * Sets the value of the parseRetainCommentsBetweenQueries property.
-     *
+     * [#12538] Whether the parser should retain comments and whitespace between queries when parsing multiple queries through {@link org.jooq.Parser#parse(String)}.
+     * <p>
+     * jOOQ's query object model doesn't have a way to represent comments
+     * or other whitespace, and as such, the parser simply skips them by default.
+     * However, it may be desirable to retain comments before or in between top
+     * level queries, when parsing multiple such queries in a script. Comments
+     * inside of queries (including procedural statements) are still not supported.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setParseRetainCommentsBetweenQueries(Boolean value) {
         this.parseRetainCommentsBetweenQueries = value;
@@ -4031,23 +4339,23 @@ public class Settings
 
     /**
      * [#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isParseMetaDefaultExpressions() {
         return parseMetaDefaultExpressions;
     }
 
     /**
-     * Sets the value of the parseMetaDefaultExpressions property.
-     *
+     * [#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setParseMetaDefaultExpressions(Boolean value) {
         this.parseMetaDefaultExpressions = value;
@@ -4055,7 +4363,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.
-     *
+     * 
      */
     public WriteIfReadonly getReadonlyTableRecordInsert() {
         return readonlyTableRecordInsert;
@@ -4063,7 +4371,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.
-     *
+     * 
      */
     public void setReadonlyTableRecordInsert(WriteIfReadonly value) {
         this.readonlyTableRecordInsert = value;
@@ -4071,7 +4379,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to update a readonly column using {@link org.jooq.UpdatableRecord#update()}.
-     *
+     * 
      */
     public WriteIfReadonly getReadonlyUpdatableRecordUpdate() {
         return readonlyUpdatableRecordUpdate;
@@ -4079,7 +4387,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to update a readonly column using {@link org.jooq.UpdatableRecord#update()}.
-     *
+     * 
      */
     public void setReadonlyUpdatableRecordUpdate(WriteIfReadonly value) {
         this.readonlyUpdatableRecordUpdate = value;
@@ -4087,7 +4395,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.Insert} statements, or the insert clause of a {@link org.jooq.Merge} statement.
-     *
+     * 
      */
     public WriteIfReadonly getReadonlyInsert() {
         return readonlyInsert;
@@ -4095,7 +4403,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.Insert} statements, or the insert clause of a {@link org.jooq.Merge} statement.
-     *
+     * 
      */
     public void setReadonlyInsert(WriteIfReadonly value) {
         this.readonlyInsert = value;
@@ -4103,7 +4411,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to update a readonly column using {@link org.jooq.Update} statements, or the update clause of a {@link org.jooq.Merge} statement.
-     *
+     * 
      */
     public WriteIfReadonly getReadonlyUpdate() {
         return readonlyUpdate;
@@ -4111,7 +4419,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to update a readonly column using {@link org.jooq.Update} statements, or the update clause of a {@link org.jooq.Merge} statement.
-     *
+     * 
      */
     public void setReadonlyUpdate(WriteIfReadonly value) {
         this.readonlyUpdate = value;
@@ -4119,23 +4427,23 @@ public class Settings
 
     /**
      * [#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys
-     *
+     * 
      * @return
      *     possible object is
      *     {@link Boolean }
-     *
+     *     
      */
     public Boolean isApplyWorkaroundFor7962() {
         return applyWorkaroundFor7962;
     }
 
     /**
-     * Sets the value of the applyWorkaroundFor7962 property.
-     *
+     * [#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys
+     * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *
+     *     
      */
     public void setApplyWorkaroundFor7962(Boolean value) {
         this.applyWorkaroundFor7962 = value;
@@ -4174,16 +4482,36 @@ public class Settings
         this.parseSearchPath = parseSearchPath;
     }
 
+    /**
+     * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). The same behaviour is replicated in the {@link org.jooq.Meta} API. This flag allows for turning off this feature.
+     * 
+     */
     public Settings withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
     }
 
+    /**
+     * Whether any catalog name should be rendered at all.
+     * <p>
+     * Use this for single-catalog environments, or when all objects are made
+     * available using synonyms
+     * 
+     */
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
     }
 
+    /**
+     * Whether any schema name should be rendered at all.
+     * <p>
+     * Setting this to false also implicitly sets "renderCatalog" to false.
+     * <p>
+     * Use this for single-schema environments, or when all objects are made
+     * available using synonyms
+     * 
+     */
     public Settings withRenderSchema(Boolean value) {
         setRenderSchema(value);
         return this;
@@ -4192,7 +4520,7 @@ public class Settings
     /**
      * Configure render mapping for runtime schema / table rewriting in
      * generated SQL.
-     *
+     * 
      */
     public Settings withRenderMapping(RenderMapping value) {
         setRenderMapping(value);
@@ -4205,7 +4533,7 @@ public class Settings
      * This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
      * <p>
      * This setting does not affect any plain SQL usage.
-     *
+     * 
      */
     public Settings withRenderQuotedNames(RenderQuotedNames value) {
         setRenderQuotedNames(value);
@@ -4218,7 +4546,7 @@ public class Settings
      * Names are modified irrespective of the {@link #getRenderQuotedNames()} setting.
      * <p>
      * This setting does not affect any plain SQL usage.
-     *
+     * 
      */
     public Settings withRenderNameCase(RenderNameCase value) {
         setRenderNameCase(value);
@@ -4232,7 +4560,7 @@ public class Settings
      * This is set to "QUOTED" by default for backwards-compatibility.
      * <p>
      * @deprecated - 3.12.0 - [#5909] - Use {@link RenderQuotedNames} and {@link RenderNameCase} instead.
-     *
+     * 
      */
     @Deprecated
     public Settings withRenderNameStyle(RenderNameStyle value) {
@@ -4243,14 +4571,14 @@ public class Settings
     /**
      * The prefix to use for named parameters in generated SQL.
      * <p>
-     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
      * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
-     *
+     * 
      */
     public Settings withRenderNamedParamPrefix(String value) {
         setRenderNamedParamPrefix(value);
@@ -4259,7 +4587,7 @@ public class Settings
 
     /**
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
-     *
+     * 
      */
     public Settings withRenderKeywordCase(RenderKeywordCase value) {
         setRenderKeywordCase(value);
@@ -4270,7 +4598,7 @@ public class Settings
      * Whether the case of {@link org.jooq.Keyword} references should be modified in any way.
      * <p>
      * @deprecated - 3.12.0 - [#5909] - Use {@link RenderKeywordCase} instead.
-     *
+     * 
      */
     @Deprecated
     public Settings withRenderKeywordStyle(RenderKeywordStyle value) {
@@ -4280,13 +4608,17 @@ public class Settings
 
     /**
      * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
-     *
+     * 
      */
     public Settings withRenderLocale(Locale value) {
         setRenderLocale(value);
         return this;
     }
 
+    /**
+     * Whether rendered SQL should be pretty-printed.
+     * 
+     */
     public Settings withRenderFormatted(Boolean value) {
         setRenderFormatted(value);
         return this;
@@ -4294,7 +4626,7 @@ public class Settings
 
     /**
      * All sorts of formatting flags / settings.
-     *
+     * 
      */
     public Settings withRenderFormatting(RenderFormatting value) {
         setRenderFormatting(value);
@@ -4303,7 +4635,7 @@ public class Settings
 
     /**
      * Whether to render optional parentheses to make associativity explicit, e.g. <code>((a + b) + c)</code> instead of (a + b + c).
-     *
+     * 
      */
     public Settings withRenderOptionalAssociativityParentheses(RenderOptionalKeyword value) {
         setRenderOptionalAssociativityParentheses(value);
@@ -4312,7 +4644,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect. This is ignored if the keyword is not supported (e.g. in Oracle)
-     *
+     * 
      */
     public Settings withRenderOptionalAsKeywordForTableAliases(RenderOptionalKeyword value) {
         setRenderOptionalAsKeywordForTableAliases(value);
@@ -4321,7 +4653,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>AS</code> keyword in table aliases, if it is optional in the output dialect.
-     *
+     * 
      */
     public Settings withRenderOptionalAsKeywordForFieldAliases(RenderOptionalKeyword value) {
         setRenderOptionalAsKeywordForFieldAliases(value);
@@ -4330,7 +4662,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>INNER</code> keyword in <code>INNER JOIN</code>, if it is optional in the output dialect.
-     *
+     * 
      */
     public Settings withRenderOptionalInnerKeyword(RenderOptionalKeyword value) {
         setRenderOptionalInnerKeyword(value);
@@ -4339,7 +4671,7 @@ public class Settings
 
     /**
      * Whether to render the optional <code>OUTER</code> keyword in <code>OUTER JOIN</code>, if it is optional in the output dialect.
-     *
+     * 
      */
     public Settings withRenderOptionalOuterKeyword(RenderOptionalKeyword value) {
         setRenderOptionalOuterKeyword(value);
@@ -4348,13 +4680,20 @@ public class Settings
 
     /**
      * Whether to render an explicit window <code>RANGE</code> clause when an implicit clause is applied.
-     *
+     * 
      */
     public Settings withRenderImplicitWindowRange(RenderImplicitWindowRange value) {
         setRenderImplicitWindowRange(value);
         return this;
     }
 
+    /**
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
+     * 
+     */
     public Settings withRenderScalarSubqueriesForStoredFunctions(Boolean value) {
         setRenderScalarSubqueriesForStoredFunctions(value);
         return this;
@@ -4362,7 +4701,7 @@ public class Settings
 
     /**
      * The join type to be generated by implicit joins.
-     *
+     * 
      */
     public Settings withRenderImplicitJoinType(RenderImplicitJoinType value) {
         setRenderImplicitJoinType(value);
@@ -4371,33 +4710,94 @@ public class Settings
 
     /**
      * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
-     *
+     * 
      */
     public Settings withRenderDefaultNullability(RenderDefaultNullability value) {
         setRenderDefaultNullability(value);
         return this;
     }
 
+    /**
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withRenderCoalesceToEmptyStringInConcat(Boolean value) {
         setRenderCoalesceToEmptyStringInConcat(value);
         return this;
     }
 
+    /**
+     * Whether an additional <code>ORDER BY rn</code> clause should be rendered on emulated paginated queries.
+     * <p>
+     * Older databases did not support OFFSET .. FETCH pagination, so jOOQ emulates it using derived
+     * tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2, 
+     * SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not 
+     * <em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle, 
+     * it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess 
+     * <code>ORDER BY</code> clause may add some additional performance overhead. This setting forces 
+     * jOOQ to not generate the additional <code>ORDER BY</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.
+     * 
+     */
     public Settings withRenderOrderByRownumberForEmulatedPagination(Boolean value) {
         setRenderOrderByRownumberForEmulatedPagination(value);
         return this;
     }
 
+    /**
+     * Whether the jOOQ <code>RETURNING</code> clause should map to SQL Server's <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server supports an <code>OUTPUT</code> clause in most DML statements, whose behaviour
+     * is almost identical to <code>RETURNING</code> in Firebird, Oracle, PostgreSQL. Users who
+     * want to prevent jOOQ from rendering this <code>OUTPUT</code> clause can deactivate this flag
+     * to revert to jOOQ calling {@code java.sql.Statement#getGeneratedKeys()} instead, which
+     * is only supported for single row inserts.
+     * <p>
+     * This <code>OUTPUT</code> clause does not support fetching trigger generated values. In order
+     * to fetch trigger generated values, {@link #fetchTriggerValuesAfterSQLServerOutput} needs to
+     * be enabled as well.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * 
+     */
     public Settings withRenderOutputForSQLServerReturningClause(Boolean value) {
         setRenderOutputForSQLServerReturningClause(value);
         return this;
     }
 
+    /**
+     * Whether the jOOQ <code>GROUP_CONCAT</code> function should be overflow-protected by setting the <code>@@group_concat_max_len</code> session variable in MySQL style database systems.
+     * <p>
+     * MySQL truncates <code>GROUP_CONCAT</code> results after a certain length, which may be way
+     * too small for jOOQ's usage, especially when using the <code>MULTISET</code> emulation. By
+     * default, jOOQ sets a session variable to the highest possible value prior to executing a
+     * query containing <code>GROUP_CONCAT</code>. This flag can be used to opt out of this.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/12092">https://github.com/jOOQ/jOOQ/issues/12092</a>.
+     * 
+     */
     public Settings withRenderGroupConcatMaxLenSessionVariable(Boolean value) {
         setRenderGroupConcatMaxLenSessionVariable(value);
         return this;
     }
 
+    /**
+     * Whether queries combined with set operators (e.g. UNION and UNION ALL) should always be surrounded by a parenthesis pair.
+     * <p>
+     * By default (i.e. when this setting is set to <code>false</code> jOOQ will only render parenthesis pairs around queries combined with set operators when required.
+     * This is for example the case when set operators are nested, when non-associative operators like EXCEPT are used, or when the queries are rendered as derived tables.
+     * <p>
+     * When this setting is set to <code>true</code> the queries combined with set operators will always be surrounded by a parenthesis pair.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.
+     * 
+     */
     public Settings withRenderParenthesisAroundSetOperationQueries(Boolean value) {
         setRenderParenthesisAroundSetOperationQueries(value);
         return this;
@@ -4409,30 +4809,61 @@ public class Settings
      * A few hierarchical mapping features work with paths encoded in names (specifically field aliases), such as the reflective mapping of nested values when aliasing fields as:
      * <p>
      * <pre><code>
-     * SELECT
+     * SELECT 
      *   a.first_name AS "book.author.firstName"
      *   a.last_name AS "book.author.lastName"
      * FROM ...
      * </code></pre>
      * <p>
      * Not all dialects support "." in identifiers. This setting allows for specifying an alternative String to use as separator, e.g. "__".
-     *
+     * 
      */
     public Settings withNamePathSeparator(String value) {
         setNamePathSeparator(value);
         return this;
     }
 
+    /**
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetDateTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
+     * 
+     */
     public Settings withBindOffsetDateTimeType(Boolean value) {
         setBindOffsetDateTimeType(value);
         return this;
     }
 
+    /**
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
+     * 
+     */
     public Settings withBindOffsetTimeType(Boolean value) {
         setBindOffsetTimeType(value);
         return this;
     }
 
+    /**
+     * Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server <code>OUTPUT</code> statements do not support fetching trigger generated values.
+     * This is a limitation of the {@link #renderOutputForSQLServerReturningClause}. An additional
+     * <code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+     * included in the <code>OUTPUT</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * 
+     */
     public Settings withFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         setFetchTriggerValuesAfterSQLServerOutput(value);
         return this;
@@ -4441,7 +4872,7 @@ public class Settings
     /**
      * Whether to fetch data into intermediate {@link org.jooq.Result} instances.
      * <p>
-     * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result}
+     * By default, a {@link org.jooq.ResultQuery} produces no intermediate {@link org.jooq.Result} 
      * instances if they are not explicitly requested by the caller, e.g. by calling
      * {@link org.jooq.ResultQuery#fetch()}, or in the presence of {@link org.jooq.ExecuteListener}
      * instances, which may require access to {@link org.jooq.ExecuteContext#result()}.
@@ -4449,178 +4880,526 @@ public class Settings
      * <p>
      * Using this flag, fetching of intermediate results can be turned off even when execute listeners
      * are present, or turned on even if they're absent.
-     *
+     * 
      */
     public Settings withFetchIntermediateResult(FetchIntermediateResult value) {
         setFetchIntermediateResult(value);
         return this;
     }
 
+    /**
+     * Transform various syntax patterns to better versions, if possible.
+     * <p>
+     * This flag enables the pattern transformation feature, which consists of several sub-flags that are
+     * all prefixed with "transformPatterns", e.g. {@link #transformPatternsTrim}. While the sub-flags default
+     * to being enabled, and can be disabled on an individual basis, the global feature itself is disabled by
+     * default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatterns(Boolean value) {
         setTransformPatterns(value);
         return this;
     }
 
+    /**
+     * Activate debug logging of the {@link #transformPatterns} feature.
+     * 
+     */
     public Settings withTransformPatternsLogging(Boolean value) {
         setTransformPatternsLogging(value);
         return this;
     }
 
+    /**
+     * Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>.
+     * <p>
+     * Historically, a few dialects did not implement <code>TRIM(x)</code> or <code>TRIM(BOTH FROM x)</code>,
+     * so users worked around this by wrapping <code>LTRIM()</code> and <code>RTRIM()</code> with each other.
+     * Maintaining this is usually undesirable, so this transformation helps remove the unwanted wrapping.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsTrim(Boolean value) {
         setTransformPatternsTrim(value);
         return this;
     }
 
+    /**
+     * Transform <code>NOT(NOT(x))</code> to <code>x</code>.
+     * <p>
+     * This transformation removes a redundant logic negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNotNot(Boolean value) {
         setTransformPatternsNotNot(value);
         return this;
     }
 
+    /**
+     * Transform <code>NOT (a != b)</code> to <code>a = b</code>, and similar comparisons.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNotComparison(Boolean value) {
         setTransformPatternsNotComparison(value);
         return this;
     }
 
+    /**
+     * Transform <code>NOT (a IS NOT DISTINCT FROM b)</code> to <code>a IS DISTINCT FROM b</code>.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNotNotDistinct(Boolean value) {
         setTransformPatternsNotNotDistinct(value);
         return this;
     }
 
+    /**
+     * Transform <code>(a + b) + (c + d)</code> to <code>((a + b) + c) + d</code>.
+     * <p>
+     * This transformation turns trees into lists, which greatly simplifies other tree traversal transformations.
+     * Some of those other transformations currently rely on this flag to be active.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNormaliseAssociativeOps(Boolean value) {
         setTransformPatternsNormaliseAssociativeOps(value);
         return this;
     }
 
+    /**
+     * Transform <code>x IN (a)</code> to <code>x = a</code> and <code>x NOT IN (a)</code> to <code>x != a</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNormaliseInListSingleElementToComparison(Boolean value) {
         setTransformPatternsNormaliseInListSingleElementToComparison(value);
         return this;
     }
 
+    /**
+     * Transform <code>1 = a</code> to <code>a = 1</code>.
+     * <p>
+     * This transformation inverses {@link TableField} [op] {@link org.jooq.impl.QOM.Val} comparisons, if they're not in that order.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNormaliseFieldCompareValue(Boolean value) {
         setTransformPatternsNormaliseFieldCompareValue(value);
         return this;
     }
 
+    /**
+     * Transform <code>x = c1 OR x = c2</code> to <code>x IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>OR</code> predicates into simpler <code>IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsOrEqToIn(Boolean value) {
         setTransformPatternsOrEqToIn(value);
         return this;
     }
 
+    /**
+     * Transform <code>x != c1 AND x != c2</code> to <code>x NOT IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>AND</code> predicates into simpler <code>NOT IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsAndNeToNotIn(Boolean value) {
         setTransformPatternsAndNeToNotIn(value);
         return this;
     }
 
+    /**
+     * Transform <code>x = a OR x > a</code> to <code>x >= a</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeOrComparison(Boolean value) {
         setTransformPatternsMergeOrComparison(value);
         return this;
     }
 
+    /**
+     * Transform <code>x >= a AND x <= a</code> to <code>x = a</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeAndComparison(Boolean value) {
         setTransformPatternsMergeAndComparison(value);
         return this;
     }
 
+    /**
+     * Transform <code>x IN (a, b, c) AND x IN (b, c, d)</code> to <code>x IN (b, c)</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeInLists(Boolean value) {
         setTransformPatternsMergeInLists(value);
         return this;
     }
 
+    /**
+     * Transform <code>x >= a AND x <= b</code> to <code>x BETWEEN a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected range predicates to a single comparison using <code>BETWEEN</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeRangePredicates(Boolean value) {
         setTransformPatternsMergeRangePredicates(value);
         return this;
     }
 
+    /**
+     * Transform <code>x BETWEEN a AND b OR x BETWEEN b AND a</code> to <code>x BETWEEN SYMMETRIC a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected <code>BETWEEN</code> predicates to a single comparison using <code>BETWEEN SYMMETRIC</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeBetweenSymmetricPredicates(Boolean value) {
         setTransformPatternsMergeBetweenSymmetricPredicates(value);
         return this;
     }
 
+    /**
+     * Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.
+     * <p>
+     * This transformation removes any trivial case abbreviations, such as <code>NVL()</code>,
+     * <code>COALESCE()</code>, <code>NULLIF()</code>, etc.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsTrivialCaseAbbreviation(Boolean value) {
         setTransformPatternsTrivialCaseAbbreviation(value);
         return this;
     }
 
+    /**
+     * Transform trivial predicates like <code>1 = 1</code> to <code>TRUE</code>.
+     * <p>
+     * This transformation removes any trivial predicates.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsTrivialPredicates(Boolean value) {
         setTransformPatternsTrivialPredicates(value);
         return this;
     }
 
+    /**
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(*) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 …)</code>.
+     * <p>
+     * Scalar subqueries that count rows and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsScalarSubqueryCountAsteriskGtZero(Boolean value) {
         setTransformPatternsScalarSubqueryCountAsteriskGtZero(value);
         return this;
     }
 
+    /**
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(expr) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 … WHERE expr IS NOT NULL)</code>.
+     * <p>
+     * Scalar subqueries that count non-null expressions and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsScalarSubqueryCountExpressionGtZero(Boolean value) {
         setTransformPatternsScalarSubqueryCountExpressionGtZero(value);
         return this;
     }
 
+    /**
+     * Transform empty scalar subqueries like <code>(SELECT 1 WHERE FALSE)</code> to <code>NULL</code>.
+     * <p>
+     * Scalar subqueries that are guaranteed to produce no results can be replaced by a <code>NULL</code> value.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsEmptyScalarSubquery(Boolean value) {
         setTransformPatternsEmptyScalarSubquery(value);
         return this;
     }
 
+    /**
+     * Transform <code>-(-(x))</code> to <code>x</code>
+     * <p>
+     * This transformation removes a redundant arithmetic negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNegNeg(Boolean value) {
         setTransformPatternsNegNeg(value);
         return this;
     }
 
+    /**
+     * Transform <code>~(~(x))</code> to <code>x</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitNotBitNot(Boolean value) {
         setTransformPatternsBitNotBitNot(value);
         return this;
     }
 
+    /**
+     * Transform <code>~(bitnand(x, y))</code> to <code>bitand(x, y)</code> and <code>~(bitand(x, y)</code> to <code>bitnand(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitNotBitNand(Boolean value) {
         setTransformPatternsBitNotBitNand(value);
         return this;
     }
 
+    /**
+     * Transform <code>~(bitnor(x, y))</code> to <code>bitor(x, y)</code> and <code>~(bitor(x, y)</code> to <code>bitnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitNotBitNor(Boolean value) {
         setTransformPatternsBitNotBitNor(value);
         return this;
     }
 
+    /**
+     * Transform <code>~(bitxnor(x, y))</code> to <code>bitxor(x, y)</code> and <code>~(bitxor(x, y)</code> to <code>bitxnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitNotBitXNor(Boolean value) {
         setTransformPatternsBitNotBitXNor(value);
         return this;
     }
 
+    /**
+     * Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>.
+     * <p>
+     * Idempotent functions that are covered so far, include:
+     * <ul>
+     * <li><code>LTRIM(LTRIM(s))</code> to <code>LTRIM(s)</code></li>
+     * <li><code>LTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>RTRIM(RTRIM(s))</code> to <code>RTRIM(s)</code></li>
+     * <li><code>RTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(LTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(RTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code></li>
+     * <li><code>LOWER(LOWER(s))</code> to <code>LOWER(s)</code></li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsIdempotentFunctionRepetition(Boolean value) {
         setTransformPatternsIdempotentFunctionRepetition(value);
         return this;
     }
 
+    /**
+     * Transform <code>1 / y * x</code> to <code>x / y</code>, and other transformations.
+     * <p>
+     * This transformation simplifies arithmetic expressions.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsArithmeticExpressions(Boolean value) {
         setTransformPatternsArithmeticExpressions(value);
         return this;
     }
 
+    /**
+     * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsTrigonometricFunctions(Boolean value) {
         setTransformPatternsTrigonometricFunctions(value);
         return this;
     }
 
+    /**
+     * Transform <code>LN(value) / LN(base)</code> to <code>LOG(base, value)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded logarithmic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsLogarithmicFunctions(Boolean value) {
         setTransformPatternsLogarithmicFunctions(value);
         return this;
     }
 
+    /**
+     * Transform <code>(EXP(x) - EXP(-x)) / 2</code> to <code>SINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsHyperbolicFunctions(Boolean value) {
         setTransformPatternsHyperbolicFunctions(value);
         return this;
     }
 
+    /**
+     * Transform <code>LN(x + SQRT(SQUARE(x) + 1))</code> to <code>ASINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded inverse hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsInverseHyperbolicFunctions(Boolean value) {
         setTransformPatternsInverseHyperbolicFunctions(value);
         return this;
     }
 
+    /**
+     * Transform {@link org.jooq.impl.QOM.CompareCondition} and a few other types of condition to inline their bind values, in case they match
+     *          
+     * <p>
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+     * converted to equivalent table lists in generated SQL using this flag.
+     * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformInlineBindValuesForFieldComparisons(Boolean value) {
         setTransformInlineBindValuesForFieldComparisons(value);
         return this;
     }
 
+    /**
+     * Transform ANSI join to table lists if possible.
+     * <p>
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+     * converted to equivalent table lists in generated SQL using this flag.
+     * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformAnsiJoinToTableLists(Boolean value) {
         setTransformAnsiJoinToTableLists(value);
         return this;
@@ -4632,7 +5411,7 @@ public class Settings
      * This transformation works around a known MySQL limitation "ERROR 1235 (42000): This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery'"
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public Settings withTransformInConditionSubqueryWithLimitToDerivedTable(Transformation value) {
         setTransformInConditionSubqueryWithLimitToDerivedTable(value);
@@ -4643,13 +5422,25 @@ public class Settings
      * Transform the <code>QUALIFY</code> clause to an equivalent derived table to filter on window functions.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public Settings withTransformQualify(Transformation value) {
         setTransformQualify(value);
         return this;
     }
 
+    /**
+     * Transform table lists to ANSI join if possible.
+     * <p>
+     * (Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
+     * this flag enables the transformation to ANSI join syntax.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformTableListsToAnsiJoin(Boolean value) {
         setTransformTableListsToAnsiJoin(value);
         return this;
@@ -4664,7 +5455,7 @@ public class Settings
      * equivalent SQL, if possible.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public Settings withTransformRownum(Transformation value) {
         setTransformRownum(value);
@@ -4678,7 +5469,7 @@ public class Settings
      * Expressions on literals and bind variables could be evaluated in the client prior to generating SQL.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public Settings withTransformUnneededArithmeticExpressions(TransformUnneededArithmeticExpressions value) {
         setTransformUnneededArithmeticExpressions(value);
@@ -4687,7 +5478,7 @@ public class Settings
 
     /**
      * Whether string literals should be escaped with backslash.
-     *
+     * 
      */
     public Settings withBackslashEscaping(BackslashEscaping value) {
         setBackslashEscaping(value);
@@ -4698,15 +5489,15 @@ public class Settings
      * Specify how bind variables are to be rendered.
      * <p>
      * Possibilities include:
-     *
+     * 
      * - question marks
      * - named parameters
      * - named or inlined parameters
      * - inlined parameters
-     *
+     * 
      * This value is overridden by statementType == STATIC_STATEMENT, in
      * case of which, this defaults to INLINED
-     *
+     * 
      */
     public Settings withParamType(ParamType value) {
         setParamType(value);
@@ -4715,7 +5506,7 @@ public class Settings
 
     /**
      * Whether rendered bind values should be cast to their respective type.
-     *
+     * 
      */
     public Settings withParamCastMode(ParamCastMode value) {
         setParamCastMode(value);
@@ -4724,7 +5515,7 @@ public class Settings
 
     /**
      * The type of statement that is to be executed.
-     *
+     * 
      */
     public Settings withStatementType(StatementType value) {
         setStatementType(value);
@@ -4741,7 +5532,7 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
      * </ul>
-     *
+     * 
      */
     public Settings withInlineThreshold(Integer value) {
         setInlineThreshold(value);
@@ -4750,7 +5541,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.TransactionListener}s.
-     *
+     * 
      */
     public Settings withTransactionListenerStartInvocationOrder(InvocationOrder value) {
         setTransactionListenerStartInvocationOrder(value);
@@ -4759,7 +5550,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.TransactionListener}s.
-     *
+     * 
      */
     public Settings withTransactionListenerEndInvocationOrder(InvocationOrder value) {
         setTransactionListenerEndInvocationOrder(value);
@@ -4768,7 +5559,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.MigrationListener}s.
-     *
+     * 
      */
     public Settings withMigrationListenerStartInvocationOrder(InvocationOrder value) {
         setMigrationListenerStartInvocationOrder(value);
@@ -4777,7 +5568,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.MigrationListener}s.
-     *
+     * 
      */
     public Settings withMigrationListenerEndInvocationOrder(InvocationOrder value) {
         setMigrationListenerEndInvocationOrder(value);
@@ -4786,7 +5577,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.VisitListener}s.
-     *
+     * 
      */
     public Settings withVisitListenerStartInvocationOrder(InvocationOrder value) {
         setVisitListenerStartInvocationOrder(value);
@@ -4795,7 +5586,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.VisitListener}s.
-     *
+     * 
      */
     public Settings withVisitListenerEndInvocationOrder(InvocationOrder value) {
         setVisitListenerEndInvocationOrder(value);
@@ -4804,7 +5595,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.RecordListener}s.
-     *
+     * 
      */
     public Settings withRecordListenerStartInvocationOrder(InvocationOrder value) {
         setRecordListenerStartInvocationOrder(value);
@@ -4813,7 +5604,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.RecordListener}s.
-     *
+     * 
      */
     public Settings withRecordListenerEndInvocationOrder(InvocationOrder value) {
         setRecordListenerEndInvocationOrder(value);
@@ -4822,7 +5613,7 @@ public class Settings
 
     /**
      * The order of invocation for [action]start() methods registered {@link org.jooq.ExecuteListener}s.
-     *
+     * 
      */
     public Settings withExecuteListenerStartInvocationOrder(InvocationOrder value) {
         setExecuteListenerStartInvocationOrder(value);
@@ -4831,43 +5622,74 @@ public class Settings
 
     /**
      * The order of invocation for [action]end() methods registered {@link org.jooq.ExecuteListener}s.
-     *
+     * 
      */
     public Settings withExecuteListenerEndInvocationOrder(InvocationOrder value) {
         setExecuteListenerEndInvocationOrder(value);
         return this;
     }
 
+    /**
+     * When set to true, this will add jOOQ's default logging ExecuteListeners.
+     * 
+     */
     public Settings withExecuteLogging(Boolean value) {
         setExecuteLogging(value);
         return this;
     }
 
+    /**
+     * Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.
+     * 
+     */
     public Settings withUpdateRecordVersion(Boolean value) {
         setUpdateRecordVersion(value);
         return this;
     }
 
+    /**
+     * Whether store(), insert(), and update() methods should update the record timestamp prior to the operation, for use with {@link #executeWithOptimisticLocking}.
+     * 
+     */
     public Settings withUpdateRecordTimestamp(Boolean value) {
         setUpdateRecordTimestamp(value);
         return this;
     }
 
+    /**
+     * Whether store() and delete() methods should be executed with optimistic locking.
+     * 
+     */
     public Settings withExecuteWithOptimisticLocking(Boolean value) {
         setExecuteWithOptimisticLocking(value);
         return this;
     }
 
+    /**
+     * Whether store() and delete() methods should be executed with optimistic locking also on "unversioned" tables,
+     * i.e. on tables that do not have a version and/or timestamp column.
+     * <p>
+     * This flag has no effect when "executeWithOptimisticLocking" is turned off.
+     * 
+     */
     public Settings withExecuteWithOptimisticLockingExcludeUnversioned(Boolean value) {
         setExecuteWithOptimisticLockingExcludeUnversioned(value);
         return this;
     }
 
+    /**
+     * Whether fetched records should be attached to the fetching configuration.
+     * 
+     */
     public Settings withAttachRecords(Boolean value) {
         setAttachRecords(value);
         return this;
     }
 
+    /**
+     * Whether {@link org.jooq.TableRecord#insert()} calls should be executed if the record is unchanged. This also affects the <code>INSERT</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
+     * 
+     */
     public Settings withInsertUnchangedRecords(Boolean value) {
         setInsertUnchangedRecords(value);
         return this;
@@ -4875,28 +5697,47 @@ public class Settings
 
     /**
      * Whether {@link org.jooq.UpdatableRecord#update()} calls should be executed if the record is unchanged. This also affects the <code>UPDATE</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
-     *
+     * 
      */
     public Settings withUpdateUnchangedRecords(UpdateUnchangedRecords value) {
         setUpdateUnchangedRecords(value);
         return this;
     }
 
+    /**
+     * Whether primary key values are deemed to be "updatable" in jOOQ.
+     * <p>
+     * Setting this to "true" will allow for updating primary key values through
+     * UpdatableRecord.store() and UpdatableRecord.update().
+     * 
+     */
     public Settings withUpdatablePrimaryKeys(Boolean value) {
         setUpdatablePrimaryKeys(value);
         return this;
     }
 
+    /**
+     * Whether reflection information should be cached in the configuration.
+     * 
+     */
     public Settings withReflectionCaching(Boolean value) {
         setReflectionCaching(value);
         return this;
     }
 
+    /**
+     * Whether record mappers should be cached in the configuration.
+     * 
+     */
     public Settings withCacheRecordMappers(Boolean value) {
         setCacheRecordMappers(value);
         return this;
     }
 
+    /**
+     * Whether parsing connection translations should be cached in the configuration.
+     * 
+     */
     public Settings withCacheParsingConnection(Boolean value) {
         setCacheParsingConnection(value);
         return this;
@@ -4904,13 +5745,17 @@ public class Settings
 
     /**
      * The default implementation of the ParsingConnection cache's LRU cache size.
-     *
+     * 
      */
     public Settings withCacheParsingConnectionLRUCacheSize(Integer value) {
         setCacheParsingConnectionLRUCacheSize(value);
         return this;
     }
 
+    /**
+     * Whether JDBC {@link java.sql.PreparedStatement} instances should be cached in loader API.
+     * 
+     */
     public Settings withCachePreparedStatementInLoader(Boolean value) {
         setCachePreparedStatementInLoader(value);
         return this;
@@ -4918,13 +5763,17 @@ public class Settings
 
     /**
      * A strategy defining how exceptions from the database / JDBC driver should be propagated
-     *
+     * 
      */
     public Settings withThrowExceptions(ThrowExceptions value) {
         setThrowExceptions(value);
         return this;
     }
 
+    /**
+     * Whether warnings should be fetched after each query execution.
+     * 
+     */
     public Settings withFetchWarnings(Boolean value) {
         setFetchWarnings(value);
         return this;
@@ -4932,48 +5781,85 @@ public class Settings
 
     /**
      * Whether server output should be fetched after each query execution.
-     *
+     * 
      */
     public Settings withFetchServerOutputSize(Integer value) {
         setFetchServerOutputSize(value);
         return this;
     }
 
+    /**
+     * Whether calls to store(), insert() and update() should return the identity column.
+     * 
+     */
     public Settings withReturnIdentityOnUpdatableRecord(Boolean value) {
         setReturnIdentityOnUpdatableRecord(value);
         return this;
     }
 
+    /**
+     * Whether calls to store(), insert() and update() should return all columns, not just identity columns.
+     * <p>
+     * Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
+     * RETURNING clause is fully supported, also for non-IDENTITY columns.
+     * 
+     */
     public Settings withReturnAllOnUpdatableRecord(Boolean value) {
         setReturnAllOnUpdatableRecord(value);
         return this;
     }
 
+    /**
+     * Whether calls to store(), insert(), update(), and delete() that are called on an UpdatableRecord
+     * that is created from a POJO (e.g. in a DAO) should return all Record values to the POJO, including
+     * IDENTITY values, and if {@link #returnAllOnUpdatableRecord} is active, also other values.
+     * 
+     */
     public Settings withReturnRecordToPojo(Boolean value) {
         setReturnRecordToPojo(value);
         return this;
     }
 
+    /**
+     * Whether JPA annotations should be considered by the DefaultRecordMapper.
+     * 
+     */
     public Settings withMapJPAAnnotations(Boolean value) {
         setMapJPAAnnotations(value);
         return this;
     }
 
+    /**
+     * Whether constructor parameter names obtained from the {@link java.lang.Record} component names should be considered by the DefaultRecordMapper.
+     * 
+     */
     public Settings withMapRecordComponentParameterNames(Boolean value) {
         setMapRecordComponentParameterNames(value);
         return this;
     }
 
+    /**
+     * Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.
+     * 
+     */
     public Settings withMapConstructorPropertiesParameterNames(Boolean value) {
         setMapConstructorPropertiesParameterNames(value);
         return this;
     }
 
+    /**
+     * Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.
+     * 
+     */
     public Settings withMapConstructorParameterNames(Boolean value) {
         setMapConstructorParameterNames(value);
         return this;
     }
 
+    /**
+     * Whether constructor parameter names obtained via reflection in Kotlin should be considered by the DefaultRecordMapper. This flag has no effect in Java.
+     * 
+     */
     public Settings withMapConstructorParameterNamesInKotlin(Boolean value) {
         setMapConstructorParameterNamesInKotlin(value);
         return this;
@@ -4982,7 +5868,7 @@ public class Settings
     /**
      * The default JDBC poolable property that should be applied to all
      * jOOQ queries, for which no specific poolable flag was specified.
-     *
+     * 
      */
     public Settings withQueryPoolable(QueryPoolable value) {
         setQueryPoolable(value);
@@ -4992,7 +5878,7 @@ public class Settings
     /**
      * The default JDBC queryTimeout property that should be applied to all
      * jOOQ queries, for which no specific queryTimeout was specified.
-     *
+     * 
      */
     public Settings withQueryTimeout(Integer value) {
         setQueryTimeout(value);
@@ -5002,7 +5888,7 @@ public class Settings
     /**
      * The default JDBC maxRows property that should be applied to all
      * jOOQ queries, for which no specific maxRows value was specified.
-     *
+     * 
      */
     public Settings withMaxRows(Integer value) {
         setMaxRows(value);
@@ -5012,7 +5898,7 @@ public class Settings
     /**
      * The default JDBC fetchSize property that should be applied to all
      * jOOQ queries, for which no specific fetchSize value was specified.
-     *
+     * 
      */
     public Settings withFetchSize(Integer value) {
         setFetchSize(value);
@@ -5021,18 +5907,26 @@ public class Settings
 
     /**
      * A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.
-     *
+     * 
      */
     public Settings withBatchSize(Integer value) {
         setBatchSize(value);
         return this;
     }
 
+    /**
+     * [#5570] Whether exception stack traces should be enhanced with additional debug information.
+     * 
+     */
     public Settings withDebugInfoOnStackTrace(Boolean value) {
         setDebugInfoOnStackTrace(value);
         return this;
     }
 
+    /**
+     * [#5600] Whether IN lists in IN predicates should be padded to powers of inListPadBase (default 2).
+     * 
+     */
     public Settings withInListPadding(Boolean value) {
         setInListPadding(value);
         return this;
@@ -5040,7 +5934,7 @@ public class Settings
 
     /**
      * [#7095] The base to use to calculate the powers of when applying in list padding.
-     *
+     * 
      */
     public Settings withInListPadBase(Integer value) {
         setInListPadBase(value);
@@ -5049,13 +5943,17 @@ public class Settings
 
     /**
      * [#5826] The delimiter character to be used to delimit statements in batches.
-     *
+     * 
      */
     public Settings withDelimiter(String value) {
         setDelimiter(value);
         return this;
     }
 
+    /**
+     * [#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.
+     * 
+     */
     public Settings withEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(Boolean value) {
         setEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(value);
         return this;
@@ -5063,7 +5961,7 @@ public class Settings
 
     /**
      * [#3884] How <code>MULTISET</code> support should be emulated.
-     *
+     * 
      */
     public Settings withEmulateMultiset(NestedCollectionEmulation value) {
         setEmulateMultiset(value);
@@ -5072,7 +5970,7 @@ public class Settings
 
     /**
      * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
-     *
+     * 
      */
     public Settings withExecuteUpdateWithoutWhere(ExecuteWithoutWhere value) {
         setExecuteUpdateWithoutWhere(value);
@@ -5081,7 +5979,7 @@ public class Settings
 
     /**
      * [#6771] Specifies whether DELETE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
-     *
+     * 
      */
     public Settings withExecuteDeleteWithoutWhere(ExecuteWithoutWhere value) {
         setExecuteDeleteWithoutWhere(value);
@@ -5090,7 +5988,7 @@ public class Settings
 
     /**
      * [#7337] The dialect that should be used to interpret SQL DDL statements. {@link SQLDialect#DEFAULT} means that jOOQ interprets the SQL itself. Any other dialect (if supported) will be interpreted on an actual JDBC connection.
-     *
+     * 
      */
     public Settings withInterpreterDialect(SQLDialect value) {
         setInterpreterDialect(value);
@@ -5099,7 +5997,7 @@ public class Settings
 
     /**
      * [#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.
-     *
+     * 
      */
     public Settings withInterpreterNameLookupCaseSensitivity(InterpreterNameLookupCaseSensitivity value) {
         setInterpreterNameLookupCaseSensitivity(value);
@@ -5108,48 +6006,80 @@ public class Settings
 
     /**
      * The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.
-     *
+     * 
      */
     public Settings withInterpreterLocale(Locale value) {
         setInterpreterLocale(value);
         return this;
     }
 
+    /**
+     * Using this flag, the interpreter will be able to delay the addition of foreign key declarations until the end of the interpretation run.
+     * 
+     */
     public Settings withInterpreterDelayForeignKeyDeclarations(Boolean value) {
         setInterpreterDelayForeignKeyDeclarations(value);
         return this;
     }
 
+    /**
+     * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.
+     * 
+     */
     public Settings withMetaIncludeSystemIndexes(Boolean value) {
         setMetaIncludeSystemIndexes(value);
         return this;
     }
 
+    /**
+     * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated sequences, by default.
+     * 
+     */
     public Settings withMetaIncludeSystemSequences(Boolean value) {
         setMetaIncludeSystemSequences(value);
         return this;
     }
 
+    /**
+     * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
+     * 
+     */
     public Settings withMigrationAllowsUndo(Boolean value) {
         setMigrationAllowsUndo(value);
         return this;
     }
 
+    /**
+     * Whether migrations revert any untracked changes in the schemas that are being migrated.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly revert any elements created in a development environment. This feature is available only in commercial distributions.
+     * 
+     */
     public Settings withMigrationRevertUntracked(Boolean value) {
         setMigrationRevertUntracked(value);
         return this;
     }
 
+    /**
+     * Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.
+     * 
+     */
     public Settings withMigrationAutoBaseline(Boolean value) {
         setMigrationAutoBaseline(value);
         return this;
     }
 
+    /**
+     * Whether a migration automatically runs a validation first.
+     * 
+     */
     public Settings withMigrationAutoValidation(Boolean value) {
         setMigrationAutoValidation(value);
         return this;
     }
 
+    /**
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the difference between <code>TIMESTAMP</code> and <code>TIMESTAMP(6)</code>, if 6 is the default precision for timestamps on the configured dialect.
+     * 
+     */
     public Settings withMigrationIgnoreDefaultTimestampPrecisionDiffs(Boolean value) {
         setMigrationIgnoreDefaultTimestampPrecisionDiffs(value);
         return this;
@@ -5157,7 +6087,7 @@ public class Settings
 
     /**
      * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
-     *
+     * 
      */
     public Settings withLocale(Locale value) {
         setLocale(value);
@@ -5166,7 +6096,7 @@ public class Settings
 
     /**
      * [#7337] The input dialect that should be chosen to disambiguate ambiguous SQL syntax.
-     *
+     * 
      */
     public Settings withParseDialect(SQLDialect value) {
         setParseDialect(value);
@@ -5175,7 +6105,7 @@ public class Settings
 
     /**
      * The Locale to be used with any parser locale dependent logic, defaulting to {@link #getLocale()}.
-     *
+     * 
      */
     public Settings withParseLocale(Locale value) {
         setParseLocale(value);
@@ -5184,7 +6114,7 @@ public class Settings
 
     /**
      * The date format to use when parsing functions whose behaviour depends on some session date format, such as NLS_DATE_FORMAT in Oracle
-     *
+     * 
      */
     public Settings withParseDateFormat(String value) {
         setParseDateFormat(value);
@@ -5193,7 +6123,7 @@ public class Settings
 
     /**
      * The timestamp format to use when parsing functions whose behaviour depends on some session date format, such as NLS_TIMESTAMP_FORMAT in Oracle
-     *
+     * 
      */
     public Settings withParseTimestampFormat(String value) {
         setParseTimestampFormat(value);
@@ -5203,14 +6133,14 @@ public class Settings
     /**
      * The prefix to use for named parameters in parsed SQL.
      * <p>
-     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but
+     * Named parameter syntax defaults to <code>:name</code> (such as supported by Oracle, JPA, Spring), but 
      * vendor specific parameters may look differently. This flag can be used to determine the prefix to be
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code> when parsing SQL.
      * <p>
      * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
-     *
+     * 
      */
     public Settings withParseNamedParamPrefix(String value) {
         setParseNamedParamPrefix(value);
@@ -5219,7 +6149,7 @@ public class Settings
 
     /**
      * [#7337] The default name case for parsed identifiers.
-     *
+     * 
      */
     public Settings withParseNameCase(ParseNameCase value) {
         setParseNameCase(value);
@@ -5228,7 +6158,7 @@ public class Settings
 
     /**
      * [#7163] Whether the parser should perform meta lookups in the Configuration's MetaProvider.
-     *
+     * 
      */
     public Settings withParseWithMetaLookups(ParseWithMetaLookups value) {
         setParseWithMetaLookups(value);
@@ -5244,13 +6174,17 @@ public class Settings
      * when the input dialect supports this syntax.
      * <p>
      * This feature is available in the commercial distribution only.
-     *
+     * 
      */
     public Settings withParseAppendMissingTableReferences(Transformation value) {
         setParseAppendMissingTableReferences(value);
         return this;
     }
 
+    /**
+     * [#9780] Whether commands of the type <code>SET key = value</code> should be parsed rather than ignored.
+     * 
+     */
     public Settings withParseSetCommands(Boolean value) {
         setParseSetCommands(value);
         return this;
@@ -5258,7 +6192,7 @@ public class Settings
 
     /**
      * [#5917] Whether the parser should accept unsupported (but known) syntax.
-     *
+     * 
      */
     public Settings withParseUnsupportedSyntax(ParseUnsupportedSyntax value) {
         setParseUnsupportedSyntax(value);
@@ -5267,18 +6201,26 @@ public class Settings
 
     /**
      * [#7344] Whether the parser should accept unknown functions.
-     *
+     * 
      */
     public Settings withParseUnknownFunctions(ParseUnknownFunctions value) {
         setParseUnknownFunctions(value);
         return this;
     }
 
+    /**
+     * [#13109] Whether the parser of the jOOQ Open Source Edition should ignore commercial only features, rather than failing.
+     * 
+     */
     public Settings withParseIgnoreCommercialOnlyFeatures(Boolean value) {
         setParseIgnoreCommercialOnlyFeatures(value);
         return this;
     }
 
+    /**
+     * [#8325] Whether the parser should ignore content between ignore comment tokens.
+     * 
+     */
     public Settings withParseIgnoreComments(Boolean value) {
         setParseIgnoreComments(value);
         return this;
@@ -5286,7 +6228,7 @@ public class Settings
 
     /**
      * [#8325] The ignore comment start token
-     *
+     * 
      */
     public Settings withParseIgnoreCommentStart(String value) {
         setParseIgnoreCommentStart(value);
@@ -5295,18 +6237,32 @@ public class Settings
 
     /**
      * [#8325] The ignore comment stop token
-     *
+     * 
      */
     public Settings withParseIgnoreCommentStop(String value) {
         setParseIgnoreCommentStop(value);
         return this;
     }
 
+    /**
+     * [#12538] Whether the parser should retain comments and whitespace between queries when parsing multiple queries through {@link org.jooq.Parser#parse(String)}.
+     * <p>
+     * jOOQ's query object model doesn't have a way to represent comments
+     * or other whitespace, and as such, the parser simply skips them by default.
+     * However, it may be desirable to retain comments before or in between top
+     * level queries, when parsing multiple such queries in a script. Comments
+     * inside of queries (including procedural statements) are still not supported.
+     * 
+     */
     public Settings withParseRetainCommentsBetweenQueries(Boolean value) {
         setParseRetainCommentsBetweenQueries(value);
         return this;
     }
 
+    /**
+     * [#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.
+     * 
+     */
     public Settings withParseMetaDefaultExpressions(Boolean value) {
         setParseMetaDefaultExpressions(value);
         return this;
@@ -5314,7 +6270,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.
-     *
+     * 
      */
     public Settings withReadonlyTableRecordInsert(WriteIfReadonly value) {
         setReadonlyTableRecordInsert(value);
@@ -5323,7 +6279,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to update a readonly column using {@link org.jooq.UpdatableRecord#update()}.
-     *
+     * 
      */
     public Settings withReadonlyUpdatableRecordUpdate(WriteIfReadonly value) {
         setReadonlyUpdatableRecordUpdate(value);
@@ -5332,7 +6288,7 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.Insert} statements, or the insert clause of a {@link org.jooq.Merge} statement.
-     *
+     * 
      */
     public Settings withReadonlyInsert(WriteIfReadonly value) {
         setReadonlyInsert(value);
@@ -5341,13 +6297,17 @@ public class Settings
 
     /**
      * [#9864] The behaviour when trying to update a readonly column using {@link org.jooq.Update} statements, or the update clause of a {@link org.jooq.Merge} statement.
-     *
+     * 
      */
     public Settings withReadonlyUpdate(WriteIfReadonly value) {
         setReadonlyUpdate(value);
         return this;
     }
 
+    /**
+     * [#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys
+     * 
+     */
     public Settings withApplyWorkaroundFor7962(Boolean value) {
         setApplyWorkaroundFor7962(value);
         return this;

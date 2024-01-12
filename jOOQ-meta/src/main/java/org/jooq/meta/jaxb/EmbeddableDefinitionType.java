@@ -178,7 +178,7 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the replacesFields property.
+     * Specify that the embeddable field replaces its underlying fields in code generation output, and when working with asterisks.
      * 
      * @param value
      *     allowed object is
@@ -263,6 +263,10 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Specify that the embeddable field replaces its underlying fields in code generation output, and when working with asterisks.
+     * 
+     */
     public EmbeddableDefinitionType withReplacesFields(Boolean value) {
         setReplacesFields(value);
         return this;

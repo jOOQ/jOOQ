@@ -89,7 +89,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the outputCatalogToDefault property.
+     * See also {@link Database#isOutputCatalogToDefault()}
      * 
      * @param value
      *     allowed object is
@@ -129,6 +129,10 @@ public class CatalogMappingType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * See also {@link Database#isOutputCatalogToDefault()}
+     * 
+     */
     public CatalogMappingType withOutputCatalogToDefault(Boolean value) {
         setOutputCatalogToDefault(value);
         return this;

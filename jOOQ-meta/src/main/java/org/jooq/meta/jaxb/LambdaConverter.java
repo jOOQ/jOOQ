@@ -83,7 +83,7 @@ public class LambdaConverter implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the nullable property.
+     * Whether to use {@link org.jooq.Converter#ofNullable(Class, Class, java.util.function.Function, java.util.function.Function)} or {@link org.jooq.Converter#of(Class, Class, java.util.function.Function, java.util.function.Function)}.
      * 
      * @param value
      *     allowed object is
@@ -112,6 +112,10 @@ public class LambdaConverter implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether to use {@link org.jooq.Converter#ofNullable(Class, Class, java.util.function.Function, java.util.function.Function)} or {@link org.jooq.Converter#of(Class, Class, java.util.function.Function, java.util.function.Function)}.
+     * 
+     */
     public LambdaConverter withNullable(Boolean value) {
         setNullable(value);
         return this;

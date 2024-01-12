@@ -140,7 +140,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the auditInsertTimestamp property.
+     * @deprecated Use ForcedType only
      * 
      * @param value
      *     allowed object is
@@ -166,7 +166,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the auditInsertUser property.
+     * @deprecated Use ForcedType only
      * 
      * @param value
      *     allowed object is
@@ -192,7 +192,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the auditUpdateTimestamp property.
+     * @deprecated Use ForcedType only
      * 
      * @param value
      *     allowed object is
@@ -218,7 +218,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the auditUpdateUser property.
+     * @deprecated Use ForcedType only
      * 
      * @param value
      *     allowed object is
@@ -262,7 +262,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the autoConverter property.
+     * @deprecated Use ForcedType only
      * 
      * @param value
      *     allowed object is
@@ -288,7 +288,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the enumConverter property.
+     * @deprecated Use ForcedType only
      * 
      * @param value
      *     allowed object is
@@ -314,7 +314,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the xmlConverter property.
+     * @deprecated Use ForcedType only
      * 
      * @param value
      *     allowed object is
@@ -340,7 +340,7 @@ public class CustomType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the jsonConverter property.
+     * @deprecated Use ForcedType only
      * 
      * @param value
      *     allowed object is
@@ -428,21 +428,37 @@ public class CustomType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     public CustomType withAuditInsertTimestamp(Boolean value) {
         setAuditInsertTimestamp(value);
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     public CustomType withAuditInsertUser(Boolean value) {
         setAuditInsertUser(value);
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     public CustomType withAuditUpdateTimestamp(Boolean value) {
         setAuditUpdateTimestamp(value);
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     public CustomType withAuditUpdateUser(Boolean value) {
         setAuditUpdateUser(value);
         return this;
@@ -458,21 +474,37 @@ public class CustomType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     public CustomType withAutoConverter(Boolean value) {
         setAutoConverter(value);
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     public CustomType withEnumConverter(Boolean value) {
         setEnumConverter(value);
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     public CustomType withXmlConverter(Boolean value) {
         setXmlConverter(value);
         return this;
     }
 
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     public CustomType withJsonConverter(Boolean value) {
         setJsonConverter(value);
         return this;

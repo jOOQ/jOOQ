@@ -166,7 +166,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the autoCommit property.
+     * The value of the JDBC autocommit flag. The flag is not set by default, i.e. it keeps the default provided to jOOQ.
      * 
      * @param value
      *     allowed object is
@@ -275,6 +275,10 @@ public class Jdbc implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The value of the JDBC autocommit flag. The flag is not set by default, i.e. it keeps the default provided to jOOQ.
+     * 
+     */
     public Jdbc withAutoCommit(Boolean value) {
         setAutoCommit(value);
         return this;

@@ -146,7 +146,7 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the literalsFromColumnContent property.
+     * The matched column's content defines the literals (this is convenience for {@link #literalSql} being <code>SELECT DISTINCT matched_column FROM matched_table</code>).
      * 
      * @param value
      *     allowed object is
@@ -170,7 +170,7 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
     }
 
     /**
-     * Sets the value of the literalsFromCheckConstraints property.
+     * The list of literals is parsed from the applicable <code>CHECK</code> constraints for the matched column, if possible.
      * 
      * @param value
      *     allowed object is
@@ -244,11 +244,19 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The matched column's content defines the literals (this is convenience for {@link #literalSql} being <code>SELECT DISTINCT matched_column FROM matched_table</code>).
+     * 
+     */
     public SyntheticEnumType withLiteralsFromColumnContent(Boolean value) {
         setLiteralsFromColumnContent(value);
         return this;
     }
 
+    /**
+     * The list of literals is parsed from the applicable <code>CHECK</code> constraints for the matched column, if possible.
+     * 
+     */
     public SyntheticEnumType withLiteralsFromCheckConstraints(Boolean value) {
         setLiteralsFromCheckConstraints(value);
         return this;

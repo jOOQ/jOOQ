@@ -559,7 +559,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the forceIntegerTypesOnZeroScaleDecimals property.
+     * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). The same behaviour is replicated in the {@link org.jooq.Meta} API. This flag allows for turning off this feature.
      * 
      * @param value
      *     allowed object is
@@ -586,7 +586,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderCatalog property.
+     * Whether any catalog name should be rendered at all.
+     * <p>
+     * Use this for single-catalog environments, or when all objects are made
+     * available using synonyms
      * 
      * @param value
      *     allowed object is
@@ -615,7 +618,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderSchema property.
+     * Whether any schema name should be rendered at all.
+     * <p>
+     * Setting this to false also implicitly sets "renderCatalog" to false.
+     * <p>
+     * Use this for single-schema environments, or when all objects are made
+     * available using synonyms
      * 
      * @param value
      *     allowed object is
@@ -859,7 +867,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderFormatted property.
+     * Whether rendered SQL should be pretty-printed.
      * 
      * @param value
      *     allowed object is
@@ -998,7 +1006,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderScalarSubqueriesForStoredFunctions property.
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
      * 
      * @param value
      *     allowed object is
@@ -1093,7 +1104,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderCoalesceToEmptyStringInConcat property.
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -1127,7 +1143,17 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderOrderByRownumberForEmulatedPagination property.
+     * Whether an additional <code>ORDER BY rn</code> clause should be rendered on emulated paginated queries.
+     * <p>
+     * Older databases did not support OFFSET .. FETCH pagination, so jOOQ emulates it using derived
+     * tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2, 
+     * SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not 
+     * <em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle, 
+     * it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess 
+     * <code>ORDER BY</code> clause may add some additional performance overhead. This setting forces 
+     * jOOQ to not generate the additional <code>ORDER BY</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.
      * 
      * @param value
      *     allowed object is
@@ -1163,7 +1189,19 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderOutputForSQLServerReturningClause property.
+     * Whether the jOOQ <code>RETURNING</code> clause should map to SQL Server's <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server supports an <code>OUTPUT</code> clause in most DML statements, whose behaviour
+     * is almost identical to <code>RETURNING</code> in Firebird, Oracle, PostgreSQL. Users who
+     * want to prevent jOOQ from rendering this <code>OUTPUT</code> clause can deactivate this flag
+     * to revert to jOOQ calling {@code java.sql.Statement#getGeneratedKeys()} instead, which
+     * is only supported for single row inserts.
+     * <p>
+     * This <code>OUTPUT</code> clause does not support fetching trigger generated values. In order
+     * to fetch trigger generated values, {@link #fetchTriggerValuesAfterReturning} needs to
+     * be enabled as well.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
      * 
      * @param value
      *     allowed object is
@@ -1194,7 +1232,14 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderGroupConcatMaxLenSessionVariable property.
+     * Whether the jOOQ <code>GROUP_CONCAT</code> function should be overflow-protected by setting the <code>@@group_concat_max_len</code> session variable in MySQL style database systems.
+     * <p>
+     * MySQL truncates <code>GROUP_CONCAT</code> results after a certain length, which may be way
+     * too small for jOOQ's usage, especially when using the <code>MULTISET</code> emulation. By
+     * default, jOOQ sets a session variable to the highest possible value prior to executing a
+     * query containing <code>GROUP_CONCAT</code>. This flag can be used to opt out of this.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/12092">https://github.com/jOOQ/jOOQ/issues/12092</a>.
      * 
      * @param value
      *     allowed object is
@@ -1225,7 +1270,14 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderParenthesisAroundSetOperationQueries property.
+     * Whether queries combined with set operators (e.g. UNION and UNION ALL) should always be surrounded by a parenthesis pair.
+     * <p>
+     * By default (i.e. when this setting is set to <code>false</code> jOOQ will only render parenthesis pairs around queries combined with set operators when required.
+     * This is for example the case when set operators are nested, when non-associative operators like EXCEPT are used, or when the queries are rendered as derived tables.
+     * <p>
+     * When this setting is set to <code>true</code> the queries combined with set operators will always be surrounded by a parenthesis pair.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.
      * 
      * @param value
      *     allowed object is
@@ -1251,7 +1303,9 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderVariablesInDerivedTablesForEmulations property.
+     * Whether emulations that require repeating expressions should render variables for those expressions in derived tables.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/14065">https://github.com/jOOQ/jOOQ/issues/14065</a>.
      * 
      * @param value
      *     allowed object is
@@ -1279,7 +1333,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderRowConditionForSeekClause property.
+     * Whether a <code>(a, b) < (:a, :b)</code> row predicate should be rendered for the <code>SEEK</code> clause.
+     * <p>
+     * Some RDBMS may support <code>(a, b) < (:a, :b)</code> row predicate syntax, which is very convenient for <code>SEEK</code> clause implementations, but fail to optimise this predicate as could be expected.
+     * This flag allows for expanding the predicate to the much more verbose, but equivalent <code>(a < :a) OR (a = :a AND b < :b)</code>. Dialects without native support for row predicates aren't affected
+     * by this flag.
      * 
      * @param value
      *     allowed object is
@@ -1306,7 +1364,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderRedundantConditionForSeekClause property.
+     * Whether a redundant <code>(a <= :a)</code> predicate should be rendered for a <code>(a, b) < (:a, :b)</code> predicate for the <code>SEEK</code> clause.
+     * <p>
+     * Some RDBMS may not be able to properly optimise <code>(a, b) < ('a', 'b')</code> or <code>(a < 'a') OR (a = 'a' AND b < 'b')</code>, and choose an appropriate index. By adding an additional redundant predicate,
+     * jOOQ may help the optimiser, e.g. <code>(a <= :a) AND (a, b) < ('a', 'b')</code> or <code>(a <= :a) AND ((a < 'a') OR (a = 'a' AND b < 'b'))</code>
      * 
      * @param value
      *     allowed object is
@@ -1330,7 +1391,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the renderPlainSQLTemplatesAsRaw property.
+     * Whether plain SQL templates ({@link org.jooq.SQL}) are rendered as raw string content.
      * 
      * @param value
      *     allowed object is
@@ -1414,7 +1475,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the bindOffsetDateTimeType property.
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetDateTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
      * 
      * @param value
      *     allowed object is
@@ -1444,7 +1511,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the bindOffsetTimeType property.
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
      * 
      * @param value
      *     allowed object is
@@ -1478,7 +1551,16 @@ public class Settings
     }
 
     /**
-     * Sets the value of the fetchTriggerValuesAfterSQLServerOutput property.
+     * Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server <code>OUTPUT</code> statements do not support fetching trigger generated values.
+     * This is a limitation of the {@link #renderOutputForSQLServerReturningClause}. An additional
+     * <code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+     * included in the <code>OUTPUT</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * <p>
+     * @deprecated - 3.18.0 - [#13912] [#15316] - Use {@link #fetchTriggerValuesAfterReturning} instead.
      * 
      * @param value
      *     allowed object is
@@ -1576,7 +1658,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsDuplicateStatements property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
      * 
      * @param value
      *     allowed object is
@@ -1609,7 +1694,16 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsDuplicateStatementsUsingTransformPatterns property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext)} diagnostic with the {@link #transformPatterns} feature activated.
+     * <p>
+     * When transforming patterns, many more complex, duplicate SQL statements can be recognised than if simply
+     * parsing and re-rendering the statement. This flag turns on all transformation patterns, independently of their
+     * individual settings.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -1636,7 +1730,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsMissingWasNullCall property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#missingWasNullCall(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
      * 
      * @param value
      *     allowed object is
@@ -1663,7 +1760,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsRepeatedStatements property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#repeatedStatements(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
      * 
      * @param value
      *     allowed object is
@@ -1692,7 +1792,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsConsecutiveAggregation property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#consecutiveAggregation(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -1721,7 +1826,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsConcatenationInPredicate property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicate(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -1750,7 +1860,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsPossiblyWrongExpression property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#possiblyWrongExpression(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -1777,7 +1892,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsTooManyColumnsFetched property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyColumnsFetched(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
      * 
      * @param value
      *     allowed object is
@@ -1804,7 +1922,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsTooManyRowsFetched property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyRowsFetched(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
      * 
      * @param value
      *     allowed object is
@@ -1831,7 +1952,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsUnnecessaryWasNullCall property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#unnecessaryWasNullCall(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
      * 
      * @param value
      *     allowed object is
@@ -1864,7 +1988,16 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsPatterns property.
+     * Whether to run the various pattern transformation diagnostics.
+     * <p>
+     * {@link #transformPatterns} allows for applying numerous pattern transformations, which can be turned on separately when running
+     * diagnostics. This flag overrides the {@link #transformPatterns} flag in the diagnostics context. Individual pattern flags
+     * still allow to enable / disable the pattern for diagnostics. 
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -1893,7 +2026,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsTrivialCondition property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#trivialCondition(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -1922,7 +2060,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsNullCondition property.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -1953,7 +2096,14 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatterns property.
+     * Transform various syntax patterns to better versions, if possible.
+     * <p>
+     * This flag enables the pattern transformation feature, which consists of several sub-flags that are
+     * all prefixed with "transformPatterns", e.g. {@link #transformPatternsTrim}. While the sub-flags default
+     * to being enabled, and can be disabled on an individual basis, the global feature itself is disabled by
+     * default.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -1977,7 +2127,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsLogging property.
+     * Activate debug logging of the {@link #transformPatterns} feature.
      * 
      * @param value
      *     allowed object is
@@ -2008,7 +2158,14 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsUnnecessaryDistinct property.
+     * Transform <code>SELECT DISTINCT a, b FROM t GROUP BY a, b</code> to <code>SELECT a, b FROM t GROUP BY a, b</code>.
+     * <p>
+     * The <code>GROUP BY</code> clause already removes duplicates, so if the <code>DISTINCT</code> clause
+     * contains at least all the columns from <code>GROUP BY</code> then it can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2039,7 +2196,14 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsUnnecessaryScalarSubquery property.
+     * Transform <code>SELECT (SELECT 1)</code> to <code>SELECT 1</code>.
+     * <p>
+     * Scalar subqueries that don't have any content other than a <code>SELECT</code> clause are unnecessary
+     * and can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2069,7 +2233,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsUnnecessaryInnerJoin property.
+     * Transform <code>SELECT * FROM t INNER JOIN u ON TRUE</code> to <code>SELECT * FROM t CROSS JOIN u</code>.
+     * <p>
+     * Some <code>INNER JOIN</code> expressions can be proven to be unnecessary.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2099,7 +2269,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsUnnecessaryGroupByExpressions property.
+     * Transform <code>SELECT a, b FROM t GROUP BY a, a, b</code> to <code>SELECT a, b FROM t GROUP BY a, b</code>.
+     * <p>
+     * Duplicate <code>GROUP BY</code> expressions can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2129,7 +2305,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsUnnecessaryOrderByExpressions property.
+     * Transform <code>SELECT a, b FROM t ORDER BY a, a, b</code> to <code>SELECT a, b FROM t ORDER BY a, b</code>.
+     * <p>
+     * Duplicate <code>ORDER BY</code> expressions can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2166,7 +2348,20 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsUnnecessaryExistsSubqueryClauses property.
+     * Transform <code>[ NOT ] EXISTS (SELECT DISTINCT a, b FROM t ORDER BY c LIMIT d)</code> to <code>[ NOT ] EXISTS (SELECT 1 FROM t)</code>.
+     * <p>
+     * In <code>EXISTS</code> subqueries, quite a few <code>SELECT</code> clauses are meaningless, and can
+     * thus be removed. These include:
+     * <ul>
+     * <li><code>SELECT</code> (any projection can be ignored)</li>
+     * <li><code>DISTINCT</code></li>
+     * <li><code>ORDER BY</code></li>
+     * <li><code>LIMIT</code> (except <code>LIMIT 0</code>, in case of which {@link #transformPatternsTrivialPredicates} applies).</li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2197,7 +2392,14 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsCountConstant property.
+     * Transform <code>COUNT(1)</code> or any other <code>COUNT(const)</code> to <code>COUNT(*)</code>.
+     * <p>
+     * There is no benefit to counting a constant expression. In fact, in some RDBMS, it might even be slightly
+     * slower, at least in benchmarks.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2229,7 +2431,15 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsTrim property.
+     * Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>.
+     * <p>
+     * Historically, a few dialects did not implement <code>TRIM(x)</code> or <code>TRIM(BOTH FROM x)</code>,
+     * so users worked around this by wrapping <code>LTRIM()</code> and <code>RTRIM()</code> with each other.
+     * Maintaining this is usually undesirable, so this transformation helps remove the unwanted wrapping.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2259,7 +2469,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNotAnd property.
+     * Transform <code>NOT(p AND q)</code> to <code>NOT(p) OR NOT(q)</code>.
+     * <p>
+     * This transformation normalises a predicate using De Morgan's rules.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2289,7 +2505,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNotOr property.
+     * Transform <code>NOT(p OR q)</code> to <code>NOT(p) AND NOT(q)</code>.
+     * <p>
+     * This transformation normalises a predicate using De Morgan's rules.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2319,7 +2541,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNotNot property.
+     * Transform <code>NOT(NOT(x))</code> to <code>x</code>.
+     * <p>
+     * This transformation removes a redundant logic negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2349,7 +2577,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNotComparison property.
+     * Transform <code>NOT (a != b)</code> to <code>a = b</code>, and similar comparisons.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2379,7 +2613,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNotNotDistinct property.
+     * Transform <code>NOT (a IS NOT DISTINCT FROM b)</code> to <code>a IS DISTINCT FROM b</code>.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2409,7 +2649,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsDistinctFromNull property.
+     * Transform <code>a IS [ NOT ] DISTINCT FROM NULL</code> to <code>a IS [ NOT ] NULL</code>.
+     * <p>
+     * This simplifies the much more verbose <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2440,7 +2686,14 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNormaliseAssociativeOps property.
+     * Transform <code>(a + b) + (c + d)</code> to <code>((a + b) + c) + d</code>.
+     * <p>
+     * This transformation turns trees into lists, which greatly simplifies other tree traversal transformations.
+     * Some of those other transformations currently rely on this flag to be active.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2468,7 +2721,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNormaliseInListSingleElementToComparison property.
+     * Transform <code>x IN (a)</code> to <code>x = a</code> and <code>x NOT IN (a)</code> to <code>x != a</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2498,7 +2755,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNormaliseFieldCompareValue property.
+     * Transform <code>1 = a</code> to <code>a = 1</code>.
+     * <p>
+     * This transformation inverses {@link TableField} [op] {@link org.jooq.impl.QOM.Val} comparisons, if they're not in that order.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2526,7 +2789,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNormaliseCoalesceToNvl property.
+     * Transform 2 argument <code>COALESCE(a, b)</code> to <code>NVL(a, b)</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2556,7 +2823,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsOrEqToIn property.
+     * Transform <code>x = c1 OR x = c2</code> to <code>x IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>OR</code> predicates into simpler <code>IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2586,7 +2859,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsAndNeToNotIn property.
+     * Transform <code>x != c1 AND x != c2</code> to <code>x NOT IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>AND</code> predicates into simpler <code>NOT IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2616,7 +2895,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsMergeOrComparison property.
+     * Transform <code>x = a OR x > a</code> to <code>x >= a</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2646,7 +2931,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsMergeAndComparison property.
+     * Transform <code>x >= a AND x <= a</code> to <code>x = a</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2676,7 +2967,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsMergeInLists property.
+     * Transform <code>x IN (a, b, c) AND x IN (b, c, d)</code> to <code>x IN (b, c)</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2706,7 +3003,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsMergeRangePredicates property.
+     * Transform <code>x >= a AND x <= b</code> to <code>x BETWEEN a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected range predicates to a single comparison using <code>BETWEEN</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2736,7 +3039,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsMergeBetweenSymmetricPredicates property.
+     * Transform <code>x BETWEEN a AND b OR x BETWEEN b AND a</code> to <code>x BETWEEN SYMMETRIC a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected <code>BETWEEN</code> predicates to a single comparison using <code>BETWEEN SYMMETRIC</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2765,7 +3074,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsCaseSearchedToCaseSimple property.
+     * Transform a searched <code>CASE WHEN x = .. WHEN x = ..</code> to a simple <code>CASE x WHEN … WHEN …</code> expression.
+     * <p>
+     * When a searched <code>CASE</code> expression always compares the same column to a value, then it can be simplified, possibly
+     * unlocking further transformations that are available only to the simple <code>CASE</code> expression.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2793,7 +3107,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsCaseElseNull property.
+     * Transform <code>CASE … ELSE NULL</code> removing the <code>ELSE</code> clause.
+     * <p>
+     * <code>CASE WHEN x THEN y ELSE NULL END</code> is equivalent to <code>CASE WHEN x THEN y END</code>.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2825,7 +3143,15 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsUnreachableCaseClauses property.
+     * Transform <code>CASE</code> by removing unreachable clauses.
+     * <p>
+     * Case clauses can be proven to be unreachable, and thus removed:
+     * <ul>
+     * <li><code>CASE WHEN p THEN 1 WHEN TRUE THEN 2 WHEN q … ELSE … END</code> is equivalent to <code>CASE WHEN p THEN 1 ELSE 2 END</code></li>
+     * <li><code>CASE WHEN p THEN 1 WHEN FALSE THEN 2 WHEN q .. ELSE .. END</code> is equivalent to <code>CASE WHEN p THEN 1 WHEN q … ELSE … END</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2857,7 +3183,15 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsUnreachableDecodeClauses property.
+     * Transform <code>DECODE</code> by removing unreachable clauses.
+     * <p>
+     * DECODE clauses can be proven to be unreachable, and thus removed:
+     * <ul>
+     * <li><code>DECODE(a, b, 1, c, 2, b, 3)</code> is equivalent to <code>DECODE(a, b, 1, c, 2)</code></li>
+     * <li><code>DECODE(a, b, 1, c, 2, b, 3, 4)</code> is equivalent to <code>DECODE(a, b, 1, c, 2, 4)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2892,7 +3226,18 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsCaseDistinctToDecode property.
+     * Transform <code>CASE WHEN a IS NOT DISTINCT FROM b …</code> to an equivalent <code>DECODE</code> function.
+     * <p>
+     * When all <code>WHEN</code> clauses of a <code>CASE</code> expression use the <code>DISTINCT</code> predicate, then the
+     * <code>CASE</code> expression can be transformed into a <code>DECODE</code> function call:
+     * <ul>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 END</code> is equivalent to <code>DECODE(a, b, 1)</code></li>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 ELSE 2 END</code> is equivalent to <code>DECODE(a, b, 1, 2)</code></li>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 WHEN a IS NOT DISTINCT FROM c THEN 2 END</code> is equivalent to <code>DECODE(a, b, 1, c, 2)</code></li>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 WHEN a IS NOT DISTINCT FROM c THEN 2 ELSE 3 END</code> is equivalent to <code>DECODE(a, b, 1, c, 2, 3)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2920,7 +3265,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsCaseMergeWhenWhen property.
+     * Transform <code>CASE WHEN a THEN x WHEN b THEN x END</code> to <code>CASE WHEN a OR b THEN x END</code>.
+     * <p>
+     * Two consecutive <code>WHEN</code> clauses can be merged, if their respective <code>THEN</code> clause is identical.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2950,7 +3299,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsCaseMergeWhenElse property.
+     * Transform <code>CASE WHEN a THEN x WHEN b THEN y ELSE y END</code> to <code>CASE WHEN a THEN x ELSE y END</code>.
+     * <p>
+     * The ultimate <code>WHEN</code> clause can be merged with the <code>ELSE</code>, if their respective result is identical.
+     * If the <code>WHEN</code> clause is the only <code>WHEN</code> clause, then the entire <code>CASE</code> expression can
+     * be replaced by the <code>ELSE</code> clause content.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -2978,7 +3333,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsCaseToCaseAbbreviation property.
+     * Transform <code>CASE</code> expressions to their respective abbreviations.
+     * <p>
+     * Some <code>CASE</code> expressions have a shorter abbreviated form, such as <code>COALESCE()</code> or <code>NULLIF()</code>.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3010,7 +3369,15 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsSimplifyCaseAbbreviation property.
+     * Transform complex predicates into simpler <code>CASE</code> abbreviations.
+     * <p>
+     * Some predicates can be simplified into case abbreviations, such as, for example
+     * <ul>
+     * <li><code>a IS NULL OR COALESCE(a = b, FALSE)</code> to <code>NULLIF(a, b) IS NULL</code></li>
+     * <li><code>a IS NOT NULL AND COALESCE(a != b, TRUE)</code> to <code>NULLIF(a, b) IS NOT NULL</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3042,7 +3409,15 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsFlattenCaseAbbreviation property.
+     * Flatten nested <code>CASE</code> abbreviations such as <code>NVL</code> or <code>CASE</code>.
+     * <p>
+     * Nested <code>CASE</code> abbreviations can be flattened, as such:
+     * <ul>
+     * <li><code>NVL(NVL(a, b), c)</code> to <code>COALESCE(a, b, c)</code></li>
+     * <li><code>COALESCE(a, ..., COALESCE(b, ..., c), ..., d)</code> to <code>COALESCE(a, …, b, …, c, ..., d)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3073,7 +3448,14 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsFlattenDecode property.
+     * Flatten nested <code>DECODE</code> functions.
+     * <p>
+     * Nested <code>DECODE</code> functions can be flattened, as such:
+     * <ul>
+     * <li><code>DECODE(a, b, c, DECODE(a, d, e))</code> to <code>DECODE(a, b, c, d, e)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3101,7 +3483,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsFlattenCase property.
+     * Transform <code>CASE … ELSE CASE …</code> by flattening the nested <code>CASE</code>.
+     * <p>
+     * <code>CASE WHEN a THEN b ELSE CASE WHEN c THEN d END END</code> is equivalent to <code>CASE WHEN a THEN b WHEN c THEN d END</code>.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3130,7 +3516,12 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsTrivialCaseAbbreviation property.
+     * Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.
+     * <p>
+     * This transformation removes any trivial case abbreviations, such as <code>NVL()</code>,
+     * <code>COALESCE()</code>, <code>NULLIF()</code>, etc.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3158,7 +3549,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsTrivialPredicates property.
+     * Transform trivial predicates like <code>1 = 1</code> to <code>TRUE</code>.
+     * <p>
+     * This transformation removes any trivial predicates.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3186,7 +3581,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsTrivialBitwiseOperations property.
+     * Transform trivial bitwise comparisons like <code>BIT_OR(a, 0)</code> to <code>a</code>.
+     * <p>
+     * This transformation removes any trivial predicates.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3212,7 +3611,9 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsBitSet property.
+     * Transform bitwise operations to an equivalent <code>BIT_SET(a, b)</code> or <code>BIT_SET(a, b, c)</code> expression.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3238,7 +3639,9 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsBitGet property.
+     * Transform bitwise operations to an equivalent <code>BIT_GET(a, b)</code> expression.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3266,7 +3669,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsScalarSubqueryCountAsteriskGtZero property.
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(*) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 …)</code>.
+     * <p>
+     * Scalar subqueries that count rows and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3294,7 +3701,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsScalarSubqueryCountExpressionGtZero property.
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(expr) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 … WHERE expr IS NOT NULL)</code>.
+     * <p>
+     * Scalar subqueries that count non-null expressions and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3322,7 +3733,11 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsEmptyScalarSubquery property.
+     * Transform empty scalar subqueries like <code>(SELECT 1 WHERE FALSE)</code> to <code>NULL</code>.
+     * <p>
+     * Scalar subqueries that are guaranteed to produce no results can be replaced by a <code>NULL</code> value.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3352,7 +3767,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNegNeg property.
+     * Transform <code>-(-(x))</code> to <code>x</code>
+     * <p>
+     * This transformation removes a redundant arithmetic negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3382,7 +3803,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsBitNotBitNot property.
+     * Transform <code>~(~(x))</code> to <code>x</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3412,7 +3839,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsBitNotBitNand property.
+     * Transform <code>~(bitnand(x, y))</code> to <code>bitand(x, y)</code> and <code>~(bitand(x, y)</code> to <code>bitnand(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3442,7 +3875,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsBitNotBitNor property.
+     * Transform <code>~(bitnor(x, y))</code> to <code>bitor(x, y)</code> and <code>~(bitor(x, y)</code> to <code>bitnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3472,7 +3911,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsBitNotBitXNor property.
+     * Transform <code>~(bitxnor(x, y))</code> to <code>bitxor(x, y)</code> and <code>~(bitxor(x, y)</code> to <code>bitxnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3507,7 +3952,18 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsNullOnNullInput property.
+     * Any {org.jooq.impl.QOM.UReturnsNullOnNullInput} function or expression with <code>NULL</code> arguments can be replaced by <code>NULL</code>.
+     * <p>
+     * There are many built-in SQL functions and operators with a <code>RETURNS NULL ON NULL INPUT</code> property, e.g.
+     * <ul>
+     * <li><code>ABS(NULL)</code></li>
+     * <li><code>MOD(NULL, 1)</code></li>
+     * <li><code>NULL + 1</code></li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3547,7 +4003,23 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsIdempotentFunctionRepetition property.
+     * Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>.
+     * <p>
+     * Idempotent functions that are covered so far, include:
+     * <ul>
+     * <li><code>LTRIM(LTRIM(s))</code> to <code>LTRIM(s)</code></li>
+     * <li><code>LTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>RTRIM(RTRIM(s))</code> to <code>RTRIM(s)</code></li>
+     * <li><code>RTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(LTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(RTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code></li>
+     * <li><code>LOWER(LOWER(s))</code> to <code>LOWER(s)</code></li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3579,7 +4051,15 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsArithmeticComparisons property.
+     * Transform <code>a + 1 = 2</code> to <code>a = 2 - 1</code>, and other transformations.
+     * <p>
+     * It is usually best to compare single columns with constants or expressions to
+     * encourage index usage. While function based indexes are possible in some RDBMS,
+     * ordinary indexes are more reusable and should be preferred.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3609,7 +4089,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsArithmeticExpressions property.
+     * Transform <code>1 / y * x</code> to <code>x / y</code>, and other transformations.
+     * <p>
+     * This transformation simplifies arithmetic expressions.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3639,7 +4125,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsTrigonometricFunctions property.
+     * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3669,7 +4161,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsLogarithmicFunctions property.
+     * Transform <code>LN(value) / LN(base)</code> to <code>LOG(base, value)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded logarithmic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3699,7 +4197,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsHyperbolicFunctions property.
+     * Transform <code>(EXP(x) - EXP(-x)) / 2</code> to <code>SINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3729,7 +4233,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformPatternsInverseHyperbolicFunctions property.
+     * Transform <code>LN(x + SQRT(SQUARE(x) + 1))</code> to <code>ASINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded inverse hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3765,7 +4275,19 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformInlineBindValuesForFieldComparisons property.
+     * Transform {@link org.jooq.impl.QOM.CompareCondition} and a few other types of condition to inline their bind values, in case they match
+     *          
+     * <p>
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+     * converted to equivalent table lists in generated SQL using this flag.
+     * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3800,7 +4322,18 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformAnsiJoinToTableLists property.
+     * Transform ANSI join to table lists if possible.
+     * <p>
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+     * converted to equivalent table lists in generated SQL using this flag.
+     * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -3884,7 +4417,15 @@ public class Settings
     }
 
     /**
-     * Sets the value of the transformTableListsToAnsiJoin property.
+     * Transform table lists to ANSI join if possible.
+     * <p>
+     * (Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
+     * this flag enables the transformation to ANSI join syntax.
+     * <p>
+     * This feature is available in the commercial distribution only.
      * 
      * @param value
      *     allowed object is
@@ -4294,7 +4835,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the executeLogging property.
+     * When set to true, this will add jOOQ's default {@link org.jooq.tools.LoggerListener} for debug logging. This is meant for use in development only.
      * 
      * @param value
      *     allowed object is
@@ -4318,7 +4859,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the executeLoggingSQLExceptions property.
+     * [#14420] Whether constraint violations and other {@link java.sql.SQLException} should produce additional log information about the column name and data causing the problem. Unlike {@link #executeLogging}, this is meant for use in production as well as development. This feature is available only in commercial distributions.
      * 
      * @param value
      *     allowed object is
@@ -4342,7 +4883,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the diagnosticsLogging property.
+     * When set to true, this will add jOOQ's default logging DiagnosticsListeners.
      * 
      * @param value
      *     allowed object is
@@ -4382,7 +4923,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the updateRecordVersion property.
+     * Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.
      * 
      * @param value
      *     allowed object is
@@ -4406,7 +4947,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the updateRecordTimestamp property.
+     * Whether store(), insert(), and update() methods should update the record timestamp prior to the operation, for use with {@link #executeWithOptimisticLocking}.
      * 
      * @param value
      *     allowed object is
@@ -4430,7 +4971,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the executeWithOptimisticLocking property.
+     * Whether store() and delete() methods should be executed with optimistic locking.
      * 
      * @param value
      *     allowed object is
@@ -4457,7 +4998,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the executeWithOptimisticLockingExcludeUnversioned property.
+     * Whether store() and delete() methods should be executed with optimistic locking also on "unversioned" tables,
+     * i.e. on tables that do not have a version and/or timestamp column.
+     * <p>
+     * This flag has no effect when "executeWithOptimisticLocking" is turned off.
      * 
      * @param value
      *     allowed object is
@@ -4481,7 +5025,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the attachRecords property.
+     * Whether fetched records should be attached to the fetching configuration.
      * 
      * @param value
      *     allowed object is
@@ -4505,7 +5049,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the insertUnchangedRecords property.
+     * Whether {@link org.jooq.TableRecord#insert()} calls should be executed if the record is unchanged. This also affects the <code>INSERT</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
      * 
      * @param value
      *     allowed object is
@@ -4548,7 +5092,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the updatablePrimaryKeys property.
+     * Whether primary key values are deemed to be "updatable" in jOOQ.
+     * <p>
+     * Setting this to "true" will allow for updating primary key values through
+     * UpdatableRecord.store() and UpdatableRecord.update().
      * 
      * @param value
      *     allowed object is
@@ -4572,7 +5119,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the reflectionCaching property.
+     * Whether reflection information should be cached in the configuration.
      * 
      * @param value
      *     allowed object is
@@ -4596,7 +5143,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the cacheRecordMappers property.
+     * Whether record mappers should be cached in the configuration.
      * 
      * @param value
      *     allowed object is
@@ -4620,7 +5167,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the cacheParsingConnection property.
+     * Whether parsing connection translations should be cached in the configuration.
      * 
      * @param value
      *     allowed object is
@@ -4660,7 +5207,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the cachePreparedStatementInLoader property.
+     * Whether JDBC {@link java.sql.PreparedStatement} instances should be cached in loader API.
      * 
      * @param value
      *     allowed object is
@@ -4700,7 +5247,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the fetchWarnings property.
+     * Whether warnings should be fetched after each query execution.
      * 
      * @param value
      *     allowed object is
@@ -4740,7 +5287,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the returnIdentityOnUpdatableRecord property.
+     * Whether calls to store(), insert() and update() should return the identity column.
      * 
      * @param value
      *     allowed object is
@@ -4764,7 +5311,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the returnDefaultOnUpdatableRecord property.
+     * Whether calls to store(), insert() and update() should return values for columns that are {@link org.jooq.DataType#defaulted()}.
      * 
      * @param value
      *     allowed object is
@@ -4788,7 +5335,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the returnComputedOnUpdatableRecord property.
+     * Whether calls to store(), insert() and update() should return values for columns that are {@link org.jooq.DataType#computed()}.
      * 
      * @param value
      *     allowed object is
@@ -4815,7 +5362,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the returnAllOnUpdatableRecord property.
+     * Whether calls to store(), insert() and update() should return all columns, not just identity columns.
+     * <p>
+     * Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
+     * RETURNING clause is fully supported, also for non-IDENTITY columns.
      * 
      * @param value
      *     allowed object is
@@ -4841,7 +5391,9 @@ public class Settings
     }
 
     /**
-     * Sets the value of the returnRecordToPojo property.
+     * Whether calls to store(), insert(), update(), and delete() that are called on an UpdatableRecord
+     * that is created from a POJO (e.g. in a DAO) should return all Record values to the POJO, including
+     * IDENTITY values, and if {@link #returnAllOnUpdatableRecord} is active, also other values.
      * 
      * @param value
      *     allowed object is
@@ -4865,7 +5417,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the mapJPAAnnotations property.
+     * Whether JPA annotations should be considered by the DefaultRecordMapper.
      * 
      * @param value
      *     allowed object is
@@ -4889,7 +5441,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the mapRecordComponentParameterNames property.
+     * Whether constructor parameter names obtained from the {@link java.lang.Record} component names should be considered by the DefaultRecordMapper.
      * 
      * @param value
      *     allowed object is
@@ -4913,7 +5465,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the mapConstructorPropertiesParameterNames property.
+     * Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.
      * 
      * @param value
      *     allowed object is
@@ -4937,7 +5489,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the mapConstructorParameterNames property.
+     * Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.
      * 
      * @param value
      *     allowed object is
@@ -4961,7 +5513,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the mapConstructorParameterNamesInKotlin property.
+     * Whether constructor parameter names obtained via reflection in Kotlin should be considered by the DefaultRecordMapper. This flag has no effect in Java.
      * 
      * @param value
      *     allowed object is
@@ -5073,7 +5625,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the debugInfoOnStackTrace property.
+     * [#5570] Whether exception stack traces should be enhanced with additional debug information.
      * 
      * @param value
      *     allowed object is
@@ -5097,7 +5649,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the inListPadding property.
+     * [#5600] Whether IN lists in IN predicates should be padded to powers of inListPadBase (default 2).
      * 
      * @param value
      *     allowed object is
@@ -5153,7 +5705,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly property.
+     * [#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.
      * 
      * @param value
      *     allowed object is
@@ -5196,7 +5748,10 @@ public class Settings
     }
 
     /**
-     * Sets the value of the emulateComputedColumns property.
+     * [#13418] Whether computed columns should be emulated in the client.
+     * <p>
+     * This can be useful if a schema was generated using a dialect that supports computed columns, but it is
+     * deployed on an RDBMS that does not.
      * 
      * @param value
      *     allowed object is
@@ -5300,7 +5855,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the interpreterDelayForeignKeyDeclarations property.
+     * Using this flag, the interpreter will be able to delay the addition of foreign key declarations until the end of the interpretation run.
      * 
      * @param value
      *     allowed object is
@@ -5324,7 +5879,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the metaIncludeSystemIndexes property.
+     * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.
      * 
      * @param value
      *     allowed object is
@@ -5348,7 +5903,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the metaIncludeSystemSequences property.
+     * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated sequences, by default.
      * 
      * @param value
      *     allowed object is
@@ -5388,7 +5943,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the migrationHistorySchemaCreateSchemaIfNotExists property.
+     * Whether {@link #getMigrationHistorySchema()} should be created if it doesn't exist.
      * 
      * @param value
      *     allowed object is
@@ -5428,7 +5983,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the migrationSchemataCreateSchemaIfNotExists property.
+     * Whether {@link #getMigrationSchemata()} should be created if they don't exist.
      * 
      * @param value
      *     allowed object is
@@ -5452,7 +6007,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the migrationAllowsUndo property.
+     * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
      * 
      * @param value
      *     allowed object is
@@ -5476,7 +6031,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the migrationRevertUntracked property.
+     * Whether migrations revert any untracked changes in the schemas that are being migrated.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly revert any elements created in a development environment. This feature is available only in commercial distributions.
      * 
      * @param value
      *     allowed object is
@@ -5500,7 +6055,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the migrationAutoBaseline property.
+     * Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.
      * 
      * @param value
      *     allowed object is
@@ -5524,7 +6079,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the migrationAutoVerification property.
+     * Whether a migration automatically runs a verification first.
      * 
      * @param value
      *     allowed object is
@@ -5548,7 +6103,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the migrationIgnoreDefaultTimestampPrecisionDiffs property.
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the difference between <code>TIMESTAMP</code> and <code>TIMESTAMP(6)</code>, if 6 is the default precision for timestamps on the configured dialect.
      * 
      * @param value
      *     allowed object is
@@ -5746,7 +6301,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseSetCommands property.
+     * [#9780] Whether commands of the type <code>SET key = value</code> should be parsed rather than ignored.
      * 
      * @param value
      *     allowed object is
@@ -5802,7 +6357,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseIgnoreCommercialOnlyFeatures property.
+     * [#13109] Whether the parser of the jOOQ Open Source Edition should ignore commercial only features, rather than failing.
      * 
      * @param value
      *     allowed object is
@@ -5826,7 +6381,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseIgnoreComments property.
+     * [#8325] Whether the parser should ignore content between ignore comment tokens.
      * 
      * @param value
      *     allowed object is
@@ -5888,7 +6443,13 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseRetainCommentsBetweenQueries property.
+     * [#12538] Whether the parser should retain comments and whitespace between queries when parsing multiple queries through {@link org.jooq.Parser#parse(String)}.
+     * <p>
+     * jOOQ's query object model doesn't have a way to represent comments
+     * or other whitespace, and as such, the parser simply skips them by default.
+     * However, it may be desirable to retain comments before or in between top
+     * level queries, when parsing multiple such queries in a script. Comments
+     * inside of queries (including procedural statements) are still not supported.
      * 
      * @param value
      *     allowed object is
@@ -5912,7 +6473,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseMetaDefaultExpressions property.
+     * [#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.
      * 
      * @param value
      *     allowed object is
@@ -5936,7 +6497,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the parseMetaViewSources property.
+     * [#8469] Whether to parse view sources retrieved from {@link java.sql.DatabaseMetaData}.
      * 
      * @param value
      *     allowed object is
@@ -6024,7 +6585,7 @@ public class Settings
     }
 
     /**
-     * Sets the value of the applyWorkaroundFor7962 property.
+     * [#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys
      * 
      * @param value
      *     allowed object is
@@ -6084,16 +6645,36 @@ public class Settings
         this.parseSearchPath = parseSearchPath;
     }
 
+    /**
+     * Historically, zero-scale decimal types are generated as their most appropriate, corresponding integer type (e.g. NUMBER(2, 0) and less: Byte). The same behaviour is replicated in the {@link org.jooq.Meta} API. This flag allows for turning off this feature.
+     * 
+     */
     public Settings withForceIntegerTypesOnZeroScaleDecimals(Boolean value) {
         setForceIntegerTypesOnZeroScaleDecimals(value);
         return this;
     }
 
+    /**
+     * Whether any catalog name should be rendered at all.
+     * <p>
+     * Use this for single-catalog environments, or when all objects are made
+     * available using synonyms
+     * 
+     */
     public Settings withRenderCatalog(Boolean value) {
         setRenderCatalog(value);
         return this;
     }
 
+    /**
+     * Whether any schema name should be rendered at all.
+     * <p>
+     * Setting this to false also implicitly sets "renderCatalog" to false.
+     * <p>
+     * Use this for single-schema environments, or when all objects are made
+     * available using synonyms
+     * 
+     */
     public Settings withRenderSchema(Boolean value) {
         setRenderSchema(value);
         return this;
@@ -6218,6 +6799,10 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether rendered SQL should be pretty-printed.
+     * 
+     */
     public Settings withRenderFormatted(Boolean value) {
         setRenderFormatted(value);
         return this;
@@ -6286,6 +6871,13 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
+     * 
+     */
     public Settings withRenderScalarSubqueriesForStoredFunctions(Boolean value) {
         setRenderScalarSubqueriesForStoredFunctions(value);
         return this;
@@ -6327,46 +6919,132 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether stored function calls should be wrapped in scalar subqueries.
+     * <p>
+     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
+     * set to true, users can automatically profit from this feature in all SQL statements.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withRenderCoalesceToEmptyStringInConcat(Boolean value) {
         setRenderCoalesceToEmptyStringInConcat(value);
         return this;
     }
 
+    /**
+     * Whether an additional <code>ORDER BY rn</code> clause should be rendered on emulated paginated queries.
+     * <p>
+     * Older databases did not support OFFSET .. FETCH pagination, so jOOQ emulates it using derived
+     * tables and <code>ROWNUM</code> (Oracle 11g and older) or <code>ROW_NUMBER()</code> (e.g. DB2, 
+     * SQL Server, etc.) filtering. While these subqueries are ordered, the ordering is not 
+     * <em>guaranteed</em> to be stable in the outer most queries. It may be stable (and e.g. in Oracle, 
+     * it mostly is, if queries are not parallel, or joined to other queries, etc.), so the excess 
+     * <code>ORDER BY</code> clause may add some additional performance overhead. This setting forces 
+     * jOOQ to not generate the additional <code>ORDER BY</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/7609">https://github.com/jOOQ/jOOQ/issues/7609</a>.
+     * 
+     */
     public Settings withRenderOrderByRownumberForEmulatedPagination(Boolean value) {
         setRenderOrderByRownumberForEmulatedPagination(value);
         return this;
     }
 
+    /**
+     * Whether the jOOQ <code>RETURNING</code> clause should map to SQL Server's <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server supports an <code>OUTPUT</code> clause in most DML statements, whose behaviour
+     * is almost identical to <code>RETURNING</code> in Firebird, Oracle, PostgreSQL. Users who
+     * want to prevent jOOQ from rendering this <code>OUTPUT</code> clause can deactivate this flag
+     * to revert to jOOQ calling {@code java.sql.Statement#getGeneratedKeys()} instead, which
+     * is only supported for single row inserts.
+     * <p>
+     * This <code>OUTPUT</code> clause does not support fetching trigger generated values. In order
+     * to fetch trigger generated values, {@link #fetchTriggerValuesAfterReturning} needs to
+     * be enabled as well.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * 
+     */
     public Settings withRenderOutputForSQLServerReturningClause(Boolean value) {
         setRenderOutputForSQLServerReturningClause(value);
         return this;
     }
 
+    /**
+     * Whether the jOOQ <code>GROUP_CONCAT</code> function should be overflow-protected by setting the <code>@@group_concat_max_len</code> session variable in MySQL style database systems.
+     * <p>
+     * MySQL truncates <code>GROUP_CONCAT</code> results after a certain length, which may be way
+     * too small for jOOQ's usage, especially when using the <code>MULTISET</code> emulation. By
+     * default, jOOQ sets a session variable to the highest possible value prior to executing a
+     * query containing <code>GROUP_CONCAT</code>. This flag can be used to opt out of this.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/12092">https://github.com/jOOQ/jOOQ/issues/12092</a>.
+     * 
+     */
     public Settings withRenderGroupConcatMaxLenSessionVariable(Boolean value) {
         setRenderGroupConcatMaxLenSessionVariable(value);
         return this;
     }
 
+    /**
+     * Whether queries combined with set operators (e.g. UNION and UNION ALL) should always be surrounded by a parenthesis pair.
+     * <p>
+     * By default (i.e. when this setting is set to <code>false</code> jOOQ will only render parenthesis pairs around queries combined with set operators when required.
+     * This is for example the case when set operators are nested, when non-associative operators like EXCEPT are used, or when the queries are rendered as derived tables.
+     * <p>
+     * When this setting is set to <code>true</code> the queries combined with set operators will always be surrounded by a parenthesis pair.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/3676">https://github.com/jOOQ/jOOQ/issues/3676</a> and <a href="https://github.com/jOOQ/jOOQ/issues/9751">https://github.com/jOOQ/jOOQ/issues/9751</a>.
+     * 
+     */
     public Settings withRenderParenthesisAroundSetOperationQueries(Boolean value) {
         setRenderParenthesisAroundSetOperationQueries(value);
         return this;
     }
 
+    /**
+     * Whether emulations that require repeating expressions should render variables for those expressions in derived tables.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/14065">https://github.com/jOOQ/jOOQ/issues/14065</a>.
+     * 
+     */
     public Settings withRenderVariablesInDerivedTablesForEmulations(Boolean value) {
         setRenderVariablesInDerivedTablesForEmulations(value);
         return this;
     }
 
+    /**
+     * Whether a <code>(a, b) < (:a, :b)</code> row predicate should be rendered for the <code>SEEK</code> clause.
+     * <p>
+     * Some RDBMS may support <code>(a, b) < (:a, :b)</code> row predicate syntax, which is very convenient for <code>SEEK</code> clause implementations, but fail to optimise this predicate as could be expected.
+     * This flag allows for expanding the predicate to the much more verbose, but equivalent <code>(a < :a) OR (a = :a AND b < :b)</code>. Dialects without native support for row predicates aren't affected
+     * by this flag.
+     * 
+     */
     public Settings withRenderRowConditionForSeekClause(Boolean value) {
         setRenderRowConditionForSeekClause(value);
         return this;
     }
 
+    /**
+     * Whether a redundant <code>(a <= :a)</code> predicate should be rendered for a <code>(a, b) < (:a, :b)</code> predicate for the <code>SEEK</code> clause.
+     * <p>
+     * Some RDBMS may not be able to properly optimise <code>(a, b) < ('a', 'b')</code> or <code>(a < 'a') OR (a = 'a' AND b < 'b')</code>, and choose an appropriate index. By adding an additional redundant predicate,
+     * jOOQ may help the optimiser, e.g. <code>(a <= :a) AND (a, b) < ('a', 'b')</code> or <code>(a <= :a) AND ((a < 'a') OR (a = 'a' AND b < 'b'))</code>
+     * 
+     */
     public Settings withRenderRedundantConditionForSeekClause(Boolean value) {
         setRenderRedundantConditionForSeekClause(value);
         return this;
     }
 
+    /**
+     * Whether plain SQL templates ({@link org.jooq.SQL}) are rendered as raw string content.
+     * 
+     */
     public Settings withRenderPlainSQLTemplatesAsRaw(Boolean value) {
         setRenderPlainSQLTemplatesAsRaw(value);
         return this;
@@ -6401,16 +7079,49 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetDateTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
+     * 
+     */
     public Settings withBindOffsetDateTimeType(Boolean value) {
         setBindOffsetDateTimeType(value);
         return this;
     }
 
+    /**
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.OffsetTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as strings to offer better compatibility with older JDBC drivers. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.
+     * 
+     */
     public Settings withBindOffsetTimeType(Boolean value) {
         setBindOffsetTimeType(value);
         return this;
     }
 
+    /**
+     * Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
+     * <p>
+     * SQL Server <code>OUTPUT</code> statements do not support fetching trigger generated values.
+     * This is a limitation of the {@link #renderOutputForSQLServerReturningClause}. An additional
+     * <code>MERGE</code> statement can run a second query if (and only if) the primary key has been
+     * included in the <code>OUTPUT</code> clause.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/4498">https://github.com/jOOQ/jOOQ/issues/4498</a>.
+     * <p>
+     * @deprecated - 3.18.0 - [#13912] [#15316] - Use {@link #fetchTriggerValuesAfterReturning} instead.
+     * 
+     */
     public Settings withFetchTriggerValuesAfterSQLServerOutput(Boolean value) {
         setFetchTriggerValuesAfterSQLServerOutput(value);
         return this;
@@ -6453,376 +7164,1127 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     */
     public Settings withDiagnosticsDuplicateStatements(Boolean value) {
         setDiagnosticsDuplicateStatements(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#duplicateStatements(org.jooq.DiagnosticsContext)} diagnostic with the {@link #transformPatterns} feature activated.
+     * <p>
+     * When transforming patterns, many more complex, duplicate SQL statements can be recognised than if simply
+     * parsing and re-rendering the statement. This flag turns on all transformation patterns, independently of their
+     * individual settings.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withDiagnosticsDuplicateStatementsUsingTransformPatterns(Boolean value) {
         setDiagnosticsDuplicateStatementsUsingTransformPatterns(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#missingWasNullCall(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     */
     public Settings withDiagnosticsMissingWasNullCall(Boolean value) {
         setDiagnosticsMissingWasNullCall(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#repeatedStatements(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     */
     public Settings withDiagnosticsRepeatedStatements(Boolean value) {
         setDiagnosticsRepeatedStatements(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#consecutiveAggregation(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withDiagnosticsConsecutiveAggregation(Boolean value) {
         setDiagnosticsConsecutiveAggregation(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#concatenationInPredicate(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withDiagnosticsConcatenationInPredicate(Boolean value) {
         setDiagnosticsConcatenationInPredicate(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#possiblyWrongExpression(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withDiagnosticsPossiblyWrongExpression(Boolean value) {
         setDiagnosticsPossiblyWrongExpression(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyColumnsFetched(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     */
     public Settings withDiagnosticsTooManyColumnsFetched(Boolean value) {
         setDiagnosticsTooManyColumnsFetched(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyRowsFetched(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     */
     public Settings withDiagnosticsTooManyRowsFetched(Boolean value) {
         setDiagnosticsTooManyRowsFetched(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#unnecessaryWasNullCall(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * 
+     */
     public Settings withDiagnosticsUnnecessaryWasNullCall(Boolean value) {
         setDiagnosticsUnnecessaryWasNullCall(value);
         return this;
     }
 
+    /**
+     * Whether to run the various pattern transformation diagnostics.
+     * <p>
+     * {@link #transformPatterns} allows for applying numerous pattern transformations, which can be turned on separately when running
+     * diagnostics. This flag overrides the {@link #transformPatterns} flag in the diagnostics context. Individual pattern flags
+     * still allow to enable / disable the pattern for diagnostics. 
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withDiagnosticsPatterns(Boolean value) {
         setDiagnosticsPatterns(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#trivialCondition(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withDiagnosticsTrivialCondition(Boolean value) {
         setDiagnosticsTrivialCondition(value);
         return this;
     }
 
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withDiagnosticsNullCondition(Boolean value) {
         setDiagnosticsNullCondition(value);
         return this;
     }
 
+    /**
+     * Transform various syntax patterns to better versions, if possible.
+     * <p>
+     * This flag enables the pattern transformation feature, which consists of several sub-flags that are
+     * all prefixed with "transformPatterns", e.g. {@link #transformPatternsTrim}. While the sub-flags default
+     * to being enabled, and can be disabled on an individual basis, the global feature itself is disabled by
+     * default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatterns(Boolean value) {
         setTransformPatterns(value);
         return this;
     }
 
+    /**
+     * Activate debug logging of the {@link #transformPatterns} feature.
+     * 
+     */
     public Settings withTransformPatternsLogging(Boolean value) {
         setTransformPatternsLogging(value);
         return this;
     }
 
+    /**
+     * Transform <code>SELECT DISTINCT a, b FROM t GROUP BY a, b</code> to <code>SELECT a, b FROM t GROUP BY a, b</code>.
+     * <p>
+     * The <code>GROUP BY</code> clause already removes duplicates, so if the <code>DISTINCT</code> clause
+     * contains at least all the columns from <code>GROUP BY</code> then it can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsUnnecessaryDistinct(Boolean value) {
         setTransformPatternsUnnecessaryDistinct(value);
         return this;
     }
 
+    /**
+     * Transform <code>SELECT (SELECT 1)</code> to <code>SELECT 1</code>.
+     * <p>
+     * Scalar subqueries that don't have any content other than a <code>SELECT</code> clause are unnecessary
+     * and can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsUnnecessaryScalarSubquery(Boolean value) {
         setTransformPatternsUnnecessaryScalarSubquery(value);
         return this;
     }
 
+    /**
+     * Transform <code>SELECT * FROM t INNER JOIN u ON TRUE</code> to <code>SELECT * FROM t CROSS JOIN u</code>.
+     * <p>
+     * Some <code>INNER JOIN</code> expressions can be proven to be unnecessary.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsUnnecessaryInnerJoin(Boolean value) {
         setTransformPatternsUnnecessaryInnerJoin(value);
         return this;
     }
 
+    /**
+     * Transform <code>SELECT a, b FROM t GROUP BY a, a, b</code> to <code>SELECT a, b FROM t GROUP BY a, b</code>.
+     * <p>
+     * Duplicate <code>GROUP BY</code> expressions can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsUnnecessaryGroupByExpressions(Boolean value) {
         setTransformPatternsUnnecessaryGroupByExpressions(value);
         return this;
     }
 
+    /**
+     * Transform <code>SELECT a, b FROM t ORDER BY a, a, b</code> to <code>SELECT a, b FROM t ORDER BY a, b</code>.
+     * <p>
+     * Duplicate <code>ORDER BY</code> expressions can be removed.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsUnnecessaryOrderByExpressions(Boolean value) {
         setTransformPatternsUnnecessaryOrderByExpressions(value);
         return this;
     }
 
+    /**
+     * Transform <code>[ NOT ] EXISTS (SELECT DISTINCT a, b FROM t ORDER BY c LIMIT d)</code> to <code>[ NOT ] EXISTS (SELECT 1 FROM t)</code>.
+     * <p>
+     * In <code>EXISTS</code> subqueries, quite a few <code>SELECT</code> clauses are meaningless, and can
+     * thus be removed. These include:
+     * <ul>
+     * <li><code>SELECT</code> (any projection can be ignored)</li>
+     * <li><code>DISTINCT</code></li>
+     * <li><code>ORDER BY</code></li>
+     * <li><code>LIMIT</code> (except <code>LIMIT 0</code>, in case of which {@link #transformPatternsTrivialPredicates} applies).</li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsUnnecessaryExistsSubqueryClauses(Boolean value) {
         setTransformPatternsUnnecessaryExistsSubqueryClauses(value);
         return this;
     }
 
+    /**
+     * Transform <code>COUNT(1)</code> or any other <code>COUNT(const)</code> to <code>COUNT(*)</code>.
+     * <p>
+     * There is no benefit to counting a constant expression. In fact, in some RDBMS, it might even be slightly
+     * slower, at least in benchmarks.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsCountConstant(Boolean value) {
         setTransformPatternsCountConstant(value);
         return this;
     }
 
+    /**
+     * Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>.
+     * <p>
+     * Historically, a few dialects did not implement <code>TRIM(x)</code> or <code>TRIM(BOTH FROM x)</code>,
+     * so users worked around this by wrapping <code>LTRIM()</code> and <code>RTRIM()</code> with each other.
+     * Maintaining this is usually undesirable, so this transformation helps remove the unwanted wrapping.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsTrim(Boolean value) {
         setTransformPatternsTrim(value);
         return this;
     }
 
+    /**
+     * Transform <code>NOT(p AND q)</code> to <code>NOT(p) OR NOT(q)</code>.
+     * <p>
+     * This transformation normalises a predicate using De Morgan's rules.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNotAnd(Boolean value) {
         setTransformPatternsNotAnd(value);
         return this;
     }
 
+    /**
+     * Transform <code>NOT(p OR q)</code> to <code>NOT(p) AND NOT(q)</code>.
+     * <p>
+     * This transformation normalises a predicate using De Morgan's rules.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNotOr(Boolean value) {
         setTransformPatternsNotOr(value);
         return this;
     }
 
+    /**
+     * Transform <code>NOT(NOT(x))</code> to <code>x</code>.
+     * <p>
+     * This transformation removes a redundant logic negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNotNot(Boolean value) {
         setTransformPatternsNotNot(value);
         return this;
     }
 
+    /**
+     * Transform <code>NOT (a != b)</code> to <code>a = b</code>, and similar comparisons.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNotComparison(Boolean value) {
         setTransformPatternsNotComparison(value);
         return this;
     }
 
+    /**
+     * Transform <code>NOT (a IS NOT DISTINCT FROM b)</code> to <code>a IS DISTINCT FROM b</code>.
+     * <p>
+     * This transformation removes a redundant logical negation from the <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNotNotDistinct(Boolean value) {
         setTransformPatternsNotNotDistinct(value);
         return this;
     }
 
+    /**
+     * Transform <code>a IS [ NOT ] DISTINCT FROM NULL</code> to <code>a IS [ NOT ] NULL</code>.
+     * <p>
+     * This simplifies the much more verbose <code>DISTINCT</code> predicate.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsDistinctFromNull(Boolean value) {
         setTransformPatternsDistinctFromNull(value);
         return this;
     }
 
+    /**
+     * Transform <code>(a + b) + (c + d)</code> to <code>((a + b) + c) + d</code>.
+     * <p>
+     * This transformation turns trees into lists, which greatly simplifies other tree traversal transformations.
+     * Some of those other transformations currently rely on this flag to be active.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNormaliseAssociativeOps(Boolean value) {
         setTransformPatternsNormaliseAssociativeOps(value);
         return this;
     }
 
+    /**
+     * Transform <code>x IN (a)</code> to <code>x = a</code> and <code>x NOT IN (a)</code> to <code>x != a</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNormaliseInListSingleElementToComparison(Boolean value) {
         setTransformPatternsNormaliseInListSingleElementToComparison(value);
         return this;
     }
 
+    /**
+     * Transform <code>1 = a</code> to <code>a = 1</code>.
+     * <p>
+     * This transformation inverses {@link TableField} [op] {@link org.jooq.impl.QOM.Val} comparisons, if they're not in that order.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNormaliseFieldCompareValue(Boolean value) {
         setTransformPatternsNormaliseFieldCompareValue(value);
         return this;
     }
 
+    /**
+     * Transform 2 argument <code>COALESCE(a, b)</code> to <code>NVL(a, b)</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNormaliseCoalesceToNvl(Boolean value) {
         setTransformPatternsNormaliseCoalesceToNvl(value);
         return this;
     }
 
+    /**
+     * Transform <code>x = c1 OR x = c2</code> to <code>x IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>OR</code> predicates into simpler <code>IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsOrEqToIn(Boolean value) {
         setTransformPatternsOrEqToIn(value);
         return this;
     }
 
+    /**
+     * Transform <code>x != c1 AND x != c2</code> to <code>x NOT IN (c1, c2)</code>.
+     * <p>
+     * This transformation simplifies verbose <code>AND</code> predicates into simpler <code>NOT IN</code> predicates.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsAndNeToNotIn(Boolean value) {
         setTransformPatternsAndNeToNotIn(value);
         return this;
     }
 
+    /**
+     * Transform <code>x = a OR x > a</code> to <code>x >= a</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeOrComparison(Boolean value) {
         setTransformPatternsMergeOrComparison(value);
         return this;
     }
 
+    /**
+     * Transform <code>x >= a AND x <= a</code> to <code>x = a</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeAndComparison(Boolean value) {
         setTransformPatternsMergeAndComparison(value);
         return this;
     }
 
+    /**
+     * Transform <code>x IN (a, b, c) AND x IN (b, c, d)</code> to <code>x IN (b, c)</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected comparisons to a single comparison using a simpler operator.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeInLists(Boolean value) {
         setTransformPatternsMergeInLists(value);
         return this;
     }
 
+    /**
+     * Transform <code>x >= a AND x <= b</code> to <code>x BETWEEN a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>AND</code> connected range predicates to a single comparison using <code>BETWEEN</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeRangePredicates(Boolean value) {
         setTransformPatternsMergeRangePredicates(value);
         return this;
     }
 
+    /**
+     * Transform <code>x BETWEEN a AND b OR x BETWEEN b AND a</code> to <code>x BETWEEN SYMMETRIC a AND b</code>.
+     * <p>
+     * This transformation merges multiple <code>OR</code> connected <code>BETWEEN</code> predicates to a single comparison using <code>BETWEEN SYMMETRIC</code>.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsMergeBetweenSymmetricPredicates(Boolean value) {
         setTransformPatternsMergeBetweenSymmetricPredicates(value);
         return this;
     }
 
+    /**
+     * Transform a searched <code>CASE WHEN x = .. WHEN x = ..</code> to a simple <code>CASE x WHEN … WHEN …</code> expression.
+     * <p>
+     * When a searched <code>CASE</code> expression always compares the same column to a value, then it can be simplified, possibly
+     * unlocking further transformations that are available only to the simple <code>CASE</code> expression.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsCaseSearchedToCaseSimple(Boolean value) {
         setTransformPatternsCaseSearchedToCaseSimple(value);
         return this;
     }
 
+    /**
+     * Transform <code>CASE … ELSE NULL</code> removing the <code>ELSE</code> clause.
+     * <p>
+     * <code>CASE WHEN x THEN y ELSE NULL END</code> is equivalent to <code>CASE WHEN x THEN y END</code>.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsCaseElseNull(Boolean value) {
         setTransformPatternsCaseElseNull(value);
         return this;
     }
 
+    /**
+     * Transform <code>CASE</code> by removing unreachable clauses.
+     * <p>
+     * Case clauses can be proven to be unreachable, and thus removed:
+     * <ul>
+     * <li><code>CASE WHEN p THEN 1 WHEN TRUE THEN 2 WHEN q … ELSE … END</code> is equivalent to <code>CASE WHEN p THEN 1 ELSE 2 END</code></li>
+     * <li><code>CASE WHEN p THEN 1 WHEN FALSE THEN 2 WHEN q .. ELSE .. END</code> is equivalent to <code>CASE WHEN p THEN 1 WHEN q … ELSE … END</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsUnreachableCaseClauses(Boolean value) {
         setTransformPatternsUnreachableCaseClauses(value);
         return this;
     }
 
+    /**
+     * Transform <code>DECODE</code> by removing unreachable clauses.
+     * <p>
+     * DECODE clauses can be proven to be unreachable, and thus removed:
+     * <ul>
+     * <li><code>DECODE(a, b, 1, c, 2, b, 3)</code> is equivalent to <code>DECODE(a, b, 1, c, 2)</code></li>
+     * <li><code>DECODE(a, b, 1, c, 2, b, 3, 4)</code> is equivalent to <code>DECODE(a, b, 1, c, 2, 4)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsUnreachableDecodeClauses(Boolean value) {
         setTransformPatternsUnreachableDecodeClauses(value);
         return this;
     }
 
+    /**
+     * Transform <code>CASE WHEN a IS NOT DISTINCT FROM b …</code> to an equivalent <code>DECODE</code> function.
+     * <p>
+     * When all <code>WHEN</code> clauses of a <code>CASE</code> expression use the <code>DISTINCT</code> predicate, then the
+     * <code>CASE</code> expression can be transformed into a <code>DECODE</code> function call:
+     * <ul>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 END</code> is equivalent to <code>DECODE(a, b, 1)</code></li>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 ELSE 2 END</code> is equivalent to <code>DECODE(a, b, 1, 2)</code></li>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 WHEN a IS NOT DISTINCT FROM c THEN 2 END</code> is equivalent to <code>DECODE(a, b, 1, c, 2)</code></li>
+     * <li><code>CASE WHEN a IS NOT DISTINCT FROM b THEN 1 WHEN a IS NOT DISTINCT FROM c THEN 2 ELSE 3 END</code> is equivalent to <code>DECODE(a, b, 1, c, 2, 3)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsCaseDistinctToDecode(Boolean value) {
         setTransformPatternsCaseDistinctToDecode(value);
         return this;
     }
 
+    /**
+     * Transform <code>CASE WHEN a THEN x WHEN b THEN x END</code> to <code>CASE WHEN a OR b THEN x END</code>.
+     * <p>
+     * Two consecutive <code>WHEN</code> clauses can be merged, if their respective <code>THEN</code> clause is identical.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsCaseMergeWhenWhen(Boolean value) {
         setTransformPatternsCaseMergeWhenWhen(value);
         return this;
     }
 
+    /**
+     * Transform <code>CASE WHEN a THEN x WHEN b THEN y ELSE y END</code> to <code>CASE WHEN a THEN x ELSE y END</code>.
+     * <p>
+     * The ultimate <code>WHEN</code> clause can be merged with the <code>ELSE</code>, if their respective result is identical.
+     * If the <code>WHEN</code> clause is the only <code>WHEN</code> clause, then the entire <code>CASE</code> expression can
+     * be replaced by the <code>ELSE</code> clause content.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsCaseMergeWhenElse(Boolean value) {
         setTransformPatternsCaseMergeWhenElse(value);
         return this;
     }
 
+    /**
+     * Transform <code>CASE</code> expressions to their respective abbreviations.
+     * <p>
+     * Some <code>CASE</code> expressions have a shorter abbreviated form, such as <code>COALESCE()</code> or <code>NULLIF()</code>.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsCaseToCaseAbbreviation(Boolean value) {
         setTransformPatternsCaseToCaseAbbreviation(value);
         return this;
     }
 
+    /**
+     * Transform complex predicates into simpler <code>CASE</code> abbreviations.
+     * <p>
+     * Some predicates can be simplified into case abbreviations, such as, for example
+     * <ul>
+     * <li><code>a IS NULL OR COALESCE(a = b, FALSE)</code> to <code>NULLIF(a, b) IS NULL</code></li>
+     * <li><code>a IS NOT NULL AND COALESCE(a != b, TRUE)</code> to <code>NULLIF(a, b) IS NOT NULL</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsSimplifyCaseAbbreviation(Boolean value) {
         setTransformPatternsSimplifyCaseAbbreviation(value);
         return this;
     }
 
+    /**
+     * Flatten nested <code>CASE</code> abbreviations such as <code>NVL</code> or <code>CASE</code>.
+     * <p>
+     * Nested <code>CASE</code> abbreviations can be flattened, as such:
+     * <ul>
+     * <li><code>NVL(NVL(a, b), c)</code> to <code>COALESCE(a, b, c)</code></li>
+     * <li><code>COALESCE(a, ..., COALESCE(b, ..., c), ..., d)</code> to <code>COALESCE(a, …, b, …, c, ..., d)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsFlattenCaseAbbreviation(Boolean value) {
         setTransformPatternsFlattenCaseAbbreviation(value);
         return this;
     }
 
+    /**
+     * Flatten nested <code>DECODE</code> functions.
+     * <p>
+     * Nested <code>DECODE</code> functions can be flattened, as such:
+     * <ul>
+     * <li><code>DECODE(a, b, c, DECODE(a, d, e))</code> to <code>DECODE(a, b, c, d, e)</code></li>
+     * </ul>
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsFlattenDecode(Boolean value) {
         setTransformPatternsFlattenDecode(value);
         return this;
     }
 
+    /**
+     * Transform <code>CASE … ELSE CASE …</code> by flattening the nested <code>CASE</code>.
+     * <p>
+     * <code>CASE WHEN a THEN b ELSE CASE WHEN c THEN d END END</code> is equivalent to <code>CASE WHEN a THEN b WHEN c THEN d END</code>.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsFlattenCase(Boolean value) {
         setTransformPatternsFlattenCase(value);
         return this;
     }
 
+    /**
+     * Transform trivial case abbreviations like <code>NVL(NULL, a)</code> to <code>a</code>.
+     * <p>
+     * This transformation removes any trivial case abbreviations, such as <code>NVL()</code>,
+     * <code>COALESCE()</code>, <code>NULLIF()</code>, etc.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsTrivialCaseAbbreviation(Boolean value) {
         setTransformPatternsTrivialCaseAbbreviation(value);
         return this;
     }
 
+    /**
+     * Transform trivial predicates like <code>1 = 1</code> to <code>TRUE</code>.
+     * <p>
+     * This transformation removes any trivial predicates.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsTrivialPredicates(Boolean value) {
         setTransformPatternsTrivialPredicates(value);
         return this;
     }
 
+    /**
+     * Transform trivial bitwise comparisons like <code>BIT_OR(a, 0)</code> to <code>a</code>.
+     * <p>
+     * This transformation removes any trivial predicates.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsTrivialBitwiseOperations(Boolean value) {
         setTransformPatternsTrivialBitwiseOperations(value);
         return this;
     }
 
+    /**
+     * Transform bitwise operations to an equivalent <code>BIT_SET(a, b)</code> or <code>BIT_SET(a, b, c)</code> expression.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitSet(Boolean value) {
         setTransformPatternsBitSet(value);
         return this;
     }
 
+    /**
+     * Transform bitwise operations to an equivalent <code>BIT_GET(a, b)</code> expression.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitGet(Boolean value) {
         setTransformPatternsBitGet(value);
         return this;
     }
 
+    /**
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(*) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 …)</code>.
+     * <p>
+     * Scalar subqueries that count rows and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsScalarSubqueryCountAsteriskGtZero(Boolean value) {
         setTransformPatternsScalarSubqueryCountAsteriskGtZero(value);
         return this;
     }
 
+    /**
+     * Transform predicates comparing scalar subqueries with a count <code>(SELECT COUNT(expr) …) > 0</code> to equivalent <code>EXISTS (SELECT 1 … WHERE expr IS NOT NULL)</code>.
+     * <p>
+     * Scalar subqueries that count non-null expressions and whose count is compared to 0 can be transformed into equivalent, but likely cheaper to execute EXISTS queries.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsScalarSubqueryCountExpressionGtZero(Boolean value) {
         setTransformPatternsScalarSubqueryCountExpressionGtZero(value);
         return this;
     }
 
+    /**
+     * Transform empty scalar subqueries like <code>(SELECT 1 WHERE FALSE)</code> to <code>NULL</code>.
+     * <p>
+     * Scalar subqueries that are guaranteed to produce no results can be replaced by a <code>NULL</code> value.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsEmptyScalarSubquery(Boolean value) {
         setTransformPatternsEmptyScalarSubquery(value);
         return this;
     }
 
+    /**
+     * Transform <code>-(-(x))</code> to <code>x</code>
+     * <p>
+     * This transformation removes a redundant arithmetic negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNegNeg(Boolean value) {
         setTransformPatternsNegNeg(value);
         return this;
     }
 
+    /**
+     * Transform <code>~(~(x))</code> to <code>x</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitNotBitNot(Boolean value) {
         setTransformPatternsBitNotBitNot(value);
         return this;
     }
 
+    /**
+     * Transform <code>~(bitnand(x, y))</code> to <code>bitand(x, y)</code> and <code>~(bitand(x, y)</code> to <code>bitnand(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitNotBitNand(Boolean value) {
         setTransformPatternsBitNotBitNand(value);
         return this;
     }
 
+    /**
+     * Transform <code>~(bitnor(x, y))</code> to <code>bitor(x, y)</code> and <code>~(bitor(x, y)</code> to <code>bitnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitNotBitNor(Boolean value) {
         setTransformPatternsBitNotBitNor(value);
         return this;
     }
 
+    /**
+     * Transform <code>~(bitxnor(x, y))</code> to <code>bitxor(x, y)</code> and <code>~(bitxor(x, y)</code> to <code>bitxnor(x, y)</code>.
+     * <p>
+     * This transformation removes a redundant bitwise negation.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsBitNotBitXNor(Boolean value) {
         setTransformPatternsBitNotBitXNor(value);
         return this;
     }
 
+    /**
+     * Any {org.jooq.impl.QOM.UReturnsNullOnNullInput} function or expression with <code>NULL</code> arguments can be replaced by <code>NULL</code>.
+     * <p>
+     * There are many built-in SQL functions and operators with a <code>RETURNS NULL ON NULL INPUT</code> property, e.g.
+     * <ul>
+     * <li><code>ABS(NULL)</code></li>
+     * <li><code>MOD(NULL, 1)</code></li>
+     * <li><code>NULL + 1</code></li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsNullOnNullInput(Boolean value) {
         setTransformPatternsNullOnNullInput(value);
         return this;
     }
 
+    /**
+     * Transform all repetitions of idempotent functions, such as <code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code>.
+     * <p>
+     * Idempotent functions that are covered so far, include:
+     * <ul>
+     * <li><code>LTRIM(LTRIM(s))</code> to <code>LTRIM(s)</code></li>
+     * <li><code>LTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>RTRIM(RTRIM(s))</code> to <code>RTRIM(s)</code></li>
+     * <li><code>RTRIM(TRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(LTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>TRIM(RTRIM(s))</code> to <code>TRIM(s)</code></li>
+     * <li><code>UPPER(UPPER(s))</code> to <code>UPPER(s)</code></li>
+     * <li><code>LOWER(LOWER(s))</code> to <code>LOWER(s)</code></li>
+     * </ul>
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsIdempotentFunctionRepetition(Boolean value) {
         setTransformPatternsIdempotentFunctionRepetition(value);
         return this;
     }
 
+    /**
+     * Transform <code>a + 1 = 2</code> to <code>a = 2 - 1</code>, and other transformations.
+     * <p>
+     * It is usually best to compare single columns with constants or expressions to
+     * encourage index usage. While function based indexes are possible in some RDBMS,
+     * ordinary indexes are more reusable and should be preferred.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsArithmeticComparisons(Boolean value) {
         setTransformPatternsArithmeticComparisons(value);
         return this;
     }
 
+    /**
+     * Transform <code>1 / y * x</code> to <code>x / y</code>, and other transformations.
+     * <p>
+     * This transformation simplifies arithmetic expressions.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsArithmeticExpressions(Boolean value) {
         setTransformPatternsArithmeticExpressions(value);
         return this;
     }
 
+    /**
+     * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsTrigonometricFunctions(Boolean value) {
         setTransformPatternsTrigonometricFunctions(value);
         return this;
     }
 
+    /**
+     * Transform <code>LN(value) / LN(base)</code> to <code>LOG(base, value)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded logarithmic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsLogarithmicFunctions(Boolean value) {
         setTransformPatternsLogarithmicFunctions(value);
         return this;
     }
 
+    /**
+     * Transform <code>(EXP(x) - EXP(-x)) / 2</code> to <code>SINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsHyperbolicFunctions(Boolean value) {
         setTransformPatternsHyperbolicFunctions(value);
         return this;
     }
 
+    /**
+     * Transform <code>LN(x + SQRT(SQUARE(x) + 1))</code> to <code>ASINH(x)</code>, and other transformations.
+     * <p>
+     * This transformation turns expanded inverse hyperbolic function definitions into their shorter equivalents.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformPatternsInverseHyperbolicFunctions(Boolean value) {
         setTransformPatternsInverseHyperbolicFunctions(value);
         return this;
     }
 
+    /**
+     * Transform {@link org.jooq.impl.QOM.CompareCondition} and a few other types of condition to inline their bind values, in case they match
+     *          
+     * <p>
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+     * converted to equivalent table lists in generated SQL using this flag.
+     * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformInlineBindValuesForFieldComparisons(Boolean value) {
         setTransformInlineBindValuesForFieldComparisons(value);
         return this;
     }
 
+    /**
+     * Transform ANSI join to table lists if possible.
+     * <p>
+     * Historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. For backwards compatibility with older RDBMS versions, ANSI joins in jOOQ code may be
+     * converted to equivalent table lists in generated SQL using this flag.
+     * <p>
+     * This flag has a limited implementation that supports inner joins (in most cases) and outer joins
+     * (only for simple comparison predicates).
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformAnsiJoinToTableLists(Boolean value) {
         setTransformAnsiJoinToTableLists(value);
         return this;
@@ -6856,6 +8318,18 @@ public class Settings
         return this;
     }
 
+    /**
+     * Transform table lists to ANSI join if possible.
+     * <p>
+     * (Very) historically, prior to ANSI join syntax, joins were implemented by listing tables in 
+     * the FROM clause and providing join predicates in the WHERE clause, possibly using vendor specific
+     * operators like <code>(+)</code> (Oracle, DB2) or <code>*=</code> (SQL Server) for outer join
+     * support. Migrating such join syntax is tedious. The jOOQ parser can parse the old syntax and
+     * this flag enables the transformation to ANSI join syntax.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
     public Settings withTransformTableListsToAnsiJoin(Boolean value) {
         setTransformTableListsToAnsiJoin(value);
         return this;
@@ -7073,16 +8547,28 @@ public class Settings
         return this;
     }
 
+    /**
+     * When set to true, this will add jOOQ's default {@link org.jooq.tools.LoggerListener} for debug logging. This is meant for use in development only.
+     * 
+     */
     public Settings withExecuteLogging(Boolean value) {
         setExecuteLogging(value);
         return this;
     }
 
+    /**
+     * [#14420] Whether constraint violations and other {@link java.sql.SQLException} should produce additional log information about the column name and data causing the problem. Unlike {@link #executeLogging}, this is meant for use in production as well as development. This feature is available only in commercial distributions.
+     * 
+     */
     public Settings withExecuteLoggingSQLExceptions(Boolean value) {
         setExecuteLoggingSQLExceptions(value);
         return this;
     }
 
+    /**
+     * When set to true, this will add jOOQ's default logging DiagnosticsListeners.
+     * 
+     */
     public Settings withDiagnosticsLogging(Boolean value) {
         setDiagnosticsLogging(value);
         return this;
@@ -7097,31 +8583,58 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether store(), insert(), and update() methods should update the record version prior to the operation, for use with {@link #executeWithOptimisticLocking}.
+     * 
+     */
     public Settings withUpdateRecordVersion(Boolean value) {
         setUpdateRecordVersion(value);
         return this;
     }
 
+    /**
+     * Whether store(), insert(), and update() methods should update the record timestamp prior to the operation, for use with {@link #executeWithOptimisticLocking}.
+     * 
+     */
     public Settings withUpdateRecordTimestamp(Boolean value) {
         setUpdateRecordTimestamp(value);
         return this;
     }
 
+    /**
+     * Whether store() and delete() methods should be executed with optimistic locking.
+     * 
+     */
     public Settings withExecuteWithOptimisticLocking(Boolean value) {
         setExecuteWithOptimisticLocking(value);
         return this;
     }
 
+    /**
+     * Whether store() and delete() methods should be executed with optimistic locking also on "unversioned" tables,
+     * i.e. on tables that do not have a version and/or timestamp column.
+     * <p>
+     * This flag has no effect when "executeWithOptimisticLocking" is turned off.
+     * 
+     */
     public Settings withExecuteWithOptimisticLockingExcludeUnversioned(Boolean value) {
         setExecuteWithOptimisticLockingExcludeUnversioned(value);
         return this;
     }
 
+    /**
+     * Whether fetched records should be attached to the fetching configuration.
+     * 
+     */
     public Settings withAttachRecords(Boolean value) {
         setAttachRecords(value);
         return this;
     }
 
+    /**
+     * Whether {@link org.jooq.TableRecord#insert()} calls should be executed if the record is unchanged. This also affects the <code>INSERT</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.
+     * 
+     */
     public Settings withInsertUnchangedRecords(Boolean value) {
         setInsertUnchangedRecords(value);
         return this;
@@ -7136,21 +8649,40 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether primary key values are deemed to be "updatable" in jOOQ.
+     * <p>
+     * Setting this to "true" will allow for updating primary key values through
+     * UpdatableRecord.store() and UpdatableRecord.update().
+     * 
+     */
     public Settings withUpdatablePrimaryKeys(Boolean value) {
         setUpdatablePrimaryKeys(value);
         return this;
     }
 
+    /**
+     * Whether reflection information should be cached in the configuration.
+     * 
+     */
     public Settings withReflectionCaching(Boolean value) {
         setReflectionCaching(value);
         return this;
     }
 
+    /**
+     * Whether record mappers should be cached in the configuration.
+     * 
+     */
     public Settings withCacheRecordMappers(Boolean value) {
         setCacheRecordMappers(value);
         return this;
     }
 
+    /**
+     * Whether parsing connection translations should be cached in the configuration.
+     * 
+     */
     public Settings withCacheParsingConnection(Boolean value) {
         setCacheParsingConnection(value);
         return this;
@@ -7165,6 +8697,10 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether JDBC {@link java.sql.PreparedStatement} instances should be cached in loader API.
+     * 
+     */
     public Settings withCachePreparedStatementInLoader(Boolean value) {
         setCachePreparedStatementInLoader(value);
         return this;
@@ -7179,6 +8715,10 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether warnings should be fetched after each query execution.
+     * 
+     */
     public Settings withFetchWarnings(Boolean value) {
         setFetchWarnings(value);
         return this;
@@ -7193,51 +8733,96 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether calls to store(), insert() and update() should return the identity column.
+     * 
+     */
     public Settings withReturnIdentityOnUpdatableRecord(Boolean value) {
         setReturnIdentityOnUpdatableRecord(value);
         return this;
     }
 
+    /**
+     * Whether calls to store(), insert() and update() should return values for columns that are {@link org.jooq.DataType#defaulted()}.
+     * 
+     */
     public Settings withReturnDefaultOnUpdatableRecord(Boolean value) {
         setReturnDefaultOnUpdatableRecord(value);
         return this;
     }
 
+    /**
+     * Whether calls to store(), insert() and update() should return values for columns that are {@link org.jooq.DataType#computed()}.
+     * 
+     */
     public Settings withReturnComputedOnUpdatableRecord(Boolean value) {
         setReturnComputedOnUpdatableRecord(value);
         return this;
     }
 
+    /**
+     * Whether calls to store(), insert() and update() should return all columns, not just identity columns.
+     * <p>
+     * Do note that only few databases support this feature. It is supported only in case the INSERT's or UPDATE's
+     * RETURNING clause is fully supported, also for non-IDENTITY columns.
+     * 
+     */
     public Settings withReturnAllOnUpdatableRecord(Boolean value) {
         setReturnAllOnUpdatableRecord(value);
         return this;
     }
 
+    /**
+     * Whether calls to store(), insert(), update(), and delete() that are called on an UpdatableRecord
+     * that is created from a POJO (e.g. in a DAO) should return all Record values to the POJO, including
+     * IDENTITY values, and if {@link #returnAllOnUpdatableRecord} is active, also other values.
+     * 
+     */
     public Settings withReturnRecordToPojo(Boolean value) {
         setReturnRecordToPojo(value);
         return this;
     }
 
+    /**
+     * Whether JPA annotations should be considered by the DefaultRecordMapper.
+     * 
+     */
     public Settings withMapJPAAnnotations(Boolean value) {
         setMapJPAAnnotations(value);
         return this;
     }
 
+    /**
+     * Whether constructor parameter names obtained from the {@link java.lang.Record} component names should be considered by the DefaultRecordMapper.
+     * 
+     */
     public Settings withMapRecordComponentParameterNames(Boolean value) {
         setMapRecordComponentParameterNames(value);
         return this;
     }
 
+    /**
+     * Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.
+     * 
+     */
     public Settings withMapConstructorPropertiesParameterNames(Boolean value) {
         setMapConstructorPropertiesParameterNames(value);
         return this;
     }
 
+    /**
+     * Whether constructor parameter names obtained via reflection in Java 8+ should be considered by the DefaultRecordMapper. This flag has no effect in Java 6 or 7.
+     * 
+     */
     public Settings withMapConstructorParameterNames(Boolean value) {
         setMapConstructorParameterNames(value);
         return this;
     }
 
+    /**
+     * Whether constructor parameter names obtained via reflection in Kotlin should be considered by the DefaultRecordMapper. This flag has no effect in Java.
+     * 
+     */
     public Settings withMapConstructorParameterNamesInKotlin(Boolean value) {
         setMapConstructorParameterNamesInKotlin(value);
         return this;
@@ -7292,11 +8877,19 @@ public class Settings
         return this;
     }
 
+    /**
+     * [#5570] Whether exception stack traces should be enhanced with additional debug information.
+     * 
+     */
     public Settings withDebugInfoOnStackTrace(Boolean value) {
         setDebugInfoOnStackTrace(value);
         return this;
     }
 
+    /**
+     * [#5600] Whether IN lists in IN predicates should be padded to powers of inListPadBase (default 2).
+     * 
+     */
     public Settings withInListPadding(Boolean value) {
         setInListPadding(value);
         return this;
@@ -7320,6 +8913,10 @@ public class Settings
         return this;
     }
 
+    /**
+     * [#6462] Use only the primary key to emulate MySQL's INSERT .. ON DUPLICATE KEY UPDATE statement. In MySQL, the statement considers all unique keys for duplicates to apply an update rather than an insert. Earlier versions of jOOQ considered only the PRIMARY KEY. This flag can be turned on to maintain backwards compatibility.
+     * 
+     */
     public Settings withEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(Boolean value) {
         setEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly(value);
         return this;
@@ -7334,6 +8931,13 @@ public class Settings
         return this;
     }
 
+    /**
+     * [#13418] Whether computed columns should be emulated in the client.
+     * <p>
+     * This can be useful if a schema was generated using a dialect that supports computed columns, but it is
+     * deployed on an RDBMS that does not.
+     * 
+     */
     public Settings withEmulateComputedColumns(Boolean value) {
         setEmulateComputedColumns(value);
         return this;
@@ -7384,16 +8988,28 @@ public class Settings
         return this;
     }
 
+    /**
+     * Using this flag, the interpreter will be able to delay the addition of foreign key declarations until the end of the interpretation run.
+     * 
+     */
     public Settings withInterpreterDelayForeignKeyDeclarations(Boolean value) {
         setInterpreterDelayForeignKeyDeclarations(value);
         return this;
     }
 
+    /**
+     * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.
+     * 
+     */
     public Settings withMetaIncludeSystemIndexes(Boolean value) {
         setMetaIncludeSystemIndexes(value);
         return this;
     }
 
+    /**
+     * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated sequences, by default.
+     * 
+     */
     public Settings withMetaIncludeSystemSequences(Boolean value) {
         setMetaIncludeSystemSequences(value);
         return this;
@@ -7408,6 +9024,10 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether {@link #getMigrationHistorySchema()} should be created if it doesn't exist.
+     * 
+     */
     public Settings withMigrationHistorySchemaCreateSchemaIfNotExists(Boolean value) {
         setMigrationHistorySchemaCreateSchemaIfNotExists(value);
         return this;
@@ -7422,31 +9042,55 @@ public class Settings
         return this;
     }
 
+    /**
+     * Whether {@link #getMigrationSchemata()} should be created if they don't exist.
+     * 
+     */
     public Settings withMigrationSchemataCreateSchemaIfNotExists(Boolean value) {
         setMigrationSchemataCreateSchemaIfNotExists(value);
         return this;
     }
 
+    /**
+     * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
+     * 
+     */
     public Settings withMigrationAllowsUndo(Boolean value) {
         setMigrationAllowsUndo(value);
         return this;
     }
 
+    /**
+     * Whether migrations revert any untracked changes in the schemas that are being migrated.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly revert any elements created in a development environment. This feature is available only in commercial distributions.
+     * 
+     */
     public Settings withMigrationRevertUntracked(Boolean value) {
         setMigrationRevertUntracked(value);
         return this;
     }
 
+    /**
+     * Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.
+     * 
+     */
     public Settings withMigrationAutoBaseline(Boolean value) {
         setMigrationAutoBaseline(value);
         return this;
     }
 
+    /**
+     * Whether a migration automatically runs a verification first.
+     * 
+     */
     public Settings withMigrationAutoVerification(Boolean value) {
         setMigrationAutoVerification(value);
         return this;
     }
 
+    /**
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the difference between <code>TIMESTAMP</code> and <code>TIMESTAMP(6)</code>, if 6 is the default precision for timestamps on the configured dialect.
+     * 
+     */
     public Settings withMigrationIgnoreDefaultTimestampPrecisionDiffs(Boolean value) {
         setMigrationIgnoreDefaultTimestampPrecisionDiffs(value);
         return this;
@@ -7548,6 +9192,10 @@ public class Settings
         return this;
     }
 
+    /**
+     * [#9780] Whether commands of the type <code>SET key = value</code> should be parsed rather than ignored.
+     * 
+     */
     public Settings withParseSetCommands(Boolean value) {
         setParseSetCommands(value);
         return this;
@@ -7571,11 +9219,19 @@ public class Settings
         return this;
     }
 
+    /**
+     * [#13109] Whether the parser of the jOOQ Open Source Edition should ignore commercial only features, rather than failing.
+     * 
+     */
     public Settings withParseIgnoreCommercialOnlyFeatures(Boolean value) {
         setParseIgnoreCommercialOnlyFeatures(value);
         return this;
     }
 
+    /**
+     * [#8325] Whether the parser should ignore content between ignore comment tokens.
+     * 
+     */
     public Settings withParseIgnoreComments(Boolean value) {
         setParseIgnoreComments(value);
         return this;
@@ -7599,16 +9255,34 @@ public class Settings
         return this;
     }
 
+    /**
+     * [#12538] Whether the parser should retain comments and whitespace between queries when parsing multiple queries through {@link org.jooq.Parser#parse(String)}.
+     * <p>
+     * jOOQ's query object model doesn't have a way to represent comments
+     * or other whitespace, and as such, the parser simply skips them by default.
+     * However, it may be desirable to retain comments before or in between top
+     * level queries, when parsing multiple such queries in a script. Comments
+     * inside of queries (including procedural statements) are still not supported.
+     * 
+     */
     public Settings withParseRetainCommentsBetweenQueries(Boolean value) {
         setParseRetainCommentsBetweenQueries(value);
         return this;
     }
 
+    /**
+     * [#8469] Whether to parse default expressions retrieved from {@link java.sql.DatabaseMetaData}.
+     * 
+     */
     public Settings withParseMetaDefaultExpressions(Boolean value) {
         setParseMetaDefaultExpressions(value);
         return this;
     }
 
+    /**
+     * [#8469] Whether to parse view sources retrieved from {@link java.sql.DatabaseMetaData}.
+     * 
+     */
     public Settings withParseMetaViewSources(Boolean value) {
         setParseMetaViewSources(value);
         return this;
@@ -7650,6 +9324,10 @@ public class Settings
         return this;
     }
 
+    /**
+     * [#7963] Apply workaround for ORA-04043 when inserting into Oracle tables with qualified, quoted identifiers, and fetching generated keys
+     * 
+     */
     public Settings withApplyWorkaroundFor7962(Boolean value) {
         setApplyWorkaroundFor7962(value);
         return this;

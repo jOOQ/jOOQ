@@ -30,6 +30,7 @@ Secondary features include:
 - [Parser (and translator)](https://www.jooq.org/doc/latest/manual/sql-building/sql-parser/)
 - [Pattern based transformation](https://www.jooq.org/doc/latest/manual/sql-building/queryparts/sql-transformation/transform-patterns/)
 - [Plain SQL templating](https://www.jooq.org/doc/latest/manual/sql-building/plain-sql-templating/)
+- [Policies](https://www.jooq.org/doc/latest/manual/sql-building/queryparts/policies/)
 - [Procedural logic API](https://blog.jooq.org/vendor-agnostic-dynamic-procedural-logic-with-jooq/)
 - [Reactive support via R2DBC](https://www.jooq.org/doc/latest/manual/sql-execution/fetching/reactive-fetching/)
 - [Readonly columns](https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-readonly-columns/)

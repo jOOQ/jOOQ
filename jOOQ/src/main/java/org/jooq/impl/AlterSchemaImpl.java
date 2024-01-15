@@ -172,7 +172,7 @@ implements
                 ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(schema)
-           .end(Clause.ALTER_SCHEMA_SCHEMA);
+           .end(Clause.ALTER_SCHEMA_SCHEMA).sql(' ');
 
         if (renameTo != null)
             ctx.start(Clause.ALTER_SCHEMA_RENAME)

@@ -4885,6 +4885,18 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("return compositeKeyRecord(%s);", params.toString());
         }
 
+        // [#12180] [#16074] Scalac 3 regression workarounds
+        if (scala) {
+            for (String name : asList("insert", "update", "merge", "delete", "deleteById")) {
+                String argType = name.endsWith("ById") ? tType : pType;
+                String argName = name.endsWith("ById") ? "id" : "obj";
+
+                out.println("override def %s(%s: %s): Unit = super.%s(%s)", name, argName, argType, name, argName);
+                out.println("override def %s(%ss: %s*): Unit = super.%s(%ss:_*)", name, argName, argType, name, argName);
+                out.println("override def %s(%ss: %s[%s]): Unit = super.%s(%ss)", name, argName, Collection.class, argType, name, argName);
+            }
+        }
+
         if (scala || kotlin) {}
         else
             out.println("}");

@@ -66,7 +66,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class CodegenTask extends DefaultTask {
 
     final NamedConfiguration       configuration;
-    final FileCollection           runtimeClasspath;
     final FileCollection           codegenClasspath;
     final ProviderFactory          providers;
     final List<NamedConfiguration> named;
@@ -74,13 +73,11 @@ public class CodegenTask extends DefaultTask {
     @Inject
     public CodegenTask(
         NamedConfiguration configuration,
-        FileCollection runtimeClasspath,
         FileCollection codegenClasspath,
         ProviderFactory providers
     ) {
         this.configuration = configuration;
         this.providers = providers;
-        this.runtimeClasspath = runtimeClasspath;
         this.codegenClasspath = codegenClasspath;
         this.named = new ArrayList<>();
 

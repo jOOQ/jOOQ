@@ -226,7 +226,7 @@ implements
                 else
                     ctx.visit(index);
 
-                ctx.end(Clause.ALTER_INDEX_INDEX);
+                ctx.end(Clause.ALTER_INDEX_INDEX).sql(' ');
 
                 if (renameTo != null)
                     ctx.start(Clause.ALTER_INDEX_RENAME)

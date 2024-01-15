@@ -70,7 +70,6 @@ public class CodegenPlugin implements Plugin<Project> {
             CodegenPluginExtension.class
         );
 
-        Configuration runtimeClasspath = project.getConfigurations().getByName("runtimeClasspath");
         Configuration codegenClasspath = project.getConfigurations().create("jooqCodegen");
         codegenClasspath.setDescription("The classpath used for code generation, including JDBC drivers, code generation extensions, etc.");
 
@@ -93,7 +92,6 @@ public class CodegenPlugin implements Plugin<Project> {
                 CodegenTask.taskName(configuration),
                 CodegenTask.class,
                 configuration,
-                runtimeClasspath,
                 codegenClasspath
             ).configure(configureTask(named, source, configuration));
         });

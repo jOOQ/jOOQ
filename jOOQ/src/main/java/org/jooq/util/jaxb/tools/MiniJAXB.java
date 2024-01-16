@@ -50,6 +50,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -138,7 +139,7 @@ public final class MiniJAXB {
     public static void marshal(XMLAppendable object, Writer out) {
         try {
             XMLBuilder builder = XMLBuilder.formatting();
-            XmlRootElement e = object.getClass().getAnnotation(XmlRootElement.class);
+            XmlRootElement e = getAnnotation(object.getClass(), XmlRootElement.class);
             if (e != null) {
                 out.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
                 builder.append(e.name(), object);
@@ -300,10 +301,10 @@ public final class MiniJAXB {
             List<Object> list = new ArrayList<Object>(asList(childElement.getTextContent().split(" +")));
             Reflect.on(result).set(childName, Convert.convert(list, (Class<?>) ((ParameterizedType) child.getGenericType()).getActualTypeArguments()[0]));
         }
-        else if (childType.getAnnotation(XmlEnum.class) != null) {
+        else if (getAnnotation(childType, XmlEnum.class) != null) {
             Reflect.on(result).set(childName, Reflect.onClass(childType).call("fromValue", textContent.trim()));
         }
-        else if (childType.getAnnotation(XmlType.class) != null) {
+        else if (getAnnotation(childType, XmlType.class) != null) {
             Object object = Reflect.on(childType).create().get();
             Reflect.on(result).set(childName, object);
 
@@ -324,7 +325,7 @@ public final class MiniJAXB {
             return;
 
         // [#13897] Distinguish between lists of xs:complexType and xs:simpleType
-        boolean isComplexType = type.getAnnotation(XmlType.class) != null;
+        boolean isComplexType = getAnnotation(type, XmlType.class) != null;
         NodeList list = element.getChildNodes();
         for (int i = 0; i < list.getLength(); i++) {
             Node item = list.item(i);
@@ -446,6 +447,7 @@ public final class MiniJAXB {
     private static String getNamespace(Class<?> type) {
         if (type != null && type.getPackage() != null && type.getPackage().isAnnotationPresent(XmlSchema.class))
             return type.getPackage().getAnnotation(XmlSchema.class).namespace();
+
         return null;
     }
 
@@ -495,13 +497,7 @@ public final class MiniJAXB {
         // We're assuming that XJC generated objects are all in the same package
         Package pkg = firstClass.getPackage();
         try {
-
-            // [#12985] [#15974] [#15966] Gradle generates a subclass for our configuration extensions, which
-            //                            will accept an injected argument. We shouldn't use that subclass here.
-            Class<T> defaultsClass = firstClass;
-            while (defaultsClass.getName().startsWith("org.jooq.codegen.gradle"))
-                defaultsClass = (Class<T>) defaultsClass.getSuperclass();
-
+            Class<T> defaultsClass = nonGradleExtensionClass(firstClass);
             T defaults = defaultsClass.getDeclaredConstructor().newInstance();
 
             methodLoop:
@@ -553,5 +549,22 @@ public final class MiniJAXB {
         }
 
         return first;
+    }
+
+    /**
+     * [#12985] [#15974] [#15966] Gradle generates a subclass for our
+     * configuration extensions, which will accept an injected argument. We
+     * shouldn't use that subclass here.
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> Class<T> nonGradleExtensionClass(Class<T> klass) {
+        while (klass.getName().startsWith("org.jooq.codegen.gradle"))
+            klass = (Class<T>) klass.getSuperclass();
+
+        return klass;
+    }
+
+    private static <A extends Annotation> A getAnnotation(Class<?> klass, Class<A> annotation) {
+        return nonGradleExtensionClass(klass).getAnnotation(annotation);
     }
 }

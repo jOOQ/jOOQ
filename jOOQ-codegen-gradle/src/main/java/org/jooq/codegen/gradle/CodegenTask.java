@@ -40,6 +40,7 @@ package org.jooq.codegen.gradle;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.file.Directory;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.provider.Property;
@@ -56,6 +57,7 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -118,9 +120,12 @@ public class CodegenTask extends DefaultTask {
         return codegenClasspath;
     }
 
-    @OutputDirectory @Optional
-    public Property<Directory> getOutputDirectory() {
-        return configuration.outputDirectory;
+    @OutputDirectories
+    public List<DirectoryProperty> getOutputDirectory() {
+        if (named.isEmpty() && configuration.outputDirectorySet)
+            return Arrays.asList(configuration.outputDirectory);
+        else
+            return Arrays.asList();
     }
 
     private URLClassLoader getClassLoader() {

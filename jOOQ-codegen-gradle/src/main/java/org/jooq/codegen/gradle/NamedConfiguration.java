@@ -40,6 +40,7 @@ package org.jooq.codegen.gradle;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.file.Directory;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
@@ -66,7 +67,8 @@ public class NamedConfiguration {
     final String        name;
     boolean             unnamed;
     Configuration       configuration;
-    Property<Directory> outputDirectory;
+    DirectoryProperty   outputDirectory;
+    boolean             outputDirectorySet;
 
     @Inject
     public NamedConfiguration(
@@ -80,12 +82,12 @@ public class NamedConfiguration {
         this.layout = layout;
         this.name = name;
         this.unnamed = false;
-        this.configuration = newConfiguration();
+        this.configuration = init(new Configuration());
         this.outputDirectory = objects.directoryProperty();
     }
 
-    static final Configuration newConfiguration() {
-        return new Configuration()
+    static final Configuration init(Configuration configuration) {
+        return configuration
             .withGenerator(new Generator()
                 .withTarget(new Target()));
     }
@@ -100,9 +102,9 @@ public class NamedConfiguration {
 
     void configuration0(Configuration configuration) {
         if (!unnamed)
-            MiniJAXB.append(this.configuration, copy(project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration().configuration));
+            this.configuration = MiniJAXB.append(copy(project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration().configuration), copy(this.configuration));
 
-        MiniJAXB.append(this.configuration, configuration);
+        this.configuration = MiniJAXB.append(copy(configuration), copy(this.configuration));
     }
 
     static Configuration copy(Configuration configuration) {
@@ -111,6 +113,7 @@ public class NamedConfiguration {
 
     public void configuration(Action<ConfigurationExtension> action) {
         ConfigurationExtension c = objects.newInstance(ConfigurationExtension.class, objects);
+        init(c);
         action.execute(c);
         configuration0(c);
 
@@ -124,6 +127,7 @@ public class NamedConfiguration {
             configuration.getGenerator().getTarget().setDirectory("build/generated-sources/jooq");
 
         outputDirectory.value(layout.getProjectDirectory().dir(target.getDirectory()));
+        outputDirectorySet = true;
     }
 
     boolean defaultTarget() {

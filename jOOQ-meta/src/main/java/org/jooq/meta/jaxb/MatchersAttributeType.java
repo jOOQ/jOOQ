@@ -4,6 +4,7 @@ package org.jooq.meta.jaxb;
 import java.io.Serializable;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -34,6 +35,24 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
     protected MatcherRule attributeMember;
     protected MatcherRule attributeSetter;
     protected MatcherRule attributeGetter;
+    @XmlElement(defaultValue = "false")
+    protected Boolean recordSetterOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean recordGetterOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean recordMemberOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean interfaceSetterOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean interfaceGetterOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean interfaceMemberOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean pojoSetterOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean pojoGetterOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean pojoMemberOverride = false;
 
     /**
      * This field matcher applies to all unqualified or qualified UDT attribute names matched by this expression. If left empty, this matcher applies to all fields.
@@ -116,6 +135,222 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether an "override" modifier in generated record setters should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRecordSetterOverride() {
+        return recordSetterOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record setters should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRecordSetterOverride(Boolean value) {
+        this.recordSetterOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record getters should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRecordGetterOverride() {
+        return recordGetterOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record getters should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRecordGetterOverride(Boolean value) {
+        this.recordGetterOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record members (properties) should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRecordMemberOverride() {
+        return recordMemberOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record members (properties) should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRecordMemberOverride(Boolean value) {
+        this.recordMemberOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated interface setters should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isInterfaceSetterOverride() {
+        return interfaceSetterOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated interface setters should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setInterfaceSetterOverride(Boolean value) {
+        this.interfaceSetterOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated interface getters should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isInterfaceGetterOverride() {
+        return interfaceGetterOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated interface getters should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setInterfaceGetterOverride(Boolean value) {
+        this.interfaceGetterOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated interface members (properties) should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isInterfaceMemberOverride() {
+        return interfaceMemberOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated interface members (properties) should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setInterfaceMemberOverride(Boolean value) {
+        this.interfaceMemberOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated POJO setters should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isPojoSetterOverride() {
+        return pojoSetterOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated POJO setters should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setPojoSetterOverride(Boolean value) {
+        this.pojoSetterOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated POJO getters should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isPojoGetterOverride() {
+        return pojoGetterOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated POJO getters should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setPojoGetterOverride(Boolean value) {
+        this.pojoGetterOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated POJO members (properties) should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isPojoMemberOverride() {
+        return pojoMemberOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated POJO members (properties) should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setPojoMemberOverride(Boolean value) {
+        this.pojoMemberOverride = value;
+    }
+
+    /**
      * This field matcher applies to all unqualified or qualified UDT attribute names matched by this expression. If left empty, this matcher applies to all fields.
      * 
      */
@@ -160,6 +395,87 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether an "override" modifier in generated record setters should be generated.
+     * 
+     */
+    public MatchersAttributeType withRecordSetterOverride(Boolean value) {
+        setRecordSetterOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record getters should be generated.
+     * 
+     */
+    public MatchersAttributeType withRecordGetterOverride(Boolean value) {
+        setRecordGetterOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record members (properties) should be generated.
+     * 
+     */
+    public MatchersAttributeType withRecordMemberOverride(Boolean value) {
+        setRecordMemberOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated interface setters should be generated.
+     * 
+     */
+    public MatchersAttributeType withInterfaceSetterOverride(Boolean value) {
+        setInterfaceSetterOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated interface getters should be generated.
+     * 
+     */
+    public MatchersAttributeType withInterfaceGetterOverride(Boolean value) {
+        setInterfaceGetterOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated interface members (properties) should be generated.
+     * 
+     */
+    public MatchersAttributeType withInterfaceMemberOverride(Boolean value) {
+        setInterfaceMemberOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated POJO setters should be generated.
+     * 
+     */
+    public MatchersAttributeType withPojoSetterOverride(Boolean value) {
+        setPojoSetterOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated POJO getters should be generated.
+     * 
+     */
+    public MatchersAttributeType withPojoGetterOverride(Boolean value) {
+        setPojoGetterOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated POJO members (properties) should be generated.
+     * 
+     */
+    public MatchersAttributeType withPojoMemberOverride(Boolean value) {
+        setPojoMemberOverride(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("expression", expression);
@@ -167,6 +483,15 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
         builder.append("attributeMember", attributeMember);
         builder.append("attributeSetter", attributeSetter);
         builder.append("attributeGetter", attributeGetter);
+        builder.append("recordSetterOverride", recordSetterOverride);
+        builder.append("recordGetterOverride", recordGetterOverride);
+        builder.append("recordMemberOverride", recordMemberOverride);
+        builder.append("interfaceSetterOverride", interfaceSetterOverride);
+        builder.append("interfaceGetterOverride", interfaceGetterOverride);
+        builder.append("interfaceMemberOverride", interfaceMemberOverride);
+        builder.append("pojoSetterOverride", pojoSetterOverride);
+        builder.append("pojoGetterOverride", pojoGetterOverride);
+        builder.append("pojoMemberOverride", pojoMemberOverride);
     }
 
     @Override
@@ -233,6 +558,87 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (recordSetterOverride == null) {
+            if (other.recordSetterOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!recordSetterOverride.equals(other.recordSetterOverride)) {
+                return false;
+            }
+        }
+        if (recordGetterOverride == null) {
+            if (other.recordGetterOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!recordGetterOverride.equals(other.recordGetterOverride)) {
+                return false;
+            }
+        }
+        if (recordMemberOverride == null) {
+            if (other.recordMemberOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!recordMemberOverride.equals(other.recordMemberOverride)) {
+                return false;
+            }
+        }
+        if (interfaceSetterOverride == null) {
+            if (other.interfaceSetterOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!interfaceSetterOverride.equals(other.interfaceSetterOverride)) {
+                return false;
+            }
+        }
+        if (interfaceGetterOverride == null) {
+            if (other.interfaceGetterOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!interfaceGetterOverride.equals(other.interfaceGetterOverride)) {
+                return false;
+            }
+        }
+        if (interfaceMemberOverride == null) {
+            if (other.interfaceMemberOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!interfaceMemberOverride.equals(other.interfaceMemberOverride)) {
+                return false;
+            }
+        }
+        if (pojoSetterOverride == null) {
+            if (other.pojoSetterOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!pojoSetterOverride.equals(other.pojoSetterOverride)) {
+                return false;
+            }
+        }
+        if (pojoGetterOverride == null) {
+            if (other.pojoGetterOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!pojoGetterOverride.equals(other.pojoGetterOverride)) {
+                return false;
+            }
+        }
+        if (pojoMemberOverride == null) {
+            if (other.pojoMemberOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!pojoMemberOverride.equals(other.pojoMemberOverride)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -245,6 +651,15 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
         result = ((prime*result)+((attributeMember == null)? 0 :attributeMember.hashCode()));
         result = ((prime*result)+((attributeSetter == null)? 0 :attributeSetter.hashCode()));
         result = ((prime*result)+((attributeGetter == null)? 0 :attributeGetter.hashCode()));
+        result = ((prime*result)+((recordSetterOverride == null)? 0 :recordSetterOverride.hashCode()));
+        result = ((prime*result)+((recordGetterOverride == null)? 0 :recordGetterOverride.hashCode()));
+        result = ((prime*result)+((recordMemberOverride == null)? 0 :recordMemberOverride.hashCode()));
+        result = ((prime*result)+((interfaceSetterOverride == null)? 0 :interfaceSetterOverride.hashCode()));
+        result = ((prime*result)+((interfaceGetterOverride == null)? 0 :interfaceGetterOverride.hashCode()));
+        result = ((prime*result)+((interfaceMemberOverride == null)? 0 :interfaceMemberOverride.hashCode()));
+        result = ((prime*result)+((pojoSetterOverride == null)? 0 :pojoSetterOverride.hashCode()));
+        result = ((prime*result)+((pojoGetterOverride == null)? 0 :pojoGetterOverride.hashCode()));
+        result = ((prime*result)+((pojoMemberOverride == null)? 0 :pojoMemberOverride.hashCode()));
         return result;
     }
 

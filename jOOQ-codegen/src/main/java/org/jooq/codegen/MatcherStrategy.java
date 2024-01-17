@@ -37,11 +37,14 @@
  */
 package org.jooq.codegen;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -96,6 +99,25 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
     /**
      * Take a {@link Definition}, try to match its name or qualified name
+     * against an expression.
+     */
+    private final boolean match(Definition definition, String expression) {
+        return match(definition.getName(), expression)
+            || match(definition.getQualifiedName(), expression);
+    }
+
+    private final boolean match(String name, String expression) {
+        return matcher(name, expression) != null;
+    }
+
+    private final Matcher matcher(String name, String expression) {
+        Pattern p = patterns.pattern(defaultIfEmpty(expression, "^.*$").trim());
+        Matcher m = p.matcher(name);
+        return m.matches() ? m : null;
+    }
+
+    /**
+     * Take a {@link Definition}, try to match its name or qualified name
      * against an expression, and apply a rule upon match.
      */
     private final String match(Definition definition, String expression, MatcherRule rule) {
@@ -105,6 +127,10 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         return null;
     }
 
+    /**
+     * Take a {@link Definition}, try to match its name or qualified name
+     * against an expression, and apply a rule upon match.
+     */
     private final String match(String name, String expression, MatcherRule rule) {
         if (rule != null)
             return match(name, expression, rule.getExpression(), rule.getTransform());
@@ -133,10 +159,9 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             ruleExpression = "$0";
 
         if (ruleExpression != null) {
-            Pattern p = patterns.pattern(defaultIfEmpty(expression, "^.*$").trim());
-            Matcher m = p.matcher(name);
+            Matcher m = matcher(name, expression);
 
-            if (m.matches())
+            if (m != null)
                 return transform(m.replaceAll(ruleExpression), ruleTransformType);
         }
 
@@ -383,6 +408,32 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     }
 
     @Override
+    public boolean getJavaSetterOverride(Definition definition, Mode mode) {
+        switch (mode) {
+            case RECORD:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isRecordSetterOverride,
+                    MatchersAttributeType::isRecordSetterOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+            case INTERFACE:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isInterfaceSetterOverride,
+                    MatchersAttributeType::isInterfaceSetterOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+            case POJO:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isPojoSetterOverride,
+                    MatchersAttributeType::isPojoSetterOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+        }
+
+        return super.getJavaMemberOverride(definition, mode);
+    }
+
+    @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
         for (MatchersFieldType fields : fields(definition)) {
             String result = match(definition, fields.getExpression(), fields.getFieldGetter());
@@ -398,6 +449,32 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
         // Default to standard behaviour
         return super.getJavaGetterName(definition, mode);
+    }
+
+    @Override
+    public boolean getJavaGetterOverride(Definition definition, Mode mode) {
+        switch (mode) {
+            case RECORD:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isRecordGetterOverride,
+                    MatchersAttributeType::isRecordGetterOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+            case INTERFACE:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isInterfaceGetterOverride,
+                    MatchersAttributeType::isInterfaceGetterOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+            case POJO:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isPojoGetterOverride,
+                    MatchersAttributeType::isPojoGetterOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+        }
+
+        return super.getJavaMemberOverride(definition, mode);
     }
 
     @Override
@@ -714,6 +791,56 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
 
         // Default to standard behaviour
         return super.getJavaMemberName(definition, mode);
+    }
+
+    private boolean getJavaOverride0(
+        Definition definition,
+        Function<? super MatchersFieldType, ? extends Boolean> isFieldOverride,
+        Function<? super MatchersAttributeType, ? extends Boolean> isAttributeOverride,
+        Supplier<? extends Boolean> defaultOverride
+    ) {
+        for (MatchersFieldType field : fields(definition)) {
+            if (match(definition, field.getExpression())) {
+                if (TRUE.equals(isFieldOverride.apply(field)))
+                    return true;
+            }
+        }
+
+        for (MatchersAttributeType attribute : attributes(definition)) {
+            if (match(definition, attribute.getExpression())) {
+                if (TRUE.equals(isAttributeOverride.apply(attribute)))
+                    return true;
+            }
+        }
+
+        // Default to standard behaviour
+        return defaultOverride.get();
+    }
+
+    @Override
+    public boolean getJavaMemberOverride(Definition definition, Mode mode) {
+        switch (mode) {
+            case RECORD:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isRecordMemberOverride,
+                    MatchersAttributeType::isRecordMemberOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+            case INTERFACE:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isInterfaceMemberOverride,
+                    MatchersAttributeType::isInterfaceMemberOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+            case POJO:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isPojoMemberOverride,
+                    MatchersAttributeType::isPojoMemberOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+        }
+
+        return super.getJavaMemberOverride(definition, mode);
     }
 
     @Override

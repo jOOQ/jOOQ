@@ -1956,7 +1956,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String colTypeFull = getJavaType(column, out);
                 final String colType = out.ref(colTypeFull);
                 final String colGetter = getStrategy().getJavaGetterName(column, Mode.RECORD);
-                final String colMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                final String colMember = getStrategy().getJavaMemberName(column, Mode.RECORD);
 
                 if (scala) {
                     printDeprecationIfUnknownType(out, colTypeFull);
@@ -1993,7 +1993,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String colTypeFull = getJavaType(column, out);
                 final String colType = out.ref(colTypeFull);
                 final String colGetter = getStrategy().getJavaGetterName(column, Mode.RECORD);
-                final String colMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                final String colMember = getStrategy().getJavaMemberName(column, Mode.RECORD);
 
                 if (scala) {
                     printDeprecationIfUnknownType(out, colTypeFull);
@@ -2030,7 +2030,6 @@ public class JavaGenerator extends AbstractGenerator {
                 final String colTypeFull = getJavaType(column, out);
                 final String colType = out.ref(colTypeFull);
                 final String colSetter = getStrategy().getJavaSetterName(column, Mode.RECORD);
-                final String colMember = getStrategy().getJavaMemberName(column, Mode.POJO);
 
                 if (scala) {
                     out.println();
@@ -2549,7 +2548,7 @@ public class JavaGenerator extends AbstractGenerator {
                         else
                             out.println("%s(%s);",
                                 getStrategy().getJavaSetterName(column, Mode.RECORD),
-                                getStrategy().getJavaMemberName(column, Mode.POJO));
+                                getStrategy().getJavaMemberName(column, Mode.RECORD));
                     }
                 }
             }
@@ -2624,7 +2623,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#12459] Kotlin setters must return Unit
         final String setterReturnType = generateFluentSetters() && !kotlin ? className : tokenVoid;
         final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD);
-        final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
+        final String member = getStrategy().getJavaMemberName(column, Mode.RECORD);
         final String typeFull = getJavaType(column.getType(resolver(out)), out);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
@@ -2633,7 +2632,7 @@ public class JavaGenerator extends AbstractGenerator {
         final boolean isUDTArray = column.getType(resolver(out)).isUDTArray();
         final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDT
             || !kotlin && getStrategy().getJavaSetterOverride(column, Mode.RECORD)
-            ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.POJO);
+            ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.RECORD);
 
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isArray)) {
@@ -2748,13 +2747,13 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateEmbeddableRecordSetter(EmbeddableDefinition embeddable, int index, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(embeddable.getReferencingTable(), Mode.RECORD);
         final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
-        final String member = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
+        final String member = getStrategy().getJavaMemberName(embeddable, Mode.RECORD);
         final String setter = getStrategy().getJavaSetterName(embeddable, Mode.RECORD);
         final String typeFull = getStrategy().getFullJavaClassName(embeddable, generateInterfaces() ? Mode.INTERFACE : Mode.RECORD);
         final String type = out.ref(typeFull);
         final String name = embeddable.getQualifiedOutputName();
         final boolean override = generateInterfaces() && !generateImmutableInterfaces()
-            || !kotlin && getStrategy().getJavaMemberOverride(embeddable, Mode.POJO)
+            || !kotlin && getStrategy().getJavaMemberOverride(embeddable, Mode.RECORD)
             ||  kotlin && getStrategy().getJavaSetterOverride(embeddable, Mode.RECORD);
 
         if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
@@ -2786,7 +2785,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (kotlin)
                     out.tab(1).println("set(%s, value.%s)",
                         position,
-                        getStrategy().getJavaMemberName(column, Mode.POJO)
+                        getStrategy().getJavaMemberName(column, Mode.RECORD)
                     );
                 else
                     out.println("set(%s, value.%s%s)%s",
@@ -2850,7 +2849,7 @@ public class JavaGenerator extends AbstractGenerator {
         printNullableOrNonnullAnnotation(out, column);
         boolean override = generateInterfaces()
             || !kotlin && getStrategy().getJavaGetterOverride(column, Mode.RECORD)
-            ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.POJO);
+            ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.RECORD);
 
         if (scala) {
             out.println("%s%sdef %s: %s = get(%s).asInstanceOf[%s]", visibility(override), override ? "override " : "", scalaWhitespaceSuffix(getter), type, index, type);
@@ -3214,9 +3213,7 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own interface getters.
      */
     protected void generateEmbeddableInterfaceGetter(EmbeddableDefinition embeddable, @SuppressWarnings("unused") int index, JavaWriter out) {
-
-        // TODO: The Mode should be INTERFACE
-        final String member = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
+        final String member = getStrategy().getJavaMemberName(embeddable, Mode.INTERFACE);
         final String getter = getStrategy().getJavaGetterName(embeddable, Mode.INTERFACE);
         final String typeFull = getStrategy().getFullJavaClassName(embeddable, Mode.INTERFACE);
         final String type = out.ref(typeFull);
@@ -3243,9 +3240,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generateInterfaceGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
-
-        // TODO: The Mode should be INTERFACE
-        final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
+        final String member = getStrategy().getJavaMemberName(column, Mode.INTERFACE);
         final String getter = getStrategy().getJavaGetterName(column, Mode.INTERFACE);
         final String typeFull = getJavaType(column.getType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE);
         final String type = out.ref(typeFull);
@@ -8879,9 +8874,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
             final String setter = getStrategy().getJavaSetterName(column, Mode.INTERFACE);
             final String getter = getStrategy().getJavaGetterName(column, Mode.INTERFACE);
-
-            // TODO: Use appropriate Mode here
-            final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
+            final String member = getStrategy().getJavaMemberName(column, Mode.INTERFACE);
 
             if (scala)
                 out.println("%s(from.%s)", setter, getter);
@@ -9288,9 +9281,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (kotlin
                 && generateKotlinSetterJvmNameAnnotationsOnIsPrefix()
                 && column instanceof ColumnDefinition
-
-                // TODO: The Mode should be INTERFACE
-                && P_IS.matcher(getStrategy().getJavaMemberName(column, Mode.POJO)).matches()) {
+                && P_IS.matcher(getStrategy().getJavaMemberName(column, mode)).matches()) {
 
             // [#12440] And if we have interfaces, we'll run into https://youtrack.jetbrains.com/issue/KT-31420
             // [#13467] Since jOOQ 3.17, all these properties are open, so this applies everywhere

@@ -639,9 +639,9 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
         // [#10481] Embeddables have a defining name (class name) and a referencing name (identifier name, member name).
         if (definition instanceof EmbeddableDefinition)
-            return getJavaClassName0LC(((EmbeddableDefinition) definition).getReferencingOutputName(), mode);
+            return getJavaClassName0LC(((EmbeddableDefinition) definition).getReferencingOutputName(), Mode.DEFAULT);
         else
-            return getJavaClassName0LC(definition, mode);
+            return getJavaClassName0LC(definition, Mode.DEFAULT);
     }
 
     @Override

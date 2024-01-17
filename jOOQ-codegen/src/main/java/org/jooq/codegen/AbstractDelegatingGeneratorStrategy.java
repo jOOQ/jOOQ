@@ -166,6 +166,26 @@ public abstract class AbstractDelegatingGeneratorStrategy extends AbstractGenera
     }
 
     @Override
+    public boolean getJavaGetterOverride(Definition definition, Mode mode) {
+        return delegate.getJavaGetterOverride(definition, mode);
+    }
+
+    @Override
+    public boolean getJavaSetterOverride(Definition definition, Mode mode) {
+        return delegate.getJavaSetterOverride(definition, mode);
+    }
+
+    @Override
+    public boolean getJavaMethodOverride(Definition definition, Mode mode) {
+        return delegate.getJavaMethodOverride(definition, mode);
+    }
+
+    @Override
+    public boolean getJavaMemberOverride(Definition definition, Mode mode) {
+        return delegate.getJavaMemberOverride(definition, mode);
+    }
+
+    @Override
     public String getGlobalNamesJavaClassName(Definition container, Class<? extends Definition> objectType) {
         return delegate.getGlobalNamesJavaClassName(container, objectType);
     }

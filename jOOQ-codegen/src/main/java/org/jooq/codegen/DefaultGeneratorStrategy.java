@@ -290,8 +290,18 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     }
 
     @Override
+    public boolean getJavaSetterOverride(Definition definition, Mode mode) {
+        return false;
+    }
+
+    @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
         return "get" + getterSetterSuffix(definition);
+    }
+
+    @Override
+    public boolean getJavaGetterOverride(Definition definition, Mode mode) {
+        return false;
     }
 
     @Override
@@ -323,6 +333,11 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         }
 
         return getJavaClassName0LC(definition, Mode.DEFAULT);
+    }
+
+    @Override
+    public boolean getJavaMethodOverride(Definition definition, Mode mode) {
+        return false;
     }
 
     @Override
@@ -627,6 +642,11 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return getJavaClassName0LC(((EmbeddableDefinition) definition).getReferencingOutputName(), mode);
         else
             return getJavaClassName0LC(definition, mode);
+    }
+
+    @Override
+    public boolean getJavaMemberOverride(Definition definition, Mode mode) {
+        return false;
     }
 
     private String getJavaClassName0LC(Definition definition, Mode mode) {

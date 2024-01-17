@@ -245,6 +245,14 @@ public interface GeneratorStrategy {
     String getJavaSetterName(Definition definition, Mode mode);
 
     /**
+     * Whether the {@link #getJavaSetterName(Definition, Mode)} produces a
+     * method that overrides a member from a parent type unknown to jOOQ, e.g.
+     * from {@link #getJavaClassExtends(Definition, Mode)} or
+     * {@link #getJavaClassImplements(Definition, Mode)}.
+     */
+    boolean getJavaSetterOverride(Definition definition, Mode mode);
+
+    /**
      * This is applied to definitions that can result in getters of a container.
      * For example, the definition could be a {@link ColumnDefinition}, the
      * container a {@link TableDefinition}. Then this would apply to records and
@@ -272,6 +280,14 @@ public interface GeneratorStrategy {
     String getJavaGetterName(Definition definition, Mode mode);
 
     /**
+     * Whether the {@link #getJavaGetterName(Definition, Mode)} produces a
+     * method that overrides a member from a parent type unknown to jOOQ, e.g.
+     * from {@link #getJavaClassExtends(Definition, Mode)} or
+     * {@link #getJavaClassImplements(Definition, Mode)}.
+     */
+    boolean getJavaGetterOverride(Definition definition, Mode mode);
+
+    /**
      * This is applied to definitions that can result in methods. For example,
      * the definition could be a {@link RoutineDefinition}
      * <p>
@@ -289,6 +305,14 @@ public interface GeneratorStrategy {
      * @return The Java method name representing this object, e.g. [myFunction]
      */
     String getJavaMethodName(Definition definition, Mode mode);
+
+    /**
+     * Whether the {@link #getJavaMethodName(Definition, Mode)} produces a
+     * method that overrides a member from a parent type unknown to jOOQ, e.g.
+     * from {@link #getJavaClassExtends(Definition, Mode)} or
+     * {@link #getJavaClassImplements(Definition, Mode)}.
+     */
+    boolean getJavaMethodOverride(Definition definition, Mode mode);
 
     /**
      * @return The super class name of the global names class for a given
@@ -442,6 +466,14 @@ public interface GeneratorStrategy {
      *         lower case character, e.g. [myTableSuffix]
      */
     String getJavaMemberName(Definition definition, Mode mode);
+
+    /**
+     * Whether the {@link #getJavaMemberName(Definition, Mode)} produces a
+     * member that overrides a member from a parent type unknown to jOOQ, e.g.
+     * from {@link #getJavaClassExtends(Definition, Mode)} or
+     * {@link #getJavaClassImplements(Definition, Mode)}.
+     */
+    boolean getJavaMemberOverride(Definition definition, Mode mode);
 
     /**
      * @return The full Java class name of the global names class for a

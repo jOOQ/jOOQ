@@ -2631,7 +2631,9 @@ public class JavaGenerator extends AbstractGenerator {
         final boolean isUDT = column.getType(resolver(out)).isUDT();
         final boolean isArray = column.getType(resolver(out)).isArray();
         final boolean isUDTArray = column.getType(resolver(out)).isUDTArray();
-        final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDT;
+        final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDT
+            || !kotlin && getStrategy().getJavaSetterOverride(column, Mode.RECORD)
+            ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.POJO);
 
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isArray)) {
@@ -2639,7 +2641,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
             if (scala) {
-                out.println("%sdef %s(value: %s): %s = {", visibility(override), setter, type, setterReturnType);
+                out.println("%s%sdef %s(value: %s): %s = {", visibility(override), override ? "override " : "", setter, type, setterReturnType);
                 out.println("set(%s, value)", index);
 
                 if (generateFluentSetters())
@@ -2656,7 +2658,7 @@ public class JavaGenerator extends AbstractGenerator {
                 printValidationAnnotation(out, column);
                 printKotlinSetterAnnotation(out, column, Mode.RECORD);
 
-                out.println("%sopen %svar %s: %s%s", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type, kotlinNullability(out, column, Mode.RECORD));
+                out.println("%sopen %svar %s: %s%s", visibility(generateInterfaces()), (override || generateInterfaces() ? "override " : ""), member, type, kotlinNullability(out, column, Mode.RECORD));
                 out.tab(1).println("set(value): %s = set(%s, value)", setterReturnType, index);
             }
             else {
@@ -2751,17 +2753,19 @@ public class JavaGenerator extends AbstractGenerator {
         final String typeFull = getStrategy().getFullJavaClassName(embeddable, generateInterfaces() ? Mode.INTERFACE : Mode.RECORD);
         final String type = out.ref(typeFull);
         final String name = embeddable.getQualifiedOutputName();
-        final boolean override = generateInterfaces() && !generateImmutableInterfaces();
+        final boolean override = generateInterfaces() && !generateImmutableInterfaces()
+            || !kotlin && getStrategy().getJavaMemberOverride(embeddable, Mode.POJO)
+            ||  kotlin && getStrategy().getJavaSetterOverride(embeddable, Mode.RECORD);
 
         if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
             out.javadoc("Setter for the embeddable <code>%s</code>.", name);
 
         if (scala) {
-            out.println("%sdef %s(value: %s): %s = {", visibility(override), setter, type, setterReturnType);
+            out.println("%s%sdef %s(value: %s): %s = {", visibility(override), override ? "override " : "", setter, type, setterReturnType);
         }
         else if (kotlin) {
             out.println();
-            out.println("%sopen %svar %s: %s", visibility(generateInterfaces()), (generateInterfaces() ? "override " : ""), member, type);
+            out.println("%sopen %svar %s: %s", visibility(generateInterfaces()), (generateInterfaces() || override ? "override " : ""), member, type);
             out.tab(1).println("set(value): %s {", setterReturnType);
         }
         else {
@@ -2844,10 +2848,12 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         printNullableOrNonnullAnnotation(out, column);
-        boolean override = generateInterfaces();
+        boolean override = generateInterfaces()
+            || !kotlin && getStrategy().getJavaGetterOverride(column, Mode.RECORD)
+            ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.POJO);
 
         if (scala) {
-            out.println("%sdef %s: %s = get(%s).asInstanceOf[%s]", visibility(override), scalaWhitespaceSuffix(getter), type, index, type);
+            out.println("%s%sdef %s: %s = get(%s).asInstanceOf[%s]", visibility(override), override ? "override " : "", scalaWhitespaceSuffix(getter), type, index, type);
         }
         else if (kotlin) {
             String nullable = column instanceof EmbeddableDefinition ? "" : kotlinNullability(out, column, Mode.RECORD);
@@ -5511,6 +5517,7 @@ public class JavaGenerator extends AbstractGenerator {
             forEach(getTypedElements(tableUdtOrEmbeddable), (column, separator) -> {
                 final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String nullability = kotlinNullability(out, column, Mode.POJO);
+                final boolean override = getStrategy().getJavaMemberOverride(column, Mode.POJO);
 
                 if (column instanceof ColumnDefinition)
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -5521,7 +5528,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.println("%s%s%s %s: %s%s%s%s",
                     visibility(generateInterfaces()),
-                    generateInterfaces() ? "override " : "",
+                    generateInterfaces() || override ? "override " : "",
                     generateImmutablePojos() ? "val" : "var",
                     member,
                     out.ref(getJavaType(column.getType(resolver(out, Mode.POJO)), out, Mode.POJO)),
@@ -5800,6 +5807,9 @@ public class JavaGenerator extends AbstractGenerator {
         final String columnGetter = getStrategy().getJavaGetterName(embeddable, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
         final String name = embeddable.getQualifiedOutputName();
+        final boolean override = generateInterfaces()
+            || !kotlin && getStrategy().getJavaGetterOverride(embeddable, Mode.POJO)
+            ||  kotlin && getStrategy().getJavaMemberOverride(embeddable, Mode.POJO);
 
         // Getter
         if (!kotlin && !printDeprecationIfUnknownType(out, columnTypeFull))
@@ -5808,19 +5818,19 @@ public class JavaGenerator extends AbstractGenerator {
         printNonnullAnnotation(out);
 
         if (scala) {
-            out.println("%sdef %s: %s = new %s(", visibility(generateInterfaces()), scalaWhitespaceSuffix(columnGetter), columnType, columnType);
+            out.println("%s%sdef %s: %s = new %s(", visibility(override), override ? "override " : "", scalaWhitespaceSuffix(columnGetter), columnType, columnType);
         }
         else if (kotlin) {
 
             // [#14853] The POJO property hasn't been generated in the setter, if the POJO
             //          is immutable, as there are no setters.
             if (generateImmutablePojos())
-                generateEmbeddablePojoProperty(out, generateImmutableInterfaces(), generateInterfaces(), columnTypeDeclared, columnMember);
+                generateEmbeddablePojoProperty(out, generateImmutableInterfaces(), override, columnTypeDeclared, columnMember);
 
             out.tab(1).println("get(): %s = %s(", columnTypeDeclared, columnType);
         }
         else {
-            out.overrideIf(generateInterfaces());
+            out.overrideIf(override);
             out.println("%s%s %s() {", visibility(generateInterfaces()), columnType, columnGetter);
             out.println("return new %s(", columnType);
         }
@@ -5891,7 +5901,9 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own pojo setters.
      */
     protected void generateEmbeddablePojoSetter(EmbeddableDefinition embeddable, @SuppressWarnings("unused") int index, JavaWriter out) {
-        final boolean override = generateInterfaces() && !generateImmutableInterfaces();
+        final boolean override = generateInterfaces() && !generateImmutableInterfaces()
+            || !kotlin && getStrategy().getJavaSetterOverride(embeddable, Mode.POJO)
+            ||  kotlin && getStrategy().getJavaMemberOverride(embeddable, Mode.POJO);
         final String className = getStrategy().getJavaClassName(embeddable.getReferencingTable(), Mode.POJO);
         final String columnTypeFull = getStrategy().getFullJavaClassName(embeddable, override ? Mode.INTERFACE : Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
@@ -5904,7 +5916,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Setter for <code>%s</code>.", name);
 
         if (scala) {
-            out.println("%sdef %s(value: %s): %s = {", visibility(override), columnSetter, columnType, columnSetterReturnType);
+            out.println("%s%sdef %s(value: %s): %s = {", visibility(override), override ? "override " : "", columnSetter, columnType, columnSetterReturnType);
         }
         else if (kotlin) {
             generateEmbeddablePojoProperty(out, false, override, columnType, columnMember);
@@ -7144,6 +7156,7 @@ public class JavaGenerator extends AbstractGenerator {
                     // [#8762] Cache these calls for much improved runtime performance!
                     for (ForeignKeyDefinition foreignKey : outboundFKs) {
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+                        final boolean keyMethodOverride = getStrategy().getJavaMethodOverride(foreignKey, Mode.DEFAULT);
                         final String referencedTableClassName = out.ref(
                               getStrategy().getFullJavaClassName(foreignKey.getReferencedTable())
                             + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(foreignKey.getReferencedTable(), Mode.PATH)) : "")
@@ -7174,10 +7187,10 @@ public class JavaGenerator extends AbstractGenerator {
                         );
 
                         if (scala) {
-                            out.println("%slazy val %s: %s = { new %s(this, %s, null) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
+                            out.println("%s%slazy val %s: %s = { new %s(this, %s, null) }", visibility(), keyMethodOverride ? "override " : "", scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
                         }
                         else if (kotlin) {
-                            out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencedTableClassName);
+                            out.println("%s%sfun %s(): %s {", visibility(), keyMethodOverride ? "override " : "", keyMethodName, referencedTableClassName);
                             out.println("if (!this::_%s.isInitialized)", unquotedKeyMethodName);
                             out.println("_%s = %s(this, %s, null)", unquotedKeyMethodName, referencedTableClassName, keyFullId);
                             out.println();
@@ -7186,11 +7199,12 @@ public class JavaGenerator extends AbstractGenerator {
 
                             if (generateImplicitJoinPathsAsKotlinProperties()) {
                                 out.println();
-                                out.println("%sval %s: %s", visibility(), keyMethodName, referencedTableClassName);
+                                out.println("%s%sval %s: %s", visibility(), keyMethodOverride ? "override " : "", keyMethodName, referencedTableClassName);
                                 out.tab(1).println("get(): %s = %s()", referencedTableClassName, keyMethodName);
                             }
                         }
                         else {
+                            out.overrideIf(keyMethodOverride);
                             out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);
                             out.println("if (_%s == null)", keyMethodName);
                             out.println("_%s = new %s(this, %s, null);", keyMethodName, referencedTableClassName, keyFullId);
@@ -7222,6 +7236,7 @@ public class JavaGenerator extends AbstractGenerator {
                             continue inboundFKLoop;
                         }
 
+                        final boolean keyMethodOverride = getStrategy().getJavaMethodOverride(foreignKey, Mode.DEFAULT);
                         final String keyFullId = kotlin
                             ? out.ref(getStrategy().getFullJavaIdentifier(foreignKey))
                             : out.ref(getStrategy().getFullJavaIdentifier(foreignKey), 2);
@@ -7249,10 +7264,10 @@ public class JavaGenerator extends AbstractGenerator {
                         );
 
                         if (scala) {
-                            out.println("%slazy val %s: %s = { new %s(this, null, %s.getInverseKey()) }", visibility(), scalaWhitespaceSuffix(keyMethodName), referencingTableClassName, referencingTableClassName, keyFullId);
+                            out.println("%s%slazy val %s: %s = { new %s(this, null, %s.getInverseKey()) }", visibility(), keyMethodOverride ? "override " : "", scalaWhitespaceSuffix(keyMethodName), referencingTableClassName, referencingTableClassName, keyFullId);
                         }
                         else if (kotlin) {
-                            out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencingTableClassName);
+                            out.println("%s%sfun %s(): %s {", visibility(), keyMethodOverride ? "override " : "", keyMethodName, referencingTableClassName);
                             out.println("if (!this::_%s.isInitialized)", unquotedKeyMethodName);
                             out.println("_%s = %s(this, null, %s.inverseKey)", unquotedKeyMethodName, referencingTableClassName, keyFullId);
                             out.println();
@@ -7261,11 +7276,12 @@ public class JavaGenerator extends AbstractGenerator {
 
                             if (generateImplicitJoinPathsAsKotlinProperties()) {
                                 out.println();
-                                out.println("%sval %s: %s", visibility(), keyMethodName, referencingTableClassName);
+                                out.println("%s%sval %s: %s", visibility(), keyMethodOverride ? "override " : "", keyMethodName, referencingTableClassName);
                                 out.tab(1).println("get(): %s = %s()", referencingTableClassName, keyMethodName);
                             }
                         }
                         else {
+                            out.overrideIf(keyMethodOverride);
                             out.println("%s%s %s() {", visibility(), referencingTableClassName, keyMethodName);
                             out.println("if (_%s == null)", keyMethodName);
                             out.println("_%s = new %s(this, null, %s.getInverseKey());", keyMethodName, referencingTableClassName, keyFullId);

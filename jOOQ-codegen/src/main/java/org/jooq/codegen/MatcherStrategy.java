@@ -799,19 +799,13 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
         Function<? super MatchersAttributeType, ? extends Boolean> isAttributeOverride,
         Supplier<? extends Boolean> defaultOverride
     ) {
-        for (MatchersFieldType field : fields(definition)) {
-            if (match(definition, field.getExpression())) {
-                if (TRUE.equals(isFieldOverride.apply(field)))
-                    return true;
-            }
-        }
+        for (MatchersFieldType field : fields(definition))
+            if (match(definition, field.getExpression()) && TRUE.equals(isFieldOverride.apply(field)))
+                return true;
 
-        for (MatchersAttributeType attribute : attributes(definition)) {
-            if (match(definition, attribute.getExpression())) {
-                if (TRUE.equals(isAttributeOverride.apply(attribute)))
-                    return true;
-            }
-        }
+        for (MatchersAttributeType attribute : attributes(definition))
+            if (match(definition, attribute.getExpression()) && TRUE.equals(isAttributeOverride.apply(attribute)))
+                return true;
 
         // Default to standard behaviour
         return defaultOverride.get();

@@ -4978,12 +4978,12 @@ public final class QOM {
         @NotNull default Ltrim $string(Field<String> newString) { return $arg1(newString); }
 
         /**
-         * The characters to be trimmed.
+         * The characters to be removed.
          */
         @Nullable default Field<String> $characters() { return $arg2(); }
 
         /**
-         * The characters to be trimmed.
+         * The characters to be removed.
          */
         @CheckReturnValue
         @NotNull default Ltrim $characters(Field<String> newCharacters) { return $arg2(newCharacters); }
@@ -5346,12 +5346,12 @@ public final class QOM {
         @NotNull default Rtrim $string(Field<String> newString) { return $arg1(newString); }
 
         /**
-         * The characters to be trimmed.
+         * The characters to be removed.
          */
         @Nullable default Field<String> $characters() { return $arg2(); }
 
         /**
-         * The characters to be trimmed.
+         * The characters to be removed.
          */
         @CheckReturnValue
         @NotNull default Rtrim $characters(Field<String> newCharacters) { return $arg2(newCharacters); }
@@ -5784,12 +5784,12 @@ public final class QOM {
         @NotNull default Trim $string(Field<String> newString) { return $arg1(newString); }
 
         /**
-         * The characters to be trimmed.
+         * The characters to be removed.
          */
         @Nullable default Field<String> $characters() { return $arg2(); }
 
         /**
-         * The characters to be trimmed.
+         * The characters to be removed.
          */
         @CheckReturnValue
         @NotNull default Trim $characters(Field<String> newCharacters) { return $arg2(newCharacters); }
@@ -5825,6 +5825,117 @@ public final class QOM {
         //permits
         //    Uuid
     {}
+
+    /**
+     * The <code>BINARY LTRIM</code> function.
+     * <p>
+     * Trim bytes from the left side of a binary string.
+     */
+    public /*sealed*/ interface BinaryLtrim
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<byte[]>, Field<byte[]>, BinaryLtrim>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    BinaryLtrim
+    {
+
+        /**
+         * The binary string to be trimmed.
+         */
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+
+        /**
+         * The binary string to be trimmed.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryLtrim $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+
+        /**
+         * The binary characters to be removed.
+         */
+        @NotNull default Field<byte[]> $characters() { return $arg2(); }
+
+        /**
+         * The binary characters to be removed.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryLtrim $characters(Field<byte[]> newCharacters) { return $arg2(newCharacters); }
+    }
+
+    /**
+     * The <code>BINARY RTRIM</code> function.
+     * <p>
+     * Trim bytes from the right side of a binary string.
+     */
+    public /*sealed*/ interface BinaryRtrim
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<byte[]>, Field<byte[]>, BinaryRtrim>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    BinaryRtrim
+    {
+
+        /**
+         * The binary string to be trimmed.
+         */
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+
+        /**
+         * The binary string to be trimmed.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryRtrim $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+
+        /**
+         * The characters to be removed.
+         */
+        @NotNull default Field<byte[]> $characters() { return $arg2(); }
+
+        /**
+         * The characters to be removed.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryRtrim $characters(Field<byte[]> newCharacters) { return $arg2(newCharacters); }
+    }
+
+    /**
+     * The <code>BINARY TRIM</code> function.
+     * <p>
+     * Trim characters from both sides of a string.
+     */
+    public /*sealed*/ interface BinaryTrim
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<byte[]>, Field<byte[]>, BinaryTrim>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    BinaryTrim
+    {
+
+        /**
+         * The binary string to be trimmed.
+         */
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+
+        /**
+         * The binary string to be trimmed.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryTrim $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+
+        /**
+         * The characters to be removed.
+         */
+        @NotNull default Field<byte[]> $characters() { return $arg2(); }
+
+        /**
+         * The characters to be removed.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryTrim $characters(Field<byte[]> newCharacters) { return $arg2(newCharacters); }
+    }
 
     /**
      * The <code>DATE ADD</code> function.

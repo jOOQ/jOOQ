@@ -330,6 +330,9 @@ final class Names {
     static final Name N_ATN                         = systemName("atn");
     static final Name N_ATN2                        = systemName("atn2");
     static final Name N_AVG                         = systemName("avg");
+    static final Name N_BINARY_LTRIM                = systemName("binary_ltrim");
+    static final Name N_BINARY_RTRIM                = systemName("binary_rtrim");
+    static final Name N_BINARY_TRIM                 = systemName("binary_trim");
     static final Name N_BIN_AND                     = systemName("bin_and");
     static final Name N_BIN_NOT                     = systemName("bin_not");
     static final Name N_BIN_OR                      = systemName("bin_or");

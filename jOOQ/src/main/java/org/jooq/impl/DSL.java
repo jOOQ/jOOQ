@@ -19423,7 +19423,7 @@ public class DSL {
      * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -19437,7 +19437,7 @@ public class DSL {
      * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -19451,7 +19451,7 @@ public class DSL {
      * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -19465,7 +19465,7 @@ public class DSL {
      * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -20191,7 +20191,7 @@ public class DSL {
      * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
@@ -20205,7 +20205,7 @@ public class DSL {
      * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
@@ -20219,7 +20219,7 @@ public class DSL {
      * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
@@ -20233,7 +20233,7 @@ public class DSL {
      * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
@@ -20785,7 +20785,7 @@ public class DSL {
      * Trim characters (whitespace as default) from both sides of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -20799,7 +20799,7 @@ public class DSL {
      * Trim characters (whitespace as default) from both sides of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -20813,7 +20813,7 @@ public class DSL {
      * Trim characters (whitespace as default) from both sides of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -20827,7 +20827,7 @@ public class DSL {
      * Trim characters (whitespace as default) from both sides of a string.
      *
      * @param string The string to be trimmed.
-     * @param characters The characters to be trimmed.
+     * @param characters The characters to be removed.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
@@ -20894,6 +20894,178 @@ public class DSL {
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static Field<UUID> uuid() {
         return new Uuid();
+    }
+
+    // -------------------------------------------------------------------------
+    // Binary functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The <code>BINARY_LTRIM</code> function.
+     * <p>
+     * Trim bytes from the left side of a binary string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The binary characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryLtrim(byte[] bytes, byte[] characters) {
+        return new BinaryLtrim(Tools.field(bytes), Tools.field(characters));
+    }
+
+    /**
+     * The <code>BINARY_LTRIM</code> function.
+     * <p>
+     * Trim bytes from the left side of a binary string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The binary characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryLtrim(byte[] bytes, Field<byte[]> characters) {
+        return new BinaryLtrim(Tools.field(bytes), characters);
+    }
+
+    /**
+     * The <code>BINARY_LTRIM</code> function.
+     * <p>
+     * Trim bytes from the left side of a binary string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The binary characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryLtrim(Field<byte[]> bytes, byte[] characters) {
+        return new BinaryLtrim(bytes, Tools.field(characters));
+    }
+
+    /**
+     * The <code>BINARY_LTRIM</code> function.
+     * <p>
+     * Trim bytes from the left side of a binary string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The binary characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryLtrim(Field<byte[]> bytes, Field<byte[]> characters) {
+        return new BinaryLtrim(bytes, characters);
+    }
+
+    /**
+     * The <code>BINARY_RTRIM</code> function.
+     * <p>
+     * Trim bytes from the right side of a binary string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryRtrim(byte[] bytes, byte[] characters) {
+        return new BinaryRtrim(Tools.field(bytes), Tools.field(characters));
+    }
+
+    /**
+     * The <code>BINARY_RTRIM</code> function.
+     * <p>
+     * Trim bytes from the right side of a binary string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryRtrim(byte[] bytes, Field<byte[]> characters) {
+        return new BinaryRtrim(Tools.field(bytes), characters);
+    }
+
+    /**
+     * The <code>BINARY_RTRIM</code> function.
+     * <p>
+     * Trim bytes from the right side of a binary string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryRtrim(Field<byte[]> bytes, byte[] characters) {
+        return new BinaryRtrim(bytes, Tools.field(characters));
+    }
+
+    /**
+     * The <code>BINARY_RTRIM</code> function.
+     * <p>
+     * Trim bytes from the right side of a binary string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryRtrim(Field<byte[]> bytes, Field<byte[]> characters) {
+        return new BinaryRtrim(bytes, characters);
+    }
+
+    /**
+     * The <code>BINARY_TRIM</code> function.
+     * <p>
+     * Trim characters from both sides of a string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryTrim(byte[] bytes, byte[] characters) {
+        return new BinaryTrim(Tools.field(bytes), Tools.field(characters));
+    }
+
+    /**
+     * The <code>BINARY_TRIM</code> function.
+     * <p>
+     * Trim characters from both sides of a string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryTrim(byte[] bytes, Field<byte[]> characters) {
+        return new BinaryTrim(Tools.field(bytes), characters);
+    }
+
+    /**
+     * The <code>BINARY_TRIM</code> function.
+     * <p>
+     * Trim characters from both sides of a string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryTrim(Field<byte[]> bytes, byte[] characters) {
+        return new BinaryTrim(bytes, Tools.field(characters));
+    }
+
+    /**
+     * The <code>BINARY_TRIM</code> function.
+     * <p>
+     * Trim characters from both sides of a string.
+     *
+     * @param bytes The binary string to be trimmed.
+     * @param characters The characters to be removed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryTrim(Field<byte[]> bytes, Field<byte[]> characters) {
+        return new BinaryTrim(bytes, characters);
     }
 
     // -------------------------------------------------------------------------

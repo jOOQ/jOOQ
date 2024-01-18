@@ -95,6 +95,9 @@ import static org.jooq.impl.DSL.atanh;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.begin;
+import static org.jooq.impl.DSL.binaryLtrim;
+import static org.jooq.impl.DSL.binaryRtrim;
+import static org.jooq.impl.DSL.binaryTrim;
 import static org.jooq.impl.DSL.bitAnd;
 import static org.jooq.impl.DSL.bitAndAgg;
 import static org.jooq.impl.DSL.bitCount;
@@ -8967,7 +8970,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("LPAD"))
                     return parseFunctionArgs3(DSL::lpad, DSL::lpad);
                 else if (parseFunctionNameIf("LTRIM"))
-                    return parseFunctionArgs2(DSL::ltrim, DSL::ltrim);
+                    return parseFunctionArgs2(DSL::ltrim, (f1, f2) -> f1.getDataType().isBinary() ? binaryLtrim(f1, f2) : ltrim(f1, f2));
                 else if (parseFunctionNameIf("LEFT"))
                     return parseFunctionArgs2(DSL::left);
                 else if (parseFunctionNameIf("LENGTH", "LEN"))
@@ -9124,7 +9127,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("RPAD"))
                     return parseFunctionArgs3(DSL::rpad, DSL::rpad);
                 else if (parseFunctionNameIf("RTRIM"))
-                    return parseFunctionArgs2(DSL::rtrim, DSL::rtrim);
+                    return parseFunctionArgs2(DSL::rtrim, (f1, f2) -> f1.getDataType().isBinary() ? binaryRtrim(f1, f2) : rtrim(f1, f2));
                 else if (parseFunctionNameIf("RIGHT"))
                     return parseFunctionArgs2(DSL::right);
                 else if (parseFunctionNameIf("RANDOM_UUID") && parseEmptyParens())
@@ -11524,6 +11527,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             boolean leading = parseKeywordIf("LEADING", "L");
             boolean trailing = !leading && parseKeywordIf("TRAILING", "T");
             boolean both = !leading && !trailing && parseKeywordIf("BOTH", "B");
+            boolean binary = false;
 
             if (leading || trailing || both) {
                 if (parseIf(',') || parseIf(')')) {
@@ -11533,8 +11537,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     Field<String> f = (Field) parseField();
                     parse(')');
 
-                    return leading ? ltrim(f)
-                         : trailing ? rtrim(f)
+                    return leading
+                         ? ltrim(f)
+                         : trailing
+                         ? rtrim(f)
                          : trim(f);
                 }
             }
@@ -11550,21 +11556,35 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 }
             }
 
-            Field<String> f1 = (Field) parseField();
+            Field f1 = parseField();
 
             if (parseKeywordIf("FROM")) {
-                Field<String> f2 = (Field) parseField();
+                Field f2 = parseField();
+                binary = f2.getDataType().isBinary();
                 parse(')');
 
-                return leading ? ltrim(f2, f1)
-                     : trailing ? rtrim(f2, f1)
-                     : trim(f2, f1);
+                return leading
+                     ? binary
+                         ? binaryLtrim(f2, f1)
+                         : ltrim(f2, f1)
+                     : trailing
+                     ? binary
+                         ? binaryRtrim(f2, f1)
+                         : rtrim(f2, f1)
+                     : binary
+                         ? binaryTrim(f2, f1)
+                         : trim(f2, f1);
             }
             else {
-                Field<String> f2 = parseIf(',') ? (Field) parseField() : null;
+                Field f2 = parseIf(',') ? parseField() : null;
+                binary = f1.getDataType().isBinary();
                 parse(')');
 
-                return f2 == null ? trim(f1) : trim(f1, f2);
+                return f2 == null
+                     ? trim(f1)
+                     : binary
+                         ? binaryTrim(f1, f2)
+                         : trim(f1, f2);
             }
         }
 

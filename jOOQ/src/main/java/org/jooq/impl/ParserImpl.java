@@ -98,6 +98,7 @@ import static org.jooq.impl.DSL.begin;
 import static org.jooq.impl.DSL.binaryLtrim;
 import static org.jooq.impl.DSL.binaryMd5;
 import static org.jooq.impl.DSL.binaryRtrim;
+import static org.jooq.impl.DSL.binarySubstring;
 import static org.jooq.impl.DSL.binaryTrim;
 import static org.jooq.impl.DSL.bitAnd;
 import static org.jooq.impl.DSL.bitAndAgg;
@@ -11493,7 +11494,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (substring || substr) {
             boolean keywords = !substr;
             parse('(');
-            Field<String> f1 = (Field) parseField();
+            Field f1 = parseField();
+            boolean binary = f1.getDataType().isBinary();
             if (substr || !(keywords = parseKeywordIf("FROM")))
                 parse(',');
             Field f2 = toField(parseNumericOp());
@@ -11504,8 +11506,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(')');
 
             return f3 == null
-                ? DSL.substring(f1, f2)
-                : DSL.substring(f1, f2, f3);
+                ? binary
+                    ? DSL.binarySubstring(f1, f2)
+                    : DSL.substring(f1, f2)
+                : binary
+                    ? DSL.binarySubstring(f1, f2, f3)
+                    : DSL.substring(f1, f2, f3);
         }
 
 

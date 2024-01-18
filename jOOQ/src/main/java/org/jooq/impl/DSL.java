@@ -21035,6 +21035,94 @@ public class DSL {
     }
 
     /**
+     * The <code>BINARY_SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a binary string, from a given position.
+     *
+     * @param string The binary string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binarySubstring(Field<byte[]> string, int startingPosition, int length) {
+        return new BinarySubstring(string, Tools.field(startingPosition), Tools.field(length));
+    }
+
+    /**
+     * The <code>BINARY_SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a binary string, from a given position.
+     *
+     * @param string The binary string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binarySubstring(Field<byte[]> string, int startingPosition, Field<? extends Number> length) {
+        return new BinarySubstring(string, Tools.field(startingPosition), length);
+    }
+
+    /**
+     * The <code>BINARY_SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a binary string, from a given position.
+     *
+     * @param string The binary string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binarySubstring(Field<byte[]> string, Field<? extends Number> startingPosition, int length) {
+        return new BinarySubstring(string, startingPosition, Tools.field(length));
+    }
+
+    /**
+     * The <code>BINARY_SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a binary string, from a given position.
+     *
+     * @param string The binary string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     * @param length The maximum length of the substring.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binarySubstring(Field<byte[]> string, Field<? extends Number> startingPosition, Field<? extends Number> length) {
+        return new BinarySubstring(string, startingPosition, length);
+    }
+
+    /**
+     * The <code>BINARY_SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a binary string, from a given position.
+     *
+     * @param string The binary string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binarySubstring(Field<byte[]> string, int startingPosition) {
+        return new BinarySubstring(string, Tools.field(startingPosition));
+    }
+
+    /**
+     * The <code>BINARY_SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a binary string, from a given position.
+     *
+     * @param string The binary string from which to get the substring.
+     * @param startingPosition The position (1-based) from which to get the substring.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binarySubstring(Field<byte[]> string, Field<? extends Number> startingPosition) {
+        return new BinarySubstring(string, startingPosition);
+    }
+
+    /**
      * The <code>BINARY_TRIM</code> function.
      * <p>
      * Trim characters from both sides of a string.

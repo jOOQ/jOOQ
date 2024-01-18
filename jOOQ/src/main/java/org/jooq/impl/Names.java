@@ -333,6 +333,7 @@ final class Names {
     static final Name N_BINARY_LTRIM                = systemName("binary_ltrim");
     static final Name N_BINARY_MD5                  = systemName("binary_md5");
     static final Name N_BINARY_RTRIM                = systemName("binary_rtrim");
+    static final Name N_BINARY_SUBSTRING            = systemName("binary_substring");
     static final Name N_BINARY_TRIM                 = systemName("binary_trim");
     static final Name N_BIN_AND                     = systemName("bin_and");
     static final Name N_BIN_NOT                     = systemName("bin_not");

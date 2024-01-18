@@ -5919,6 +5919,54 @@ public final class QOM {
     }
 
     /**
+     * The <code>BINARY SUBSTRING</code> function.
+     * <p>
+     * Get a substring of a binary string, from a given position.
+     */
+    public /*sealed*/ interface BinarySubstring
+        extends
+            UReturnsNullOnNullInput,
+            UOperator3<Field<byte[]>, Field<? extends Number>, Field<? extends Number>, BinarySubstring>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    BinarySubstring
+    {
+
+        /**
+         * The binary string from which to get the substring.
+         */
+        @NotNull default Field<byte[]> $string() { return $arg1(); }
+
+        /**
+         * The binary string from which to get the substring.
+         */
+        @CheckReturnValue
+        @NotNull default BinarySubstring $string(Field<byte[]> newString) { return $arg1(newString); }
+
+        /**
+         * The position (1-based) from which to get the substring.
+         */
+        @NotNull default Field<? extends Number> $startingPosition() { return $arg2(); }
+
+        /**
+         * The position (1-based) from which to get the substring.
+         */
+        @CheckReturnValue
+        @NotNull default BinarySubstring $startingPosition(Field<? extends Number> newStartingPosition) { return $arg2(newStartingPosition); }
+
+        /**
+         * The maximum length of the substring.
+         */
+        @Nullable default Field<? extends Number> $length() { return $arg3(); }
+
+        /**
+         * The maximum length of the substring.
+         */
+        @CheckReturnValue
+        @NotNull default BinarySubstring $length(Field<? extends Number> newLength) { return $arg3(newLength); }
+    }
+
+    /**
      * The <code>BINARY TRIM</code> function.
      * <p>
      * Trim characters from both sides of a string.

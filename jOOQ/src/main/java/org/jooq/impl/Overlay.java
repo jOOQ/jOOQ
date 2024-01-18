@@ -116,11 +116,40 @@ implements
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT     = SQLDialect.supportedBy(DERBY, DUCKDB, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
-    private static final Set<SQLDialect> SUPPORT_INSERT = SQLDialect.supportedBy(H2, MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT        = SQLDialect.supportedBy(DERBY, DUCKDB, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
+
+
+
+
+    private static final Set<SQLDialect> SUPPORT_INSERT    = SQLDialect.supportedBy(H2, MARIADB, MYSQL);
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+        accept0(ctx,
+            in, placing, startIndex, length,
+            DSL::length, DSL::substring, DSL::substring
+        );
+    }
+
+    static final <T> void accept0(
+        Context<?> ctx,
+        Field<T> in,
+        Field<T> placing,
+        Field<? extends Number> startIndex,
+        Field<? extends Number> length,
+        Function1<? super Field<T>, ? extends Field<? extends Number>> fLength,
+        Function2<? super Field<T>, ? super Field<? extends Number>, ? extends Field<T>> fSubstring2,
+        Function3<? super Field<T>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends Field<T>> fSubstring3
+    ) {
+
         Field<? extends Number> l = length;
 
 
@@ -129,38 +158,54 @@ implements
 
 
 
-
-
-
-
         if (l != null) {
-            if (SUPPORT_INSERT.contains(ctx.dialect()))
-                ctx.visit(function(N_INSERT, getDataType(), in, startIndex, l, placing));
-            else if (NO_SUPPORT.contains(ctx.dialect()))
+            if (SUPPORT_INSERT.contains(ctx.dialect())) {
+                ctx.visit(function(N_INSERT, in.getDataType(), in, startIndex, l, placing));
+            }
+            else if (
+
+
+
+                NO_SUPPORT.contains(ctx.dialect())
+            ) {
+
+                // [#16101] TODO: Use binaryConcat() if necessary
                 ctx.visit(
-                    DSL.substring(in, inline(1), isub(startIndex, inline(1)))
+                    fSubstring3.apply(in, inline(1), isub(startIndex, inline(1)))
                        .concat(placing)
-                       .concat(DSL.substring(in, iadd(startIndex, l)))
+                       .concat(fSubstring2.apply(in, iadd(startIndex, l)))
                 );
-            else
+            }
+            else {
                 ctx.visit(N_OVERLAY).sql('(').visit(in).sql(' ')
                    .visit(K_PLACING).sql(' ').visit(placing).sql(' ')
                    .visit(K_FROM).sql(' ').visit(startIndex).sql(' ')
                    .visit(K_FOR).sql(' ').visit(l).sql(')');
+            }
         }
         else {
-            if (SUPPORT_INSERT.contains(ctx.dialect()))
-                ctx.visit(function(N_INSERT, getDataType(), in, startIndex, DSL.length(placing), placing));
-            else if (NO_SUPPORT.contains(ctx.dialect()))
+            if (SUPPORT_INSERT.contains(ctx.dialect())) {
+                ctx.visit(function(N_INSERT, in.getDataType(), in, startIndex, fLength.apply(placing), placing));
+            }
+            else if (
+
+
+
+                NO_SUPPORT.contains(ctx.dialect())
+            ) {
+
+                // [#16101] TODO: Use binaryConcat() if necessary
                 ctx.visit(
-                    DSL.substring(in, inline(1), isub(startIndex, inline(1)))
+                    fSubstring3.apply(in, inline(1), isub(startIndex, inline(1)))
                        .concat(placing)
-                       .concat(DSL.substring(in, iadd(startIndex, DSL.length(placing))))
+                       .concat(fSubstring2.apply(in, iadd(startIndex, fLength.apply(placing))))
                 );
-            else
+            }
+            else {
                 ctx.visit(N_OVERLAY).sql('(').visit(in).sql(' ')
                    .visit(K_PLACING).sql(' ').visit(placing).sql(' ')
                    .visit(K_FROM).sql(' ').visit(startIndex).sql(')');
+            }
         }
     }
 

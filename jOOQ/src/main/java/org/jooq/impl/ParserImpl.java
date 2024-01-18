@@ -95,8 +95,10 @@ import static org.jooq.impl.DSL.atanh;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.begin;
+import static org.jooq.impl.DSL.binaryLength;
 import static org.jooq.impl.DSL.binaryLtrim;
 import static org.jooq.impl.DSL.binaryMd5;
+import static org.jooq.impl.DSL.binaryOverlay;
 import static org.jooq.impl.DSL.binaryRtrim;
 import static org.jooq.impl.DSL.binarySubstring;
 import static org.jooq.impl.DSL.binaryTrim;
@@ -8701,7 +8703,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return chr((Field) parseFieldParenthesised());
 
                 else if (parseFunctionNameIf("CHARINDEX"))
-                    return parseFunctionArgs3((f1, f2) -> DSL.position(f2, f1), (f1, f2, f3) -> DSL.position(f2, f1, f3));
+                    return parseFunctionArgs3(
+                        (f1, f2) -> binary(f1, f2) ? DSL.binaryPosition(f2, f1) : DSL.position(f2, f1),
+                        (f1, f2, f3) -> binary(f1, f2) ? DSL.binaryPosition(f2, f1, f3) : DSL.position(f2, f1, f3)
+                    );
                 else if (parseFunctionNameIf("CHAR_LENGTH"))
                     return charLength((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("CARDINALITY"))
@@ -8918,7 +8923,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("ISO_DAY_OF_WEEK"))
                     return isoDayOfWeek(parseFieldParenthesised());
                 else if (parseFunctionNameIf("INSTR"))
-                    return parseFunctionArgs3(DSL::position, DSL::position);
+                    return parseFunctionArgs3(
+                        (f1, f2) -> binary(f1, f2) ? DSL.binaryPosition(f1, f2) : DSL.position(f1, f2),
+                        (f1, f2, f3) -> binary(f1, f2) ? DSL.binaryPosition(f1, f2, f3) : DSL.position(f1, f2, f3)
+                    );
                 else if (parseFunctionNameIf("INSERT"))
                     return parseFunctionArgs4(DSL::insert);
                 else if (parseFunctionNameIf("IFNULL"))
@@ -8972,11 +8980,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("LPAD"))
                     return parseFunctionArgs3(DSL::lpad, DSL::lpad);
                 else if (parseFunctionNameIf("LTRIM"))
-                    return parseFunctionArgs2(DSL::ltrim, (f1, f2) -> f1.getDataType().isBinary() ? binaryLtrim(f1, f2) : ltrim(f1, f2));
+                    return parseFunctionArgs2(DSL::ltrim, (f1, f2) -> binary(f1, f2) ? binaryLtrim(f1, f2) : ltrim(f1, f2));
                 else if (parseFunctionNameIf("LEFT"))
                     return parseFunctionArgs2(DSL::left);
                 else if (parseFunctionNameIf("LENGTH", "LEN"))
-                    return length((Field) parseFieldParenthesised());
+                    return parseFunctionArgs1(f -> f.getDataType().isBinary() ? binaryLength(f) : length(f));
                 else if (parseFunctionNameIf("LENGTHB"))
                     return octetLength((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("LN", "LOGN"))
@@ -9129,7 +9137,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("RPAD"))
                     return parseFunctionArgs3(DSL::rpad, DSL::rpad);
                 else if (parseFunctionNameIf("RTRIM"))
-                    return parseFunctionArgs2(DSL::rtrim, (f1, f2) -> f1.getDataType().isBinary() ? binaryRtrim(f1, f2) : rtrim(f1, f2));
+                    return parseFunctionArgs2(DSL::rtrim, (f1, f2) -> binary(f1, f2) ? binaryRtrim(f1, f2) : rtrim(f1, f2));
                 else if (parseFunctionNameIf("RIGHT"))
                     return parseFunctionArgs2(DSL::right);
                 else if (parseFunctionNameIf("RANDOM_UUID") && parseEmptyParens())
@@ -11341,9 +11349,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldOverlayIf() {
         if (parseFunctionNameIf("OVERLAY")) {
             parse('(');
-            Field<String> f1 = (Field) parseField();
+            Field f1 = parseField();
             parseKeyword("PLACING");
-            Field<String> f2 = (Field) parseField();
+            Field f2 = parseField();
             parseKeyword("FROM");
             Field<Number> f3 = (Field) parseField();
             Field<Number> f4 =
@@ -11356,22 +11364,35 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
               : null;
             parse(')');
 
-            return f4 == null ? overlay(f1, f2, f3) : overlay(f1, f2, f3, f4);
+            return f4 == null
+                ? binary(f1, f2)
+                    ? binaryOverlay(f1, f2, f3)
+                    : overlay(f1, f2, f3)
+                : binary(f1, f2)
+                    ? binaryOverlay(f1, f2, f3, f4)
+                    : overlay(f1, f2, f3, f4);
         }
 
         return null;
+    }
+
+    private final boolean binary(Field<?> f1, Field<?> f2) {
+        return f1.getDataType().isBinary() || f2.getDataType().isBinary();
     }
 
     private final Field<?> parseFieldPositionIf() {
         if (parseFunctionNameIf("POSITION")) {
             parse('(');
             forbidden.add(FK_IN);
-            Field<String> f1 = (Field) parseField();
+            Field f1 = parseField();
             parseKeyword("IN");
             forbidden.remove(FK_IN);
-            Field<String> f2 = (Field) parseField();
+            Field f2 = parseField();
             parse(')');
-            return DSL.position(f2, f1);
+
+            return binary(f1, f2)
+                 ? DSL.binaryPosition(f2, f1)
+                 : DSL.position(f2, f1);
         }
 
         return null;
@@ -11381,9 +11402,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean locate = parseFunctionNameIf("LOCATE");
         if (locate || parseFunctionNameIf("LOCATE_IN_STRING")) {
             parse('(');
-            Field<String> f1 = (Field) parseField();
+            Field f1 = parseField();
             parse(',');
-            Field<String> f2 = (Field) parseField();
+            Field f2 = parseField();
             Field<Integer> f3 = (Field) (parseIf(',') ? parseField() : null);
             parse(')');
 
@@ -11398,10 +11419,28 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+
+
+
             if (locate)
-                return f3 == null ? DSL.position(f2, f1) : DSL.position(f2, f1, f3);
+                return f3 == null
+                     ? binary(f1, f2)
+                         ? DSL.binaryPosition(f2, f1)
+                         : DSL.position(f2, f1)
+                     : binary(f1, f2)
+                         ? DSL.binaryPosition(f2, f1, f3)
+                         : DSL.position(f2, f1, f3);
             else
-                return f3 == null ? DSL.position(f1, f2) : DSL.position(f1, f2, f3);
+                return f3 == null
+                     ? binary(f1, f2)
+                         ? DSL.binaryPosition(f1, f2)
+                         : DSL.position(f1, f2)
+                     : binary(f1, f2)
+                         ? DSL.binaryPosition(f1, f2, f3)
+                         : DSL.position(f1, f2, f3);
         }
 
         return null;
@@ -11534,7 +11573,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             boolean leading = parseKeywordIf("LEADING", "L");
             boolean trailing = !leading && parseKeywordIf("TRAILING", "T");
             boolean both = !leading && !trailing && parseKeywordIf("BOTH", "B");
-            boolean binary = false;
 
             if (leading || trailing || both) {
                 if (parseIf(',') || parseIf(')')) {
@@ -11567,29 +11605,27 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             if (parseKeywordIf("FROM")) {
                 Field f2 = parseField();
-                binary = f2.getDataType().isBinary();
                 parse(')');
 
                 return leading
-                     ? binary
+                     ? binary(f1, f2)
                          ? binaryLtrim(f2, f1)
                          : ltrim(f2, f1)
                      : trailing
-                     ? binary
+                     ? binary(f1, f2)
                          ? binaryRtrim(f2, f1)
                          : rtrim(f2, f1)
-                     : binary
+                     : binary(f1, f2)
                          ? binaryTrim(f2, f1)
                          : trim(f2, f1);
             }
             else {
                 Field f2 = parseIf(',') ? parseField() : null;
-                binary = f1.getDataType().isBinary();
                 parse(')');
 
                 return f2 == null
                      ? trim(f1)
-                     : binary
+                     : binary(f1, f2)
                          ? binaryTrim(f1, f2)
                          : trim(f1, f2);
             }

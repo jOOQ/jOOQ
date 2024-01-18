@@ -20901,6 +20901,28 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>BINARY_LENGTH</code> function.
+     * <p>
+     * The length of a binary string in bytes.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<Integer> binaryLength(byte[] bytes) {
+        return new BinaryLength(Tools.field(bytes));
+    }
+
+    /**
+     * The <code>BINARY_LENGTH</code> function.
+     * <p>
+     * The length of a binary string in bytes.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<Integer> binaryLength(Field<byte[]> bytes) {
+        return new BinaryLength(bytes);
+    }
+
+    /**
      * The <code>BINARY_LTRIM</code> function.
      * <p>
      * Trim bytes from the left side of a binary string.
@@ -20976,6 +20998,244 @@ public class DSL {
     @Support({ POSTGRES, YUGABYTEDB })
     public static Field<byte[]> binaryMd5(Field<byte[]> bytes) {
         return new BinaryMd5(bytes);
+    }
+
+    /**
+     * The <code>BINARY_OVERLAY</code> function.
+     * <p>
+     * Place a binary string on top of another binary string, replacing the original contents.
+     *
+     * @param in The original binary string on top of which the overlay is placed.
+     * @param placing The binary string that is being placed on top of the other binary string.
+     * @param startIndex The start index (1-based) starting from where the overlay is placed.
+     * @param length The length in the original string that will be replaced, if different from the overlay length.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryOverlay(Field<byte[]> in, byte[] placing, Number startIndex, Number length) {
+        return new BinaryOverlay(in, Tools.field(placing), Tools.field(startIndex), Tools.field(length));
+    }
+
+    /**
+     * The <code>BINARY_OVERLAY</code> function.
+     * <p>
+     * Place a binary string on top of another binary string, replacing the original contents.
+     *
+     * @param in The original binary string on top of which the overlay is placed.
+     * @param placing The binary string that is being placed on top of the other binary string.
+     * @param startIndex The start index (1-based) starting from where the overlay is placed.
+     * @param length The length in the original string that will be replaced, if different from the overlay length.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryOverlay(Field<byte[]> in, Field<byte[]> placing, Field<? extends Number> startIndex, Field<? extends Number> length) {
+        return new BinaryOverlay(in, placing, startIndex, length);
+    }
+
+    /**
+     * The <code>BINARY_OVERLAY</code> function.
+     * <p>
+     * Place a binary string on top of another binary string, replacing the original contents.
+     *
+     * @param in The original binary string on top of which the overlay is placed.
+     * @param placing The binary string that is being placed on top of the other binary string.
+     * @param startIndex The start index (1-based) starting from where the overlay is placed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryOverlay(Field<byte[]> in, byte[] placing, Number startIndex) {
+        return new BinaryOverlay(in, Tools.field(placing), Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>BINARY_OVERLAY</code> function.
+     * <p>
+     * Place a binary string on top of another binary string, replacing the original contents.
+     *
+     * @param in The original binary string on top of which the overlay is placed.
+     * @param placing The binary string that is being placed on top of the other binary string.
+     * @param startIndex The start index (1-based) starting from where the overlay is placed.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryOverlay(Field<byte[]> in, Field<byte[]> placing, Field<? extends Number> startIndex) {
+        return new BinaryOverlay(in, placing, startIndex);
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(byte[] in, byte[] search, int startIndex) {
+        return new BinaryPosition(Tools.field(in), Tools.field(search), Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(byte[] in, byte[] search, Field<? extends Number> startIndex) {
+        return new BinaryPosition(Tools.field(in), Tools.field(search), startIndex);
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(byte[] in, Field<byte[]> search, int startIndex) {
+        return new BinaryPosition(Tools.field(in), search, Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(byte[] in, Field<byte[]> search, Field<? extends Number> startIndex) {
+        return new BinaryPosition(Tools.field(in), search, startIndex);
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(Field<byte[]> in, byte[] search, int startIndex) {
+        return new BinaryPosition(in, Tools.field(search), Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(Field<byte[]> in, byte[] search, Field<? extends Number> startIndex) {
+        return new BinaryPosition(in, Tools.field(search), startIndex);
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(Field<byte[]> in, Field<byte[]> search, int startIndex) {
+        return new BinaryPosition(in, search, Tools.field(startIndex));
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     * @param startIndex The start index (1-based) from which to start looking for the substring.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(Field<byte[]> in, Field<byte[]> search, Field<? extends Number> startIndex) {
+        return new BinaryPosition(in, search, startIndex);
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(byte[] in, byte[] search) {
+        return new BinaryPosition(Tools.field(in), Tools.field(search));
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(byte[] in, Field<byte[]> search) {
+        return new BinaryPosition(Tools.field(in), search);
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(Field<byte[]> in, byte[] search) {
+        return new BinaryPosition(in, Tools.field(search));
+    }
+
+    /**
+     * The <code>BINARY_POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     *
+     * @param in The string in which to search the substring.
+     * @param search The substring to search for.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryPosition(Field<byte[]> in, Field<byte[]> search) {
+        return new BinaryPosition(in, search);
     }
 
     /**

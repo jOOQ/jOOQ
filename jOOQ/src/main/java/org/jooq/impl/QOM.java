@@ -5827,6 +5827,24 @@ public final class QOM {
     {}
 
     /**
+     * The <code>BINARY LENGTH</code> function.
+     * <p>
+     * The length of a binary string in bytes.
+     */
+    public /*sealed*/ interface BinaryLength
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<byte[]>, BinaryLength>,
+            org.jooq.Field<Integer>
+        //permits
+        //    BinaryLength
+    {
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BinaryLength $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+    }
+
+    /**
      * The <code>BINARY LTRIM</code> function.
      * <p>
      * Trim bytes from the left side of a binary string.
@@ -5879,6 +5897,113 @@ public final class QOM {
         @NotNull default Field<byte[]> $bytes() { return $arg1(); }
         @CheckReturnValue
         @NotNull default BinaryMd5 $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+    }
+
+    /**
+     * The <code>BINARY OVERLAY</code> function.
+     * <p>
+     * Place a binary string on top of another binary string, replacing the original contents.
+     */
+    public /*sealed*/ interface BinaryOverlay
+        extends
+            UReturnsNullOnNullInput,
+            UOperator4<Field<byte[]>, Field<byte[]>, Field<? extends Number>, Field<? extends Number>, BinaryOverlay>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    BinaryOverlay
+    {
+
+        /**
+         * The original binary string on top of which the overlay is placed.
+         */
+        @NotNull default Field<byte[]> $in() { return $arg1(); }
+
+        /**
+         * The original binary string on top of which the overlay is placed.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryOverlay $in(Field<byte[]> newIn) { return $arg1(newIn); }
+
+        /**
+         * The binary string that is being placed on top of the other binary string.
+         */
+        @NotNull default Field<byte[]> $placing() { return $arg2(); }
+
+        /**
+         * The binary string that is being placed on top of the other binary string.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryOverlay $placing(Field<byte[]> newPlacing) { return $arg2(newPlacing); }
+
+        /**
+         * The start index (1-based) starting from where the overlay is placed.
+         */
+        @NotNull default Field<? extends Number> $startIndex() { return $arg3(); }
+
+        /**
+         * The start index (1-based) starting from where the overlay is placed.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryOverlay $startIndex(Field<? extends Number> newStartIndex) { return $arg3(newStartIndex); }
+
+        /**
+         * The length in the original string that will be replaced, if different from the overlay length.
+         */
+        @Nullable default Field<? extends Number> $length() { return $arg4(); }
+
+        /**
+         * The length in the original string that will be replaced, if different from the overlay length.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryOverlay $length(Field<? extends Number> newLength) { return $arg4(newLength); }
+    }
+
+    /**
+     * The <code>BINARY POSITION</code> function.
+     * <p>
+     * Search the position (1-based) of a substring in another string.
+     */
+    public /*sealed*/ interface BinaryPosition
+        extends
+            UReturnsNullOnNullInput,
+            UOperator3<Field<byte[]>, Field<byte[]>, Field<? extends Number>, BinaryPosition>,
+            org.jooq.Field<Integer>
+        //permits
+        //    BinaryPosition
+    {
+
+        /**
+         * The string in which to search the substring.
+         */
+        @NotNull default Field<byte[]> $in() { return $arg1(); }
+
+        /**
+         * The string in which to search the substring.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryPosition $in(Field<byte[]> newIn) { return $arg1(newIn); }
+
+        /**
+         * The substring to search for.
+         */
+        @NotNull default Field<byte[]> $search() { return $arg2(); }
+
+        /**
+         * The substring to search for.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryPosition $search(Field<byte[]> newSearch) { return $arg2(newSearch); }
+
+        /**
+         * The start index (1-based) from which to start looking for the substring.
+         */
+        @Nullable default Field<? extends Number> $startIndex() { return $arg3(); }
+
+        /**
+         * The start index (1-based) from which to start looking for the substring.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryPosition $startIndex(Field<? extends Number> newStartIndex) { return $arg3(newStartIndex); }
     }
 
     /**

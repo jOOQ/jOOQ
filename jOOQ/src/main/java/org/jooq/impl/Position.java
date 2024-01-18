@@ -121,6 +121,18 @@ implements
 
 
 
+        accept0(ctx, in, search, startIndex, DSL::position, DSL::substring);
+    }
+
+    static final <T> void accept0(
+        Context<?> ctx,
+        Field<T> in,
+        Field<T> search,
+        Field<? extends Number> startIndex,
+        Function2<? super Field<T>, ? super Field<T>, ? extends Field<Integer>> fPosition2,
+        Function2<? super Field<T>, ? super Field<? extends Number>, ? extends Field<T>> fSubstring2
+    ) {
+
         if (startIndex != null) {
             switch (ctx.family()) {
 
@@ -152,9 +164,9 @@ implements
 
                 default:
                     ctx.visit(
-                        DSL.case_(DSL.position(DSL.substring(in, startIndex), search))
+                        DSL.case_(fPosition2.apply(fSubstring2.apply(in, startIndex), search))
                            .when(inline(0), inline(0))
-                           .else_(iadd(DSL.position(DSL.substring(in, startIndex), search), isub(startIndex, one())))
+                           .else_(iadd(fPosition2.apply(fSubstring2.apply(in, startIndex), search), isub(startIndex, one())))
                     );
                     break;
             }

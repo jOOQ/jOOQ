@@ -20957,6 +20957,28 @@ public class DSL {
     }
 
     /**
+     * The <code>BINARY_MD5</code> function.
+     * <p>
+     * Calculate an MD5 hash from a binary string.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryMd5(byte[] bytes) {
+        return new BinaryMd5(Tools.field(bytes));
+    }
+
+    /**
+     * The <code>BINARY_MD5</code> function.
+     * <p>
+     * Calculate an MD5 hash from a binary string.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryMd5(Field<byte[]> bytes) {
+        return new BinaryMd5(bytes);
+    }
+
+    /**
      * The <code>BINARY_RTRIM</code> function.
      * <p>
      * Trim bytes from the right side of a binary string.

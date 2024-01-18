@@ -5864,6 +5864,24 @@ public final class QOM {
     }
 
     /**
+     * The <code>BINARY MD5</code> function.
+     * <p>
+     * Calculate an MD5 hash from a binary string.
+     */
+    public /*sealed*/ interface BinaryMd5
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<byte[]>, BinaryMd5>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    BinaryMd5
+    {
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BinaryMd5 $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+    }
+
+    /**
      * The <code>BINARY RTRIM</code> function.
      * <p>
      * Trim bytes from the right side of a binary string.

@@ -96,6 +96,7 @@ import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.begin;
 import static org.jooq.impl.DSL.binaryLtrim;
+import static org.jooq.impl.DSL.binaryMd5;
 import static org.jooq.impl.DSL.binaryRtrim;
 import static org.jooq.impl.DSL.binaryTrim;
 import static org.jooq.impl.DSL.bitAnd;
@@ -8902,7 +8903,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return hour(parseFieldParenthesised());
 
                 else if (parseFunctionNameIf("HASH_MD5"))
-                    return md5((Field) parseFieldParenthesised());
+                    return parseFunctionArgs1(f -> f.getDataType().isBinary() ? binaryMd5(f) : md5(f));
                 else if (parseFunctionNameIf("HEX"))
                     return toHex((Field) parseFieldParenthesised());
 
@@ -9017,7 +9018,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("MID"))
                     return parseFunctionArgs3(DSL::mid);
                 else if (parseFunctionNameIf("MD5"))
-                    return md5((Field) parseFieldParenthesised());
+                    return parseFunctionArgs1(f -> f.getDataType().isBinary() ? binaryMd5(f) : md5(f));
 
                 else if ((field = parseMultisetValueConstructorIf()) != null)
                     return field;

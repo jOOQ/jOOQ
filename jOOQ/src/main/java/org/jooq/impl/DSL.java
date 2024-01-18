@@ -19420,7 +19420,7 @@ public class DSL {
     /**
      * The <code>LTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
      * @param characters The characters to be trimmed.
@@ -19434,7 +19434,7 @@ public class DSL {
     /**
      * The <code>LTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
      * @param characters The characters to be trimmed.
@@ -19448,7 +19448,7 @@ public class DSL {
     /**
      * The <code>LTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
      * @param characters The characters to be trimmed.
@@ -19462,7 +19462,7 @@ public class DSL {
     /**
      * The <code>LTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
      * @param characters The characters to be trimmed.
@@ -19476,7 +19476,7 @@ public class DSL {
     /**
      * The <code>LTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
      */
@@ -19489,7 +19489,7 @@ public class DSL {
     /**
      * The <code>LTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the left side of a string.
      *
      * @param string The string to be trimmed.
      */
@@ -20188,7 +20188,7 @@ public class DSL {
     /**
      * The <code>RTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
      * @param characters The characters to be trimmed.
@@ -20202,7 +20202,7 @@ public class DSL {
     /**
      * The <code>RTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
      * @param characters The characters to be trimmed.
@@ -20216,7 +20216,7 @@ public class DSL {
     /**
      * The <code>RTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
      * @param characters The characters to be trimmed.
@@ -20230,7 +20230,7 @@ public class DSL {
     /**
      * The <code>RTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
      * @param characters The characters to be trimmed.
@@ -20244,7 +20244,7 @@ public class DSL {
     /**
      * The <code>RTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
      */
@@ -20257,7 +20257,7 @@ public class DSL {
     /**
      * The <code>RTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the right side of a string.
      *
      * @param string The string to be trimmed.
      */

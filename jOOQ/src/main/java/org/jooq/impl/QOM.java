@@ -4955,7 +4955,7 @@ public final class QOM {
     /**
      * The <code>LTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the left side of a string.
      */
     public /*sealed*/ interface Ltrim
         extends
@@ -5323,7 +5323,7 @@ public final class QOM {
     /**
      * The <code>RTRIM</code> function.
      * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
+     * Trim characters (whitespace as default) from the right side of a string.
      */
     public /*sealed*/ interface Rtrim
         extends

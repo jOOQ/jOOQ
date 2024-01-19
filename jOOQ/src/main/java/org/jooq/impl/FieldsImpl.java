@@ -546,6 +546,11 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
     final void add(Field<?> f) {
 
+
+
+
+
+
         // TODO: [#10481] Can we replace our internal Field<?>[] by an ArrayList<Field<?>>?
         Field<?>[] result = new Field[fields.length + 1];
 

@@ -247,6 +247,10 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
             boolean r = result.isReadonly();
             String g = result.getGeneratedAlwaysAs();
 
+
+
+
+
             int l = 0;
             int p = 0;
             int s = 0;
@@ -300,6 +304,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
                 if (generator == null)
                     generator = customType.getGenerator();
+
 
 
 
@@ -402,6 +407,13 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
 
             }
+
+
+
+
+
+
+
         }
 
         return result;
@@ -447,6 +459,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                 .withJsonConverter(forcedType.isJsonConverter())
                 .withLambdaConverter(forcedType.getLambdaConverter())
                 .withVisibilityModifier(forcedType.getVisibilityModifier())
+                .withHidden(forcedType.isHidden())
                 .withGenerator(forcedType.getGenerator())
                 .withAuditInsertTimestamp(forcedType.isAuditInsertTimestamp())
                 .withAuditInsertUser(forcedType.isAuditInsertUser())

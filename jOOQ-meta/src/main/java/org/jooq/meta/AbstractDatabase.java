@@ -1646,6 +1646,7 @@ public abstract class AbstractDatabase implements Database {
             boolean commercialFlags =
                    type.getVisibilityModifier() != null
                 || !StringUtils.isBlank(type.getGenerator())
+                || TRUE.equals(type.isHidden())
                 || TRUE.equals(type.isAuditInsertTimestamp())
                 || TRUE.equals(type.isAuditInsertUser())
                 || TRUE.equals(type.isAuditUpdateTimestamp())
@@ -1660,7 +1661,7 @@ public abstract class AbstractDatabase implements Database {
                 continue;
             }
             else if (commercialFlags && !commercial()) {
-                log.warn("<generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
+                log.warn("<generator/>, <hidden/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
 
                 it.remove();
                 continue;

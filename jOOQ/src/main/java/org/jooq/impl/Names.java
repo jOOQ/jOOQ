@@ -330,9 +330,11 @@ final class Names {
     static final Name N_ATN                         = systemName("atn");
     static final Name N_ATN2                        = systemName("atn2");
     static final Name N_AVG                         = systemName("avg");
+    static final Name N_BINARY_BIT_LENGTH           = systemName("binary_bit_length");
     static final Name N_BINARY_LENGTH               = systemName("binary_length");
     static final Name N_BINARY_LTRIM                = systemName("binary_ltrim");
     static final Name N_BINARY_MD5                  = systemName("binary_md5");
+    static final Name N_BINARY_OCTET_LENGTH         = systemName("binary_octet_length");
     static final Name N_BINARY_OVERLAY              = systemName("binary_overlay");
     static final Name N_BINARY_POSITION             = systemName("binary_position");
     static final Name N_BINARY_RTRIM                = systemName("binary_rtrim");

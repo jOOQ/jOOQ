@@ -20901,6 +20901,28 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>BINARY_BIT_LENGTH</code> function.
+     * <p>
+     * The length of a binary string in bits.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<Integer> binaryBitLength(byte[] bytes) {
+        return new BinaryBitLength(Tools.field(bytes));
+    }
+
+    /**
+     * The <code>BINARY_BIT_LENGTH</code> function.
+     * <p>
+     * The length of a binary string in bits.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<Integer> binaryBitLength(Field<byte[]> bytes) {
+        return new BinaryBitLength(bytes);
+    }
+
+    /**
      * The <code>BINARY_LENGTH</code> function.
      * <p>
      * The length of a binary string in bytes.
@@ -21001,6 +21023,28 @@ public class DSL {
     }
 
     /**
+     * The <code>BINARY_OCTET_LENGTH</code> function.
+     * <p>
+     * The length of a binary string in octets.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryOctetLength(byte[] bytes) {
+        return new BinaryOctetLength(Tools.field(bytes));
+    }
+
+    /**
+     * The <code>BINARY_OCTET_LENGTH</code> function.
+     * <p>
+     * The length of a binary string in octets.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> binaryOctetLength(Field<byte[]> bytes) {
+        return new BinaryOctetLength(bytes);
+    }
+
+    /**
      * The <code>BINARY_OVERLAY</code> function.
      * <p>
      * Place a binary string on top of another binary string, replacing the original contents.
@@ -21072,7 +21116,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(byte[] in, byte[] search, int startIndex) {
         return new BinaryPosition(Tools.field(in), Tools.field(search), Tools.field(startIndex));
     }
@@ -21087,7 +21131,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(byte[] in, byte[] search, Field<? extends Number> startIndex) {
         return new BinaryPosition(Tools.field(in), Tools.field(search), startIndex);
     }
@@ -21102,7 +21146,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(byte[] in, Field<byte[]> search, int startIndex) {
         return new BinaryPosition(Tools.field(in), search, Tools.field(startIndex));
     }
@@ -21117,7 +21161,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(byte[] in, Field<byte[]> search, Field<? extends Number> startIndex) {
         return new BinaryPosition(Tools.field(in), search, startIndex);
     }
@@ -21132,7 +21176,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(Field<byte[]> in, byte[] search, int startIndex) {
         return new BinaryPosition(in, Tools.field(search), Tools.field(startIndex));
     }
@@ -21147,7 +21191,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(Field<byte[]> in, byte[] search, Field<? extends Number> startIndex) {
         return new BinaryPosition(in, Tools.field(search), startIndex);
     }
@@ -21162,7 +21206,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(Field<byte[]> in, Field<byte[]> search, int startIndex) {
         return new BinaryPosition(in, search, Tools.field(startIndex));
     }
@@ -21177,7 +21221,7 @@ public class DSL {
      * @param startIndex The start index (1-based) from which to start looking for the substring.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(Field<byte[]> in, Field<byte[]> search, Field<? extends Number> startIndex) {
         return new BinaryPosition(in, search, startIndex);
     }
@@ -21191,7 +21235,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(byte[] in, byte[] search) {
         return new BinaryPosition(Tools.field(in), Tools.field(search));
     }
@@ -21205,7 +21249,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(byte[] in, Field<byte[]> search) {
         return new BinaryPosition(Tools.field(in), search);
     }
@@ -21219,7 +21263,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(Field<byte[]> in, byte[] search) {
         return new BinaryPosition(in, Tools.field(search));
     }
@@ -21233,7 +21277,7 @@ public class DSL {
      * @param search The substring to search for.
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<Integer> binaryPosition(Field<byte[]> in, Field<byte[]> search) {
         return new BinaryPosition(in, search);
     }

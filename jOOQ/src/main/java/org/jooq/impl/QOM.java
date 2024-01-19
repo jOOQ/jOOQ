@@ -5827,6 +5827,24 @@ public final class QOM {
     {}
 
     /**
+     * The <code>BINARY BIT LENGTH</code> function.
+     * <p>
+     * The length of a binary string in bits.
+     */
+    public /*sealed*/ interface BinaryBitLength
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<byte[]>, BinaryBitLength>,
+            org.jooq.Field<Integer>
+        //permits
+        //    BinaryBitLength
+    {
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BinaryBitLength $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+    }
+
+    /**
      * The <code>BINARY LENGTH</code> function.
      * <p>
      * The length of a binary string in bytes.
@@ -5897,6 +5915,24 @@ public final class QOM {
         @NotNull default Field<byte[]> $bytes() { return $arg1(); }
         @CheckReturnValue
         @NotNull default BinaryMd5 $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+    }
+
+    /**
+     * The <code>BINARY OCTET LENGTH</code> function.
+     * <p>
+     * The length of a binary string in octets.
+     */
+    public /*sealed*/ interface BinaryOctetLength
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<byte[]>, BinaryOctetLength>,
+            org.jooq.Field<Integer>
+        //permits
+        //    BinaryOctetLength
+    {
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BinaryOctetLength $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
     }
 
     /**

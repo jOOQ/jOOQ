@@ -98,6 +98,7 @@ import static org.jooq.impl.DSL.begin;
 import static org.jooq.impl.DSL.binaryLength;
 import static org.jooq.impl.DSL.binaryLtrim;
 import static org.jooq.impl.DSL.binaryMd5;
+import static org.jooq.impl.DSL.binaryOctetLength;
 import static org.jooq.impl.DSL.binaryOverlay;
 import static org.jooq.impl.DSL.binaryRtrim;
 import static org.jooq.impl.DSL.binarySubstring;
@@ -8667,7 +8668,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             case 'B':
                 if (parseFunctionNameIf("BIT_LENGTH"))
-                    return bitLength((Field) parseFieldParenthesised());
+                    return parseFunctionArgs1(binary1(DSL::binaryBitLength, DSL::bitLength));
                 else if (parseFunctionNameIf("BITGET", "BIT_GET"))
                     return parseFunctionArgs2(DSL::bitGet);
                 else if (parseFunctionNameIf("BITSET", "BIT_SET"))
@@ -8704,7 +8705,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if (parseFunctionNameIf("CHARINDEX"))
                     return parseFunctionArgs3(
-                        (f1, f2) -> binary(f1, f2) ? DSL.binaryPosition(f2, f1) : DSL.position(f2, f1),
+                        binary2(DSL::binaryPosition, DSL::position),
                         (f1, f2, f3) -> binary(f1, f2) ? DSL.binaryPosition(f2, f1, f3) : DSL.position(f2, f1, f3)
                     );
                 else if (parseFunctionNameIf("CHAR_LENGTH"))
@@ -8909,7 +8910,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return hour(parseFieldParenthesised());
 
                 else if (parseFunctionNameIf("HASH_MD5"))
-                    return parseFunctionArgs1(f -> f.getDataType().isBinary() ? binaryMd5(f) : md5(f));
+                    return parseFunctionArgs1(binary1(DSL::binaryMd5, DSL::md5));
                 else if (parseFunctionNameIf("HEX"))
                     return toHex((Field) parseFieldParenthesised());
 
@@ -8924,7 +8925,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return isoDayOfWeek(parseFieldParenthesised());
                 else if (parseFunctionNameIf("INSTR"))
                     return parseFunctionArgs3(
-                        (f1, f2) -> binary(f1, f2) ? DSL.binaryPosition(f1, f2) : DSL.position(f1, f2),
+                        binary2(DSL::binaryPosition, DSL::position),
                         (f1, f2, f3) -> binary(f1, f2) ? DSL.binaryPosition(f1, f2, f3) : DSL.position(f1, f2, f3)
                     );
                 else if (parseFunctionNameIf("INSERT"))
@@ -8980,11 +8981,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("LPAD"))
                     return parseFunctionArgs3(DSL::lpad, DSL::lpad);
                 else if (parseFunctionNameIf("LTRIM"))
-                    return parseFunctionArgs2(DSL::ltrim, (f1, f2) -> binary(f1, f2) ? binaryLtrim(f1, f2) : ltrim(f1, f2));
+                    return parseFunctionArgs2(DSL::ltrim, binary2(DSL::binaryLtrim, DSL::ltrim));
                 else if (parseFunctionNameIf("LEFT"))
                     return parseFunctionArgs2(DSL::left);
                 else if (parseFunctionNameIf("LENGTH", "LEN"))
-                    return parseFunctionArgs1(f -> f.getDataType().isBinary() ? binaryLength(f) : length(f));
+                    return parseFunctionArgs1(binary1(DSL::binaryLength, DSL::length));
                 else if (parseFunctionNameIf("LENGTHB"))
                     return octetLength((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("LN", "LOGN"))
@@ -9027,7 +9028,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("MID"))
                     return parseFunctionArgs3(DSL::mid);
                 else if (parseFunctionNameIf("MD5"))
-                    return parseFunctionArgs1(f -> f.getDataType().isBinary() ? binaryMd5(f) : md5(f));
+                    return parseFunctionArgs1(binary1(DSL::binaryMd5, DSL::md5));
 
                 else if ((field = parseMultisetValueConstructorIf()) != null)
                     return field;
@@ -9087,7 +9088,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if ((field = parseFieldTranslateIf()) != null)
                     return field;
                 else if (parseFunctionNameIf("OCTET_LENGTH"))
-                    return octetLength((Field) parseFieldParenthesised());
+                    return parseFunctionArgs1(binary1(DSL::binaryOctetLength, DSL::octetLength));
                 else if ((field = parseFieldObjectConstructIf()) != null)
                     return field;
                 else if (parseFunctionNameIf("OBJECT_KEYS"))
@@ -9137,7 +9138,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("RPAD"))
                     return parseFunctionArgs3(DSL::rpad, DSL::rpad);
                 else if (parseFunctionNameIf("RTRIM"))
-                    return parseFunctionArgs2(DSL::rtrim, (f1, f2) -> binary(f1, f2) ? binaryRtrim(f1, f2) : rtrim(f1, f2));
+                    return parseFunctionArgs2(DSL::rtrim, binary2(DSL::binaryRtrim, DSL::rtrim));
                 else if (parseFunctionNameIf("RIGHT"))
                     return parseFunctionArgs2(DSL::right);
                 else if (parseFunctionNameIf("RANDOM_UUID") && parseEmptyParens())
@@ -11376,8 +11377,26 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
+    private final boolean binary(Field<?> f1) {
+        return f1.getDataType().isBinary();
+    }
+
     private final boolean binary(Field<?> f1, Field<?> f2) {
         return f1.getDataType().isBinary() || f2.getDataType().isBinary();
+    }
+
+    private final <Q> Function1<? super Field<?>, ? extends Q> binary1(
+        Function1<? super Field, ? extends Q> binary,
+        Function1<? super Field, ? extends Q> nonBinary
+    ) {
+        return f1 -> binary(f1) ? binary.apply(f1) : nonBinary.apply(f1);
+    }
+
+    private final <Q> Function2<? super Field<?>, ? super Field<?>, ? extends Q> binary2(
+        Function2<? super Field, ? super Field, ? extends Q> binary,
+        Function2<? super Field, ? super Field, ? extends Q> nonBinary
+    ) {
+        return (f1, f2) -> binary(f1, f2) ? binary.apply(f1, f2) : nonBinary.apply(f1, f2);
     }
 
     private final Field<?> parseFieldPositionIf() {
@@ -11534,7 +11553,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             boolean keywords = !substr;
             parse('(');
             Field f1 = parseField();
-            boolean binary = f1.getDataType().isBinary();
             if (substr || !(keywords = parseKeywordIf("FROM")))
                 parse(',');
             Field f2 = toField(parseNumericOp());
@@ -11545,10 +11563,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(')');
 
             return f3 == null
-                ? binary
+                ? binary(f1)
                     ? DSL.binarySubstring(f1, f2)
                     : DSL.substring(f1, f2)
-                : binary
+                : binary(f1)
                     ? DSL.binarySubstring(f1, f2, f3)
                     : DSL.substring(f1, f2, f3);
         }

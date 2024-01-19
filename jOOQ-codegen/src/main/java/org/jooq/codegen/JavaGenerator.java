@@ -6548,7 +6548,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        for (ColumnDefinition column : table.getColumns()) {
+        for (ColumnDefinition column : table.getColumnsIncludingHidden()) {
             final DataTypeDefinition columnTypeDef = column.getType(resolver(out));
             final DomainDefinition domain = schema.getDatabase().getDomain(schema, columnTypeDef.getQualifiedUserType());
             final String columnTypeFull = getJavaType(columnTypeDef, out);

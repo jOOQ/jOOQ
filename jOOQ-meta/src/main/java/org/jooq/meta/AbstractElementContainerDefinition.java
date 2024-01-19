@@ -74,6 +74,7 @@ extends AbstractDefinition {
     private static final JooqLogger log             = JooqLogger.getLogger(AbstractElementContainerDefinition.class);
 
     private List<E>                 elements;
+    private List<E>                 elementsIncludingHidden;
 
     public AbstractElementContainerDefinition(SchemaDefinition schema, String name, String comment) {
         this(schema, null, name, comment);
@@ -91,6 +92,7 @@ extends AbstractDefinition {
     protected final List<E> getElements() {
         if (elements == null) {
             elements = new ArrayList<>();
+            elementsIncludingHidden = new ArrayList<>();
 
             try {
                 AbstractDatabase db = (AbstractDatabase) getDatabase();
@@ -149,13 +151,18 @@ extends AbstractDefinition {
 
                 // [#2603] Filter exclude / include also for table columns
                 if (this instanceof TableDefinition && db.getIncludeExcludeColumns()) {
-                    elements = db.filterExcludeInclude(e);
+                    elementsIncludingHidden = db.filterExcludeInclude(e);
                     log.info("Columns fetched", fetchedSize(e, elements));
                 }
                 else
-                    elements = e;
+                    elementsIncludingHidden = e;
 
-                db.sort(elements);
+                db.sort(elementsIncludingHidden);
+                elements.addAll(elementsIncludingHidden);
+
+
+
+
             }
             catch (Exception e) {
                 log.error("Error while initialising type", e);
@@ -163,6 +170,11 @@ extends AbstractDefinition {
         }
 
         return elements;
+    }
+
+    protected final List<E> getElementsIncludingHidden() {
+        getElements();
+        return elementsIncludingHidden;
     }
 
 

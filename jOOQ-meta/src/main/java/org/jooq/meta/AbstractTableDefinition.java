@@ -293,6 +293,11 @@ implements
     }
 
     @Override
+    public final List<ColumnDefinition> getColumnsIncludingHidden() {
+        return getElementsIncludingHidden();
+    }
+
+    @Override
     public final ColumnDefinition getColumn(String columnName) {
         return getElement(columnName);
     }

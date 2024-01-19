@@ -60,6 +60,11 @@ public interface TableDefinition extends Definition {
     List<ColumnDefinition> getColumns();
 
     /**
+     * All columns in the type, table or view, including hidden columns.
+     */
+    List<ColumnDefinition> getColumnsIncludingHidden();
+
+    /**
      * Get a column in this type by its name.
      */
     ColumnDefinition getColumn(String columnName);

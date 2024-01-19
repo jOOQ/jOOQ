@@ -2196,6 +2196,14 @@ This has no effect on matched objects that are not columns.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="hidden" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The hidden flag allows for hiding columns from usage in queries by default, unless explicitly projected..
+<p>
+This has no effect on matched objects that are not columns.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="generator" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link org.jooq.Generator} implementation used for client-side computed columns.
 <p>
@@ -2888,6 +2896,24 @@ This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb
       
       <element name="asMethodOverrides" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to generate overrides for {@link org.jooq.Table#as(org.jooq.Name)} and related overloads.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="hiddenColumnsInRecords" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether hidden columns should be generated in records.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="hiddenColumnsInPojos" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether hidden columns should be generated in POJOs.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="hiddenColumnsInInterfaces" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether hidden columns should be generated in interfaces.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

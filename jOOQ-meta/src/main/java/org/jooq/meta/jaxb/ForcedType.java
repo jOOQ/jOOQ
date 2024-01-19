@@ -38,6 +38,8 @@ public class ForcedType implements Serializable, XMLAppendable
     protected String userType;
     @XmlSchemaType(name = "string")
     protected VisibilityModifier visibilityModifier;
+    @XmlElement(defaultValue = "false")
+    protected Boolean hidden = false;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String generator;
     protected Boolean auditInsertTimestamp;
@@ -154,6 +156,38 @@ public class ForcedType implements Serializable, XMLAppendable
      */
     public void setVisibilityModifier(VisibilityModifier value) {
         this.visibilityModifier = value;
+    }
+
+    /**
+     * The hidden flag allows for hiding columns from usage in queries by default, unless explicitly projected..
+     * <p>
+     * This has no effect on matched objects that are not columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * The hidden flag allows for hiding columns from usage in queries by default, unless explicitly projected..
+     * <p>
+     * This has no effect on matched objects that are not columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setHidden(Boolean value) {
+        this.hidden = value;
     }
 
     /**
@@ -718,6 +752,19 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
+     * The hidden flag allows for hiding columns from usage in queries by default, unless explicitly projected..
+     * <p>
+     * This has no effect on matched objects that are not columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public ForcedType withHidden(Boolean value) {
+        setHidden(value);
+        return this;
+    }
+
+    /**
      * A {@link org.jooq.Generator} implementation used for client-side computed columns.
      * <p>
      * This has no effect on matched objects that are not columns.
@@ -966,6 +1013,7 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("name", name);
         builder.append("userType", userType);
         builder.append("visibilityModifier", visibilityModifier);
+        builder.append("hidden", hidden);
         builder.append("generator", generator);
         builder.append("auditInsertTimestamp", auditInsertTimestamp);
         builder.append("auditInsertUser", auditInsertUser);
@@ -1044,6 +1092,15 @@ public class ForcedType implements Serializable, XMLAppendable
             }
         } else {
             if (!visibilityModifier.equals(other.visibilityModifier)) {
+                return false;
+            }
+        }
+        if (hidden == null) {
+            if (other.hidden!= null) {
+                return false;
+            }
+        } else {
+            if (!hidden.equals(other.hidden)) {
                 return false;
             }
         }
@@ -1274,6 +1331,7 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((userType == null)? 0 :userType.hashCode()));
         result = ((prime*result)+((visibilityModifier == null)? 0 :visibilityModifier.hashCode()));
+        result = ((prime*result)+((hidden == null)? 0 :hidden.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((auditInsertTimestamp == null)? 0 :auditInsertTimestamp.hashCode()));
         result = ((prime*result)+((auditInsertUser == null)? 0 :auditInsertUser.hashCode()));

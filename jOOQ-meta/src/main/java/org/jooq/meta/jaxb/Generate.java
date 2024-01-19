@@ -266,6 +266,12 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean renameMethodOverrides = true;
     @XmlElement(defaultValue = "true")
     protected Boolean asMethodOverrides = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean hiddenColumnsInRecords = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean hiddenColumnsInPojos = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean hiddenColumnsInInterfaces = false;
 
     /**
      * Generate index information.
@@ -3018,6 +3024,90 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether hidden columns should be generated in records.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isHiddenColumnsInRecords() {
+        return hiddenColumnsInRecords;
+    }
+
+    /**
+     * Whether hidden columns should be generated in records.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setHiddenColumnsInRecords(Boolean value) {
+        this.hiddenColumnsInRecords = value;
+    }
+
+    /**
+     * Whether hidden columns should be generated in POJOs.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isHiddenColumnsInPojos() {
+        return hiddenColumnsInPojos;
+    }
+
+    /**
+     * Whether hidden columns should be generated in POJOs.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setHiddenColumnsInPojos(Boolean value) {
+        this.hiddenColumnsInPojos = value;
+    }
+
+    /**
+     * Whether hidden columns should be generated in interfaces.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isHiddenColumnsInInterfaces() {
+        return hiddenColumnsInInterfaces;
+    }
+
+    /**
+     * Whether hidden columns should be generated in interfaces.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setHiddenColumnsInInterfaces(Boolean value) {
+        this.hiddenColumnsInInterfaces = value;
+    }
+
+    /**
      * Generate index information.
      * 
      */
@@ -4093,6 +4183,39 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether hidden columns should be generated in records.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Generate withHiddenColumnsInRecords(Boolean value) {
+        setHiddenColumnsInRecords(value);
+        return this;
+    }
+
+    /**
+     * Whether hidden columns should be generated in POJOs.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Generate withHiddenColumnsInPojos(Boolean value) {
+        setHiddenColumnsInPojos(value);
+        return this;
+    }
+
+    /**
+     * Whether hidden columns should be generated in interfaces.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Generate withHiddenColumnsInInterfaces(Boolean value) {
+        setHiddenColumnsInInterfaces(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("indexes", indexes);
@@ -4210,6 +4333,9 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("whereMethodOverrides", whereMethodOverrides);
         builder.append("renameMethodOverrides", renameMethodOverrides);
         builder.append("asMethodOverrides", asMethodOverrides);
+        builder.append("hiddenColumnsInRecords", hiddenColumnsInRecords);
+        builder.append("hiddenColumnsInPojos", hiddenColumnsInPojos);
+        builder.append("hiddenColumnsInInterfaces", hiddenColumnsInInterfaces);
     }
 
     @Override
@@ -5266,6 +5392,33 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (hiddenColumnsInRecords == null) {
+            if (other.hiddenColumnsInRecords!= null) {
+                return false;
+            }
+        } else {
+            if (!hiddenColumnsInRecords.equals(other.hiddenColumnsInRecords)) {
+                return false;
+            }
+        }
+        if (hiddenColumnsInPojos == null) {
+            if (other.hiddenColumnsInPojos!= null) {
+                return false;
+            }
+        } else {
+            if (!hiddenColumnsInPojos.equals(other.hiddenColumnsInPojos)) {
+                return false;
+            }
+        }
+        if (hiddenColumnsInInterfaces == null) {
+            if (other.hiddenColumnsInInterfaces!= null) {
+                return false;
+            }
+        } else {
+            if (!hiddenColumnsInInterfaces.equals(other.hiddenColumnsInInterfaces)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -5388,6 +5541,9 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((whereMethodOverrides == null)? 0 :whereMethodOverrides.hashCode()));
         result = ((prime*result)+((renameMethodOverrides == null)? 0 :renameMethodOverrides.hashCode()));
         result = ((prime*result)+((asMethodOverrides == null)? 0 :asMethodOverrides.hashCode()));
+        result = ((prime*result)+((hiddenColumnsInRecords == null)? 0 :hiddenColumnsInRecords.hashCode()));
+        result = ((prime*result)+((hiddenColumnsInPojos == null)? 0 :hiddenColumnsInPojos.hashCode()));
+        result = ((prime*result)+((hiddenColumnsInInterfaces == null)? 0 :hiddenColumnsInInterfaces.hashCode()));
         return result;
     }
 

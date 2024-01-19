@@ -163,6 +163,12 @@ implements
     }
 
     @Override
+    public abstract boolean hidden();
+
+    @Override
+    public abstract DataType<T> hidden(boolean h);
+
+    @Override
     public abstract boolean readonly();
 
     @Override
@@ -721,6 +727,7 @@ implements
             scale0(),
             length0(),
             nullability(),
+            hidden(),
             readonly(),
             (Generator<?, ?, E>) generatedAlwaysAsGenerator(),
             generationOption(),

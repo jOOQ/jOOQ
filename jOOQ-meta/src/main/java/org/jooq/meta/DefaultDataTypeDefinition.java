@@ -76,6 +76,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final String           converter;
     private final String           binding;
     private final boolean          nullable;
+    private boolean                hidden;
     private boolean                readonly;
     private String                 generatedAlwaysAs;
     private GenerationOption       generationOption;
@@ -119,6 +120,10 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String generator, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean hidden, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String generator, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
 
@@ -148,6 +153,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.precision = precision == null ? 0 : precision.intValue();
         this.scale = scale == null ? 0 : scale.intValue();
         this.nullable = nullable == null ? true : nullable.booleanValue();
+        this.hidden = hidden;
         this.readonly = readonly;
         this.generatedAlwaysAs = generatedAlwaysAs;
         this.defaultValue = defaultValue;
@@ -174,6 +180,16 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final boolean isNullable() {
         return nullable;
+    }
+
+    public final DefaultDataTypeDefinition hidden(boolean h) {
+        this.hidden = h;
+        return this;
+    }
+
+    @Override
+    public final boolean isHidden() {
+        return hidden;
     }
 
     public final DefaultDataTypeDefinition readonly(boolean r) {

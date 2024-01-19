@@ -30,7 +30,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class CustomType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31902L;
+    private final static long serialVersionUID = 32000L;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
@@ -38,6 +38,8 @@ public class CustomType implements Serializable, XMLAppendable
     protected String type;
     @XmlSchemaType(name = "string")
     protected VisibilityModifier visibilityModifier;
+    @XmlElement(defaultValue = "false")
+    protected Boolean hidden = false;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String generator;
     protected Boolean auditInsertTimestamp;
@@ -108,6 +110,32 @@ public class CustomType implements Serializable, XMLAppendable
     @Deprecated
     public void setVisibilityModifier(VisibilityModifier value) {
         this.visibilityModifier = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public Boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setHidden(Boolean value) {
+        this.hidden = value;
     }
 
     /**
@@ -476,6 +504,15 @@ public class CustomType implements Serializable, XMLAppendable
      * @deprecated Use ForcedType only
      * 
      */
+    public CustomType withHidden(Boolean value) {
+        setHidden(value);
+        return this;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     @Deprecated
     public CustomType withGenerator(String value) {
         setGenerator(value);
@@ -607,6 +644,7 @@ public class CustomType implements Serializable, XMLAppendable
         builder.append("name", name);
         builder.append("type", type);
         builder.append("visibilityModifier", visibilityModifier);
+        builder.append("hidden", hidden);
         builder.append("generator", generator);
         builder.append("auditInsertTimestamp", auditInsertTimestamp);
         builder.append("auditInsertUser", auditInsertUser);
@@ -666,6 +704,15 @@ public class CustomType implements Serializable, XMLAppendable
             }
         } else {
             if (!visibilityModifier.equals(other.visibilityModifier)) {
+                return false;
+            }
+        }
+        if (hidden == null) {
+            if (other.hidden!= null) {
+                return false;
+            }
+        } else {
+            if (!hidden.equals(other.hidden)) {
                 return false;
             }
         }
@@ -805,6 +852,7 @@ public class CustomType implements Serializable, XMLAppendable
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((type == null)? 0 :type.hashCode()));
         result = ((prime*result)+((visibilityModifier == null)? 0 :visibilityModifier.hashCode()));
+        result = ((prime*result)+((hidden == null)? 0 :hidden.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((auditInsertTimestamp == null)? 0 :auditInsertTimestamp.hashCode()));
         result = ((prime*result)+((auditInsertUser == null)? 0 :auditInsertUser.hashCode()));

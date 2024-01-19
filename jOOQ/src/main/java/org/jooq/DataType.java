@@ -487,6 +487,25 @@ public interface DataType<T> extends Named {
     boolean nullable();
 
     /**
+     * Return a new data type like this, with a new hidden attribute.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     *
+     * @param readonly The new hidden attribute value.
+     * @return The new data type
+     */
+    @NotNull
+    @Support
+    DataType<T> hidden(boolean hidden);
+
+    /**
+     * Get the hidden attribute of this data type.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean hidden();
+
+    /**
      * Return a new data type like this, with a new readonly attribute.
      * <p>
      * This feature is implemented in commercial distributions only.

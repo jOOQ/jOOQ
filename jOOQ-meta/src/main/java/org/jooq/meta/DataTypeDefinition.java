@@ -124,6 +124,11 @@ public interface DataTypeDefinition {
     boolean isNullable();
 
     /**
+     * Whether this data type is hidden.
+     */
+    boolean isHidden();
+
+    /**
      * Whether this data type is readonly.
      */
     boolean isReadonly();

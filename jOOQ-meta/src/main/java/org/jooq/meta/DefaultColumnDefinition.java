@@ -60,6 +60,7 @@ public class DefaultColumnDefinition
     private static final JooqLogger              log = JooqLogger.getLogger(DefaultColumnDefinition.class);
     private final int                            position;
     private final boolean                        identity;
+    private final boolean                        hidden;
     private final boolean                        readonly;
     private transient List<EmbeddableDefinition> replacedByEmbeddables;
     private boolean                              synthetic;
@@ -84,15 +85,30 @@ public class DefaultColumnDefinition
         boolean readonly,
         String comment
     ) {
+        this(table, name, position, type, identity, false, readonly, comment);
+    }
+
+    public DefaultColumnDefinition(
+        TableDefinition table,
+        String name,
+        int position,
+        DataTypeDefinition type,
+        boolean identity,
+        boolean hidden,
+        boolean readonly,
+        String comment
+    ) {
         super(table, name, position, type, comment);
 
         this.position = position;
         this.identity = identity || isSyntheticIdentity(this);
+        this.hidden = hidden;
         this.readonly = readonly || isSyntheticReadonlyColumn(this, this.identity);
 
         // [#6222] Copy the column's identity flag to the data type definition
         if (type instanceof DefaultDataTypeDefinition dd) {
             dd.identity(this.identity);
+            dd.hidden(this.hidden);
             dd.readonly(this.readonly);
 
 
@@ -179,6 +195,11 @@ public class DefaultColumnDefinition
     @Override
     public final boolean isIdentity() {
         return identity;
+    }
+
+    @Override
+    public final boolean isHidden() {
+        return hidden;
     }
 
     @Override

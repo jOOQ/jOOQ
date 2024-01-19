@@ -72,6 +72,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         Integer newScale,
         Integer newLength,
         Nullability newNullability,
+        boolean newHidden,
         boolean newReadonly,
         Generator<?, ?, T> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
@@ -89,6 +90,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             n,
+            hidden(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -96,6 +98,28 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             collation(),
             characterSet(),
             !n.nullable() && identity(),
+            defaultValue()
+        );
+    }
+
+    @Override
+    public final DataType<T> hidden(boolean h) {
+        if (h && !CONFIG.get().commercial())
+            logGeneratedAlwaysAs.info("Hidden columns", "Hidden columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+
+        return construct(
+            precision0(),
+            scale0(),
+            length0(),
+            nullability(),
+            h,
+            readonly(),
+            generatedAlwaysAsGenerator(),
+            generationOption(),
+            generationLocation(),
+            collation(),
+            characterSet(),
+            identity(),
             defaultValue()
         );
     }
@@ -110,6 +134,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             nullability(),
+            hidden(),
             r,
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -133,6 +158,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             nullability(),
+            hidden(),
             g != null ? true : readonly(),
             g,
             generationOption(),
@@ -154,6 +180,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             nullability(),
+            hidden(),
             readonly(),
             generatedAlwaysAsGenerator(),
             g,
@@ -175,6 +202,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             nullability(),
+            hidden(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -193,6 +221,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             nullability(),
+            hidden(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -211,6 +240,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             nullability(),
+            hidden(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -229,6 +259,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             i ? NOT_NULL : nullability(),
+            hidden(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -247,6 +278,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             length0(),
             nullability(),
+            hidden(),
             readonly(),
             d != null ? null : generatedAlwaysAsGenerator(),
             generationOption(),
@@ -265,6 +297,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             s,
             length0(),
             nullability(),
+            hidden(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -283,6 +316,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             s,
             length0(),
             nullability(),
+            hidden(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -301,6 +335,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             scale0(),
             l,
             nullability(),
+            hidden(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),

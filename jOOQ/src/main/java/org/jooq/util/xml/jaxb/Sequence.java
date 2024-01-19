@@ -55,7 +55,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Sequence implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 32000L;
     @XmlElement(name = "sequence_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String sequenceCatalog;

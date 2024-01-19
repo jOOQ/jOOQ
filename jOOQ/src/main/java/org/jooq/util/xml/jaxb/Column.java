@@ -41,6 +41,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="is_nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="column_default" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="hidden" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="readonly" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="is_generated" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="generation_expression" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -63,7 +64,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Column implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 32000L;
     @XmlElement(name = "table_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableCatalog;
@@ -115,6 +116,7 @@ public class Column implements Serializable, XMLAppendable
     protected String columnDefault;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
+    protected Boolean hidden;
     protected Boolean readonly;
     @XmlElement(name = "is_generated")
     protected Boolean isGenerated;
@@ -294,6 +296,30 @@ public class Column implements Serializable, XMLAppendable
     }
 
     /**
+     * Gets the value of the hidden property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * Sets the value of the hidden property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setHidden(Boolean value) {
+        this.hidden = value;
+    }
+
+    /**
      * Gets the value of the readonly property.
      * 
      * @return
@@ -452,6 +478,11 @@ public class Column implements Serializable, XMLAppendable
         return this;
     }
 
+    public Column withHidden(Boolean value) {
+        setHidden(value);
+        return this;
+    }
+
     public Column withReadonly(Boolean value) {
         setReadonly(value);
         return this;
@@ -493,6 +524,7 @@ public class Column implements Serializable, XMLAppendable
         builder.append("is_nullable", isNullable);
         builder.append("column_default", columnDefault);
         builder.append("comment", comment);
+        builder.append("hidden", hidden);
         builder.append("readonly", readonly);
         builder.append("is_generated", isGenerated);
         builder.append("generation_expression", generationExpression);
@@ -689,6 +721,15 @@ public class Column implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (hidden == null) {
+            if (other.hidden!= null) {
+                return false;
+            }
+        } else {
+            if (!hidden.equals(other.hidden)) {
+                return false;
+            }
+        }
         if (readonly == null) {
             if (other.readonly!= null) {
                 return false;
@@ -751,6 +792,7 @@ public class Column implements Serializable, XMLAppendable
         result = ((prime*result)+((isNullable == null)? 0 :isNullable.hashCode()));
         result = ((prime*result)+((columnDefault == null)? 0 :columnDefault.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
+        result = ((prime*result)+((hidden == null)? 0 :hidden.hashCode()));
         result = ((prime*result)+((readonly == null)? 0 :readonly.hashCode()));
         result = ((prime*result)+((isGenerated == null)? 0 :isGenerated.hashCode()));
         result = ((prime*result)+((generationExpression == null)? 0 :generationExpression.hashCode()));

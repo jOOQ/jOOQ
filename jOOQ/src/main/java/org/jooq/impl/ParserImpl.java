@@ -4562,6 +4562,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         List<Index> indexes = new ArrayList<>();
         boolean primary = false;
         boolean identity = false;
+        boolean hidden = false;
         boolean readonly = false;
         boolean ctas = false;
 
@@ -4641,6 +4642,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     constraints,
                     primary,
                     identity,
+                    hidden,
                     readonly
                 );
 
@@ -4864,7 +4866,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return storageStep;
     }
 
-    private static final record ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity, boolean readonly) {}
+    private static final record ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity, boolean hidden, boolean readonly) {}
 
     private final ParseInlineConstraints parseInlineConstraints(
         Name fieldName,
@@ -4872,6 +4874,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         List<? super Constraint> constraints,
         boolean primary,
         boolean identity,
+        boolean hidden,
         boolean readonly
     ) {
         boolean nullable = false;
@@ -4886,6 +4889,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Comment fieldComment = null;
 
         identity |= type.identity();
+        hidden |= type.hidden();
         readonly |= type.readonly();
 
         for (;;) {
@@ -4916,6 +4920,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     type = type.identity(true);
                     defaultValue = true;
                     identity = true;
+                    continue;
+                }
+                else if (parseKeywordIf("VISIBLE")) {
+                    continue;
+                }
+                else if (parseKeywordIf("HIDDEN", "INVISIBLE")) {
+                    type = type.hidden(true);
                     continue;
                 }
                 else if (!ignoreProEdition() && parseKeywordIf("READONLY") && requireProEdition()) {
@@ -5095,7 +5106,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             break;
         }
 
-        return new ParseInlineConstraints(type, fieldComment, primary, identity, readonly);
+        return new ParseInlineConstraints(type, fieldComment, primary, identity, hidden, readonly);
     }
 
 
@@ -5702,7 +5713,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         int p = list == null ? -1 : list.size();
 
-        ParseInlineConstraints inline = parseInlineConstraints(fieldName, type, list, false, false, false);
+        ParseInlineConstraints inline = parseInlineConstraints(fieldName, type, list, false, false, false, false);
         Field<?> result = field(fieldName, inline.type, inline.fieldComment);
 
         if (list != null)

@@ -358,6 +358,7 @@ final class InformationSchemaExport {
             ic.setColumnDefault(DSL.using(configuration).render(type.defaultValue()));
             ic.setIsNullable(type.nullable());
             ic.setOrdinalPosition(i + 1);
+            ic.setHidden(type.hidden());
             ic.setReadonly(type.readonly());
 
             if (type.computed()) {

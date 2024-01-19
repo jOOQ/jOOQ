@@ -502,6 +502,7 @@ class GenerationUtil {
             type.getPrecision(),
             type.getScale(),
             type.isNullable(),
+            type.isHidden(),
             type.isReadonly(),
             type.getGeneratedAlwaysAs(),
             type.getDefaultValue(),

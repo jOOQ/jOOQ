@@ -118,6 +118,7 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                     unbox(column.getOrdinalPosition()),
                     type,
                     column.getIdentityGeneration() != null,
+                    TRUE.equals(column.isHidden()),
                     TRUE.equals(column.isReadonly()),
                     column.getComment()
                 ));

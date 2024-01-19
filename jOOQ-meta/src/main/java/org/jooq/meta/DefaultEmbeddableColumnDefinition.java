@@ -76,6 +76,7 @@ public class DefaultEmbeddableColumnDefinition
                 original.getPrecision(),
                 original.getScale(),
                 original.isNullable() || other.isNullable(),
+                original.isHidden(),
                 original.isReadonly(),
                 original.getGeneratedAlwaysAs(),
                 original.getDefaultValue(),

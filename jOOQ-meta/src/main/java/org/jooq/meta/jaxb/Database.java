@@ -33,7 +33,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Database implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31902L;
+    private final static long serialVersionUID = 32000L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)

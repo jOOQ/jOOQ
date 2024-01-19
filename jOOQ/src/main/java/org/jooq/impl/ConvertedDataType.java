@@ -90,6 +90,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
         Integer newScale,
         Integer newLength,
         Nullability newNullability,
+        boolean newHidden,
         boolean newReadonly,
         Generator<?, ?, U> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
@@ -104,6 +105,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
             newScale,
             newLength,
             newNullability,
+            newHidden,
             newReadonly,
             (Generator) newGeneratedAlwaysAs,
             newGenerationOption,
@@ -205,6 +207,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final Nullability nullability() {
         return delegate.nullability();
+    }
+
+    @Override
+    public final boolean hidden() {
+        return delegate.hidden();
     }
 
     @Override

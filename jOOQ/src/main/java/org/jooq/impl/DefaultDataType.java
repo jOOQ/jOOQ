@@ -269,6 +269,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private final String                                        typeName;
 
     private final Nullability                                   nullability;
+    private final boolean                                       hidden;
     private final boolean                                       readonly;
     private final Generator<?, ?, T>                            generatedAlwaysAs;
     private final GenerationOption                              generationOption;
@@ -350,10 +351,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, false, defaultValue);
+        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, false, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, false, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean hidden, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
         super(qualifiedTypeName, NO_COMMENT);
 
         // [#13934] Patch parameters
@@ -376,6 +377,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.castTypeSuffix = split.length > 1 ? split[1] : "";
 
         this.nullability = nullability == null ? Nullability.DEFAULT : nullability;
+        this.hidden = hidden;
         this.readonly = readonly;
         this.generatedAlwaysAs = generatedAlwaysAs;
         this.generationOption = generationOption == null ? GenerationOption.DEFAULT : generationOption;
@@ -423,6 +425,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer newScale,
         Integer newLength,
         Nullability newNullability,
+        boolean newHidden,
         boolean newReadonly,
         Generator<?, ?, T> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
@@ -438,6 +441,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             newScale,
             newLength,
             newNullability,
+            newHidden,
             newReadonly,
             newGeneratedAlwaysAs,
             newGenerationOption,
@@ -458,6 +462,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer scale,
         Integer length,
         Nullability nullability,
+        boolean hidden,
         boolean readonly,
         Generator<?, ?, T> generatedAlwaysAs,
         GenerationOption generationOption,
@@ -479,6 +484,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.castTypeSuffix = t.castTypeSuffix0();
 
         this.nullability = nullability;
+        this.hidden = hidden;
         this.readonly = readonly;
         this.generatedAlwaysAs = generatedAlwaysAs;
         this.generationOption = generationOption;
@@ -515,6 +521,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     @Override
     public final Nullability nullability() {
         return nullability;
+    }
+
+    @Override
+    public final boolean hidden() {
+        return hidden;
     }
 
     @Override
@@ -597,7 +608,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
                 // ... and then, set them back to the original value
                 // [#2710] TODO: Remove this logic along with cached data types
-                return dataType.construct(precision, scale, length, nullability, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
+                return dataType.construct(precision, scale, length, nullability, hidden, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
         }
 
         // If this is already the dialect's specific data type, return this

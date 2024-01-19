@@ -30,7 +30,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class CommentType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31902L;
+    private final static long serialVersionUID = 32000L;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;

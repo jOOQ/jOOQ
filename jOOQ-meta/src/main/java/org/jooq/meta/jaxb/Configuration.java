@@ -49,7 +49,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Configuration implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31902L;
+    private final static long serialVersionUID = 32000L;
     @XmlSchemaType(name = "string")
     protected Logging logging;
     @XmlElement(defaultValue = "FAIL")

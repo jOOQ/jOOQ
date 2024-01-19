@@ -10476,6 +10476,7 @@ public class JavaGenerator extends AbstractGenerator {
             type.getLength(),
             type.isNullable(),
             type.isIdentity(),
+            type.isHidden(),
             type.isReadonly(),
             type.getGeneratedAlwaysAs(),
             type.getGenerationOption(),
@@ -10804,6 +10805,7 @@ public class JavaGenerator extends AbstractGenerator {
         int l,
         boolean n,
         boolean i,
+        boolean h,
         boolean r,
         String g,
         GenerationOption go,
@@ -10843,7 +10845,7 @@ public class JavaGenerator extends AbstractGenerator {
                 db,
                 schema,
                 DefaultDataType.getDataType(db.getDialect(), String.class).getTypeName(),
-                l, p, s, n, r, g, d, i, (Name) null, ge, null, null, null
+                l, p, s, n, h, r, g, d, i, (Name) null, ge, null, null, null
             ), out));
             sb.append(".asEnumDataType(");
             sb.append(classOf(out.ref(getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM))));
@@ -10870,6 +10872,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             dataType = dataType.nullable(n).identity(i);
+
 
 
 
@@ -10925,6 +10928,9 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (dataType.identity())
                 sb.append(".identity(true)");
+
+
+
 
 
 

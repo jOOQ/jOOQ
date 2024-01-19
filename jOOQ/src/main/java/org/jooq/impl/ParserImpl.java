@@ -8717,7 +8717,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if (parseFunctionNameIf("CHARINDEX"))
                     return parseFunctionArgs3(
-                        (f1, f2) -> binary(f1, f2) ? DSL.binaryPosition(f1, f2) : DSL.position(f1, f2),
+                        (f1, f2) -> binary(f1, f2) ? DSL.binaryPosition(f2, f1) : DSL.position(f2, f1),
                         (f1, f2, f3) -> binary(f1, f2) ? DSL.binaryPosition(f2, f1, f3) : DSL.position(f2, f1, f3)
                     );
                 else if (parseFunctionNameIf("CHAR_LENGTH"))

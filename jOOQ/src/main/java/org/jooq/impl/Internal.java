@@ -558,7 +558,7 @@ public final class Internal {
     public static final Name createPathAlias(Table<?> path, ForeignKey<?, ?> childPath, InverseForeignKey<?, ?> parentPath) {
         Name name = childPath != null
             ? DSL.name(childPath.getName())
-            : DSL.name(parentPath.getName() + ".inverse");
+            : DSL.name(parentPath.getName() + ".inverse." + parentPath.getForeignKey().getTable().getName());
 
         if (path instanceof TableImpl<?> t) {
             if (t.path != null)

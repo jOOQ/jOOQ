@@ -6278,7 +6278,15 @@ final class Tools {
         return t == Date.class || t == LocalDate.class;
     }
 
-    static final boolean hasAmbiguousNames(Collection<? extends Field<?>> fields) {
+    static final boolean hasAmbiguousNamesInTables(Iterable<? extends Table<?>> tables) {
+        if (tables == null)
+            return false;
+
+        Set<String> names = new HashSet<>();
+        return anyMatch(tables, t -> anyMatch(t.fields(), f -> !names.add(f.getName())));
+    }
+
+    static final boolean hasAmbiguousNames(Iterable<? extends Field<?>> fields) {
         if (fields == null)
             return false;
 
@@ -6657,6 +6665,40 @@ final class Tools {
 
     static final boolean hasEmbeddedFields(Iterable<? extends Field<?>> fields) {
         return anyMatch(fields, f -> f.getDataType().isEmbeddable());
+    }
+
+    static final <E> Iterable<E> concat(Iterable<E> i1, Iterable<E> i2) {
+        return () -> concat(i1.iterator(), i2.iterator());
+    }
+
+    static final <E> Iterator<E> concat(Iterator<E> i1, Iterator<E> i2) {
+        return new Iterator<E>() {
+            boolean first = true;
+
+            @Override
+            public boolean hasNext() {
+                if (first)
+                    if (i1.hasNext())
+                        return true;
+                    else
+                        first = false;
+
+                return i2.hasNext();
+            }
+
+            @Override
+            public E next() {
+                return first ? i1.next() : i2.next();
+            }
+
+            @Override
+            public void remove() {
+                if (first)
+                    i1.remove();
+                else
+                    i2.remove();
+            }
+        };
     }
 
     static final <E> List<E> collect(Iterable<E> iterable) {
@@ -7358,6 +7400,18 @@ final class Tools {
 
         // [#6304] [#7626] [#14668] Improved alias discovery
         return traverseJoins(in, false, r -> r, search(search, Tools::unwrap));
+    }
+
+    static final List<Table<?>> joinedTables(Iterable<? extends Table<?>> i) {
+        List<Table<?>> result = new ArrayList<>();
+        traverseJoins(i, result::add);
+        return result;
+    }
+
+    static final List<Table<?>> joinedTables(Table<?> t) {
+        List<Table<?>> result = new ArrayList<>();
+        traverseJoins(t, result::add);
+        return result;
     }
 
     static final void traverseJoins(Iterable<? extends Table<?>> i, Consumer<? super Table<?>> consumer) {

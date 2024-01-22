@@ -429,6 +429,12 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C scopeRegister(QueryPart part, boolean forceNew, QueryPart mapped);
 
     /**
+     * Get all values of a type that are in the current scope or higher.
+     */
+    @NotNull
+    <Q extends QueryPart> Iterable<Q> scopeParts(Class<? extends Q> type);
+
+    /**
      * Check whether a query part is registered in the current scope or higher.
      */
     boolean inScope(QueryPart part);

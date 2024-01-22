@@ -44,6 +44,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -98,7 +100,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     final Iterable<Value<V>> valueIterable() {
-        return () -> new ScopeStackIterator<Value<V>>(Value::lastOf, e -> true);
+        return () -> new ScopeStackIterator<Value<V>>(e -> Value.lastOf(e.getValue()), e -> true);
     }
 
     @Override
@@ -107,11 +109,19 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     final Iterable<V> iterableAtScopeLevel() {
-        return () -> new ScopeStackIterator<>(list -> list.size() == scopeLevel + 1 ? list.get(scopeLevel) : null, e -> true);
+        return () -> new ScopeStackIterator<>((k, v) -> v.size() == scopeLevel + 1 ? v.get(scopeLevel) : null, e -> true);
     }
 
     final Iterable<V> iterable(Predicate<? super V> filter) {
-        return () -> new ScopeStackIterator<>(list -> list.get(list.size() - 1), filter);
+        return () -> new ScopeStackIterator<>((k, v) -> v.get(v.size() - 1), filter);
+    }
+
+    final Iterable<K> keyIterableAtScopeLevel() {
+        return () -> new ScopeStackIterator<>((k, v) -> v.size() == scopeLevel + 1 ? k : null, e -> true);
+    }
+
+    final Iterable<K> keyIterable(Predicate<? super K> filter) {
+        return () -> new ScopeStackIterator<>((k, v) -> k, filter);
     }
 
     static final record Value<V>(int scopeLevel, V value) {
@@ -127,12 +137,16 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     private final class ScopeStackIterator<U> implements Iterator<U> {
-        final Iterator<List<V>>    it = stack().values().iterator();
-        final Function<List<V>, U> valueExtractor;
-        final Predicate<? super U> filter;
-        U                          next;
+        final Iterator<Entry<K, List<V>>>    it = stack().entrySet().iterator();
+        final Function<Entry<K, List<V>>, U> valueExtractor;
+        final Predicate<? super U>           filter;
+        U                                    next;
 
-        ScopeStackIterator(Function<List<V>, U> valueExtractor, Predicate<? super U> filter) {
+        ScopeStackIterator(BiFunction<K, List<V>, U> valueExtractor, Predicate<? super U> filter) {
+            this(e -> valueExtractor.apply(e.getKey(), e.getValue()), filter);
+        }
+
+        ScopeStackIterator(Function<Entry<K, List<V>>, U> valueExtractor, Predicate<? super U> filter) {
             this.valueExtractor = valueExtractor;
             this.filter = filter;
         }
@@ -156,8 +170,8 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
         private U move() {
             for (
-                List<V> list;
-                it.hasNext() && ((list = it.next()).isEmpty() || ((next = valueExtractor.apply(list)) == null) || !filter.test(next));
+                Entry<K, List<V>> e;
+                it.hasNext() && ((e = it.next()).getValue().isEmpty() || ((next = valueExtractor.apply(e)) == null) || !filter.test(next));
                 next = null
             );
 

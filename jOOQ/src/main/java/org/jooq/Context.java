@@ -405,6 +405,12 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C scopeRegister(QueryPart part, boolean forceNew, QueryPart mapped);
 
     /**
+     * Get all values of a type that are in the current scope or higher.
+     */
+    @NotNull
+    <Q extends QueryPart> Iterable<Q> scopeParts(Class<? extends Q> type);
+
+    /**
      * Retrieve the registered mapping for a query part in the current scope.
      * <p>
      * If no such mapping exists, the argument {@link QueryPart} itself is

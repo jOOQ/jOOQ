@@ -200,12 +200,15 @@ import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;
+import static org.jooq.impl.Tools.concat;
 import static org.jooq.impl.Tools.containsUnaliasedTable;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
+import static org.jooq.impl.Tools.hasAmbiguousNamesInTables;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.isWindow;
+import static org.jooq.impl.Tools.joinedTables;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.impl.Tools.recordType;
@@ -249,6 +252,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -1667,6 +1671,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     final void accept0(Context<?> context) {
 
 
@@ -1694,16 +1699,25 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             }
 
             case WHEN_MULTIPLE_TABLES: {
-                int s = getFrom().size();
+                if (knownTableSource()) {
+                    Iterator<Table<?>> it = concat(
+                        joinedTables(getFrom()),
+                        context.scopeParts((Class<Table<?>>) (Class) Table.class)
+                    ).iterator();
 
-                if (knownTableSource() && (s == 0 || s == 1 && !(getFrom().get(0) instanceof JoinTable)))
-                    context.data(DATA_RENDER_TABLE, false);
+                    // [#15996] At least 2 tables are in scope
+                    if (!it.hasNext() || it.next() != null && !it.hasNext())
+                        context.data(DATA_RENDER_TABLE, false);
+                }
 
                 break;
             }
 
             case WHEN_AMBIGUOUS_COLUMNS: {
-                if (knownTableSource() && !hasAmbiguousNames(getSelect()))
+                if (knownTableSource() && !hasAmbiguousNamesInTables(concat(
+                    joinedTables(getFrom()),
+                    context.scopeParts((Class<Table<?>>) (Class) Table.class)
+                )))
                     context.data(DATA_RENDER_TABLE, false);
 
                 break;

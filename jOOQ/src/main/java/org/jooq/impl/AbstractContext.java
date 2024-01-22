@@ -832,6 +832,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public final <Q extends QueryPart> Iterable<Q> scopeParts(Class<? extends Q> type) {
+        return (Iterable<Q>) scopeStack.keyIterable(k -> type.isInstance(k));
+    }
+
+    @Override
     public /* non-final */ QueryPart scopeMapping(QueryPart part) {
         return part;
     }

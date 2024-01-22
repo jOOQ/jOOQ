@@ -73,10 +73,6 @@ public class CodegenPlugin implements Plugin<Project> {
         Configuration codegenClasspath = project.getConfigurations().create("jooqCodegen");
         codegenClasspath.setDescription("The classpath used for code generation, including JDBC drivers, code generation extensions, etc.");
 
-        SourceSetContainer source = project
-            .getExtensions()
-            .getByType(SourceSetContainer.class);
-
         jooq.getExecutions().create("", configuration -> {
             configuration.unnamed = true;
             configuration.configuration = NamedConfiguration.init(new org.jooq.meta.jaxb.Configuration());
@@ -93,13 +89,13 @@ public class CodegenPlugin implements Plugin<Project> {
                 CodegenTask.class,
                 configuration,
                 codegenClasspath
-            ).configure(configureTask(named, source, configuration));
+            ).configure(configureTask(project, named, configuration));
         });
     }
 
     private static Action<CodegenTask> configureTask(
+        Project project,
         List<NamedConfiguration> named,
-        SourceSetContainer source,
         NamedConfiguration configuration
     ) {
         return task -> {
@@ -113,10 +109,16 @@ public class CodegenPlugin implements Plugin<Project> {
             task.setDescription("jOOQ code generation" + (configuration.unnamed ? " for all executions" : " for the " + configuration.name + " execution"));
             task.setGroup("jOOQ");
 
-            source.configureEach(sourceSet -> {
-                if (sourceSet.getName().equals("main"))
-                    sourceSet.getJava().srcDir(task.getOutputDirectory());
-            });
+            SourceSetContainer source = project
+                    .getExtensions()
+                    .findByType(SourceSetContainer.class);
+
+            if (source != null) {
+                source.configureEach(sourceSet -> {
+                    if (sourceSet.getName().equals("main"))
+                        sourceSet.getJava().srcDir(task.getOutputDirectory());
+                });
+            }
         };
     }
 }

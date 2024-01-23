@@ -56,6 +56,8 @@ import javax.inject.Inject;
 import groovy.lang.*;
 import org.codehaus.groovy.runtime.*;
 
+import java.io.File;
+
 /**
  * A wrapper for a name, configuration pair.
  */
@@ -117,16 +119,21 @@ public class NamedConfiguration {
         action.execute(c);
         configuration0(c);
 
-        if (configuration.getBasedir() == null)
-            configuration.setBasedir(layout.getProjectDirectory().getAsFile().getAbsolutePath());
-
         // [#15944] Override default target directory
         Target target = configuration.getGenerator().getTarget();
 
         if (defaultTarget())
-            configuration.getGenerator().getTarget().setDirectory("build/generated-sources/jooq");
+            target.setDirectory("build/generated-sources/jooq");
 
-        outputDirectory.value(layout.getProjectDirectory().dir(target.getDirectory()));
+        String directory = target.getDirectory();
+
+        // [#16133] Make sure the CodegenTask's OutputDirectory takes into account any basedir config
+        if (configuration.getBasedir() == null)
+            configuration.setBasedir(layout.getProjectDirectory().getAsFile().getAbsolutePath());
+        else if (!new File(directory).isAbsolute())
+            directory = new File(configuration.getBasedir(), directory).getAbsolutePath();
+
+        outputDirectory.value(layout.getProjectDirectory().dir(directory));
         outputDirectorySet = true;
     }
 

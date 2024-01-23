@@ -82,6 +82,9 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     private static final JooqLogger log = JooqLogger.getLogger(FieldsImpl.class);
     Field<?>[]                      fields;
 
+
+
+
     FieldsImpl(SelectField<?>... fields) {
         this.fields = Tools.map(fields, toField(), Field<?>[]::new);
     }
@@ -551,13 +554,22 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
 
 
 
+
+
+
+
+
+        fields = add0(fields, f);
+    }
+
+    private static final Field<?>[] add0(Field<?>[] fields, Field<?> field) {
+
         // TODO: [#10481] Can we replace our internal Field<?>[] by an ArrayList<Field<?>>?
         Field<?>[] result = new Field[fields.length + 1];
 
         System.arraycopy(fields, 0, result, 0, fields.length);
-        result[fields.length] = f;
-
-        fields = result;
+        result[fields.length] = field;
+        return result;
     }
 
 

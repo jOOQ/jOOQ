@@ -4159,23 +4159,34 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 appendResolveSomeAsterisks0(ctx, resolveSupported, result, resolveExcept, resolveUnqualifiedCombined, list, j.$table1().asterisk());
                 appendResolveSomeAsterisks0(ctx, resolveSupported, result, resolveExcept, resolveUnqualifiedCombined, list, j.$table2().asterisk());
             }
-            else if (q.$except().isEmpty())
-                if (resolveSupported)
+            else if (q.$except().isEmpty()) {
+                if (resolveSupported
+        
+                )
                     result.addAll(asList(q.qualifier().fields()));
                 else
                     result.add(s);
-            else if (resolveExcept)
+            }
+            else if (resolveExcept
+        
+            )
                 result.addAll(subtract(asList(q.qualifier().fields()), q.$except()));
             else
                 result.add(s);
         }
         else if (s instanceof Asterisk a) {
-            if (a.$except().isEmpty())
-                if (resolveSupported || resolveUnqualifiedCombined && list.size() > 1)
+            if (a.$except().isEmpty()) {
+                if (resolveSupported
+                    || resolveUnqualifiedCombined && list.size() > 1
+        
+                )
                     result.addAll(resolveAsterisk(new QueryPartList<>()));
                 else
                     result.add(s);
-            else if (resolveExcept)
+            }
+            else if (resolveExcept
+        
+            )
                 result.addAll(resolveAsterisk(new QueryPartList<>(), (QueryPartListView<Field<?>>) a.$except()));
             else
                 result.add(s);

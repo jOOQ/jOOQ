@@ -37,7 +37,6 @@
  */
 package org.jooq.codegen;
 
-import org.jooq.Row;
 
 /**
  * Some publicly available constants used in jOOQ

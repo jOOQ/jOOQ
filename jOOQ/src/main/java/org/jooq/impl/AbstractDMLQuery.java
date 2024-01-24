@@ -394,7 +394,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             && ctx.data(DATA_RENDERING_DATA_CHANGE_DELTA_TABLE) == null
         ) {
             increment(ctx.data(), DATA_RENDERING_DATA_CHANGE_DELTA_TABLE, () -> {
-                ctx.visit(select(returning).from(
+                ctx.visit(select(returningOrResolvedAsterisks(ctx)).from(
                     new DataChangeDeltaTable<>(this instanceof Delete ? ResultOption.OLD : ResultOption.FINAL, this).as(table().getUnqualifiedName())
                 ));
             });
@@ -948,7 +948,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
     }
 
-    private QueryPart returningOrResolvedAsterisks(Context<?> c){
+    private SelectFieldList<?> returningOrResolvedAsterisks(Context<?> c){
 
         // Firebird didn't support asterisks at all here until version 4.0
         // MariaDB doesn't support qualified asterisks: https://jira.mariadb.org/browse/MDEV-23178

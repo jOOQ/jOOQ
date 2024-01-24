@@ -69,7 +69,6 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -102,7 +101,6 @@ import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.orElse;
 import static org.jooq.impl.Tools.reference;
 import static org.jooq.impl.Tools.removeGenerator;
 import static org.jooq.impl.Tools.unalias;
@@ -152,6 +150,7 @@ import org.jooq.Name;
 import org.jooq.Param;
 // ...
 import org.jooq.QualifiedAsterisk;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -175,7 +174,6 @@ import org.jooq.impl.QOM.ResultOption;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 
@@ -206,6 +204,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     final Table<R>                               table;
     final SelectFieldList<SelectFieldOrAsterisk> returning;
     final List<Field<?>>                         returningResolvedAsterisks;
+    boolean                                      forceResolveAsterisks;
     Result<Record>                               returnedResult;
     Result<R>                                    returned;
 
@@ -216,6 +215,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         this.table = table;
         this.returning = new SelectFieldList<>();
         this.returningResolvedAsterisks = new ArrayList<>();
+        this.forceResolveAsterisks = false;
     }
 
     // ------------------------------------------------------------------------
@@ -243,20 +243,36 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         returning.clear();
         returning.addAll(fields.isEmpty() ? Arrays.asList(table.fields()) : fields);
 
+        forceResolveAsterisks = false;
         returningResolvedAsterisks.clear();
-        for (SelectFieldOrAsterisk s : returning)
-            if (s instanceof Field<?> f)
+        for (SelectFieldOrAsterisk s : returning) {
+            if (s instanceof Field<?> f) {
                 returningResolvedAsterisks.add(f);
-            else if (s instanceof QualifiedAsterisk a)
+            }
+            else if (s instanceof QualifiedAsterisk a) {
+
+
+
+
                 returningResolvedAsterisks.addAll(Arrays.asList(a.qualifier().fields()));
-            else if (s instanceof Asterisk)
+            }
+            else if (s instanceof Asterisk) {
+
+
+
+
                 returningResolvedAsterisks.addAll(Arrays.asList(table.fields()));
-            else if (s instanceof Row r)
+            }
+            else if (s instanceof Row r) {
                 returningResolvedAsterisks.add(new RowAsField<>(r));
-            else if (s instanceof Table<?> t)
+            }
+            else if (s instanceof Table<?> t) {
                 returningResolvedAsterisks.add(new TableAsField<>(t));
-            else
+            }
+            else {
                 throw new UnsupportedOperationException("Type not supported: " + s);
+            }
+        }
     }
 
     // @Override
@@ -924,19 +940,21 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 ctx.formatSeparator()
                    .visit(K_RETURNING)
                    .sql(' ')
-                   .declareFields(true, c -> c.visit(
-
-                       // Firebird didn't support asterisks at all here until version 4.0
-                       // MariaDB doesn't support qualified asterisks: https://jira.mariadb.org/browse/MDEV-23178
-                       NO_SUPPORT_RETURNING_ASTERISK.contains(c.dialect())
-                     ? new SelectFieldList<>(returningResolvedAsterisks)
-                     : returning
-                   ));
+                   .declareFields(true, c -> c.visit(returningOrResolvedAsterisks(c)));
 
                 if (unqualify)
                     ctx.qualify(qualify);
             }
         }
+    }
+
+    private QueryPart returningOrResolvedAsterisks(Context<?> c){
+
+        // Firebird didn't support asterisks at all here until version 4.0
+        // MariaDB doesn't support qualified asterisks: https://jira.mariadb.org/browse/MDEV-23178
+        return NO_SUPPORT_RETURNING_ASTERISK.contains(c.dialect()) || forceResolveAsterisks
+            ? new SelectFieldList<>(returningResolvedAsterisks)
+            : returning;
     }
 
     final boolean nativeSupportReturning(Scope ctx) {

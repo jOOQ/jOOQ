@@ -51,7 +51,6 @@ import org.jooq.Function7;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record7;
-import org.jooq.Records;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Row7;

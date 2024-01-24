@@ -50,7 +50,7 @@ import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
-import static org.jooq.impl.FieldsImpl.fieldsRow0;
+import static org.jooq.impl.FieldsImpl.internalFieldsRow0;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.allMatch;
@@ -1416,7 +1416,7 @@ final class Interpreter {
             for (int i = 0; i < columns.size(); i++)
                 addField(t, Integer.MAX_VALUE, (UnqualifiedName) columns.get(i).getUnqualifiedName(), columns.get(i).getDataType());
         else if (select != null)
-            for (Field<?> column : fieldsRow0((FieldsTrait) select).fields())
+            for (Field<?> column : internalFieldsRow0((FieldsTrait) select).fields())
                 addField(t, Integer.MAX_VALUE, (UnqualifiedName) column.getUnqualifiedName(), column.getDataType());
 
         return t;

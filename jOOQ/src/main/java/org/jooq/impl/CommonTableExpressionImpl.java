@@ -193,7 +193,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
     }
 
     final FieldsImpl<R> fields1() {
-        Field<?>[] s = FieldsImpl.fieldsRow0((FieldsTrait) query).fields();
+        Field<?>[] s = FieldsImpl.internalFieldsRow0((FieldsTrait) query).fields();
 
         // [#10565] Can't reuse s.length, see explanation below
         Field<?>[] f = new Field[Tools.degree(query)];

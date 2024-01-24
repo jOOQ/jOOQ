@@ -104,6 +104,12 @@ import org.jetbrains.annotations.Nullable;
 public interface Fields {
 
     /**
+     * Get another {@link Fields} instance that includes the hidden fields.
+     */
+    @NotNull
+    Fields fieldsIncludingHidden();
+
+    /**
      * Get all fields known to this type.
      */
     @NotNull

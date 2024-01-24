@@ -58,6 +58,7 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Fields;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
@@ -205,8 +206,8 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
      * [#13341] Prevent costly calls to Select.asTable() where not strictly
      * needed.
      */
-    static final Row fieldsRow0(FieldsTrait fields) {
-        return fields instanceof Select<?> s ? s.asTable("t").fieldsRow() : fields.fieldsRow();
+    static final Fields internalFieldsRow0(FieldsTrait fields) {
+        return fields instanceof Select<?> s ? ((FieldsTrait) s.asTable("t")).internalFieldsRow() : fields.internalFieldsRow();
     }
 
     private static final ThrowingFunction<SelectField<?>, Field<?>, RuntimeException> toField() {
@@ -546,6 +547,17 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     // -------------------------------------------------------------------------
     // XXX: List-like API
     // -------------------------------------------------------------------------
+
+
+    @Override
+    public final Fields fieldsIncludingHidden() {
+
+
+
+
+
+        return this;
+    }
 
     final void add(Field<?> f) {
 

@@ -61,6 +61,7 @@ import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Fields;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -79,7 +80,14 @@ import org.jooq.impl.QOM.UnmodifiableList;
  * A common base class for the various degrees of {@link Row1}, {@link Row2},
  * etc.
  */
-abstract class AbstractRow<R extends Record> extends AbstractQueryPart implements Row, SelectField<R> {
+abstract class AbstractRow<R extends Record>
+extends
+    AbstractQueryPart
+implements
+    Row,
+    FieldsTrait,
+    SelectField<R>
+{
 
     private static final Clause[] CLAUSES = { FIELD_ROW };
 
@@ -301,167 +309,13 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
+    public final Fields internalFieldsRow() {
+        return fields;
+    }
+
+    @Override
     public final Row fieldsRow() {
         return this;
-    }
-
-    @Override
-    public final Stream<Field<?>> fieldStream() {
-        return Stream.of(fields());
-    }
-
-    @Override
-    public final <T> Field<T> field(Field<T> field) {
-        return fields.field(field);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(String)}.
-     */
-    @Deprecated
-    @Override
-    public final Field<?> field(String name) {
-        return fields.field(name);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(String, Class)}.
-     */
-    @Deprecated
-    @Override
-    public final <T> Field<T> field(String name, Class<T> type) {
-        return fields.field(name, type);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(String, DataType)}.
-     */
-    @Deprecated
-    @Override
-    public final <T> Field<T> field(String name, DataType<T> dataType) {
-        return fields.field(name, dataType);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(Name)}.
-     */
-    @Deprecated
-    @Override
-    public final Field<?> field(Name name) {
-        return fields.field(name);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(Name, Class)}.
-     */
-    @Deprecated
-    @Override
-    public final <T> Field<T> field(Name name, Class<T> type) {
-        return fields.field(name, type);
-    }
-
-    /**
-     * @deprecated This method hides static import {@link DSL#field(Name, DataType)}.
-     */
-    @Deprecated
-    @Override
-    public final <T> Field<T> field(Name name, DataType<T> dataType) {
-        return fields.field(name, dataType);
-    }
-
-    @Override
-    public final Field<?> field(int index) {
-        return fields.field(index);
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, Class<T> type) {
-        return fields.field(index, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, DataType<T> dataType) {
-        return fields.field(index, dataType);
-    }
-
-    @Override
-    public final Field<?>[] fields() {
-        return fields.fields();
-    }
-
-    @Override
-    public final Field<?>[] fields(Field<?>... f) {
-        return fields.fields(f);
-    }
-
-    @Override
-    public final Field<?>[] fields(String... fieldNames) {
-        return fields.fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(Name... fieldNames) {
-        return fields.fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(int... fieldIndexes) {
-        return fields.fields(fieldIndexes);
-    }
-
-    @Override
-    public final int indexOf(Field<?> field) {
-        return fields.indexOf(field);
-    }
-
-    @Override
-    public final int indexOf(String fieldName) {
-        return fields.indexOf(fieldName);
-    }
-
-    @Override
-    public final int indexOf(Name fieldName) {
-        return fields.indexOf(fieldName);
-    }
-
-    @Override
-    public final Class<?>[] types() {
-        return fields.types();
-    }
-
-    @Override
-    public final Class<?> type(int fieldIndex) {
-        return fields.type(fieldIndex);
-    }
-
-    @Override
-    public final Class<?> type(String fieldName) {
-        return fields.type(fieldName);
-    }
-
-    @Override
-    public final Class<?> type(Name fieldName) {
-        return fields.type(fieldName);
-    }
-
-    @Override
-    public final DataType<?>[] dataTypes() {
-        return fields.dataTypes();
-    }
-
-    @Override
-    public final DataType<?> dataType(int fieldIndex) {
-        return fields.dataType(fieldIndex);
-    }
-
-    @Override
-    public final DataType<?> dataType(String fieldName) {
-        return fields.dataType(fieldName);
-    }
-
-    @Override
-    public final DataType<?> dataType(Name fieldName) {
-        return fields.dataType(fieldName);
     }
 
     // ------------------------------------------------------------------------

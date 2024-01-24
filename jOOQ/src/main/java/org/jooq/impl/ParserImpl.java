@@ -15560,7 +15560,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 Name q = lookupName.qualifier();
                 boolean x = q.qualified();
                 if (x && q.equals(t.value().getQualifiedName()) || !x && q.last().equals(t.value().getName()))
-                    if ((found = Value.of(t.scopeLevel(), t.value().field(lookup.getName()))) != null)
+                    if ((found = Value.of(t.scopeLevel(), t.value().fieldsIncludingHidden().field(lookup.getName()))) != null)
                         break tableScopeLoop;
 
 
@@ -15571,7 +15571,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
             }
-            else if ((f = Value.of(t.scopeLevel(), t.value().field(lookup.getName()))) != null) {
+            else if ((f = Value.of(t.scopeLevel(), t.value().fieldsIncludingHidden().field(lookup.getName()))) != null) {
                 if (found == null || found.scopeLevel() < f.scopeLevel()) {
                     found = f;
                 }

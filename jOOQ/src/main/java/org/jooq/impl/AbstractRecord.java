@@ -70,6 +70,7 @@ import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EmbeddableRecord;
 import org.jooq.Field;
+import org.jooq.Fields;
 import org.jooq.JSONFormat;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -106,6 +107,7 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Document;
 import org.xml.sax.ContentHandler;
@@ -117,7 +119,13 @@ import org.xml.sax.SAXException;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-abstract class AbstractRecord extends AbstractStore implements Record {
+abstract class AbstractRecord
+extends
+    AbstractStore
+implements
+    Record,
+    FieldsTrait
+{
 
     final AbstractRow<? extends AbstractRecord> fields;
     final Object[]                              values;
@@ -176,138 +184,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // ------------------------------------------------------------------------
 
     @Override
-    public final Field<?>[] fields() {
-        return fields.fields();
-    }
-
-    @Override
-    public final Stream<Field<?>> fieldStream() {
-        return fields.fieldStream();
-    }
-
-    @Override
-    public final <T> Field<T> field(Field<T> field) {
-        return fields.field(field);
-    }
-
-    @Override
-    public final Field<?> field(String name) {
-        return fields.field(name);
-    }
-
-    @Override
-    public final <T> Field<T> field(String name, Class<T> type) {
-        return fields.field(name, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(String name, DataType<T> dataType) {
-        return fields.field(name, dataType);
-    }
-
-    @Override
-    public final Field<?> field(Name name) {
-        return fields.field(name);
-    }
-
-    @Override
-    public final <T> Field<T> field(Name name, Class<T> type) {
-        return fields.field(name, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(Name name, DataType<T> dataType) {
-        return fields.field(name, dataType);
-    }
-
-    @Override
-    public final Field<?> field(int index) {
-        return index >= 0 && index < fields.size() ? fields.field(index) : null;
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, Class<T> type) {
-        return fields.field(index, type);
-    }
-
-    @Override
-    public final <T> Field<T> field(int index, DataType<T> dataType) {
-        return fields.field(index, dataType);
-    }
-
-    @Override
-    public final Field<?>[] fields(Field<?>... f) {
-        return fields.fields(f);
-    }
-
-    @Override
-    public final Field<?>[] fields(String... fieldNames) {
-        return fields.fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(Name... fieldNames) {
-        return fields.fields(fieldNames);
-    }
-
-    @Override
-    public final Field<?>[] fields(int... fieldIndexes) {
-        return fields.fields(fieldIndexes);
-    }
-
-    @Override
-    public final int indexOf(Field<?> field) {
-        return fields.indexOf(field);
-    }
-
-    @Override
-    public final int indexOf(String fieldName) {
-        return fields.indexOf(fieldName);
-    }
-
-    @Override
-    public final int indexOf(Name fieldName) {
-        return fields.indexOf(fieldName);
-    }
-
-    @Override
-    public final Class<?>[] types() {
-        return fields.types();
-    }
-
-    @Override
-    public final Class<?> type(int fieldIndex) {
-        return fields.type(fieldIndex);
-    }
-
-    @Override
-    public final Class<?> type(String fieldName) {
-        return fields.type(fieldName);
-    }
-
-    @Override
-    public final Class<?> type(Name fieldName) {
-        return fields.type(fieldName);
-    }
-
-    @Override
-    public final DataType<?>[] dataTypes() {
-        return fields.dataTypes();
-    }
-
-    @Override
-    public final DataType<?> dataType(int fieldIndex) {
-        return fields.dataType(fieldIndex);
-    }
-
-    @Override
-    public final DataType<?> dataType(String fieldName) {
-        return fields.dataType(fieldName);
-    }
-
-    @Override
-    public final DataType<?> dataType(Name fieldName) {
-        return fields.dataType(fieldName);
+    @Internal
+    public final Fields internalFieldsRow() {
+        return fields;
     }
 
     // ------------------------------------------------------------------------

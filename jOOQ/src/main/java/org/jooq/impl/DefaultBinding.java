@@ -5001,8 +5001,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     if (o == null)
                         return null;
-                    else if (o instanceof UUID u)
-                        return u;
+                    else if (o.getClass() == UUID.class)
+                        return (UUID) o;
                     else
                         return Convert.convert(o.toString(), UUID.class);
                 }

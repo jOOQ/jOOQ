@@ -22,7 +22,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.springframework.version>3.2.6.RELEASE</org.springframework.version>
     </properties>
 
     <dependencies>

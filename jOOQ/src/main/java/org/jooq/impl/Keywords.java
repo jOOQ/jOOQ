@@ -215,6 +215,7 @@ final class Keywords {
     static final Keyword K_IGNORE_NULLS             = keyword("ignore nulls");
     static final Keyword K_IMMEDIATE                = keyword("immediate");
     static final Keyword K_IMMUTABLE                = keyword("immutable");
+    static final Keyword K_IMPLICITLY               = keyword("implicitly");
     static final Keyword K_IN                       = keyword("in");
     static final Keyword K_INCLUDE                  = keyword("include");
     static final Keyword K_INCLUDE_NULL_VALUES      = keyword("include_null_values");

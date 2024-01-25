@@ -1112,6 +1112,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether invisible columns should be included in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="invisibleColumnsAsHidden" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This flag indicates whether invisible columns should marked as {@link org.jooq.DataType#hidden()} in output produced by this database]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="recordVersionFields" type="string" default="" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All table and view columns that are used as "version" fields for optimistic locking.
 <p>

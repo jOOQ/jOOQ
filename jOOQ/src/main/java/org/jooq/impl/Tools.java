@@ -65,7 +65,9 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 // ...
 // ...
 // ...
@@ -167,6 +169,7 @@ import static org.jooq.impl.Keywords.K_GENERATED;
 import static org.jooq.impl.Keywords.K_HIDDEN;
 import static org.jooq.impl.Keywords.K_IDENTITY;
 import static org.jooq.impl.Keywords.K_IF;
+import static org.jooq.impl.Keywords.K_IMPLICITLY;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Keywords.K_INVISIBLE;
 import static org.jooq.impl.Keywords.K_LIKE;
@@ -5829,6 +5832,18 @@ final class Tools {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

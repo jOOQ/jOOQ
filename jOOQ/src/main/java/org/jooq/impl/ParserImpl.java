@@ -4922,7 +4922,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     identity = true;
                     continue;
                 }
-                else if (parseKeywordIf("VISIBLE")) {
+                else if (parseKeywordIf("NOT HIDDEN", "VISIBLE")) {
                     continue;
                 }
                 else if (parseKeywordIf("HIDDEN", "NOT VISIBLE", "INVISIBLE")) {

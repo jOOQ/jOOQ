@@ -152,15 +152,15 @@ final class DDL {
                 applyAs(
                       materialized
                     ? configuration.createMaterializedViewIfNotExists()
-                        ? ctx.createMaterializedViewIfNotExists(table, table.fields())
+                        ? ctx.createMaterializedViewIfNotExists(table, table.fieldsIncludingHidden().fields())
                         : configuration.createOrReplaceMaterializedView()
-                        ? ctx.createOrReplaceMaterializedView(table, table.fields())
-                        : ctx.createMaterializedView(table, table.fields())
+                        ? ctx.createOrReplaceMaterializedView(table, table.fieldsIncludingHidden().fields())
+                        : ctx.createMaterializedView(table, table.fieldsIncludingHidden().fields())
                     : configuration.createViewIfNotExists()
-                    ? ctx.createViewIfNotExists(table, table.fields())
+                    ? ctx.createViewIfNotExists(table, table.fieldsIncludingHidden().fields())
                     : configuration.createOrReplaceView()
-                    ? ctx.createOrReplaceView(table, table.fields())
-                    : ctx.createView(table, table.fields()),
+                    ? ctx.createOrReplaceView(table, table.fieldsIncludingHidden().fields())
+                    : ctx.createView(table, table.fieldsIncludingHidden().fields()),
                     table.getOptions()
                 )
             );
@@ -182,7 +182,7 @@ final class DDL {
 
                 // [#14512] We're exporting COMMENT ON COLUMN statements, so
                 //          no need to comment columns again here.
-                .columns(sortIf(map(table.fields(), f -> f.comment("")), !configuration.respectColumnOrder()))
+                .columns(sortIf(map(table.fieldsIncludingHidden().fields(), f -> f.comment("")), !configuration.respectColumnOrder()))
                 .constraints(constraints);
 
         if (temporary && onCommit != null) {
@@ -502,7 +502,7 @@ final class DDL {
                 else
                     result.add(ctx.commentOnTable(table).is(tComment));
 
-            for (Field<?> field : sortIf(Arrays.asList(table.fields()), !configuration.respectColumnOrder())) {
+            for (Field<?> field : sortIf(Arrays.asList(table.fieldsIncludingHidden().fields()), !configuration.respectColumnOrder())) {
                 Comment fComment = field.getCommentPart();
 
                 if (!StringUtils.isEmpty(fComment.getComment()))

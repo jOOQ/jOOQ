@@ -199,7 +199,7 @@ final class Snapshot extends AbstractMeta {
         SnapshotTable(SnapshotSchema schema, Table<R> table) {
             super(table.getQualifiedName(), schema, null, null, table.getCommentPart(), table.getOptions());
 
-            for (Field<?> field : table.fields())
+            for (Field<?> field : table.fieldsIncludingHidden().fields())
                 createField(field.getUnqualifiedName(), field.getDataType(), this, field.getComment());
 
             indexes = map(table.getIndexes(), index -> new IndexImpl(

@@ -454,7 +454,7 @@ final class FilteredMeta extends AbstractMeta {
 
             this.delegate = delegate;
 
-            for (Field<?> field : delegate.fields())
+            for (Field<?> field : delegate.fieldsIncludingHidden().fields())
                 createField(field.getQualifiedName(), field.getDataType(), this, field.getComment());
         }
 

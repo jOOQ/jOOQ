@@ -105,6 +105,8 @@ public class Database implements Serializable, XMLAppendable
     protected Boolean includeSystemUDTs = false;
     @XmlElement(defaultValue = "true")
     protected Boolean includeInvisibleColumns = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean invisibleColumnsAsHidden = true;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String recordVersionFields = "";
@@ -1157,6 +1159,34 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludeInvisibleColumns(Boolean value) {
         this.includeInvisibleColumns = value;
+    }
+
+    /**
+     * This flag indicates whether invisible columns should marked as {@link org.jooq.DataType#hidden()} in output produced by this database.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isInvisibleColumnsAsHidden() {
+        return invisibleColumnsAsHidden;
+    }
+
+    /**
+     * This flag indicates whether invisible columns should marked as {@link org.jooq.DataType#hidden()} in output produced by this database.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setInvisibleColumnsAsHidden(Boolean value) {
+        this.invisibleColumnsAsHidden = value;
     }
 
     /**
@@ -2545,6 +2575,17 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * This flag indicates whether invisible columns should marked as {@link org.jooq.DataType#hidden()} in output produced by this database.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Database withInvisibleColumnsAsHidden(Boolean value) {
+        setInvisibleColumnsAsHidden(value);
+        return this;
+    }
+
+    /**
      * All table and view columns that are used as "version" fields for optimistic locking.
      * <p>
      * This is a Java regular expression. Use the pipe to separate several expressions.
@@ -3152,6 +3193,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includeSystemSequences", includeSystemSequences);
         builder.append("includeSystemUDTs", includeSystemUDTs);
         builder.append("includeInvisibleColumns", includeInvisibleColumns);
+        builder.append("invisibleColumnsAsHidden", invisibleColumnsAsHidden);
         builder.append("recordVersionFields", recordVersionFields);
         builder.append("recordTimestampFields", recordTimestampFields);
         builder.append("syntheticObjects", syntheticObjects);
@@ -3525,6 +3567,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includeInvisibleColumns.equals(other.includeInvisibleColumns)) {
+                return false;
+            }
+        }
+        if (invisibleColumnsAsHidden == null) {
+            if (other.invisibleColumnsAsHidden!= null) {
+                return false;
+            }
+        } else {
+            if (!invisibleColumnsAsHidden.equals(other.invisibleColumnsAsHidden)) {
                 return false;
             }
         }
@@ -3930,6 +3981,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includeSystemSequences == null)? 0 :includeSystemSequences.hashCode()));
         result = ((prime*result)+((includeSystemUDTs == null)? 0 :includeSystemUDTs.hashCode()));
         result = ((prime*result)+((includeInvisibleColumns == null)? 0 :includeInvisibleColumns.hashCode()));
+        result = ((prime*result)+((invisibleColumnsAsHidden == null)? 0 :invisibleColumnsAsHidden.hashCode()));
         result = ((prime*result)+((recordVersionFields == null)? 0 :recordVersionFields.hashCode()));
         result = ((prime*result)+((recordTimestampFields == null)? 0 :recordTimestampFields.hashCode()));
         result = ((prime*result)+((syntheticObjects == null)? 0 :syntheticObjects.hashCode()));

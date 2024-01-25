@@ -825,6 +825,20 @@ public interface Database extends AutoCloseable {
     boolean getIncludeInvisibleColumns();
 
     /**
+     * Whether invisible columns should be marked as {@link DataType#hidden()}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    void setInvisibleColumnsAsHidden(boolean invisibleColumnsAsHidden);
+
+    /**
+     * Whether invisible columns should be marked as {@link DataType#hidden()}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    boolean getInvisibleColumnsAsHidden();
+
+    /**
      * Whether zero-scale decimal types should be treated as their most
      * appropriate, corresponding integer type.
      */

@@ -56,6 +56,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
@@ -69,6 +70,8 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.h2.H2Database.ElementType;
 import org.jooq.meta.h2.H2Database.ElementTypeLookupKey;
 import org.jooq.meta.hsqldb.information_schema.Tables;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * H2 table definition
@@ -102,6 +105,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
         List<ColumnDefinition> result = new ArrayList<>();
 
         H2Database db = (H2Database) getDatabase();
+        Field<Boolean> visible = COLUMNS.IS_VISIBLE.coerce(BOOLEAN);
 
 
         // [#252] While recursing on ELEMENT_TYPES to detect multi dimensional
@@ -131,7 +135,8 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 Tables.COLUMNS.IS_IDENTITY.eq(inline("YES")).as(Tables.COLUMNS.IS_IDENTITY),
                 COLUMNS.DOMAIN_SCHEMA,
                 COLUMNS.DOMAIN_NAME,
-                Tables.COLUMNS.DTD_IDENTIFIER
+                Tables.COLUMNS.DTD_IDENTIFIER,
+                visible
             )
             .from(COLUMNS)
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
@@ -165,7 +170,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
             if (et == null)
                 et = new ElementType(record.get(COLUMNS.TYPE_NAME), record.get(COLUMNS.CHARACTER_MAXIMUM_LENGTH), record.get(COLUMNS.NUMERIC_PRECISION), record.get(COLUMNS.NUMERIC_SCALE), null, 0);
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 typeSchema == null ? getSchema() : typeSchema,
                 et.dataType() + IntStream.range(0, et.dimension()).mapToObj(i -> " ARRAY").collect(Collectors.joining()),
@@ -176,6 +181,11 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 isIdentity || isComputed ? null : record.get(COLUMNS.COLUMN_DEFAULT),
                 userType
             ).generatedAlwaysAs(isComputed ? record.get(Tables.COLUMNS.GENERATION_EXPRESSION) : null);
+
+
+
+
+
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

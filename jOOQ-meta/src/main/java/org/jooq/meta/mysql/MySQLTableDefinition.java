@@ -154,7 +154,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 }
             }
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
                 dataType,
@@ -167,6 +167,11 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
             )
                 .generatedAlwaysAs(generated ? record.get(COLUMNS.GENERATION_EXPRESSION) : null)
                 .generationOption(generationOption);
+
+
+
+
+
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

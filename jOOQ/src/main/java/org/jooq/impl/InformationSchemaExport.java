@@ -329,7 +329,7 @@ final class InformationSchemaExport {
             result.getViews().add(iv);
         }
 
-        Field<?>[] fields = t.fields();
+        Field<?>[] fields = t.fieldsIncludingHidden().fields();
         for (int i = 0; i < fields.length; i++) {
             Field<?> f = fields[i];
             DataType<?> type = f.getDataType();

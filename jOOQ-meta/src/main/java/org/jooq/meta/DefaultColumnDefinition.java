@@ -85,7 +85,7 @@ public class DefaultColumnDefinition
         boolean readonly,
         String comment
     ) {
-        this(table, name, position, type, identity, false, readonly, comment);
+        this(table, name, position, type, identity, type.isHidden(), readonly, comment);
     }
 
     public DefaultColumnDefinition(

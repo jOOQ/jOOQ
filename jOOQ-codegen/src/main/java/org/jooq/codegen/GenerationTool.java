@@ -603,6 +603,7 @@ public class GenerationTool {
             database.setIncludeSystemSequences(TRUE.equals(d.isIncludeSystemSequences()));
             database.setIncludeSystemUDTs(TRUE.equals(d.isIncludeSystemUDTs()));
             database.setIncludeInvisibleColumns(!FALSE.equals(d.isIncludeInvisibleColumns()));
+            database.setInvisibleColumnsAsHidden(!FALSE.equals(d.isInvisibleColumnsAsHidden()));
             database.setIncludePrimaryKeys(!FALSE.equals(d.isIncludePrimaryKeys()));
             database.setIncludeRoutines(!FALSE.equals(d.isIncludeRoutines()));
             database.setIncludeDomains(!FALSE.equals(d.isIncludeDomains()));

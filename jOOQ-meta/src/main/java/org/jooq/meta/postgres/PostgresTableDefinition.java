@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.greatest;
 import static org.jooq.impl.DSL.inline;
@@ -146,6 +147,8 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
         Field<String> serialColumnDefault = inline("nextval('%_seq'::regclass)");
         Field<String> generationExpression = COLUMNS.GENERATION_EXPRESSION;
         Field<String> attgenerated = database.is12() ? PG_ATTRIBUTE.ATTGENERATED : inline("s");
+        Condition columnHidden = falseCondition();
+
 
 
 
@@ -166,6 +169,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             ? isIdentity10.or(count().filterWhere(isIdentity10).over().eq(inline(0)).and(isSerial))
             : isSerial;
 
+
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
@@ -184,7 +188,8 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                     when(COLUMNS.DATA_TYPE.eq(inline("ARRAY")), substring(PG_TYPE.TYPNAME, inline(2)))
                         .else_(COLUMNS.UDT_NAME)
                 ).as(COLUMNS.UDT_NAME),
-                PG_DESCRIPTION.DESCRIPTION)
+                PG_DESCRIPTION.DESCRIPTION,
+                columnHidden)
             .from(COLUMNS)
             .join(PG_ATTRIBUTE)
                 .on(PG_ATTRIBUTE.ATTNAME.eq(COLUMNS.COLUMN_NAME))
@@ -209,7 +214,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             if (schemaName != null)
                 typeSchema = getDatabase().getSchema(schemaName);
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 typeSchema,
                 record.get(COLUMNS.DATA_TYPE),
@@ -231,6 +236,11 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                   ? GenerationOption.VIRTUAL
                   : null
                 );
+
+
+
+
+
 
             ColumnDefinition column = new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

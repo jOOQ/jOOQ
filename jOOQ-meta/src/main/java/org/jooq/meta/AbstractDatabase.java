@@ -197,6 +197,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                              includeExcludeColumns                   = false;
     private boolean                                                              includeExcludePackageRoutines           = false;
     private boolean                                                              includeInvisibleColumns                 = true;
+    private boolean                                                              invisibleColumnsAsHidden                = true;
     private boolean                                                              includeXMLSchemaCollections             = true;
     private boolean                                                              includeTables                           = true;
     private boolean                                                              includeEmbeddables                      = true;
@@ -1179,6 +1180,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean getIncludeInvisibleColumns() {
         return includeInvisibleColumns;
+    }
+
+    @Override
+    public final void setInvisibleColumnsAsHidden(boolean invisibleColumnsAsHidden) {
+        this.invisibleColumnsAsHidden = invisibleColumnsAsHidden;
+    }
+
+    @Override
+    public final boolean getInvisibleColumnsAsHidden() {
+        return invisibleColumnsAsHidden;
     }
 
     @Override

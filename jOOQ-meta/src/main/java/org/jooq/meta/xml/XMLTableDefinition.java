@@ -93,7 +93,7 @@ public class XMLTableDefinition extends AbstractTableDefinition {
 
                 SchemaDefinition schema = getDatabase().getSchema(column.getTableSchema());
 
-                DataTypeDefinition type = new DefaultDataTypeDefinition(
+                DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     getDatabase(),
                     schema,
                     column.getDataType(),
@@ -110,7 +110,8 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                             : "VIRTUAL".equalsIgnoreCase(column.getGenerationOption())
                             ? VIRTUAL
                             : null
-                        : null);
+                        : null)
+                    .hidden(column.isHidden());
 
                 result.add(new DefaultColumnDefinition(
                     this,

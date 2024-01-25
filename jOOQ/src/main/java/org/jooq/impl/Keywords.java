@@ -204,6 +204,7 @@ final class Keywords {
     static final Keyword K_GROUPING_SETS            = keyword("grouping sets");
     static final Keyword K_GROUP_BY                 = keyword("group by");
     static final Keyword K_HAVING                   = keyword("having");
+    static final Keyword K_HIDDEN                   = keyword("hidden");
     static final Keyword K_HOUR                     = keyword("hour");
     static final Keyword K_HOUR_TO_SECOND           = keyword("hour to second");
     static final Keyword K_IDENTITY                 = keyword("identity");
@@ -227,6 +228,7 @@ final class Keywords {
     static final Keyword K_INT                      = keyword("int");
     static final Keyword K_INTERVAL                 = keyword("interval");
     static final Keyword K_INTO                     = keyword("into");
+    static final Keyword K_INVISIBLE                = keyword("invisible");
     static final Keyword K_IS                       = keyword("is");
     static final Keyword K_IS_DOCUMENT              = keyword("is document");
     static final Keyword K_IS_JSON                  = keyword("is json");
@@ -448,6 +450,7 @@ final class Keywords {
     static final Keyword K_VERSIONS                 = keyword("versions");
     static final Keyword K_VIEW                     = keyword("view");
     static final Keyword K_VIRTUAL                  = keyword("virtual");
+    static final Keyword K_VISIBLE                  = keyword("visible");
     static final Keyword K_VOLATILE                 = keyword("volatile");
     static final Keyword K_WHEN                     = keyword("when");
     static final Keyword K_WHERE                    = keyword("where");

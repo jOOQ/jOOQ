@@ -164,9 +164,11 @@ import static org.jooq.impl.Keywords.K_EXECUTE_BLOCK;
 import static org.jooq.impl.Keywords.K_EXECUTE_IMMEDIATE;
 import static org.jooq.impl.Keywords.K_EXECUTE_STATEMENT;
 import static org.jooq.impl.Keywords.K_GENERATED;
+import static org.jooq.impl.Keywords.K_HIDDEN;
 import static org.jooq.impl.Keywords.K_IDENTITY;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_INT;
+import static org.jooq.impl.Keywords.K_INVISIBLE;
 import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
@@ -185,6 +187,7 @@ import static org.jooq.impl.Keywords.K_STORED;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_VIRTUAL;
+import static org.jooq.impl.Keywords.K_VISIBLE;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
@@ -5678,6 +5681,7 @@ final class Tools {
 
 
 
+
         // [#5356] Some dialects require the DEFAULT clause prior to the
         //         NULL constraints clause
         if (DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
@@ -5694,6 +5698,7 @@ final class Tools {
             toSQLDDLTypeDeclarationDefault(ctx, type);
 
         toSQLDDLTypeDeclarationIdentityAfterNull(ctx, type);
+
 
 
 
@@ -5824,6 +5829,62 @@ final class Tools {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

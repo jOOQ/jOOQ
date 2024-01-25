@@ -4925,7 +4925,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseKeywordIf("VISIBLE")) {
                     continue;
                 }
-                else if (parseKeywordIf("HIDDEN", "INVISIBLE")) {
+                else if (parseKeywordIf("HIDDEN", "NOT VISIBLE", "INVISIBLE")) {
                     type = type.hidden(true);
                     continue;
                 }

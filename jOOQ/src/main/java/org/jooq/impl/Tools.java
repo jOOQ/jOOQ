@@ -6014,6 +6014,8 @@ final class Tools {
 
 
 
+
+
     private static final void toSQLDDLTypeDeclarationDefault(Context<?> ctx, DataType<?> type) {
         if (type.defaulted()) {
             Field<?> v = type.defaultValue();

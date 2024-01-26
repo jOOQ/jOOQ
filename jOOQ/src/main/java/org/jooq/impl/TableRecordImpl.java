@@ -58,6 +58,7 @@ import static org.jooq.conf.WriteIfReadonly.WRITE;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.indexOrFail;
@@ -74,6 +75,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
@@ -457,14 +459,19 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualified
         // [#14573] Return also non-key columns
         if (TRUE.equals(s.isReturnDefaultOnUpdatableRecord()))
             for (Field<?> f : fields())
-                if (f.getDataType().defaulted())
+                if (isType(f, DataType::defaulted))
                     result.add(f);
 
         if (TRUE.equals(s.isReturnComputedOnUpdatableRecord()))
             for (Field<?> f : fields())
-                if (f.getDataType().computed())
+                if (isType(f, DataType::computed))
                     result.add(f);
 
         return result;
+    }
+
+    private static final boolean isType(Field<?> f, Predicate<? super DataType<?>> predicate) {
+        DataType<?> t = f.getDataType();
+        return predicate.test(t) || t.isEmbeddable() && anyMatch(t.getRow().fields(), x -> predicate.test(x.getDataType()));
     }
 }

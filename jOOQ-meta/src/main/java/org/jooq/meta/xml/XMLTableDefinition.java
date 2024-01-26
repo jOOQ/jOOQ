@@ -111,7 +111,7 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                             ? VIRTUAL
                             : null
                         : null)
-                    .hidden(column.isHidden());
+                    .hidden(TRUE.equals(column.isHidden()));
 
                 result.add(new DefaultColumnDefinition(
                     this,

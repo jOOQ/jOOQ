@@ -72,6 +72,7 @@ import static org.jooq.impl.DerivedTable.NO_SUPPORT_CORRELATED_DERIVED_TABLE;
 import static org.jooq.impl.Internal.createPathAlias;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Names.N_MULTISET;
+import static org.jooq.impl.QualifiedName.hashCode0;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.CONFIG;
@@ -564,7 +565,7 @@ implements
     public int hashCode() {
 
         // [#7172] [#10274] [#14875] Cannot use getQualifiedName() based super implementation yet here
-        return defaultIfNull(getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName().append(getUnqualifiedName()).hashCode();
+        return hashCode0(defaultIfNull(getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName(), getUnqualifiedName());
     }
 
     @Override

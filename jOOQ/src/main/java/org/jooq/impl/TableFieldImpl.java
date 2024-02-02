@@ -44,6 +44,7 @@ import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
+import static org.jooq.impl.QualifiedName.hashCode0;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
@@ -223,9 +224,11 @@ implements
         if (getTable() == null)
             return getUnqualifiedName().hashCode();
         else
-            return defaultIfNull(getTable().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName()
-                .append(getTable().getUnqualifiedName())
-                .append(getUnqualifiedName()).hashCode();
+            return hashCode0(
+                defaultIfNull(getTable().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName(),
+                getTable().getUnqualifiedName(),
+                getUnqualifiedName()
+            );
     }
 
     @Override

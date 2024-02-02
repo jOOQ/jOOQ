@@ -272,12 +272,50 @@ final class QualifiedName extends AbstractName {
                 if (n.name == null)
                     h = 31 * h + 0;
                 else
-                    h = 31 * h + n.name.hashCode();
+                    h = 31 * h + hashCode0(n);
             }
 
             hash = h;
         }
 
         return hash;
+    }
+
+    static int hashCode0(Name n1) {
+        return n1 instanceof UnqualifiedName u ? hashCode0(u) : n1.hashCode();
+    }
+
+    static int hashCode0(UnqualifiedName n1) {
+        return n1.name.hashCode();
+    }
+
+    static int hashCode0(Name n1, Name n2) {
+        int h = 1;
+
+        if (!n1.empty()) h = 31 * h + hashCode0(n1);
+        if (!n2.empty()) h = 31 * h + hashCode0(n2);
+
+        return h;
+    }
+
+    static int hashCode0(Name n1, Name n2, Name n3) {
+        int h = 1;
+
+        if (!n1.empty()) h = 31 * h + hashCode0(n1);
+        if (!n2.empty()) h = 31 * h + hashCode0(n2);
+        if (!n3.empty()) h = 31 * h + hashCode0(n3);
+
+        return h;
+    }
+
+    static int hashCode0(Name n1, Name n2, Name n3, Name n4) {
+        int h = 1;
+
+        if (!n1.empty()) h = 31 * h + hashCode0(n1);
+        if (!n2.empty()) h = 31 * h + hashCode0(n2);
+        if (!n3.empty()) h = 31 * h + hashCode0(n3);
+        if (!n4.empty()) h = 31 * h + hashCode0(n4);
+
+        return h;
     }
 }

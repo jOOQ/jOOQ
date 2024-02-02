@@ -61,7 +61,7 @@
         <spring.version>6.1.3</spring.version>
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
         <errorprone.version>2.24.1</errorprone.version>
-        <testcontainers.version>1.19.3</testcontainers.version>
+        <testcontainers.version>1.19.4</testcontainers.version>
         <jackson.version>2.16.1</jackson.version>
         <jackson.version.databind>2.16.1</jackson.version.databind>
         <jetbrains.annotations.version>24.1.0</jetbrains.annotations.version>

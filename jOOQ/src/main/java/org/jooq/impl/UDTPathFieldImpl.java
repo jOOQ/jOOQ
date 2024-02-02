@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.QualifiedName.hashCode0;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -225,14 +226,18 @@ implements
     @Override
     public int hashCode() {
         if (getQualifier() instanceof Table)
-            return defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName()
-                .append(getQualifier().getUnqualifiedName())
-                .append(getUnqualifiedName()).hashCode();
+            return hashCode0(
+                defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName(),
+                getQualifier().getUnqualifiedName(),
+                getUnqualifiedName()
+            );
         else
-            return defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName()
-                .append(getQualifier().getUnqualifiedName())
-                .append(getUDT().getUnqualifiedName())
-                .append(getUnqualifiedName()).hashCode();
+            return hashCode0(
+                defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName(),
+                getQualifier().getUnqualifiedName(),
+                getUDT().getUnqualifiedName(),
+                getUnqualifiedName()
+            );
     }
 
     @Override

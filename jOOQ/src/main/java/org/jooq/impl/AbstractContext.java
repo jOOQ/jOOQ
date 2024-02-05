@@ -69,9 +69,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -361,47 +359,26 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     protected abstract void visit0(QueryPartInternal internal);
 
-    private final C toggle(boolean b, BooleanSupplier get, BooleanConsumer set, Consumer<? super C> consumer) {
-        boolean previous = get.getAsBoolean();
-
-        try {
-            set.accept(b);
-            consumer.accept((C) this);
-        }
-        finally {
-            set.accept(previous);
-        }
-
-        return (C) this;
-    }
-
-    private final <T> C toggle(T t, Supplier<T> get, Consumer<T> set, Consumer<? super C> consumer) {
-        T previous = get.get();
-
-        try {
-            set.accept(t);
-            consumer.accept((C) this);
-        }
-        finally {
-            set.accept(previous);
-        }
-
-        return (C) this;
-    }
-
     @Override
     public final C data(Object key, Object value, Consumer<? super C> consumer) {
-        return toggle(
-            value,
-            () -> data(key),
-            v -> {
-                if (v == null)
-                    data().remove(key);
-                else
-                    data(key, v);
-            },
-            consumer
-        );
+        Object previous = data(key);
+
+        try {
+            if (value == null)
+                data().remove(key);
+            else
+                data(key, value);
+
+            consumer.accept((C) this);
+        }
+        finally {
+            if (previous == null)
+                data().remove(key);
+            else
+                data(key, previous);
+        }
+
+        return (C) this;
     }
 
     /**
@@ -593,7 +570,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public C declareFields(boolean f, Consumer<? super C> consumer) {
-        return toggle(f, this::declareFields, this::declareFields, consumer);
+        boolean previous = declareFields();
+
+        try {
+            declareFields(f);
+            consumer.accept((C) this);
+        }
+        finally {
+            declareFields(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
@@ -610,7 +597,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public C declareTables(boolean f, Consumer<? super C> consumer) {
-        return toggle(f, this::declareTables, this::declareTables, consumer);
+        boolean previous = declareTables();
+
+        try {
+        	declareTables(f);
+            consumer.accept((C) this);
+        }
+        finally {
+            declareTables(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
@@ -626,7 +623,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public C declareAliases(boolean f, Consumer<? super C> consumer) {
-        return toggle(f, this::declareAliases, this::declareAliases, consumer);
+        boolean previous = declareAliases();
+
+        try {
+        	declareAliases(f);
+            consumer.accept((C) this);
+        }
+        finally {
+            declareAliases(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
@@ -642,8 +649,28 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public C declareWindows(boolean f, Consumer<? super C> consumer) {
-        return toggle(f, this::declareWindows, this::declareWindows, consumer);
+        boolean previous = declareWindows();
+
+        try {
+            declareWindows(f);
+            consumer.accept((C) this);
+        }
+        finally {
+            declareWindows(previous);
+        }
+
+        return (C) this;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -681,7 +708,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public C declareCTE(boolean f, Consumer<? super C> consumer) {
-        return toggle(f, this::declareCTE, this::declareCTE, consumer);
+        boolean previous = declareCTE();
+
+        try {
+            declareCTE(f);
+            consumer.accept((C) this);
+        }
+        finally {
+            declareCTE(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
@@ -975,7 +1012,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C paramType(ParamType p, Consumer<? super C> runnable) {
-        return toggle(p, this::paramType, this::paramType, runnable);
+        ParamType previous = paramType();
+
+        try {
+            paramType(p);
+            runnable.accept((C) this);
+        }
+        finally {
+            paramType(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
@@ -1001,7 +1048,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C quote(boolean q, Consumer<? super C> consumer) {
-        return toggle(q, this::quote, this::quote, consumer);
+        boolean previous = quote();
+
+        try {
+            quote(q);
+            consumer.accept((C) this);
+        }
+        finally {
+            quote(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
@@ -1016,7 +1073,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C qualify(boolean q, Consumer<? super C> consumer) {
-        return toggle(q, this::qualify, this::qualify, consumer);
+        boolean previous = qualify();
+
+        try {
+            qualify(q);
+            consumer.accept((C) this);
+        }
+        finally {
+            qualify(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
@@ -1032,7 +1099,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C qualifySchema(boolean q, Consumer<? super C> consumer) {
-        return toggle(q, this::qualifySchema, this::qualifySchema, consumer);
+        boolean previous = qualifySchema();
+
+        try {
+            qualifySchema(q);
+            consumer.accept((C) this);
+        }
+        finally {
+            qualifySchema(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
@@ -1048,7 +1125,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C qualifyCatalog(boolean q, Consumer<? super C> consumer) {
-        return toggle(q, this::qualifyCatalog, this::qualifyCatalog, consumer);
+        boolean previous = qualifyCatalog();
+
+        try {
+            qualifyCatalog(q);
+            consumer.accept((C) this);
+        }
+        finally {
+            qualifyCatalog(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
@@ -1064,21 +1151,32 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C languageContext(LanguageContext context, Consumer<? super C> consumer) {
-        return toggle(context, this::languageContext, this::languageContext, consumer);
+        LanguageContext previous = languageContext();
+
+        try {
+            languageContext(context);
+            consumer.accept((C) this);
+        }
+        finally {
+            languageContext(previous);
+        }
+
+        return (C) this;
     }
 
     @Override
     public final C languageContext(LanguageContext context, QueryPart newTopLevelForLanguageContext, Consumer<? super C> consumer) {
-        return toggle(context,
-            this::languageContext,
-            this::languageContext,
-            c -> toggle(
-                newTopLevelForLanguageContext,
-                this::topLevelForLanguageContext,
-                this::topLevelForLanguageContext,
-                consumer
-            )
-        );
+        return languageContext(context, c -> {
+            QueryPart previous = topLevelForLanguageContext();
+
+            try {
+                topLevelForLanguageContext(newTopLevelForLanguageContext);
+                consumer.accept((C) this);
+            }
+            finally {
+                topLevelForLanguageContext(previous);
+            }
+        });
     }
 
     @Override
@@ -1102,7 +1200,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C castMode(CastMode mode, Consumer<? super C> consumer) {
-        return toggle(mode, this::castMode, this::castMode, consumer);
+        CastMode previous = castMode();
+
+        try {
+            castMode(mode);
+            consumer.accept((C) this);
+        }
+        finally {
+            castMode(previous);
+        }
+
+        return (C) this;
     }
 
     @Override

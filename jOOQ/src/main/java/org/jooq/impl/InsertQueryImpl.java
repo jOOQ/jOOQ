@@ -946,7 +946,7 @@ implements
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause
         //         Flag for backwards compatibility considers only PRIMARY KEY
-        else if (TRUE.equals(Tools.settings(ctx.configuration()).isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly()))
+        else if (TRUE.equals(ctx.settings().isEmulateOnDuplicateKeyUpdateOnPrimaryKeyOnly()))
             return singletonList(table().getPrimaryKey().getFields());
 
         // [#6462] MySQL ON DUPLICATE KEY UPDATE clause

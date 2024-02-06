@@ -514,17 +514,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         @Override
         public final Settings settings() {
-            return Tools.settings(configuration());
+            return AbstractContext.this.settings();
         }
 
         @Override
         public final SQLDialect dialect() {
-            return Tools.configuration(configuration()).dialect();
+            return AbstractContext.this.dialect();
         }
 
         @Override
         public final SQLDialect family() {
-            return dialect().family();
+            return AbstractContext.this.family();
         }
 
         @Override
@@ -1440,7 +1440,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
 
         private final JoinType joinType(Table<?> t, JoinType onDefault) {
-            RenderImplicitJoinType type = defaultIfNull(Tools.settings(ctx.configuration()).getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT);
+            RenderImplicitJoinType type = defaultIfNull(ctx.settings().getRenderImplicitJoinType(), RenderImplicitJoinType.DEFAULT);
 
             switch (type) {
 
@@ -1465,7 +1465,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
 
         private final JoinType joinToManyType(Table<?> t) {
-            RenderImplicitJoinType type = defaultIfNull(Tools.settings(ctx.configuration()).getRenderImplicitJoinToManyType(), RenderImplicitJoinType.DEFAULT);
+            RenderImplicitJoinType type = defaultIfNull(ctx.settings().getRenderImplicitJoinToManyType(), RenderImplicitJoinType.DEFAULT);
 
             switch (type) {
 

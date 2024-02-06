@@ -608,17 +608,17 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final Settings settings() {
-        return Tools.settings(configuration());
+        return configuration().settings();
     }
 
     @Override
     public final SQLDialect dialect() {
-        return Tools.configuration(configuration()).dialect();
+        return configuration().dialect();
     }
 
     @Override
     public final SQLDialect family() {
-        return dialect().family();
+        return configuration().family();
     }
 
     @Override

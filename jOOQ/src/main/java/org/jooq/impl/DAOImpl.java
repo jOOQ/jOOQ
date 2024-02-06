@@ -124,17 +124,17 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public /* non-final */ Settings settings() {
-        return Tools.settings(configuration());
+        return configuration().settings();
     }
 
     @Override
     public /* non-final */ SQLDialect dialect() {
-        return Tools.configuration(configuration()).dialect();
+        return configuration().dialect();
     }
 
     @Override
     public /* non-final */ SQLDialect family() {
-        return dialect().family();
+        return configuration().family();
     }
 
     /**

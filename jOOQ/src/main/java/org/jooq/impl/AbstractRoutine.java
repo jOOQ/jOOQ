@@ -2171,7 +2171,7 @@ implements
             );
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching
-            if (TRUE.equals(settings(ctx.configuration()).isRenderScalarSubqueriesForStoredFunctions()))
+            if (TRUE.equals(ctx.settings().isRenderScalarSubqueriesForStoredFunctions()))
                 result = DSL.select(result).asField();
 
             ctx.visit(result);

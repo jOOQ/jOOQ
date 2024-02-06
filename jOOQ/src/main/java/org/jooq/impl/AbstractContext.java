@@ -491,17 +491,17 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         @Override
         public final Settings settings() {
-            return Tools.settings(configuration());
+            return AbstractContext.this.settings();
         }
 
         @Override
         public final SQLDialect dialect() {
-            return Tools.configuration(configuration()).dialect();
+            return AbstractContext.this.dialect();
         }
 
         @Override
         public final SQLDialect family() {
-            return dialect().family();
+            return AbstractContext.this.family();
         }
 
         @Override

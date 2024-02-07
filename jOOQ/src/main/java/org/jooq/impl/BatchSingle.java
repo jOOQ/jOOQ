@@ -60,6 +60,7 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.impl.R2DBC.BatchSingleSubscriber;
 import org.jooq.impl.R2DBC.BatchSubscription;
 import org.jooq.tools.JooqLogger;
@@ -190,16 +191,13 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.SINGLE, new Query[] { query });
         ExecuteListener listener = ExecuteListeners.get(ctx);
 
-        Param<?>[] params = extractParams();
-
         try {
             // [#8968] Keep start() event inside of lifecycle management
             listener.start(ctx);
             ctx.transformQueries(listener);
 
             listener.renderStart(ctx);
-            // [#1520] TODO: Should the number of bind values be checked, here?
-            ctx.sql(dsl.render(query));
+            Rendered.rendered(configuration, ctx, false).setSQLAndParams(ctx);
             listener.renderEnd(ctx);
 
             listener.prepareStart(ctx);
@@ -220,8 +218,8 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
                 // [#3547]         The original query may have no Params specified - e.g. when it was constructed with
                 //                 plain SQL. In that case, infer the bind value type directly from the bind value
                 visitAll(new DefaultBindContext(configuration, ctx, ctx.statement()),
-                    (params.length > 0)
-                        ? fields(bindValues, params)
+                    (ctx.params().length > 0)
+                        ? fields(bindValues, ctx.params())
                         : fields(bindValues));
 
                 listener.bindEnd(ctx);

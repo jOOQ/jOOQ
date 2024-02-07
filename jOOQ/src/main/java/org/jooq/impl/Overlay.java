@@ -135,7 +135,7 @@ implements
 
         accept0(ctx,
             in, placing, startIndex, length,
-            DSL::length, DSL::substring, DSL::substring
+            DSL::length, (f1, f2) -> DSL.concat(f1, f2), DSL::substring, DSL::substring
         );
     }
 
@@ -146,6 +146,7 @@ implements
         Field<? extends Number> startIndex,
         Field<? extends Number> length,
         Function1<? super Field<T>, ? extends Field<? extends Number>> fLength,
+        Function2<? super Field<T>, ? super Field<T>, ? extends Field<T>> fConcat,
         Function2<? super Field<T>, ? super Field<? extends Number>, ? extends Field<T>> fSubstring2,
         Function3<? super Field<T>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends Field<T>> fSubstring3
     ) {
@@ -171,9 +172,13 @@ implements
 
                 // [#16101] TODO: Use binaryConcat() if necessary
                 ctx.visit(
-                    fSubstring3.apply(in, inline(1), isub(startIndex, inline(1)))
-                       .concat(placing)
-                       .concat(fSubstring2.apply(in, iadd(startIndex, l)))
+                    fConcat.apply(
+                        fConcat.apply(
+                            fSubstring3.apply(in, inline(1), isub(startIndex, inline(1))),
+                            placing
+                        ),
+                        fSubstring2.apply(in, iadd(startIndex, l))
+                    )
                 );
             }
             else {
@@ -194,11 +199,14 @@ implements
                 NO_SUPPORT.contains(ctx.dialect())
             ) {
 
-                // [#16101] TODO: Use binaryConcat() if necessary
                 ctx.visit(
-                    fSubstring3.apply(in, inline(1), isub(startIndex, inline(1)))
-                       .concat(placing)
-                       .concat(fSubstring2.apply(in, iadd(startIndex, fLength.apply(placing))))
+                    fConcat.apply(
+                        fConcat.apply(
+                            fSubstring3.apply(in, inline(1), isub(startIndex, inline(1))),
+                            placing
+                        ),
+                        fSubstring2.apply(in, iadd(startIndex, fLength.apply(placing)))
+                    )
                 );
             }
             else {

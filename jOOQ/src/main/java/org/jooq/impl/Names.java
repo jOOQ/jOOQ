@@ -331,6 +331,7 @@ final class Names {
     static final Name N_ATN2                        = systemName("atn2");
     static final Name N_AVG                         = systemName("avg");
     static final Name N_BINARY_BIT_LENGTH           = systemName("binary_bit_length");
+    static final Name N_BINARY_CONCAT               = systemName("binary_concat");
     static final Name N_BINARY_LENGTH               = systemName("binary_length");
     static final Name N_BINARY_LTRIM                = systemName("binary_ltrim");
     static final Name N_BINARY_MD5                  = systemName("binary_md5");

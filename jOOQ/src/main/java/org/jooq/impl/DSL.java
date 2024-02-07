@@ -20923,6 +20923,62 @@ public class DSL {
     }
 
     /**
+     * The <code>BINARY_CONCAT</code> function.
+     * <p>
+     * The concatenation of binary strings.
+     *
+     * @param bytes1 The first binary string.
+     * @param bytes2 The second binary string.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryConcat(byte[] bytes1, byte[] bytes2) {
+        return new BinaryConcat(Tools.field(bytes1), Tools.field(bytes2));
+    }
+
+    /**
+     * The <code>BINARY_CONCAT</code> function.
+     * <p>
+     * The concatenation of binary strings.
+     *
+     * @param bytes1 The first binary string.
+     * @param bytes2 The second binary string.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryConcat(byte[] bytes1, Field<byte[]> bytes2) {
+        return new BinaryConcat(Tools.field(bytes1), bytes2);
+    }
+
+    /**
+     * The <code>BINARY_CONCAT</code> function.
+     * <p>
+     * The concatenation of binary strings.
+     *
+     * @param bytes1 The first binary string.
+     * @param bytes2 The second binary string.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryConcat(Field<byte[]> bytes1, byte[] bytes2) {
+        return new BinaryConcat(bytes1, Tools.field(bytes2));
+    }
+
+    /**
+     * The <code>BINARY_CONCAT</code> function.
+     * <p>
+     * The concatenation of binary strings.
+     *
+     * @param bytes1 The first binary string.
+     * @param bytes2 The second binary string.
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> binaryConcat(Field<byte[]> bytes1, Field<byte[]> bytes2) {
+        return new BinaryConcat(bytes1, bytes2);
+    }
+
+    /**
      * The <code>BINARY_LENGTH</code> function.
      * <p>
      * The length of a binary string in bytes.

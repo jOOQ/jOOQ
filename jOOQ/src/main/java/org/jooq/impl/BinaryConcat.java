@@ -62,78 +62,50 @@ import java.util.stream.*;
 
 
 /**
- * The <code>BINARY OVERLAY</code> statement.
+ * The <code>BINARY CONCAT</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class BinaryOverlay
+final class BinaryConcat
 extends
     AbstractField<byte[]>
 implements
-    QOM.BinaryOverlay
+    QOM.BinaryConcat
 {
 
-    final Field<byte[]>           in;
-    final Field<byte[]>           placing;
-    final Field<? extends Number> startIndex;
-    final Field<? extends Number> length;
+    final Field<byte[]> bytes1;
+    final Field<byte[]> bytes2;
 
-    BinaryOverlay(
-        Field<byte[]> in,
-        Field<byte[]> placing,
-        Field<? extends Number> startIndex
+    BinaryConcat(
+        Field<byte[]> bytes1,
+        Field<byte[]> bytes2
     ) {
         super(
-            N_BINARY_OVERLAY,
-            allNotNull(VARBINARY, in, placing, startIndex)
+            N_BINARY_CONCAT,
+            allNotNull(VARBINARY, bytes1, bytes2)
         );
 
-        this.in = nullSafeNotNull(in, VARBINARY);
-        this.placing = nullSafeNotNull(placing, VARBINARY);
-        this.startIndex = nullSafeNotNull(startIndex, INTEGER);
-        this.length = null;
-    }
-
-    BinaryOverlay(
-        Field<byte[]> in,
-        Field<byte[]> placing,
-        Field<? extends Number> startIndex,
-        Field<? extends Number> length
-    ) {
-        super(
-            N_BINARY_OVERLAY,
-            allNotNull(VARBINARY, in, placing, startIndex, length)
-        );
-
-        this.in = nullSafeNotNull(in, VARBINARY);
-        this.placing = nullSafeNotNull(placing, VARBINARY);
-        this.startIndex = nullSafeNotNull(startIndex, INTEGER);
-        this.length = nullSafeNotNull(length, INTEGER);
+        this.bytes1 = nullSafeNotNull(bytes1, VARBINARY);
+        this.bytes2 = nullSafeNotNull(bytes2, VARBINARY);
     }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-
-
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
 
 
 
-
-        Overlay.accept0(ctx,
-            in, placing, startIndex, length,
-            DSL::binaryLength, DSL::binaryConcat, DSL::binarySubstring, DSL::binarySubstring
-        );
+            default:
+                ctx.sql('(').visit(bytes1).sql(" || ").visit(bytes2).sql(')');
+                break;
+        }
     }
-
-
-
-
 
 
 
@@ -154,47 +126,27 @@ implements
 
     @Override
     public final Field<byte[]> $arg1() {
-        return in;
+        return bytes1;
     }
 
     @Override
     public final Field<byte[]> $arg2() {
-        return placing;
+        return bytes2;
     }
 
     @Override
-    public final Field<? extends Number> $arg3() {
-        return startIndex;
+    public final QOM.BinaryConcat $arg1(Field<byte[]> newValue) {
+        return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final Field<? extends Number> $arg4() {
-        return length;
+    public final QOM.BinaryConcat $arg2(Field<byte[]> newValue) {
+        return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final QOM.BinaryOverlay $arg1(Field<byte[]> newValue) {
-        return $constructor().apply(newValue, $arg2(), $arg3(), $arg4());
-    }
-
-    @Override
-    public final QOM.BinaryOverlay $arg2(Field<byte[]> newValue) {
-        return $constructor().apply($arg1(), newValue, $arg3(), $arg4());
-    }
-
-    @Override
-    public final QOM.BinaryOverlay $arg3(Field<? extends Number> newValue) {
-        return $constructor().apply($arg1(), $arg2(), newValue, $arg4());
-    }
-
-    @Override
-    public final QOM.BinaryOverlay $arg4(Field<? extends Number> newValue) {
-        return $constructor().apply($arg1(), $arg2(), $arg3(), newValue);
-    }
-
-    @Override
-    public final Function4<? super Field<byte[]>, ? super Field<byte[]>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.BinaryOverlay> $constructor() {
-        return (a1, a2, a3, a4) -> new BinaryOverlay(a1, a2, a3, a4);
+    public final Function2<? super Field<byte[]>, ? super Field<byte[]>, ? extends QOM.BinaryConcat> $constructor() {
+        return (a1, a2) -> new BinaryConcat(a1, a2);
     }
 
     // -------------------------------------------------------------------------
@@ -203,12 +155,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.BinaryOverlay o) {
+        if (that instanceof QOM.BinaryConcat o) {
             return
-                StringUtils.equals($in(), o.$in()) &&
-                StringUtils.equals($placing(), o.$placing()) &&
-                StringUtils.equals($startIndex(), o.$startIndex()) &&
-                StringUtils.equals($length(), o.$length())
+                StringUtils.equals($bytes1(), o.$bytes1()) &&
+                StringUtils.equals($bytes2(), o.$bytes2())
             ;
         }
         else

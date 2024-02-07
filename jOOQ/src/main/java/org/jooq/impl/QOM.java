@@ -5845,6 +5845,43 @@ public final class QOM {
     }
 
     /**
+     * The <code>BINARY CONCAT</code> function.
+     * <p>
+     * The concatenation of binary strings.
+     */
+    public /*sealed*/ interface BinaryConcat
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<byte[]>, Field<byte[]>, BinaryConcat>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    BinaryConcat
+    {
+
+        /**
+         * The first binary string.
+         */
+        @NotNull default Field<byte[]> $bytes1() { return $arg1(); }
+
+        /**
+         * The first binary string.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryConcat $bytes1(Field<byte[]> newBytes1) { return $arg1(newBytes1); }
+
+        /**
+         * The second binary string.
+         */
+        @NotNull default Field<byte[]> $bytes2() { return $arg2(); }
+
+        /**
+         * The second binary string.
+         */
+        @CheckReturnValue
+        @NotNull default BinaryConcat $bytes2(Field<byte[]> newBytes2) { return $arg2(newBytes2); }
+    }
+
+    /**
      * The <code>BINARY LENGTH</code> function.
      * <p>
      * The length of a binary string in bytes.

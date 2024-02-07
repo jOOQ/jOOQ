@@ -38,15 +38,19 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.ExecuteType.DDL;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
+import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_APPEND_SQL;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_PREPEND_SQL;
@@ -64,6 +68,7 @@ import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Param;
@@ -1049,6 +1054,43 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             this.sql = sql;
             this.bindValues = bindValues;
             this.skipUpdateCounts = skipUpdateCounts;
+        }
+
+        static Rendered rendered(Configuration c, DefaultExecuteContext ctx, boolean countBindValues) {
+            Query query = ctx.batchMode() == BatchMode.SINGLE
+                ? ctx.batchQueries()[0]
+                : ctx.query();
+
+            // [#3542] [#4977] Some dialects do not support bind values in DDL statements
+            // [#6474] [#6929] Can this be communicated in a leaner way?
+            if (ctx.type() == DDL) {
+                ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                DefaultRenderContext render = new DefaultRenderContext(c, ctx);
+                return new Rendered(render.paramType(INLINED).visit(query).render(), null, render.skipUpdateCounts());
+            }
+            else if (executePreparedStatements(c.settings())) {
+                try {
+                    DefaultRenderContext render = new DefaultRenderContext(c, ctx);
+                    render.data(DATA_COUNT_BIND_VALUES, countBindValues);
+                    return new Rendered(render.visit(query).render(), render.bindValues(), render.skipUpdateCounts());
+                }
+                catch (DefaultRenderContext.ForceInlineSignal e) {
+                    ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                    DefaultRenderContext render = new DefaultRenderContext(c, ctx);
+                    return new Rendered(render.paramType(INLINED).visit(query).render(), null, render.skipUpdateCounts());
+                }
+            }
+            else {
+                DefaultRenderContext render = new DefaultRenderContext(c, ctx);
+                return new Rendered(render.paramType(INLINED).visit(query).render(), null, render.skipUpdateCounts());
+            }
+        }
+
+        final void setSQLAndParams(DefaultExecuteContext ctx) {
+            ctx.sql(sql);
+
+            if (bindValues != null)
+                ctx.params(bindValues.toArray(EMPTY_PARAM));
         }
 
         @Override

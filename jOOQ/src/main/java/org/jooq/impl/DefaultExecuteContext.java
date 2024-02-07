@@ -41,6 +41,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.Tools.EMPTY_INT;
+import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 
@@ -74,6 +75,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
 import org.jooq.Insert;
 import org.jooq.Merge;
+import org.jooq.Param;
 // ...
 import org.jooq.Query;
 import org.jooq.Record;
@@ -119,6 +121,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private Query                                         query;
     private final Routine<?>                              routine;
     private String                                        sql;
+    private Param<?>[]                                    params;
     private int                                           skipUpdateCounts;
 
     private final BatchMode                               batchMode;
@@ -544,6 +547,18 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final String sql() {
         return sql;
+    }
+
+    // [#16215] [#16217] These methods are backported without being declared in public API
+
+    public void params(Param<?>[] p) {
+        this.params = p;
+    }
+
+    public final Param<?>[] params() {
+        return params != null
+            ? params
+            : EMPTY_PARAM;
     }
 
     @Override

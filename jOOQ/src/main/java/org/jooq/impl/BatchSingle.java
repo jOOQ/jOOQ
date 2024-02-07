@@ -41,11 +41,13 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
 import static org.jooq.conf.SettingsTools.getBatchSize;
 import static org.jooq.impl.AbstractQuery.connection;
+import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.checkedFunction;
 import static org.jooq.impl.Tools.chunks;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitAll;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -65,6 +67,7 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.impl.R2DBC.BatchSingleSubscriber;
 import org.jooq.impl.R2DBC.BatchSubscription;
 import org.jooq.tools.JooqLogger;
@@ -195,16 +198,13 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.SINGLE, new Query[] { query });
         ExecuteListener listener = ExecuteListeners.get(ctx);
 
-        Param<?>[] params = extractParams();
-
         try {
             // [#8968] Keep start() event inside of lifecycle management
             listener.start(ctx);
             ctx.transformQueries(listener);
 
             listener.renderStart(ctx);
-            // [#1520] TODO: Should the number of bind values be checked, here?
-            ctx.sql(dsl.render(query));
+            Rendered.rendered(configuration, ctx, false).setSQLAndParams(ctx);
             listener.renderEnd(ctx);
 
             listener.prepareStart(ctx);
@@ -225,7 +225,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
                 for (int i = 0; i < size; i++) {
                     Object[] bindValues = allBindValues.get(i);
 
-                    setBindValues(ctx, listener, params, bindValues);
+                    setBindValues(ctx, listener, ctx.params(), bindValues);
                     listener.executeStart(ctx);
                     result[i] = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
@@ -243,7 +243,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
                             ctx.statement().clearBatch();
 
                         for (Object[] bindValues : chunk) {
-                            setBindValues(ctx, listener, params, bindValues);
+                            setBindValues(ctx, listener, ctx.params(), bindValues);
                             ctx.statement().addBatch();
                         }
 

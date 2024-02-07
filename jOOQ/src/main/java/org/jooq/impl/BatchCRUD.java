@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
+import static org.jooq.impl.Tools.EMPTY_PARAM;
+import static org.jooq.impl.Tools.map;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -51,6 +53,7 @@ import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
+import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -118,7 +121,7 @@ final class BatchCRUD extends AbstractBatch {
 
     private final int[] executePrepared() {
         boolean optimisticLocking = TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking());
-        Map<String, List<Query>> queries = new LinkedHashMap<>();
+        Map<String, List<QueryCollectorSignal>> queries = new LinkedHashMap<>();
         List<QueryCollectorSignal> signals = new ArrayList<>();
         QueryCollector collector = new QueryCollector();
 
@@ -139,12 +142,9 @@ final class BatchCRUD extends AbstractBatch {
                 if (optimisticLocking)
                     signals.add(e);
 
-                Query query = e.getQuery();
-                String sql = e.getSQL();
-
                 // Aggregate executable queries by identical SQL
-                if (query.isExecutable())
-                    queries.computeIfAbsent(sql, s -> new ArrayList<>()).add(query);
+                if (e.getQuery().isExecutable())
+                    queries.computeIfAbsent(e.getSQL(), s -> new ArrayList<>()).add(e);
             }
             finally {
                 records[i].attach(previous);
@@ -159,10 +159,10 @@ final class BatchCRUD extends AbstractBatch {
         // The order is preserved as much as possible
         List<Integer> result = new ArrayList<>();
         queries.forEach((k, v) -> {
-            BatchBindStep batch = dsl.batch(v.get(0));
+            BatchBindStep batch = dsl.batch(v.get(0).getQuery());
 
-            for (Query query : v)
-                batch.bind(query.getBindValues().toArray());
+            for (QueryCollectorSignal signal : v)
+                batch.bind(map(signal.getParams(), p -> p.getValue(), Object[]::new));
 
             int[] array = batch.execute();
             for (int i : array)
@@ -308,7 +308,11 @@ final class BatchCRUD extends AbstractBatch {
 
         @Override
         public void renderEnd(ExecuteContext ctx) {
-            throw new QueryCollectorSignal(ctx.sql(), ctx.query());
+            throw new QueryCollectorSignal(
+                ctx.sql(),
+                ctx instanceof DefaultExecuteContext d ? d.params() : EMPTY_PARAM,
+                ctx.query()
+            );
         }
     }
 
@@ -319,18 +323,24 @@ final class BatchCRUD extends AbstractBatch {
      * execution, and return generated SQL back to batch execution.
      */
     static class QueryCollectorSignal extends ControlFlowSignal {
-        final String sql;
-        final Query  query;
-        BigInteger   version;
-        Timestamp    timestamp;
+        final String     sql;
+        final Param<?>[] params;
+        final Query      query;
+        BigInteger       version;
+        Timestamp        timestamp;
 
-        QueryCollectorSignal(String sql, Query query) {
+        QueryCollectorSignal(String sql, Param<?>[] params, Query query) {
             this.sql = sql;
+            this.params = params;
             this.query = query;
         }
 
         String getSQL() {
             return sql;
+        }
+
+        Param<?>[] getParams() {
+            return params;
         }
 
         Query getQuery() {

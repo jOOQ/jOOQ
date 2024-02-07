@@ -285,7 +285,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
                 // [#385] If a statement was previously kept open
                 if (keepStatement() && statement != null) {
-                    ctx.sql(rendered.sql);
+                    rendered.setSQLAndParams(ctx);
                     ctx.statement(statement);
 
                     // [#3191] Pre-initialise the ExecuteContext with a previous connection, if available.
@@ -301,7 +301,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
                     listener.renderStart(ctx);
                     rendered = getSQL0(ctx);
-                    ctx.sql(rendered.sql);
+                    rendered.setSQLAndParams(ctx);
                     listener.renderEnd(ctx);
                     rendered.sql = ctx.sql();
 
@@ -340,8 +340,8 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
                     !TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT))) {
 
                     listener.bindStart(ctx);
-                    if (rendered.bindValues != null)
-                        new DefaultBindContext(c, ctx, ctx.statement()).visit(rendered.bindValues);
+                    if (ctx.params().length > 0)
+                        new DefaultBindContext(c, ctx, ctx.statement()).visit(QueryPartListView.wrap(ctx.params()));
                     listener.bindEnd(ctx);
                 }
 
@@ -495,33 +495,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
     }
 
     private static final Rendered getSQL0(DefaultExecuteContext ctx) {
-        Rendered result;
-        DefaultRenderContext render;
-        Configuration c = ctx.originalConfiguration();
-
-        // [#3542] [#4977] Some dialects do not support bind values in DDL statements
-        // [#6474] [#6929] Can this be communicated in a leaner way?
-        if (ctx.type() == DDL) {
-            ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-            render = new DefaultRenderContext(c, ctx);
-            result = new Rendered(render.paramType(INLINED).visit(ctx.query()).render(), null, render.skipUpdateCounts());
-        }
-        else if (executePreparedStatements(c.settings())) {
-            try {
-                render = new DefaultRenderContext(c, ctx);
-                render.data(DATA_COUNT_BIND_VALUES, true);
-                result = new Rendered(render.visit(ctx.query()).render(), render.bindValues(), render.skipUpdateCounts());
-            }
-            catch (DefaultRenderContext.ForceInlineSignal e) {
-                ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                render = new DefaultRenderContext(c, ctx);
-                result = new Rendered(render.paramType(INLINED).visit(ctx.query()).render(), null, render.skipUpdateCounts());
-            }
-        }
-        else {
-            render = new DefaultRenderContext(c, ctx);
-            result = new Rendered(render.paramType(INLINED).visit(ctx.query()).render(), null, render.skipUpdateCounts());
-        }
+        Rendered rendered = Rendered.rendered(ctx.originalConfiguration(), ctx, true);
 
 
 
@@ -547,7 +521,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
 
 
-        return result;
+        return rendered;
     }
 
 

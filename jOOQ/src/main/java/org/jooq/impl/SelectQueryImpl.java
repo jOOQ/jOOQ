@@ -378,6 +378,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_UNION_ORDER_BY_ALIAS = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect>         NO_SUPPORT_WITH_READ_ONLY       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_LIMIT_ZERO           = SQLDialect.supportedBy(DERBY, HSQLDB);
+
 
 
 
@@ -2156,7 +2158,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @SuppressWarnings("unchecked")
     private final Condition limitWindowFunctionCondition(Field<Integer> limitWindowFunction) {
-        return getLimit().limitZero()
+        return getLimit().limitAbsent()
             ? limitWindowFunction.gt((Field<Integer>) getLimit().getLowerRownum())
             : limitWindowFunction
                     .between((Field<Integer>) getLimit().getLowerRownum().add(inline(1)))
@@ -3469,7 +3471,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (TRUE.equals(ctx.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE))) {
             if (actualLimit.isApplicable()) {
-                ctx.visit(actualLimit);
+                if (!(actualLimit.limitZero() && NO_SUPPORT_LIMIT_ZERO.contains(ctx.dialect())))
+                    ctx.visit(actualLimit);
             }
 
             // [#13509] Force a LIMIT clause to prevent optimisation of "unnecessary" ORDER BY
@@ -3504,6 +3507,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         ;
     }
+
+
+
 
 
 
@@ -4371,6 +4377,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+        if (NO_SUPPORT_LIMIT_ZERO.contains(ctx.dialect()) && limit.limitZero() && !isGrouping())
+            result.addConditions(falseCondition());
+
         return result;
     }
 
@@ -4505,6 +4514,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         //   [#15820] We're not grouping
         if (isGrouping() && !getOrderBy().isEmpty() && !getSeek().isEmpty() && unionOp.isEmpty())
             result.addConditions(getSeekCondition(ctx));
+
+        if (NO_SUPPORT_LIMIT_ZERO.contains(ctx.dialect()) && limit.limitZero() && isGrouping())
+            result.addConditions(falseCondition());
 
         return result;
     }

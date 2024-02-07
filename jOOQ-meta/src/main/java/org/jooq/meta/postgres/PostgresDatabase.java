@@ -1089,8 +1089,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     count().over(partitionBy(r1.ROUTINE_SCHEMA, r1.ROUTINE_NAME)).gt(one()),
                     rowNumber().over(partitionBy(r1.ROUTINE_SCHEMA, r1.ROUTINE_NAME).orderBy(
 
-                        // [#9754] To stabilise overload calculation, we use the type signature
-                        // replace(field("pg_get_function_arguments({0})", VARCHAR, PG_PROC.OID), inline('"'), inline("")),
+                        // [#9754] [#14039] To stabilise overload calculation, we use the type signature
+                        replace(field("pg_get_function_arguments({0})", VARCHAR, PG_PROC.OID), inline('"'), inline("")),
                         r1.SPECIFIC_NAME
                     ))
                 ).as("overload"),

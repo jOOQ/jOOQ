@@ -431,6 +431,7 @@ final class Names {
     static final Name N_INSTR                       = systemName("instr");
     static final Name N_ISJSON                      = systemName("isjson");
     static final Name N_JSONB_ARRAY                 = systemName("jsonb_array");
+    static final Name N_JSONB_ARRAY_LENGTH          = systemName("jsonb_array_length");
     static final Name N_JSONB_GET_ATTRIBUTE         = systemName("jsonb_get_attribute");
     static final Name N_JSONB_GET_ATTRIBUTE_AS_TEXT = systemName("jsonb_get_attribute_as_text");
     static final Name N_JSONB_GET_ELEMENT           = systemName("jsonb_get_element");
@@ -442,6 +443,7 @@ final class Names {
     static final Name N_JSONB_REPLACE               = systemName("jsonb_replace");
     static final Name N_JSONB_SET                   = systemName("jsonb_set");
     static final Name N_JSON_ARRAY                  = systemName("json_array");
+    static final Name N_JSON_ARRAY_LENGTH           = systemName("json_array_length");
     static final Name N_JSON_EXTRACT                = systemName("json_extract");
     static final Name N_JSON_GET_ATTRIBUTE          = systemName("json_get_attribute");
     static final Name N_JSON_GET_ATTRIBUTE_AS_TEXT  = systemName("json_get_attribute_as_text");

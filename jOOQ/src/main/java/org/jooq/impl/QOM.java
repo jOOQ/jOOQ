@@ -6972,6 +6972,42 @@ public final class QOM {
     }
 
     /**
+     * The <code>JSON ARRAY LENGTH</code> function.
+     * <p>
+     * Calculate the length of a JSON array.
+     */
+    public /*sealed*/ interface JSONArrayLength
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<JSON>, JSONArrayLength>,
+            org.jooq.Field<Integer>
+        //permits
+        //    JSONArrayLength
+    {
+        @NotNull default Field<JSON> $field() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default JSONArrayLength $field(Field<JSON> newField) { return $arg1(newField); }
+    }
+
+    /**
+     * The <code>JSONB ARRAY LENGTH</code> function.
+     * <p>
+     * Calculate the length of a JSONB array.
+     */
+    public /*sealed*/ interface JSONBArrayLength
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<JSONB>, JSONBArrayLength>,
+            org.jooq.Field<Integer>
+        //permits
+        //    JSONBArrayLength
+    {
+        @NotNull default Field<JSONB> $field() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default JSONBArrayLength $field(Field<JSONB> newField) { return $arg1(newField); }
+    }
+
+    /**
      * The <code>JSON KEYS</code> function.
      * <p>
      * Retrieve all keys from a JSON object as an array of strings.

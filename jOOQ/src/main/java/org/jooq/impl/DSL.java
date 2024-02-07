@@ -23313,6 +23313,54 @@ public class DSL {
     }
 
     /**
+     * The <code>JSON_ARRAY_LENGTH</code> function.
+     * <p>
+     * Calculate the length of a JSON array.
+     *
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> jsonArrayLength(JSON field) {
+        return new JSONArrayLength(Tools.field(field));
+    }
+
+    /**
+     * The <code>JSON_ARRAY_LENGTH</code> function.
+     * <p>
+     * Calculate the length of a JSON array.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> jsonArrayLength(Field<JSON> field) {
+        return new JSONArrayLength(field);
+    }
+
+    /**
+     * The <code>JSONB_ARRAY_LENGTH</code> function.
+     * <p>
+     * Calculate the length of a JSONB array.
+     *
+     * @param field is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> jsonbArrayLength(JSONB field) {
+        return new JSONBArrayLength(Tools.field(field));
+    }
+
+    /**
+     * The <code>JSONB_ARRAY_LENGTH</code> function.
+     * <p>
+     * Calculate the length of a JSONB array.
+     */
+    @NotNull
+    @Support
+    public static Field<Integer> jsonbArrayLength(Field<JSONB> field) {
+        return new JSONBArrayLength(field);
+    }
+
+    /**
      * The <code>JSON_KEYS</code> function.
      * <p>
      * Retrieve all keys from a JSON object as an array of strings.

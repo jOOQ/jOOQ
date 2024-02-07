@@ -8964,7 +8964,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldJSONLiteralIf()) != null)
                     return field;
-                else if (parseFunctionNameIf("JSON_ARRAY_LENGTH"))
+                else if (parseFunctionNameIf("JSON_ARRAY_LENGTH", "JSON_LENGTH"))
                     return parseFunctionArgs1(DSL::jsonArrayLength);
                 else if (parseFunctionNameIf("JSON_KEYS"))
                     return parseFunctionArgs1(DSL::jsonKeys);

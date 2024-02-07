@@ -8066,6 +8066,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> concatOperator(Field<?> a1, Field<?> a2) {
         if (a1.getDataType().isArray() && a2.getDataType().isArray())
             return DSL.arrayConcat((Field) a1, (Field) a2);
+        else if (a1.getDataType().isBinary() && a2.getDataType().isBinary())
+            return DSL.binaryConcat((Field) a1, (Field) a2);
         else
             return DSL.concat(a1, a2);
     }

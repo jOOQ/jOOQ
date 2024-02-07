@@ -23320,7 +23320,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonArrayLength(JSON field) {
         return new JSONArrayLength(Tools.field(field));
     }
@@ -23331,7 +23331,7 @@ public class DSL {
      * Calculate the length of a JSON array.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonArrayLength(Field<JSON> field) {
         return new JSONArrayLength(field);
     }
@@ -23344,7 +23344,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonbArrayLength(JSONB field) {
         return new JSONBArrayLength(Tools.field(field));
     }
@@ -23355,7 +23355,7 @@ public class DSL {
      * Calculate the length of a JSONB array.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonbArrayLength(Field<JSONB> field) {
         return new JSONBArrayLength(field);
     }

@@ -91,7 +91,28 @@ implements
 
     @Override
     final boolean parenthesised(Context<?> ctx) {
-        return true;
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+            case MARIADB:
+            case MYSQL:
+                return true;
+
+
+
+            case POSTGRES:
+            case YUGABYTEDB:
+                return true;
+
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -102,6 +123,21 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+            case MARIADB:
+            case MYSQL:
+                ctx.visit(function(N_JSON_LENGTH, getDataType(), field));
+                break;
 
 
 

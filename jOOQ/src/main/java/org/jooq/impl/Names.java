@@ -451,6 +451,7 @@ final class Names {
     static final Name N_JSON_GET_ELEMENT_AS_TEXT    = systemName("json_get_element_as_text");
     static final Name N_JSON_INSERT                 = systemName("json_insert");
     static final Name N_JSON_KEYS                   = systemName("json_keys");
+    static final Name N_JSON_LENGTH                 = systemName("json_length");
     static final Name N_JSON_MODIFY                 = systemName("json_modify");
     static final Name N_JSON_OBJECT                 = systemName("json_object");
     static final Name N_JSON_REMOVE                 = systemName("json_remove");

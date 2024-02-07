@@ -49,6 +49,7 @@ import org.jooq.ConnectionProvider;
 import org.jooq.ConverterContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
+import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -147,6 +148,16 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
 
     @Override
     public final void sql(String sql) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
+    public final Param<?>[] params() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
+    public final void params(Param<?>[] params) {
         throw new UnsupportedOperationException("Not implemented");
     }
 

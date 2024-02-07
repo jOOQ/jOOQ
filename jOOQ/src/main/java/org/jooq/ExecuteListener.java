@@ -375,7 +375,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * </ul>
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
@@ -383,6 +385,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#sql(String)}: The rendered <code>SQL</code>
      * statement that is about to be executed. You can modify this statement
      * freely.</li>
+     * <li>{@link ExecuteContext#params(Param[])}: Bind values that are to be
+     * bound to the {@link PreparedStatement}.</li>
      * </ul>
      *
      * @param ctx The context containing information about the execution.
@@ -472,7 +476,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * </ul>
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
@@ -480,6 +486,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <li>{@link ExecuteContext#sql(String)}: The rendered <code>SQL</code>
      * statement that is about to be executed. You can modify this statement
      * freely.</li>
+     * <li>{@link ExecuteContext#params(Param[])}: Bind values that are to be
+     * bound to the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The {@link PreparedStatement}
      * about to be executed. At this stage, no such statement is available yet,
      * but if provided, the execution lifecycle will skip preparing a statement.
@@ -521,7 +529,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -542,6 +552,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
+     * <li>{@link ExecuteContext#params(Param[])}: Bind values that are to be
+     * bound to the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement(PreparedStatement)}: The
      * <code>Statement</code>, <code>PreparedStatement</code>, or
      * <code>CallableStatement</code> that is about to be executed. You can
@@ -568,7 +580,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -586,6 +600,8 @@ public interface ExecuteListener extends EventListener, Serializable {
      * <p>
      * Overridable attributes in <code>ExecuteContext</code>:
      * <ul>
+     * <li>{@link ExecuteContext#params(Param[])}: Bind values that are to be
+     * bound to the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement(PreparedStatement)}: The
      * <code>PreparedStatement</code>, or <code>CallableStatement</code> that is
      * about to be executed. You can modify this statement freely, or wrap
@@ -615,7 +631,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -662,7 +680,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -715,7 +735,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -770,7 +792,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -807,7 +831,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -845,7 +871,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -903,7 +931,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -973,7 +1003,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -1025,7 +1057,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -1077,7 +1111,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -1149,7 +1185,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -1208,7 +1246,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -1262,7 +1302,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of
@@ -1317,7 +1359,9 @@ public interface ExecuteListener extends EventListener, Serializable {
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
      * <li>{@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
      * that is about to be executed, or <code>null</code> if the
-     * <code>SQL</code> statement is unknown..</li>
+     * <code>SQL</code> statement is unknown.</li>
+     * <li>{@link ExecuteContext#params()}: The bind values that are bound to
+     * the {@link PreparedStatement}.</li>
      * <li>{@link ExecuteContext#statement()}: The
      * <code>PreparedStatement</code> that is about to be executed, or
      * <code>null</code> if no statement is known to jOOQ. This can be any of

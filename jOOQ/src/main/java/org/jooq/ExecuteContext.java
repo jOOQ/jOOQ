@@ -244,6 +244,22 @@ public interface ExecuteContext extends Scope {
     void sql(String sql);
 
     /**
+     * The bind values that are being bound to the {@link PreparedStatement}.
+     */
+    Param<?> @NotNull [] params();
+
+    /**
+     * Override the bind values that are being bound to the
+     * {@link PreparedStatement}.
+     * <p>
+     * This may have no effect, if called at the wrong moment.
+     *
+     * @see ExecuteListener#renderEnd(ExecuteContext)
+     * @see ExecuteListener#prepareStart(ExecuteContext)
+     */
+    void params(Param<?>[] params);
+
+    /**
      * The number of user defined update counts that are going to be skipped
      * when a statement batch is executed.
      * <p>

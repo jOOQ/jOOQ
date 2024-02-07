@@ -319,7 +319,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
                .sql(' ').visit(offsetOrZero)
                .sql(' ').visit(K_ROWS);
 
-        if (!limitZero()) {
+        if (!limitAbsent()) {
             ctx.formatSeparator()
                .visit(K_FETCH_NEXT).sql(' ').visit(limit);
 
@@ -335,7 +335,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
     private final void acceptDefault(Context<?> ctx, CastMode castMode) {
         ctx.castMode(NEVER);
 
-        if (!limitZero())
+        if (!limitAbsent())
             ctx.formatSeparator()
                .visit(K_LIMIT)
                .sql(' ').visit(limit);
@@ -383,17 +383,25 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
 
     /**
+     * Whether the limit is absent
+     */
+    final boolean limitAbsent() {
+        return limit == null;
+    }
+
+    /**
      * Whether this limit has a limit of zero
      */
     final boolean limitZero() {
-        return limit == null;
+        return !limitAbsent()
+            && Long.valueOf(0L).equals(getLimit());
     }
 
     /**
      * Whether this limit has a limit of one
      */
     final boolean limitOne() {
-        return !limitZero()
+        return !limitAbsent()
             && !withTies()
             && !percent()
             && Long.valueOf(1L).equals(getLimit());

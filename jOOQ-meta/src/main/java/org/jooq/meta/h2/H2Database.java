@@ -257,6 +257,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
             final boolean unique = !index.get(INDEXES.NON_UNIQUE, boolean.class);
 
             // [#6310] [#6620] Function-based indexes are not yet supported
+            // [#16237]        Alternatively, the column could be hidden or excluded
             for (Record column : columns)
                 if (table.getColumn(column.get(INDEXES.COLUMN_NAME)) == null)
                     continue indexLoop;

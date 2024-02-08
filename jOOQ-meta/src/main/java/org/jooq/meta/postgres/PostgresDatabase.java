@@ -262,6 +262,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 // [#6310] [#6620] Function-based indexes are not yet supported
                 // [#11047]        Even without supporting function-based indexes, we might have to parse
                 //                 the column expression, because it might be quoted
+                // [#16237]        Alternatively, the column could be hidden or excluded
                 if (table.getColumn(columns[k]) == null && table.getColumn(columns[k] = tryParseColumnName(columns[k])) == null)
                     continue indexLoop;
 

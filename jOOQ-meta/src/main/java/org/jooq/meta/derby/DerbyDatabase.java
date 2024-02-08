@@ -56,6 +56,7 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.derby.sys.Tables.SYSCHECKS;
+import static org.jooq.meta.derby.sys.Tables.SYSCOLUMNS;
 import static org.jooq.meta.derby.sys.Tables.SYSCONGLOMERATES;
 import static org.jooq.meta.derby.sys.Tables.SYSCONSTRAINTS;
 import static org.jooq.meta.derby.sys.Tables.SYSKEYS;
@@ -67,7 +68,9 @@ import static org.jooq.meta.derby.sys.Tables.SYSVIEWS;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,12 +86,14 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.SortOrder;
 import org.jooq.TableOptions.TableType;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
+import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -276,6 +281,51 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
         }
     }
 
+    Map<TableDefinition, List<ColumnDefinition>> lookupColumnByIndex;
+
+    private ColumnDefinition lookupColumnByIndex(TableDefinition table, int index) {
+        if (lookupColumnByIndex == null) {
+            lookupColumnByIndex = new HashMap<>();
+
+            for (Record r : create()
+                .select(
+                    SYSTABLES.sysschemas().SCHEMANAME,
+                    SYSTABLES.TABLENAME,
+                    SYSCOLUMNS.COLUMNNAME,
+                    SYSCOLUMNS.COLUMNNUMBER)
+                .from(SYSCOLUMNS)
+                .join(SYSTABLES).on(SYSCOLUMNS.REFERENCEID.eq(SYSTABLES.TABLEID))
+                .where(SYSTABLES.sysschemas().SCHEMANAME.in(getInputSchemata()))
+                .orderBy(
+                    SYSTABLES.sysschemas().SCHEMANAME,
+                    SYSTABLES.TABLENAME,
+                    SYSCOLUMNS.COLUMNNUMBER)
+            ) {
+                SchemaDefinition s = getSchema(r.get(SYSTABLES.sysschemas().SCHEMANAME));
+
+                if (s != null) {
+                    TableDefinition t = getTable(s, r.get(SYSTABLES.TABLENAME));
+
+                    if (t != null) {
+                        ColumnDefinition c = t.getColumn(r.get(SYSCOLUMNS.COLUMNNAME));
+
+                        // [#16237] ColumnDefinition can be null if it's hidden or excluded
+                        lookupColumnByIndex.computeIfAbsent(t, x -> new ArrayList<>()).add(c);
+                    }
+                }
+            }
+        }
+
+        List<ColumnDefinition> list = lookupColumnByIndex.get(table);
+        if (list == null)
+            return null;
+
+        if (list.size() <= index)
+            return null;
+
+        return list.get(index);
+    }
+
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
         List<IndexDefinition> result = new ArrayList<>();
@@ -314,26 +364,37 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
             if (descriptor == null)
                 continue indexLoop;
 
-            result.add(new AbstractIndexDefinition(tableSchema, indexName, table, descriptor.toUpperCase().contains("UNIQUE")) {
-                List<IndexColumnDefinition> indexColumns = new ArrayList<>();
+            class SkipIndex extends ControlFlowSignal {}
 
-                {
-                    List<Integer> columnIndexes = decode(descriptor);
-                    for (int i = 0; i < columnIndexes.size(); i++) {
-                        indexColumns.add(new DefaultIndexColumnDefinition(
-                            this,
-                            table.getColumn(columnIndexes.get(i)),
-                            SortOrder.ASC,
-                            i + 1
-                        ));
+            try {
+                result.add(new AbstractIndexDefinition(tableSchema, indexName, table, descriptor.toUpperCase().contains("UNIQUE")) {
+                    List<IndexColumnDefinition> indexColumns = new ArrayList<>();
+
+                    {
+                        List<Integer> columnIndexes = decode(descriptor);
+                        for (int i = 0; i < columnIndexes.size(); i++) {
+                            ColumnDefinition column = lookupColumnByIndex(table, columnIndexes.get(i));
+
+                            // [#16237] If column is hidden or excluded
+                            if (column == null)
+                                throw new SkipIndex();
+
+                            indexColumns.add(new DefaultIndexColumnDefinition(
+                                this,
+                                column,
+                                SortOrder.ASC,
+                                i + 1
+                            ));
+                        }
                     }
-                }
 
-                @Override
-                protected List<IndexColumnDefinition> getIndexColumns0() {
-                    return indexColumns;
-                }
-            });
+                    @Override
+                    protected List<IndexColumnDefinition> getIndexColumns0() {
+                        return indexColumns;
+                    }
+                });
+            }
+            catch (SkipIndex ignore) {}
         }
 
         return result;

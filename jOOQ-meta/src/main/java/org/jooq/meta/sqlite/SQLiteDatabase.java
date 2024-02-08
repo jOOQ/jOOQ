@@ -199,6 +199,7 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
             final boolean unique = index.get(fUnique);
 
             // [#6310] [#6620] Function-based indexes are not yet supported
+            // [#16237]        Alternatively, the column could be hidden or excluded
             for (Record column : columns)
                 if (table.getColumn(column.get(fColumnName)) == null)
                     continue indexLoop;

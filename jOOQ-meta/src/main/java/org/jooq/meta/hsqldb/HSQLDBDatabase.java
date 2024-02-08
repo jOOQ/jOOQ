@@ -189,6 +189,7 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
             final boolean unique = !index.get(SYSTEM_INDEXINFO.NON_UNIQUE, boolean.class);
 
             // [#6310] [#6620] Function-based indexes are not yet supported
+            // [#16237]        Alternatively, the column could be hidden or excluded
             for (Record column : cols)
                 if (table.getColumn(column.get(SYSTEM_INDEXINFO.COLUMN_NAME)) == null)
                     continue indexLoop;

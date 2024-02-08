@@ -181,6 +181,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
             final boolean unique = !index.get(STATISTICS.NON_UNIQUE, boolean.class);
 
             // [#6310] [#6620] Function-based indexes are not yet supported
+            // [#16237]        Alternatively, the column could be hidden or excluded
             for (Record column : columns)
                 if (table.getColumn(column.get(STATISTICS.COLUMN_NAME)) == null)
                     continue indexLoop;

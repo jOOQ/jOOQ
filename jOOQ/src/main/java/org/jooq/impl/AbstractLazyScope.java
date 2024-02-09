@@ -42,7 +42,6 @@ import java.util.Map;
 
 import org.jooq.CacheContext;
 import org.jooq.Configuration;
-import org.jooq.ConverterContext;
 import org.jooq.DSLContext;
 import org.jooq.GeneratorContext;
 import org.jooq.SQLDialect;
@@ -53,7 +52,7 @@ import org.jooq.conf.Settings;
  * Unlike {@link AbstractScope}, this implementation lazy initialises its
  * {@link #data()} map in order to avoid allocation in very short lived
  * {@link Scope} implementations, such as e.g. {@link CacheContext},
- * {@link ConverterContext}, {@link GeneratorContext}.
+ * {@link GeneratorContext}.
  *
  * @author Lukas Eder
  */

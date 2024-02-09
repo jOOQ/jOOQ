@@ -43,7 +43,7 @@ import org.jooq.Configuration;
 /**
  * @author Lukas Eder
  */
-final class DefaultCacheContext extends AbstractScope implements CacheContext {
+final class DefaultCacheContext extends AbstractLazyScope implements CacheContext {
 
     private final CacheType cacheType;
 

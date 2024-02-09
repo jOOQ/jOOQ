@@ -50,7 +50,7 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-final class DefaultGeneratorContext<R extends Record, X extends Table<R>, T> extends AbstractScope implements GeneratorContext<R, X, T> {
+final class DefaultGeneratorContext<R extends Record, X extends Table<R>, T> extends AbstractLazyScope implements GeneratorContext<R, X, T> {
 
     final Instant                renderTime;
     final X                      table;

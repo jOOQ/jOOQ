@@ -361,13 +361,6 @@ implements
     }
 
     @Override
-    @Deprecated
-    public final WindowOrderByStep<T> partitionByOne() {
-        windowSpecification.partitionByOne();
-        return this;
-    }
-
-    @Override
     public /* non-final */ AbstractWindowFunction<T> orderBy(OrderField<?>... fields) {
         windowSpecification.orderBy(fields);
         return this;

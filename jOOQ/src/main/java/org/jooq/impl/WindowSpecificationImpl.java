@@ -123,8 +123,6 @@ implements
     WindowSpecificationExcludeStep
 {
 
-    private static final Set<SQLDialect> OMIT_PARTITION_BY_ONE                       = SQLDialect.supportedBy(CUBRID, MYSQL, SQLITE);
-
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB, TRINO);
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_NTILE                  = SQLDialect.supportedBy(H2);
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2, MARIADB);
@@ -144,7 +142,6 @@ implements
     private Integer                      frameEnd;
     private FrameUnits                   frameUnits;
     private FrameExclude                 exclude;
-    private boolean                      partitionByOne;
 
     WindowSpecificationImpl() {
         this(null);
@@ -164,7 +161,6 @@ implements
         copy.frameEnd = this.frameEnd;
         copy.frameUnits = this.frameUnits;
         copy.exclude = this.exclude;
-        copy.partitionByOne = this.partitionByOne;
         return copy;
     }
 
@@ -249,19 +245,11 @@ implements
             ctx.declareWindows(false, c -> c.visit(windowDefinition));
 
         if (hasPartitionBy) {
+            if (hasWindowDefinitions)
+                ctx.formatSeparator();
 
-            // Ignore PARTITION BY 1 clause. These databases erroneously map the
-            // 1 literal onto the column index (CUBRID, Sybase), or do not support
-            // constant expressions in the PARTITION BY clause (HANA)
-            if (partitionByOne && OMIT_PARTITION_BY_ONE.contains(ctx.dialect())) {
-            }
-            else {
-                if (hasWindowDefinitions)
-                    ctx.formatSeparator();
-
-                ctx.visit(K_PARTITION_BY).separatorRequired(true)
-                   .visit(partitionBy);
-            }
+            ctx.visit(K_PARTITION_BY).separatorRequired(true)
+               .visit(partitionBy);
         }
 
         if (hasOrderBy) {
@@ -416,14 +404,6 @@ implements
     @Override
     public final WindowSpecificationPartitionByStep partitionBy(Collection<? extends GroupField> fields) {
         partitionBy.addAll(fields);
-        return this;
-    }
-
-    @Override
-    @Deprecated
-    public final WindowSpecificationOrderByStep partitionByOne() {
-        partitionByOne = true;
-        partitionBy.add(one());
         return this;
     }
 

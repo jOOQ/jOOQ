@@ -114,17 +114,4 @@ public interface WindowSpecificationPartitionByStep extends WindowSpecificationO
     @NotNull
     @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowSpecificationOrderByStep partitionBy(Collection<? extends GroupField> fields);
-
-    /**
-     * Add a <code>PARTITION BY 1</code> clause to the window specification,
-     * where such a clause is required by the syntax of an RDBMS.
-     *
-     * @deprecated - 3.10 - [#6427] - This synthetic clause is no longer
-     *             supported, use {@link #partitionBy(GroupField...)} instead, or
-     *             omit the clause entirely.
-     */
-    @Deprecated(forRemoval = true, since = "3.10")
-    @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WindowSpecificationOrderByStep partitionByOne();
 }

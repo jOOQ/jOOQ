@@ -82,6 +82,7 @@ import static org.jooq.impl.Tools.unalias;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.ArrayList;
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -116,6 +117,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.UEmptyField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.reflect.Reflect;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -488,6 +490,21 @@ implements
 
         // TODO: [#4695] Calculate the correct Record[B] type
         return (Class<? extends R>) RecordImplN.class;
+    }
+
+    private transient Constructor<? extends R> recordConstructor;
+
+    final Constructor<? extends R> getRecordConstructor() {
+        if (recordConstructor == null) {
+            try {
+                recordConstructor = Reflect.accessible(getRecordType().getDeclaredConstructor());
+            }
+            catch (Exception e) {
+                throw new IllegalStateException("Could not access record constructor", e);
+            }
+        }
+
+        return recordConstructor;
     }
 
     @Override

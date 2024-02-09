@@ -309,6 +309,7 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.TableRecord;
 // ...
 // ...
 import org.jooq.WindowDefinition;
@@ -4131,6 +4132,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             // https://blog.jooq.org/creating-tables-dum-and-dee-in-postgresql/
             (r, t) -> r && t.fieldsRow().size() > 0
         );
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    final Table<? extends R> getTable0() {
+        return getFrom().size() == 1 && TableRecord.class.isAssignableFrom(getRecordType0())
+             ? (Table<? extends R>) getFrom().get(0)
+             : null;
     }
 
     @SuppressWarnings("unchecked")

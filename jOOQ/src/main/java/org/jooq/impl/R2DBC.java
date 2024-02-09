@@ -353,7 +353,7 @@ final class R2DBC {
                     // TODO: This call is duplicated from CursorImpl and related classes.
                     // Refactor this call to make sure code is re-used, especially when
                     // ExecuteListener lifecycle management is implemented
-                    RecordDelegate<AbstractRecord> delegate = Tools.newRecord(true, recordFactory((Class<AbstractRecord>) query.getRecordType(), (AbstractRow<AbstractRecord>) Tools.row0(fields)), query.configuration());
+                    RecordDelegate<AbstractRecord> delegate = Tools.newRecord(true, recordFactory(null, (Class<AbstractRecord>) query.getRecordType(), (AbstractRow<AbstractRecord>) Tools.row0(fields)), query.configuration());
 
                     // TODO: What data to pass here?
                     DefaultBindingGetResultSetContext<?> ctx = new DefaultBindingGetResultSetContext(

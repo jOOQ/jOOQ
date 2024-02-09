@@ -1362,14 +1362,22 @@ final class Tools {
      * Create a new {@link Table} or {@link UDT} record.
      */
     static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, RecordQualifier<R> type, Configuration configuration) {
-        return newRecord(fetched, type.getRecordType(), (AbstractRow<R>) type.fieldsRow(), configuration);
+        return newRecord(
+            fetched,
+            recordFactory(
+                type,
+                type.getRecordType(),
+                (AbstractRow<R>) type.fieldsRow()
+            ),
+            configuration
+        );
     }
 
     /**
      * Create a new record.
      */
     static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<? extends R> type, AbstractRow<? extends R> fields, Configuration configuration) {
-        return newRecord(fetched, recordFactory(type, fields), configuration);
+        return newRecord(fetched, recordFactory(null, type, fields), configuration);
     }
 
     /**
@@ -1458,7 +1466,11 @@ final class Tools {
      * Create a new record factory.
      */
     @SuppressWarnings({ "unchecked" })
-    static final <R extends Record> Supplier<R> recordFactory(Class<? extends R> type, AbstractRow<? extends R> row) {
+    static final <R extends Record> Supplier<R> recordFactory(
+        RecordQualifier<? extends R> qualifier,
+        Class<? extends R> type,
+        AbstractRow<? extends R> row
+    ) {
 
         // An ad-hoc type resulting from a JOIN or arbitrary SELECT
         if (type == AbstractRecord.class || type == Record.class || InternalRecord.class.isAssignableFrom(type)) {
@@ -1499,7 +1511,9 @@ final class Tools {
             try {
 
                 // [#919] Allow for accessing non-public constructors
-                final Constructor<? extends R> constructor = Reflect.accessible(type.getDeclaredConstructor());
+                final Constructor<? extends R> constructor = qualifier instanceof TableImpl<? extends R> t
+                    ? t.getRecordConstructor()
+                    : Reflect.accessible(type.getDeclaredConstructor());
 
                 return () -> {
                     try {

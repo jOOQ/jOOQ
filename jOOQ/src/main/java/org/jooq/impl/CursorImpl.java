@@ -84,6 +84,7 @@ import org.jooq.Field;
 // ...
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.Table;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
@@ -112,15 +113,15 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
 
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
-        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImplN.class, 0, true);
+        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, null, (Class<? extends R>) RecordImplN.class, 0, true);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type, int maxRows, boolean autoclosing) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Table<? extends R> table, Class<? extends R> type, int maxRows, boolean autoclosing) {
         super(ctx.configuration(), (AbstractRow<R>) Tools.row0(fields));
 
         this.ctx = ctx;
         this.listener = (listener != null ? listener : ExecuteListeners.getAndStart(ctx));
-        this.factory = recordFactory(type, this.fields);
+        this.factory = recordFactory(table, type, this.fields);
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
         this.rs = new CursorResultSet();

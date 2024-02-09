@@ -61,6 +61,7 @@ import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.getMappedTable;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -88,6 +89,7 @@ import org.jooq.TableOptions;
 // ...
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.reflect.Reflect;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -454,6 +456,21 @@ implements
 
         // TODO: [#4695] Calculate the correct Record[B] type
         return (Class<? extends R>) RecordImplN.class;
+    }
+
+    private transient Constructor<? extends R> recordConstructor;
+
+    final Constructor<? extends R> getRecordConstructor() {
+        if (recordConstructor == null) {
+            try {
+                recordConstructor = Reflect.accessible(getRecordType().getDeclaredConstructor());
+            }
+            catch (Exception e) {
+                throw new IllegalStateException("Could not access record constructor", e);
+            }
+        }
+
+        return recordConstructor;
     }
 
     @Override

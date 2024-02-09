@@ -103,11 +103,6 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     }
 
     @Override
-    public final BindContext keyword(String keyword) {
-        return this;
-    }
-
-    @Override
     public final BindContext sql(String sql) {
         return this;
     }

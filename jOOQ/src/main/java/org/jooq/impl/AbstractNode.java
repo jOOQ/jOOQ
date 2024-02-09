@@ -50,7 +50,7 @@ import org.jooq.exception.DataDefinitionException;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractNode<N extends Node<N>> extends AbstractScope implements Node<N> {
+abstract class AbstractNode<N extends Node<N>> extends AbstractLazyScope implements Node<N> {
 
     final N      root;
     final String id;

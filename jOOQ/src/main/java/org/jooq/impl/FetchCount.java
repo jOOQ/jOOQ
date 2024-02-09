@@ -46,6 +46,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Select;
+import org.jooq.Table;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UTransient;
 
@@ -66,6 +67,11 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> implements 
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(select(count).from(new AliasedSelect<>(query, true, true, false).as("t")));
+    }
+
+    @Override
+    final Table<? extends Record1<Integer>> getTable0() {
+        return null;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

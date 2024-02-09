@@ -361,7 +361,7 @@ final class R2DBC {
 
                     return (R) delegate.operate(new CursorImpl.CursorRecordInitialiser(
                         new DefaultExecuteContext(query.configuration(), query), new DefaultExecuteListener(),
-                        ctx, Tools.row0(fields), 0, new boolean[0]
+                        ctx, Tools.row0(fields), 0
                     ));
                 }
                 catch (Throwable t) {

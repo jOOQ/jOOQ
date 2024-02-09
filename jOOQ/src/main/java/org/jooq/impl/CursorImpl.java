@@ -99,7 +99,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
 
     final ExecuteContext                ctx;
     final ExecuteListener               listener;
-    private final boolean[]             intern;
     private final boolean               keepResultSet;
     private final boolean               keepStatement;
     private final boolean               autoclosing;
@@ -112,11 +111,11 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
     private transient int               rows;
 
     @SuppressWarnings("unchecked")
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
-        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, null, (Class<? extends R>) RecordImplN.class, 0, true);
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, boolean keepStatement, boolean keepResultSet) {
+        this(ctx, listener, fields, keepStatement, keepResultSet, null, (Class<? extends R>) RecordImplN.class, 0, true);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Table<? extends R> table, Class<? extends R> type, int maxRows, boolean autoclosing) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, boolean keepStatement, boolean keepResultSet, Table<? extends R> table, Class<? extends R> type, int maxRows, boolean autoclosing) {
         super(ctx.configuration(), (AbstractRow<R>) Tools.row0(fields));
 
         this.ctx = ctx;
@@ -127,15 +126,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         this.rs = new CursorResultSet();
         this.maxRows = maxRows;
         this.autoclosing = autoclosing;
-
-        if (internIndexes != null) {
-            this.intern = new boolean[fields.length];
-
-            for (int i : internIndexes)
-                intern[i] = true;
-        }
-        else
-            this.intern = null;
     }
 
     // -------------------------------------------------------------------------
@@ -1348,8 +1338,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         private final CursorRecordInitialiser        initialiser    = new CursorRecordInitialiser(
             ctx, listener,
             new DefaultBindingGetResultSetContext<>(ctx, rs, 0),
-            fields, 0,
-            intern
+            fields, 0
         );
 
         @SuppressWarnings("unchecked")
@@ -1436,7 +1425,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         private final ExecuteListener                      listener;
         private final AbstractRow<?>                       initialiserFields;
         private int                                        offset;
-        private final boolean[]                            intern;
 
 
 
@@ -1451,10 +1439,8 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
             ExecuteListener listener,
             DefaultBindingGetResultSetContext<?> rsContext,
             AbstractRow<?> initialiserFields,
-            int offset,
-            boolean[] intern
+            int offset
         ) {
-
 
 
 
@@ -1476,7 +1462,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
             this.rsContext = rsContext;
             this.initialiserFields = initialiserFields;
             this.offset = offset;
-            this.intern = intern;
 
 
 
@@ -1517,11 +1502,6 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
             for (int i = 0; i < size; i++)
                 setValue(record, initialiserFields.field(i), i);
 
-            if (intern != null)
-                for (int i = 0; i < intern.length; i++)
-                    if (intern[i])
-                        record.intern0(i);
-
             ctx.record(record);
             listener.recordEnd(ctx);
 
@@ -1560,12 +1540,12 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                     CursorRecordInitialiser operation = new CursorRecordInitialiser(
                         ctx, listener,
                         rsContext,
-                        nested, nestedOffset,
+                        nested, nestedOffset
 
 
 
 
-                        intern
+
                     );
                     value = (T) Tools.newRecord(true, (Class<AbstractRecord>) recordType, (AbstractRow<AbstractRecord>) nested, ((DefaultExecuteContext) ctx).originalConfiguration())
                                      .operate(operation);

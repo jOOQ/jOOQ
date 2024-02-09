@@ -3193,26 +3193,6 @@ implements
     }
 
     @Override
-    public final CloseableResultQuery<R> intern(Field<?>... fields) {
-        return getDelegate().intern(fields);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(int... fieldIndexes) {
-        return getDelegate().intern(fieldIndexes);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(String... fieldNames) {
-        return getDelegate().intern(fieldNames);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(Name... fieldNames) {
-        return getDelegate().intern(fieldNames);
-    }
-
-    @Override
     public final Class<? extends R> getRecordType() {
         return getDelegate().getRecordType();
     }

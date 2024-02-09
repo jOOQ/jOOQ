@@ -99,9 +99,6 @@ implements
     private Result<R>                      result;
     private ResultsImpl                    results;
 
-    // Some temp variables for String interning
-    private final Intern                   intern                            = new Intern();
-
     AbstractResultQuery(Configuration configuration) {
         super(configuration);
     }
@@ -171,30 +168,6 @@ implements
     }
 
     @Override
-    public final CloseableResultQuery<R> intern(Field<?>... fields) {
-        intern.internFields = fields;
-        return this;
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(int... fieldIndexes) {
-        intern.internIndexes = fieldIndexes;
-        return this;
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(String... fieldNameStrings) {
-        intern.internNameStrings = fieldNameStrings;
-        return this;
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(Name... fieldNames) {
-        intern.internNames = fieldNames;
-        return this;
-    }
-
-    @Override
     protected final void prepare(ExecuteContext ctx) throws SQLException {
         if (ctx.statement() == null) {
 
@@ -259,7 +232,7 @@ implements
             }
 
             Field<?>[] fields = getFields(() -> ctx.resultSet().getMetaData());
-            cursor = new CursorImpl<>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getTable(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()), autoclosing);
+            cursor = new CursorImpl<>(ctx, listener, fields, keepStatement(), keepResultSet(), getTable(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()), autoclosing);
 
             if (!lazy) {
                 result = cursor.fetch();
@@ -270,7 +243,7 @@ implements
         // Fetch several result sets
         else {
             results = new ResultsImpl(ctx.configuration());
-            consumeResultSets(ctx, listener, results, intern, e);
+            consumeResultSets(ctx, listener, results, e);
         }
 
         return result != null ? result.size() : 0;

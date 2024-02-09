@@ -382,24 +382,11 @@ implements
         }
     }
 
-    final void intern0(int fieldIndex) {
-        safeIndex(fieldIndex);
-
-        if (field(fieldIndex).getType() == String.class) {
-            values[fieldIndex] = intern((String) values[fieldIndex]);
-            originals[fieldIndex] = intern((String) originals[fieldIndex]);
-        }
-    }
-
     final int safeIndex(int index) {
         if (index >= 0 && index < values.length)
             return index;
 
         throw new IllegalArgumentException("No field at index " + index + " in Record type " + fields);
-    }
-
-    final String intern(String string) {
-        return string == null ? null : string.intern();
     }
 
     /**

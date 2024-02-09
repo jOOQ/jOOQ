@@ -1300,7 +1300,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         ExecuteListener listener = ExecuteListeners.getAndStart(ctx);
 
         ctx.resultSet(rs);
-        return new CursorImpl<>(ctx, listener, fields, null, false, true);
+        return new CursorImpl<>(ctx, listener, fields, false, true);
     }
 
     @Override

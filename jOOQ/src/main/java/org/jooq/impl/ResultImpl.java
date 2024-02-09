@@ -1027,31 +1027,6 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
         return sortAsc(Collections.reverseOrder(comparator));
     }
 
-    @Override
-    public final Result<R> intern(Field<?>... f) {
-        return intern(fields.fields.indexesOf(f));
-    }
-
-    @Override
-    public final Result<R> intern(int... fieldIndexes) {
-        for (int fieldIndex : fieldIndexes)
-            if (fields.field(fieldIndex).getType() == String.class)
-                for (Record record : this)
-                    ((AbstractRecord) record).intern0(fieldIndex);
-
-        return this;
-    }
-
-    @Override
-    public final Result<R> intern(String... fieldNames) {
-        return intern(fields.fields.indexesOf(fieldNames));
-    }
-
-    @Override
-    public final Result<R> intern(Name... fieldNames) {
-        return intern(fields.fields.indexesOf(fieldNames));
-    }
-
     /**
      * A comparator for records, wrapping another comparator for &lt;T&gt;
      */

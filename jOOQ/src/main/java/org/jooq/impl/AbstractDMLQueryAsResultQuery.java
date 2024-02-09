@@ -275,24 +275,4 @@ implements
     public final CloseableResultQuery<R> resultSetHoldability(int resultSetHoldability) {
         return this;
     }
-
-    @Override
-    public final CloseableResultQuery<R> intern(Field<?>... fields) {
-        return this;
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(int... fieldIndexes) {
-        return this;
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(String... fieldNames) {
-        return this;
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(Name... fieldNames) {
-        return this;
-    }
 }

@@ -592,7 +592,7 @@ implements
             // [#2925] Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
             //         http://tracker.firebirdsql.org/browse/JDBC-350
             if (ctx.family() != FIREBIRD)
-                Tools.consumeResultSets(ctx, listener, results, null, e);
+                Tools.consumeResultSets(ctx, listener, results, e);
 
             listener.outStart(ctx);
             fetchOutParameters(ctx);

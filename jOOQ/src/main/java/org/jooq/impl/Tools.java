@@ -4923,7 +4923,7 @@ final class Tools {
     /**
      * [#3681] Consume all {@link ResultSet}s from a JDBC {@link Statement}.
      */
-    static final void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, Intern intern, SQLException prev) throws SQLException {
+    static final void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, SQLException prev) throws SQLException {
         boolean anyResults = false;
         int i;
         int rows = (ctx.resultSet() == null) ? ctx.rows() : 0;
@@ -4934,7 +4934,7 @@ final class Tools {
                     anyResults = true;
 
                     Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                    Cursor<Record> c = new CursorImpl<>(ctx, listener, fields, intern != null ? intern.internIndexes(fields) : null, true, false);
+                    Cursor<Record> c = new CursorImpl<>(ctx, listener, fields, true, false);
                     results.resultsOrRows().add(new ResultOrRowsImpl(c.fetch()));
                 }
                 else if (prev == null) {

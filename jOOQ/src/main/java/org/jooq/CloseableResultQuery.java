@@ -100,42 +100,6 @@ public interface CloseableResultQuery<R extends Record> extends ResultQuery<R>, 
     @NotNull
     CloseableResultQuery<R> resultSetHoldability(int resultSetHoldability);
 
-    /**
-     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
-     *             and will be removed in 4.0
-     */
-    @Override
-    @NotNull
-    @Deprecated(forRemoval = true, since = "3.10")
-    CloseableResultQuery<R> intern(Field<?>... fields);
-
-    /**
-     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
-     *             and will be removed in 4.0
-     */
-    @Override
-    @NotNull
-    @Deprecated(forRemoval = true, since = "3.10")
-    CloseableResultQuery<R> intern(int... fieldIndexes);
-
-    /**
-     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
-     *             and will be removed in 4.0
-     */
-    @Override
-    @NotNull
-    @Deprecated(forRemoval = true, since = "3.10")
-    CloseableResultQuery<R> intern(String... fieldNames);
-
-    /**
-     * @deprecated - 3.10 - [#6254] - This functionality is no longer supported
-     *             and will be removed in 4.0
-     */
-    @Override
-    @NotNull
-    @Deprecated(forRemoval = true, since = "3.10")
-    CloseableResultQuery<R> intern(Name... fieldNames);
-
     @Override
     @NotNull
     <X extends Record> CloseableResultQuery<X> coerce(Table<X> table);

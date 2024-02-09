@@ -45,7 +45,7 @@ import org.jooq.ConverterContext;
 /**
  * @author Lukas Eder
  */
-final class DefaultConverterContext extends AbstractScope implements ConverterContext {
+final class DefaultConverterContext extends AbstractLazyScope implements ConverterContext {
 
     DefaultConverterContext(Configuration configuration) {
         super(configuration, new DataMap());

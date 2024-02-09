@@ -413,11 +413,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
-    public final RenderContext keyword(String keyword) {
-        return visit(DSL.keyword(keyword));
-    }
-
-    @Override
     public final RenderContext sql(String s) {
         return sql(s, s == null || !cachedRenderFormatted);
     }

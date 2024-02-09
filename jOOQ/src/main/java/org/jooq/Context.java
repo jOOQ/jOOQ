@@ -566,17 +566,6 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     String render(QueryPart part);
 
     /**
-     * Append a SQL keyword to the context's contained {@link StringBuilder}.
-     * <p>
-     * Use this to have your SQL keyword rendered in {@link RenderKeywordCase}.
-     *
-     * @deprecated - 3.10.0 - [#4990] - Use {@link DSL#keyword(String)} instead.
-     */
-    @NotNull
-    @Deprecated(forRemoval = true, since = "3.10")
-    C keyword(String keyword);
-
-    /**
      * Append some SQL to the context's contained {@link StringBuilder}.
      */
     @NotNull

@@ -259,7 +259,7 @@ implements
             }
 
             Field<?>[] fields = getFields(() -> ctx.resultSet().getMetaData());
-            cursor = new CursorImpl<>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()), autoclosing);
+            cursor = new CursorImpl<>(ctx, listener, fields, intern.internIndexes(fields), keepStatement(), keepResultSet(), getTable(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()), autoclosing);
 
             if (!lazy) {
                 result = cursor.fetch();
@@ -343,14 +343,23 @@ implements
     }
 
     @SuppressWarnings("unchecked")
+    final Table<? extends R> getTable() {
+        if (coerceTable != null)
+            return (Table<? extends R>) coerceTable;
+        else
+            return getTable0();
+    }
+
+    @SuppressWarnings("unchecked")
     @Override
     public final Class<? extends R> getRecordType() {
         if (coerceTable != null)
             return (Class<? extends R>) coerceTable.getRecordType();
-
-        return getRecordType0();
+        else
+            return getRecordType0();
     }
 
+    abstract Table<? extends R> getTable0();
     abstract Class<? extends R> getRecordType0();
 
     @Override

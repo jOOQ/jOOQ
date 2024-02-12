@@ -241,21 +241,23 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     ? scopeStack.create(root)
                     : scopeStack.getOrCreate(root);
 
-                if (e.joinNode == null)
-                    e.joinNode = new JoinNode(configuration(), root);
+                if (!tables.isEmpty()) {
+                    if (e.joinNode == null)
+                        e.joinNode = new JoinNode(configuration(), root);
 
-                JoinNode childNode = e.joinNode;
-                for (int i = tables.size() - 1; i >= 0; i--) {
-                    Table<?> t = tables.get(i);
-                    ForeignKey<?, ?> k = ((TableImpl<?>) t).childPath;
+                    JoinNode childNode = e.joinNode;
+                    for (int i = tables.size() - 1; i >= 0; i--) {
+                        Table<?> t = tables.get(i);
+                        ForeignKey<?, ?> k = ((TableImpl<?>) t).childPath;
 
-                    JoinNode next = childNode.children.get(k);
-                    if (next == null) {
-                        next = new JoinNode(configuration(), t);
-                        childNode.children.put(k, next);
+                        JoinNode next = childNode.children.get(k);
+                        if (next == null) {
+                            next = new JoinNode(configuration(), t);
+                            childNode.children.put(k, next);
+                        }
+
+                        childNode = next;
                     }
-
-                    childNode = next;
                 }
             }
             else if (forceNew)

@@ -6842,6 +6842,7 @@ public class JavaGenerator extends AbstractGenerator {
                 else {
                     out.javadoc("A subtype implementing {@link %s} for simplified path-based joins.", Path.class);
                     out.println("%sstatic class %s extends %s implements %s<%s> {", visibility(), pathClassName, className, Path.class, recordType);
+                    out.printSerial();
                     out.println("%s<O extends %s> %s(%s<O> path, %s<O, %s> childPath, %s<O, %s> parentPath) {", visibility(), Record.class, pathClassName, Table.class, ForeignKey.class, recordType, InverseForeignKey.class, recordType);
                     out.println("super(path, childPath, parentPath);");
                     out.println("}");

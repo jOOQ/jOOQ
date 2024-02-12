@@ -37,16 +37,15 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Name.Quoted.DEFAULT;
 import static org.jooq.Name.Quoted.MIXED;
 // ...
-import static org.jooq.impl.Tools.allMatch;
-import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.stringLiteral;
 
 import org.jooq.Context;
 import org.jooq.Name;
-import org.jooq.tools.StringUtils;
+// ...
 
 /**
  * The default implementation for a qualified SQL identifier.
@@ -55,93 +54,27 @@ import org.jooq.tools.StringUtils;
  */
 final class QualifiedName extends AbstractName {
 
-    private final UnqualifiedName[] qualifiedName;
+    final Name            qualifier;
+    final UnqualifiedName last;
 
-    QualifiedName(String[] qualifiedName) {
-        this(qualifiedName, DEFAULT);
+    QualifiedName(Name qualifier, UnqualifiedName last) {
+        this.qualifier = qualifier;
+        this.last = last;
     }
 
-    QualifiedName(String[] qualifiedName, Quoted quoted) {
-        this(names(qualifiedName, quoted));
-    }
 
-    QualifiedName(Name[] qualifiedName) {
-        this(last(nonEmpty(qualifiedName)));
-    }
 
-    private QualifiedName(UnqualifiedName[] qualifiedName) {
-        this.qualifiedName = qualifiedName;
-    }
 
-    private static final UnqualifiedName[] names(String[] qualifiedName, Quoted quoted) {
-        return map(nonEmpty(qualifiedName), s -> new UnqualifiedName(s, quoted), UnqualifiedName[]::new);
-    }
 
-    private static final UnqualifiedName[] last(Name[] qualifiedName) {
-        if (qualifiedName instanceof UnqualifiedName[] u)
-            return u;
 
-        UnqualifiedName[] result = new UnqualifiedName[qualifiedName.length];
 
-        for (int i = 0; i < qualifiedName.length; i++)
-            if (qualifiedName[i] instanceof QualifiedName q) {
-                result[i] = q.qualifiedName[q.qualifiedName.length - 1];
-            }
-            else if (qualifiedName[i] instanceof UnqualifiedName u)
-                result[i] = u;
-            else
-                result[i] = new UnqualifiedName(qualifiedName[i].last());
 
-        return result;
-    }
 
-    private static final String[] nonEmpty(String[] qualifiedName) {
-        String[] result;
-        int nulls = 0;
 
-        for (String name : qualifiedName)
-            if (StringUtils.isEmpty(name))
-                nulls++;
 
-        if (nulls > 0) {
-            result = new String[qualifiedName.length - nulls];
 
-            for (int i = qualifiedName.length - 1; i >= 0; i--)
-                if (StringUtils.isEmpty(qualifiedName[i]))
-                    nulls--;
-                else
-                    result[i - nulls] = qualifiedName[i];
-        }
-        else {
-            result = qualifiedName;
-        }
 
-        return result;
-    }
 
-    private static final Name[] nonEmpty(Name[] names) {
-        Name[] result;
-        int nulls = 0;
-
-        for (Name name : names)
-            if (name == null || name.equals(NO_NAME))
-                nulls++;
-
-        if (nulls > 0) {
-            result = new Name[names.length - nulls];
-
-            for (int i = names.length - 1; i >= 0; i--)
-                if (names[i] == null || names[i].equals(NO_NAME))
-                    nulls--;
-                else
-                    result[i - nulls] = names[i];
-        }
-        else {
-            result = names;
-        }
-
-        return result;
-    }
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -159,97 +92,108 @@ final class QualifiedName extends AbstractName {
 
 
 
-
         // [#3437] Fully qualify this field only if allowed in the current context
-        if (ctx.qualify()) {
-            String separator = "";
-
-            for (UnqualifiedName name : qualifiedName) {
-                ctx.sql(separator).visit(name);
-                separator = ".";
-            }
-        }
-        else {
-            ctx.visit(qualifiedName[qualifiedName.length - 1]);
-        }
+        if (ctx.qualify() && qualifier != null)
+            ctx.visit(qualifier).sql('.').visit(last);
+        else
+            ctx.visit(last);
     }
 
     @Override
     public final String first() {
-        return qualifiedName.length > 0 ? qualifiedName[0].last() : null;
+        return qualifier != null ? qualifier.first() : last.name;
     }
 
     @Override
     public final String last() {
-        return qualifiedName.length > 0 ? qualifiedName[qualifiedName.length - 1].last() : null;
+        return last.name;
     }
 
     @Override
     public final boolean empty() {
-        return allMatch(qualifiedName, n -> n.empty());
+        return last.empty();
     }
 
     @Override
     public final boolean qualified() {
-        return qualifiedName.length > 1;
+        return qualifier != null;
     }
 
     @Override
     public final boolean qualifierQualified() {
-        return qualifiedName.length > 2;
+        return qualifier != null && qualifier.qualified();
     }
 
     @Override
     public final Name qualifier() {
-        if (qualifiedName.length <= 1)
-            return null;
-        if (qualifiedName.length == 2)
-            return qualifiedName[0];
-
-        UnqualifiedName[] qualifier = new UnqualifiedName[qualifiedName.length - 1];
-        System.arraycopy(qualifiedName, 0, qualifier, 0, qualifier.length);
-        return new QualifiedName(qualifier);
+        return qualifier;
     }
 
     @Override
     public final Name unqualifiedName() {
-        if (qualifiedName.length == 0)
-            return this;
-        else
-            return qualifiedName[qualifiedName.length - 1];
+        return last;
     }
 
     @Override
     public final Quoted quoted() {
-        Quoted result = null;
-
-        for (UnqualifiedName name : qualifiedName)
-            if (result == null)
-                result = name.quoted();
-            else if (result != name.quoted())
-                return MIXED;
-
-        return result == null ? DEFAULT : result;
+        Quoted result = qualifier != null ? qualifier.quoted() : null;
+        return result == null || result == last.quoted() ? last.quoted() : MIXED;
     }
 
     @Override
     public final Name quotedName() {
-        return new QualifiedName(map(qualifiedName, n -> n.quotedName(), Name[]::new));
+        return qualifier.quotedName().append(last.quotedName());
     }
 
     @Override
     public final Name unquotedName() {
-        return new QualifiedName(map(qualifiedName, n -> n.unquotedName(), Name[]::new));
+        return qualifier.unquotedName().append(last.unquotedName());
     }
 
     @Override
     public final String[] getName() {
-        return map(qualifiedName, n -> n.last(), String[]::new);
+        if (empty())
+            return EMPTY_STRING;
+
+        int i = 1;
+        Name q = qualifier;
+        while (q != null) {
+            q = q.qualifier();
+            i++;
+        }
+
+        String[] name = new String[i];
+        name[--i] = last.name;
+        q = qualifier;
+        while (q != null) {
+            name[--i] = q.last();
+            q = q.qualifier();
+        }
+
+        return name;
     }
 
     @Override
     public final Name[] parts() {
-        return qualifiedName.clone();
+        if (empty())
+            return EMPTY_NAME;
+
+        int i = 1;
+        Name q = qualifier;
+        while (q != null) {
+            q = q.qualifier();
+            i++;
+        }
+
+        Name[] parts = new Name[i];
+        parts[--i] = last;
+        q = qualifier;
+        while (q != null) {
+            parts[--i] = q.unqualifiedName();
+            q = q.qualifier();
+        }
+
+        return parts;
     }
 
     // ------------------------------------------------------------------------
@@ -266,13 +210,12 @@ final class QualifiedName extends AbstractName {
         if (hash == null) {
             int h = 1;
 
-            for (int i = 0; i < qualifiedName.length; i++) {
-                UnqualifiedName n = qualifiedName[i];
+            h = 31 * h + hashCode0(last);
 
-                if (n.name == null)
-                    h = 31 * h + 0;
-                else
-                    h = 31 * h + hashCode0(n);
+            Name q = qualifier;
+            while (q != null) {
+                h = 31 * h + hashCode0(q.unqualifiedName());
+                q = q.qualifier();
             }
 
             hash = h;

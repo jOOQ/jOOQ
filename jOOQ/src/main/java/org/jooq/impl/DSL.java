@@ -12975,10 +12975,15 @@ public class DSL {
     @NotNull
     @Support
     public static Name name(String... qualifiedName) {
-        if (qualifiedName == null || qualifiedName.length != 1)
-            return new QualifiedName(qualifiedName);
-        else
-            return new UnqualifiedName(qualifiedName[0]);
+        if (Tools.isEmpty(qualifiedName))
+            return new UnqualifiedName(null);
+
+        Name result = new UnqualifiedName(qualifiedName[0]);
+
+        for (int i = 1; i < qualifiedName.length; i++)
+            result = result.append(new UnqualifiedName(qualifiedName[i]));
+
+        return result;
     }
 
     /**
@@ -13011,7 +13016,15 @@ public class DSL {
     @NotNull
     @Support
     public static Name name(Name... nameParts) {
-        return new QualifiedName(nameParts);
+        if (Tools.isEmpty(nameParts))
+            return new UnqualifiedName(null);
+
+        Name result = nameParts[0] != null ? nameParts[0] : new UnqualifiedName(null);
+
+        for (int i = 1; i < nameParts.length; i++)
+            result = result.append(nameParts[i]);
+
+        return result;
     }
 
     /**
@@ -13076,10 +13089,15 @@ public class DSL {
     @NotNull
     @Support
     public static Name quotedName(String... qualifiedName) {
-        if (qualifiedName == null || qualifiedName.length != 1)
-            return new QualifiedName(qualifiedName, Quoted.QUOTED);
-        else
-            return new UnqualifiedName(qualifiedName[0], Quoted.QUOTED);
+        if (Tools.isEmpty(qualifiedName))
+            return new UnqualifiedName(null);
+
+        Name result = new UnqualifiedName(qualifiedName[0], Quoted.QUOTED);
+
+        for (int i = 1; i < qualifiedName.length; i++)
+            result = result.append(new UnqualifiedName(qualifiedName[i], Quoted.QUOTED));
+
+        return result;
     }
 
     /**
@@ -13131,10 +13149,15 @@ public class DSL {
     @NotNull
     @Support
     public static Name unquotedName(String... qualifiedName) {
-        if (qualifiedName == null || qualifiedName.length != 1)
-            return new QualifiedName(qualifiedName, Quoted.UNQUOTED);
-        else
-            return new UnqualifiedName(qualifiedName[0], Quoted.UNQUOTED);
+        if (Tools.isEmpty(qualifiedName))
+            return new UnqualifiedName(null);
+
+        Name result = new UnqualifiedName(qualifiedName[0], Quoted.UNQUOTED);
+
+        for (int i = 1; i < qualifiedName.length; i++)
+            result = result.append(new UnqualifiedName(qualifiedName[i], Quoted.UNQUOTED));
+
+        return result;
     }
 
     /**
@@ -13185,10 +13208,15 @@ public class DSL {
     @NotNull
     @Support
     public static Name systemName(String... qualifiedName) {
-        if (qualifiedName == null || qualifiedName.length != 1)
-            return new QualifiedName(qualifiedName, Quoted.SYSTEM);
-        else
-            return new UnqualifiedName(qualifiedName[0], Quoted.SYSTEM);
+        if (Tools.isEmpty(qualifiedName))
+            return new UnqualifiedName(null);
+
+        Name result = new UnqualifiedName(qualifiedName[0], Quoted.SYSTEM);
+
+        for (int i = 1; i < qualifiedName.length; i++)
+            result = result.append(new UnqualifiedName(qualifiedName[i], Quoted.SYSTEM));
+
+        return result;
     }
 
     /**

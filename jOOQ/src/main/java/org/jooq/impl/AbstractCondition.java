@@ -44,6 +44,7 @@ import static org.jooq.Operator.XOR;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.Names.N_CONDITION;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -61,7 +62,7 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
     private static final Clause[] CLAUSES = { CONDITION };
 
     AbstractCondition() {
-        super(DSL.name("condition"), SQLDataType.BOOLEAN);
+        super(N_CONDITION, SQLDataType.BOOLEAN);
     }
 
     @Override

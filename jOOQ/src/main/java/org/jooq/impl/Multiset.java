@@ -70,6 +70,7 @@ import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.JSON;
@@ -174,7 +175,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         switch (emulateMultiset(ctx.configuration())) {
             case JSON: {
                 List<Field<?>> fields = select.getSelect();
-                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
+                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(N_T, (Name[]) null);
 
                 switch (ctx.family()) {
 
@@ -244,7 +245,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
             case JSONB: {
                 List<Field<?>> fields = select.getSelect();
-                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
+                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(N_T, (Name[]) null);
 
                 switch (ctx.family()) {
 
@@ -315,7 +316,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
             case XML: {
                 List<Field<?>> fields = select.getSelect();
-                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(DSL.name("t"), (Name[]) null);
+                Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(N_T, (Name[]) null);
 
                 switch (ctx.family()) {
 

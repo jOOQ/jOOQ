@@ -235,19 +235,22 @@ final class ScopeStack<K, V> implements Iterable<V> {
         return result;
     }
 
-    private void set0(List<V> list, V value) {
+    private final void set0(List<V> list, V value) {
         int l = scopeLevel + 1;
         int size = list.size();
-        if (size < l)
-            list.addAll(nCopies(l - size, null));
+        if (size < l) {
+            int nulls = l - size;
+            for (int i = 0; i < nulls; i++)
+                list.add(null);
+        }
         list.set(scopeLevel, value);
     }
 
-    private List<V> listOrNull(K key) {
+    private final List<V> listOrNull(K key) {
         return stack().get(key);
     }
 
-    private List<V> list(K key) {
+    private final List<V> list(K key) {
         return stack().computeIfAbsent(key, k -> new ArrayList<>());
     }
 

@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.Names.N_CONDITION;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -70,7 +71,7 @@ final class ConditionProviderImpl extends AbstractField<Boolean> implements Cond
     }
 
     ConditionProviderImpl(Condition condition) {
-        super(DSL.name("condition"), SQLDataType.BOOLEAN);
+        super(N_CONDITION, SQLDataType.BOOLEAN);
 
         this.condition = condition;
     }

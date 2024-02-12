@@ -43,6 +43,7 @@ import static org.jooq.Operator.OR;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.Names.N_CONDITION;
 
 import java.util.function.BiFunction;
 
@@ -65,7 +66,7 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
     private static final Clause[] CLAUSES = { CONDITION };
 
     AbstractCondition() {
-        super(DSL.name("condition"), SQLDataType.BOOLEAN);
+        super(N_CONDITION, SQLDataType.BOOLEAN);
     }
 
     /**

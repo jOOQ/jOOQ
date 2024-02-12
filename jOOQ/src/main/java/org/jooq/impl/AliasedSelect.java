@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Names.NQ_SELECT;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.visitSubquery;
@@ -108,7 +109,7 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
 
     @Override
     final FieldsImpl<R> fields0() {
-        return new FieldsImpl<>(query.asTable(DSL.name("t"), aliases).fields());
+        return new FieldsImpl<>(query.asTable(N_T, aliases).fields());
     }
 
     @Override
@@ -133,7 +134,7 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
         //                  actual derived table usage.
         // [#10521] TODO: Reuse avoidAliasPushdown here
         if (ctx.family() == DERBY && q != null && q.hasUnions())
-            visitSubquery(ctx, selectFrom(query.asTable(DSL.name("t"), aliases)), DERIVED_TABLE, false);
+            visitSubquery(ctx, selectFrom(query.asTable(N_T, aliases)), DERIVED_TABLE, false);
         else
             ctx.data(DATA_SELECT_ALIASES, aliases, subquery ? c -> visitSubquery(c, query, DERIVED_TABLE, false) : c -> c.visit(query));
     }

@@ -1347,20 +1347,22 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             Table<?> root,
             List<TableImpl<?>> tables
         ) {
-            if (result == null)
-                result = new JoinNode(ctx, root);
+            if (!tables.isEmpty()) {
+                if (result == null)
+                    result = new JoinNode(ctx, root);
 
-            JoinNode node = result;
-            for (int i = tables.size() - 1; i >= 0; i--) {
-                TableImpl<?> t = tables.get(i);
+                JoinNode node = result;
+                for (int i = tables.size() - 1; i >= 0; i--) {
+                    TableImpl<?> t = tables.get(i);
 
-                if (t.childPath != null)
-                    node = node.pathsToOne.computeIfAbsent(t.childPath, k -> new JoinNode(ctx, t));
-                else
-                    node = node.pathsToMany.computeIfAbsent(t.parentPath, k -> new JoinNode(ctx, t));
+                    if (t.childPath != null)
+                        node = node.pathsToOne.computeIfAbsent(t.childPath, k -> new JoinNode(ctx, t));
+                    else
+                        node = node.pathsToMany.computeIfAbsent(t.parentPath, k -> new JoinNode(ctx, t));
 
-                if (i == 0)
-                    node.references++;
+                    if (i == 0)
+                        node.references++;
+                }
             }
 
             return result;

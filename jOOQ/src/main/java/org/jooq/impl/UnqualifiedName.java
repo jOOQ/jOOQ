@@ -42,6 +42,8 @@ import static org.jooq.Name.Quoted.QUOTED;
 import static org.jooq.Name.Quoted.SYSTEM;
 import static org.jooq.Name.Quoted.UNQUOTED;
 // ...
+import static org.jooq.impl.Tools.EMPTY_NAME;
+import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.stringLiteral;
 
 import java.util.Arrays;
@@ -155,12 +157,12 @@ final class UnqualifiedName extends AbstractName {
 
     @Override
     public final String[] getName() {
-        return new String[] { name };
+        return empty() ? EMPTY_STRING : new String[] { name };
     }
 
     @Override
     public final Name[] parts() {
-        return new Name[] { this };
+        return empty() ? EMPTY_NAME : new Name[] { this };
     }
 
     // ------------------------------------------------------------------------

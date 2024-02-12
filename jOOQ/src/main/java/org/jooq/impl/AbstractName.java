@@ -75,15 +75,12 @@ implements
     public final Name append(Name name) {
         if (empty())
             return name;
-        else if (name.empty())
+        else if (name == null || name.empty())
             return this;
-
-        Name[] p1 = parts();
-        Name[] p2 = name.parts();
-        Name[] array = new Name[p1.length + p2.length];
-        System.arraycopy(p1, 0, array, 0, p1.length);
-        System.arraycopy(p2, 0, array, p1.length, p2.length);
-        return new QualifiedName(array);
+        else if (name instanceof UnqualifiedName last)
+            return new QualifiedName(this, last);
+        else
+            return append(name.qualifier()).append(name.unqualifiedName());
     }
 
     @Override

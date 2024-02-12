@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Names.N_T;
+
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -63,7 +65,7 @@ implements
     }
 
     AbstractAutoAliasTable(Name alias, Name[] fieldAliases) {
-        super(TableOptions.expression(), alias != null ? alias : DSL.name("t"));
+        super(TableOptions.expression(), alias != null ? alias : N_T);
 
         this.alias = alias;
         this.fieldAliases = fieldAliases;

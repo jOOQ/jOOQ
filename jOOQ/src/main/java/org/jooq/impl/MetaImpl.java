@@ -1181,6 +1181,12 @@ final class MetaImpl extends AbstractMeta {
                     type = SQLDataType.OTHER;
                 }
 
+
+
+
+
+
+
                 // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL
                 if (isAutoIncrement)
                     if (!hasAutoIncrement)

@@ -107,6 +107,8 @@ public class Book extends TableImpl<BookRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class BookPath extends Book implements Path<BookRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> BookPath(Table<O> path, ForeignKey<O, BookRecord> childPath, InverseForeignKey<O, BookRecord> parentPath) {
             super(path, childPath, parentPath);
         }

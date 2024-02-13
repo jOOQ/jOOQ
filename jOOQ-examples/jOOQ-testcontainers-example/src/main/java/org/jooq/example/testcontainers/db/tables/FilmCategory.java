@@ -109,6 +109,8 @@ public class FilmCategory extends TableImpl<FilmCategoryRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class FilmCategoryPath extends FilmCategory implements Path<FilmCategoryRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> FilmCategoryPath(Table<O> path, ForeignKey<O, FilmCategoryRecord> childPath, InverseForeignKey<O, FilmCategoryRecord> parentPath) {
             super(path, childPath, parentPath);
         }

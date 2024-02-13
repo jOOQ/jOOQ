@@ -119,6 +119,8 @@ public class Store extends TableImpl<StoreRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class StorePath extends Store implements Path<StoreRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> StorePath(Table<O> path, ForeignKey<O, StoreRecord> childPath, InverseForeignKey<O, StoreRecord> parentPath) {
             super(path, childPath, parentPath);
         }

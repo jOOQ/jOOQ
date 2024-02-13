@@ -139,6 +139,8 @@ public class Address extends TableImpl<AddressRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class AddressPath extends Address implements Path<AddressRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> AddressPath(Table<O> path, ForeignKey<O, AddressRecord> childPath, InverseForeignKey<O, AddressRecord> parentPath) {
             super(path, childPath, parentPath);
         }

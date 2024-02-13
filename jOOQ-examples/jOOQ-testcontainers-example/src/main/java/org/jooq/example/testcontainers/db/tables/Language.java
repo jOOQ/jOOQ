@@ -107,6 +107,8 @@ public class Language extends TableImpl<LanguageRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class LanguagePath extends Language implements Path<LanguageRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> LanguagePath(Table<O> path, ForeignKey<O, LanguageRecord> childPath, InverseForeignKey<O, LanguageRecord> parentPath) {
             super(path, childPath, parentPath);
         }

@@ -140,6 +140,8 @@ public class Rental extends TableImpl<RentalRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class RentalPath extends Rental implements Path<RentalRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> RentalPath(Table<O> path, ForeignKey<O, RentalRecord> childPath, InverseForeignKey<O, RentalRecord> parentPath) {
             super(path, childPath, parentPath);
         }

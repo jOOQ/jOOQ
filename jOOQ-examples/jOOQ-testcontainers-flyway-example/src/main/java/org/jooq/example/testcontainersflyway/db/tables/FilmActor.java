@@ -111,6 +111,8 @@ public class FilmActor extends TableImpl<FilmActorRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class FilmActorPath extends FilmActor implements Path<FilmActorRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> FilmActorPath(Table<O> path, ForeignKey<O, FilmActorRecord> childPath, InverseForeignKey<O, FilmActorRecord> parentPath) {
             super(path, childPath, parentPath);
         }

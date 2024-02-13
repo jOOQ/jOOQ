@@ -117,6 +117,8 @@ public class City extends TableImpl<CityRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class CityPath extends City implements Path<CityRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> CityPath(Table<O> path, ForeignKey<O, CityRecord> childPath, InverseForeignKey<O, CityRecord> parentPath) {
             super(path, childPath, parentPath);
         }

@@ -107,6 +107,8 @@ public class Country extends TableImpl<CountryRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class CountryPath extends Country implements Path<CountryRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> CountryPath(Table<O> path, ForeignKey<O, CountryRecord> childPath, InverseForeignKey<O, CountryRecord> parentPath) {
             super(path, childPath, parentPath);
         }

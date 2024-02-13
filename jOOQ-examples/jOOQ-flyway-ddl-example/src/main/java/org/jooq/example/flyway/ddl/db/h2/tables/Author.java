@@ -121,6 +121,8 @@ public class Author extends TableImpl<AuthorRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class AuthorPath extends Author implements Path<AuthorRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> AuthorPath(Table<O> path, ForeignKey<O, AuthorRecord> childPath, InverseForeignKey<O, AuthorRecord> parentPath) {
             super(path, childPath, parentPath);
         }

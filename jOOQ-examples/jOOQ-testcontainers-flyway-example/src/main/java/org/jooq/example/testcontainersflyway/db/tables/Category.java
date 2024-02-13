@@ -108,6 +108,8 @@ public class Category extends TableImpl<CategoryRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class CategoryPath extends Category implements Path<CategoryRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> CategoryPath(Table<O> path, ForeignKey<O, CategoryRecord> childPath, InverseForeignKey<O, CategoryRecord> parentPath) {
             super(path, childPath, parentPath);
         }

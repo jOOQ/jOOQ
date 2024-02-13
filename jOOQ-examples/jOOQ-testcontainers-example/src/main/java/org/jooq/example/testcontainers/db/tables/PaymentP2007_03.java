@@ -130,6 +130,8 @@ public class PaymentP2007_03 extends TableImpl<PaymentP2007_03Record> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class PaymentP2007_03Path extends PaymentP2007_03 implements Path<PaymentP2007_03Record> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> PaymentP2007_03Path(Table<O> path, ForeignKey<O, PaymentP2007_03Record> childPath, InverseForeignKey<O, PaymentP2007_03Record> parentPath) {
             super(path, childPath, parentPath);
         }

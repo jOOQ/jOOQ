@@ -118,6 +118,8 @@ public class Inventory extends TableImpl<InventoryRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class InventoryPath extends Inventory implements Path<InventoryRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> InventoryPath(Table<O> path, ForeignKey<O, InventoryRecord> childPath, InverseForeignKey<O, InventoryRecord> parentPath) {
             super(path, childPath, parentPath);
         }

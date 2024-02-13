@@ -158,6 +158,8 @@ public class Staff extends TableImpl<StaffRecord> {
      * A subtype implementing {@link Path} for simplified path-based joins.
      */
     public static class StaffPath extends Staff implements Path<StaffRecord> {
+
+        private static final long serialVersionUID = 1L;
         public <O extends Record> StaffPath(Table<O> path, ForeignKey<O, StaffRecord> childPath, InverseForeignKey<O, StaffRecord> parentPath) {
             super(path, childPath, parentPath);
         }

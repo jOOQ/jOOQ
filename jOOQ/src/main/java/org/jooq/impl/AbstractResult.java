@@ -528,17 +528,20 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         writer.append(' ');
 
                     JSONValue.writeJSONString(field.getName(), writer);
-                    writer.append(',');
 
-                    if (format.format())
-                        writer.append(format.newline()).append(format.indentString(3));
+                    if (!field.getDataType().getQualifiedName().empty()) {
+                        writer.append(',');
 
-                    writer.append("\"type\":");
+                        if (format.format())
+                            writer.append(format.newline()).append(format.indentString(3));
 
-                    if (format.format())
-                        writer.append(' ');
+                        writer.append("\"type\":");
 
-                    JSONValue.writeJSONString(formatTypeName(field), writer);
+                        if (format.format())
+                            writer.append(' ');
+
+                        JSONValue.writeJSONString(formatTypeName(field), writer);
+                    }
 
                     if (format.format())
                         writer.append(format.newline()).append(format.indentString(2));
@@ -800,9 +803,14 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     writer.append(" name=\"");
                     writer.append(escapeXML(field.getName()));
                     writer.append("\"");
-                    writer.append(" type=\"");
-                    writer.append(escapeXML(formatTypeName(field)));
-                    writer.append("\"/>");
+
+                    if (!field.getDataType().getQualifiedName().empty()) {
+                        writer.append(" type=\"");
+                        writer.append(escapeXML(formatTypeName(field)));
+                        writer.append("\"");
+                    }
+
+                    writer.append("/>");
                 }
 
                 writer.append(newline).append(format.indentString(1)).append("</fields>");
@@ -1186,7 +1194,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     }
 
                     eField.setAttribute("name", field.getName());
-                    eField.setAttribute("type", formatTypeName(field));
+
+                    if (!field.getDataType().getQualifiedName().empty())
+                        eField.setAttribute("type", formatTypeName(field));
+
                     eFields.appendChild(eField);
                 }
 
@@ -1315,7 +1326,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 }
 
                 attrs.addAttribute("", "", "name", "CDATA", field.getName());
-                attrs.addAttribute("", "", "type", "CDATA", formatTypeName(field));
+
+                if (!field.getDataType().getQualifiedName().empty())
+                    attrs.addAttribute("", "", "type", "CDATA", formatTypeName(field));
 
                 handler.startElement("", "", "field", attrs);
                 handler.endElement("", "", "field");

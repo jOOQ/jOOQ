@@ -45,6 +45,7 @@ import static org.jooq.Name.Quoted.UNQUOTED;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.stringLiteral;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Arrays;
 
@@ -101,7 +102,7 @@ final class UnqualifiedName extends AbstractName {
         );
 
         ctx.quote(current);
-        ctx.literal(name);
+        ctx.literal(defaultIfNull(name, ""));
         ctx.quote(previous);
     }
 
@@ -174,9 +175,6 @@ final class UnqualifiedName extends AbstractName {
 
         // [#13499] Since QualifiedName and UnqualifiedName can be equal, both
         //          need the same hashCode() computation
-        if (name == null)
-            return 0;
-        else
-            return 31 * 1 + name.hashCode();
+        return 31 * 1 + StringUtils.defaultIfNull(name, "").hashCode();
     }
 }

@@ -104,6 +104,9 @@ implements
             case MYSQL:
                 return true;
 
+            case SQLITE:
+                return true;
+
 
 
             case POSTGRES:
@@ -137,6 +140,10 @@ implements
             case MARIADB:
             case MYSQL:
                 ctx.visit(function(N_JSON_LENGTH, getDataType(), field));
+                break;
+
+            case SQLITE:
+                ctx.visit(function(N_JSON_ARRAY_LENGTH, getDataType(), field));
                 break;
 
 

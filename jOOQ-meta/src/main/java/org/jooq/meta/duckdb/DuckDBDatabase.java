@@ -38,8 +38,11 @@
 
 package org.jooq.meta.duckdb;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.Records.mapping;
+import static org.jooq.SQLDialect.DUCKDB;
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.row;
@@ -55,6 +58,7 @@ import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_SCHEMAS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TABLES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TYPES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_VIEWS;
+// ...
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -100,6 +104,17 @@ import org.jooq.meta.XMLSchemaCollectionDefinition;
  * @author Lukas Eder
  */
 public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatabase {
+
+    private Boolean is0100;
+
+    boolean is0100() {
+
+        // [#16289] The COMMENTS fields were introduced with DuckDB 0.10.0
+        if (is0100 == null)
+            is0100 = configuredDialectIsNotFamilyAndSupports(asList(DUCKDB), () -> exists(DUCKDB_TABLES.COMMENT));
+
+        return is0100;
+    }
 
     @Override
     protected DSLContext create0() {
@@ -306,7 +321,10 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
                 DUCKDB_TABLES.DATABASE_NAME,
                 DUCKDB_TABLES.SCHEMA_NAME,
                 DUCKDB_TABLES.TABLE_NAME,
-                inline(TableType.TABLE.name()).as("table_type")
+                inline(TableType.TABLE.name()).as("table_type"),
+                is0100()
+                    ? DUCKDB_TABLES.COMMENT
+                    : inline(null, VARCHAR).as(DUCKDB_TABLES.COMMENT)
             )
             .from("{0}()", DUCKDB_TABLES)
             .where(row(DUCKDB_TABLES.DATABASE_NAME, DUCKDB_TABLES.SCHEMA_NAME).in(
@@ -317,7 +335,10 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
                     DUCKDB_VIEWS.DATABASE_NAME,
                     DUCKDB_VIEWS.SCHEMA_NAME,
                     DUCKDB_VIEWS.VIEW_NAME,
-                    inline(TableType.VIEW.name()).as("table_type")
+                    inline(TableType.VIEW.name()).as("table_type"),
+                    is0100()
+                        ? DUCKDB_VIEWS.COMMENT
+                        : inline(null, VARCHAR).as(DUCKDB_VIEWS.COMMENT)
                 )
                 .from("{0}()", DUCKDB_VIEWS)
                 .where(row(DUCKDB_VIEWS.DATABASE_NAME, DUCKDB_VIEWS.SCHEMA_NAME).in(
@@ -330,7 +351,8 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
             SchemaDefinition schema = catalog.getSchema(record.get(DUCKDB_TABLES.SCHEMA_NAME));
             String name = record.get(DUCKDB_TABLES.TABLE_NAME);
             TableType tableType = record.get("table_type", TableType.class);
-            result.add(new DuckDBTableDefinition(schema, name, "", tableType, null));
+            String comment = record.get(DUCKDB_TABLES.COMMENT);
+            result.add(new DuckDBTableDefinition(schema, name, comment, tableType, null));
         }
 
         return result;

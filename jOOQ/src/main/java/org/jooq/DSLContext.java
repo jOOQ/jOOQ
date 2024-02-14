@@ -9725,7 +9725,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnTable(@Stringly.Name String table);
 
     /**
@@ -9734,7 +9734,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnTable(Name table);
 
     /**
@@ -9743,7 +9743,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnTable(Table<?> table);
 
     /**
@@ -9752,7 +9752,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnView(@Stringly.Name String view);
 
     /**
@@ -9761,7 +9761,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnView(Name view);
 
     /**
@@ -9770,7 +9770,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnView(Table<?> view);
 
     /**
@@ -9806,7 +9806,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnColumn(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(@Stringly.Name String field);
 
     /**
@@ -9815,7 +9815,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnColumn(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(Name field);
 
     /**
@@ -9824,7 +9824,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnColumn(Field)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(Field<?> field);
 
     /**

@@ -17,7 +17,7 @@ import org.jooq.meta.duckdb.system.main.tables.DuckdbViews;
 /**
  * Convenience access to all tables in main.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
 
     /**

@@ -41,6 +41,7 @@ package org.jooq.meta.duckdb;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_COLUMNS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TYPES;
 
@@ -50,6 +51,7 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -89,7 +91,10 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
                     DUCKDB_TYPES.SCHEMA_NAME).as(DUCKDB_TYPES.SCHEMA_NAME),
                 when(
                     DUCKDB_TYPES.LOGICAL_TYPE.eq(inline("STRUCT")),
-                    DUCKDB_TYPES.TYPE_NAME).as(DUCKDB_TYPES.TYPE_NAME)
+                    DUCKDB_TYPES.TYPE_NAME).as(DUCKDB_TYPES.TYPE_NAME),
+                ((DuckDBDatabase) getDatabase()).is0100()
+                    ? DUCKDB_COLUMNS.COMMENT
+                    : inline(null, VARCHAR).as(DUCKDB_COLUMNS.COMMENT)
             )
             .from("{0}()", DUCKDB_COLUMNS)
                 .leftJoin(DUCKDB_TYPES)
@@ -120,7 +125,7 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
                 record.get(DUCKDB_COLUMNS.COLUMN_INDEX),
                 type,
                 false,
-                null
+                record.get(DUCKDB_COLUMNS.COMMENT)
             ));
 		}
 

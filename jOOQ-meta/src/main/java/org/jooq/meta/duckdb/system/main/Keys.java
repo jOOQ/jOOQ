@@ -19,7 +19,7 @@ import org.jooq.meta.duckdb.system.main.tables.DuckdbTypes;
  * A class modelling foreign key relationships and constraints of tables in
  * main.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Keys {
 
     // -------------------------------------------------------------------------

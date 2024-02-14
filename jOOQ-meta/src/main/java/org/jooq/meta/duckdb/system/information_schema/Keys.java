@@ -19,7 +19,7 @@ import org.jooq.meta.duckdb.system.information_schema.tables.Tables;
  * A class modelling foreign key relationships and constraints of tables in
  * information_schema.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Keys {
 
     // -------------------------------------------------------------------------

@@ -11,7 +11,7 @@ import org.jooq.meta.duckdb.system.information_schema.tables.Schemata;
 /**
  * Convenience access to all tables in information_schema.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
 
     /**

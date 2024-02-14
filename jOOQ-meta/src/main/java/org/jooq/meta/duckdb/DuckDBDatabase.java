@@ -42,7 +42,6 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.Records.mapping;
 import static org.jooq.SQLDialect.DUCKDB;
-// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.row;
@@ -52,13 +51,13 @@ import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_COLUMNS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_CONSTRAINTS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_DATABASES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_SCHEMAS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TABLES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TYPES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_VIEWS;
-// ...
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -74,9 +73,8 @@ import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
-// ...
-// ...
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.ArrayDefinition;
@@ -235,7 +233,41 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
     @Override
     public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
-        return null;
+        Table<?> t =
+            select(
+                DUCKDB_TABLES.DATABASE_NAME,
+                DUCKDB_TABLES.SCHEMA_NAME,
+                DUCKDB_TABLES.TABLE_NAME,
+                inline(null, VARCHAR).as(DUCKDB_COLUMNS.COLUMN_NAME),
+                DUCKDB_TABLES.COMMENT)
+            .from("{0}()", DUCKDB_TABLES)
+            .unionAll(
+                select(
+                    DUCKDB_VIEWS.DATABASE_NAME,
+                    DUCKDB_VIEWS.SCHEMA_NAME,
+                    DUCKDB_VIEWS.VIEW_NAME,
+                    inline(null, VARCHAR).as(DUCKDB_COLUMNS.COLUMN_NAME),
+                    DUCKDB_VIEWS.COMMENT)
+                .from("{0}()", DUCKDB_VIEWS))
+            .unionAll(
+                select(
+                    DUCKDB_COLUMNS.DATABASE_NAME,
+                    DUCKDB_COLUMNS.SCHEMA_NAME,
+                    DUCKDB_COLUMNS.TABLE_NAME,
+                    DUCKDB_COLUMNS.COLUMN_NAME,
+                    DUCKDB_COLUMNS.COMMENT)
+                .from("{0}()", DUCKDB_COLUMNS))
+            .asTable(DUCKDB_TABLES);
+
+        return create()
+            .select(
+                t.field(DUCKDB_TABLES.DATABASE_NAME),
+                t.field(DUCKDB_TABLES.SCHEMA_NAME),
+                t.field(DUCKDB_TABLES.TABLE_NAME),
+                t.field(DUCKDB_COLUMNS.COLUMN_NAME),
+                t.field(DUCKDB_TABLES.COMMENT))
+            .from(t)
+            .where(t.field(DUCKDB_TABLES.SCHEMA_NAME).in(schemas));
     }
 
 

@@ -9890,7 +9890,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 sb.append(DefaultDataType.class.getName());
                 sb.append(".getDefaultDataType(\"");
-                sb.append(escapeString(u != null ? u.toString() : t));
+                sb.append(escapeString(u != null && !u.empty() ? u.toString() : t));
                 sb.append("\")");
             }
 

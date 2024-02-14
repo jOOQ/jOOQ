@@ -87,21 +87,21 @@ public interface WindowExcludeStep<T> extends WindowFinalStep<T> {
      * Add an <code>EXCLUDE CURRENT ROW</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> excludeCurrentRow();
 
     /**
      * Add an <code>EXCLUDE GROUP</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> excludeGroup();
 
     /**
      * Add an <code>EXCLUDE TIES</code> clause.
      */
     @NotNull
-    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> excludeTies();
 
     /**

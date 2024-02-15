@@ -135,6 +135,11 @@ implements
                 break;
             }
 
+            case DUCKDB: {
+                ctx.visit(N_DATE_ADD).sql('(').visit(date).sql(", ").visit(K_INTERVAL).sql(' ').visit(inline(1)).sql(' ').visit(standardKeyword()).sql(" * ").visit(interval).sql(')');
+                break;
+            }
+
             case DERBY:
             case HSQLDB: {
                 switch (datePart) {

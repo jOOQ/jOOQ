@@ -44,6 +44,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -173,7 +174,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Select<R> except(Select<? extends R> select);
 
     /**
@@ -190,7 +191,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Select<R> exceptDistinct(Select<? extends R> select);
 
     /**
@@ -203,7 +204,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     Select<R> exceptAll(Select<? extends R> select);
 
     /**
@@ -223,7 +224,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Select<R> intersect(Select<? extends R> select);
 
     /**
@@ -240,7 +241,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Select<R> intersectDistinct(Select<? extends R> select);
 
     /**
@@ -253,7 +254,7 @@ extends
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     Select<R> intersectAll(Select<? extends R> select);
 
     /**

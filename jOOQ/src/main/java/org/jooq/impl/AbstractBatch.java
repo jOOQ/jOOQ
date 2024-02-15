@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.Tools.blocking;
 
@@ -56,7 +55,7 @@ import org.jooq.SQLDialect;
  */
 abstract class AbstractBatch implements Batch {
 
-    static final Set<SQLDialect> NO_SUPPORT_BATCH = SQLDialect.supportedBy(DUCKDB, TRINO);
+    static final Set<SQLDialect> NO_SUPPORT_BATCH = SQLDialect.supportedBy(TRINO);
     final Configuration          configuration;
     final DSLContext             dsl;
 

@@ -148,6 +148,7 @@ final class TimestampDiff<T> extends AbstractField<DayToSecond> implements QOM.T
                 ctx.visit(N_DATEDIFF).sql('(').visit(K_MILLISECOND).sql(", ").visit(timestamp2).sql(", ").visit(timestamp1).sql(')');
                 break;
 
+            case DUCKDB:
             case H2:
             case HSQLDB:
                 ctx.visit(N_DATEDIFF).sql("('ms', ").visit(timestamp2).sql(", ").visit(timestamp1).sql(')');

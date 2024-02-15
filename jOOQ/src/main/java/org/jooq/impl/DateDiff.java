@@ -209,8 +209,9 @@ final class DateDiff<T> extends AbstractField<Integer> implements UNotYetImpleme
                 return;
 
 
-
-
+            case DUCKDB:
+                ctx.visit(N_DATEDIFF).sql('(').visit(inline(p.name().toLowerCase())).sql(", ").visit(startDate).sql(", ").visit(endDate).sql(')');
+                return;
 
 
 

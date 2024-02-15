@@ -82,9 +82,6 @@ public class CodegenTask extends DefaultTask {
         this.providers = providers;
         this.codegenClasspath = codegenClasspath;
         this.named = new ArrayList<>();
-
-        // TODO: Can we optimise this without using internals?
-        getOutputs().upToDateWhen(task -> false);
     }
 
     @TaskAction

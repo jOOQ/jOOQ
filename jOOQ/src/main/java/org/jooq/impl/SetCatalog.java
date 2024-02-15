@@ -111,6 +111,7 @@ implements
 
 
             case DERBY:
+            case DUCKDB:
             case H2:
             case HSQLDB:
             case MARIADB:

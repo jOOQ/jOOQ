@@ -37,10 +37,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.impl.Keywords.K_EXCEPT;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -48,6 +50,7 @@ import org.jooq.Name;
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 // ...
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 // ...
 import org.jooq.impl.QOM.UnmodifiableList;
@@ -57,8 +60,10 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 final class QualifiedAsteriskImpl extends AbstractQueryPart implements QualifiedAsterisk {
 
-    private final Table<?>        table;
-    final QueryPartList<Field<?>> fields;
+    private static final Set<SQLDialect> NO_SUPPORT_FULLY_QUALIFIED_ASTERISKS = SQLDialect.supportedBy(DUCKDB);
+
+    private final Table<?>               table;
+    final QueryPartList<Field<?>>        fields;
 
     QualifiedAsteriskImpl(Table<?> table) {
         this(table, null);
@@ -83,7 +88,12 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
 
 
             default:
-                ctx.visit(table).sql('.').visit(AsteriskImpl.INSTANCE.get());
+                if (NO_SUPPORT_FULLY_QUALIFIED_ASTERISKS.contains(ctx.dialect()))
+                    ctx.qualify(false, c -> c.visit(table));
+                else
+                    ctx.visit(table);
+
+                ctx.sql('.').visit(AsteriskImpl.INSTANCE.get());
 
                 // [#7921] H2 has native support for EXCEPT. Emulations are implemented
                 //         in SelectQueryImpl

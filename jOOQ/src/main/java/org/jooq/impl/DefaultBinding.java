@@ -4797,14 +4797,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final Time get0(BindingGetResultSetContext<U> ctx) throws SQLException {
 
-            // SQLite's type affinity needs special care...
-            if (ctx.family() == SQLDialect.SQLITE) {
-                String time = ctx.resultSet().getString(ctx.index());
-                return time == null ? null : new Time(parse(Time.class, time));
-            }
+            switch (ctx.family()) {
 
-            else {
-                return ctx.resultSet().getTime(ctx.index());
+                // ResultSet.getTime() isn't implemented correctly, see: https://github.com/duckdb/duckdb/issues/10682
+                case DUCKDB: {
+                    String time = ctx.resultSet().getString(ctx.index());
+                    return time == null ? null : Convert.convert(time, Time.class);
+                }
+
+                // SQLite's type affinity needs special care...
+                case SQLITE: {
+                    String time = ctx.resultSet().getString(ctx.index());
+                    return time == null ? null : new Time(parse(Time.class, time));
+                }
+
+                default:
+                    return ctx.resultSet().getTime(ctx.index());
             }
         }
 

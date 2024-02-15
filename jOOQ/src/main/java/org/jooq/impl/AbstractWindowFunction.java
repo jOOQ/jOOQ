@@ -40,6 +40,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -100,7 +101,7 @@ implements
     WindowFunction<T>,
     ScopeMappable
 {
-    private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(DUCKDB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
     // Other attributes
     WindowSpecificationImpl              windowSpecification;

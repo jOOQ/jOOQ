@@ -7845,4 +7845,8 @@ final class Tools {
                 throw new IllegalArgumentException("Unsupported quantifier: " + q);
         }
     }
+
+    static final boolean sortable(Field<?> f) {
+        return !f.getDataType().isBinary();
+    }
 }

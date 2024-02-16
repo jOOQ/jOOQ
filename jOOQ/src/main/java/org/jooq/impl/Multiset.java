@@ -80,8 +80,10 @@ import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.fieldNames;
+import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.selectQueryImpl;
+import static org.jooq.impl.Tools.sortable;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
@@ -199,8 +201,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
                     default: {
                         if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
+                            List<Field<?>> l = map(select.getSelect(), f -> Tools.unalias(f));
+
                             JSONArrayAggReturningStep<JSON> returning =
-                                jsonArrayaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true, select.$distinct()).orderBy(select.$orderBy());
+                                jsonArrayaggEmulation(ctx, row(l), true, select.$distinct())
+                                    .orderBy(multisetCondition
+                                        ? map(filter(l, f -> sortable(f)), f -> f.sortDefault())
+                                        : select.$orderBy()
+                                    );
 
                             Select<?> s = select
                                 .$select(Arrays.asList(DSL.coalesce(
@@ -270,8 +278,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
                     default: {
                         if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
+                            List<Field<?>> l = map(select.getSelect(), f -> Tools.unalias(f));
+
                             JSONArrayAggReturningStep<JSONB> returning =
-                                jsonbArrayaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true, select.$distinct()).orderBy(select.$orderBy());
+                                jsonbArrayaggEmulation(ctx, row(l), true, select.$distinct())
+                                    .orderBy(multisetCondition
+                                        ? map(filter(l, f -> sortable(f)), f -> f.sortDefault())
+                                        : select.$orderBy()
+                                    );
 
                             Select<?> s = select
                                 .$select(Arrays.asList(DSL.coalesce(
@@ -339,11 +353,17 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
                     default: {
                         if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select) && !select.$distinct()) {
+                            List<Field<?>> l = map(select.getSelect(), f -> Tools.unalias(f));
+
                             acceptMultisetSubqueryForXMLEmulation(ctx, multisetCondition, (Select<Record1<XML>>)
                                 select
                                 .$select(asList(xmlelement(
                                     nResult(ctx),
-                                    xmlaggEmulation(ctx, row(map(select.getSelect(), f -> Tools.unalias(f))), true).orderBy(select.$orderBy())
+                                    xmlaggEmulation(ctx, row(l), true)
+                                        .orderBy(multisetCondition
+                                            ? map(filter(l, f -> sortable(f)), f -> f.sortDefault())
+                                            : select.$orderBy()
+                                        )
                                 )))
                                 .$orderBy(asList())
                             );

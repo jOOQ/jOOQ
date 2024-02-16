@@ -73,10 +73,10 @@ implements
 
     @Override
     public final Name append(Name name) {
-        if (empty())
-            return name;
-        else if (name == null || name.empty())
+        if (name == null || name.empty())
             return this;
+        else if (empty())
+            return name;
         else if (name instanceof UnqualifiedName last)
             return new QualifiedName(this, last);
         else

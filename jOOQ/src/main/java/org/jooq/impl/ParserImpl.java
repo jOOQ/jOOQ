@@ -10876,6 +10876,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return requireNotNull(YearToMonth.yearToMonth(string), message);
             else
                 return requireNotNull(YearToMonth.year(string), message);
+        else if (parseKeywordIf("YEAR_MONTH"))
+            return requireNotNull(YearToMonth.yearToMonth(string), message);
         else if (parseIntervalPrecisionKeywordIf("MONTH"))
             return requireNotNull(YearToMonth.month(string), message);
         else if (parseIntervalPrecisionKeywordIf("DAY"))
@@ -10890,6 +10892,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     throw expected("HOUR", "MINUTE", "SECOND");
             else
                 return requireNotNull(DayToSecond.day(string), message);
+        else if (parseKeywordIf("DAY_SECOND"))
+            return requireNotNull(DayToSecond.dayToSecond(string), message);
+        else if (parseKeywordIf("DAY_MINUTE"))
+            return requireNotNull(DayToSecond.dayToMinute(string), message);
+        else if (parseKeywordIf("DAY_HOUR"))
+            return requireNotNull(DayToSecond.dayToHour(string), message);
         else if (parseIntervalPrecisionKeywordIf("HOUR"))
             if (parseKeywordIf("TO"))
                 if (parseIntervalPrecisionKeywordIf("SECOND"))
@@ -10900,11 +10908,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     throw expected("MINUTE", "SECOND");
             else
                 return requireNotNull(DayToSecond.hour(string), message);
+        else if (parseKeywordIf("HOUR_SECOND"))
+            return requireNotNull(DayToSecond.hourToSecond(string), message);
+        else if (parseKeywordIf("HOUR_MINUTE"))
+            return requireNotNull(DayToSecond.hourToMinute(string), message);
         else if (parseIntervalPrecisionKeywordIf("MINUTE"))
             if (parseKeywordIf("TO") && parseIntervalPrecisionKeywordIf("SECOND"))
                 return requireNotNull(DayToSecond.minuteToSecond(string), message);
             else
                 return requireNotNull(DayToSecond.minute(string), message);
+        else if (parseKeywordIf("MINUTE_SECOND"))
+            return requireNotNull(DayToSecond.minuteToSecond(string), message);
         else if (parseIntervalPrecisionKeywordIf("SECOND"))
             return requireNotNull(DayToSecond.second(string), message);
 

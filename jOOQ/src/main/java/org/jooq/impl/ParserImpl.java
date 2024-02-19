@@ -5422,7 +5422,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         List<Field<?>> fields = null;
 
                         if (!ifColumnExists) {
-                            while (parseIf(',') || parseKeywordIf("DROP") && (parseKeywordIf("COLUMN") || true)) {
+                            while (parseIf(',')
+                                && (parseKeywordIf("DROP") || true) && (parseKeywordIf("COLUMN") || true)
+                                || parseKeywordIf("DROP") && (parseKeywordIf("COLUMN") || true)
+                            ) {
                                 if (fields == null) {
                                     fields = new ArrayList<>();
                                     fields.add(field);

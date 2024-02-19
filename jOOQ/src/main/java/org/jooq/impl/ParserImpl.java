@@ -12433,6 +12433,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else
                 ordered = distinct ? listAggDistinct(field) : listAgg(field);
 
+            if (parseKeywordIf("ORDER BY"))
+                ordered.withinGroupOrderBy(parseList(',', c -> c.parseSortField()));
+
             parse(')');
         }
         else

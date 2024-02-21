@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
@@ -104,7 +105,7 @@ final class RowIsNull extends AbstractCondition implements QOM.RowIsNull {
 
 
         if (EMULATE_NULL_ROW.contains(ctx.dialect()))
-            ctx.visit(allNull(row.fields()));
+            ctx.visit(allNull(asList(row.fields())));
         else
             acceptStandard(ctx);
     }

@@ -6613,6 +6613,20 @@ final class Tools {
         return !i.hasNext();
     }
 
+    static final boolean exactlyOne(Iterable<?> it) {
+        if (it == null)
+            return false;
+        else if (it instanceof Collection<?> c)
+            return c.size() == 1;
+
+        Iterator<?> i = it.iterator();
+        return i.hasNext() && true_(i.next()) && !i.hasNext();
+    }
+
+    static final boolean true_(Object o) {
+        return true;
+    }
+
     static final boolean isNotEmpty(Object[] array) {
         return !isEmpty(array);
     }

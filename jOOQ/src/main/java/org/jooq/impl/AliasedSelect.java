@@ -42,13 +42,21 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Names.NQ_SELECT;
 import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
+import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.fieldNames;
+import static org.jooq.impl.Tools.flattenCollection;
+import static org.jooq.impl.Tools.hasEmbeddedFields;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_ALIASES;
 
+import java.util.List;
+
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Select;
@@ -71,10 +79,6 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
     private final boolean   forceLimit;
     private final Name[]    aliases;
 
-    AliasedSelect(Select<R> query, boolean subquery, boolean ignoreOrderBy, boolean forceLimit) {
-        this(query, subquery, ignoreOrderBy, forceLimit, Tools.fieldNames(Tools.degree(query)));
-    }
-
     AliasedSelect(Select<R> query, boolean subquery, boolean ignoreOrderBy, boolean forceLimit, Name... aliases) {
         super(TableOptions.expression(), NQ_SELECT);
 
@@ -92,12 +96,17 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
     @Override
     public final Table<R> as(Name alias) {
         SelectQueryImpl<R> q = selectQueryImpl(query);
+        List<Field<?>> f = q.getSelect();
 
         // [#11473] In the presence of ORDER BY, AliasedSelect tends not to work
         //          correctly if ORDER BY references names available prior to the aliasing only
         // [#10521] TODO: Reuse avoidAliasPushdown here
-        if (q != null && (ignoreOrderBy && !q.getOrderBy().isEmpty() || Tools.hasEmbeddedFields(q.getSelect())))
-            return query.asTable(alias, aliases);
+        // [#16326] With embeddables, we might need to generate field names from a flattened collection
+        if (q != null && (ignoreOrderBy && !q.getOrderBy().isEmpty() || hasEmbeddedFields(f) || isEmpty(aliases)))
+            if (isEmpty(aliases))
+                return query.asTable(alias, fieldNames(collect(flattenCollection(f)).size()));
+            else
+                return query.asTable(alias, aliases);
         else
             return new TableAlias<>(this, alias, c -> true);
     }

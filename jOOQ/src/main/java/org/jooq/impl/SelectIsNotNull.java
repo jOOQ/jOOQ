@@ -42,10 +42,11 @@ import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.allNotNull;
+import static org.jooq.impl.Tools.exactlyOne;
+import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Clause;
-import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Select;
@@ -78,7 +79,8 @@ final class SelectIsNotNull extends AbstractCondition implements QOM.SelectIsNot
         if (SelectIsNull.EMULATE_NULL_QUERY.contains(ctx.dialect())) {
 
             // [#11011] Avoid the RVE IS NULL emulation for queries of degree 1
-            if (select.getSelect().size() == 1) {
+            // [#16319] Flatten embeddables to find collection size
+            if (exactlyOne(flattenCollection(select.getSelect()))) {
                 acceptStandard(ctx);
             }
             else {

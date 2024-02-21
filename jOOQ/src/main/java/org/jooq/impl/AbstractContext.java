@@ -52,6 +52,9 @@ import static org.jooq.impl.Tools.DATAKEY_RESET_IN_SUBQUERY_SCOPE;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.lazy;
+import static org.jooq.impl.Tools.traverseJoins;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
@@ -98,6 +101,9 @@ import org.jooq.conf.RenderImplicitJoinType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
+import org.jooq.exception.DataAccessException;
+import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.impl.Tools.DataKeyScopeStackPart;
 import org.jooq.tools.StringUtils;
@@ -244,7 +250,24 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final C visit(Condition part) {
-        return visit((QueryPart) part);
+
+        // [#16310] The MULTISET content flag needs to be reset for any non
+        //          multiset projection context. For example, in any Condition.
+        //          While Conditions can be projected, they're projecting a BOOLEAN,
+        //          not nested records or collections
+        if (TRUE.equals(data(DATA_MULTISET_CONTENT))) {
+            try {
+                data(DATA_MULTISET_CONTENT, false);
+                visit((QueryPart) part);
+            }
+            finally {
+                data(DATA_MULTISET_CONTENT, true);
+            }
+        }
+        else
+            visit((QueryPart) part);
+
+        return (C) this;
     }
 
     @Override

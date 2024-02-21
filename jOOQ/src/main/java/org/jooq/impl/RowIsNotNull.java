@@ -37,11 +37,11 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Tools.allNotNull;
 
 import org.jooq.Clause;
-import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Row;
@@ -71,7 +71,7 @@ final class RowIsNotNull extends AbstractCondition implements QOM.RowIsNotNull {
 
 
         if (RowIsNull.EMULATE_NULL_ROW.contains(ctx.dialect()))
-            ctx.visit(allNotNull(row.fields()));
+            ctx.visit(allNotNull(asList(row.fields())));
         else
             acceptStandard(ctx);
     }

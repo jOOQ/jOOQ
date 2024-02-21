@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
@@ -127,7 +128,7 @@ final class SelectIsNull extends AbstractCondition implements QOM.SelectIsNull {
             else {
                 Name[] n = fieldNames(f.size());
                 Table<?> t = new AliasedSelect<>(select, true, true, false, n).as("t");
-                ctx.visit(inline(1).eq(selectCount().from(t).where(allNull(fieldsByName(n)))));
+                ctx.visit(inline(1).eq(selectCount().from(t).where(allNull(asList(fieldsByName(n))))));
             }
         }
         else

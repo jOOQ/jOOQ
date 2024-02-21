@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
@@ -48,6 +49,7 @@ import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.visitSubquery;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Clause;
@@ -93,7 +95,7 @@ final class SelectIsNotNull extends AbstractCondition implements QOM.SelectIsNot
             else {
                 Name[] n = fieldNames(f.size());
                 Table<?> t = new AliasedSelect<>(select, true, true, false, n).as("t");
-                ctx.visit(inline(1).eq(selectCount().from(t).where(allNotNull(fieldsByName(n)))));
+                ctx.visit(inline(1).eq(selectCount().from(t).where(allNotNull(asList(fieldsByName(n))))));
             }
         }
         else

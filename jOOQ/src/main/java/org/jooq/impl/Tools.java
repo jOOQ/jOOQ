@@ -2350,11 +2350,11 @@ final class Tools {
         return null;
     }
 
-    static final Condition allNull(Field<?>[] fields) {
+    static final Condition allNull(Collection<? extends Field<?>> fields) {
         return DSL.and(map(fields, Field::isNull));
     }
 
-    static final Condition allNotNull(Field<?>[] fields) {
+    static final Condition allNotNull(Collection<? extends Field<?>> fields) {
         return DSL.and(map(fields, Field::isNotNull));
     }
 

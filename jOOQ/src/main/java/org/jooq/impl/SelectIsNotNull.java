@@ -42,13 +42,19 @@ import static org.jooq.impl.DSL.selectCount;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.allNotNull;
-import static org.jooq.impl.Tools.exactlyOne;
+import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.fieldNames;
+import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.visitSubquery;
 
+import java.util.List;
+
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.Function1;
+import org.jooq.Name;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -80,12 +86,14 @@ final class SelectIsNotNull extends AbstractCondition implements QOM.SelectIsNot
 
             // [#11011] Avoid the RVE IS NULL emulation for queries of degree 1
             // [#16319] Flatten embeddables to find collection size
-            if (exactlyOne(flattenCollection(select.getSelect()))) {
+            List<Field<?>> f = collect(flattenCollection(select.getSelect()));
+            if (f.size() == 1) {
                 acceptStandard(ctx);
             }
             else {
-                Table<?> t = new AliasedSelect<>(select, true, true, false).as("t");
-                ctx.visit(inline(1).eq(selectCount().from(t).where(allNotNull(t.fields()))));
+                Name[] n = fieldNames(f.size());
+                Table<?> t = new AliasedSelect<>(select, true, true, false, n).as("t");
+                ctx.visit(inline(1).eq(selectCount().from(t).where(allNotNull(fieldsByName(n)))));
             }
         }
         else

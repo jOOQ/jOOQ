@@ -42,6 +42,7 @@ import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Tools.allNotNull;
 
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Row;

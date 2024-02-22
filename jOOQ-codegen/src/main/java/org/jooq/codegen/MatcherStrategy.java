@@ -776,7 +776,13 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
         for (MatchersFieldType fields : fields(definition)) {
-            String result = match(definition, fields.getExpression(), fields.getFieldMember());
+            String result = null;
+
+            switch (mode) {
+                case DAO:     result = match(definition, fields.getExpression(), fields.getDaoMember()); break;
+                case DEFAULT:
+                default:      result = match(definition, fields.getExpression(), fields.getFieldMember()); break;
+            }
 
             if (result != null)
                 return result;

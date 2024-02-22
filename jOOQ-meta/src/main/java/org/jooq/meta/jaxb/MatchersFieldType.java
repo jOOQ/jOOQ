@@ -35,6 +35,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
     protected MatcherRule fieldMember;
     protected MatcherRule fieldSetter;
     protected MatcherRule fieldGetter;
+    protected MatcherRule daoMember;
     @XmlElement(defaultValue = "false")
     protected Boolean recordSetterOverride = false;
     @XmlElement(defaultValue = "false")
@@ -132,6 +133,22 @@ public class MatchersFieldType implements Serializable, XMLAppendable
      */
     public void setFieldGetter(MatcherRule value) {
         this.fieldGetter = value;
+    }
+
+    /**
+     * This rule influences the naming of generated members and member suffixes in DAO methods corresponding to this {@link org.jooq.Field}
+     * 
+     */
+    public MatcherRule getDaoMember() {
+        return daoMember;
+    }
+
+    /**
+     * This rule influences the naming of generated members and member suffixes in DAO methods corresponding to this {@link org.jooq.Field}
+     * 
+     */
+    public void setDaoMember(MatcherRule value) {
+        this.daoMember = value;
     }
 
     /**
@@ -396,6 +413,15 @@ public class MatchersFieldType implements Serializable, XMLAppendable
     }
 
     /**
+     * This rule influences the naming of generated members and member suffixes in DAO methods corresponding to this {@link org.jooq.Field}
+     * 
+     */
+    public MatchersFieldType withDaoMember(MatcherRule value) {
+        setDaoMember(value);
+        return this;
+    }
+
+    /**
      * Whether an "override" modifier in generated record setters should be generated.
      * 
      */
@@ -483,6 +509,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
         builder.append("fieldMember", fieldMember);
         builder.append("fieldSetter", fieldSetter);
         builder.append("fieldGetter", fieldGetter);
+        builder.append("daoMember", daoMember);
         builder.append("recordSetterOverride", recordSetterOverride);
         builder.append("recordGetterOverride", recordGetterOverride);
         builder.append("recordMemberOverride", recordMemberOverride);
@@ -555,6 +582,15 @@ public class MatchersFieldType implements Serializable, XMLAppendable
             }
         } else {
             if (!fieldGetter.equals(other.fieldGetter)) {
+                return false;
+            }
+        }
+        if (daoMember == null) {
+            if (other.daoMember!= null) {
+                return false;
+            }
+        } else {
+            if (!daoMember.equals(other.daoMember)) {
                 return false;
             }
         }
@@ -651,6 +687,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
         result = ((prime*result)+((fieldMember == null)? 0 :fieldMember.hashCode()));
         result = ((prime*result)+((fieldSetter == null)? 0 :fieldSetter.hashCode()));
         result = ((prime*result)+((fieldGetter == null)? 0 :fieldGetter.hashCode()));
+        result = ((prime*result)+((daoMember == null)? 0 :daoMember.hashCode()));
         result = ((prime*result)+((recordSetterOverride == null)? 0 :recordSetterOverride.hashCode()));
         result = ((prime*result)+((recordGetterOverride == null)? 0 :recordGetterOverride.hashCode()));
         result = ((prime*result)+((recordMemberOverride == null)? 0 :recordMemberOverride.hashCode()));

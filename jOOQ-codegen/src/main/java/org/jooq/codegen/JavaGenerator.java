@@ -5254,8 +5254,7 @@ public class JavaGenerator extends AbstractGenerator {
         columnLoop:
         for (Definition column : embeddablesAndUnreplacedColumns) {
             final String colName = column.getOutputName();
-            final String colClass = getStrategy().getJavaClassName(column);
-            final String colMemberUC = StringUtils.toUC(getStrategy().getJavaMemberName(column), getStrategy().getTargetLocale());
+            final String colMemberUC = StringUtils.toUC(getStrategy().getJavaMemberName(column, Mode.DAO), getStrategy().getTargetLocale());
             final String colTypeFull = getJavaType(column, out, Mode.POJO);
             final String colTypeRecord = out.ref(getJavaType(column, out, Mode.RECORD));
             final String colType = out.ref(colTypeFull);
@@ -5282,7 +5281,7 @@ public class JavaGenerator extends AbstractGenerator {
                         visibility(), colMemberUC, colType, colType, List.class, pType, colIdentifier, colTypeRecord, colTypeRecord);
                 else
                     out.println("%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, lowerInclusive, upperInclusive)",
-                        visibility(), colClass, colType, colType, List.class, pType, colIdentifier);
+                        visibility(), colMemberUC, colType, colType, List.class, pType, colIdentifier);
             }
             else if (kotlin) {
                 if (column instanceof EmbeddableDefinition) {
@@ -5293,7 +5292,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final String nullability = kotlinNullability(out, (TypedElementDefinition<?>) column, Mode.POJO);
 
                     out.println("%sfun fetchRangeOf%s(lowerInclusive: %s%s, upperInclusive: %s%s): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
-                        visibility(), colClass, colType, nullability, colType, nullability, out.ref(KLIST), pType, colIdentifier);
+                        visibility(), colMemberUC, colType, nullability, colType, nullability, out.ref(KLIST), pType, colIdentifier);
                 }
             }
             else {
@@ -5304,7 +5303,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("return fetchRange(%s, new %s(lowerInclusive), new %s(upperInclusive));", colIdentifier, colTypeRecord, colTypeRecord);
                 }
                 else {
-                    out.println("%s%s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", visibility(), List.class, pType, colClass, colType, colType);
+                    out.println("%s%s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", visibility(), List.class, pType, colMemberUC, colType, colType);
                     out.println("return fetchRange(%s, lowerInclusive, upperInclusive);", colIdentifier);
                 }
 
@@ -5322,7 +5321,7 @@ public class JavaGenerator extends AbstractGenerator {
                         visibility(), colMemberUC, colType, List.class, pType, colIdentifier, colTypeRecord);
                 else
                     out.println("%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values:_*)",
-                        visibility(), colClass, colType, List.class, pType, colIdentifier);
+                        visibility(), colMemberUC, colType, List.class, pType, colIdentifier);
             }
             else if (kotlin) {
                 String toTypedArray = PRIMITIVE_WRAPPERS.contains(colTypeFull) ? ".toTypedArray()" : "";
@@ -5332,7 +5331,7 @@ public class JavaGenerator extends AbstractGenerator {
                         visibility(), colMemberUC, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord);
                 else
                     out.println("%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, *values%s)",
-                        visibility(), colClass, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
+                        visibility(), colMemberUC, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
             }
             else {
                 printNonnullAnnotation(out);
@@ -5347,7 +5346,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("return fetch(%s, records);", colIdentifier);
                 }
                 else {
-                    out.println("%s%s<%s> fetchBy%s(%s... values) {", visibility(), List.class, pType, colClass, colType);
+                    out.println("%s%s<%s> fetchBy%s(%s... values) {", visibility(), List.class, pType, colMemberUC, colType);
                     out.println("return fetch(%s, values);", colIdentifier);
                 }
 
@@ -5366,14 +5365,14 @@ public class JavaGenerator extends AbstractGenerator {
                             out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
 
                         if (scala) {
-                            out.println("%sdef fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", visibility(), colClass, colType, pType, colIdentifier);
+                            out.println("%sdef fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", visibility(), colMemberUC, colType, pType, colIdentifier);
                         }
                         else if (kotlin) {
-                            out.println("%sfun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", visibility(), colClass, colType, pType, colIdentifier);
+                            out.println("%sfun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", visibility(), colMemberUC, colType, pType, colIdentifier);
                         }
                         else {
                             printNullableAnnotation(out);
-                            out.println("%s%s fetchOneBy%s(%s value) {", visibility(), pType, colClass, colType);
+                            out.println("%s%s fetchOneBy%s(%s value) {", visibility(), pType, colMemberUC, colType);
                             out.println("return fetchOne(%s, value);", colIdentifier);
                             out.println("}");
 
@@ -5381,7 +5380,7 @@ public class JavaGenerator extends AbstractGenerator {
                                 out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
 
                             printNonnullAnnotation(out);
-                            out.println("%s%s<%s> fetchOptionalBy%s(%s value) {", visibility(), Optional.class, pType, colClass, colType);
+                            out.println("%s%s<%s> fetchOptionalBy%s(%s value) {", visibility(), Optional.class, pType, colMemberUC, colType);
                             out.println("return fetchOptional(%s, value);", colIdentifier);
                             out.println("}");
                         }

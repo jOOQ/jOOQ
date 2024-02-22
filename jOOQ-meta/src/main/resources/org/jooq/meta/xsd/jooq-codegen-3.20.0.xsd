@@ -519,6 +519,10 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated getters (e.g. in {@link org.jooq.TableRecord} and/or POJOs) corresponding to this {@link org.jooq.Field}]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>      
       
+      <element name="daoMember" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of generated members and member suffixes in DAO methods corresponding to this {@link org.jooq.Field}]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="recordSetterOverride" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether an "override" modifier in generated record setters should be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

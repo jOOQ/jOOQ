@@ -53,6 +53,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Clause;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;

@@ -82,21 +82,21 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     @Override
     public final File getFileRoot() {
         String dir = getTargetDirectory();
-        String pkg = patchPackageName(getTargetPackage().replaceAll("\\.", "/"));
+        String pkg = unescape(getTargetPackage().replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg);
     }
 
     @Override
     public final File getGlobalNamesFile(Definition container, Class<? extends Definition> objectType) {
         String dir = getTargetDirectory();
-        String pkg = patchPackageName(getGlobalNamesJavaPackageName(container, objectType).replaceAll("\\.", "/"));
+        String pkg = unescape(getGlobalNamesJavaPackageName(container, objectType).replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg, getGlobalNamesFileName(container, objectType));
     }
 
     @Override
     public final File getGlobalReferencesFile(Definition container, Class<? extends Definition> objectType) {
         String dir = getTargetDirectory();
-        String pkg = patchPackageName(getGlobalReferencesJavaPackageName(container, objectType).replaceAll("\\.", "/"));
+        String pkg = unescape(getGlobalReferencesJavaPackageName(container, objectType).replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg, getGlobalReferencesFileName(container, objectType));
     }
 
@@ -108,21 +108,25 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     @Override
     public final File getFile(Definition definition, Mode mode) {
         String dir = getTargetDirectory();
-        String pkg = patchPackageName(getJavaPackageName(definition, mode).replaceAll("\\.", "/"));
+        String pkg = unescape(getJavaPackageName(definition, mode).replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg, getFileName(definition, mode));
     }
 
     @Override
     public final File getFile(String fileName) {
         String dir = getTargetDirectory();
-        String pkg = patchPackageName(getTargetPackage().replaceAll("\\.", "/"));
+        String pkg = unescape(getTargetPackage().replaceAll("\\.", "/"));
         return new File(dir + "/" + pkg, fileName);
     }
 
-    private final String patchPackageName(String pkg) {
+    final String unescape(String pkg) {
+        return unescape(getTargetLanguage(), pkg);
+    }
+
+    static final String unescape(Language language, String pkg) {
         // [#13866] Backticks that were used to escape identifiers conflicting
         //          with keywords shouldn't appear in file names.
-        switch (getTargetLanguage()) {
+        switch (language) {
             case KOTLIN:
             case SCALA:
                 if (pkg.contains("`"))
@@ -130,6 +134,7 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
 
                 break;
         }
+
         return pkg;
     }
 

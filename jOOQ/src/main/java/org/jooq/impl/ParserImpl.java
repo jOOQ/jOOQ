@@ -13449,9 +13449,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseIf('e', false) || parseIf('E', false)) {
             parseIf('-', false);
+            int p0 = position();
             parseDigits();
 
+            // [#16330] Support implicit 0 exponents (e.g. 0e or 0.0e as supported by SQL Server)
             String s = substring(p, position());
+            if (position() == p0)
+                s = s + "0";
+
             parseWhitespaceIf();
             return sign == Sign.MINUS ? -Double.parseDouble(s) : Double.parseDouble(s);
         }

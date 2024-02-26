@@ -351,7 +351,7 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
     @NotNull
     final String getBindVariable(Context<?> ctx) {
         if (ctx.paramType() == NAMED || ctx.paramType() == NAMED_OR_INLINED) {
-            int index = ctx.nextIndex();
+            int index = ctx.peekIndex();
             String prefix = defaultIfNull(ctx.settings().getRenderNamedParamPrefix(), ":");
 
             if (StringUtils.isBlank(getParamName()))

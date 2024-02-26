@@ -738,6 +738,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             Param<?> param = (Param<?>) internal;
 
             if (!param.isInline()) {
+
+                // [#16340] Increment index even if we don't need it internally, while rendering
+                nextIndex();
                 bindValues.add(param);
 
                 Integer threshold = settings().getInlineThreshold();

@@ -70,6 +70,9 @@ public class Settings
     @XmlElement(defaultValue = "false")
     protected Boolean renderFormatted = false;
     protected RenderFormatting renderFormatting;
+    @XmlElement(defaultValue = "NEVER")
+    @XmlSchemaType(name = "string")
+    protected AutoAliasExpressions renderAutoAliasedDerivedTableExpressions = AutoAliasExpressions.NEVER;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected RenderOptionalKeyword renderOptionalAssociativityParentheses = RenderOptionalKeyword.DEFAULT;
@@ -892,6 +895,26 @@ public class Settings
      */
     public void setRenderFormatting(RenderFormatting value) {
         this.renderFormatting = value;
+    }
+
+    /**
+     * Whether to auto-alias expressions in derived tables.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public AutoAliasExpressions getRenderAutoAliasedDerivedTableExpressions() {
+        return renderAutoAliasedDerivedTableExpressions;
+    }
+
+    /**
+     * Whether to auto-alias expressions in derived tables.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setRenderAutoAliasedDerivedTableExpressions(AutoAliasExpressions value) {
+        this.renderAutoAliasedDerivedTableExpressions = value;
     }
 
     /**
@@ -6818,6 +6841,17 @@ public class Settings
     }
 
     /**
+     * Whether to auto-alias expressions in derived tables.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withRenderAutoAliasedDerivedTableExpressions(AutoAliasExpressions value) {
+        setRenderAutoAliasedDerivedTableExpressions(value);
+        return this;
+    }
+
+    /**
      * Whether to render optional parentheses to make associativity explicit, e.g. <code>((a + b) + c)</code> instead of (a + b + c).
      * 
      */
@@ -9421,6 +9455,7 @@ public class Settings
         builder.append("renderLocale", renderLocale);
         builder.append("renderFormatted", renderFormatted);
         builder.append("renderFormatting", renderFormatting);
+        builder.append("renderAutoAliasedDerivedTableExpressions", renderAutoAliasedDerivedTableExpressions);
         builder.append("renderOptionalAssociativityParentheses", renderOptionalAssociativityParentheses);
         builder.append("renderOptionalAsKeywordForTableAliases", renderOptionalAsKeywordForTableAliases);
         builder.append("renderOptionalAsKeywordForFieldAliases", renderOptionalAsKeywordForFieldAliases);
@@ -9775,6 +9810,15 @@ public class Settings
             }
         } else {
             if (!renderFormatting.equals(other.renderFormatting)) {
+                return false;
+            }
+        }
+        if (renderAutoAliasedDerivedTableExpressions == null) {
+            if (other.renderAutoAliasedDerivedTableExpressions!= null) {
+                return false;
+            }
+        } else {
+            if (!renderAutoAliasedDerivedTableExpressions.equals(other.renderAutoAliasedDerivedTableExpressions)) {
                 return false;
             }
         }
@@ -11689,6 +11733,7 @@ public class Settings
         result = ((prime*result)+((renderLocale == null)? 0 :renderLocale.hashCode()));
         result = ((prime*result)+((renderFormatted == null)? 0 :renderFormatted.hashCode()));
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
+        result = ((prime*result)+((renderAutoAliasedDerivedTableExpressions == null)? 0 :renderAutoAliasedDerivedTableExpressions.hashCode()));
         result = ((prime*result)+((renderOptionalAssociativityParentheses == null)? 0 :renderOptionalAssociativityParentheses.hashCode()));
         result = ((prime*result)+((renderOptionalAsKeywordForTableAliases == null)? 0 :renderOptionalAsKeywordForTableAliases.hashCode()));
         result = ((prime*result)+((renderOptionalAsKeywordForFieldAliases == null)? 0 :renderOptionalAsKeywordForFieldAliases.hashCode()));

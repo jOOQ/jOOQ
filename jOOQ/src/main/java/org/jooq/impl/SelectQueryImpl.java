@@ -103,7 +103,6 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -229,7 +228,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT_WITHOUT_INSE
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_INTO_CLAUSE;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
@@ -248,7 +246,6 @@ import static org.jooq.impl.Transformations.transformGroupByColumnIndex;
 import static org.jooq.impl.Transformations.transformInlineCTE;
 import static org.jooq.impl.Transformations.transformQualify;
 import static org.jooq.impl.Transformations.transformRownum;
-import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -269,8 +266,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import org.jooq.Asterisk;
 import org.jooq.Clause;
@@ -324,8 +319,8 @@ import org.jooq.TableRecord;
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
+import org.jooq.conf.AutoAliasExpressions;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.AbstractContext.JoinNode;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.QOM.CompareCondition;
@@ -1746,14 +1741,28 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         Object renderTrailingLimit = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
         Name[] selectAliases = (Name[]) context.data(DATA_SELECT_ALIASES);
 
+
+
+
+
+
+
+
+
+
+
         try {
             List<Field<?>> originalFields = null;
             List<Field<?>> alternativeFields = null;
 
             if (selectAliases != null) {
                 context.data().remove(DATA_SELECT_ALIASES);
+
+
+
+                Name[] a = selectAliases;
                 alternativeFields = map(originalFields = getSelect(),
-                    (f, i) -> i < selectAliases.length ? f.as(selectAliases[i]) : f
+                    (f, i) -> i < a.length && a[i] != null ? f.as(a[i]) : f
                 );
             }
 

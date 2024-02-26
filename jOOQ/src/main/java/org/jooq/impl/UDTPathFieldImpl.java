@@ -89,6 +89,7 @@ implements
     UDTPathField<R, U, T>,
     SimpleQueryPart,
     TypedReference<T>,
+    NamedField<T>,
     ScopeMappable,
     UEmpty
 {

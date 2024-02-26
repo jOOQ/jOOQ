@@ -44,7 +44,13 @@ import org.jooq.SQL;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UEmptyCondition;
 
-final class SQLCondition extends AbstractCondition implements UEmptyCondition {
+final class SQLCondition
+extends
+    AbstractCondition
+implements
+    UEmptyCondition,
+    NamedField<Boolean>
+{
 
     private final SQL delegate;
 

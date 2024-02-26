@@ -89,6 +89,7 @@ implements
     TableField<R, T>,
     SimpleQueryPart,
     TypedReference<T>,
+    NamedField<T>,
     ScopeMappable,
     UEmpty
 {

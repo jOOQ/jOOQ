@@ -113,6 +113,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.impl.QOM.UEmpty;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -421,8 +422,22 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
             else
                 ctx.sql('(');
 
-        if (nestedJoinTable && NO_SUPPORT_ALIASED_JOIN_TABLES.contains(ctx.dialect()))
+        if (nestedJoinTable && NO_SUPPORT_ALIASED_JOIN_TABLES.contains(ctx.dialect())) {
             ctx.visit(select(asterisk()).from((Table<?>) wrapped));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         else
             ctx.visit(wrapped);
 

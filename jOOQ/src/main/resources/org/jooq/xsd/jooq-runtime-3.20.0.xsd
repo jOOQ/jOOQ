@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
   xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.19.0.xsd"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.20.0.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.19.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.20.0.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -128,6 +128,12 @@ providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> 
 
       <element name="renderFormatting" type="jooq-runtime:RenderFormatting" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All sorts of formatting flags / settings.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="renderAutoAliasedDerivedTableExpressions" type="jooq-runtime:AutoAliasExpressions" minOccurs="0" maxOccurs="1" default="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to auto-alias expressions in derived tables.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="renderOptionalAssociativityParentheses" type="jooq-runtime:RenderOptionalKeyword" minOccurs="0" maxOccurs="1" default="DEFAULT">
@@ -2451,6 +2457,20 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       <enumeration value="WHEN_NEEDED"/>
       
       <!-- Always fetch trigger values. -->
+      <enumeration value="ALWAYS"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="AutoAliasExpressions">
+    <restriction base="string">
+    
+      <!-- Never auto-alias expressions. -->
+      <enumeration value="NEVER"/>
+      
+      <!-- Auto-alias only unnamed expressions. -->
+      <enumeration value="UNNAMED"/>
+      
+      <!-- Always auto-alias expressions. -->
       <enumeration value="ALWAYS"/>
     </restriction>
   </simpleType>

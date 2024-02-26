@@ -529,6 +529,13 @@ final class Tools {
 
 
 
+
+
+
+
+
+
+
         /**
          * [#1629] The {@link Connection#getAutoCommit()} flag value before starting
          * a new transaction.

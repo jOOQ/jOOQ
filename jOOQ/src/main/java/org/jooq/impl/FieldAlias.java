@@ -44,7 +44,6 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
-import org.jooq.Table;
 // ...
 
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +51,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class FieldAlias<T> extends AbstractField<T> implements QOM.FieldAlias<T>, SimpleCheckQueryPart {
+final class FieldAlias<T>
+extends
+    AbstractField<T>
+implements
+    QOM.FieldAlias<T>,
+    SimpleCheckQueryPart,
+    NamedField<T>
+{
 
     private final Alias<Field<T>> alias;
 

@@ -3995,6 +3995,11 @@ final class Tools {
         return true;
     }
 
+    static final boolean hasName(Context<?> ctx, Field<?> field) {
+        return field instanceof NamedField
+            || field instanceof NamedCheckField && ((NamedCheckField<?>) field).hasName(ctx);
+    }
+
     static final boolean isRendersSeparator(QueryPart part) {
         return part instanceof SeparatedQueryPart && ((SeparatedQueryPart) part).rendersSeparator();
     }

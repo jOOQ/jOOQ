@@ -69,6 +69,7 @@ final class FieldCondition
 extends
     AbstractCondition
 implements
+    NamedCheckField<Boolean>,
     QOM.FieldCondition
 {
 
@@ -124,6 +125,11 @@ implements
 
 
 
+
+    @Override
+    public final boolean hasName(Context<?> ctx) {
+        return Tools.hasName(ctx, field);
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

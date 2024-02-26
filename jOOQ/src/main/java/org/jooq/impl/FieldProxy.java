@@ -60,6 +60,7 @@ extends
 implements
     TableField<Record, T>,
     UProxy<Field<T>>,
+    NamedCheckField<T>,
     ScopeMappable
 {
 
@@ -94,6 +95,11 @@ implements
 
         this.delegate = delegate;
         this.position = position;
+    }
+
+    @Override
+    public final boolean hasName(Context<?> ctx) {
+        return Tools.hasName(ctx, delegate);
     }
 
     final int position() {

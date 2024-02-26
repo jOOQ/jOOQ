@@ -58,6 +58,7 @@ extends
     AbstractField<T>
 implements
     AutoAlias<Field<T>>,
+    NamedCheckField<T>,
     QOM.Coerce<T>
 {
 
@@ -67,6 +68,11 @@ implements
         super(field.getQualifiedName(), type);
 
         this.field = (AbstractField<?>) Tools.uncoerce(field);
+    }
+
+    @Override
+    public final boolean hasName(Context<?> ctx) {
+        return Tools.hasName(ctx, field);
     }
 
     @Override

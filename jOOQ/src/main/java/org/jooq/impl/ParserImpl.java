@@ -13436,7 +13436,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         switch (character()) {
             case '?':
                 parse('?');
-                paramName = "" + bindIndex;
+                paramName = null;
                 break;
 
             default:
@@ -13469,10 +13469,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (binding instanceof Field<?> f)
             return f;
 
-        Param<?> param = DSL.param(paramName, binding);
+        Param<?> param = paramName != null
+            ? DSL.param(paramName, binding)
+            : DSL.val(binding);
 
         if (bindParamListener != null)
-            bindParams.put(paramName, param);
+            bindParams.put(paramName != null ? paramName : ("" + bindIndex), param);
 
         return param;
     }

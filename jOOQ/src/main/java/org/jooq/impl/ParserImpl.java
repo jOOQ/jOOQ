@@ -15381,9 +15381,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // [#11054] Use a VisitListener to find actual Params in the expression tree,
             //          which may have more refined DataTypes attached to them, from context
             dsl.configuration().deriveAppending(onVisitStart(ctx -> {
-                if (ctx.queryPart() instanceof Param<?> p)
-                    if (!params.containsKey(p.getParamName()))
-                        params.put(p.getParamName(), p);
+                if (ctx.queryPart() instanceof Param<?> p) {
+                    if (!p.isInline()) {
+                        String name = p.getParamName();
+
+                        if (name == null)
+                            name = "" + ctx.context().peekIndex();
+
+                        if (!params.containsKey(name))
+                            params.put(name, p);
+                    }
+                }
             })).dsl().render(result);
 
             for (String name : bindParams.keySet())

@@ -82,7 +82,7 @@ final class ParsingConnection extends DefaultConnection {
             effectiveParamType(configuration.settings()) == INLINED
         ));
 
-        if (getDelegate() == null)
+        if (((SettingsEnabledConnection) getDelegate()).getDelegate() == null)
             if (configuration.connectionFactory() instanceof NoConnectionFactory)
                 throw new DetachedException("ConnectionProvider did not provide a JDBC Connection");
             else

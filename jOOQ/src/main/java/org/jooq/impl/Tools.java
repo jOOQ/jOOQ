@@ -7650,12 +7650,4 @@ final class Tools {
     static final boolean sortable(Field<?> f) {
         return !f.getDataType().isBinary();
     }
-
-    static final ParamType effectiveParamType(Settings settings) {
-        return SettingsTools.getStatementType(settings) == StatementType.STATIC_STATEMENT
-            ? ParamType.INLINED
-            : SettingsTools.getParamType(settings) == ParamType.FORCE_INDEXED
-            ? ParamType.INDEXED
-            : null;
-    }
 }

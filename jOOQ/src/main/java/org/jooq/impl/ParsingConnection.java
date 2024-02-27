@@ -42,7 +42,6 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.CacheType.CACHE_PARSING_CONNECTION;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
-import static org.jooq.impl.Tools.effectiveParamType;
 import static org.jooq.impl.Tools.map;
 
 import java.sql.CallableStatement;
@@ -59,6 +58,7 @@ import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.Param;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
@@ -79,7 +79,7 @@ final class ParsingConnection extends DefaultConnection {
             configuration.connectionProvider().acquire(),
             configuration.settings(),
             null,
-            effectiveParamType(configuration.settings()) == INLINED
+            SettingsTools.getParamType(configuration.settings()) == INLINED
         ));
 
         if (((SettingsEnabledConnection) getDelegate()).getDelegate() == null)
@@ -195,7 +195,7 @@ final class ParsingConnection extends DefaultConnection {
             int size = p.size();
             Rendered rendered = size == 0 ? translate(configuration, sql) : translate(configuration, sql, p.get(0).toArray(EMPTY_PARAM));
             PreparedStatement s = prepare.apply(rendered.sql);
-            boolean inlined = effectiveParamType(configuration.settings()) == INLINED;
+            boolean inlined = SettingsTools.getParamType(configuration.settings()) == INLINED;
 
             for (int i = 0; i < size; i++) {
 

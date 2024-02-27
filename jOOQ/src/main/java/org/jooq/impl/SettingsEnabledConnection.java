@@ -60,12 +60,18 @@ final class SettingsEnabledConnection extends DefaultConnection {
 
     private final Settings       settings;
     private final ExecuteContext ctx;
+    private final boolean        forceStaticStatements;
 
     SettingsEnabledConnection(Connection delegate, Settings settings, ExecuteContext ctx) {
+        this(delegate, settings, ctx, false);
+    }
+
+    SettingsEnabledConnection(Connection delegate, Settings settings, ExecuteContext ctx, boolean forceStaticStatements) {
         super(delegate);
 
         this.settings = settings;
         this.ctx = ctx;
+        this.forceStaticStatements = forceStaticStatements;
     }
 
     // ------------------------------------------------------------------------
@@ -73,7 +79,10 @@ final class SettingsEnabledConnection extends DefaultConnection {
     // ------------------------------------------------------------------------
 
     private final boolean executePreparedStatements0() {
-        return executePreparedStatements(settings) && !TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT));
+        return !forceStaticStatements
+            && (ctx == null || !TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT)))
+            && executePreparedStatements(settings)
+        ;
     }
 
     @Override

@@ -29326,7 +29326,7 @@ public class DSL {
     @NotNull
     @Support
     public static AggregateFunction<Integer> count(SelectFieldOrAsterisk field) {
-        return count(field("{0}", field));
+        return count(field instanceof Field<?> f ? f : field("{0}", field));
     }
 
     /**
@@ -29348,7 +29348,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
-        return countDistinct(field("{0}", field));
+        return countDistinct(field instanceof Field<?> f ? f : field("{0}", field));
     }
 
     /**

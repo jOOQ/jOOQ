@@ -38,9 +38,11 @@
 package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.CacheType.CACHE_PARSING_CONNECTION;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
+import static org.jooq.impl.Tools.effectiveParamType;
 import static org.jooq.impl.Tools.map;
 
 import java.sql.CallableStatement;
@@ -73,7 +75,12 @@ final class ParsingConnection extends DefaultConnection {
     final Configuration             configuration;
 
     ParsingConnection(Configuration configuration) {
-        super(configuration.connectionProvider().acquire());
+        super(new SettingsEnabledConnection(
+            configuration.connectionProvider().acquire(),
+            configuration.settings(),
+            null,
+            effectiveParamType(configuration.settings()) == INLINED
+        ));
 
         if (getDelegate() == null)
             if (configuration.connectionFactory() instanceof NoConnectionFactory)
@@ -188,6 +195,7 @@ final class ParsingConnection extends DefaultConnection {
             int size = p.size();
             Rendered rendered = size == 0 ? translate(configuration, sql) : translate(configuration, sql, p.get(0).toArray(EMPTY_PARAM));
             PreparedStatement s = prepare.apply(rendered.sql);
+            boolean inlined = effectiveParamType(configuration.settings()) == INLINED;
 
             for (int i = 0; i < size; i++) {
 
@@ -195,13 +203,17 @@ final class ParsingConnection extends DefaultConnection {
                 if (i > 0)
                     rendered = translate(configuration, sql, p.get(i).toArray(EMPTY_PARAM));
 
-                new DefaultBindContext(configuration, null, s).visit(rendered.bindValues);
+                if (!inlined)
+                    new DefaultBindContext(configuration, null, s).visit(rendered.bindValues);
 
                 // TODO: Find a less hacky way to signal that we're batching. Currently:
                 // - ArrayList<Arraylist<Param<?>>> = batching
                 // - SingletonList<ArrayList<Param<?>>> = not batching
                 if (size > 1 || p instanceof ArrayList)
-                    s.addBatch();
+                    if (!inlined)
+                        s.addBatch();
+                    else
+                        s.addBatch(rendered.sql);
             }
 
             return s;

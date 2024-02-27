@@ -7493,7 +7493,7 @@ public final class QOM {
         //permits
         //    Count
     {
-        @NotNull Field<?> $field();
+        @Nullable Field<?> $field();
         boolean $distinct();
         @CheckReturnValue
         @NotNull Count $field(Field<?> field);

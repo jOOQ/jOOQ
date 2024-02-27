@@ -93,13 +93,23 @@ implements
         super.accept(ctx);
     }
 
+    Count(
+        boolean distinct
+    ) {
+        super(
+            distinct,
+            N_COUNT,
+            INTEGER
+        );
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
     @Override
     public final Field<?> $field() {
-        return getArguments().get(0);
+        return getArgument(0);
     }
 
     @Override

@@ -108,7 +108,7 @@ implements
     @SuppressWarnings("unchecked")
     @Override
     public final Field<T> $value() {
-        return (Field<T>) getArguments().get(0);
+        return (Field<T>) getArgument(0);
     }
 
     @Override

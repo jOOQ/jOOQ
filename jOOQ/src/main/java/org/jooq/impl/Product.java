@@ -189,7 +189,7 @@ implements
     @SuppressWarnings("unchecked")
     @Override
     public final Field<? extends Number> $field() {
-        return (Field<? extends Number>) getArguments().get(0);
+        return (Field<? extends Number>) getArgument(0);
     }
 
     @Override

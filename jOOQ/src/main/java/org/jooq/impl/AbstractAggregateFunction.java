@@ -258,8 +258,6 @@ implements
 
 
 
-
-
         acceptArguments1(ctx, arguments);
     }
 
@@ -274,8 +272,7 @@ implements
                 ctx.sql('(');
         }
 
-        if (!args.isEmpty())
-            acceptArguments2(ctx, args);
+        acceptArguments2(ctx, args);
 
         if (parens)
             ctx.sql(')');
@@ -286,6 +283,9 @@ implements
     }
 
     final void acceptArguments3(Context<?> ctx, QueryPartCollectionView<Field<?>> args, Function<? super Field<?>, ? extends Field<?>> fun) {
+        if (args.isEmpty() && this instanceof Count)
+            args = QueryPartListView.wrap(ASTERISK.get());
+
         if (!filter.hasWhere() || supportsFilter(ctx))
             ctx.visit(wrap(args).map(fun));
 
@@ -303,7 +303,6 @@ implements
     boolean applyFilter(Context<?> ctx, Field<?> arg, int i) {
         return true;
     }
-
 
 
 
@@ -369,6 +368,10 @@ implements
     // -------------------------------------------------------------------------
     // XXX Aggregate function API
     // -------------------------------------------------------------------------
+
+    final Field<?> getArgument(int index) {
+        return index < arguments.size() ? arguments.get(index) : null;
+    }
 
     final QueryPartList<Field<?>> getArguments() {
         return arguments;

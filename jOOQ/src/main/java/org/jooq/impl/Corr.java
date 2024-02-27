@@ -127,13 +127,13 @@ implements
     @SuppressWarnings("unchecked")
     @Override
     public final Field<? extends Number> $y() {
-        return (Field<? extends Number>) getArguments().get(0);
+        return (Field<? extends Number>) getArgument(0);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public final Field<? extends Number> $x() {
-        return (Field<? extends Number>) getArguments().get(1);
+        return (Field<? extends Number>) getArgument(1);
     }
 
     @Override

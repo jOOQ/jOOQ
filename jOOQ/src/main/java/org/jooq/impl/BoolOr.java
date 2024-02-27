@@ -136,7 +136,7 @@ implements
 
     @Override
     public final Condition $condition() {
-        return DSL.condition((Field<Boolean>) getArguments().get(0));
+        return DSL.condition((Field<Boolean>) getArgument(0));
     }
 
     @Override

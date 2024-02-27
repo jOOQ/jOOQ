@@ -13175,7 +13175,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     throw exception("Unexpected token: \"'\"");
 
                 try {
-                    buffer.write(Integer.parseInt("" + c1 + c2, 16));
+                    buffer.write(parseInt("" + c1 + c2, 16));
                 }
                 catch (NumberFormatException e) {
                     throw exception("Illegal character for binary literal");
@@ -13353,13 +13353,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                         // Unicode character value UTF-16
                         case 'u':
-                            c1 = (char) Integer.parseInt(new String(sql, i + 1, 4), 16);
+                            c1 = (char) parseInt(substring(i + 1, i + 5), 16);
                             i += 4;
                             break;
 
                         // Unicode character value UTF-32
                         case 'U':
-                            sb.appendCodePoint(Integer.parseInt(new String(sql, i + 1, 8), 16));
+                            sb.appendCodePoint(parseInt(substring(i + 1, i + 9), 16));
                             i += 8;
                             continue characterLoop;
 
@@ -13375,14 +13375,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                                     if (Character.digit(c4, 8) != -1) {
                                         i++;
-                                        c1 = (char) Integer.parseInt("" + c2 + c3 + c4, 8);
+                                        c1 = (char) parseInt("" + c2 + c3 + c4, 8);
                                     }
                                     else {
-                                        c1 = (char) Integer.parseInt("" + c2 + c3, 8);
+                                        c1 = (char) parseInt("" + c2 + c3, 8);
                                     }
                                 }
                                 else {
-                                    c1 = (char) Integer.parseInt("" + c2, 8);
+                                    c1 = (char) parseInt("" + c2, 8);
                                 }
                             }
 
@@ -13458,7 +13458,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 s = s + "0";
 
             parseWhitespaceIf();
-            return sign == Sign.MINUS ? -Double.parseDouble(s) : Double.parseDouble(s);
+            return sign == Sign.MINUS ? -parseDouble(s) : parseDouble(s);
         }
         else {
             String s = substring(p, position());
@@ -14682,8 +14682,37 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return true;
     }
 
+    private final double parseDouble(String string) {
+        try {
+            return Double.parseDouble(string);
+        }
+        catch (NumberFormatException e) {
+            throw expected("Double literal");
+        }
+    }
+
+    private final int parseInt(String string) {
+        try {
+            return Integer.parseInt(string);
+        }
+        catch (NumberFormatException e) {
+            throw expected("Integer literal");
+        }
+    }
+
+    private final int parseInt(String string, int base) {
+        try {
+            return Integer.parseInt(string, base);
+        }
+        catch (NumberFormatException e) {
+            throw expected("Integer literal of base: " + base);
+        }
+    }
+
     private final String substring(int startPosition, int endPosition) {
-        return new String(sql, startPosition, endPosition - startPosition);
+        startPosition = Math.max(0, startPosition);
+        endPosition = Math.min(sql.length, endPosition);
+        return new String(sql, startPosition, Math.min(endPosition - startPosition, sql.length - startPosition));
     }
 
     private final ParserException internalError() {

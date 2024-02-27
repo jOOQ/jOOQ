@@ -7236,12 +7236,4 @@ final class Tools {
 
         return dataType;
     }
-
-    static final ParamType effectiveParamType(Settings settings) {
-        return SettingsTools.getStatementType(settings) == StatementType.STATIC_STATEMENT
-            ? ParamType.INLINED
-            : SettingsTools.getParamType(settings) == ParamType.FORCE_INDEXED
-            ? ParamType.INDEXED
-            : null;
-    }
 }

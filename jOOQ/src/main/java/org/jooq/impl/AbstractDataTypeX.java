@@ -84,7 +84,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
     );
 
     @Override
-    public final DataType<T> nullability(Nullability n) {
+    public /* non-final */ DataType<T> nullability(Nullability n) {
         return construct(
             precision0(),
             scale0(),

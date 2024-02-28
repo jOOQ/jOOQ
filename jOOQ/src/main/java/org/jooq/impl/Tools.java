@@ -1922,6 +1922,32 @@ final class Tools {
             return field.cast(type);
     }
 
+    static final <T> Field<T> castNullLiteralIfNeeded(Context<?> ctx, Field<T> field) {
+        switch (ctx.family()) {
+
+            case POSTGRES:
+            case YUGABYTEDB:
+
+                // [#16367] The NULL literal defaults to type TEXT in PostgreSQL.
+                //          if we know the data type, we should cast it explicitly
+                if (ctx.subquery()) {
+                    Field<T> f = unalias(field);
+
+                    if (isInlineVal1(ctx, f, v -> v == null)
+                        && !f.getDataType().isOther()
+                        && !f.getDataType().isString()
+                    ) {
+                        Field<T> cast = f.cast(f.getDataType());
+                        return f == field ? cast : cast.as(field);
+                    }
+                }
+
+                break;
+        }
+
+        return field;
+    }
+
     // The following overloads help performance by avoiding runtime data type lookups
     // ------------------------------------------------------------------------------
 
@@ -3966,26 +3992,42 @@ final class Tools {
             || field instanceof ConvertedVal && ((ConvertedVal<?>) field).delegate instanceof Val;
     }
 
-    static final boolean isVal(QueryPart p, Predicate<? super Val<?>> predicate) {
+    static final boolean isVal0(QueryPart p, Predicate<? super Val<?>> predicate) {
         if (p instanceof Val<?> v) {
             return predicate.test(v);
         }
         else if (p instanceof ConvertedVal<?> v) {
-            return isVal(v.delegate, predicate);
+            return isVal0(v.delegate, predicate);
         }
         else
             return false;
     }
 
-    static final <T> boolean isVal0(Field<T> p, Predicate<? super Val<T>> predicate) {
+    static final <T> boolean isVal1(Field<T> p, Predicate<? super Val<T>> predicate) {
         if (p instanceof Val<T> v) {
             return predicate.test(v);
         }
         else if (p instanceof ConvertedVal<T> v) {
-            return isVal0((Field<T>) v.delegate, predicate);
+            return isVal1((Field<T>) v.delegate, predicate);
         }
         else
             return false;
+    }
+
+    static final boolean isInlineVal0(QueryPart p, Predicate<? super Object> predicate) {
+        return Tools.isVal0(p, v -> v.isInline() && predicate.test(v.$value()));
+    }
+
+    static final boolean isInlineVal0(Context<?> ctx, QueryPart p, Predicate<? super Object> predicate) {
+        return Tools.isVal0(p, v -> v.isInline(ctx) && predicate.test(v.$value()));
+    }
+
+    static final <T> boolean isInlineVal1(Field<T> p, Predicate<? super T> predicate) {
+        return Tools.isVal1(p, v -> v.isInline() && predicate.test(v.$value()));
+    }
+
+    static final <T> boolean isInlineVal1(Context<?> ctx, Field<T> p, Predicate<? super T> predicate) {
+        return Tools.isVal1(p, v -> v.isInline(ctx) && predicate.test(v.$value()));
     }
 
     static final boolean isWindow(QueryPart part) {

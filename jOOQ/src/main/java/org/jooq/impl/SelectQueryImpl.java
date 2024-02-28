@@ -212,6 +212,7 @@ import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.hasAmbiguousNamesInTables;
 import static org.jooq.impl.Tools.isEmpty;
+import static org.jooq.impl.Tools.isInlineVal0;
 import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.isWindow;
 import static org.jooq.impl.Tools.joinedTables;

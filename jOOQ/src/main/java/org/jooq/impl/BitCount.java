@@ -101,16 +101,6 @@ implements
 
 
 
-            case DUCKDB:
-
-            case MARIADB:
-            case MYSQL:
-                ctx.visit(N_BIT_COUNT).sql('(').visit(value).sql(')');
-                return;
-
-
-
-
 
 
 
@@ -144,11 +134,35 @@ implements
                 return;
             }
 
-            default: {
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case IGNITE:
+            case POSTGRES:
+            case SQLITE:
+            case TRINO:
+            case YUGABYTEDB: {
                 bitAndShrEmulation(ctx);
                 return;
             }
+
+            default:
+                acceptNative(ctx);
+                return;
+
         }
+    }
+
+    private final void acceptNative(Context<?> ctx) {
+        ctx.visit(N_BIT_COUNT).sql('(').visit(value).sql(')');
     }
 
     private final void bitAndDivEmulation(Context<?> ctx) {
@@ -298,7 +312,7 @@ implements
         }
         else {
             // Currently not supported
-            ctx.visit(N_BIT_COUNT).sql('(').visit(value).sql(')');
+            acceptNative(ctx);
         }
     }
 
@@ -453,7 +467,7 @@ implements
         }
         else {
             // Currently not supported
-            ctx.visit(N_BIT_COUNT).sql('(').visit(value).sql(')');
+            acceptNative(ctx);
         }
     }
 

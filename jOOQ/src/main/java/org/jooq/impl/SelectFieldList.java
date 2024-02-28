@@ -92,11 +92,10 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
 
     @SuppressWarnings("unchecked")
     private void acceptElement0(Context<?> ctx, F part) {
-        visitAutoAliased(ctx, part, Context::declareFields, (c, t) -> {
-            if (c.declareFields() && part instanceof Field<?> f)
-                super.acceptElement(c, (F) Tools.castNullLiteralIfNeeded(c, f));
-            else
-                super.acceptElement(c, t);
-        });
+        if (ctx.declareFields() && part instanceof Field<?> f) {
+            part = (F) Tools.castNullLiteralIfNeeded(ctx, f);
+        }
+
+        visitAutoAliased(ctx, part, Context::declareFields, (c, t) -> super.acceptElement(c, t));
     }
 }

@@ -837,7 +837,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             if (dataType.isUUID()) {
                 switch (ctx.family()) {
+
+
+                    case POSTGRES:
                     case TRINO:
+                    case YUGABYTEDB:
                         return true;
                 }
             }

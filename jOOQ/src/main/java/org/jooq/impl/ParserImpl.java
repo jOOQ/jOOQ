@@ -10983,7 +10983,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
-    private final Field<Boolean> parseBooleanValueExpressionIf() {
+    private final Field<?> parseBooleanValueExpressionIf() {
         TruthValue truth = parseTruthValueIf();
 
         if (truth != null) {
@@ -10992,8 +10992,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return inline(true);
                 case T_FALSE:
                     return inline(false);
+
+                // [#16368] We cannot decide the data type at this point
                 case T_NULL:
-                    return inline((Boolean) null);
+                    return inline(null, OTHER);
                 default:
                     throw exception("Truth value not supported: " + truth);
             }

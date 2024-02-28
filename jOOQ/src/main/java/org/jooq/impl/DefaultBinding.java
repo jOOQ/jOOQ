@@ -801,6 +801,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
 
+            if (dataType.getType() == UUID.class) {
+                switch (ctx.family()) {
+
+
+                    case POSTGRES:
+                    case YUGABYTEDB:
+                        return true;
+                }
+            }
+
 
 
 

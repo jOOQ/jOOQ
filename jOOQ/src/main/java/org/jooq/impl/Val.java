@@ -65,6 +65,7 @@ import java.time.OffsetTime;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.jooq.Context;
 import org.jooq.DataType;

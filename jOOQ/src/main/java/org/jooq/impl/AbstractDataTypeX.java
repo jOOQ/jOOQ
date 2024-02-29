@@ -83,21 +83,24 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
     );
 
     @Override
-    public final DataType<T> nullability(Nullability n) {
-        return construct(
-            precision0(),
-            scale0(),
-            length0(),
-            n,
-            readonly(),
-            generatedAlwaysAsGenerator(),
-            generationOption(),
-            generationLocation(),
-            collation(),
-            characterSet(),
-            !n.nullable() && identity(),
-            defaultValue()
-        );
+    public /* non-final */ DataType<T> nullability(Nullability n) {
+        if (n == nullability())
+            return this;
+        else
+            return construct(
+                precision0(),
+                scale0(),
+                length0(),
+                n,
+                readonly(),
+                generatedAlwaysAsGenerator(),
+                generationOption(),
+                generationLocation(),
+                collation(),
+                characterSet(),
+                !n.nullable() && identity(),
+                defaultValue()
+            );
     }
 
     @Override

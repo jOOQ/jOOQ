@@ -1938,6 +1938,7 @@ final class Tools {
     static final <T> Field<T> castNullLiteralIfNeeded(Context<?> ctx, Field<T> field) {
         switch (ctx.family()) {
 
+            case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
 

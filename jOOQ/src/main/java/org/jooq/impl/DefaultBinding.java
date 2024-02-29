@@ -839,6 +839,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 switch (ctx.family()) {
 
 
+                    case HSQLDB:
                     case POSTGRES:
                     case TRINO:
                     case YUGABYTEDB:

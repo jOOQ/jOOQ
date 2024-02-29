@@ -37,7 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Nullability.NOT_NULL;
+import static org.jooq.Nullability.NULL;
+
 import org.jooq.DataType;
+import org.jooq.Nullability;
 import org.jooq.SQLDialect;
 import org.jooq.util.postgres.PostgresDataType;
 
@@ -72,5 +76,25 @@ public class BuiltInDataType<T> extends DefaultDataType<T> {
      */
     public BuiltInDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName) {
         super(dialect, sqlDataType, typeName, castTypeName);
+    }
+
+    // [#11083] Nullability caches of built-in data types
+
+    final DataType<T> cachedNull;
+    final DataType<T> cachedNotNull;
+
+    {
+        cachedNull = super.nullability(NULL);
+        cachedNotNull = super.nullability(NOT_NULL);
+    }
+
+    @Override
+    public final DataType<T> nullability(Nullability n) {
+        if (n == NULL)
+            return cachedNull;
+        else if (n == NOT_NULL)
+            return cachedNotNull;
+        else
+            return super.nullability(n);
     }
 }

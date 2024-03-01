@@ -108,16 +108,18 @@ public class CodegenPlugin implements Plugin<Project> {
             task.setDescription("jOOQ code generation" + (configuration.unnamed ? " for all executions" : " for the " + configuration.name + " execution"));
             task.setGroup("jOOQ");
 
-            SourceSetContainer source = project
+            task.doFirst(t -> {
+                SourceSetContainer source = project
                     .getExtensions()
                     .findByType(SourceSetContainer.class);
 
-            if (source != null) {
-                source.configureEach(sourceSet -> {
-                    if (sourceSet.getName().equals("main"))
-                        sourceSet.getJava().srcDir(task.getOutputDirectory());
-                });
-            }
+                if (source != null) {
+                    source.configureEach(sourceSet -> {
+                        if (sourceSet.getName().equals("main"))
+                            sourceSet.getJava().srcDir(task.getOutputDirectory());
+                    });
+                }
+            });
         };
     }
 }

@@ -85,6 +85,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.combine;
+import static org.jooq.impl.Tools.isNotEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_AS_REQUIRED;
@@ -149,6 +150,10 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
     final Q wrapped() {
         return wrapped;
+    }
+
+    final boolean hasFieldAliases() {
+        return isNotEmpty(fieldAliases);
     }
 
     @Override
@@ -227,7 +232,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
         // [#454] [#1801] Some databases don't allow "derived column names" in
         // "simple class specifications", or "common table expression references".
         // Hence, wrap the table reference in a subselect
-        if (fieldAliases != null
+        if (hasFieldAliases()
                 && (SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1.contains(dialect))
                 && (wrapped instanceof TableImpl || wrapped instanceof CommonTableExpressionImpl)) {
 
@@ -237,7 +242,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
         // [#1801] Some databases do not support "derived column names".
         // They can be emulated by concatenating a dummy SELECT with no
         // results using UNION ALL
-        else if (fieldAliases != null && (
+        else if (hasFieldAliases() && (
                 emulatedDerivedColumnList
              || SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2.contains(dialect)
 
@@ -334,7 +339,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
                .qualify(false, c -> c.visit(alias));
 
         // [#1801] Add field aliases to the table alias, if applicable
-        if (fieldAliases != null && !emulatedDerivedColumnList) {
+        if (hasFieldAliases() && !emulatedDerivedColumnList) {
             toSQLDerivedColumnList(context);
         }
 

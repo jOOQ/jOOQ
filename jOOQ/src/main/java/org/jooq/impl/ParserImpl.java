@@ -4579,7 +4579,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         throw exception("Duplicate primary key specification");
 
                     primary = true;
-                    constraints.add(parsePrimaryKeySpecification(constraint));
+                    PrimaryKeySpecification pk = parsePrimaryKeySpecification(constraint, true);
+                    constraints.add(pk.constraint());
+                    if (pk.identity()) {
+                        ConstraintImpl c = (ConstraintImpl) pk.constraint();
+
+                        if (c.$primaryKey().length == 1)
+                            fields.replaceAll(f -> f.getName().equalsIgnoreCase(c.$primaryKey()[0].getName())
+                                ? field(f.getQualifiedName(), f.getDataType().identity(true))
+                                : f
+                            );
+                        else
+                            throw expected("Single column primary key with inline identity");
+                    }
+
                     continue columnLoop;
                 }
                 else if (parseKeywordIf("UNIQUE")) {
@@ -5243,7 +5256,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Index parseIndexSpecification(Table<?> table) {
         Name name = parseIdentifierIf();
         parseUsingIndexTypeIf();
-        return Internal.createIndex(name == null ? NO_NAME : name, table, parseParenthesisedSortSpecification(), false);
+        return Internal.createIndex(name == null ? NO_NAME : name, table, parseParenthesisedSortSpecification(false).fields(), false);
     }
 
     private final boolean parseConstraintConflictClauseIf() {
@@ -5276,16 +5289,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return parseKeywordIf("INITIALLY") && parseKeyword("DEFERRED", "IMMEDIATE");
     }
 
-    private final Constraint parsePrimaryKeySpecification(ConstraintTypeStep constraint) {
+    private static final record PrimaryKeySpecification(Constraint constraint, boolean identity) {}
+
+    private final PrimaryKeySpecification parsePrimaryKeySpecification(ConstraintTypeStep constraint, boolean allowIdentity) {
         parseUsingIndexTypeIf();
-        Field<?>[] fieldNames = parseKeyColumnList();
+        KeyColumnList k = parseKeyColumnList(allowIdentity);
 
         ConstraintEnforcementStep e = constraint == null
-            ? primaryKey(fieldNames)
-            : constraint.primaryKey(fieldNames);
+            ? primaryKey(k.fields())
+            : constraint.primaryKey(k.fields());
 
         parseUsingIndexTypeIf();
-        return parseConstraintEnforcementIf(e);
+        return new PrimaryKeySpecification(parseConstraintEnforcementIf(e), k.identity());
     }
 
     private final Constraint parseUniqueSpecification(ConstraintTypeStep constraint) {
@@ -5297,7 +5312,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (constraint == null && (constraintName = parseIdentifierIf()) != null)
             constraint = constraint(constraintName);
 
-        Field<?>[] fieldNames = parseKeyColumnList();
+        Field<?>[] fieldNames = parseKeyColumnList(false).fields();
 
         ConstraintEnforcementStep e = constraint == null
             ? unique(fieldNames)
@@ -5307,19 +5322,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return parseConstraintEnforcementIf(e);
     }
 
-    private final Field<?>[] parseKeyColumnList() {
-        SortField<?>[] fieldExpressions = parseParenthesisedSortSpecification();
-        Field<?>[] fieldNames = new Field[fieldExpressions.length];
+    private static final record KeyColumnList(Field<?>[] fields, boolean identity) {}
 
-        for (int i = 0; i < fieldExpressions.length; i++)
-            if (fieldExpressions[i].$sortOrder() != SortOrder.DESC)
-                fieldNames[i] = fieldExpressions[i].$field();
+    private final KeyColumnList parseKeyColumnList(boolean allowIdentity) {
+        SortSpecification s = parseParenthesisedSortSpecification(allowIdentity);
+        Field<?>[] fieldNames = new Field[s.fields().length];
+
+        for (int i = 0; i < s.fields().length; i++)
+            if (s.fields()[i].$sortOrder() != SortOrder.DESC)
+                fieldNames[i] = s.fields()[i].$field();
 
             // [#7899] TODO: Support this in jOOQ
             else
                 throw notImplemented("DESC sorting in constraints");
 
-        return fieldNames;
+        return new KeyColumnList(fieldNames, s.identity());
     }
 
     private final Constraint parseCheckSpecification(ConstraintTypeStep constraint) {
@@ -5499,7 +5516,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return parseCascadeRestrictIf(
                             s1.dropUnique(
                                   peek('(')
-                                ? unique(parseKeyColumnList())
+                                ? unique(parseKeyColumnList(false).fields())
                                 : constraint(parseIdentifier())
                             ),
                             AlterTableDropStep::cascade,
@@ -5623,8 +5640,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Name name = parseIdentifierIf();
 
             return name == null
-                ? dsl.createIndex().on(tableName, parseParenthesisedSortSpecification())
-                : dsl.createIndex(name).on(tableName, parseParenthesisedSortSpecification());
+                ? dsl.createIndex().on(tableName, parseParenthesisedSortSpecification(false).fields())
+                : dsl.createIndex(name).on(tableName, parseParenthesisedSortSpecification(false).fields());
         }
 
         if (parseIf('(')) {
@@ -5682,7 +5699,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         ConstraintTypeStep constraint = parseConstraintNameSpecification();
 
         if (parsePrimaryKeyClusteredNonClusteredKeywordIf())
-            list.add(parsePrimaryKeySpecification(constraint));
+            list.add(parsePrimaryKeySpecification(constraint, false).constraint());
         else if (parseKeywordIf("UNIQUE") && (parseKeywordIf("KEY", "INDEX") || true))
             list.add(parseUniqueSpecification(constraint));
         else if (parseKeywordIf("FOREIGN KEY"))
@@ -6461,12 +6478,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseUsingIndexTypeIf();
         SortField<?>[] fields = null;
         if (peek('('))
-            fields = parseParenthesisedSortSpecification();
+            fields = parseParenthesisedSortSpecification(false).fields();
         parseKeyword("ON");
         Table<?> tableName = parseTableName();
         parseUsingIndexTypeIf();
         if (fields == null)
-            fields = parseParenthesisedSortSpecification();
+            fields = parseParenthesisedSortSpecification(false).fields();
         parseUsingIndexTypeIf();
 
         Name[] include = null;
@@ -6507,12 +6524,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : s3;
     }
 
-    private SortField<?>[] parseParenthesisedSortSpecification() {
+    private static final record SortSpecification(SortField<?>[] fields, boolean identity) {}
+
+    private SortSpecification parseParenthesisedSortSpecification(boolean allowIdentity) {
         parse('(');
         SortField<?>[] fields = parseList(',', c -> c.parseSortField()).toArray(EMPTY_SORTFIELD);
+        boolean identity = fields.length == 1 && allowIdentity && parseKeywordIf("AUTOINCREMENT", "AUTO_INCREMENT");
         parse(')');
 
-        return fields;
+        return new SortSpecification(fields, identity);
     }
 
     private final boolean parseUsingIndexTypeIf() {

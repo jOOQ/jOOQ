@@ -231,7 +231,7 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
                 if (u.where != null) {
                     Select<R> q = new InlineDerivedTable<>(u).query();
 
-                    if (a.hasFieldAliases())
+                    if (a.alias.hasFieldAliases())
                         return q.asTable(a.getUnqualifiedName(), a.alias.fieldAliases);
                     else
                         return q.asTable(a);

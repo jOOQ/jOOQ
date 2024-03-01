@@ -104,16 +104,12 @@ implements
 
         // [#13418]
         List<Field<?>> result = Tools.map(this.alias.wrapped().fieldsRow().fields(), (f, i) -> new TableFieldImpl(
-              hasFieldAliases() && alias.fieldAliases.length > i
+              alias.hasFieldAliases() && alias.fieldAliases.length > i
             ? alias.fieldAliases[i]
             : f.getUnqualifiedName(), removeGenerator(CONFIG.get(), f.getDataType()), this, f.getCommentPart(), f.getBinding()
         ));
 
         return new FieldsImpl<>(result);
-    }
-
-    final boolean hasFieldAliases() {
-        return alias.fieldAliases != null;
     }
 
     /**

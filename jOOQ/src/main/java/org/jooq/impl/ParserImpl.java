@@ -4584,11 +4584,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     if (pk.identity()) {
                         ConstraintImpl c = (ConstraintImpl) pk.constraint();
 
-                        if (c.$primaryKey().length == 1)
-                            fields.replaceAll(f -> f.getName().equalsIgnoreCase(c.$primaryKey()[0].getName())
-                                ? field(f.getQualifiedName(), f.getDataType().identity(true))
-                                : f
-                            );
+                        replacement:
+                        if (c.$primaryKey().length == 1) {
+                            for (int i = 0; i < fields.size(); i++) {
+                                Field<?> f = fields.get(i);
+
+                                if (f.getName().equalsIgnoreCase(c.$primaryKey()[0].getName())) {
+                                    fields.set(i, field(f.getQualifiedName(), f.getDataType().identity(true)));
+                                    break replacement;
+                                }
+                            }
+
+                            throw expected("Column not found: " + c.$primaryKey()[0].getName());
+                        }
                         else
                             throw expected("Single column primary key with inline identity");
                     }

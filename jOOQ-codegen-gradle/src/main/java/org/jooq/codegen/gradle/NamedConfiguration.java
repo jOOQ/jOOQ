@@ -63,14 +63,15 @@ import java.io.File;
  */
 public class NamedConfiguration {
 
-    final ObjectFactory objects;
-    final Project       project;
-    final ProjectLayout layout;
-    final String        name;
-    boolean             unnamed;
-    Configuration       configuration;
-    DirectoryProperty   outputDirectory;
-    boolean             outputDirectorySet;
+    final ObjectFactory            objects;
+    final Project                  project;
+    final ProjectLayout            layout;
+    final String                   name;
+    Action<ConfigurationExtension> action;
+    boolean                        unnamed;
+    private Configuration          configuration;
+    private DirectoryProperty      outputDirectory;
+    private boolean                outputDirectorySet;
 
     @Inject
     public NamedConfiguration(
@@ -98,13 +99,22 @@ public class NamedConfiguration {
         return name;
     }
 
+    DirectoryProperty getOutputDirectory() {
+        executeAction();
+        return outputDirectorySet ? outputDirectory : null;
+    }
+
     public Configuration getConfiguration() {
+        executeAction();
         return configuration;
     }
 
     void configuration0(Configuration configuration) {
-        if (!unnamed)
-            this.configuration = MiniJAXB.append(copy(project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration().configuration), copy(this.configuration));
+        if (!unnamed) {
+            NamedConfiguration defaultConfiguration = project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration();
+            defaultConfiguration.executeAction();
+            this.configuration = MiniJAXB.append(copy(defaultConfiguration.configuration), copy(this.configuration));
+        }
 
         this.configuration = MiniJAXB.append(copy(configuration), copy(this.configuration));
     }
@@ -114,30 +124,37 @@ public class NamedConfiguration {
     }
 
     public void configuration(Action<ConfigurationExtension> action) {
-        ConfigurationExtension c = objects.newInstance(ConfigurationExtension.class, objects);
-        init(c);
-        action.execute(c);
-        configuration0(c);
-
-        // [#15944] Override default target directory
-        Target target = configuration.getGenerator().getTarget();
-
-        if (defaultTarget())
-            target.setDirectory("build/generated-sources/jooq");
-
-        String directory = target.getDirectory();
-
-        // [#16133] Make sure the CodegenTask's OutputDirectory takes into account any basedir config
-        if (configuration.getBasedir() == null)
-            configuration.setBasedir(layout.getProjectDirectory().getAsFile().getAbsolutePath());
-        else if (!new File(directory).isAbsolute())
-            directory = new File(configuration.getBasedir(), directory).getAbsolutePath();
-
-        outputDirectory.value(layout.getProjectDirectory().dir(directory));
-        outputDirectorySet = true;
+        this.action = action;
     }
 
-    boolean defaultTarget() {
+    void executeAction() {
+        if (action != null) {
+            ConfigurationExtension c = objects.newInstance(ConfigurationExtension.class, objects);
+            init(c);
+            action.execute(c);
+            configuration0(c);
+
+            // [#15944] Override default target directory
+            Target target = configuration.getGenerator().getTarget();
+
+            if (defaultTarget())
+                target.setDirectory("build/generated-sources/jooq");
+
+            String directory = target.getDirectory();
+
+            // [#16133] Make sure the CodegenTask's OutputDirectory takes into account any basedir config
+            if (configuration.getBasedir() == null)
+                configuration.setBasedir(layout.getProjectDirectory().getAsFile().getAbsolutePath());
+            else if (!new File(directory).isAbsolute())
+                directory = new File(configuration.getBasedir(), directory).getAbsolutePath();
+
+            outputDirectory.value(layout.getProjectDirectory().dir(directory));
+            outputDirectorySet = true;
+            action = null;
+        }
+    }
+
+    private boolean defaultTarget() {
 
         // [#15944] Override default target directory
         Target target = configuration.getGenerator().getTarget();

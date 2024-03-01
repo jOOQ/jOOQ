@@ -75,7 +75,6 @@ public class CodegenPlugin implements Plugin<Project> {
 
         jooq.getExecutions().create("", configuration -> {
             configuration.unnamed = true;
-            configuration.configuration = NamedConfiguration.init(new org.jooq.meta.jaxb.Configuration());
         });
 
         List<NamedConfiguration> named = new ArrayList<>();

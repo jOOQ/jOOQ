@@ -98,7 +98,7 @@ public class CodegenTask extends DefaultTask {
                 //         This is the approach that worked well for the Maven plugin.
                 //         There's probably a better way in Gradle.
                 Thread.currentThread().setContextClassLoader(pluginClassLoader);
-                GenerationTool.generate(configuration.configuration);
+                GenerationTool.generate(configuration.getConfiguration());
             }
             finally {
 
@@ -111,7 +111,7 @@ public class CodegenTask extends DefaultTask {
     @Input
     public Provider<String> getInput() {
         return providers.provider(() ->
-            configuration.configuration.toString()
+            configuration.getConfiguration().toString()
         );
     }
 
@@ -122,8 +122,8 @@ public class CodegenTask extends DefaultTask {
 
     @OutputDirectories
     public List<DirectoryProperty> getOutputDirectory() {
-        if (named.isEmpty() && configuration.outputDirectorySet)
-            return Arrays.asList(configuration.outputDirectory);
+        if (named.isEmpty() && configuration.getOutputDirectory() != null)
+            return Arrays.asList(configuration.getOutputDirectory());
         else
             return Arrays.asList();
     }

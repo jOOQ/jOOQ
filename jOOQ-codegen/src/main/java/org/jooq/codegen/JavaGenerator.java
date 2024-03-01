@@ -9276,6 +9276,15 @@ public class JavaGenerator extends AbstractGenerator {
             && !type.isIdentity();
     }
 
+    private boolean writeOnlyNullable(JavaWriter out, TypedElementDefinition<?> column) {
+        return writeOnlyNullable(column.getType(resolver(out)));
+    }
+
+    private boolean writeOnlyNullable(DataTypeDefinition type) {
+        return !type.isNullable()
+            && (type.isDefaulted() || type.isIdentity());
+    }
+
     private static final Pattern P_IS = Pattern.compile("^is[A-Z].*$");
 
     protected void printKotlinSetterAnnotation(JavaWriter out, TypedElementDefinition<?> column, Mode mode) {
@@ -9303,16 +9312,29 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String nullableOrNonnullAnnotation(JavaWriter out, Definition column) {
-        return (column instanceof TypedElementDefinition && !effectivelyNotNull(out, (TypedElementDefinition<?>) column))
-             ? nullableAnnotation(out)
-             : nonnullAnnotation(out);
+        if (column instanceof TypedElementDefinition<?> t) {
+            if (!effectivelyNotNull(out, t)) {
+                if (writeOnlyNullable(out, t) && !generateNullableAnnotationOnWriteOnlyNullableTypes())
+                    return null;
+                else
+                    return nullableAnnotation(out);
+            }
+        }
+
+        return nonnullAnnotation(out);
     }
 
     private void printNullableOrNonnullAnnotation(JavaWriter out, Definition column) {
-        if (column instanceof TypedElementDefinition && !effectivelyNotNull(out, (TypedElementDefinition<?>) column))
-            printNullableAnnotation(out);
-        else
-            printNonnullAnnotation(out);
+        if (column instanceof TypedElementDefinition<?> t) {
+            if (!effectivelyNotNull(out, t)) {
+                if (!writeOnlyNullable(out, t) || generateNullableAnnotationOnWriteOnlyNullableTypes())
+                    printNullableAnnotation(out);
+
+                return;
+            }
+        }
+
+        printNonnullAnnotation(out);
     }
 
     protected void printNullableAnnotation(JavaWriter out) {

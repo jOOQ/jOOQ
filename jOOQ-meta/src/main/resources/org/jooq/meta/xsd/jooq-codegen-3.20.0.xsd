@@ -2489,6 +2489,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="nullableAnnotationOnWriteOnlyNullableTypes" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether write-only (e.g. defaulted, non-null) nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="nullableAnnotationType" type="string" default="javax.annotation.Nullable" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

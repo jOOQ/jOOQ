@@ -771,6 +771,8 @@ public class GenerationTool {
                 generator.setGeneratedNonnullAnnotationType(g.getGenerate().getNonnullAnnotationType());
             if (g.getGenerate().isNullableAnnotation() != null)
                 generator.setGenerateNullableAnnotation(g.getGenerate().isNullableAnnotation());
+            if (g.getGenerate().isNullableAnnotationOnWriteOnlyNullableTypes() != null)
+                generator.setGenerateNullableAnnotationOnWriteOnlyNullableTypes(g.getGenerate().isNullableAnnotationOnWriteOnlyNullableTypes());
             if (g.getGenerate().getNullableAnnotationType() != null)
                 generator.setGeneratedNullableAnnotationType(g.getGenerate().getNullableAnnotationType());
             if (g.getGenerate().isConstructorPropertiesAnnotation() != null)

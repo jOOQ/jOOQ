@@ -75,6 +75,8 @@ public class Generate implements Serializable, XMLAppendable
     protected String nonnullAnnotationType = "javax.annotation.Nonnull";
     @XmlElement(defaultValue = "false")
     protected Boolean nullableAnnotation = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean nullableAnnotationOnWriteOnlyNullableTypes = false;
     @XmlElement(defaultValue = "javax.annotation.Nullable")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String nullableAnnotationType = "javax.annotation.Nullable";
@@ -783,6 +785,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setNullableAnnotation(Boolean value) {
         this.nullableAnnotation = value;
+    }
+
+    /**
+     * Whether write-only (e.g. defaulted, non-null) nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isNullableAnnotationOnWriteOnlyNullableTypes() {
+        return nullableAnnotationOnWriteOnlyNullableTypes;
+    }
+
+    /**
+     * Whether write-only (e.g. defaulted, non-null) nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setNullableAnnotationOnWriteOnlyNullableTypes(Boolean value) {
+        this.nullableAnnotationOnWriteOnlyNullableTypes = value;
     }
 
     /**
@@ -3312,6 +3338,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether write-only (e.g. defaulted, non-null) nullable items should be annotated with the annotation type specified in {@link #nullableAnnotationType}. Unlike {@link #nonnullAnnotation}, nullability can be guaranteed as in SQL, and by consequence in jOOQ, every column expression can be made nullable using some SQL operation.
+     * 
+     */
+    public Generate withNullableAnnotationOnWriteOnlyNullableTypes(Boolean value) {
+        setNullableAnnotationOnWriteOnlyNullableTypes(value);
+        return this;
+    }
+
+    /**
      * Specify the qualified annotation name for all nullable items in generated code, defaulting to the JSR-305 {@link javax.annotation.Nullable} type.
      * 
      */
@@ -4239,6 +4274,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("nonnullAnnotation", nonnullAnnotation);
         builder.append("nonnullAnnotationType", nonnullAnnotationType);
         builder.append("nullableAnnotation", nullableAnnotation);
+        builder.append("nullableAnnotationOnWriteOnlyNullableTypes", nullableAnnotationOnWriteOnlyNullableTypes);
         builder.append("nullableAnnotationType", nullableAnnotationType);
         builder.append("constructorPropertiesAnnotation", constructorPropertiesAnnotation);
         builder.append("constructorPropertiesAnnotationOnPojos", constructorPropertiesAnnotationOnPojos);
@@ -4543,6 +4579,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!nullableAnnotation.equals(other.nullableAnnotation)) {
+                return false;
+            }
+        }
+        if (nullableAnnotationOnWriteOnlyNullableTypes == null) {
+            if (other.nullableAnnotationOnWriteOnlyNullableTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!nullableAnnotationOnWriteOnlyNullableTypes.equals(other.nullableAnnotationOnWriteOnlyNullableTypes)) {
                 return false;
             }
         }
@@ -5447,6 +5492,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((nonnullAnnotation == null)? 0 :nonnullAnnotation.hashCode()));
         result = ((prime*result)+((nonnullAnnotationType == null)? 0 :nonnullAnnotationType.hashCode()));
         result = ((prime*result)+((nullableAnnotation == null)? 0 :nullableAnnotation.hashCode()));
+        result = ((prime*result)+((nullableAnnotationOnWriteOnlyNullableTypes == null)? 0 :nullableAnnotationOnWriteOnlyNullableTypes.hashCode()));
         result = ((prime*result)+((nullableAnnotationType == null)? 0 :nullableAnnotationType.hashCode()));
         result = ((prime*result)+((constructorPropertiesAnnotation == null)? 0 :constructorPropertiesAnnotation.hashCode()));
         result = ((prime*result)+((constructorPropertiesAnnotationOnPojos == null)? 0 :constructorPropertiesAnnotationOnPojos.hashCode()));

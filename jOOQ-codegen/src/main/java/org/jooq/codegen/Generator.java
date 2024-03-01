@@ -320,6 +320,26 @@ public interface Generator {
     void setGenerateNullableAnnotation(boolean generateNullableAnnotation);
 
     /**
+     * Whether Nullable annotations should be generated on write-only nullable
+     * types (e.g. defaulted, non-null).
+     * <p>
+     * Unlike {@link #generateNonnullAnnotation()}, nullability can be
+     * guaranteed as in SQL, and by consequence in jOOQ, every column expression
+     * can be made nullable using some SQL operation.
+     */
+    boolean generateNullableAnnotationOnWriteOnlyNullableTypes();
+
+    /**
+     * Whether Nullable annotations should be generated on write-only nullable
+     * types (e.g. defaulted, non-null).
+     * <p>
+     * Unlike {@link #generateNonnullAnnotation()}, nullability can be
+     * guaranteed as in SQL, and by consequence in jOOQ, every column expression
+     * can be made nullable using some SQL operation.
+     */
+    void setGenerateNullableAnnotationOnWriteOnlyNullableTypes(boolean generateNullableAnnotationOnWriteOnlyNullableTypes);
+
+    /**
      * Which type of Nullable annotation should be generated.
      */
     String generatedNullableAnnotationType();

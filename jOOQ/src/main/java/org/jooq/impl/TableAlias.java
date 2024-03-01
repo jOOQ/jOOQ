@@ -88,7 +88,7 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final FieldsImpl<R> initFieldAliases() {
         List<Field<?>> result = Tools.map(this.alias.wrapped().fieldsRow().fields(), (f, i) -> new TableFieldImpl(
-              alias.fieldAliases != null && alias.fieldAliases.length > i
+              alias.hasFieldAliases() && alias.fieldAliases.length > i
             ? alias.fieldAliases[i]
             : f.getUnqualifiedName(), removeGenerator(f.getDataType()), this, f.getCommentPart(), f.getBinding()
         ));

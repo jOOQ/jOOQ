@@ -7913,8 +7913,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final List<Field<?>> parseFieldsOrEmptyOptionallyParenthesised(boolean allowUnparenthesisedLists) {
         if (peek('('))
             return parseFieldsOrEmptyParenthesised();
-        else if (peekEndOfStatement())
-            return emptyList();
+
+
+
+
         else if (allowUnparenthesisedLists)
             return parseList(',', c -> c.parseField());
         else

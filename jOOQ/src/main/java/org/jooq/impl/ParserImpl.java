@@ -1986,7 +1986,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             }
             else if (parseKeywordIf("GROUPING SETS")) {
                 parse('(');
-                List<List<Field<?>>> fieldSets = parseList(',', c -> parseFieldsOrEmptyParenthesised());
+                List<List<Field<?>>> fieldSets = parseList(',', c -> parseFieldsOrEmptyOptionallyParenthesised(false));
                 parse(')');
                 result.addGroupBy(groupingSets(fieldSets.toArray((Collection[]) EMPTY_COLLECTION)));
             }
@@ -3776,16 +3776,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeyword("NULL");
         return new NullStatement();
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -7966,6 +7956,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse(')');
             return result;
         }
+    }
+
+    private final List<Field<?>> parseFieldsOrEmptyOptionallyParenthesised(boolean allowUnparenthesisedLists) {
+        if (peek('('))
+            return parseFieldsOrEmptyParenthesised();
+        else if (peekEndOfStatement())
+            return emptyList();
+        else if (allowUnparenthesisedLists)
+            return parseList(',', c -> c.parseField());
+        else
+            return asList(parseField());
     }
 
     private final SelectField<?> parseSelectField() {

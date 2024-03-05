@@ -411,6 +411,10 @@ public abstract class AbstractDatabase implements Database {
         //        separator is illegal
         configuration.settings().setNamePathSeparator("__");
 
+        // [#15934] The parser might expose dialect specific behaviour, e.g.
+        //          when parsing defaults.
+        configuration.settings().setParseDialect(configuration.dialect());
+
         if (muteExceptions) {
             return DSL.using(configuration);
         }

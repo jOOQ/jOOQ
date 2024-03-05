@@ -929,6 +929,7 @@ final class Interpreter {
 
         MutableSequence ms = new MutableSequence((UnqualifiedName) sequence.getUnqualifiedName(), schema);
 
+        ms.dataType = query.$dataType();
         ms.startWith = query.$startWith();
         ms.incrementBy = query.$incrementBy();
         ms.minvalue = query.$noMinvalue() ? null : query.$minvalue();
@@ -1983,14 +1984,16 @@ final class Interpreter {
         }
     }
 
-    private final class MutableSequence extends MutableNamed {
-        MutableSchema           schema;
-        Field<? extends Number> startWith;
-        Field<? extends Number> incrementBy;
-        Field<? extends Number> minvalue;
-        Field<? extends Number> maxvalue;
-        boolean                 cycle;
-        Field<? extends Number> cache;
+    private final class MutableSequence<T extends Number> extends MutableNamed {
+
+        MutableSchema schema;
+        DataType<T>   dataType;
+        Field<T>      startWith;
+        Field<T>      incrementBy;
+        Field<T>      minvalue;
+        Field<T>      maxvalue;
+        boolean       cycle;
+        Field<T>      cache;
 
         MutableSequence(UnqualifiedName name, MutableSchema schema) {
             super(name);
@@ -2011,15 +2014,20 @@ final class Interpreter {
             return interpretedSequences.computeIfAbsent(qualifiedName(), n -> new InterpretedSequence(schema.interpretedSchema()));
         }
 
-        private final class InterpretedSequence extends SequenceImpl<Long> {
+        private final class InterpretedSequence extends SequenceImpl<T> {
             InterpretedSequence(Schema schema) {
-                super(MutableSequence.this.name(), schema, BIGINT, false,
-                    (Field<Long>) MutableSequence.this.startWith,
-                    (Field<Long>) MutableSequence.this.incrementBy,
-                    (Field<Long>) MutableSequence.this.minvalue,
-                    (Field<Long>) MutableSequence.this.maxvalue,
+                super(MutableSequence.this.name(), schema,
+                    MutableSequence.this.dataType != null
+                        ? MutableSequence.this.dataType
+                        : (DataType<T>) SQLDataType.BIGINT,
+                    false,
+                    MutableSequence.this.startWith,
+                    MutableSequence.this.incrementBy,
+                    MutableSequence.this.minvalue,
+                    MutableSequence.this.maxvalue,
                     MutableSequence.this.cycle,
-                    (Field<Long>) MutableSequence.this.cache);
+                    MutableSequence.this.cache
+                );
             }
         }
     }

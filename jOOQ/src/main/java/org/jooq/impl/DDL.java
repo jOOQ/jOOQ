@@ -55,6 +55,7 @@ import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
 import static org.jooq.impl.Comparators.TABLE_VIEW_COMP;
+import static org.jooq.impl.CreateSequenceImpl.NO_SUPPORT_AS;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.Tools.map;
 
@@ -79,6 +80,7 @@ import org.jooq.CreateDomainAsStep;
 import org.jooq.CreateDomainConstraintStep;
 import org.jooq.CreateDomainDefaultStep;
 import org.jooq.CreateIndexIncludeStep;
+import org.jooq.CreateSequenceAsStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableOnCommitStep;
 // ...
@@ -244,10 +246,14 @@ final class DDL {
             return q.as(options.source());
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     final Query createSequence(Sequence<?> sequence) {
         CreateSequenceFlagsStep result = configuration.createSequenceIfNotExists()
                     ? ctx.createSequenceIfNotExists(sequence)
                     : ctx.createSequence(sequence);
+
+        if (sequence.getDataType().isNumeric() && !NO_SUPPORT_AS.contains(ctx.dialect()))
+            ((CreateSequenceAsStep) result).as(sequence.getDataType());
 
         if (sequence.getStartWith() != null)
             result = result.startWith(sequence.getStartWith());

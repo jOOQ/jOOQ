@@ -247,15 +247,16 @@ implements
 
 
 
-    private static final Clause[]            CLAUSES                  = { Clause.CREATE_SEQUENCE };
-    private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD);
-    private static final Set<SQLDialect>     REQUIRES_START_WITH      = SQLDialect.supportedBy(DERBY);
-    private static final Set<SQLDialect>     NO_SUPPORT_CACHE         = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect>     NO_SEPARATOR             = SQLDialect.supportedBy(CUBRID, MARIADB);
-    private static final Set<SQLDialect>     OMIT_NO_CACHE            = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>     OMIT_NO_CYCLE            = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect>     OMIT_NO_MINVALUE         = SQLDialect.supportedBy(FIREBIRD);
-    private static final Set<SQLDialect>     OMIT_NO_MAXVALUE         = SQLDialect.supportedBy(FIREBIRD);
+    private static final Clause[] CLAUSES                  = { Clause.CREATE_SEQUENCE };
+    static final Set<SQLDialect>  NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD);
+    static final Set<SQLDialect>  REQUIRES_START_WITH      = SQLDialect.supportedBy(DERBY);
+    static final Set<SQLDialect>  NO_SUPPORT_CACHE         = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    static final Set<SQLDialect>  NO_SUPPORT_AS            = SQLDialect.supportedBy(CUBRID, DUCKDB, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
+    static final Set<SQLDialect>  NO_SEPARATOR             = SQLDialect.supportedBy(CUBRID, MARIADB);
+    static final Set<SQLDialect>  OMIT_NO_CACHE            = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>  OMIT_NO_CYCLE            = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>  OMIT_NO_MINVALUE         = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>  OMIT_NO_MAXVALUE         = SQLDialect.supportedBy(FIREBIRD);
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
@@ -283,7 +284,7 @@ implements
         ctx.visit(sequence);
         String noSeparator = NO_SEPARATOR.contains(ctx.dialect()) ? "" : " ";
 
-        if (dataType != null) {
+        if (dataType != null && !NO_SUPPORT_AS.contains(ctx.dialect())) {
             ctx.sql(' ').visit(K_AS).sql(' ');
             toSQLDDLTypeDeclaration(ctx, dataType);
         }

@@ -698,6 +698,10 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
     @Override
     public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
+        Field<String> dataType = is2_0_202()
+            ? field(SEQUENCES.getQualifiedName().append("DATA_TYPE"), VARCHAR)
+            : inline("BIGINT");
+
         Field<Long> minValue = is2_0_202()
             ? field(SEQUENCES.getQualifiedName().append("MINIMUM_VALUE"), SEQUENCES.MIN_VALUE.getDataType())
             : SEQUENCES.MIN_VALUE;
@@ -715,7 +719,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 inline(null, VARCHAR).as("catalog"),
                 SEQUENCES.SEQUENCE_SCHEMA,
                 SEQUENCES.SEQUENCE_NAME,
-                inline("BIGINT").as("type_name"),
+                dataType.as("type_name"),
                 inline(null, INTEGER).as("precision"),
                 inline(null, INTEGER).as("scale"),
                 inline(null, BIGINT).as("start_value"),
@@ -755,7 +759,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                     this,
                     schema,
-                    H2DataType.BIGINT.getTypeName()
+                    record.get("type_name", String.class)
                 );
 
                 result.add(new DefaultSequenceDefinition(

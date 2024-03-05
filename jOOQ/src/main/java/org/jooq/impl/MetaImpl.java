@@ -1157,13 +1157,20 @@ final class MetaImpl extends AbstractMeta {
                             }
                             else {
                                 try {
-                                    type = type.defaultValue(dsl()
+                                    DSLContext ctx = dsl()
                                         .configuration()
-                                        .deriveSettings(s -> s.withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
-                                        .dsl()
-                                        .parser()
-                                        .parseField(defaultValue)
-                                    );
+                                        .deriveSettings(s -> s
+                                            .withParseDialect(dialect())
+                                            .withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
+                                        .dsl();
+
+
+
+
+
+
+
+                                    type = type.defaultValue(ctx.parser().parseField(defaultValue));
                                 }
                                 catch (ParserException e) {
                                     log.info("Cannot parse default expression: " + defaultValue, e);

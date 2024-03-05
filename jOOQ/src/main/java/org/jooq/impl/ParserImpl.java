@@ -8625,6 +8625,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
         switch (characterUpper()) {
 
             // [#8821] Known prefixes so far:

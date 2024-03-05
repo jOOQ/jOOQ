@@ -64,27 +64,29 @@ import java.util.stream.*;
 /**
  * The <code>CREATE SEQUENCE</code> statement.
  */
-@SuppressWarnings({ "hiding", "rawtypes", "unused" })
-final class CreateSequenceImpl
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class CreateSequenceImpl<T extends Number>
 extends
     AbstractDDLQuery
 implements
-    QOM.CreateSequence,
-    CreateSequenceFlagsStep,
+    QOM.CreateSequence<T>,
+    CreateSequenceAsStep<T>,
+    CreateSequenceFlagsStep<T>,
     CreateSequenceFinalStep
 {
 
-    final Sequence<?>             sequence;
-    final boolean                 ifNotExists;
-          Field<? extends Number> startWith;
-          Field<? extends Number> incrementBy;
-          Field<? extends Number> minvalue;
-          boolean                 noMinvalue;
-          Field<? extends Number> maxvalue;
-          boolean                 noMaxvalue;
-          CycleOption             cycle;
-          Field<? extends Number> cache;
-          boolean                 noCache;
+    final Sequence<?> sequence;
+    final boolean     ifNotExists;
+          DataType<T> dataType;
+          Field<T>    startWith;
+          Field<T>    incrementBy;
+          Field<T>    minvalue;
+          boolean     noMinvalue;
+          Field<T>    maxvalue;
+          boolean     noMaxvalue;
+          CycleOption cycle;
+          Field<T>    cache;
+          boolean     noCache;
 
     CreateSequenceImpl(
         Configuration configuration,
@@ -95,6 +97,7 @@ implements
             configuration,
             sequence,
             ifNotExists,
+            null,
             null,
             null,
             null,
@@ -111,20 +114,22 @@ implements
         Configuration configuration,
         Sequence<?> sequence,
         boolean ifNotExists,
-        Field<? extends Number> startWith,
-        Field<? extends Number> incrementBy,
-        Field<? extends Number> minvalue,
+        DataType<T> dataType,
+        Field<T> startWith,
+        Field<T> incrementBy,
+        Field<T> minvalue,
         boolean noMinvalue,
-        Field<? extends Number> maxvalue,
+        Field<T> maxvalue,
         boolean noMaxvalue,
         CycleOption cycle,
-        Field<? extends Number> cache,
+        Field<T> cache,
         boolean noCache
     ) {
         super(configuration);
 
         this.sequence = sequence;
         this.ifNotExists = ifNotExists;
+        this.dataType = dataType;
         this.startWith = startWith;
         this.incrementBy = incrementBy;
         this.minvalue = minvalue;
@@ -141,86 +146,97 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final CreateSequenceImpl startWith(Number startWith) {
-        return startWith(Tools.field(startWith, sequence.getDataType()));
+    public final <T extends Number> CreateSequenceImpl<T> as(Class<T> dataType) {
+        return as(DefaultDataType.getDataType(null, dataType));
     }
 
     @Override
-    public final CreateSequenceImpl startWith(Field<? extends Number> startWith) {
+    public final <T extends Number> CreateSequenceImpl<T> as(DataType<T> dataType) {
+        this.dataType = (DataType) dataType;
+        return (CreateSequenceImpl) this;
+    }
+
+    @Override
+    public final CreateSequenceImpl<T> startWith(T startWith) {
+        return startWith(Tools.field(startWith, (DataType<T>) sequence.getDataType()));
+    }
+
+    @Override
+    public final CreateSequenceImpl<T> startWith(Field<T> startWith) {
         this.startWith = startWith;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl incrementBy(Number incrementBy) {
-        return incrementBy(Tools.field(incrementBy, sequence.getDataType()));
+    public final CreateSequenceImpl<T> incrementBy(T incrementBy) {
+        return incrementBy(Tools.field(incrementBy, (DataType<T>) sequence.getDataType()));
     }
 
     @Override
-    public final CreateSequenceImpl incrementBy(Field<? extends Number> incrementBy) {
+    public final CreateSequenceImpl<T> incrementBy(Field<T> incrementBy) {
         this.incrementBy = incrementBy;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl minvalue(Number minvalue) {
-        return minvalue(Tools.field(minvalue, sequence.getDataType()));
+    public final CreateSequenceImpl<T> minvalue(T minvalue) {
+        return minvalue(Tools.field(minvalue, (DataType<T>) sequence.getDataType()));
     }
 
     @Override
-    public final CreateSequenceImpl minvalue(Field<? extends Number> minvalue) {
+    public final CreateSequenceImpl<T> minvalue(Field<T> minvalue) {
         this.minvalue = minvalue;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl noMinvalue() {
+    public final CreateSequenceImpl<T> noMinvalue() {
         this.noMinvalue = true;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl maxvalue(Number maxvalue) {
-        return maxvalue(Tools.field(maxvalue, sequence.getDataType()));
+    public final CreateSequenceImpl<T> maxvalue(T maxvalue) {
+        return maxvalue(Tools.field(maxvalue, (DataType<T>) sequence.getDataType()));
     }
 
     @Override
-    public final CreateSequenceImpl maxvalue(Field<? extends Number> maxvalue) {
+    public final CreateSequenceImpl<T> maxvalue(Field<T> maxvalue) {
         this.maxvalue = maxvalue;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl noMaxvalue() {
+    public final CreateSequenceImpl<T> noMaxvalue() {
         this.noMaxvalue = true;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl cycle() {
+    public final CreateSequenceImpl<T> cycle() {
         this.cycle = CycleOption.CYCLE;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl noCycle() {
+    public final CreateSequenceImpl<T> noCycle() {
         this.cycle = CycleOption.NO_CYCLE;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl cache(Number cache) {
-        return cache(Tools.field(cache, sequence.getDataType()));
+    public final CreateSequenceImpl<T> cache(T cache) {
+        return cache(Tools.field(cache, (DataType<T>) sequence.getDataType()));
     }
 
     @Override
-    public final CreateSequenceImpl cache(Field<? extends Number> cache) {
+    public final CreateSequenceImpl<T> cache(Field<T> cache) {
         this.cache = cache;
         return this;
     }
 
     @Override
-    public final CreateSequenceImpl noCache() {
+    public final CreateSequenceImpl<T> noCache() {
         this.noCache = true;
         return this;
     }
@@ -266,6 +282,11 @@ implements
 
         ctx.visit(sequence);
         String noSeparator = NO_SEPARATOR.contains(ctx.dialect()) ? "" : " ";
+
+        if (dataType != null) {
+            ctx.sql(' ').visit(K_AS).sql(' ');
+            toSQLDDLTypeDeclaration(ctx, dataType);
+        }
 
         // Some databases default to sequences starting with MIN_VALUE
         if (startWith == null && REQUIRES_START_WITH.contains(ctx.dialect()))
@@ -322,17 +343,22 @@ implements
     }
 
     @Override
-    public final Field<? extends Number> $startWith() {
+    public final DataType<T> $dataType() {
+        return dataType;
+    }
+
+    @Override
+    public final Field<T> $startWith() {
         return startWith;
     }
 
     @Override
-    public final Field<? extends Number> $incrementBy() {
+    public final Field<T> $incrementBy() {
         return incrementBy;
     }
 
     @Override
-    public final Field<? extends Number> $minvalue() {
+    public final Field<T> $minvalue() {
         return minvalue;
     }
 
@@ -342,7 +368,7 @@ implements
     }
 
     @Override
-    public final Field<? extends Number> $maxvalue() {
+    public final Field<T> $maxvalue() {
         return maxvalue;
     }
 
@@ -357,7 +383,7 @@ implements
     }
 
     @Override
-    public final Field<? extends Number> $cache() {
+    public final Field<T> $cache() {
         return cache;
     }
 
@@ -367,63 +393,70 @@ implements
     }
 
     @Override
-    public final QOM.CreateSequence $sequence(Sequence<?> newValue) {
-        return $constructor().apply(newValue, $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    public final QOM.CreateSequence<T> $sequence(Sequence<?> newValue) {
+        return $constructor().apply(newValue, $ifNotExists(), $dataType(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $ifNotExists(boolean newValue) {
-        return $constructor().apply($sequence(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    public final QOM.CreateSequence<T> $ifNotExists(boolean newValue) {
+        return $constructor().apply($sequence(), newValue, $dataType(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $startWith(Field<? extends Number> newValue) {
-        return $constructor().apply($sequence(), $ifNotExists(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    public final QOM.CreateSequence<T> $dataType(DataType<T> newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), newValue, $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $incrementBy(Field<? extends Number> newValue) {
-        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    public final QOM.CreateSequence<T> $startWith(Field<T> newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), $dataType(), newValue, $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $minvalue(Field<? extends Number> newValue) {
-        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    public final QOM.CreateSequence<T> $incrementBy(Field<T> newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), $dataType(), $startWith(), newValue, $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $noMinvalue(boolean newValue) {
-        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
+    public final QOM.CreateSequence<T> $minvalue(Field<T> newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), $dataType(), $startWith(), $incrementBy(), newValue, $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $maxvalue(Field<? extends Number> newValue) {
-        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $cache(), $noCache());
+    public final QOM.CreateSequence<T> $noMinvalue(boolean newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), $dataType(), $startWith(), $incrementBy(), $minvalue(), newValue, $maxvalue(), $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $noMaxvalue(boolean newValue) {
-        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $cache(), $noCache());
+    public final QOM.CreateSequence<T> $maxvalue(Field<T> newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), $dataType(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), newValue, $noMaxvalue(), $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $cycle(CycleOption newValue) {
-        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
+    public final QOM.CreateSequence<T> $noMaxvalue(boolean newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), $dataType(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), newValue, $cycle(), $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $cache(Field<? extends Number> newValue) {
-        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $noCache());
+    public final QOM.CreateSequence<T> $cycle(CycleOption newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), $dataType(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), newValue, $cache(), $noCache());
     }
 
     @Override
-    public final QOM.CreateSequence $noCache(boolean newValue) {
-        return $constructor().apply($sequence(), $ifNotExists(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
+    public final QOM.CreateSequence<T> $cache(Field<T> newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), $dataType(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), newValue, $noCache());
     }
 
-    public final Function11<? super Sequence<?>, ? super Boolean, ? super Field<? extends Number>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? super Boolean, ? super Field<? extends Number>, ? super Boolean, ? super CycleOption, ? super Field<? extends Number>, ? super Boolean, ? extends QOM.CreateSequence> $constructor() {
-        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) -> new CreateSequenceImpl(configuration(), a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+    @Override
+    public final QOM.CreateSequence<T> $noCache(boolean newValue) {
+        return $constructor().apply($sequence(), $ifNotExists(), $dataType(), $startWith(), $incrementBy(), $minvalue(), $noMinvalue(), $maxvalue(), $noMaxvalue(), $cycle(), $cache(), newValue);
     }
+
+    public final Function12<? super Sequence<?>, ? super Boolean, ? super DataType<T>, ? super Field<T>, ? super Field<T>, ? super Field<T>, ? super Boolean, ? super Field<T>, ? super Boolean, ? super CycleOption, ? super Field<T>, ? super Boolean, ? extends QOM.CreateSequence<T>> $constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) -> new CreateSequenceImpl(configuration(), a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
+    }
+
+
 
 
 

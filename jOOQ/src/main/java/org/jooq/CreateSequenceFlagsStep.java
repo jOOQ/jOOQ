@@ -68,7 +68,7 @@ import org.jetbrains.annotations.*;
  * </ul>
  */
 @SuppressWarnings({ "unused" })
-public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
+public interface CreateSequenceFlagsStep<T extends Number> extends CreateSequenceFinalStep {
 
     /**
      * Add the <code>START WITH</code> clause to the <code>CREATE SEQUENCE</code> statement.
@@ -77,14 +77,14 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep startWith(Number startWith);
+    CreateSequenceFlagsStep<T> startWith(T startWith);
 
     /**
      * Add the <code>START WITH</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep startWith(Field<? extends Number> startWith);
+    CreateSequenceFlagsStep<T> startWith(Field<T> startWith);
 
     /**
      * Add the <code>INCREMENT BY</code> clause to the <code>CREATE SEQUENCE</code> statement.
@@ -93,14 +93,14 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep incrementBy(Number incrementBy);
+    CreateSequenceFlagsStep<T> incrementBy(T incrementBy);
 
     /**
      * Add the <code>INCREMENT BY</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep incrementBy(Field<? extends Number> incrementBy);
+    CreateSequenceFlagsStep<T> incrementBy(Field<T> incrementBy);
 
     /**
      * Add the <code>MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
@@ -109,21 +109,21 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
      */
     @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep minvalue(Number minvalue);
+    CreateSequenceFlagsStep<T> minvalue(T minvalue);
 
     /**
      * Add the <code>MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep minvalue(Field<? extends Number> minvalue);
+    CreateSequenceFlagsStep<T> minvalue(Field<T> minvalue);
 
     /**
      * Add the <code>NO MINVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep noMinvalue();
+    CreateSequenceFlagsStep<T> noMinvalue();
 
     /**
      * Add the <code>MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
@@ -132,35 +132,35 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
      */
     @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep maxvalue(Number maxvalue);
+    CreateSequenceFlagsStep<T> maxvalue(T maxvalue);
 
     /**
      * Add the <code>MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep maxvalue(Field<? extends Number> maxvalue);
+    CreateSequenceFlagsStep<T> maxvalue(Field<T> maxvalue);
 
     /**
      * Add the <code>NO MAXVALUE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep noMaxvalue();
+    CreateSequenceFlagsStep<T> noMaxvalue();
 
     /**
      * Add the <code>CYCLE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep cycle();
+    CreateSequenceFlagsStep<T> cycle();
 
     /**
      * Add the <code>NO CYCLE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep noCycle();
+    CreateSequenceFlagsStep<T> noCycle();
 
     /**
      * Add the <code>CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
@@ -169,19 +169,19 @@ public interface CreateSequenceFlagsStep extends CreateSequenceFinalStep {
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep cache(Number cache);
+    CreateSequenceFlagsStep<T> cache(T cache);
 
     /**
      * Add the <code>CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, H2, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep cache(Field<? extends Number> cache);
+    CreateSequenceFlagsStep<T> cache(Field<T> cache);
 
     /**
      * Add the <code>NO CACHE</code> clause to the <code>CREATE SEQUENCE</code> statement.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    CreateSequenceFlagsStep noCache();
+    CreateSequenceFlagsStep<T> noCache();
 }

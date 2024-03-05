@@ -9698,7 +9698,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    public static org.jooq.CreateSequenceFlagsStep createSequence(@Stringly.Name String sequence) {
+    public static org.jooq.CreateSequenceAsStep<Number> createSequence(@Stringly.Name String sequence) {
         return dsl().createSequence(sequence);
     }
 
@@ -9713,7 +9713,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    public static org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
+    public static org.jooq.CreateSequenceAsStep<Number> createSequence(Name sequence) {
         return dsl().createSequence(sequence);
     }
 
@@ -9728,7 +9728,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    public static org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
+    public static org.jooq.CreateSequenceAsStep<Number> createSequence(Sequence<?> sequence) {
         return dsl().createSequence(sequence);
     }
 
@@ -9743,7 +9743,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(@Stringly.Name String sequence) {
+    public static org.jooq.CreateSequenceAsStep<Number> createSequenceIfNotExists(@Stringly.Name String sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
 
@@ -9758,7 +9758,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
+    public static org.jooq.CreateSequenceAsStep<Number> createSequenceIfNotExists(Name sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
 
@@ -9773,7 +9773,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    public static org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
+    public static org.jooq.CreateSequenceAsStep<Number> createSequenceIfNotExists(Sequence<?> sequence) {
         return dsl().createSequenceIfNotExists(sequence);
     }
 

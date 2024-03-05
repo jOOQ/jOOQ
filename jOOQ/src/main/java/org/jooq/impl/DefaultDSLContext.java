@@ -3729,32 +3729,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.CreateSequenceFlagsStep createSequence(@Stringly.Name String sequence) {
+    public org.jooq.CreateSequenceAsStep<Number> createSequence(@Stringly.Name String sequence) {
         return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), false);
     }
 
     @Override
-    public org.jooq.CreateSequenceFlagsStep createSequence(Name sequence) {
+    public org.jooq.CreateSequenceAsStep<Number> createSequence(Name sequence) {
         return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), false);
     }
 
     @Override
-    public org.jooq.CreateSequenceFlagsStep createSequence(Sequence<?> sequence) {
+    public org.jooq.CreateSequenceAsStep<Number> createSequence(Sequence<?> sequence) {
         return new CreateSequenceImpl(configuration(), sequence, false);
     }
 
     @Override
-    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(@Stringly.Name String sequence) {
+    public org.jooq.CreateSequenceAsStep<Number> createSequenceIfNotExists(@Stringly.Name String sequence) {
         return new CreateSequenceImpl(configuration(), DSL.sequence(DSL.name(sequence)), true);
     }
 
     @Override
-    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence) {
+    public org.jooq.CreateSequenceAsStep<Number> createSequenceIfNotExists(Name sequence) {
         return new CreateSequenceImpl(configuration(), DSL.sequence(sequence), true);
     }
 
     @Override
-    public org.jooq.CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence) {
+    public org.jooq.CreateSequenceAsStep<Number> createSequenceIfNotExists(Sequence<?> sequence) {
         return new CreateSequenceImpl(configuration(), sequence, true);
     }
 

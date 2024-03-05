@@ -10832,7 +10832,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    CreateSequenceFlagsStep createSequence(@Stringly.Name String sequence);
+    CreateSequenceAsStep<Number> createSequence(@Stringly.Name String sequence);
 
     /**
      * The <code>CREATE SEQUENCE</code> statement.
@@ -10841,7 +10841,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    CreateSequenceFlagsStep createSequence(Name sequence);
+    CreateSequenceAsStep<Number> createSequence(Name sequence);
 
     /**
      * The <code>CREATE SEQUENCE</code> statement.
@@ -10850,7 +10850,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    CreateSequenceFlagsStep createSequence(Sequence<?> sequence);
+    CreateSequenceAsStep<Number> createSequence(Sequence<?> sequence);
 
     /**
      * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
@@ -10859,7 +10859,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    CreateSequenceFlagsStep createSequenceIfNotExists(@Stringly.Name String sequence);
+    CreateSequenceAsStep<Number> createSequenceIfNotExists(@Stringly.Name String sequence);
 
     /**
      * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
@@ -10868,7 +10868,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    CreateSequenceFlagsStep createSequenceIfNotExists(Name sequence);
+    CreateSequenceAsStep<Number> createSequenceIfNotExists(Name sequence);
 
     /**
      * The <code>CREATE SEQUENCE IF NOT EXISTS</code> statement.
@@ -10877,7 +10877,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
-    CreateSequenceFlagsStep createSequenceIfNotExists(Sequence<?> sequence);
+    CreateSequenceAsStep<Number> createSequenceIfNotExists(Sequence<?> sequence);
 
     /**
      * The <code>DROP DATABASE</code> statement.

@@ -3054,11 +3054,12 @@ public final class QOM {
     /**
      * The <code>CREATE SEQUENCE</code> statement.
      */
-    public static final CreateSequence CreateSequence() {
-        return new org.jooq.impl.CreateSequenceImpl(
+    public static final <T extends Number> CreateSequence<T> CreateSequence() {
+        return new org.jooq.impl.CreateSequenceImpl<>(
             null,
             null,
             false,
+            null,
             null,
             null,
             null,
@@ -3074,23 +3075,25 @@ public final class QOM {
     /**
      * The <code>CREATE SEQUENCE</code> statement.
      */
-    public static final CreateSequence CreateSequence(
+    public static final <T extends Number> CreateSequence<T> CreateSequence(
         Sequence<?> sequence,
         boolean ifNotExists,
-        Field<? extends Number> startWith,
-        Field<? extends Number> incrementBy,
-        Field<? extends Number> minvalue,
+        DataType<T> dataType,
+        Field<T> startWith,
+        Field<T> incrementBy,
+        Field<T> minvalue,
         boolean noMinvalue,
-        Field<? extends Number> maxvalue,
+        Field<T> maxvalue,
         boolean noMaxvalue,
         CycleOption cycle,
-        Field<? extends Number> cache,
+        Field<T> cache,
         boolean noCache
     ) {
-        return new org.jooq.impl.CreateSequenceImpl(
+        return new org.jooq.impl.CreateSequenceImpl<>(
             null,
             sequence,
             ifNotExists,
+            dataType,
             startWith,
             incrementBy,
             minvalue,
@@ -3106,7 +3109,7 @@ public final class QOM {
     /**
      * The <code>CREATE SEQUENCE</code> statement.
      */
-    public /*sealed*/ interface CreateSequence
+    public /*sealed*/ interface CreateSequence<T extends Number>
         extends
             DDLQuery
         //permits
@@ -3114,37 +3117,40 @@ public final class QOM {
     {
         @NotNull Sequence<?> $sequence();
         boolean $ifNotExists();
-        @Nullable Field<? extends Number> $startWith();
-        @Nullable Field<? extends Number> $incrementBy();
-        @Nullable Field<? extends Number> $minvalue();
+        @Nullable DataType<T> $dataType();
+        @Nullable Field<T> $startWith();
+        @Nullable Field<T> $incrementBy();
+        @Nullable Field<T> $minvalue();
         boolean $noMinvalue();
-        @Nullable Field<? extends Number> $maxvalue();
+        @Nullable Field<T> $maxvalue();
         boolean $noMaxvalue();
         @Nullable CycleOption $cycle();
-        @Nullable Field<? extends Number> $cache();
+        @Nullable Field<T> $cache();
         boolean $noCache();
         @CheckReturnValue
-        @NotNull CreateSequence $sequence(Sequence<?> sequence);
+        @NotNull CreateSequence<T> $sequence(Sequence<?> sequence);
         @CheckReturnValue
-        @NotNull CreateSequence $ifNotExists(boolean ifNotExists);
+        @NotNull CreateSequence<T> $ifNotExists(boolean ifNotExists);
         @CheckReturnValue
-        @NotNull CreateSequence $startWith(Field<? extends Number> startWith);
+        @NotNull CreateSequence<T> $dataType(DataType<T> dataType);
         @CheckReturnValue
-        @NotNull CreateSequence $incrementBy(Field<? extends Number> incrementBy);
+        @NotNull CreateSequence<T> $startWith(Field<T> startWith);
         @CheckReturnValue
-        @NotNull CreateSequence $minvalue(Field<? extends Number> minvalue);
+        @NotNull CreateSequence<T> $incrementBy(Field<T> incrementBy);
         @CheckReturnValue
-        @NotNull CreateSequence $noMinvalue(boolean noMinvalue);
+        @NotNull CreateSequence<T> $minvalue(Field<T> minvalue);
         @CheckReturnValue
-        @NotNull CreateSequence $maxvalue(Field<? extends Number> maxvalue);
+        @NotNull CreateSequence<T> $noMinvalue(boolean noMinvalue);
         @CheckReturnValue
-        @NotNull CreateSequence $noMaxvalue(boolean noMaxvalue);
+        @NotNull CreateSequence<T> $maxvalue(Field<T> maxvalue);
         @CheckReturnValue
-        @NotNull CreateSequence $cycle(CycleOption cycle);
+        @NotNull CreateSequence<T> $noMaxvalue(boolean noMaxvalue);
         @CheckReturnValue
-        @NotNull CreateSequence $cache(Field<? extends Number> cache);
+        @NotNull CreateSequence<T> $cycle(CycleOption cycle);
         @CheckReturnValue
-        @NotNull CreateSequence $noCache(boolean noCache);
+        @NotNull CreateSequence<T> $cache(Field<T> cache);
+        @CheckReturnValue
+        @NotNull CreateSequence<T> $noCache(boolean noCache);
     }
 
     /**

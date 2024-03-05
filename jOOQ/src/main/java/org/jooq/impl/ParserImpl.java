@@ -570,6 +570,7 @@ import org.jooq.CreateIndexWhereStep;
 // ...
 // ...
 // ...
+import org.jooq.CreateSequenceAsStep;
 import org.jooq.CreateSequenceFlagsStep;
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableCommentStep;
@@ -4359,6 +4360,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             ? dsl.createSequenceIfNotExists(schemaName)
             : dsl.createSequence(schemaName);
 
+        boolean as = false;
         boolean startWith = false;
         boolean incrementBy = false;
         boolean minvalue = false;
@@ -4367,9 +4369,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         boolean cache = false;
 
         for (;;) {
-            Field<Long> field;
+            Field field;
+            DataType type = null;
 
-            if (!startWith && (startWith |= (field = parseSequenceStartWithIf()) != null))
+            if (!as && (as |= (parseKeywordIf("AS") && (type = parseDataType()) != null)))
+                s = ((CreateSequenceAsStep) s).as(type);
+            else if (!startWith && (startWith |= (field = parseSequenceStartWithIf()) != null))
                 s = s.startWith(field);
             else if (!incrementBy && (incrementBy |= (field = parseSequenceIncrementByIf()) != null))
                 s = s.incrementBy(field);

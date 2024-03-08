@@ -42,6 +42,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -103,20 +104,20 @@ public interface AlterTableRenameColumnToStep {
      * Specify a new column name.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableFinalStep to(Field<?> newName);
 
     /**
      * Specify a new column name.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableFinalStep to(Name newName);
 
     /**
      * Specify a new column name.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableFinalStep to(String newName);
 }

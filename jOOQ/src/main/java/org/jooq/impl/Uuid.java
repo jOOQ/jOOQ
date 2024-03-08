@@ -107,6 +107,9 @@ implements
 
 
 
+            case CLICKHOUSE:
+                return true;
+
             case FIREBIRD:
                 return false;
 
@@ -188,6 +191,10 @@ implements
 
 
 
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_generateUUIDv4, getDataType()));
+                break;
 
             case FIREBIRD:
                 ctx.visit(function(N_UUID_TO_CHAR, getDataType(), function(N_GEN_UUID, getDataType())));

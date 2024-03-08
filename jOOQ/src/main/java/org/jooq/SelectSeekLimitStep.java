@@ -42,6 +42,7 @@ import org.jetbrains.annotations.*;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -149,7 +150,7 @@ public interface SelectSeekLimitStep<R extends Record> extends SelectForUpdateSt
      * statements.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     SelectForUpdateStep<R> limit(Field<? extends Number> numberOfRows);
 
 }

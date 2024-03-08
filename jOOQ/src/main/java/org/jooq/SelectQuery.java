@@ -42,6 +42,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -572,7 +573,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addWindow(WindowDefinition... definitions);
 
     /**
@@ -580,7 +581,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param definitions The definitions
      */
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addWindow(Collection<? extends WindowDefinition> definitions);
 
     /**
@@ -589,7 +590,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param condition The condition
      */
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Condition condition);
 
     /**
@@ -598,7 +599,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Condition... conditions);
 
     /**
@@ -607,7 +608,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *
      * @param conditions The condition
      */
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Collection<? extends Condition> conditions);
 
     /**
@@ -618,7 +619,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param condition The condition
      */
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Operator operator, Condition condition);
 
     /**
@@ -629,7 +630,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param conditions The condition
      */
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Operator operator, Condition... conditions);
 
     /**
@@ -640,7 +641,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      *            conditions
      * @param conditions The condition
      */
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addQualify(Operator operator, Collection<? extends Condition> conditions);
 
     /**
@@ -859,7 +860,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addOffset(Number offset);
 
     /**
@@ -872,7 +873,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addOffset(Field<? extends Number> offset);
 
     /**
@@ -986,7 +987,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     void setWithTies(boolean withTies);
 
     /**

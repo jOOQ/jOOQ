@@ -423,6 +423,8 @@ import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.DefaultParseContext.FunctionKeyword.FK_AND;
 import static org.jooq.impl.DefaultParseContext.FunctionKeyword.FK_IN;
+import static org.jooq.impl.Internal.iadd;
+import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_SELECT;
@@ -5499,9 +5501,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 // TODO: support all of the storageLoop from the CREATE TABLE statement
                 if (parseKeywordIf("COMMENT")) {
-                    if (!parseIf('='))
-                        parseKeywordIf("IS");
-                    return dsl.commentOnTable(tableName).is(parseStringLiteral());
+                    if (parseKeywordIf("COLUMN")) {
+                        return dsl.commentOnColumn(tableName.getQualifiedName().append(parseIdentifier()))
+                                  .is(parseStringLiteral());
+                    }
+                    else {
+                        if (!parseIf('='))
+                            parseKeywordIf("IS");
+
+                        return dsl.commentOnTable(tableName).is(parseStringLiteral());
+                    }
                 }
 
                 break;
@@ -5583,6 +5592,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("MODIFY"))
                     if (parseKeywordIf("CONSTRAINT"))
                         return parseAlterTableAlterConstraint(s1);
+                    else if (parseKeywordIf("COMMENT"))
+                        return s1.comment(parseComment());
                     else if ((parseKeywordIf("COLUMN") || true))
                         return parseAlterTableAlterColumn(s1);
 
@@ -5763,7 +5774,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return s1.alter(field).dropDefault();
             else if (parseKeywordIf("SET NOT NULL") || parseNotNullOptionalEnable())
                 return s1.alter(field).setNotNull();
-            else if (parseKeywordIf("SET DEFAULT"))
+            else if (parseKeywordIf("SET DEFAULT", "DEFAULT"))
                 return s1.alter(field).default_((Field) toField(parseConcat()));
             else if (parseKeywordIf("TO", "RENAME TO", "RENAME AS"))
                 return s1.renameColumn(field).to(parseFieldName());
@@ -7221,6 +7232,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 ? generateSeries(from, to)
                 : generateSeries(from, to, step);
         }
+        else if (parseFunctionNameIf("NUMBERS")) {
+            parse('(');
+            Field f1 = toField(parseConcat());
+            Field f2 = parseIf(',') ? toField(parseConcat()) : null;
+            parse(')');
+
+            result = f2 == null
+                ? generateSeries(zero(), isub(f1, one()))
+                : generateSeries(f1, isub(iadd(f1, f2), one()));
+        }
         else if (parseFunctionNameIf("JSON_TABLE")) {
             parse('(');
             Field json = parseField();
@@ -8256,6 +8277,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return parse('(') && parse(')');
     }
 
+    private final boolean parseEmptyParensOr(Predicate<? super ParseContext> p) {
+        return parse('(') && (parseIf(')') || p.test(this) && parse(')'));
+    }
+
     private final boolean parseEmptyParensIf() {
         return parseIf('(') && parse(')') || true;
     }
@@ -8735,7 +8760,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'B':
                 if (parseFunctionNameIf("BIT_LENGTH"))
                     return parseFunctionArgs1(f -> binary(f) ? binaryBitLength(f) : bitLength(f));
-                else if (parseFunctionNameIf("BITGET", "BIT_GET"))
+                else if (parseFunctionNameIf("BITGET", "BIT_GET", "bitTest"))
                     return parseFunctionArgs2(DSL::bitGet);
                 else if (parseFunctionNameIf("BITSET", "BIT_SET"))
                     return parseFunctionArgs3(DSL::bitSet, DSL::bitSet);
@@ -8944,6 +8969,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return currentTimestamp();
                 else if (parseFunctionNameIf("GENGUID", "GENERATE_UUID", "GEN_RANDOM_UUID") && parseEmptyParens())
                     return uuid();
+                else if (parseFunctionNameIf("generateUUIDv4") && parseEmptyParensOr(c -> c.parseField() != null))
+                    return uuid();
                 else if (parseFunctionNameIf("GET_BIT", "GETBIT"))
                     return parseFunctionArgs2(DSL::bitGet);
 
@@ -8968,6 +8995,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if ((field = parseFieldBitwiseFunctionIf()) != null)
+                    return field;
                 else
                     break;
 
@@ -9048,7 +9077,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'L':
                 if (parseFunctionNameIf("LOWER", "LCASE"))
                     return lower((Field) parseFieldParenthesised());
-                else if (parseFunctionNameIf("LPAD"))
+                else if (parseFunctionNameIf("LPAD", "leftPad"))
                     return parseFunctionArgs3(DSL::lpad, DSL::lpad);
                 else if (parseFunctionNameIf("LTRIM"))
                     return parseFunctionArgs2(DSL::ltrim, (f1, f2) -> binary(f1, f2) ? binaryLtrim(f1, f2) : ltrim(f1, f2));
@@ -9083,7 +9112,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 break;
 
             case 'M':
-                if (parseFunctionNameIf("MOD"))
+                if (parseFunctionNameIf("MOD", "MODULO"))
                     return parseFunctionArgs2(Field::mod);
                 else if (parseFunctionNameIf("MICROSECOND"))
                     return microsecond(parseFieldParenthesised());
@@ -9197,7 +9226,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
             case 'R':
-                if (parseFunctionNameIf("REPLACE"))
+                if (parseFunctionNameIf("REPLACE", "replaceAll"))
                     return parseFunctionArgs3(DSL::replace, DSL::replace);
                 else if ((field = parseFieldRegexpReplaceIf()) != null)
                     return field;
@@ -9205,7 +9234,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs2(DSL::repeat);
                 else if (parseFunctionNameIf("REVERSE"))
                     return reverse((Field) parseFieldParenthesised());
-                else if (parseFunctionNameIf("RPAD"))
+                else if (parseFunctionNameIf("RPAD", "rightPad"))
                     return parseFunctionArgs3(DSL::rpad, DSL::rpad);
                 else if (parseFunctionNameIf("RTRIM"))
                     return parseFunctionArgs2(DSL::rtrim, (f1, f2) -> binary(f1, f2) ? binaryRtrim(f1, f2) : rtrim(f1, f2));
@@ -9244,7 +9273,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'S':
                 if ((field = parseFieldSubstringIf()) != null)
                     return field;
-                else if (parseFunctionNameIf("SUBSTRING_INDEX"))
+                else if (parseFunctionNameIf("SUBSTRING_INDEX", "substringIndex"))
                     return parseFunctionArgs3(DSL::substringIndex);
                 else if (parseFunctionNameIf("SPACE"))
                     return space((Field) parseFieldParenthesised());
@@ -9463,6 +9492,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 else if ((field = parseFieldTrimIf()) != null)
                     return field;
+                else if (parseFunctionNameIf("trimBoth"))
+                    return parseFunctionArgs1(DSL::trim);
+                else if (parseFunctionNameIf("trimLeft"))
+                    return parseFunctionArgs1(DSL::ltrim);
+                else if (parseFunctionNameIf("trimRight"))
+                    return parseFunctionArgs1(DSL::rtrim);
                 else if ((field = parseFieldTranslateIf()) != null)
                     return field;
                 else if (parseFunctionNameIf("TO_CHAR"))
@@ -9749,14 +9784,23 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldBitwiseFunctionIf() {
         int p = position();
 
+        char c0 = characterUpper();
         char c1 = character(p + 1);
         char c2 = character(p + 2);
         boolean agg = false;
 
-        if (c1 != 'I' && c1 != 'i')
-            return null;
-        if (c2 != 'T' && c2 != 't' && c2 != 'N' && c2 != 'n')
-            return null;
+        if (c0 == 'B') {
+            if (c1 != 'I' && c1 != 'i')
+                return null;
+            if (c2 != 'T' && c2 != 't' && c2 != 'N' && c2 != 'n')
+                return null;
+        }
+        else {
+            if (c1 != 'r')
+                return null;
+            if (c2 != 'o')
+                return null;
+        }
 
         if (parseKeywordIf("BIT_AND") ||
             parseKeywordIf("BITWISE_AND") ||
@@ -9765,7 +9809,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BIT_AND_AGG")) ||
             (agg = parseKeywordIf("BITWISE_AND_AGG")) ||
             (agg = parseKeywordIf("BITAND_AGG")) ||
-            (agg = parseKeywordIf("BIN_AND_AGG"))) {
+            (agg = parseKeywordIf("BIN_AND_AGG")) ||
+            (agg = parseFunctionNameIf("groupBitAnd"))) {
             parse('(');
             if (parseKeywordIf("DISTINCT", "ALL"))
                 agg = true;
@@ -9785,7 +9830,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseKeywordIf("BIN_NAND") ||
             (agg = parseKeywordIf("BIT_NAND_AGG")) ||
             (agg = parseKeywordIf("BITNAND_AGG")) ||
-            (agg = parseKeywordIf("BIN_NAND_AGG"))) {
+            (agg = parseKeywordIf("BIN_NAND_AGG")) ||
+            (agg = parseFunctionNameIf("groupBitNand"))) {
             parse('(');
             if (parseKeywordIf("DISTINCT", "ALL"))
                 agg = true;
@@ -9807,7 +9853,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BIT_OR_AGG")) ||
             (agg = parseKeywordIf("BITWISE_OR_AGG")) ||
             (agg = parseKeywordIf("BITOR_AGG")) ||
-            (agg = parseKeywordIf("BIN_OR_AGG"))) {
+            (agg = parseKeywordIf("BIN_OR_AGG")) ||
+            (agg = parseKeywordIf("groupBitOr"))) {
             parse('(');
             if (parseKeywordIf("DISTINCT", "ALL"))
                 agg = true;
@@ -9827,7 +9874,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseKeywordIf("BIN_NOR") ||
             (agg = parseKeywordIf("BIT_NOR_AGG")) ||
             (agg = parseKeywordIf("BITNOR_AGG")) ||
-            (agg = parseKeywordIf("BIN_NOR_AGG"))) {
+            (agg = parseKeywordIf("BIN_NOR_AGG")) ||
+            (agg = parseKeywordIf("groupBitNor"))) {
             parse('(');
             if (parseKeywordIf("DISTINCT", "ALL"))
                 agg = true;
@@ -9848,7 +9896,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseKeywordIf("BIN_XOR") ||
             (agg = parseKeywordIf("BIT_XOR_AGG")) ||
             (agg = parseKeywordIf("BITXOR_AGG")) ||
-            (agg = parseKeywordIf("BIN_XOR_AGG"))) {
+            (agg = parseKeywordIf("BIN_XOR_AGG")) ||
+            (agg = parseKeywordIf("groupBitXor"))) {
             parse('(');
             Field<?> x = toField(parseNumericOp());
 
@@ -9866,7 +9915,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parseKeywordIf("BIN_XNOR") ||
             (agg = parseKeywordIf("BIT_XNOR_AGG")) ||
             (agg = parseKeywordIf("BITXNOR_AGG")) ||
-            (agg = parseKeywordIf("BIN_XNOR_AGG"))) {
+            (agg = parseKeywordIf("BIN_XNOR_AGG")) ||
+            (agg = parseKeywordIf("groupBitXnor"))) {
             parse('(');
             Field<?> x = toField(parseNumericOp());
 
@@ -11474,14 +11524,26 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             forbidden.add(FK_IN);
             Field f1 = parseField();
-            parseKeyword("IN");
-            forbidden.remove(FK_IN);
-            Field f2 = parseField();
-            parse(')');
 
-            return binary(f1, f2)
-                 ? DSL.binaryPosition(f2, f1)
-                 : DSL.position(f2, f1);
+            if (parseIf(',')) {
+                Field f2 = parseField();
+                Field f3 = parseIf(',') ? parseField() : null;
+                parse(')');
+
+                return f3 == null
+                     ? DSL.position(f1, f2)
+                     : DSL.position(f1, f2, f3);
+            }
+            else {
+                parseKeyword("IN");
+                forbidden.remove(FK_IN);
+                Field f2 = parseField();
+                parse(')');
+
+                return binary(f1, f2)
+                     ? DSL.binaryPosition(f2, f1)
+                     : DSL.position(f2, f1);
+            }
         }
 
         return null;
@@ -11536,8 +11598,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldRegexpReplaceIf() {
-        boolean all = parseFunctionNameIf("REGEXP_REPLACE_ALL");
-        boolean first = !all && parseFunctionNameIf("REGEXP_REPLACE_FIRST");
+        boolean all = parseFunctionNameIf("REGEXP_REPLACE_ALL", "replaceRegexpAll");
+        boolean first = !all && parseFunctionNameIf("REGEXP_REPLACE_FIRST", "replaceRegexpOne");
         boolean ifx = !all && !first && parseFunctionNameIf("REGEX_REPLACE");
 
         if (all || first || ifx || parseFunctionNameIf("REGEXP_REPLACE")) {
@@ -12162,8 +12224,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseFieldLeadLagIf() {
-        boolean lead = parseFunctionNameIf("LEAD");
-        boolean lag = !lead && parseFunctionNameIf("LAG");
+        boolean lead = parseFunctionNameIf("LEAD", "leadInFrame");
+        boolean lag = !lead && parseFunctionNameIf("LAG", "lagInFrame");
 
         if (lead || lag) {
             parse('(');
@@ -12283,9 +12345,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'C':
                 if (parseFunctionNameIf("CORR"))
                     return parseBinarySetFunction(DSL::corr);
-                else if (parseFunctionNameIf("COVAR_POP"))
+                else if (parseFunctionNameIf("COVAR_POP", "covarPop"))
                     return parseBinarySetFunction(DSL::covarPop);
-                else if (parseFunctionNameIf("COVAR_SAMP"))
+                else if (parseFunctionNameIf("COVAR_SAMP", "covarSamp"))
                     return parseBinarySetFunction(DSL::covarSamp);
 
                 break;
@@ -14204,25 +14266,25 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return ComputationalOperation.SUM;
                 else if (parseFunctionNameIf("SOME"))
                     return ComputationalOperation.ANY;
-                else if (parseFunctionNameIf("STDDEV", "STDEVP", "STDDEV_POP"))
+                else if (parseFunctionNameIf("STDDEV", "STDEVP", "STDDEV_POP", "stddevPop"))
                     return ComputationalOperation.STDDEV_POP;
 
 
 
 
-                else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV", "STDEV_SAMP"))
+                else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV", "STDEV_SAMP", "stddevSamp"))
                     return ComputationalOperation.STDDEV_SAMP;
 
                 break;
 
             case 'V':
-                if (parseFunctionNameIf("VAR_POP", "VARIANCE", "VARP"))
+                if (parseFunctionNameIf("VAR_POP", "VARIANCE", "VARP", "varPop"))
                     return ComputationalOperation.VAR_POP;
 
 
 
 
-                else if (parseFunctionNameIf("VAR_SAMP", "VARIANCE_SAMP", "VAR"))
+                else if (parseFunctionNameIf("VAR_SAMP", "VARIANCE_SAMP", "VAR", "varSamp"))
                     return ComputationalOperation.VAR_SAMP;
 
                 break;
@@ -14605,6 +14667,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final boolean peekKeyword(String keyword, boolean updatePosition, boolean peekIntoParens, boolean requireFunction) {
+        boolean caseSensitive = Character.isLowerCase(keyword.charAt(0));
         int length = keyword.length();
         int p = position();
 
@@ -14626,7 +14689,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     break;
 
                 default:
-                    if (upper(character(pos)) != c)
+                    if (caseSensitive) {
+                        if (character(pos) != c)
+                            return false;
+                    }
+                    else if (upper(character(pos)) != c)
                         return false;
 
                     break;

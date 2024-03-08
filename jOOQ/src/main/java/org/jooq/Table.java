@@ -43,6 +43,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -2089,7 +2090,7 @@ extends
      * A synonym for {@link #fullOuterJoin(TableLike)}.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TablePartitionByStep<Record> fullJoin(TableLike<?> table);
 
     /**
@@ -2098,7 +2099,7 @@ extends
      * A synonym for {@link #fullOuterJoin(Path)}.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TableOptionalOnStep<Record> fullJoin(Path<?> path);
 
 
@@ -2182,7 +2183,7 @@ extends
      * escape literals when concatenated into SQL clauses!
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     TablePartitionByStep<Record> fullJoin(SQL sql);
 
@@ -2197,7 +2198,7 @@ extends
      * escape literals when concatenated into SQL clauses!
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     TablePartitionByStep<Record> fullJoin(String sql);
 
@@ -2212,7 +2213,7 @@ extends
      * escape literals when concatenated into SQL clauses!
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     TablePartitionByStep<Record> fullJoin(String sql, Object... bindings);
 
@@ -2227,7 +2228,7 @@ extends
      * escape literals when concatenated into SQL clauses!
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     TablePartitionByStep<Record> fullJoin(String sql, QueryPart... parts);
 
@@ -2237,21 +2238,21 @@ extends
      * A synonym for {@link #fullOuterJoin(Name)}.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TablePartitionByStep<Record> fullJoin(Name name);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TablePartitionByStep<Record> fullOuterJoin(TableLike<?> table);
 
     /**
      * <code>FULL OUTER JOIN</code> a path to this table.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TableOptionalOnStep<Record> fullOuterJoin(Path<?> path);
 
 
@@ -2324,7 +2325,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     TablePartitionByStep<Record> fullOuterJoin(SQL sql);
 
@@ -2340,7 +2341,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     TablePartitionByStep<Record> fullOuterJoin(String sql);
 
@@ -2357,7 +2358,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     TablePartitionByStep<Record> fullOuterJoin(String sql, Object... bindings);
 
@@ -2374,7 +2375,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     TablePartitionByStep<Record> fullOuterJoin(String sql, QueryPart... parts);
 
@@ -2384,7 +2385,7 @@ extends
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     TablePartitionByStep<Record> fullOuterJoin(Name name);
 
     /**
@@ -2398,7 +2399,7 @@ extends
      * </code></pre>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Table<Record> crossJoin(TableLike<?> table);
 
     /**
@@ -2420,7 +2421,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> crossJoin(SQL sql);
 
@@ -2443,7 +2444,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> crossJoin(String sql);
 
@@ -2467,7 +2468,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> crossJoin(String sql, Object... bindings);
 
@@ -2491,7 +2492,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> crossJoin(String sql, QueryPart... parts);
 
@@ -2508,7 +2509,7 @@ extends
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Table<Record> crossJoin(Name name);
 
     /**
@@ -2719,7 +2720,7 @@ extends
      * this behaviour using the information provided in this query.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Table<Record> naturalRightOuterJoin(TableLike<?> table);
 
     /**
@@ -2737,7 +2738,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(SQL sql);
 
@@ -2756,7 +2757,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql);
 
@@ -2776,7 +2777,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
 
@@ -2796,7 +2797,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 
@@ -2809,7 +2810,7 @@ extends
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Table<Record> naturalRightOuterJoin(Name name);
 
     /**
@@ -2819,7 +2820,7 @@ extends
      * this behaviour using the information provided in this query.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Table<Record> naturalFullOuterJoin(TableLike<?> table);
 
     /**
@@ -2837,7 +2838,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(SQL sql);
 
@@ -2856,7 +2857,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(String sql);
 
@@ -2876,7 +2877,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(String sql, Object... bindings);
 
@@ -2896,7 +2897,7 @@ extends
      * @see SQL
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     Table<Record> naturalFullOuterJoin(String sql, QueryPart... parts);
 
@@ -2909,7 +2910,7 @@ extends
      * @see DSL#table(Name)
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Table<Record> naturalFullOuterJoin(Name name);
 
     // -------------------------------------------------------------------------

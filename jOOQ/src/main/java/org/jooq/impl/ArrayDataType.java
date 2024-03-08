@@ -182,6 +182,9 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
             case YUGABYTEDB:
                 return dataType + "[]";
 
+            case CLICKHOUSE:
+                return "Array(" + dataType + ")";
+
             case H2:
 
 

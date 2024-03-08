@@ -122,6 +122,10 @@ implements
                 ctx.visit(N_ARBITRARY);
                 break;
 
+            case CLICKHOUSE:
+                ctx.visit(N_ANY);
+                break;
+
 
 
 

@@ -43,6 +43,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -364,7 +365,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R>,
     /**
      * Set an empty record with the <code>DEFAULT VALUES</code> clause.
      */
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void setDefaultValues();
 
     /**

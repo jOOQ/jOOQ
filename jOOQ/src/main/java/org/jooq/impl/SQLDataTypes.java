@@ -72,6 +72,75 @@ final class SQLDataTypes {
 
     private SQLDataTypes() {}
 
+    static class ClickHouseDataType {
+
+        private static final SQLDialect FAMILY = SQLDialect.CLICKHOUSE;
+
+        // -------------------------------------------------------------------------
+        // Default SQL data types and synonyms thereof
+        // -------------------------------------------------------------------------
+
+        static final DataType<Byte>        TINYINT                  = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINT, "tinyint");
+        static final DataType<Byte>        INT8                     = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINT, "Int8");
+        static final DataType<Short>       SMALLINT                 = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINT, "smallint");
+        static final DataType<Short>       INT16                    = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINT, "Int16");
+        static final DataType<Integer>     INTEGER                  = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "integer");
+        static final DataType<Integer>     INT                      = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "int");
+        static final DataType<Integer>     INT32                    = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "Int32");
+        static final DataType<Long>        BIGINT                   = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "bigint");
+        static final DataType<Long>        INT64                    = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "Int64");
+        static final DataType<Double>      DOUBLE                   = new BuiltInDataType<>(FAMILY, SQLDataType.DOUBLE, "double");
+        static final DataType<Double>      DOUBLEPRECISION          = new BuiltInDataType<>(FAMILY, SQLDataType.DOUBLE, "double precision");
+        static final DataType<Double>      FLOAT64                  = new BuiltInDataType<>(FAMILY, SQLDataType.DOUBLE, "Float64");
+        static final DataType<Double>      FLOAT                    = new BuiltInDataType<>(FAMILY, SQLDataType.FLOAT, "float");
+        static final DataType<Float>       REAL                     = new BuiltInDataType<>(FAMILY, SQLDataType.REAL, "real");
+        static final DataType<Float>       FLOAT32                  = new BuiltInDataType<>(FAMILY, SQLDataType.REAL, "Float32");
+        static final DataType<Boolean>     BOOLEAN                  = new BuiltInDataType<>(FAMILY, SQLDataType.BOOLEAN, "boolean");
+        static final DataType<Boolean>     BOOL                     = new BuiltInDataType<>(FAMILY, SQLDataType.BOOLEAN, "bool");
+        static final DataType<BigDecimal>  DECIMAL                  = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "decimal(p, s)");
+        static final DataType<BigDecimal>  DECIMAL32                = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "Decimal32(s)");
+        static final DataType<BigDecimal>  DECIMAL64                = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "Decimal64(s)");
+        static final DataType<BigDecimal>  DECIMAL128               = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "Decimal128(s)");
+        static final DataType<BigDecimal>  DECIMAL256               = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "Decimal256(s)");
+        static final DataType<String>      VARCHAR                  = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "varchar(l)");
+        static final DataType<String>      CHAR                     = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "char(l)");
+        static final DataType<String>      STRING                   = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "String");
+        static final DataType<Date>        DATE                     = new BuiltInDataType<>(FAMILY, SQLDataType.DATE, "date");
+        static final DataType<Date>        DATE32                   = new BuiltInDataType<>(FAMILY, SQLDataType.DATE, "Date32");
+        static final DataType<Time>        TIME                     = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time(p)");
+        static final DataType<Timestamp>   TIMESTAMP                = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp(p)");
+        static final DataType<Timestamp>   DATETIME                 = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "DateTime");
+        static final DataType<Timestamp>   DATETIME64               = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "DateTime64(p)");
+        static final DataType<byte[]>      VARBINARY                = new BuiltInDataType<>(FAMILY, SQLDataType.VARBINARY, "varbinary");
+        static final DataType<JSON>        JSON                     = new BuiltInDataType<>(FAMILY, SQLDataType.JSON, "JSON");
+        static final DataType<Object>      OTHER                    = new BuiltInDataType<>(FAMILY, SQLDataType.OTHER, "other");
+        static final DataType<UUID>        UUID                     = new BuiltInDataType<>(FAMILY, SQLDataType.UUID, "UUID");
+
+        static final DataType<UByte>       UINT8                    = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINTUNSIGNED, "UInt8");
+        static final DataType<UShort>      UINT16                   = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINTUNSIGNED, "UInt16");
+        static final DataType<UInteger>    UINT32                   = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGERUNSIGNED, "UInt32");
+        static final DataType<ULong>       UINT64                   = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINTUNSIGNED, "UInt64");
+
+        // -------------------------------------------------------------------------
+        // Compatibility types for supported SQLDialect.CLICKHOUSE, SQLDataTypes
+        // -------------------------------------------------------------------------
+
+
+        static final DataType<Year>        __YEAR                = new BuiltInDataType<>(FAMILY, SQLDataType.YEAR, "smallint");
+        static final DataType<String>      __CLOB                = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "varchar");
+        static final DataType<byte[]>      __BLOB                = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "varbinary");
+        static final DataType<byte[]>      __BINARY              = new BuiltInDataType<>(FAMILY, SQLDataType.BINARY, "varbinary");
+        static final DataType<JSONB>       __JSONB               = new BuiltInDataType<>(FAMILY, SQLDataType.JSONB, "JSON");
+        static final DataType<BigDecimal>  __NUMERIC             = new BuiltInDataType<>(FAMILY, SQLDataType.NUMERIC, "decimal(p, s)");
+
+        // -------------------------------------------------------------------------
+        // Compatibility types for supported Java types
+        // -------------------------------------------------------------------------
+
+        static final DataType<BigInteger> __BIGINTEGER           = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL_INTEGER, "decimal(p, s)");
+
+    }
+
     static class DuckDBDataType {
 
         private static final SQLDialect FAMILY = SQLDialect.DUCKDB;
@@ -122,7 +191,7 @@ final class SQLDataTypes {
         public static final DataType<DayToSecond>  INTERVALDAYTOSECOND      = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALDAYTOSECOND, "interval day to second", "interval day(9) to second");
 
         // -------------------------------------------------------------------------
-        // Compatibility types for supported SQLDialect.HSQLDB, SQLDataTypes
+        // Compatibility types for supported SQLDialect.DUCKDB, SQLDataTypes
         // -------------------------------------------------------------------------
 
         protected static final DataType<String>    __NCHAR                  = new BuiltInDataType<>(FAMILY, SQLDataType.NCHAR, "char(l)");

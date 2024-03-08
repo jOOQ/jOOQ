@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -97,7 +98,7 @@ public interface WindowOverStep<T> {
      * </code></pre>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowPartitionByStep<T> over();
 
     /**
@@ -113,7 +114,7 @@ public interface WindowOverStep<T> {
      * windows will be inlined.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> over(Name name);
 
     /**
@@ -129,7 +130,7 @@ public interface WindowOverStep<T> {
      * windows will be inlined.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> over(String name);
 
     /**
@@ -140,7 +141,7 @@ public interface WindowOverStep<T> {
      * </code></pre>
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> over(WindowSpecification specification);
 
     /**
@@ -156,7 +157,7 @@ public interface WindowOverStep<T> {
      * windows will be inlined.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowFinalStep<T> over(WindowDefinition definition);
 
 }

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -63,7 +64,6 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.Field;
 import org.jooq.GroupField;
 import org.jooq.Name;
 import org.jooq.OrderField;
@@ -101,7 +101,7 @@ implements
     WindowFunction<T>,
     ScopeMappable
 {
-    private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(DUCKDB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(CLICKHOUSE, DUCKDB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
     // Other attributes
     WindowSpecificationImpl              windowSpecification;

@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -90,14 +91,14 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowOrderByStep<T> partitionBy(GroupField... fields);
 
     /**
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowOrderByStep<T> partitionBy(Collection<? extends GroupField> fields);
 
 }

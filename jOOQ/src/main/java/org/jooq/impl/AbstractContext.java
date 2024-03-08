@@ -58,6 +58,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNQUALIFY_LOCAL_SCOPE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -1139,7 +1140,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
     @Override
     public final boolean qualify() {
-        return qualify;
+        return data(DATA_UNQUALIFY_LOCAL_SCOPE) == null ? qualify : false;
     }
 
     @Override

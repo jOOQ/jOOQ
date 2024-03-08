@@ -108,6 +108,10 @@ implements
 
 
 
+            case CLICKHOUSE:
+                ctx.visit(N_stddevPop);
+                break;
+
             default:
                 super.acceptFunctionName(ctx);
                 break;

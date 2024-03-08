@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -90,13 +91,13 @@ public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowRowsStep<T> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowRowsStep<T> orderBy(Collection<? extends OrderField<?>> fields);
 }

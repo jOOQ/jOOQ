@@ -50,6 +50,7 @@ import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -128,7 +129,7 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     static final Set<SQLDialect>  NO_SUPPORT_ALIASED_JOIN_TABLES        = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect>  SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect>  SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
-    static final Set<SQLDialect>  SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedUntil(IGNITE, MARIADB, SQLITE);
+    static final Set<SQLDialect>  SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL2 = SQLDialect.supportedUntil(CLICKHOUSE, IGNITE, MARIADB, SQLITE);
 
 
 

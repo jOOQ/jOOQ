@@ -144,6 +144,10 @@ implements
                 .sql(')');
                 break;
 
+            case CLICKHOUSE:
+                ctx.visit(function(N_rightPad, getDataType(), string, length, characterOrBlank()));
+                break;
+
             default:
                 ctx.visit(function(N_RPAD, getDataType(), string, length, characterOrBlank()));
                 break;

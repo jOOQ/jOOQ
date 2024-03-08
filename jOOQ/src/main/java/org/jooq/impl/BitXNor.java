@@ -113,6 +113,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case CUBRID:
             case DUCKDB:
             case FIREBIRD:
@@ -160,6 +161,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case CUBRID:
             case DUCKDB:
             case FIREBIRD:

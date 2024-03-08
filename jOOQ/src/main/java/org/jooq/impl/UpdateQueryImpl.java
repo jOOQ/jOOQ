@@ -49,6 +49,7 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -101,6 +102,7 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.containsDeclaredTable;
 import static org.jooq.impl.Tools.findAny;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNQUALIFY_LOCAL_SCOPE;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -182,6 +184,7 @@ import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.UnmodifiableMap;
 import org.jooq.impl.QOM.Update;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -202,17 +205,19 @@ implements
 
 
 
-
-
+    private static final Set<SQLDialect> REQUIRES_WHERE                = SQLDialect.supportedBy(CLICKHOUSE);
     private static final Set<SQLDialect> EMULATE_FROM_WITH_MERGE       = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
     private static final Set<SQLDialect> EMULATE_RETURNING_WITH_UPSERT = SQLDialect.supportedBy(MARIADB);
 
     // LIMIT is not supported at all
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT              = SQLDialect.supportedUntil(CUBRID, DERBY, DUCKDB, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT              = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, DUCKDB, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
 
     // LIMIT is supported but not ORDER BY
     private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT     = SQLDialect.supportedBy(IGNITE);
     static final Set<SQLDialect>         NO_SUPPORT_UPDATE_JOIN        = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, YUGABYTEDB);
+
+    // https://github.com/ClickHouse/ClickHouse/issues/61020
+    static final Set<SQLDialect>         NO_SUPPORT_QUALIFY_IN_WHERE   = SQLDialect.supportedBy(CLICKHOUSE);
 
     private final FieldMapForUpdate      updateMap;
     private final TableList              from;
@@ -803,16 +808,19 @@ implements
         else {
             ctx.start(UPDATE_WHERE);
 
-            if (hasWhere())
+            if (hasWhere()) {
+                ctx.formatSeparator()
+                   .visit(K_WHERE).sql(' ');
+
+                if (NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect()))
+                    ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true, c -> c.visit(getWhere()));
+                else
+                    ctx.visit(getWhere());
+            }
+            else if (REQUIRES_WHERE.contains(ctx.dialect()))
                 ctx.formatSeparator()
                    .visit(K_WHERE).sql(' ')
-                   .visit(getWhere());
-
-
-
-
-
-
+                   .visit(trueCondition());
 
             ctx.end(UPDATE_WHERE);
 

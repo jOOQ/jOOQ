@@ -88,7 +88,6 @@ implements
 
 
 
-            case CUBRID:
 
             case FIREBIRD:
 
@@ -98,6 +97,8 @@ implements
 
 
 
+            case CLICKHOUSE:
+            case CUBRID:
             case DUCKDB:
             case MARIADB:
             case MYSQL:

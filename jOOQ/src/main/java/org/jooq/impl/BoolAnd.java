@@ -89,7 +89,7 @@ implements
 
 
 
-    private static final Set<SQLDialect> EMULATE = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> EMULATE = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
 
     @Override
     final void acceptFunctionName(Context<?> ctx) {

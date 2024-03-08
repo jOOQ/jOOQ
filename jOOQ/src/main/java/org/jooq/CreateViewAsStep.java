@@ -73,7 +73,7 @@ public interface CreateViewAsStep<R extends Record> {
     /**
      * Add the <code>AS</code> clause to the <code>CREATE VIEW</code> statement.
      */
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateViewFinalStep as(ResultQuery<? extends R> query);
 
@@ -87,7 +87,7 @@ public interface CreateViewAsStep<R extends Record> {
      *
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     @NotNull @CheckReturnValue
     CreateViewFinalStep as(@Stringly.SQL String query, QueryPart... parts);
@@ -102,7 +102,7 @@ public interface CreateViewAsStep<R extends Record> {
      *
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     @NotNull @CheckReturnValue
     CreateViewFinalStep as(@Stringly.SQL String query, Object... bindings);
@@ -117,7 +117,7 @@ public interface CreateViewAsStep<R extends Record> {
      *
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     @NotNull @CheckReturnValue
     CreateViewFinalStep as(@Stringly.SQL String query);
@@ -132,7 +132,7 @@ public interface CreateViewAsStep<R extends Record> {
      *
      * @see SQL
      */
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
     @NotNull @CheckReturnValue
     CreateViewFinalStep as(SQL query);

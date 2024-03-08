@@ -130,9 +130,8 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES               = { Clause.ALTER_SCHEMA };
-
-
+    private static final Clause[] CLAUSES                 = { Clause.ALTER_SCHEMA };
+    static final Set<SQLDialect>  SUPPORT_RENAME_DATABASE = SQLDialect.supportedBy(CLICKHOUSE);
 
 
 
@@ -160,8 +159,12 @@ implements
 
         boolean supportRename = false;
 
-        if (supportRename)
-            ctx.visit(K_RENAME).sql(' ').visit(K_SCHEMA);
+        if (supportRename = SUPPORT_RENAME_DATABASE.contains(ctx.dialect()))
+            ctx.visit(K_RENAME).sql(' ').visit(K_DATABASE);
+
+
+
+
         else
             ctx.visit(K_ALTER_SCHEMA);
 

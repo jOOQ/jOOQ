@@ -51,6 +51,7 @@ import static org.jooq.ContextConverter.scoped;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
@@ -463,6 +464,12 @@ final class Tools {
          * scope.
          */
         DATA_MANDATORY_WHERE_CLAUSE(true, null, 1),
+
+        /**
+         * [#7539] Whether {@link Context#qualify()} should be set for the local
+         * scope.
+         */
+        DATA_UNQUALIFY_LOCAL_SCOPE(true, null, 1),
 
         /**
          * [#1520] Count the number of bind values, and potentially enforce a
@@ -1187,8 +1194,8 @@ final class Tools {
     };
 
     static final Set<SQLDialect>         REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, TRINO);
-    static final Set<SQLDialect>         NO_SUPPORT_NOT_NULL                = SQLDialect.supportedBy(TRINO);
+    static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(CLICKHOUSE, DERBY, FIREBIRD, H2, HSQLDB, TRINO);
+    static final Set<SQLDialect>         NO_SUPPORT_NOT_NULL                = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
@@ -5806,6 +5813,7 @@ final class Tools {
             case NOT_NULL:
 
                 // [#11485] Some dialects don't support NOT NULL constraints!
+                // [#7539]  Or they support them (being the default), but not the syntax
                 if (!NO_SUPPORT_NOT_NULL.contains(ctx.dialect()))
                     ctx.sql(' ').visit(K_NOT_NULL);
 
@@ -6136,6 +6144,9 @@ final class Tools {
 
 
     static final void toSQLDDLTypeDeclaration0(Context<?> ctx, DataType<?> type) {
+        if (ctx.family() == CLICKHOUSE && type.nullable())
+            ctx.sql("Nullable(");
+
         DataType<?> elementType = type.getArrayBaseDataType();
 
         // In some databases, identity is a type, not a flag.
@@ -6314,6 +6325,9 @@ final class Tools {
         // [#8011] Collations are vendor-specific storage clauses, which we might need to ignore
         if (type.collation() != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.sql(' ').visit(K_COLLATE).sql(' ').visit(type.collation());
+
+        if (ctx.family() == CLICKHOUSE && type.nullable())
+            ctx.sql(')');
     }
 
     static final boolean storedEnumType(DataType<EnumType> enumType) {
@@ -7296,6 +7310,7 @@ final class Tools {
 
 
 
+                case CLICKHOUSE:
                 case DUCKDB:
                 case MARIADB:
                 case MYSQL:

@@ -120,6 +120,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case DERBY:
             case DUCKDB:
             case SQLITE:

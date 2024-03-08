@@ -95,7 +95,7 @@ implements
 
 
 
-    static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedUntil(CUBRID, DERBY);
+    static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY);
     static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
 
 

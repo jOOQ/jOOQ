@@ -42,6 +42,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
@@ -91,7 +92,7 @@ implements
     QOM.Decode<V, T>
 {
     private static final Set<SQLDialect> EMULATE_DECODE_ORACLE = SQLDialect.supportedBy(MARIADB);
-    private static final Set<SQLDialect> EMULATE_DISTINCT      = SQLDialect.supportedUntil(CUBRID, DERBY, DUCKDB, FIREBIRD, HSQLDB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    private static final Set<SQLDialect> EMULATE_DISTINCT      = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, HSQLDB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
 
 

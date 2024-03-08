@@ -38,8 +38,6 @@
 
 package org.jooq.impl;
 
-// ...
-// ...
 import static org.jooq.impl.Keywords.K_MINUS;
 
 import org.jooq.Keyword;
@@ -103,22 +101,30 @@ enum CombineOperator {
     }
 
     public final String toSQL(SQLDialect dialect) {
+        switch (dialect.family()) {
 
 
 
 
 
-        return sql;
+            default:
+                return sql;
+        }
     }
 
     public final Keyword toKeyword(SQLDialect dialect) {
+        switch (dialect.family()) {
+
+            case CLICKHOUSE:
+                return keywordOptionalDistinct;
 
 
 
 
 
 
-
-        return keyword;
+            default:
+                return keyword;
+        }
     }
 }

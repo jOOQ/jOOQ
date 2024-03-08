@@ -1450,6 +1450,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="includeSchemaComment" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the schema comment (if available) should be included and prepended to the message.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
   
@@ -1518,6 +1522,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="fields" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic readonly column.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
   
@@ -1538,6 +1546,10 @@ Use this along with the synthetic primary key feature to replace existing primar
 
       <element name="tables" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic ROWID.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -1566,6 +1578,10 @@ Use this along with the synthetic primary key feature to replace existing primar
       <element name="comment" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The column comment.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
   
@@ -1584,6 +1600,10 @@ Use this along with the synthetic primary key feature to replace existing primar
 
       <element name="fields" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic identity.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -1628,6 +1648,10 @@ Use this along with the synthetic primary key feature to replace existing primar
       <element name="comment" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The enum comment.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
   
@@ -1661,6 +1685,10 @@ Use this along with the synthetic primary key feature to replace existing primar
       <element name="key" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all unique keys and unique indexes which should be treated as primary key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
   
@@ -1685,6 +1713,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 
       <element name="fields" type="tns:SyntheticKeyFieldsType" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A set of regular expressions matching all fields in order on which to apply this synthetic unique key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -1722,6 +1754,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 
       <element name="referencedKey" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching a key that is referenced by this synthetic foreign key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -1761,6 +1797,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 
       <element name="sql" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining SQL query.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>
@@ -2170,6 +2210,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="replacesFields" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify that the embeddable field replaces its underlying fields in code generation output, and when working with asterisks.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
   
@@ -2347,6 +2391,10 @@ type. If provided, both "includeExpression" and "includeTypes" must match.]]></j
       
       <element name="objectType" type="tns:ForcedTypeObjectType" default="ALL" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether this forced type should apply to all object types, or only to specific ones]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </all>
   </complexType>

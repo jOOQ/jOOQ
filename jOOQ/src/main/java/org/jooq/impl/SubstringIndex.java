@@ -98,6 +98,9 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+            case CLICKHOUSE:
+                return true;
+
 
 
 
@@ -118,6 +121,10 @@ implements
 
 
 
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_substringIndex, getDataType(), string, delimiter, n));
+                break;
 
 
 

@@ -194,7 +194,9 @@ public class JDBCUtils {
     private static SQLDialect dialectFromProductName(String product) {
         String p = product.toLowerCase().replace(" ", "");
 
-        if (p.contains("h2"))
+        if (p.contains("clickhouse"))
+            return CLICKHOUSE;
+        else if (p.contains("h2"))
             return H2;
         else if (p.contains("mariadb"))
             return MARIADB;
@@ -450,6 +452,8 @@ public class JDBCUtils {
 
 
 
+        else if (url.contains(":clickhouse:"))
+            return CLICKHOUSE;
         else if (url.contains(":cubrid:"))
             return CUBRID;
         else if (url.contains(":derby:"))
@@ -525,6 +529,8 @@ public class JDBCUtils {
     @NotNull
     public static final String driver(SQLDialect dialect) {
         switch (dialect.family()) {
+            case CLICKHOUSE:
+                return "com.clickhouse.jdbc.ClickHouseDriver";
             case CUBRID:
                 return "cubrid.jdbc.driver.CUBRIDDriver";
             case DERBY:

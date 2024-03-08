@@ -299,6 +299,10 @@ implements
                 ctx.visit(N_BITWISE_OR_AGG);
                 break;
 
+            case CLICKHOUSE:
+                ctx.visit(N_groupBitOr);
+                break;
+
             default:
                 super.acceptFunctionName(ctx);
                 break;

@@ -47,6 +47,7 @@ import static org.jooq.Clause.DELETE_WHERE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -95,6 +96,7 @@ import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Tools.containsDeclaredTable;
 import static org.jooq.impl.Tools.traverseJoins;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNQUALIFY_LOCAL_SCOPE;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -140,13 +142,14 @@ implements
     private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX         = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     // LIMIT is not supported at all
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                 = SQLDialect.supportedUntil(CUBRID, DERBY, DUCKDB, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                 = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, DUCKDB, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
 
     // LIMIT is supported but not ORDER BY
     private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT        = SQLDialect.supportedBy(IGNITE);
     private static final Set<SQLDialect> SUPPORT_MULTITABLE_DELETE        = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> REQUIRE_REPEAT_FROM_IN_USING     = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> NO_SUPPORT_REPEAT_FROM_IN_USING  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> REQUIRES_WHERE                   = SQLDialect.supportedBy(CLICKHOUSE);
 
 
 
@@ -154,7 +157,8 @@ implements
 
 
 
-
+    // https://github.com/ClickHouse/ClickHouse/issues/61020
+    static final Set<SQLDialect>         NO_SUPPORT_QUALIFY_IN_WHERE      = SQLDialect.supportedBy(CLICKHOUSE);
 
     private final TableList              using;
     private final ConditionProviderImpl  condition;
@@ -357,11 +361,8 @@ implements
 
 
         boolean noSupportParametersInWhere = false;
-
-
-
-
-
+        if (moreWhere instanceof NoCondition && REQUIRES_WHERE.contains(ctx.dialect()))
+            moreWhere = trueCondition();
 
         Condition where = DSL.and(getWhere(), moreWhere);
 
@@ -378,9 +379,8 @@ implements
                .visit(K_WHERE).sql(' ');
 
             ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
-                if (keyFields.length == 1) {
+                if (keyFields.length == 1)
                     c.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(where).orderBy(orderBy).limit(limit)));
-                }
                 else
                     c.visit(row(keyFields).in(select(keyFields).from(table()).where(where).orderBy(orderBy).limit(limit)));
             });
@@ -391,11 +391,14 @@ implements
             ctx.start(DELETE_WHERE);
 
             if (!(where instanceof NoCondition))
-                ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c ->
-                    c.formatSeparator()
-                       .visit(K_WHERE).sql(' ')
-                       .visit(where)
-                );
+                ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
+                    c.formatSeparator().visit(K_WHERE).sql(' ');
+
+                    if (NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect()))
+                        ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false, c1 -> c1.visit(where));
+                    else
+                        ctx.visit(where);
+                });
 
             ctx.end(DELETE_WHERE);
 

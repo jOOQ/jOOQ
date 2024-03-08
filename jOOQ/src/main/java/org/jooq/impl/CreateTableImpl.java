@@ -350,11 +350,11 @@ implements
     static final Set<SQLDialect> EMULATE_STORED_ENUM_TYPES_AS_CHECK = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, SQLITE);
     static final Set<SQLDialect> REQUIRES_WITH_DATA                 = SQLDialect.supportedBy(HSQLDB);
     static final Set<SQLDialect> WRAP_SELECT_IN_PARENS              = SQLDialect.supportedBy(HSQLDB);
-    static final Set<SQLDialect> SUPPORT_TEMPORARY                  = SQLDialect.supportedBy(DUCKDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> SUPPORT_TEMPORARY                  = SQLDialect.supportedBy(CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_TABLE_COMMENT_IN_BLOCK     = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_COLUMN_COMMENT_IN_BLOCK    = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supportedBy(FIREBIRD);
-    static final Set<SQLDialect> NO_SUPPORT_NULLABLE_PRIMARY_KEY    = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> NO_SUPPORT_NULLABLE_PRIMARY_KEY    = SQLDialect.supportedBy(CLICKHOUSE, MARIADB, MYSQL);
     static final Set<SQLDialect> REQUIRE_NON_PK_COLUMNS             = SQLDialect.supportedBy(IGNITE);
 
 
@@ -455,6 +455,16 @@ implements
         else {
             toSQLCreateTable(ctx);
             toSQLOnCommit(ctx);
+        }
+
+        // [#7539] ClickHouse has a mandatory ENGINE clause. We default to the two most popular engines for now.
+        if (ctx.family() == CLICKHOUSE) {
+            ctx.formatSeparator().visit(K_ENGINE).sql(' ');
+
+            if (anyMatch(tableElements, e -> e instanceof ConstraintImpl && isNotEmpty(((ConstraintImpl) e).$primaryKey())))
+                ctx.visit(unquotedName("MergeTree")).sql("()");
+            else
+                ctx.visit(unquotedName("Log")).sql("()");
         }
 
         if (comment != null && !EMULATE_TABLE_COMMENT_IN_BLOCK.contains(ctx.dialect())) {
@@ -612,7 +622,7 @@ implements
         if (NO_SUPPORT_NULLABLE_PRIMARY_KEY.contains(ctx.dialect())
                 && type.nullability() == Nullability.DEFAULT
                 && isPrimaryKey(field))
-            type = type.nullable(false);
+            type = type.notNull();
 
         return type;
     }

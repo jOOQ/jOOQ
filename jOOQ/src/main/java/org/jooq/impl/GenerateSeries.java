@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -67,6 +68,7 @@ import static org.jooq.impl.DSL.one;
 // ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.withRecursive;
 import static org.jooq.impl.Internal.iadd;
 import static org.jooq.impl.Internal.idiv;
@@ -76,8 +78,10 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Names.N_GENERATE_ARRAY;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
 import static org.jooq.impl.Names.N_GENERATOR;
+import static org.jooq.impl.Names.N_NUMBERS;
 import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.Names.N_UNNEST;
+import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.visitSubquery;
@@ -108,6 +112,7 @@ implements
 
     private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedUntil(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect> EMULATE_SYSTEM_RANGE   = SQLDialect.supportedBy(H2);
+    private static final Set<SQLDialect> EMULATE_NUMBERS        = SQLDialect.supportedBy(CLICKHOUSE);
 
 
 
@@ -174,6 +179,17 @@ implements
                 ctx.paramType(INLINED, c -> c.visit(step));
                 ctx.sql(')');
             }
+        }
+        else if (EMULATE_NUMBERS.contains(ctx.dialect())) {
+            visitSubquery(
+                ctx,
+                step == null
+                    ? select(DSL.field(unquotedName("number"), INTEGER).as(name))
+                        .from(table("{0}({1}, {2})", N_NUMBERS, from, iadd(isub(to, from), one())))
+                    : select(iadd(imul(isub(DSL.field(unquotedName("number"), INTEGER), one()), step), from).as(name))
+                        .from(table("{0}({1}, {2})", N_NUMBERS, one(), idiv(to, step).cast(BIGINT))),
+                DERIVED_TABLE
+            );
         }
 
 
@@ -252,6 +268,8 @@ implements
         if (EMULATE_WITH_RECURSIVE.contains(ctx.dialect()))
             return t.as(name);
         else if (EMULATE_SYSTEM_RANGE.contains(ctx.dialect()))
+            return t.as(name, name);
+        else if (EMULATE_NUMBERS.contains(ctx.dialect()))
             return t.as(name, name);
 
 

@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -244,7 +245,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * @see #as(WindowSpecification)
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowDefinition as();
 
     /**
@@ -259,7 +260,7 @@ public interface Name extends QueryPart, Comparable<Name> {
      * </ul>
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowDefinition as(WindowSpecification window);
 
     /**

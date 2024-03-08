@@ -41,6 +41,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -67,6 +68,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Keywords.K_TUPLE;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_ROW_CONTENT;
 
@@ -126,6 +128,9 @@ final class RowAsField<ROW extends Row, REC extends Record> extends AbstractRowA
 
 
 
+
+        else if (ctx.family() == CLICKHOUSE)
+            ctx.data(DATA_ROW_CONTENT, true, c -> c.visit(K_TUPLE).sql(' ').visit(row));
 
         // [#11812] RowField is mainly used for projections, in case of which an
         //          explicit ROW keyword helps disambiguate (1) from ROW(1)

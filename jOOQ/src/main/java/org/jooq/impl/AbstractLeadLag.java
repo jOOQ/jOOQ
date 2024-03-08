@@ -40,14 +40,11 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.Names.N_COALESCE;
-import static org.jooq.impl.Names.N_LEAD;
-
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
+import static org.jooq.impl.Names.N_lagInFrame;
+import static org.jooq.impl.Names.N_leadInFrame;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
@@ -108,7 +105,21 @@ abstract class AbstractLeadLag<T> extends AbstractWindowFunction<T> {
 
 
             default:
-                ctx.visit(getUnqualifiedName()).sql('(').visit(field);
+                switch (ctx.family()) {
+                    case CLICKHOUSE:
+                        if (this instanceof Lead)
+                            ctx.visit(N_leadInFrame);
+                        else
+                            ctx.visit(N_lagInFrame);
+
+                        break;
+
+                    default:
+                        ctx.visit(getUnqualifiedName());
+                        break;
+                }
+
+                ctx.sql('(').visit(field);
 
                 if (offset != null) {
                     switch (ctx.family()) {

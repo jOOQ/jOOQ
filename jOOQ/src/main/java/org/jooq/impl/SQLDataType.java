@@ -42,6 +42,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -100,6 +101,7 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectCategory;
 import org.jooq.XML;
+import org.jooq.impl.SQLDataTypes.ClickHouseDataType;
 import org.jooq.impl.SQLDataTypes.DuckDBDataType;
 import org.jooq.impl.SQLDataTypes.TrinoDataType;
 import org.jooq.types.DayToSecond;
@@ -845,6 +847,9 @@ public final class SQLDataType {
 
 
 
+
+            Class.forName(ClickHouseDataType.class.getName());
+            initJSR310Types(CLICKHOUSE);
 
             Class.forName(CUBRIDDataType.class.getName());
             initJSR310Types(CUBRID);

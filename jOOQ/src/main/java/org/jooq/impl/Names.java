@@ -73,6 +73,7 @@ final class Names {
     static final Name N_ARRAY_CONSTRUCT             = systemName("array_construct");
     static final Name N_ARRAY_CONSTRUCT_COMPACT     = systemName("array_construct_compact");
     static final Name N_BITCOUNT                    = systemName("bitcount");
+    static final Name N_bitCount                    = systemName("bitCount");
     static final Name N_BITWISE_AND_AGG             = systemName("bitwise_and_agg");
     static final Name N_BITWISE_OR_AGG              = systemName("bitwise_or_agg");
     static final Name N_BIT_NAND                    = systemName("bit_nand");
@@ -90,6 +91,8 @@ final class Names {
     static final Name N_COUNTIF                     = systemName("countif");
     static final Name N_COUNTSET                    = systemName("countset");
     static final Name N_COUNT_IF                    = systemName("count_if");
+    static final Name N_covarPop                    = systemName("covarPop");
+    static final Name N_covarSamp                   = systemName("covarSamp");
     static final Name N_CUBE                        = systemName("cube");
     static final Name N_CUME_DIST                   = systemName("cume_dist");
     static final Name N_CURRENTUSER                 = systemName("currentuser");
@@ -135,6 +138,12 @@ final class Names {
     static final Name N_GREATEST                    = systemName("greatest");
     static final Name N_GROUPING_SETS               = systemName("grouping sets");
     static final Name N_GROUP_CONCAT                = systemName("group_concat");
+    static final Name N_groupBitAnd                 = systemName("groupBitAnd");
+    static final Name N_groupBitNand                = systemName("groupBitNand");
+    static final Name N_groupBitNor                 = systemName("groupBitNor");
+    static final Name N_groupBitOr                  = systemName("groupBitOr");
+    static final Name N_groupBitXnor                = systemName("groupBitXnor");
+    static final Name N_groupBitXor                 = systemName("groupBitXor");
     static final Name N_HASHBYTES                   = systemName("hashbytes");
     static final Name N_HASH_MD5                    = systemName("hash_md5");
     static final Name N_HEX_TO_BINARY               = systemName("hex_to_binary");
@@ -170,9 +179,12 @@ final class Names {
     static final Name N_JSON_UNQUOTE                = systemName("json_unquote");
     static final Name N_JSON_VALUE                  = systemName("json_value");
     static final Name N_LAG                         = systemName("lag");
+    static final Name N_lagInFrame                  = systemName("lagInFrame");
     static final Name N_LAST_VALUE                  = systemName("last_value");
     static final Name N_LEAD                        = systemName("lead");
+    static final Name N_leadInFrame                 = systemName("leadInFrame");
     static final Name N_LEAST                       = systemName("least");
+    static final Name N_leftPad                     = systemName("leftPad");
     static final Name N_LIST                        = systemName("list");
     static final Name N_LISTAGG                     = systemName("listagg");
     static final Name N_LOCATE                      = systemName("locate");
@@ -199,6 +211,7 @@ final class Names {
     static final Name N_NTH_VALUE                   = systemName("nth_value");
     static final Name N_NTILE                       = systemName("ntile");
     static final Name N_NULL                        = systemName("null");
+    static final Name N_NUMBERS                     = systemName("numbers");
     static final Name N_NVL2                        = systemName("nvl2");
     static final Name N_OBJECT_AGG                  = systemName("object_agg");
     static final Name N_OBJECT_CONSTRUCT            = systemName("object_construct");
@@ -225,7 +238,11 @@ final class Names {
     static final Name N_REGEXP_REPLACE              = systemName("regexp_replace");
     static final Name N_REGEX_REPLACE               = systemName("regex_replace");
     static final Name N_REPLACE_REGEXPR             = systemName("replace_regexpr");
+    static final Name N_replaceAll                  = systemName("replaceAll");
+    static final Name N_replaceRegexpAll            = systemName("replaceRegexpAll");
+    static final Name N_replaceRegexpOne            = systemName("replaceRegexpOne");
     static final Name N_RESULT                      = systemName("result");
+    static final Name N_rightPad                    = systemName("rightPad");
     static final Name N_RND                         = systemName("rnd");
     static final Name N_ROLLUP                      = systemName("rollup");
     static final Name N_ROUND_DOWN                  = systemName("round_down");
@@ -254,6 +271,8 @@ final class Names {
     static final Name N_STANDARD_HASH               = systemName("standard_hash");
     static final Name N_STATS_MODE                  = systemName("stats_mode");
     static final Name N_STDDEV                      = systemName("stddev");
+    static final Name N_stddevPop                   = systemName("stddevPop");
+    static final Name N_stddevSamp                  = systemName("stddevSamp");
     static final Name N_STDEV                       = systemName("stdev");
     static final Name N_STDEVP                      = systemName("stdevp");
     static final Name N_STDEV_SAMP                  = systemName("stdev_samp");
@@ -289,6 +308,8 @@ final class Names {
     static final Name N_VARIANCE                    = systemName("variance");
     static final Name N_VARIANCE_SAMP               = systemName("variance_samp");
     static final Name N_VARP                        = systemName("varp");
+    static final Name N_varPop                      = systemName("varPop");
+    static final Name N_varSamp                     = systemName("varSamp");
     static final Name N_WEEKDAY                     = systemName("weekday");
     static final Name N_XMLAGG                      = systemName("xmlagg");
     static final Name N_XMLATTRIBUTES               = systemName("xmlattributes");
@@ -608,6 +629,15 @@ final class Names {
     static final Name N_XMLSERIALIZE                = systemName("xmlserialize");
     static final Name N_XMLSERIALIZE_CONTENT        = systemName("xmlserialize_content");
     static final Name N_XOR                         = systemName("xor");
+    static final Name N_bitAnd                      = systemName("bitAnd");
+    static final Name N_bitNot                      = systemName("bitNot");
+    static final Name N_bitOr                       = systemName("bitOr");
+    static final Name N_bitShiftLeft                = systemName("bitShiftLeft");
+    static final Name N_bitShiftRight               = systemName("bitShiftRight");
+    static final Name N_bitTest                     = systemName("bitTest");
+    static final Name N_bitXor                      = systemName("bitXor");
+    static final Name N_generateUUIDv4              = systemName("generateUUIDv4");
+    static final Name N_substringIndex              = systemName("substringIndex");
 
 
 

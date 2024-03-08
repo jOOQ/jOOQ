@@ -163,6 +163,14 @@ implements
 
                 return;
 
+            case CLICKHOUSE:
+                if (replace == null)
+                    ctx.visit(function(N_replaceAll, VARCHAR, string, search, inline("")));
+                else
+                    ctx.visit(function(N_replaceAll, VARCHAR, string, search, replace));
+
+                return;
+
             default:
                 if (replace == null)
                     ctx.visit(function(N_REPLACE, VARCHAR, string, search));

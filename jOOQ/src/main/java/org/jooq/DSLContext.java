@@ -43,6 +43,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 // ...
 // ...
@@ -9293,7 +9294,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterDatabase(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, POSTGRES, YUGABYTEDB })
     AlterDatabaseStep alterDatabase(@Stringly.Name String database);
 
     /**
@@ -9302,7 +9303,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterDatabase(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, POSTGRES, YUGABYTEDB })
     AlterDatabaseStep alterDatabase(Name database);
 
     /**
@@ -9311,7 +9312,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterDatabase(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, POSTGRES, YUGABYTEDB })
     AlterDatabaseStep alterDatabase(Catalog database);
 
     /**
@@ -9455,7 +9456,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterSchema(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES })
     AlterSchemaStep alterSchema(@Stringly.Name String schema);
 
     /**
@@ -9464,7 +9465,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterSchema(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES })
     AlterSchemaStep alterSchema(Name schema);
 
     /**
@@ -9473,7 +9474,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterSchema(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES })
     AlterSchemaStep alterSchema(Schema schema);
 
     /**
@@ -9725,7 +9726,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnTable(@Stringly.Name String table);
 
     /**
@@ -9734,7 +9735,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnTable(Name table);
 
     /**
@@ -9743,7 +9744,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnTable(Table<?> table);
 
     /**
@@ -9752,7 +9753,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnView(@Stringly.Name String view);
 
     /**
@@ -9761,7 +9762,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnView(Name view);
 
     /**
@@ -9770,7 +9771,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnView(Table<?> view);
 
     /**
@@ -9806,7 +9807,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnColumn(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(@Stringly.Name String field);
 
     /**
@@ -9815,7 +9816,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnColumn(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(Name field);
 
     /**
@@ -9824,7 +9825,7 @@ public interface DSLContext extends Scope {
      * @see DSL#commentOnColumn(Field)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(Field<?> field);
 
     /**
@@ -9833,7 +9834,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDatabase(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateDatabaseFinalStep createDatabase(@Stringly.Name String database);
 
     /**
@@ -9842,7 +9843,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDatabase(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateDatabaseFinalStep createDatabase(Name database);
 
     /**
@@ -9851,7 +9852,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDatabase(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateDatabaseFinalStep createDatabase(Catalog database);
 
     /**
@@ -9860,7 +9861,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDatabaseIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, YUGABYTEDB })
     CreateDatabaseFinalStep createDatabaseIfNotExists(@Stringly.Name String database);
 
     /**
@@ -9869,7 +9870,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDatabaseIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, YUGABYTEDB })
     CreateDatabaseFinalStep createDatabaseIfNotExists(Name database);
 
     /**
@@ -9878,7 +9879,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createDatabaseIfNotExists(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, YUGABYTEDB })
     CreateDatabaseFinalStep createDatabaseIfNotExists(Catalog database);
 
     /**
@@ -9985,7 +9986,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndex(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndex(@Stringly.Name String index);
 
     /**
@@ -9994,7 +9995,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndex(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndex(Name index);
 
     /**
@@ -10003,7 +10004,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndex(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndex(Index index);
 
     /**
@@ -10012,7 +10013,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndex()
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndex();
 
     /**
@@ -10021,7 +10022,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndexIfNotExists(@Stringly.Name String index);
 
     /**
@@ -10030,7 +10031,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndexIfNotExists(Name index);
 
     /**
@@ -10039,7 +10040,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndexIfNotExists(Index index);
 
     /**
@@ -10048,7 +10049,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createIndexIfNotExists()
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateIndexStep createIndexIfNotExists();
 
     /**
@@ -10227,7 +10228,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -10236,7 +10237,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTable(Name table);
 
     /**
@@ -10245,7 +10246,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTable(Table<?> table);
 
     /**
@@ -10254,7 +10255,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTableIfNotExists(@Stringly.Name String table);
 
     /**
@@ -10263,7 +10264,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10272,7 +10273,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTableIfNotExists(Table<?> table);
 
     /**
@@ -10281,7 +10282,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -10290,7 +10291,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTable(Name table);
 
     /**
@@ -10299,7 +10300,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTable(Table<?> table);
 
     /**
@@ -10308,7 +10309,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table);
 
     /**
@@ -10317,7 +10318,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10326,7 +10327,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table);
 
     /**
@@ -10335,7 +10336,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(String, String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(@Stringly.Name String view, @Stringly.Name String... fields);
 
     /**
@@ -10344,7 +10345,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(Name, Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(Name view, Name... fields);
 
     /**
@@ -10353,7 +10354,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(Table<?> view, Field<?>... fields);
 
     /**
@@ -10362,7 +10363,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(String, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(@Stringly.Name String view, Collection<? extends String> fields);
 
     /**
@@ -10371,7 +10372,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(Name, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(Name view, Collection<? extends Name> fields);
 
     /**
@@ -10380,7 +10381,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createView(Table, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(Table<?> view, Collection<? extends Field<?>> fields);
 
     /**
@@ -10389,7 +10390,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createViewIfNotExists(String, String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, @Stringly.Name String... fields);
 
     /**
@@ -10398,7 +10399,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createViewIfNotExists(Name, Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, Name... fields);
 
     /**
@@ -10407,7 +10408,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createViewIfNotExists(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Field<?>... fields);
 
     /**
@@ -10416,7 +10417,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createViewIfNotExists(String, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(@Stringly.Name String view, Collection<? extends String> fields);
 
     /**
@@ -10425,7 +10426,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createViewIfNotExists(Name, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, Collection<? extends Name> fields);
 
     /**
@@ -10434,7 +10435,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createViewIfNotExists(Table, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Collection<? extends Field<?>> fields);
 
     /**
@@ -10443,7 +10444,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createOrReplaceView(String, String...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, @Stringly.Name String... fields);
 
     /**
@@ -10452,7 +10453,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createOrReplaceView(Name, Name...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Name... fields);
 
     /**
@@ -10461,7 +10462,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createOrReplaceView(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Field<?>... fields);
 
     /**
@@ -10470,7 +10471,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createOrReplaceView(String, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(@Stringly.Name String view, Collection<? extends String> fields);
 
     /**
@@ -10479,7 +10480,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createOrReplaceView(Name, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Collection<? extends Name> fields);
 
     /**
@@ -10488,7 +10489,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createOrReplaceView(Table, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Collection<? extends Field<?>> fields);
 
     /**
@@ -10777,7 +10778,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createSchema(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateSchemaFinalStep createSchema(@Stringly.Name String schema);
 
     /**
@@ -10786,7 +10787,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createSchema(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateSchemaFinalStep createSchema(Name schema);
 
     /**
@@ -10795,7 +10796,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createSchema(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateSchemaFinalStep createSchema(Schema schema);
 
     /**
@@ -10804,7 +10805,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createSchemaIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateSchemaFinalStep createSchemaIfNotExists(@Stringly.Name String schema);
 
     /**
@@ -10813,7 +10814,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createSchemaIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateSchemaFinalStep createSchemaIfNotExists(Name schema);
 
     /**
@@ -10822,7 +10823,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createSchemaIfNotExists(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateSchemaFinalStep createSchemaIfNotExists(Schema schema);
 
     /**
@@ -10885,7 +10886,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropDatabase(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropDatabaseFinalStep dropDatabase(@Stringly.Name String database);
 
     /**
@@ -10894,7 +10895,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropDatabase(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropDatabaseFinalStep dropDatabase(Name database);
 
     /**
@@ -10903,7 +10904,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropDatabase(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropDatabaseFinalStep dropDatabase(Catalog database);
 
     /**
@@ -10912,7 +10913,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropDatabaseIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropDatabaseFinalStep dropDatabaseIfExists(@Stringly.Name String database);
 
     /**
@@ -10921,7 +10922,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropDatabaseIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropDatabaseFinalStep dropDatabaseIfExists(Name database);
 
     /**
@@ -10930,7 +10931,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropDatabaseIfExists(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropDatabaseFinalStep dropDatabaseIfExists(Catalog database);
 
     /**
@@ -11037,7 +11038,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndex(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndex(@Stringly.Name String index);
 
     /**
@@ -11046,7 +11047,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndex(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndex(Name index);
 
     /**
@@ -11055,7 +11056,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndex(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndex(Index index);
 
     /**
@@ -11064,7 +11065,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndexIfExists(@Stringly.Name String index);
 
     /**
@@ -11073,7 +11074,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndexIfExists(Name index);
 
     /**
@@ -11082,7 +11083,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropIndexIfExists(Index)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DropIndexOnStep dropIndexIfExists(Index index);
 
 
@@ -11135,7 +11136,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropSchema(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropSchemaStep dropSchema(@Stringly.Name String schema);
 
     /**
@@ -11144,7 +11145,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropSchema(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropSchemaStep dropSchema(Name schema);
 
     /**
@@ -11153,7 +11154,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropSchema(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropSchemaStep dropSchema(Schema schema);
 
     /**
@@ -11162,7 +11163,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropSchemaIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropSchemaStep dropSchemaIfExists(@Stringly.Name String schema);
 
     /**
@@ -11171,7 +11172,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropSchemaIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropSchemaStep dropSchemaIfExists(Name schema);
 
     /**
@@ -11180,7 +11181,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropSchemaIfExists(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropSchemaStep dropSchemaIfExists(Schema schema);
 
     /**
@@ -11297,7 +11298,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -11306,7 +11307,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTable(Name table);
 
     /**
@@ -11315,7 +11316,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTable(Table<?> table);
 
     /**
@@ -11324,7 +11325,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table);
 
     /**
@@ -11333,7 +11334,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTableIfExists(Name table);
 
     /**
@@ -11342,7 +11343,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTableIfExists(Table<?> table);
 
 
@@ -11541,7 +11542,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropView(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropView(@Stringly.Name String view);
 
     /**
@@ -11550,7 +11551,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropView(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropView(Name view);
 
     /**
@@ -11559,7 +11560,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropView(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropView(Table<?> view);
 
     /**
@@ -11568,7 +11569,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropViewIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropViewIfExists(@Stringly.Name String view);
 
     /**
@@ -11577,7 +11578,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropViewIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropViewIfExists(Name view);
 
     /**
@@ -11586,7 +11587,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropViewIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     DropViewFinalStep dropViewIfExists(Table<?> view);
 
     /**
@@ -11776,7 +11777,7 @@ public interface DSLContext extends Scope {
      * @see DSL#setCatalog(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, MARIADB, MYSQL })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL })
     RowCountQuery setCatalog(@Stringly.Name String catalog);
 
     /**
@@ -11787,7 +11788,7 @@ public interface DSLContext extends Scope {
      * @see DSL#setCatalog(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, MARIADB, MYSQL })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL })
     RowCountQuery setCatalog(Name catalog);
 
     /**
@@ -11798,7 +11799,7 @@ public interface DSLContext extends Scope {
      * @see DSL#setCatalog(Catalog)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, MARIADB, MYSQL })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL })
     RowCountQuery setCatalog(Catalog catalog);
 
     /**
@@ -11809,7 +11810,7 @@ public interface DSLContext extends Scope {
      * @see DSL#setSchema(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     RowCountQuery setSchema(@Stringly.Name String schema);
 
     /**
@@ -11820,7 +11821,7 @@ public interface DSLContext extends Scope {
      * @see DSL#setSchema(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     RowCountQuery setSchema(Name schema);
 
     /**
@@ -11831,7 +11832,7 @@ public interface DSLContext extends Scope {
      * @see DSL#setSchema(Schema)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     RowCountQuery setSchema(Schema schema);
 
     /**
@@ -12087,7 +12088,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -12106,7 +12107,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -12125,7 +12126,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -12144,7 +12145,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -12163,7 +12164,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -12182,7 +12183,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -12201,7 +12202,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -12220,7 +12221,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -12239,7 +12240,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -12258,7 +12259,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -12277,7 +12278,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -12296,7 +12297,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     CreateViewAsStep<Record> createOrReplaceView(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -12315,7 +12316,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(String view, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
@@ -12334,7 +12335,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(String view, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
     /**
@@ -12353,7 +12354,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, Function<? super Field<?>, ? extends Name> fieldNameFunction);
 
     /**
@@ -12372,7 +12373,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(Name view, BiFunction<? super Field<?>, ? super Integer, ? extends Name> fieldNameFunction);
 
     /**
@@ -12391,7 +12392,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, Function<? super Field<?>, ? extends Field<?>> fieldNameFunction);
 
     /**
@@ -12410,7 +12411,7 @@ public interface DSLContext extends Scope {
      */
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     CreateViewAsStep<Record> createViewIfNotExists(Table<?> view, BiFunction<? super Field<?>, ? super Integer, ? extends Field<?>> fieldNameFunction);
 
     /**

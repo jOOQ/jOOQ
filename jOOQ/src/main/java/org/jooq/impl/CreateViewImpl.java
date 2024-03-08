@@ -157,7 +157,7 @@ implements
 
     private static final Clause[]        CLAUSES                        = { Clause.CREATE_VIEW };
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = SQLDialect.supportedUntil(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect> NO_SUPPORT_COLUMN_RENAME       = SQLDialect.supportedBy(TRINO);
+    private static final Set<SQLDialect> NO_SUPPORT_COLUMN_RENAME       = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
     private static final Set<SQLDialect> NO_SUPPORT_COLUMN_RENAME_MVIEW = SQLDialect.supportedBy(H2);
     private transient Select<?>          parsed;
 

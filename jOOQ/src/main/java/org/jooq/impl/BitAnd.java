@@ -110,6 +110,9 @@ implements
 
 
 
+            case CLICKHOUSE:
+                return true;
+
             case FIREBIRD:
                 return true;
 
@@ -146,6 +149,10 @@ implements
 
 
 
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_bitAnd, getDataType(), arg1, arg2));
+                break;
 
             case FIREBIRD:
                 ctx.visit(function(N_BIN_AND, getDataType(), arg1, arg2));

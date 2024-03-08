@@ -95,6 +95,9 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+            case CLICKHOUSE:
+                return true;
+
             case FIREBIRD:
                 return true;
 
@@ -143,6 +146,10 @@ implements
 
 
 
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_bitShiftLeft, getDataType(), value, count));
+                break;
 
             case FIREBIRD:
                 ctx.visit(function(N_BIN_SHL, getDataType(), value, count));

@@ -399,7 +399,17 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
         expression.accept(ctx);
         ctx.castMode(castMode).sql(' ').visit(K_AS).sql(' ');
 
-        type.accept(ctx);
+        switch (ctx.family()) {
+            case CLICKHOUSE:
+                ctx.sql("Nullable(");
+                type.accept(ctx);
+                ctx.sql(')');
+                break;
+
+            default:
+                type.accept(ctx);
+                break;
+        }
 
 
 

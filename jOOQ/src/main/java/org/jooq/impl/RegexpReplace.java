@@ -43,6 +43,8 @@ import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Names.N_REGEXP_REPLACE;
 import static org.jooq.impl.Names.N_REGEX_REPLACE;
 import static org.jooq.impl.Names.N_REPLACE_REGEXPR;
+import static org.jooq.impl.Names.N_replaceRegexpAll;
+import static org.jooq.impl.Names.N_replaceRegexpOne;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -81,6 +83,12 @@ final class RegexpReplace extends AbstractField<String> implements UNotYetImplem
                     ctx.sql(", 'g')");
                 else
                     ctx.sql(')');
+
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(all ? N_replaceRegexpAll : N_replaceRegexpOne)
+                   .sql('(').visit(field).sql(", ").visit(pattern).sql(", ").visit(replacement).sql(')');
 
                 break;
 

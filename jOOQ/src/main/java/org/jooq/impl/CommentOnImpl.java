@@ -182,6 +182,17 @@ implements
                 break;
             }
 
+            case CLICKHOUSE: {
+                if (table != null)
+                    ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ')
+                       .visit(K_MODIFY).sql(' ').visit(K_COMMENT).sql(' ').visit(comment);
+                else
+                    ctx.visit(K_ALTER_TABLE).sql(' ').visit(table(field.getQualifiedName().qualifier())).sql(' ')
+                       .visit(K_COMMENT).sql(' ').visit(K_COLUMN).sql(' ').visit(DSL.field(field.getUnqualifiedName())).sql(' ').visit(comment);
+
+                break;
+            }
+
             default: {
                 acceptDefault(ctx);
                 break;

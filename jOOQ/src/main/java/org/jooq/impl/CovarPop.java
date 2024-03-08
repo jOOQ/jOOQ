@@ -110,6 +110,19 @@ implements
             super.accept(ctx);
     }
 
+    @Override
+    void acceptFunctionName(Context<?> ctx) {
+        switch (ctx.family()) {
+            case CLICKHOUSE:
+                ctx.visit(N_covarPop);
+                break;
+
+            default:
+                super.acceptFunctionName(ctx);
+                break;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private final void acceptEmulation(Context<?> ctx) {
         Field<? extends Number> x = (Field) getArguments().get(0);

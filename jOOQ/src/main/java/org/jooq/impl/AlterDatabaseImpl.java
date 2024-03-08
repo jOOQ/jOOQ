@@ -130,11 +130,8 @@ implements
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS    = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-
-
-
-
+    static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS    = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> SUPPORT_RENAME_DATABASE = SQLDialect.supportedBy(CLICKHOUSE);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());
@@ -149,7 +146,7 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
-        boolean supportRename = false;
+        boolean supportRename = SUPPORT_RENAME_DATABASE.contains(ctx.dialect());
 
         if (supportRename)
             ctx.visit(K_RENAME);

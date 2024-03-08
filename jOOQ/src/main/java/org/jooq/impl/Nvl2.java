@@ -91,6 +91,7 @@ final class Nvl2<T> extends AbstractField<T> implements QOM.Nvl2<T> {
 
 
 
+            case CLICKHOUSE:
             case CUBRID:
             case DERBY:
             case DUCKDB:

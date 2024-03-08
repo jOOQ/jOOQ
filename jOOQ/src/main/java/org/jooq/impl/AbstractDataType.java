@@ -37,12 +37,12 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
@@ -107,6 +107,7 @@ import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Domain;
@@ -128,10 +129,8 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.ContextConverter;
 import org.jooq.Table;
 import org.jooq.XML;
-import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.QOM.UEmpty;

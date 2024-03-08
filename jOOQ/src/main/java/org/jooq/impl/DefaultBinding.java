@@ -57,6 +57,7 @@ import static org.jooq.Geometry.geometry;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -841,6 +842,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+                    case CLICKHOUSE:
                     case HSQLDB:
                     case POSTGRES:
                     case TRINO:
@@ -4881,6 +4883,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+            // [#7539] Clickhouse Timestamp literals don't support milliseconds
+            else if (ctx.family() == CLICKHOUSE)
+                ctx.render().visit(K_TIMESTAMP).sql(" '").sql(truncateTimestamp(escape(value, ctx.render()))).sql('\'');
+
             // [#1253] Derby doesn't support the standard literal
             else if (ctx.family() == DERBY)
                 ctx.render().visit(K_TIMESTAMP).sql("('").sql(escape(value, ctx.render())).sql("')");
@@ -4896,6 +4902,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // Most dialects implement SQL standard timestamp literals
             else
                 ctx.render().visit(K_TIMESTAMP).sql(" '").sql(format(value, ctx.render())).sql('\'');
+        }
+
+        private final String truncateTimestamp(String t) {
+            int i = t.indexOf('.');
+            return i > 0 ? t.substring(0, i) : t;
         }
 
         private final String format(Timestamp value, RenderContext render) {

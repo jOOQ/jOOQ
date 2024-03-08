@@ -39,6 +39,7 @@ package org.jooq;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 // ...
 import static org.jooq.SQLDialect.DUCKDB;
@@ -102,7 +103,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowSpecificationExcludeStep andUnboundedPreceding();
 
     /**
@@ -110,7 +111,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowSpecificationExcludeStep andPreceding(int number);
 
     /**
@@ -118,7 +119,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowSpecificationExcludeStep andCurrentRow();
 
     /**
@@ -126,7 +127,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowSpecificationExcludeStep andUnboundedFollowing();
 
     /**
@@ -134,7 +135,7 @@ public interface WindowSpecificationRowsAndStep {
      * specification.
      */
     @NotNull
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     WindowSpecificationExcludeStep andFollowing(int number);
 
 }

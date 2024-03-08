@@ -42,6 +42,7 @@ import org.jetbrains.annotations.*;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -131,6 +132,6 @@ public interface SelectWithTiesAfterOffsetStep<R extends Record> extends SelectF
      * Add the <code>WITH TIES</code> clause to a <code>LIMIT</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     SelectForUpdateStep<R> withTies();
 }

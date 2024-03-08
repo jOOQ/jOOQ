@@ -97,6 +97,11 @@ public enum SQLDialect {
     // -------------------------------------------------------------------------
 
     /**
+     * The ClickHouse dialect family.
+     */
+    CLICKHOUSE("ClickHouse", false, true),
+
+    /**
      * The CUBRID dialect family.
      *
      * @deprecated - [#9403] - 3.13.0 - This dialect is hardly used by anyone

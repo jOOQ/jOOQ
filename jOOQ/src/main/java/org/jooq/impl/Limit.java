@@ -184,6 +184,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
             }
 
 
+            case CLICKHOUSE:
             case DERBY:
             case TRINO: {
                 acceptStandard(ctx, castMode);

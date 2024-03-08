@@ -163,6 +163,7 @@ final class Keywords {
     static final Keyword K_END_LOOP                 = keyword("end loop");
     static final Keyword K_END_TRY                  = keyword("end try");
     static final Keyword K_ENFORCED                 = keyword("enforced");
+    static final Keyword K_ENGINE                   = keyword("engine");
     static final Keyword K_ENUM                     = keyword("enum");
     static final Keyword K_ERROR                    = keyword("error");
     static final Keyword K_ESCAPE                   = keyword("escape");
@@ -430,6 +431,7 @@ final class Keywords {
     static final Keyword K_TRIM                     = keyword("trim");
     static final Keyword K_TRUE                     = keyword("true");
     static final Keyword K_TRUNCATE                 = keyword("truncate");
+    static final Keyword K_TUPLE                    = keyword("tuple");
     static final Keyword K_TYPE                     = keyword("type");
     static final Keyword K_UNBOUNDED_FOLLOWING      = keyword("unbounded following");
     static final Keyword K_UNBOUNDED_PRECEDING      = keyword("unbounded preceding");

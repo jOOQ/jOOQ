@@ -43,6 +43,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -1298,14 +1299,14 @@ extends
      * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitAnd(T arg2);
 
     /**
      * The <code>BIT_AND</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitAnd(Field<T> arg2);
 
     /**
@@ -1314,14 +1315,14 @@ extends
      * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNand(T arg2);
 
     /**
      * The <code>BIT_NAND</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNand(Field<T> arg2);
 
     /**
@@ -1330,21 +1331,21 @@ extends
      * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNor(T arg2);
 
     /**
      * The <code>BIT_NOR</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNor(Field<T> arg2);
 
     /**
      * The <code>BIT_NOT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitNot();
 
     /**
@@ -1353,14 +1354,14 @@ extends
      * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitOr(T arg2);
 
     /**
      * The <code>BIT_OR</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitOr(Field<T> arg2);
 
     /**
@@ -1369,14 +1370,14 @@ extends
      * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitXNor(T arg2);
 
     /**
      * The <code>BIT_XNOR</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitXNor(Field<T> arg2);
 
     /**
@@ -1385,14 +1386,14 @@ extends
      * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitXor(T arg2);
 
     /**
      * The <code>BIT_XOR</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> bitXor(Field<T> arg2);
 
     /**
@@ -1449,14 +1450,14 @@ extends
      * @param exponent is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<BigDecimal> power(Number exponent);
 
     /**
      * The <code>POWER</code> operator.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<BigDecimal> power(Field<? extends Number> exponent);
 
     /**
@@ -1465,14 +1466,14 @@ extends
      * @param exponent is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<BigDecimal> pow(Number exponent);
 
     /**
      * The <code>POW</code> operator, an alias for the <code>POWER</code> operator.
      */
     @NotNull
-    @Support
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<BigDecimal> pow(Field<? extends Number> exponent);
 
     /**
@@ -1484,7 +1485,7 @@ extends
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> shl(Number count);
 
     /**
@@ -1496,7 +1497,7 @@ extends
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> shl(Field<? extends Number> count);
 
     /**
@@ -1508,7 +1509,7 @@ extends
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> shr(Number count);
 
     /**
@@ -1520,7 +1521,7 @@ extends
      * @param count The number of bits to shift.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     Field<T> shr(Field<? extends Number> count);
 
     // -------------------------------------------------------------------------

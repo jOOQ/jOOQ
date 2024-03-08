@@ -116,7 +116,7 @@ implements
 
 
 
-    private static final Set<SQLDialect> NO_SUPPORT        = SQLDialect.supportedBy(DERBY, DUCKDB, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
+    private static final Set<SQLDialect> NO_SUPPORT        = SQLDialect.supportedBy(CLICKHOUSE, DERBY, DUCKDB, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
 
 
 

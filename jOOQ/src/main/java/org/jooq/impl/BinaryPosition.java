@@ -120,7 +120,7 @@ implements
 
 
 
-        Position.accept0(ctx, in, search, startIndex, DSL::binaryPosition, DSL::binarySubstring);
+        Position.accept0(ctx, getDataType(), in, search, startIndex, DSL::binaryPosition, DSL::binarySubstring);
     }
 
 

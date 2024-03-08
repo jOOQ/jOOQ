@@ -74,6 +74,7 @@ import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -161,8 +162,8 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
 
 
-    static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supportedBy(CUBRID, TRINO);
-    static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CUBRID, H2, IGNITE, TRINO);
+    static final Set<SQLDialect>  EMULATE_NATURAL_JOIN       = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, TRINO);
+    static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, H2, IGNITE, TRINO);
     static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supportedBy(CUBRID, IGNITE);
     static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, TRINO, YUGABYTEDB);
 

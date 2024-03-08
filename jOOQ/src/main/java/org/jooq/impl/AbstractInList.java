@@ -44,6 +44,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -108,7 +109,7 @@ import org.jooq.impl.QOM.UnmodifiableList;
 abstract class AbstractInList<T> extends AbstractCondition {
 
     static final Set<SQLDialect>  REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(DERBY, FIREBIRD);
-    static final Set<SQLDialect>  NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>  NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB);
 
     final Field<T>                field;
     final QueryPartList<Field<T>> values;

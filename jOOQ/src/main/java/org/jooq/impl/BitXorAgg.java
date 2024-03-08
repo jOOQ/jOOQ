@@ -300,6 +300,10 @@ implements
                 ctx.visit(N_BIT_XOR_AGG);
                 break;
 
+            case CLICKHOUSE:
+                ctx.visit(N_groupBitXor);
+                break;
+
             default:
                 super.acceptFunctionName(ctx);
                 break;

@@ -106,6 +106,9 @@ implements
 
 
 
+            case CLICKHOUSE:
+                return true;
+
             case H2:
                 return false;
 
@@ -167,6 +170,10 @@ implements
 
 
 
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_bitTest, getDataType(), value, bit));
+                break;
 
             case H2:
                 ctx.visit(case_(function(N_BITGET, BOOLEAN, value, bit)).when(trueCondition(), inline(1)).when(falseCondition(), inline(0)));

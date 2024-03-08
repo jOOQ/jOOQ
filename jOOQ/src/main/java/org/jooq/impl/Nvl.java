@@ -130,6 +130,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case MARIADB:
             case MYSQL:
             case SQLITE:
@@ -196,6 +197,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case MARIADB:
             case MYSQL:
             case SQLITE:

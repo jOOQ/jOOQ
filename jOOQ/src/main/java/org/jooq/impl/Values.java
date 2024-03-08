@@ -43,6 +43,7 @@ import static org.jooq.Clause.TABLE_VALUES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
@@ -109,7 +110,7 @@ implements
     QOM.Values<R>
 {
 
-    static final Set<SQLDialect>    NO_SUPPORT_VALUES              = SQLDialect.supportedUntil(FIREBIRD, MARIADB);
+    static final Set<SQLDialect>    NO_SUPPORT_VALUES              = SQLDialect.supportedUntil(CLICKHOUSE, FIREBIRD, MARIADB);
     static final Set<SQLDialect>    REQUIRE_ROWTYPE_CAST           = SQLDialect.supportedBy(DERBY, FIREBIRD);
     static final Set<SQLDialect>    REQUIRE_ROWTYPE_CAST_FIRST_ROW = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>    NO_SUPPORT_PARENTHESES         = SQLDialect.supportedBy();

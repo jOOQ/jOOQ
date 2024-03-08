@@ -107,6 +107,7 @@ import static org.jooq.impl.Keywords.K_BEFORE;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
+import static org.jooq.impl.Keywords.K_COLUMN;
 import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_CONSTRAINTS;
@@ -232,11 +233,11 @@ implements
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
-    private static final Set<SQLDialect> SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(DERBY);
+    private static final Set<SQLDialect> SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(CLICKHOUSE, DERBY);
     private static final Set<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(DERBY, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(CLICKHOUSE, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
 
 
@@ -1449,6 +1450,10 @@ implements
                     break;
                 }
 
+                case CLICKHOUSE:
+                    ctx.visit(K_MODIFY).sql(' ').visit(K_COLUMN);
+                    break;
+
 
 
 
@@ -1513,6 +1518,7 @@ implements
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);
 
                 switch (family) {
+
 
 
 
@@ -1683,6 +1689,7 @@ implements
     private final Keyword addColumnKeyword(Context<?> ctx) {
         switch (ctx.family()) {
 
+            case CLICKHOUSE:
             case TRINO:
                 return K_ADD_COLUMN;
 
@@ -1743,6 +1750,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case TRINO:
                 ctx.visit(K_DROP_COLUMN);
                 break;

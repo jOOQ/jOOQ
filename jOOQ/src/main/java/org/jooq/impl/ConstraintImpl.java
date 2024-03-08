@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Clause.CONSTRAINT;
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.IGNITE;
 // ...
@@ -152,9 +153,11 @@ implements
 
 {
     private static final Clause[]        CLAUSES                      = { CONSTRAINT };
+    private static final Set<SQLDialect> NO_SUPPORT_NAMED             = SQLDialect.supportedBy();
+    private static final Set<SQLDialect> NO_SUPPORT_NAMED_PK          = SQLDialect.supportedBy(CLICKHOUSE);
     private static final Set<SQLDialect> NO_SUPPORT_PK                = SQLDialect.supportedBy(TRINO);
-    private static final Set<SQLDialect> NO_SUPPORT_UK                = SQLDialect.supportedBy(IGNITE, TRINO);
-    private static final Set<SQLDialect> NO_SUPPORT_FK                = SQLDialect.supportedBy(IGNITE, TRINO);
+    private static final Set<SQLDialect> NO_SUPPORT_UK                = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
+    private static final Set<SQLDialect> NO_SUPPORT_FK                = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
     private static final Set<SQLDialect> NO_SUPPORT_CHECK             = SQLDialect.supportedBy(IGNITE, TRINO);
 
 
@@ -208,7 +211,9 @@ implements
             ctx.visit(getQualifiedName());
         }
         else {
-            if (named )
+            if (named
+                    && !NO_SUPPORT_NAMED.contains(ctx.dialect())
+                    && (primaryKey == null || !NO_SUPPORT_NAMED_PK.contains(ctx.dialect())))
                 ctx.visit(K_CONSTRAINT).sql(' ')
                    .visit(getUnqualifiedName()).sql(' ');
 

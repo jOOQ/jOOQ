@@ -42,6 +42,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -134,7 +135,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableFinalStep renameTo(Table<?> newName);
 
     /**
@@ -142,7 +143,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableFinalStep renameTo(Name newName);
 
     /**
@@ -150,7 +151,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableFinalStep renameTo(String newName);
 
     /**
@@ -158,7 +159,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableRenameColumnToStep renameColumn(Field<?> oldName);
 
     /**
@@ -166,7 +167,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableRenameColumnToStep renameColumn(Name oldName);
 
     /**
@@ -174,7 +175,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableRenameColumnToStep renameColumn(String oldName);
 
     /**
@@ -242,7 +243,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #alterColumn(Field)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     <T> AlterTableAlterStep<T> alter(Field<T> field);
 
     /**
@@ -252,7 +253,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #alterColumn(Name)}
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAlterStep<Object> alter(Name field);
 
     /**
@@ -262,7 +263,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #alterColumn(String)}
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAlterStep<Object> alter(String field);
 
     /**
@@ -270,7 +271,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     <T> AlterTableAlterStep<T> alterColumn(Field<T> field);
 
     /**
@@ -278,7 +279,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAlterStep<Object> alterColumn(Name field);
 
     /**
@@ -286,7 +287,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAlterStep<Object> alterColumn(String field);
 
     /**
@@ -328,7 +329,7 @@ public interface AlterTableStep {
      * the <code>ALTER TABLE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableAddStep add(TableElement... fields);
 
     /**
@@ -336,7 +337,7 @@ public interface AlterTableStep {
      * the <code>ALTER TABLE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableAddStep add(Collection<? extends TableElement> fields);
 
     /**
@@ -376,7 +377,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(Field)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAddStep addIfNotExists(Field<?> field);
 
     /**
@@ -386,7 +387,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(Field, DataType)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     <T> AlterTableAddStep addIfNotExists(Field<T> field, DataType<T> type);
 
     /**
@@ -396,7 +397,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(Name, DataType)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAddStep addIfNotExists(Name field, DataType<?> type);
 
     /**
@@ -406,7 +407,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #addColumnIfNotExists(String, DataType)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAddStep addIfNotExists(String field, DataType<?> type);
 
     /**
@@ -446,7 +447,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAddStep addColumnIfNotExists(Field<?> field);
 
     /**
@@ -454,7 +455,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     <T> AlterTableAddStep addColumnIfNotExists(Field<T> field, DataType<T> type);
 
     /**
@@ -462,7 +463,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAddStep addColumnIfNotExists(Name field, DataType<?> type);
 
     /**
@@ -470,7 +471,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAddStep addColumnIfNotExists(String field, DataType<?> type);
 
     /**
@@ -478,7 +479,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableUsingIndexStep add(Constraint constraint);
 
     /**
@@ -518,7 +519,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumnIfExists(Field)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableDropStep dropIfExists(Field<?> field);
 
     /**
@@ -528,7 +529,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumnIfExists(Name)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableDropStep dropIfExists(Name field);
 
     /**
@@ -538,7 +539,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumnIfExists(String)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableDropStep dropIfExists(String field);
 
     /**
@@ -570,7 +571,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableDropStep dropColumnIfExists(Field<?> field);
 
     /**
@@ -578,7 +579,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableDropStep dropColumnIfExists(Name field);
 
     /**
@@ -586,7 +587,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableDropStep dropColumnIfExists(String field);
 
     /**
@@ -596,7 +597,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumns(Collection)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableDropStep drop(Field<?>... fields);
 
     /**
@@ -606,7 +607,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumns(Collection)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableDropStep drop(Name... fields);
 
     /**
@@ -616,7 +617,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumns(Collection)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableDropStep drop(String... fields);
 
     /**
@@ -624,7 +625,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropColumns(Field<?>... fields);
 
     /**
@@ -632,7 +633,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropColumns(Name... fields);
 
     /**
@@ -640,7 +641,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropColumns(String... fields);
 
     /**
@@ -650,7 +651,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #dropColumns(Collection)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableDropStep drop(Collection<? extends Field<?>> fields);
 
     /**
@@ -658,7 +659,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropColumns(Collection<? extends Field<?>> fields);
 
     /**
@@ -666,7 +667,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep drop(Constraint constraint);
 
     /**
@@ -676,7 +677,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropConstraint(Constraint constraint);
 
     /**
@@ -686,7 +687,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropConstraint(Name constraint);
 
     /**
@@ -696,7 +697,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropConstraint(String constraint);
 
     /**
@@ -704,7 +705,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropIfExists(Constraint constraint);
 
     /**
@@ -714,7 +715,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropConstraintIfExists(Constraint constraint);
 
     /**
@@ -724,7 +725,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropConstraintIfExists(Name constraint);
 
     /**
@@ -734,7 +735,7 @@ public interface AlterTableStep {
      * @see DSL#constraint(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, POSTGRES, YUGABYTEDB })
     AlterTableDropStep dropConstraintIfExists(String constraint);
 
     /**

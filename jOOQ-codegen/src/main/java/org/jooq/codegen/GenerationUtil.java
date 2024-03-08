@@ -544,18 +544,17 @@ class GenerationUtil {
 
 
             case POSTGRES:
-            case YUGABYTEDB: {
+            case YUGABYTEDB:
                 return getPGArrayBaseType(t, u);
-            }
 
-            case TRINO: {
+            case CLICKHOUSE:
+            case TRINO:
                 return new BaseType(t.replaceFirst("(?i:array\\((.*?)\\))", "$1"), u);
-            }
 
             case H2:
 
             case HSQLDB:
-            default: {
+            default:
 
                 // In HSQLDB 2.2.5, there has been an incompatible INFORMATION_SCHEMA change around the
                 // ELEMENT_TYPES view. Arrays are now described much more explicitly
@@ -565,7 +564,6 @@ class GenerationUtil {
                 // This is for backwards compatibility
                 else
                     return new BaseType(t.replaceFirst("(?i: ARRAY)", ""), u);
-            }
         }
     }
 

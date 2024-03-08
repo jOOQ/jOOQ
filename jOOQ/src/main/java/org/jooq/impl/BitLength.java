@@ -114,6 +114,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case DERBY:
             case SQLITE:
             case TRINO:
@@ -159,6 +160,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case DERBY:
             case SQLITE:
             case TRINO:

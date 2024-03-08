@@ -97,6 +97,7 @@ final class CurrentDate<T> extends AbstractField<T> implements QOM.CurrentDate<T
 
 
 
+            case CLICKHOUSE:
             case MARIADB:
             case MYSQL:
                 ctx.visit(N_CURRENT_DATE).sql("()");

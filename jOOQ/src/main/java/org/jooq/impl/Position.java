@@ -121,11 +121,12 @@ implements
 
 
 
-        accept0(ctx, in, search, startIndex, DSL::position, DSL::substring);
+        accept0(ctx, getDataType(), in, search, startIndex, DSL::position, DSL::substring);
     }
 
     static final <T> void accept0(
         Context<?> ctx,
+        DataType<Integer> type,
         Field<T> in,
         Field<T> search,
         Field<? extends Number> startIndex,
@@ -161,6 +162,10 @@ implements
 
 
 
+
+                case CLICKHOUSE:
+                    ctx.visit(function(N_POSITION, type, in, search, startIndex));
+                    break;
 
                 default:
                     ctx.visit(
@@ -198,6 +203,10 @@ implements
 
                 case SQLITE:
                     ctx.visit(N_INSTR).sql('(').visit(in).sql(", ").visit(search).sql(')');
+                    break;
+
+                case CLICKHOUSE:
+                    ctx.visit(function(N_POSITION, type, in, search));
                     break;
 
                 default:

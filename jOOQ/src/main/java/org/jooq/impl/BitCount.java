@@ -154,6 +154,10 @@ implements
                 return;
             }
 
+            case CLICKHOUSE:
+                ctx.visit(N_bitCount).sql('(').visit(value).sql(')');
+                return;
+
             default:
                 acceptNative(ctx);
                 return;

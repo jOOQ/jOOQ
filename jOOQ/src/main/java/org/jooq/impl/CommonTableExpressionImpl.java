@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -74,7 +75,8 @@ import org.jooq.impl.Tools.SimpleDataKey;
  */
 final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> implements CommonTableExpression<R> {
 
-    private static final Set<SQLDialect> SUPPORT_MATERIALIZED = SQLDialect.supportedBy(POSTGRES, SQLITE);
+    static final Set<SQLDialect> SUPPORT_MATERIALIZED   = SQLDialect.supportedBy(POSTGRES, SQLITE);
+    static final Set<SQLDialect> NO_SUPPORT_COLUMN_LIST = SQLDialect.supportedBy(CLICKHOUSE);
 
 
 
@@ -119,15 +121,14 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
         if (ctx.declareCTE()) {
             QueryPart s = query;
 
+            // [#4474] TODO: Is there a case where we could handle ResultQuery as well?
+            if (NO_SUPPORT_COLUMN_LIST.contains(ctx.dialect()) && query instanceof Select) {
+                ctx.visit(name.name);
+                s = new AliasedSelect<>((Select<R>) query, false, true, false, name.fieldNames);
+            }
+            else
+                ctx.visit(name);
 
-
-
-
-
-
-
-
-            ctx.visit(name);
             ctx.sql(' ').visit(K_AS).sql(' ');
 
             Object previous = null;

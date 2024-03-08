@@ -322,6 +322,10 @@ implements
 
             ctx.sql('(').visit(list).sql(')');
 
+        // [#7539] A type is mandatory for ClickHouse. We currently default to minmax
+        if (ctx.family() == CLICKHOUSE)
+            ctx.sql(' ').visit(K_TYPE).sql(' ').visit(unquotedName("minmax"));
+
         if (supportsInclude && !include.isEmpty()) {
             Keyword keyword = K_INCLUDE;
 

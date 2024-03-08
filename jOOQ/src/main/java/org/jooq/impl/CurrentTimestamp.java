@@ -132,6 +132,7 @@ final class CurrentTimestamp<T> extends AbstractField<T> implements QOM.CurrentT
 
 
 
+            case CLICKHOUSE:
             case MARIADB:
             case MYSQL:
                 if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.dialect()))

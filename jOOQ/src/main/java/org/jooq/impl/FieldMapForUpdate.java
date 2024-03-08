@@ -42,6 +42,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
@@ -100,7 +101,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -129,7 +129,7 @@ extends
 {
 
     static final Set<SQLDialect> CASTS_NEEDED                      = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect> NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(DUCKDB, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(CLICKHOUSE, DUCKDB, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_RVE_SET_QUERY             = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
 
 

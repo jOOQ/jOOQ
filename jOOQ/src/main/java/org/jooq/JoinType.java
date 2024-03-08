@@ -43,6 +43,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -97,7 +98,7 @@ public enum JoinType {
      * <code>CROSS JOIN</code> two tables.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     CROSS_JOIN("cross join", false, false),
 
     /**
@@ -118,7 +119,7 @@ public enum JoinType {
      * <code>FULL OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     FULL_OUTER_JOIN("full outer join", "full outer join", "full join", true, false),
 
     /**
@@ -139,14 +140,14 @@ public enum JoinType {
      * <code>NATURAL RIGHT OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     NATURAL_RIGHT_OUTER_JOIN("natural right outer join", "natural right outer join", "natural right join", false, false),
 
     /**
      * <code>NATURAL FULL OUTER JOIN</code> two tables.
      */
     @NotNull
-    @Support({ FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     NATURAL_FULL_OUTER_JOIN("natural full outer join", "natural full outer join", "natural full join", false, false),
 
     /**

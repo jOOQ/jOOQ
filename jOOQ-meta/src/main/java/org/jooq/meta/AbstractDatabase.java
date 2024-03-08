@@ -2704,7 +2704,8 @@ public abstract class AbstractDatabase implements Database {
 
                     Name key = table.getQualifiedNamePart().append(referencingName);
                     if (result.containsKey(key)) {
-                        log.warn("Embeddable configuration", "Table " + table + " already has embeddable by the same referencingName " + embeddable);
+                        if (!TRUE.equals(embeddable.isIgnoreUnused()))
+                            log.warn("Embeddable configuration", "Table " + table + " already has embeddable by the same referencingName " + embeddable);
                     }
                     else {
                         result.put(

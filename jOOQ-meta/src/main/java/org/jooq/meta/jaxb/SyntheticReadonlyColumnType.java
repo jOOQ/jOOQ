@@ -24,6 +24,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *       &lt;all&gt;
  *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="fields" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="ignoreUnused" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -48,6 +49,8 @@ public class SyntheticReadonlyColumnType implements Serializable, XMLAppendable
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String fields;
+    @XmlElement(defaultValue = "false")
+    protected Boolean ignoreUnused = false;
 
     /**
      * A regular expression matching all tables on which to apply this synthetic readonly column.
@@ -82,6 +85,30 @@ public class SyntheticReadonlyColumnType implements Serializable, XMLAppendable
     }
 
     /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIgnoreUnused() {
+        return ignoreUnused;
+    }
+
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIgnoreUnused(Boolean value) {
+        this.ignoreUnused = value;
+    }
+
+    /**
      * A regular expression matching all tables on which to apply this synthetic readonly column.
      * 
      */
@@ -99,10 +126,20 @@ public class SyntheticReadonlyColumnType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     */
+    public SyntheticReadonlyColumnType withIgnoreUnused(Boolean value) {
+        setIgnoreUnused(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("tables", tables);
         builder.append("fields", fields);
+        builder.append("ignoreUnused", ignoreUnused);
     }
 
     @Override
@@ -142,6 +179,15 @@ public class SyntheticReadonlyColumnType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (ignoreUnused == null) {
+            if (other.ignoreUnused!= null) {
+                return false;
+            }
+        } else {
+            if (!ignoreUnused.equals(other.ignoreUnused)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -151,6 +197,7 @@ public class SyntheticReadonlyColumnType implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
+        result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
         return result;
     }
 

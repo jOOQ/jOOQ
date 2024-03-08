@@ -49,6 +49,8 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
     protected String tables;
     @XmlElement(defaultValue = "false")
     protected Boolean replacesFields = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean ignoreUnused = false;
     @XmlElementWrapper(name = "fields")
     @XmlElement(name = "field")
     protected List<EmbeddableField> fields;
@@ -189,6 +191,30 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         this.replacesFields = value;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIgnoreUnused() {
+        return ignoreUnused;
+    }
+
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIgnoreUnused(Boolean value) {
+        this.ignoreUnused = value;
+    }
+
     public List<EmbeddableField> getFields() {
         if (fields == null) {
             fields = new ArrayList<EmbeddableField>();
@@ -272,6 +298,15 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     */
+    public EmbeddableDefinitionType withIgnoreUnused(Boolean value) {
+        setIgnoreUnused(value);
+        return this;
+    }
+
     public EmbeddableDefinitionType withFields(EmbeddableField... values) {
         if (values!= null) {
             for (EmbeddableField value: values) {
@@ -303,6 +338,7 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         builder.append("referencingComment", referencingComment);
         builder.append("tables", tables);
         builder.append("replacesFields", replacesFields);
+        builder.append("ignoreUnused", ignoreUnused);
         builder.append("fields", "field", fields);
     }
 
@@ -397,6 +433,15 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (ignoreUnused == null) {
+            if (other.ignoreUnused!= null) {
+                return false;
+            }
+        } else {
+            if (!ignoreUnused.equals(other.ignoreUnused)) {
+                return false;
+            }
+        }
         if (fields == null) {
             if (other.fields!= null) {
                 return false;
@@ -421,6 +466,7 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         result = ((prime*result)+((referencingComment == null)? 0 :referencingComment.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((replacesFields == null)? 0 :replacesFields.hashCode()));
+        result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         return result;
     }

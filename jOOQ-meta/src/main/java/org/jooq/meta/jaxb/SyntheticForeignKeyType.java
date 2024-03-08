@@ -32,6 +32,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="referencedTable" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="referencedFields" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.0.xsd}SyntheticKeyFieldsType" minOccurs="0"/&gt;
  *         &lt;element name="referencedKey" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="ignoreUnused" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -60,6 +61,8 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
     protected String referencedTable;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String referencedKey;
+    @XmlElement(defaultValue = "false")
+    protected Boolean ignoreUnused = false;
     @XmlElementWrapper(name = "fields", required = true)
     @XmlElement(name = "field")
     protected List<String> fields;
@@ -131,6 +134,30 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
         this.referencedKey = value;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIgnoreUnused() {
+        return ignoreUnused;
+    }
+
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIgnoreUnused(Boolean value) {
+        this.ignoreUnused = value;
+    }
+
     public List<String> getFields() {
         if (fields == null) {
             fields = new ArrayList<String>();
@@ -189,6 +216,15 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     */
+    public SyntheticForeignKeyType withIgnoreUnused(Boolean value) {
+        setIgnoreUnused(value);
+        return this;
+    }
+
     public SyntheticForeignKeyType withFields(String... values) {
         if (values!= null) {
             for (String value: values) {
@@ -237,6 +273,7 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
         builder.append("tables", tables);
         builder.append("referencedTable", referencedTable);
         builder.append("referencedKey", referencedKey);
+        builder.append("ignoreUnused", ignoreUnused);
         builder.append("fields", "field", fields);
         builder.append("referencedFields", "field", referencedFields);
     }
@@ -296,6 +333,15 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (ignoreUnused == null) {
+            if (other.ignoreUnused!= null) {
+                return false;
+            }
+        } else {
+            if (!ignoreUnused.equals(other.ignoreUnused)) {
+                return false;
+            }
+        }
         if (fields == null) {
             if (other.fields!= null) {
                 return false;
@@ -325,6 +371,7 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((referencedTable == null)? 0 :referencedTable.hashCode()));
         result = ((prime*result)+((referencedKey == null)? 0 :referencedKey.hashCode()));
+        result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         result = ((prime*result)+((referencedFields == null)? 0 :referencedFields.hashCode()));
         return result;

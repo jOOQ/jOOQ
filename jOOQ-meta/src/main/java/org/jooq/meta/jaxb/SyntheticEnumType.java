@@ -34,6 +34,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="literalsFromColumnContent" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="literalsFromCheckConstraints" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="ignoreUnused" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -65,6 +66,8 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
     protected Boolean literalsFromCheckConstraints;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
+    @XmlElement(defaultValue = "false")
+    protected Boolean ignoreUnused = false;
     @XmlElementWrapper(name = "literals")
     @XmlElement(name = "literal")
     protected List<String> literals;
@@ -197,6 +200,30 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
         this.comment = value;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIgnoreUnused() {
+        return ignoreUnused;
+    }
+
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIgnoreUnused(Boolean value) {
+        this.ignoreUnused = value;
+    }
+
     public List<String> getLiterals() {
         if (literals == null) {
             literals = new ArrayList<String>();
@@ -271,6 +298,15 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     */
+    public SyntheticEnumType withIgnoreUnused(Boolean value) {
+        setIgnoreUnused(value);
+        return this;
+    }
+
     public SyntheticEnumType withLiterals(String... values) {
         if (values!= null) {
             for (String value: values) {
@@ -301,6 +337,7 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
         builder.append("literalsFromColumnContent", literalsFromColumnContent);
         builder.append("literalsFromCheckConstraints", literalsFromCheckConstraints);
         builder.append("comment", comment);
+        builder.append("ignoreUnused", ignoreUnused);
         builder.append("literals", "literal", literals);
     }
 
@@ -386,6 +423,15 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (ignoreUnused == null) {
+            if (other.ignoreUnused!= null) {
+                return false;
+            }
+        } else {
+            if (!ignoreUnused.equals(other.ignoreUnused)) {
+                return false;
+            }
+        }
         if (literals == null) {
             if (other.literals!= null) {
                 return false;
@@ -409,6 +455,7 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
         result = ((prime*result)+((literalsFromColumnContent == null)? 0 :literalsFromColumnContent.hashCode()));
         result = ((prime*result)+((literalsFromCheckConstraints == null)? 0 :literalsFromCheckConstraints.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
+        result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
         result = ((prime*result)+((literals == null)? 0 :literals.hashCode()));
         return result;
     }

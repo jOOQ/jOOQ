@@ -79,6 +79,8 @@ public class ForcedType implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "ALL")
     @XmlSchemaType(name = "string")
     protected ForcedTypeObjectType objectType = ForcedTypeObjectType.ALL;
+    @XmlElement(defaultValue = "false")
+    protected Boolean ignoreUnused = false;
 
     /**
      * The priority among forced types in which to apply this one. Forced types of equal priority will be applied in the order in which they're added to the forced types list (e.g. the Maven lexical XML order)
@@ -709,6 +711,30 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIgnoreUnused() {
+        return ignoreUnused;
+    }
+
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIgnoreUnused(Boolean value) {
+        this.ignoreUnused = value;
+    }
+
+    /**
      * The priority among forced types in which to apply this one. Forced types of equal priority will be applied in the order in which they're added to the forced types list (e.g. the Maven lexical XML order)
      * 
      */
@@ -1007,6 +1033,15 @@ public class ForcedType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if this object was not used by a code generation run.
+     * 
+     */
+    public ForcedType withIgnoreUnused(Boolean value) {
+        setIgnoreUnused(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("priority", priority);
@@ -1038,6 +1073,7 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("types", types);
         builder.append("nullability", nullability);
         builder.append("objectType", objectType);
+        builder.append("ignoreUnused", ignoreUnused);
     }
 
     @Override
@@ -1320,6 +1356,15 @@ public class ForcedType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (ignoreUnused == null) {
+            if (other.ignoreUnused!= null) {
+                return false;
+            }
+        } else {
+            if (!ignoreUnused.equals(other.ignoreUnused)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -1356,6 +1401,7 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((types == null)? 0 :types.hashCode()));
         result = ((prime*result)+((nullability == null)? 0 :nullability.hashCode()));
         result = ((prime*result)+((objectType == null)? 0 :objectType.hashCode()));
+        result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
         return result;
     }
 

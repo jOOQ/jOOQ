@@ -287,7 +287,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                             db.markUsed(forcedType);
 
                         // [#7373] [#10944] Refer to <customType/> only if someone is still using the feature
-                        else
+                        else if (!TRUE.equals(forcedType.isIgnoreUnused()))
                             log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + forcedType);
                     }
                 }

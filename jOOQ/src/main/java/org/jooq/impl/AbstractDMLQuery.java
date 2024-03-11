@@ -42,6 +42,7 @@ import static java.lang.Boolean.FALSE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -150,7 +151,6 @@ import org.jooq.Name;
 import org.jooq.Param;
 // ...
 import org.jooq.QualifiedAsterisk;
-import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
@@ -184,11 +184,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
     private static final JooqLogger              log                                    = JooqLogger.getLogger(AbstractQuery.class);
 
-    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_INSERT_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, TRINO);
-    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_UPDATE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, TRINO);
-    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_DELETE_RETURNING     = SQLDialect.supportedUntil(CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, TRINO);
+    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_INSERT_RETURNING     = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, TRINO);
+    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_UPDATE_RETURNING     = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, TRINO);
+    private static final Set<SQLDialect>         NO_NATIVE_SUPPORT_DELETE_RETURNING     = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, H2, HSQLDB, IGNITE, MYSQL, TRINO);
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE = SQLDialect.supportedBy(H2);
-    private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(IGNITE, TRINO);
+    private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
     private static final Set<SQLDialect>         NO_SUPPORT_RETURNING_ASTERISK          = SQLDialect.supportedUntil(MARIADB);
 
 

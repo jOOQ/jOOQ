@@ -98,8 +98,6 @@ import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.clickhouse.system.tables.DataSkippingIndices;
 import org.jooq.meta.clickhouse.system.tables.Tables;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Lukas Eder
  */
@@ -249,7 +247,15 @@ public class ClickHouseDatabase extends AbstractDatabase implements ResultQueryD
 
     @Override
     public ResultQuery<Record4<String, String, String, String>> sources(List<String> schemas) {
-        return null;
+        return create()
+            .select(
+                SYSTEM.TABLES.DATABASE.as("catalog"),
+                SYSTEM.TABLES.DATABASE,
+                SYSTEM.TABLES.TABLE,
+                SYSTEM.TABLES.CREATE_TABLE_QUERY)
+            .from(SYSTEM.TABLES)
+            .where(SYSTEM.TABLES.DATABASE.in(schemas))
+            .and(SYSTEM.TABLES.ENGINE.eq(inline("View")));
     }
 
     @Override

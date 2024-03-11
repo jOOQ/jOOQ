@@ -133,6 +133,7 @@ import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_POSITION;
 import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
+import static org.jooq.impl.Keywords.K_REMOVE;
 import static org.jooq.impl.Keywords.K_RENAME;
 import static org.jooq.impl.Keywords.K_RENAME_COLUMN;
 import static org.jooq.impl.Keywords.K_RENAME_CONSTRAINT;
@@ -238,7 +239,7 @@ implements
     private static final Set<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(CLICKHOUSE, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
 
 
 
@@ -1554,6 +1555,10 @@ implements
                     case MARIADB:
                     case MYSQL:
                         ctx.sql(' ').visit(K_SET_DEFAULT).sql(' ').visit(K_NULL);
+                        break;
+
+                    case CLICKHOUSE:
+                        ctx.sql(' ').visit(K_REMOVE).sql(' ').visit(K_DEFAULT);
                         break;
 
                     default:

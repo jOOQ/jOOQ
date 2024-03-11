@@ -149,7 +149,7 @@ implements
 
     private static final Clause[]        CLAUSES              = { Clause.DROP_INDEX };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, MYSQL);
-    private static final Set<SQLDialect> REQUIRES_ON          = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> REQUIRES_ON          = SQLDialect.supportedBy(CLICKHOUSE, MARIADB, MYSQL);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS.contains(ctx.dialect());

@@ -395,7 +395,7 @@ implements
                     c.formatSeparator().visit(K_WHERE).sql(' ');
 
                     if (NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect()))
-                        ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false, c1 -> c1.visit(where));
+                        ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true, c1 -> c1.visit(where));
                     else
                         ctx.visit(where);
                 });

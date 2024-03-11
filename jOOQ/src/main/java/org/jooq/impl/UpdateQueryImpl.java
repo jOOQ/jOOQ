@@ -214,7 +214,7 @@ implements
 
     // LIMIT is supported but not ORDER BY
     private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT     = SQLDialect.supportedBy(IGNITE);
-    static final Set<SQLDialect>         NO_SUPPORT_UPDATE_JOIN        = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_UPDATE_JOIN        = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, YUGABYTEDB);
 
     // https://github.com/ClickHouse/ClickHouse/issues/61020
     static final Set<SQLDialect>         NO_SUPPORT_QUALIFY_IN_WHERE   = SQLDialect.supportedBy(CLICKHOUSE);

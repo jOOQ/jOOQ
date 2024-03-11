@@ -144,6 +144,7 @@ final class Names {
     static final Name N_groupBitOr                  = systemName("groupBitOr");
     static final Name N_groupBitXnor                = systemName("groupBitXnor");
     static final Name N_groupBitXor                 = systemName("groupBitXor");
+    static final Name N_HAS                         = systemName("has");
     static final Name N_HASHBYTES                   = systemName("hashbytes");
     static final Name N_HASH_MD5                    = systemName("hash_md5");
     static final Name N_HEX_TO_BINARY               = systemName("hex_to_binary");

@@ -98,10 +98,9 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
                     c -> {
                         switch (ctx.family()) {
 
-
-
-
-
+                            case CLICKHOUSE:
+                                ctx.visit(K_ARRAY).sql('(').visit(fields).sql(')');
+                                break;
 
                             default:
                                 ctx.visit(K_ARRAY).sql('[').visit(fields).sql(']');

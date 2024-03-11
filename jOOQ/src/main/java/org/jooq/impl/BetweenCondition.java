@@ -47,6 +47,7 @@ import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -103,7 +104,7 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
     private static final Clause[]        CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
     private static final Clause[]        CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
     private static final Clause[]        CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
-    private static final Set<SQLDialect> NO_SUPPORT_SYMMETRIC          = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
+    private static final Set<SQLDialect> NO_SUPPORT_SYMMETRIC          = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
 
     private final boolean                symmetric;
     private final boolean                not;

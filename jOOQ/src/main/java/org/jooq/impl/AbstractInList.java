@@ -73,13 +73,16 @@ import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_IN;
+import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_NOT_IN;
 import static org.jooq.impl.Keywords.K_OR;
+import static org.jooq.impl.Names.N_HAS;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
@@ -154,8 +157,19 @@ abstract class AbstractInList<T> extends AbstractCondition {
 
 
 
+
+        // [#7539] Work around https://github.com/ClickHouse/ClickHouse/issues/58242
+        else if (ctx.family() == CLICKHOUSE && anyMatch(values, v -> !(v instanceof Val)))
+            acceptClickHouse(ctx);
         else
             accept0(ctx);
+    }
+
+    private final void acceptClickHouse(Context<?> ctx) {
+        if (!(this instanceof InList))
+            ctx.visit(K_NOT).sql(' ');
+
+        ctx.visit(N_HAS).sql('(').visit(array(values)).sql(", ").visit(field).sql(')');
     }
 
     private final void accept0(Context<?> ctx) {

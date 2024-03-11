@@ -33932,7 +33932,8 @@ public class DSL {
 
     static <T> Param<T> val0(T value, boolean inferredDataType) {
         Class type = value == null ? Object.class : value.getClass();
-        return val0(value, getDataType0(type), inferredDataType);
+        DataType dataType = getDataType0(type);
+        return val0(value, dataType, inferredDataType || !(dataType instanceof BuiltInDataType));
     }
 
     /**

@@ -404,6 +404,7 @@ final class Names {
     static final Name N_BOOL_OR                     = systemName("bool_or");
     static final Name N_BYTE_LENGTH                 = systemName("byte_length");
     static final Name N_CARDINALITY                 = systemName("cardinality");
+    static final Name N_CBRT                        = systemName("cbrt");
     static final Name N_CEIL                        = systemName("ceil");
     static final Name N_CEILING                     = systemName("ceiling");
     static final Name N_CHAR                        = systemName("char");
@@ -534,6 +535,7 @@ final class Names {
     static final Name N_RETURN_                     = systemName("return_");
     static final Name N_REVERSE                     = systemName("reverse");
     static final Name N_RIGHT                       = systemName("right");
+    static final Name N_ROOT                        = systemName("root");
     static final Name N_ROUND                       = systemName("round");
     static final Name N_ROWNUM                      = systemName("rownum");
     static final Name N_RPAD                        = systemName("rpad");

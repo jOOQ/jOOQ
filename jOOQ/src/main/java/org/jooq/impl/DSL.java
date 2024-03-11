@@ -18327,6 +18327,26 @@ public class DSL {
     }
 
     /**
+     * The <code>CBRT</code> function.
+     *
+     * @param value is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> cbrt(Number value) {
+        return new Cbrt(Tools.field(value));
+    }
+
+    /**
+     * The <code>CBRT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> cbrt(Field<? extends Number> value) {
+        return new Cbrt(value);
+    }
+
+    /**
      * The <code>CEIL</code> function.
      * <p>
      * Get the smallest integer value equal or greater to a value.
@@ -18699,6 +18719,49 @@ public class DSL {
     @Support
     public static Field<BigDecimal> rand() {
         return new Rand();
+    }
+
+    /**
+     * The <code>ROOT</code> function.
+     *
+     * @param value is wrapped as {@link DSL#val(Object)}.
+     * @param degree is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> root(Number value, Number degree) {
+        return new Root(Tools.field(value), Tools.field(degree));
+    }
+
+    /**
+     * The <code>ROOT</code> function.
+     *
+     * @param value is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> root(Number value, Field<? extends Number> degree) {
+        return new Root(Tools.field(value), degree);
+    }
+
+    /**
+     * The <code>ROOT</code> function.
+     *
+     * @param degree is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> root(Field<? extends Number> value, Number degree) {
+        return new Root(value, Tools.field(degree));
+    }
+
+    /**
+     * The <code>ROOT</code> function.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> root(Field<? extends Number> value, Field<? extends Number> degree) {
+        return new Root(value, degree);
     }
 
     /**

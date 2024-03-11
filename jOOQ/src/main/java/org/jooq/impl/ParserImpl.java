@@ -8813,6 +8813,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return coth((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("COT"))
                     return cot((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("CBRT"))
+                    return parseFunctionArgs1(DSL::cbrt);
                 else if (parseFunctionNameIf("CONTAINS"))
                     return parseFunctionArgs2((f1, f2) -> f1.contains(f2));
                 else if ((field = parseNextvalCurrvalIf(SequenceMethod.CURRVAL)) != null)
@@ -9265,6 +9267,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs1(f -> parseWindowFunction(null, null, ratioToReport(f)));
                 else if (parseKeywordIf("RSHIFT", "RIGHT_SHIFT"))
                     return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shr(f1, f2));
+                else if (parseFunctionNameIf("ROOT"))
+                    return parseFunctionArgs2(DSL::sqrt, DSL::root);
                 else if (parseFunctionNameIf("ROW"))
                     return parseTuple();
 

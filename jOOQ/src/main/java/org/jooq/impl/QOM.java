@@ -7053,6 +7053,42 @@ public final class QOM {
     {}
 
     /**
+     * The <code>CBRT</code> function.
+     */
+    public static final Cbrt Cbrt() {
+        return new org.jooq.impl.Cbrt(
+            null
+        );
+    }
+
+    /**
+     * The <code>CBRT</code> function.
+     */
+    public static final Cbrt Cbrt(
+        Field<? extends Number> value
+    ) {
+        return new org.jooq.impl.Cbrt(
+            value
+        );
+    }
+
+    /**
+     * The <code>CBRT</code> function.
+     */
+    public /*sealed*/ interface Cbrt
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Cbrt>,
+            org.jooq.Field<BigDecimal>
+        //permits
+        //    Cbrt
+    {
+        @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default Cbrt $value(Field<? extends Number> newValue) { return $arg1(newValue); }
+    }
+
+    /**
      * The <code>CEIL</code> function.
      * <p>
      * Get the smallest integer value equal or greater to a value.
@@ -7770,6 +7806,48 @@ public final class QOM {
         //permits
         //    Rand
     {}
+
+    /**
+     * The <code>ROOT</code> function.
+     */
+    public static final Root Root() {
+        return new org.jooq.impl.Root(
+            null,
+            null
+        );
+    }
+
+    /**
+     * The <code>ROOT</code> function.
+     */
+    public static final Root Root(
+        Field<? extends Number> value,
+        Field<? extends Number> degree
+    ) {
+        return new org.jooq.impl.Root(
+            value,
+            degree
+        );
+    }
+
+    /**
+     * The <code>ROOT</code> function.
+     */
+    public /*sealed*/ interface Root
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<? extends Number>, Field<? extends Number>, Root>,
+            org.jooq.Field<BigDecimal>
+        //permits
+        //    Root
+    {
+        @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default Root $value(Field<? extends Number> newValue) { return $arg1(newValue); }
+        @NotNull default Field<? extends Number> $degree() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default Root $degree(Field<? extends Number> newDegree) { return $arg2(newDegree); }
+    }
 
     /**
      * The <code>ROUND</code> function.

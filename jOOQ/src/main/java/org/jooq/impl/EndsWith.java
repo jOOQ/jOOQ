@@ -94,6 +94,9 @@ implements
             case DUCKDB:
                 return true;
 
+            case CLICKHOUSE:
+                return true;
+
             default:
                 return false;
         }
@@ -110,6 +113,10 @@ implements
 
             case DUCKDB:
                 ctx.visit(function(N_SUFFIX, BOOLEAN, string, suffix));
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_endsWith, BOOLEAN, string, suffix));
                 break;
 
             default:

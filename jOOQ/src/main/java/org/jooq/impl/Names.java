@@ -511,6 +511,7 @@ final class Names {
     static final Name N_OVERLAY                     = systemName("overlay");
     static final Name N_PI                          = systemName("pi");
     static final Name N_POSITION                    = systemName("position");
+    static final Name N_POW                         = systemName("pow");
     static final Name N_PRINTF                      = systemName("printf");
     static final Name N_PRIOR                       = systemName("prior");
     static final Name N_PRODUCT                     = systemName("product");
@@ -637,7 +638,9 @@ final class Names {
     static final Name N_bitShiftRight               = systemName("bitShiftRight");
     static final Name N_bitTest                     = systemName("bitTest");
     static final Name N_bitXor                      = systemName("bitXor");
+    static final Name N_endsWith                    = systemName("endsWith");
     static final Name N_generateUUIDv4              = systemName("generateUUIDv4");
+    static final Name N_startsWith                  = systemName("startsWith");
     static final Name N_substringIndex              = systemName("substringIndex");
 
 

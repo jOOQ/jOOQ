@@ -101,6 +101,9 @@ implements
 
 
 
+            case CLICKHOUSE:
+                return true;
+
             case DERBY:
                 return false;
 
@@ -124,6 +127,10 @@ implements
 
 
 
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_POW, getDataType(), base, exponent));
+                break;
 
             case DERBY:
                 ctx.visit(DSL.exp(imul(DSL.ln(base), exponent)));

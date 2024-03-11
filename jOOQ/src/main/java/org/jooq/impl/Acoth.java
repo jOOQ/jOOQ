@@ -113,6 +113,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case CUBRID:
             case DERBY:
             case DUCKDB:
@@ -161,6 +162,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case CUBRID:
             case DERBY:
             case DUCKDB:

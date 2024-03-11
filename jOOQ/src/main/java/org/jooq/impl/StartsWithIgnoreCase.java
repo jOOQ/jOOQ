@@ -97,6 +97,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case DUCKDB:
             case TRINO:
                 ctx.visit(string.lower().startsWith(prefix.lower()));

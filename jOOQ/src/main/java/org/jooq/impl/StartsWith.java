@@ -128,6 +128,9 @@ implements
             case TRINO:
                 return true;
 
+            case CLICKHOUSE:
+                return true;
+
             default:
                 return true;
         }
@@ -179,6 +182,10 @@ implements
             case DUCKDB:
             case TRINO:
                 ctx.visit(function(N_STARTS_WITH, BOOLEAN, string, prefix));
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_startsWith, BOOLEAN, string, prefix));
                 break;
 
             default:

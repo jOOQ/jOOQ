@@ -682,7 +682,7 @@ extends
      * The <code>EQ</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition eq(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -710,7 +710,7 @@ extends
      * The <code>EQUAL</code> operator, an alias for the <code>EQ</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition equal(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -738,7 +738,7 @@ extends
      * The <code>GE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition ge(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -766,7 +766,7 @@ extends
      * The <code>GREATER_OR_EQUAL</code> operator, an alias for the <code>GE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition greaterOrEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -794,7 +794,7 @@ extends
      * The <code>GREATER_THAN</code> operator, an alias for the <code>GT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition greaterThan(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -822,7 +822,7 @@ extends
      * The <code>GT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition gt(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -935,7 +935,7 @@ extends
      * The <code>LE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition le(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -963,7 +963,7 @@ extends
      * The <code>LESS_OR_EQUAL</code> operator, an alias for the <code>LE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition lessOrEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -991,7 +991,7 @@ extends
      * The <code>LESS_THAN</code> operator, an alias for the <code>LT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition lessThan(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -1072,7 +1072,7 @@ extends
      * The <code>LT</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition lt(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -1100,7 +1100,7 @@ extends
      * The <code>NE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition ne(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -1128,7 +1128,7 @@ extends
      * The <code>NOT_EQUAL</code> operator, an alias for the <code>NE</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition notEqual(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
 
     /**
@@ -1450,14 +1450,14 @@ extends
      * @param exponent is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     Field<BigDecimal> power(Number exponent);
 
     /**
      * The <code>POWER</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     Field<BigDecimal> power(Field<? extends Number> exponent);
 
     /**
@@ -1466,14 +1466,14 @@ extends
      * @param exponent is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     Field<BigDecimal> pow(Number exponent);
 
     /**
      * The <code>POW</code> operator, an alias for the <code>POWER</code> operator.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     Field<BigDecimal> pow(Field<? extends Number> exponent);
 
     /**

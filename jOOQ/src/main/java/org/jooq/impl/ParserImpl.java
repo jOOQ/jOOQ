@@ -8942,7 +8942,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if (parseFunctionNameIf("ELEMENT_AT"))
                     return parseFunctionArgs2(DSL::arrayGet);
-                else if (parseFunctionNameIf("ENDS_WITH"))
+                else if (parseFunctionNameIf("ENDS_WITH", "endsWith"))
                     return parseFunctionArgs2((f1, f2) -> f1.endsWith(f2));
                 else if (parseFunctionNameIf("EXP"))
                     return exp((Field) parseFieldNumericOpParenthesised());
@@ -9281,7 +9281,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs3(DSL::splitPart);
                 else if (parseFunctionNameIf("STR_REPLACE"))
                     return parseFunctionArgs3(DSL::replace, DSL::replace);
-                else if (parseFunctionNameIf("STARTS_WITH"))
+                else if (parseFunctionNameIf("STARTS_WITH", "startsWith"))
                     return parseFunctionArgs2((f1, f2) -> f1.startsWith(f2));
                 else if (parseFunctionNameIf("SCHEMA") && parseEmptyParensIf())
                     return currentSchema();
@@ -9551,7 +9551,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return excluded(parseFieldParenthesised());
 
             case 'W':
-                if (parseFunctionNameIf("WIDTH_BUCKET"))
+                if (parseFunctionNameIf("WIDTH_BUCKET", "widthBucket"))
                     return parseFunctionArgs4((f1, f2, f3, f4) -> widthBucket(f1, f2, f3, f4));
                 else if (parseFunctionNameIf("WEEK"))
                     return week(parseFieldParenthesised());

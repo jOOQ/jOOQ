@@ -97,6 +97,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case DUCKDB:
                 ctx.visit(string.lower().endsWith(suffix.lower()));
                 break;

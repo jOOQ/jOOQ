@@ -120,6 +120,9 @@ implements
             case YUGABYTEDB:
                 return false;
 
+            case CLICKHOUSE:
+                return true;
+
             case SQLITE:
                 return false;
 
@@ -169,6 +172,10 @@ implements
             case POSTGRES:
             case YUGABYTEDB:
                 ctx.visit(DSL.exp(one()));
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_E, getDataType()));
                 break;
 
             case SQLITE: {

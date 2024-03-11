@@ -97,6 +97,11 @@ implements
 
 
 
+            case CLICKHOUSE:
+                return true;
+
+
+
 
 
 
@@ -125,6 +130,12 @@ implements
 
 
 
+
+
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_PI, getDataType()));
+                break;
 
 
 

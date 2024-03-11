@@ -45,6 +45,7 @@ import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.extractVal;
 import static org.jooq.impl.Tools.isVal;
+import static org.jooq.impl.Tools.isVal1;
 import static org.jooq.impl.Tools.nullSafe;
 
 import java.util.Collection;
@@ -224,7 +225,8 @@ implements
 
         findConversionCandidates: {
             for (int i = 0; i < size; i++)
-                if (isVal(fields.field(i)) && !isVal(row.field(i)))
+                if (isVal1(fields.field(i), v -> v.inferredDataType)
+                    && !isVal1(row.field(i), v -> v.inferredDataType))
                     break findConversionCandidates;
 
             return this;
@@ -233,10 +235,12 @@ implements
         Field<?>[] result = new Field[size];
         for (int i = 0; i < size; i++) {
             Field<?> f = fields.field(i);
-            Val<?> v;
+            Val<?> val;
 
-            if ((v = extractVal(f)) != null)
-                result[i] = v.convertTo(row.field(i).getDataType());
+            if (isVal1(fields.field(i), v -> v.inferredDataType)
+                    && !isVal1(row.field(i), v -> v.inferredDataType)
+                    && (val = extractVal(f)) != null)
+                result[i] = val.convertTo(row.field(i).getDataType());
             else
                 result[i] = f;
         }

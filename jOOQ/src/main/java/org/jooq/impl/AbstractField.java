@@ -296,7 +296,7 @@ implements
 
     @Override
     public final <Z> Field<Z> cast(Class<Z> type) {
-        return cast(DefaultDataType.getDataType(null, type));
+        return cast(DefaultDataType.check(DefaultDataType.getDataType(null, type)));
     }
 
     // ------------------------------------------------------------------------
@@ -315,7 +315,7 @@ implements
 
     @Override
     public final <Z> Field<Z> coerce(Class<Z> type) {
-        return coerce(DefaultDataType.getDataType(null, type));
+        return coerce(DefaultDataType.check(DefaultDataType.getDataType(null, type)));
     }
 
     // ------------------------------------------------------------------------

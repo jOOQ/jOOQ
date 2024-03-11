@@ -33933,7 +33933,13 @@ public class DSL {
     static <T> Param<T> val0(T value, boolean inferredDataType) {
         Class type = value == null ? Object.class : value.getClass();
         DataType dataType = getDataType0(type);
-        return val0(value, dataType, inferredDataType || !(dataType instanceof BuiltInDataType));
+        return val0(
+            value,
+            dataType,
+            inferredDataType
+                || !(dataType instanceof BuiltInDataType)
+                || dataType.isOther()
+        );
     }
 
     /**

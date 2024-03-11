@@ -832,14 +832,34 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private static final class DiscouragedStaticTypeRegistryUsage extends RuntimeException {}
 
     public static final <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type, DataType<T> fallbackDataType) {
-        return check(getDataType0(dialect, type, fallbackDataType));
+        return getDataType0(dialect, type, fallbackDataType);
     }
 
-    private static final <T> DataType<T> check(DataType<T> result) {
+    static final <T> DataType<T> check(DataType<T> result) {
 
         // [#5713] [#15286] TODO: Move this to a dynamic type registry and make warning configurable
-        if (result instanceof ConvertedDataType || result instanceof LegacyConvertedDataType)
-            getDataType.warn("Static type registry", "The deprecated static type registry was being accessed for a non-built-in data type: " + result + ". It is strongly recommended not looking up DataType<T> references from Class<T> references by relying on the internal static type registry. See https://github.com/jOOQ/jOOQ/issues/15286 for details.", new DiscouragedStaticTypeRegistryUsage());
+        if (result instanceof LegacyConvertedDataType) {
+            DiscouragedStaticTypeRegistryUsage e = new DiscouragedStaticTypeRegistryUsage();
+
+            getDataType.warn("Static type registry", """
+                The deprecated static type registry was being accessed for a non-built-in data type: {result}.
+
+                It is strongly recommended not looking up DataType<T> references from Class<T> references by
+                relying on the internal static type registry. For example, avoid calling DSL.val(Object) or
+                DSL.val(Object, Class), and call DSL.val(Object, DataType), providing an explicit DataType
+                reference to jOOQ if your DataType uses a Converter or a Binding. If you think jOOQ should
+                be able to infer your user type in your particular query, please report a bug here:
+                https://jooq.org/bug
+
+                See https://github.com/jOOQ/jOOQ/issues/15286 for more details.
+                """.replace("{result}", "" + result), e);
+
+            // [#16090] [#16425]
+            // An undocumented flag to throw the logged exception to help with faster fixing of this problem
+            // Users should not rely on this flag as it may be removed without announcement when it isn't needed anymore.
+            if ("true".equals(System.getProperty("org.jooq.throw-on-discouraged-static-type-registry-access")))
+                throw e;
+        }
 
         if (result instanceof ArrayDataType<?> a)
             check(a.elementType);

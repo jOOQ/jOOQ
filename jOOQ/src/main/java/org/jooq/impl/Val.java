@@ -177,6 +177,11 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
 
     @Override
     public void accept(Context<?> ctx) {
+    	
+    	// [#16090] [#16425] Inferred user types shouldn't rely on static type registry
+        if (inferredDataType)
+            DefaultDataType.check(getDataType());
+
         if (getDataType().isEmbeddable()) {
 
             // TODO [#12021] [#12706] ROW must consistently follow MULTISET emulation

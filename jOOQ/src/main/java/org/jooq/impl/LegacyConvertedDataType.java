@@ -148,4 +148,9 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
     public <X> DataType<X> asConvertedDataType(Converter<? super U, X> converter) {
         return super.asConvertedDataType(new ChainedConverterBinding(getBinding(), converter));
     }
+
+    static final boolean isInstance(DataType<?> t) {
+        return t instanceof LegacyConvertedDataType
+            || t instanceof DataTypeProxy && isInstance(((DataTypeProxy<?>) t).type());
+    }
 }

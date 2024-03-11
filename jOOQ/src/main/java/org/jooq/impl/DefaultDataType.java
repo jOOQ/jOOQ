@@ -838,7 +838,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     static final <T> DataType<T> check(DataType<T> result) {
 
         // [#5713] [#15286] TODO: Move this to a dynamic type registry and make warning configurable
-        if (result instanceof LegacyConvertedDataType) {
+        if (LegacyConvertedDataType.isInstance(result)) {
             DiscouragedStaticTypeRegistryUsage e = new DiscouragedStaticTypeRegistryUsage();
 
             getDataType.warn("Static type registry", """

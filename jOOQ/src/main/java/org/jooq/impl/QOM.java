@@ -12792,10 +12792,26 @@ public final class QOM {
         //permits
         //    JSONGetElement
     {
+
+        /**
+         * The JSON document
+         */
         @NotNull default Field<JSON> $field() { return $arg1(); }
+
+        /**
+         * The JSON document
+         */
         @CheckReturnValue
         @NotNull default JSONGetElement $field(Field<JSON> newField) { return $arg1(newField); }
+
+        /**
+         * The 0-based JSON array index
+         */
         @NotNull default Field<Integer> $index() { return $arg2(); }
+
+        /**
+         * The 0-based JSON array index
+         */
         @CheckReturnValue
         @NotNull default JSONGetElement $index(Field<Integer> newIndex) { return $arg2(newIndex); }
     }
@@ -12840,10 +12856,26 @@ public final class QOM {
         //permits
         //    JSONBGetElement
     {
+
+        /**
+         * The JSONB document
+         */
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+
+        /**
+         * The JSONB document
+         */
         @CheckReturnValue
         @NotNull default JSONBGetElement $field(Field<JSONB> newField) { return $arg1(newField); }
+
+        /**
+         * The 0-based JSONB array index
+         */
         @NotNull default Field<Integer> $index() { return $arg2(); }
+
+        /**
+         * The 0-based JSONB array index
+         */
         @CheckReturnValue
         @NotNull default JSONBGetElement $index(Field<Integer> newIndex) { return $arg2(newIndex); }
     }
@@ -12888,10 +12920,26 @@ public final class QOM {
         //permits
         //    JSONGetElementAsText
     {
+
+        /**
+         * The JSON document
+         */
         @NotNull default Field<JSON> $field() { return $arg1(); }
+
+        /**
+         * The JSON document
+         */
         @CheckReturnValue
         @NotNull default JSONGetElementAsText $field(Field<JSON> newField) { return $arg1(newField); }
+
+        /**
+         * The 0-based JSON array index
+         */
         @NotNull default Field<Integer> $index() { return $arg2(); }
+
+        /**
+         * The 0-based JSON array index
+         */
         @CheckReturnValue
         @NotNull default JSONGetElementAsText $index(Field<Integer> newIndex) { return $arg2(newIndex); }
     }
@@ -12936,10 +12984,26 @@ public final class QOM {
         //permits
         //    JSONBGetElementAsText
     {
+
+        /**
+         * The JSONB document
+         */
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+
+        /**
+         * The JSONB document
+         */
         @CheckReturnValue
         @NotNull default JSONBGetElementAsText $field(Field<JSONB> newField) { return $arg1(newField); }
+
+        /**
+         * The 0-based JSONB array index
+         */
         @NotNull default Field<Integer> $index() { return $arg2(); }
+
+        /**
+         * The 0-based JSONB array index
+         */
         @CheckReturnValue
         @NotNull default JSONBGetElementAsText $index(Field<Integer> newIndex) { return $arg2(newIndex); }
     }
@@ -12984,10 +13048,26 @@ public final class QOM {
         //permits
         //    JSONGetAttribute
     {
+
+        /**
+         * The JSON document
+         */
         @NotNull default Field<JSON> $field() { return $arg1(); }
+
+        /**
+         * The JSON document
+         */
         @CheckReturnValue
         @NotNull default JSONGetAttribute $field(Field<JSON> newField) { return $arg1(newField); }
+
+        /**
+         * The JSON object attribute name
+         */
         @NotNull default Field<String> $attribute() { return $arg2(); }
+
+        /**
+         * The JSON object attribute name
+         */
         @CheckReturnValue
         @NotNull default JSONGetAttribute $attribute(Field<String> newAttribute) { return $arg2(newAttribute); }
     }
@@ -13032,10 +13112,26 @@ public final class QOM {
         //permits
         //    JSONBGetAttribute
     {
+
+        /**
+         * The JSONB document
+         */
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+
+        /**
+         * The JSONB document
+         */
         @CheckReturnValue
         @NotNull default JSONBGetAttribute $field(Field<JSONB> newField) { return $arg1(newField); }
+
+        /**
+         * The JSONB object attribute name
+         */
         @NotNull default Field<String> $attribute() { return $arg2(); }
+
+        /**
+         * The JSONB object attribute name
+         */
         @CheckReturnValue
         @NotNull default JSONBGetAttribute $attribute(Field<String> newAttribute) { return $arg2(newAttribute); }
     }
@@ -13080,10 +13176,26 @@ public final class QOM {
         //permits
         //    JSONGetAttributeAsText
     {
+
+        /**
+         * The JSON document
+         */
         @NotNull default Field<JSON> $field() { return $arg1(); }
+
+        /**
+         * The JSON document
+         */
         @CheckReturnValue
         @NotNull default JSONGetAttributeAsText $field(Field<JSON> newField) { return $arg1(newField); }
+
+        /**
+         * The JSON object attribute name
+         */
         @NotNull default Field<String> $attribute() { return $arg2(); }
+
+        /**
+         * The JSON object attribute name
+         */
         @CheckReturnValue
         @NotNull default JSONGetAttributeAsText $attribute(Field<String> newAttribute) { return $arg2(newAttribute); }
     }
@@ -13131,10 +13243,26 @@ public final class QOM {
         //permits
         //    JSONBGetAttributeAsText
     {
+
+        /**
+         * The JSONB document
+         */
         @NotNull default Field<JSONB> $field() { return $arg1(); }
+
+        /**
+         * The JSONB document
+         */
         @CheckReturnValue
         @NotNull default JSONBGetAttributeAsText $field(Field<JSONB> newField) { return $arg1(newField); }
+
+        /**
+         * The JSONB object attribute name
+         */
         @NotNull default Field<String> $attribute() { return $arg2(); }
+
+        /**
+         * The JSONB object attribute name
+         */
         @CheckReturnValue
         @NotNull default JSONBGetAttributeAsText $attribute(Field<String> newAttribute) { return $arg2(newAttribute); }
     }

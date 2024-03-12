@@ -22997,8 +22997,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
-     * @param index is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param index The 0-based JSON array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23011,7 +23011,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param index The 0-based JSON array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23024,7 +23025,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression.
      *
-     * @param index is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param index The 0-based JSON array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23036,6 +23038,9 @@ public class DSL {
      * The <code>JSON_GET_ELEMENT</code> function.
      * <p>
      * Access an array element from a JSON array expression.
+     *
+     * @param field The JSON document
+     * @param index The 0-based JSON array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23048,8 +23053,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
-     * @param index is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param index The 0-based JSONB array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23062,7 +23067,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param index The 0-based JSONB array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23075,7 +23081,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression.
      *
-     * @param index is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param index The 0-based JSONB array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23087,6 +23094,9 @@ public class DSL {
      * The <code>JSONB_GET_ELEMENT</code> function.
      * <p>
      * Access an array element from a JSONB array expression.
+     *
+     * @param field The JSONB document
+     * @param index The 0-based JSONB array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23099,8 +23109,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression and return it as a string.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
-     * @param index is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param index The 0-based JSON array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23113,7 +23123,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression and return it as a string.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param index The 0-based JSON array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23126,7 +23137,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSON array expression and return it as a string.
      *
-     * @param index is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param index The 0-based JSON array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23138,6 +23150,9 @@ public class DSL {
      * The <code>JSON_GET_ELEMENT_AS_TEXT</code> function.
      * <p>
      * Access an array element from a JSON array expression and return it as a string.
+     *
+     * @param field The JSON document
+     * @param index The 0-based JSON array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23150,8 +23165,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression and return it as a string.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
-     * @param index is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param index The 0-based JSONB array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23164,7 +23179,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression and return it as a string.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param index The 0-based JSONB array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23177,7 +23193,8 @@ public class DSL {
      * <p>
      * Access an array element from a JSONB array expression and return it as a string.
      *
-     * @param index is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param index The 0-based JSONB array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23189,6 +23206,9 @@ public class DSL {
      * The <code>JSONB_GET_ELEMENT_AS_TEXT</code> function.
      * <p>
      * Access an array element from a JSONB array expression and return it as a string.
+     *
+     * @param field The JSONB document
+     * @param index The 0-based JSONB array index
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23201,8 +23221,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
-     * @param attribute is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param attribute The JSON object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23215,7 +23235,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param attribute The JSON object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23228,7 +23249,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression.
      *
-     * @param attribute is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param attribute The JSON object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23240,6 +23262,9 @@ public class DSL {
      * The <code>JSON_GET_ATTRIBUTE</code> function.
      * <p>
      * Access an object attribute value from a JSON object expression.
+     *
+     * @param field The JSON document
+     * @param attribute The JSON object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23252,8 +23277,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSONB object expression.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
-     * @param attribute is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param attribute The JSONB object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23266,7 +23291,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSONB object expression.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param attribute The JSONB object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23279,7 +23305,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSONB object expression.
      *
-     * @param attribute is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param attribute The JSONB object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23291,6 +23318,9 @@ public class DSL {
      * The <code>JSONB_GET_ATTRIBUTE</code> function.
      * <p>
      * Access an object attribute value from a JSONB object expression.
+     *
+     * @param field The JSONB document
+     * @param attribute The JSONB object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
@@ -23303,8 +23333,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression and return it as string.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
-     * @param attribute is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param attribute The JSON object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23317,7 +23347,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression and return it as string.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param attribute The JSON object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23330,7 +23361,8 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSON object expression and return it as string.
      *
-     * @param attribute is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSON document
+     * @param attribute The JSON object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23342,6 +23374,9 @@ public class DSL {
      * The <code>JSON_GET_ATTRIBUTE_AS_TEXT</code> function.
      * <p>
      * Access an object attribute value from a JSON object expression and return it as string.
+     *
+     * @param field The JSON document
+     * @param attribute The JSON object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23355,8 +23390,8 @@ public class DSL {
      * Access an object attribute value from a JSONB object expression and return it as
      * string.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
-     * @param attribute is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param attribute The JSONB object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23370,7 +23405,8 @@ public class DSL {
      * Access an object attribute value from a JSONB object expression and return it as
      * string.
      *
-     * @param field is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param attribute The JSONB object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23384,7 +23420,8 @@ public class DSL {
      * Access an object attribute value from a JSONB object expression and return it as
      * string.
      *
-     * @param attribute is wrapped as {@link DSL#val(Object)}.
+     * @param field The JSONB document
+     * @param attribute The JSONB object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -23397,6 +23434,9 @@ public class DSL {
      * <p>
      * Access an object attribute value from a JSONB object expression and return it as
      * string.
+     *
+     * @param field The JSONB document
+     * @param attribute The JSONB object attribute name
      */
     @NotNull
     @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })

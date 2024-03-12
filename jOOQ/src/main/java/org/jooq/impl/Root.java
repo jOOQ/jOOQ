@@ -109,15 +109,25 @@ implements
 
 
 
+
+
+
+
+
+            case CLICKHOUSE:
             case CUBRID:
             case DERBY:
+            case DUCKDB:
             case FIREBIRD:
             case H2:
             case HSQLDB:
             case IGNITE:
             case MARIADB:
             case MYSQL:
+            case POSTGRES:
             case SQLITE:
+            case TRINO:
+            case YUGABYTEDB:
                 return false;
 
             default:
@@ -147,15 +157,25 @@ implements
 
 
 
+
+
+
+
+
+            case CLICKHOUSE:
             case CUBRID:
             case DERBY:
+            case DUCKDB:
             case FIREBIRD:
             case H2:
             case HSQLDB:
             case IGNITE:
             case MARIADB:
             case MYSQL:
+            case POSTGRES:
             case SQLITE:
+            case TRINO:
+            case YUGABYTEDB:
                 ctx.visit(DSL.power(value, idiv(inline(1.0), degree)));
                 break;
 

@@ -93,6 +93,38 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+            case MYSQL:
+                return false;
+
+            case MARIADB:
+                return false;
+
+            case SQLITE:
+                return false;
+
+            case CLICKHOUSE:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -139,7 +171,7 @@ implements
                 break;
 
             case CLICKHOUSE:
-                ctx.visit(function(N_JSONExtractString, JSONB, field, isub(attribute, one())));
+                ctx.visit(function(N_JSONExtractString, getDataType(), field, attribute));
                 break;
 
             default:

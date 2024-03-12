@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.JSONExists.Behaviour.ERROR;
 import static org.jooq.impl.JSONExists.Behaviour.FALSE;
 import static org.jooq.impl.JSONExists.Behaviour.TRUE;
@@ -142,6 +143,10 @@ final class JSONExists extends AbstractCondition implements JSONExistsOnStep, UN
                    .visit(castIfNeeded(json, JSONB)).sql(", ");
                 Cast.renderCast(ctx, c -> c.visit(path), c -> c.visit(Names.N_JSONPATH));
                 ctx.sql(')');
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(systemName("JSON_EXISTS"), getDataType(), json, path));
                 break;
 
             default:

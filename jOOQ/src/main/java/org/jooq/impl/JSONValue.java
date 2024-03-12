@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
 import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.JSONValue.Behaviour.DEFAULT;
 import static org.jooq.impl.JSONValue.Behaviour.ERROR;
 import static org.jooq.impl.JSONValue.Behaviour.NULL;
@@ -193,6 +194,10 @@ implements
             case POSTGRES:
             case YUGABYTEDB:
                 ctx.visit(function(N_JSONB_PATH_QUERY_FIRST, json.getDataType(), castIfNeeded(json, JSONB), DSL.field("cast({0} as jsonpath)", path)));
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(systemName("JSON_VALUE"), getDataType(), json, path));
                 break;
 
 

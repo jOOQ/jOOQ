@@ -116,7 +116,7 @@ implements
                 return false;
 
             case CLICKHOUSE:
-                return false;
+                return true;
 
             default:
                 return false;
@@ -170,7 +170,7 @@ implements
                 break;
 
             case CLICKHOUSE:
-                ctx.visit(function(N_JSONExtractRaw, JSONB, field, isub(attribute, one())));
+                ctx.visit(function(N_JSONExtractRaw, getDataType(), field, attribute));
                 break;
 
             default:

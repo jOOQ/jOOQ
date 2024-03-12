@@ -246,8 +246,8 @@ implements
             }
 
             case CLICKHOUSE: {
-                ctx.visit(function(N_toJSONString, getDataType(), array((List<Field<?>>)
-                    flatMap(entries, e -> Arrays.<Field<?>>asList(e.key(), e.value()))
+                ctx.visit(function(N_toJSONString, getDataType(), function(N_MAP, OTHER,
+                    flatMap(entries, e -> Arrays.<Field<?>>asList(e.key(), e.value())).toArray(EMPTY_FIELD)
                 )));
                 break;
             }

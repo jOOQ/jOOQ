@@ -110,7 +110,7 @@ implements
                 return false;
 
             case CLICKHOUSE:
-                return true;
+                return false;
 
             case TRINO:
                 return false;
@@ -153,7 +153,7 @@ implements
                 break;
 
             case CLICKHOUSE:
-                ctx.visit(function(N_JSONExtractKeys, getDataType(), field));
+                ctx.visit(function(N_toJSONString, getDataType(), function(N_JSONExtractKeys, OTHER, field)));
                 break;
 
             case TRINO:

@@ -42,14 +42,8 @@ body:
       description: What JDK version and distribution did you use (use `java -version`)
       placeholder: ex. openjdk version "17" 2021-09-14
   - type: input
-    id: os-version
-    attributes:
-      label: OS Version
-      description: What operating system version and distribution did you use (use e.g. `ver` on Windows)
-      placeholder: ex. Microsoft Windows [Version 10.0.22000.856]
-  - type: input
     id: jdbc-version
     attributes:
-      label: JDBC driver name and version (include name if unofficial driver)
-      description: What JDBC driver name and version did you use.
+      label: JDBC / R2DBC driver name and version (include name if unofficial driver)
+      description: What JDBC or R2DBC driver name and version did you use.
       placeholder: ex. org.postgresql:postgresql:42.4.2

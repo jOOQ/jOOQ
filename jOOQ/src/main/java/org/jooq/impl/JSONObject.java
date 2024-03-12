@@ -245,6 +245,13 @@ implements
                 break;
             }
 
+            case CLICKHOUSE: {
+                ctx.visit(function(N_toJSONString, getDataType(), array((List<Field<?>>)
+                    flatMap(entries, e -> Arrays.<Field<?>>asList(e.key(), e.value()))
+                )));
+                break;
+            }
+
             case TRINO: {
                 // [#11485] While JSON_OBJECT is supported in Trino, it seems there are a few show stopping bugs, including:
                 // https://github.com/trinodb/trino/issues/16522

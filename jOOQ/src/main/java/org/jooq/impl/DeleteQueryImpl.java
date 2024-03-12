@@ -365,6 +365,7 @@ implements
             moreWhere = trueCondition();
 
         Condition where = DSL.and(getWhere(), moreWhere);
+        boolean noQualifyInWhere = NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect());
 
         if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
             Field<?>[] keyFields =
@@ -379,10 +380,16 @@ implements
                .visit(K_WHERE).sql(' ');
 
             ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
+                if (noQualifyInWhere)
+                    ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
+
                 if (keyFields.length == 1)
                     c.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(where).orderBy(orderBy).limit(limit)));
                 else
                     c.visit(row(keyFields).in(select(keyFields).from(table()).where(where).orderBy(orderBy).limit(limit)));
+
+                if (noQualifyInWhere)
+                    ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
             });
 
             ctx.end(DELETE_WHERE);
@@ -394,10 +401,13 @@ implements
                 ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
                     c.formatSeparator().visit(K_WHERE).sql(' ');
 
-                    if (NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect()))
-                        ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true, c1 -> c1.visit(where));
-                    else
-                        ctx.visit(where);
+                    if (noQualifyInWhere)
+                        ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
+
+                    ctx.visit(where);
+
+                    if (noQualifyInWhere)
+                        ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
                 });
 
             ctx.end(DELETE_WHERE);

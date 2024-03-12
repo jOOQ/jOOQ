@@ -183,8 +183,19 @@ final class Limit extends AbstractQueryPart implements UTransient {
                 break;
             }
 
+            case CLICKHOUSE: {
 
-            case CLICKHOUSE:
+                // Use standard OFFSET .. FETCH only with WITH TIES to work around
+                // https://github.com/ClickHouse/ClickHouse/issues/61195
+                if (!withTies() && !percent())
+                    acceptDefault(ctx, castMode);
+                else
+                    acceptStandard(ctx, castMode);
+
+                break;
+            }
+
+
             case DERBY:
             case TRINO: {
                 acceptStandard(ctx, castMode);

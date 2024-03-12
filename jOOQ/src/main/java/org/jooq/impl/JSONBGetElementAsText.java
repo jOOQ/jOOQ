@@ -136,6 +136,10 @@ implements
                 ctx.visit(function(N_JSON_EXTRACT, JSONB, field, inline("$[").concat(index).concat(inline("]"))));
                 break;
 
+            case CLICKHOUSE:
+                ctx.visit(function(N_JSONExtractRaw, JSONB, field, isub(index, one())));
+                break;
+
             default:
                 ctx.sql('(').visit(field).sql("->>").visit(index).sql(')');
                 break;

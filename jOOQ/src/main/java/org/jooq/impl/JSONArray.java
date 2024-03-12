@@ -207,6 +207,17 @@ implements
 
 
 
+            case CLICKHOUSE: {
+
+                // [#7539] ARRAY types can't mix data types, so use TUPLE for degrees > 1
+                if (fields.size() > 1)
+                    ctx.visit(function(N_toJSONString, getDataType(), function(N_TUPLE, OTHER, fields.toArray(EMPTY_FIELD))));
+                else
+                    ctx.visit(function(N_toJSONString, getDataType(), array(fields)));
+
+                break;
+            }
+
             case TRINO: {
                 // [#11485] While JSON_OBJECT is supported in Trino, it seems there are a few show stopping bugs, including:
                 // https://github.com/trinodb/trino/issues/16522

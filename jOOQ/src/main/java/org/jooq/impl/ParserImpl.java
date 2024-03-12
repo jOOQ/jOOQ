@@ -9047,9 +9047,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldJSONLiteralIf()) != null)
                     return field;
-                else if (parseFunctionNameIf("JSON_ARRAY_LENGTH", "JSON_LENGTH"))
+                else if (parseFunctionNameIf("JSON_ARRAY_LENGTH", "JSON_LENGTH", "JSONARRAYLENGTH"))
                     return parseFunctionArgs1(DSL::jsonArrayLength);
-                else if (parseFunctionNameIf("JSON_KEYS"))
+                else if (parseFunctionNameIf("JSON_KEYS", "JSONExtractKeys"))
                     return parseFunctionArgs1(DSL::jsonKeys);
                 else if (parseFunctionNameIf("JSON_INSERT"))
                     return parseFunctionArgs3(DSL::jsonInsert);
@@ -14308,7 +14308,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-        if (parseIf("=") || parseKeywordIf("EQ"))
+        if (parseIf("==") || parseIf("=") || parseKeywordIf("EQ"))
             return Comparator.EQUALS;
         else if (parseIf("!=") || parseIf("<>") || parseIf("^=") || parseKeywordIf("NE"))
             return Comparator.NOT_EQUALS;
@@ -14671,7 +14671,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final boolean peekKeyword(String keyword, boolean updatePosition, boolean peekIntoParens, boolean requireFunction) {
-        boolean caseSensitive = Character.isLowerCase(keyword.charAt(0));
+        boolean caseSensitive =
+               Character.isLowerCase(keyword.charAt(0))
+            || Character.isLowerCase(keyword.charAt(keyword.length() - 1));
         int length = keyword.length();
         int p = position();
 

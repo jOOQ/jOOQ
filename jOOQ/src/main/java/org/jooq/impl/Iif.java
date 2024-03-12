@@ -67,6 +67,7 @@ final class Iif<T> extends AbstractField<T> implements QOM.Iif<T> {
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
+            case CLICKHOUSE:
 
             case MARIADB:
             case MYSQL:

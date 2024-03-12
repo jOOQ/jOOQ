@@ -42,6 +42,7 @@ import static org.jooq.Comparator.IS_NOT_DISTINCT_FROM;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
@@ -86,7 +87,7 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  * @author Lukas Eder
  */
 final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplemented {
-    private static final Set<SQLDialect> EMULATE_DISTINCT            = SQLDialect.supportedBy(CUBRID, DERBY);
+    private static final Set<SQLDialect> EMULATE_DISTINCT            = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY);
 
     // An emulation may be required only for the version where a subquery is used
     // E.g. in HSQLDB: https://sourceforge.net/p/hsqldb/bugs/1579/

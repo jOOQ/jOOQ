@@ -785,6 +785,7 @@ implements
 
 
         acceptFrom(ctx);
+        boolean noQualifyInWhere = NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect());
 
         if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
             Field<?>[] keyFields =
@@ -798,10 +799,16 @@ implements
                .formatSeparator()
                .visit(K_WHERE).sql(' ');
 
+            if (noQualifyInWhere)
+                ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
+
             if (keyFields.length == 1)
                 ctx.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
             else
                 ctx.visit(row(keyFields).in(select(keyFields).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
+
+            if (noQualifyInWhere)
+                ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
 
             ctx.end(UPDATE_WHERE);
         }
@@ -812,10 +819,13 @@ implements
                 ctx.formatSeparator()
                    .visit(K_WHERE).sql(' ');
 
-                if (NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect()))
-                    ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true, c -> c.visit(getWhere()));
-                else
-                    ctx.visit(getWhere());
+                if (noQualifyInWhere)
+                    ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
+
+                ctx.visit(getWhere());
+
+                if (noQualifyInWhere)
+                    ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
             }
             else if (REQUIRES_WHERE.contains(ctx.dialect()))
                 ctx.formatSeparator()

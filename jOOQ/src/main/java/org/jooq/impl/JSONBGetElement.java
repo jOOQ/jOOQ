@@ -115,6 +115,9 @@ implements
             case TRINO:
                 return false;
 
+            case CLICKHOUSE:
+                return false;
+
             default:
                 return false;
         }
@@ -159,6 +162,10 @@ implements
             case MYSQL:
             case TRINO:
                 ctx.visit(function(N_JSON_EXTRACT, JSONB, field, inline("$[").concat(index).concat(inline("]"))));
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_JSONExtractRaw, JSONB, field, isub(index, one())));
                 break;
 
             default:

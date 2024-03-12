@@ -295,11 +295,13 @@ final class Names {
     static final Name N_TIMESTAMPSUB                = systemName("timestampsub");
     static final Name N_TIMESTAMP_DIFF              = systemName("timestamp_diff");
     static final Name N_TIMESTAMP_SUB               = systemName("timestamp_sub");
+    static final Name N_toJSONString                = systemName("toJSONString");
     static final Name N_TO_CLOB                     = systemName("to_clob");
     static final Name N_TO_NUMBER                   = systemName("to_number");
     static final Name N_TO_VARIANT                  = systemName("to_variant");
     static final Name N_TRUNCATE                    = systemName("truncate");
     static final Name N_TRUNCNUM                    = systemName("truncnum");
+    static final Name N_TUPLE                       = systemName("tuple");
     static final Name N_UNNEST                      = systemName("unnest");
     static final Name N_USER                        = systemName("user");
     static final Name N_UUID_TO_CHAR                = systemName("uuid_to_char");
@@ -453,6 +455,7 @@ final class Names {
     static final Name N_INSERTING                   = systemName("inserting");
     static final Name N_INSTR                       = systemName("instr");
     static final Name N_ISJSON                      = systemName("isjson");
+    static final Name N_JSONArrayLength             = systemName("JSONArrayLength");
     static final Name N_JSONB_ARRAY                 = systemName("jsonb_array");
     static final Name N_JSONB_ARRAY_LENGTH          = systemName("jsonb_array_length");
     static final Name N_JSONB_GET_ATTRIBUTE         = systemName("jsonb_get_attribute");
@@ -465,6 +468,9 @@ final class Names {
     static final Name N_JSONB_REMOVE                = systemName("jsonb_remove");
     static final Name N_JSONB_REPLACE               = systemName("jsonb_replace");
     static final Name N_JSONB_SET                   = systemName("jsonb_set");
+    static final Name N_JSONExtractKeys             = systemName("JSONExtractKeys");
+    static final Name N_JSONExtractRaw              = systemName("JSONExtractRaw");
+    static final Name N_JSONExtractString           = systemName("JSONExtractString");
     static final Name N_JSON_ARRAY                  = systemName("json_array");
     static final Name N_JSON_ARRAY_LENGTH           = systemName("json_array_length");
     static final Name N_JSON_EXTRACT                = systemName("json_extract");

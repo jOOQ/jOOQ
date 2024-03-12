@@ -109,6 +109,9 @@ implements
             case SQLITE:
                 return false;
 
+            case CLICKHOUSE:
+                return true;
+
             case TRINO:
                 return false;
 
@@ -147,6 +150,10 @@ implements
 
             case SQLITE:
                 ctx.visit(DSL.field(select(jsonArrayAgg(DSL.field(name("key")))).from("json_each({0})", field)));
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_JSONExtractKeys, getDataType(), field));
                 break;
 
             case TRINO:

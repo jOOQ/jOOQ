@@ -22924,7 +22924,7 @@ public class DSL {
      * The <code>JSON_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSON> jsonArray(Field<?>... fields) {
         return new JSONArray(SQLDataType.JSON, Arrays.asList(fields));
     }
@@ -22933,7 +22933,7 @@ public class DSL {
      * The <code>JSON_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSON> jsonArray(Collection<? extends Field<?>> fields) {
         return new JSONArray(SQLDataType.JSON, new QueryPartList<>(fields));
     }
@@ -22942,7 +22942,7 @@ public class DSL {
      * The <code>JSONB_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSONB> jsonbArray(Field<?>... fields) {
         return new JSONArray(SQLDataType.JSONB, Arrays.asList(fields));
     }
@@ -22951,7 +22951,7 @@ public class DSL {
      * The <code>JSONB_ARRAY</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
         return new JSONArray(SQLDataType.JSONB, new QueryPartList<>(fields));
     }
@@ -22960,7 +22960,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
         return new JSONObject(SQLDataType.JSON, Arrays.asList(entries));
     }
@@ -22969,7 +22969,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject(SQLDataType.JSON, new QueryPartList<>(entries));
     }
@@ -22978,7 +22978,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(JSONEntry<?>... entries) {
         return new JSONObject(SQLDataType.JSONB, Arrays.asList(entries));
     }
@@ -22987,7 +22987,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject(SQLDataType.JSONB, new QueryPartList<>(entries));
     }
@@ -23001,7 +23001,7 @@ public class DSL {
      * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(JSON field, int index) {
         return new JSONGetElement(Tools.field(field), Tools.field(index));
     }
@@ -23014,7 +23014,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(JSON field, Field<Integer> index) {
         return new JSONGetElement(Tools.field(field), index);
     }
@@ -23027,7 +23027,7 @@ public class DSL {
      * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(Field<JSON> field, int index) {
         return new JSONGetElement(field, Tools.field(index));
     }
@@ -23038,7 +23038,7 @@ public class DSL {
      * Access an array element from a JSON array expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(Field<JSON> field, Field<Integer> index) {
         return new JSONGetElement(field, index);
     }
@@ -23052,7 +23052,7 @@ public class DSL {
      * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(JSONB field, int index) {
         return new JSONBGetElement(Tools.field(field), Tools.field(index));
     }
@@ -23065,7 +23065,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(JSONB field, Field<Integer> index) {
         return new JSONBGetElement(Tools.field(field), index);
     }
@@ -23078,7 +23078,7 @@ public class DSL {
      * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(Field<JSONB> field, int index) {
         return new JSONBGetElement(field, Tools.field(index));
     }
@@ -23089,7 +23089,7 @@ public class DSL {
      * Access an array element from a JSONB array expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(Field<JSONB> field, Field<Integer> index) {
         return new JSONBGetElement(field, index);
     }
@@ -23103,7 +23103,7 @@ public class DSL {
      * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetElementAsText(JSON field, int index) {
         return new JSONGetElementAsText(Tools.field(field), Tools.field(index));
     }
@@ -23116,7 +23116,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetElementAsText(JSON field, Field<Integer> index) {
         return new JSONGetElementAsText(Tools.field(field), index);
     }
@@ -23129,7 +23129,7 @@ public class DSL {
      * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetElementAsText(Field<JSON> field, int index) {
         return new JSONGetElementAsText(field, Tools.field(index));
     }
@@ -23140,7 +23140,7 @@ public class DSL {
      * Access an array element from a JSON array expression and return it as a string.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetElementAsText(Field<JSON> field, Field<Integer> index) {
         return new JSONGetElementAsText(field, index);
     }
@@ -23154,7 +23154,7 @@ public class DSL {
      * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetElementAsText(JSONB field, int index) {
         return new JSONBGetElementAsText(Tools.field(field), Tools.field(index));
     }
@@ -23167,7 +23167,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetElementAsText(JSONB field, Field<Integer> index) {
         return new JSONBGetElementAsText(Tools.field(field), index);
     }
@@ -23180,7 +23180,7 @@ public class DSL {
      * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetElementAsText(Field<JSONB> field, int index) {
         return new JSONBGetElementAsText(field, Tools.field(index));
     }
@@ -23191,7 +23191,7 @@ public class DSL {
      * Access an array element from a JSONB array expression and return it as a string.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetElementAsText(Field<JSONB> field, Field<Integer> index) {
         return new JSONBGetElementAsText(field, index);
     }
@@ -23205,7 +23205,7 @@ public class DSL {
      * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(JSON field, @Stringly.Param String attribute) {
         return new JSONGetAttribute(Tools.field(field), Tools.field(attribute));
     }
@@ -23218,7 +23218,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(JSON field, Field<String> attribute) {
         return new JSONGetAttribute(Tools.field(field), attribute);
     }
@@ -23231,7 +23231,7 @@ public class DSL {
      * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(Field<JSON> field, @Stringly.Param String attribute) {
         return new JSONGetAttribute(field, Tools.field(attribute));
     }
@@ -23242,7 +23242,7 @@ public class DSL {
      * Access an object attribute value from a JSON object expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(Field<JSON> field, Field<String> attribute) {
         return new JSONGetAttribute(field, attribute);
     }
@@ -23256,7 +23256,7 @@ public class DSL {
      * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(JSONB field, @Stringly.Param String attribute) {
         return new JSONBGetAttribute(Tools.field(field), Tools.field(attribute));
     }
@@ -23269,7 +23269,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(JSONB field, Field<String> attribute) {
         return new JSONBGetAttribute(Tools.field(field), attribute);
     }
@@ -23282,7 +23282,7 @@ public class DSL {
      * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(Field<JSONB> field, @Stringly.Param String attribute) {
         return new JSONBGetAttribute(field, Tools.field(attribute));
     }
@@ -23293,7 +23293,7 @@ public class DSL {
      * Access an object attribute value from a JSONB object expression.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(Field<JSONB> field, Field<String> attribute) {
         return new JSONBGetAttribute(field, attribute);
     }
@@ -23307,7 +23307,7 @@ public class DSL {
      * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetAttributeAsText(JSON field, @Stringly.Param String attribute) {
         return new JSONGetAttributeAsText(Tools.field(field), Tools.field(attribute));
     }
@@ -23320,7 +23320,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetAttributeAsText(JSON field, Field<String> attribute) {
         return new JSONGetAttributeAsText(Tools.field(field), attribute);
     }
@@ -23333,7 +23333,7 @@ public class DSL {
      * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetAttributeAsText(Field<JSON> field, @Stringly.Param String attribute) {
         return new JSONGetAttributeAsText(field, Tools.field(attribute));
     }
@@ -23344,7 +23344,7 @@ public class DSL {
      * Access an object attribute value from a JSON object expression and return it as string.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetAttributeAsText(Field<JSON> field, Field<String> attribute) {
         return new JSONGetAttributeAsText(field, attribute);
     }
@@ -23359,7 +23359,7 @@ public class DSL {
      * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetAttributeAsText(JSONB field, @Stringly.Param String attribute) {
         return new JSONBGetAttributeAsText(Tools.field(field), Tools.field(attribute));
     }
@@ -23373,7 +23373,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetAttributeAsText(JSONB field, Field<String> attribute) {
         return new JSONBGetAttributeAsText(Tools.field(field), attribute);
     }
@@ -23387,7 +23387,7 @@ public class DSL {
      * @param attribute is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetAttributeAsText(Field<JSONB> field, @Stringly.Param String attribute) {
         return new JSONBGetAttributeAsText(field, Tools.field(attribute));
     }
@@ -23399,7 +23399,7 @@ public class DSL {
      * string.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetAttributeAsText(Field<JSONB> field, Field<String> attribute) {
         return new JSONBGetAttributeAsText(field, attribute);
     }
@@ -23412,7 +23412,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonArrayLength(JSON field) {
         return new JSONArrayLength(Tools.field(field));
     }
@@ -23423,7 +23423,7 @@ public class DSL {
      * Calculate the length of a JSON array.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonArrayLength(Field<JSON> field) {
         return new JSONArrayLength(field);
     }
@@ -23436,7 +23436,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonbArrayLength(JSONB field) {
         return new JSONBArrayLength(Tools.field(field));
     }
@@ -23447,7 +23447,7 @@ public class DSL {
      * Calculate the length of a JSONB array.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonbArrayLength(Field<JSONB> field) {
         return new JSONBArrayLength(field);
     }
@@ -23460,7 +23460,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonKeys(JSON field) {
         return new JSONKeys(Tools.field(field));
     }
@@ -23471,7 +23471,7 @@ public class DSL {
      * Retrieve all keys from a JSON object as an array of strings.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonKeys(Field<JSON> field) {
         return new JSONKeys(field);
     }
@@ -23484,7 +23484,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbKeys(JSONB field) {
         return new JSONBKeys(Tools.field(field));
     }
@@ -23495,7 +23495,7 @@ public class DSL {
      * Retrieve all keys from a JSONB object as an array of strings.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbKeys(Field<JSONB> field) {
         return new JSONBKeys(field);
     }
@@ -32057,7 +32057,7 @@ public class DSL {
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<Integer> ntile(int number) {
         return new Ntile(inline(number));
     }
@@ -32066,7 +32066,7 @@ public class DSL {
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static WindowOverStep<Integer> ntile(Field<Integer> number) {
         return new Ntile(number);
     }

@@ -107,10 +107,7 @@ implements
             case SQLITE:
                 return true;
 
-
-
-            case POSTGRES:
-            case YUGABYTEDB:
+            case CLICKHOUSE:
                 return true;
 
             default:
@@ -146,11 +143,8 @@ implements
                 ctx.visit(function(N_JSON_ARRAY_LENGTH, getDataType(), field));
                 break;
 
-
-
-            case POSTGRES:
-            case YUGABYTEDB:
-                ctx.visit(function(N_JSONB_ARRAY_LENGTH, getDataType(), field));
+            case CLICKHOUSE:
+                ctx.visit(function(N_JSONArrayLength, getDataType(), field));
                 break;
 
             default:

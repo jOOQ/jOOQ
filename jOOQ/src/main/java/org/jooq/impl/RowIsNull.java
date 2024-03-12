@@ -42,6 +42,7 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -83,7 +84,7 @@ final class RowIsNull extends AbstractCondition implements QOM.RowIsNull {
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
-    static final Set<SQLDialect> EMULATE_NULL_ROW   = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
+    static final Set<SQLDialect> EMULATE_NULL_ROW   = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
 
     private final Row            row;
 

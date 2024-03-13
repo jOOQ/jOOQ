@@ -1331,7 +1331,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         DSL.select(new QualifiedSelectFieldList(table(name("t")), select))
            .from(copy.asTable("t"))
            .where(rn.eq(one()))
-           .orderBy(map(orderBy, o -> unqualified(o)));
+           .orderBy(map(orderBy, (SortField<?> o) -> unqualified(o)));
 
         if (limit.limit != null) {
             SelectLimitPercentStep<?> s2 = s1.limit(limit.limit);
@@ -1558,7 +1558,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     && !s.having.hasWhere()
                     && !s.limit.isApplicable()
                     && !s.hasUnions())
-                    s.union((Select<R>) DSL.select(map(s.getSelect(), f -> inline((Object) null, f))).where(falseCondition()));
+                    s.union((Select<R>) DSL.select(map(s.getSelect(), (Field<?> f) -> inline((Object) null, f))).where(falseCondition()));
             }));
         else
             accept0(ctx);
@@ -3679,7 +3679,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6983
                 if (ctx.family() == DERBY)
-                    ctx.visit(new SelectFieldList<>(map(fields, f -> Tools.unqualified(f))));
+                    ctx.visit(new SelectFieldList<>(Tools.<Field<?>, Field<?>, RuntimeException>map(fields, f -> Tools.unqualified(f))));
                 else
                     ctx.sql('*');
 

@@ -47,11 +47,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public sealed interface ColumnElement
-extends
-    QueryPart
-permits
-    Comment
-{
+public interface ColumnElement extends QueryPart {
 
 }

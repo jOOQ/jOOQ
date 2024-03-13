@@ -47,14 +47,4 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public sealed interface TableElement
-extends
-    Named
-permits
-    FieldOrConstraint,
-    Field,
-    Constraint,
-    Index
-{
-
-}
+public interface TableElement extends Named {}

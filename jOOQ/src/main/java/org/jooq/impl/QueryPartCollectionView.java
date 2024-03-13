@@ -75,18 +75,13 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-sealed class QueryPartCollectionView<T extends QueryPart>
+class QueryPartCollectionView<T extends QueryPart>
 extends
     AbstractQueryPart
 implements
     UnmodifiableCollection<T>,
     SimpleCheckQueryPart,
     SeparatedQueryPart
-permits
-
-
-
-    QueryPartListView
 {
 
     final Collection<T>                    wrapped;

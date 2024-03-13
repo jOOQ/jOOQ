@@ -49,18 +49,9 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-sealed class QueryPartList<T extends QueryPart>
+class QueryPartList<T extends QueryPart>
 extends
     QueryPartListView<T>
-permits
-    CommonTableExpressionList,
-    GroupFieldList,
-    SelectFieldList,
-    SortFieldList,
-    TableList,
-    TopLevelCte,
-    WindowList,
-    QualifiedSelectFieldList
 {
 
     QueryPartList() {

@@ -46,6 +46,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public non-sealed interface Path<R extends Record> extends TableLike<R> {
+public interface Path<R extends Record> extends TableLike<R> {
 
 }

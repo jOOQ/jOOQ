@@ -75,7 +75,7 @@ import org.jooq.impl.QOM.UOpaque;
  *
  * @author Lukas Eder
  */
-public non-sealed abstract class CustomTable<R extends TableRecord<R>>
+public abstract class CustomTable<R extends TableRecord<R>>
 extends
     TableImpl<R>
 implements

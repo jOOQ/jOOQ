@@ -236,11 +236,9 @@ public final class QOM {
     /**
      * A generic tuple of degree 2 for use in {@link QOM} types.
      */
-    public sealed interface Tuple2<Q1 extends org.jooq.QueryPart, Q2 extends org.jooq.QueryPart>
+    public interface Tuple2<Q1 extends org.jooq.QueryPart, Q2 extends org.jooq.QueryPart>
         extends
             org.jooq.QueryPart
-        permits
-            TupleImpl2
     {
 
         /**
@@ -269,12 +267,10 @@ public final class QOM {
     /**
      * An unmodifiable {@link Map} of {@link QueryPart} keys and values.
      */
-    public sealed interface UnmodifiableMap<K extends org.jooq.QueryPart, V extends org.jooq.QueryPart>
+    public interface UnmodifiableMap<K extends org.jooq.QueryPart, V extends org.jooq.QueryPart>
         extends
             org.jooq.QueryPart,
             java.util.Map<K, V>
-        permits
-            AbstractQueryPartMap
     {
 
         /**
@@ -286,24 +282,19 @@ public final class QOM {
     /**
      * An unmodifiable {@link Collection} of {@link QueryPart} elements.
      */
-    public sealed interface UnmodifiableCollection<Q extends org.jooq.QueryPart>
+    public interface UnmodifiableCollection<Q extends org.jooq.QueryPart>
         extends
             org.jooq.QueryPart,
             java.util.Collection<Q>
-        permits
-            UnmodifiableList,
-            QueryPartCollectionView
     {}
 
     /**
      * An unmodifiable {@link List} of {@link QueryPart} elements.
      */
-    public sealed interface UnmodifiableList<Q extends org.jooq.QueryPart>
+    public interface UnmodifiableList<Q extends org.jooq.QueryPart>
         extends
             UnmodifiableCollection<Q>,
             java.util.List<Q>
-        permits
-            QueryPartListView
     {
 
         // TODO: These methods could return unmodifiable views instead, to avoid
@@ -430,11 +421,9 @@ public final class QOM {
      * A <code>WITH</code> clause of a {@link Select}, {@link Insert},
      * {@link Update}, or {@link Delete} statement.
      */
-    public sealed interface With
+    public interface With
         extends
             org.jooq.QueryPart
-        permits
-            WithImpl
     {
         @NotNull UnmodifiableList<? extends CommonTableExpression<?>> $commonTableExpressions();
         @CheckReturnValue
@@ -473,12 +462,9 @@ public final class QOM {
     /**
      * The <code>INSERT</code> statement.
      */
-    public sealed interface Insert<R extends Record>
+    public interface Insert<R extends Record>
         extends
             DMLQuery<R>
-        permits
-            InsertImpl,
-            InsertQueryImpl
     {
         @Nullable With $with();
         @NotNull  Table<R> $into();
@@ -520,11 +506,9 @@ public final class QOM {
     /**
      * An <code>INSERT</code> statement with a <code>RETURNING</code> clause.
      */
-    public sealed interface InsertReturning<R extends Record>
+    public interface InsertReturning<R extends Record>
         extends
             ResultQuery<R>
-        permits
-            InsertAsResultQuery
     {
         @NotNull Insert<?> $insert();
         @CheckReturnValue
@@ -537,12 +521,9 @@ public final class QOM {
     /**
      * The <code>UPDATE</code> statement.
      */
-    public sealed interface Update<R extends Record>
+    public interface Update<R extends Record>
         extends
             DMLQuery<R>
-        permits
-            UpdateImpl,
-            UpdateQueryImpl
     {
         @Nullable With $with();
         @NotNull  Table<R> $table();
@@ -568,11 +549,9 @@ public final class QOM {
     /**
      * An <code>UPDATE</code> statement with a <code>RETURNING</code> clause.
      */
-    public sealed interface UpdateReturning<R extends Record>
+    public interface UpdateReturning<R extends Record>
         extends
             ResultQuery<R>
-        permits
-            UpdateAsResultQuery
     {
         @NotNull Update<?> $update();
         @CheckReturnValue
@@ -585,12 +564,9 @@ public final class QOM {
     /**
      * The <code>DELETE</code> statement.
      */
-    public sealed interface Delete<R extends Record>
+    public interface Delete<R extends Record>
         extends
             DMLQuery<R>
-        permits
-            DeleteImpl,
-            DeleteQueryImpl
     {
         @Nullable With $with();
         @NotNull  Table<R> $from();
@@ -613,11 +589,9 @@ public final class QOM {
     /**
      * An <code>DELETE</code> statement with a <code>RETURNING</code> clause.
      */
-    public sealed interface DeleteReturning<R extends Record>
+    public interface DeleteReturning<R extends Record>
         extends
             ResultQuery<R>
-        permits
-            DeleteAsResultQuery
     {
         @NotNull Delete<?> $delete();
         @CheckReturnValue
@@ -664,18 +638,12 @@ public final class QOM {
 
 
 
-
-
-
-
     /**
      * A table with a MySQL style index access hint.
      */
-    public sealed interface HintedTable<R extends Record>
+    public interface HintedTable<R extends Record>
         extends
             Table<R>
-        permits
-            org.jooq.impl.HintedTable
     {
         @NotNull Table<R> $table();
         @CheckReturnValue
@@ -686,11 +654,9 @@ public final class QOM {
      * A collection derived table or table valued function with a
      * <code>WITH ORDINALITY</code> clause.
      */
-    public sealed interface WithOrdinalityTable<R extends Record>
+    public interface WithOrdinalityTable<R extends Record>
         extends
             Table<R>
-        permits
-            org.jooq.impl.WithOrdinalityTable
     {
         @NotNull Table<?> $table();
         @CheckReturnValue
@@ -809,31 +775,25 @@ public final class QOM {
     /**
      * A {@link Condition} that is always <code>TRUE</code>.
      */
-    public sealed interface True
+    public interface True
         extends
             Condition
-        permits
-            TrueCondition
     {}
 
     /**
      * A {@link Condition} that is always <code>FALSE</code>.
      */
-    public sealed interface False
+    public interface False
         extends
             Condition
-        permits
-            FalseCondition
     {}
 
     /**
      * A {@link Condition} that is always <code>NULL</code>.
      */
-    public sealed interface Null
+    public interface Null
         extends
             Condition
-        permits
-            NullCondition
     {}
 
     /**
@@ -982,20 +942,15 @@ public final class QOM {
         @NotNull default Select<?> $field() { return $arg1(); }
     }
 
-    public sealed interface Quantified
+    public interface Quantified
         extends
             org.jooq.QueryPart
-        permits
-            QuantifiedSelect,
-            QuantifiedArray
     {}
 
-    public sealed interface QuantifiedSelect<R extends Record>
+    public interface QuantifiedSelect<R extends Record>
         extends
             Quantified,
             UOperator2<Quantifier, Select<R>, QuantifiedSelect<R>>
-        permits
-            org.jooq.impl.QuantifiedSelectImpl
     {
         @NotNull default Quantifier $quantifier() { return $arg1(); }
         @NotNull default QuantifiedSelect<R> $quantifier(Quantifier newQuantifier) { return $arg1(newQuantifier); }
@@ -1003,12 +958,10 @@ public final class QOM {
         @NotNull default QuantifiedSelect<R> $query(Select<R> newSelect) { return $arg2(newSelect); }
     }
 
-    public sealed interface QuantifiedArray<T>
+    public interface QuantifiedArray<T>
         extends
             Quantified,
             UOperator2<Quantifier, Field<T[]>, QuantifiedArray<T>>
-        permits
-            org.jooq.impl.QuantifiedArray
     {
         @NotNull default Quantifier $quantifier() { return $arg1(); }
         @NotNull default QuantifiedArray<T> $quantifier(Quantifier newQuantifier) { return $arg1(newQuantifier); }
@@ -1038,18 +991,9 @@ public final class QOM {
         @NotNull Table<R> $table();
     }
 
-    public sealed interface JoinTable<R extends org.jooq.Record, J extends JoinTable<R, J>>
+    public interface JoinTable<R extends org.jooq.Record, J extends JoinTable<R, J>>
         extends
             org.jooq.Table<R>
-        permits
-            CrossJoin,
-            CrossApply,
-            OuterApply,
-            NaturalJoin,
-            NaturalLeftJoin,
-            NaturalRightJoin,
-            NaturalFullJoin,
-            QualifiedJoin
     {
         @NotNull Table<?> $table1();
         @NotNull Table<?> $table2();
@@ -1059,59 +1003,45 @@ public final class QOM {
         @NotNull J $hint(JoinHint hint);
     }
 
-    public sealed interface CrossJoin<R extends org.jooq.Record>
+    public interface CrossJoin<R extends org.jooq.Record>
         extends
             JoinTable<R, CrossJoin<R>>
-        permits
-            org.jooq.impl.CrossJoin
     {}
 
-    public sealed interface CrossApply<R extends org.jooq.Record>
+    public interface CrossApply<R extends org.jooq.Record>
         extends
             JoinTable<R, CrossApply<R>>
-        permits
-            org.jooq.impl.CrossApply
     {}
 
-    public sealed interface OuterApply<R extends org.jooq.Record>
+    public interface OuterApply<R extends org.jooq.Record>
         extends
             JoinTable<R, OuterApply<R>>
-        permits
-            org.jooq.impl.OuterApply
     {}
 
-    public sealed interface NaturalJoin<R extends org.jooq.Record>
+    public interface NaturalJoin<R extends org.jooq.Record>
         extends
             JoinTable<R, NaturalJoin<R>>
-        permits
-            org.jooq.impl.NaturalJoin
     {}
 
-    public sealed interface NaturalLeftJoin<R extends org.jooq.Record>
+    public interface NaturalLeftJoin<R extends org.jooq.Record>
         extends
             JoinTable<R, NaturalLeftJoin<R>>
-        permits
-            org.jooq.impl.NaturalLeftJoin
     {
         @NotNull UnmodifiableList<Field<?>> $partitionBy2();
         @NotNull NaturalLeftJoin<R> $partitionBy2(Collection<? extends Field<?>> partitionBy2);
     }
 
-    public sealed interface NaturalRightJoin<R extends org.jooq.Record>
+    public interface NaturalRightJoin<R extends org.jooq.Record>
         extends
             JoinTable<R, NaturalRightJoin<R>>
-        permits
-            org.jooq.impl.NaturalRightJoin
     {
         @NotNull UnmodifiableList<Field<?>> $partitionBy1();
         @NotNull NaturalRightJoin<R> $partitionBy1(Collection<? extends Field<?>> partitionBy1);
     }
 
-    public sealed interface NaturalFullJoin<R extends org.jooq.Record>
+    public interface NaturalFullJoin<R extends org.jooq.Record>
         extends
             JoinTable<R, NaturalFullJoin<R>>
-        permits
-            org.jooq.impl.NaturalFullJoin
     {
         @NotNull UnmodifiableList<Field<?>> $partitionBy1();
         @NotNull NaturalFullJoin<R> $partitionBy1(Collection<? extends Field<?>> partitionBy1);
@@ -1119,17 +1049,9 @@ public final class QOM {
         @NotNull NaturalFullJoin<R> $partitionBy2(Collection<? extends Field<?>> partitionBy2);
     }
 
-    public sealed interface QualifiedJoin<R extends org.jooq.Record, J extends QualifiedJoin<R, J>>
+    public interface QualifiedJoin<R extends org.jooq.Record, J extends QualifiedJoin<R, J>>
         extends
             JoinTable<R, J>
-        permits
-            Join,
-            StraightJoin,
-            LeftJoin,
-            RightJoin,
-            FullJoin,
-            LeftSemiJoin,
-            LeftAntiJoin
     {
         @Nullable Condition $on();
         @NotNull J $on(Condition on);
@@ -1137,45 +1059,35 @@ public final class QOM {
         @NotNull J $using(Collection<? extends Field<?>> using);
     }
 
-    public sealed interface Join<R extends org.jooq.Record>
+    public interface Join<R extends org.jooq.Record>
         extends
             QualifiedJoin<R, Join<R>>
-        permits
-            org.jooq.impl.Join
     {}
 
-    public sealed interface StraightJoin<R extends org.jooq.Record>
+    public interface StraightJoin<R extends org.jooq.Record>
         extends
             QualifiedJoin<R, StraightJoin<R>>
-        permits
-            org.jooq.impl.StraightJoin
     {}
 
-    public sealed interface LeftJoin<R extends org.jooq.Record>
+    public interface LeftJoin<R extends org.jooq.Record>
         extends
             QualifiedJoin<R, LeftJoin<R>>
-        permits
-            org.jooq.impl.LeftJoin
     {
         @NotNull UnmodifiableList<Field<?>> $partitionBy2();
         @NotNull LeftJoin<R> $partitionBy2(Collection<? extends Field<?>> partitionBy2);
     }
 
-    public sealed interface RightJoin<R extends org.jooq.Record>
+    public interface RightJoin<R extends org.jooq.Record>
         extends
             QualifiedJoin<R, RightJoin<R>>
-        permits
-            org.jooq.impl.RightJoin
     {
         @NotNull UnmodifiableList<Field<?>> $partitionBy1();
         @NotNull RightJoin<R> $partitionBy1(Collection<? extends Field<?>> partitionBy1);
     }
 
-    public sealed interface FullJoin<R extends org.jooq.Record>
+    public interface FullJoin<R extends org.jooq.Record>
         extends
             QualifiedJoin<R, FullJoin<R>>
-        permits
-            org.jooq.impl.FullJoin
     {
         @NotNull UnmodifiableList<Field<?>> $partitionBy1();
         @NotNull FullJoin<R> $partitionBy1(Collection<? extends Field<?>> partitionBy1);
@@ -1183,18 +1095,14 @@ public final class QOM {
         @NotNull FullJoin<R> $partitionBy2(Collection<? extends Field<?>> partitionBy2);
     }
 
-    public sealed interface LeftSemiJoin<R extends org.jooq.Record>
+    public interface LeftSemiJoin<R extends org.jooq.Record>
         extends
             QualifiedJoin<R, LeftSemiJoin<R>>
-        permits
-            org.jooq.impl.LeftSemiJoin
     {}
 
-    public sealed interface LeftAntiJoin<R extends org.jooq.Record>
+    public interface LeftAntiJoin<R extends org.jooq.Record>
         extends
             QualifiedJoin<R, LeftAntiJoin<R>>
-        permits
-            org.jooq.impl.LeftAntiJoin
     {}
 
     // -------------------------------------------------------------------------
@@ -1202,8 +1110,9 @@ public final class QOM {
     // -------------------------------------------------------------------------
 
     // Can't seal these types yet because of https://bugs.eclipse.org/bugs/show_bug.cgi?id=577872
+    // See also: https://github.com/jOOQ/jOOQ/issues/16444
 
-    public non-sealed interface EmptyGroupingSet
+    public interface EmptyGroupingSet
         extends
             GroupField,
             UEmpty
@@ -1211,7 +1120,7 @@ public final class QOM {
             org.jooq.impl.EmptyGroupingSet*/
     {}
 
-    public non-sealed interface Rollup
+    public interface Rollup
         extends
             GroupField,
             UOperator1<UnmodifiableList<? extends FieldOrRow>, Rollup>
@@ -1219,7 +1128,7 @@ public final class QOM {
             Rollup*/
     {}
 
-    public non-sealed interface Cube
+    public interface Cube
         extends
             GroupField,
             UOperator1<UnmodifiableList<? extends FieldOrRow>, Cube>
@@ -1227,7 +1136,7 @@ public final class QOM {
             Cube*/
     {}
 
-    public non-sealed interface GroupingSets
+    public interface GroupingSets
         extends
             GroupField,
             UOperator1<UnmodifiableList<? extends UnmodifiableList<? extends FieldOrRow>>, GroupingSets>
@@ -18003,17 +17912,9 @@ public final class QOM {
      * used to render SQL, but unlike {@link UTransient} parts, can also appear
      * in user expression trees.
      */
-    sealed interface UOpaque
+    interface UOpaque
         extends
             UEmpty
-        permits
-
-
-
-            CustomField,
-            CustomTable,
-            CustomCondition,
-            CustomQueryPart
     {}
 
     /**

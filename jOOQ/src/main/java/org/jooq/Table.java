@@ -148,7 +148,7 @@ import jakarta.persistence.JoinTable;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-public non-sealed interface Table<R extends Record>
+public interface Table<R extends Record>
 extends
     TableLike<R>,
     RecordQualifier<R>,

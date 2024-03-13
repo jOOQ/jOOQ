@@ -57,14 +57,11 @@ import org.jooq.impl.QOM.UnmodifiableList;
 /**
  * @author Lukas Eder
  */
-abstract sealed class AbstractQueryPartMap<K extends QueryPart, V extends QueryPart>
+abstract class AbstractQueryPartMap<K extends QueryPart, V extends QueryPart>
 extends
     AbstractQueryPart
 implements
     QOM.UnmodifiableMap<K, V>
-permits
-    FieldMapForUpdate,
-    QueryPartMapView
 {
 
     private final Map<K, V> map;

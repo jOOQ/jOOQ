@@ -45,12 +45,4 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public sealed interface OrderField<T>
-extends
-    QueryPart
-permits
-    Field,
-    SortField
-{
-
-}
+public interface OrderField<T> extends QueryPart {}

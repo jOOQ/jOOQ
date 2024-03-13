@@ -49,12 +49,4 @@ package org.jooq;
  * @deprecated - 3.17.0 - [#13005] - Use {@link TableElement} instead.
  */
 @Deprecated
-public sealed interface FieldOrConstraint
-extends
-    TableElement
-permits
-    Field,
-    Constraint
-{
-
-}
+public interface FieldOrConstraint extends TableElement {}

@@ -433,7 +433,7 @@ final class Tools {
     /**
      * A common super types for {@link BooleanDataKey}, {@link SimpleDataKey} and {@link ExtendedDataKey}
      */
-    sealed interface DataKey {
+    interface DataKey {
 
         /**
          * Whether this data key resets itself to {@link #resetValue()} when

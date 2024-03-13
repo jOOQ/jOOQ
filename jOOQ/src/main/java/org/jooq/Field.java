@@ -152,7 +152,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <T> The field type
  * @author Lukas Eder
  */
-public non-sealed interface Field<T>
+public interface Field<T>
 extends
     SelectField<T>,
     GroupField,

@@ -7218,6 +7218,20 @@ final class Tools {
              : convertVal(field, type);
     }
 
+    @SuppressWarnings("unchecked")
+    static final <T, R extends Record1<T>> QuantifiedSelect<? extends Record1<T>> nullSafeQuantifiedSelect(QuantifiedSelect<? extends Record1<T>> s, DataType<?> type) {
+        if (s instanceof QuantifiedArray) {
+            QuantifiedArray<R> a = (QuantifiedArray<R>) s;
+            Field<R[]> a1 = a.array;
+            Field<R[]> a2 = convertVal(a1, type.array());
+
+            if (a1 != a2) {
+                return (QuantifiedArray) a.$array(a2);
+            }
+        }
+        return s;
+    }
+
     /**
      * In very rare cases, we want {@link #nullSafe(Field, DataType)} behaviour
      * but only for <code>null</code> values.

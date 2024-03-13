@@ -170,7 +170,7 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
     }
 
     final <U> Val<U> convertTo0(DataType<U> type) {
-        Val<U> w = new Val<>(type.convert(getValue()), type, inferredDataType, getParamName());
+        Val<U> w = new Val<>(type.convert(getValue()), type, LegacyConvertedDataType.isInstance(type) || type.getType() == Object.class, getParamName());
         w.setInline0(isInline());
         return w;
     }

@@ -8754,6 +8754,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs3((f1, f2, f3) -> arrayReplace((Field<Void[]>) f1, (Field<Void>) f2, (Field<Void>) f3));
                 else if ((field = parseFieldArrayConstructIf()) != null)
                     return field;
+                else if (parseFunctionNameIf("ADD"))
+                    return parseFunctionArgs2(Field::add);
 
                 break;
 
@@ -8932,6 +8934,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("DIV", "DIVIDE"))
+                    return parseFunctionArgs2(Field::div);
 
                 break;
 
@@ -9116,6 +9120,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             case 'M':
                 if (parseFunctionNameIf("MOD", "MODULO"))
                     return parseFunctionArgs2(Field::mod);
+                else if (parseFunctionNameIf("MULTIPLY"))
+                    return parseFunctionArgs2(Field::mul);
                 else if (parseFunctionNameIf("MICROSECOND"))
                     return microsecond(parseFieldParenthesised());
                 else if (parseFunctionNameIf("MILLENNIUM"))
@@ -9148,6 +9154,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+                else if (parseFunctionNameIf("MINUS"))
+                    return parseFunctionArgs2(Field::sub);
+
                 break;
 
             case 'N':
@@ -9178,6 +9187,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     parse(')');
                     return now(precision);
                 }
+                else if (parseFunctionNameIf("NEG", "NEGATE"))
+                    return parseFunctionArgs1(DSL::neg);
 
                 break;
 
@@ -9212,6 +9223,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("PLUS"))
+                    return parseFunctionArgs2(Field::add);
 
                 break;
 
@@ -9487,6 +9500,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseFunctionNameIf("SUB", "SUBTRACT"))
+                    return parseFunctionArgs2(Field::sub);
 
                 break;
 
@@ -12612,6 +12627,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     parse(')');
 
                     return operation == ComputationalOperation.MAX ? greatest(arg, fields.toArray(EMPTY_FIELD)) : least(arg, fields.toArray(EMPTY_FIELD));
+                }
+            }
+
+            case PRODUCT: {
+                if (!distinct && parseIf(',')) {
+                    Field<?> result = arg.mul(parseField());
+                    parse(')');
+
+                    return result;
                 }
             }
         }

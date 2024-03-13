@@ -211,7 +211,7 @@ public interface DataType<T> extends Named {
      * A convenient short for form {@link #getArrayDataType()} for DSL usage
      */
     @NotNull
-    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     DataType<T[]> array() throws DataTypeException;
 
     /**

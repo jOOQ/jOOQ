@@ -153,6 +153,7 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
 
     static final boolean isInstance(DataType<?> t) {
         return t instanceof LegacyConvertedDataType
+            || t instanceof ArrayDataType && isInstance(((ArrayDataType<?>) t).getArrayComponentDataType())
             || t instanceof DataTypeProxy && isInstance(((DataTypeProxy<?>) t).type());
     }
 }

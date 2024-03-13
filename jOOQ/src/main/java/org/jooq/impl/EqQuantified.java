@@ -81,7 +81,7 @@ implements
     ) {
 
         this.arg1 = nullSafeNotNull(arg1, (DataType) OTHER);
-        this.arg2 = arg2;
+        this.arg2 = nullSafeQuantifiedSelect(arg2, arg1.getDataType());
     }
 
     // -------------------------------------------------------------------------

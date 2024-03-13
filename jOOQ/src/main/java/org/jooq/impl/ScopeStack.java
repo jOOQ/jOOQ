@@ -96,7 +96,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     final boolean isEmpty() {
-        return !iterator().hasNext();
+        return !stack().isEmpty() && !iterator().hasNext();
     }
 
     final Iterable<Value<V>> valueIterable() {

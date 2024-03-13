@@ -1849,7 +1849,7 @@ final class Tools {
     }
 
     static final List<JSONEntry<?>> jsonEntries(Field<?>[] entries) {
-        return Tools.map(entries, f -> DSL.jsonEntry(f));
+        return Tools.map(entries, (Field<?> f) -> DSL.jsonEntry(f));
     }
 
     private static final IllegalArgumentException fieldExpected(Object value) {

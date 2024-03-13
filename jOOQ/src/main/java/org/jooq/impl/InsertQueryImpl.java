@@ -925,7 +925,7 @@ implements
                 // [#8937] With DEFAULT VALUES, there is no SELECT. Create one from
                 //         known DEFAULT expressions, or use NULL.
                 if (s == null)
-                    s = select(map(f, x -> x.getDataType().defaulted() ? x.getDataType().default_() : DSL.inline(null, x)));
+                    s = select(map(f, (Field<?> x) -> x.getDataType().defaulted() ? x.getDataType().default_() : DSL.inline(null, x)));
 
 
 

@@ -48,6 +48,7 @@ import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function2;
 import org.jooq.Param;
@@ -154,13 +155,14 @@ implements
                     // use nested derived tables with UNION ALL
                     if (array instanceof Param) {
                         Object[] values0 = ((Param<? extends Object[]>) array).getValue();
-
+                        DataType<Object> type = (DataType<Object>) array.getDataType().getArrayComponentDataType();
                         Select<Record1<Object>> select = null;
+
                         for (Object value : values0)
                             if (select == null)
-                                select = select(val(value));
+                                select = select(val(value, type));
                             else
-                                select = select.unionAll(select(val(value)));
+                                select = select.unionAll(select(val(value, type)));
 
                         return select;
                     }

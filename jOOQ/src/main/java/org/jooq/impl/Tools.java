@@ -1849,7 +1849,7 @@ final class Tools {
     }
 
     static final List<JSONEntry<?>> jsonEntries(Field<?>[] entries) {
-        return Tools.map(entries, f -> DSL.jsonEntry(f));
+        return Tools.map(entries, (Field<?> f) -> DSL.jsonEntry(f));
     }
 
     private static final IllegalArgumentException fieldExpected(Object value) {
@@ -7216,6 +7216,20 @@ final class Tools {
              : field instanceof Condition c
              ? (Field<T>) DSL.field(c)
              : convertVal(field, type);
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <T, R extends Record1<T>> QuantifiedSelect<? extends Record1<T>> nullSafeQuantifiedSelect(QuantifiedSelect<? extends Record1<T>> s, DataType<?> type) {
+        if (s instanceof QuantifiedArray) {
+            QuantifiedArray<R> a = (QuantifiedArray<R>) s;
+            Field<R[]> a1 = a.array;
+            Field<R[]> a2 = convertVal(a1, type.array());
+
+            if (a1 != a2) {
+                return (QuantifiedArray) a.$array(a2);
+            }
+        }
+        return s;
     }
 
     /**

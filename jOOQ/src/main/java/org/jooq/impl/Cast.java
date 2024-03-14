@@ -37,10 +37,17 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Keywords.K_CONVERSION;
+import static org.jooq.impl.Keywords.K_DEFAULT;
+import static org.jooq.impl.Keywords.K_ERROR;
+import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_ON;
+import static org.jooq.impl.Keywords.K_TRIM;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_SAFE_CAST;
 import static org.jooq.impl.Names.N_TO_CLOB;
@@ -48,6 +55,7 @@ import static org.jooq.impl.Names.N_TO_DATE;
 import static org.jooq.impl.Names.N_TO_TIMESTAMP;
 import static org.jooq.impl.Names.N_TRY_CAST;
 import static org.jooq.impl.Names.N_XMLTYPE;
+import static org.jooq.impl.Names.N_accurateCastOrNull;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.CHAR;
 import static org.jooq.impl.SQLDataType.DECIMAL;
@@ -387,6 +395,10 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
 
 
 
+                case CLICKHOUSE:
+                    ctx.visit(N_accurateCastOrNull);
+                    break;
+
                 default:
                     ctx.visit(N_TRY_CAST);
                     break;
@@ -397,7 +409,12 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
 
         ctx.sql('(').castMode(CastMode.NEVER);
         expression.accept(ctx);
-        ctx.castMode(castMode).sql(' ').visit(K_AS).sql(' ');
+        ctx.castMode(castMode);
+
+        if (tryCast && ctx.family() == CLICKHOUSE)
+            ctx.sql(", '").stringLiteral(true);
+        else
+            ctx.sql(' ').visit(K_AS).sql(' ');
 
         switch (ctx.family()) {
             case CLICKHOUSE:
@@ -411,6 +428,9 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
                 break;
         }
 
+        if (tryCast)
+            if (ctx.family() == CLICKHOUSE)
+                ctx.stringLiteral(false).sql('\'');
 
 
 

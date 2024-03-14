@@ -138,18 +138,18 @@ implements
     QOM.Delete<R>
 {
 
-    private static final Clause[]        CLAUSES                          = { DELETE };
-    private static final Set<SQLDialect> SPECIAL_DELETE_AS_SYNTAX         = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Clause[]       CLAUSES                          = { DELETE };
+    static final Set<SQLDialect>        SPECIAL_DELETE_AS_SYNTAX         = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     // LIMIT is not supported at all
-    private static final Set<SQLDialect> NO_SUPPORT_LIMIT                 = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, DUCKDB, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect>        NO_SUPPORT_LIMIT                 = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, DUCKDB, H2, HSQLDB, POSTGRES, SQLITE, YUGABYTEDB);
 
     // LIMIT is supported but not ORDER BY
-    private static final Set<SQLDialect> NO_SUPPORT_ORDER_BY_LIMIT        = SQLDialect.supportedBy(IGNITE);
-    private static final Set<SQLDialect> SUPPORT_MULTITABLE_DELETE        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> REQUIRE_REPEAT_FROM_IN_USING     = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> NO_SUPPORT_REPEAT_FROM_IN_USING  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect> REQUIRES_WHERE                   = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect>        NO_SUPPORT_ORDER_BY_LIMIT        = SQLDialect.supportedBy(IGNITE);
+    static final Set<SQLDialect>        SUPPORT_MULTITABLE_DELETE        = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>        REQUIRE_REPEAT_FROM_IN_USING     = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>        NO_SUPPORT_REPEAT_FROM_IN_USING  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>        REQUIRES_WHERE                   = SQLDialect.supportedBy(CLICKHOUSE);
 
 
 
@@ -158,12 +158,12 @@ implements
 
 
     // https://github.com/ClickHouse/ClickHouse/issues/61020
-    static final Set<SQLDialect>         NO_SUPPORT_QUALIFY_IN_WHERE      = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect>        NO_SUPPORT_QUALIFY_IN_WHERE      = SQLDialect.supportedBy(CLICKHOUSE);
 
-    private final TableList              using;
-    private final ConditionProviderImpl  condition;
-    private final SortFieldList          orderBy;
-    private Field<? extends Number>      limit;
+    private final TableList             using;
+    private final ConditionProviderImpl condition;
+    private final SortFieldList         orderBy;
+    private Field<? extends Number>     limit;
 
     DeleteQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);

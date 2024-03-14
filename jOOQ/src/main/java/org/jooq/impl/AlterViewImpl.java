@@ -183,7 +183,7 @@ implements
     private static final Clause[]        CLAUSES                     = { Clause.ALTER_VIEW };
     private static final Set<SQLDialect> NO_SUPPORT_RENAME_IF_EXISTS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS        = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> SUPPORT_ALTER_TABLE_RENAME  = SQLDialect.supportedBy(HSQLDB, YUGABYTEDB);
+    private static final Set<SQLDialect> SUPPORT_ALTER_TABLE_RENAME  = SQLDialect.supportedBy(CLICKHOUSE, HSQLDB, YUGABYTEDB);
 
     private final boolean supportsIfExists(Context<?> ctx) {
         if (renameTo != null)
@@ -263,6 +263,7 @@ implements
             return;
         }
 
+        if (renameTo != null) {
 
 
 
@@ -280,7 +281,11 @@ implements
 
 
 
-
+            if (SUPPORT_ALTER_TABLE_RENAME.contains(ctx.dialect())) {
+                ctx.visit((ifExists ? alterTableIfExists(view) : alterTable(view)).renameTo(renameTo));
+                return;
+            }
+        }
 
         accept1(ctx);
     }
@@ -337,12 +342,10 @@ implements
         ctx.start(Clause.ALTER_VIEW_VIEW)
            .visit(K_ALTER).sql(' ');
 
-        if (SUPPORT_ALTER_TABLE_RENAME.contains(ctx.dialect()))
-            ctx.visit(K_TABLE).sql(' ');
-        else if (materialized)
-            ctx.visit(K_MATERIALIZED).sql(' ').visit(K_VIEW).sql(' ');
+        if (materialized)
+            ctx.visit(K_MATERIALIZED).sql(' ').visit(K_VIEW);
         else
-            ctx.visit(K_VIEW).sql(' ');
+            ctx.visit(K_VIEW);
 
         if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);

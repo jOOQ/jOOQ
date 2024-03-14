@@ -9708,7 +9708,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterViewStep alterView(Table<?> view, Field<?>... fields);
 
     /**
@@ -9717,7 +9717,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterView(Table, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterViewStep alterView(Table<?> view, Collection<? extends Field<?>> fields);
 
     /**

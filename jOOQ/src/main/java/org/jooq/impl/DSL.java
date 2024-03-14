@@ -7842,7 +7842,7 @@ public class DSL {
      * @see DSLContext#alterView(Table, Field...)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(Table<?> view, Field<?>... fields) {
         return dsl().alterView(view, fields);
     }
@@ -7857,7 +7857,7 @@ public class DSL {
      * @see DSLContext#alterView(Table, Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static org.jooq.AlterViewStep alterView(Table<?> view, Collection<? extends Field<?>> fields) {
         return dsl().alterView(view, fields);
     }
@@ -22621,7 +22621,7 @@ public class DSL {
      * @param dataType The data type to try to cast the value to
      */
     @NotNull
-    @Support({ DUCKDB, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, TRINO })
     public static <T> Field<T> tryCast(Object value, DataType<T> dataType) {
         return new TryCast<>(Tools.field(value), dataType);
     }
@@ -22633,7 +22633,7 @@ public class DSL {
      * @param dataType The data type to try to cast the value to
      */
     @NotNull
-    @Support({ DUCKDB, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, TRINO })
     public static <T> Field<T> tryCast(Field<?> value, DataType<T> dataType) {
         return new TryCast<>(value, dataType);
     }

@@ -688,7 +688,7 @@ final class Convert {
                     return from(((Optional) from).orElse(null), scope);
 
                 // Regular checks
-                else if (fromClass == byte[].class) {
+                else if (fromClass == byte[].class && !toClass.isArray()) {
 
                     // [#5824] UUID's most significant bits in byte[] are first
                     if (toClass == UUID.class) {

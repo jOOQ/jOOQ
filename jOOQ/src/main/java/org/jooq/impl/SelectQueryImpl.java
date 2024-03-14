@@ -343,21 +343,17 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implements SelectQuery<R> {
-    private static final JooqLogger      log                             = JooqLogger.getLogger(SelectQueryImpl.class);
-    private static final Clause[]        CLAUSES                         = { SELECT };
-    static final Set<SQLDialect>         EMULATE_SELECT_INTO_AS_CTAS     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
-    private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE       = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
+    private static final JooqLogger      log                                     = JooqLogger.getLogger(SelectQueryImpl.class);
+    private static final Clause[]        CLAUSES                                 = { SELECT };
+    static final Set<SQLDialect>         EMULATE_SELECT_INTO_AS_CTAS             = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE               = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
 
 
 
-    static final Set<SQLDialect>         NO_SUPPORT_WINDOW_CLAUSE        = SQLDialect.supportedUntil(CUBRID, DERBY, HSQLDB, IGNITE, MARIADB);
-    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE            = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB);
-    private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML      = SQLDialect.supportedUntil(MYSQL);
-    private static final Set<SQLDialect> NO_IMPLICIT_GROUP_BY_ON_HAVING  = SQLDialect.supportedBy(SQLITE);
-
-
-
-
+    static final Set<SQLDialect>         NO_SUPPORT_WINDOW_CLAUSE                = SQLDialect.supportedUntil(CUBRID, DERBY, HSQLDB, IGNITE, MARIADB);
+    private static final Set<SQLDialect> REQUIRES_FROM_CLAUSE                    = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, HSQLDB);
+    private static final Set<SQLDialect> REQUIRES_DERIVED_TABLE_DML              = SQLDialect.supportedUntil(MYSQL);
+    private static final Set<SQLDialect> NO_IMPLICIT_GROUP_BY_ON_HAVING          = SQLDialect.supportedBy(SQLITE);
 
 
 
@@ -369,14 +365,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-    static final Set<SQLDialect>         SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(CLICKHOUSE, H2, MARIADB, POSTGRES, TRINO);
-    static final Set<SQLDialect>         EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
-    static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect>         NO_SUPPORT_UNION_ORDER_BY_ALIAS = SQLDialect.supportedBy(FIREBIRD);
-    static final Set<SQLDialect>         NO_SUPPORT_WITH_READ_ONLY       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
-    static final Set<SQLDialect>         NO_SUPPORT_LIMIT_ZERO           = SQLDialect.supportedBy(DERBY, HSQLDB);
 
 
+
+
+    static final Set<SQLDialect>         SUPPORT_FULL_WITH_TIES                  = SQLDialect.supportedBy(CLICKHOUSE, H2, MARIADB, POSTGRES, TRINO);
+    static final Set<SQLDialect>         EMULATE_DISTINCT_ON                     = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
+    static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS         = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_UNION_ORDER_BY_ALIAS         = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>         NO_SUPPORT_WITH_READ_ONLY               = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_LIMIT_ZERO                   = SQLDialect.supportedBy(DERBY, HSQLDB);
+    static final Set<SQLDialect>         WRAP_EXP_BODY_IN_DERIVED_TABLE_LIMIT    = SQLDialect.supportedUntil(CLICKHOUSE);
+    static final Set<SQLDialect>         WRAP_EXP_BODY_IN_DERIVED_TABLE_ORDER_BY = SQLDialect.supportedBy(CLICKHOUSE);
 
 
 
@@ -3514,14 +3514,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean wrapQueryExpressionBodyInDerivedTable(Context<?> ctx) {
-        return false
 
-
-
-
-
-
-        ;
+        // [#2059] [#7539] Some dialects require query in derived table when using ORDER BY
+        return !unionOp.isEmpty() && (
+               WRAP_EXP_BODY_IN_DERIVED_TABLE_LIMIT.contains(ctx.dialect()) && getLimit().isApplicable()
+            || WRAP_EXP_BODY_IN_DERIVED_TABLE_ORDER_BY.contains(ctx.dialect()) && !getOrderBy().isEmpty()
+        );
     }
 
 

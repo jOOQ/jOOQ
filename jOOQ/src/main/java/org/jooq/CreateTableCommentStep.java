@@ -73,14 +73,14 @@ public interface CreateTableCommentStep extends CreateTableStorageStep {
     /**
      * Add the <code>COMMENT</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTableStorageStep comment(@Stringly.Comment String comment);
 
     /**
      * Add the <code>COMMENT</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTableStorageStep comment(Comment comment);
 }

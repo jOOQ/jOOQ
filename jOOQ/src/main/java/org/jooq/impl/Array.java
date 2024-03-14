@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
+// ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
@@ -66,9 +68,10 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
 
-    private static final Set<SQLDialect> REQUIRES_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> REQUIRES_CAST              = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_SQUARE_BRACKETS = SQLDialect.supportedBy(CLICKHOUSE);
 
-    final FieldsImpl<Record>             fields;
+    final FieldsImpl<Record>     fields;
 
     Array(Collection<? extends Field<T>> fields) {
         super(N_ARRAY, type(fields));
@@ -96,16 +99,10 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
             default:
                 renderCastIf(ctx,
                     c -> {
-                        switch (ctx.family()) {
-
-                            case CLICKHOUSE:
-                                ctx.visit(K_ARRAY).sql('(').visit(fields).sql(')');
-                                break;
-
-                            default:
-                                ctx.visit(K_ARRAY).sql('[').visit(fields).sql(']');
-                                break;
-                        }
+                        if (NO_SUPPORT_SQUARE_BRACKETS.contains(ctx.dialect()))
+                            ctx.visit(K_ARRAY).sql('(').visit(fields).sql(')');
+                        else
+                            ctx.visit(K_ARRAY).sql('[').visit(fields).sql(']');
                     },
                     c -> {
                         DataType<?> type = (DataType<?>) c.data(DATA_EMPTY_ARRAY_BASE_TYPE);

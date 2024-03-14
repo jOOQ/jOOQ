@@ -90,6 +90,7 @@ import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.Array.NO_SUPPORT_SQUARE_BRACKETS;
 import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.Convert.patchIso8601Timestamp;
 import static org.jooq.impl.DSL.cast;
@@ -1327,7 +1328,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // By default, render HSQLDB syntax
             else {
-                boolean squareBrackets = true;
+                boolean squareBrackets = !NO_SUPPORT_SQUARE_BRACKETS.contains(ctx.dialect());
 
                 ctx.render().visit(K_ARRAY);
                 ctx.render().sql(squareBrackets ? '[' : '(');
@@ -1383,6 +1384,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     ctx.statement().setString(ctx.index(), toPGArrayString(value));
                     break;
                 }
+
                 case HSQLDB: {
                     Object[] a = value;
                     Class<?> t = dataType.getType();
@@ -1397,10 +1399,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     ctx.statement().setArray(ctx.index(), new MockArray(ctx.family(), a, t));
                     break;
                 }
+
+                case CLICKHOUSE:
                 case H2: {
                     ctx.statement().setObject(ctx.index(), value);
                     break;
                 }
+
                 default:
                     throw new SQLDialectNotSupportedException("Cannot bind ARRAY types in dialect " + ctx.family());
             }

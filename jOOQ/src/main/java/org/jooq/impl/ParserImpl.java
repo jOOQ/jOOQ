@@ -15627,12 +15627,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         private final void scopeResolve() {
-            if (metaLookups() != ParseWithMetaLookups.OFF) {
-                if (!lookupFields.isEmpty())
-                    unknownField(lookupFields.iterator().next());
-                if (!lookupQualifiedAsterisks.isEmpty())
-                    unknownTable(lookupQualifiedAsterisks.iterator().next());
-            }
+            if (!lookupFields.isEmpty())
+                unknownField(lookupFields.iterator().next());
+            if (!lookupQualifiedAsterisks.isEmpty())
+                unknownTable(lookupQualifiedAsterisks.iterator().next());
         }
 
         private final void scopeStart() {
@@ -15645,52 +15643,48 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         private final void scopeEnd(Query scopeOwner) {
-            List<FieldProxy<?>> fields = null;
+            List<FieldProxy<?>> fields = new ArrayList<>();
 
-            if (metaLookups() != ParseWithMetaLookups.OFF) {
-                fields = new ArrayList<>();
+            // [#14372] Avoid looking up tables at a higher scope level
+            lookupLoop:
+            for (QualifiedAsteriskProxy lookup : scope.lookupQualifiedAsterisks.iterableAtScopeLevel()) {
+                for (Table<?> t : scope.tableScope) {
 
-                // [#14372] Avoid looking up tables at a higher scope level
-                lookupLoop:
-                for (QualifiedAsteriskProxy lookup : scope.lookupQualifiedAsterisks.iterableAtScopeLevel()) {
-                    for (Table<?> t : scope.tableScope) {
-
-                        // [#15056] TODO: Could there be an ambiguity, as with fields?
-                        if (t.getName().equals(lookup.$table().getName())) {
-                            lookup.delegate((QualifiedAsteriskImpl) t.asterisk());
-                            continue lookupLoop;
-                        }
+                    // [#15056] TODO: Could there be an ambiguity, as with fields?
+                    if (t.getName().equals(lookup.$table().getName())) {
+                        lookup.delegate((QualifiedAsteriskImpl) t.asterisk());
+                        continue lookupLoop;
                     }
-
-                    // [#15056] TODO: Should we support references to higher scopes?
-                    unknownTable(lookup);
                 }
 
-                // [#14372] Avoid looking up fields at a higher scope level
-                for (FieldProxy<?> lookup : scope.lookupFields.iterableAtScopeLevel()) {
-                    Value<Field<?>> found = null;
+                // [#15056] TODO: Should we support references to higher scopes?
+                unknownTable(lookup);
+            }
 
-                    for (Field<?> f : scope.fieldScope) {
-                        if (f.getName().equals(lookup.getName())) {
-                            if (found != null) {
-                                position(lookup.position());
-                                throw exception("Ambiguous field identifier");
-                            }
+            // [#14372] Avoid looking up fields at a higher scope level
+            for (FieldProxy<?> lookup : scope.lookupFields.iterableAtScopeLevel()) {
+                Value<Field<?>> found = null;
 
-                            // TODO: Does this instance of "found" really interact with the one below?
-                            found = new Value<>(0, f);
+                for (Field<?> f : scope.fieldScope) {
+                    if (f.getName().equals(lookup.getName())) {
+                        if (found != null) {
+                            position(lookup.position());
+                            throw exception("Ambiguous field identifier");
                         }
-                    }
 
-                    found = resolveInTableScope(scope.tableScope.valueIterable(), lookup.getQualifiedName(), lookup, found);
+                        // TODO: Does this instance of "found" really interact with the one below?
+                        found = new Value<>(0, f);
+                    }
+                }
 
-                    if (found != null && !(found.value() instanceof FieldProxy)) {
-                        lookup.delegate((AbstractField) found.value());
-                    }
-                    else {
-                        lookup.scopeOwner(scopeOwner);
-                        fields.add(lookup);
-                    }
+                found = resolveInTableScope(scope.tableScope.valueIterable(), lookup.getQualifiedName(), lookup, found);
+
+                if (found != null && !(found.value() instanceof FieldProxy)) {
+                    lookup.delegate((AbstractField) found.value());
+                }
+                else {
+                    lookup.scopeOwner(scopeOwner);
+                    fields.add(lookup);
                 }
             }
 
@@ -15699,13 +15693,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             scope.tableScope.scopeEnd();
             scope.fieldScope.scopeEnd();
 
-            if (fields != null)
-                for (FieldProxy<?> r : fields)
-                    if (scope.lookupFields.get(r.getQualifiedName()) == null)
-                        if (scope.lookupFields.inScope())
-                            scope.lookupFields.set(r.getQualifiedName(), r);
-                        else
-                            unknownField(r);
+            for (FieldProxy<?> r : fields)
+                if (scope.lookupFields.get(r.getQualifiedName()) == null)
+                    if (scope.lookupFields.inScope())
+                        scope.lookupFields.set(r.getQualifiedName(), r);
+                    else
+                        unknownField(r);
         }
 
         private final void scopeClear() {

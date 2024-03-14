@@ -358,7 +358,7 @@ final class Convert {
         if (from == null)
             return null;
 
-        Object[] arrayOfT = convertArray(from, converter.fromType());
+        Object[] arrayOfT = (Object[]) convertArray(from, converter.fromType());
         Object[] arrayOfU = (Object[]) Array.newInstance(converter.toType(), from.length);
 
         for (int i = 0; i < arrayOfT.length; i++)
@@ -384,7 +384,7 @@ final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     @SuppressWarnings("unchecked")
-    static final Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
+    static final Object convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
         if (from == null)
             return null;
         else if (!toClass.isArray())
@@ -398,6 +398,70 @@ final class Convert {
                 return Arrays.copyOf(from, from.length, (Class<? extends Object[]>) toClass);
             else if (from[0] != null && from[0].getClass() == toComponentType)
                 return Arrays.copyOf(from, from.length, (Class<? extends Object[]>) toClass);
+            else if (toComponentType == byte.class) {
+                final byte[] result = (byte[]) Array.newInstance(toComponentType, from.length);
+
+                for (int i = 0; i < from.length; i++)
+                    result[i] = (byte) convert(from[i], toComponentType);
+
+                return result;
+            }
+            else if (toComponentType == short.class) {
+                final short[] result = (short[]) Array.newInstance(toComponentType, from.length);
+
+                for (int i = 0; i < from.length; i++)
+                    result[i] = (short) convert(from[i], toComponentType);
+
+                return result;
+            }
+            else if (toComponentType == int.class) {
+                final int[] result = (int[]) Array.newInstance(toComponentType, from.length);
+
+                for (int i = 0; i < from.length; i++)
+                    result[i] = (int) convert(from[i], toComponentType);
+
+                return result;
+            }
+            else if (toComponentType == long.class) {
+                final long[] result = (long[]) Array.newInstance(toComponentType, from.length);
+
+                for (int i = 0; i < from.length; i++)
+                    result[i] = (long) convert(from[i], toComponentType);
+
+                return result;
+            }
+            else if (toComponentType == char.class) {
+                final char[] result = (char[]) Array.newInstance(toComponentType, from.length);
+
+                for (int i = 0; i < from.length; i++)
+                    result[i] = (char) convert(from[i], toComponentType);
+
+                return result;
+            }
+            else if (toComponentType == boolean.class) {
+                final boolean[] result = (boolean[]) Array.newInstance(toComponentType, from.length);
+
+                for (int i = 0; i < from.length; i++)
+                    result[i] = (boolean) convert(from[i], toComponentType);
+
+                return result;
+            }
+            else if (toComponentType == float.class) {
+                final float[] result = (float[]) Array.newInstance(toComponentType, from.length);
+
+                for (int i = 0; i < from.length; i++)
+                    result[i] = (float) convert(from[i], toComponentType);
+
+                return result;
+            }
+            else if (toComponentType == double.class) {
+                final double[] result = (double[]) Array.newInstance(toComponentType, from.length);
+
+                for (int i = 0; i < from.length; i++)
+                    result[i] = (double) convert(from[i], toComponentType);
+
+                return result;
+            }
             else {
                 final Object[] result = (Object[]) Array.newInstance(toComponentType, from.length);
 
@@ -643,7 +707,7 @@ final class Convert {
                         return convert(new String((byte[]) from), toClass);
                 }
                 else if (fromClass.isArray()) {
-                    Object[] fromArray = (Object[]) from;
+                    Object[] fromArray = toObjectArray(from);
 
                     // [#3062] [#5796] Default collections if no specific collection type was requested
                     if (Collection.class.isAssignableFrom(toClass) &&
@@ -1423,6 +1487,66 @@ final class Convert {
             }
 
             throw fail(from, toClass);
+        }
+
+        private final Object[] toObjectArray(Object from) {
+            Object[] result;
+
+            if (from instanceof Object[] a) {
+                return a;
+            }
+            else if (from instanceof byte[] a) {
+                result = new Byte[a.length];
+
+                for (int i = 0; i < result.length; i++)
+                    result[i] = a[i];
+            }
+            else if (from instanceof short[] a) {
+                result = new Short[a.length];
+
+                for (int i = 0; i < result.length; i++)
+                    result[i] = a[i];
+            }
+            else if (from instanceof int[] a) {
+                result = new Integer[a.length];
+
+                for (int i = 0; i < result.length; i++)
+                    result[i] = a[i];
+            }
+            else if (from instanceof long[] a) {
+                result = new Long[a.length];
+
+                for (int i = 0; i < result.length; i++)
+                    result[i] = a[i];
+            }
+            else if (from instanceof char[] a) {
+                result = new Character[a.length];
+
+                for (int i = 0; i < result.length; i++)
+                    result[i] = a[i];
+            }
+            else if (from instanceof boolean[] a) {
+                result = new Boolean[a.length];
+
+                for (int i = 0; i < result.length; i++)
+                    result[i] = a[i];
+            }
+            else if (from instanceof float[] a) {
+                result = new Float[a.length];
+
+                for (int i = 0; i < result.length; i++)
+                    result[i] = a[i];
+            }
+            else if (from instanceof double[] a) {
+                result = new Double[a.length];
+
+                for (int i = 0; i < result.length; i++)
+                    result[i] = a[i];
+            }
+            else
+                throw new IllegalArgumentException("Unsupported type: " + from);
+
+            return result;
         }
 
         @SuppressWarnings("unchecked")

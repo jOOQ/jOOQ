@@ -1390,7 +1390,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     // [#2325] [#5823] Cannot bind UUID[] type in HSQLDB.
                     // See also: https://sourceforge.net/p/hsqldb/bugs/1466
                     if (t == UUID[].class) {
-                        a = Convert.convertArray(a, byte[][].class);
+                        a = (Object[]) Convert.convertArray(a, byte[][].class);
                         t = byte[][].class;
                     }
 

@@ -1070,7 +1070,7 @@ public final class Internal {
      */
     @Deprecated(forRemoval = true)
     public static final Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
-        return Convert.convertArray(from, toClass);
+        return (Object[]) Convert.convertArray(from, toClass);
     }
 
     /**

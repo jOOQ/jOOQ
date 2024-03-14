@@ -138,6 +138,7 @@ final class Names {
     static final Name N_GREATEST                    = systemName("greatest");
     static final Name N_GROUPING_SETS               = systemName("grouping sets");
     static final Name N_GROUP_CONCAT                = systemName("group_concat");
+    static final Name N_groupArray                  = systemName("groupArray");
     static final Name N_groupBitAnd                 = systemName("groupBitAnd");
     static final Name N_groupBitNand                = systemName("groupBitNand");
     static final Name N_groupBitNor                 = systemName("groupBitNor");

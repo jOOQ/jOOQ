@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_ARRAY_AGG;
+import static org.jooq.impl.Names.N_groupArray;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Context;
@@ -64,6 +65,13 @@ final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> implements QOM.Ar
 
 
 
+
+
+            case CLICKHOUSE:
+                ctx.visit(N_groupArray).sql('(');
+                acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
+                ctx.sql(')');
+                break;
 
             default:
                 ctx.visit(N_ARRAY_AGG).sql('(');

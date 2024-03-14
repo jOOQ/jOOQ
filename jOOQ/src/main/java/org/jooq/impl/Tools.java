@@ -7953,7 +7953,7 @@ final class Tools {
         if (type == null)
             return array;
         else
-            return Convert.convertArray(array, type);
+            return (Object[]) Convert.convertArray(array, type);
     }
 
     static final <R extends Record> QuantifiedSelect<R> quantify(Quantifier q, Select<R> select) {

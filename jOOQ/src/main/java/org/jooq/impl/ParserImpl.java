@@ -9003,8 +9003,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 }
                 else if ((field = parseFieldBitwiseFunctionIf()) != null)
                     return field;
-                else
-                    break;
+
+                break;
 
             case 'H':
                 if (parseFunctionNameIf("HOUR"))
@@ -12430,7 +12430,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final AggregateFilterStep<?> parseArrayAggFunctionIf() {
-        if (parseKeywordIf("ARRAY_AGG")) {
+        if (parseKeywordIf("ARRAY_AGG", "groupArray")) {
             parse('(');
 
             boolean distinct = parseSetQuantifier();

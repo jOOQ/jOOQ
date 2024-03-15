@@ -124,7 +124,7 @@ implements
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
-                return false;
+                return true;
 
             default:
                 return true;

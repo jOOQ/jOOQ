@@ -111,7 +111,7 @@ implements
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
-                return false;
+                return true;
 
             case SQLITE:
                 return false;

@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
@@ -68,6 +69,7 @@ import static org.jooq.impl.Keywords.K_WITH_TIES;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.Tools.isScalarSubquery;
 
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
@@ -328,12 +330,12 @@ final class Limit extends AbstractQueryPart implements UTransient {
         if ( !offsetZero())
             ctx.formatSeparator()
                .visit(K_OFFSET)
-               .sql(' ').visit(offsetOrZero)
+               .sql(' ').visit(offsetOrZero(ctx))
                .sql(' ').visit(K_ROWS);
 
         if (!limitAbsent()) {
             ctx.formatSeparator()
-               .visit(K_FETCH_NEXT).sql(' ').visit(limit);
+               .visit(K_FETCH_NEXT).sql(' ').visit(limit(ctx));
 
             if (percent)
                 ctx.sql(' ').visit(K_PERCENT);
@@ -350,17 +352,43 @@ final class Limit extends AbstractQueryPart implements UTransient {
         if (!limitAbsent())
             ctx.formatSeparator()
                .visit(K_LIMIT)
-               .sql(' ').visit(limit);
+               .sql(' ').visit(limit(ctx));
 
         if (!offsetZero())
             ctx.formatSeparator()
                .visit(K_OFFSET)
-               .sql(' ').visit(offsetOrZero);
+               .sql(' ').visit(offsetOrZero(ctx));
 
         ctx.castMode(castMode);
     }
 
-    private void acceptDefaultLimitMandatory(Context<?> ctx, CastMode castMode) {
+    private final Field<?> limit(Context<?> ctx) {
+        switch (ctx.family()) {
+            case CLICKHOUSE:
+                if (limit instanceof ScalarSubquery)
+                    return new Cast<>(limit, limit.getDataType().notNull(), true);
+                else
+                    return limit;
+
+            default:
+                return limit;
+        }
+    }
+
+    private final Field<?> offsetOrZero(Context<?> ctx) {
+        switch (ctx.family()) {
+            case CLICKHOUSE:
+                if (offsetOrZero instanceof ScalarSubquery)
+                    return new Cast<>(offsetOrZero, offsetOrZero.getDataType().notNull());
+                else
+                    return offsetOrZero;
+
+            default:
+                return offsetOrZero;
+        }
+    }
+
+    private final void acceptDefaultLimitMandatory(Context<?> ctx, CastMode castMode) {
         ctx.castMode(NEVER)
            .formatSeparator()
            .visit(K_LIMIT)

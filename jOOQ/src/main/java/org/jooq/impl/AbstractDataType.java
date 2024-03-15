@@ -622,6 +622,19 @@ implements
     }
 
     private final String getCastTypeName0(Configuration configuration) {
+        switch (configuration.family()) {
+            case CLICKHOUSE:
+                if (nullable())
+                    return "Nullable(" + getCastTypeName1(configuration) + ")";
+                else
+                    return getCastTypeName1(configuration);
+
+            default:
+                return getCastTypeName1(configuration);
+        }
+    }
+
+    private final String getCastTypeName1(Configuration configuration) {
         SQLDialect dialect = configuration.dialect();
 
         // [#10277] Various qualified, user defined types

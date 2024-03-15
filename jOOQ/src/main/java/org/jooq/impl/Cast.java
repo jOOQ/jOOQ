@@ -88,8 +88,12 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
 
     private final Field<?> field;
 
-    public Cast(Field<?> field, DataType<T> type) {
-        super(N_CAST, type.nullable(field.getDataType().nullable()));
+    Cast(Field<?> field, DataType<T> type) {
+        this(field, type, false);
+    }
+
+    Cast(Field<?> field, DataType<T> type, boolean retainNullability) {
+        super(N_CAST, retainNullability ? type : type.nullable(field.getDataType().nullable()));
 
         this.field = field;
     }
@@ -416,17 +420,7 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
         else
             ctx.sql(' ').visit(K_AS).sql(' ');
 
-        switch (ctx.family()) {
-            case CLICKHOUSE:
-                ctx.sql("Nullable(");
-                type.accept(ctx);
-                ctx.sql(')');
-                break;
-
-            default:
-                type.accept(ctx);
-                break;
-        }
+        type.accept(ctx);
 
         if (tryCast)
             if (ctx.family() == CLICKHOUSE)

@@ -19599,7 +19599,7 @@ public class DSL {
      * @param string is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static Field<String> md5(@Stringly.Param String string) {
         return new Md5(Tools.field(string));
     }
@@ -19610,7 +19610,7 @@ public class DSL {
      * Calculate an MD5 hash from a string.
      */
     @NotNull
-    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static Field<String> md5(Field<String> string) {
         return new Md5(string);
     }
@@ -22644,27 +22644,33 @@ public class DSL {
 
     /**
      * The <code>CURRENT_CATALOG</code> function.
+     * <p>
+     * The CURRENT_CATALOG of the current session
      */
     @NotNull
-    @Support({ FIREBIRD, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> currentCatalog() {
         return new CurrentCatalog();
     }
 
     /**
      * The <code>CURRENT_SCHEMA</code> function.
+     * <p>
+     * The CURRENT_SCHEMA of the current session
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> currentSchema() {
         return new CurrentSchema();
     }
 
     /**
      * The <code>CURRENT_USER</code> function.
+     * <p>
+     * The CURRENT_USER of the current session with the database
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> currentUser() {
         return new CurrentUser();
     }

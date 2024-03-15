@@ -8787,7 +8787,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((parseFunctionNameIf("CURRENT_CATALOG") && parseEmptyParens()))
                     return currentCatalog();
-                else if ((parseFunctionNameIf("CURRENT_DATABASE") && parseEmptyParens()))
+                else if ((parseFunctionNameIf("CURRENT_DATABASE", "currentDatabase") && parseEmptyParens()))
                     return currentCatalog();
                 else if ((parseKeywordIf("CURRENT_SCHEMA", "CURRENT SCHEMA")) && parseEmptyParensIf())
                     return currentSchema();

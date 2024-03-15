@@ -83,11 +83,59 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
 
+
+
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case FIREBIRD:
+            case SQLITE:
+                return false;
+
+            case DERBY:
+                return false;
+
+            case H2:
+                return true;
+
+
+
+            case MARIADB:
+            case MYSQL:
+                return true;
+
+            case CLICKHOUSE:
+                return true;
+
+
+
+
+            case HSQLDB:
+            case POSTGRES:
+            case YUGABYTEDB:
+                return false;
+
+            default:
+                return true;
+        }
+    }
 
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
 
 
 
@@ -113,19 +161,24 @@ implements
                 ctx.visit(inline(""));
                 break;
 
-            case DERBY:
+            case DERBY: {
                 ctx.visit(K_CURRENT).sql(' ').visit(K_SCHEMA);
                 break;
+            }
 
             case H2:
-                ctx.visit(K_SCHEMA).sql("()");
+                ctx.visit(function(N_SCHEMA, getDataType()));
                 break;
 
 
 
             case MARIADB:
             case MYSQL:
-                ctx.visit(K_DATABASE).sql("()");
+                ctx.visit(function(N_DATABASE, getDataType()));
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_currentDatabase, getDataType()));
                 break;
 
 
@@ -134,16 +187,14 @@ implements
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(K_CURRENT_SCHEMA);
+                ctx.visit(N_CURRENT_SCHEMA);
                 break;
 
             default:
-                ctx.visit(K_CURRENT_SCHEMA).sql("()");
+                ctx.visit(function(N_CURRENT_SCHEMA, getDataType()));
                 break;
         }
     }
-
-
 
 
 

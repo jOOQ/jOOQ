@@ -96,9 +96,7 @@ final class Names {
     static final Name N_covarSamp                   = systemName("covarSamp");
     static final Name N_CUBE                        = systemName("cube");
     static final Name N_CUME_DIST                   = systemName("cume_dist");
-    static final Name N_CURRENTUSER                 = systemName("currentuser");
     static final Name N_CURRENT_BIGDATETIME         = systemName("current_bigdatetime");
-    static final Name N_CURRENT_DATABASE            = systemName("current_database");
     static final Name N_CURRENT_DATE                = systemName("current_date");
     static final Name N_CURRENT_TIME                = systemName("current_time");
     static final Name N_CURRENT_TIMESTAMP           = systemName("current_timestamp");
@@ -113,7 +111,6 @@ final class Names {
     static final Name N_DAYOFYEAR                   = systemName("dayofyear");
     static final Name N_DAYS                        = systemName("days");
     static final Name N_DAYS_BETWEEN                = systemName("days_between");
-    static final Name N_DB_NAME                     = systemName("db_name");
     static final Name N_DECODE                      = systemName("decode");
     static final Name N_DECODE_ORACLE               = systemName("decode_oracle");
     static final Name N_DEFAULT                     = systemName("default");
@@ -254,7 +251,6 @@ final class Names {
     static final Name N_ROWSFROM                    = systemName("rowsfrom");
     static final Name N_ROW_NUMBER                  = systemName("row_number");
     static final Name N_SAFE_CAST                   = systemName("safe_cast");
-    static final Name N_SCHEMA_NAME                 = systemName("schema_name");
     static final Name N_SECONDS_BETWEEN             = systemName("seconds_between");
     static final Name N_SEQ4                        = systemName("seq4");
     static final Name N_SEQ8                        = systemName("seq8");
@@ -305,7 +301,6 @@ final class Names {
     static final Name N_TRUNCNUM                    = systemName("truncnum");
     static final Name N_TUPLE                       = systemName("tuple");
     static final Name N_UNNEST                      = systemName("unnest");
-    static final Name N_USER                        = systemName("user");
     static final Name N_UUID_TO_CHAR                = systemName("uuid_to_char");
     static final Name N_VALUE                       = systemName("value");
     static final Name N_VALUES                      = systemName("values");
@@ -429,11 +424,16 @@ final class Names {
     static final Name N_COUNT                       = systemName("count");
     static final Name N_COVAR_POP                   = systemName("covar_pop");
     static final Name N_COVAR_SAMP                  = systemName("covar_samp");
+    static final Name N_CURRENTUSER                 = systemName("currentuser");
     static final Name N_CURRENT_CATALOG             = systemName("current_catalog");
+    static final Name N_CURRENT_DATABASE            = systemName("current_database");
     static final Name N_CURRENT_SCHEMA              = systemName("current_schema");
     static final Name N_CURRENT_USER                = systemName("current_user");
+    static final Name N_DATABASE                    = systemName("database");
     static final Name N_DATALENGTH                  = systemName("datalength");
     static final Name N_DATE_ADD                    = systemName("date_add");
+    static final Name N_DBINFO                      = systemName("dbinfo");
+    static final Name N_DB_NAME                     = systemName("db_name");
     static final Name N_DEGREES                     = systemName("degrees");
     static final Name N_DELETING                    = systemName("deleting");
     static final Name N_DIGITS                      = systemName("digits");
@@ -549,6 +549,8 @@ final class Names {
     static final Name N_RPAD                        = systemName("rpad");
     static final Name N_RSHIFT                      = systemName("rshift");
     static final Name N_RTRIM                       = systemName("rtrim");
+    static final Name N_SCHEMA                      = systemName("schema");
+    static final Name N_SCHEMA_NAME                 = systemName("schema_name");
     static final Name N_SETBIT                      = systemName("setbit");
     static final Name N_SET_BIT                     = systemName("set_bit");
     static final Name N_SGN                         = systemName("sgn");
@@ -627,6 +629,7 @@ final class Names {
     static final Name N_UNIQUE                      = systemName("unique");
     static final Name N_UPDATING                    = systemName("updating");
     static final Name N_UPPER                       = systemName("upper");
+    static final Name N_USER                        = systemName("user");
     static final Name N_UUID                        = systemName("uuid");
     static final Name N_UUID_GENERATE               = systemName("uuid_generate");
     static final Name N_UUID_STRING                 = systemName("uuid_string");
@@ -648,6 +651,8 @@ final class Names {
     static final Name N_bitShiftRight               = systemName("bitShiftRight");
     static final Name N_bitTest                     = systemName("bitTest");
     static final Name N_bitXor                      = systemName("bitXor");
+    static final Name N_currentDatabase             = systemName("currentDatabase");
+    static final Name N_currentUser                 = systemName("currentUser");
     static final Name N_endsWith                    = systemName("endsWith");
     static final Name N_generateUUIDv4              = systemName("generateUUIDv4");
     static final Name N_startsWith                  = systemName("startsWith");

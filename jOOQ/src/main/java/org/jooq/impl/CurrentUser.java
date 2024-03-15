@@ -83,11 +83,52 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case DERBY:
+            case FIREBIRD:
+            case HSQLDB:
+            case POSTGRES:
+            case YUGABYTEDB:
+                return false;
+
+            case SQLITE:
+                return false;
+
+            case CLICKHOUSE:
+                return true;
+
+            default:
+                return true;
+        }
+    }
 
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
 
 
 
@@ -123,16 +164,18 @@ implements
                 break;
 
             case SQLITE:
-                ctx.visit(DSL.inline(""));
+                ctx.visit(inline(""));
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_currentUser, getDataType()));
                 break;
 
             default:
-                ctx.visit(N_CURRENT_USER).sql("()");
+                ctx.visit(function(N_CURRENT_USER, getDataType()));
                 break;
         }
     }
-
-
 
 
 

@@ -11937,6 +11937,8 @@ public final class QOM {
 
     /**
      * The <code>CURRENT CATALOG</code> function.
+     * <p>
+     * The CURRENT_CATALOG of the current session
      */
     public static final CurrentCatalog CurrentCatalog() {
         return new org.jooq.impl.CurrentCatalog(
@@ -11945,6 +11947,8 @@ public final class QOM {
 
     /**
      * The <code>CURRENT CATALOG</code> function.
+     * <p>
+     * The CURRENT_CATALOG of the current session
      */
     public /*sealed*/ interface CurrentCatalog
         extends
@@ -11956,6 +11960,8 @@ public final class QOM {
 
     /**
      * The <code>CURRENT SCHEMA</code> function.
+     * <p>
+     * The CURRENT_SCHEMA of the current session
      */
     public static final CurrentSchema CurrentSchema() {
         return new org.jooq.impl.CurrentSchema(
@@ -11964,6 +11970,8 @@ public final class QOM {
 
     /**
      * The <code>CURRENT SCHEMA</code> function.
+     * <p>
+     * The CURRENT_SCHEMA of the current session
      */
     public /*sealed*/ interface CurrentSchema
         extends
@@ -11975,6 +11983,8 @@ public final class QOM {
 
     /**
      * The <code>CURRENT USER</code> function.
+     * <p>
+     * The CURRENT_USER of the current session with the database
      */
     public static final CurrentUser CurrentUser() {
         return new org.jooq.impl.CurrentUser(
@@ -11983,6 +11993,8 @@ public final class QOM {
 
     /**
      * The <code>CURRENT USER</code> function.
+     * <p>
+     * The CURRENT_USER of the current session with the database
      */
     public /*sealed*/ interface CurrentUser
         extends

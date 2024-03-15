@@ -49,135 +49,135 @@ public class Columns extends TableImpl<Record> {
     /**
      * The column <code>information_schema.columns.table_catalog</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.columns.table_schema</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.columns.table_name</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.columns.column_name</code>.
      */
-    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("column_name"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("column_name"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.columns.ordinal_position</code>.
      */
-    public final TableField<Record, ULong> ORDINAL_POSITION = createField(DSL.name("ordinal_position"), SQLDataType.BIGINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> ORDINAL_POSITION = createField(DSL.name("ordinal_position"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.columns.column_default</code>.
      */
-    public final TableField<Record, String> COLUMN_DEFAULT = createField(DSL.name("column_default"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COLUMN_DEFAULT = createField(DSL.name("column_default"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.columns.is_nullable</code>.
      */
-    public final TableField<Record, String> IS_NULLABLE = createField(DSL.name("is_nullable"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> IS_NULLABLE = createField(DSL.name("is_nullable"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.columns.data_type</code>.
      */
-    public final TableField<Record, String> DATA_TYPE = createField(DSL.name("data_type"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DATA_TYPE = createField(DSL.name("data_type"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column
      * <code>information_schema.columns.character_maximum_length</code>.
      */
-    public final TableField<Record, ULong> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("character_maximum_length"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("character_maximum_length"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column
      * <code>information_schema.columns.character_octet_length</code>.
      */
-    public final TableField<Record, ULong> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.columns.numeric_precision</code>.
      */
-    public final TableField<Record, ULong> NUMERIC_PRECISION = createField(DSL.name("numeric_precision"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> NUMERIC_PRECISION = createField(DSL.name("numeric_precision"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column
      * <code>information_schema.columns.numeric_precision_radix</code>.
      */
-    public final TableField<Record, ULong> NUMERIC_PRECISION_RADIX = createField(DSL.name("numeric_precision_radix"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> NUMERIC_PRECISION_RADIX = createField(DSL.name("numeric_precision_radix"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.columns.numeric_scale</code>.
      */
-    public final TableField<Record, ULong> NUMERIC_SCALE = createField(DSL.name("numeric_scale"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> NUMERIC_SCALE = createField(DSL.name("numeric_scale"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.columns.datetime_precision</code>.
      */
-    public final TableField<Record, ULong> DATETIME_PRECISION = createField(DSL.name("datetime_precision"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> DATETIME_PRECISION = createField(DSL.name("datetime_precision"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.columns.character_set_catalog</code>.
      */
-    public final TableField<Record, String> CHARACTER_SET_CATALOG = createField(DSL.name("character_set_catalog"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> CHARACTER_SET_CATALOG = createField(DSL.name("character_set_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.character_set_schema</code>.
      */
-    public final TableField<Record, String> CHARACTER_SET_SCHEMA = createField(DSL.name("character_set_schema"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> CHARACTER_SET_SCHEMA = createField(DSL.name("character_set_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.character_set_name</code>.
      */
-    public final TableField<Record, String> CHARACTER_SET_NAME = createField(DSL.name("character_set_name"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> CHARACTER_SET_NAME = createField(DSL.name("character_set_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.collation_catalog</code>.
      */
-    public final TableField<Record, String> COLLATION_CATALOG = createField(DSL.name("collation_catalog"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COLLATION_CATALOG = createField(DSL.name("collation_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.collation_schema</code>.
      */
-    public final TableField<Record, String> COLLATION_SCHEMA = createField(DSL.name("collation_schema"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COLLATION_SCHEMA = createField(DSL.name("collation_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.collation_name</code>.
      */
-    public final TableField<Record, String> COLLATION_NAME = createField(DSL.name("collation_name"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COLLATION_NAME = createField(DSL.name("collation_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.domain_catalog</code>.
      */
-    public final TableField<Record, String> DOMAIN_CATALOG = createField(DSL.name("domain_catalog"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DOMAIN_CATALOG = createField(DSL.name("domain_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.domain_schema</code>.
      */
-    public final TableField<Record, String> DOMAIN_SCHEMA = createField(DSL.name("domain_schema"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DOMAIN_SCHEMA = createField(DSL.name("domain_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.domain_name</code>.
      */
-    public final TableField<Record, String> DOMAIN_NAME = createField(DSL.name("domain_name"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DOMAIN_NAME = createField(DSL.name("domain_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.extra</code>.
      */
-    public final TableField<Record, String> EXTRA = createField(DSL.name("extra"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> EXTRA = createField(DSL.name("extra"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.columns.column_comment</code>.
      */
-    public final TableField<Record, String> COLUMN_COMMENT = createField(DSL.name("column_comment"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COLUMN_COMMENT = createField(DSL.name("column_comment"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.columns.column_type</code>.
      */
-    public final TableField<Record, String> COLUMN_TYPE = createField(DSL.name("column_type"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COLUMN_TYPE = createField(DSL.name("column_type"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     private Columns(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

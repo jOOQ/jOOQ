@@ -46,40 +46,40 @@ public class Schemata extends TableImpl<Record> {
     /**
      * The column <code>information_schema.schemata.catalog_name</code>.
      */
-    public final TableField<Record, String> CATALOG_NAME = createField(DSL.name("catalog_name"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> CATALOG_NAME = createField(DSL.name("catalog_name"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.schemata.schema_name</code>.
      */
-    public final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("schema_name"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> SCHEMA_NAME = createField(DSL.name("schema_name"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.schemata.schema_owner</code>.
      */
-    public final TableField<Record, String> SCHEMA_OWNER = createField(DSL.name("schema_owner"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> SCHEMA_OWNER = createField(DSL.name("schema_owner"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column
      * <code>information_schema.schemata.default_character_set_catalog</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column
      * <code>information_schema.schemata.default_character_set_schema</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column
      * <code>information_schema.schemata.default_character_set_name</code>.
      */
-    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.schemata.sql_path</code>.
      */
-    public final TableField<Record, String> SQL_PATH = createField(DSL.name("sql_path"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> SQL_PATH = createField(DSL.name("sql_path"), SQLDataType.VARCHAR, this, "");
 
     private Schemata(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

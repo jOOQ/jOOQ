@@ -50,42 +50,42 @@ public class Tables extends TableImpl<Record> {
     /**
      * The column <code>information_schema.tables.table_catalog</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.tables.table_schema</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.tables.table_name</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.tables.table_type</code>.
      */
-    public final TableField<Record, String> TABLE_TYPE = createField(DSL.name("table_type"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_TYPE = createField(DSL.name("table_type"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.tables.table_rows</code>.
      */
-    public final TableField<Record, ULong> TABLE_ROWS = createField(DSL.name("table_rows"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> TABLE_ROWS = createField(DSL.name("table_rows"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.tables.data_length</code>.
      */
-    public final TableField<Record, ULong> DATA_LENGTH = createField(DSL.name("data_length"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> DATA_LENGTH = createField(DSL.name("data_length"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>information_schema.tables.table_collation</code>.
      */
-    public final TableField<Record, String> TABLE_COLLATION = createField(DSL.name("table_collation"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_COLLATION = createField(DSL.name("table_collation"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>information_schema.tables.table_comment</code>.
      */
-    public final TableField<Record, String> TABLE_COMMENT = createField(DSL.name("table_comment"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_COMMENT = createField(DSL.name("table_comment"), SQLDataType.VARCHAR, this, "");
 
     private Tables(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

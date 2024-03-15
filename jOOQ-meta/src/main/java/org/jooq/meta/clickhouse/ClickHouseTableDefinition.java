@@ -39,6 +39,7 @@ package org.jooq.meta.clickhouse;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
+import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.regexpReplaceFirst;
 import static org.jooq.meta.clickhouse.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.clickhouse.system.System.SYSTEM;
@@ -85,7 +86,7 @@ public class ClickHouseTableDefinition extends AbstractTableDefinition {
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
                 COLUMNS.IS_NULLABLE,
-                COLUMNS.COLUMN_DEFAULT,
+                nullif(COLUMNS.COLUMN_DEFAULT, inline("")).as(COLUMNS.COLUMN_DEFAULT),
                 SYSTEM.COLUMNS.COMMENT
             )
             .from(COLUMNS)

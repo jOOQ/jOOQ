@@ -44,107 +44,107 @@ public class Columns extends TableImpl<Record> {
     /**
      * The column <code>system.columns.database</code>.
      */
-    public final TableField<Record, String> DATABASE = createField(DSL.name("database"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DATABASE = createField(DSL.name("database"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.table</code>.
      */
-    public final TableField<Record, String> TABLE = createField(DSL.name("table"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE = createField(DSL.name("table"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.name</code>.
      */
-    public final TableField<Record, String> NAME = createField(DSL.name("name"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.type</code>.
      */
-    public final TableField<Record, String> TYPE = createField(DSL.name("type"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TYPE = createField(DSL.name("type"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.position</code>.
      */
-    public final TableField<Record, ULong> POSITION = createField(DSL.name("position"), SQLDataType.BIGINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> POSITION = createField(DSL.name("position"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.default_kind</code>.
      */
-    public final TableField<Record, String> DEFAULT_KIND = createField(DSL.name("default_kind"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DEFAULT_KIND = createField(DSL.name("default_kind"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.default_expression</code>.
      */
-    public final TableField<Record, String> DEFAULT_EXPRESSION = createField(DSL.name("default_expression"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DEFAULT_EXPRESSION = createField(DSL.name("default_expression"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.data_compressed_bytes</code>.
      */
-    public final TableField<Record, ULong> DATA_COMPRESSED_BYTES = createField(DSL.name("data_compressed_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> DATA_COMPRESSED_BYTES = createField(DSL.name("data_compressed_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.data_uncompressed_bytes</code>.
      */
-    public final TableField<Record, ULong> DATA_UNCOMPRESSED_BYTES = createField(DSL.name("data_uncompressed_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> DATA_UNCOMPRESSED_BYTES = createField(DSL.name("data_uncompressed_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.marks_bytes</code>.
      */
-    public final TableField<Record, ULong> MARKS_BYTES = createField(DSL.name("marks_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> MARKS_BYTES = createField(DSL.name("marks_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.comment</code>.
      */
-    public final TableField<Record, String> COMMENT = createField(DSL.name("comment"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COMMENT = createField(DSL.name("comment"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.is_in_partition_key</code>.
      */
-    public final TableField<Record, UByte> IS_IN_PARTITION_KEY = createField(DSL.name("is_in_partition_key"), SQLDataType.TINYINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.TINYINTUNSIGNED)), this, "");
+    public final TableField<Record, UByte> IS_IN_PARTITION_KEY = createField(DSL.name("is_in_partition_key"), SQLDataType.TINYINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.is_in_sorting_key</code>.
      */
-    public final TableField<Record, UByte> IS_IN_SORTING_KEY = createField(DSL.name("is_in_sorting_key"), SQLDataType.TINYINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.TINYINTUNSIGNED)), this, "");
+    public final TableField<Record, UByte> IS_IN_SORTING_KEY = createField(DSL.name("is_in_sorting_key"), SQLDataType.TINYINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.is_in_primary_key</code>.
      */
-    public final TableField<Record, UByte> IS_IN_PRIMARY_KEY = createField(DSL.name("is_in_primary_key"), SQLDataType.TINYINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.TINYINTUNSIGNED)), this, "");
+    public final TableField<Record, UByte> IS_IN_PRIMARY_KEY = createField(DSL.name("is_in_primary_key"), SQLDataType.TINYINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.is_in_sampling_key</code>.
      */
-    public final TableField<Record, UByte> IS_IN_SAMPLING_KEY = createField(DSL.name("is_in_sampling_key"), SQLDataType.TINYINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.TINYINTUNSIGNED)), this, "");
+    public final TableField<Record, UByte> IS_IN_SAMPLING_KEY = createField(DSL.name("is_in_sampling_key"), SQLDataType.TINYINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.compression_codec</code>.
      */
-    public final TableField<Record, String> COMPRESSION_CODEC = createField(DSL.name("compression_codec"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COMPRESSION_CODEC = createField(DSL.name("compression_codec"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.columns.character_octet_length</code>.
      */
-    public final TableField<Record, ULong> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>system.columns.numeric_precision</code>.
      */
-    public final TableField<Record, ULong> NUMERIC_PRECISION = createField(DSL.name("numeric_precision"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> NUMERIC_PRECISION = createField(DSL.name("numeric_precision"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>system.columns.numeric_precision_radix</code>.
      */
-    public final TableField<Record, ULong> NUMERIC_PRECISION_RADIX = createField(DSL.name("numeric_precision_radix"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> NUMERIC_PRECISION_RADIX = createField(DSL.name("numeric_precision_radix"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>system.columns.numeric_scale</code>.
      */
-    public final TableField<Record, ULong> NUMERIC_SCALE = createField(DSL.name("numeric_scale"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> NUMERIC_SCALE = createField(DSL.name("numeric_scale"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     /**
      * The column <code>system.columns.datetime_precision</code>.
      */
-    public final TableField<Record, ULong> DATETIME_PRECISION = createField(DSL.name("datetime_precision"), SQLDataType.BIGINTUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> DATETIME_PRECISION = createField(DSL.name("datetime_precision"), SQLDataType.BIGINTUNSIGNED, this, "");
 
     private Columns(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

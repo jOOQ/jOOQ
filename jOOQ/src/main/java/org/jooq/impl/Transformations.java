@@ -94,7 +94,7 @@ final class Transformations {
     static final Set<SQLDialect> NO_SUPPORT_IN_LIMIT              = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect> SUPPORT_MISSING_TABLE_REFERENCES = SQLDialect.supportedBy();
     static final Set<SQLDialect> EMULATE_QUALIFY                  = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect> EMULATE_ROWNUM                   = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect> EMULATE_ROWNUM                   = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     static final Set<SQLDialect> EMULATE_GROUP_BY_COLUMN_INDEX    = SQLDialect.supportedBy(CUBRID, DERBY, H2, HSQLDB, IGNITE);
     static final Set<SQLDialect> NO_SUPPORT_CTE                   = SQLDialect.supportedUntil(CUBRID, DERBY);
 

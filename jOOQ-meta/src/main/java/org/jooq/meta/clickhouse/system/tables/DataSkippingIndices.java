@@ -44,54 +44,54 @@ public class DataSkippingIndices extends TableImpl<Record> {
     /**
      * The column <code>system.data_skipping_indices.database</code>.
      */
-    public final TableField<Record, String> DATABASE = createField(DSL.name("database"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> DATABASE = createField(DSL.name("database"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.data_skipping_indices.table</code>.
      */
-    public final TableField<Record, String> TABLE = createField(DSL.name("table"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE = createField(DSL.name("table"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.data_skipping_indices.name</code>.
      */
-    public final TableField<Record, String> NAME = createField(DSL.name("name"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> NAME = createField(DSL.name("name"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.data_skipping_indices.type</code>.
      */
-    public final TableField<Record, String> TYPE = createField(DSL.name("type"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TYPE = createField(DSL.name("type"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.data_skipping_indices.type_full</code>.
      */
-    public final TableField<Record, String> TYPE_FULL = createField(DSL.name("type_full"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TYPE_FULL = createField(DSL.name("type_full"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.data_skipping_indices.expr</code>.
      */
-    public final TableField<Record, String> EXPR = createField(DSL.name("expr"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> EXPR = createField(DSL.name("expr"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>system.data_skipping_indices.granularity</code>.
      */
-    public final TableField<Record, ULong> GRANULARITY = createField(DSL.name("granularity"), SQLDataType.BIGINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> GRANULARITY = createField(DSL.name("granularity"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column
      * <code>system.data_skipping_indices.data_compressed_bytes</code>.
      */
-    public final TableField<Record, ULong> DATA_COMPRESSED_BYTES = createField(DSL.name("data_compressed_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> DATA_COMPRESSED_BYTES = createField(DSL.name("data_compressed_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column
      * <code>system.data_skipping_indices.data_uncompressed_bytes</code>.
      */
-    public final TableField<Record, ULong> DATA_UNCOMPRESSED_BYTES = createField(DSL.name("data_uncompressed_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> DATA_UNCOMPRESSED_BYTES = createField(DSL.name("data_uncompressed_bytes"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "");
 
     /**
      * The column <code>system.data_skipping_indices.marks</code>.
      */
-    public final TableField<Record, ULong> MARKS = createField(DSL.name("marks"), SQLDataType.BIGINTUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.BIGINTUNSIGNED)), this, "");
+    public final TableField<Record, ULong> MARKS = createField(DSL.name("marks"), SQLDataType.BIGINTUNSIGNED.nullable(false), this, "");
 
     private DataSkippingIndices(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

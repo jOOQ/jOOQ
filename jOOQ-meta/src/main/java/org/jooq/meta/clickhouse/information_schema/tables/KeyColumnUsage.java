@@ -51,70 +51,70 @@ public class KeyColumnUsage extends TableImpl<Record> {
      * The column
      * <code>information_schema.key_column_usage.constraint_catalog</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> CONSTRAINT_CATALOG = createField(DSL.name("constraint_catalog"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column
      * <code>information_schema.key_column_usage.constraint_schema</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> CONSTRAINT_SCHEMA = createField(DSL.name("constraint_schema"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column
      * <code>information_schema.key_column_usage.constraint_name</code>.
      */
-    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column
      * <code>information_schema.key_column_usage.table_catalog</code>.
      */
-    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_CATALOG = createField(DSL.name("table_catalog"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.key_column_usage.table_schema</code>.
      */
-    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_SCHEMA = createField(DSL.name("table_schema"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.key_column_usage.table_name</code>.
      */
-    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), SQLDataType.CHAR.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> TABLE_NAME = createField(DSL.name("table_name"), SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
      * The column <code>information_schema.key_column_usage.column_name</code>.
      */
-    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("column_name"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> COLUMN_NAME = createField(DSL.name("column_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column
      * <code>information_schema.key_column_usage.ordinal_position</code>.
      */
-    public final TableField<Record, UInteger> ORDINAL_POSITION = createField(DSL.name("ordinal_position"), SQLDataType.INTEGERUNSIGNED.nullable(false).defaultValue(DSL.field(DSL.raw(""), SQLDataType.INTEGERUNSIGNED)), this, "");
+    public final TableField<Record, UInteger> ORDINAL_POSITION = createField(DSL.name("ordinal_position"), SQLDataType.INTEGERUNSIGNED.nullable(false), this, "");
 
     /**
      * The column
      * <code>information_schema.key_column_usage.position_in_unique_constraint</code>.
      */
-    public final TableField<Record, UInteger> POSITION_IN_UNIQUE_CONSTRAINT = createField(DSL.name("position_in_unique_constraint"), SQLDataType.INTEGERUNSIGNED.defaultValue(DSL.field(DSL.raw(""), SQLDataType.INTEGERUNSIGNED)), this, "");
+    public final TableField<Record, UInteger> POSITION_IN_UNIQUE_CONSTRAINT = createField(DSL.name("position_in_unique_constraint"), SQLDataType.INTEGERUNSIGNED, this, "");
 
     /**
      * The column
      * <code>information_schema.key_column_usage.referenced_table_schema</code>.
      */
-    public final TableField<Record, String> REFERENCED_TABLE_SCHEMA = createField(DSL.name("referenced_table_schema"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> REFERENCED_TABLE_SCHEMA = createField(DSL.name("referenced_table_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column
      * <code>information_schema.key_column_usage.referenced_table_name</code>.
      */
-    public final TableField<Record, String> REFERENCED_TABLE_NAME = createField(DSL.name("referenced_table_name"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> REFERENCED_TABLE_NAME = createField(DSL.name("referenced_table_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column
      * <code>information_schema.key_column_usage.referenced_column_name</code>.
      */
-    public final TableField<Record, String> REFERENCED_COLUMN_NAME = createField(DSL.name("referenced_column_name"), SQLDataType.CHAR.defaultValue(DSL.field(DSL.raw(""), SQLDataType.CHAR)), this, "");
+    public final TableField<Record, String> REFERENCED_COLUMN_NAME = createField(DSL.name("referenced_column_name"), SQLDataType.VARCHAR, this, "");
 
     private KeyColumnUsage(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

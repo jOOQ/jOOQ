@@ -102,9 +102,9 @@ final class SQLDataTypes {
         static final DataType<BigDecimal>  DECIMAL64                = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "Decimal64(s)");
         static final DataType<BigDecimal>  DECIMAL128               = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "Decimal128(s)");
         static final DataType<BigDecimal>  DECIMAL256               = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "Decimal256(s)");
+        static final DataType<String>      STRING                   = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "String");
         static final DataType<String>      VARCHAR                  = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "varchar(l)");
         static final DataType<String>      CHAR                     = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "char(l)");
-        static final DataType<String>      STRING                   = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "String");
         static final DataType<Date>        DATE                     = new BuiltInDataType<>(FAMILY, SQLDataType.DATE, "date");
         static final DataType<Date>        DATE32                   = new BuiltInDataType<>(FAMILY, SQLDataType.DATE, "Date32");
         static final DataType<Time>        TIME                     = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time(p)");

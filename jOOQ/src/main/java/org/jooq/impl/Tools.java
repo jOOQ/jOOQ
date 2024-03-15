@@ -2121,10 +2121,10 @@ final class Tools {
     }
 
     @SuppressWarnings("unchecked")
-    private static final <T> Field<T> field(
+    private static final <T> Field<T> field0(
         Object value,
         boolean defaultInferred,
-        Function<? super Object, ? extends Param<T>> defaultValue
+        BiFunction<? super Object, ? super Val<?>, ? extends Param<T>> defaultValue
     ) {
 
         // [#14694] Inferred data types may have to be refined lazily, here.
@@ -2133,7 +2133,7 @@ final class Tools {
         //          row is passed to the INSERT's valuesOfRows() method.
         if (value instanceof Val<?> p1) {
             if (p1.inferredDataType && !defaultInferred) {
-                Val<T> p2 = (Val<T>) defaultValue.apply(p1.getValue());
+                Val<T> p2 = (Val<T>) defaultValue.apply(p1.getValue(), p1);
                 p2.setInline0(p1.isInline());
                 return p2;
             }
@@ -2162,24 +2162,27 @@ final class Tools {
             throw fieldExpected(value);
 
         else
-            return defaultValue.apply(value);
+            return defaultValue.apply(value, null);
     }
 
     @SuppressWarnings("unchecked")
     static final <T> Field<T> field(T value) {
-        return field(value, true, v -> DSL.val0((T) v, true));
+        return field0(value, true, (v, val) -> DSL.val0((T) v, true));
     }
 
+    @SuppressWarnings("unchecked")
     static final <T> Field<T> field(Object value, Field<T> field) {
-        return field(value, false, v -> val(v, field));
+        return field0(value, false, (v, val) -> DSL.val0((T) v, nullSafeDataType(field), false, val != null ? val.index : 0, val != null ? val.getParamName() : null));
     }
 
+    @SuppressWarnings("unchecked")
     static final <T> Field<T> field(Object value, Class<T> type) {
-        return field(value, false, v -> val(v, type));
+        return field0(value, false, (v, val) -> DSL.val0((T) v, DSL.getDataType0(type), true, val != null ? val.index : 0, val != null ? val.getParamName() : null));
     }
 
+    @SuppressWarnings("unchecked")
     static final <T> Field<T> field(Object value, DataType<T> type) {
-        return field(value, false, v -> val(v, type));
+        return field0(value, false, (v, val) -> DSL.val0((T) v, type, false, val != null ? val.index : 0, val != null ? val.getParamName() : null));
     }
 
     static final <T> List<Field<T>> fields(T[] values) {
@@ -3460,29 +3463,15 @@ final class Tools {
      * Create {@link QueryPart} objects from bind values or substitutes
      */
     static final List<QueryPart> queryParts(Object... substitutes) {
+
         // [#724] When bindings is null, this is probably due to API-misuse
         // The user probably meant new Object[] { null }
-        if (substitutes == null) {
+        if (substitutes == null)
             return queryParts(new Object[] { null });
-        }
-        else {
-            List<QueryPart> result = new ArrayList<>(substitutes.length);
 
-            for (Object substitute : substitutes) {
-
-                // [#1432] Distinguish between QueryParts and other objects
-                if (substitute instanceof QueryPart q) {
-                    result.add(q);
-                }
-                else {
-                    @SuppressWarnings("unchecked")
-                    Class<Object> type = (Class<Object>) (substitute != null ? substitute.getClass() : Object.class);
-                    result.add(new Val<>(substitute, DSL.getDataType(type), true));
-                }
-            }
-
-            return result;
-        }
+        // [#1432] Distinguish between QueryParts and other objects
+        else
+            return map(substitutes, s -> (QueryPart) (s instanceof QueryPart q ? q : val(s)));
     }
 
     @SuppressWarnings("unchecked")

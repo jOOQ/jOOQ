@@ -41,6 +41,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -82,8 +83,8 @@ import org.jooq.SQLDialect;
  */
 final class RowOverlaps<T1, T2> extends AbstractCondition implements QOM.RowOverlaps {
 
-    private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, SQLITE, TRINO);
-    private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(DUCKDB, HSQLDB, TRINO);
+    private static final Set<SQLDialect> EMULATE_NON_STANDARD_OVERLAPS = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, SQLITE, TRINO);
+    private static final Set<SQLDialect> EMULATE_INTERVAL_OVERLAPS     = SQLDialect.supportedBy(CLICKHOUSE, DUCKDB, HSQLDB, TRINO);
 
     private final Row2<T1, T2>           left;
     private final Row2<T1, T2>           right;

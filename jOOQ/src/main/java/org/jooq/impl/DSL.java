@@ -32351,7 +32351,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> param(Class<T> type) {
-        return param(DefaultDataType.getDataType(null, type));
+        return val0(null, DefaultDataType.getDataType(null, type), true, 0, null);
     }
 
     /**
@@ -32362,7 +32362,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> param(DataType<T> type) {
-        return new Val<>(null, type, false);
+        return val0(null, type, false, 0, null);
     }
 
     /**
@@ -32420,7 +32420,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> param(String name, Class<T> type) {
-        return param(name, DefaultDataType.getDataType(null, type));
+        return val0(null, DefaultDataType.getDataType(null, type), true, 0, name);
     }
 
     /**
@@ -32431,7 +32431,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> param(String name, DataType<T> type) {
-        return new Val<>(null, type, false, name);
+        return val0(null, type, false, 0, name);
     }
 
     /**
@@ -32466,7 +32466,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> param(String name, T value) {
-        return new Val<>(value, val(value).getDataType(), false, name);
+        return val0(value, val(value).getDataType(), true, 0, name);
     }
 
     /**
@@ -32497,7 +32497,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Byte> value(byte value) {
-        return value((Object) value, SQLDataType.TINYINT);
+        return val(value);
     }
 
     /**
@@ -32509,7 +32509,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Byte> value(Byte value) {
-        return value((Object) value, SQLDataType.TINYINT);
+        return val(value);
     }
 
     /**
@@ -32521,7 +32521,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UByte> value(UByte value) {
-        return value((Object) value, SQLDataType.TINYINTUNSIGNED);
+        return val(value);
     }
 
     /**
@@ -32533,7 +32533,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Short> value(short value) {
-        return value((Object) value, SQLDataType.SMALLINT);
+        return val(value);
     }
 
     /**
@@ -32545,7 +32545,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Short> value(Short value) {
-        return value((Object) value, SQLDataType.SMALLINT);
+        return val(value);
     }
 
     /**
@@ -32557,7 +32557,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UShort> value(UShort value) {
-        return value((Object) value, SQLDataType.SMALLINTUNSIGNED);
+        return val(value);
     }
 
     /**
@@ -32569,7 +32569,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Integer> value(int value) {
-        return value((Object) value, SQLDataType.INTEGER);
+        return val(value);
     }
 
     /**
@@ -32581,7 +32581,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Integer> value(Integer value) {
-        return value((Object) value, SQLDataType.INTEGER);
+        return val(value);
     }
 
     /**
@@ -32593,7 +32593,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UInteger> value(UInteger value) {
-        return value((Object) value, SQLDataType.INTEGERUNSIGNED);
+        return val(value);
     }
 
     /**
@@ -32605,7 +32605,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Long> value(long value) {
-        return value((Object) value, SQLDataType.BIGINT);
+        return val(value);
     }
 
     /**
@@ -32617,7 +32617,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Long> value(Long value) {
-        return value((Object) value, SQLDataType.BIGINT);
+        return val(value);
     }
 
     /**
@@ -32629,7 +32629,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<ULong> value(ULong value) {
-        return value((Object) value, SQLDataType.BIGINTUNSIGNED);
+        return val(value);
     }
 
     /**
@@ -32641,7 +32641,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Float> value(float value) {
-        return value((Object) value, SQLDataType.REAL);
+        return val(value);
     }
 
     /**
@@ -32653,7 +32653,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Float> value(Float value) {
-        return value((Object) value, SQLDataType.REAL);
+        return val(value);
     }
 
     /**
@@ -32665,7 +32665,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Double> value(double value) {
-        return value((Object) value, SQLDataType.DOUBLE);
+        return val(value);
     }
 
     /**
@@ -32677,7 +32677,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Double> value(Double value) {
-        return value((Object) value, SQLDataType.DOUBLE);
+        return val(value);
     }
 
     /**
@@ -32689,7 +32689,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Boolean> value(boolean value) {
-        return value((Object) value, SQLDataType.BOOLEAN);
+        return val(value);
     }
 
     /**
@@ -32701,7 +32701,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Boolean> value(Boolean value) {
-        return value((Object) value, SQLDataType.BOOLEAN);
+        return val(value);
     }
 
     /**
@@ -32713,7 +32713,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<BigDecimal> value(BigDecimal value) {
-        return value((Object) value, SQLDataType.DECIMAL);
+        return val(value);
     }
 
     /**
@@ -32725,7 +32725,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<BigInteger> value(BigInteger value) {
-        return value((Object) value, SQLDataType.DECIMAL_INTEGER);
+        return val(value);
     }
 
     /**
@@ -32737,7 +32737,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<byte[]> value(byte[] value) {
-        return value((Object) value, SQLDataType.VARBINARY);
+        return val(value);
     }
 
     /**
@@ -32749,7 +32749,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<String> value(String value) {
-        return value((Object) value, SQLDataType.VARCHAR);
+        return val(value);
     }
 
     /**
@@ -32761,7 +32761,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Date> value(Date value) {
-        return value((Object) value, SQLDataType.DATE);
+        return val(value);
     }
 
     /**
@@ -32773,7 +32773,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Time> value(Time value) {
-        return value((Object) value, SQLDataType.TIME);
+        return val(value);
     }
 
     /**
@@ -32785,7 +32785,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Timestamp> value(Timestamp value) {
-        return value((Object) value, SQLDataType.TIMESTAMP);
+        return val(value);
     }
 
     /**
@@ -32797,7 +32797,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<LocalDate> value(LocalDate value) {
-        return value((Object) value, SQLDataType.LOCALDATE);
+        return val(value);
     }
 
     /**
@@ -32809,7 +32809,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<LocalTime> value(LocalTime value) {
-        return value((Object) value, SQLDataType.LOCALTIME);
+        return val(value);
     }
 
     /**
@@ -32821,7 +32821,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<LocalDateTime> value(LocalDateTime value) {
-        return value((Object) value, SQLDataType.LOCALDATETIME);
+        return val(value);
     }
 
     /**
@@ -32833,7 +32833,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<OffsetTime> value(OffsetTime value) {
-        return value((Object) value, SQLDataType.OFFSETTIME);
+        return val(value);
     }
 
     /**
@@ -32845,7 +32845,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<OffsetDateTime> value(OffsetDateTime value) {
-        return value((Object) value, SQLDataType.OFFSETDATETIME);
+        return val(value);
     }
 
     /**
@@ -32857,7 +32857,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Instant> value(Instant value) {
-        return value((Object) value, SQLDataType.INSTANT);
+        return val(value);
     }
 
     /**
@@ -32869,7 +32869,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UUID> value(UUID value) {
-        return value((Object) value, SQLDataType.UUID);
+        return val(value);
     }
 
     /**
@@ -32881,7 +32881,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<JSON> value(JSON value) {
-        return value((Object) value, SQLDataType.JSON);
+        return val(value);
     }
 
     /**
@@ -32893,7 +32893,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<JSONB> value(JSONB value) {
-        return value((Object) value, SQLDataType.JSONB);
+        return val(value);
     }
 
     /**
@@ -32905,7 +32905,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<XML> value(XML value) {
-        return value((Object) value, SQLDataType.XML);
+        return val(value);
     }
 
 
@@ -33071,7 +33071,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Byte> inline(byte value) {
-        return inline((Object) value, SQLDataType.TINYINT);
+        return inline0((Object) value, SQLDataType.TINYINT, true);
     }
 
     /**
@@ -33093,7 +33093,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Byte> inline(Byte value) {
-        return inline((Object) value, SQLDataType.TINYINT);
+        return inline0((Object) value, SQLDataType.TINYINT, true);
     }
 
     /**
@@ -33115,7 +33115,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UByte> inline(UByte value) {
-        return inline((Object) value, SQLDataType.TINYINTUNSIGNED);
+        return inline0((Object) value, SQLDataType.TINYINTUNSIGNED, true);
     }
 
     /**
@@ -33137,7 +33137,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Short> inline(short value) {
-        return inline((Object) value, SQLDataType.SMALLINT);
+        return inline0((Object) value, SQLDataType.SMALLINT, true);
     }
 
     /**
@@ -33159,7 +33159,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Short> inline(Short value) {
-        return inline((Object) value, SQLDataType.SMALLINT);
+        return inline0((Object) value, SQLDataType.SMALLINT, true);
     }
 
     /**
@@ -33181,7 +33181,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UShort> inline(UShort value) {
-        return inline((Object) value, SQLDataType.SMALLINTUNSIGNED);
+        return inline0((Object) value, SQLDataType.SMALLINTUNSIGNED, true);
     }
 
     /**
@@ -33203,7 +33203,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Integer> inline(int value) {
-        return inline((Object) value, SQLDataType.INTEGER);
+        return inline0((Object) value, SQLDataType.INTEGER, true);
     }
 
     /**
@@ -33225,7 +33225,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Integer> inline(Integer value) {
-        return inline((Object) value, SQLDataType.INTEGER);
+        return inline0((Object) value, SQLDataType.INTEGER, true);
     }
 
     /**
@@ -33247,7 +33247,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UInteger> inline(UInteger value) {
-        return inline((Object) value, SQLDataType.INTEGERUNSIGNED);
+        return inline0((Object) value, SQLDataType.INTEGERUNSIGNED, true);
     }
 
     /**
@@ -33269,7 +33269,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Long> inline(long value) {
-        return inline((Object) value, SQLDataType.BIGINT);
+        return inline0((Object) value, SQLDataType.BIGINT, true);
     }
 
     /**
@@ -33291,7 +33291,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Long> inline(Long value) {
-        return inline((Object) value, SQLDataType.BIGINT);
+        return inline0((Object) value, SQLDataType.BIGINT, true);
     }
 
     /**
@@ -33313,7 +33313,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<ULong> inline(ULong value) {
-        return inline((Object) value, SQLDataType.BIGINTUNSIGNED);
+        return inline0((Object) value, SQLDataType.BIGINTUNSIGNED, true);
     }
 
     /**
@@ -33335,7 +33335,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Float> inline(float value) {
-        return inline((Object) value, SQLDataType.REAL);
+        return inline0((Object) value, SQLDataType.REAL, true);
     }
 
     /**
@@ -33357,7 +33357,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Float> inline(Float value) {
-        return inline((Object) value, SQLDataType.REAL);
+        return inline0((Object) value, SQLDataType.REAL, true);
     }
 
     /**
@@ -33379,7 +33379,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Double> inline(double value) {
-        return inline((Object) value, SQLDataType.DOUBLE);
+        return inline0((Object) value, SQLDataType.DOUBLE, true);
     }
 
     /**
@@ -33401,7 +33401,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Double> inline(Double value) {
-        return inline((Object) value, SQLDataType.DOUBLE);
+        return inline0((Object) value, SQLDataType.DOUBLE, true);
     }
 
     /**
@@ -33423,7 +33423,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Boolean> inline(boolean value) {
-        return inline((Object) value, SQLDataType.BOOLEAN);
+        return inline0((Object) value, SQLDataType.BOOLEAN, true);
     }
 
     /**
@@ -33445,7 +33445,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Boolean> inline(Boolean value) {
-        return inline((Object) value, SQLDataType.BOOLEAN);
+        return inline0((Object) value, SQLDataType.BOOLEAN, true);
     }
 
     /**
@@ -33467,7 +33467,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<BigDecimal> inline(BigDecimal value) {
-        return inline((Object) value, SQLDataType.DECIMAL);
+        return inline0((Object) value, SQLDataType.DECIMAL, true);
     }
 
     /**
@@ -33489,7 +33489,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<BigInteger> inline(BigInteger value) {
-        return inline((Object) value, SQLDataType.DECIMAL_INTEGER);
+        return inline0((Object) value, SQLDataType.DECIMAL_INTEGER, true);
     }
 
     /**
@@ -33511,7 +33511,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<byte[]> inline(byte[] value) {
-        return inline((Object) value, SQLDataType.VARBINARY);
+        return inline0((Object) value, SQLDataType.VARBINARY, true);
     }
 
     /**
@@ -33533,7 +33533,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<String> inline(String value) {
-        return inline((Object) value, SQLDataType.VARCHAR);
+        return inline0((Object) value, SQLDataType.VARCHAR, true);
     }
 
     /**
@@ -33555,7 +33555,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Date> inline(Date value) {
-        return inline((Object) value, SQLDataType.DATE);
+        return inline0((Object) value, SQLDataType.DATE, true);
     }
 
     /**
@@ -33577,7 +33577,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Time> inline(Time value) {
-        return inline((Object) value, SQLDataType.TIME);
+        return inline0((Object) value, SQLDataType.TIME, true);
     }
 
     /**
@@ -33599,7 +33599,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Timestamp> inline(Timestamp value) {
-        return inline((Object) value, SQLDataType.TIMESTAMP);
+        return inline0((Object) value, SQLDataType.TIMESTAMP, true);
     }
 
     /**
@@ -33621,7 +33621,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<LocalDate> inline(LocalDate value) {
-        return inline((Object) value, SQLDataType.LOCALDATE);
+        return inline0((Object) value, SQLDataType.LOCALDATE, true);
     }
 
     /**
@@ -33643,7 +33643,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<LocalTime> inline(LocalTime value) {
-        return inline((Object) value, SQLDataType.LOCALTIME);
+        return inline0((Object) value, SQLDataType.LOCALTIME, true);
     }
 
     /**
@@ -33665,7 +33665,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<LocalDateTime> inline(LocalDateTime value) {
-        return inline((Object) value, SQLDataType.LOCALDATETIME);
+        return inline0((Object) value, SQLDataType.LOCALDATETIME, true);
     }
 
     /**
@@ -33687,7 +33687,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<OffsetTime> inline(OffsetTime value) {
-        return inline((Object) value, SQLDataType.OFFSETTIME);
+        return inline0((Object) value, SQLDataType.OFFSETTIME, true);
     }
 
     /**
@@ -33709,7 +33709,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<OffsetDateTime> inline(OffsetDateTime value) {
-        return inline((Object) value, SQLDataType.OFFSETDATETIME);
+        return inline0((Object) value, SQLDataType.OFFSETDATETIME, true);
     }
 
     /**
@@ -33731,7 +33731,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Instant> inline(Instant value) {
-        return inline((Object) value, SQLDataType.INSTANT);
+        return inline0((Object) value, SQLDataType.INSTANT, true);
     }
 
     /**
@@ -33753,7 +33753,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UUID> inline(UUID value) {
-        return inline((Object) value, SQLDataType.UUID);
+        return inline0((Object) value, SQLDataType.UUID, true);
     }
 
     /**
@@ -33775,7 +33775,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<JSON> inline(JSON value) {
-        return inline((Object) value, SQLDataType.JSON);
+        return inline0((Object) value, SQLDataType.JSON, true);
     }
 
     /**
@@ -33797,7 +33797,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<JSONB> inline(JSONB value) {
-        return inline((Object) value, SQLDataType.JSONB);
+        return inline0((Object) value, SQLDataType.JSONB, true);
     }
 
     /**
@@ -33819,7 +33819,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<XML> inline(XML value) {
-        return inline((Object) value, SQLDataType.XML);
+        return inline0((Object) value, SQLDataType.XML, true);
     }
 
 
@@ -33991,7 +33991,11 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> inline(Object value, DataType<T> type) {
-        AbstractParamX<T> val = (AbstractParamX<T>) val(value, type);
+        return inline0(value, type, false);
+    }
+
+    static <T> Param<T> inline0(Object value, DataType<T> type, boolean inferredDataType) {
+        AbstractParamX<T> val = (AbstractParamX<T>) val0(value, type, inferredDataType);
         val.setInline0(true);
         return val;
     }
@@ -34030,19 +34034,13 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> val(T value) {
-        return val0(value, false);
+        return val0(value, true);
     }
 
     static <T> Param<T> val0(T value, boolean inferredDataType) {
         Class type = value == null ? Object.class : value.getClass();
         DataType dataType = getDataType0(type);
-        return val0(
-            value,
-            dataType,
-            inferredDataType
-                || !(dataType instanceof BuiltInDataType)
-                || dataType.isOther()
-        );
+        return val0(value, dataType, inferredDataType);
     }
 
     /**
@@ -34053,7 +34051,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Byte> val(byte value) {
-        return val((Object) value, SQLDataType.TINYINT);
+        return val0((Object) value, SQLDataType.TINYINT, true);
     }
 
     /**
@@ -34064,7 +34062,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Byte> val(Byte value) {
-        return val((Object) value, SQLDataType.TINYINT);
+        return val0((Object) value, SQLDataType.TINYINT, true);
     }
 
     /**
@@ -34075,7 +34073,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UByte> val(UByte value) {
-        return val((Object) value, SQLDataType.TINYINTUNSIGNED);
+        return val0((Object) value, SQLDataType.TINYINTUNSIGNED, true);
     }
 
     /**
@@ -34086,7 +34084,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Short> val(short value) {
-        return val((Object) value, SQLDataType.SMALLINT);
+        return val0((Object) value, SQLDataType.SMALLINT, true);
     }
 
     /**
@@ -34097,7 +34095,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Short> val(Short value) {
-        return val((Object) value, SQLDataType.SMALLINT);
+        return val0((Object) value, SQLDataType.SMALLINT, true);
     }
 
     /**
@@ -34108,7 +34106,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UShort> val(UShort value) {
-        return val((Object) value, SQLDataType.SMALLINTUNSIGNED);
+        return val0((Object) value, SQLDataType.SMALLINTUNSIGNED, true);
     }
 
     /**
@@ -34119,7 +34117,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Integer> val(int value) {
-        return val((Object) value, SQLDataType.INTEGER);
+        return val0((Object) value, SQLDataType.INTEGER, true);
     }
 
     /**
@@ -34130,7 +34128,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Integer> val(Integer value) {
-        return val((Object) value, SQLDataType.INTEGER);
+        return val0((Object) value, SQLDataType.INTEGER, true);
     }
 
     /**
@@ -34141,7 +34139,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UInteger> val(UInteger value) {
-        return val((Object) value, SQLDataType.INTEGERUNSIGNED);
+        return val0((Object) value, SQLDataType.INTEGERUNSIGNED, true);
     }
 
     /**
@@ -34152,7 +34150,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Long> val(long value) {
-        return val((Object) value, SQLDataType.BIGINT);
+        return val0((Object) value, SQLDataType.BIGINT, true);
     }
 
     /**
@@ -34163,7 +34161,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Long> val(Long value) {
-        return val((Object) value, SQLDataType.BIGINT);
+        return val0((Object) value, SQLDataType.BIGINT, true);
     }
 
     /**
@@ -34174,7 +34172,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<ULong> val(ULong value) {
-        return val((Object) value, SQLDataType.BIGINTUNSIGNED);
+        return val0((Object) value, SQLDataType.BIGINTUNSIGNED, true);
     }
 
     /**
@@ -34185,7 +34183,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Float> val(float value) {
-        return val((Object) value, SQLDataType.REAL);
+        return val0((Object) value, SQLDataType.REAL, true);
     }
 
     /**
@@ -34196,7 +34194,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Float> val(Float value) {
-        return val((Object) value, SQLDataType.REAL);
+        return val0((Object) value, SQLDataType.REAL, true);
     }
 
     /**
@@ -34207,7 +34205,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Double> val(double value) {
-        return val((Object) value, SQLDataType.DOUBLE);
+        return val0((Object) value, SQLDataType.DOUBLE, true);
     }
 
     /**
@@ -34218,7 +34216,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Double> val(Double value) {
-        return val((Object) value, SQLDataType.DOUBLE);
+        return val0((Object) value, SQLDataType.DOUBLE, true);
     }
 
     /**
@@ -34229,7 +34227,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Boolean> val(boolean value) {
-        return val((Object) value, SQLDataType.BOOLEAN);
+        return val0((Object) value, SQLDataType.BOOLEAN, true);
     }
 
     /**
@@ -34240,7 +34238,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Boolean> val(Boolean value) {
-        return val((Object) value, SQLDataType.BOOLEAN);
+        return val0((Object) value, SQLDataType.BOOLEAN, true);
     }
 
     /**
@@ -34251,7 +34249,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<BigDecimal> val(BigDecimal value) {
-        return val((Object) value, SQLDataType.DECIMAL);
+        return val0((Object) value, SQLDataType.DECIMAL, true);
     }
 
     /**
@@ -34262,7 +34260,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<BigInteger> val(BigInteger value) {
-        return val((Object) value, SQLDataType.DECIMAL_INTEGER);
+        return val0((Object) value, SQLDataType.DECIMAL_INTEGER, true);
     }
 
     /**
@@ -34273,7 +34271,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<byte[]> val(byte[] value) {
-        return val((Object) value, SQLDataType.VARBINARY);
+        return val0((Object) value, SQLDataType.VARBINARY, true);
     }
 
     /**
@@ -34284,7 +34282,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<String> val(String value) {
-        return val((Object) value, SQLDataType.VARCHAR);
+        return val0((Object) value, SQLDataType.VARCHAR, true);
     }
 
     /**
@@ -34295,7 +34293,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Date> val(Date value) {
-        return val((Object) value, SQLDataType.DATE);
+        return val0((Object) value, SQLDataType.DATE, true);
     }
 
     /**
@@ -34306,7 +34304,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Time> val(Time value) {
-        return val((Object) value, SQLDataType.TIME);
+        return val0((Object) value, SQLDataType.TIME, true);
     }
 
     /**
@@ -34317,7 +34315,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Timestamp> val(Timestamp value) {
-        return val((Object) value, SQLDataType.TIMESTAMP);
+        return val0((Object) value, SQLDataType.TIMESTAMP, true);
     }
 
     /**
@@ -34328,7 +34326,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<LocalDate> val(LocalDate value) {
-        return val((Object) value, SQLDataType.LOCALDATE);
+        return val0((Object) value, SQLDataType.LOCALDATE, true);
     }
 
     /**
@@ -34339,7 +34337,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<LocalTime> val(LocalTime value) {
-        return val((Object) value, SQLDataType.LOCALTIME);
+        return val0((Object) value, SQLDataType.LOCALTIME, true);
     }
 
     /**
@@ -34350,7 +34348,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<LocalDateTime> val(LocalDateTime value) {
-        return val((Object) value, SQLDataType.LOCALDATETIME);
+        return val0((Object) value, SQLDataType.LOCALDATETIME, true);
     }
 
     /**
@@ -34361,7 +34359,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<OffsetTime> val(OffsetTime value) {
-        return val((Object) value, SQLDataType.OFFSETTIME);
+        return val0((Object) value, SQLDataType.OFFSETTIME, true);
     }
 
     /**
@@ -34372,7 +34370,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<OffsetDateTime> val(OffsetDateTime value) {
-        return val((Object) value, SQLDataType.OFFSETDATETIME);
+        return val0((Object) value, SQLDataType.OFFSETDATETIME, true);
     }
 
     /**
@@ -34383,7 +34381,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<Instant> val(Instant value) {
-        return val((Object) value, SQLDataType.INSTANT);
+        return val0((Object) value, SQLDataType.INSTANT, true);
     }
 
     /**
@@ -34394,7 +34392,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<UUID> val(UUID value) {
-        return val((Object) value, SQLDataType.UUID);
+        return val0((Object) value, SQLDataType.UUID, true);
     }
 
     /**
@@ -34405,7 +34403,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<JSON> val(JSON value) {
-        return val((Object) value, SQLDataType.JSON);
+        return val0((Object) value, SQLDataType.JSON, true);
     }
 
     /**
@@ -34416,7 +34414,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<JSONB> val(JSONB value) {
-        return val((Object) value, SQLDataType.JSONB);
+        return val0((Object) value, SQLDataType.JSONB, true);
     }
 
     /**
@@ -34427,7 +34425,7 @@ public class DSL {
     @NotNull
     @Support
     public static Param<XML> val(XML value) {
-        return val((Object) value, SQLDataType.XML);
+        return val0((Object) value, SQLDataType.XML, true);
     }
 
 
@@ -34476,7 +34474,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Param<T> val(Object value, Class<T> type) {
-        return val(value, getDataType(type));
+        return val0(value, getDataType(type), true);
     }
 
     /**
@@ -34514,6 +34512,10 @@ public class DSL {
     }
 
     private static <T> Param<T> val0(Object value, DataType<T> type, boolean inferredDataType) {
+        return val0(value, type, inferredDataType, 0, null);
+    }
+
+    static <T> Param<T> val0(Object value, DataType<T> type, boolean inferredDataType, int index, String paramName) {
 
         // Advanced data types have dedicated constant types
         if (value instanceof QualifiedRecord<?> r)
@@ -34536,7 +34538,7 @@ public class DSL {
 
         // The default behaviour
         T converted = type.convert(value);
-        return new Val<>(converted, mostSpecific(converted, type), inferredDataType);
+        return new Val<>(converted, mostSpecific(converted, type), inferredDataType, index, paramName);
     }
 
     /**

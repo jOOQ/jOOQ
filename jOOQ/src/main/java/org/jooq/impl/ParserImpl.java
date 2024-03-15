@@ -13606,13 +13606,28 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         // [#11074] Bindings can be Param or even Field types
         Object binding = nextBinding();
+        Param<?> param;
 
-        if (binding instanceof Field<?> f)
+        if (binding instanceof Val<?> v) {
+            param = DSL.val0(
+                v.getValue(),
+                v.getDataType(),
+                v.inferredDataType,
+                bindIndex,
+                paramName
+            );
+        }
+        else if (binding instanceof Field<?> f) {
             return f;
-
-        Param<?> param = paramName != null
-            ? DSL.param(paramName, binding)
-            : DSL.val(binding);
+        }
+        else
+            param = DSL.val0(
+                binding,
+                DSL.getDataType0((Class<?>) (binding != null ? binding.getClass() : Object.class)),
+                true,
+                bindIndex,
+                paramName
+            );
 
         if (bindParamListener != null)
             bindParams.put(paramName != null ? paramName : ("" + bindIndex), param);

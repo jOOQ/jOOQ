@@ -728,7 +728,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
         static final Set<SQLDialect> REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
         static final Set<SQLDialect> NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-        static final Set<SQLDialect> NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+        static final Set<SQLDialect> NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
 
 
@@ -4030,7 +4030,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case POSTGRES:
                 case YUGABYTEDB:
-                    return pgNewRecord(ctx, dataType.getType(), (AbstractRow<Record>) dataType.getRow(), ctx.resultSet().getObject(ctx.index()));
+                    return pgNewRecord(ctx,
+                        dataType.getType(),
+                        (AbstractRow<Record>) dataType.getRow(),
+                        ctx.resultSet().getObject(ctx.index())
+                    );
+
+                case CLICKHOUSE:
+                    return newRecord(true,
+                        (Class<Record>) dataType.getRecordType(),
+                        (AbstractRow<Record>) dataType.getRow(),
+                        ctx.configuration()
+                    ).operate(r -> {
+                        r.from(ctx.resultSet().getObject(ctx.index()));
+                        return r;
+                    });
 
                 default:
                     if (UDTRecord.class.isAssignableFrom(dataType.getType()))

@@ -105,16 +105,13 @@ final class ParsingConnection extends DefaultConnection {
             bindSize = render.bindValues().size();
             bindMapping = new HashMap<>();
 
-            // TODO: We shouldn't rely on identity for these reasons:
-            // - Copies are possible
-            // - Wrappings are possible
-            // - Conversions are possible
-            // Ideally, we should be able to maintain and extract the map directly in the DefaultRenderContext
-            // TODO: If anything goes wrong (probably because of the above), the cache must be invalid, and we must re-parse and re-render the query every time
-            for (int i = 0; i < bindValues.length; i++)
-                for (int j = 0; j < render.bindValues().size(); j++)
-                    if (bindValues[i] == render.bindValues().get(j))
-                        bindMapping.computeIfAbsent(i, x -> new ArrayList<>()).add(j);
+            // [#16456] Parsed bind indexes are available in Val
+            for (int j = 0; j < render.bindValues().size(); j++) {
+                if (render.bindValues().get(j) instanceof Val<?> v) {
+                    if (v.index <= bindValues.length)
+                        bindMapping.computeIfAbsent(v.index - 1, x -> new ArrayList<>()).add(j);
+                }
+            }
         }
 
         Rendered rendered(Param<?>... bindValues) {

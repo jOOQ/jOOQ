@@ -73,6 +73,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.JSONB;
 import org.jooq.Param;
+import org.jooq.Parser;
 // ...
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
@@ -110,16 +111,24 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
      */
     final boolean                                            inferredDataType;
 
-    Val(T value, DataType<T> type, boolean inferredDataType) {
+    /**
+     * [#16456] The bind index if the bind value was created by some context
+     * that has bind indexes available, e.g. the {@link Parser}.
+     */
+    final int                                                index;
+
+    Val(T value, DataType<T> type, boolean inferredDataType, int index) {
         super(value, type(value, type));
 
         this.inferredDataType = inferredDataType;
+        this.index = index;
     }
 
-    Val(T value, DataType<T> type, boolean inferredDataType, String paramName) {
+    Val(T value, DataType<T> type, boolean inferredDataType, int index, String paramName) {
         super(value, type(value, type), paramName);
 
         this.inferredDataType = inferredDataType;
+        this.index = index;
     }
 
     private static final <T> DataType<T> type(T value, DataType<T> type) {
@@ -164,13 +173,13 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
     }
 
     final Val<T> copy(Object newValue) {
-        Val<T> w = new Val<>(getDataType().convert(newValue), getDataType(), inferredDataType, getParamName());
+        Val<T> w = new Val<>(getDataType().convert(newValue), getDataType(), inferredDataType, index, getParamName());
         w.setInline0(isInline());
         return w;
     }
 
     final <U> Val<U> convertTo0(DataType<U> type) {
-        Val<U> w = new Val<>(type.convert(getValue()), type, LegacyConvertedDataType.isInstance(type) || type.isOther(), getParamName());
+        Val<U> w = new Val<>(type.convert(getValue()), type, LegacyConvertedDataType.isInstance(type) || type.isOther(), index, getParamName());
         w.setInline0(isInline());
         return w;
     }
@@ -381,7 +390,7 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
 
     @Override
     public final Param<T> $inline(boolean inline) {
-        Val<T> w = new Val<>(value, getDataType(), inferredDataType, getParamName());
+        Val<T> w = new Val<>(value, getDataType(), inferredDataType, index, getParamName());
         w.setInline0(inline);
         return w;
     }

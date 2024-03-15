@@ -12678,6 +12678,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final AggregateFunction<?> parseCountIf() {
         if (parseFunctionNameIf("COUNT")) {
             parse('(');
+            if (parseIf(')'))
+                return count();
+
             boolean distinct = parseSetQuantifier();
 
             if (parseIf('*') && parse(')'))

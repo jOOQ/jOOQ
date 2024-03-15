@@ -28406,7 +28406,7 @@ public class DSL {
      * @see #rollup(FieldOrRow...)
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, MARIADB, MYSQL, POSTGRES, TRINO })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, MARIADB, MYSQL, POSTGRES, TRINO })
     public static GroupField rollup(Field<?>... fields) {
         return rollup((FieldOrRow[]) Tools.nullSafe(fields));
     }
@@ -28425,7 +28425,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, MARIADB, MYSQL, POSTGRES, TRINO })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, MARIADB, MYSQL, POSTGRES, TRINO })
     public static GroupField rollup(FieldOrRow... fields) {
         return new Rollup(fields);
     }
@@ -28436,7 +28436,7 @@ public class DSL {
      * @see #cube(Field...)
      */
     @NotNull
-    @Support({ DUCKDB, POSTGRES, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
     public static GroupField cube(Field<?>... fields) {
         return cube((FieldOrRow[]) Tools.nullSafe(fields));
     }
@@ -28455,7 +28455,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ DUCKDB, POSTGRES, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
     public static GroupField cube(FieldOrRow... fields) {
         return new Cube(fields);
     }
@@ -28475,7 +28475,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ DUCKDB, POSTGRES, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
     public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = map(fields, f -> asList(f), List[]::new);
         return groupingSets(array);
@@ -28496,7 +28496,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ DUCKDB, POSTGRES, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = map(fieldSets, f -> asList(f), List[]::new);
         return groupingSets(array);
@@ -28517,7 +28517,7 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @NotNull
-    @Support({ DUCKDB, POSTGRES, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
     @SafeVarargs
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         return new GroupingSets(fieldSets);
@@ -28570,7 +28570,7 @@ public class DSL {
      * @see #rollup(Field...)
      */
     @NotNull
-    @Support({ DUCKDB, MYSQL, POSTGRES, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, MYSQL, POSTGRES, TRINO })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", INTEGER, field);
     }

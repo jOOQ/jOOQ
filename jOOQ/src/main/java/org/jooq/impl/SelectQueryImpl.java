@@ -4207,10 +4207,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 l = new ArrayList<>(l);
                 r = new ArrayList<>(r);
 
-                for (int i = 0; i < r.size(); i++) {
-                    if (r.get(i) instanceof NoField) {
-                        l.remove(i);
-                        r.remove(i);
+                Iterator<Field<?>> lit = l.iterator();
+                Iterator<Field<?>> rit = r.iterator();
+
+                while (lit.hasNext() && rit.hasNext()) {
+                    lit.next();
+
+                    if (rit.next() instanceof NoField) {
+                        lit.remove();
+                        rit.remove();
                     }
                 }
             }

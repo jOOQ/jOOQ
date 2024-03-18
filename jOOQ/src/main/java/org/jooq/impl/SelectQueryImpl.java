@@ -1290,7 +1290,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         DSL.select(new QualifiedSelectFieldList(table(name("t")), select))
            .from(copy.asTable("t"))
            .where(rn.eq(one()))
-           .orderBy(map(orderBy, o -> unqualified(o)));
+           .orderBy(map(orderBy, (SortField<?> o) -> unqualified(o)));
 
         if (limit.limit != null) {
             SelectLimitPercentStep<?> s2 = s1.limit(limit.limit);
@@ -3315,7 +3315,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 // [#7222] Workaround for https://issues.apache.org/jira/browse/DERBY-6983
                 if (ctx.family() == DERBY)
-                    ctx.visit(new SelectFieldList<>(map(fields, f -> Tools.unqualified(f))));
+                    ctx.visit(new SelectFieldList<>(Tools.<Field<?>, Field<?>, RuntimeException>map(fields, f -> Tools.unqualified(f))));
                 else
                     ctx.sql('*');
 
@@ -3998,10 +3998,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 l = new ArrayList<>(l);
                 r = new ArrayList<>(r);
 
-                for (int i = 0; i < r.size(); i++) {
-                    if (r.get(i) instanceof NoField) {
-                        l.remove(i);
-                        r.remove(i);
+                Iterator<Field<?>> lit = l.iterator();
+                Iterator<Field<?>> rit = r.iterator();
+
+                while (lit.hasNext() && rit.hasNext()) {
+                    lit.next();
+
+                    if (rit.next() instanceof NoField) {
+                        lit.remove();
+                        rit.remove();
                     }
                 }
             }

@@ -125,11 +125,6 @@ implements
 
 
 
-
-
-
-
-
             default:
                 ctx.visit(function(N_SQRT, getDataType(), value));
                 break;

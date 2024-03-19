@@ -136,11 +136,6 @@ implements
 
 
 
-
-
-
-
-
             case SQLITE:
                 ctx.visit(function(N_LOG, getDataType(), value));
                 break;

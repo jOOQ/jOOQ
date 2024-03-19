@@ -190,6 +190,7 @@ import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.DECIMAL;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
@@ -7844,4 +7845,18 @@ final class Tools {
     static final boolean sortable(Field<?> f) {
         return !f.getDataType().isBinary();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

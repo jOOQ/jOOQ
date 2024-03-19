@@ -104,6 +104,11 @@ implements
             case DERBY:
                 return false;
 
+
+
+
+
+
             default:
                 return true;
         }
@@ -128,6 +133,12 @@ implements
             case DERBY:
                 ctx.visit(DSL.exp(imul(DSL.ln(base), exponent)));
                 break;
+
+
+
+
+
+
 
             default:
                 ctx.visit(function(N_POWER, getDataType(), base, exponent));

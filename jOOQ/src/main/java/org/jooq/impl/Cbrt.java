@@ -160,7 +160,7 @@ implements
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                ctx.visit(DSL.root(value, inline(3, value.getDataType())));
+                ctx.visit(DSL.root(value, inline(3)));
                 break;
 
 

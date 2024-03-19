@@ -370,19 +370,12 @@ implements
         if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
-        switch (ctx.family()) {
 
 
 
 
 
-
-
-            default: {
-                ctx.sql(' ').visit(sequence);
-                break;
-            }
-        }
+        ctx.sql(' ').visit(sequence);
 
         ctx.end(Clause.ALTER_SEQUENCE_SEQUENCE);
 

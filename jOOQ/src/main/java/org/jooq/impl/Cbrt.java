@@ -118,6 +118,11 @@ implements
             case SQLITE:
                 return false;
 
+
+
+
+
+
             default:
                 return true;
         }
@@ -155,8 +160,14 @@ implements
             case MARIADB:
             case MYSQL:
             case SQLITE:
-                ctx.visit(DSL.root(value, inline(3.0)));
+                ctx.visit(DSL.root(value, inline(3, value.getDataType())));
                 break;
+
+
+
+
+
+
 
             default:
                 ctx.visit(function(N_CBRT, getDataType(), value));

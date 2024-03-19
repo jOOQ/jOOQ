@@ -176,7 +176,7 @@ implements
             case SQLITE:
             case TRINO:
             case YUGABYTEDB:
-                ctx.visit(DSL.power(value, idiv(inline(1.0), degree)));
+                ctx.visit(DSL.power(value, idiv(inline(1.0, degree.getDataType()), degree)));
                 break;
 
             default:

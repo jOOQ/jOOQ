@@ -197,6 +197,7 @@ import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.DECIMAL;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
@@ -204,6 +205,7 @@ import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.ScalarSubquery.NO_SUPPORT_CORRELATED_SUBQUERY;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.SubqueryCharacteristics.SET_OPERATION;
@@ -6133,10 +6135,6 @@ final class Tools {
 
 
     static final void toSQLDDLTypeDeclaration0(Context<?> ctx, DataType<?> type) {
-        if (ctx.family() == CLICKHOUSE && type.nullable())
-            ctx.sql("Nullable(");
-
-        DataType<?> elementType = type.getArrayBaseDataType();
 
         // In some databases, identity is a type, not a flag.
         if (type.identity()) {
@@ -6229,6 +6227,12 @@ final class Tools {
         if (type.isTimestamp() && (type.getBinding() instanceof DateAsTimestampBinding || type.getBinding() instanceof LocalDateAsLocalDateTimeBinding))
             type = SQLDataType.DATE;
 
+        if (ctx.family() == CLICKHOUSE) {
+            ctx.sql(type.getCastTypeName(ctx.configuration()));
+            return;
+        }
+
+        DataType<?> elementType = type.getArrayBaseDataType();
         String typeName = type.getTypeName(ctx.configuration());
 
 
@@ -6314,9 +6318,6 @@ final class Tools {
         // [#8011] Collations are vendor-specific storage clauses, which we might need to ignore
         if (type.collation() != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.sql(' ').visit(K_COLLATE).sql(' ').visit(type.collation());
-
-        if (ctx.family() == CLICKHOUSE && type.nullable())
-            ctx.sql(')');
     }
 
     static final boolean storedEnumType(DataType<EnumType> enumType) {
@@ -7915,6 +7916,7 @@ final class Tools {
 
     private static boolean derivedTableEnabled(Context<?> ctx) {
         return !FALSE.equals(ctx.settings().isRenderVariablesInDerivedTablesForEmulations())
+            && !NO_SUPPORT_CORRELATED_SUBQUERY.contains(ctx.dialect())
             && !NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect());
     }
 
@@ -7959,4 +7961,18 @@ final class Tools {
     static final boolean sortable(Field<?> f) {
         return !f.getDataType().isBinary();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

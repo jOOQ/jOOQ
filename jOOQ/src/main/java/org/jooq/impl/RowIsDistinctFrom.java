@@ -65,11 +65,17 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.Names.NQ_SELECT;
+import static org.jooq.impl.Names.N_arrayUniq;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.Tools.visitSubquery;
 
@@ -87,18 +93,19 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  * @author Lukas Eder
  */
 final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplemented {
-    private static final Set<SQLDialect> EMULATE_DISTINCT            = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY);
+    static final Set<SQLDialect> EMULATE_DISTINCT            = SQLDialect.supportedBy(CUBRID, DERBY);
+    static final Set<SQLDialect> EMULATE_WITH_ARRAYS         = SQLDialect.supportedBy(CLICKHOUSE);
 
     // An emulation may be required only for the version where a subquery is used
     // E.g. in HSQLDB: https://sourceforge.net/p/hsqldb/bugs/1579/
     // Or in PostgreSQL: https://twitter.com/pg_xocolatl/status/1260344255035379714
-    private static final Set<SQLDialect> EMULATE_DISTINCT_SELECT     = SQLDialect.supportedBy(HSQLDB, POSTGRES, TRINO, YUGABYTEDB);
-    private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> EMULATE_DISTINCT_SELECT     = SQLDialect.supportedBy(HSQLDB, POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
 
-    private final Row                    lhs;
-    private final Row                    rhsRow;
-    private final Select<?>              rhsSelect;
-    private final boolean                not;
+    private final Row            lhs;
+    private final Row            rhsRow;
+    private final Select<?>      rhsSelect;
+    private final boolean        not;
 
     RowIsDistinctFrom(Row lhs, Row rhs, boolean not) {
         this.lhs = lhs;
@@ -145,6 +152,17 @@ final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplem
 
             if (!not)
                 ctx.sql(')');
+        }
+
+        else if (EMULATE_WITH_ARRAYS.contains(ctx.dialect())) {
+            ctx.visit(
+                function(N_arrayUniq, INTEGER,
+                    array(
+                        lhs,
+                        rhsRow != null ? rhsRow : CustomField.of(NQ_SELECT, SQLDataType.RECORD, c -> visitSubquery(c, rhsSelect, PREDICAND))
+                    )
+                ).eq(inline(not ? 1 : 2))
+            );
         }
 
         // SQLite knows the IS / IS NOT predicate

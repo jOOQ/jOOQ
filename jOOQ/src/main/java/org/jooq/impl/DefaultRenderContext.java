@@ -48,6 +48,7 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
+import static org.jooq.impl.JoinTable.NO_SUPPORT_NESTED_JOIN;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
@@ -306,18 +307,24 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             //          TODO: subqueryLevel() is lower than scopeLevel if we use implicit join in procedural logic
             else if (e1.joinNode != null && e1.joinNode.hasJoinPaths()) {
                 DefaultRenderContext ctx = new DefaultRenderContext(this, false);
-                ctx.data(DATA_RENDER_IMPLICIT_JOIN, true);
-                replacedSQL = ctx
-                    .declareTables(true)
-                    .sql('(')
-                    .formatIndentStart(e1.indent)
-                    .formatIndentStart()
-                    .formatNewLine()
-                    .visit(e1.joinNode.joinTree())
-                    .formatNewLine()
-                    .sql(')')
-                    .render();
+                boolean noNesting = !NO_SUPPORT_NESTED_JOIN.contains(ctx.dialect());
 
+                ctx.data(DATA_RENDER_IMPLICIT_JOIN, true);
+                ctx.declareTables(true);
+
+                if (noNesting)
+                    ctx.sql('(')
+                       .formatIndentStart(e1.indent)
+                       .formatIndentStart()
+                       .formatNewLine();
+
+                ctx.visit(e1.joinNode.joinTree());
+
+                if (noNesting)
+                    ctx.formatNewLine()
+                       .sql(')');
+
+                replacedSQL = ctx.render();
                 insertedBindValues = ctx.bindValues();
             }
             else {

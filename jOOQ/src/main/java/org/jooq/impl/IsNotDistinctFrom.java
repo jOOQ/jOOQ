@@ -116,6 +116,10 @@ implements
         else if (IsDistinctFrom.EMULATE_DISTINCT_PREDICATE.contains(ctx.dialect()))
             ctx.visit(exists(select(arg1.as("x")).intersect(select(arg2.as("x")))));
 
+        // [#7539] While INTERSECT is supported, correlating subqueries hardly is in ClickHouse
+        else if (IsDistinctFrom.EMULATE_WITH_ARRAYS.contains(ctx.dialect()))
+            ctx.visit(function(N_arrayUniq, INTEGER, array(arg1, arg2)).eq(inline(1)));
+
         // MySQL knows the <=> operator
         else if (IsDistinctFrom.SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect()))
             ctx.visit(condition("{0} <=> {1}", arg1, arg2));

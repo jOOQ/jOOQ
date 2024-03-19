@@ -284,7 +284,12 @@ implements
 
     final void acceptArguments3(Context<?> ctx, QueryPartCollectionView<Field<?>> args, Function<? super Field<?>, ? extends Field<?>> fun) {
         if (args.isEmpty() && this instanceof Count)
-            args = QueryPartListView.wrap(ASTERISK.get());
+
+            // [#7539] Work around https://github.com/ClickHouse/ClickHouse/issues/61004
+            if (ctx.family() == CLICKHOUSE && filter.hasWhere())
+                args = QueryPartListView.wrap();
+            else
+                args = QueryPartListView.wrap(ASTERISK.get());
 
         if (!filter.hasWhere() || supportsFilter(ctx))
             ctx.visit(wrap(args).map(fun));

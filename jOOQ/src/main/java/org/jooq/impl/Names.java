@@ -73,6 +73,7 @@ final class Names {
     static final Name N_ARRAY_AGG                   = systemName("array_agg");
     static final Name N_ARRAY_CONSTRUCT             = systemName("array_construct");
     static final Name N_ARRAY_CONSTRUCT_COMPACT     = systemName("array_construct_compact");
+    static final Name N_arrayUniq                   = systemName("arrayUniq");
     static final Name N_BITCOUNT                    = systemName("bitcount");
     static final Name N_bitCount                    = systemName("bitCount");
     static final Name N_BITWISE_AND_AGG             = systemName("bitwise_and_agg");
@@ -644,6 +645,9 @@ final class Names {
     static final Name N_XMLSERIALIZE                = systemName("xmlserialize");
     static final Name N_XMLSERIALIZE_CONTENT        = systemName("xmlserialize_content");
     static final Name N_XOR                         = systemName("xor");
+    static final Name N_arrayConcat                 = systemName("arrayConcat");
+    static final Name N_arrayPushBack               = systemName("arrayPushBack");
+    static final Name N_arrayPushFront              = systemName("arrayPushFront");
     static final Name N_bitAnd                      = systemName("bitAnd");
     static final Name N_bitNot                      = systemName("bitNot");
     static final Name N_bitOr                       = systemName("bitOr");

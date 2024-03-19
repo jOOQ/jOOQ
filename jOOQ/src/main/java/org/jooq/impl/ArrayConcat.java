@@ -93,6 +93,17 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+            case CLICKHOUSE:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -100,6 +111,10 @@ implements
 
 
 
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_arrayConcat, getDataType(), arg1, arg2));
+                break;
 
             default:
                 ctx.sql('(').visit(arg1).sql(" || ").visit(arg2).sql(')');

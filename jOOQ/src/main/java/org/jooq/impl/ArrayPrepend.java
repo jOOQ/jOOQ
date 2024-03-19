@@ -100,6 +100,9 @@ implements
             case TRINO:
                 return false;
 
+            case CLICKHOUSE:
+                return false;
+
             default:
                 return true;
         }
@@ -118,6 +121,10 @@ implements
             case HSQLDB:
             case TRINO:
                 ctx.visit(arrayConcat(array(arg1), arg2));
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(function(N_arrayPushFront, getDataType(), arg2, arg1));
                 break;
 
             default:

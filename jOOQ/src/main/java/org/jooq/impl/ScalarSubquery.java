@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -63,6 +64,7 @@ import org.jooq.Select;
 @SuppressWarnings("unchecked")
 final class ScalarSubquery<T> extends AbstractField<T> implements QOM.ScalarSubquery<T> {
 
+    static final Set<SQLDialect> NO_SUPPORT_CORRELATED_SUBQUERY     = SQLDialect.supportedBy(CLICKHOUSE);
     static final Set<SQLDialect> NO_SUPPORT_WITH_IN_SCALAR_SUBQUERY = SQLDialect.supportedBy(HSQLDB);
     final Select<?>              query;
     final boolean                predicandSubquery;

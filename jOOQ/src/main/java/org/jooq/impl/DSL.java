@@ -22108,7 +22108,7 @@ public class DSL {
      * Calculate the cardinality of an array field.
      */
     @NotNull
-    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static Field<Integer> cardinality(Field<? extends Object[]> array) {
         return new Cardinality(array);
     }
@@ -22121,7 +22121,7 @@ public class DSL {
      * @param index is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T> arrayGet(Field<T[]> array, int index) {
         return new ArrayGet<>(array, Tools.field(index));
     }
@@ -22132,7 +22132,7 @@ public class DSL {
      * Get an array element at a given index (1 based).
      */
     @NotNull
-    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T> arrayGet(Field<T[]> array, Field<Integer> index) {
         return new ArrayGet<>(array, index);
     }
@@ -22143,7 +22143,7 @@ public class DSL {
      * Concatenate two arrays.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayConcat(T[] arg1, T[] arg2) {
         return new ArrayConcat<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -22154,7 +22154,7 @@ public class DSL {
      * Concatenate two arrays.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayConcat(T[] arg1, Field<T[]> arg2) {
         return new ArrayConcat<>(Tools.field(arg1), arg2);
     }
@@ -22165,7 +22165,7 @@ public class DSL {
      * Concatenate two arrays.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayConcat(Field<T[]> arg1, T[] arg2) {
         return new ArrayConcat<>(arg1, Tools.field(arg2, arg1));
     }
@@ -22176,7 +22176,7 @@ public class DSL {
      * Concatenate two arrays.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayConcat(Field<T[]> arg1, Field<T[]> arg2) {
         return new ArrayConcat<>(arg1, arg2);
     }
@@ -22189,7 +22189,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] arg1, T arg2) {
         return new ArrayAppend<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -22200,7 +22200,7 @@ public class DSL {
      * Append an element to an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(T[] arg1, Field<T> arg2) {
         return new ArrayAppend<>(Tools.field(arg1), arg2);
     }
@@ -22213,7 +22213,7 @@ public class DSL {
      * @param arg2 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, T arg2) {
         return new ArrayAppend<>(arg1, Tools.field(arg2));
     }
@@ -22224,7 +22224,7 @@ public class DSL {
      * Append an element to an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, Field<T> arg2) {
         return new ArrayAppend<>(arg1, arg2);
     }
@@ -22237,7 +22237,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T arg1, T[] arg2) {
         return new ArrayPrepend<>(Tools.field(arg1), Tools.field(arg2));
     }
@@ -22250,7 +22250,7 @@ public class DSL {
      * @param arg1 is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(T arg1, Field<T[]> arg2) {
         return new ArrayPrepend<>(Tools.field(arg1), arg2);
     }
@@ -22261,7 +22261,7 @@ public class DSL {
      * Prepend an element to an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> arg1, T[] arg2) {
         return new ArrayPrepend<>(arg1, Tools.field(arg2));
     }
@@ -22272,7 +22272,7 @@ public class DSL {
      * Prepend an element to an array.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayPrepend(Field<T> arg1, Field<T[]> arg2) {
         return new ArrayPrepend<>(arg1, arg2);
     }

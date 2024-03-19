@@ -8738,16 +8738,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFieldAddDatePart(MINUTE);
                 else if (parseFunctionNameIf("ADD_SECONDS"))
                     return parseFieldAddDatePart(SECOND);
-                else if (parseFunctionNameIf("ARRAY_APPEND"))
+                else if (parseFunctionNameIf("ARRAY_APPEND", "arrayPushBack"))
                     return parseFunctionArgs2((f1, f2) -> arrayAppend((Field<Void[]>) f1, (Field<Void>) f2));
-                else if (parseFunctionNameIf("ARRAY_CAT", "ARRAY_CONCAT"))
+                else if (parseFunctionNameIf("ARRAY_CAT", "ARRAY_CONCAT", "arrayConcat"))
                     return parseFunctionArgs2((f1, f2) -> arrayConcat(f1, f2));
-                else if (parseFunctionNameIf("ARRAY_GET"))
+                else if (parseFunctionNameIf("ARRAY_GET", "arrayElement"))
                     return parseFunctionArgs2((f1, f2) -> arrayGet(f1, f2));
                 else if (parseFunctionNameIf("ARRAY_OVERLAP", "ARRAYS_OVERLAP"))
                     return parseFunctionArgs2((f1, f2) -> arrayOverlap((Field<Void[]>) f1, (Field<Void[]>) f2));
                 else if (parseFunctionNameIf("ARRAY_PREPEND"))
                     return parseFunctionArgs2((f1, f2) -> arrayPrepend((Field<Void>) f1, (Field<Void[]>) f2));
+                else if (parseFunctionNameIf("arrayPushFront"))
+                    return parseFunctionArgs2((f1, f2) -> arrayPrepend((Field<Void>) f2, (Field<Void[]>) f1));
                 else if (parseFunctionNameIf("ARRAY_REMOVE"))
                     return parseFunctionArgs2((f1, f2) -> arrayRemove((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_REPLACE"))

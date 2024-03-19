@@ -95,7 +95,8 @@ implements
 
 
 
-    static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY);
+    static final Set<SQLDialect> EMULATE_DISTINCT_PREDICATE  = SQLDialect.supportedUntil(CUBRID, DERBY);
+    static final Set<SQLDialect> EMULATE_WITH_ARRAYS         = SQLDialect.supportedBy(CLICKHOUSE);
     static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
 
 
@@ -122,6 +123,10 @@ implements
         // [#7222] [#7224] Make sure the columns are aliased
         else if (EMULATE_DISTINCT_PREDICATE.contains(ctx.dialect()))
             ctx.visit(notExists(select(arg1.as("x")).intersect(select(arg2.as("x")))));
+
+        // [#7539] While INTERSECT is supported, correlating subqueries hardly is in ClickHouse
+        else if (EMULATE_WITH_ARRAYS.contains(ctx.dialect()))
+            ctx.visit(function(N_arrayUniq, INTEGER, array(arg1, arg2)).eq(inline(2)));
 
         // MySQL knows the <=> operator
         else if (SUPPORT_DISTINCT_WITH_ARROW.contains(ctx.dialect()))

@@ -1439,16 +1439,16 @@ public final class QOM {
 
     public /*sealed*/ interface ScalarSubquery<T>
         extends
-            Field<T>,
-            UOperator1<Select<? extends Record1<T>>, ScalarSubquery<T>>
+            org.jooq.Field<T>,
+            UOperator1<org.jooq.Select<? extends org.jooq.Record1<T>>, ScalarSubquery<T>>
         /*permits
             ScalarSubquery*/
     {}
 
     public /*sealed*/ interface RowSubquery
         extends
-            Row,
-            UOperator1<Select<?>, RowSubquery>
+            org.jooq.Row,
+            UOperator1<org.jooq.Select<?>, RowSubquery>
     {}
 
     public /*sealed*/ interface Neg<T>

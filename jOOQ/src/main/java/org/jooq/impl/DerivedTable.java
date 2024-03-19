@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -66,7 +67,7 @@ import org.jooq.TableOptions;
  */
 class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.DerivedTable<R> {
 
-    static final Set<SQLDialect>  NO_SUPPORT_CORRELATED_DERIVED_TABLE = SQLDialect.supportedUntil(DERBY, H2, MARIADB);
+    static final Set<SQLDialect>  NO_SUPPORT_CORRELATED_DERIVED_TABLE = SQLDialect.supportedUntil(CLICKHOUSE, DERBY, H2, MARIADB);
     private final Lazy<Select<R>> query;
 
     DerivedTable(Select<R> query) {

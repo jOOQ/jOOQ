@@ -178,6 +178,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supportedBy(CUBRID, IGNITE);
     static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>  EMUlATE_SEMI_ANTI_JOIN     = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>  NO_SUPPORT_NESTED_JOIN     = SQLDialect.supportedBy(CLICKHOUSE);
 
     final Table<?>                lhs;
     final Table<?>                rhs;

@@ -1140,10 +1140,10 @@ public class Settings
     }
 
     /**
-     * Whether stored function calls should be wrapped in scalar subqueries.
+     * Whether string concatenation operands should be coalesced to empty strings.
      * <p>
-     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
-     * set to true, users can automatically profit from this feature in all SQL statements.
+     * Some dialects treat <code>NULL</code> values as empty strings when concatenating strings (e.g. Oracle). For
+     * compatibility reasons, this flag allows for replicating this behaviour also elsewhere.
      * <p>
      * This feature is available in the commercial distribution only.
      * 
@@ -1157,10 +1157,10 @@ public class Settings
     }
 
     /**
-     * Whether stored function calls should be wrapped in scalar subqueries.
+     * Whether string concatenation operands should be coalesced to empty strings.
      * <p>
-     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
-     * set to true, users can automatically profit from this feature in all SQL statements.
+     * Some dialects treat <code>NULL</code> values as empty strings when concatenating strings (e.g. Oracle). For
+     * compatibility reasons, this flag allows for replicating this behaviour also elsewhere.
      * <p>
      * This feature is available in the commercial distribution only.
      * 
@@ -6995,10 +6995,10 @@ public class Settings
     }
 
     /**
-     * Whether stored function calls should be wrapped in scalar subqueries.
+     * Whether string concatenation operands should be coalesced to empty strings.
      * <p>
-     * Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
-     * set to true, users can automatically profit from this feature in all SQL statements.
+     * Some dialects treat <code>NULL</code> values as empty strings when concatenating strings (e.g. Oracle). For
+     * compatibility reasons, this flag allows for replicating this behaviour also elsewhere.
      * <p>
      * This feature is available in the commercial distribution only.
      * 

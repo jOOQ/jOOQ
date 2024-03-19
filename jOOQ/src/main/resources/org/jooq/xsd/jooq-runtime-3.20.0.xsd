@@ -195,10 +195,10 @@ unless DML joins are supported.]]></jxb:javadoc></jxb:property></appinfo></annot
       </element>
       
       <element name="renderCoalesceToEmptyStringInConcat" type="boolean" minOccurs="0" maxOccurs="1" default="false">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether stored function calls should be wrapped in scalar subqueries.
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether string concatenation operands should be coalesced to empty strings.
 <p>
-Oracle 11g (and potentially, other databases too) implements scalar subquery caching. With this flag
-set to true, users can automatically profit from this feature in all SQL statements.
+Some dialects treat <code>NULL</code> values as empty strings when concatenating strings (e.g. Oracle). For
+compatibility reasons, this flag allows for replicating this behaviour also elsewhere.
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

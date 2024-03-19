@@ -118,19 +118,12 @@ implements
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
-        switch (ctx.family()) {
 
 
 
 
 
-
-
-            default: {
-                ctx.visit(sequence);
-                break;
-            }
-        }
+        ctx.sql(' ').visit(sequence);
 
         if (ctx.family() == DERBY)
             ctx.sql(' ').visit(K_RESTRICT);

@@ -70,6 +70,8 @@ public class Settings
     @XmlElement(defaultValue = "false")
     protected Boolean renderFormatted = false;
     protected RenderFormatting renderFormatting;
+    @XmlElement(defaultValue = "false")
+    protected Boolean renderNullifEmptyStringForBindValues = false;
     @XmlElement(defaultValue = "NEVER")
     @XmlSchemaType(name = "string")
     protected AutoAliasExpressions renderAutoAliasedDerivedTableExpressions = AutoAliasExpressions.NEVER;
@@ -895,6 +897,34 @@ public class Settings
      */
     public void setRenderFormatting(RenderFormatting value) {
         this.renderFormatting = value;
+    }
+
+    /**
+     * Whether to wrap String typed bind values with NULLIF(?, '') for Oracle compatibility.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRenderNullifEmptyStringForBindValues() {
+        return renderNullifEmptyStringForBindValues;
+    }
+
+    /**
+     * Whether to wrap String typed bind values with NULLIF(?, '') for Oracle compatibility.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRenderNullifEmptyStringForBindValues(Boolean value) {
+        this.renderNullifEmptyStringForBindValues = value;
     }
 
     /**
@@ -6841,6 +6871,17 @@ public class Settings
     }
 
     /**
+     * Whether to wrap String typed bind values with NULLIF(?, '') for Oracle compatibility.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withRenderNullifEmptyStringForBindValues(Boolean value) {
+        setRenderNullifEmptyStringForBindValues(value);
+        return this;
+    }
+
+    /**
      * Whether to auto-alias expressions in derived tables.
      * <p>
      * This feature is available in the commercial distribution only.
@@ -9455,6 +9496,7 @@ public class Settings
         builder.append("renderLocale", renderLocale);
         builder.append("renderFormatted", renderFormatted);
         builder.append("renderFormatting", renderFormatting);
+        builder.append("renderNullifEmptyStringForBindValues", renderNullifEmptyStringForBindValues);
         builder.append("renderAutoAliasedDerivedTableExpressions", renderAutoAliasedDerivedTableExpressions);
         builder.append("renderOptionalAssociativityParentheses", renderOptionalAssociativityParentheses);
         builder.append("renderOptionalAsKeywordForTableAliases", renderOptionalAsKeywordForTableAliases);
@@ -9810,6 +9852,15 @@ public class Settings
             }
         } else {
             if (!renderFormatting.equals(other.renderFormatting)) {
+                return false;
+            }
+        }
+        if (renderNullifEmptyStringForBindValues == null) {
+            if (other.renderNullifEmptyStringForBindValues!= null) {
+                return false;
+            }
+        } else {
+            if (!renderNullifEmptyStringForBindValues.equals(other.renderNullifEmptyStringForBindValues)) {
                 return false;
             }
         }
@@ -11733,6 +11784,7 @@ public class Settings
         result = ((prime*result)+((renderLocale == null)? 0 :renderLocale.hashCode()));
         result = ((prime*result)+((renderFormatted == null)? 0 :renderFormatted.hashCode()));
         result = ((prime*result)+((renderFormatting == null)? 0 :renderFormatting.hashCode()));
+        result = ((prime*result)+((renderNullifEmptyStringForBindValues == null)? 0 :renderNullifEmptyStringForBindValues.hashCode()));
         result = ((prime*result)+((renderAutoAliasedDerivedTableExpressions == null)? 0 :renderAutoAliasedDerivedTableExpressions.hashCode()));
         result = ((prime*result)+((renderOptionalAssociativityParentheses == null)? 0 :renderOptionalAssociativityParentheses.hashCode()));
         result = ((prime*result)+((renderOptionalAsKeywordForTableAliases == null)? 0 :renderOptionalAsKeywordForTableAliases.hashCode()));

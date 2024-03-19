@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.joining;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
@@ -44,7 +45,9 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.AbstractRowAsField.acceptMultisetContent;
 import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.Names.N_NULLIF;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -215,7 +218,23 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
 
 
             try {
-                getBinding().sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), r, value, getBindVariable(ctx)));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                accept0(r);
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while generating SQL for Binding", e);
@@ -232,7 +251,11 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
         }
     }
 
-    private void acceptDefaultEmbeddable(Context<?> ctx) {
+    private final void accept0(RenderContext ctx) throws SQLException {
+        getBinding().sql(new DefaultBindingSQLContext<>(ctx.configuration(), ctx.data(), ctx, value, getBindVariable(ctx)));
+    }
+
+    private final void acceptDefaultEmbeddable(Context<?> ctx) {
         ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(embeddedFields(this))));
     }
 

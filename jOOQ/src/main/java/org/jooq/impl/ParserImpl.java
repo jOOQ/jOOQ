@@ -14167,7 +14167,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Join parseJoinTypeIf() {
         JoinHint hint;
 
-        if (parseKeywordIf("CROSS")) {
+        if (parseKeywordIf("ANTI JOIN"))
+            return new Join(JoinType.LEFT_ANTI_JOIN, null);
+        else if (parseKeywordIf("CROSS")) {
             if (parseKeywordIf("JOIN"))
                 return new Join(JoinType.CROSS_JOIN, null);
             else if (parseKeywordIf("APPLY"))
@@ -14201,6 +14203,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else if ((parseKeywordIf("INNER") || true) && parseKeyword("JOIN"))
                 return new Join(JoinType.NATURAL_JOIN, null);
         }
+        else if (parseKeywordIf("SEMI JOIN"))
+            return new Join(JoinType.LEFT_SEMI_JOIN, null);
         else if (parseKeywordIf("STRAIGHT_JOIN"))
             return new Join(JoinType.STRAIGHT_JOIN, null);
 
@@ -15013,6 +15017,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     };
 
     private static final String[] KEYWORDS_IN_FROM = {
+        "ANTI JOIN",
         "CROSS APPLY",
         "CROSS JOIN",
         "FULL JOIN",
@@ -15066,6 +15071,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "RIGHT OUTER LOOKUP JOIN",
         "RIGHT OUTER MERGE JOIN",
         "RIGHT SEMI JOIN",
+        "SEMI JOIN",
         "STRAIGHT_JOIN",
         "USING"
     };

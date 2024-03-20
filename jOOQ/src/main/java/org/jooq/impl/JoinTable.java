@@ -80,7 +80,6 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -112,8 +111,10 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.Keywords.K_ANTI_JOIN;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PARTITION_BY;
+import static org.jooq.impl.Keywords.K_SEMI_JOIN;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.QueryPartListView.wrap;
@@ -177,7 +178,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, H2, IGNITE, TRINO);
     static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supportedBy(CUBRID, IGNITE);
     static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect>  EMUlATE_SEMI_ANTI_JOIN     = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>  EMUlATE_SEMI_ANTI_JOIN     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>  NO_SUPPORT_NESTED_JOIN     = SQLDialect.supportedBy(CLICKHOUSE);
 
     final Table<?>                lhs;
@@ -467,6 +468,32 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
                 else
                     keyword = translatedType.toKeyword();
+
+                break;
+
+            case LEFT_SEMI_JOIN:
+                switch (ctx.family()) {
+                    case DUCKDB:
+                        keyword = K_SEMI_JOIN;
+                        break;
+
+                    default:
+                        keyword = translatedType.toKeyword();
+                        break;
+                }
+
+                break;
+
+            case LEFT_ANTI_JOIN:
+                switch (ctx.family()) {
+                    case DUCKDB:
+                        keyword = K_ANTI_JOIN;
+                        break;
+
+                    default:
+                        keyword = translatedType.toKeyword();
+                        break;
+                }
 
                 break;
 

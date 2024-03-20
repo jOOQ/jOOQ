@@ -62,6 +62,7 @@ final class Keywords {
     static final Keyword K_ALTER_TABLE              = keyword("alter table");
     static final Keyword K_ALWAYS                   = keyword("always");
     static final Keyword K_AND                      = keyword("and");
+    static final Keyword K_ANTI_JOIN                = keyword("anti join");
     static final Keyword K_ARRAY                    = keyword("array");
     static final Keyword K_AS                       = keyword("as");
     static final Keyword K_AS_OF                    = keyword("as of");
@@ -387,6 +388,7 @@ final class Keywords {
     static final Keyword K_SEARCH_PATH              = keyword("search_path");
     static final Keyword K_SECOND                   = keyword("second");
     static final Keyword K_SELECT                   = keyword("select");
+    static final Keyword K_SEMI_JOIN                = keyword("semi join");
     static final Keyword K_SEPARATOR                = keyword("separator");
     static final Keyword K_SEQUENCE                 = keyword("sequence");
     static final Keyword K_SERIAL                   = keyword("serial");

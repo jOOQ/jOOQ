@@ -293,6 +293,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
+import org.jooq.tools.json.JSONArray;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -1282,6 +1283,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultArrayBinding<U> extends InternalBinding<Object[], U> {
+
+        private static final Set<SQLDialect> REQUIRES_JSON_CAST  = SQLDialect.supportedBy(DUCKDB);
         private static final Set<SQLDialect> REQUIRES_ARRAY_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
 
@@ -1356,11 +1359,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlBind0(BindingSQLContext<U> ctx, Object[] value) throws SQLException {
             Cast.renderCastIf(ctx.render(),
-                c -> super.sqlBind0(ctx, value),
+                c -> {
+                    if (REQUIRES_JSON_CAST.contains(ctx.dialect())) {
+                        ctx.render().visit(K_CAST).sql('(');
+                        super.sqlBind0(ctx, value);
+                        ctx.render().sql(' ').visit(K_AS).sql(' ').visit(K_JSON).sql(')');
+                    }
+                    else
+                        super.sqlBind0(ctx, value);
+                },
                 c -> {
 
+                    if (REQUIRES_JSON_CAST.contains(ctx.dialect())) {
+                        ctx.render().sql(dataType.getCastTypeName(ctx.render().configuration()));
+                    }
+
                     // Postgres needs explicit casting for enum (array) types
-                    if (EnumType.class.isAssignableFrom(dataType.getType().getComponentType()))
+                    else if (EnumType.class.isAssignableFrom(dataType.getType().getComponentType()))
                         pgRenderEnumCast(ctx.render(), dataType.getType(), pgEnumValue(dataType.getType()));
 
                     // ... and also for other array types
@@ -1369,7 +1384,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 },
 
                 // In Postgres, some additional casting must be done in some cases...
-                () -> REQUIRES_ARRAY_CAST.contains(ctx.family())
+                () -> REQUIRES_ARRAY_CAST.contains(ctx.dialect())
+                   || REQUIRES_JSON_CAST.contains(ctx.dialect())
             );
         }
 
@@ -1397,6 +1413,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     }
 
                     ctx.statement().setArray(ctx.index(), new MockArray(ctx.family(), a, t));
+                    break;
+                }
+
+                // [#15732] Use JSON as a workaround to bind array types for now.
+                case DUCKDB: {
+                    ctx.statement().setString(ctx.index(), new JSONArray(asList(value)).toString());
                     break;
                 }
 

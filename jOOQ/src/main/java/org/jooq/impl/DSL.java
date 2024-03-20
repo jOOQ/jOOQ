@@ -29310,7 +29310,7 @@ public class DSL {
      * Create an array literal.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> array(T... values) {
         return array(Tools.fields(values));
     }
@@ -29320,7 +29320,7 @@ public class DSL {
      */
     @SafeVarargs
     @NotNull
-    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> array(Field<T>... fields) {
         return array(Arrays.asList(fields));
     }
@@ -29329,7 +29329,7 @@ public class DSL {
      * Create an array literal.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> array(Collection<? extends Field<T>> fields) {
         return new Array<>(fields);
     }
@@ -29342,7 +29342,7 @@ public class DSL {
      * </code></pre>
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     public static <T> Field<T[]> array(Select<? extends Record1<T>> select) {
         return new ArrayQuery<>(select);
     }

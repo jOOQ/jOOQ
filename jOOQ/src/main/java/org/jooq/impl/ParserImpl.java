@@ -14187,8 +14187,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else if ((parseKeywordIf("OUTER") || true) && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
                 return new Join(JoinType.LEFT_OUTER_JOIN, hint);
         }
-        else if (parseKeywordIf("RIGHT") && (parseKeywordIf("OUTER") || true) && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
-            return new Join(JoinType.RIGHT_OUTER_JOIN, hint);
+        else if (parseKeywordIf("RIGHT")) {
+            if (parseKeywordIf("ANTI JOIN"))
+                throw notImplemented("RIGHT ANTI JOIN");
+            else if (parseKeywordIf("SEMI JOIN"))
+                throw notImplemented("RIGHT SEMI JOIN");
+            else if ((parseKeywordIf("OUTER") || true) && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
+                return new Join(JoinType.RIGHT_OUTER_JOIN, hint);
+        }
         else if (parseKeywordIf("FULL") && (parseKeywordIf("OUTER") || true) && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
             return new Join(JoinType.FULL_OUTER_JOIN, hint);
         else if (parseKeywordIf("OUTER APPLY"))
@@ -15350,7 +15356,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final ParserException notImplemented(String feature) {
-        return notImplemented(feature, "https://github.com/jOOQ/jOOQ/issues/10171");
+        return notImplemented(feature, "https://github.com/jOOQ/jOOQ/issues/16487");
     }
 
     private final ParserException notImplemented(String feature, String link) {

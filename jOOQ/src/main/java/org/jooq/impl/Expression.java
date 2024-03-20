@@ -790,6 +790,7 @@ implements
 
 
 
+                case DUCKDB:
                 case POSTGRES:
                 case YUGABYTEDB:
                 case TRINO: {

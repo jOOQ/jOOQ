@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -76,7 +77,6 @@ import static org.jooq.impl.MetaSQL.M_COMMENTS;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SOURCES;
-import static org.jooq.impl.MetaSQL.M_UNIQUE_KEYS;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
@@ -155,7 +155,7 @@ final class MetaImpl extends AbstractMeta {
     private static final JooqLogger      log                              = JooqLogger.getLogger(MetaImpl.class);
     private static final Set<SQLDialect> INVERSE_SCHEMA_CATALOG           = SQLDialect.supportedBy(CLICKHOUSE, MARIADB, MYSQL);
     private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_SCHEMAS               = SQLDialect.supportedBy(FIREBIRD, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_INDEXES               = SQLDialect.supportedBy(TRINO);
 

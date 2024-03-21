@@ -739,6 +739,14 @@ implements
     }
 
     @Override
+    public final boolean isFloat() {
+        Class<?> tType = tType0();
+        return Float.class == tType
+            || Double.class == tType
+        ;
+    }
+
+    @Override
     public final boolean isString() {
         return tType0() == String.class;
     }

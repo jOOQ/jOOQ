@@ -1069,6 +1069,18 @@ public interface DataType<T> extends Named {
     boolean isInteger();
 
     /**
+     * Whether this data type is any floating point data type.
+     * <p>
+     * This applies to any of these types:
+     * <ul>
+     * <li> {@link SQLDataType#FLOAT}</li>
+     * <li> {@link SQLDataType#DOUBLE}</li>
+     * <li> {@link SQLDataType#REAL}</li>
+     * </ul>
+     */
+    boolean isFloat();
+
+    /**
      * Whether this data type is any character data type.
      * <p>
      * This applies to any of these types:

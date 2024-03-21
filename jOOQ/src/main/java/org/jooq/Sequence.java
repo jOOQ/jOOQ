@@ -42,6 +42,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -116,14 +117,14 @@ public interface Sequence<T extends Number> extends Qualified, Typed<T> {
      * An expression to get the current value of this sequence.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     Field<T> currval();
 
     /**
      * An expression to increment the sequence and get the next value.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     Field<T> nextval();
 
     /**
@@ -132,6 +133,6 @@ public interface Sequence<T extends Number> extends Qualified, Typed<T> {
      * This is done using {@link DSL#generateSeries(int, int)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     Select<Record1<T>> nextvals(int size);
 }

@@ -13622,7 +13622,7 @@ public class DSL {
      * </code></pre>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     public static Sequence<BigInteger> sequence(Name name) {
         return sequence(name, BigInteger.class);
     }
@@ -13656,7 +13656,7 @@ public class DSL {
      *            {@link SQLDataType})
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     public static <T extends Number> Sequence<T> sequence(Name name, Class<T> type) {
         return sequence(name, getDataType(type));
     }
@@ -13675,7 +13675,7 @@ public class DSL {
      * </code></pre>
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     public static <T extends Number> Sequence<T> sequence(Name name, DataType<T> type) {
         return new SequenceImpl<>(
             name.unqualifiedName(),
@@ -15189,7 +15189,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     @PlainSQL
     public static Sequence<BigInteger> sequence(String sql) {
         return sequence(sql, BigInteger.class);
@@ -15220,7 +15220,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, Class<T> type) {
         return sequence(sql, getDataType(type));
@@ -15243,7 +15243,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.10")
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
         return new SequenceImpl<>(sql, null, type, true);

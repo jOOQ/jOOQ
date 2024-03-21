@@ -130,14 +130,6 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
         ctx.settings().setRenderMapping(new RenderMapping()
             .withDefaultCatalog(DUCKDB_TABLES.getCatalog().getName())
             .withDefaultSchema(DUCKDB_TABLES.getSchema().getName())
-//            .withCatalogs(new MappedCatalog()
-//                .withInput(DUCKDB_TABLES.getCatalog().getName())
-//                .withOutput("")
-//                .withSchemata(new MappedSchema()
-//                    .withInput(DUCKDB_TABLES.getSchema().getName())
-//                    .withOutput("")
-//                )
-//            )
         );
         return ctx;
     }
@@ -377,7 +369,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
                   cycle,
                   0 as cache
                 from duckdb_sequences()
-                where sequence_name in ({0})
+                where schema_name in ({0})
                 """,
                 DSL.list(schemas.stream().map(DSL::val).collect(toList()))
             )

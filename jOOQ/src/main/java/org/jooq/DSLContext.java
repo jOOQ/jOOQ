@@ -12508,7 +12508,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     BigInteger nextval(String sequence) throws DataAccessException;
 
     /**
@@ -12518,7 +12518,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     BigInteger nextval(Name sequence) throws DataAccessException;
 
     /**
@@ -12528,7 +12528,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -12540,7 +12540,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     <T extends Number> List<T> nextvals(Sequence<T> sequence, int size) throws DataAccessException;
 
     /**
@@ -12550,7 +12550,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     BigInteger currval(String sequence) throws DataAccessException;
 
     /**
@@ -12560,7 +12560,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     BigInteger currval(Name sequence) throws DataAccessException;
 
     /**
@@ -12570,7 +12570,7 @@ public interface DSLContext extends Scope {
      * @throws DataAccessException if something went wrong executing the query
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException;
 
     // -------------------------------------------------------------------------

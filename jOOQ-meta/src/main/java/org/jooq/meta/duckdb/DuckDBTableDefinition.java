@@ -51,7 +51,6 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
-import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -86,6 +85,7 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
                 DUCKDB_COLUMNS.NUMERIC_SCALE,
                 DUCKDB_COLUMNS.IS_NULLABLE,
                 DUCKDB_COLUMNS.COLUMN_DEFAULT,
+                DUCKDB_COLUMNS.COLUMN_DEFAULT.like(inline("nextval('%')")).as("is_identity"),
                 when(
                     DUCKDB_TYPES.LOGICAL_TYPE.eq(inline("STRUCT")),
                     DUCKDB_TYPES.SCHEMA_NAME).as(DUCKDB_TYPES.SCHEMA_NAME),
@@ -124,7 +124,7 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
                 record.get(DUCKDB_COLUMNS.COLUMN_NAME),
                 record.get(DUCKDB_COLUMNS.COLUMN_INDEX),
                 type,
-                false,
+                record.get("is_identity", boolean.class),
                 record.get(DUCKDB_COLUMNS.COMMENT)
             ));
 		}

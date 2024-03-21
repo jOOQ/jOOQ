@@ -189,6 +189,8 @@ final class SQLDataTypes {
         public static final DataType<YearToSecond> INTERVAL                 = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVAL, "interval");
         public static final DataType<YearToMonth>  INTERVALYEARTOMONTH      = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
         public static final DataType<DayToSecond>  INTERVALDAYTOSECOND      = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALDAYTOSECOND, "interval day to second", "interval day(9) to second");
+        public static final DataType<JSON>         JSON                     = new BuiltInDataType<>(FAMILY, SQLDataType.JSON, "json");
+        public static final DataType<JSONB>        JSONB                    = new BuiltInDataType<>(FAMILY, SQLDataType.JSONB, "json");
 
         // -------------------------------------------------------------------------
         // Compatibility types for supported SQLDialect.DUCKDB, SQLDataTypes
@@ -202,8 +204,6 @@ final class SQLDataTypes {
         protected static final DataType<UShort>    __SMALLINTUNSIGNED       = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINTUNSIGNED, "int");
         protected static final DataType<UInteger>  __INTEGERUNSIGNED        = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGERUNSIGNED, "bigint");
         protected static final DataType<ULong>     __BIGINTUNSIGNED         = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINTUNSIGNED, "decimal(p, s)");
-        protected static final DataType<JSON>      __JSON                   = new BuiltInDataType<>(FAMILY, SQLDataType.JSON, "clob");
-        protected static final DataType<JSONB>     __JSONB                  = new BuiltInDataType<>(FAMILY, SQLDataType.JSONB, "blob");
         protected static final DataType<Year>      __YEAR                   = new BuiltInDataType<>(FAMILY, SQLDataType.YEAR, "smallint");
 
         // -------------------------------------------------------------------------

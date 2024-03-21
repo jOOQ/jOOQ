@@ -58,6 +58,9 @@ import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_SCHEMAS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TABLES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TYPES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_VIEWS;
+import static org.jooq.meta.duckdb.system.information_schema.Tables.KEY_COLUMN_USAGE;
+import static org.jooq.meta.duckdb.system.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
+import static org.jooq.meta.duckdb.system.information_schema.Tables.TABLE_CONSTRAINTS;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -75,6 +78,9 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
+import org.jooq.conf.MappedCatalog;
+import org.jooq.conf.MappedSchema;
+import org.jooq.conf.RenderMapping;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.ArrayDefinition;
@@ -95,8 +101,7 @@ import org.jooq.meta.TableDefinition;
 // ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
-
-import org.jetbrains.annotations.NotNull;
+import org.jooq.meta.duckdb.system.information_schema.tables.KeyColumnUsage;
 
 /**
  * The DuckDB database
@@ -121,7 +126,19 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
         DSLContext ctx = DSL.using(getConnection(), SQLDialect.DUCKDB);
 
         // Cannot fully qualify column references of table valued functions
-        ctx.settings().setRenderSchema(false);
+        // But don't do this with the INFORMATION_SCHEMA!
+        ctx.settings().setRenderMapping(new RenderMapping()
+            .withDefaultCatalog(DUCKDB_TABLES.getCatalog().getName())
+            .withDefaultSchema(DUCKDB_TABLES.getSchema().getName())
+//            .withCatalogs(new MappedCatalog()
+//                .withInput(DUCKDB_TABLES.getCatalog().getName())
+//                .withOutput("")
+//                .withSchemata(new MappedSchema()
+//                    .withInput(DUCKDB_TABLES.getSchema().getName())
+//                    .withOutput("")
+//                )
+//            )
+        );
         return ctx;
     }
 
@@ -202,6 +219,62 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        KeyColumnUsage fkKcu = KEY_COLUMN_USAGE.as("fk_kcu");
+        KeyColumnUsage pkKcu = KEY_COLUMN_USAGE.as("pk_kcu");
+
+        for (Record record : create()
+            .select(
+                REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
+                REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
+                TABLE_CONSTRAINTS.TABLE_NAME,
+                fkKcu.CONSTRAINT_NAME,
+                fkKcu.TABLE_SCHEMA,
+                fkKcu.TABLE_NAME,
+                fkKcu.COLUMN_NAME,
+                pkKcu.COLUMN_NAME
+            )
+            .from(REFERENTIAL_CONSTRAINTS)
+            .join(fkKcu)
+                .on(fkKcu.CONSTRAINT_SCHEMA.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA))
+                .and(fkKcu.CONSTRAINT_NAME.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME))
+            .join(TABLE_CONSTRAINTS)
+                .on(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA.eq(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA))
+                .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.eq(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME))
+            .join(pkKcu)
+                .on(pkKcu.CONSTRAINT_SCHEMA.eq(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA))
+                .and(pkKcu.CONSTRAINT_NAME.eq(TABLE_CONSTRAINTS.CONSTRAINT_NAME))
+                .and(pkKcu.ORDINAL_POSITION.eq(fkKcu.POSITION_IN_UNIQUE_CONSTRAINT))
+            .where(fkKcu.TABLE_SCHEMA.in(getInputSchemata()))
+            .orderBy(
+                fkKcu.TABLE_SCHEMA.asc(),
+                fkKcu.TABLE_NAME.asc(),
+                fkKcu.CONSTRAINT_NAME.asc(),
+                fkKcu.ORDINAL_POSITION.asc())
+        ) {
+            SchemaDefinition foreignKeySchema = getSchema(record.get(fkKcu.TABLE_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
+
+            String foreignKey = record.get(fkKcu.CONSTRAINT_NAME);
+            String foreignKeyTableName = record.get(fkKcu.TABLE_NAME);
+            String foreignKeyColumn = record.get(fkKcu.COLUMN_NAME);
+            String uniqueKey = record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
+            String uniqueKeyTableName = record.get(TABLE_CONSTRAINTS.TABLE_NAME);
+            String uniqueKeyColumn = record.get(pkKcu.COLUMN_NAME);
+
+            TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
+            TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
+
+            if (foreignKeyTable != null && uniqueKeyTable != null)
+                relations.addForeignKey(
+                    foreignKey,
+                    foreignKeyTable,
+                    foreignKeyTable.getColumn(foreignKeyColumn),
+                    uniqueKey,
+                    uniqueKeyTable,
+                    uniqueKeyTable.getColumn(uniqueKeyColumn),
+                    true
+                );
+        }
     }
 
     @Override

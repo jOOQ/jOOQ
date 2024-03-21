@@ -141,6 +141,45 @@ public class Schemata extends TableImpl<Record> {
         return Keys.SYNTHETIC_PK_SCHEMATA;
     }
 
+    private transient KeyColumnUsage _keyColumnUsage;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>system.information_schema.key_column_usage</code> table
+     */
+    public KeyColumnUsage keyColumnUsage() {
+        if (_keyColumnUsage == null)
+            _keyColumnUsage = new KeyColumnUsage(this, null, Keys.SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+
+        return _keyColumnUsage;
+    }
+
+    private transient ReferentialConstraints _referentialConstraints;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>system.information_schema.referential_constraints</code> table
+     */
+    public ReferentialConstraints referentialConstraints() {
+        if (_referentialConstraints == null)
+            _referentialConstraints = new ReferentialConstraints(this, null, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+
+        return _referentialConstraints;
+    }
+
+    private transient TableConstraints _tableConstraints;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>system.information_schema.table_constraints</code> table
+     */
+    public TableConstraints tableConstraints() {
+        if (_tableConstraints == null)
+            _tableConstraints = new TableConstraints(this, null, Keys.SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+
+        return _tableConstraints;
+    }
+
     private transient Columns _columns;
 
     /**

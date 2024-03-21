@@ -5,7 +5,10 @@ package org.jooq.meta.duckdb.system.information_schema;
 
 
 import org.jooq.meta.duckdb.system.information_schema.tables.Columns;
+import org.jooq.meta.duckdb.system.information_schema.tables.KeyColumnUsage;
+import org.jooq.meta.duckdb.system.information_schema.tables.ReferentialConstraints;
 import org.jooq.meta.duckdb.system.information_schema.tables.Schemata;
+import org.jooq.meta.duckdb.system.information_schema.tables.TableConstraints;
 
 
 /**
@@ -20,9 +23,24 @@ public class Tables {
     public static final Columns COLUMNS = Columns.COLUMNS;
 
     /**
+     * The table <code>system.information_schema.key_column_usage</code>.
+     */
+    public static final KeyColumnUsage KEY_COLUMN_USAGE = KeyColumnUsage.KEY_COLUMN_USAGE;
+
+    /**
+     * The table <code>system.information_schema.referential_constraints</code>.
+     */
+    public static final ReferentialConstraints REFERENTIAL_CONSTRAINTS = ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
+
+    /**
      * The table <code>system.information_schema.schemata</code>.
      */
     public static final Schemata SCHEMATA = Schemata.SCHEMATA;
+
+    /**
+     * The table <code>system.information_schema.table_constraints</code>.
+     */
+    public static final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
 
     /**
      * The table <code>system.information_schema.tables</code>.

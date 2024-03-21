@@ -12,7 +12,10 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.duckdb.system.System;
 import org.jooq.meta.duckdb.system.information_schema.tables.Columns;
+import org.jooq.meta.duckdb.system.information_schema.tables.KeyColumnUsage;
+import org.jooq.meta.duckdb.system.information_schema.tables.ReferentialConstraints;
 import org.jooq.meta.duckdb.system.information_schema.tables.Schemata;
+import org.jooq.meta.duckdb.system.information_schema.tables.TableConstraints;
 import org.jooq.meta.duckdb.system.information_schema.tables.Tables;
 
 
@@ -35,9 +38,24 @@ public class InformationSchema extends SchemaImpl {
     public final Columns COLUMNS = Columns.COLUMNS;
 
     /**
+     * The table <code>system.information_schema.key_column_usage</code>.
+     */
+    public final KeyColumnUsage KEY_COLUMN_USAGE = KeyColumnUsage.KEY_COLUMN_USAGE;
+
+    /**
+     * The table <code>system.information_schema.referential_constraints</code>.
+     */
+    public final ReferentialConstraints REFERENTIAL_CONSTRAINTS = ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
+
+    /**
      * The table <code>system.information_schema.schemata</code>.
      */
     public final Schemata SCHEMATA = Schemata.SCHEMATA;
+
+    /**
+     * The table <code>system.information_schema.table_constraints</code>.
+     */
+    public final TableConstraints TABLE_CONSTRAINTS = TableConstraints.TABLE_CONSTRAINTS;
 
     /**
      * The table <code>system.information_schema.tables</code>.
@@ -61,7 +79,10 @@ public class InformationSchema extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Columns.COLUMNS,
+            KeyColumnUsage.KEY_COLUMN_USAGE,
+            ReferentialConstraints.REFERENTIAL_CONSTRAINTS,
             Schemata.SCHEMATA,
+            TableConstraints.TABLE_CONSTRAINTS,
             Tables.TABLES
         );
     }

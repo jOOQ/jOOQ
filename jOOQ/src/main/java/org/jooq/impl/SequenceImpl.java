@@ -251,6 +251,7 @@ implements
 
 
 
+                case DUCKDB:
                 case POSTGRES:
                 case YUGABYTEDB:
                     ctx.visit(method.keyword).sql('(');

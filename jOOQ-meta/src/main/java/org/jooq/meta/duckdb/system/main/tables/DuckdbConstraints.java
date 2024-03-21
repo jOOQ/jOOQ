@@ -13,7 +13,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 import org.jooq.meta.duckdb.system.main.Main;
@@ -91,26 +90,16 @@ public class DuckdbConstraints extends TableImpl<Record> {
     public final TableField<Record, String> EXPRESSION = createField(DSL.name("expression"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.main.duckdb_constraints.constraint_column_indexes</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> CONSTRAINT_COLUMN_INDEXES = createField(DSL.name("constraint_column_indexes"), DefaultDataType.getDefaultDataType("BIGINT[]"), this, "");
+    public final TableField<Record, Long[]> CONSTRAINT_COLUMN_INDEXES = createField(DSL.name("constraint_column_indexes"), SQLDataType.BIGINT.array(), this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.main.duckdb_constraints.constraint_column_names</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> CONSTRAINT_COLUMN_NAMES = createField(DSL.name("constraint_column_names"), DefaultDataType.getDefaultDataType("VARCHAR[]"), this, "");
+    public final TableField<Record, String[]> CONSTRAINT_COLUMN_NAMES = createField(DSL.name("constraint_column_names"), SQLDataType.VARCHAR.array(), this, "");
 
     private DuckdbConstraints(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

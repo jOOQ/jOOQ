@@ -541,6 +541,8 @@ class GenerationUtil {
 
 
 
+            case DUCKDB:
+                return new BaseType(t.replaceFirst("(?i:array)|\\[\\]", ""), u);
 
 
             case POSTGRES:

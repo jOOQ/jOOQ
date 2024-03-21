@@ -41,6 +41,7 @@ import static java.util.Collections.unmodifiableCollection;
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -140,28 +141,29 @@ import org.jetbrains.annotations.ApiStatus.Internal;
 @Internal
 public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
-    private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(HSQLDB, MARIADB);
-    private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION  = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
-    private static final Set<SQLDialect>                        SUPPORT_POSTGRES_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION   = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>                        SUPPORT_TRINO_ARRAY_NOTATION    = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
+    private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION            = SQLDialect.supportedBy(HSQLDB, MARIADB);
+    private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION         = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
+    private static final Set<SQLDialect>                        SUPPORT_POSTGRES_PREFIX_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>                        SUPPORT_POSTGRES_SUFFIX_ARRAY_NOTATION = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION          = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>                        SUPPORT_TRINO_ARRAY_NOTATION           = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
 
     /**
      * A pattern for data type name normalisation.
      */
-    private static final Pattern                                P_NORMALISE                     = Pattern.compile("\"|\\.|\\s|\\(\\w+(\\s*,\\s*\\w+)*\\)|(NOT\\s*NULL)?");
+    private static final Pattern                                P_NORMALISE                            = Pattern.compile("\"|\\.|\\s|\\(\\w+(\\s*,\\s*\\w+)*\\)|(NOT\\s*NULL)?");
 
     /**
      * A pattern to be used to replace all precision, scale, and length
      * information.
      */
-    private static final Pattern                                P_TYPE_NAME                     = Pattern.compile("\\([^)]*\\)");
+    private static final Pattern                                P_TYPE_NAME                            = Pattern.compile("\\([^)]*\\)");
 
     /**
      * A pattern to be used to extract all precision, scale, and length
      * information.
      */
-    private static final Pattern                                P_PRECISION_SCALE               = Pattern.compile("\\(\\s*(\\d+)(?:\\s*,\\s*(\\d+))?\\s*\\)");
+    private static final Pattern                                P_PRECISION_SCALE                      = Pattern.compile("\\(\\s*(\\d+)(?:\\s*,\\s*(\\d+))?\\s*\\)");
 
     // -------------------------------------------------------------------------
     // Data type caches
@@ -712,12 +714,12 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                     result = TYPES_BY_NAME[SQLDialect.DEFAULT.ordinal()].get("INTEGER");
 
                 // [#4065] PostgreSQL reports array types as _typename, e.g. _varchar
-                else if (arrayCheck && SUPPORT_POSTGRES_ARRAY_NOTATION.contains(dialect) && typeName.charAt(0) == '_')
+                else if (arrayCheck && SUPPORT_POSTGRES_PREFIX_ARRAY_NOTATION.contains(dialect) && typeName.charAt(0) == '_')
                     result = getDataType(dialect, typeName.substring(1)).getArrayDataType();
 
                 // [#8545] CockroachDB is a little different from PostgreSQL. We're reading crdb_sql_type rather
                 //         than data_type / udt_name from information_schema.columns
-                else if (arrayCheck && SUPPORT_POSTGRES_ARRAY_NOTATION.contains(dialect) && typeName.endsWith("[]"))
+                else if (arrayCheck && SUPPORT_POSTGRES_SUFFIX_ARRAY_NOTATION.contains(dialect) && typeName.endsWith("[]"))
                     result = getDataType(dialect, typeName.substring(0, typeName.length() - 2)).getArrayDataType();
 
                 // [#6466] HSQLDB reports array types as XYZARRAY. H2 should, too

@@ -3472,6 +3472,7 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+            case DUCKDB:
             case H2:
             case POSTGRES:
             case YUGABYTEDB:

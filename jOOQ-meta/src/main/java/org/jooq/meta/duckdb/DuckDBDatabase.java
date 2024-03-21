@@ -96,6 +96,8 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * The DuckDB database
  *
@@ -116,7 +118,11 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
     @Override
     protected DSLContext create0() {
-        return DSL.using(getConnection(), SQLDialect.DUCKDB);
+        DSLContext ctx = DSL.using(getConnection(), SQLDialect.DUCKDB);
+
+        // Cannot fully qualify column references of table valued functions
+        ctx.settings().setRenderSchema(false);
+        return ctx;
     }
 
     @Override

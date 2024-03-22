@@ -71,7 +71,10 @@ import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_UNIQUE_KEYS;
+import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
@@ -86,6 +89,7 @@ import java.io.Serializable;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -764,15 +768,39 @@ final class MetaImpl extends AbstractMeta {
                                 String.class,  // TABLE_NAME
                                 boolean.class, // NON_UNIQUE
                                 String.class,  // INDEX_QUALIFIER
+
                                 String.class,  // INDEX_NAME
                                 int.class,     // TYPE
                                 int.class,     // ORDINAL_POSITION
                                 String.class,  // COLUMN_NAME
                                 String.class,  // ASC_OR_DESC
+
                                 long.class,    // CARDINALITY
                                 long.class,    // PAGES
                                 String.class   // FILTER_CONDITION
                             );
+                        }
+
+                        catch (SQLFeatureNotSupportedException e) {
+                            log.debug("Cannot call DatabaseMetaData::getIndexInfo", e);
+
+                            return dsl().newResult(asList(
+                                DSL.field("TABLE_CAT", VARCHAR),
+                                DSL.field("TABLE_SCHEM", VARCHAR),
+                                DSL.field("TABLE_NAME", VARCHAR),
+                                DSL.field("NON_UNIQUE", BOOLEAN),
+                                DSL.field("INDEX_QUALIFIER", VARCHAR),
+
+                                DSL.field("INDEX_NAME", VARCHAR),
+                                DSL.field("TYPE", INTEGER),
+                                DSL.field("ORDINAL_POSITION", INTEGER),
+                                DSL.field("COLUMN_NAME", SMALLINT),
+                                DSL.field("ASC_OR_DESC", SMALLINT),
+
+                                DSL.field("CARDINALITY", BIGINT),
+                                DSL.field("PAGES", BIGINT),
+                                DSL.field("FILTER_CONDITION", VARCHAR)
+                            ));
                         }
                     }));
 
@@ -897,6 +925,27 @@ final class MetaImpl extends AbstractMeta {
                         String.class,  // FK_NAME
                         String.class   // PK_NAME
                     );
+                }
+                catch (SQLFeatureNotSupportedException e) {
+                    log.debug("Cannot call DatabaseMetaData::getImportedKeys", e);
+
+                    return dsl().newResult(asList(
+                        DSL.field("PKTABLE_CAT", VARCHAR),
+                        DSL.field("PKTABLE_SCHEM", VARCHAR),
+                        DSL.field("PKTABLE_NAME", VARCHAR),
+                        DSL.field("PKCOLUMN_NAME", VARCHAR),
+                        DSL.field("FKTABLE_CAT", VARCHAR),
+
+                        DSL.field("FKTABLE_SCHEM", VARCHAR),
+                        DSL.field("FKTABLE_NAME", VARCHAR),
+                        DSL.field("FKCOLUMN_NAME", VARCHAR),
+                        DSL.field("KEY_SEQ", SMALLINT),
+                        DSL.field("UPDATE_RULE", SMALLINT),
+
+                        DSL.field("DELETE_RULE", SMALLINT),
+                        DSL.field("FK_NAME", VARCHAR),
+                        DSL.field("PK_NAME", VARCHAR)
+                    ));
                 }
             });
 

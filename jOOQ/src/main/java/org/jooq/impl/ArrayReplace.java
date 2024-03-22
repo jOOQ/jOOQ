@@ -102,6 +102,9 @@ implements
             case HSQLDB:
                 return false;
 
+            case DUCKDB:
+                return false;
+
             case TRINO:
                 return false;
 
@@ -128,6 +131,12 @@ implements
                     select(arrayAgg(when(x.isNotDistinctFrom(arg2), arg3).else_(x)).orderBy(o))
                     .from(unnest(arg1).withOrdinality().as("t", "x", "o"))
                 ));
+                break;
+            }
+
+            case DUCKDB: {
+                Field<T> e = DSL.field(raw("e"), arg2.getDataType());
+                ctx.visit(function(N_ARRAY_TRANSFORM, arg1.getDataType(), arg1, DSL.field("e -> {0}", when(e.isNotDistinctFrom(arg2), arg3).else_(e))));
                 break;
             }
 

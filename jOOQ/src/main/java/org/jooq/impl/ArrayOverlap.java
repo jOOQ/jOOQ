@@ -91,6 +91,9 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+            case DUCKDB:
+                return false;
+
             case H2:
                 return false;
 
@@ -113,6 +116,10 @@ implements
 
 
 
+
+            case DUCKDB:
+                ctx.visit(cardinality(function(N_ARRAY_INTERSECT, arg1.getDataType(), arg1, arg2)).gt(inline(0)));
+                break;
 
             case H2:
                 ctx.visit(exists(

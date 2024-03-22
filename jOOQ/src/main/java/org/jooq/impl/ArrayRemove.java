@@ -99,6 +99,9 @@ implements
             case HSQLDB:
                 return false;
 
+            case DUCKDB:
+                return false;
+
             default:
                 return true;
         }
@@ -125,6 +128,10 @@ implements
                 ));
                 break;
             }
+
+            case DUCKDB:
+                ctx.visit(function(N_ARRAY_FILTER, getDataType(), arg1, DSL.field("e -> e <> {0}", OTHER, arg2)));
+                break;
 
             default:
                 ctx.visit(function(N_ARRAY_REMOVE, getDataType(), arg1, arg2));

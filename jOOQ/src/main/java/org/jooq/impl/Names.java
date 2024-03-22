@@ -334,12 +334,15 @@ final class Names {
     static final Name N_ARRAYS_OVERLAP              = systemName("arrays_overlap");
     static final Name N_ARRAY_APPEND                = systemName("array_append");
     static final Name N_ARRAY_CONCAT                = systemName("array_concat");
+    static final Name N_ARRAY_FILTER                = systemName("array_filter");
     static final Name N_ARRAY_GET                   = systemName("array_get");
+    static final Name N_ARRAY_INTERSECT             = systemName("array_intersect");
     static final Name N_ARRAY_LENGTH                = systemName("array_length");
     static final Name N_ARRAY_OVERLAP               = systemName("array_overlap");
     static final Name N_ARRAY_PREPEND               = systemName("array_prepend");
     static final Name N_ARRAY_REMOVE                = systemName("array_remove");
     static final Name N_ARRAY_REPLACE               = systemName("array_replace");
+    static final Name N_ARRAY_TRANSFORM             = systemName("array_transform");
     static final Name N_ASC                         = systemName("asc");
     static final Name N_ASCII                       = systemName("ascii");
     static final Name N_ASCII_CHAR                  = systemName("ascii_char");

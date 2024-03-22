@@ -46,6 +46,7 @@ import org.jetbrains.annotations.*;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -75,6 +76,6 @@ public interface GroupConcatSeparatorStep extends AggregateFunction<String> {
      * Specify the separator on the <code>GROUP_CONCAT</code> function.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     AggregateFunction<String> separator(String separator);
 }

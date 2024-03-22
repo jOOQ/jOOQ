@@ -46,6 +46,7 @@ import org.jetbrains.annotations.*;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -74,13 +75,13 @@ public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
      * Add an <code>ORDER BY</code> clause to the function.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GroupConcatSeparatorStep orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     GroupConcatSeparatorStep orderBy(Collection<? extends OrderField<?>> fields);
 }

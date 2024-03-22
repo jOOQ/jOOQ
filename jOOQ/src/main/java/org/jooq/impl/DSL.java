@@ -29456,7 +29456,7 @@ public class DSL {
      * Get the count(distinct field) function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
         return countDistinct(field instanceof Field<?> f ? f : field("{0}", field));
     }
@@ -29469,7 +29469,7 @@ public class DSL {
      * {@link #count(Field)}, instead.
      */
     @NotNull
-    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static AggregateFunction<Integer> countDistinct(Table<?> table) {
         return new CountTable(table, true);
     }
@@ -29484,7 +29484,7 @@ public class DSL {
      * <code>COUNT(DISTINCT(expr1, expr2))</code>.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
         fields = Tools.nullSafe(fields);
         return fields.length == 0 ? countDistinct(asterisk()) : new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.INTEGER, fields);
@@ -29494,7 +29494,7 @@ public class DSL {
      * Get the <code>array_agg()</code> aggregate function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> ArrayAggOrderByStep<T[]> arrayAgg(Field<T> field) {
         return new ArrayAgg(false, Tools.nullSafe(field));
     }
@@ -29503,7 +29503,7 @@ public class DSL {
      * Get the <code>array_agg()</code> aggregate function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> ArrayAggOrderByStep<T[]> arrayAggDistinct(Field<T> field) {
         return new ArrayAgg(true, Tools.nullSafe(field));
     }
@@ -31447,7 +31447,7 @@ public class DSL {
      * @see #groupConcat(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
         return new ListAgg(false, Tools.nullSafe(field));
     }
@@ -31458,7 +31458,7 @@ public class DSL {
      * @see #groupConcat(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
         return new ListAgg(false, Tools.nullSafe(field), inline(separator));
     }
@@ -31469,7 +31469,7 @@ public class DSL {
      * @see #groupConcatDistinct(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAggDistinct(Field<?> field) {
         return new ListAgg(true, Tools.nullSafe(field));
     }
@@ -31480,7 +31480,7 @@ public class DSL {
      * @see #groupConcatDistinct(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAggDistinct(Field<?> field, String separator) {
         return new ListAgg(true, Tools.nullSafe(field), inline(separator));
     }
@@ -31509,7 +31509,7 @@ public class DSL {
      * @see #listAgg(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static GroupConcatOrderByStep groupConcat(Field<?> field) {
         return new GroupConcat(Tools.nullSafe(field));
     }
@@ -31541,7 +31541,7 @@ public class DSL {
      */
     @Deprecated(forRemoval = true, since = "3.12")
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static AggregateFunction<String> groupConcat(Field<?> field, String separator) {
         return new GroupConcat(Tools.nullSafe(field)).separator(separator);
     }
@@ -31566,7 +31566,7 @@ public class DSL {
      * @see #listAgg(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static GroupConcatOrderByStep groupConcatDistinct(Field<?> field) {
         return new GroupConcat(Tools.nullSafe(field), true);
     }

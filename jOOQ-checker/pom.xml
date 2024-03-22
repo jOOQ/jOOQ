@@ -37,6 +37,24 @@
                     <!-- [#9099] later versions up to 3.1.1 don't appear to work (to be tested with 3.1.2) -->
                     <version>3.0.1</version>
                 </plugin>
+                
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+
+                    <configuration>
+                        <!-- [14806] [#14881] Cannot use release with the below exports flag -->
+                        <release combine.self="override"/>
+
+                        <compilerArgs>
+                            <!-- [14806] [#14881] The checkerframework 3.19+ requires these -->
+                            <arg>--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+                            <arg>--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 

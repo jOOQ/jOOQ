@@ -40,8 +40,6 @@ package org.jooq.checker;
 import static java.util.Arrays.asList;
 import static org.checkerframework.javacutil.TreeUtils.elementFromDeclaration;
 import static org.checkerframework.javacutil.TreeUtils.elementFromUse;
-import static org.checkerframework.javacutil.TreeUtils.enclosingClass;
-import static org.checkerframework.javacutil.TreeUtils.enclosingMethod;
 
 import java.io.PrintWriter;
 import java.util.EnumSet;
@@ -212,12 +210,31 @@ final class Tools {
     }
 
     static Element enclosing(TreePath path) {
-        MethodTree enclosingMethod = enclosingMethod(path);
+
+        /*
+
+        MethodTree enclosingMethod = org.checkerframework.javacutil.TreeUtils.enclosingMethod(path);
+
+        */
+
+
+        MethodTree enclosingMethod = org.checkerframework.javacutil.TreePathUtil.enclosingMethod(path);
+
 
         if (enclosingMethod != null)
             return elementFromDeclaration(enclosingMethod);
 
-        ClassTree enclosingClass = enclosingClass(path);
+
+        /*
+
+        ClassTree enclosingClass = org.checkerframework.javacutil.TreeUtils.enclosingClass(path);
+
+        */
+
+
+        ClassTree enclosingClass = org.checkerframework.javacutil.TreePathUtil.enclosingClass(path);
+
+
         return elementFromDeclaration(enclosingClass);
     }
 

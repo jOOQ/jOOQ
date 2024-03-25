@@ -44,16 +44,16 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface Lambda1<T1, R> extends QueryPart {
+public interface Lambda1<Q1 extends QueryPart, QR extends QueryPart> extends QueryPart {
 
     /**
      * The first argument of the lambda.
      */
-    @NotNull Field<T1> $arg1();
+    @NotNull Q1 $arg1();
 
     /**
      * The lambda result.
      */
-    @NotNull Field<R> $result();
+    @NotNull QR $result();
 
 }

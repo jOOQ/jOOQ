@@ -6339,7 +6339,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ArrayFilter<T>
         extends
-            UOperator2<Field<T[]>, Lambda1<T, Boolean>, ArrayFilter<T>>,
+            UOperator2<Field<T[]>, Lambda1<Field<T>, Condition>, ArrayFilter<T>>,
             org.jooq.Field<T[]>
         //permits
         //    ArrayFilter
@@ -6347,9 +6347,9 @@ public final class QOM {
         @NotNull default Field<T[]> $array() { return $arg1(); }
         @CheckReturnValue
         @NotNull default ArrayFilter<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
-        @NotNull default Lambda1<T, Boolean> $predicate() { return $arg2(); }
+        @NotNull default Lambda1<Field<T>, Condition> $predicate() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default ArrayFilter<T> $predicate(Lambda1<T, Boolean> newPredicate) { return $arg2(newPredicate); }
+        @NotNull default ArrayFilter<T> $predicate(Lambda1<Field<T>, Condition> newPredicate) { return $arg2(newPredicate); }
     }
 
     /**
@@ -6359,7 +6359,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ArrayMap<T, U>
         extends
-            UOperator2<Field<T[]>, Lambda1<T, U>, ArrayMap<T, U>>,
+            UOperator2<Field<T[]>, Lambda1<Field<T>, Field<U>>, ArrayMap<T, U>>,
             org.jooq.Field<T[]>
         //permits
         //    ArrayMap
@@ -6367,9 +6367,9 @@ public final class QOM {
         @NotNull default Field<T[]> $array() { return $arg1(); }
         @CheckReturnValue
         @NotNull default ArrayMap<T, U> $array(Field<T[]> newArray) { return $arg1(newArray); }
-        @NotNull default Lambda1<T, U> $mapper() { return $arg2(); }
+        @NotNull default Lambda1<Field<T>, Field<U>> $mapper() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default ArrayMap<T, U> $mapper(Lambda1<T, U> newMapper) { return $arg2(newMapper); }
+        @NotNull default ArrayMap<T, U> $mapper(Lambda1<Field<T>, Field<U>> newMapper) { return $arg2(newMapper); }
     }
 
     /**
@@ -6379,7 +6379,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ArrayAllMatch<T>
         extends
-            UOperator2<Field<T[]>, Lambda1<T, Boolean>, ArrayAllMatch<T>>,
+            UOperator2<Field<T[]>, Lambda1<Field<T>, Condition>, ArrayAllMatch<T>>,
             org.jooq.Condition
         //permits
         //    ArrayAllMatch
@@ -6387,9 +6387,9 @@ public final class QOM {
         @NotNull default Field<T[]> $array() { return $arg1(); }
         @CheckReturnValue
         @NotNull default ArrayAllMatch<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
-        @NotNull default Lambda1<T, Boolean> $predicate() { return $arg2(); }
+        @NotNull default Lambda1<Field<T>, Condition> $predicate() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default ArrayAllMatch<T> $predicate(Lambda1<T, Boolean> newPredicate) { return $arg2(newPredicate); }
+        @NotNull default ArrayAllMatch<T> $predicate(Lambda1<Field<T>, Condition> newPredicate) { return $arg2(newPredicate); }
     }
 
     /**
@@ -6399,7 +6399,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ArrayAnyMatch<T>
         extends
-            UOperator2<Field<T[]>, Lambda1<T, Boolean>, ArrayAnyMatch<T>>,
+            UOperator2<Field<T[]>, Lambda1<Field<T>, Condition>, ArrayAnyMatch<T>>,
             org.jooq.Condition
         //permits
         //    ArrayAnyMatch
@@ -6407,9 +6407,9 @@ public final class QOM {
         @NotNull default Field<T[]> $array() { return $arg1(); }
         @CheckReturnValue
         @NotNull default ArrayAnyMatch<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
-        @NotNull default Lambda1<T, Boolean> $predicate() { return $arg2(); }
+        @NotNull default Lambda1<Field<T>, Condition> $predicate() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default ArrayAnyMatch<T> $predicate(Lambda1<T, Boolean> newPredicate) { return $arg2(newPredicate); }
+        @NotNull default ArrayAnyMatch<T> $predicate(Lambda1<Field<T>, Condition> newPredicate) { return $arg2(newPredicate); }
     }
 
     /**
@@ -6419,7 +6419,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ArrayNoneMatch<T>
         extends
-            UOperator2<Field<T[]>, Lambda1<T, Boolean>, ArrayNoneMatch<T>>,
+            UOperator2<Field<T[]>, Lambda1<Field<T>, Condition>, ArrayNoneMatch<T>>,
             org.jooq.Condition
         //permits
         //    ArrayNoneMatch
@@ -6427,9 +6427,9 @@ public final class QOM {
         @NotNull default Field<T[]> $array() { return $arg1(); }
         @CheckReturnValue
         @NotNull default ArrayNoneMatch<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
-        @NotNull default Lambda1<T, Boolean> $predicate() { return $arg2(); }
+        @NotNull default Lambda1<Field<T>, Condition> $predicate() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default ArrayNoneMatch<T> $predicate(Lambda1<T, Boolean> newPredicate) { return $arg2(newPredicate); }
+        @NotNull default ArrayNoneMatch<T> $predicate(Lambda1<Field<T>, Condition> newPredicate) { return $arg2(newPredicate); }
     }
 
     /**

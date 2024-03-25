@@ -37,11 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_E;
-
 import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Lambda1;
 import org.jooq.QueryPart;
 // ...
@@ -50,17 +46,17 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class LambdaImpl1<T1, R>
+final class LambdaImpl1<Q1 extends QueryPart, QR extends QueryPart>
 extends
     AbstractQueryPart
 implements
-    Lambda1<T1, R>
+    Lambda1<Q1, QR>
 {
 
-    final Field<T1> arg1;
-    final Field<R>  result;
+    final Q1 arg1;
+    final QR result;
 
-    LambdaImpl1(Field<T1> arg1, Field<R> result) {
+    LambdaImpl1(Q1 arg1, QR result) {
         this.arg1 = arg1;
         this.result = result;
     }
@@ -79,12 +75,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T1> $arg1() {
+    public final Q1 $arg1() {
         return arg1;
     }
 
     @Override
-    public final Field<R> $result() {
+    public final QR $result() {
         return result;
     }
 

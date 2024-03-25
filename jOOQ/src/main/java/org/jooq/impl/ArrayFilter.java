@@ -70,12 +70,12 @@ implements
     QOM.ArrayFilter<T>
 {
 
-    final Field<T[]>          array;
-    final Lambda1<T, Boolean> predicate;
+    final Field<T[]>                   array;
+    final Lambda1<Field<T>, Condition> predicate;
 
     ArrayFilter(
         Field<T[]> array,
-        Lambda1<T, Boolean> predicate
+        Lambda1<Field<T>, Condition> predicate
     ) {
         super(
             N_ARRAY_FILTER,
@@ -171,7 +171,7 @@ implements
     }
 
     @Override
-    public final Lambda1<T, Boolean> $arg2() {
+    public final Lambda1<Field<T>, Condition> $arg2() {
         return predicate;
     }
 
@@ -181,12 +181,12 @@ implements
     }
 
     @Override
-    public final QOM.ArrayFilter<T> $arg2(Lambda1<T, Boolean> newValue) {
+    public final QOM.ArrayFilter<T> $arg2(Lambda1<Field<T>, Condition> newValue) {
         return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<T[]>, ? super Lambda1<T, Boolean>, ? extends QOM.ArrayFilter<T>> $constructor() {
+    public final Function2<? super Field<T[]>, ? super Lambda1<Field<T>, Condition>, ? extends QOM.ArrayFilter<T>> $constructor() {
         return (a1, a2) -> new ArrayFilter<>(a1, a2);
     }
 

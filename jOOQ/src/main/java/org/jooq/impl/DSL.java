@@ -14039,20 +14039,20 @@ public class DSL {
 
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     @NotNull
-    static <T1, R> Lambda1<T1, R> lambda(T1[] field, org.jooq.Function1<? super Field<T1>, ? extends Field<R>> function) {
+    static <T1, QR extends QueryPart> Lambda1<Field<T1>, QR> lambda(T1[] field, org.jooq.Function1<? super Field<T1>, ? extends QR> function) {
         return lambda(Tools.field(field), function);
     }
 
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     @NotNull
-    static <T1, R> Lambda1<T1, R> lambda(Field<T1[]> field, org.jooq.Function1<? super Field<T1>, ? extends Field<R>> function) {
+    static <T1, QR extends QueryPart> Lambda1<Field<T1>, QR> lambda(Field<T1[]> field, org.jooq.Function1<? super Field<T1>, ? extends QR> function) {
         Field<T1> e = (Field<T1>) DSL.field(N_E, field.getDataType().getArrayBaseDataType());
         return lambda(e, function.apply(e));
     }
 
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     @NotNull
-    public static <T1, R> Lambda1<T1, R> lambda(Field<T1> arg1, Field<R> result) {
+    public static <Q1 extends QueryPart, QR extends QueryPart> Lambda1<Q1, QR> lambda(Q1 arg1, QR result) {
         return new org.jooq.impl.LambdaImpl1<>(arg1, result);
     }
 
@@ -22427,7 +22427,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayFilter(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+    public static <T> Field<T[]> arrayFilter(T[] array, Function1<? super Field<T>, ? extends Condition> predicate) {
         return new ArrayFilter<>(Tools.field(array), DSL.lambda(array, predicate));
     }
 
@@ -22438,7 +22438,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayFilter(T[] array, Lambda1<T, Boolean> predicate) {
+    public static <T> Field<T[]> arrayFilter(T[] array, Lambda1<Field<T>, Condition> predicate) {
         return new ArrayFilter<>(Tools.field(array), predicate);
     }
 
@@ -22449,7 +22449,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Function1<? super Field<T>, ? extends Condition> predicate) {
         return new ArrayFilter<>(array, DSL.lambda(array, predicate));
     }
 
@@ -22460,7 +22460,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Lambda1<T, Boolean> predicate) {
+    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Lambda1<Field<T>, Condition> predicate) {
         return new ArrayFilter<>(array, predicate);
     }
 
@@ -22482,7 +22482,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T, U> Field<T[]> arrayMap(T[] array, Lambda1<T, U> mapper) {
+    public static <T, U> Field<T[]> arrayMap(T[] array, Lambda1<Field<T>, Field<U>> mapper) {
         return new ArrayMap<>(Tools.field(array), mapper);
     }
 
@@ -22504,7 +22504,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T, U> Field<T[]> arrayMap(Field<T[]> array, Lambda1<T, U> mapper) {
+    public static <T, U> Field<T[]> arrayMap(Field<T[]> array, Lambda1<Field<T>, Field<U>> mapper) {
         return new ArrayMap<>(array, mapper);
     }
 
@@ -22515,7 +22515,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayAllMatch(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+    public static <T> Condition arrayAllMatch(T[] array, Function1<? super Field<T>, ? extends Condition> predicate) {
         return new ArrayAllMatch<>(Tools.field(array), DSL.lambda(array, predicate));
     }
 
@@ -22526,7 +22526,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayAllMatch(T[] array, Lambda1<T, Boolean> predicate) {
+    public static <T> Condition arrayAllMatch(T[] array, Lambda1<Field<T>, Condition> predicate) {
         return new ArrayAllMatch<>(Tools.field(array), predicate);
     }
 
@@ -22537,7 +22537,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayAllMatch(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+    public static <T> Condition arrayAllMatch(Field<T[]> array, Function1<? super Field<T>, ? extends Condition> predicate) {
         return new ArrayAllMatch<>(array, DSL.lambda(array, predicate));
     }
 
@@ -22548,7 +22548,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayAllMatch(Field<T[]> array, Lambda1<T, Boolean> predicate) {
+    public static <T> Condition arrayAllMatch(Field<T[]> array, Lambda1<Field<T>, Condition> predicate) {
         return new ArrayAllMatch<>(array, predicate);
     }
 
@@ -22559,7 +22559,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayAnyMatch(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+    public static <T> Condition arrayAnyMatch(T[] array, Function1<? super Field<T>, ? extends Condition> predicate) {
         return new ArrayAnyMatch<>(Tools.field(array), DSL.lambda(array, predicate));
     }
 
@@ -22570,7 +22570,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayAnyMatch(T[] array, Lambda1<T, Boolean> predicate) {
+    public static <T> Condition arrayAnyMatch(T[] array, Lambda1<Field<T>, Condition> predicate) {
         return new ArrayAnyMatch<>(Tools.field(array), predicate);
     }
 
@@ -22581,7 +22581,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayAnyMatch(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+    public static <T> Condition arrayAnyMatch(Field<T[]> array, Function1<? super Field<T>, ? extends Condition> predicate) {
         return new ArrayAnyMatch<>(array, DSL.lambda(array, predicate));
     }
 
@@ -22592,7 +22592,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayAnyMatch(Field<T[]> array, Lambda1<T, Boolean> predicate) {
+    public static <T> Condition arrayAnyMatch(Field<T[]> array, Lambda1<Field<T>, Condition> predicate) {
         return new ArrayAnyMatch<>(array, predicate);
     }
 
@@ -22603,7 +22603,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayNoneMatch(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+    public static <T> Condition arrayNoneMatch(T[] array, Function1<? super Field<T>, ? extends Condition> predicate) {
         return new ArrayNoneMatch<>(Tools.field(array), DSL.lambda(array, predicate));
     }
 
@@ -22614,7 +22614,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayNoneMatch(T[] array, Lambda1<T, Boolean> predicate) {
+    public static <T> Condition arrayNoneMatch(T[] array, Lambda1<Field<T>, Condition> predicate) {
         return new ArrayNoneMatch<>(Tools.field(array), predicate);
     }
 
@@ -22625,7 +22625,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayNoneMatch(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+    public static <T> Condition arrayNoneMatch(Field<T[]> array, Function1<? super Field<T>, ? extends Condition> predicate) {
         return new ArrayNoneMatch<>(array, DSL.lambda(array, predicate));
     }
 
@@ -22636,7 +22636,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayNoneMatch(Field<T[]> array, Lambda1<T, Boolean> predicate) {
+    public static <T> Condition arrayNoneMatch(Field<T[]> array, Lambda1<Field<T>, Condition> predicate) {
         return new ArrayNoneMatch<>(array, predicate);
     }
 

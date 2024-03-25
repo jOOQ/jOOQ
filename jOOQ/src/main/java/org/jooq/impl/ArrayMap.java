@@ -70,12 +70,12 @@ implements
     QOM.ArrayMap<T, U>
 {
 
-    final Field<T[]>    array;
-    final Lambda1<T, U> mapper;
+    final Field<T[]>                  array;
+    final Lambda1<Field<T>, Field<U>> mapper;
 
     ArrayMap(
         Field<T[]> array,
-        Lambda1<T, U> mapper
+        Lambda1<Field<T>, Field<U>> mapper
     ) {
         super(
             N_ARRAY_MAP,
@@ -177,7 +177,7 @@ implements
     }
 
     @Override
-    public final Lambda1<T, U> $arg2() {
+    public final Lambda1<Field<T>, Field<U>> $arg2() {
         return mapper;
     }
 
@@ -187,12 +187,12 @@ implements
     }
 
     @Override
-    public final QOM.ArrayMap<T, U> $arg2(Lambda1<T, U> newValue) {
+    public final QOM.ArrayMap<T, U> $arg2(Lambda1<Field<T>, Field<U>> newValue) {
         return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<T[]>, ? super Lambda1<T, U>, ? extends QOM.ArrayMap<T, U>> $constructor() {
+    public final Function2<? super Field<T[]>, ? super Lambda1<Field<T>, Field<U>>, ? extends QOM.ArrayMap<T, U>> $constructor() {
         return (a1, a2) -> new ArrayMap<>(a1, a2);
     }
 

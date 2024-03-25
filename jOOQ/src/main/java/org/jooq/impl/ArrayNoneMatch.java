@@ -70,12 +70,12 @@ implements
     QOM.ArrayNoneMatch<T>
 {
 
-    final Field<T[]>          array;
-    final Lambda1<T, Boolean> predicate;
+    final Field<T[]>                   array;
+    final Lambda1<Field<T>, Condition> predicate;
 
     ArrayNoneMatch(
         Field<T[]> array,
-        Lambda1<T, Boolean> predicate
+        Lambda1<Field<T>, Condition> predicate
     ) {
 
         this.array = nullSafeNotNull(array, ((DataType) OTHER).array());
@@ -164,7 +164,7 @@ implements
     }
 
     @Override
-    public final Lambda1<T, Boolean> $arg2() {
+    public final Lambda1<Field<T>, Condition> $arg2() {
         return predicate;
     }
 
@@ -174,12 +174,12 @@ implements
     }
 
     @Override
-    public final QOM.ArrayNoneMatch<T> $arg2(Lambda1<T, Boolean> newValue) {
+    public final QOM.ArrayNoneMatch<T> $arg2(Lambda1<Field<T>, Condition> newValue) {
         return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<T[]>, ? super Lambda1<T, Boolean>, ? extends QOM.ArrayNoneMatch<T>> $constructor() {
+    public final Function2<? super Field<T[]>, ? super Lambda1<Field<T>, Condition>, ? extends QOM.ArrayNoneMatch<T>> $constructor() {
         return (a1, a2) -> new ArrayNoneMatch<>(a1, a2);
     }
 

@@ -4069,8 +4069,8 @@ final class Tools {
         return part instanceof SeparatedQueryPart && ((SeparatedQueryPart) part).rendersSeparator();
     }
 
-    static final boolean isPossiblyNullable(Field<?> f) {
-        return f instanceof AbstractField && ((AbstractField<?>) f).isPossiblyNullable();
+    static final boolean isNullable(Field<?> f) {
+        return f instanceof AbstractField && ((AbstractField<?>) f).isNullable();
     }
 
     static final Val<?> extractVal(Field<?> field) {

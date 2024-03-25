@@ -113,11 +113,11 @@ implements
     // ------------------------------------------------------------------------
 
     /**
-     * [#10179] [#14665] Subclasses may override this method to indicate that
-     * the condition may produce <code>TRUE</code>, <code>FALSE</code>, or
-     * <code>NULL</code>.
+     * [#10179] [#11757] [#14665] Subclasses may override this method to
+     * indicate that the condition may produce <code>TRUE</code>,
+     * <code>FALSE</code>, or <code>NULL</code>.
      */
-    boolean isNullable() {
+    /* non-final */ boolean isNullable() {
         return true;
     }
 
@@ -127,10 +127,6 @@ implements
     @Override
     public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
-    }
-
-    /* non-final */ boolean isPossiblyNullable() {
-        return true;
     }
 
     /* non-final */ int projectionSize() {

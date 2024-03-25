@@ -66,7 +66,12 @@ import org.jooq.impl.QOM.UnmodifiableList;
 /**
  * @author Lukas Eder
  */
-final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
+final class Array<T>
+extends
+    AbstractField<T[]>
+implements
+    QOM.Array<T>
+{
 
     static final Set<SQLDialect> REQUIRES_CAST              = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_SQUARE_BRACKETS = SQLDialect.supportedBy(CLICKHOUSE);
@@ -77,6 +82,15 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
         super(N_ARRAY, type(fields));
 
         this.fields = new FieldsImpl<>(fields);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+    @Override
+    final boolean isNullable() {
+        return false;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

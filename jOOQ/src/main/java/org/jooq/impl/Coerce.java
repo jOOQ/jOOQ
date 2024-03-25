@@ -86,8 +86,8 @@ implements
     }
 
     @Override
-    boolean isPossiblyNullable() {
-        return field.isPossiblyNullable();
+    final boolean isNullable() {
+        return field.isNullable();
     }
 
     @Override

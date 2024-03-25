@@ -91,7 +91,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
     }
 
     @Override
-    final boolean isPossiblyNullable() {
+    final boolean isNullable() {
         return !inline || value == null;
     }
 

@@ -58,6 +58,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.RenderContext.CastMode;
 // ...
 import org.jooq.SQLDialect;
 // ...
@@ -93,6 +94,11 @@ implements
         return false;
     }
 
+    @Override
+    public boolean generatesCast() {
+        return true;
+    }
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private static <T> DataType<T[]> type(Collection<? extends Field<T>> fields) {
         if (fields == null || fields.isEmpty())
@@ -126,7 +132,7 @@ implements
                         else
                             c.visit(K_INT).sql("[]");
                     },
-                    () -> fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect())
+                    () -> fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect()) && ctx.castMode() != CastMode.NEVER
                 );
 
                 break;

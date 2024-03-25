@@ -1687,34 +1687,6 @@ public final class QOM {
     /**
      * The <code>ALTER DATABASE</code> statement.
      */
-    public static final AlterDatabase AlterDatabase() {
-        return new org.jooq.impl.AlterDatabaseImpl(
-            null,
-            null,
-            false,
-            null
-        );
-    }
-
-    /**
-     * The <code>ALTER DATABASE</code> statement.
-     */
-    public static final AlterDatabase AlterDatabase(
-        Catalog database,
-        boolean ifExists,
-        Catalog renameTo
-    ) {
-        return new org.jooq.impl.AlterDatabaseImpl(
-            null,
-            database,
-            ifExists,
-            renameTo
-        );
-    }
-
-    /**
-     * The <code>ALTER DATABASE</code> statement.
-     */
     public /*sealed*/ interface AlterDatabase
         extends
             DDLQuery
@@ -1730,67 +1702,6 @@ public final class QOM {
         @NotNull AlterDatabase $ifExists(boolean ifExists);
         @CheckReturnValue
         @NotNull AlterDatabase $renameTo(Catalog renameTo);
-    }
-
-    /**
-     * The <code>ALTER DOMAIN</code> statement.
-     */
-    public static final <T> AlterDomain<T> AlterDomain() {
-        return new org.jooq.impl.AlterDomainImpl<>(
-            null,
-            null,
-            false,
-            null,
-            null,
-            false,
-            null,
-            null,
-            false,
-            null,
-            false,
-            false,
-            false,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ALTER DOMAIN</code> statement.
-     */
-    public static final <T> AlterDomain<T> AlterDomain(
-        Domain<T> domain,
-        boolean ifExists,
-        Constraint addConstraint,
-        Constraint dropConstraint,
-        boolean dropConstraintIfExists,
-        Domain<?> renameTo,
-        Constraint renameConstraint,
-        boolean renameConstraintIfExists,
-        Field<T> setDefault,
-        boolean dropDefault,
-        boolean setNotNull,
-        boolean dropNotNull,
-        Cascade cascade,
-        Constraint renameConstraintTo
-    ) {
-        return new org.jooq.impl.AlterDomainImpl<>(
-            null,
-            domain,
-            ifExists,
-            addConstraint,
-            dropConstraint,
-            dropConstraintIfExists,
-            renameTo,
-            renameConstraint,
-            renameConstraintIfExists,
-            setDefault,
-            dropDefault,
-            setNotNull,
-            dropNotNull,
-            cascade,
-            renameConstraintTo
-        );
     }
 
     /**
@@ -1849,37 +1760,6 @@ public final class QOM {
     /**
      * The <code>ALTER INDEX</code> statement.
      */
-    public static final AlterIndex AlterIndex() {
-        return new org.jooq.impl.AlterIndexImpl(
-            null,
-            null,
-            false,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ALTER INDEX</code> statement.
-     */
-    public static final AlterIndex AlterIndex(
-        Index index,
-        boolean ifExists,
-        Table<?> on,
-        Index renameTo
-    ) {
-        return new org.jooq.impl.AlterIndexImpl(
-            null,
-            index,
-            ifExists,
-            on,
-            renameTo
-        );
-    }
-
-    /**
-     * The <code>ALTER INDEX</code> statement.
-     */
     public /*sealed*/ interface AlterIndex
         extends
             DDLQuery
@@ -1903,34 +1783,6 @@ public final class QOM {
     /**
      * The <code>ALTER SCHEMA</code> statement.
      */
-    public static final AlterSchema AlterSchema() {
-        return new org.jooq.impl.AlterSchemaImpl(
-            null,
-            null,
-            false,
-            null
-        );
-    }
-
-    /**
-     * The <code>ALTER SCHEMA</code> statement.
-     */
-    public static final AlterSchema AlterSchema(
-        Schema schema,
-        boolean ifExists,
-        Schema renameTo
-    ) {
-        return new org.jooq.impl.AlterSchemaImpl(
-            null,
-            schema,
-            ifExists,
-            renameTo
-        );
-    }
-
-    /**
-     * The <code>ALTER SCHEMA</code> statement.
-     */
     public /*sealed*/ interface AlterSchema
         extends
             DDLQuery
@@ -1946,67 +1798,6 @@ public final class QOM {
         @NotNull AlterSchema $ifExists(boolean ifExists);
         @CheckReturnValue
         @NotNull AlterSchema $renameTo(Schema renameTo);
-    }
-
-    /**
-     * The <code>ALTER SEQUENCE</code> statement.
-     */
-    public static final <T extends Number> AlterSequence<T> AlterSequence() {
-        return new org.jooq.impl.AlterSequenceImpl<>(
-            null,
-            null,
-            false,
-            null,
-            false,
-            null,
-            null,
-            null,
-            null,
-            false,
-            null,
-            false,
-            null,
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>ALTER SEQUENCE</code> statement.
-     */
-    public static final <T extends Number> AlterSequence<T> AlterSequence(
-        Sequence<T> sequence,
-        boolean ifExists,
-        Sequence<?> renameTo,
-        boolean restart,
-        Field<T> restartWith,
-        Field<T> startWith,
-        Field<T> incrementBy,
-        Field<T> minvalue,
-        boolean noMinvalue,
-        Field<T> maxvalue,
-        boolean noMaxvalue,
-        CycleOption cycle,
-        Field<T> cache,
-        boolean noCache
-    ) {
-        return new org.jooq.impl.AlterSequenceImpl<>(
-            null,
-            sequence,
-            ifExists,
-            renameTo,
-            restart,
-            restartWith,
-            startWith,
-            incrementBy,
-            minvalue,
-            noMinvalue,
-            maxvalue,
-            noMaxvalue,
-            cycle,
-            cache,
-            noCache
-        );
     }
 
     /**
@@ -2065,46 +1856,6 @@ public final class QOM {
     /**
      * The <code>ALTER TYPE</code> statement.
      */
-    public static final AlterType AlterType() {
-        return new org.jooq.impl.AlterTypeImpl(
-            null,
-            null,
-            false,
-            null,
-            null,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ALTER TYPE</code> statement.
-     */
-    public static final AlterType AlterType(
-        Name type,
-        boolean ifExists,
-        Name renameTo,
-        Schema setSchema,
-        Field<String> addValue,
-        Field<String> renameValue,
-        Field<String> renameValueTo
-    ) {
-        return new org.jooq.impl.AlterTypeImpl(
-            null,
-            type,
-            ifExists,
-            renameTo,
-            setSchema,
-            addValue,
-            renameValue,
-            renameValueTo
-        );
-    }
-
-    /**
-     * The <code>ALTER TYPE</code> statement.
-     */
     public /*sealed*/ interface AlterType
         extends
             DDLQuery
@@ -2132,46 +1883,6 @@ public final class QOM {
         @NotNull AlterType $renameValue(Field<String> renameValue);
         @CheckReturnValue
         @NotNull AlterType $renameValueTo(Field<String> renameValueTo);
-    }
-
-    /**
-     * The <code>ALTER VIEW</code> statement.
-     */
-    public static final AlterView AlterView() {
-        return new org.jooq.impl.AlterViewImpl(
-            null,
-            null,
-            null,
-            false,
-            false,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ALTER VIEW</code> statement.
-     */
-    public static final AlterView AlterView(
-        Table<?> view,
-        Collection<? extends Field<?>> fields,
-        boolean materialized,
-        boolean ifExists,
-        Comment comment,
-        Table<?> renameTo,
-        Select<?> as
-    ) {
-        return new org.jooq.impl.AlterViewImpl(
-            null,
-            view,
-            fields,
-            materialized,
-            ifExists,
-            comment,
-            renameTo,
-            as
-        );
     }
 
     /**
@@ -2209,40 +1920,6 @@ public final class QOM {
     /**
      * The <code>COMMENT ON TABLE</code> statement.
      */
-    public static final CommentOn CommentOn() {
-        return new org.jooq.impl.CommentOnImpl(
-            null,
-            null,
-            false,
-            false,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>COMMENT ON TABLE</code> statement.
-     */
-    public static final CommentOn CommentOn(
-        Table<?> table,
-        boolean isView,
-        boolean isMaterializedView,
-        Field<?> field,
-        Comment comment
-    ) {
-        return new org.jooq.impl.CommentOnImpl(
-            null,
-            table,
-            isView,
-            isMaterializedView,
-            field,
-            comment
-        );
-    }
-
-    /**
-     * The <code>COMMENT ON TABLE</code> statement.
-     */
     public /*sealed*/ interface CommentOn
         extends
             DDLQuery
@@ -2269,31 +1946,6 @@ public final class QOM {
     /**
      * The <code>CREATE DATABASE</code> statement.
      */
-    public static final CreateDatabase CreateDatabase() {
-        return new org.jooq.impl.CreateDatabaseImpl(
-            null,
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>CREATE DATABASE</code> statement.
-     */
-    public static final CreateDatabase CreateDatabase(
-        Catalog database,
-        boolean ifNotExists
-    ) {
-        return new org.jooq.impl.CreateDatabaseImpl(
-            null,
-            database,
-            ifNotExists
-        );
-    }
-
-    /**
-     * The <code>CREATE DATABASE</code> statement.
-     */
     public /*sealed*/ interface CreateDatabase
         extends
             DDLQuery
@@ -2306,40 +1958,6 @@ public final class QOM {
         @NotNull CreateDatabase $database(Catalog database);
         @CheckReturnValue
         @NotNull CreateDatabase $ifNotExists(boolean ifNotExists);
-    }
-
-    /**
-     * The <code>CREATE DOMAIN</code> statement.
-     */
-    public static final <T> CreateDomain<T> CreateDomain() {
-        return new org.jooq.impl.CreateDomainImpl<>(
-            null,
-            null,
-            false,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>CREATE DOMAIN</code> statement.
-     */
-    public static final <T> CreateDomain<T> CreateDomain(
-        Domain<?> domain,
-        boolean ifNotExists,
-        DataType<T> dataType,
-        Field<T> default_,
-        Collection<? extends Constraint> constraints
-    ) {
-        return new org.jooq.impl.CreateDomainImpl<>(
-            null,
-            domain,
-            ifNotExists,
-            dataType,
-            default_,
-            constraints
-        );
     }
 
     /**
@@ -2409,97 +2027,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     */
-    public static final CreateIndex CreateIndex() {
-        return new org.jooq.impl.CreateIndexImpl(
-            null,
-            false,
-            null,
-            false,
-            null,
-            null,
-            null,
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>CREATE INDEX</code> statement.
-     */
-    public static final CreateIndex CreateIndex(
-        boolean unique,
-        Index index,
-        boolean ifNotExists,
-        Table<?> table,
-        Collection<? extends OrderField<?>> on,
-        Collection<? extends Field<?>> include,
-        Condition where,
-        boolean excludeNullKeys
-    ) {
-        return new org.jooq.impl.CreateIndexImpl(
-            null,
-            unique,
-            index,
-            ifNotExists,
-            table,
-            on,
-            include,
-            where,
-            excludeNullKeys
-        );
-    }
-
     /**
      * The <code>CREATE INDEX</code> statement.
      */
@@ -2564,88 +2091,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>CREATE TABLE</code> statement.
-     */
-    public static final CreateTable CreateTable() {
-        return new org.jooq.impl.CreateTableImpl(
-            null,
-            null,
-            false,
-            false,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>CREATE TABLE</code> statement.
-     */
-    public static final CreateTable CreateTable(
-        Table<?> table,
-        boolean temporary,
-        boolean ifNotExists,
-        Collection<? extends TableElement> tableElements,
-        Select<?> select,
-        WithOrWithoutData withData,
-        TableCommitAction onCommit,
-        Comment comment,
-        SQL storage
-    ) {
-        return new org.jooq.impl.CreateTableImpl(
-            null,
-            table,
-            temporary,
-            ifNotExists,
-            tableElements,
-            select,
-            withData,
-            onCommit,
-            comment,
-            storage
-        );
-    }
-
     /**
      * The <code>CREATE TABLE</code> statement.
      */
@@ -2682,43 +2127,6 @@ public final class QOM {
         @NotNull CreateTable $comment(Comment comment);
         @CheckReturnValue
         @NotNull CreateTable $storage(SQL storage);
-    }
-
-    /**
-     * The <code>CREATE VIEW</code> statement.
-     */
-    public static final <R extends Record> CreateView<R> CreateView() {
-        return new org.jooq.impl.CreateViewImpl<>(
-            null,
-            null,
-            null,
-            false,
-            false,
-            false,
-            null
-        );
-    }
-
-    /**
-     * The <code>CREATE VIEW</code> statement.
-     */
-    public static final <R extends Record> CreateView<R> CreateView(
-        Table<?> view,
-        Collection<? extends Field<?>> fields,
-        boolean orReplace,
-        boolean materialized,
-        boolean ifNotExists,
-        ResultQuery<? extends R> query
-    ) {
-        return new org.jooq.impl.CreateViewImpl<>(
-            null,
-            view,
-            fields,
-            orReplace,
-            materialized,
-            ifNotExists,
-            query
-        );
     }
 
     /**
@@ -2812,106 +2220,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>CREATE TYPE</code> statement.
-     */
-    public static final CreateType CreateType() {
-        return new org.jooq.impl.CreateTypeImpl(
-            null,
-            null,
-            false,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>CREATE TYPE</code> statement.
-     */
-    public static final CreateType CreateType(
-        Type<?> type,
-        boolean ifNotExists,
-        Collection<? extends Field<String>> values,
-        Collection<? extends Field<?>> attributes
-    ) {
-        return new org.jooq.impl.CreateTypeImpl(
-            null,
-            type,
-            ifNotExists,
-            values,
-            attributes
-        );
-    }
-
     /**
      * The <code>CREATE TYPE</code> statement.
      */
@@ -2938,31 +2246,6 @@ public final class QOM {
     /**
      * The <code>CREATE SCHEMA</code> statement.
      */
-    public static final CreateSchema CreateSchema() {
-        return new org.jooq.impl.CreateSchemaImpl(
-            null,
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>CREATE SCHEMA</code> statement.
-     */
-    public static final CreateSchema CreateSchema(
-        Schema schema,
-        boolean ifNotExists
-    ) {
-        return new org.jooq.impl.CreateSchemaImpl(
-            null,
-            schema,
-            ifNotExists
-        );
-    }
-
-    /**
-     * The <code>CREATE SCHEMA</code> statement.
-     */
     public /*sealed*/ interface CreateSchema
         extends
             DDLQuery
@@ -2975,61 +2258,6 @@ public final class QOM {
         @NotNull CreateSchema $schema(Schema schema);
         @CheckReturnValue
         @NotNull CreateSchema $ifNotExists(boolean ifNotExists);
-    }
-
-    /**
-     * The <code>CREATE SEQUENCE</code> statement.
-     */
-    public static final <T extends Number> CreateSequence<T> CreateSequence() {
-        return new org.jooq.impl.CreateSequenceImpl<>(
-            null,
-            null,
-            false,
-            null,
-            null,
-            null,
-            null,
-            false,
-            null,
-            false,
-            null,
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>CREATE SEQUENCE</code> statement.
-     */
-    public static final <T extends Number> CreateSequence<T> CreateSequence(
-        Sequence<?> sequence,
-        boolean ifNotExists,
-        DataType<T> dataType,
-        Field<T> startWith,
-        Field<T> incrementBy,
-        Field<T> minvalue,
-        boolean noMinvalue,
-        Field<T> maxvalue,
-        boolean noMaxvalue,
-        CycleOption cycle,
-        Field<T> cache,
-        boolean noCache
-    ) {
-        return new org.jooq.impl.CreateSequenceImpl<>(
-            null,
-            sequence,
-            ifNotExists,
-            dataType,
-            startWith,
-            incrementBy,
-            minvalue,
-            noMinvalue,
-            maxvalue,
-            noMaxvalue,
-            cycle,
-            cache,
-            noCache
-        );
     }
 
     /**
@@ -3082,31 +2310,6 @@ public final class QOM {
     /**
      * The <code>DROP DATABASE</code> statement.
      */
-    public static final DropDatabase DropDatabase() {
-        return new org.jooq.impl.DropDatabaseImpl(
-            null,
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>DROP DATABASE</code> statement.
-     */
-    public static final DropDatabase DropDatabase(
-        Catalog database,
-        boolean ifExists
-    ) {
-        return new org.jooq.impl.DropDatabaseImpl(
-            null,
-            database,
-            ifExists
-        );
-    }
-
-    /**
-     * The <code>DROP DATABASE</code> statement.
-     */
     public /*sealed*/ interface DropDatabase
         extends
             DDLQuery
@@ -3119,34 +2322,6 @@ public final class QOM {
         @NotNull DropDatabase $database(Catalog database);
         @CheckReturnValue
         @NotNull DropDatabase $ifExists(boolean ifExists);
-    }
-
-    /**
-     * The <code>DROP DOMAIN</code> statement.
-     */
-    public static final DropDomain DropDomain() {
-        return new org.jooq.impl.DropDomainImpl(
-            null,
-            null,
-            false,
-            null
-        );
-    }
-
-    /**
-     * The <code>DROP DOMAIN</code> statement.
-     */
-    public static final DropDomain DropDomain(
-        Domain<?> domain,
-        boolean ifExists,
-        Cascade cascade
-    ) {
-        return new org.jooq.impl.DropDomainImpl(
-            null,
-            domain,
-            ifExists,
-            cascade
-        );
     }
 
     /**
@@ -3188,64 +2363,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>DROP INDEX</code> statement.
-     */
-    public static final DropIndex DropIndex() {
-        return new org.jooq.impl.DropIndexImpl(
-            null,
-            null,
-            false,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>DROP INDEX</code> statement.
-     */
-    public static final DropIndex DropIndex(
-        Index index,
-        boolean ifExists,
-        Table<?> on,
-        Cascade cascade
-    ) {
-        return new org.jooq.impl.DropIndexImpl(
-            null,
-            index,
-            ifExists,
-            on,
-            cascade
-        );
-    }
 
     /**
      * The <code>DROP INDEX</code> statement.
@@ -3290,61 +2407,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>DROP SCHEMA</code> statement.
-     */
-    public static final DropSchema DropSchema() {
-        return new org.jooq.impl.DropSchemaImpl(
-            null,
-            null,
-            false,
-            null
-        );
-    }
-
-    /**
-     * The <code>DROP SCHEMA</code> statement.
-     */
-    public static final DropSchema DropSchema(
-        Schema schema,
-        boolean ifExists,
-        Cascade cascade
-    ) {
-        return new org.jooq.impl.DropSchemaImpl(
-            null,
-            schema,
-            ifExists,
-            cascade
-        );
-    }
-
     /**
      * The <code>DROP SCHEMA</code> statement.
      */
@@ -3368,31 +2430,6 @@ public final class QOM {
     /**
      * The <code>DROP SEQUENCE</code> statement.
      */
-    public static final DropSequence DropSequence() {
-        return new org.jooq.impl.DropSequenceImpl(
-            null,
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>DROP SEQUENCE</code> statement.
-     */
-    public static final DropSequence DropSequence(
-        Sequence<?> sequence,
-        boolean ifExists
-    ) {
-        return new org.jooq.impl.DropSequenceImpl(
-            null,
-            sequence,
-            ifExists
-        );
-    }
-
-    /**
-     * The <code>DROP SEQUENCE</code> statement.
-     */
     public /*sealed*/ interface DropSequence
         extends
             DDLQuery
@@ -3405,37 +2442,6 @@ public final class QOM {
         @NotNull DropSequence $sequence(Sequence<?> sequence);
         @CheckReturnValue
         @NotNull DropSequence $ifExists(boolean ifExists);
-    }
-
-    /**
-     * The <code>DROP TABLE</code> statement.
-     */
-    public static final DropTable DropTable() {
-        return new org.jooq.impl.DropTableImpl(
-            null,
-            false,
-            null,
-            false,
-            null
-        );
-    }
-
-    /**
-     * The <code>DROP TABLE</code> statement.
-     */
-    public static final DropTable DropTable(
-        boolean temporary,
-        Table<?> table,
-        boolean ifExists,
-        Cascade cascade
-    ) {
-        return new org.jooq.impl.DropTableImpl(
-            null,
-            temporary,
-            table,
-            ifExists,
-            cascade
-        );
     }
 
     /**
@@ -3484,64 +2490,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>DROP TYPE</code> statement.
-     */
-    public static final DropType DropType() {
-        return new org.jooq.impl.DropTypeImpl(
-            null,
-            null,
-            false,
-            null
-        );
-    }
-
-    /**
-     * The <code>DROP TYPE</code> statement.
-     */
-    public static final DropType DropType(
-        Collection<? extends Type<?>> types,
-        boolean ifExists,
-        Cascade cascade
-    ) {
-        return new org.jooq.impl.DropTypeImpl(
-            null,
-            types,
-            ifExists,
-            cascade
-        );
-    }
-
     /**
      * The <code>DROP TYPE</code> statement.
      */
@@ -3565,34 +2513,6 @@ public final class QOM {
     /**
      * The <code>DROP VIEW</code> statement.
      */
-    public static final DropView DropView() {
-        return new org.jooq.impl.DropViewImpl(
-            null,
-            null,
-            false,
-            false
-        );
-    }
-
-    /**
-     * The <code>DROP VIEW</code> statement.
-     */
-    public static final DropView DropView(
-        Table<?> view,
-        boolean materialized,
-        boolean ifExists
-    ) {
-        return new org.jooq.impl.DropViewImpl(
-            null,
-            view,
-            materialized,
-            ifExists
-        );
-    }
-
-    /**
-     * The <code>DROP VIEW</code> statement.
-     */
     public /*sealed*/ interface DropView
         extends
             DDLQuery
@@ -3608,40 +2528,6 @@ public final class QOM {
         @NotNull DropView $materialized(boolean materialized);
         @CheckReturnValue
         @NotNull DropView $ifExists(boolean ifExists);
-    }
-
-    /**
-     * The <code>GRANT</code> statement.
-     */
-    public static final Grant Grant() {
-        return new org.jooq.impl.GrantImpl(
-            null,
-            null,
-            null,
-            null,
-            false,
-            false
-        );
-    }
-
-    /**
-     * The <code>GRANT</code> statement.
-     */
-    public static final Grant Grant(
-        Collection<? extends Privilege> privileges,
-        Table<?> on,
-        Role to,
-        boolean toPublic,
-        boolean withGrantOption
-    ) {
-        return new org.jooq.impl.GrantImpl(
-            null,
-            privileges,
-            on,
-            to,
-            toPublic,
-            withGrantOption
-        );
     }
 
     /**
@@ -3668,40 +2554,6 @@ public final class QOM {
         @NotNull Grant $toPublic(boolean toPublic);
         @CheckReturnValue
         @NotNull Grant $withGrantOption(boolean withGrantOption);
-    }
-
-    /**
-     * The <code>REVOKE</code> statement.
-     */
-    public static final Revoke Revoke() {
-        return new org.jooq.impl.RevokeImpl(
-            null,
-            null,
-            false,
-            null,
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>REVOKE</code> statement.
-     */
-    public static final Revoke Revoke(
-        Collection<? extends Privilege> privileges,
-        boolean grantOptionFor,
-        Table<?> on,
-        Role from,
-        boolean fromPublic
-    ) {
-        return new org.jooq.impl.RevokeImpl(
-            null,
-            privileges,
-            grantOptionFor,
-            on,
-            from,
-            fromPublic
-        );
     }
 
     /**
@@ -3735,38 +2587,6 @@ public final class QOM {
      * <p>
      * Set a vendor specific session configuration to a new value.
      */
-    public static final SetCommand SetCommand() {
-        return new org.jooq.impl.SetCommand(
-            null,
-            null,
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>SET</code> statement.
-     * <p>
-     * Set a vendor specific session configuration to a new value.
-     */
-    public static final SetCommand SetCommand(
-        Name name,
-        Param<?> value,
-        boolean local
-    ) {
-        return new org.jooq.impl.SetCommand(
-            null,
-            name,
-            value,
-            local
-        );
-    }
-
-    /**
-     * The <code>SET</code> statement.
-     * <p>
-     * Set a vendor specific session configuration to a new value.
-     */
     public /*sealed*/ interface SetCommand
         extends
             org.jooq.RowCountQuery
@@ -3782,32 +2602,6 @@ public final class QOM {
         @NotNull SetCommand $value(Param<?> value);
         @CheckReturnValue
         @NotNull SetCommand $local(boolean local);
-    }
-
-    /**
-     * The <code>SET CATALOG</code> statement.
-     * <p>
-     * Set the current catalog to a new value.
-     */
-    public static final SetCatalog SetCatalog() {
-        return new org.jooq.impl.SetCatalog(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>SET CATALOG</code> statement.
-     * <p>
-     * Set the current catalog to a new value.
-     */
-    public static final SetCatalog SetCatalog(
-        Catalog catalog
-    ) {
-        return new org.jooq.impl.SetCatalog(
-            null,
-            catalog
-        );
     }
 
     /**
@@ -3831,32 +2625,6 @@ public final class QOM {
      * <p>
      * Set the current schema to a new value.
      */
-    public static final SetSchema SetSchema() {
-        return new org.jooq.impl.SetSchema(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>SET SCHEMA</code> statement.
-     * <p>
-     * Set the current schema to a new value.
-     */
-    public static final SetSchema SetSchema(
-        Schema schema
-    ) {
-        return new org.jooq.impl.SetSchema(
-            null,
-            schema
-        );
-    }
-
-    /**
-     * The <code>SET SCHEMA</code> statement.
-     * <p>
-     * Set the current schema to a new value.
-     */
     public /*sealed*/ interface SetSchema
         extends
             org.jooq.RowCountQuery
@@ -3866,34 +2634,6 @@ public final class QOM {
         @NotNull Schema $schema();
         @CheckReturnValue
         @NotNull SetSchema $schema(Schema schema);
-    }
-
-    /**
-     * The <code>TRUNCATE</code> statement.
-     */
-    public static final <R extends Record> Truncate<R> Truncate() {
-        return new org.jooq.impl.TruncateImpl<>(
-            null,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>TRUNCATE</code> statement.
-     */
-    public static final <R extends Record> Truncate<R> Truncate(
-        Collection<? extends Table<?>> table,
-        IdentityRestartOption restartIdentity,
-        Cascade cascade
-    ) {
-        return new org.jooq.impl.TruncateImpl<>(
-            null,
-            table,
-            restartIdentity,
-            cascade
-        );
     }
 
     /**
@@ -3938,48 +2678,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>START TRANSACTION</code> statement.
-     * <p>
-     * Start a transaction
-     */
-    public static final StartTransaction StartTransaction() {
-        return new org.jooq.impl.StartTransaction(
-            null
-        );
-    }
-
     /**
      * The <code>START TRANSACTION</code> statement.
      * <p>
@@ -3998,32 +2696,6 @@ public final class QOM {
      * <p>
      * Specify a savepoint
      */
-    public static final Savepoint Savepoint() {
-        return new org.jooq.impl.Savepoint(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>SAVEPOINT</code> statement.
-     * <p>
-     * Specify a savepoint
-     */
-    public static final Savepoint Savepoint(
-        Name name
-    ) {
-        return new org.jooq.impl.Savepoint(
-            null,
-            name
-        );
-    }
-
-    /**
-     * The <code>SAVEPOINT</code> statement.
-     * <p>
-     * Specify a savepoint
-     */
     public /*sealed*/ interface Savepoint
         extends
             org.jooq.Query
@@ -4033,32 +2705,6 @@ public final class QOM {
         @NotNull Name $name();
         @CheckReturnValue
         @NotNull Savepoint $name(Name name);
-    }
-
-    /**
-     * The <code>RELEASE SAVEPOINT</code> statement.
-     * <p>
-     * Release a savepoint
-     */
-    public static final ReleaseSavepoint ReleaseSavepoint() {
-        return new org.jooq.impl.ReleaseSavepoint(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>RELEASE SAVEPOINT</code> statement.
-     * <p>
-     * Release a savepoint
-     */
-    public static final ReleaseSavepoint ReleaseSavepoint(
-        Name name
-    ) {
-        return new org.jooq.impl.ReleaseSavepoint(
-            null,
-            name
-        );
     }
 
     /**
@@ -4082,17 +2728,6 @@ public final class QOM {
      * <p>
      * Commit a transaction
      */
-    public static final Commit Commit() {
-        return new org.jooq.impl.Commit(
-            null
-        );
-    }
-
-    /**
-     * The <code>COMMIT</code> statement.
-     * <p>
-     * Commit a transaction
-     */
     public /*sealed*/ interface Commit
         extends
             UEmpty,
@@ -4100,32 +2735,6 @@ public final class QOM {
         //permits
         //    Commit
     {}
-
-    /**
-     * The <code>ROLLBACK</code> statement.
-     * <p>
-     * Rollback a transaction
-     */
-    public static final Rollback Rollback() {
-        return new org.jooq.impl.Rollback(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ROLLBACK</code> statement.
-     * <p>
-     * Rollback a transaction
-     */
-    public static final Rollback Rollback(
-        Name toSavepoint
-    ) {
-        return new org.jooq.impl.Rollback(
-            null,
-            toSavepoint
-        );
-    }
 
     /**
      * The <code>ROLLBACK</code> statement.
@@ -4146,29 +2755,6 @@ public final class QOM {
     /**
      * The <code>AND</code> operator.
      */
-    public static final And And() {
-        return new org.jooq.impl.And(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>AND</code> operator.
-     */
-    public static final And And(
-        Condition arg1,
-        Condition arg2
-    ) {
-        return new org.jooq.impl.And(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>AND</code> operator.
-     */
     public /*sealed*/ interface And
         extends
             UCommutativeOperator<Condition, And>,
@@ -4176,29 +2762,6 @@ public final class QOM {
         //permits
         //    And
     {}
-
-    /**
-     * The <code>EQ</code> operator.
-     */
-    public static final <R extends Record> TableEq<R> TableEq() {
-        return new org.jooq.impl.TableEq<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>EQ</code> operator.
-     */
-    public static final <R extends Record> TableEq<R> TableEq(
-        Table<R> arg1,
-        Table<R> arg2
-    ) {
-        return new org.jooq.impl.TableEq<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>EQ</code> operator.
@@ -4215,29 +2778,6 @@ public final class QOM {
     /**
      * The <code>EQ</code> operator.
      */
-    public static final <T> Eq<T> Eq() {
-        return new org.jooq.impl.Eq<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>EQ</code> operator.
-     */
-    public static final <T> Eq<T> Eq(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Eq<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>EQ</code> operator.
-     */
     public /*sealed*/ interface Eq<T>
         extends
             UReturnsNullOnNullInput,
@@ -4246,29 +2786,6 @@ public final class QOM {
         //permits
         //    Eq
     {}
-
-    /**
-     * The <code>EQ</code> operator.
-     */
-    public static final <T> EqQuantified<T> EqQuantified() {
-        return new org.jooq.impl.EqQuantified<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>EQ</code> operator.
-     */
-    public static final <T> EqQuantified<T> EqQuantified(
-        Field<T> arg1,
-        org.jooq.QuantifiedSelect<? extends Record1<T>> arg2
-    ) {
-        return new org.jooq.impl.EqQuantified<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>EQ</code> operator.
@@ -4285,26 +2802,6 @@ public final class QOM {
     /**
      * The <code>EXISTS</code> function.
      */
-    public static final Exists Exists() {
-        return new org.jooq.impl.Exists(
-            null
-        );
-    }
-
-    /**
-     * The <code>EXISTS</code> function.
-     */
-    public static final Exists Exists(
-        Select<?> query
-    ) {
-        return new org.jooq.impl.Exists(
-            query
-        );
-    }
-
-    /**
-     * The <code>EXISTS</code> function.
-     */
     public /*sealed*/ interface Exists
         extends
             UOperator1<Select<?>, Exists>,
@@ -4315,29 +2812,6 @@ public final class QOM {
         @NotNull default Select<?> $query() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Exists $query(Select<?> newQuery) { return $arg1(newQuery); }
-    }
-
-    /**
-     * The <code>GE</code> operator.
-     */
-    public static final <T> Ge<T> Ge() {
-        return new org.jooq.impl.Ge<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>GE</code> operator.
-     */
-    public static final <T> Ge<T> Ge(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Ge<>(
-            arg1,
-            arg2
-        );
     }
 
     /**
@@ -4361,29 +2835,6 @@ public final class QOM {
     /**
      * The <code>GE</code> operator.
      */
-    public static final <T> GeQuantified<T> GeQuantified() {
-        return new org.jooq.impl.GeQuantified<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>GE</code> operator.
-     */
-    public static final <T> GeQuantified<T> GeQuantified(
-        Field<T> arg1,
-        org.jooq.QuantifiedSelect<? extends Record1<T>> arg2
-    ) {
-        return new org.jooq.impl.GeQuantified<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>GE</code> operator.
-     */
     public /*sealed*/ interface GeQuantified<T>
         extends
             UReturnsNullOnNullInput,
@@ -4392,29 +2843,6 @@ public final class QOM {
         //permits
         //    GeQuantified
     {}
-
-    /**
-     * The <code>GT</code> operator.
-     */
-    public static final <T> Gt<T> Gt() {
-        return new org.jooq.impl.Gt<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>GT</code> operator.
-     */
-    public static final <T> Gt<T> Gt(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Gt<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>GT</code> operator.
@@ -4437,29 +2865,6 @@ public final class QOM {
     /**
      * The <code>GT</code> operator.
      */
-    public static final <T> GtQuantified<T> GtQuantified() {
-        return new org.jooq.impl.GtQuantified<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>GT</code> operator.
-     */
-    public static final <T> GtQuantified<T> GtQuantified(
-        Field<T> arg1,
-        org.jooq.QuantifiedSelect<? extends Record1<T>> arg2
-    ) {
-        return new org.jooq.impl.GtQuantified<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>GT</code> operator.
-     */
     public /*sealed*/ interface GtQuantified<T>
         extends
             UReturnsNullOnNullInput,
@@ -4468,37 +2873,6 @@ public final class QOM {
         //permits
         //    GtQuantified
     {}
-
-    /**
-     * The <code>IN</code> operator.
-     * <p>
-     * The subquery must return exactly one field. This is not checked
-     * by jOOQ and will result in syntax errors in the database, if not used
-     * correctly.
-     */
-    public static final <T> In<T> In() {
-        return new org.jooq.impl.In<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>IN</code> operator.
-     * <p>
-     * The subquery must return exactly one field. This is not checked
-     * by jOOQ and will result in syntax errors in the database, if not used
-     * correctly.
-     */
-    public static final <T> In<T> In(
-        Field<T> arg1,
-        Select<? extends Record1<T>> arg2
-    ) {
-        return new org.jooq.impl.In<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>IN</code> operator.
@@ -4521,35 +2895,6 @@ public final class QOM {
      * The DISTINCT predicate allows for creating NULL safe comparisons where the two operands
      * are tested for non-equality
      */
-    public static final <T> IsDistinctFrom<T> IsDistinctFrom() {
-        return new org.jooq.impl.IsDistinctFrom<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>IS DISTINCT FROM</code> operator.
-     * <p>
-     * The DISTINCT predicate allows for creating NULL safe comparisons where the two operands
-     * are tested for non-equality
-     */
-    public static final <T> IsDistinctFrom<T> IsDistinctFrom(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.IsDistinctFrom<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>IS DISTINCT FROM</code> operator.
-     * <p>
-     * The DISTINCT predicate allows for creating NULL safe comparisons where the two operands
-     * are tested for non-equality
-     */
     public /*sealed*/ interface IsDistinctFrom<T>
         extends
             UCommutativeOperator<Field<T>, IsDistinctFrom<T>>,
@@ -4557,26 +2902,6 @@ public final class QOM {
         //permits
         //    IsDistinctFrom
     {}
-
-    /**
-     * The <code>IS NULL</code> operator.
-     */
-    public static final IsNull IsNull() {
-        return new org.jooq.impl.IsNull(
-            null
-        );
-    }
-
-    /**
-     * The <code>IS NULL</code> operator.
-     */
-    public static final IsNull IsNull(
-        Field<?> field
-    ) {
-        return new org.jooq.impl.IsNull(
-            field
-        );
-    }
 
     /**
      * The <code>IS NULL</code> operator.
@@ -4599,35 +2924,6 @@ public final class QOM {
      * The NOT DISTINCT predicate allows for creating NULL safe comparisons where the two
      * operands are tested for equality
      */
-    public static final <T> IsNotDistinctFrom<T> IsNotDistinctFrom() {
-        return new org.jooq.impl.IsNotDistinctFrom<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>IS NOT DISTINCT FROM</code> operator.
-     * <p>
-     * The NOT DISTINCT predicate allows for creating NULL safe comparisons where the two
-     * operands are tested for equality
-     */
-    public static final <T> IsNotDistinctFrom<T> IsNotDistinctFrom(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.IsNotDistinctFrom<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>IS NOT DISTINCT FROM</code> operator.
-     * <p>
-     * The NOT DISTINCT predicate allows for creating NULL safe comparisons where the two
-     * operands are tested for equality
-     */
     public /*sealed*/ interface IsNotDistinctFrom<T>
         extends
             UCommutativeOperator<Field<T>, IsNotDistinctFrom<T>>,
@@ -4635,26 +2931,6 @@ public final class QOM {
         //permits
         //    IsNotDistinctFrom
     {}
-
-    /**
-     * The <code>IS NOT NULL</code> operator.
-     */
-    public static final IsNotNull IsNotNull() {
-        return new org.jooq.impl.IsNotNull(
-            null
-        );
-    }
-
-    /**
-     * The <code>IS NOT NULL</code> operator.
-     */
-    public static final IsNotNull IsNotNull(
-        Field<?> field
-    ) {
-        return new org.jooq.impl.IsNotNull(
-            field
-        );
-    }
 
     /**
      * The <code>IS NOT NULL</code> operator.
@@ -4669,29 +2945,6 @@ public final class QOM {
         @NotNull default Field<?> $field() { return $arg1(); }
         @CheckReturnValue
         @NotNull default IsNotNull $field(Field<?> newField) { return $arg1(newField); }
-    }
-
-    /**
-     * The <code>LE</code> operator.
-     */
-    public static final <T> Le<T> Le() {
-        return new org.jooq.impl.Le<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>LE</code> operator.
-     */
-    public static final <T> Le<T> Le(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Le<>(
-            arg1,
-            arg2
-        );
     }
 
     /**
@@ -4715,29 +2968,6 @@ public final class QOM {
     /**
      * The <code>LE</code> operator.
      */
-    public static final <T> LeQuantified<T> LeQuantified() {
-        return new org.jooq.impl.LeQuantified<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>LE</code> operator.
-     */
-    public static final <T> LeQuantified<T> LeQuantified(
-        Field<T> arg1,
-        org.jooq.QuantifiedSelect<? extends Record1<T>> arg2
-    ) {
-        return new org.jooq.impl.LeQuantified<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>LE</code> operator.
-     */
     public /*sealed*/ interface LeQuantified<T>
         extends
             UReturnsNullOnNullInput,
@@ -4746,32 +2976,6 @@ public final class QOM {
         //permits
         //    LeQuantified
     {}
-
-    /**
-     * The <code>LIKE</code> operator.
-     */
-    public static final Like Like() {
-        return new org.jooq.impl.Like(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>LIKE</code> operator.
-     */
-    public static final Like Like(
-        Field<?> value,
-        Field<String> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.Like(
-            value,
-            pattern,
-            escape
-        );
-    }
 
     /**
      * The <code>LIKE</code> operator.
@@ -4793,32 +2997,6 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
         @CheckReturnValue
         @NotNull default Like $escape(Character newEscape) { return $arg3(newEscape); }
-    }
-
-    /**
-     * The <code>LIKE</code> operator.
-     */
-    public static final LikeQuantified LikeQuantified() {
-        return new org.jooq.impl.LikeQuantified(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>LIKE</code> operator.
-     */
-    public static final LikeQuantified LikeQuantified(
-        Field<?> value,
-        org.jooq.QuantifiedSelect<? extends Record1<String>> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.LikeQuantified(
-            value,
-            pattern,
-            escape
-        );
     }
 
     /**
@@ -4853,46 +3031,6 @@ public final class QOM {
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) like lower(value)</code> in all other dialects.
      */
-    public static final LikeIgnoreCase LikeIgnoreCase() {
-        return new org.jooq.impl.LikeIgnoreCase(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>LIKE IGNORE CASE</code> operator.
-     * <p>
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value.
-     * <p>
-     * This translates to <code>this ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
-     */
-    public static final LikeIgnoreCase LikeIgnoreCase(
-        Field<?> value,
-        Field<String> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.LikeIgnoreCase(
-            value,
-            pattern,
-            escape
-        );
-    }
-
-    /**
-     * The <code>LIKE IGNORE CASE</code> operator.
-     * <p>
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value.
-     * <p>
-     * This translates to <code>this ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
-     */
     public /*sealed*/ interface LikeIgnoreCase
         extends
             UReturnsNullOnNullInput,
@@ -4910,29 +3048,6 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
         @CheckReturnValue
         @NotNull default LikeIgnoreCase $escape(Character newEscape) { return $arg3(newEscape); }
-    }
-
-    /**
-     * The <code>LT</code> operator.
-     */
-    public static final <T> Lt<T> Lt() {
-        return new org.jooq.impl.Lt<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>LT</code> operator.
-     */
-    public static final <T> Lt<T> Lt(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Lt<>(
-            arg1,
-            arg2
-        );
     }
 
     /**
@@ -4956,29 +3071,6 @@ public final class QOM {
     /**
      * The <code>LT</code> operator.
      */
-    public static final <T> LtQuantified<T> LtQuantified() {
-        return new org.jooq.impl.LtQuantified<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>LT</code> operator.
-     */
-    public static final <T> LtQuantified<T> LtQuantified(
-        Field<T> arg1,
-        org.jooq.QuantifiedSelect<? extends Record1<T>> arg2
-    ) {
-        return new org.jooq.impl.LtQuantified<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>LT</code> operator.
-     */
     public /*sealed*/ interface LtQuantified<T>
         extends
             UReturnsNullOnNullInput,
@@ -4987,29 +3079,6 @@ public final class QOM {
         //permits
         //    LtQuantified
     {}
-
-    /**
-     * The <code>NE</code> operator.
-     */
-    public static final <R extends Record> TableNe<R> TableNe() {
-        return new org.jooq.impl.TableNe<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>NE</code> operator.
-     */
-    public static final <R extends Record> TableNe<R> TableNe(
-        Table<R> arg1,
-        Table<R> arg2
-    ) {
-        return new org.jooq.impl.TableNe<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>NE</code> operator.
@@ -5026,29 +3095,6 @@ public final class QOM {
     /**
      * The <code>NE</code> operator.
      */
-    public static final <T> Ne<T> Ne() {
-        return new org.jooq.impl.Ne<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>NE</code> operator.
-     */
-    public static final <T> Ne<T> Ne(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Ne<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>NE</code> operator.
-     */
     public /*sealed*/ interface Ne<T>
         extends
             UReturnsNullOnNullInput,
@@ -5057,29 +3103,6 @@ public final class QOM {
         //permits
         //    Ne
     {}
-
-    /**
-     * The <code>NE</code> operator.
-     */
-    public static final <T> NeQuantified<T> NeQuantified() {
-        return new org.jooq.impl.NeQuantified<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>NE</code> operator.
-     */
-    public static final <T> NeQuantified<T> NeQuantified(
-        Field<T> arg1,
-        org.jooq.QuantifiedSelect<? extends Record1<T>> arg2
-    ) {
-        return new org.jooq.impl.NeQuantified<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>NE</code> operator.
@@ -5096,26 +3119,6 @@ public final class QOM {
     /**
      * The <code>NOT</code> operator.
      */
-    public static final Not Not() {
-        return new org.jooq.impl.Not(
-            null
-        );
-    }
-
-    /**
-     * The <code>NOT</code> operator.
-     */
-    public static final Not Not(
-        Condition condition
-    ) {
-        return new org.jooq.impl.Not(
-            condition
-        );
-    }
-
-    /**
-     * The <code>NOT</code> operator.
-     */
     public /*sealed*/ interface Not
         extends
             UReturnsNullOnNullInput,
@@ -5127,26 +3130,6 @@ public final class QOM {
         @NotNull default Condition $condition() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Not $condition(Condition newCondition) { return $arg1(newCondition); }
-    }
-
-    /**
-     * The <code>NOT</code> operator.
-     */
-    public static final NotField NotField() {
-        return new org.jooq.impl.NotField(
-            null
-        );
-    }
-
-    /**
-     * The <code>NOT</code> operator.
-     */
-    public static final NotField NotField(
-        Field<Boolean> field
-    ) {
-        return new org.jooq.impl.NotField(
-            field
-        );
     }
 
     /**
@@ -5176,45 +3159,6 @@ public final class QOM {
      * condition will be <code>NULL</code> (or <code>false</code>, depending on
      * the dialect) as well. This is standard SQL behaviour.
      */
-    public static final <T> NotIn<T> NotIn() {
-        return new org.jooq.impl.NotIn<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>NOT IN</code> operator.
-     * <p>
-     * The subquery must return exactly one field. This is not checked
-     * by jOOQ and will result in syntax errors in the database, if not used
-     * correctly.
-     * <p>
-     * If any of the passed values is <code>NULL</code>, then the
-     * condition will be <code>NULL</code> (or <code>false</code>, depending on
-     * the dialect) as well. This is standard SQL behaviour.
-     */
-    public static final <T> NotIn<T> NotIn(
-        Field<T> arg1,
-        Select<? extends Record1<T>> arg2
-    ) {
-        return new org.jooq.impl.NotIn<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>NOT IN</code> operator.
-     * <p>
-     * The subquery must return exactly one field. This is not checked
-     * by jOOQ and will result in syntax errors in the database, if not used
-     * correctly.
-     * <p>
-     * If any of the passed values is <code>NULL</code>, then the
-     * condition will be <code>NULL</code> (or <code>false</code>, depending on
-     * the dialect) as well. This is standard SQL behaviour.
-     */
     public /*sealed*/ interface NotIn<T>
         extends
             UOperator2<Field<T>, Select<? extends Record1<T>>, NotIn<T>>,
@@ -5222,32 +3166,6 @@ public final class QOM {
         //permits
         //    NotIn
     {}
-
-    /**
-     * The <code>NOT LIKE</code> operator.
-     */
-    public static final NotLike NotLike() {
-        return new org.jooq.impl.NotLike(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>NOT LIKE</code> operator.
-     */
-    public static final NotLike NotLike(
-        Field<?> value,
-        Field<String> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.NotLike(
-            value,
-            pattern,
-            escape
-        );
-    }
 
     /**
      * The <code>NOT LIKE</code> operator.
@@ -5269,32 +3187,6 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
         @CheckReturnValue
         @NotNull default NotLike $escape(Character newEscape) { return $arg3(newEscape); }
-    }
-
-    /**
-     * The <code>NOT LIKE</code> operator.
-     */
-    public static final NotLikeQuantified NotLikeQuantified() {
-        return new org.jooq.impl.NotLikeQuantified(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>NOT LIKE</code> operator.
-     */
-    public static final NotLikeQuantified NotLikeQuantified(
-        Field<?> value,
-        org.jooq.QuantifiedSelect<? extends Record1<String>> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.NotLikeQuantified(
-            value,
-            pattern,
-            escape
-        );
     }
 
     /**
@@ -5329,46 +3221,6 @@ public final class QOM {
      * {@link SQLDialect#POSTGRES}, or to
      * <code>lower(this) not like lower(value)</code> in all other dialects.
      */
-    public static final NotLikeIgnoreCase NotLikeIgnoreCase() {
-        return new org.jooq.impl.NotLikeIgnoreCase(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>NOT LIKE IGNORE CASE</code> operator.
-     * <p>
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value.
-     * <p>
-     * This translates to <code>this not ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(value)</code> in all other dialects.
-     */
-    public static final NotLikeIgnoreCase NotLikeIgnoreCase(
-        Field<?> value,
-        Field<String> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.NotLikeIgnoreCase(
-            value,
-            pattern,
-            escape
-        );
-    }
-
-    /**
-     * The <code>NOT LIKE IGNORE CASE</code> operator.
-     * <p>
-     * Create a condition to case-insensitively pattern-check this field against
-     * a value.
-     * <p>
-     * This translates to <code>this not ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(value)</code> in all other dialects.
-     */
     public /*sealed*/ interface NotLikeIgnoreCase
         extends
             UReturnsNullOnNullInput,
@@ -5386,32 +3238,6 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
         @CheckReturnValue
         @NotNull default NotLikeIgnoreCase $escape(Character newEscape) { return $arg3(newEscape); }
-    }
-
-    /**
-     * The <code>NOT SIMILAR TO</code> operator.
-     */
-    public static final NotSimilarTo NotSimilarTo() {
-        return new org.jooq.impl.NotSimilarTo(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>NOT SIMILAR TO</code> operator.
-     */
-    public static final NotSimilarTo NotSimilarTo(
-        Field<?> value,
-        Field<String> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.NotSimilarTo(
-            value,
-            pattern,
-            escape
-        );
     }
 
     /**
@@ -5439,32 +3265,6 @@ public final class QOM {
     /**
      * The <code>NOT SIMILAR TO</code> operator.
      */
-    public static final NotSimilarToQuantified NotSimilarToQuantified() {
-        return new org.jooq.impl.NotSimilarToQuantified(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>NOT SIMILAR TO</code> operator.
-     */
-    public static final NotSimilarToQuantified NotSimilarToQuantified(
-        Field<?> value,
-        org.jooq.QuantifiedSelect<? extends Record1<String>> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.NotSimilarToQuantified(
-            value,
-            pattern,
-            escape
-        );
-    }
-
-    /**
-     * The <code>NOT SIMILAR TO</code> operator.
-     */
     public /*sealed*/ interface NotSimilarToQuantified
         extends
             UReturnsNullOnNullInput,
@@ -5487,29 +3287,6 @@ public final class QOM {
     /**
      * The <code>OR</code> operator.
      */
-    public static final Or Or() {
-        return new org.jooq.impl.Or(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>OR</code> operator.
-     */
-    public static final Or Or(
-        Condition arg1,
-        Condition arg2
-    ) {
-        return new org.jooq.impl.Or(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>OR</code> operator.
-     */
     public /*sealed*/ interface Or
         extends
             UCommutativeOperator<Condition, Or>,
@@ -5517,32 +3294,6 @@ public final class QOM {
         //permits
         //    Or
     {}
-
-    /**
-     * The <code>SIMILAR TO</code> operator.
-     */
-    public static final SimilarTo SimilarTo() {
-        return new org.jooq.impl.SimilarTo(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>SIMILAR TO</code> operator.
-     */
-    public static final SimilarTo SimilarTo(
-        Field<?> value,
-        Field<String> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.SimilarTo(
-            value,
-            pattern,
-            escape
-        );
-    }
 
     /**
      * The <code>SIMILAR TO</code> operator.
@@ -5564,32 +3315,6 @@ public final class QOM {
         @Nullable default Character $escape() { return $arg3(); }
         @CheckReturnValue
         @NotNull default SimilarTo $escape(Character newEscape) { return $arg3(newEscape); }
-    }
-
-    /**
-     * The <code>SIMILAR TO</code> operator.
-     */
-    public static final SimilarToQuantified SimilarToQuantified() {
-        return new org.jooq.impl.SimilarToQuantified(
-            null,
-            null,
-            (char) 0
-        );
-    }
-
-    /**
-     * The <code>SIMILAR TO</code> operator.
-     */
-    public static final SimilarToQuantified SimilarToQuantified(
-        Field<?> value,
-        org.jooq.QuantifiedSelect<? extends Record1<String>> pattern,
-        Character escape
-    ) {
-        return new org.jooq.impl.SimilarToQuantified(
-            value,
-            pattern,
-            escape
-        );
     }
 
     /**
@@ -5617,26 +3342,6 @@ public final class QOM {
     /**
      * The <code>UNIQUE</code> function.
      */
-    public static final Unique Unique() {
-        return new org.jooq.impl.Unique(
-            null
-        );
-    }
-
-    /**
-     * The <code>UNIQUE</code> function.
-     */
-    public static final Unique Unique(
-        Select<?> query
-    ) {
-        return new org.jooq.impl.Unique(
-            query
-        );
-    }
-
-    /**
-     * The <code>UNIQUE</code> function.
-     */
     public /*sealed*/ interface Unique
         extends
             UOperator1<Select<?>, Unique>,
@@ -5647,29 +3352,6 @@ public final class QOM {
         @NotNull default Select<?> $query() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Unique $query(Select<?> newQuery) { return $arg1(newQuery); }
-    }
-
-    /**
-     * The <code>XOR</code> operator.
-     */
-    public static final Xor Xor() {
-        return new org.jooq.impl.Xor(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>XOR</code> operator.
-     */
-    public static final Xor Xor(
-        Condition arg1,
-        Condition arg2
-    ) {
-        return new org.jooq.impl.Xor(
-            arg1,
-            arg2
-        );
     }
 
     /**
@@ -5687,29 +3369,6 @@ public final class QOM {
     /**
      * The <code>ROW EQ</code> operator.
      */
-    public static final <T extends Row> RowEq<T> RowEq() {
-        return new org.jooq.impl.RowEq<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ROW EQ</code> operator.
-     */
-    public static final <T extends Row> RowEq<T> RowEq(
-        T arg1,
-        T arg2
-    ) {
-        return new org.jooq.impl.RowEq<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>ROW EQ</code> operator.
-     */
     public /*sealed*/ interface RowEq<T extends Row>
         extends
             UReturnsNullOnNullInput,
@@ -5722,29 +3381,6 @@ public final class QOM {
     /**
      * The <code>ROW NE</code> operator.
      */
-    public static final <T extends Row> RowNe<T> RowNe() {
-        return new org.jooq.impl.RowNe<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ROW NE</code> operator.
-     */
-    public static final <T extends Row> RowNe<T> RowNe(
-        T arg1,
-        T arg2
-    ) {
-        return new org.jooq.impl.RowNe<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>ROW NE</code> operator.
-     */
     public /*sealed*/ interface RowNe<T extends Row>
         extends
             UReturnsNullOnNullInput,
@@ -5753,29 +3389,6 @@ public final class QOM {
         //permits
         //    RowNe
     {}
-
-    /**
-     * The <code>ROW GT</code> operator.
-     */
-    public static final <T extends Row> RowGt<T> RowGt() {
-        return new org.jooq.impl.RowGt<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ROW GT</code> operator.
-     */
-    public static final <T extends Row> RowGt<T> RowGt(
-        T arg1,
-        T arg2
-    ) {
-        return new org.jooq.impl.RowGt<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>ROW GT</code> operator.
@@ -5793,29 +3406,6 @@ public final class QOM {
         @NotNull default RowLt<T> $converse() {
             return new org.jooq.impl.RowLt<>($arg2(), $arg1());
         }
-    }
-
-    /**
-     * The <code>ROW GE</code> operator.
-     */
-    public static final <T extends Row> RowGe<T> RowGe() {
-        return new org.jooq.impl.RowGe<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ROW GE</code> operator.
-     */
-    public static final <T extends Row> RowGe<T> RowGe(
-        T arg1,
-        T arg2
-    ) {
-        return new org.jooq.impl.RowGe<>(
-            arg1,
-            arg2
-        );
     }
 
     /**
@@ -5839,29 +3429,6 @@ public final class QOM {
     /**
      * The <code>ROW LT</code> operator.
      */
-    public static final <T extends Row> RowLt<T> RowLt() {
-        return new org.jooq.impl.RowLt<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ROW LT</code> operator.
-     */
-    public static final <T extends Row> RowLt<T> RowLt(
-        T arg1,
-        T arg2
-    ) {
-        return new org.jooq.impl.RowLt<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>ROW LT</code> operator.
-     */
     public /*sealed*/ interface RowLt<T extends Row>
         extends
             UReturnsNullOnNullInput,
@@ -5875,29 +3442,6 @@ public final class QOM {
         @NotNull default RowGt<T> $converse() {
             return new org.jooq.impl.RowGt<>($arg2(), $arg1());
         }
-    }
-
-    /**
-     * The <code>ROW LE</code> operator.
-     */
-    public static final <T extends Row> RowLe<T> RowLe() {
-        return new org.jooq.impl.RowLe<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ROW LE</code> operator.
-     */
-    public static final <T extends Row> RowLe<T> RowLe(
-        T arg1,
-        T arg2
-    ) {
-        return new org.jooq.impl.RowLe<>(
-            arg1,
-            arg2
-        );
     }
 
     /**
@@ -5923,30 +3467,6 @@ public final class QOM {
      * <p>
      * Create a condition to check if this field contains XML data.
      */
-    public static final IsDocument IsDocument() {
-        return new org.jooq.impl.IsDocument(
-            null
-        );
-    }
-
-    /**
-     * The <code>IS DOCUMENT</code> operator.
-     * <p>
-     * Create a condition to check if this field contains XML data.
-     */
-    public static final IsDocument IsDocument(
-        Field<?> field
-    ) {
-        return new org.jooq.impl.IsDocument(
-            field
-        );
-    }
-
-    /**
-     * The <code>IS DOCUMENT</code> operator.
-     * <p>
-     * Create a condition to check if this field contains XML data.
-     */
     public /*sealed*/ interface IsDocument
         extends
             UReturnsNullOnNullInput,
@@ -5958,30 +3478,6 @@ public final class QOM {
         @NotNull default Field<?> $field() { return $arg1(); }
         @CheckReturnValue
         @NotNull default IsDocument $field(Field<?> newField) { return $arg1(newField); }
-    }
-
-    /**
-     * The <code>IS NOT DOCUMENT</code> operator.
-     * <p>
-     * Create a condition to check if this field does not contain XML data.
-     */
-    public static final IsNotDocument IsNotDocument() {
-        return new org.jooq.impl.IsNotDocument(
-            null
-        );
-    }
-
-    /**
-     * The <code>IS NOT DOCUMENT</code> operator.
-     * <p>
-     * Create a condition to check if this field does not contain XML data.
-     */
-    public static final IsNotDocument IsNotDocument(
-        Field<?> field
-    ) {
-        return new org.jooq.impl.IsNotDocument(
-            field
-        );
     }
 
     /**
@@ -6007,30 +3503,6 @@ public final class QOM {
      * <p>
      * Create a condition to check if this field contains JSON data.
      */
-    public static final IsJson IsJson() {
-        return new org.jooq.impl.IsJson(
-            null
-        );
-    }
-
-    /**
-     * The <code>IS JSON</code> operator.
-     * <p>
-     * Create a condition to check if this field contains JSON data.
-     */
-    public static final IsJson IsJson(
-        Field<?> field
-    ) {
-        return new org.jooq.impl.IsJson(
-            field
-        );
-    }
-
-    /**
-     * The <code>IS JSON</code> operator.
-     * <p>
-     * Create a condition to check if this field contains JSON data.
-     */
     public /*sealed*/ interface IsJson
         extends
             UReturnsNullOnNullInput,
@@ -6049,30 +3521,6 @@ public final class QOM {
      * <p>
      * Create a condition to check if this field does not contain JSON data.
      */
-    public static final IsNotJson IsNotJson() {
-        return new org.jooq.impl.IsNotJson(
-            null
-        );
-    }
-
-    /**
-     * The <code>IS NOT JSON</code> operator.
-     * <p>
-     * Create a condition to check if this field does not contain JSON data.
-     */
-    public static final IsNotJson IsNotJson(
-        Field<?> field
-    ) {
-        return new org.jooq.impl.IsNotJson(
-            field
-        );
-    }
-
-    /**
-     * The <code>IS NOT JSON</code> operator.
-     * <p>
-     * Create a condition to check if this field does not contain JSON data.
-     */
     public /*sealed*/ interface IsNotJson
         extends
             UReturnsNullOnNullInput,
@@ -6084,32 +3532,6 @@ public final class QOM {
         @NotNull default Field<?> $field() { return $arg1(); }
         @CheckReturnValue
         @NotNull default IsNotJson $field(Field<?> newField) { return $arg1(newField); }
-    }
-
-    /**
-     * The <code>EXCLUDED</code> function.
-     * <p>
-     * Provide "EXCLUDED" qualification for a column for use in ON CONFLICT or ON DUPLICATE
-     * KEY UPDATE.
-     */
-    public static final <T> Excluded<T> Excluded() {
-        return new org.jooq.impl.Excluded<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>EXCLUDED</code> function.
-     * <p>
-     * Provide "EXCLUDED" qualification for a column for use in ON CONFLICT or ON DUPLICATE
-     * KEY UPDATE.
-     */
-    public static final <T> Excluded<T> Excluded(
-        Field<T> field
-    ) {
-        return new org.jooq.impl.Excluded<>(
-            field
-        );
     }
 
     /**
@@ -6163,70 +3585,6 @@ public final class QOM {
      * row to a different physical location at any time, thus changing the rowid
      * value. In general, use primary keys, instead.
      */
-    public static final QualifiedRowid QualifiedRowid() {
-        return new org.jooq.impl.QualifiedRowid(
-            null
-        );
-    }
-
-    /**
-     * The <code>ROWID</code> operator.
-     * <p>
-     * Get a <code>table.rowid</code> reference from this table.
-     * <p>
-     * A rowid value describes the physical location of a row on the disk, which
-     * can be used as a replacement for a primary key in some situations -
-     * especially within a query, e.g. to self-join a table:
-     * <p>
-     * <pre><code>
-     * -- Emulating this MySQL statement...
-     * DELETE FROM x ORDER BY x.y LIMIT 1
-     *
-     * -- ... in other databases
-     * DELETE FROM x
-     * WHERE x.rowid IN (
-     *   SELECT x.rowid FROM x ORDER BY x.a LIMIT 1
-     * )
-     * </code></pre>
-     * <p>
-     * It is <em>not</em> recommended to use <code>rowid</code> values in client
-     * applications as actual row identifiers as the database system may move a
-     * row to a different physical location at any time, thus changing the rowid
-     * value. In general, use primary keys, instead.
-     */
-    public static final QualifiedRowid QualifiedRowid(
-        Table<?> table
-    ) {
-        return new org.jooq.impl.QualifiedRowid(
-            table
-        );
-    }
-
-    /**
-     * The <code>ROWID</code> operator.
-     * <p>
-     * Get a <code>table.rowid</code> reference from this table.
-     * <p>
-     * A rowid value describes the physical location of a row on the disk, which
-     * can be used as a replacement for a primary key in some situations -
-     * especially within a query, e.g. to self-join a table:
-     * <p>
-     * <pre><code>
-     * -- Emulating this MySQL statement...
-     * DELETE FROM x ORDER BY x.y LIMIT 1
-     *
-     * -- ... in other databases
-     * DELETE FROM x
-     * WHERE x.rowid IN (
-     *   SELECT x.rowid FROM x ORDER BY x.a LIMIT 1
-     * )
-     * </code></pre>
-     * <p>
-     * It is <em>not</em> recommended to use <code>rowid</code> values in client
-     * applications as actual row identifiers as the database system may move a
-     * row to a different physical location at any time, thus changing the rowid
-     * value. In general, use primary keys, instead.
-     */
     public /*sealed*/ interface QualifiedRowid
         extends
             UOperator1<Table<?>, QualifiedRowid>,
@@ -6237,26 +3595,6 @@ public final class QOM {
         @NotNull default Table<?> $table() { return $arg1(); }
         @CheckReturnValue
         @NotNull default QualifiedRowid $table(Table<?> newTable) { return $arg1(newTable); }
-    }
-
-    /**
-     * The <code>ABS</code> function.
-     */
-    public static final <T extends Number> Abs<T> Abs() {
-        return new org.jooq.impl.Abs<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>ABS</code> function.
-     */
-    public static final <T extends Number> Abs<T> Abs(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.Abs<>(
-            value
-        );
     }
 
     /**
@@ -6278,26 +3616,6 @@ public final class QOM {
     /**
      * The <code>ACOS</code> function.
      */
-    public static final Acos Acos() {
-        return new org.jooq.impl.Acos(
-            null
-        );
-    }
-
-    /**
-     * The <code>ACOS</code> function.
-     */
-    public static final Acos Acos(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Acos(
-            value
-        );
-    }
-
-    /**
-     * The <code>ACOS</code> function.
-     */
     public /*sealed*/ interface Acos
         extends
             UReturnsNullOnNullInput,
@@ -6309,26 +3627,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Acos $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>ACOSH</code> function.
-     */
-    public static final Acosh Acosh() {
-        return new org.jooq.impl.Acosh(
-            null
-        );
-    }
-
-    /**
-     * The <code>ACOSH</code> function.
-     */
-    public static final Acosh Acosh(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Acosh(
-            value
-        );
     }
 
     /**
@@ -6350,26 +3648,6 @@ public final class QOM {
     /**
      * The <code>ACOTH</code> function.
      */
-    public static final Acoth Acoth() {
-        return new org.jooq.impl.Acoth(
-            null
-        );
-    }
-
-    /**
-     * The <code>ACOTH</code> function.
-     */
-    public static final Acoth Acoth(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Acoth(
-            value
-        );
-    }
-
-    /**
-     * The <code>ACOTH</code> function.
-     */
     public /*sealed*/ interface Acoth
         extends
             UReturnsNullOnNullInput,
@@ -6381,29 +3659,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Acoth $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>ADD</code> operator.
-     */
-    public static final <T> Add<T> Add() {
-        return new org.jooq.impl.Add<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ADD</code> operator.
-     */
-    public static final <T> Add<T> Add(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Add<>(
-            arg1,
-            arg2
-        );
     }
 
     /**
@@ -6421,26 +3676,6 @@ public final class QOM {
     /**
      * The <code>ASIN</code> function.
      */
-    public static final Asin Asin() {
-        return new org.jooq.impl.Asin(
-            null
-        );
-    }
-
-    /**
-     * The <code>ASIN</code> function.
-     */
-    public static final Asin Asin(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Asin(
-            value
-        );
-    }
-
-    /**
-     * The <code>ASIN</code> function.
-     */
     public /*sealed*/ interface Asin
         extends
             UReturnsNullOnNullInput,
@@ -6452,26 +3687,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Asin $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>ASINH</code> function.
-     */
-    public static final Asinh Asinh() {
-        return new org.jooq.impl.Asinh(
-            null
-        );
-    }
-
-    /**
-     * The <code>ASINH</code> function.
-     */
-    public static final Asinh Asinh(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Asinh(
-            value
-        );
     }
 
     /**
@@ -6493,26 +3708,6 @@ public final class QOM {
     /**
      * The <code>ATAN</code> function.
      */
-    public static final Atan Atan() {
-        return new org.jooq.impl.Atan(
-            null
-        );
-    }
-
-    /**
-     * The <code>ATAN</code> function.
-     */
-    public static final Atan Atan(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Atan(
-            value
-        );
-    }
-
-    /**
-     * The <code>ATAN</code> function.
-     */
     public /*sealed*/ interface Atan
         extends
             UReturnsNullOnNullInput,
@@ -6524,29 +3719,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Atan $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>ATAN2</code> function.
-     */
-    public static final Atan2 Atan2() {
-        return new org.jooq.impl.Atan2(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ATAN2</code> function.
-     */
-    public static final Atan2 Atan2(
-        Field<? extends Number> x,
-        Field<? extends Number> y
-    ) {
-        return new org.jooq.impl.Atan2(
-            x,
-            y
-        );
     }
 
     /**
@@ -6571,26 +3743,6 @@ public final class QOM {
     /**
      * The <code>ATANH</code> function.
      */
-    public static final Atanh Atanh() {
-        return new org.jooq.impl.Atanh(
-            null
-        );
-    }
-
-    /**
-     * The <code>ATANH</code> function.
-     */
-    public static final Atanh Atanh(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Atanh(
-            value
-        );
-    }
-
-    /**
-     * The <code>ATANH</code> function.
-     */
     public /*sealed*/ interface Atanh
         extends
             UReturnsNullOnNullInput,
@@ -6602,29 +3754,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Atanh $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>BIT AND</code> operator.
-     */
-    public static final <T extends Number> BitAnd<T> BitAnd() {
-        return new org.jooq.impl.BitAnd<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT AND</code> operator.
-     */
-    public static final <T extends Number> BitAnd<T> BitAnd(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.BitAnd<>(
-            arg1,
-            arg2
-        );
     }
 
     /**
@@ -6644,30 +3773,6 @@ public final class QOM {
      * <p>
      * Count the number of bits set in a number
      */
-    public static final BitCount BitCount() {
-        return new org.jooq.impl.BitCount(
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT COUNT</code> function.
-     * <p>
-     * Count the number of bits set in a number
-     */
-    public static final BitCount BitCount(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.BitCount(
-            value
-        );
-    }
-
-    /**
-     * The <code>BIT COUNT</code> function.
-     * <p>
-     * Count the number of bits set in a number
-     */
     public /*sealed*/ interface BitCount
         extends
             UReturnsNullOnNullInput,
@@ -6679,29 +3784,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default BitCount $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>BIT GET</code> function.
-     */
-    public static final <T extends Number> BitGet<T> BitGet() {
-        return new org.jooq.impl.BitGet<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT GET</code> function.
-     */
-    public static final <T extends Number> BitGet<T> BitGet(
-        Field<T> value,
-        Field<? extends Number> bit
-    ) {
-        return new org.jooq.impl.BitGet<>(
-            value,
-            bit
-        );
     }
 
     /**
@@ -6726,29 +3808,6 @@ public final class QOM {
     /**
      * The <code>BIT NAND</code> operator.
      */
-    public static final <T extends Number> BitNand<T> BitNand() {
-        return new org.jooq.impl.BitNand<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT NAND</code> operator.
-     */
-    public static final <T extends Number> BitNand<T> BitNand(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.BitNand<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>BIT NAND</code> operator.
-     */
     public /*sealed*/ interface BitNand<T extends Number>
         extends
             UReturnsNullOnNullInput,
@@ -6757,29 +3816,6 @@ public final class QOM {
         //permits
         //    BitNand
     {}
-
-    /**
-     * The <code>BIT NOR</code> operator.
-     */
-    public static final <T extends Number> BitNor<T> BitNor() {
-        return new org.jooq.impl.BitNor<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT NOR</code> operator.
-     */
-    public static final <T extends Number> BitNor<T> BitNor(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.BitNor<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>BIT NOR</code> operator.
@@ -6796,26 +3832,6 @@ public final class QOM {
     /**
      * The <code>BIT NOT</code> operator.
      */
-    public static final <T extends Number> BitNot<T> BitNot() {
-        return new org.jooq.impl.BitNot<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT NOT</code> operator.
-     */
-    public static final <T extends Number> BitNot<T> BitNot(
-        Field<T> arg1
-    ) {
-        return new org.jooq.impl.BitNot<>(
-            arg1
-        );
-    }
-
-    /**
-     * The <code>BIT NOT</code> operator.
-     */
     public /*sealed*/ interface BitNot<T extends Number>
         extends
             UReturnsNullOnNullInput,
@@ -6828,29 +3844,6 @@ public final class QOM {
     /**
      * The <code>BIT OR</code> operator.
      */
-    public static final <T extends Number> BitOr<T> BitOr() {
-        return new org.jooq.impl.BitOr<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT OR</code> operator.
-     */
-    public static final <T extends Number> BitOr<T> BitOr(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.BitOr<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>BIT OR</code> operator.
-     */
     public /*sealed*/ interface BitOr<T extends Number>
         extends
             UReturnsNullOnNullInput,
@@ -6859,32 +3852,6 @@ public final class QOM {
         //permits
         //    BitOr
     {}
-
-    /**
-     * The <code>BIT SET</code> function.
-     */
-    public static final <T extends Number> BitSet<T> BitSet() {
-        return new org.jooq.impl.BitSet<>(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT SET</code> function.
-     */
-    public static final <T extends Number> BitSet<T> BitSet(
-        Field<T> value,
-        Field<? extends Number> bit,
-        Field<T> newValue
-    ) {
-        return new org.jooq.impl.BitSet<>(
-            value,
-            bit,
-            newValue
-        );
-    }
 
     /**
      * The <code>BIT SET</code> function.
@@ -6911,29 +3878,6 @@ public final class QOM {
     /**
      * The <code>BIT X NOR</code> operator.
      */
-    public static final <T extends Number> BitXNor<T> BitXNor() {
-        return new org.jooq.impl.BitXNor<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT X NOR</code> operator.
-     */
-    public static final <T extends Number> BitXNor<T> BitXNor(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.BitXNor<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>BIT X NOR</code> operator.
-     */
     public /*sealed*/ interface BitXNor<T extends Number>
         extends
             UReturnsNullOnNullInput,
@@ -6942,29 +3886,6 @@ public final class QOM {
         //permits
         //    BitXNor
     {}
-
-    /**
-     * The <code>BIT XOR</code> operator.
-     */
-    public static final <T extends Number> BitXor<T> BitXor() {
-        return new org.jooq.impl.BitXor<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT XOR</code> operator.
-     */
-    public static final <T extends Number> BitXor<T> BitXor(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.BitXor<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>BIT XOR</code> operator.
@@ -6981,26 +3902,6 @@ public final class QOM {
     /**
      * The <code>CBRT</code> function.
      */
-    public static final Cbrt Cbrt() {
-        return new org.jooq.impl.Cbrt(
-            null
-        );
-    }
-
-    /**
-     * The <code>CBRT</code> function.
-     */
-    public static final Cbrt Cbrt(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Cbrt(
-            value
-        );
-    }
-
-    /**
-     * The <code>CBRT</code> function.
-     */
     public /*sealed*/ interface Cbrt
         extends
             UReturnsNullOnNullInput,
@@ -7012,30 +3913,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Cbrt $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>CEIL</code> function.
-     * <p>
-     * Get the smallest integer value equal or greater to a value.
-     */
-    public static final <T extends Number> Ceil<T> Ceil() {
-        return new org.jooq.impl.Ceil<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>CEIL</code> function.
-     * <p>
-     * Get the smallest integer value equal or greater to a value.
-     */
-    public static final <T extends Number> Ceil<T> Ceil(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.Ceil<>(
-            value
-        );
     }
 
     /**
@@ -7059,26 +3936,6 @@ public final class QOM {
     /**
      * The <code>COS</code> function.
      */
-    public static final Cos Cos() {
-        return new org.jooq.impl.Cos(
-            null
-        );
-    }
-
-    /**
-     * The <code>COS</code> function.
-     */
-    public static final Cos Cos(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Cos(
-            value
-        );
-    }
-
-    /**
-     * The <code>COS</code> function.
-     */
     public /*sealed*/ interface Cos
         extends
             UReturnsNullOnNullInput,
@@ -7090,26 +3947,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Cos $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>COSH</code> function.
-     */
-    public static final Cosh Cosh() {
-        return new org.jooq.impl.Cosh(
-            null
-        );
-    }
-
-    /**
-     * The <code>COSH</code> function.
-     */
-    public static final Cosh Cosh(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Cosh(
-            value
-        );
     }
 
     /**
@@ -7131,26 +3968,6 @@ public final class QOM {
     /**
      * The <code>COT</code> function.
      */
-    public static final Cot Cot() {
-        return new org.jooq.impl.Cot(
-            null
-        );
-    }
-
-    /**
-     * The <code>COT</code> function.
-     */
-    public static final Cot Cot(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Cot(
-            value
-        );
-    }
-
-    /**
-     * The <code>COT</code> function.
-     */
     public /*sealed*/ interface Cot
         extends
             UReturnsNullOnNullInput,
@@ -7167,26 +3984,6 @@ public final class QOM {
     /**
      * The <code>COTH</code> function.
      */
-    public static final Coth Coth() {
-        return new org.jooq.impl.Coth(
-            null
-        );
-    }
-
-    /**
-     * The <code>COTH</code> function.
-     */
-    public static final Coth Coth(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Coth(
-            value
-        );
-    }
-
-    /**
-     * The <code>COTH</code> function.
-     */
     public /*sealed*/ interface Coth
         extends
             UReturnsNullOnNullInput,
@@ -7198,30 +3995,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Coth $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>DEGREES</code> function.
-     * <p>
-     * Turn a value in radians to degrees.
-     */
-    public static final Degrees Degrees() {
-        return new org.jooq.impl.Degrees(
-            null
-        );
-    }
-
-    /**
-     * The <code>DEGREES</code> function.
-     * <p>
-     * Turn a value in radians to degrees.
-     */
-    public static final Degrees Degrees(
-        Field<? extends Number> radians
-    ) {
-        return new org.jooq.impl.Degrees(
-            radians
-        );
     }
 
     /**
@@ -7253,29 +4026,6 @@ public final class QOM {
     /**
      * The <code>DIV</code> operator.
      */
-    public static final <T> Div<T> Div() {
-        return new org.jooq.impl.Div<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>DIV</code> operator.
-     */
-    public static final <T> Div<T> Div(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Div<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>DIV</code> operator.
-     */
     public /*sealed*/ interface Div<T>
         extends
             UReturnsNullOnNullInput,
@@ -7284,16 +4034,6 @@ public final class QOM {
         //permits
         //    Div
     {}
-
-    /**
-     * The <code>E</code> function.
-     * <p>
-     * The E literal (Euler number).
-     */
-    public static final Euler Euler() {
-        return new org.jooq.impl.Euler(
-        );
-    }
 
     /**
      * The <code>E</code> function.
@@ -7311,26 +4051,6 @@ public final class QOM {
     /**
      * The <code>EXP</code> function.
      */
-    public static final Exp Exp() {
-        return new org.jooq.impl.Exp(
-            null
-        );
-    }
-
-    /**
-     * The <code>EXP</code> function.
-     */
-    public static final Exp Exp(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Exp(
-            value
-        );
-    }
-
-    /**
-     * The <code>EXP</code> function.
-     */
     public /*sealed*/ interface Exp
         extends
             UReturnsNullOnNullInput,
@@ -7342,30 +4062,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Exp $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>FLOOR</code> function.
-     * <p>
-     * Get the biggest integer value equal or less than a value.
-     */
-    public static final <T extends Number> Floor<T> Floor() {
-        return new org.jooq.impl.Floor<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>FLOOR</code> function.
-     * <p>
-     * Get the biggest integer value equal or less than a value.
-     */
-    public static final <T extends Number> Floor<T> Floor(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.Floor<>(
-            value
-        );
     }
 
     /**
@@ -7391,30 +4087,6 @@ public final class QOM {
      * <p>
      * Get the natural logarithm of a value.
      */
-    public static final Ln Ln() {
-        return new org.jooq.impl.Ln(
-            null
-        );
-    }
-
-    /**
-     * The <code>LN</code> function.
-     * <p>
-     * Get the natural logarithm of a value.
-     */
-    public static final Ln Ln(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Ln(
-            value
-        );
-    }
-
-    /**
-     * The <code>LN</code> function.
-     * <p>
-     * Get the natural logarithm of a value.
-     */
     public /*sealed*/ interface Ln
         extends
             UReturnsNullOnNullInput,
@@ -7426,33 +4098,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Ln $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>LOG</code> function.
-     * <p>
-     * Get the logarithm of a value for a base.
-     */
-    public static final Log Log() {
-        return new org.jooq.impl.Log(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>LOG</code> function.
-     * <p>
-     * Get the logarithm of a value for a base.
-     */
-    public static final Log Log(
-        Field<? extends Number> value,
-        Field<? extends Number> base
-    ) {
-        return new org.jooq.impl.Log(
-            value,
-            base
-        );
     }
 
     /**
@@ -7481,30 +4126,6 @@ public final class QOM {
      * <p>
      * Get the logarithm of a value for base 10.
      */
-    public static final Log10 Log10() {
-        return new org.jooq.impl.Log10(
-            null
-        );
-    }
-
-    /**
-     * The <code>LOG10</code> function.
-     * <p>
-     * Get the logarithm of a value for base 10.
-     */
-    public static final Log10 Log10(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Log10(
-            value
-        );
-    }
-
-    /**
-     * The <code>LOG10</code> function.
-     * <p>
-     * Get the logarithm of a value for base 10.
-     */
     public /*sealed*/ interface Log10
         extends
             UReturnsNullOnNullInput,
@@ -7516,29 +4137,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Log10 $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>MOD</code> operator.
-     */
-    public static final <T extends Number> Mod<T> Mod() {
-        return new org.jooq.impl.Mod<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>MOD</code> operator.
-     */
-    public static final <T extends Number> Mod<T> Mod(
-        Field<T> dividend,
-        Field<? extends Number> divisor
-    ) {
-        return new org.jooq.impl.Mod<>(
-            dividend,
-            divisor
-        );
     }
 
     /**
@@ -7563,29 +4161,6 @@ public final class QOM {
     /**
      * The <code>MUL</code> operator.
      */
-    public static final <T> Mul<T> Mul() {
-        return new org.jooq.impl.Mul<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>MUL</code> operator.
-     */
-    public static final <T> Mul<T> Mul(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Mul<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>MUL</code> operator.
-     */
     public /*sealed*/ interface Mul<T>
         extends
             UReturnsNullOnNullInput,
@@ -7600,16 +4175,6 @@ public final class QOM {
      * <p>
      * The π literal.
      */
-    public static final Pi Pi() {
-        return new org.jooq.impl.Pi(
-        );
-    }
-
-    /**
-     * The <code>PI</code> function.
-     * <p>
-     * The π literal.
-     */
     public /*sealed*/ interface Pi
         extends
             UOperator0<Pi>,
@@ -7617,29 +4182,6 @@ public final class QOM {
         //permits
         //    Pi
     {}
-
-    /**
-     * The <code>POWER</code> operator.
-     */
-    public static final Power Power() {
-        return new org.jooq.impl.Power(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>POWER</code> operator.
-     */
-    public static final Power Power(
-        Field<? extends Number> base,
-        Field<? extends Number> exponent
-    ) {
-        return new org.jooq.impl.Power(
-            base,
-            exponent
-        );
-    }
 
     /**
      * The <code>POWER</code> operator.
@@ -7658,30 +4200,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $exponent() { return $arg2(); }
         @CheckReturnValue
         @NotNull default Power $exponent(Field<? extends Number> newExponent) { return $arg2(newExponent); }
-    }
-
-    /**
-     * The <code>RADIANS</code> function.
-     * <p>
-     * Turn a value in degrees to radians.
-     */
-    public static final Radians Radians() {
-        return new org.jooq.impl.Radians(
-            null
-        );
-    }
-
-    /**
-     * The <code>RADIANS</code> function.
-     * <p>
-     * Turn a value in degrees to radians.
-     */
-    public static final Radians Radians(
-        Field<? extends Number> degrees
-    ) {
-        return new org.jooq.impl.Radians(
-            degrees
-        );
     }
 
     /**
@@ -7715,16 +4233,6 @@ public final class QOM {
      * <p>
      * Get a random numeric value.
      */
-    public static final Rand Rand() {
-        return new org.jooq.impl.Rand(
-        );
-    }
-
-    /**
-     * The <code>RAND</code> function.
-     * <p>
-     * Get a random numeric value.
-     */
     public /*sealed*/ interface Rand
         extends
             UOperator0<Rand>,
@@ -7732,29 +4240,6 @@ public final class QOM {
         //permits
         //    Rand
     {}
-
-    /**
-     * The <code>ROOT</code> function.
-     */
-    public static final Root Root() {
-        return new org.jooq.impl.Root(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ROOT</code> function.
-     */
-    public static final Root Root(
-        Field<? extends Number> value,
-        Field<? extends Number> degree
-    ) {
-        return new org.jooq.impl.Root(
-            value,
-            degree
-        );
-    }
 
     /**
      * The <code>ROOT</code> function.
@@ -7773,33 +4258,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $degree() { return $arg2(); }
         @CheckReturnValue
         @NotNull default Root $degree(Field<? extends Number> newDegree) { return $arg2(newDegree); }
-    }
-
-    /**
-     * The <code>ROUND</code> function.
-     * <p>
-     * Round a numeric value to the nearest decimal precision.
-     */
-    public static final <T extends Number> Round<T> Round() {
-        return new org.jooq.impl.Round<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ROUND</code> function.
-     * <p>
-     * Round a numeric value to the nearest decimal precision.
-     */
-    public static final <T extends Number> Round<T> Round(
-        Field<T> value,
-        Field<Integer> decimals
-    ) {
-        return new org.jooq.impl.Round<>(
-            value,
-            decimals
-        );
     }
 
     /**
@@ -7844,33 +4302,6 @@ public final class QOM {
      * <p>
      * Left shift all bits in a number
      */
-    public static final <T extends Number> Shl<T> Shl() {
-        return new org.jooq.impl.Shl<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>SHL</code> operator.
-     * <p>
-     * Left shift all bits in a number
-     */
-    public static final <T extends Number> Shl<T> Shl(
-        Field<T> value,
-        Field<? extends Number> count
-    ) {
-        return new org.jooq.impl.Shl<>(
-            value,
-            count
-        );
-    }
-
-    /**
-     * The <code>SHL</code> operator.
-     * <p>
-     * Left shift all bits in a number
-     */
     public /*sealed*/ interface Shl<T extends Number>
         extends
             UReturnsNullOnNullInput,
@@ -7901,33 +4332,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default Shl<T> $count(Field<? extends Number> newCount) { return $arg2(newCount); }
-    }
-
-    /**
-     * The <code>SHR</code> operator.
-     * <p>
-     * Right shift all bits in a number
-     */
-    public static final <T extends Number> Shr<T> Shr() {
-        return new org.jooq.impl.Shr<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>SHR</code> operator.
-     * <p>
-     * Right shift all bits in a number
-     */
-    public static final <T extends Number> Shr<T> Shr(
-        Field<T> value,
-        Field<? extends Number> count
-    ) {
-        return new org.jooq.impl.Shr<>(
-            value,
-            count
-        );
     }
 
     /**
@@ -7972,30 +4376,6 @@ public final class QOM {
      * <p>
      * Get the sign of a number and return it as any of +1, 0, -1.
      */
-    public static final Sign Sign() {
-        return new org.jooq.impl.Sign(
-            null
-        );
-    }
-
-    /**
-     * The <code>SIGN</code> function.
-     * <p>
-     * Get the sign of a number and return it as any of +1, 0, -1.
-     */
-    public static final Sign Sign(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Sign(
-            value
-        );
-    }
-
-    /**
-     * The <code>SIGN</code> function.
-     * <p>
-     * Get the sign of a number and return it as any of +1, 0, -1.
-     */
     public /*sealed*/ interface Sign
         extends
             UReturnsNullOnNullInput,
@@ -8007,26 +4387,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Sign $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>SIN</code> function.
-     */
-    public static final Sin Sin() {
-        return new org.jooq.impl.Sin(
-            null
-        );
-    }
-
-    /**
-     * The <code>SIN</code> function.
-     */
-    public static final Sin Sin(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Sin(
-            value
-        );
     }
 
     /**
@@ -8048,26 +4408,6 @@ public final class QOM {
     /**
      * The <code>SINH</code> function.
      */
-    public static final Sinh Sinh() {
-        return new org.jooq.impl.Sinh(
-            null
-        );
-    }
-
-    /**
-     * The <code>SINH</code> function.
-     */
-    public static final Sinh Sinh(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Sinh(
-            value
-        );
-    }
-
-    /**
-     * The <code>SINH</code> function.
-     */
     public /*sealed*/ interface Sinh
         extends
             UReturnsNullOnNullInput,
@@ -8079,26 +4419,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Sinh $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>SQRT</code> function.
-     */
-    public static final Sqrt Sqrt() {
-        return new org.jooq.impl.Sqrt(
-            null
-        );
-    }
-
-    /**
-     * The <code>SQRT</code> function.
-     */
-    public static final Sqrt Sqrt(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Sqrt(
-            value
-        );
     }
 
     /**
@@ -8120,26 +4440,6 @@ public final class QOM {
     /**
      * The <code>SQUARE</code> function.
      */
-    public static final <T extends Number> Square<T> Square() {
-        return new org.jooq.impl.Square<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>SQUARE</code> function.
-     */
-    public static final <T extends Number> Square<T> Square(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.Square<>(
-            value
-        );
-    }
-
-    /**
-     * The <code>SQUARE</code> function.
-     */
     public /*sealed*/ interface Square<T extends Number>
         extends
             UReturnsNullOnNullInput,
@@ -8151,29 +4451,6 @@ public final class QOM {
         @NotNull default Field<T> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Square<T> $value(Field<T> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>SUB</code> operator.
-     */
-    public static final <T> Sub<T> Sub() {
-        return new org.jooq.impl.Sub<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>SUB</code> operator.
-     */
-    public static final <T> Sub<T> Sub(
-        Field<T> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.Sub<>(
-            arg1,
-            arg2
-        );
     }
 
     /**
@@ -8191,26 +4468,6 @@ public final class QOM {
     /**
      * The <code>TAN</code> function.
      */
-    public static final Tan Tan() {
-        return new org.jooq.impl.Tan(
-            null
-        );
-    }
-
-    /**
-     * The <code>TAN</code> function.
-     */
-    public static final Tan Tan(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Tan(
-            value
-        );
-    }
-
-    /**
-     * The <code>TAN</code> function.
-     */
     public /*sealed*/ interface Tan
         extends
             UReturnsNullOnNullInput,
@@ -8222,26 +4479,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Tan $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>TANH</code> function.
-     */
-    public static final Tanh Tanh() {
-        return new org.jooq.impl.Tanh(
-            null
-        );
-    }
-
-    /**
-     * The <code>TANH</code> function.
-     */
-    public static final Tanh Tanh(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Tanh(
-            value
-        );
     }
 
     /**
@@ -8265,16 +4502,6 @@ public final class QOM {
      * <p>
      * The τ literal, or π, in a better world.
      */
-    public static final Tau Tau() {
-        return new org.jooq.impl.Tau(
-        );
-    }
-
-    /**
-     * The <code>TAU</code> function.
-     * <p>
-     * The τ literal, or π, in a better world.
-     */
     public /*sealed*/ interface Tau
         extends
             UOperator0<Tau>,
@@ -8282,33 +4509,6 @@ public final class QOM {
         //permits
         //    Tau
     {}
-
-    /**
-     * The <code>TRUNC</code> function.
-     * <p>
-     * Truncate a number to a given number of decimals.
-     */
-    public static final <T extends Number> Trunc<T> Trunc() {
-        return new org.jooq.impl.Trunc<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>TRUNC</code> function.
-     * <p>
-     * Truncate a number to a given number of decimals.
-     */
-    public static final <T extends Number> Trunc<T> Trunc(
-        Field<T> value,
-        Field<Integer> decimals
-    ) {
-        return new org.jooq.impl.Trunc<>(
-            value,
-            decimals
-        );
-    }
 
     /**
      * The <code>TRUNC</code> function.
@@ -8345,39 +4545,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default Trunc<T> $decimals(Field<Integer> newDecimals) { return $arg2(newDecimals); }
-    }
-
-    /**
-     * The <code>WIDTH BUCKET</code> function.
-     * <p>
-     * Divide a range into buckets of equal size.
-     */
-    public static final <T extends Number> WidthBucket<T> WidthBucket() {
-        return new org.jooq.impl.WidthBucket<>(
-            null,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>WIDTH BUCKET</code> function.
-     * <p>
-     * Divide a range into buckets of equal size.
-     */
-    public static final <T extends Number> WidthBucket<T> WidthBucket(
-        Field<T> field,
-        Field<T> low,
-        Field<T> high,
-        Field<Integer> buckets
-    ) {
-        return new org.jooq.impl.WidthBucket<>(
-            field,
-            low,
-            high,
-            buckets
-        );
     }
 
     /**
@@ -8444,30 +4611,6 @@ public final class QOM {
      * <p>
      * The ASCII value of a character.
      */
-    public static final Ascii Ascii() {
-        return new org.jooq.impl.Ascii(
-            null
-        );
-    }
-
-    /**
-     * The <code>ASCII</code> function.
-     * <p>
-     * The ASCII value of a character.
-     */
-    public static final Ascii Ascii(
-        Field<String> string
-    ) {
-        return new org.jooq.impl.Ascii(
-            string
-        );
-    }
-
-    /**
-     * The <code>ASCII</code> function.
-     * <p>
-     * The ASCII value of a character.
-     */
     public /*sealed*/ interface Ascii
         extends
             UReturnsNullOnNullInput,
@@ -8479,30 +4622,6 @@ public final class QOM {
         @NotNull default Field<String> $string() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Ascii $string(Field<String> newString) { return $arg1(newString); }
-    }
-
-    /**
-     * The <code>BIT LENGTH</code> function.
-     * <p>
-     * The length of a string in bits.
-     */
-    public static final BitLength BitLength() {
-        return new org.jooq.impl.BitLength(
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT LENGTH</code> function.
-     * <p>
-     * The length of a string in bits.
-     */
-    public static final BitLength BitLength(
-        Field<String> string
-    ) {
-        return new org.jooq.impl.BitLength(
-            string
-        );
     }
 
     /**
@@ -8528,30 +4647,6 @@ public final class QOM {
      * <p>
      * The length of a string in characters.
      */
-    public static final CharLength CharLength() {
-        return new org.jooq.impl.CharLength(
-            null
-        );
-    }
-
-    /**
-     * The <code>CHAR LENGTH</code> function.
-     * <p>
-     * The length of a string in characters.
-     */
-    public static final CharLength CharLength(
-        Field<String> string
-    ) {
-        return new org.jooq.impl.CharLength(
-            string
-        );
-    }
-
-    /**
-     * The <code>CHAR LENGTH</code> function.
-     * <p>
-     * The length of a string in characters.
-     */
     public /*sealed*/ interface CharLength
         extends
             UReturnsNullOnNullInput,
@@ -8568,26 +4663,6 @@ public final class QOM {
     /**
      * The <code>CHR</code> function.
      */
-    public static final Chr Chr() {
-        return new org.jooq.impl.Chr(
-            null
-        );
-    }
-
-    /**
-     * The <code>CHR</code> function.
-     */
-    public static final Chr Chr(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Chr(
-            value
-        );
-    }
-
-    /**
-     * The <code>CHR</code> function.
-     */
     public /*sealed*/ interface Chr
         extends
             UReturnsNullOnNullInput,
@@ -8599,69 +4674,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Chr $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>CONTAINS</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).contains(13)</code>
-     * <p>
-     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
-     * also to express the "ARRAY contains" operator. For example: <pre><code>
-     * // Use this expression
-     * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     *
-     * // ... to render this SQL
-     * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
-     * </code></pre>
-     * <p>
-     * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
-     * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
-     */
-    public static final <T> Contains<T> Contains() {
-        return new org.jooq.impl.Contains<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>CONTAINS</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).contains(13)</code>
-     * <p>
-     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method
-     * also to express the "ARRAY contains" operator. For example: <pre><code>
-     * // Use this expression
-     * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
-     *
-     * // ... to render this SQL
-     * ARRAY[1, 2, 3] @&gt; ARRAY[1, 2]
-     * </code></pre>
-     * <p>
-     * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
-     * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
-     */
-    public static final <T> Contains<T> Contains(
-        Field<T> value,
-        Field<T> content
-    ) {
-        return new org.jooq.impl.Contains<>(
-            value,
-            content
-        );
     }
 
     /**
@@ -8715,47 +4727,6 @@ public final class QOM {
      * <code>lower(this) like lower(('%' || escape(value, '\') || '%') escape '\')</code>
      * in all other dialects.
      */
-    public static final <T> ContainsIgnoreCase<T> ContainsIgnoreCase() {
-        return new org.jooq.impl.ContainsIgnoreCase<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>CONTAINS IGNORE CASE</code> operator.
-     * <p>
-     * Convenience method for {@link Field#likeIgnoreCase(String, char)} including
-     * proper adding of wildcards and escaping.
-     * <p>
-     * This translates to
-     * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(('%' || escape(value, '\') || '%') escape '\')</code>
-     * in all other dialects.
-     */
-    public static final <T> ContainsIgnoreCase<T> ContainsIgnoreCase(
-        Field<T> value,
-        Field<T> content
-    ) {
-        return new org.jooq.impl.ContainsIgnoreCase<>(
-            value,
-            content
-        );
-    }
-
-    /**
-     * The <code>CONTAINS IGNORE CASE</code> operator.
-     * <p>
-     * Convenience method for {@link Field#likeIgnoreCase(String, char)} including
-     * proper adding of wildcards and escaping.
-     * <p>
-     * This translates to
-     * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(('%' || escape(value, '\') || '%') escape '\')</code>
-     * in all other dialects.
-     */
     public /*sealed*/ interface ContainsIgnoreCase<T>
         extends
             UReturnsNullOnNullInput,
@@ -8775,26 +4746,6 @@ public final class QOM {
     /**
      * The <code>DIGITS</code> function.
      */
-    public static final Digits Digits() {
-        return new org.jooq.impl.Digits(
-            null
-        );
-    }
-
-    /**
-     * The <code>DIGITS</code> function.
-     */
-    public static final Digits Digits(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.Digits(
-            value
-        );
-    }
-
-    /**
-     * The <code>DIGITS</code> function.
-     */
     public /*sealed*/ interface Digits
         extends
             UReturnsNullOnNullInput,
@@ -8806,45 +4757,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Digits $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>ENDS WITH</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWith(33)</code>
-     */
-    public static final <T> EndsWith<T> EndsWith() {
-        return new org.jooq.impl.EndsWith<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ENDS WITH</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWith(33)</code>
-     */
-    public static final <T> EndsWith<T> EndsWith(
-        Field<T> string,
-        Field<T> suffix
-    ) {
-        return new org.jooq.impl.EndsWith<>(
-            string,
-            suffix
-        );
     }
 
     /**
@@ -8885,45 +4797,6 @@ public final class QOM {
      * Note: This also works with numbers, for instance
      * <code>val(1133).endsWithIgnoreCase(33)</code>
      */
-    public static final <T> EndsWithIgnoreCase<T> EndsWithIgnoreCase() {
-        return new org.jooq.impl.EndsWithIgnoreCase<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ENDS WITH IGNORE CASE</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWithIgnoreCase(33)</code>
-     */
-    public static final <T> EndsWithIgnoreCase<T> EndsWithIgnoreCase(
-        Field<T> string,
-        Field<T> suffix
-    ) {
-        return new org.jooq.impl.EndsWithIgnoreCase<>(
-            string,
-            suffix
-        );
-    }
-
-    /**
-     * The <code>ENDS WITH IGNORE CASE</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWithIgnoreCase(33)</code>
-     */
     public /*sealed*/ interface EndsWithIgnoreCase<T>
         extends
             UReturnsNullOnNullInput,
@@ -8938,33 +4811,6 @@ public final class QOM {
         @NotNull default Field<T> $suffix() { return $arg2(); }
         @CheckReturnValue
         @NotNull default EndsWithIgnoreCase<T> $suffix(Field<T> newSuffix) { return $arg2(newSuffix); }
-    }
-
-    /**
-     * The <code>LEFT</code> function.
-     * <p>
-     * Get the left outermost characters from a string.
-     */
-    public static final Left Left() {
-        return new org.jooq.impl.Left(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>LEFT</code> function.
-     * <p>
-     * Get the left outermost characters from a string.
-     */
-    public static final Left Left(
-        Field<String> string,
-        Field<? extends Number> length
-    ) {
-        return new org.jooq.impl.Left(
-            string,
-            length
-        );
     }
 
     /**
@@ -9009,30 +4855,6 @@ public final class QOM {
      * <p>
      * Turn a string into lower case.
      */
-    public static final Lower Lower() {
-        return new org.jooq.impl.Lower(
-            null
-        );
-    }
-
-    /**
-     * The <code>LOWER</code> function.
-     * <p>
-     * Turn a string into lower case.
-     */
-    public static final Lower Lower(
-        Field<String> string
-    ) {
-        return new org.jooq.impl.Lower(
-            string
-        );
-    }
-
-    /**
-     * The <code>LOWER</code> function.
-     * <p>
-     * Turn a string into lower case.
-     */
     public /*sealed*/ interface Lower
         extends
             UReturnsNullOnNullInput,
@@ -9044,36 +4866,6 @@ public final class QOM {
         @NotNull default Field<String> $string() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Lower $string(Field<String> newString) { return $arg1(newString); }
-    }
-
-    /**
-     * The <code>LPAD</code> function.
-     * <p>
-     * Left-pad a string with a character (whitespace as default) for a number of times.
-     */
-    public static final Lpad Lpad() {
-        return new org.jooq.impl.Lpad(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>LPAD</code> function.
-     * <p>
-     * Left-pad a string with a character (whitespace as default) for a number of times.
-     */
-    public static final Lpad Lpad(
-        Field<String> string,
-        Field<? extends Number> length,
-        Field<String> character
-    ) {
-        return new org.jooq.impl.Lpad(
-            string,
-            length,
-            character
-        );
     }
 
     /**
@@ -9129,33 +4921,6 @@ public final class QOM {
      * <p>
      * Trim characters (whitespace as default) from the left side of a string.
      */
-    public static final Ltrim Ltrim() {
-        return new org.jooq.impl.Ltrim(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>LTRIM</code> function.
-     * <p>
-     * Trim characters (whitespace as default) from the left side of a string.
-     */
-    public static final Ltrim Ltrim(
-        Field<String> string,
-        Field<String> characters
-    ) {
-        return new org.jooq.impl.Ltrim(
-            string,
-            characters
-        );
-    }
-
-    /**
-     * The <code>LTRIM</code> function.
-     * <p>
-     * Trim characters (whitespace as default) from the left side of a string.
-     */
     public /*sealed*/ interface Ltrim
         extends
             UReturnsNullOnNullInput,
@@ -9193,30 +4958,6 @@ public final class QOM {
      * <p>
      * Calculate an MD5 hash from a string.
      */
-    public static final Md5 Md5() {
-        return new org.jooq.impl.Md5(
-            null
-        );
-    }
-
-    /**
-     * The <code>MD5</code> function.
-     * <p>
-     * Calculate an MD5 hash from a string.
-     */
-    public static final Md5 Md5(
-        Field<String> string
-    ) {
-        return new org.jooq.impl.Md5(
-            string
-        );
-    }
-
-    /**
-     * The <code>MD5</code> function.
-     * <p>
-     * Calculate an MD5 hash from a string.
-     */
     public /*sealed*/ interface Md5
         extends
             UReturnsNullOnNullInput,
@@ -9235,30 +4976,6 @@ public final class QOM {
      * <p>
      * The length of a string in octets.
      */
-    public static final OctetLength OctetLength() {
-        return new org.jooq.impl.OctetLength(
-            null
-        );
-    }
-
-    /**
-     * The <code>OCTET LENGTH</code> function.
-     * <p>
-     * The length of a string in octets.
-     */
-    public static final OctetLength OctetLength(
-        Field<String> string
-    ) {
-        return new org.jooq.impl.OctetLength(
-            string
-        );
-    }
-
-    /**
-     * The <code>OCTET LENGTH</code> function.
-     * <p>
-     * The length of a string in octets.
-     */
     public /*sealed*/ interface OctetLength
         extends
             UReturnsNullOnNullInput,
@@ -9270,39 +4987,6 @@ public final class QOM {
         @NotNull default Field<String> $string() { return $arg1(); }
         @CheckReturnValue
         @NotNull default OctetLength $string(Field<String> newString) { return $arg1(newString); }
-    }
-
-    /**
-     * The <code>OVERLAY</code> function.
-     * <p>
-     * Place a string on top of another string, replacing the original contents.
-     */
-    public static final Overlay Overlay() {
-        return new org.jooq.impl.Overlay(
-            null,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>OVERLAY</code> function.
-     * <p>
-     * Place a string on top of another string, replacing the original contents.
-     */
-    public static final Overlay Overlay(
-        Field<String> in,
-        Field<String> placing,
-        Field<? extends Number> startIndex,
-        Field<? extends Number> length
-    ) {
-        return new org.jooq.impl.Overlay(
-            in,
-            placing,
-            startIndex,
-            length
-        );
     }
 
     /**
@@ -9369,36 +5053,6 @@ public final class QOM {
      * <p>
      * Search the position (1-based) of a substring in another string.
      */
-    public static final Position Position() {
-        return new org.jooq.impl.Position(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>POSITION</code> function.
-     * <p>
-     * Search the position (1-based) of a substring in another string.
-     */
-    public static final Position Position(
-        Field<String> in,
-        Field<String> search,
-        Field<? extends Number> startIndex
-    ) {
-        return new org.jooq.impl.Position(
-            in,
-            search,
-            startIndex
-        );
-    }
-
-    /**
-     * The <code>POSITION</code> function.
-     * <p>
-     * Search the position (1-based) of a substring in another string.
-     */
     public /*sealed*/ interface Position
         extends
             UReturnsNullOnNullInput,
@@ -9447,33 +5101,6 @@ public final class QOM {
      * <p>
      * Repeat a string a number of times.
      */
-    public static final Repeat Repeat() {
-        return new org.jooq.impl.Repeat(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REPEAT</code> function.
-     * <p>
-     * Repeat a string a number of times.
-     */
-    public static final Repeat Repeat(
-        Field<String> string,
-        Field<? extends Number> count
-    ) {
-        return new org.jooq.impl.Repeat(
-            string,
-            count
-        );
-    }
-
-    /**
-     * The <code>REPEAT</code> function.
-     * <p>
-     * Repeat a string a number of times.
-     */
     public /*sealed*/ interface Repeat
         extends
             UReturnsNullOnNullInput,
@@ -9504,36 +5131,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default Repeat $count(Field<? extends Number> newCount) { return $arg2(newCount); }
-    }
-
-    /**
-     * The <code>REPLACE</code> function.
-     * <p>
-     * Replace all occurrences of a substring in another string.
-     */
-    public static final Replace Replace() {
-        return new org.jooq.impl.Replace(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REPLACE</code> function.
-     * <p>
-     * Replace all occurrences of a substring in another string.
-     */
-    public static final Replace Replace(
-        Field<String> string,
-        Field<String> search,
-        Field<String> replace
-    ) {
-        return new org.jooq.impl.Replace(
-            string,
-            search,
-            replace
-        );
     }
 
     /**
@@ -9589,30 +5186,6 @@ public final class QOM {
      * <p>
      * Reverse a string.
      */
-    public static final Reverse Reverse() {
-        return new org.jooq.impl.Reverse(
-            null
-        );
-    }
-
-    /**
-     * The <code>REVERSE</code> function.
-     * <p>
-     * Reverse a string.
-     */
-    public static final Reverse Reverse(
-        Field<String> string
-    ) {
-        return new org.jooq.impl.Reverse(
-            string
-        );
-    }
-
-    /**
-     * The <code>REVERSE</code> function.
-     * <p>
-     * Reverse a string.
-     */
     public /*sealed*/ interface Reverse
         extends
             UReturnsNullOnNullInput,
@@ -9624,33 +5197,6 @@ public final class QOM {
         @NotNull default Field<String> $string() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Reverse $string(Field<String> newString) { return $arg1(newString); }
-    }
-
-    /**
-     * The <code>RIGHT</code> function.
-     * <p>
-     * Get the right outermost characters from a string.
-     */
-    public static final Right Right() {
-        return new org.jooq.impl.Right(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>RIGHT</code> function.
-     * <p>
-     * Get the right outermost characters from a string.
-     */
-    public static final Right Right(
-        Field<String> string,
-        Field<? extends Number> length
-    ) {
-        return new org.jooq.impl.Right(
-            string,
-            length
-        );
     }
 
     /**
@@ -9688,36 +5234,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default Right $length(Field<? extends Number> newLength) { return $arg2(newLength); }
-    }
-
-    /**
-     * The <code>RPAD</code> function.
-     * <p>
-     * Right-pad a string with a character (whitespace as default) for a number of times.
-     */
-    public static final Rpad Rpad() {
-        return new org.jooq.impl.Rpad(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>RPAD</code> function.
-     * <p>
-     * Right-pad a string with a character (whitespace as default) for a number of times.
-     */
-    public static final Rpad Rpad(
-        Field<String> string,
-        Field<? extends Number> length,
-        Field<String> character
-    ) {
-        return new org.jooq.impl.Rpad(
-            string,
-            length,
-            character
-        );
     }
 
     /**
@@ -9773,33 +5289,6 @@ public final class QOM {
      * <p>
      * Trim characters (whitespace as default) from the right side of a string.
      */
-    public static final Rtrim Rtrim() {
-        return new org.jooq.impl.Rtrim(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>RTRIM</code> function.
-     * <p>
-     * Trim characters (whitespace as default) from the right side of a string.
-     */
-    public static final Rtrim Rtrim(
-        Field<String> string,
-        Field<String> characters
-    ) {
-        return new org.jooq.impl.Rtrim(
-            string,
-            characters
-        );
-    }
-
-    /**
-     * The <code>RTRIM</code> function.
-     * <p>
-     * Trim characters (whitespace as default) from the right side of a string.
-     */
     public /*sealed*/ interface Rtrim
         extends
             UReturnsNullOnNullInput,
@@ -9837,30 +5326,6 @@ public final class QOM {
      * <p>
      * Get a string of spaces of a given length.
      */
-    public static final Space Space() {
-        return new org.jooq.impl.Space(
-            null
-        );
-    }
-
-    /**
-     * The <code>SPACE</code> function.
-     * <p>
-     * Get a string of spaces of a given length.
-     */
-    public static final Space Space(
-        Field<? extends Number> count
-    ) {
-        return new org.jooq.impl.Space(
-            count
-        );
-    }
-
-    /**
-     * The <code>SPACE</code> function.
-     * <p>
-     * Get a string of spaces of a given length.
-     */
     public /*sealed*/ interface Space
         extends
             UReturnsNullOnNullInput,
@@ -9880,36 +5345,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default Space $count(Field<? extends Number> newCount) { return $arg1(newCount); }
-    }
-
-    /**
-     * The <code>SPLIT PART</code> function.
-     * <p>
-     * Split a string into tokens, and retrieve the nth token.
-     */
-    public static final SplitPart SplitPart() {
-        return new org.jooq.impl.SplitPart(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>SPLIT PART</code> function.
-     * <p>
-     * Split a string into tokens, and retrieve the nth token.
-     */
-    public static final SplitPart SplitPart(
-        Field<String> string,
-        Field<String> delimiter,
-        Field<? extends Number> n
-    ) {
-        return new org.jooq.impl.SplitPart(
-            string,
-            delimiter,
-            n
-        );
     }
 
     /**
@@ -9971,45 +5406,6 @@ public final class QOM {
      * Note: This also works with numbers, for instance
      * <code>val(1133).startsWith(11)</code>
      */
-    public static final <T> StartsWith<T> StartsWith() {
-        return new org.jooq.impl.StartsWith<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>STARTS WITH</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWith(11)</code>
-     */
-    public static final <T> StartsWith<T> StartsWith(
-        Field<T> string,
-        Field<T> prefix
-    ) {
-        return new org.jooq.impl.StartsWith<>(
-            string,
-            prefix
-        );
-    }
-
-    /**
-     * The <code>STARTS WITH</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWith(11)</code>
-     */
     public /*sealed*/ interface StartsWith<T>
         extends
             UReturnsNullOnNullInput,
@@ -10037,45 +5433,6 @@ public final class QOM {
      * Note: This also works with numbers, for instance
      * <code>val(1133).startsWithIgnoreCase(11)</code>
      */
-    public static final <T> StartsWithIgnoreCase<T> StartsWithIgnoreCase() {
-        return new org.jooq.impl.StartsWithIgnoreCase<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>STARTS WITH IGNORE CASE</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWithIgnoreCase(11)</code>
-     */
-    public static final <T> StartsWithIgnoreCase<T> StartsWithIgnoreCase(
-        Field<T> string,
-        Field<T> prefix
-    ) {
-        return new org.jooq.impl.StartsWithIgnoreCase<>(
-            string,
-            prefix
-        );
-    }
-
-    /**
-     * The <code>STARTS WITH IGNORE CASE</code> operator.
-     * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWithIgnoreCase(11)</code>
-     */
     public /*sealed*/ interface StartsWithIgnoreCase<T>
         extends
             UReturnsNullOnNullInput,
@@ -10090,36 +5447,6 @@ public final class QOM {
         @NotNull default Field<T> $prefix() { return $arg2(); }
         @CheckReturnValue
         @NotNull default StartsWithIgnoreCase<T> $prefix(Field<T> newPrefix) { return $arg2(newPrefix); }
-    }
-
-    /**
-     * The <code>SUBSTRING</code> function.
-     * <p>
-     * Get a substring of a string, from a given position.
-     */
-    public static final Substring Substring() {
-        return new org.jooq.impl.Substring(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>SUBSTRING</code> function.
-     * <p>
-     * Get a substring of a string, from a given position.
-     */
-    public static final Substring Substring(
-        Field<String> string,
-        Field<? extends Number> startingPosition,
-        Field<? extends Number> length
-    ) {
-        return new org.jooq.impl.Substring(
-            string,
-            startingPosition,
-            length
-        );
     }
 
     /**
@@ -10175,36 +5502,6 @@ public final class QOM {
      * <p>
      * Get a substring of a string, from the beginning until the nth occurrence of a substring.
      */
-    public static final SubstringIndex SubstringIndex() {
-        return new org.jooq.impl.SubstringIndex(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>SUBSTRING INDEX</code> function.
-     * <p>
-     * Get a substring of a string, from the beginning until the nth occurrence of a substring.
-     */
-    public static final SubstringIndex SubstringIndex(
-        Field<String> string,
-        Field<String> delimiter,
-        Field<? extends Number> n
-    ) {
-        return new org.jooq.impl.SubstringIndex(
-            string,
-            delimiter,
-            n
-        );
-    }
-
-    /**
-     * The <code>SUBSTRING INDEX</code> function.
-     * <p>
-     * Get a substring of a string, from the beginning until the nth occurrence of a substring.
-     */
     public /*sealed*/ interface SubstringIndex
         extends
             UReturnsNullOnNullInput,
@@ -10253,33 +5550,6 @@ public final class QOM {
      * <p>
      * Format an arbitrary value as a string.
      */
-    public static final ToChar ToChar() {
-        return new org.jooq.impl.ToChar(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>TO CHAR</code> function.
-     * <p>
-     * Format an arbitrary value as a string.
-     */
-    public static final ToChar ToChar(
-        Field<?> value,
-        Field<String> formatMask
-    ) {
-        return new org.jooq.impl.ToChar(
-            value,
-            formatMask
-        );
-    }
-
-    /**
-     * The <code>TO CHAR</code> function.
-     * <p>
-     * Format an arbitrary value as a string.
-     */
     public /*sealed*/ interface ToChar
         extends
             UReturnsNullOnNullInput,
@@ -10310,33 +5580,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default ToChar $formatMask(Field<String> newFormatMask) { return $arg2(newFormatMask); }
-    }
-
-    /**
-     * The <code>TO DATE</code> function.
-     * <p>
-     * Parse a string-formatted date value to a date.
-     */
-    public static final ToDate ToDate() {
-        return new org.jooq.impl.ToDate(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>TO DATE</code> function.
-     * <p>
-     * Parse a string-formatted date value to a date.
-     */
-    public static final ToDate ToDate(
-        Field<String> value,
-        Field<String> formatMask
-    ) {
-        return new org.jooq.impl.ToDate(
-            value,
-            formatMask
-        );
     }
 
     /**
@@ -10381,30 +5624,6 @@ public final class QOM {
      * <p>
      * Format a number to its hex value.
      */
-    public static final ToHex ToHex() {
-        return new org.jooq.impl.ToHex(
-            null
-        );
-    }
-
-    /**
-     * The <code>TO HEX</code> function.
-     * <p>
-     * Format a number to its hex value.
-     */
-    public static final ToHex ToHex(
-        Field<? extends Number> value
-    ) {
-        return new org.jooq.impl.ToHex(
-            value
-        );
-    }
-
-    /**
-     * The <code>TO HEX</code> function.
-     * <p>
-     * Format a number to its hex value.
-     */
     public /*sealed*/ interface ToHex
         extends
             UReturnsNullOnNullInput,
@@ -10416,33 +5635,6 @@ public final class QOM {
         @NotNull default Field<? extends Number> $value() { return $arg1(); }
         @CheckReturnValue
         @NotNull default ToHex $value(Field<? extends Number> newValue) { return $arg1(newValue); }
-    }
-
-    /**
-     * The <code>TO TIMESTAMP</code> function.
-     * <p>
-     * Parse a string-formatted timestamp value to a timestamp.
-     */
-    public static final ToTimestamp ToTimestamp() {
-        return new org.jooq.impl.ToTimestamp(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>TO TIMESTAMP</code> function.
-     * <p>
-     * Parse a string-formatted timestamp value to a timestamp.
-     */
-    public static final ToTimestamp ToTimestamp(
-        Field<String> value,
-        Field<String> formatMask
-    ) {
-        return new org.jooq.impl.ToTimestamp(
-            value,
-            formatMask
-        );
     }
 
     /**
@@ -10480,36 +5672,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default ToTimestamp $formatMask(Field<String> newFormatMask) { return $arg2(newFormatMask); }
-    }
-
-    /**
-     * The <code>TRANSLATE</code> function.
-     * <p>
-     * Translate a set of characters to another set of characters in a string.
-     */
-    public static final Translate Translate() {
-        return new org.jooq.impl.Translate(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>TRANSLATE</code> function.
-     * <p>
-     * Translate a set of characters to another set of characters in a string.
-     */
-    public static final Translate Translate(
-        Field<String> string,
-        Field<String> from,
-        Field<String> to
-    ) {
-        return new org.jooq.impl.Translate(
-            string,
-            from,
-            to
-        );
     }
 
     /**
@@ -10565,33 +5727,6 @@ public final class QOM {
      * <p>
      * Trim characters (whitespace as default) from both sides of a string.
      */
-    public static final Trim Trim() {
-        return new org.jooq.impl.Trim(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>TRIM</code> function.
-     * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
-     */
-    public static final Trim Trim(
-        Field<String> string,
-        Field<String> characters
-    ) {
-        return new org.jooq.impl.Trim(
-            string,
-            characters
-        );
-    }
-
-    /**
-     * The <code>TRIM</code> function.
-     * <p>
-     * Trim characters (whitespace as default) from both sides of a string.
-     */
     public /*sealed*/ interface Trim
         extends
             UReturnsNullOnNullInput,
@@ -10629,30 +5764,6 @@ public final class QOM {
      * <p>
      * Turn a string into upper case.
      */
-    public static final Upper Upper() {
-        return new org.jooq.impl.Upper(
-            null
-        );
-    }
-
-    /**
-     * The <code>UPPER</code> function.
-     * <p>
-     * Turn a string into upper case.
-     */
-    public static final Upper Upper(
-        Field<String> string
-    ) {
-        return new org.jooq.impl.Upper(
-            string
-        );
-    }
-
-    /**
-     * The <code>UPPER</code> function.
-     * <p>
-     * Turn a string into upper case.
-     */
     public /*sealed*/ interface Upper
         extends
             UReturnsNullOnNullInput,
@@ -10664,16 +5775,6 @@ public final class QOM {
         @NotNull default Field<String> $string() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Upper $string(Field<String> newString) { return $arg1(newString); }
-    }
-
-    /**
-     * The <code>UUID</code> function.
-     * <p>
-     * Generate a random UUID.
-     */
-    public static final Uuid Uuid() {
-        return new org.jooq.impl.Uuid(
-        );
     }
 
     /**
@@ -10694,30 +5795,6 @@ public final class QOM {
      * <p>
      * The length of a binary string in bits.
      */
-    public static final BinaryBitLength BinaryBitLength() {
-        return new org.jooq.impl.BinaryBitLength(
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY BIT LENGTH</code> function.
-     * <p>
-     * The length of a binary string in bits.
-     */
-    public static final BinaryBitLength BinaryBitLength(
-        Field<byte[]> bytes
-    ) {
-        return new org.jooq.impl.BinaryBitLength(
-            bytes
-        );
-    }
-
-    /**
-     * The <code>BINARY BIT LENGTH</code> function.
-     * <p>
-     * The length of a binary string in bits.
-     */
     public /*sealed*/ interface BinaryBitLength
         extends
             UReturnsNullOnNullInput,
@@ -10729,33 +5806,6 @@ public final class QOM {
         @NotNull default Field<byte[]> $bytes() { return $arg1(); }
         @CheckReturnValue
         @NotNull default BinaryBitLength $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
-    }
-
-    /**
-     * The <code>BINARY CONCAT</code> function.
-     * <p>
-     * The concatenation of binary strings.
-     */
-    public static final BinaryConcat BinaryConcat() {
-        return new org.jooq.impl.BinaryConcat(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY CONCAT</code> function.
-     * <p>
-     * The concatenation of binary strings.
-     */
-    public static final BinaryConcat BinaryConcat(
-        Field<byte[]> bytes1,
-        Field<byte[]> bytes2
-    ) {
-        return new org.jooq.impl.BinaryConcat(
-            bytes1,
-            bytes2
-        );
     }
 
     /**
@@ -10800,30 +5850,6 @@ public final class QOM {
      * <p>
      * The length of a binary string in bytes.
      */
-    public static final BinaryLength BinaryLength() {
-        return new org.jooq.impl.BinaryLength(
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY LENGTH</code> function.
-     * <p>
-     * The length of a binary string in bytes.
-     */
-    public static final BinaryLength BinaryLength(
-        Field<byte[]> bytes
-    ) {
-        return new org.jooq.impl.BinaryLength(
-            bytes
-        );
-    }
-
-    /**
-     * The <code>BINARY LENGTH</code> function.
-     * <p>
-     * The length of a binary string in bytes.
-     */
     public /*sealed*/ interface BinaryLength
         extends
             UReturnsNullOnNullInput,
@@ -10835,33 +5861,6 @@ public final class QOM {
         @NotNull default Field<byte[]> $bytes() { return $arg1(); }
         @CheckReturnValue
         @NotNull default BinaryLength $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
-    }
-
-    /**
-     * The <code>BINARY LTRIM</code> function.
-     * <p>
-     * Trim bytes from the left side of a binary string.
-     */
-    public static final BinaryLtrim BinaryLtrim() {
-        return new org.jooq.impl.BinaryLtrim(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY LTRIM</code> function.
-     * <p>
-     * Trim bytes from the left side of a binary string.
-     */
-    public static final BinaryLtrim BinaryLtrim(
-        Field<byte[]> bytes,
-        Field<byte[]> characters
-    ) {
-        return new org.jooq.impl.BinaryLtrim(
-            bytes,
-            characters
-        );
     }
 
     /**
@@ -10906,30 +5905,6 @@ public final class QOM {
      * <p>
      * Calculate an MD5 hash from a binary string.
      */
-    public static final BinaryMd5 BinaryMd5() {
-        return new org.jooq.impl.BinaryMd5(
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY MD5</code> function.
-     * <p>
-     * Calculate an MD5 hash from a binary string.
-     */
-    public static final BinaryMd5 BinaryMd5(
-        Field<byte[]> bytes
-    ) {
-        return new org.jooq.impl.BinaryMd5(
-            bytes
-        );
-    }
-
-    /**
-     * The <code>BINARY MD5</code> function.
-     * <p>
-     * Calculate an MD5 hash from a binary string.
-     */
     public /*sealed*/ interface BinaryMd5
         extends
             UReturnsNullOnNullInput,
@@ -10948,30 +5923,6 @@ public final class QOM {
      * <p>
      * The length of a binary string in octets.
      */
-    public static final BinaryOctetLength BinaryOctetLength() {
-        return new org.jooq.impl.BinaryOctetLength(
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY OCTET LENGTH</code> function.
-     * <p>
-     * The length of a binary string in octets.
-     */
-    public static final BinaryOctetLength BinaryOctetLength(
-        Field<byte[]> bytes
-    ) {
-        return new org.jooq.impl.BinaryOctetLength(
-            bytes
-        );
-    }
-
-    /**
-     * The <code>BINARY OCTET LENGTH</code> function.
-     * <p>
-     * The length of a binary string in octets.
-     */
     public /*sealed*/ interface BinaryOctetLength
         extends
             UReturnsNullOnNullInput,
@@ -10983,39 +5934,6 @@ public final class QOM {
         @NotNull default Field<byte[]> $bytes() { return $arg1(); }
         @CheckReturnValue
         @NotNull default BinaryOctetLength $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
-    }
-
-    /**
-     * The <code>BINARY OVERLAY</code> function.
-     * <p>
-     * Place a binary string on top of another binary string, replacing the original contents.
-     */
-    public static final BinaryOverlay BinaryOverlay() {
-        return new org.jooq.impl.BinaryOverlay(
-            null,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY OVERLAY</code> function.
-     * <p>
-     * Place a binary string on top of another binary string, replacing the original contents.
-     */
-    public static final BinaryOverlay BinaryOverlay(
-        Field<byte[]> in,
-        Field<byte[]> placing,
-        Field<? extends Number> startIndex,
-        Field<? extends Number> length
-    ) {
-        return new org.jooq.impl.BinaryOverlay(
-            in,
-            placing,
-            startIndex,
-            length
-        );
     }
 
     /**
@@ -11082,36 +6000,6 @@ public final class QOM {
      * <p>
      * Search the position (1-based) of a substring in another string.
      */
-    public static final BinaryPosition BinaryPosition() {
-        return new org.jooq.impl.BinaryPosition(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY POSITION</code> function.
-     * <p>
-     * Search the position (1-based) of a substring in another string.
-     */
-    public static final BinaryPosition BinaryPosition(
-        Field<byte[]> in,
-        Field<byte[]> search,
-        Field<? extends Number> startIndex
-    ) {
-        return new org.jooq.impl.BinaryPosition(
-            in,
-            search,
-            startIndex
-        );
-    }
-
-    /**
-     * The <code>BINARY POSITION</code> function.
-     * <p>
-     * Search the position (1-based) of a substring in another string.
-     */
     public /*sealed*/ interface BinaryPosition
         extends
             UReturnsNullOnNullInput,
@@ -11160,33 +6048,6 @@ public final class QOM {
      * <p>
      * Trim bytes from the right side of a binary string.
      */
-    public static final BinaryRtrim BinaryRtrim() {
-        return new org.jooq.impl.BinaryRtrim(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY RTRIM</code> function.
-     * <p>
-     * Trim bytes from the right side of a binary string.
-     */
-    public static final BinaryRtrim BinaryRtrim(
-        Field<byte[]> bytes,
-        Field<byte[]> characters
-    ) {
-        return new org.jooq.impl.BinaryRtrim(
-            bytes,
-            characters
-        );
-    }
-
-    /**
-     * The <code>BINARY RTRIM</code> function.
-     * <p>
-     * Trim bytes from the right side of a binary string.
-     */
     public /*sealed*/ interface BinaryRtrim
         extends
             UReturnsNullOnNullInput,
@@ -11217,36 +6078,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default BinaryRtrim $characters(Field<byte[]> newCharacters) { return $arg2(newCharacters); }
-    }
-
-    /**
-     * The <code>BINARY SUBSTRING</code> function.
-     * <p>
-     * Get a substring of a binary string, from a given position.
-     */
-    public static final BinarySubstring BinarySubstring() {
-        return new org.jooq.impl.BinarySubstring(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY SUBSTRING</code> function.
-     * <p>
-     * Get a substring of a binary string, from a given position.
-     */
-    public static final BinarySubstring BinarySubstring(
-        Field<byte[]> string,
-        Field<? extends Number> startingPosition,
-        Field<? extends Number> length
-    ) {
-        return new org.jooq.impl.BinarySubstring(
-            string,
-            startingPosition,
-            length
-        );
     }
 
     /**
@@ -11302,33 +6133,6 @@ public final class QOM {
      * <p>
      * Trim characters from both sides of a string.
      */
-    public static final BinaryTrim BinaryTrim() {
-        return new org.jooq.impl.BinaryTrim(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>BINARY TRIM</code> function.
-     * <p>
-     * Trim characters from both sides of a string.
-     */
-    public static final BinaryTrim BinaryTrim(
-        Field<byte[]> bytes,
-        Field<byte[]> characters
-    ) {
-        return new org.jooq.impl.BinaryTrim(
-            bytes,
-            characters
-        );
-    }
-
-    /**
-     * The <code>BINARY TRIM</code> function.
-     * <p>
-     * Trim characters from both sides of a string.
-     */
     public /*sealed*/ interface BinaryTrim
         extends
             UReturnsNullOnNullInput,
@@ -11359,36 +6163,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default BinaryTrim $characters(Field<byte[]> newCharacters) { return $arg2(newCharacters); }
-    }
-
-    /**
-     * The <code>DATE ADD</code> function.
-     * <p>
-     * Add an interval to a date.
-     */
-    public static final <T> DateAdd<T> DateAdd() {
-        return new org.jooq.impl.DateAdd<>(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>DATE ADD</code> function.
-     * <p>
-     * Add an interval to a date.
-     */
-    public static final <T> DateAdd<T> DateAdd(
-        Field<T> date,
-        Field<? extends Number> interval,
-        DatePart datePart
-    ) {
-        return new org.jooq.impl.DateAdd<>(
-            date,
-            interval,
-            datePart
-        );
     }
 
     /**
@@ -11444,30 +6218,6 @@ public final class QOM {
      * <p>
      * Calculate the cardinality of an array field.
      */
-    public static final Cardinality Cardinality() {
-        return new org.jooq.impl.Cardinality(
-            null
-        );
-    }
-
-    /**
-     * The <code>CARDINALITY</code> function.
-     * <p>
-     * Calculate the cardinality of an array field.
-     */
-    public static final Cardinality Cardinality(
-        Field<? extends Object[]> array
-    ) {
-        return new org.jooq.impl.Cardinality(
-            array
-        );
-    }
-
-    /**
-     * The <code>CARDINALITY</code> function.
-     * <p>
-     * Calculate the cardinality of an array field.
-     */
     public /*sealed*/ interface Cardinality
         extends
             UReturnsNullOnNullInput,
@@ -11479,33 +6229,6 @@ public final class QOM {
         @NotNull default Field<? extends Object[]> $array() { return $arg1(); }
         @CheckReturnValue
         @NotNull default Cardinality $array(Field<? extends Object[]> newArray) { return $arg1(newArray); }
-    }
-
-    /**
-     * The <code>ARRAY GET</code> function.
-     * <p>
-     * Get an array element at a given index (1 based).
-     */
-    public static final <T> ArrayGet<T> ArrayGet() {
-        return new org.jooq.impl.ArrayGet<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ARRAY GET</code> function.
-     * <p>
-     * Get an array element at a given index (1 based).
-     */
-    public static final <T> ArrayGet<T> ArrayGet(
-        Field<T[]> array,
-        Field<Integer> index
-    ) {
-        return new org.jooq.impl.ArrayGet<>(
-            array,
-            index
-        );
     }
 
     /**
@@ -11534,33 +6257,6 @@ public final class QOM {
      * <p>
      * Concatenate two arrays.
      */
-    public static final <T> ArrayConcat<T> ArrayConcat() {
-        return new org.jooq.impl.ArrayConcat<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ARRAY CONCAT</code> function.
-     * <p>
-     * Concatenate two arrays.
-     */
-    public static final <T> ArrayConcat<T> ArrayConcat(
-        Field<T[]> arg1,
-        Field<T[]> arg2
-    ) {
-        return new org.jooq.impl.ArrayConcat<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>ARRAY CONCAT</code> function.
-     * <p>
-     * Concatenate two arrays.
-     */
     public /*sealed*/ interface ArrayConcat<T>
         extends
             UReturnsNullOnNullInput,
@@ -11569,33 +6265,6 @@ public final class QOM {
         //permits
         //    ArrayConcat
     {}
-
-    /**
-     * The <code>ARRAY APPEND</code> function.
-     * <p>
-     * Append an element to an array.
-     */
-    public static final <T> ArrayAppend<T> ArrayAppend() {
-        return new org.jooq.impl.ArrayAppend<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ARRAY APPEND</code> function.
-     * <p>
-     * Append an element to an array.
-     */
-    public static final <T> ArrayAppend<T> ArrayAppend(
-        Field<T[]> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.ArrayAppend<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>ARRAY APPEND</code> function.
@@ -11615,33 +6284,6 @@ public final class QOM {
      * <p>
      * Prepend an element to an array.
      */
-    public static final <T> ArrayPrepend<T> ArrayPrepend() {
-        return new org.jooq.impl.ArrayPrepend<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ARRAY PREPEND</code> function.
-     * <p>
-     * Prepend an element to an array.
-     */
-    public static final <T> ArrayPrepend<T> ArrayPrepend(
-        Field<T> arg1,
-        Field<T[]> arg2
-    ) {
-        return new org.jooq.impl.ArrayPrepend<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>ARRAY PREPEND</code> function.
-     * <p>
-     * Prepend an element to an array.
-     */
     public /*sealed*/ interface ArrayPrepend<T>
         extends
             UOperator2<Field<T>, Field<T[]>, ArrayPrepend<T>>,
@@ -11649,33 +6291,6 @@ public final class QOM {
         //permits
         //    ArrayPrepend
     {}
-
-    /**
-     * The <code>ARRAY OVERLAP</code> function.
-     * <p>
-     * Check if 2 arrays overlap.
-     */
-    public static final <T> ArrayOverlap<T> ArrayOverlap() {
-        return new org.jooq.impl.ArrayOverlap<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ARRAY OVERLAP</code> function.
-     * <p>
-     * Check if 2 arrays overlap.
-     */
-    public static final <T> ArrayOverlap<T> ArrayOverlap(
-        Field<T[]> arg1,
-        Field<T[]> arg2
-    ) {
-        return new org.jooq.impl.ArrayOverlap<>(
-            arg1,
-            arg2
-        );
-    }
 
     /**
      * The <code>ARRAY OVERLAP</code> function.
@@ -11696,33 +6311,6 @@ public final class QOM {
      * <p>
      * Remove an element from an array.
      */
-    public static final <T> ArrayRemove<T> ArrayRemove() {
-        return new org.jooq.impl.ArrayRemove<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ARRAY REMOVE</code> function.
-     * <p>
-     * Remove an element from an array.
-     */
-    public static final <T> ArrayRemove<T> ArrayRemove(
-        Field<T[]> arg1,
-        Field<T> arg2
-    ) {
-        return new org.jooq.impl.ArrayRemove<>(
-            arg1,
-            arg2
-        );
-    }
-
-    /**
-     * The <code>ARRAY REMOVE</code> function.
-     * <p>
-     * Remove an element from an array.
-     */
     public /*sealed*/ interface ArrayRemove<T>
         extends
             UOperator2<Field<T[]>, Field<T>, ArrayRemove<T>>,
@@ -11730,36 +6318,6 @@ public final class QOM {
         //permits
         //    ArrayRemove
     {}
-
-    /**
-     * The <code>ARRAY REPLACE</code> function.
-     * <p>
-     * Replace an element in an array.
-     */
-    public static final <T> ArrayReplace<T> ArrayReplace() {
-        return new org.jooq.impl.ArrayReplace<>(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ARRAY REPLACE</code> function.
-     * <p>
-     * Replace an element in an array.
-     */
-    public static final <T> ArrayReplace<T> ArrayReplace(
-        Field<T[]> arg1,
-        Field<T> arg2,
-        Field<T> arg3
-    ) {
-        return new org.jooq.impl.ArrayReplace<>(
-            arg1,
-            arg2,
-            arg3
-        );
-    }
 
     /**
      * The <code>ARRAY REPLACE</code> function.
@@ -11779,33 +6337,6 @@ public final class QOM {
      * <p>
      * Filter elements out of an array.
      */
-    public static final <T> ArrayFilter<T> ArrayFilter() {
-        return new org.jooq.impl.ArrayFilter<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>ARRAY FILTER</code> function.
-     * <p>
-     * Filter elements out of an array.
-     */
-    public static final <T> ArrayFilter<T> ArrayFilter(
-        Field<T[]> array,
-        Lambda1<T, Boolean> filter
-    ) {
-        return new org.jooq.impl.ArrayFilter<>(
-            array,
-            filter
-        );
-    }
-
-    /**
-     * The <code>ARRAY FILTER</code> function.
-     * <p>
-     * Filter elements out of an array.
-     */
     public /*sealed*/ interface ArrayFilter<T>
         extends
             UOperator2<Field<T[]>, Lambda1<T, Boolean>, ArrayFilter<T>>,
@@ -11819,33 +6350,6 @@ public final class QOM {
         @NotNull default Lambda1<T, Boolean> $filter() { return $arg2(); }
         @CheckReturnValue
         @NotNull default ArrayFilter<T> $filter(Lambda1<T, Boolean> newFilter) { return $arg2(newFilter); }
-    }
-
-    /**
-     * The <code>NVL</code> function.
-     * <p>
-     * Return the first non-null argument.
-     */
-    public static final <T> Nvl<T> Nvl() {
-        return new org.jooq.impl.Nvl<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>NVL</code> function.
-     * <p>
-     * Return the first non-null argument.
-     */
-    public static final <T> Nvl<T> Nvl(
-        Field<T> value,
-        Field<T> defaultValue
-    ) {
-        return new org.jooq.impl.Nvl<>(
-            value,
-            defaultValue
-        );
     }
 
     /**
@@ -11887,29 +6391,6 @@ public final class QOM {
     /**
      * The <code>NULLIF</code> function.
      */
-    public static final <T> Nullif<T> Nullif() {
-        return new org.jooq.impl.Nullif<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>NULLIF</code> function.
-     */
-    public static final <T> Nullif<T> Nullif(
-        Field<T> value,
-        Field<T> other
-    ) {
-        return new org.jooq.impl.Nullif<>(
-            value,
-            other
-        );
-    }
-
-    /**
-     * The <code>NULLIF</code> function.
-     */
     public /*sealed*/ interface Nullif<T>
         extends
             UOperator2<Field<T>, Field<T>, Nullif<T>>,
@@ -11939,29 +6420,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default Nullif<T> $other(Field<T> newOther) { return $arg2(newOther); }
-    }
-
-    /**
-     * The <code>TRY CAST</code> function.
-     */
-    public static final <T> TryCast<T> TryCast() {
-        return new org.jooq.impl.TryCast<>(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>TRY CAST</code> function.
-     */
-    public static final <T> TryCast<T> TryCast(
-        Field<?> value,
-        DataType<T> dataType
-    ) {
-        return new org.jooq.impl.TryCast<>(
-            value,
-            dataType
-        );
     }
 
     /**
@@ -12004,16 +6462,6 @@ public final class QOM {
      * <p>
      * The CURRENT_CATALOG of the current session
      */
-    public static final CurrentCatalog CurrentCatalog() {
-        return new org.jooq.impl.CurrentCatalog(
-        );
-    }
-
-    /**
-     * The <code>CURRENT CATALOG</code> function.
-     * <p>
-     * The CURRENT_CATALOG of the current session
-     */
     public /*sealed*/ interface CurrentCatalog
         extends
             UOperator0<CurrentCatalog>,
@@ -12027,16 +6475,6 @@ public final class QOM {
      * <p>
      * The CURRENT_SCHEMA of the current session
      */
-    public static final CurrentSchema CurrentSchema() {
-        return new org.jooq.impl.CurrentSchema(
-        );
-    }
-
-    /**
-     * The <code>CURRENT SCHEMA</code> function.
-     * <p>
-     * The CURRENT_SCHEMA of the current session
-     */
     public /*sealed*/ interface CurrentSchema
         extends
             UOperator0<CurrentSchema>,
@@ -12044,16 +6482,6 @@ public final class QOM {
         //permits
         //    CurrentSchema
     {}
-
-    /**
-     * The <code>CURRENT USER</code> function.
-     * <p>
-     * The CURRENT_USER of the current session with the database
-     */
-    public static final CurrentUser CurrentUser() {
-        return new org.jooq.impl.CurrentUser(
-        );
-    }
 
     /**
      * The <code>CURRENT USER</code> function.
@@ -12218,210 +6646,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>XMLCOMMENT</code> function.
-     */
-    public static final XMLComment XMLComment() {
-        return new org.jooq.impl.XMLComment(
-            null
-        );
-    }
-
-    /**
-     * The <code>XMLCOMMENT</code> function.
-     */
-    public static final XMLComment XMLComment(
-        Field<String> comment
-    ) {
-        return new org.jooq.impl.XMLComment(
-            comment
-        );
-    }
-
     /**
      * The <code>XMLCOMMENT</code> function.
      */
@@ -12435,26 +6659,6 @@ public final class QOM {
         @NotNull default Field<String> $comment() { return $arg1(); }
         @CheckReturnValue
         @NotNull default XMLComment $comment(Field<String> newComment) { return $arg1(newComment); }
-    }
-
-    /**
-     * The <code>XMLCONCAT</code> function.
-     */
-    public static final XMLConcat XMLConcat() {
-        return new org.jooq.impl.XMLConcat(
-            null
-        );
-    }
-
-    /**
-     * The <code>XMLCONCAT</code> function.
-     */
-    public static final XMLConcat XMLConcat(
-        Collection<? extends Field<?>> args
-    ) {
-        return new org.jooq.impl.XMLConcat(
-            args
-        );
     }
 
     /**
@@ -12486,48 +6690,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>XMLFOREST</code> function.
-     */
-    public static final XMLForest XMLForest() {
-        return new org.jooq.impl.XMLForest(
-            null
-        );
-    }
-
-    /**
-     * The <code>XMLFOREST</code> function.
-     */
-    public static final XMLForest XMLForest(
-        Collection<? extends Field<?>> fields
-    ) {
-        return new org.jooq.impl.XMLForest(
-            fields
-        );
-    }
-
     /**
      * The <code>XMLFOREST</code> function.
      */
@@ -12541,29 +6703,6 @@ public final class QOM {
         @NotNull default UnmodifiableList<? extends Field<?>> $fields() { return $arg1(); }
         @CheckReturnValue
         @NotNull default XMLForest $fields(UnmodifiableList<? extends Field<?>> newFields) { return $arg1(newFields); }
-    }
-
-    /**
-     * The <code>XMLPI</code> function.
-     */
-    public static final XMLPi XMLPi() {
-        return new org.jooq.impl.XMLPi(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>XMLPI</code> function.
-     */
-    public static final XMLPi XMLPi(
-        Name target,
-        Field<?> content
-    ) {
-        return new org.jooq.impl.XMLPi(
-            target,
-            content
-        );
     }
 
     /**
@@ -12587,32 +6726,6 @@ public final class QOM {
     /**
      * The <code>XMLSERIALIZE</code> function.
      */
-    public static final <T> XMLSerialize<T> XMLSerialize() {
-        return new org.jooq.impl.XMLSerialize<>(
-            false,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>XMLSERIALIZE</code> function.
-     */
-    public static final <T> XMLSerialize<T> XMLSerialize(
-        boolean content,
-        Field<XML> value,
-        DataType<T> type
-    ) {
-        return new org.jooq.impl.XMLSerialize<>(
-            content,
-            value,
-            type
-        );
-    }
-
-    /**
-     * The <code>XMLSERIALIZE</code> function.
-     */
     public /*sealed*/ interface XMLSerialize<T>
         extends
             UOperator3<Boolean, Field<XML>, DataType<T>, XMLSerialize<T>>,
@@ -12629,35 +6742,6 @@ public final class QOM {
         @NotNull default DataType<T> $type() { return $arg3(); }
         @CheckReturnValue
         @NotNull default XMLSerialize<T> $type(DataType<T> newType) { return $arg3(newType); }
-    }
-
-    /**
-     * The <code>JSON ARRAY</code> function.
-     */
-    public static final <T> JSONArray<T> JSONArray() {
-        return new org.jooq.impl.JSONArray<>(
-            null,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON ARRAY</code> function.
-     */
-    public static final <T> JSONArray<T> JSONArray(
-        DataType<T> type,
-        Collection<? extends Field<?>> fields,
-        JSONOnNull onNull,
-        DataType<?> returning
-    ) {
-        return new org.jooq.impl.JSONArray<>(
-            type,
-            fields,
-            onNull,
-            returning
-        );
     }
 
     /**
@@ -12687,35 +6771,6 @@ public final class QOM {
     /**
      * The <code>JSON OBJECT</code> function.
      */
-    public static final <T> JSONObject<T> JSONObject() {
-        return new org.jooq.impl.JSONObject<>(
-            null,
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON OBJECT</code> function.
-     */
-    public static final <T> JSONObject<T> JSONObject(
-        DataType<T> type,
-        Collection<? extends JSONEntry<?>> entries,
-        JSONOnNull onNull,
-        DataType<?> returning
-    ) {
-        return new org.jooq.impl.JSONObject<>(
-            type,
-            entries,
-            onNull,
-            returning
-        );
-    }
-
-    /**
-     * The <code>JSON OBJECT</code> function.
-     */
     public /*sealed*/ interface JSONObject<T>
         extends
             UOperator4<DataType<T>, UnmodifiableList<? extends JSONEntry<?>>, JSONOnNull, DataType<?>, JSONObject<T>>,
@@ -12735,33 +6790,6 @@ public final class QOM {
         @Nullable default DataType<?> $returning() { return $arg4(); }
         @CheckReturnValue
         @NotNull default JSONObject<T> $returning(DataType<?> newReturning) { return $arg4(newReturning); }
-    }
-
-    /**
-     * The <code>JSON GET ELEMENT</code> function.
-     * <p>
-     * Access an array element from a JSON array expression.
-     */
-    public static final JSONGetElement JSONGetElement() {
-        return new org.jooq.impl.JSONGetElement(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON GET ELEMENT</code> function.
-     * <p>
-     * Access an array element from a JSON array expression.
-     */
-    public static final JSONGetElement JSONGetElement(
-        Field<JSON> field,
-        Field<Integer> index
-    ) {
-        return new org.jooq.impl.JSONGetElement(
-            field,
-            index
-        );
     }
 
     /**
@@ -12806,33 +6834,6 @@ public final class QOM {
      * <p>
      * Access an array element from a JSONB array expression.
      */
-    public static final JSONBGetElement JSONBGetElement() {
-        return new org.jooq.impl.JSONBGetElement(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB GET ELEMENT</code> function.
-     * <p>
-     * Access an array element from a JSONB array expression.
-     */
-    public static final JSONBGetElement JSONBGetElement(
-        Field<JSONB> field,
-        Field<Integer> index
-    ) {
-        return new org.jooq.impl.JSONBGetElement(
-            field,
-            index
-        );
-    }
-
-    /**
-     * The <code>JSONB GET ELEMENT</code> function.
-     * <p>
-     * Access an array element from a JSONB array expression.
-     */
     public /*sealed*/ interface JSONBGetElement
         extends
             UReturnsNullOnNullInput,
@@ -12863,33 +6864,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default JSONBGetElement $index(Field<Integer> newIndex) { return $arg2(newIndex); }
-    }
-
-    /**
-     * The <code>JSON GET ELEMENT AS TEXT</code> function.
-     * <p>
-     * Access an array element from a JSON array expression and return it as a string.
-     */
-    public static final JSONGetElementAsText JSONGetElementAsText() {
-        return new org.jooq.impl.JSONGetElementAsText(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON GET ELEMENT AS TEXT</code> function.
-     * <p>
-     * Access an array element from a JSON array expression and return it as a string.
-     */
-    public static final JSONGetElementAsText JSONGetElementAsText(
-        Field<JSON> field,
-        Field<Integer> index
-    ) {
-        return new org.jooq.impl.JSONGetElementAsText(
-            field,
-            index
-        );
     }
 
     /**
@@ -12934,33 +6908,6 @@ public final class QOM {
      * <p>
      * Access an array element from a JSONB array expression and return it as a string.
      */
-    public static final JSONBGetElementAsText JSONBGetElementAsText() {
-        return new org.jooq.impl.JSONBGetElementAsText(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB GET ELEMENT AS TEXT</code> function.
-     * <p>
-     * Access an array element from a JSONB array expression and return it as a string.
-     */
-    public static final JSONBGetElementAsText JSONBGetElementAsText(
-        Field<JSONB> field,
-        Field<Integer> index
-    ) {
-        return new org.jooq.impl.JSONBGetElementAsText(
-            field,
-            index
-        );
-    }
-
-    /**
-     * The <code>JSONB GET ELEMENT AS TEXT</code> function.
-     * <p>
-     * Access an array element from a JSONB array expression and return it as a string.
-     */
     public /*sealed*/ interface JSONBGetElementAsText
         extends
             UReturnsNullOnNullInput,
@@ -12991,33 +6938,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default JSONBGetElementAsText $index(Field<Integer> newIndex) { return $arg2(newIndex); }
-    }
-
-    /**
-     * The <code>JSON GET ATTRIBUTE</code> function.
-     * <p>
-     * Access an object attribute value from a JSON object expression.
-     */
-    public static final JSONGetAttribute JSONGetAttribute() {
-        return new org.jooq.impl.JSONGetAttribute(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON GET ATTRIBUTE</code> function.
-     * <p>
-     * Access an object attribute value from a JSON object expression.
-     */
-    public static final JSONGetAttribute JSONGetAttribute(
-        Field<JSON> field,
-        Field<String> attribute
-    ) {
-        return new org.jooq.impl.JSONGetAttribute(
-            field,
-            attribute
-        );
     }
 
     /**
@@ -13062,33 +6982,6 @@ public final class QOM {
      * <p>
      * Access an object attribute value from a JSONB object expression.
      */
-    public static final JSONBGetAttribute JSONBGetAttribute() {
-        return new org.jooq.impl.JSONBGetAttribute(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB GET ATTRIBUTE</code> function.
-     * <p>
-     * Access an object attribute value from a JSONB object expression.
-     */
-    public static final JSONBGetAttribute JSONBGetAttribute(
-        Field<JSONB> field,
-        Field<String> attribute
-    ) {
-        return new org.jooq.impl.JSONBGetAttribute(
-            field,
-            attribute
-        );
-    }
-
-    /**
-     * The <code>JSONB GET ATTRIBUTE</code> function.
-     * <p>
-     * Access an object attribute value from a JSONB object expression.
-     */
     public /*sealed*/ interface JSONBGetAttribute
         extends
             UReturnsNullOnNullInput,
@@ -13119,33 +7012,6 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default JSONBGetAttribute $attribute(Field<String> newAttribute) { return $arg2(newAttribute); }
-    }
-
-    /**
-     * The <code>JSON GET ATTRIBUTE AS TEXT</code> function.
-     * <p>
-     * Access an object attribute value from a JSON object expression and return it as string.
-     */
-    public static final JSONGetAttributeAsText JSONGetAttributeAsText() {
-        return new org.jooq.impl.JSONGetAttributeAsText(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON GET ATTRIBUTE AS TEXT</code> function.
-     * <p>
-     * Access an object attribute value from a JSON object expression and return it as string.
-     */
-    public static final JSONGetAttributeAsText JSONGetAttributeAsText(
-        Field<JSON> field,
-        Field<String> attribute
-    ) {
-        return new org.jooq.impl.JSONGetAttributeAsText(
-            field,
-            attribute
-        );
     }
 
     /**
@@ -13191,35 +7057,6 @@ public final class QOM {
      * Access an object attribute value from a JSONB object expression and return it as
      * string.
      */
-    public static final JSONBGetAttributeAsText JSONBGetAttributeAsText() {
-        return new org.jooq.impl.JSONBGetAttributeAsText(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB GET ATTRIBUTE AS TEXT</code> function.
-     * <p>
-     * Access an object attribute value from a JSONB object expression and return it as
-     * string.
-     */
-    public static final JSONBGetAttributeAsText JSONBGetAttributeAsText(
-        Field<JSONB> field,
-        Field<String> attribute
-    ) {
-        return new org.jooq.impl.JSONBGetAttributeAsText(
-            field,
-            attribute
-        );
-    }
-
-    /**
-     * The <code>JSONB GET ATTRIBUTE AS TEXT</code> function.
-     * <p>
-     * Access an object attribute value from a JSONB object expression and return it as
-     * string.
-     */
     public /*sealed*/ interface JSONBGetAttributeAsText
         extends
             UReturnsNullOnNullInput,
@@ -13257,30 +7094,6 @@ public final class QOM {
      * <p>
      * Calculate the length of a JSON array.
      */
-    public static final JSONArrayLength JSONArrayLength() {
-        return new org.jooq.impl.JSONArrayLength(
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON ARRAY LENGTH</code> function.
-     * <p>
-     * Calculate the length of a JSON array.
-     */
-    public static final JSONArrayLength JSONArrayLength(
-        Field<JSON> field
-    ) {
-        return new org.jooq.impl.JSONArrayLength(
-            field
-        );
-    }
-
-    /**
-     * The <code>JSON ARRAY LENGTH</code> function.
-     * <p>
-     * Calculate the length of a JSON array.
-     */
     public /*sealed*/ interface JSONArrayLength
         extends
             UReturnsNullOnNullInput,
@@ -13292,30 +7105,6 @@ public final class QOM {
         @NotNull default Field<JSON> $field() { return $arg1(); }
         @CheckReturnValue
         @NotNull default JSONArrayLength $field(Field<JSON> newField) { return $arg1(newField); }
-    }
-
-    /**
-     * The <code>JSONB ARRAY LENGTH</code> function.
-     * <p>
-     * Calculate the length of a JSONB array.
-     */
-    public static final JSONBArrayLength JSONBArrayLength() {
-        return new org.jooq.impl.JSONBArrayLength(
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB ARRAY LENGTH</code> function.
-     * <p>
-     * Calculate the length of a JSONB array.
-     */
-    public static final JSONBArrayLength JSONBArrayLength(
-        Field<JSONB> field
-    ) {
-        return new org.jooq.impl.JSONBArrayLength(
-            field
-        );
     }
 
     /**
@@ -13341,30 +7130,6 @@ public final class QOM {
      * <p>
      * Retrieve all keys from a JSON object as an array of strings.
      */
-    public static final JSONKeys JSONKeys() {
-        return new org.jooq.impl.JSONKeys(
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON KEYS</code> function.
-     * <p>
-     * Retrieve all keys from a JSON object as an array of strings.
-     */
-    public static final JSONKeys JSONKeys(
-        Field<JSON> field
-    ) {
-        return new org.jooq.impl.JSONKeys(
-            field
-        );
-    }
-
-    /**
-     * The <code>JSON KEYS</code> function.
-     * <p>
-     * Retrieve all keys from a JSON object as an array of strings.
-     */
     public /*sealed*/ interface JSONKeys
         extends
             UReturnsNullOnNullInput,
@@ -13383,30 +7148,6 @@ public final class QOM {
      * <p>
      * Retrieve all keys from a JSONB object as an array of strings.
      */
-    public static final JSONBKeys JSONBKeys() {
-        return new org.jooq.impl.JSONBKeys(
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB KEYS</code> function.
-     * <p>
-     * Retrieve all keys from a JSONB object as an array of strings.
-     */
-    public static final JSONBKeys JSONBKeys(
-        Field<JSONB> field
-    ) {
-        return new org.jooq.impl.JSONBKeys(
-            field
-        );
-    }
-
-    /**
-     * The <code>JSONB KEYS</code> function.
-     * <p>
-     * Retrieve all keys from a JSONB object as an array of strings.
-     */
     public /*sealed*/ interface JSONBKeys
         extends
             UReturnsNullOnNullInput,
@@ -13418,36 +7159,6 @@ public final class QOM {
         @NotNull default Field<JSONB> $field() { return $arg1(); }
         @CheckReturnValue
         @NotNull default JSONBKeys $field(Field<JSONB> newField) { return $arg1(newField); }
-    }
-
-    /**
-     * The <code>JSON SET</code> function.
-     * <p>
-     * Add or replace a JSON value to a JSON field at a given path.
-     */
-    public static final JSONSet JSONSet() {
-        return new org.jooq.impl.JSONSet(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON SET</code> function.
-     * <p>
-     * Add or replace a JSON value to a JSON field at a given path.
-     */
-    public static final JSONSet JSONSet(
-        Field<JSON> field,
-        Field<String> path,
-        Field<?> value
-    ) {
-        return new org.jooq.impl.JSONSet(
-            field,
-            path,
-            value
-        );
     }
 
     /**
@@ -13478,36 +7189,6 @@ public final class QOM {
      * <p>
      * Add or replace a JSONB value to a JSONB field at a given path.
      */
-    public static final JSONBSet JSONBSet() {
-        return new org.jooq.impl.JSONBSet(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB SET</code> function.
-     * <p>
-     * Add or replace a JSONB value to a JSONB field at a given path.
-     */
-    public static final JSONBSet JSONBSet(
-        Field<JSONB> field,
-        Field<String> path,
-        Field<?> value
-    ) {
-        return new org.jooq.impl.JSONBSet(
-            field,
-            path,
-            value
-        );
-    }
-
-    /**
-     * The <code>JSONB SET</code> function.
-     * <p>
-     * Add or replace a JSONB value to a JSONB field at a given path.
-     */
     public /*sealed*/ interface JSONBSet
         extends
             UOperator3<Field<JSONB>, Field<String>, Field<?>, JSONBSet>,
@@ -13524,36 +7205,6 @@ public final class QOM {
         @NotNull default Field<?> $value() { return $arg3(); }
         @CheckReturnValue
         @NotNull default JSONBSet $value(Field<?> newValue) { return $arg3(newValue); }
-    }
-
-    /**
-     * The <code>JSON INSERT</code> function.
-     * <p>
-     * Add (but not replace) a JSON value to a JSON field at a given path.
-     */
-    public static final JSONInsert JSONInsert() {
-        return new org.jooq.impl.JSONInsert(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON INSERT</code> function.
-     * <p>
-     * Add (but not replace) a JSON value to a JSON field at a given path.
-     */
-    public static final JSONInsert JSONInsert(
-        Field<JSON> field,
-        Field<String> path,
-        Field<?> value
-    ) {
-        return new org.jooq.impl.JSONInsert(
-            field,
-            path,
-            value
-        );
     }
 
     /**
@@ -13584,36 +7235,6 @@ public final class QOM {
      * <p>
      * Add (but not replace) a JSON value to a JSON field at a given path.
      */
-    public static final JSONBInsert JSONBInsert() {
-        return new org.jooq.impl.JSONBInsert(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB INSERT</code> function.
-     * <p>
-     * Add (but not replace) a JSON value to a JSON field at a given path.
-     */
-    public static final JSONBInsert JSONBInsert(
-        Field<JSONB> field,
-        Field<String> path,
-        Field<?> value
-    ) {
-        return new org.jooq.impl.JSONBInsert(
-            field,
-            path,
-            value
-        );
-    }
-
-    /**
-     * The <code>JSONB INSERT</code> function.
-     * <p>
-     * Add (but not replace) a JSON value to a JSON field at a given path.
-     */
     public /*sealed*/ interface JSONBInsert
         extends
             UOperator3<Field<JSONB>, Field<String>, Field<?>, JSONBInsert>,
@@ -13630,36 +7251,6 @@ public final class QOM {
         @NotNull default Field<?> $value() { return $arg3(); }
         @CheckReturnValue
         @NotNull default JSONBInsert $value(Field<?> newValue) { return $arg3(newValue); }
-    }
-
-    /**
-     * The <code>JSON REPLACE</code> function.
-     * <p>
-     * Replace (but not add) a JSON value to a JSON field at a given path.
-     */
-    public static final JSONReplace JSONReplace() {
-        return new org.jooq.impl.JSONReplace(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON REPLACE</code> function.
-     * <p>
-     * Replace (but not add) a JSON value to a JSON field at a given path.
-     */
-    public static final JSONReplace JSONReplace(
-        Field<JSON> field,
-        Field<String> path,
-        Field<?> value
-    ) {
-        return new org.jooq.impl.JSONReplace(
-            field,
-            path,
-            value
-        );
     }
 
     /**
@@ -13690,36 +7281,6 @@ public final class QOM {
      * <p>
      * Replace (but not add) a JSONB value to a JSONB field at a given path.
      */
-    public static final JSONBReplace JSONBReplace() {
-        return new org.jooq.impl.JSONBReplace(
-            null,
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB REPLACE</code> function.
-     * <p>
-     * Replace (but not add) a JSONB value to a JSONB field at a given path.
-     */
-    public static final JSONBReplace JSONBReplace(
-        Field<JSONB> field,
-        Field<String> path,
-        Field<?> value
-    ) {
-        return new org.jooq.impl.JSONBReplace(
-            field,
-            path,
-            value
-        );
-    }
-
-    /**
-     * The <code>JSONB REPLACE</code> function.
-     * <p>
-     * Replace (but not add) a JSONB value to a JSONB field at a given path.
-     */
     public /*sealed*/ interface JSONBReplace
         extends
             UOperator3<Field<JSONB>, Field<String>, Field<?>, JSONBReplace>,
@@ -13743,33 +7304,6 @@ public final class QOM {
      * <p>
      * Remove a JSON value from a JSON field at a given path.
      */
-    public static final JSONRemove JSONRemove() {
-        return new org.jooq.impl.JSONRemove(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSON REMOVE</code> function.
-     * <p>
-     * Remove a JSON value from a JSON field at a given path.
-     */
-    public static final JSONRemove JSONRemove(
-        Field<JSON> field,
-        Field<String> path
-    ) {
-        return new org.jooq.impl.JSONRemove(
-            field,
-            path
-        );
-    }
-
-    /**
-     * The <code>JSON REMOVE</code> function.
-     * <p>
-     * Remove a JSON value from a JSON field at a given path.
-     */
     public /*sealed*/ interface JSONRemove
         extends
             UReturnsNullOnNullInput,
@@ -13784,33 +7318,6 @@ public final class QOM {
         @NotNull default Field<String> $path() { return $arg2(); }
         @CheckReturnValue
         @NotNull default JSONRemove $path(Field<String> newPath) { return $arg2(newPath); }
-    }
-
-    /**
-     * The <code>JSONB REMOVE</code> function.
-     * <p>
-     * Remove a JSONB value from a JSONB field at a given path.
-     */
-    public static final JSONBRemove JSONBRemove() {
-        return new org.jooq.impl.JSONBRemove(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>JSONB REMOVE</code> function.
-     * <p>
-     * Remove a JSONB value from a JSONB field at a given path.
-     */
-    public static final JSONBRemove JSONBRemove(
-        Field<JSONB> field,
-        Field<String> path
-    ) {
-        return new org.jooq.impl.JSONBRemove(
-            field,
-            path
-        );
     }
 
     /**
@@ -13872,57 +7379,6 @@ public final class QOM {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The <code>FIELD</code> function.
-     * <p>
-     * Wrap a condition in a boolean field.
-     */
-    public static final ConditionAsField ConditionAsField() {
-        return new org.jooq.impl.ConditionAsField(
-            null
-        );
-    }
-
-    /**
-     * The <code>FIELD</code> function.
-     * <p>
-     * Wrap a condition in a boolean field.
-     */
-    public static final ConditionAsField ConditionAsField(
-        Condition condition
-    ) {
-        return new org.jooq.impl.ConditionAsField(
-            condition
-        );
-    }
-
     /**
      * The <code>FIELD</code> function.
      * <p>
@@ -13939,46 +7395,6 @@ public final class QOM {
         @NotNull default Condition $condition() { return $arg1(); }
         @CheckReturnValue
         @NotNull default ConditionAsField $condition(Condition newCondition) { return $arg1(newCondition); }
-    }
-
-    /**
-     * The <code>CONDITION</code> function.
-     * <p>
-     * Create a condition from a boolean field.
-     * <p>
-     * Databases that support boolean data types can use boolean expressions
-     * as predicates or as columns interchangeably. This extends to any type
-     * of field, including functions. A Postgres example:
-     * <p>
-     * <pre><code>
-     * select 1 where texteq('a', 'a');
-     * </code></pre>
-     */
-    public static final FieldCondition FieldCondition() {
-        return new org.jooq.impl.FieldCondition(
-            null
-        );
-    }
-
-    /**
-     * The <code>CONDITION</code> function.
-     * <p>
-     * Create a condition from a boolean field.
-     * <p>
-     * Databases that support boolean data types can use boolean expressions
-     * as predicates or as columns interchangeably. This extends to any type
-     * of field, including functions. A Postgres example:
-     * <p>
-     * <pre><code>
-     * select 1 where texteq('a', 'a');
-     * </code></pre>
-     */
-    public static final FieldCondition FieldCondition(
-        Field<Boolean> field
-    ) {
-        return new org.jooq.impl.FieldCondition(
-            field
-        );
     }
 
     /**
@@ -14012,30 +7428,6 @@ public final class QOM {
      * <p>
      * Get any arbitrary value from the group.
      */
-    public static final <T> AnyValue<T> AnyValue() {
-        return new org.jooq.impl.AnyValue<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>ANY VALUE</code> function.
-     * <p>
-     * Get any arbitrary value from the group.
-     */
-    public static final <T> AnyValue<T> AnyValue(
-        Field<T> field
-    ) {
-        return new org.jooq.impl.AnyValue<>(
-            field
-        );
-    }
-
-    /**
-     * The <code>ANY VALUE</code> function.
-     * <p>
-     * Get any arbitrary value from the group.
-     */
     public /*sealed*/ interface AnyValue<T>
         extends
             org.jooq.AggregateFunction<T>
@@ -14045,29 +7437,6 @@ public final class QOM {
         @NotNull Field<T> $field();
         @CheckReturnValue
         @NotNull AnyValue<T> $field(Field<T> field);
-    }
-
-    /**
-     * The <code>AVG</code> function.
-     */
-    public static final Avg Avg() {
-        return new org.jooq.impl.Avg(
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>AVG</code> function.
-     */
-    public static final Avg Avg(
-        Field<? extends Number> field,
-        boolean distinct
-    ) {
-        return new org.jooq.impl.Avg(
-            field,
-            distinct
-        );
     }
 
     /**
@@ -14092,30 +7461,6 @@ public final class QOM {
      * <p>
      * Calculate the bitwise <code>AND</code> aggregate value.
      */
-    public static final <T extends Number> BitAndAgg<T> BitAndAgg() {
-        return new org.jooq.impl.BitAndAgg<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT AND AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>AND</code> aggregate value.
-     */
-    public static final <T extends Number> BitAndAgg<T> BitAndAgg(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.BitAndAgg<>(
-            value
-        );
-    }
-
-    /**
-     * The <code>BIT AND AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>AND</code> aggregate value.
-     */
     public /*sealed*/ interface BitAndAgg<T extends Number>
         extends
             org.jooq.AggregateFunction<T>
@@ -14125,30 +7470,6 @@ public final class QOM {
         @NotNull Field<T> $value();
         @CheckReturnValue
         @NotNull BitAndAgg<T> $value(Field<T> value);
-    }
-
-    /**
-     * The <code>BIT OR AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>OR</code> aggregate value.
-     */
-    public static final <T extends Number> BitOrAgg<T> BitOrAgg() {
-        return new org.jooq.impl.BitOrAgg<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT OR AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>OR</code> aggregate value.
-     */
-    public static final <T extends Number> BitOrAgg<T> BitOrAgg(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.BitOrAgg<>(
-            value
-        );
     }
 
     /**
@@ -14172,30 +7493,6 @@ public final class QOM {
      * <p>
      * Calculate the bitwise <code>XOR</code> aggregate value.
      */
-    public static final <T extends Number> BitXorAgg<T> BitXorAgg() {
-        return new org.jooq.impl.BitXorAgg<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT XOR AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>XOR</code> aggregate value.
-     */
-    public static final <T extends Number> BitXorAgg<T> BitXorAgg(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.BitXorAgg<>(
-            value
-        );
-    }
-
-    /**
-     * The <code>BIT XOR AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>XOR</code> aggregate value.
-     */
     public /*sealed*/ interface BitXorAgg<T extends Number>
         extends
             org.jooq.AggregateFunction<T>
@@ -14205,30 +7502,6 @@ public final class QOM {
         @NotNull Field<T> $value();
         @CheckReturnValue
         @NotNull BitXorAgg<T> $value(Field<T> value);
-    }
-
-    /**
-     * The <code>BIT NAND AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>NAND</code> aggregate value.
-     */
-    public static final <T extends Number> BitNandAgg<T> BitNandAgg() {
-        return new org.jooq.impl.BitNandAgg<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT NAND AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>NAND</code> aggregate value.
-     */
-    public static final <T extends Number> BitNandAgg<T> BitNandAgg(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.BitNandAgg<>(
-            value
-        );
     }
 
     /**
@@ -14252,30 +7525,6 @@ public final class QOM {
      * <p>
      * Calculate the bitwise <code>NOR</code> aggregate value.
      */
-    public static final <T extends Number> BitNorAgg<T> BitNorAgg() {
-        return new org.jooq.impl.BitNorAgg<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT NOR AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>NOR</code> aggregate value.
-     */
-    public static final <T extends Number> BitNorAgg<T> BitNorAgg(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.BitNorAgg<>(
-            value
-        );
-    }
-
-    /**
-     * The <code>BIT NOR AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>NOR</code> aggregate value.
-     */
     public /*sealed*/ interface BitNorAgg<T extends Number>
         extends
             org.jooq.AggregateFunction<T>
@@ -14285,30 +7534,6 @@ public final class QOM {
         @NotNull Field<T> $value();
         @CheckReturnValue
         @NotNull BitNorAgg<T> $value(Field<T> value);
-    }
-
-    /**
-     * The <code>BIT X NOR AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>XNOR</code> aggregate value.
-     */
-    public static final <T extends Number> BitXNorAgg<T> BitXNorAgg() {
-        return new org.jooq.impl.BitXNorAgg<>(
-            null
-        );
-    }
-
-    /**
-     * The <code>BIT X NOR AGG</code> function.
-     * <p>
-     * Calculate the bitwise <code>XNOR</code> aggregate value.
-     */
-    public static final <T extends Number> BitXNorAgg<T> BitXNorAgg(
-        Field<T> value
-    ) {
-        return new org.jooq.impl.BitXNorAgg<>(
-            value
-        );
     }
 
     /**
@@ -14330,26 +7555,6 @@ public final class QOM {
     /**
      * The <code>BOOL AND</code> function.
      */
-    public static final BoolAnd BoolAnd() {
-        return new org.jooq.impl.BoolAnd(
-            null
-        );
-    }
-
-    /**
-     * The <code>BOOL AND</code> function.
-     */
-    public static final BoolAnd BoolAnd(
-        Condition condition
-    ) {
-        return new org.jooq.impl.BoolAnd(
-            condition
-        );
-    }
-
-    /**
-     * The <code>BOOL AND</code> function.
-     */
     public /*sealed*/ interface BoolAnd
         extends
             org.jooq.AggregateFunction<Boolean>
@@ -14364,26 +7569,6 @@ public final class QOM {
     /**
      * The <code>BOOL OR</code> function.
      */
-    public static final BoolOr BoolOr() {
-        return new org.jooq.impl.BoolOr(
-            null
-        );
-    }
-
-    /**
-     * The <code>BOOL OR</code> function.
-     */
-    public static final BoolOr BoolOr(
-        Condition condition
-    ) {
-        return new org.jooq.impl.BoolOr(
-            condition
-        );
-    }
-
-    /**
-     * The <code>BOOL OR</code> function.
-     */
     public /*sealed*/ interface BoolOr
         extends
             org.jooq.AggregateFunction<Boolean>
@@ -14393,39 +7578,6 @@ public final class QOM {
         @NotNull Condition $condition();
         @CheckReturnValue
         @NotNull BoolOr $condition(Condition condition);
-    }
-
-    /**
-     * The <code>CORR</code> function.
-     * <p>
-     * Calculate the correlation coefficient. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#covarPop(Field, Field)} and {@link DSL#stddevPop(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final Corr Corr() {
-        return new org.jooq.impl.Corr(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>CORR</code> function.
-     * <p>
-     * Calculate the correlation coefficient. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#covarPop(Field, Field)} and {@link DSL#stddevPop(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final Corr Corr(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.Corr(
-            y,
-            x
-        );
     }
 
     /**
@@ -14453,29 +7605,6 @@ public final class QOM {
     /**
      * The <code>COUNT</code> function.
      */
-    public static final Count Count() {
-        return new org.jooq.impl.Count(
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>COUNT</code> function.
-     */
-    public static final Count Count(
-        Field<?> field,
-        boolean distinct
-    ) {
-        return new org.jooq.impl.Count(
-            field,
-            distinct
-        );
-    }
-
-    /**
-     * The <code>COUNT</code> function.
-     */
     public /*sealed*/ interface Count
         extends
             org.jooq.AggregateFunction<Integer>
@@ -14488,39 +7617,6 @@ public final class QOM {
         @NotNull Count $field(Field<?> field);
         @CheckReturnValue
         @NotNull Count $distinct(boolean distinct);
-    }
-
-    /**
-     * The <code>COVAR SAMP</code> function.
-     * <p>
-     * Calculate the sample covariance. This standard SQL function may be supported natively,
-     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
-     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final CovarSamp CovarSamp() {
-        return new org.jooq.impl.CovarSamp(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>COVAR SAMP</code> function.
-     * <p>
-     * Calculate the sample covariance. This standard SQL function may be supported natively,
-     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
-     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final CovarSamp CovarSamp(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.CovarSamp(
-            y,
-            x
-        );
     }
 
     /**
@@ -14553,39 +7649,6 @@ public final class QOM {
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
-    public static final CovarPop CovarPop() {
-        return new org.jooq.impl.CovarPop(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>COVAR POP</code> function.
-     * <p>
-     * Calculate the population covariance. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final CovarPop CovarPop(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.CovarPop(
-            y,
-            x
-        );
-    }
-
-    /**
-     * The <code>COVAR POP</code> function.
-     * <p>
-     * Calculate the population covariance. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
     public /*sealed*/ interface CovarPop
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -14598,29 +7661,6 @@ public final class QOM {
         @NotNull CovarPop $y(Field<? extends Number> y);
         @CheckReturnValue
         @NotNull CovarPop $x(Field<? extends Number> x);
-    }
-
-    /**
-     * The <code>MAX</code> function.
-     */
-    public static final <T> Max<T> Max() {
-        return new org.jooq.impl.Max<>(
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>MAX</code> function.
-     */
-    public static final <T> Max<T> Max(
-        Field<T> field,
-        boolean distinct
-    ) {
-        return new org.jooq.impl.Max<>(
-            field,
-            distinct
-        );
     }
 
     /**
@@ -14643,26 +7683,6 @@ public final class QOM {
     /**
      * The <code>MEDIAN</code> function.
      */
-    public static final Median Median() {
-        return new org.jooq.impl.Median(
-            null
-        );
-    }
-
-    /**
-     * The <code>MEDIAN</code> function.
-     */
-    public static final Median Median(
-        Field<? extends Number> field
-    ) {
-        return new org.jooq.impl.Median(
-            field
-        );
-    }
-
-    /**
-     * The <code>MEDIAN</code> function.
-     */
     public /*sealed*/ interface Median
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -14672,29 +7692,6 @@ public final class QOM {
         @NotNull Field<? extends Number> $field();
         @CheckReturnValue
         @NotNull Median $field(Field<? extends Number> field);
-    }
-
-    /**
-     * The <code>MIN</code> function.
-     */
-    public static final <T> Min<T> Min() {
-        return new org.jooq.impl.Min<>(
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>MIN</code> function.
-     */
-    public static final <T> Min<T> Min(
-        Field<T> field,
-        boolean distinct
-    ) {
-        return new org.jooq.impl.Min<>(
-            field,
-            distinct
-        );
     }
 
     /**
@@ -14712,53 +7709,6 @@ public final class QOM {
         @NotNull Min<T> $field(Field<T> field);
         @CheckReturnValue
         @NotNull Min<T> $distinct(boolean distinct);
-    }
-
-    /**
-     * The <code>PRODUCT</code> function.
-     * <p>
-     * Get the sum over a numeric field: product(distinct field).
-     * <p>
-     * Few dialects currently support multiplicative aggregation natively. jOOQ
-     * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
-     * numbers, and does some additional handling for zero and negative numbers.
-     * <p>
-     * Note that this implementation may introduce rounding errors, even for
-     * integer multiplication.
-     * <p>
-     * More information here: <a href=
-     * "https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
-     */
-    public static final Product Product() {
-        return new org.jooq.impl.Product(
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>PRODUCT</code> function.
-     * <p>
-     * Get the sum over a numeric field: product(distinct field).
-     * <p>
-     * Few dialects currently support multiplicative aggregation natively. jOOQ
-     * emulates this using <code>exp(sum(log(arg)))</code> for strictly positive
-     * numbers, and does some additional handling for zero and negative numbers.
-     * <p>
-     * Note that this implementation may introduce rounding errors, even for
-     * integer multiplication.
-     * <p>
-     * More information here: <a href=
-     * "https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql">https://blog.jooq.org/how-to-write-a-multiplication-aggregate-function-in-sql</a>.
-     */
-    public static final Product Product(
-        Field<? extends Number> field,
-        boolean distinct
-    ) {
-        return new org.jooq.impl.Product(
-            field,
-            distinct
-        );
     }
 
     /**
@@ -14798,39 +7748,6 @@ public final class QOM {
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
-    public static final RegrAvgX RegrAvgX() {
-        return new org.jooq.impl.RegrAvgX(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REGR AVGX</code> function.
-     * <p>
-     * Calculate the average of the independent values (x). This standard SQL function may
-     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrAvgX RegrAvgX(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.RegrAvgX(
-            y,
-            x
-        );
-    }
-
-    /**
-     * The <code>REGR AVGX</code> function.
-     * <p>
-     * Calculate the average of the independent values (x). This standard SQL function may
-     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
     public /*sealed*/ interface RegrAvgX
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -14843,39 +7760,6 @@ public final class QOM {
         @NotNull RegrAvgX $y(Field<? extends Number> y);
         @CheckReturnValue
         @NotNull RegrAvgX $x(Field<? extends Number> x);
-    }
-
-    /**
-     * The <code>REGR AVGY</code> function.
-     * <p>
-     * Calculate the average of the dependent values (y). This standard SQL function may
-     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrAvgY RegrAvgY() {
-        return new org.jooq.impl.RegrAvgY(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REGR AVGY</code> function.
-     * <p>
-     * Calculate the average of the dependent values (y). This standard SQL function may
-     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrAvgY RegrAvgY(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.RegrAvgY(
-            y,
-            x
-        );
     }
 
     /**
@@ -14908,39 +7792,6 @@ public final class QOM {
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
-    public static final RegrCount RegrCount() {
-        return new org.jooq.impl.RegrCount(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REGR COUNT</code> function.
-     * <p>
-     * Calculate the number of non-<code>NULL</code> pairs. This standard SQL function may
-     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrCount RegrCount(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.RegrCount(
-            y,
-            x
-        );
-    }
-
-    /**
-     * The <code>REGR COUNT</code> function.
-     * <p>
-     * Calculate the number of non-<code>NULL</code> pairs. This standard SQL function may
-     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
     public /*sealed*/ interface RegrCount
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -14953,39 +7804,6 @@ public final class QOM {
         @NotNull RegrCount $y(Field<? extends Number> y);
         @CheckReturnValue
         @NotNull RegrCount $x(Field<? extends Number> x);
-    }
-
-    /**
-     * The <code>REGR INTERCEPT</code> function.
-     * <p>
-     * Calculate the y intercept of the regression line. This standard SQL function may
-     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrIntercept RegrIntercept() {
-        return new org.jooq.impl.RegrIntercept(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REGR INTERCEPT</code> function.
-     * <p>
-     * Calculate the y intercept of the regression line. This standard SQL function may
-     * be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrIntercept RegrIntercept(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.RegrIntercept(
-            y,
-            x
-        );
     }
 
     /**
@@ -15018,39 +7836,6 @@ public final class QOM {
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
-    public static final RegrR2 RegrR2() {
-        return new org.jooq.impl.RegrR2(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REGR R2</code> function.
-     * <p>
-     * Calculate the coefficient of determination. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrR2 RegrR2(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.RegrR2(
-            y,
-            x
-        );
-    }
-
-    /**
-     * The <code>REGR R2</code> function.
-     * <p>
-     * Calculate the coefficient of determination. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
     public /*sealed*/ interface RegrR2
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -15063,39 +7848,6 @@ public final class QOM {
         @NotNull RegrR2 $y(Field<? extends Number> y);
         @CheckReturnValue
         @NotNull RegrR2 $x(Field<? extends Number> x);
-    }
-
-    /**
-     * The <code>REGR SLOPE</code> function.
-     * <p>
-     * Calculate the slope of the regression line. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrSlope RegrSlope() {
-        return new org.jooq.impl.RegrSlope(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REGR SLOPE</code> function.
-     * <p>
-     * Calculate the slope of the regression line. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrSlope RegrSlope(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.RegrSlope(
-            y,
-            x
-        );
     }
 
     /**
@@ -15128,39 +7880,6 @@ public final class QOM {
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
-    public static final RegrSxx RegrSxx() {
-        return new org.jooq.impl.RegrSxx(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REGR SXX</code> function.
-     * <p>
-     * Calculate the <code>REGR_SXX</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrSxx RegrSxx(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.RegrSxx(
-            y,
-            x
-        );
-    }
-
-    /**
-     * The <code>REGR SXX</code> function.
-     * <p>
-     * Calculate the <code>REGR_SXX</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
     public /*sealed*/ interface RegrSxx
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -15173,39 +7892,6 @@ public final class QOM {
         @NotNull RegrSxx $y(Field<? extends Number> y);
         @CheckReturnValue
         @NotNull RegrSxx $x(Field<? extends Number> x);
-    }
-
-    /**
-     * The <code>REGR SXY</code> function.
-     * <p>
-     * Calculate the <code>REGR_SXY</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrSxy RegrSxy() {
-        return new org.jooq.impl.RegrSxy(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REGR SXY</code> function.
-     * <p>
-     * Calculate the <code>REGR_SXY</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrSxy RegrSxy(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.RegrSxy(
-            y,
-            x
-        );
     }
 
     /**
@@ -15238,39 +7924,6 @@ public final class QOM {
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
-    public static final RegrSyy RegrSyy() {
-        return new org.jooq.impl.RegrSyy(
-            null,
-            null
-        );
-    }
-
-    /**
-     * The <code>REGR SYY</code> function.
-     * <p>
-     * Calculate the <code>REGR_SYY</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final RegrSyy RegrSyy(
-        Field<? extends Number> y,
-        Field<? extends Number> x
-    ) {
-        return new org.jooq.impl.RegrSyy(
-            y,
-            x
-        );
-    }
-
-    /**
-     * The <code>REGR SYY</code> function.
-     * <p>
-     * Calculate the <code>REGR_SYY</code> auxiliary function. This standard SQL function
-     * may be supported natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
     public /*sealed*/ interface RegrSyy
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -15283,36 +7936,6 @@ public final class QOM {
         @NotNull RegrSyy $y(Field<? extends Number> y);
         @CheckReturnValue
         @NotNull RegrSyy $x(Field<? extends Number> x);
-    }
-
-    /**
-     * The <code>STDDEV POP</code> function.
-     * <p>
-     * Calculate the population standard deviation. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final StddevPop StddevPop() {
-        return new org.jooq.impl.StddevPop(
-            null
-        );
-    }
-
-    /**
-     * The <code>STDDEV POP</code> function.
-     * <p>
-     * Calculate the population standard deviation. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final StddevPop StddevPop(
-        Field<? extends Number> field
-    ) {
-        return new org.jooq.impl.StddevPop(
-            field
-        );
     }
 
     /**
@@ -15342,36 +7965,6 @@ public final class QOM {
      * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
-    public static final StddevSamp StddevSamp() {
-        return new org.jooq.impl.StddevSamp(
-            null
-        );
-    }
-
-    /**
-     * The <code>STDDEV SAMP</code> function.
-     * <p>
-     * Calculate the sample standard deviation. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final StddevSamp StddevSamp(
-        Field<? extends Number> field
-    ) {
-        return new org.jooq.impl.StddevSamp(
-            field
-        );
-    }
-
-    /**
-     * The <code>STDDEV SAMP</code> function.
-     * <p>
-     * Calculate the sample standard deviation. This standard SQL function may be supported
-     * natively, or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}.
-     * If an emulation is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
     public /*sealed*/ interface StddevSamp
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -15381,29 +7974,6 @@ public final class QOM {
         @NotNull Field<? extends Number> $field();
         @CheckReturnValue
         @NotNull StddevSamp $field(Field<? extends Number> field);
-    }
-
-    /**
-     * The <code>SUM</code> function.
-     */
-    public static final Sum Sum() {
-        return new org.jooq.impl.Sum(
-            null,
-            false
-        );
-    }
-
-    /**
-     * The <code>SUM</code> function.
-     */
-    public static final Sum Sum(
-        Field<? extends Number> field,
-        boolean distinct
-    ) {
-        return new org.jooq.impl.Sum(
-            field,
-            distinct
-        );
     }
 
     /**
@@ -15421,36 +7991,6 @@ public final class QOM {
         @NotNull Sum $field(Field<? extends Number> field);
         @CheckReturnValue
         @NotNull Sum $distinct(boolean distinct);
-    }
-
-    /**
-     * The <code>VAR POP</code> function.
-     * <p>
-     * Calculate the population variance. This standard SQL function may be supported natively,
-     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
-     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final VarPop VarPop() {
-        return new org.jooq.impl.VarPop(
-            null
-        );
-    }
-
-    /**
-     * The <code>VAR POP</code> function.
-     * <p>
-     * Calculate the population variance. This standard SQL function may be supported natively,
-     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
-     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final VarPop VarPop(
-        Field<? extends Number> field
-    ) {
-        return new org.jooq.impl.VarPop(
-            field
-        );
     }
 
     /**
@@ -15480,36 +8020,6 @@ public final class QOM {
      * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
      * cancellation</a>" in case the calculations are performed using floating point arithmetic.
      */
-    public static final VarSamp VarSamp() {
-        return new org.jooq.impl.VarSamp(
-            null
-        );
-    }
-
-    /**
-     * The <code>VAR SAMP</code> function.
-     * <p>
-     * Calculate the sample variance. This standard SQL function may be supported natively,
-     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
-     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
-    public static final VarSamp VarSamp(
-        Field<? extends Number> field
-    ) {
-        return new org.jooq.impl.VarSamp(
-            field
-        );
-    }
-
-    /**
-     * The <code>VAR SAMP</code> function.
-     * <p>
-     * Calculate the sample variance. This standard SQL function may be supported natively,
-     * or emulated using {@link DSL#sum(Field)} and {@link DSL#count(Field)}. If an emulation
-     * is applied, beware of the risk of "<a href="https://en.wikipedia.org/wiki/Catastrophic_cancellation">Catastrophic
-     * cancellation</a>" in case the calculations are performed using floating point arithmetic.
-     */
     public /*sealed*/ interface VarSamp
         extends
             org.jooq.AggregateFunction<BigDecimal>
@@ -15520,1082 +8030,6 @@ public final class QOM {
         @CheckReturnValue
         @NotNull VarSamp $field(Field<? extends Number> field);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

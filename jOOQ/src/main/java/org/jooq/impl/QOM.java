@@ -103,6 +103,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.Keyword;
+import org.jooq.Lambda1;
 // ...
 import org.jooq.Name;
 import org.jooq.Operator;
@@ -227,6 +228,22 @@ public final class QOM {
     // -------------------------------------------------------------------------
     // XXX: Model
     // -------------------------------------------------------------------------
+
+//    public interface Lambda1<T1, R>
+//        extends
+//            org.jooq.QueryPart
+//    {
+//
+//        /**
+//         * The first argument of the lambda.
+//         */
+//        @NotNull Field<T1> $arg1();
+//
+//        /**
+//         * The lambda result.
+//         */
+//        @NotNull Field<R> $result();
+//    }
 
     // This class uses a lot of fully qualified types, because of some javac bug
     // In Java 1.8.0_302, which hasn't been analysed and reproduced yet in a more
@@ -11756,6 +11773,53 @@ public final class QOM {
         //permits
         //    ArrayReplace
     {}
+
+    /**
+     * The <code>ARRAY FILTER</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    public static final <T> ArrayFilter<T> ArrayFilter() {
+        return new org.jooq.impl.ArrayFilter<>(
+            null,
+            null
+        );
+    }
+
+    /**
+     * The <code>ARRAY FILTER</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    public static final <T> ArrayFilter<T> ArrayFilter(
+        Field<T[]> array,
+        Lambda1<T, Boolean> filter
+    ) {
+        return new org.jooq.impl.ArrayFilter<>(
+            array,
+            filter
+        );
+    }
+
+    /**
+     * The <code>ARRAY FILTER</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    public /*sealed*/ interface ArrayFilter<T>
+        extends
+            UOperator2<Field<T[]>, Lambda1<T, Boolean>, ArrayFilter<T>>,
+            org.jooq.Field<T[]>
+        //permits
+        //    ArrayFilter
+    {
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default ArrayFilter<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+        @NotNull default Lambda1<T, Boolean> $filter() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default ArrayFilter<T> $filter(Lambda1<T, Boolean> newFilter) { return $arg2(newFilter); }
+    }
 
     /**
      * The <code>NVL</code> function.

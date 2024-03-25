@@ -110,6 +110,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Names.N_COUNT;
 import static org.jooq.impl.Names.N_CUME_DIST;
 import static org.jooq.impl.Names.N_DENSE_RANK;
+import static org.jooq.impl.Names.N_E;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
 import static org.jooq.impl.Names.N_PERCENTILE_CONT;
@@ -223,6 +224,7 @@ import org.jooq.False;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 // ...
+import org.jooq.Function1;
 import org.jooq.Geography;
 import org.jooq.Geometry;
 import org.jooq.GroupConcatOrderByStep;
@@ -269,6 +271,7 @@ import org.jooq.JSONTableColumnsFirstStep;
 import org.jooq.JSONValueOnStep;
 import org.jooq.Keyword;
 // ...
+import org.jooq.Lambda1;
 // ...
 // ...
 import org.jooq.Merge;
@@ -14031,6 +14034,29 @@ public class DSL {
 
 
     // -------------------------------------------------------------------------
+    // XXX: Lambda constructors
+    // -------------------------------------------------------------------------
+
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @NotNull
+    static <T1, R> Lambda1<T1, R> lambda(T1[] field, org.jooq.Function1<? super Field<T1>, ? extends Field<R>> function) {
+        return lambda(Tools.field(field), function);
+    }
+
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @NotNull
+    static <T1, R> Lambda1<T1, R> lambda(Field<T1[]> field, org.jooq.Function1<? super Field<T1>, ? extends Field<R>> function) {
+        Field<T1> e = (Field<T1>) DSL.field(N_E, field.getDataType().getArrayBaseDataType());
+        return lambda(e, function.apply(e));
+    }
+
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    @NotNull
+    public static <T1, R> Lambda1<T1, R> lambda(Field<T1> arg1, Field<R> result) {
+        return new org.jooq.impl.LambdaImpl1<>(arg1, result);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX: Routine parameter constructors
     // -------------------------------------------------------------------------
 
@@ -22392,6 +22418,50 @@ public class DSL {
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<T[]> arrayReplace(Field<T[]> arg1, Field<T> arg2, Field<T> arg3) {
         return new ArrayReplace<>(arg1, arg2, arg3);
+    }
+
+    /**
+     * The <code>ARRAY_FILTER</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arrayFilter(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> filter) {
+        return new ArrayFilter<>(Tools.field(array), DSL.lambda(array, filter));
+    }
+
+    /**
+     * The <code>ARRAY_FILTER</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arrayFilter(T[] array, Lambda1<T, Boolean> filter) {
+        return new ArrayFilter<>(Tools.field(array), filter);
+    }
+
+    /**
+     * The <code>ARRAY_FILTER</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> filter) {
+        return new ArrayFilter<>(array, DSL.lambda(array, filter));
+    }
+
+    /**
+     * The <code>ARRAY_FILTER</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Lambda1<T, Boolean> filter) {
+        return new ArrayFilter<>(array, filter);
     }
 
     // -------------------------------------------------------------------------

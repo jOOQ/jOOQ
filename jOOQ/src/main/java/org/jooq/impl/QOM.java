@@ -6353,6 +6353,26 @@ public final class QOM {
     }
 
     /**
+     * The <code>ARRAY MAP</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    public /*sealed*/ interface ArrayMap<T, U>
+        extends
+            UOperator2<Field<T[]>, Lambda1<T, U>, ArrayMap<T, U>>,
+            org.jooq.Field<T[]>
+        //permits
+        //    ArrayMap
+    {
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default ArrayMap<T, U> $array(Field<T[]> newArray) { return $arg1(newArray); }
+        @NotNull default Lambda1<T, U> $mapper() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default ArrayMap<T, U> $mapper(Lambda1<T, U> newMapper) { return $arg2(newMapper); }
+    }
+
+    /**
      * The <code>NVL</code> function.
      * <p>
      * Return the first non-null argument.

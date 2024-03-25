@@ -338,6 +338,7 @@ final class Names {
     static final Name N_ARRAY_GET                   = systemName("array_get");
     static final Name N_ARRAY_INTERSECT             = systemName("array_intersect");
     static final Name N_ARRAY_LENGTH                = systemName("array_length");
+    static final Name N_ARRAY_MAP                   = systemName("array_map");
     static final Name N_ARRAY_OVERLAP               = systemName("array_overlap");
     static final Name N_ARRAY_PREPEND               = systemName("array_prepend");
     static final Name N_ARRAY_REMOVE                = systemName("array_remove");
@@ -649,6 +650,8 @@ final class Names {
     static final Name N_XMLSERIALIZE_CONTENT        = systemName("xmlserialize_content");
     static final Name N_XOR                         = systemName("xor");
     static final Name N_arrayConcat                 = systemName("arrayConcat");
+    static final Name N_arrayFilter                 = systemName("arrayFilter");
+    static final Name N_arrayMap                    = systemName("arrayMap");
     static final Name N_arrayPushBack               = systemName("arrayPushBack");
     static final Name N_arrayPushFront              = systemName("arrayPushFront");
     static final Name N_bitAnd                      = systemName("bitAnd");

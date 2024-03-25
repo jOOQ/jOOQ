@@ -60,30 +60,30 @@ import java.util.stream.*;
 
 
 /**
- * The <code>ARRAY FILTER</code> statement.
+ * The <code>ARRAY MAP</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class ArrayFilter<T>
+final class ArrayMap<T, U>
 extends
     AbstractField<T[]>
 implements
-    QOM.ArrayFilter<T>
+    QOM.ArrayMap<T, U>
 {
 
-    final Field<T[]>          array;
-    final Lambda1<T, Boolean> filter;
+    final Field<T[]>    array;
+    final Lambda1<T, U> mapper;
 
-    ArrayFilter(
+    ArrayMap(
         Field<T[]> array,
-        Lambda1<T, Boolean> filter
+        Lambda1<T, U> mapper
     ) {
         super(
-            N_ARRAY_FILTER,
+            N_ARRAY_MAP,
             allNotNull((DataType) dataType(((DataType) OTHER).array(), array, false), array)
         );
 
         this.array = nullSafeNotNull(array, ((DataType) OTHER).array());
-        this.filter = filter;
+        this.mapper = mapper;
     }
 
     // -------------------------------------------------------------------------
@@ -107,6 +107,9 @@ implements
             case CLICKHOUSE:
                 return false;
 
+            case TRINO:
+                return true;
+
             default:
                 return true;
         }
@@ -128,22 +131,25 @@ implements
             case POSTGRES:
             case YUGABYTEDB:
                 ctx.visit(DSL.field(
-                    select(DSL.coalesce(arrayAgg(filter.$arg1()), when(array.isNotNull(), DSL.cast(array(), getDataType()))))
-                    .from(unnest(array).as(N_T, filter.$arg1().getUnqualifiedName()))
-                    .where(filter.$result())
+                    select(DSL.coalesce(arrayAgg(mapper.$result()), when(array.isNotNull(), DSL.cast(array(), getDataType()))))
+                    .from(unnest(array).as(N_T, mapper.$arg1().getUnqualifiedName()))
                 ));
                 break;
 
             case DUCKDB:
-                ctx.visit(function(N_ARRAY_FILTER, getDataType(), array, DSL.field("{0}", OTHER, filter)));
+                ctx.visit(function(N_ARRAY_TRANSFORM, getDataType(), array, DSL.field("{0}", OTHER, mapper)));
                 break;
 
             case CLICKHOUSE:
-                ctx.visit(DSL.function(N_arrayFilter, getDataType(), DSL.field("{0}", OTHER, filter), array));
+                ctx.visit(DSL.function(N_arrayMap, getDataType(), DSL.field("{0}", OTHER, mapper), array));
+                break;
+
+            case TRINO:
+                ctx.visit(function(N_TRANSFORM, getDataType(), array, DSL.field("{0}", OTHER, mapper)));
                 break;
 
             default:
-                ctx.visit(function(N_ARRAY_FILTER, getDataType(), array, DSL.field("{0}", OTHER, filter)));
+                ctx.visit(function(N_ARRAY_MAP, getDataType(), array, DSL.field("{0}", OTHER, mapper)));
                 break;
         }
     }
@@ -171,23 +177,23 @@ implements
     }
 
     @Override
-    public final Lambda1<T, Boolean> $arg2() {
-        return filter;
+    public final Lambda1<T, U> $arg2() {
+        return mapper;
     }
 
     @Override
-    public final QOM.ArrayFilter<T> $arg1(Field<T[]> newValue) {
+    public final QOM.ArrayMap<T, U> $arg1(Field<T[]> newValue) {
         return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.ArrayFilter<T> $arg2(Lambda1<T, Boolean> newValue) {
+    public final QOM.ArrayMap<T, U> $arg2(Lambda1<T, U> newValue) {
         return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<T[]>, ? super Lambda1<T, Boolean>, ? extends QOM.ArrayFilter<T>> $constructor() {
-        return (a1, a2) -> new ArrayFilter<>(a1, a2);
+    public final Function2<? super Field<T[]>, ? super Lambda1<T, U>, ? extends QOM.ArrayMap<T, U>> $constructor() {
+        return (a1, a2) -> new ArrayMap<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------
@@ -196,10 +202,10 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.ArrayFilter<?> o) {
+        if (that instanceof QOM.ArrayMap<?, ?> o) {
             return
                 StringUtils.equals($array(), o.$array()) &&
-                StringUtils.equals($filter(), o.$filter())
+                StringUtils.equals($mapper(), o.$mapper())
             ;
         }
         else

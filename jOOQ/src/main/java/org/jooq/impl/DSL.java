@@ -22464,6 +22464,50 @@ public class DSL {
         return new ArrayFilter<>(array, filter);
     }
 
+    /**
+     * The <code>ARRAY_MAP</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T, U> Field<T[]> arrayMap(T[] array, Function1<? super Field<T>, ? extends Field<U>> mapper) {
+        return new ArrayMap<>(Tools.field(array), DSL.lambda(array, mapper));
+    }
+
+    /**
+     * The <code>ARRAY_MAP</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T, U> Field<T[]> arrayMap(T[] array, Lambda1<T, U> mapper) {
+        return new ArrayMap<>(Tools.field(array), mapper);
+    }
+
+    /**
+     * The <code>ARRAY_MAP</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T, U> Field<T[]> arrayMap(Field<T[]> array, Function1<? super Field<T>, ? extends Field<U>> mapper) {
+        return new ArrayMap<>(array, DSL.lambda(array, mapper));
+    }
+
+    /**
+     * The <code>ARRAY_MAP</code> function.
+     * <p>
+     * Filter elements out of an array.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T, U> Field<T[]> arrayMap(Field<T[]> array, Lambda1<T, U> mapper) {
+        return new ArrayMap<>(array, mapper);
+    }
+
     // -------------------------------------------------------------------------
     // Utility functions
     // -------------------------------------------------------------------------

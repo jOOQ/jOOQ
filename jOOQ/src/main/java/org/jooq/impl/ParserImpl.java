@@ -81,7 +81,9 @@ import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.arrayAppend;
 import static org.jooq.impl.DSL.arrayConcat;
+import static org.jooq.impl.DSL.arrayFilter;
 import static org.jooq.impl.DSL.arrayGet;
+import static org.jooq.impl.DSL.arrayMap;
 import static org.jooq.impl.DSL.arrayOverlap;
 import static org.jooq.impl.DSL.arrayPrepend;
 import static org.jooq.impl.DSL.arrayRemove;
@@ -235,6 +237,7 @@ import static org.jooq.impl.DSL.jsonbObjectAgg;
 import static org.jooq.impl.DSL.key;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
+import static org.jooq.impl.DSL.lambda;
 import static org.jooq.impl.DSL.lastValue;
 import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.lead;
@@ -647,6 +650,7 @@ import org.jooq.JSONValueOnStep;
 import org.jooq.JoinType;
 import org.jooq.Keyword;
 // ...
+import org.jooq.Lambda1;
 import org.jooq.LanguageContext;
 import org.jooq.LikeEscapeStep;
 // ...
@@ -8744,6 +8748,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs2((f1, f2) -> arrayConcat(f1, f2));
                 else if (parseFunctionNameIf("ARRAY_GET", "arrayElement"))
                     return parseFunctionArgs2((f1, f2) -> arrayGet(f1, f2));
+                else if ((field = parseFieldArrayFilterIf()) != null)
+                    return field;
+                else if ((field = parseFieldArrayMapIf()) != null)
+                    return field;
                 else if (parseFunctionNameIf("ARRAY_OVERLAP", "ARRAYS_OVERLAP"))
                     return parseFunctionArgs2((f1, f2) -> arrayOverlap((Field<Void[]>) f1, (Field<Void[]>) f2));
                 else if (parseFunctionNameIf("ARRAY_PREPEND"))
@@ -9552,6 +9560,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if ((field = parseFieldTruncIf()) != null)
                     return field;
                 else if ((field = parseFieldCastIf()) != null)
+                    return field;
+                else if ((field = parseFieldArrayMapIf()) != null)
                     return field;
 
                 break;
@@ -10402,6 +10412,71 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
             parse(')');
             return result;
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseFieldArrayFilterIf() {
+        if (parseFunctionNameIf("ARRAY_FILTER", "arrayFilter")) {
+            parse('(');
+            Field f;
+            Lambda1 l = parseLambdaIf(c -> c.parseCondition());
+
+            if (l != null && parse(',')) {
+                f = parseField();
+            }
+            else {
+                f = parseField();
+                parse(',');
+                l = parseLambda(c -> c.parseCondition());
+            }
+
+            parse(')');
+            return arrayFilter(f, l);
+        }
+
+        return null;
+    }
+
+    private final Lambda1<?, ?> parseLambda(Function<? super ParseContext, ? extends Field<?>> field) {
+        Lambda1<?, ?> l = parseLambdaIf(field);
+
+        if (l == null)
+            throw expected("Lambda");
+
+        return l;
+    }
+
+    private final Lambda1<?, ?> parseLambdaIf(Function<? super ParseContext, ? extends Field<?>> field) {
+        int p = position();
+        Name e = parseIdentifierIf();
+
+        if (e != null && parseIf("->"))
+            return lambda(field(e), (Field<?>) field.apply(this));
+        else
+            position(p);
+
+        return null;
+    }
+
+    private final Field<?> parseFieldArrayMapIf() {
+        if (parseFunctionNameIf("ARRAY_MAP", "arrayMap", "ARRAY_TRANSFORM", "TRANSFORM")) {
+            parse('(');
+            Field f;
+            Lambda1 l = parseLambdaIf(c -> c.parseField());
+
+            if (l != null && parse(',')) {
+                f = parseField();
+            }
+            else {
+                f = parseField();
+                parse(',');
+                l = parseLambda(c -> c.parseField());
+            }
+
+            parse(')');
+            return arrayMap(f, l);
         }
 
         return null;

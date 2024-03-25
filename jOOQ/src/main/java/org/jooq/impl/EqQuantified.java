@@ -52,8 +52,6 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
-import org.jooq.impl.*;
-import org.jooq.impl.QOM.*;
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -188,7 +186,7 @@ implements
             else if (quantifiedArrayParam || quantifiedArray) {
                 QOM.QuantifiedArray<?> a = (org.jooq.impl.QOM.QuantifiedArray<?>) arg2;
                 ctx.visit(DSL.condition(
-                    a.$quantifier() == Quantifier.ALL ? org.jooq.Operator.AND : org.jooq.Operator.OR,
+                    a.$quantifier() == QOM.Quantifier.ALL ? org.jooq.Operator.AND : org.jooq.Operator.OR,
                     a.$array() instanceof Array
                         ? map(((Array) a.$array()).$elements(), v -> comparisonCondition(arg1, op, (Field<String>) v, escape))
                         : map(((Param<? extends Object[]>) a.$array()).getValue(), v -> v instanceof Field ? comparisonCondition(arg1, op, (Field<String>) v, escape) : comparisonCondition(arg1, op, v, escape))
@@ -217,7 +215,7 @@ implements
                 }
 
                 Table<?> t;
-                Quantifier q;
+                QOM.Quantifier q;
 
                 if (arg2 instanceof QuantifiedArray<?> a) {
                     t = new ArrayTable(a.$array()).asTable("t", "pattern");

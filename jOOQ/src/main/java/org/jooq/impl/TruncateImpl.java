@@ -52,8 +52,8 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
-import org.jooq.impl.*;
-import org.jooq.impl.QOM.*;
+import org.jooq.impl.QOM.IdentityRestartOption;
+import org.jooq.impl.QOM.Cascade;
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -211,7 +211,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final UnmodifiableList<? extends Table<?>> $table() {
+    public final QOM.UnmodifiableList<? extends Table<?>> $table() {
         return QOM.unmodifiable(table);
     }
 

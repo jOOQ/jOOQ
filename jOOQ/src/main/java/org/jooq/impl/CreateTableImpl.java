@@ -52,8 +52,8 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
-import org.jooq.impl.*;
-import org.jooq.impl.QOM.*;
+import org.jooq.impl.QOM.WithOrWithoutData;
+import org.jooq.impl.QOM.TableCommitAction;
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -361,19 +361,19 @@ implements
 
 
 
-    final UnmodifiableList<? extends Field<?>> $columns() {
+    final QOM.UnmodifiableList<? extends Field<?>> $columns() {
         return QOM.unmodifiable(
             tableElements.stream().filter(e -> e instanceof Field<?>).map(e -> (Field<?>) e).collect(Collectors.toList())
         );
     }
 
-    final UnmodifiableList<? extends Constraint> $constraints() {
+    final QOM.UnmodifiableList<? extends Constraint> $constraints() {
         return QOM.unmodifiable(
             tableElements.stream().filter(e -> e instanceof Constraint).map(e -> (Constraint) e).collect(Collectors.toList())
         );
     }
 
-    final UnmodifiableList<? extends Index> $indexes() {
+    final QOM.UnmodifiableList<? extends Index> $indexes() {
         return QOM.unmodifiable(
             tableElements.stream().filter(e -> e instanceof Index).map(e -> (Index) e).collect(Collectors.toList())
         );
@@ -492,7 +492,7 @@ implements
     private void toSQLCreateTable(Context<?> ctx) {
         toSQLCreateTableName(ctx);
 
-        UnmodifiableList<? extends Field<?>> columns = $columns();
+        QOM.UnmodifiableList<? extends Field<?>> columns = $columns();
         if (!columns.isEmpty()
                 && (select == null || !NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))) {
             ctx.sqlIndentStart(" (")
@@ -795,7 +795,7 @@ implements
     }
 
     @Override
-    public final UnmodifiableList<? extends TableElement> $tableElements() {
+    public final QOM.UnmodifiableList<? extends TableElement> $tableElements() {
         return QOM.unmodifiable(tableElements);
     }
 

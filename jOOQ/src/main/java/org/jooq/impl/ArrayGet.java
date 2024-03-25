@@ -52,8 +52,6 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
-import org.jooq.impl.*;
-import org.jooq.impl.QOM.*;
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -129,7 +127,7 @@ implements
         }
     }
 
-    private class Standard extends AbstractField<T> implements UTransient {
+    private class Standard extends AbstractField<T> implements QOM.UTransient {
 
         Standard() {
             super(ArrayGet.this.getQualifiedName(), ArrayGet.this.getDataType());

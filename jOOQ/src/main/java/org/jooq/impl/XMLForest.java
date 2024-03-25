@@ -52,8 +52,6 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
-import org.jooq.impl.*;
-import org.jooq.impl.QOM.*;
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -123,12 +121,12 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final UnmodifiableList<? extends Field<?>> $arg1() {
+    public final QOM.UnmodifiableList<? extends Field<?>> $arg1() {
         return QOM.unmodifiable(fields);
     }
 
     @Override
-    public final QOM.XMLForest $arg1(UnmodifiableList<? extends Field<?>> newValue) {
+    public final QOM.XMLForest $arg1(QOM.UnmodifiableList<? extends Field<?>> newValue) {
         return $constructor().apply(newValue);
     }
 

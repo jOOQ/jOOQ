@@ -6301,7 +6301,7 @@ public final class QOM {
      */
     public /*sealed*/ interface XMLConcat
         extends
-            UOperator1<UnmodifiableList<? extends Field<?>>, XMLConcat>,
+            UOperator1<QOM.UnmodifiableList<? extends Field<?>>, XMLConcat>,
             org.jooq.Field<XML>
         //permits
         //    XMLConcat
@@ -6330,14 +6330,14 @@ public final class QOM {
      */
     public /*sealed*/ interface XMLForest
         extends
-            UOperator1<UnmodifiableList<? extends Field<?>>, XMLForest>,
+            UOperator1<QOM.UnmodifiableList<? extends Field<?>>, XMLForest>,
             org.jooq.Field<XML>
         //permits
         //    XMLForest
     {
-        @NotNull default UnmodifiableList<? extends Field<?>> $fields() { return $arg1(); }
+        @NotNull default QOM.UnmodifiableList<? extends Field<?>> $fields() { return $arg1(); }
         @CheckReturnValue
-        @NotNull default XMLForest $fields(UnmodifiableList<? extends Field<?>> newFields) { return $arg1(newFields); }
+        @NotNull default XMLForest $fields(QOM.UnmodifiableList<? extends Field<?>> newFields) { return $arg1(newFields); }
     }
 
     /**
@@ -6384,7 +6384,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONArray<T>
         extends
-            UOperator4<DataType<T>, UnmodifiableList<? extends Field<?>>, JSONOnNull, DataType<?>, JSONArray<T>>,
+            UOperator4<DataType<T>, QOM.UnmodifiableList<? extends Field<?>>, JSONOnNull, DataType<?>, JSONArray<T>>,
             Field<T>
         //permits
         //    JSONArray
@@ -6392,9 +6392,9 @@ public final class QOM {
         @NotNull default DataType<T> $type() { return $arg1(); }
         @CheckReturnValue
         @NotNull default JSONArray<T> $type(DataType<T> newType) { return $arg1(newType); }
-        @NotNull default UnmodifiableList<? extends Field<?>> $fields() { return $arg2(); }
+        @NotNull default QOM.UnmodifiableList<? extends Field<?>> $fields() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default JSONArray<T> $fields(UnmodifiableList<? extends Field<?>> newFields) { return $arg2(newFields); }
+        @NotNull default JSONArray<T> $fields(QOM.UnmodifiableList<? extends Field<?>> newFields) { return $arg2(newFields); }
         @Nullable default JSONOnNull $onNull() { return $arg3(); }
         @CheckReturnValue
         @NotNull default JSONArray<T> $onNull(JSONOnNull newOnNull) { return $arg3(newOnNull); }
@@ -6408,7 +6408,7 @@ public final class QOM {
      */
     public /*sealed*/ interface JSONObject<T>
         extends
-            UOperator4<DataType<T>, UnmodifiableList<? extends JSONEntry<?>>, JSONOnNull, DataType<?>, JSONObject<T>>,
+            UOperator4<DataType<T>, QOM.UnmodifiableList<? extends JSONEntry<?>>, JSONOnNull, DataType<?>, JSONObject<T>>,
             Field<T>
         //permits
         //    JSONObject
@@ -6416,9 +6416,9 @@ public final class QOM {
         @NotNull default DataType<T> $type() { return $arg1(); }
         @CheckReturnValue
         @NotNull default JSONObject<T> $type(DataType<T> newType) { return $arg1(newType); }
-        @NotNull default UnmodifiableList<? extends JSONEntry<?>> $entries() { return $arg2(); }
+        @NotNull default QOM.UnmodifiableList<? extends JSONEntry<?>> $entries() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default JSONObject<T> $entries(UnmodifiableList<? extends JSONEntry<?>> newEntries) { return $arg2(newEntries); }
+        @NotNull default JSONObject<T> $entries(QOM.UnmodifiableList<? extends JSONEntry<?>> newEntries) { return $arg2(newEntries); }
         @Nullable default JSONOnNull $onNull() { return $arg3(); }
         @CheckReturnValue
         @NotNull default JSONObject<T> $onNull(JSONOnNull newOnNull) { return $arg3(newOnNull); }

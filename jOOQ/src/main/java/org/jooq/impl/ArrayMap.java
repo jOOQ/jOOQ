@@ -65,7 +65,7 @@ import java.util.stream.*;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class ArrayMap<T, U>
 extends
-    AbstractField<T[]>
+    AbstractField<U[]>
 implements
     QOM.ArrayMap<T, U>
 {

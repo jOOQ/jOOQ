@@ -22471,7 +22471,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T, U> Field<T[]> arrayMap(T[] array, Function1<? super Field<T>, ? extends Field<U>> mapper) {
+    public static <T, U> Field<U[]> arrayMap(T[] array, Function1<? super Field<T>, ? extends Field<U>> mapper) {
         return new ArrayMap<>(Tools.field(array), DSL.lambda(array, mapper));
     }
 
@@ -22482,7 +22482,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T, U> Field<T[]> arrayMap(T[] array, Lambda1<Field<T>, Field<U>> mapper) {
+    public static <T, U> Field<U[]> arrayMap(T[] array, Lambda1<Field<T>, Field<U>> mapper) {
         return new ArrayMap<>(Tools.field(array), mapper);
     }
 
@@ -22493,7 +22493,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T, U> Field<T[]> arrayMap(Field<T[]> array, Function1<? super Field<T>, ? extends Field<U>> mapper) {
+    public static <T, U> Field<U[]> arrayMap(Field<T[]> array, Function1<? super Field<T>, ? extends Field<U>> mapper) {
         return new ArrayMap<>(array, DSL.lambda(array, mapper));
     }
 
@@ -22504,7 +22504,7 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T, U> Field<T[]> arrayMap(Field<T[]> array, Lambda1<Field<T>, Field<U>> mapper) {
+    public static <T, U> Field<U[]> arrayMap(Field<T[]> array, Lambda1<Field<T>, Field<U>> mapper) {
         return new ArrayMap<>(array, mapper);
     }
 

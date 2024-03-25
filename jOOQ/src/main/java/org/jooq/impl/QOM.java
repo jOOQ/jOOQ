@@ -6360,7 +6360,7 @@ public final class QOM {
     public /*sealed*/ interface ArrayMap<T, U>
         extends
             UOperator2<Field<T[]>, Lambda1<Field<T>, Field<U>>, ArrayMap<T, U>>,
-            org.jooq.Field<T[]>
+            org.jooq.Field<U[]>
         //permits
         //    ArrayMap
     {

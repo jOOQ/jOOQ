@@ -2,6 +2,7 @@ package org.jooq.kotlin
 
 import org.jetbrains.annotations.Blocking
 import org.jooq.*
+import org.jooq.SQLDialect.*
 import org.jooq.conf.*
 import org.jooq.impl.DSL.*
 import org.jooq.migrations.xml.jaxb.*
@@ -303,6 +304,21 @@ operator fun <T> Field<Array<T>?>.get(index: Int) = arrayGet(this, index)
 
 @Support
 operator fun <T> Field<Array<T>?>.get(index: Field<Int?>) = arrayGet(this, index)
+
+@Support
+fun <T> Field<Array<T>?>.filter(predicate: (Field<T>) -> Condition) = arrayFilter(this, predicate)
+
+@Support
+fun <T, U> Field<Array<T>?>.map(mapper: (Field<T>) -> Field<U>) = arrayMap(this, mapper)
+
+@Support
+fun <T> Field<Array<T>?>.allMatch(predicate: (Field<T>) -> Condition) = arrayAllMatch(this, predicate)
+
+@Support
+fun <T> Field<Array<T>?>.anyMatch(predicate: (Field<T>) -> Condition) = arrayAnyMatch(this, predicate)
+
+@Support
+fun <T> Field<Array<T>?>.noneMatch(predicate: (Field<T>) -> Condition) = arrayNoneMatch(this, predicate)
 
 // ----------------------------------------------------------------------------
 // Extensions to make Field<JSON> and Field<JSONB> aware of its being JSON

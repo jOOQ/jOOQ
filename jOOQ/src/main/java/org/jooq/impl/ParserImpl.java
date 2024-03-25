@@ -8748,10 +8748,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs2((f1, f2) -> arrayConcat(f1, f2));
                 else if (parseFunctionNameIf("ARRAY_GET", "arrayElement"))
                     return parseFunctionArgs2((f1, f2) -> arrayGet(f1, f2));
-                else if ((field = parseFieldArrayFilterIf()) != null)
-                    return field;
-                else if ((field = parseFieldArrayMapIf()) != null)
-                    return field;
+                else if (parseFunctionNameIf("ARRAY_FILTER", "arrayFilter"))
+                    return parseArrayLambdaFunction(DSL::arrayFilter);
+                else if (parseFunctionNameIf("ARRAY_MAP", "arrayMap", "ARRAY_TRANSFORM"))
+                    return parseArrayLambdaFunction(DSL::arrayMap);
+                else if (parseFunctionNameIf("ARRAY_ALL_MATCH", "arrayAll", "ALL_MATCH"))
+                    return parseArrayLambdaFunction(DSL::arrayAllMatch);
+                else if (parseFunctionNameIf("ARRAY_ANY_MATCH", "arrayExists", "ANY_MATCH"))
+                    return parseArrayLambdaFunction(DSL::arrayAnyMatch);
+                else if (parseFunctionNameIf("ARRAY_NONE_MATCH"))
+                    return parseArrayLambdaFunction(DSL::arrayNoneMatch);
+                else if (parseFunctionNameIf("ARRAY_MAP", "arrayMap", "ARRAY_TRANSFORM"))
+                    return parseArrayLambdaFunction(DSL::arrayMap);
                 else if (parseFunctionNameIf("ARRAY_OVERLAP", "ARRAYS_OVERLAP"))
                     return parseFunctionArgs2((f1, f2) -> arrayOverlap((Field<Void[]>) f1, (Field<Void[]>) f2));
                 else if (parseFunctionNameIf("ARRAY_PREPEND"))
@@ -9199,6 +9207,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 }
                 else if (parseFunctionNameIf("NEG", "NEGATE"))
                     return parseFunctionArgs1(DSL::neg);
+                else if (parseFunctionNameIf("NONE_MATCH"))
+                    return parseArrayLambdaFunction(DSL::arrayNoneMatch);
 
                 break;
 
@@ -9561,8 +9571,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldCastIf()) != null)
                     return field;
-                else if ((field = parseFieldArrayMapIf()) != null)
-                    return field;
+                else if (parseFunctionNameIf("TRANSFORM"))
+                    return parseArrayLambdaFunction(DSL::arrayMap);
 
                 break;
 
@@ -10417,26 +10427,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
-    private final Field<?> parseFieldArrayFilterIf() {
-        if (parseFunctionNameIf("ARRAY_FILTER", "arrayFilter")) {
-            parse('(');
-            Field f;
-            Lambda1 l = parseLambdaIf(c -> c.parseCondition());
+    private final Field<?> parseArrayLambdaFunction(Function2<Field, Lambda1, Field> function) {
+        parse('(');
+        Field f;
+        Lambda1 l = parseLambdaIf(c -> c.parseField());
 
-            if (l != null && parse(',')) {
-                f = parseField();
-            }
-            else {
-                f = parseField();
-                parse(',');
-                l = parseLambda(c -> c.parseCondition());
-            }
-
-            parse(')');
-            return arrayFilter(f, l);
+        if (l != null && parse(',')) {
+            f = parseField();
+        }
+        else {
+            f = parseField();
+            parse(',');
+            l = parseLambda(c -> c.parseField());
         }
 
-        return null;
+        parse(')');
+        return function.apply(f, l);
     }
 
     private final Lambda1<?, ?> parseLambda(Function<? super ParseContext, ? extends Field<?>> field) {
@@ -10456,28 +10462,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return lambda(field(e), (Field<?>) field.apply(this));
         else
             position(p);
-
-        return null;
-    }
-
-    private final Field<?> parseFieldArrayMapIf() {
-        if (parseFunctionNameIf("ARRAY_MAP", "arrayMap", "ARRAY_TRANSFORM", "TRANSFORM")) {
-            parse('(');
-            Field f;
-            Lambda1 l = parseLambdaIf(c -> c.parseField());
-
-            if (l != null && parse(',')) {
-                f = parseField();
-            }
-            else {
-                f = parseField();
-                parse(',');
-                l = parseLambda(c -> c.parseField());
-            }
-
-            parse(')');
-            return arrayMap(f, l);
-        }
 
         return null;
     }

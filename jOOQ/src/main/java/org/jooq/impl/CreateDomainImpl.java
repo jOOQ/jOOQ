@@ -52,8 +52,6 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
-import org.jooq.impl.*;
-import org.jooq.impl.QOM.*;
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -227,7 +225,7 @@ implements
     }
 
     @Override
-    public final UnmodifiableList<? extends Constraint> $constraints() {
+    public final QOM.UnmodifiableList<? extends Constraint> $constraints() {
         return QOM.unmodifiable(constraints);
     }
 

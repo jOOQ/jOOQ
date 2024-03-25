@@ -52,8 +52,7 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
-import org.jooq.impl.*;
-import org.jooq.impl.QOM.*;
+import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.tools.*;
 
 import java.util.*;
@@ -277,7 +276,7 @@ implements
     }
 
     @Override
-    public final UnmodifiableList<? extends Field<?>> $arg2() {
+    public final QOM.UnmodifiableList<? extends Field<?>> $arg2() {
         return QOM.unmodifiable(fields);
     }
 
@@ -297,7 +296,7 @@ implements
     }
 
     @Override
-    public final QOM.JSONArray<T> $arg2(UnmodifiableList<? extends Field<?>> newValue) {
+    public final QOM.JSONArray<T> $arg2(QOM.UnmodifiableList<? extends Field<?>> newValue) {
         return $constructor().apply($arg1(), newValue, $arg3(), $arg4());
     }
 

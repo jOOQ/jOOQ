@@ -125,7 +125,7 @@ implements
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(when(array.isNotNull(), exists(
+                ctx.visit(ifNotNull(array, exists(
                     selectOne()
                     .from(unnest(array).as(N_T, predicate.$arg1().getUnqualifiedName()))
                     .where(predicate.$result())

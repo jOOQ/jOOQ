@@ -132,6 +132,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultParseContext.SUPPORTS_HASH_COMMENT_SYNTAX;
 import static org.jooq.impl.DerivedTable.NO_SUPPORT_CORRELATED_DERIVED_TABLE;
@@ -7957,6 +7958,15 @@ final class Tools {
             default:
                 throw new IllegalArgumentException("Unsupported quantifier: " + q);
         }
+    }
+
+    static final <T> Field<T> ifNotNull(Field<?> field, Field<T> ifNotNull) {
+        if (field instanceof AbstractField<?> af) {
+            if (!af.isNullable())
+                return ifNotNull;
+        }
+
+        return when(field.isNotNull(), ifNotNull);
     }
 
     static final boolean sortable(Field<?> f) {

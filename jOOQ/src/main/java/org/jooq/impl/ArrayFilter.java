@@ -128,7 +128,7 @@ implements
             case POSTGRES:
             case YUGABYTEDB:
                 ctx.visit(DSL.field(
-                    select(DSL.coalesce(arrayAgg(predicate.$arg1()), when(array.isNotNull(), DSL.cast(array(), getDataType()))))
+                    select(DSL.coalesce(arrayAgg(predicate.$arg1()), ifNotNull(array, DSL.cast(array(), getDataType()))))
                     .from(unnest(array).as(N_T, predicate.$arg1().getUnqualifiedName()))
                     .where(predicate.$result())
                 ));

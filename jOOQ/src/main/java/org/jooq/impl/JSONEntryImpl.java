@@ -73,6 +73,7 @@ import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.emulateMultiset;
+import static org.jooq.impl.Tools.ifNotNull;
 import static org.jooq.impl.Tools.isScalarSubquery;
 
 import java.util.Set;
@@ -241,7 +242,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                 if (isType(type, Boolean.class))
                     return function(N_JSON, SQLDataType.JSON, booleanCase(field));
                 else if (type.isBinary())
-                    return when(field.isNotNull(), function(N_HEX, VARCHAR, field));
+                    return ifNotNull(field, function(N_HEX, VARCHAR, field));
                 else if (castJSONTypes && type.isJSON())
                     return function(N_JSON, SQLDataType.JSON, field);
 

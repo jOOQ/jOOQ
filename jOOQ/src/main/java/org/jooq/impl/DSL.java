@@ -12555,7 +12555,7 @@ public class DSL {
      * emulated using several <code>UNION ALL</code> connected subqueries.
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES })
     public static Table<?> unnest(Field<?> cursor) {
         return unnest0(cursor);
     }
@@ -22427,8 +22427,8 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayFilter(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> filter) {
-        return new ArrayFilter<>(Tools.field(array), DSL.lambda(array, filter));
+    public static <T> Field<T[]> arrayFilter(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+        return new ArrayFilter<>(Tools.field(array), DSL.lambda(array, predicate));
     }
 
     /**
@@ -22438,8 +22438,8 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayFilter(T[] array, Lambda1<T, Boolean> filter) {
-        return new ArrayFilter<>(Tools.field(array), filter);
+    public static <T> Field<T[]> arrayFilter(T[] array, Lambda1<T, Boolean> predicate) {
+        return new ArrayFilter<>(Tools.field(array), predicate);
     }
 
     /**
@@ -22449,8 +22449,8 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> filter) {
-        return new ArrayFilter<>(array, DSL.lambda(array, filter));
+    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+        return new ArrayFilter<>(array, DSL.lambda(array, predicate));
     }
 
     /**
@@ -22460,14 +22460,14 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Lambda1<T, Boolean> filter) {
-        return new ArrayFilter<>(array, filter);
+    public static <T> Field<T[]> arrayFilter(Field<T[]> array, Lambda1<T, Boolean> predicate) {
+        return new ArrayFilter<>(array, predicate);
     }
 
     /**
      * The <code>ARRAY_MAP</code> function.
      * <p>
-     * Filter elements out of an array.
+     * Map elements of an array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22478,7 +22478,7 @@ public class DSL {
     /**
      * The <code>ARRAY_MAP</code> function.
      * <p>
-     * Filter elements out of an array.
+     * Map elements of an array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22489,7 +22489,7 @@ public class DSL {
     /**
      * The <code>ARRAY_MAP</code> function.
      * <p>
-     * Filter elements out of an array.
+     * Map elements of an array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22500,12 +22500,144 @@ public class DSL {
     /**
      * The <code>ARRAY_MAP</code> function.
      * <p>
-     * Filter elements out of an array.
+     * Map elements of an array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T, U> Field<T[]> arrayMap(Field<T[]> array, Lambda1<T, U> mapper) {
         return new ArrayMap<>(array, mapper);
+    }
+
+    /**
+     * The <code>ARRAY_ALL_MATCH</code> function.
+     * <p>
+     * Check if all elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayAllMatch(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+        return new ArrayAllMatch<>(Tools.field(array), DSL.lambda(array, predicate));
+    }
+
+    /**
+     * The <code>ARRAY_ALL_MATCH</code> function.
+     * <p>
+     * Check if all elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayAllMatch(T[] array, Lambda1<T, Boolean> predicate) {
+        return new ArrayAllMatch<>(Tools.field(array), predicate);
+    }
+
+    /**
+     * The <code>ARRAY_ALL_MATCH</code> function.
+     * <p>
+     * Check if all elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayAllMatch(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+        return new ArrayAllMatch<>(array, DSL.lambda(array, predicate));
+    }
+
+    /**
+     * The <code>ARRAY_ALL_MATCH</code> function.
+     * <p>
+     * Check if all elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayAllMatch(Field<T[]> array, Lambda1<T, Boolean> predicate) {
+        return new ArrayAllMatch<>(array, predicate);
+    }
+
+    /**
+     * The <code>ARRAY_ANY_MATCH</code> function.
+     * <p>
+     * Check if any elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayAnyMatch(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+        return new ArrayAnyMatch<>(Tools.field(array), DSL.lambda(array, predicate));
+    }
+
+    /**
+     * The <code>ARRAY_ANY_MATCH</code> function.
+     * <p>
+     * Check if any elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayAnyMatch(T[] array, Lambda1<T, Boolean> predicate) {
+        return new ArrayAnyMatch<>(Tools.field(array), predicate);
+    }
+
+    /**
+     * The <code>ARRAY_ANY_MATCH</code> function.
+     * <p>
+     * Check if any elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayAnyMatch(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+        return new ArrayAnyMatch<>(array, DSL.lambda(array, predicate));
+    }
+
+    /**
+     * The <code>ARRAY_ANY_MATCH</code> function.
+     * <p>
+     * Check if any elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayAnyMatch(Field<T[]> array, Lambda1<T, Boolean> predicate) {
+        return new ArrayAnyMatch<>(array, predicate);
+    }
+
+    /**
+     * The <code>ARRAY_NONE_MATCH</code> function.
+     * <p>
+     * Check if none of the elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayNoneMatch(T[] array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+        return new ArrayNoneMatch<>(Tools.field(array), DSL.lambda(array, predicate));
+    }
+
+    /**
+     * The <code>ARRAY_NONE_MATCH</code> function.
+     * <p>
+     * Check if none of the elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayNoneMatch(T[] array, Lambda1<T, Boolean> predicate) {
+        return new ArrayNoneMatch<>(Tools.field(array), predicate);
+    }
+
+    /**
+     * The <code>ARRAY_NONE_MATCH</code> function.
+     * <p>
+     * Check if none of the elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayNoneMatch(Field<T[]> array, Function1<? super Field<T>, ? extends Field<Boolean>> predicate) {
+        return new ArrayNoneMatch<>(array, DSL.lambda(array, predicate));
+    }
+
+    /**
+     * The <code>ARRAY_NONE_MATCH</code> function.
+     * <p>
+     * Check if none of the elements of an array match a given predicate.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayNoneMatch(Field<T[]> array, Lambda1<T, Boolean> predicate) {
+        return new ArrayNoneMatch<>(array, predicate);
     }
 
     // -------------------------------------------------------------------------

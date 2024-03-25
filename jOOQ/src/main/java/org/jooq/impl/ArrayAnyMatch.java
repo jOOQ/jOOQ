@@ -60,27 +60,23 @@ import java.util.stream.*;
 
 
 /**
- * The <code>ARRAY FILTER</code> statement.
+ * The <code>ARRAY ANY MATCH</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class ArrayFilter<T>
+final class ArrayAnyMatch<T>
 extends
-    AbstractField<T[]>
+    AbstractCondition
 implements
-    QOM.ArrayFilter<T>
+    QOM.ArrayAnyMatch<T>
 {
 
     final Field<T[]>          array;
     final Lambda1<T, Boolean> predicate;
 
-    ArrayFilter(
+    ArrayAnyMatch(
         Field<T[]> array,
         Lambda1<T, Boolean> predicate
     ) {
-        super(
-            N_ARRAY_FILTER,
-            allNotNull((DataType) dataType(((DataType) OTHER).array(), array, false), array)
-        );
 
         this.array = nullSafeNotNull(array, ((DataType) OTHER).array());
         this.predicate = predicate;
@@ -95,17 +91,18 @@ implements
         switch (ctx.family()) {
 
 
+            case DUCKDB:
             case H2:
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
                 return false;
 
-            case DUCKDB:
-                return true;
-
             case CLICKHOUSE:
                 return false;
+
+            case TRINO:
+                return true;
 
             default:
                 return true;
@@ -123,27 +120,28 @@ implements
 
 
 
+            case DUCKDB:
             case H2:
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(DSL.field(
-                    select(DSL.coalesce(arrayAgg(predicate.$arg1()), when(array.isNotNull(), DSL.cast(array(), getDataType()))))
+                ctx.visit(when(array.isNotNull(), exists(
+                    selectOne()
                     .from(unnest(array).as(N_T, predicate.$arg1().getUnqualifiedName()))
                     .where(predicate.$result())
-                ));
-                break;
-
-            case DUCKDB:
-                ctx.visit(function(N_ARRAY_FILTER, getDataType(), array, DSL.field("{0}", OTHER, predicate)));
+                )));
                 break;
 
             case CLICKHOUSE:
-                ctx.visit(DSL.function(N_arrayFilter, getDataType(), DSL.field("{0}", OTHER, predicate), array));
+                ctx.visit(DSL.function(N_arrayExists, getDataType(), DSL.field("{0}", OTHER, predicate), array));
+                break;
+
+            case TRINO:
+                ctx.visit(function(N_ANY_MATCH, BOOLEAN, array, DSL.field("{0}", OTHER, predicate)));
                 break;
 
             default:
-                ctx.visit(function(N_ARRAY_FILTER, getDataType(), array, DSL.field("{0}", OTHER, predicate)));
+                ctx.visit(function(N_ARRAY_ANY_MATCH, BOOLEAN, array, DSL.field("{0}", OTHER, predicate)));
                 break;
         }
     }
@@ -176,18 +174,18 @@ implements
     }
 
     @Override
-    public final QOM.ArrayFilter<T> $arg1(Field<T[]> newValue) {
+    public final QOM.ArrayAnyMatch<T> $arg1(Field<T[]> newValue) {
         return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.ArrayFilter<T> $arg2(Lambda1<T, Boolean> newValue) {
+    public final QOM.ArrayAnyMatch<T> $arg2(Lambda1<T, Boolean> newValue) {
         return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<T[]>, ? super Lambda1<T, Boolean>, ? extends QOM.ArrayFilter<T>> $constructor() {
-        return (a1, a2) -> new ArrayFilter<>(a1, a2);
+    public final Function2<? super Field<T[]>, ? super Lambda1<T, Boolean>, ? extends QOM.ArrayAnyMatch<T>> $constructor() {
+        return (a1, a2) -> new ArrayAnyMatch<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------
@@ -196,7 +194,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.ArrayFilter<?> o) {
+        if (that instanceof QOM.ArrayAnyMatch<?> o) {
             return
                 StringUtils.equals($array(), o.$array()) &&
                 StringUtils.equals($predicate(), o.$predicate())

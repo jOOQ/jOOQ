@@ -6347,15 +6347,15 @@ public final class QOM {
         @NotNull default Field<T[]> $array() { return $arg1(); }
         @CheckReturnValue
         @NotNull default ArrayFilter<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
-        @NotNull default Lambda1<T, Boolean> $filter() { return $arg2(); }
+        @NotNull default Lambda1<T, Boolean> $predicate() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default ArrayFilter<T> $filter(Lambda1<T, Boolean> newFilter) { return $arg2(newFilter); }
+        @NotNull default ArrayFilter<T> $predicate(Lambda1<T, Boolean> newPredicate) { return $arg2(newPredicate); }
     }
 
     /**
      * The <code>ARRAY MAP</code> function.
      * <p>
-     * Filter elements out of an array.
+     * Map elements of an array.
      */
     public /*sealed*/ interface ArrayMap<T, U>
         extends
@@ -6370,6 +6370,66 @@ public final class QOM {
         @NotNull default Lambda1<T, U> $mapper() { return $arg2(); }
         @CheckReturnValue
         @NotNull default ArrayMap<T, U> $mapper(Lambda1<T, U> newMapper) { return $arg2(newMapper); }
+    }
+
+    /**
+     * The <code>ARRAY ALL MATCH</code> function.
+     * <p>
+     * Check if all elements of an array match a given predicate.
+     */
+    public /*sealed*/ interface ArrayAllMatch<T>
+        extends
+            UOperator2<Field<T[]>, Lambda1<T, Boolean>, ArrayAllMatch<T>>,
+            org.jooq.Condition
+        //permits
+        //    ArrayAllMatch
+    {
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default ArrayAllMatch<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+        @NotNull default Lambda1<T, Boolean> $predicate() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default ArrayAllMatch<T> $predicate(Lambda1<T, Boolean> newPredicate) { return $arg2(newPredicate); }
+    }
+
+    /**
+     * The <code>ARRAY ANY MATCH</code> function.
+     * <p>
+     * Check if any elements of an array match a given predicate.
+     */
+    public /*sealed*/ interface ArrayAnyMatch<T>
+        extends
+            UOperator2<Field<T[]>, Lambda1<T, Boolean>, ArrayAnyMatch<T>>,
+            org.jooq.Condition
+        //permits
+        //    ArrayAnyMatch
+    {
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default ArrayAnyMatch<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+        @NotNull default Lambda1<T, Boolean> $predicate() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default ArrayAnyMatch<T> $predicate(Lambda1<T, Boolean> newPredicate) { return $arg2(newPredicate); }
+    }
+
+    /**
+     * The <code>ARRAY NONE MATCH</code> function.
+     * <p>
+     * Check if none of the elements of an array match a given predicate.
+     */
+    public /*sealed*/ interface ArrayNoneMatch<T>
+        extends
+            UOperator2<Field<T[]>, Lambda1<T, Boolean>, ArrayNoneMatch<T>>,
+            org.jooq.Condition
+        //permits
+        //    ArrayNoneMatch
+    {
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default ArrayNoneMatch<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+        @NotNull default Lambda1<T, Boolean> $predicate() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default ArrayNoneMatch<T> $predicate(Lambda1<T, Boolean> newPredicate) { return $arg2(newPredicate); }
     }
 
     /**

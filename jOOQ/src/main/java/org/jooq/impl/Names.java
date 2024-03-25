@@ -330,8 +330,12 @@ final class Names {
     static final Name N_ACOS                        = systemName("acos");
     static final Name N_ACOSH                       = systemName("acosh");
     static final Name N_ACOTH                       = systemName("acoth");
+    static final Name N_ALL_MATCH                   = systemName("all_match");
+    static final Name N_ANY_MATCH                   = systemName("any_match");
     static final Name N_ANY_VALUE                   = systemName("any_value");
     static final Name N_ARRAYS_OVERLAP              = systemName("arrays_overlap");
+    static final Name N_ARRAY_ALL_MATCH             = systemName("array_all_match");
+    static final Name N_ARRAY_ANY_MATCH             = systemName("array_any_match");
     static final Name N_ARRAY_APPEND                = systemName("array_append");
     static final Name N_ARRAY_CONCAT                = systemName("array_concat");
     static final Name N_ARRAY_FILTER                = systemName("array_filter");
@@ -339,6 +343,7 @@ final class Names {
     static final Name N_ARRAY_INTERSECT             = systemName("array_intersect");
     static final Name N_ARRAY_LENGTH                = systemName("array_length");
     static final Name N_ARRAY_MAP                   = systemName("array_map");
+    static final Name N_ARRAY_NONE_MATCH            = systemName("array_none_match");
     static final Name N_ARRAY_OVERLAP               = systemName("array_overlap");
     static final Name N_ARRAY_PREPEND               = systemName("array_prepend");
     static final Name N_ARRAY_REMOVE                = systemName("array_remove");
@@ -517,6 +522,7 @@ final class Names {
     static final Name N_MEDIAN                      = systemName("median");
     static final Name N_MIN                         = systemName("min");
     static final Name N_NEWID                       = systemName("newid");
+    static final Name N_NONE_MATCH                  = systemName("none_match");
     static final Name N_NULLIF                      = systemName("nullif");
     static final Name N_NVL                         = systemName("nvl");
     static final Name N_OBJECT_KEYS                 = systemName("object_keys");
@@ -649,7 +655,9 @@ final class Names {
     static final Name N_XMLSERIALIZE                = systemName("xmlserialize");
     static final Name N_XMLSERIALIZE_CONTENT        = systemName("xmlserialize_content");
     static final Name N_XOR                         = systemName("xor");
+    static final Name N_arrayAll                    = systemName("arrayAll");
     static final Name N_arrayConcat                 = systemName("arrayConcat");
+    static final Name N_arrayExists                 = systemName("arrayExists");
     static final Name N_arrayFilter                 = systemName("arrayFilter");
     static final Name N_arrayMap                    = systemName("arrayMap");
     static final Name N_arrayPushBack               = systemName("arrayPushBack");

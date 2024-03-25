@@ -55,6 +55,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.RenderContext.CastMode;
 // ...
 import org.jooq.SQLDialect;
 // ...
@@ -73,6 +74,15 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
         super(N_ARRAY, type(fields));
 
         this.fields = new FieldsImpl<>(fields);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean generatesCast() {
+        return true;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -108,7 +118,7 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
                         }
                     },
                     c -> c.visit(K_INT).sql("[]"),
-                    () -> fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect())
+                    () -> fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect()) && ctx.castMode() != CastMode.NEVER
                 );
 
                 break;

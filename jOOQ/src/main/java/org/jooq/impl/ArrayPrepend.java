@@ -70,20 +70,20 @@ implements
     QOM.ArrayPrepend<T>
 {
 
-    final Field<T>   arg1;
-    final Field<T[]> arg2;
+    final Field<T>   prepend;
+    final Field<T[]> array;
 
     ArrayPrepend(
-        Field<T> arg1,
-        Field<T[]> arg2
+        Field<T> prepend,
+        Field<T[]> array
     ) {
         super(
             N_ARRAY_PREPEND,
-            allNotNull((DataType) dataType(((DataType) OTHER).array(), arg2, false), arg1, arg2)
+            allNotNull((DataType) dataType(((DataType) OTHER).array(), array, false), prepend, array)
         );
 
-        this.arg1 = nullSafeNotNull(arg1, (DataType) OTHER);
-        this.arg2 = nullSafeNotNull(arg2, ((DataType) OTHER).array());
+        this.prepend = nullSafeNotNull(prepend, (DataType) OTHER);
+        this.array = nullSafeNotNull(array, ((DataType) OTHER).array());
     }
 
     // -------------------------------------------------------------------------
@@ -118,15 +118,15 @@ implements
             case H2:
             case HSQLDB:
             case TRINO:
-                ctx.visit(arrayConcat(array(arg1), arg2));
+                ctx.visit(arrayConcat(array(prepend), array));
                 break;
 
             case CLICKHOUSE:
-                ctx.visit(function(N_arrayPushFront, getDataType(), arg2, arg1));
+                ctx.visit(function(N_arrayPushFront, getDataType(), array, prepend));
                 break;
 
             default:
-                ctx.visit(function(N_ARRAY_PREPEND, getDataType(), arg1, arg2));
+                ctx.visit(function(N_ARRAY_PREPEND, getDataType(), prepend, array));
                 break;
         }
     }
@@ -150,12 +150,12 @@ implements
 
     @Override
     public final Field<T> $arg1() {
-        return arg1;
+        return prepend;
     }
 
     @Override
     public final Field<T[]> $arg2() {
-        return arg2;
+        return array;
     }
 
     @Override
@@ -181,8 +181,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.ArrayPrepend<?> o) {
             return
-                StringUtils.equals($arg1(), o.$arg1()) &&
-                StringUtils.equals($arg2(), o.$arg2())
+                StringUtils.equals($prepend(), o.$prepend()) &&
+                StringUtils.equals($array(), o.$array())
             ;
         }
         else

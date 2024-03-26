@@ -70,20 +70,20 @@ implements
     QOM.ArrayRemove<T>
 {
 
-    final Field<T[]> arg1;
-    final Field<T>   arg2;
+    final Field<T[]> array;
+    final Field<T>   remove;
 
     ArrayRemove(
-        Field<T[]> arg1,
-        Field<T> arg2
+        Field<T[]> array,
+        Field<T> remove
     ) {
         super(
             N_ARRAY_REMOVE,
-            allNotNull((DataType) dataType(((DataType) OTHER).array(), arg1, false), arg1, arg2)
+            allNotNull((DataType) dataType(((DataType) OTHER).array(), array, false), array, remove)
         );
 
-        this.arg1 = nullSafeNotNull(arg1, ((DataType) OTHER).array());
-        this.arg2 = nullSafeNotNull(arg2, (DataType) OTHER);
+        this.array = nullSafeNotNull(array, ((DataType) OTHER).array());
+        this.remove = nullSafeNotNull(remove, (DataType) OTHER);
     }
 
     // -------------------------------------------------------------------------
@@ -93,11 +93,9 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+            case DUCKDB:
             case H2:
             case HSQLDB:
-                return false;
-
-            case DUCKDB:
                 return false;
 
             default:
@@ -114,25 +112,14 @@ implements
 
 
 
-            case H2:
-            case HSQLDB: {
-                Field<T> x = DSL.field(name("x"), arg2.getDataType());
-                Field<Long> o = DSL.field(name("o"), BIGINT);
-
-                ctx.visit(DSL.field(
-                    select(arrayAgg(x).orderBy(o))
-                    .from(unnest(arg1).withOrdinality().as("t", "x", "o"))
-                    .where(x.ne(arg2))
-                ));
-                break;
-            }
-
             case DUCKDB:
-                ctx.visit(function(N_ARRAY_FILTER, getDataType(), arg1, DSL.field("e -> e <> {0}", OTHER, arg2)));
+            case H2:
+            case HSQLDB:
+                ctx.visit(arrayFilter(array, e -> e.ne(remove)));
                 break;
 
             default:
-                ctx.visit(function(N_ARRAY_REMOVE, getDataType(), arg1, arg2));
+                ctx.visit(function(N_ARRAY_REMOVE, getDataType(), array, remove));
                 break;
         }
     }
@@ -156,12 +143,12 @@ implements
 
     @Override
     public final Field<T[]> $arg1() {
-        return arg1;
+        return array;
     }
 
     @Override
     public final Field<T> $arg2() {
-        return arg2;
+        return remove;
     }
 
     @Override
@@ -187,8 +174,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.ArrayRemove<?> o) {
             return
-                StringUtils.equals($arg1(), o.$arg1()) &&
-                StringUtils.equals($arg2(), o.$arg2())
+                StringUtils.equals($array(), o.$array()) &&
+                StringUtils.equals($remove(), o.$remove())
             ;
         }
         else

@@ -22167,44 +22167,56 @@ public class DSL {
      * The <code>ARRAY_CONCAT</code> function.
      * <p>
      * Concatenate two arrays.
+     *
+     * @param array1 The first array.
+     * @param array2 The second array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayConcat(T[] arg1, T[] arg2) {
-        return new ArrayConcat<>(Tools.field(arg1), Tools.field(arg2));
+    public static <T> Field<T[]> arrayConcat(T[] array1, T[] array2) {
+        return new ArrayConcat<>(Tools.field(array1), Tools.field(array2));
     }
 
     /**
      * The <code>ARRAY_CONCAT</code> function.
      * <p>
      * Concatenate two arrays.
+     *
+     * @param array1 The first array.
+     * @param array2 The second array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayConcat(T[] arg1, Field<T[]> arg2) {
-        return new ArrayConcat<>(Tools.field(arg1), arg2);
+    public static <T> Field<T[]> arrayConcat(T[] array1, Field<T[]> array2) {
+        return new ArrayConcat<>(Tools.field(array1), array2);
     }
 
     /**
      * The <code>ARRAY_CONCAT</code> function.
      * <p>
      * Concatenate two arrays.
+     *
+     * @param array1 The first array.
+     * @param array2 The second array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayConcat(Field<T[]> arg1, T[] arg2) {
-        return new ArrayConcat<>(arg1, Tools.field(arg2, arg1));
+    public static <T> Field<T[]> arrayConcat(Field<T[]> array1, T[] array2) {
+        return new ArrayConcat<>(array1, Tools.field(array2, array1));
     }
 
     /**
      * The <code>ARRAY_CONCAT</code> function.
      * <p>
      * Concatenate two arrays.
+     *
+     * @param array1 The first array.
+     * @param array2 The second array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayConcat(Field<T[]> arg1, Field<T[]> arg2) {
-        return new ArrayConcat<>(arg1, arg2);
+    public static <T> Field<T[]> arrayConcat(Field<T[]> array1, Field<T[]> array2) {
+        return new ArrayConcat<>(array1, array2);
     }
 
     /**
@@ -22212,23 +22224,13 @@ public class DSL {
      * <p>
      * Append an element to an array.
      *
-     * @param arg2 is wrapped as {@link DSL#val(Object)}.
+     * @param array The array to which to append an element.
+     * @param append The element to append to the array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayAppend(T[] arg1, T arg2) {
-        return new ArrayAppend<>(Tools.field(arg1), Tools.field(arg2));
-    }
-
-    /**
-     * The <code>ARRAY_APPEND</code> function.
-     * <p>
-     * Append an element to an array.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayAppend(T[] arg1, Field<T> arg2) {
-        return new ArrayAppend<>(Tools.field(arg1), arg2);
+    public static <T> Field<T[]> arrayAppend(T[] array, T append) {
+        return new ArrayAppend<>(Tools.field(array), Tools.field(append));
     }
 
     /**
@@ -22236,23 +22238,41 @@ public class DSL {
      * <p>
      * Append an element to an array.
      *
-     * @param arg2 is wrapped as {@link DSL#val(Object)}.
+     * @param array The array to which to append an element.
+     * @param append The element to append to the array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, T arg2) {
-        return new ArrayAppend<>(arg1, Tools.field(arg2));
+    public static <T> Field<T[]> arrayAppend(T[] array, Field<T> append) {
+        return new ArrayAppend<>(Tools.field(array), append);
     }
 
     /**
      * The <code>ARRAY_APPEND</code> function.
      * <p>
      * Append an element to an array.
+     *
+     * @param array The array to which to append an element.
+     * @param append The element to append to the array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayAppend(Field<T[]> arg1, Field<T> arg2) {
-        return new ArrayAppend<>(arg1, arg2);
+    public static <T> Field<T[]> arrayAppend(Field<T[]> array, T append) {
+        return new ArrayAppend<>(array, Tools.field(append));
+    }
+
+    /**
+     * The <code>ARRAY_APPEND</code> function.
+     * <p>
+     * Append an element to an array.
+     *
+     * @param array The array to which to append an element.
+     * @param append The element to append to the array.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arrayAppend(Field<T[]> array, Field<T> append) {
+        return new ArrayAppend<>(array, append);
     }
 
     /**
@@ -22260,12 +22280,13 @@ public class DSL {
      * <p>
      * Prepend an element to an array.
      *
-     * @param arg1 is wrapped as {@link DSL#val(Object)}.
+     * @param prepend The element to prepend to the array.
+     * @param array The array to which to prepend an element.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayPrepend(T arg1, T[] arg2) {
-        return new ArrayPrepend<>(Tools.field(arg1), Tools.field(arg2));
+    public static <T> Field<T[]> arrayPrepend(T prepend, T[] array) {
+        return new ArrayPrepend<>(Tools.field(prepend), Tools.field(array));
     }
 
     /**
@@ -22273,78 +22294,97 @@ public class DSL {
      * <p>
      * Prepend an element to an array.
      *
-     * @param arg1 is wrapped as {@link DSL#val(Object)}.
+     * @param prepend The element to prepend to the array.
+     * @param array The array to which to prepend an element.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayPrepend(T arg1, Field<T[]> arg2) {
-        return new ArrayPrepend<>(Tools.field(arg1), arg2);
+    public static <T> Field<T[]> arrayPrepend(T prepend, Field<T[]> array) {
+        return new ArrayPrepend<>(Tools.field(prepend), array);
     }
 
     /**
      * The <code>ARRAY_PREPEND</code> function.
      * <p>
      * Prepend an element to an array.
+     *
+     * @param prepend The element to prepend to the array.
+     * @param array The array to which to prepend an element.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayPrepend(Field<T> arg1, T[] arg2) {
-        return new ArrayPrepend<>(arg1, Tools.field(arg2));
+    public static <T> Field<T[]> arrayPrepend(Field<T> prepend, T[] array) {
+        return new ArrayPrepend<>(prepend, Tools.field(array));
     }
 
     /**
      * The <code>ARRAY_PREPEND</code> function.
      * <p>
      * Prepend an element to an array.
+     *
+     * @param prepend The element to prepend to the array.
+     * @param array The array to which to prepend an element.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayPrepend(Field<T> arg1, Field<T[]> arg2) {
-        return new ArrayPrepend<>(arg1, arg2);
+    public static <T> Field<T[]> arrayPrepend(Field<T> prepend, Field<T[]> array) {
+        return new ArrayPrepend<>(prepend, array);
     }
 
     /**
      * The <code>ARRAY_OVERLAP</code> function.
      * <p>
      * Check if 2 arrays overlap.
+     *
+     * @param array1 The first array.
+     * @param array2 The second array.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayOverlap(T[] arg1, T[] arg2) {
-        return new ArrayOverlap<>(Tools.field(arg1), Tools.field(arg2));
+    public static <T> Condition arrayOverlap(T[] array1, T[] array2) {
+        return new ArrayOverlap<>(Tools.field(array1), Tools.field(array2));
     }
 
     /**
      * The <code>ARRAY_OVERLAP</code> function.
      * <p>
      * Check if 2 arrays overlap.
+     *
+     * @param array1 The first array.
+     * @param array2 The second array.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayOverlap(T[] arg1, Field<T[]> arg2) {
-        return new ArrayOverlap<>(Tools.field(arg1), arg2);
+    public static <T> Condition arrayOverlap(T[] array1, Field<T[]> array2) {
+        return new ArrayOverlap<>(Tools.field(array1), array2);
     }
 
     /**
      * The <code>ARRAY_OVERLAP</code> function.
      * <p>
      * Check if 2 arrays overlap.
+     *
+     * @param array1 The first array.
+     * @param array2 The second array.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayOverlap(Field<T[]> arg1, T[] arg2) {
-        return new ArrayOverlap<>(arg1, Tools.field(arg2, arg1));
+    public static <T> Condition arrayOverlap(Field<T[]> array1, T[] array2) {
+        return new ArrayOverlap<>(array1, Tools.field(array2, array1));
     }
 
     /**
      * The <code>ARRAY_OVERLAP</code> function.
      * <p>
      * Check if 2 arrays overlap.
+     *
+     * @param array1 The first array.
+     * @param array2 The second array.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Condition arrayOverlap(Field<T[]> arg1, Field<T[]> arg2) {
-        return new ArrayOverlap<>(arg1, arg2);
+    public static <T> Condition arrayOverlap(Field<T[]> array1, Field<T[]> array2) {
+        return new ArrayOverlap<>(array1, array2);
     }
 
     /**
@@ -22352,23 +22392,13 @@ public class DSL {
      * <p>
      * Remove an element from an array.
      *
-     * @param arg2 is wrapped as {@link DSL#val(Object)}.
+     * @param array The array whose elements are to be removed.
+     * @param remove The array element that should be removed.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayRemove(T[] arg1, T arg2) {
-        return new ArrayRemove<>(Tools.field(arg1), Tools.field(arg2));
-    }
-
-    /**
-     * The <code>ARRAY_REMOVE</code> function.
-     * <p>
-     * Remove an element from an array.
-     */
-    @NotNull
-    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayRemove(T[] arg1, Field<T> arg2) {
-        return new ArrayRemove<>(Tools.field(arg1), arg2);
+    public static <T> Field<T[]> arrayRemove(T[] array, T remove) {
+        return new ArrayRemove<>(Tools.field(array), Tools.field(remove));
     }
 
     /**
@@ -22376,23 +22406,41 @@ public class DSL {
      * <p>
      * Remove an element from an array.
      *
-     * @param arg2 is wrapped as {@link DSL#val(Object)}.
+     * @param array The array whose elements are to be removed.
+     * @param remove The array element that should be removed.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayRemove(Field<T[]> arg1, T arg2) {
-        return new ArrayRemove<>(arg1, Tools.field(arg2));
+    public static <T> Field<T[]> arrayRemove(T[] array, Field<T> remove) {
+        return new ArrayRemove<>(Tools.field(array), remove);
     }
 
     /**
      * The <code>ARRAY_REMOVE</code> function.
      * <p>
      * Remove an element from an array.
+     *
+     * @param array The array whose elements are to be removed.
+     * @param remove The array element that should be removed.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayRemove(Field<T[]> arg1, Field<T> arg2) {
-        return new ArrayRemove<>(arg1, arg2);
+    public static <T> Field<T[]> arrayRemove(Field<T[]> array, T remove) {
+        return new ArrayRemove<>(array, Tools.field(remove));
+    }
+
+    /**
+     * The <code>ARRAY_REMOVE</code> function.
+     * <p>
+     * Remove an element from an array.
+     *
+     * @param array The array whose elements are to be removed.
+     * @param remove The array element that should be removed.
+     */
+    @NotNull
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arrayRemove(Field<T[]> array, Field<T> remove) {
+        return new ArrayRemove<>(array, remove);
     }
 
     /**
@@ -22400,30 +22448,38 @@ public class DSL {
      * <p>
      * Replace an element in an array.
      *
-     * @param arg2 is wrapped as {@link DSL#val(Object)}.
-     * @param arg3 is wrapped as {@link DSL#val(Object)}.
+     * @param array The array whose elements are to be replaced.
+     * @param search The expression to search for in the array.
+     * @param replace The value to replace a value by.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayReplace(T[] arg1, T arg2, T arg3) {
-        return new ArrayReplace<>(Tools.field(arg1), Tools.field(arg2), Tools.field(arg3));
+    public static <T> Field<T[]> arrayReplace(T[] array, T search, T replace) {
+        return new ArrayReplace<>(Tools.field(array), Tools.field(search), Tools.field(replace));
     }
 
     /**
      * The <code>ARRAY_REPLACE</code> function.
      * <p>
      * Replace an element in an array.
+     *
+     * @param array The array whose elements are to be replaced.
+     * @param search The expression to search for in the array.
+     * @param replace The value to replace a value by.
      */
     @NotNull
     @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<T[]> arrayReplace(Field<T[]> arg1, Field<T> arg2, Field<T> arg3) {
-        return new ArrayReplace<>(arg1, arg2, arg3);
+    public static <T> Field<T[]> arrayReplace(Field<T[]> array, Field<T> search, Field<T> replace) {
+        return new ArrayReplace<>(array, search, replace);
     }
 
     /**
      * The <code>ARRAY_FILTER</code> function.
      * <p>
      * Filter elements out of an array.
+     *
+     * @param array The array whose elements are filtered.
+     * @param predicate A predicate defining which elements to keep in the array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22435,6 +22491,9 @@ public class DSL {
      * The <code>ARRAY_FILTER</code> function.
      * <p>
      * Filter elements out of an array.
+     *
+     * @param array The array whose elements are filtered.
+     * @param predicate A predicate defining which elements to keep in the array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22446,6 +22505,9 @@ public class DSL {
      * The <code>ARRAY_FILTER</code> function.
      * <p>
      * Filter elements out of an array.
+     *
+     * @param array The array whose elements are filtered.
+     * @param predicate A predicate defining which elements to keep in the array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22457,6 +22519,9 @@ public class DSL {
      * The <code>ARRAY_FILTER</code> function.
      * <p>
      * Filter elements out of an array.
+     *
+     * @param array The array whose elements are filtered.
+     * @param predicate A predicate defining which elements to keep in the array.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22468,6 +22533,9 @@ public class DSL {
      * The <code>ARRAY_MAP</code> function.
      * <p>
      * Map elements of an array.
+     *
+     * @param array The array whose elements are mapped.
+     * @param mapper The function that defines the mapping between source elements and result elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22479,6 +22547,9 @@ public class DSL {
      * The <code>ARRAY_MAP</code> function.
      * <p>
      * Map elements of an array.
+     *
+     * @param array The array whose elements are mapped.
+     * @param mapper The function that defines the mapping between source elements and result elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22490,6 +22561,9 @@ public class DSL {
      * The <code>ARRAY_MAP</code> function.
      * <p>
      * Map elements of an array.
+     *
+     * @param array The array whose elements are mapped.
+     * @param mapper The function that defines the mapping between source elements and result elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22501,6 +22575,9 @@ public class DSL {
      * The <code>ARRAY_MAP</code> function.
      * <p>
      * Map elements of an array.
+     *
+     * @param array The array whose elements are mapped.
+     * @param mapper The function that defines the mapping between source elements and result elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22512,6 +22589,9 @@ public class DSL {
      * The <code>ARRAY_ALL_MATCH</code> function.
      * <p>
      * Check if all elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be true for all array elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22523,6 +22603,9 @@ public class DSL {
      * The <code>ARRAY_ALL_MATCH</code> function.
      * <p>
      * Check if all elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be true for all array elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22534,6 +22617,9 @@ public class DSL {
      * The <code>ARRAY_ALL_MATCH</code> function.
      * <p>
      * Check if all elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be true for all array elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22545,6 +22631,9 @@ public class DSL {
      * The <code>ARRAY_ALL_MATCH</code> function.
      * <p>
      * Check if all elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be true for all array elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22556,6 +22645,9 @@ public class DSL {
      * The <code>ARRAY_ANY_MATCH</code> function.
      * <p>
      * Check if any elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be true for at least 1 array element
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22567,6 +22659,9 @@ public class DSL {
      * The <code>ARRAY_ANY_MATCH</code> function.
      * <p>
      * Check if any elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be true for at least 1 array element
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22578,6 +22673,9 @@ public class DSL {
      * The <code>ARRAY_ANY_MATCH</code> function.
      * <p>
      * Check if any elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be true for at least 1 array element
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22589,6 +22687,9 @@ public class DSL {
      * The <code>ARRAY_ANY_MATCH</code> function.
      * <p>
      * Check if any elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be true for at least 1 array element
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22600,6 +22701,9 @@ public class DSL {
      * The <code>ARRAY_NONE_MATCH</code> function.
      * <p>
      * Check if none of the elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be false for all elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22611,6 +22715,9 @@ public class DSL {
      * The <code>ARRAY_NONE_MATCH</code> function.
      * <p>
      * Check if none of the elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be false for all elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22622,6 +22729,9 @@ public class DSL {
      * The <code>ARRAY_NONE_MATCH</code> function.
      * <p>
      * Check if none of the elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be false for all elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
@@ -22633,6 +22743,9 @@ public class DSL {
      * The <code>ARRAY_NONE_MATCH</code> function.
      * <p>
      * Check if none of the elements of an array match a given predicate.
+     *
+     * @param array The array to be checked.
+     * @param predicate The predicate that must be false for all elements.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })

@@ -70,23 +70,23 @@ implements
     QOM.ArrayReplace<T>
 {
 
-    final Field<T[]> arg1;
-    final Field<T>   arg2;
-    final Field<T>   arg3;
+    final Field<T[]> array;
+    final Field<T>   search;
+    final Field<T>   replace;
 
     ArrayReplace(
-        Field<T[]> arg1,
-        Field<T> arg2,
-        Field<T> arg3
+        Field<T[]> array,
+        Field<T> search,
+        Field<T> replace
     ) {
         super(
             N_ARRAY_REPLACE,
-            allNotNull((DataType) dataType(((DataType) OTHER).array(), arg1, false), arg1, arg2, arg3)
+            allNotNull((DataType) dataType(((DataType) OTHER).array(), array, false), array, search, replace)
         );
 
-        this.arg1 = nullSafeNotNull(arg1, ((DataType) OTHER).array());
-        this.arg2 = nullSafeNotNull(arg2, (DataType) OTHER);
-        this.arg3 = nullSafeNotNull(arg3, (DataType) OTHER);
+        this.array = nullSafeNotNull(array, ((DataType) OTHER).array());
+        this.search = nullSafeNotNull(search, (DataType) OTHER);
+        this.replace = nullSafeNotNull(replace, (DataType) OTHER);
     }
 
     // -------------------------------------------------------------------------
@@ -96,13 +96,9 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+            case DUCKDB:
             case H2:
             case HSQLDB:
-                return false;
-
-            case DUCKDB:
-                return false;
-
             case TRINO:
                 return false;
 
@@ -120,32 +116,15 @@ implements
 
 
 
+            case DUCKDB:
             case H2:
-            case HSQLDB: {
-                Field<T> x = DSL.field(name("x"), arg2.getDataType());
-                Field<Long> o = DSL.field(name("o"), BIGINT);
-
-                ctx.visit(DSL.field(
-                    select(arrayAgg(when(x.isNotDistinctFrom(arg2), arg3).else_(x)).orderBy(o))
-                    .from(unnest(arg1).withOrdinality().as("t", "x", "o"))
-                ));
+            case HSQLDB:
+            case TRINO:
+                ctx.visit(arrayMap(array, e -> when(e.isNotDistinctFrom(search), replace).else_(e)));
                 break;
-            }
-
-            case DUCKDB: {
-                Field<T> e = DSL.field(raw("e"), arg2.getDataType());
-                ctx.visit(function(N_ARRAY_TRANSFORM, arg1.getDataType(), arg1, DSL.field("e -> {0}", when(e.isNotDistinctFrom(arg2), arg3).else_(e))));
-                break;
-            }
-
-            case TRINO: {
-                Field<T> e = DSL.field(raw("e"), arg2.getDataType());
-                ctx.visit(function(N_TRANSFORM, arg1.getDataType(), arg1, DSL.field("e -> {0}", when(e.isNotDistinctFrom(arg2), arg3).else_(e))));
-                break;
-            }
 
             default:
-                ctx.visit(function(N_ARRAY_REPLACE, getDataType(), arg1, arg2, arg3));
+                ctx.visit(function(N_ARRAY_REPLACE, getDataType(), array, search, replace));
                 break;
         }
     }
@@ -170,17 +149,17 @@ implements
 
     @Override
     public final Field<T[]> $arg1() {
-        return arg1;
+        return array;
     }
 
     @Override
     public final Field<T> $arg2() {
-        return arg2;
+        return search;
     }
 
     @Override
     public final Field<T> $arg3() {
-        return arg3;
+        return replace;
     }
 
     @Override
@@ -211,9 +190,9 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.ArrayReplace<?> o) {
             return
-                StringUtils.equals($arg1(), o.$arg1()) &&
-                StringUtils.equals($arg2(), o.$arg2()) &&
-                StringUtils.equals($arg3(), o.$arg3())
+                StringUtils.equals($array(), o.$array()) &&
+                StringUtils.equals($search(), o.$search()) &&
+                StringUtils.equals($replace(), o.$replace())
             ;
         }
         else

@@ -6264,7 +6264,30 @@ public final class QOM {
             org.jooq.Field<T[]>
         //permits
         //    ArrayConcat
-    {}
+    {
+
+        /**
+         * The first array.
+         */
+        @NotNull default Field<T[]> $array1() { return $arg1(); }
+
+        /**
+         * The first array.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayConcat<T> $array1(Field<T[]> newArray1) { return $arg1(newArray1); }
+
+        /**
+         * The second array.
+         */
+        @NotNull default Field<T[]> $array2() { return $arg2(); }
+
+        /**
+         * The second array.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayConcat<T> $array2(Field<T[]> newArray2) { return $arg2(newArray2); }
+    }
 
     /**
      * The <code>ARRAY APPEND</code> function.
@@ -6277,7 +6300,30 @@ public final class QOM {
             org.jooq.Field<T[]>
         //permits
         //    ArrayAppend
-    {}
+    {
+
+        /**
+         * The array to which to append an element.
+         */
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array to which to append an element.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayAppend<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The element to append to the array.
+         */
+        @NotNull default Field<T> $append() { return $arg2(); }
+
+        /**
+         * The element to append to the array.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayAppend<T> $append(Field<T> newAppend) { return $arg2(newAppend); }
+    }
 
     /**
      * The <code>ARRAY PREPEND</code> function.
@@ -6290,7 +6336,30 @@ public final class QOM {
             org.jooq.Field<T[]>
         //permits
         //    ArrayPrepend
-    {}
+    {
+
+        /**
+         * The element to prepend to the array.
+         */
+        @NotNull default Field<T> $prepend() { return $arg1(); }
+
+        /**
+         * The element to prepend to the array.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayPrepend<T> $prepend(Field<T> newPrepend) { return $arg1(newPrepend); }
+
+        /**
+         * The array to which to prepend an element.
+         */
+        @NotNull default Field<T[]> $array() { return $arg2(); }
+
+        /**
+         * The array to which to prepend an element.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayPrepend<T> $array(Field<T[]> newArray) { return $arg2(newArray); }
+    }
 
     /**
      * The <code>ARRAY OVERLAP</code> function.
@@ -6304,7 +6373,30 @@ public final class QOM {
             org.jooq.Condition
         //permits
         //    ArrayOverlap
-    {}
+    {
+
+        /**
+         * The first array.
+         */
+        @NotNull default Field<T[]> $array1() { return $arg1(); }
+
+        /**
+         * The first array.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayOverlap<T> $array1(Field<T[]> newArray1) { return $arg1(newArray1); }
+
+        /**
+         * The second array.
+         */
+        @NotNull default Field<T[]> $array2() { return $arg2(); }
+
+        /**
+         * The second array.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayOverlap<T> $array2(Field<T[]> newArray2) { return $arg2(newArray2); }
+    }
 
     /**
      * The <code>ARRAY REMOVE</code> function.
@@ -6317,7 +6409,30 @@ public final class QOM {
             org.jooq.Field<T[]>
         //permits
         //    ArrayRemove
-    {}
+    {
+
+        /**
+         * The array whose elements are to be removed.
+         */
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array whose elements are to be removed.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayRemove<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The array element that should be removed.
+         */
+        @NotNull default Field<T> $remove() { return $arg2(); }
+
+        /**
+         * The array element that should be removed.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayRemove<T> $remove(Field<T> newRemove) { return $arg2(newRemove); }
+    }
 
     /**
      * The <code>ARRAY REPLACE</code> function.
@@ -6330,7 +6445,41 @@ public final class QOM {
             org.jooq.Field<T[]>
         //permits
         //    ArrayReplace
-    {}
+    {
+
+        /**
+         * The array whose elements are to be replaced.
+         */
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array whose elements are to be replaced.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayReplace<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The expression to search for in the array.
+         */
+        @NotNull default Field<T> $search() { return $arg2(); }
+
+        /**
+         * The expression to search for in the array.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayReplace<T> $search(Field<T> newSearch) { return $arg2(newSearch); }
+
+        /**
+         * The value to replace a value by.
+         */
+        @NotNull default Field<T> $replace() { return $arg3(); }
+
+        /**
+         * The value to replace a value by.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayReplace<T> $replace(Field<T> newReplace) { return $arg3(newReplace); }
+    }
 
     /**
      * The <code>ARRAY FILTER</code> function.
@@ -6344,10 +6493,26 @@ public final class QOM {
         //permits
         //    ArrayFilter
     {
+
+        /**
+         * The array whose elements are filtered.
+         */
         @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array whose elements are filtered.
+         */
         @CheckReturnValue
         @NotNull default ArrayFilter<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * A predicate defining which elements to keep in the array.
+         */
         @NotNull default Lambda1<Field<T>, Condition> $predicate() { return $arg2(); }
+
+        /**
+         * A predicate defining which elements to keep in the array.
+         */
         @CheckReturnValue
         @NotNull default ArrayFilter<T> $predicate(Lambda1<Field<T>, Condition> newPredicate) { return $arg2(newPredicate); }
     }
@@ -6364,10 +6529,26 @@ public final class QOM {
         //permits
         //    ArrayMap
     {
+
+        /**
+         * The array whose elements are mapped.
+         */
         @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array whose elements are mapped.
+         */
         @CheckReturnValue
         @NotNull default ArrayMap<T, U> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The function that defines the mapping between source elements and result elements.
+         */
         @NotNull default Lambda1<Field<T>, Field<U>> $mapper() { return $arg2(); }
+
+        /**
+         * The function that defines the mapping between source elements and result elements.
+         */
         @CheckReturnValue
         @NotNull default ArrayMap<T, U> $mapper(Lambda1<Field<T>, Field<U>> newMapper) { return $arg2(newMapper); }
     }
@@ -6384,10 +6565,26 @@ public final class QOM {
         //permits
         //    ArrayAllMatch
     {
+
+        /**
+         * The array to be checked.
+         */
         @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array to be checked.
+         */
         @CheckReturnValue
         @NotNull default ArrayAllMatch<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The predicate that must be true for all array elements.
+         */
         @NotNull default Lambda1<Field<T>, Condition> $predicate() { return $arg2(); }
+
+        /**
+         * The predicate that must be true for all array elements.
+         */
         @CheckReturnValue
         @NotNull default ArrayAllMatch<T> $predicate(Lambda1<Field<T>, Condition> newPredicate) { return $arg2(newPredicate); }
     }
@@ -6404,10 +6601,26 @@ public final class QOM {
         //permits
         //    ArrayAnyMatch
     {
+
+        /**
+         * The array to be checked.
+         */
         @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array to be checked.
+         */
         @CheckReturnValue
         @NotNull default ArrayAnyMatch<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The predicate that must be true for at least 1 array element
+         */
         @NotNull default Lambda1<Field<T>, Condition> $predicate() { return $arg2(); }
+
+        /**
+         * The predicate that must be true for at least 1 array element
+         */
         @CheckReturnValue
         @NotNull default ArrayAnyMatch<T> $predicate(Lambda1<Field<T>, Condition> newPredicate) { return $arg2(newPredicate); }
     }
@@ -6424,10 +6637,26 @@ public final class QOM {
         //permits
         //    ArrayNoneMatch
     {
+
+        /**
+         * The array to be checked.
+         */
         @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array to be checked.
+         */
         @CheckReturnValue
         @NotNull default ArrayNoneMatch<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The predicate that must be false for all elements.
+         */
         @NotNull default Lambda1<Field<T>, Condition> $predicate() { return $arg2(); }
+
+        /**
+         * The predicate that must be false for all elements.
+         */
         @CheckReturnValue
         @NotNull default ArrayNoneMatch<T> $predicate(Lambda1<Field<T>, Condition> newPredicate) { return $arg2(newPredicate); }
     }

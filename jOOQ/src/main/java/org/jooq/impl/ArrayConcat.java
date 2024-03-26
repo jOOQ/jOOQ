@@ -70,20 +70,20 @@ implements
     QOM.ArrayConcat<T>
 {
 
-    final Field<T[]> arg1;
-    final Field<T[]> arg2;
+    final Field<T[]> array1;
+    final Field<T[]> array2;
 
     ArrayConcat(
-        Field<T[]> arg1,
-        Field<T[]> arg2
+        Field<T[]> array1,
+        Field<T[]> array2
     ) {
         super(
             N_ARRAY_CONCAT,
-            allNotNull((DataType) dataType(((DataType) OTHER).array(), arg1, false), arg1, arg2)
+            allNotNull((DataType) dataType(((DataType) OTHER).array(), array1, false), array1, array2)
         );
 
-        this.arg1 = nullSafeNotNull(arg1, ((DataType) OTHER).array());
-        this.arg2 = nullSafeNotNull(arg2, ((DataType) OTHER).array());
+        this.array1 = nullSafeNotNull(array1, ((DataType) OTHER).array());
+        this.array2 = nullSafeNotNull(array2, ((DataType) OTHER).array());
     }
 
     // -------------------------------------------------------------------------
@@ -111,11 +111,11 @@ implements
 
 
             case CLICKHOUSE:
-                ctx.visit(function(N_arrayConcat, getDataType(), arg1, arg2));
+                ctx.visit(function(N_arrayConcat, getDataType(), array1, array2));
                 break;
 
             default:
-                ctx.sql('(').visit(arg1).sql(" || ").visit(arg2).sql(')');
+                ctx.sql('(').visit(array1).sql(" || ").visit(array2).sql(')');
                 break;
         }
     }
@@ -139,12 +139,12 @@ implements
 
     @Override
     public final Field<T[]> $arg1() {
-        return arg1;
+        return array1;
     }
 
     @Override
     public final Field<T[]> $arg2() {
-        return arg2;
+        return array2;
     }
 
     @Override
@@ -170,8 +170,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.ArrayConcat<?> o) {
             return
-                StringUtils.equals($arg1(), o.$arg1()) &&
-                StringUtils.equals($arg2(), o.$arg2())
+                StringUtils.equals($array1(), o.$array1()) &&
+                StringUtils.equals($array2(), o.$array2())
             ;
         }
         else

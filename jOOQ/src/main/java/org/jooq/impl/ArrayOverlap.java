@@ -70,16 +70,16 @@ implements
     QOM.ArrayOverlap<T>
 {
 
-    final Field<T[]> arg1;
-    final Field<T[]> arg2;
+    final Field<T[]> array1;
+    final Field<T[]> array2;
 
     ArrayOverlap(
-        Field<T[]> arg1,
-        Field<T[]> arg2
+        Field<T[]> array1,
+        Field<T[]> array2
     ) {
 
-        this.arg1 = nullSafeNotNull(arg1, ((DataType) OTHER).array());
-        this.arg2 = nullSafeNotNull(arg2, ((DataType) OTHER).array());
+        this.array1 = nullSafeNotNull(array1, ((DataType) OTHER).array());
+        this.array2 = nullSafeNotNull(array2, ((DataType) OTHER).array());
     }
 
     // -------------------------------------------------------------------------
@@ -116,29 +116,29 @@ implements
 
 
             case DUCKDB:
-                ctx.visit(cardinality(function(N_ARRAY_INTERSECT, arg1.getDataType(), arg1, arg2)).gt(inline(0)));
+                ctx.visit(cardinality(function(N_ARRAY_INTERSECT, array1.getDataType(), array1, array2)).gt(inline(0)));
                 break;
 
             case H2:
                 ctx.visit(exists(
-                    select(asterisk()).from(unnest(arg1))
-                    .intersect(select(asterisk()).from(unnest(arg2)))
+                    select(asterisk()).from(unnest(array1))
+                    .intersect(select(asterisk()).from(unnest(array2)))
                 ));
                 break;
 
             case HSQLDB:
                 ctx.visit(exists(
-                    select(asterisk()).from(unnest(arg1))
-                    .intersectAll(select(asterisk()).from(unnest(arg2)))
+                    select(asterisk()).from(unnest(array1))
+                    .intersectAll(select(asterisk()).from(unnest(array2)))
                 ));
                 break;
 
             case TRINO:
-                ctx.visit(function(N_ARRAYS_OVERLAP, BOOLEAN, arg1, arg2));
+                ctx.visit(function(N_ARRAYS_OVERLAP, BOOLEAN, array1, array2));
                 break;
 
             default:
-                ctx.sql('(').visit(arg1).sql(" && ").visit(arg2).sql(')');
+                ctx.sql('(').visit(array1).sql(" && ").visit(array2).sql(')');
                 break;
         }
     }
@@ -162,12 +162,12 @@ implements
 
     @Override
     public final Field<T[]> $arg1() {
-        return arg1;
+        return array1;
     }
 
     @Override
     public final Field<T[]> $arg2() {
-        return arg2;
+        return array2;
     }
 
     @Override
@@ -193,8 +193,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.ArrayOverlap<?> o) {
             return
-                StringUtils.equals($arg1(), o.$arg1()) &&
-                StringUtils.equals($arg2(), o.$arg2())
+                StringUtils.equals($array1(), o.$array1()) &&
+                StringUtils.equals($array2(), o.$array2())
             ;
         }
         else

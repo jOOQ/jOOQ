@@ -114,7 +114,7 @@ implements
 
     static final Set<SQLDialect>      NO_SUPPORT_FILTER          = SQLDialect.supportedUntil(CUBRID, DERBY, IGNITE, MARIADB, MYSQL);
     static final Set<SQLDialect>      NO_SUPPORT_WINDOW_FILTER   = SQLDialect.supportedBy(TRINO);
-    static final Set<SQLDialect>      SUPPORT_DISTINCT_RVE       = SQLDialect.supportedBy(H2, POSTGRES);
+    static final Set<SQLDialect>      REQUIRE_DISTINCT_RVE       = SQLDialect.supportedBy(DUCKDB, H2, POSTGRES);
 
     static final Lazy<Field<Integer>> ASTERISK                   = Lazy.of(() -> DSL.field(DSL.raw("*"), Integer.class));
 
@@ -268,7 +268,7 @@ implements
 
             // [#2883][#9109] PostgreSQL and H2 can use the DISTINCT keyword with formal row value expressions.
             // [#13415] ListAgg is a special case, where the second argument is the separator
-            if (parens |= (args.size() > 1 && SUPPORT_DISTINCT_RVE.contains(ctx.dialect()) && !(this instanceof ListAgg)))
+            if (parens |= (args.size() > 1 && REQUIRE_DISTINCT_RVE.contains(ctx.dialect()) && !(this instanceof ListAgg)))
                 ctx.sql('(');
         }
 

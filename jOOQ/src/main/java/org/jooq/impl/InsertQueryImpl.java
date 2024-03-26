@@ -182,6 +182,7 @@ implements
     static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect> REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION          = SQLDialect.supportedBy(MYSQL);
     static final Set<SQLDialect> NO_SUPPORT_INSERT_ALIASED_TABLE               = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, TRINO);
+    static final Set<SQLDialect> NO_SUPPORT_ON_CONSTRAINT_ON_CONFLICT          = SQLDialect.supportedBy(DUCKDB);
 
     final FieldMapsForInsert     insertMaps;
     Select<?>                    select;
@@ -471,7 +472,7 @@ implements
                            .visit(K_ON_CONFLICT)
                            .sql(' ');
 
-                        if (onConstraint != null ) {
+                        if (onConstraint != null && !NO_SUPPORT_ON_CONSTRAINT_ON_CONFLICT.contains(ctx.dialect())) {
                             ctx.data(DATA_CONSTRAINT_REFERENCE, true);
                             ctx.visit(K_ON_CONSTRAINT)
                                .sql(' ')
@@ -483,15 +484,11 @@ implements
                             if (onConflict != null && onConflict.size() > 0)
                                 ctx.sql('(').visit(onConflict).sql(')');
 
-
-
-
-
-
-
-
-
-
+                            else if (onConstraint != null && NO_SUPPORT_ON_CONSTRAINT_ON_CONFLICT.contains(ctx.dialect()))
+                                if (onConstraintUniqueKey != null)
+                                    ctx.sql('(').qualify(false, c -> c.visit(new FieldsImpl<>(onConstraintUniqueKey.getFields()))).sql(')');
+                                else
+                                    ctx.sql("[unknown unique key]");
 
                             // [#13273] SQLite 3.38 has started supporting optional on conflict targets
                             else if (SUPPORTS_OPTIONAL_DO_UPDATE_CONFLICT_TARGETS.contains(ctx.dialect()) && !onConflictWhere.hasWhere())
@@ -654,7 +651,7 @@ implements
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .visit(K_ON_CONFLICT);
 
-                    if (onConstraint != null ) {
+                    if (onConstraint != null && !NO_SUPPORT_ON_CONSTRAINT_ON_CONFLICT.contains(ctx.dialect())) {
                         ctx.data(DATA_CONSTRAINT_REFERENCE, true, c -> c
                             .sql(' ')
                             .visit(K_ON_CONSTRAINT)
@@ -668,16 +665,12 @@ implements
                             acceptOnConflictWhere(ctx);
                         }
 
-
-
-
-
-
-
-
-
-
-
+                        else if (onConstraint != null && NO_SUPPORT_ON_CONSTRAINT_ON_CONFLICT.contains(ctx.dialect())) {
+                            if (onConstraintUniqueKey != null)
+                                ctx.sql(" (").qualify(false, c -> c.visit(new FieldsImpl<>(onConstraintUniqueKey.getFields()))).sql(')');
+                            else
+                                ctx.sql(" [ unknown unique key ]");
+                        }
                     }
 
                     ctx.formatSeparator()

@@ -130,7 +130,7 @@ extends
 
     static final Set<SQLDialect> CASTS_NEEDED                      = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(CLICKHOUSE, DUCKDB, POSTGRES, SQLITE, YUGABYTEDB);
-    static final Set<SQLDialect> EMULATE_RVE_SET_QUERY             = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> EMULATE_RVE_SET_QUERY             = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
 
 
 

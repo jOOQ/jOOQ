@@ -53,6 +53,7 @@ import static org.jooq.Clause.INSERT_RETURNING;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -182,7 +183,7 @@ implements
     static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect> REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION          = SQLDialect.supportedBy(MYSQL);
     static final Set<SQLDialect> NO_SUPPORT_INSERT_ALIASED_TABLE               = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, TRINO);
-    static final Set<SQLDialect> NO_SUPPORT_ON_CONSTRAINT_ON_CONFLICT          = SQLDialect.supportedBy(DUCKDB);
+    static final Set<SQLDialect> NO_SUPPORT_ON_CONSTRAINT_ON_CONFLICT          = SQLDialect.supportedUntil(DUCKDB);
 
     final FieldMapsForInsert     insertMaps;
     Select<?>                    select;

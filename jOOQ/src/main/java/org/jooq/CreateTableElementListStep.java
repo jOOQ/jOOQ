@@ -220,7 +220,7 @@ public interface CreateTableElementListStep extends CreateTableAsStep {
     /**
      * Add the <code>CHECK</code> clause to the <code>CREATE TABLE</code> statement.
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CreateTableElementListStep check(Condition condition);
 

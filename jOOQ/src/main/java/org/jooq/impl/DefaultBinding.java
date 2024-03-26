@@ -3972,7 +3972,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-        static final Set<SQLDialect> REQUIRE_RECORD_CAST        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+        static final Set<SQLDialect> REQUIRE_RECORD_CAST        = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
 
         DefaultRecordBinding(DataType<Record> dataType, Converter<Record, U> converter) {
             super(dataType, converter);

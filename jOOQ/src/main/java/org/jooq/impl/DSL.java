@@ -13692,7 +13692,7 @@ public class DSL {
      * Create a qualified type, given its type name.
      */
     @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static Type<?> type(@Stringly.Name String name) {
         return type(name(name));
     }
@@ -13701,7 +13701,7 @@ public class DSL {
      * Create a qualified type, given its type name.
      */
     @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static Type<?> type(Name name) {
         return type(name, SQLDataType.OTHER);
     }
@@ -13710,7 +13710,7 @@ public class DSL {
      * Create a qualified type, given its type name.
      */
     @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static <T> Type<T> type(@Stringly.Name String name, DataType<T> type) {
         return type(name(name), type);
     }
@@ -13719,7 +13719,7 @@ public class DSL {
      * Create a qualified type, given its type name.
      */
     @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
+    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static <T> Type<T> type(Name name, DataType<T> type) {
         return new TypeImpl<>(name, CommentImpl.NO_COMMENT, type);
     }

@@ -149,6 +149,7 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
 
 
 
+                        case DUCKDB:
                         case POSTGRES:
                         case YUGABYTEDB:
                             c.visit(K_ROW);
@@ -192,6 +193,7 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
         switch (ctx.family()) {
 
 
+            case DUCKDB:
             case POSTGRES:
             case YUGABYTEDB:
                 return "ROW";
@@ -219,6 +221,7 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
 
             // Postgres cannot bind a complete structured type. The type is
             // inlined instead: ROW(.., .., ..)
+            case DUCKDB:
             case POSTGRES:
             case YUGABYTEDB:  {
                 if (value != null)

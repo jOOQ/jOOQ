@@ -3899,6 +3899,17 @@ final class Tools {
             return false;
     }
 
+    static final <T> boolean isVal1(Field<T> p, Predicate<? super Val<T>> predicate) {
+        if (p instanceof Val<T> v) {
+            return predicate.test(v);
+        }
+        else if (p instanceof ConvertedVal<T> v) {
+            return isVal1((Field<T>) v.delegate, predicate);
+        }
+        else
+            return false;
+    }
+
     static final boolean isWindow(QueryPart part) {
         return part instanceof AbstractWindowFunction && ((AbstractWindowFunction<?>) part).isWindow();
     }

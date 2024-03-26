@@ -162,8 +162,7 @@ final class MetaImpl extends AbstractMeta {
     private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_SCHEMAS               = SQLDialect.supportedBy(FIREBIRD, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_INDEXES               = SQLDialect.supportedBy(TRINO);
-
-
+    private static final Set<SQLDialect> SUPPORTS_CATALOGS                = SQLDialect.supportedBy(DUCKDB);
 
 
 
@@ -265,23 +264,21 @@ final class MetaImpl extends AbstractMeta {
     final List<Catalog> getCatalogs0() {
         List<Catalog> result = new ArrayList<>();
 
+        // [#7714] If the database system doesn't really support qualifying objects by their
+        //         catalog, then we should not return any catalogs here.
+        if (SUPPORTS_CATALOGS.contains(dialect())) {
 
+            // [#2760] MySQL JDBC confuses "catalog" and "schema"
+            if (!inverseSchemaCatalog) {
+                Result<Record> catalogs = meta(meta -> dsl().fetch(
+                    meta.getCatalogs(),
+                    SQLDataType.VARCHAR // TABLE_CATALOG
+                ));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                for (String name : catalogs.getValues(0, String.class))
+                    result.add(new MetaCatalog(name));
+            }
+        }
 
         // There should always be at least one (empty) catalog in a database
         if (result.isEmpty())

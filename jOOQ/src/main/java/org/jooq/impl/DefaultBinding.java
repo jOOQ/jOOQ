@@ -4413,7 +4413,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case NATIVE:
                     return apply(
-                        nativePatch.apply(ctx.resultSet().getObject(ctx.index())),
+                        (List<?>) nativePatch.apply(ctx.resultSet().getObject(ctx.index())),
                         l -> readMultisetList(ctx, row, recordType, l)
                     );
             }

@@ -44,6 +44,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -105,21 +106,21 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * Add a <code>FROM</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     UpdateWhereStep<R> from(TableLike<?> table);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     UpdateWhereStep<R> from(TableLike<?>... table);
 
     /**
      * Add a <code>FROM</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     UpdateWhereStep<R> from(Collection<? extends TableLike<?>> tables);
 
     /**
@@ -134,7 +135,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     @PlainSQL
     UpdateWhereStep<R> from(SQL sql);
 
@@ -150,7 +151,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     @PlainSQL
     UpdateWhereStep<R> from(String sql);
 
@@ -167,7 +168,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     @PlainSQL
     UpdateWhereStep<R> from(String sql, Object... bindings);
 
@@ -184,7 +185,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     @PlainSQL
     UpdateWhereStep<R> from(String sql, QueryPart... parts);
 
@@ -194,6 +195,6 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
      * @see DSL#table(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     UpdateWhereStep<R> from(Name name);
 }

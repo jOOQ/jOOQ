@@ -45,6 +45,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -372,7 +373,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     void addFrom(TableLike<?> from);
 
     /**
@@ -380,7 +381,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     void addFrom(TableLike<?>... from);
 
     /**
@@ -388,7 +389,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
     void addFrom(Collection<? extends TableLike<?>> from);
 
     // ------------------------------------------------------------------------

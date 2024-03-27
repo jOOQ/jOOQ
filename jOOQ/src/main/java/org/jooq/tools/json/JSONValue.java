@@ -22,7 +22,9 @@ package org.jooq.tools.json;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -43,26 +45,28 @@ public class JSONValue {
             return;
         }
 
-        if (value instanceof String) {
+        if (value instanceof String s) {
             out.write('\"');
-            out.write(escape((String) value));
+            out.write(escape(s));
             out.write('\"');
             return;
         }
 
-        if (value instanceof Double) {
-            if (((Double) value).isInfinite() || ((Double) value).isNaN())
+        if (value instanceof Double d) {
+            if (d.isInfinite() || d.isNaN())
                 out.write("null");
             else
                 out.write(value.toString());
+
             return;
         }
 
-        if (value instanceof Float) {
-            if (((Float) value).isInfinite() || ((Float) value).isNaN())
+        if (value instanceof Float f) {
+            if (f.isInfinite() || f.isNaN())
                 out.write("null");
             else
                 out.write(value.toString());
+
             return;
         }
 
@@ -76,13 +80,18 @@ public class JSONValue {
             return;
         }
 
-        if (value instanceof Map) {
-            JSONObject.writeJSONString((Map<?, ?>) value, out);
+        if (value instanceof Map<?, ?> m) {
+            JSONObject.writeJSONString(m, out);
             return;
         }
 
-        if (value instanceof List) {
-            JSONArray.writeJSONString((List<?>) value, out);
+        if (value instanceof List<?> l) {
+            JSONArray.writeJSONString(l, out);
+            return;
+        }
+
+        if (value instanceof Object[] a) {
+            JSONArray.writeJSONString(Arrays.asList(a), out);
             return;
         }
 
@@ -102,41 +111,14 @@ public class JSONValue {
      *         number.
      */
     public static String toJSONString(Object value) {
-        if (value == null)
-            return "null";
+        Writer w = new StringWriter();
 
-        if (value instanceof String)
-            return "\"" + escape((String) value) + "\"";
-
-        if (value instanceof Double) {
-            if (((Double) value).isInfinite() || ((Double) value).isNaN())
-                return "null";
-            else
-                return value.toString();
+        try {
+            writeJSONString(value, w);
         }
+        catch (IOException ignore) {}
 
-        if (value instanceof Float) {
-            if (((Float) value).isInfinite() || ((Float) value).isNaN())
-                return "null";
-            else
-                return value.toString();
-        }
-
-        if (value instanceof Number)
-            return value.toString();
-
-        if (value instanceof Boolean)
-            return value.toString();
-
-        if (value instanceof Map)
-            return JSONObject.toJSONString((Map<?, ?>) value);
-
-        if (value instanceof List)
-            return JSONArray.toJSONString((List<?>) value);
-
-        // Patched original according to issue 27 of JSON-simple
-        // http://code.google.com/p/json-simple/issues/detail?id=27
-        return "\"" + escape(value.toString()) + "\"";
+        return w.toString();
     }
 
     /**

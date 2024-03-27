@@ -39,31 +39,26 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
-import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.Multiset.NO_SUPPORT_JSONB_COMPARE;
 import static org.jooq.impl.Multiset.NO_SUPPORT_JSON_COMPARE;
 import static org.jooq.impl.Multiset.NO_SUPPORT_XML_COMPARE;
+import static org.jooq.impl.Multiset.arrayAggEmulation;
 import static org.jooq.impl.Multiset.jsonArrayaggEmulation;
 import static org.jooq.impl.Multiset.jsonbArrayaggEmulation;
 import static org.jooq.impl.Multiset.nResult;
 import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Multiset.xmlaggEmulation;
-import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_MULTISET_AGG;
-import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
+import org.jooq.ArrayAggOrderByStep;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONB;
@@ -164,23 +159,16 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
                 break;
             }
 
-            case NATIVE:
-                switch (ctx.family()) {
-                    case DUCKDB:
-                        ctx.visit(N_ARRAY_AGG);
-                        break;
-                    default:
-                        ctx.visit(N_MULTISET_AGG);
-                        break;
-                }
+            case NATIVE: {
+                ArrayAggOrderByStep<?> order = arrayAggEmulation(row, true);
 
-                ctx.sql('(');
-                acceptArguments1(ctx, new QueryPartListView<>(new RowAsField<>(DSL.row(arguments))));
-                acceptOrderBy(ctx);
-                ctx.sql(')');
-                acceptFilterClause(ctx);
-                acceptOverClause(ctx);
+                ctx.visit(multisetCondition
+                    ? fo(order.orderBy(row.fields()))
+                    : ofo((AbstractAggregateFunction<?>) order)
+                );
+
                 break;
+            }
         }
     }
 

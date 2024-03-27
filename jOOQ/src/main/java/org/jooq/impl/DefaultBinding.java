@@ -296,6 +296,7 @@ import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.json.JSONArray;
+import org.jooq.tools.json.JSONValue;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -1420,7 +1421,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#15732] Use JSON as a workaround to bind array types for now.
                 case DUCKDB: {
-                    ctx.statement().setString(ctx.index(), new JSONArray(asList(value)).toString());
+                    ctx.statement().setString(ctx.index(), JSONValue.toJSONString(value));
                     break;
                 }
 

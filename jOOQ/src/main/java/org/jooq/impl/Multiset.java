@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.*;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
@@ -97,6 +98,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import org.jooq.AggregateFilterStep;
+import org.jooq.ArrayAggOrderByStep;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -119,12 +121,16 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
+import org.jooq.SelectJoinStep;
+import org.jooq.SelectOrderByStep;
 import org.jooq.Spatial;
 import org.jooq.Table;
 import org.jooq.TableLike;
 // ...
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -394,9 +400,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
             case NATIVE:
                 switch (ctx.family()) {
-                    case DUCKDB:
-                        visitSubquery(ctx.visit(K_ARRAY), select(DSL.field(N_T)).from(select.asTable(N_T)));
+                    case DUCKDB: {
+                        SelectOrderByStep<?> s = select(DSL.field(N_T)).from(select.asTable(N_T));
+                        visitSubquery(ctx.visit(K_ARRAY), multisetCondition
+                            ? s.orderBy(DSL.field(N_T))
+                            : s
+                        );
                         break;
+                    }
 
                     default:
                         visitSubquery(ctx.visit(K_MULTISET), select);
@@ -600,6 +611,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                         return xmlelement(n, v);
                 })
             )
+        );
+    }
+
+    static final ArrayAggOrderByStep<?> arrayAggEmulation(Fields fields, boolean agg) {
+        return arrayAgg(
+            new RowAsField<>(row(
+                map(fields.fields(), (f, i) -> agg ? f : DSL.field(fieldName(i), f.getDataType()))
+            ))
         );
     }
 

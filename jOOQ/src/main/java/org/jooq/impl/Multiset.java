@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.*;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
@@ -63,6 +64,7 @@ import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.DerivedTable.NO_SUPPORT_CORRELATED_DERIVED_TABLE;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
+import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Names.NQ_RESULT;
 import static org.jooq.impl.Names.N_HEX;
@@ -391,7 +393,16 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             }
 
             case NATIVE:
-                visitSubquery(ctx.visit(K_MULTISET), select);
+                switch (ctx.family()) {
+                    case DUCKDB:
+                        visitSubquery(ctx.visit(K_ARRAY), select(DSL.field(N_T)).from(select.asTable(N_T)));
+                        break;
+
+                    default:
+                        visitSubquery(ctx.visit(K_MULTISET), select);
+                        break;
+                }
+
                 break;
         }
     }

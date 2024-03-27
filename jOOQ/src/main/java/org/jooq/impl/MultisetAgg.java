@@ -49,6 +49,7 @@ import static org.jooq.impl.Multiset.jsonbArrayaggEmulation;
 import static org.jooq.impl.Multiset.nResult;
 import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Multiset.xmlaggEmulation;
+import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_MULTISET_AGG;
 import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -163,7 +164,16 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
             }
 
             case NATIVE:
-                ctx.visit(N_MULTISET_AGG).sql('(');
+                switch (ctx.family()) {
+                    case DUCKDB:
+                        ctx.visit(N_ARRAY_AGG);
+                        break;
+                    default:
+                        ctx.visit(N_MULTISET_AGG);
+                        break;
+                }
+
+                ctx.sql('(');
                 acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
                 acceptOrderBy(ctx);
                 ctx.sql(')');

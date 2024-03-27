@@ -37,11 +37,15 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.newRecord;
 
+import java.sql.Array;
+import java.sql.SQLException;
+import java.sql.Struct;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,6 +58,7 @@ import org.jooq.Nullability;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 
@@ -180,6 +185,17 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
                     }));
 
             return result;
+        }
+        else if (object instanceof Object[] a) {
+            return convert((Object) asList(a));
+        }
+        else if (object instanceof Array a) {
+            try {
+                return convert((Object) asList((Object[]) a.getArray()));
+            }
+            catch (SQLException e) {
+                throw new DataAccessException("Error while accessing array", e);
+            }
         }
         else if (object == null)
             return new ResultImpl<>(CONFIG.get(), row);

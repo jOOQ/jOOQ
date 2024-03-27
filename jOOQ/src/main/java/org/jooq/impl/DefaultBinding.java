@@ -4059,15 +4059,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         (AbstractRow<Record>) dataType.getRow(),
                         ctx.configuration()
                     ).operate(r -> {
-
-                        // DuckDB
-                        if (object instanceof Struct s)
-                            r.from(s.getAttributes());
-
-                        // ClickHouse
-                        else
-                            r.from(object);
-
+                        r.from(object);
                         return r;
                     });
                 }
@@ -4370,7 +4362,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @SuppressWarnings("unchecked")
         static final <R extends Record> Result<R> readMultiset(BindingGetResultSetContext<?> ctx, DataType<Result<R>> type) throws SQLException {
-            return readMultiset(ctx, (AbstractRow<R>) type.getRow(), (Class<R>) type.getRecordType(), identity(), identity(), (Function) identity());
+            return readMultiset(ctx,
+                (AbstractRow<R>) type.getRow(),
+                (Class<R>) type.getRecordType(),
+                identity(),
+                identity(),
+                o -> o instanceof List<?> l
+                   ? l
+                   : o instanceof Object[] a
+                   ? asList(a)
+                   : o instanceof Array a
+                   ? asList((Object[]) a.getArray())
+                   : null
+            );
         }
 
         static final <R extends Record> Result<R> readMultiset(
@@ -4379,15 +4383,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Class<R> recordType,
             Function<String, String> jsonStringPatch,
             Function<String, String> xmlStringPatch,
-            Function<Object, List<Struct>> nativePatch
+            ThrowingFunction<Object, List<?>, SQLException> nativePatch
         )
         throws SQLException {
             NestedCollectionEmulation emulation = emulateMultiset(ctx.configuration());
 
             switch (emulation) {
-                // case ARRAY:
-                //     return copy(ctx, (Multiset<?>) field, ctx.configuration().dsl().fetch(ctx.resultSet().getArray(ctx.index()).getResultSet()));
-
                 case JSON:
                 case JSONB:
                     if (emulation == NestedCollectionEmulation.JSONB && EMULATE_AS_BLOB.contains(ctx.dialect())) {
@@ -4410,14 +4411,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         s -> readMultisetXML(ctx, row, recordType, s)
                     );
 
-
-
-
-
-
-
-
-
+                case NATIVE:
+                    return apply(
+                        nativePatch.apply(ctx.resultSet().getObject(ctx.index())),
+                        l -> readMultisetList(ctx, row, recordType, l)
+                    );
             }
 
             throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);

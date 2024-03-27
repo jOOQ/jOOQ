@@ -38,65 +38,61 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.impl.Tools.apply;
+import static org.jooq.impl.Tools.newRecord;
 
+import java.sql.SQLException;
+import java.sql.Struct;
+import java.util.List;
 
+import org.jooq.DSLContext;
+import org.jooq.DataType;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.Select;
 
+/**
+ * A handler for recursive, native {@link DSL#multiset(Select)} data structures.
+ *
+ * @author Lukas Eder
+ */
+final class ListHandler<R extends Record> {
+    private final DSLContext         ctx;
+    private final AbstractRow<R>     row;
+    private final Class<? extends R> recordType;
 
+    ListHandler(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType) {
+        this.ctx = ctx;
+        this.row = row;
+        this.recordType = recordType;
+    }
 
+    final Result<R> read(List<?> list) throws SQLException {
+        Result<R> result = new ResultImpl<>(ctx.configuration(), row);
 
+        for (Object o : list)
+            result.add(newRecord(true, recordType, row, ctx.configuration()).operate(r -> {
+                if (o instanceof Struct s) {
+                    Object[] attributes = s.getAttributes();
 
+                    // [#13400] Recurse for nested MULTISET or ROW types
+                    for (int i = 0; i < attributes.length && i < row.size(); i++) {
+                        DataType<?> t = row.field(i).getDataType();
 
+                        if (t.isMultiset() && attributes[i] instanceof List)
+                            attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read((List<Struct>) attributes[i]);
+                        else if (t.isRecord() && attributes[i] instanceof Struct)
+                            attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(asList((Struct) attributes[i])).get(0);
+                    }
 
+                    r.fromArray(attributes);
+                    r.changed(false);
+                    return r;
+                }
+                else
+                    throw new UnsupportedOperationException("No support for reading value " + o);
+            }));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return result;
+    }
+}
 

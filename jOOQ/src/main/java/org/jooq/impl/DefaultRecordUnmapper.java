@@ -44,6 +44,8 @@ import static org.jooq.impl.Tools.getMatchingMembers;
 import static org.jooq.impl.Tools.hasColumnAnnotations;
 
 import java.lang.reflect.Method;
+import java.sql.SQLException;
+import java.sql.Struct;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +55,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordType;
 import org.jooq.RecordUnmapper;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.MappingException;
 
 /**
@@ -97,6 +100,8 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
             delegate = new MapUnmapper();
         else if (Iterable.class.isAssignableFrom(type))
             delegate = new IterableUnmapper();
+        else if (Struct.class.isAssignableFrom(type))
+            delegate = new StructUnmapper();
         else
             delegate = new PojoUnmapper();
     }
@@ -173,6 +178,26 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
             }
 
             throw new MappingException("Iterable expected. Got: " + klass(source));
+        }
+    }
+
+    private final class StructUnmapper implements RecordUnmapper<E, R> {
+
+        final ArrayUnmapper a = new ArrayUnmapper();
+
+        @SuppressWarnings({ "unchecked" })
+        @Override
+        public final R unmap(E source) {
+            if (source instanceof Struct s) {
+                try {
+                    return a.unmap((E) s.getAttributes());
+                }
+                catch (SQLException e) {
+                    throw new DataAccessException("Error while reading Struct", e);
+                }
+            }
+
+            throw new MappingException("Struct expected. Got: " + klass(source));
         }
     }
 

@@ -7358,6 +7358,7 @@ final class Tools {
 
 
 
+                case DUCKDB:
                 default:
                     return NestedCollectionEmulation.NATIVE;
             }

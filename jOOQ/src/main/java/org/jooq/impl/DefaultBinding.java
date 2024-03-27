@@ -91,6 +91,7 @@ import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Array.NO_SUPPORT_SQUARE_BRACKETS;
+import static org.jooq.impl.BlobBinding.readBlob;
 import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.Convert.patchIso8601Timestamp;
 import static org.jooq.impl.DSL.cast;
@@ -188,6 +189,7 @@ import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 import static org.jooq.util.postgres.PostgresUtils.toYearToMonth;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Modifier;
@@ -2294,7 +2296,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, byte[] value) throws SQLException {
             switch (ctx.family()) {
-                case DUCKDB:
                 case H2:
                     blobs.set(new DefaultBindingSetStatementContext<>(ctx.executeContext(), ctx.statement(), ctx.index(), value));
                     break;
@@ -2349,13 +2350,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final byte[] get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-
-
-
-
-
-
-
 
 
 
@@ -3883,17 +3877,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Object get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            return unlob(ctx.resultSet().getObject(ctx.index()));
+            return unlob(ctx, ctx.resultSet().getObject(ctx.index()));
         }
 
         @Override
         final Object get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return unlob(ctx.statement().getObject(ctx.index()));
+            return unlob(ctx, ctx.statement().getObject(ctx.index()));
         }
 
         @Override
         final Object get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return unlob(ctx.input().readObject());
+            return unlob(ctx, ctx.input().readObject());
         }
 
         @Override
@@ -3905,14 +3899,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
          * [#2534] Extract <code>byte[]</code> or <code>String</code> data from a
          * LOB, if the argument is a lob.
          */
-        private static final Object unlob(Object object) throws SQLException {
+        private static final Object unlob(Scope ctx, Object object) throws SQLException {
             if (object instanceof Blob blob) {
-                try {
-                    return blob.getBytes(1, asInt(blob.length()));
-                }
-                finally {
-                    JDBCUtils.safeFree(blob);
-                }
+                return readBlob(ctx, blob);
             }
             else if (object instanceof Clob clob) {
                 try {

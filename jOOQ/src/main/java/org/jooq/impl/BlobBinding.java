@@ -48,6 +48,7 @@ import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
 
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -66,7 +67,9 @@ import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.ResourceManagingScope;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.conf.ParamType;
+import org.jooq.exception.ExceptionTools;
 import org.jooq.impl.R2DBC.R2DBCPreparedStatement;
 import org.jooq.impl.R2DBC.R2DBCResultSet;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -145,13 +148,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         }
         else if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
             Blob blob = ctx.resultSet().getBlob(ctx.index());
-
-            try {
-                ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
-            }
-            finally {
-                JDBCUtils.safeFree(blob);
-            }
+            ctx.value(blob == null ? null : readBlob(ctx, blob));
         }
         else
             ctx.value(ctx.resultSet().getBytes(ctx.index()));
@@ -161,13 +158,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
     public final void get(BindingGetStatementContext<byte[]> ctx) throws SQLException {
         if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
             Blob blob = ctx.statement().getBlob(ctx.index());
-
-            try {
-                ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
-            }
-            finally {
-                JDBCUtils.safeFree(blob);
-            }
+            ctx.value(blob == null ? null : readBlob(ctx, blob));
         }
         else
             ctx.value(ctx.statement().getBytes(ctx.index()));
@@ -177,13 +168,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
     public final void get(BindingGetSQLInputContext<byte[]> ctx) throws SQLException {
         if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
             Blob blob = ctx.input().readBlob();
-
-            try {
-                ctx.value(blob == null ? null : blob.getBytes(1, asInt(blob.length())));
-            }
-            finally {
-                JDBCUtils.safeFree(blob);
-            }
+            ctx.value(blob == null ? null : readBlob(ctx, blob));
         }
         else
             ctx.value(ctx.input().readBytes());
@@ -216,5 +201,32 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         scope.autoFree(blob);
         blob.setBytes(1, bytes);
         return blob;
+    }
+
+    static final byte[] readBlob(Scope ctx, Blob blob) throws SQLException {
+        try {
+            switch (ctx.family()) {
+
+                // [#15732] Work around https://github.com/duckdb/duckdb/issues/11381
+                case DUCKDB:
+                    try {
+                        return blob.getBinaryStream().readAllBytes();
+                    }
+                    catch (IOException e) {
+                        SQLException cause = ExceptionTools.getCause(e, SQLException.class);
+
+                        if (cause != null)
+                            throw cause;
+                        else
+                            throw new SQLException(e);
+                    }
+
+                default:
+                    return blob.getBytes(1, asInt(blob.length()));
+            }
+        }
+        finally {
+            JDBCUtils.safeFree(blob);
+        }
     }
 }

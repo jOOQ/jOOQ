@@ -42,6 +42,7 @@ package org.jooq.impl;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -103,7 +104,7 @@ implements
     QOM.WithOrdinalityTable<R>
 {
 
-    static final Set<SQLDialect> NO_SUPPORT_STANDARD          = SQLDialect.supportedBy(DERBY, FIREBIRD, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> NO_SUPPORT_STANDARD          = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect> NO_SUPPORT_TVF               = SQLDialect.supportedBy(H2, HSQLDB);
     static final Set<SQLDialect> NO_SUPPORT_TABLE_EXPRESSIONS = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 

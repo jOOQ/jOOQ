@@ -41,6 +41,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -94,21 +95,21 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * Add a <code>USING</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     DeleteWhereStep<R> using(TableLike<?> table);
 
     /**
      * Add a <code>USING</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     DeleteWhereStep<R> using(TableLike<?>... tables);
 
     /**
      * Add a <code>USING</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     DeleteWhereStep<R> using(Collection<? extends TableLike<?>> tables);
 
     /**
@@ -123,7 +124,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     DeleteWhereStep<R> using(SQL sql);
 
@@ -139,7 +140,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     DeleteWhereStep<R> using(String sql);
 
@@ -156,7 +157,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     DeleteWhereStep<R> using(String sql, Object... bindings);
 
@@ -173,7 +174,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     @PlainSQL
     DeleteWhereStep<R> using(String sql, QueryPart... parts);
 
@@ -183,6 +184,6 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see DSL#table(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     DeleteWhereStep<R> using(Name name);
 }

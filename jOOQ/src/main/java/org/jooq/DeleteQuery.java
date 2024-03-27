@@ -44,6 +44,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
@@ -82,19 +83,19 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
     /**
      * Add tables to the <code>USING</code> clause.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     void addUsing(TableLike<?> table);
 
     /**
      * Add tables to the <code>USING</code> clause.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     void addUsing(TableLike<?>... tables);
 
     /**
      * Add tables to the <code>USING</code> clause.
      */
-    @Support({ MARIADB, MYSQL, POSTGRES })
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES })
     void addUsing(Collection<? extends TableLike<?>> tables);
 
     // ------------------------------------------------------------------------

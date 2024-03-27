@@ -49,7 +49,9 @@ import java.util.Random;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.impl.DefaultDataType;
+import org.jooq.impl.ParserException;
 import org.jooq.impl.QOM;
+import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractUDTDefinition;
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -57,8 +59,11 @@ import org.jooq.meta.DefaultAttributeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
+import org.jooq.tools.JooqLogger;
 
 public class DuckDBUDTDefinition extends AbstractUDTDefinition {
+
+    private static final JooqLogger log = JooqLogger.getLogger(DuckDBUDTDefinition.class);
 
     public DuckDBUDTDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, null, name, comment);
@@ -86,39 +91,44 @@ public class DuckDBUDTDefinition extends AbstractUDTDefinition {
                 .fetchSingle()
                 .value1();
 
-            QOM.CreateType ct = (QOM.CreateType)
-            create().parser()
-                    .parseQuery("create type t as " + struct);
+            try {
+                QOM.CreateType ct = (QOM.CreateType)
+                create().parser()
+                        .parseQuery("create type t as " + struct);
 
-            int i = 1;
-            for (Field<?> a : ct.$attributes()) {
-                SchemaDefinition typeSchema = null;
+                int i = 1;
+                for (Field<?> a : ct.$attributes()) {
+                    SchemaDefinition typeSchema = null;
 
-                Name qualifiedName = a.getDataType().getQualifiedName();
-                if (qualifiedName.qualified())
-                    typeSchema = getDatabase().getSchema(qualifiedName.qualifier().last());
+                    Name qualifiedName = a.getDataType().getQualifiedName();
+                    if (qualifiedName.qualified())
+                        typeSchema = getDatabase().getSchema(qualifiedName.qualifier().last());
 
-                DataTypeDefinition type = new DefaultDataTypeDefinition(
-                    getDatabase(),
-                    typeSchema == null ? getSchema() : typeSchema,
-                    qualifiedName.last(),
-                    a.getDataType().length(),
-                    a.getDataType().precision(),
-                    a.getDataType().scale(),
-                    a.getDataType().nullable(),
-                    a.getDataType().defaulted() ? a.getDataType().default_().toString() : null,
-                    name(
-                        qualifiedName.qualified() ? qualifiedName.qualifier().last() : null,
-                        qualifiedName.last()
-                    )
-                );
+                    DataTypeDefinition type = new DefaultDataTypeDefinition(
+                        getDatabase(),
+                        typeSchema == null ? getSchema() : typeSchema,
+                        qualifiedName.last(),
+                        a.getDataType().length(),
+                        a.getDataType().precision(),
+                        a.getDataType().scale(),
+                        a.getDataType().nullable(),
+                        a.getDataType().defaulted() ? a.getDataType().default_().toString() : null,
+                        name(
+                            qualifiedName.qualified() ? qualifiedName.qualifier().last() : null,
+                            qualifiedName.last()
+                        )
+                    );
 
-                result.add(new DefaultAttributeDefinition(
-                    this,
-                    a.getName(),
-                    i++,
-                    type
-                ));
+                    result.add(new DefaultAttributeDefinition(
+                        this,
+                        a.getName(),
+                        i++,
+                        type
+                    ));
+                }
+            }
+            catch (ParserException e) {
+                log.info("Error while parsing UDT. DuckDB UDTs cannot be reverse engineered reliably very easily without sufficient information in the information_schema. Please upvote this feature request to improve support for nested UDTs, etc: https://github.com/duckdb/duckdb/discussions/8832", e);
             }
         }
         finally {

@@ -337,7 +337,7 @@ public interface AlterTableStep {
      * the <code>ALTER TABLE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableAddStep add(TableElement... fields);
 
     /**
@@ -345,7 +345,7 @@ public interface AlterTableStep {
      * the <code>ALTER TABLE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableAddStep add(Collection<? extends TableElement> fields);
 
     /**

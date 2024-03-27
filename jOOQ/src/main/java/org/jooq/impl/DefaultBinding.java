@@ -4059,14 +4059,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     );
 
                 case CLICKHOUSE:
+                case DUCKDB: {
+                    Object object = ctx.resultSet().getObject(ctx.index());
+
+                    if (object == null)
+                        return null;
+
                     return newRecord(true,
                         (Class<Record>) dataType.getRecordType(),
                         (AbstractRow<Record>) dataType.getRow(),
                         ctx.configuration()
                     ).operate(r -> {
-                        r.from(ctx.resultSet().getObject(ctx.index()));
+
+                        // DuckDB
+                        if (object instanceof Struct s)
+                            r.from(s.getAttributes());
+
+                        // ClickHouse
+                        else
+                            r.from(object);
+
                         return r;
                     });
+                }
 
                 default:
                     if (UDTRecord.class.isAssignableFrom(dataType.getType()))

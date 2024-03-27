@@ -43,6 +43,7 @@ import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.recordType;
 
+import java.sql.Struct;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -164,7 +165,12 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
             return (R) object;
 
         // [#12116] TODO: Move this logic into JSONReader to make it more generally useful
-        else if (object instanceof Record || object instanceof Map || object instanceof List) {
+        else if (
+            object instanceof Record
+         || object instanceof Map
+         || object instanceof List
+         || object instanceof Struct
+        ) {
             return newRecord(true, getRecordType(), row, CONFIG.get())
                 .operate(r -> {
 

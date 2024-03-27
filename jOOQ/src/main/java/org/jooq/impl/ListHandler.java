@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.impl.Tools.newRecord;
 
+import java.sql.Array;
 import java.sql.SQLException;
 import java.sql.Struct;
 import java.util.List;
@@ -78,10 +79,12 @@ final class ListHandler<R extends Record> {
                     for (int i = 0; i < attributes.length && i < row.size(); i++) {
                         DataType<?> t = row.field(i).getDataType();
 
-                        if (t.isMultiset() && attributes[i] instanceof List)
-                            attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read((List<Struct>) attributes[i]);
-                        else if (t.isRecord() && attributes[i] instanceof Struct)
-                            attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(asList((Struct) attributes[i])).get(0);
+                        if (t.isMultiset() && attributes[i] instanceof List<?> l)
+                            attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(l);
+                        else if (t.isMultiset() && attributes[i] instanceof Array a)
+                            attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(asList((Object[]) a.getArray()));
+                        else if (t.isRecord() && attributes[i] instanceof Struct x)
+                            attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(asList(x)).get(0);
                     }
 
                     r.fromArray(attributes);

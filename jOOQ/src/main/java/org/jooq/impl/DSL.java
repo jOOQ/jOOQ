@@ -12470,7 +12470,7 @@ public class DSL {
      * @see #unnest(Field)
      */
     @NotNull
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES })
     public static Table<?> table(Field<?> cursor) {
         return unnest(cursor);
     }

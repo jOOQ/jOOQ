@@ -4414,8 +4414,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case NATIVE:
                     return apply(
-                        (List<?>) nativePatch.apply(ctx.resultSet().getObject(ctx.index())),
-                        l -> readMultisetList(ctx, row, recordType, l)
+                        nativePatch.apply(ctx.resultSet().getObject(ctx.index())),
+                        (List<?> l) -> readMultisetList(ctx, row, recordType, l)
                     );
             }
 

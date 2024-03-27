@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 // ...
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.Multiset.NO_SUPPORT_JSONB_COMPARE;
@@ -174,7 +175,7 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
                 }
 
                 ctx.sql('(');
-                acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
+                acceptArguments1(ctx, new QueryPartListView<>(new RowAsField<>(DSL.row(arguments))));
                 acceptOrderBy(ctx);
                 ctx.sql(')');
                 acceptFilterClause(ctx);

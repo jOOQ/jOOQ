@@ -329,6 +329,14 @@ public interface AlterTableStep {
      * the <code>ALTER TABLE</code> statement.
      */
     @NotNull @CheckReturnValue
+    @Support
+    AlterTableAddStep add(TableElement field);
+
+    /**
+     * Add an <code>ADD</code> clause with multiple columns or constraints to
+     * the <code>ALTER TABLE</code> statement.
+     */
+    @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableAddStep add(TableElement... fields);
 

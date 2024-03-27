@@ -460,6 +460,11 @@ implements
     }
 
     @Override
+    public final AlterTableImpl add(TableElement field) {
+        return add(Arrays.asList(field));
+    }
+
+    @Override
     public final AlterTableImpl add(TableElement... fields) {
         return add(Arrays.asList(fields));
     }

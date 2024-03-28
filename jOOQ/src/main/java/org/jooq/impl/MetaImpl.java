@@ -168,6 +168,7 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+    private static final Pattern         P_DUCKDB_IDENTITY_DEFAULT        = Pattern.compile("^(?i:nextval\\s*\\(.*\\)).*$");
     private static final Pattern         P_SYSINDEX_DERBY                 = Pattern.compile("^(?i:SQL\\d{10,}).*$");
     private static final Pattern         P_SYSINDEX_H2                    = Pattern.compile("^(?i:PRIMARY_KEY_|UK_INDEX_|FK_INDEX_).*$");
     private static final Pattern         P_SYSINDEX_HSQLDB                = Pattern.compile("^(?i:SYS_IDX_).*$");
@@ -1385,6 +1386,7 @@ final class MetaImpl extends AbstractMeta {
                     ? column.get(22, boolean.class)                      // IS_AUTOINCREMENT
                     : false;
 
+                switch (family()) {
 
 
 
@@ -1395,6 +1397,23 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
+
+
+
+
+
+
+
+
+                    case DUCKDB:
+                        if (!isAutoIncrement && !isEmpty(defaultValue) && P_DUCKDB_IDENTITY_DEFAULT.matcher(defaultValue).matches()) {
+                            isAutoIncrement = true;
+                            defaultValue = null;
+                        }
+
+                        break;
+                }
 
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType type;

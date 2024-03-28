@@ -10751,7 +10751,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTypeIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     CreateTypeStep createTypeIfNotExists(@Stringly.Name String type);
 
     /**
@@ -10760,7 +10760,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTypeIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     CreateTypeStep createTypeIfNotExists(Name type);
 
     /**
@@ -10769,7 +10769,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTypeIfNotExists(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     CreateTypeStep createTypeIfNotExists(Type<?> type);
 
     /**

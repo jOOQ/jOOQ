@@ -9566,7 +9566,7 @@ public class DSL {
      * @see DSLContext#createTypeIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTypeStep createTypeIfNotExists(@Stringly.Name String type) {
         return dsl().createTypeIfNotExists(type);
     }
@@ -9581,7 +9581,7 @@ public class DSL {
      * @see DSLContext#createTypeIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTypeStep createTypeIfNotExists(Name type) {
         return dsl().createTypeIfNotExists(type);
     }
@@ -9596,7 +9596,7 @@ public class DSL {
      * @see DSLContext#createTypeIfNotExists(Type)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
+    @Support({ H2, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTypeStep createTypeIfNotExists(Type<?> type) {
         return dsl().createTypeIfNotExists(type);
     }

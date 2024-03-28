@@ -4055,14 +4055,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     if (object == null)
                         return null;
 
-                    return newRecord(true,
-                        (Class<Record>) dataType.getRecordType(),
-                        (AbstractRow<Record>) dataType.getRow(),
-                        ctx.configuration()
-                    ).operate(r -> {
-                        r.from(object);
-                        return r;
-                    });
+                    return readMultiset(ctx, dataType);
                 }
 
                 default:
@@ -4104,6 +4097,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     DefaultBindingGetResultSetContext<?> c = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), ctx.resultSet(), ctx.index());
                     r.field(0).getBinding().get((BindingGetResultSetContext) c);
                     r.fromArray(c.value());
+                    r.changed(false);
                     return r;
                 }));
             }
@@ -4445,6 +4439,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             result.add(newRecord(true, recordType, row, ctx.configuration()).operate(r -> {
                 r.from(asList(s));
+                r.changed(false);
                 return r;
             }));
 

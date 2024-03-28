@@ -4415,19 +4415,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case NATIVE:
                     return apply(
                         nativePatch.apply(ctx.resultSet().getObject(ctx.index())),
-                        (List<?> l) -> readMultisetList(ctx, row, recordType, l)
+                        l -> readMultisetList(ctx, row, recordType, l)
                     );
             }
 
             throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);
         }
 
-
-
-
-
-
-
+        static <R extends Record> Result<R> readMultisetList(Scope ctx, AbstractRow<R> row, Class<R> recordType, List<?> l) throws SQLException {
+            return new ListHandler<>(ctx.dsl(), row, recordType).read(l);
+        }
 
         static final <R extends Record> Result<R> readMultisetXML(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
             if (s.startsWith("<"))

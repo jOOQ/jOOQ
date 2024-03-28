@@ -44,13 +44,18 @@ import static org.jooq.Records.mapping;
 import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.meta.duckdb.system.information_schema.Tables.KEY_COLUMN_USAGE;
+import static org.jooq.meta.duckdb.system.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
+import static org.jooq.meta.duckdb.system.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_COLUMNS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_CONSTRAINTS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_DATABASES;
@@ -58,9 +63,6 @@ import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_SCHEMAS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TABLES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TYPES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_VIEWS;
-import static org.jooq.meta.duckdb.system.information_schema.Tables.KEY_COLUMN_USAGE;
-import static org.jooq.meta.duckdb.system.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
-import static org.jooq.meta.duckdb.system.information_schema.Tables.TABLE_CONSTRAINTS;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -68,6 +70,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record14;
@@ -78,14 +81,13 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
-import org.jooq.conf.MappedCatalog;
-import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.DataTypeDefinition;
+import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
@@ -102,6 +104,9 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.duckdb.system.information_schema.tables.KeyColumnUsage;
+import org.jooq.meta.duckdb.system.main.tables.DuckdbConstraints;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The DuckDB database
@@ -271,6 +276,50 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
     @Override
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+        DuckdbConstraints c = DUCKDB_CONSTRAINTS;
+
+        Field<Integer> i = rowNumber()
+            .over(partitionBy(c.DATABASE_NAME, c.SCHEMA_NAME, c.TABLE_NAME).orderBy(c.CONSTRAINT_TEXT))
+            .as("i");
+
+        for (Record record : create()
+            .select(
+                c.DATABASE_NAME,
+                c.SCHEMA_NAME,
+                c.TABLE_NAME,
+                c.CONSTRAINT_TEXT,
+                i
+             )
+            .from("{0}()", c)
+            .where(row(c.DATABASE_NAME, c.SCHEMA_NAME).in(
+                getInputCatalogsAndSchemata().stream().map(e -> row(e.getKey(), e.getValue())).collect(toList())
+            ))
+            .and(c.CONSTRAINT_TYPE.eq(inline("CHECK")))
+            .orderBy(
+                c.DATABASE_NAME,
+                c.SCHEMA_NAME,
+                c.TABLE_NAME,
+                i)
+        ) {
+            CatalogDefinition catalog = getCatalog(record.get(c.DATABASE_NAME));
+
+            if (catalog != null) {
+                SchemaDefinition schema = catalog.getSchema(record.get(c.SCHEMA_NAME));
+
+                if (schema != null) {
+                    TableDefinition table = getTable(schema, record.get(c.TABLE_NAME));
+
+                    if (table != null) {
+                        relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                            schema,
+                            table,
+                            "CHECK_" + record.get(i),
+                            record.get(c.CONSTRAINT_TEXT)
+                        ));
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -451,11 +500,17 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
             .orderBy(1, 2, 3)
         ) {
             CatalogDefinition catalog = getCatalog(record.get(DUCKDB_TABLES.DATABASE_NAME));
-            SchemaDefinition schema = catalog.getSchema(record.get(DUCKDB_TABLES.SCHEMA_NAME));
-            String name = record.get(DUCKDB_TABLES.TABLE_NAME);
-            TableType tableType = record.get("table_type", TableType.class);
-            String comment = record.get(DUCKDB_TABLES.COMMENT);
-            result.add(new DuckDBTableDefinition(schema, name, comment, tableType, null));
+
+            if (catalog != null) {
+                SchemaDefinition schema = catalog.getSchema(record.get(DUCKDB_TABLES.SCHEMA_NAME));
+
+                if (schema != null) {
+                    String name = record.get(DUCKDB_TABLES.TABLE_NAME);
+                    TableType tableType = record.get("table_type", TableType.class);
+                    String comment = record.get(DUCKDB_TABLES.COMMENT);
+                    result.add(new DuckDBTableDefinition(schema, name, comment, tableType, null));
+                }
+            }
         }
 
         return result;

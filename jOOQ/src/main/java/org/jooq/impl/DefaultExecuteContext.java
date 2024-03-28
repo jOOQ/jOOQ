@@ -797,7 +797,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final void exception(RuntimeException e) {
-        this.exception = Tools.translate(sql(), e);
+        this.exception = Tools.translate(this, sql(), e);
 
         if (Boolean.TRUE.equals(settings().isDebugInfoOnStackTrace())) {
 
@@ -824,7 +824,7 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final void sqlException(SQLException e) {
         this.sqlException = e;
-        exception(Tools.translate(sql(), e));
+        exception(Tools.translate(this, sql(), e));
 
         if (family() == SQLDialect.DEFAULT && logDefaultDialect.isWarnEnabled())
             logDefaultDialect.warn("Unsupported dialect",

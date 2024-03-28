@@ -37,6 +37,8 @@
  */
 package org.jooq.exception;
 
+import static org.jooq.exception.SQLStateClass.C23_INTEGRITY_CONSTRAINT_VIOLATION;
+
 import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
@@ -59,6 +61,8 @@ public class IntegrityConstraintViolationException extends DataAccessException {
      */
     public IntegrityConstraintViolationException(String message) {
         super(message);
+
+        sqlStateClass(C23_INTEGRITY_CONSTRAINT_VIOLATION);
     }
 
     /**
@@ -70,5 +74,7 @@ public class IntegrityConstraintViolationException extends DataAccessException {
      */
     public IntegrityConstraintViolationException(String message, Throwable cause) {
         super(message, cause);
+
+        sqlStateClass(C23_INTEGRITY_CONSTRAINT_VIOLATION);
     }
 }

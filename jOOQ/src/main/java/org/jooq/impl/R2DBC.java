@@ -246,7 +246,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            complete(true, () -> resultSubscriber.downstream.subscriber.onError(translate(resultSubscriber.downstream.sql(), t)));
+            complete(true, () -> resultSubscriber.downstream.subscriber.onError(translate(resultSubscriber.downstream.configuration.dsl(), resultSubscriber.downstream.sql(), t)));
         }
 
         @Override
@@ -282,7 +282,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            complete(true, () -> downstream.subscriber.onError(translate(downstream.sql(), t)));
+            complete(true, () -> downstream.subscriber.onError(translate(downstream.configuration.dsl(), downstream.sql(), t)));
         }
 
         @Override
@@ -397,7 +397,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            downstream.subscriber.onError(translate(downstream.sql(), t));
+            downstream.subscriber.onError(translate(downstream.configuration.dsl(), downstream.sql(), t));
         }
 
         @Override

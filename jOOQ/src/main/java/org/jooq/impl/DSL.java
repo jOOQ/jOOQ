@@ -126,6 +126,7 @@ import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
+import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.combine;
 import static org.jooq.impl.Tools.configuration;
@@ -578,7 +579,7 @@ public class DSL {
                 return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
-                throw Tools.translate("Error when initialising Connection", e);
+                throw Tools.translate(CTX.get(), "Error when initialising Connection", e);
             }
         }
     }
@@ -620,7 +621,7 @@ public class DSL {
                 return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
-                throw Tools.translate("Error when initialising Connection", e);
+                throw Tools.translate(CTX.get(), "Error when initialising Connection", e);
             }
         }
     }
@@ -661,7 +662,7 @@ public class DSL {
                 return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
-                throw Tools.translate("Error when initialising Connection", e);
+                throw Tools.translate(CTX.get(), "Error when initialising Connection", e);
             }
         }
     }

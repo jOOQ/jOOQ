@@ -96,6 +96,7 @@ import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.exception.DataAccessException.sqlStateClass;
+import static org.jooq.exception.SQLStateClass.C23_INTEGRITY_CONSTRAINT_VIOLATION;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
@@ -3552,13 +3553,13 @@ final class Tools {
     /**
      * Translate a {@link R2dbcException} to a {@link DataAccessException}
      */
-    static final RuntimeException translate(String sql, Throwable t) {
+    static final RuntimeException translate(Scope scope, String sql, Throwable t) {
         if (t instanceof R2dbcException e)
-            return translate(sql, e);
+            return translate(scope, sql, e);
         else if (t instanceof SQLException e)
-            return translate(sql, e);
+            return translate(scope, sql, e);
         else if (t instanceof RuntimeException e)
-            return translate(sql, e);
+            return translate(scope, sql, e);
         else if (t != null)
             return new DataAccessException("SQL [" + sql + "]; Unspecified Throwable", t);
         else
@@ -3568,9 +3569,9 @@ final class Tools {
     /**
      * Translate a {@link R2dbcException} to a {@link DataAccessException}
      */
-    static final DataAccessException translate(String sql, R2dbcException e) {
+    static final DataAccessException translate(Scope scope, String sql, R2dbcException e) {
         if (e != null)
-            return translate(sql, e, sqlStateClass(e));
+            return translate(scope, sql, e, sqlStateClass(e));
         else
             return new DataAccessException("SQL [" + sql + "]; Unspecified R2dbcException");
     }
@@ -3578,28 +3579,39 @@ final class Tools {
     /**
      * Translate a {@link SQLException} to a {@link DataAccessException}
      */
-    static final DataAccessException translate(String sql, SQLException e) {
+    static final DataAccessException translate(Scope scope, String sql, SQLException e) {
         if (e != null)
-            return translate(sql, e, sqlStateClass(e));
+            return translate(scope, sql, e, sqlStateClass(e));
         else
             return new DataAccessException("SQL [" + sql + "]; Unspecified SQLException");
     }
 
-    private static final DataAccessException translate(String sql, Exception e, SQLStateClass sqlState) {
+    private static final DataAccessException translate(Scope scope, String sql, Exception e, SQLStateClass sqlState) {
         switch (sqlState) {
             case C22_DATA_EXCEPTION:
                 return new DataException("SQL [" + sql + "]; " + e.getMessage(), e);
             case C23_INTEGRITY_CONSTRAINT_VIOLATION:
                 return new IntegrityConstraintViolationException("SQL [" + sql + "]; " + e.getMessage(), e);
-            default:
-                return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);
+            case NONE:
+                switch (scope.family()) {
+                    case DUCKDB: {
+                        String m = e.getMessage().toLowerCase();
+
+                        if (m.contains("constraint violated: duplicate key"))
+                            return new IntegrityConstraintViolationException("SQL [" + sql + "]; " + e.getMessage(), e);
+                        else if (m.contains("constraint Error: not nullL constraint failed"));
+                            return new IntegrityConstraintViolationException("SQL [" + sql + "]; " + e.getMessage(), e);
+                    }
+                }
         }
+
+        return new DataAccessException("SQL [" + sql + "]; " + e.getMessage(), e);
     }
 
     /**
      * Translate a {@link RuntimeException} to a {@link DataAccessException}
      */
-    static final RuntimeException translate(String sql, RuntimeException e) {
+    static final RuntimeException translate(Scope scope, String sql, RuntimeException e) {
         if (e != null)
             return e;
         else
@@ -5045,7 +5057,7 @@ final class Tools {
 
                 if (ctx.settings().getThrowExceptions() == THROW_NONE) {
                     ctx.sqlException(e);
-                    results.resultsOrRows().add(new ResultOrRowsImpl(Tools.translate(ctx.sql(), e)));
+                    results.resultsOrRows().add(new ResultOrRowsImpl(Tools.translate(ctx, ctx.sql(), e)));
                 }
                 else {
                     consumeExceptions(ctx.configuration(), ctx.statement(), e);

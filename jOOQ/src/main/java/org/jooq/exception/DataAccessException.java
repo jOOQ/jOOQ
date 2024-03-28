@@ -76,6 +76,8 @@ import io.r2dbc.spi.R2dbcException;
  */
 public class DataAccessException extends RuntimeException {
 
+    SQLStateClass sqlStateClass;
+
     /**
      * Constructor for DataAccessException.
      *
@@ -123,6 +125,9 @@ public class DataAccessException extends RuntimeException {
      */
     @NotNull
     public SQLStateClass sqlStateClass() {
+        if (sqlStateClass != null)
+            return sqlStateClass;
+
         SQLException s = getCause(SQLException.class);
         if (s != null)
             return sqlStateClass(s);
@@ -132,6 +137,14 @@ public class DataAccessException extends RuntimeException {
             return sqlStateClass(r);
 
         return SQLStateClass.NONE;
+    }
+
+    /**
+     * Set the {@link SQLStateClass}.
+     */
+    public DataAccessException sqlStateClass(SQLStateClass c) {
+        this.sqlStateClass = c;
+        return this;
     }
 
     /**
@@ -155,11 +168,12 @@ public class DataAccessException extends RuntimeException {
 
 
 
+
         if (e.getSQLState() != null)
             return SQLStateClass.fromCode(e.getSQLState());
-        else if (e.getSQLState() == null && causePrefix(e, "org.sqlite"))
+        else if (causePrefix(e, "org.sqlite"))
             return SQLStateClass.fromSQLiteVendorCode(e.getErrorCode());
-        else if (e.getSQLState() == null && causePrefix(e, "io.trino"))
+        else if (causePrefix(e, "io.trino"))
             return SQLStateClass.fromTrinoVendorCode(e.getErrorCode());
         else
             return SQLStateClass.NONE;

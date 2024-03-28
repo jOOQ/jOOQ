@@ -160,7 +160,7 @@ final class MetaDataFieldProvider implements Serializable {
             }
         }
         catch (SQLException e) {
-            throw Tools.translate(null, e);
+            throw Tools.translate(configuration.dsl(), null, e);
         }
 
         return new FieldsImpl<>(fields);

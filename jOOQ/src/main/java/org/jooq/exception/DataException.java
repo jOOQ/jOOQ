@@ -37,6 +37,8 @@
  */
 package org.jooq.exception;
 
+import static org.jooq.exception.SQLStateClass.C22_DATA_EXCEPTION;
+
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 
@@ -61,6 +63,8 @@ public class DataException extends DataAccessException {
      */
     public DataException(String message) {
         super(message);
+
+        sqlStateClass(C22_DATA_EXCEPTION);
     }
 
     /**
@@ -72,5 +76,7 @@ public class DataException extends DataAccessException {
      */
     public DataException(String message, Throwable cause) {
         super(message, cause);
+
+        sqlStateClass(C22_DATA_EXCEPTION);
     }
 }

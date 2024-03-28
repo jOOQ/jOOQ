@@ -207,6 +207,7 @@ public class BlobBinding implements Binding<byte[], byte[]> {
         try {
             switch (ctx.family()) {
 
+
                 // [#15732] Work around https://github.com/duckdb/duckdb/issues/11381
                 case DUCKDB:
                     try {
@@ -220,6 +221,8 @@ public class BlobBinding implements Binding<byte[], byte[]> {
                         else
                             throw new SQLException(e);
                     }
+
+
 
                 default:
                     return blob.getBytes(1, asInt(blob.length()));

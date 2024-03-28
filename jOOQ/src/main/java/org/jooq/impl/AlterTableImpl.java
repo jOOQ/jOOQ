@@ -235,7 +235,7 @@ implements
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect> SUPPORT_RENAME_TABLE                  = SQLDialect.supportedBy(CLICKHOUSE, DERBY);
-    private static final Set<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(DERBY, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(DERBY, DUCKDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(CLICKHOUSE, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);

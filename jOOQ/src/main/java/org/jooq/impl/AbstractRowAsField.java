@@ -225,7 +225,6 @@ implements
 
                     break;
 
-                // case ARRAY:
                 case NATIVE:
                 default:
                     acceptDefault.accept(ctx);

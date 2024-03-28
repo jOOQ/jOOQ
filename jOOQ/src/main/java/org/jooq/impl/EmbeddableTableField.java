@@ -98,14 +98,18 @@ implements
         // [#12237] If a RowField is nested somewhere in MULTISET, we must apply
         //          the MULTISET emulation as well, here
         if (forceMultisetContent(ctx, () -> getDataType().getRow().size() > 1))
-            acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptDefault);
+            acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptRow);
         else if (forceRowContent(ctx))
-            ctx.visit(((AbstractRow<?>) getDataType().getRow()).rf());
+            acceptRow(ctx);
         else
             acceptDefault(ctx);
     }
 
-    private void acceptDefault(Context<?> ctx) {
+    private final void acceptRow(Context<?> ctx) {
+        ctx.visit(((AbstractRow<?>) getDataType().getRow()).rf());
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
         ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(getDataType().getRow().fields())));
     }
 

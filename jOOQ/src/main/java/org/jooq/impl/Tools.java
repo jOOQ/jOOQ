@@ -6217,6 +6217,7 @@ final class Tools {
                 // [#7597] In PostgreSQL, the enum type reference should be used
 
 
+                case DUCKDB:
                 case POSTGRES:
                 case YUGABYTEDB: {
 

@@ -356,6 +356,7 @@ implements
     static final Set<SQLDialect> REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect> NO_SUPPORT_NULLABLE_PRIMARY_KEY    = SQLDialect.supportedBy(CLICKHOUSE, MARIADB, MYSQL);
     static final Set<SQLDialect> REQUIRE_NON_PK_COLUMNS             = SQLDialect.supportedBy(IGNITE);
+    static final Set<SQLDialect> CREATE_SEQUENCE_FOR_IDENTITY       = SQLDialect.supportedBy(DUCKDB);
 
 
 
@@ -441,6 +442,11 @@ implements
     private final void accept1(Context<?> ctx) {
         ctx.start(Clause.CREATE_TABLE);
 
+        if (CREATE_SEQUENCE_FOR_IDENTITY.contains(ctx.family())
+            && anyMatch(tableElements, e -> e instanceof Field && ((Field<?>) e).getDataType().identity())
+        )
+            prependSQL(ctx, createSequenceIfNotExists(identitySequence(table)));
+
         if (select != null) {
 
 
@@ -522,7 +528,7 @@ implements
 
                 if (select == null) {
                     ctx.sql(' ');
-                    Tools.toSQLDDLTypeDeclarationForAddition(ctx, type);
+                    Tools.toSQLDDLTypeDeclarationForAddition(ctx, table, type);
                     acceptColumnComment(ctx, field);
                 }
 
@@ -610,7 +616,7 @@ implements
 
                 if (select == null) {
                     ctx.sql(' ');
-                    Tools.toSQLDDLTypeDeclarationForAddition(ctx, INTEGER);
+                    Tools.toSQLDDLTypeDeclarationForAddition(ctx, table, INTEGER);
                 }
             }
         }

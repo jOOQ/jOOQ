@@ -1327,7 +1327,7 @@ implements
 
                 if (part instanceof Field<?> f) {
                     ctx.sql(' ');
-                    toSQLDDLTypeDeclarationForAddition(ctx, f.getDataType());
+                    toSQLDDLTypeDeclarationForAddition(ctx, table, f.getDataType());
                     CreateTableImpl.acceptColumnComment(ctx, f);
                 }
             }
@@ -1355,7 +1355,7 @@ implements
 
 
             ctx.qualify(false, c -> c.visit(Tools.uncollate(addColumn))).sql(' ');
-            toSQLDDLTypeDeclarationForAddition(ctx, addColumnType);
+            toSQLDDLTypeDeclarationForAddition(ctx, table, addColumnType);
             CreateTableImpl.acceptColumnComment(ctx, addColumn);
 
 
@@ -1502,7 +1502,7 @@ implements
 
                 ctx.sql(' ');
                 toSQLDDLTypeDeclaration(ctx, alterColumnType);
-                toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, alterColumnType);
+                toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, table, alterColumnType);
 
                 // [#3805] Some databases cannot change the type and the NOT NULL constraint in a single statement
                 if (!NO_SUPPORT_ALTER_TYPE_AND_NULL.contains(ctx.dialect())) {
@@ -1518,7 +1518,7 @@ implements
                     }
                 }
 
-                toSQLDDLTypeDeclarationIdentityAfterNull(ctx, alterColumnType);
+                toSQLDDLTypeDeclarationIdentityAfterNull(ctx, table, alterColumnType);
             }
             else if (alterColumnDefault != null) {
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);

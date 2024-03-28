@@ -211,7 +211,7 @@ implements
         return CustomField.of(f.getUnqualifiedName(), f.getDataType(), c -> {
             c.visit(f.getUnqualifiedName());
             c.sql(' ');
-            Tools.toSQLDDLTypeDeclarationForAddition(c, f.getDataType());
+            Tools.toSQLDDLTypeDeclarationForAddition(c, null, f.getDataType());
         });
     }
 

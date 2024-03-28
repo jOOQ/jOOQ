@@ -334,6 +334,7 @@ import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectFieldOrAsterisk;
+import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.Source;
 import org.jooq.Table;
@@ -5763,7 +5764,7 @@ final class Tools {
         });
     }
 
-    static final void toSQLDDLTypeDeclarationForAddition(Context<?> ctx, DataType<?> type) {
+    static final void toSQLDDLTypeDeclarationForAddition(Context<?> ctx, Table<?> table, DataType<?> type) {
         boolean qualify = ctx.qualify();
         toSQLDDLTypeDeclaration(ctx, type);
 
@@ -5771,7 +5772,7 @@ final class Tools {
         //          have qualified field references elsewhere, e.g. in computed
         //          column declarations.
         ctx.qualify(false);
-        toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, type);
+        toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, table, type);
 
 
 
@@ -5792,7 +5793,7 @@ final class Tools {
         if (!DEFAULT_BEFORE_NULL.contains(ctx.dialect()))
             toSQLDDLTypeDeclarationDefault(ctx, type);
 
-        toSQLDDLTypeDeclarationIdentityAfterNull(ctx, type);
+        toSQLDDLTypeDeclarationIdentityAfterNull(ctx, table, type);
 
 
 
@@ -5858,14 +5859,28 @@ final class Tools {
         }
     }
 
-    private static final Set<SQLDialect> REQUIRE_IDENTITY_AFTER_NULL = SQLDialect.supportedBy(H2, MARIADB, MYSQL);
+    static final Sequence<?> identitySequence(Table<?> table) {
+        if (table == null)
+            return DSL.sequence("id");
+
+        Name n = table.getQualifiedName();
+
+        if (n.qualified())
+            n = n.qualifier().append(n.last() + "_seq");
+        else
+            n = name(n.last() + "_seq");
+
+        return DSL.sequence(n);
+    }
+
+    private static final Set<SQLDialect> REQUIRE_IDENTITY_AFTER_NULL = SQLDialect.supportedBy(DUCKDB, H2, MARIADB, MYSQL);
     private static final Set<SQLDialect> SUPPORT_PG_IDENTITY         = SQLDialect.supportedBy(POSTGRES);
 
     /**
      * If a type is an identity type, some dialects require the relevant
      * keywords before the [ NOT ] NULL constraint.
      */
-    static final void toSQLDDLTypeDeclarationIdentityBeforeNull(Context<?> ctx, DataType<?> type) {
+    static final void toSQLDDLTypeDeclarationIdentityBeforeNull(Context<?> ctx, Table<?> table, DataType<?> type) {
         if (REQUIRE_IDENTITY_AFTER_NULL.contains(ctx.dialect()))
             return;
 
@@ -5902,7 +5917,7 @@ final class Tools {
      * If a type is an identity type, some dialects require the relevant
      * keywords after the [ NOT ] NULL constraint.
      */
-    static final void toSQLDDLTypeDeclarationIdentityAfterNull(Context<?> ctx, DataType<?> type) {
+    static final void toSQLDDLTypeDeclarationIdentityAfterNull(Context<?> ctx, Table<?> table, DataType<?> type) {
         if (!REQUIRE_IDENTITY_AFTER_NULL.contains(ctx.dialect()))
             return;
 
@@ -5922,6 +5937,7 @@ final class Tools {
 
                 case MARIADB:
                 case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
+                case DUCKDB: ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(identitySequence(table).nextval()); break;
             }
         }
     }

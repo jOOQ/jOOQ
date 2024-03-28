@@ -38,6 +38,9 @@
 package org.jooq.exception;
 
 import static org.jooq.exception.SQLStateClass.C22_DATA_EXCEPTION;
+import static org.jooq.exception.SQLStateClass.C23_INTEGRITY_CONSTRAINT_VIOLATION;
+import static org.jooq.exception.SQLStateSubclass.C22000_NO_SUBCLASS;
+import static org.jooq.exception.SQLStateSubclass.C23000_NO_SUBCLASS;
 
 import java.sql.SQLDataException;
 import java.sql.SQLException;
@@ -64,7 +67,7 @@ public class DataException extends DataAccessException {
     public DataException(String message) {
         super(message);
 
-        sqlStateClass(C22_DATA_EXCEPTION);
+        init();
     }
 
     /**
@@ -77,6 +80,11 @@ public class DataException extends DataAccessException {
     public DataException(String message, Throwable cause) {
         super(message, cause);
 
+        init();
+    }
+
+    private final void init() {
         sqlStateClass(C22_DATA_EXCEPTION);
+        sqlStateSubclass(C22000_NO_SUBCLASS);
     }
 }

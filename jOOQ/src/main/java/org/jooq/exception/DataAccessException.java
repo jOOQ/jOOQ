@@ -76,7 +76,8 @@ import io.r2dbc.spi.R2dbcException;
  */
 public class DataAccessException extends RuntimeException {
 
-    SQLStateClass sqlStateClass;
+    SQLStateClass    sqlStateClass;
+    SQLStateSubclass sqlStateSubclass;
 
     /**
      * Constructor for DataAccessException.
@@ -197,6 +198,14 @@ public class DataAccessException extends RuntimeException {
     }
 
     /**
+     * Set the {@link SQLStateSubclass}.
+     */
+    public DataAccessException sqlStateSubclass(SQLStateSubclass c) {
+        this.sqlStateSubclass = c;
+        return this;
+    }
+
+    /**
      * Decode the {@link SQLException#getSQLState()} or
      * {@link R2dbcException#getSqlState()} from {@link #getCause()} into
      * {@link SQLStateSubclass}, if this <code>DataAccessException</code> was
@@ -204,7 +213,10 @@ public class DataAccessException extends RuntimeException {
      */
     @NotNull
     public SQLStateSubclass sqlStateSubclass() {
-        return SQLStateSubclass.fromCode(sqlState());
+        if (sqlStateSubclass != null)
+            return sqlStateSubclass;
+        else
+            return SQLStateSubclass.fromCode(sqlState());
     }
 
     @Override

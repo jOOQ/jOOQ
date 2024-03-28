@@ -252,7 +252,7 @@ implements
     static final Set<SQLDialect>  NO_SUPPORT_CACHE           = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
     static final Set<SQLDialect>  NO_SUPPORT_AS              = SQLDialect.supportedBy(CUBRID, DUCKDB, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
     static final Set<SQLDialect>  NO_SEPARATOR               = SQLDialect.supportedBy(CUBRID, MARIADB);
-    static final Set<SQLDialect>  OMIT_NO_CACHE              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>  OMIT_NO_CACHE              = SQLDialect.supportedBy(DUCKDB, FIREBIRD, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>  OMIT_NO_CYCLE              = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect>  OMIT_NO_MINVALUE           = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect>  OMIT_NO_MAXVALUE           = SQLDialect.supportedBy(FIREBIRD);

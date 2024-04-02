@@ -5791,6 +5791,44 @@ public final class QOM {
     {}
 
     /**
+     * The <code>BIN TO UUID</code> function.
+     * <p>
+     * Convert a {@link SQLDataType#BINARY} representation of a UUID to a {@link SQLDataType#UUID}
+     * representation.
+     */
+    public /*sealed*/ interface BinToUuid
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<byte[]>, BinToUuid>,
+            org.jooq.Field<UUID>
+        //permits
+        //    BinToUuid
+    {
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BinToUuid $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+    }
+
+    /**
+     * The <code>UUID TO BIN</code> function.
+     * <p>
+     * Convert a {@link SQLDataType#BINARY} representation of a UUID to a {@link SQLDataType#UUID}
+     * representation.
+     */
+    public /*sealed*/ interface UuidToBin
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<UUID>, UuidToBin>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    UuidToBin
+    {
+        @NotNull default Field<UUID> $uuid() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default UuidToBin $uuid(Field<UUID> newUuid) { return $arg1(newUuid); }
+    }
+
+    /**
      * The <code>BINARY BIT LENGTH</code> function.
      * <p>
      * The length of a binary string in bits.

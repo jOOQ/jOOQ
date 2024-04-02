@@ -121,6 +121,7 @@ final class Names {
     static final Name N_DUAL                        = systemName("dual");
     static final Name N_ELEMENT_AT                  = systemName("element_at");
     static final Name N_ELT                         = systemName("elt");
+    static final Name N_ENCODE                      = systemName("encode");
     static final Name N_EVERY                       = systemName("every");
     static final Name N_EXTRACT                     = systemName("extract");
     static final Name N_FILTER                      = systemName("filter");
@@ -377,6 +378,7 @@ final class Names {
     static final Name N_BIN_OR                      = systemName("bin_or");
     static final Name N_BIN_SHL                     = systemName("bin_shl");
     static final Name N_BIN_SHR                     = systemName("bin_shr");
+    static final Name N_BIN_TO_UUID                 = systemName("bin_to_uuid");
     static final Name N_BIN_XOR                     = systemName("bin_xor");
     static final Name N_BITAND                      = systemName("bitand");
     static final Name N_BITGET                      = systemName("bitget");
@@ -642,8 +644,11 @@ final class Names {
     static final Name N_UPPER                       = systemName("upper");
     static final Name N_USER                        = systemName("user");
     static final Name N_UUID                        = systemName("uuid");
+    static final Name N_UUIDNumToString             = systemName("UUIDNumToString");
+    static final Name N_UUIDStringToNum             = systemName("UUIDStringToNum");
     static final Name N_UUID_GENERATE               = systemName("uuid_generate");
     static final Name N_UUID_STRING                 = systemName("uuid_string");
+    static final Name N_UUID_TO_BIN                 = systemName("uuid_to_bin");
     static final Name N_VAR_POP                     = systemName("var_pop");
     static final Name N_VAR_SAMP                    = systemName("var_samp");
     static final Name N_WIDTH_BUCKET                = systemName("width_bucket");

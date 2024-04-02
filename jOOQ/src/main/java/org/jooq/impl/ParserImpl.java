@@ -8794,7 +8794,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return octetLength((Field) parseFieldParenthesised());
                 else if ((field = parseFieldBitwiseFunctionIf()) != null)
                     return field;
-
+                else if (parseFunctionNameIf("BIN_TO_UUID"))
+                    return parseFunctionArgs1(DSL::binToUuid);
                 else if ((value = parseBitLiteralIf()) != null)
                     return DSL.inline((Boolean) value);
 
@@ -9581,6 +9582,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return DSL.upper((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("UUID", "UUID_GENERATE", "UUID_STRING") && parseEmptyParens())
                     return uuid();
+                else if (parseFunctionNameIf("UUID_TO_BIN", "UUIDStringToNum"))
+                    return parseFunctionArgs1(DSL::uuidToBin);
+                else if (parseFunctionNameIf("UUIDNumToString"))
+                    return parseFunctionArgs1(DSL::binToUuid);
 
                 else if (parseFunctionNameIf("UNIX_TIMESTAMP"))
                     return epoch(parseFieldParenthesised());

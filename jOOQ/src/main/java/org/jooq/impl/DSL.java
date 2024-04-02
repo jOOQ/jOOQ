@@ -21004,6 +21004,10 @@ public class DSL {
         return new Upper(string);
     }
 
+    // -------------------------------------------------------------------------
+    // UUID functions
+    // -------------------------------------------------------------------------
+
     /**
      * The <code>UUID</code> function.
      * <p>
@@ -21013,6 +21017,56 @@ public class DSL {
     @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static Field<UUID> uuid() {
         return new Uuid();
+    }
+
+    /**
+     * The <code>BIN_TO_UUID</code> function.
+     * <p>
+     * Convert a {@link SQLDataType#BINARY} representation of a UUID to a {@link SQLDataType#UUID}
+     * representation.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MYSQL, POSTGRES, YUGABYTEDB })
+    public static Field<UUID> binToUuid(byte[] bytes) {
+        return new BinToUuid(Tools.field(bytes));
+    }
+
+    /**
+     * The <code>BIN_TO_UUID</code> function.
+     * <p>
+     * Convert a {@link SQLDataType#BINARY} representation of a UUID to a {@link SQLDataType#UUID}
+     * representation.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MYSQL, POSTGRES, YUGABYTEDB })
+    public static Field<UUID> binToUuid(Field<byte[]> bytes) {
+        return new BinToUuid(bytes);
+    }
+
+    /**
+     * The <code>UUID_TO_BIN</code> function.
+     * <p>
+     * Convert a {@link SQLDataType#BINARY} representation of a UUID to a {@link SQLDataType#UUID}
+     * representation.
+     *
+     * @param uuid is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MYSQL, POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> uuidToBin(UUID uuid) {
+        return new UuidToBin(Tools.field(uuid));
+    }
+
+    /**
+     * The <code>UUID_TO_BIN</code> function.
+     * <p>
+     * Convert a {@link SQLDataType#BINARY} representation of a UUID to a {@link SQLDataType#UUID}
+     * representation.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MYSQL, POSTGRES, YUGABYTEDB })
+    public static Field<byte[]> uuidToBin(Field<UUID> uuid) {
+        return new UuidToBin(uuid);
     }
 
     // -------------------------------------------------------------------------

@@ -615,6 +615,7 @@ implements
 
 
 
+                case CLICKHOUSE:
                 case IGNITE:
                 case TRINO: {
                     acceptInsertSelect(ctx);

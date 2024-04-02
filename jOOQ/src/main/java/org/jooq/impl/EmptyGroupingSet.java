@@ -42,6 +42,7 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
@@ -79,7 +80,7 @@ import org.jooq.SQLDialect;
 final class EmptyGroupingSet extends AbstractField<Object> implements QOM.EmptyGroupingSet {
 
     static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_CONSTANT = SQLDialect.supportedUntil(DERBY, HSQLDB, IGNITE);
-    static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(FIREBIRD, MARIADB, MYSQL, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> EMULATE_EMPTY_GROUP_BY_OTHER    = SQLDialect.supportedUntil(CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, SQLITE, YUGABYTEDB);
 
 
 

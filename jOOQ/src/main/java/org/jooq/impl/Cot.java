@@ -97,6 +97,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case SQLITE:
             case TRINO:
                 return false;
@@ -121,6 +122,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case SQLITE:
             case TRINO:
                 ctx.visit(idiv(DSL.cos(value), DSL.sin(value)));

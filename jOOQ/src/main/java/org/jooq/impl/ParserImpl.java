@@ -4991,6 +4991,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (!computed && !ignoreProEdition() && parseKeywordIf("ALIAS") && requireProEdition()) {
+
+
+
+
+
+
+                }
+                else if (!computed && !ignoreProEdition() && parseKeywordIf("MATERIALIZED") && requireProEdition()) {
+
+
+
+
+
+
+                }
                 else if ((!identity || !computed) && parseKeywordIf("GENERATED")) {
                     boolean always;
                     if (!(always = parseKeywordIf("ALWAYS"))) {

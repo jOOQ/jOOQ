@@ -141,6 +141,7 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
+import static org.jooq.impl.Keywords.K_ALIAS;
 import static org.jooq.impl.Keywords.K_ALWAYS;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_ATOMIC;
@@ -176,6 +177,7 @@ import static org.jooq.impl.Keywords.K_IMPLICITLY;
 import static org.jooq.impl.Keywords.K_INT;
 import static org.jooq.impl.Keywords.K_INVISIBLE;
 import static org.jooq.impl.Keywords.K_LIKE;
+import static org.jooq.impl.Keywords.K_MATERIALIZED;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
@@ -5953,6 +5955,13 @@ final class Tools {
             }
         }
     }
+
+
+
+
+
+
+
 
 
 

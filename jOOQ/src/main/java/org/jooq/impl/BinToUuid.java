@@ -95,6 +95,7 @@ implements
                 return false;
 
 
+
             case H2:
             case HSQLDB:
                 return false;
@@ -120,6 +121,7 @@ implements
             case CLICKHOUSE:
                 ctx.visit(function(N_UUIDNumToString, UUID, bytes));
                 break;
+
 
 
             case H2:

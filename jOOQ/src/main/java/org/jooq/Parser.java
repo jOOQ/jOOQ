@@ -50,10 +50,11 @@ import org.jetbrains.annotations.Nullable;
 public interface Parser {
 
     /**
-     * Parse a SQL string to a set of queries.
+     * Parse a SQL string into a set of {@link Queries}.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a set
+     *             of {@link Queries}.
      */
     @NotNull
     @Support
@@ -61,11 +62,12 @@ public interface Parser {
     Queries parse(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string with bind variables to a set of queries.
+     * Parse a SQL string with bind variables into a set of {@link Queries}.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a set
+     *             of {@link Queries}.
      */
     @NotNull
     @Support
@@ -73,10 +75,11 @@ public interface Parser {
     Queries parse(String sql, Object... bindings) throws ParserException;
 
     /**
-     * Parse a SQL string to a query.
+     * Parse a SQL string into a {@link Query}.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Query}.
      */
     @Nullable
     @Support
@@ -84,11 +87,12 @@ public interface Parser {
     Query parseQuery(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string with bind variables to a query.
+     * Parse a SQL string with bind variables into a {@link Query}.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Query}.
      */
     @Nullable
     @Support
@@ -96,10 +100,11 @@ public interface Parser {
     Query parseQuery(String sql, Object... bindings) throws ParserException;
 
     /**
-     * Parse a SQL string to a procedural statement.
+     * Parse a SQL string into a procedural {@link Statement}.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             procedural {@link Statement}.
      */
     @Nullable
     @Support
@@ -107,11 +112,13 @@ public interface Parser {
     Statement parseStatement(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string with bind variables to a procedural statement.
+     * Parse a SQL string with bind variables into a procedural
+     * {@link Statement}.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             procedural {@link Statement}.
      */
     @Nullable
     @Support
@@ -147,11 +154,15 @@ public interface Parser {
 
 
 
+
+
+
     /**
-     * Parse a SQL string to a result query.
+     * Parse a SQL string into a {@link ResultQuery}.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link ResultQuery}.
      */
     @Nullable
     @Support
@@ -159,11 +170,12 @@ public interface Parser {
     ResultQuery<?> parseResultQuery(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string with bind variables to a result query.
+     * Parse a SQL string with bind variables into a {@link ResultQuery}.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link ResultQuery}.
      */
     @Nullable
     @Support
@@ -171,10 +183,11 @@ public interface Parser {
     ResultQuery<?> parseResultQuery(String sql, Object... bindings) throws ParserException;
 
     /**
-     * Parse a SQL string to a select statement.
+     * Parse a SQL string into a {@link Select} statement.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Select} statement.
      */
     @Nullable
     @Support
@@ -182,11 +195,12 @@ public interface Parser {
     Select<?> parseSelect(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string to a select statement.
+     * Parse a SQL string into a {@link Select} statement.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Select} statement.
      */
     @Nullable
     @Support
@@ -194,10 +208,11 @@ public interface Parser {
     Select<?> parseSelect(String sql, Object... bindings) throws ParserException;
 
     /**
-     * Parse a SQL string to a table.
+     * Parse a SQL string into a {@link Table}.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Table}.
      */
     @NotNull
     @Support
@@ -205,11 +220,12 @@ public interface Parser {
     Table<?> parseTable(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string with bind variables to a table.
+     * Parse a SQL string with bind variables into a {@link Table}.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Table}.
      */
     @NotNull
     @Support
@@ -217,10 +233,11 @@ public interface Parser {
     Table<?> parseTable(String sql, Object... bindings) throws ParserException;
 
     /**
-     * Parse a SQL string to a field.
+     * Parse a SQL string into a {@link Field}.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Field}.
      */
     @NotNull
     @Support
@@ -228,11 +245,12 @@ public interface Parser {
     Field<?> parseField(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string with bind variables to a field.
+     * Parse a SQL string with bind variables into a {@link Field}.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Field}.
      */
     @NotNull
     @Support
@@ -240,10 +258,11 @@ public interface Parser {
     Field<?> parseField(String sql, Object... bindings) throws ParserException;
 
     /**
-     * Parse a SQL string to a row.
+     * Parse a SQL string into a {@link Row}.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Row}.
      */
     @NotNull
     @Support
@@ -251,11 +270,12 @@ public interface Parser {
     Row parseRow(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string with bind variables to a row.
+     * Parse a SQL string with bind variables into a {@link Row}.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Row}.
      */
     @NotNull
     @Support
@@ -263,10 +283,11 @@ public interface Parser {
     Row parseRow(String sql, Object... bindings) throws ParserException;
 
     /**
-     * Parse a SQL string to a condition.
+     * Parse a SQL string into a {@link Condition}.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Condition}.
      */
     @NotNull
     @Support
@@ -274,11 +295,12 @@ public interface Parser {
     Condition parseCondition(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string with bind variables to a condition.
+     * Parse a SQL string with bind variables into a {@link Condition}.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a
+     *             {@link Condition}.
      */
     @NotNull
     @Support
@@ -286,10 +308,11 @@ public interface Parser {
     Condition parseCondition(String sql, Object... bindings) throws ParserException;
 
     /**
-     * Parse a SQL string to a name.
+     * Parse a SQL string into a name {@link Name}.
      *
      * @param sql The SQL string
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a name
+     *             {@link Name}.
      */
     @NotNull
     @Support
@@ -297,11 +320,12 @@ public interface Parser {
     Name parseName(String sql) throws ParserException;
 
     /**
-     * Parse a SQL string with bind variables to a name.
+     * Parse a SQL string with bind variables into a name {@link Name}.
      *
      * @param sql The SQL string
      * @param bindings The bind variables
-     * @throws ParserException If the SQL string could not be parsed.
+     * @throws ParserException If the SQL string could not be parsed into a name
+     *             {@link Name}.
      */
     @NotNull
     @Support

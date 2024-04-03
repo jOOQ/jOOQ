@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -74,7 +75,7 @@ import org.jooq.impl.QOM.UnmodifiableList;
 final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
     static final Lazy<AsteriskImpl> INSTANCE                        = Lazy.of(() -> new AsteriskImpl(new QueryPartList<>()));
     static final Set<SQLDialect>    SUPPORT_NATIVE_EXCEPT           = SQLDialect.supportedBy(H2);
-    static final Set<SQLDialect>    NO_SUPPORT_UNQUALIFIED_COMBINED = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
+    static final Set<SQLDialect>    NO_SUPPORT_UNQUALIFIED_COMBINED = SQLDialect.supportedBy(CLICKHOUSE, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL);
 
 
 

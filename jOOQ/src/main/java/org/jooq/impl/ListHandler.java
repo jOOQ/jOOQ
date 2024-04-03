@@ -72,8 +72,14 @@ final class ListHandler<R extends Record> {
 
         for (Object o : list)
             result.add(newRecord(true, recordType, row, ctx.configuration()).operate(r -> {
-                if (o instanceof Struct s) {
-                    Object[] attributes = s.getAttributes();
+                Object[] attributes =
+                    o instanceof Struct s
+                  ? s.getAttributes()
+                  : o instanceof List<?> l
+                  ? l.toArray()
+                  : null;
+
+                if (attributes != null) {
 
                     // [#13400] Recurse for nested MULTISET or ROW types
                     for (int i = 0; i < attributes.length && i < row.size(); i++) {

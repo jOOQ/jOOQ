@@ -108,6 +108,7 @@ implements
 
 
 
+            case CLICKHOUSE:
             case DERBY:
             case DUCKDB:
             case H2:

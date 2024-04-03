@@ -180,6 +180,7 @@ final class Names {
     static final Name N_JSON_TYPE                   = systemName("json_type");
     static final Name N_JSON_UNQUOTE                = systemName("json_unquote");
     static final Name N_JSON_VALUE                  = systemName("json_value");
+    static final Name N_jsonMergePatch              = systemName("jsonMergePatch");
     static final Name N_LAG                         = systemName("lag");
     static final Name N_lagInFrame                  = systemName("lagInFrame");
     static final Name N_LAST_VALUE                  = systemName("last_value");

@@ -210,7 +210,7 @@ implements
 
                 // [#7539] ARRAY types can't mix data types, so use TUPLE for degrees > 1
                 if (fields.size() > 1)
-                    ctx.visit(function(N_toJSONString, getDataType(), function(N_TUPLE, OTHER, fields.toArray(EMPTY_FIELD))));
+                    ctx.visit(function(N_toJSONString, getDataType(), function(N_TUPLE, OTHER, map(fields, e -> JSONEntryImpl.jsonCast(ctx, e), Field[]::new))));
                 else
                     ctx.visit(function(N_toJSONString, getDataType(), array(fields)));
 

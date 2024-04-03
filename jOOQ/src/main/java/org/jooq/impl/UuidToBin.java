@@ -119,7 +119,7 @@ implements
 
 
             case CLICKHOUSE:
-                ctx.visit(function(N_UUIDStringToNum, BINARY(16), uuid));
+                ctx.visit(function(N_UUIDStringToNum, BINARY(16), DSL.cast(uuid, VARCHAR)));
                 break;
 
 

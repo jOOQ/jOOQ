@@ -3969,7 +3969,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
             Cast.renderCastIf(ctx.render(),
                 c -> super.sqlBind0(ctx, value),
                 c -> pgRenderRecordCast(ctx.render()),
@@ -4105,7 +4105,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 result = DefaultResultBinding.readMultiset(ctx, row, type.getType(),
                     s -> s != null && (s.startsWith("[") || s.startsWith("{")) ? "[" + s + "]" : null,
                     s -> s != null && (s.startsWith("<")) ? "<result>" + s + "</result>" : null,
-                    s -> s instanceof Struct x ? asList(x) : null
+                    s -> s instanceof Struct x
+                         ? asList(x)
+                         : s instanceof List<?> l
+                         ? asList(l)
+                         : null
                 );
 
             return isEmpty(result) ? null : result.get(0);
@@ -4416,7 +4420,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);
         }
 
-        static <R extends Record> Result<R> readMultisetList(Scope ctx, AbstractRow<R> row, Class<R> recordType, List<?> l) throws SQLException {
+        static final <R extends Record> Result<R> readMultisetList(Scope ctx, AbstractRow<R> row, Class<R> recordType, List<?> l) throws SQLException {
             return new ListHandler<>(ctx.dsl(), row, recordType).read(l);
         }
 

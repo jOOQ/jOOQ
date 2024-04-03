@@ -245,9 +245,15 @@ implements
             }
 
             case CLICKHOUSE: {
-                ctx.visit(function(N_toJSONString, getDataType(), function(N_MAP, OTHER,
-                    flatMap(entries, e -> Arrays.<Field<?>>asList(e.key(), e.value())).toArray(EMPTY_FIELD)
-                )));
+                if (entries.isEmpty())
+                    ctx.visit(function(N_toJSONString, getDataType(), function(N_MAP, OTHER)));
+                else if (entries.size() == 1)
+                    ctx.visit(toJSONString(ctx, getDataType(), entries.get(0)));
+                else
+                    ctx.visit(function(N_jsonMergePatch, getDataType(),
+                        map(entries, e -> toJSONString(ctx, getDataType(), e), Field[]::new)
+                    ));
+
                 break;
             }
 
@@ -271,6 +277,12 @@ implements
                 acceptStandard(ctx);
                 break;
         }
+    }
+
+    static final Field<?> toJSONString(Context<?> ctx, DataType<?> t, JSONEntry<?> e) {
+        return function(N_toJSONString, t, function(N_MAP, OTHER,
+            e.key(), JSONEntryImpl.jsonCast(ctx, e.value())
+        ));
     }
 
     static final Field<?> absentOnNullIf(

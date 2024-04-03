@@ -238,6 +238,12 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
                 break;
 
+            case CLICKHOUSE:
+                if (isType(type, Boolean.class))
+                    return field.cast(BOOLEAN);
+
+                break;
+
             case SQLITE:
                 if (isType(type, Boolean.class))
                     return function(N_JSON, SQLDataType.JSON, booleanCase(field));

@@ -215,6 +215,7 @@ import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.SubqueryCharacteristics.SET_OPERATION;
 import static org.jooq.impl.Tools.executeImmediate;
+import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -1004,7 +1005,16 @@ final class Tools {
         /**
          * [#15982] The base type of an empty array in the current scope.
          */
-        DATA_EMPTY_ARRAY_BASE_TYPE
+        DATA_EMPTY_ARRAY_BASE_TYPE,
+
+        /**
+         * [#16498] In some cases, the datetime literal prefix needs to be
+         * omitted.
+         * <p>
+         * E.g. instead of <code>DATE '2000-01-01'</code>, only
+         * <code>'2001-01-01'</code> should be rendered.
+         */
+        DATA_OMIT_DATETIME_LITERAL_PREFIX,
 
         ;
 
@@ -1057,12 +1067,12 @@ final class Tools {
      * The default escape character for <code>[a] LIKE [b] ESCAPE […]</code>
      * clauses.
      */
-    static final char                    ESCAPE                             = '!';
+    static final char                    ESCAPE                                     = '!';
 
     /**
      * A lock for the initialisation of other static members
      */
-    private static final Object          initLock                           = new Object();
+    private static final Object          initLock                                   = new Object();
 
     /**
      * Indicating whether JPA (<code>jakarta.persistence</code>) is on the
@@ -1084,23 +1094,23 @@ final class Tools {
      * {@link #consumeExceptions(Configuration, PreparedStatement, SQLException)}
      * helps prevent infinite loops and {@link OutOfMemoryError}.
      */
-    static int                           maxConsumedExceptions              = 256;
-    static int                           maxConsumedResults                 = 65536;
+    static int                           maxConsumedExceptions                      = 256;
+    static int                           maxConsumedResults                         = 65536;
 
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern         DASH_PATTERN                       = Pattern.compile("(-+)");
+    private static final Pattern         DASH_PATTERN                               = Pattern.compile("(-+)");
 
     /**
      * A pattern for the pipe line syntax
      */
-    private static final Pattern         PIPE_PATTERN                       = Pattern.compile("(?<=\\|)([^|]+)(?=\\|)");
+    private static final Pattern         PIPE_PATTERN                               = Pattern.compile("(?<=\\|)([^|]+)(?=\\|)");
 
     /**
      * A pattern for the dash line syntax
      */
-    private static final Pattern         PLUS_PATTERN                       = Pattern.compile("\\+(-+)(?=\\+)");
+    private static final Pattern         PLUS_PATTERN                               = Pattern.compile("\\+(-+)(?=\\+)");
 
     /**
      * All characters that are matched by Java's interpretation of \s.
@@ -1110,25 +1120,25 @@ final class Tools {
      * processing, it is probably safe to ignore most of those alternative
      * Unicode whitespaces.
      */
-    private static final char[]          WHITESPACE_CHARACTERS              = " \t\n\u000B\f\r".toCharArray();
+    private static final char[]          WHITESPACE_CHARACTERS                      = " \t\n\u000B\f\r".toCharArray();
 
     /**
      * Acceptable prefixes for JDBC escape syntax.
      */
-    private static final char[][]        JDBC_ESCAPE_PREFIXES                = {
+    private static final char[][]        JDBC_ESCAPE_PREFIXES                       = {
         "{fn ".toCharArray(),
         "{d ".toCharArray(),
         "{t ".toCharArray(),
         "{ts ".toCharArray()
     };
 
-    private static final char[]          TOKEN_SINGLE_LINE_COMMENT          = { '-', '-' };
-    private static final char[]          TOKEN_SINGLE_LINE_COMMENT_C        = { '/', '/' };
-    private static final char[]          TOKEN_HASH                         = { '#' };
-    private static final char[]          TOKEN_MULTI_LINE_COMMENT_OPEN      = { '/', '*' };
-    private static final char[]          TOKEN_MULTI_LINE_COMMENT_CLOSE     = { '*', '/' };
-    private static final char[]          TOKEN_APOS                         = { '\'' };
-    private static final char[]          TOKEN_ESCAPED_APOS                 = { '\'', '\'' };
+    private static final char[]          TOKEN_SINGLE_LINE_COMMENT                  = { '-', '-' };
+    private static final char[]          TOKEN_SINGLE_LINE_COMMENT_C                = { '/', '/' };
+    private static final char[]          TOKEN_HASH                                 = { '#' };
+    private static final char[]          TOKEN_MULTI_LINE_COMMENT_OPEN              = { '/', '*' };
+    private static final char[]          TOKEN_MULTI_LINE_COMMENT_CLOSE             = { '*', '/' };
+    private static final char[]          TOKEN_APOS                                 = { '\'' };
+    private static final char[]          TOKEN_ESCAPED_APOS                         = { '\'', '\'' };
 
     /**
      * "Suffixes" that are placed behind a "?" character to form an operator,
@@ -1163,7 +1173,7 @@ final class Tools {
      * <li>?|</li>
      * </ul>
      */
-    private static final char[][]        NON_BIND_VARIABLE_SUFFIXES         = {
+    private static final char[][]        NON_BIND_VARIABLE_SUFFIXES                 = {
         { '?' },
         { '|' },
         { '&' },
@@ -1182,7 +1192,7 @@ final class Tools {
      * such as <code>"?&lt;&gt;"</code>, which is a non-equality operator, not
      * an operator on its own.
      */
-    private static final char[][]        BIND_VARIABLE_SUFFIXES             = {
+    private static final char[][]        BIND_VARIABLE_SUFFIXES                     = {
         { '<', '>' }
     };
 
@@ -1190,8 +1200,8 @@ final class Tools {
      * All hexadecimal digits accessible through array index, e.g.
      * <code>HEX_DIGITS[15] == 'f'</code>.
      */
-    private static final char[]          HEX_DIGITS                         = "0123456789ABCDEF".toCharArray();
-    private static final byte[]          HEX_LOOKUP                         = {
+    private static final char[]          HEX_DIGITS                                 = "0123456789ABCDEF".toCharArray();
+    private static final byte[]          HEX_LOOKUP                                 = {
         /* 0x00 */ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         /* 0x10 */ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
         /* 0x20 */ 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -1201,17 +1211,18 @@ final class Tools {
         /* 0x60 */ 0, 10, 11, 12, 13, 14, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     };
 
-    static final Set<SQLDialect>         REQUIRES_BACKSLASH_ESCAPING        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>         NO_SUPPORT_NULL                    = SQLDialect.supportedBy(CLICKHOUSE, DERBY, FIREBIRD, H2, HSQLDB, TRINO);
-    static final Set<SQLDialect>         NO_SUPPORT_NOT_NULL                = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
-    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH      = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL        = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect>         SUPPORT_POSTGRES_LITERALS          = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect>         DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
-    static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
-    static final Set<SQLDialect>         DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
-    static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT     = SQLDialect.supportedBy(SQLITE);
+    static final Set<SQLDialect>         REQUIRES_BACKSLASH_ESCAPING                = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>         NO_SUPPORT_NULL                            = SQLDialect.supportedBy(CLICKHOUSE, DERBY, FIREBIRD, H2, HSQLDB, TRINO);
+    static final Set<SQLDialect>         NO_SUPPORT_NOT_NULL                        = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
+    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH              = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL                = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES         = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>         SUPPORT_POSTGRES_LITERALS                  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>         DEFAULT_BEFORE_NULL                        = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
+    static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION             = SQLDialect.supportedBy(DERBY);
+    static final Set<SQLDialect>         DEFAULT_TIMESTAMP_NOT_NULL                 = SQLDialect.supportedBy(MARIADB);
+    static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT             = SQLDialect.supportedBy(SQLITE);
+    static final Set<SQLDialect>         NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX = SQLDialect.supportedBy(MARIADB, MYSQL);
 
 
 
@@ -6156,6 +6167,12 @@ final class Tools {
             //          expressions, not if actual parentheses are rendered.
             if (REQUIRES_PARENTHESISED_DEFAULT.contains(ctx.dialect()))
                 ctx.sql('(').visit(v).sql(')');
+
+            // [#16498] Special cases where the standard datetime literal prefix needs to be omitted
+            //          See: https://bugs.mysql.com/bug.php?id=114450
+            else if (NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX.contains(ctx.dialect()) && type.isDateTime())
+                ctx.data(DATA_OMIT_DATETIME_LITERAL_PREFIX, true, c -> c.visit(v));
+
             else
                 ctx.visit(v);
         }

@@ -109,8 +109,8 @@ public class MySQLDataType {
     public static final DataType<byte[]>     VARBINARY          = new BuiltInDataType<>(FAMILY, SQLDataType.VARBINARY, "varbinary", "binary");
     public static final DataType<Date>       DATE               = new BuiltInDataType<>(FAMILY, SQLDataType.DATE, "date", "date");
     public static final DataType<Time>       TIME               = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time", "time");
-    public static final DataType<Timestamp>  TIMESTAMP          = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp", "datetime");
     public static final DataType<Timestamp>  DATETIME           = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "datetime", "datetime");
+    public static final DataType<Timestamp>  TIMESTAMP          = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp", "datetime");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.MYSQL, SQLDataTypes

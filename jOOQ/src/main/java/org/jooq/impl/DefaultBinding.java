@@ -177,6 +177,7 @@ import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.uncoerce;
+import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
@@ -189,7 +190,6 @@ import static org.jooq.util.postgres.PostgresUtils.toPGArrayString;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 import static org.jooq.util.postgres.PostgresUtils.toYearToMonth;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Modifier;
@@ -295,7 +295,6 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
-import org.jooq.tools.json.JSONArray;
 import org.jooq.tools.json.JSONValue;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
@@ -322,7 +321,11 @@ import org.jooq.util.postgres.PostgresUtils;
 public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final JooqLogger              log                       = JooqLogger.getLogger(DefaultBinding.class);
-    private static final Set<SQLDialect> REQUIRE_JDBC_DATE_LITERAL = SQLDialect.supportedBy(MYSQL);
+
+
+
+
+
 
     // Taken from org.postgresql.PGStatement 9223372036825200000
     private static final long            PG_DATE_POSITIVE_INFINITY = 9223372036825200000L;
@@ -2476,9 +2479,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (ctx.family() == DERBY)
                 ctx.render().visit(K_DATE).sql("('").sql(escape(value, ctx.render())).sql("')");
 
-            // [#3648] Circumvent a MySQL bug related to date literals
-            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.dialect()))
-                ctx.render().sql("{d '").sql(escape(value, ctx.render())).sql("'}");
+
+
+
+
+
+
+            // [#16498] Special cases where the standard datetime literal prefix needs to be omitted
+            //          See: https://bugs.mysql.com/bug.php?id=114450
+            else if (ctx.data(DATA_OMIT_DATETIME_LITERAL_PREFIX) != null)
+                ctx.render().sql('\'').sql(format(value, ctx.render())).sql('\'');
 
             // Most dialects implement SQL standard date literals
             else
@@ -4818,9 +4828,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 default:
 
-                    // [#3648] Circumvent a MySQL bug related to date literals
-                    if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.dialect()))
-                        ctx.render().sql("{t '").sql(escape(value, ctx.render())).sql("'}");
+
+
+
+
+
+
+
+
+                    // [#16498] Special cases where the standard datetime literal prefix needs to be omitted
+                    //          See: https://bugs.mysql.com/bug.php?id=114450
+                    if (ctx.data(DATA_OMIT_DATETIME_LITERAL_PREFIX) != null)
+                        ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
 
                     // Most dialects implement SQL standard time literals
                     else
@@ -4935,9 +4954,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (ctx.family() == CUBRID)
                 ctx.render().visit(K_DATETIME).sql(" '").sql(escape(value, ctx.render())).sql('\'');
 
-            // [#3648] Circumvent a MySQL bug related to date literals
-            else if (REQUIRE_JDBC_DATE_LITERAL.contains(ctx.dialect()))
-                ctx.render().sql("{ts '").sql(escape(value, ctx.render())).sql("'}");
+
+
+
+
+
+
+            // [#16498] Special cases where the standard datetime literal prefix needs to be omitted
+            //          See: https://bugs.mysql.com/bug.php?id=114450
+            else if (ctx.data(DATA_OMIT_DATETIME_LITERAL_PREFIX) != null)
+                ctx.render().sql('\'').sql(format(value, ctx.render())).sql('\'');
 
             // Most dialects implement SQL standard timestamp literals
             else

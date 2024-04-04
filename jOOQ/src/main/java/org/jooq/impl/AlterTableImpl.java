@@ -154,6 +154,7 @@ import static org.jooq.impl.Keywords.K_WITH_NO_DATACOPY;
 import static org.jooq.impl.QOM.Cascade.CASCADE;
 import static org.jooq.impl.QOM.Cascade.RESTRICT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.endExecuteImmediate;
@@ -168,6 +169,7 @@ import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityAfterNull;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclarationIdentityBeforeNull;
 import static org.jooq.impl.Tools.tryCatch;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
+import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -207,6 +209,7 @@ import org.jooq.TableElement;
 // ...
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.Tools.ExtendedDataKey;
 
 /**
  * @author Lukas Eder
@@ -1538,8 +1541,14 @@ implements
                         break;
                 }
 
-                ctx.sql(' ').visit(alterColumnDefault)
-                   .end(ALTER_TABLE_ALTER_DEFAULT);
+                ctx.sql(' ');
+
+                if (NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX.contains(ctx.dialect()) && alterColumnDefault.getDataType().isDateTime())
+                    ctx.data(DATA_OMIT_DATETIME_LITERAL_PREFIX, true, c -> c.visit(alterColumnDefault));
+                else
+                    ctx.visit(alterColumnDefault);
+
+                ctx.end(ALTER_TABLE_ALTER_DEFAULT);
             }
             else if (alterColumnDropDefault) {
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);

@@ -496,6 +496,8 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -10595,6 +10597,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             if (parseKeywordIf("WITHOUT TIME ZONE")) {
                 return inline(parseTimestampLiteral());
             }
+            else if (parseKeywordIf("WITH TIME ZONE")) {
+                return inline(parseTimestampTZLiteral());
+            }
             else if (parseIf('(')) {
                 Field<?> f = parseField();
                 parse(')');
@@ -10621,12 +10626,24 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return timestamp;
     }
 
+    private final OffsetDateTime parseTimestampTZLiteral() {
+        OffsetDateTime timestamp = Convert.convert(parseStringLiteral(), OffsetDateTime.class);
+
+        if (timestamp == null)
+            throw exception("Illegal timestamp literal");
+
+        return timestamp;
+    }
+
     private final Field<?> parseFieldTimeLiteralIf() {
         int p = position();
 
         if (parseKeywordIf("TIME")) {
             if (parseKeywordIf("WITHOUT TIME ZONE")) {
                 return inline(parseTimeLiteral());
+            }
+            else if (parseKeywordIf("WITH TIME ZONE")) {
+                return inline(parseTimeTZLiteral());
             }
             else if (parseIf('(')) {
                 Field<?> f = parseField();
@@ -10647,6 +10664,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Time parseTimeLiteral() {
         Time time = Convert.convert(parseStringLiteral(), Time.class);
+
+        if (time == null)
+            throw exception("Illegal time literal");
+
+        return time;
+    }
+
+    private final OffsetTime parseTimeTZLiteral() {
+        OffsetTime time = Convert.convert(parseStringLiteral(), OffsetTime.class);
 
         if (time == null)
             throw exception("Illegal time literal");

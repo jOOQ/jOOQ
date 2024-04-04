@@ -29534,7 +29534,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSON, value, false);
     }
@@ -29543,7 +29543,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSONB, value, false);
     }
@@ -29552,7 +29552,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, SQLITE, TRINO })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, SQLITE, TRINO })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAggDistinct(Field<?> value) {
         return new JSONArrayAgg<>(JSON, value, true);
     }
@@ -29561,7 +29561,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAggDistinct(Field<?> value) {
         return new JSONArrayAgg<>(JSONB, value, true);
     }

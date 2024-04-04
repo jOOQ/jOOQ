@@ -41,6 +41,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -98,13 +99,13 @@ public interface DivideByReturningStep {
      * Specify the fields that you want the division to return from the dividend
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Table<Record> returning(Field<?>... fields);
 
     /**
      * Specify the fields that you want the division to return from the dividend
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     Table<Record> returning(Collection<? extends Field<?>> fields);
 }

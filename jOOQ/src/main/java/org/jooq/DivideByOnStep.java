@@ -41,6 +41,7 @@ package org.jooq;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -100,7 +101,7 @@ public interface DivideByOnStep {
      * them with each other with {@link Operator#AND}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DivideByOnConditionStep on(Condition condition);
 
     /**
@@ -108,14 +109,14 @@ public interface DivideByOnStep {
      * them with each other with {@link Operator#AND}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DivideByOnConditionStep on(Condition... conditions);
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DivideByOnConditionStep on(Field<Boolean> condition);
 
     /**
@@ -130,7 +131,7 @@ public interface DivideByOnStep {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     DivideByOnConditionStep on(SQL sql);
 
@@ -146,7 +147,7 @@ public interface DivideByOnStep {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     DivideByOnConditionStep on(String sql);
 
@@ -163,7 +164,7 @@ public interface DivideByOnStep {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     DivideByOnConditionStep on(String sql, Object... bindings);
 
@@ -180,7 +181,7 @@ public interface DivideByOnStep {
      * @see SQL
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
     DivideByOnConditionStep on(String sql, QueryPart... parts);
 }

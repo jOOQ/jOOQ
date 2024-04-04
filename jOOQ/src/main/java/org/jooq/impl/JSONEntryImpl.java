@@ -241,6 +241,8 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
             case CLICKHOUSE:
                 if (isType(type, Boolean.class))
                     return field.cast(BOOLEAN);
+                else if (isJSON(ctx, type))
+                    return field.cast(JSON);
 
                 break;
 

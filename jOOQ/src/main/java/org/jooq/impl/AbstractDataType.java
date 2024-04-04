@@ -624,7 +624,7 @@ implements
     private final String getCastTypeName0(Configuration configuration) {
         switch (configuration.family()) {
             case CLICKHOUSE:
-                if (nullable())
+                if (nullable() && !isJSON() && !isArray())
                     return "Nullable(" + getCastTypeName1(configuration) + ")";
                 else
                     return getCastTypeName1(configuration);

@@ -43,11 +43,13 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
-// ...
+import static org.jooq.impl.DSL.arrayAgg;
+import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.groupConcatDistinct;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONEntryImpl.jsonMerge;
@@ -63,6 +65,7 @@ import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_ARRAY;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
+import static org.jooq.impl.Names.N_toJSONString;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.SQLDataType.BLOB;
@@ -70,6 +73,7 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
 import java.util.Collection;
@@ -174,6 +178,17 @@ implements
                 acceptOverClause(ctx);
                 break;
 
+            case CLICKHOUSE:
+                ctx.visit(N_toJSONString).sql('(').visit(
+                    apply(
+                        arrayAggEmulation(distinct, arguments.get(0), withinGroupOrderBy),
+                        a -> arguments.get(0).getDataType().isJSON()
+                           ? a.cast(JSON.array())
+                           : a
+                    )
+                ).sql(')');
+                break;
+
             case SQLITE:
                 ctx.visit(N_JSON_GROUP_ARRAY).sql('(');
                 acceptDistinct(ctx);
@@ -274,6 +289,13 @@ implements
     static final Field<?> groupConcatEmulationWithoutArrayWrappers(boolean distinct, Field<?> field, SortFieldList orderBy) {
         return Tools.apply(
             distinct ? groupConcatDistinct(field) : groupConcat(field),
+            agg -> Tools.isEmpty(orderBy) ? agg : agg.orderBy(orderBy)
+        );
+    }
+
+    static final Field<?> arrayAggEmulation(boolean distinct, Field<?> field, SortFieldList orderBy) {
+        return Tools.apply(
+            distinct ? arrayAggDistinct(field) : arrayAgg(field),
             agg -> Tools.isEmpty(orderBy) ? agg : agg.orderBy(orderBy)
         );
     }

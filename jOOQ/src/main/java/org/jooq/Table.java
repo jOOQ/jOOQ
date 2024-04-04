@@ -3745,7 +3745,7 @@ extends
      * This has been observed to work with all dialects
      */
     @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     DivideByOnStep divideBy(Table<?> divisor);
 
     /**

@@ -76,6 +76,7 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.Year;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
@@ -988,7 +989,7 @@ final class Convert {
                     if (LocalDateTime.class == fromClass && Timestamp.class == toClass)
                         return (U) Timestamp.valueOf((LocalDateTime) from);
                     else if (LocalDateTime.class == fromClass && Temporal.class.isAssignableFrom(toClass))
-                        return toDate(((LocalDateTime) from).toInstant(OffsetTime.now().getOffset()).toEpochMilli(), ((LocalDateTime) from).getNano(), toClass);
+                        return toDate(((LocalDateTime) from).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), ((LocalDateTime) from).getNano(), toClass);
                     else if (LocalDate.class == fromClass && Date.class == toClass)
                         return (U) Date.valueOf((LocalDate) from);
                     else if (LocalTime.class == fromClass && Time.class == toClass)
@@ -1093,7 +1094,7 @@ final class Convert {
 
                     // Try "local" ISO date formats first
                     try {
-                        return (U) java.sql.Timestamp.valueOf((String) from).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
+                        return (U) java.sql.Timestamp.valueOf((String) from).toLocalDateTime().atZone(ZoneId.systemDefault()).toOffsetDateTime();
                     }
                     catch (IllegalArgumentException e1) {
                         try {
@@ -1109,7 +1110,7 @@ final class Convert {
 
                     // Try "local" ISO date formats first
                     try {
-                        return (U) java.sql.Timestamp.valueOf((String) from).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset()).toInstant();
+                        return (U) java.sql.Timestamp.valueOf((String) from).toLocalDateTime().atZone(ZoneId.systemDefault()).toInstant();
                     }
                     catch (IllegalArgumentException e1) {
                         try {
@@ -1529,7 +1530,7 @@ final class Convert {
             else if (toClass == LocalDateTime.class)
                 return (X) toTimestamp(time, nanos).toLocalDateTime();
             else if (toClass == OffsetDateTime.class)
-                return (X) toTimestamp(time, nanos).toLocalDateTime().atOffset(OffsetDateTime.now().getOffset());
+                return (X) toTimestamp(time, nanos).toLocalDateTime().atZone(ZoneId.systemDefault()).toOffsetDateTime();
             else if (toClass == Instant.class)
                 if (nanos == 0L)
                     return (X) Instant.ofEpochMilli(time);

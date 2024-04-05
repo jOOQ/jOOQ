@@ -320,7 +320,7 @@ implements
 
     @Override
     public final <Z> void set(Parameter<Z> parameter, Z value) {
-        setField(parameter, val(value, parameter.getDataType()));
+        setField(parameter, Tools.field(value, parameter.getDataType()));
     }
 
     /*

@@ -100,6 +100,7 @@ implements
             case HSQLDB:
                 return false;
 
+
             case POSTGRES:
             case YUGABYTEDB:
                 return false;
@@ -128,6 +129,7 @@ implements
             case HSQLDB:
                 ctx.visit(DSL.cast(uuid, BINARY(16)));
                 break;
+
 
             case POSTGRES:
             case YUGABYTEDB:

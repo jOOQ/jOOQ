@@ -52,8 +52,10 @@ import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.filter;
@@ -61,6 +63,9 @@ import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.flattenFieldOrRows;
 import static org.jooq.impl.Tools.lazy;
+import static org.jooq.impl.Tools.row0;
+import static org.jooq.impl.Tools.selectQueryImpl;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
 
 import java.util.AbstractList;
 import java.util.AbstractMap;
@@ -77,6 +82,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Function;
 
+import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -220,8 +226,25 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
     static final void toSQLInsertSelect(Context<?> ctx, Select<?> select) {
         ctx.formatSeparator()
            .start(INSERT_SELECT)
-           .visit(select)
+           .visit(patchSelectWithUnions(ctx, select))
            .end(INSERT_SELECT);
+    }
+
+    private static final Select<?> patchSelectWithUnions(Context<?> ctx, Select<?> select) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                return select;
+        }
     }
 
 

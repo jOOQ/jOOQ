@@ -113,7 +113,9 @@ import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.Nullability;
 import org.jooq.QualifiedRecord;
+import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.DefaultBinding.InternalBinding;
@@ -917,6 +919,32 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                 // [#8022] Special handling
                 else if (java.util.Date.class == type)
                     return (DataType<T>) SQLDataType.TIMESTAMP;
+
+
+                // [#16529] Help users trouble shoot this particular problem
+                else if (QueryPart.class.isAssignableFrom(type))
+                    throw new DataTypeException(
+                        """
+                        Type {type} cannot be used as a bind variable type.
+
+                        This error often appears when a wrong overload is chosen, e.g. among:
+
+                        - <T> Field<T> someFunction(T arg1, T arg2);
+                        - <T> Field<T> someFunction(Field<T> arg1, Field<T> arg2)
+
+                        When mixing expression arguments with bind value arguments, such as:
+
+                          someFunction(TABLE.COLUMN, "bind value")
+
+                        Then only the first overload is applicable, and in some cases, jOOQ cannot auto-wrap
+                        the "bind value" in DSL.val("bind value") for you. Consider calling the function
+                        like this, instead:
+
+                          someFunction(TABLE.COLUMN, DSL.val("bind value"))
+
+                        If you think this error shouldn't appear, please report it here: https://jooq.org/bug
+                        """.replace("{type}", type.getName())
+                    );
 
                 // All other data types are illegal
                 else

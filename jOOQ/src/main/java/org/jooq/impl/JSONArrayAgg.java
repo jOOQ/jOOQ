@@ -178,16 +178,17 @@ implements
                 acceptOverClause(ctx);
                 break;
 
-            case CLICKHOUSE:
+            case CLICKHOUSE: {
+                Field<?> agg = arrayAggEmulation(distinct, arguments.get(0), withinGroupOrderBy);
+
                 ctx.visit(N_toJSONString).sql('(').visit(
-                    apply(
-                        arrayAggEmulation(distinct, arguments.get(0), withinGroupOrderBy),
-                        a -> arguments.get(0).getDataType().isJSON()
-                           ? a.cast(JSON.array())
-                           : a
-                    )
+                    arguments.get(0).getDataType().isJSON()
+                       ? agg.cast(JSON.array())
+                       : agg
                 ).sql(')');
+
                 break;
+            }
 
             case SQLITE:
                 ctx.visit(N_JSON_GROUP_ARRAY).sql('(');

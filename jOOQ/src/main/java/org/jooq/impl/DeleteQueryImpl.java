@@ -157,6 +157,7 @@ implements
 
 
 
+
     // https://github.com/ClickHouse/ClickHouse/issues/61020
     static final Set<SQLDialect>        NO_SUPPORT_QUALIFY_IN_WHERE      = SQLDialect.supportedBy(CLICKHOUSE);
 
@@ -296,6 +297,9 @@ implements
         boolean multiTableJoin = (SUPPORT_MULTITABLE_DELETE.contains(ctx.dialect()) && t instanceof JoinTable);
         boolean specialDeleteAsSyntax = SPECIAL_DELETE_AS_SYNTAX.contains(ctx.dialect());
 
+        // [#11925] In MySQL, the tables in FROM must be repeated in USING
+        boolean hasUsing = !using.isEmpty() || multiTableJoin || specialDeleteAsSyntax && Tools.alias(t) != null;
+
         // [#11924] Multiple tables listed in the FROM clause mean this is a
         //          MySQL style multi table DELETE
         if (multiTableJoin)
@@ -310,12 +314,13 @@ implements
 
 
 
+
+
+
+
         // [#2464] Use the USING clause to declare aliases in MySQL
         else
             ctx.visit(K_FROM).sql(' ').declareTables(!specialDeleteAsSyntax, c -> c.visit(t));
-
-        // [#11925] In MySQL, the tables in FROM must be repeated in USING
-        boolean hasUsing = !using.isEmpty() || multiTableJoin || specialDeleteAsSyntax && Tools.alias(t) != null;
 
         // [#14011] Additional predicates that are added for various reasons
         Condition moreWhere = noCondition();

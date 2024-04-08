@@ -48,6 +48,25 @@ public final class Functions {
 
     /**
      * A function that short circuits the argument function returning <code>null</code>
+     * if all record fields are <code>null</code>.
+     */
+    @NotNull
+    public static final <TR extends Record, R> Function1<TR, R> nullOnRecordAllNull(Function1<? super TR, ? extends R> function) {
+        return (t1) -> {
+            if (t1 == null) {
+                return null;
+            }
+            for (int i = 0; i < t1.size(); i++) {
+                if (t1.get(i) != null) {
+                    return function.apply(t1);
+                }
+            }
+            return null;
+        };
+    }
+
+    /**
+     * A function that short circuits the argument function returning <code>null</code>
      * if all arguments are <code>null</code>.
      */
     @NotNull
@@ -242,6 +261,25 @@ public final class Functions {
     @NotNull
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, R> Function22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, R> nullOnAllNull(Function22<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? super T21, ? super T22, ? extends R> function) {
         return (t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22) -> t1 == null && t2 == null && t3 == null && t4 == null && t5 == null && t6 == null && t7 == null && t8 == null && t9 == null && t10 == null && t11 == null && t12 == null && t13 == null && t14 == null && t15 == null && t16 == null && t17 == null && t18 == null && t19 == null && t20 == null && t21 == null && t22 == null ? null : function.apply(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+    }
+
+    /**
+     * A function that short circuits the argument function returning <code>null</code>
+     * if any record field is <code>null</code>.
+     */
+    @NotNull
+    public static final <TR extends Record, R> Function1<TR, R> nullOnRecordAnyNull(Function1<? super TR, ? extends R> function) {
+        return (t1) -> {
+            if (t1 == null) {
+                return null;
+            }
+            for (int i = 0; i < t1.size(); i++) {
+                if (t1.get(i) == null) {
+                    return null;
+                }
+            }
+            return function.apply(t1);
+        };
     }
 
     /**

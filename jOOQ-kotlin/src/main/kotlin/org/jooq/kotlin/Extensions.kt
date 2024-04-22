@@ -553,6 +553,13 @@ fun Settings.migrationHistorySchema(block: MigrationSchema.() -> Unit) {
     block(migrationHistorySchema)
 }
 
+fun Settings.migrationDefaultSchema(block: MigrationSchema.() -> Unit) {
+    if (migrationDefaultSchema == null)
+        migrationDefaultSchema = MigrationSchema()
+
+    block(migrationDefaultSchema)
+}
+
 fun Settings.interpreterSearchPath(block: MutableList<InterpreterSearchSchema>.() -> Unit) {
     block(interpreterSearchPath)
 }
@@ -566,6 +573,13 @@ fun MutableList<InterpreterSearchSchema>.interpreterSearchPath(block: Interprete
 
 fun Settings.migrationSchemata(block: MutableList<MigrationSchema>.() -> Unit) {
     block(migrationSchemata)
+}
+
+@JvmName("mutableListMigrationSchema")
+fun MutableList<MigrationSchema>.migrationSchemata(block: MigrationSchema.() -> Unit) {
+    val e = MigrationSchema()
+    block(e)
+    add(e)
 }
 
 fun Settings.parseSearchPath(block: MutableList<ParseSearchSchema>.() -> Unit) {

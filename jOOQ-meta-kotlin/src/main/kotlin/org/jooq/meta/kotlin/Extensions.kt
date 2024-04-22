@@ -72,6 +72,13 @@ fun MatchersCatalogType.catalogClass(block: MatcherRule.() -> Unit) {
     block(catalogClass)
 }
 
+fun MatchersCatalogType.catalogIdentifier(block: MatcherRule.() -> Unit) {
+    if (catalogIdentifier == null)
+        catalogIdentifier = MatcherRule()
+
+    block(catalogIdentifier)
+}
+
 fun Matchers.schemas(block: MutableList<MatchersSchemaType>.() -> Unit) {
     block(schemas)
 }
@@ -81,6 +88,20 @@ fun MutableList<MatchersSchemaType>.schema(block: MatchersSchemaType.() -> Unit)
     val e = MatchersSchemaType()
     block(e)
     add(e)
+}
+
+fun MatchersSchemaType.schemaClass(block: MatcherRule.() -> Unit) {
+    if (schemaClass == null)
+        schemaClass = MatcherRule()
+
+    block(schemaClass)
+}
+
+fun MatchersSchemaType.schemaIdentifier(block: MatcherRule.() -> Unit) {
+    if (schemaIdentifier == null)
+        schemaIdentifier = MatcherRule()
+
+    block(schemaIdentifier)
 }
 
 fun Matchers.tables(block: MutableList<MatchersTableType>.() -> Unit) {
@@ -94,6 +115,69 @@ fun MutableList<MatchersTableType>.table(block: MatchersTableType.() -> Unit) {
     add(e)
 }
 
+fun MatchersTableType.tableClass(block: MatcherRule.() -> Unit) {
+    if (tableClass == null)
+        tableClass = MatcherRule()
+
+    block(tableClass)
+}
+
+fun MatchersTableType.tableIdentifier(block: MatcherRule.() -> Unit) {
+    if (tableIdentifier == null)
+        tableIdentifier = MatcherRule()
+
+    block(tableIdentifier)
+}
+
+fun MatchersTableType.pathClass(block: MatcherRule.() -> Unit) {
+    if (pathClass == null)
+        pathClass = MatcherRule()
+
+    block(pathClass)
+}
+
+fun MatchersTableType.pathExtends(block: MatcherRule.() -> Unit) {
+    if (pathExtends == null)
+        pathExtends = MatcherRule()
+
+    block(pathExtends)
+}
+
+fun MatchersTableType.pathImplements(block: MatcherRule.() -> Unit) {
+    if (pathImplements == null)
+        pathImplements = MatcherRule()
+
+    block(pathImplements)
+}
+
+fun MatchersTableType.recordClass(block: MatcherRule.() -> Unit) {
+    if (recordClass == null)
+        recordClass = MatcherRule()
+
+    block(recordClass)
+}
+
+fun MatchersTableType.interfaceClass(block: MatcherRule.() -> Unit) {
+    if (interfaceClass == null)
+        interfaceClass = MatcherRule()
+
+    block(interfaceClass)
+}
+
+fun MatchersTableType.daoClass(block: MatcherRule.() -> Unit) {
+    if (daoClass == null)
+        daoClass = MatcherRule()
+
+    block(daoClass)
+}
+
+fun MatchersTableType.pojoClass(block: MatcherRule.() -> Unit) {
+    if (pojoClass == null)
+        pojoClass = MatcherRule()
+
+    block(pojoClass)
+}
+
 fun Matchers.indexes(block: MutableList<MatchersIndexType>.() -> Unit) {
     block(indexes)
 }
@@ -103,6 +187,13 @@ fun MutableList<MatchersIndexType>.index(block: MatchersIndexType.() -> Unit) {
     val e = MatchersIndexType()
     block(e)
     add(e)
+}
+
+fun MatchersIndexType.keyIdentifier(block: MatcherRule.() -> Unit) {
+    if (keyIdentifier == null)
+        keyIdentifier = MatcherRule()
+
+    block(keyIdentifier)
 }
 
 fun Matchers.primaryKeys(block: MutableList<MatchersPrimaryKeyType>.() -> Unit) {
@@ -116,6 +207,13 @@ fun MutableList<MatchersPrimaryKeyType>.primaryKey(block: MatchersPrimaryKeyType
     add(e)
 }
 
+fun MatchersPrimaryKeyType.keyIdentifier(block: MatcherRule.() -> Unit) {
+    if (keyIdentifier == null)
+        keyIdentifier = MatcherRule()
+
+    block(keyIdentifier)
+}
+
 fun Matchers.uniqueKeys(block: MutableList<MatchersUniqueKeyType>.() -> Unit) {
     block(uniqueKeys)
 }
@@ -125,6 +223,13 @@ fun MutableList<MatchersUniqueKeyType>.uniqueKey(block: MatchersUniqueKeyType.()
     val e = MatchersUniqueKeyType()
     block(e)
     add(e)
+}
+
+fun MatchersUniqueKeyType.keyIdentifier(block: MatcherRule.() -> Unit) {
+    if (keyIdentifier == null)
+        keyIdentifier = MatcherRule()
+
+    block(keyIdentifier)
 }
 
 fun Matchers.foreignKeys(block: MutableList<MatchersForeignKeyType>.() -> Unit) {
@@ -138,6 +243,34 @@ fun MutableList<MatchersForeignKeyType>.foreignKey(block: MatchersForeignKeyType
     add(e)
 }
 
+fun MatchersForeignKeyType.keyIdentifier(block: MatcherRule.() -> Unit) {
+    if (keyIdentifier == null)
+        keyIdentifier = MatcherRule()
+
+    block(keyIdentifier)
+}
+
+fun MatchersForeignKeyType.pathMethodName(block: MatcherRule.() -> Unit) {
+    if (pathMethodName == null)
+        pathMethodName = MatcherRule()
+
+    block(pathMethodName)
+}
+
+fun MatchersForeignKeyType.pathMethodNameInverse(block: MatcherRule.() -> Unit) {
+    if (pathMethodNameInverse == null)
+        pathMethodNameInverse = MatcherRule()
+
+    block(pathMethodNameInverse)
+}
+
+fun MatchersForeignKeyType.pathMethodNameManyToMany(block: MatcherRule.() -> Unit) {
+    if (pathMethodNameManyToMany == null)
+        pathMethodNameManyToMany = MatcherRule()
+
+    block(pathMethodNameManyToMany)
+}
+
 fun Matchers.fields(block: MutableList<MatchersFieldType>.() -> Unit) {
     block(fields)
 }
@@ -147,6 +280,41 @@ fun MutableList<MatchersFieldType>.field(block: MatchersFieldType.() -> Unit) {
     val e = MatchersFieldType()
     block(e)
     add(e)
+}
+
+fun MatchersFieldType.fieldIdentifier(block: MatcherRule.() -> Unit) {
+    if (fieldIdentifier == null)
+        fieldIdentifier = MatcherRule()
+
+    block(fieldIdentifier)
+}
+
+fun MatchersFieldType.fieldMember(block: MatcherRule.() -> Unit) {
+    if (fieldMember == null)
+        fieldMember = MatcherRule()
+
+    block(fieldMember)
+}
+
+fun MatchersFieldType.fieldSetter(block: MatcherRule.() -> Unit) {
+    if (fieldSetter == null)
+        fieldSetter = MatcherRule()
+
+    block(fieldSetter)
+}
+
+fun MatchersFieldType.fieldGetter(block: MatcherRule.() -> Unit) {
+    if (fieldGetter == null)
+        fieldGetter = MatcherRule()
+
+    block(fieldGetter)
+}
+
+fun MatchersFieldType.daoMember(block: MatcherRule.() -> Unit) {
+    if (daoMember == null)
+        daoMember = MatcherRule()
+
+    block(daoMember)
 }
 
 fun Matchers.routines(block: MutableList<MatchersRoutineType>.() -> Unit) {
@@ -160,6 +328,20 @@ fun MutableList<MatchersRoutineType>.routine(block: MatchersRoutineType.() -> Un
     add(e)
 }
 
+fun MatchersRoutineType.routineClass(block: MatcherRule.() -> Unit) {
+    if (routineClass == null)
+        routineClass = MatcherRule()
+
+    block(routineClass)
+}
+
+fun MatchersRoutineType.routineMethod(block: MatcherRule.() -> Unit) {
+    if (routineMethod == null)
+        routineMethod = MatcherRule()
+
+    block(routineMethod)
+}
+
 fun Matchers.sequences(block: MutableList<MatchersSequenceType>.() -> Unit) {
     block(sequences)
 }
@@ -169,6 +351,13 @@ fun MutableList<MatchersSequenceType>.sequence(block: MatchersSequenceType.() ->
     val e = MatchersSequenceType()
     block(e)
     add(e)
+}
+
+fun MatchersSequenceType.sequenceIdentifier(block: MatcherRule.() -> Unit) {
+    if (sequenceIdentifier == null)
+        sequenceIdentifier = MatcherRule()
+
+    block(sequenceIdentifier)
 }
 
 fun Matchers.enums(block: MutableList<MatchersEnumType>.() -> Unit) {
@@ -182,6 +371,20 @@ fun MutableList<MatchersEnumType>.enum_(block: MatchersEnumType.() -> Unit) {
     add(e)
 }
 
+fun MatchersEnumType.enumClass(block: MatcherRule.() -> Unit) {
+    if (enumClass == null)
+        enumClass = MatcherRule()
+
+    block(enumClass)
+}
+
+fun MatchersEnumType.enumLiteral(block: MatcherRule.() -> Unit) {
+    if (enumLiteral == null)
+        enumLiteral = MatcherRule()
+
+    block(enumLiteral)
+}
+
 fun Matchers.embeddables(block: MutableList<MatchersEmbeddableType>.() -> Unit) {
     block(embeddables)
 }
@@ -191,6 +394,27 @@ fun MutableList<MatchersEmbeddableType>.embeddable(block: MatchersEmbeddableType
     val e = MatchersEmbeddableType()
     block(e)
     add(e)
+}
+
+fun MatchersEmbeddableType.recordClass(block: MatcherRule.() -> Unit) {
+    if (recordClass == null)
+        recordClass = MatcherRule()
+
+    block(recordClass)
+}
+
+fun MatchersEmbeddableType.interfaceClass(block: MatcherRule.() -> Unit) {
+    if (interfaceClass == null)
+        interfaceClass = MatcherRule()
+
+    block(interfaceClass)
+}
+
+fun MatchersEmbeddableType.pojoClass(block: MatcherRule.() -> Unit) {
+    if (pojoClass == null)
+        pojoClass = MatcherRule()
+
+    block(pojoClass)
 }
 
 fun Matchers.udts(block: MutableList<MatchersUDTType>.() -> Unit) {
@@ -204,6 +428,48 @@ fun MutableList<MatchersUDTType>.udt(block: MatchersUDTType.() -> Unit) {
     add(e)
 }
 
+fun MatchersUDTType.udtClass(block: MatcherRule.() -> Unit) {
+    if (udtClass == null)
+        udtClass = MatcherRule()
+
+    block(udtClass)
+}
+
+fun MatchersUDTType.udtIdentifier(block: MatcherRule.() -> Unit) {
+    if (udtIdentifier == null)
+        udtIdentifier = MatcherRule()
+
+    block(udtIdentifier)
+}
+
+fun MatchersUDTType.pathClass(block: MatcherRule.() -> Unit) {
+    if (pathClass == null)
+        pathClass = MatcherRule()
+
+    block(pathClass)
+}
+
+fun MatchersUDTType.recordClass(block: MatcherRule.() -> Unit) {
+    if (recordClass == null)
+        recordClass = MatcherRule()
+
+    block(recordClass)
+}
+
+fun MatchersUDTType.interfaceClass(block: MatcherRule.() -> Unit) {
+    if (interfaceClass == null)
+        interfaceClass = MatcherRule()
+
+    block(interfaceClass)
+}
+
+fun MatchersUDTType.pojoClass(block: MatcherRule.() -> Unit) {
+    if (pojoClass == null)
+        pojoClass = MatcherRule()
+
+    block(pojoClass)
+}
+
 fun Matchers.attributes(block: MutableList<MatchersAttributeType>.() -> Unit) {
     block(attributes)
 }
@@ -213,6 +479,34 @@ fun MutableList<MatchersAttributeType>.attribute(block: MatchersAttributeType.()
     val e = MatchersAttributeType()
     block(e)
     add(e)
+}
+
+fun MatchersAttributeType.attributeIdentifier(block: MatcherRule.() -> Unit) {
+    if (attributeIdentifier == null)
+        attributeIdentifier = MatcherRule()
+
+    block(attributeIdentifier)
+}
+
+fun MatchersAttributeType.attributeMember(block: MatcherRule.() -> Unit) {
+    if (attributeMember == null)
+        attributeMember = MatcherRule()
+
+    block(attributeMember)
+}
+
+fun MatchersAttributeType.attributeSetter(block: MatcherRule.() -> Unit) {
+    if (attributeSetter == null)
+        attributeSetter = MatcherRule()
+
+    block(attributeSetter)
+}
+
+fun MatchersAttributeType.attributeGetter(block: MatcherRule.() -> Unit) {
+    if (attributeGetter == null)
+        attributeGetter = MatcherRule()
+
+    block(attributeGetter)
 }
 
 fun Generator.database(block: Database.() -> Unit) {
@@ -451,6 +745,13 @@ fun MutableList<ForcedType>.forcedType(block: ForcedType.() -> Unit) {
     val e = ForcedType()
     block(e)
     add(e)
+}
+
+fun ForcedType.lambdaConverter(block: LambdaConverter.() -> Unit) {
+    if (lambdaConverter == null)
+        lambdaConverter = LambdaConverter()
+
+    block(lambdaConverter)
 }
 
 fun Generator.generate(block: Generate.() -> Unit) {

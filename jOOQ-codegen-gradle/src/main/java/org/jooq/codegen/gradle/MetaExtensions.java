@@ -274,6 +274,12 @@ public class MetaExtensions {
             action.execute(o);
             setCatalogClass(o);
         }
+
+        public void catalogIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setCatalogIdentifier(o);
+        }
     }
 
     public static class MatcherRuleExtension extends MatcherRule {
@@ -294,6 +300,18 @@ public class MetaExtensions {
         public MatchersSchemaTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public void schemaClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setSchemaClass(o);
+        }
+
+        public void schemaIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setSchemaIdentifier(o);
+        }
     }
 
     public static class MatchersTableTypeExtension extends MatchersTableType {
@@ -303,6 +321,60 @@ public class MetaExtensions {
         @Inject
         public MatchersTableTypeExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public void tableClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setTableClass(o);
+        }
+
+        public void tableIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setTableIdentifier(o);
+        }
+
+        public void pathClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPathClass(o);
+        }
+
+        public void pathExtends(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPathExtends(o);
+        }
+
+        public void pathImplements(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPathImplements(o);
+        }
+
+        public void recordClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setRecordClass(o);
+        }
+
+        public void interfaceClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setInterfaceClass(o);
+        }
+
+        public void daoClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setDaoClass(o);
+        }
+
+        public void pojoClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPojoClass(o);
         }
     }
 
@@ -314,6 +386,12 @@ public class MetaExtensions {
         public MatchersIndexTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public void keyIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setKeyIdentifier(o);
+        }
     }
 
     public static class MatchersPrimaryKeyTypeExtension extends MatchersPrimaryKeyType {
@@ -323,6 +401,12 @@ public class MetaExtensions {
         @Inject
         public MatchersPrimaryKeyTypeExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public void keyIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setKeyIdentifier(o);
         }
     }
 
@@ -334,6 +418,12 @@ public class MetaExtensions {
         public MatchersUniqueKeyTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public void keyIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setKeyIdentifier(o);
+        }
     }
 
     public static class MatchersForeignKeyTypeExtension extends MatchersForeignKeyType {
@@ -343,6 +433,30 @@ public class MetaExtensions {
         @Inject
         public MatchersForeignKeyTypeExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public void keyIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setKeyIdentifier(o);
+        }
+
+        public void pathMethodName(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPathMethodName(o);
+        }
+
+        public void pathMethodNameInverse(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPathMethodNameInverse(o);
+        }
+
+        public void pathMethodNameManyToMany(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPathMethodNameManyToMany(o);
         }
     }
 
@@ -354,6 +468,36 @@ public class MetaExtensions {
         public MatchersFieldTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public void fieldIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setFieldIdentifier(o);
+        }
+
+        public void fieldMember(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setFieldMember(o);
+        }
+
+        public void fieldSetter(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setFieldSetter(o);
+        }
+
+        public void fieldGetter(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setFieldGetter(o);
+        }
+
+        public void daoMember(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setDaoMember(o);
+        }
     }
 
     public static class MatchersRoutineTypeExtension extends MatchersRoutineType {
@@ -363,6 +507,18 @@ public class MetaExtensions {
         @Inject
         public MatchersRoutineTypeExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public void routineClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setRoutineClass(o);
+        }
+
+        public void routineMethod(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setRoutineMethod(o);
         }
     }
 
@@ -374,6 +530,12 @@ public class MetaExtensions {
         public MatchersSequenceTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public void sequenceIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setSequenceIdentifier(o);
+        }
     }
 
     public static class MatchersEnumTypeExtension extends MatchersEnumType {
@@ -383,6 +545,18 @@ public class MetaExtensions {
         @Inject
         public MatchersEnumTypeExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public void enumClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setEnumClass(o);
+        }
+
+        public void enumLiteral(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setEnumLiteral(o);
         }
     }
 
@@ -394,6 +568,24 @@ public class MetaExtensions {
         public MatchersEmbeddableTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public void recordClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setRecordClass(o);
+        }
+
+        public void interfaceClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setInterfaceClass(o);
+        }
+
+        public void pojoClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPojoClass(o);
+        }
     }
 
     public static class MatchersUDTTypeExtension extends MatchersUDTType {
@@ -404,6 +596,42 @@ public class MetaExtensions {
         public MatchersUDTTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public void udtClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setUdtClass(o);
+        }
+
+        public void udtIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setUdtIdentifier(o);
+        }
+
+        public void pathClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPathClass(o);
+        }
+
+        public void recordClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setRecordClass(o);
+        }
+
+        public void interfaceClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setInterfaceClass(o);
+        }
+
+        public void pojoClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setPojoClass(o);
+        }
     }
 
     public static class MatchersAttributeTypeExtension extends MatchersAttributeType {
@@ -413,6 +641,30 @@ public class MetaExtensions {
         @Inject
         public MatchersAttributeTypeExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public void attributeIdentifier(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setAttributeIdentifier(o);
+        }
+
+        public void attributeMember(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setAttributeMember(o);
+        }
+
+        public void attributeSetter(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setAttributeSetter(o);
+        }
+
+        public void attributeGetter(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setAttributeGetter(o);
         }
     }
 
@@ -771,6 +1023,12 @@ public class MetaExtensions {
         @Inject
         public ForcedTypeExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public void lambdaConverter(Action<LambdaConverterExtension> action) {
+            LambdaConverterExtension o = objects.newInstance(LambdaConverterExtension.class, objects);
+            action.execute(o);
+            setLambdaConverter(o);
         }
     }
 

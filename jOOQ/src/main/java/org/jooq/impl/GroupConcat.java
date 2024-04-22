@@ -68,7 +68,7 @@ implements
 
     private final Field<?>      field;
     private final SortFieldList orderBy;
-    private String              separator;
+    private Field<String>       separator;
 
     GroupConcat(Field<?> field) {
         this(field, false);
@@ -88,7 +88,7 @@ implements
         if (separator == null)
             result = new ListAgg(distinct, field, inline(","));
         else
-            result = new ListAgg(distinct, field, inline(separator));
+            result = new ListAgg(distinct, field, separator);
 
         if (!orderBy.isEmpty())
             result.withinGroupOrderBy(orderBy);
@@ -102,6 +102,11 @@ implements
 
     @Override
     public final AggregateFunction<String> separator(String s) {
+        return separator(inline(s));
+    }
+
+    @Override
+    public final AggregateFunction<String> separator(Field<String> s) {
         this.separator = s;
         return this;
     }

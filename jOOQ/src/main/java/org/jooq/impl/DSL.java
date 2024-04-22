@@ -31874,7 +31874,18 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
-        return new ListAgg(false, Tools.nullSafe(field), inline(separator));
+        return listAgg(field, inline(separator));
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcat(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
+    public static OrderedAggregateFunction<String> listAgg(Field<?> field, Field<String> separator) {
+        return new ListAgg(false, Tools.nullSafe(field), separator);
     }
 
     /**
@@ -31896,7 +31907,18 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     public static OrderedAggregateFunction<String> listAggDistinct(Field<?> field, String separator) {
-        return new ListAgg(true, Tools.nullSafe(field), inline(separator));
+        return listAggDistinct(field, inline(separator));
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcatDistinct(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static OrderedAggregateFunction<String> listAggDistinct(Field<?> field, Field<String> separator) {
+        return new ListAgg(true, Tools.nullSafe(field), separator);
     }
 
     /**

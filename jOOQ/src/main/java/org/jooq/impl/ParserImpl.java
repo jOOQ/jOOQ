@@ -12235,7 +12235,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 s2 = s1;
 
             if (parseKeywordIf("SEPARATOR"))
-                s3 = s2.separator(parseStringLiteral());
+                s3 = s2.separator((Field) parseField());
             else
                 s3 = s2;
 
@@ -12517,7 +12517,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final AggregateFilterStep<?> parseOrderedSetFunctionIf() {
-        // TODO Listagg set function
         OrderedAggregateFunction<?> orderedN;
         OrderedAggregateFunctionOfDeferredType ordered1;
         boolean optionalWithinGroup = false;
@@ -12669,7 +12668,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field<?> field = parseField();
 
             if (parseIf(','))
-                ordered = distinct ? listAggDistinct(field, parseStringLiteral()) : listAgg(field, parseStringLiteral());
+                ordered = distinct ? listAggDistinct(field, (Field) parseField()) : listAgg(field, (Field) parseField());
             else
                 ordered = distinct ? listAggDistinct(field) : listAgg(field);
 

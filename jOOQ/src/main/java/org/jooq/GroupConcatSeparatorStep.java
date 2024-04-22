@@ -78,4 +78,11 @@ public interface GroupConcatSeparatorStep extends AggregateFunction<String> {
     @NotNull
     @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     AggregateFunction<String> separator(String separator);
+
+    /**
+     * Specify the separator on the <code>GROUP_CONCAT</code> function.
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
+    AggregateFunction<String> separator(Field<String> separator);
 }

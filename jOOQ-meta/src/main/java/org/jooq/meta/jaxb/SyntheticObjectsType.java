@@ -30,7 +30,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticObjectsType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31902L;
+    private final static long serialVersionUID = 31908L;
     @XmlElementWrapper(name = "readonlyColumns")
     @XmlElement(name = "readonlyColumn")
     protected List<SyntheticReadonlyColumnType> readonlyColumns;

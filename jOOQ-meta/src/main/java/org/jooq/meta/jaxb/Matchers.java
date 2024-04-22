@@ -22,20 +22,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Matchers", propOrder = {
-    "catalogs",
-    "schemas",
-    "tables",
-    "indexes",
-    "primaryKeys",
-    "uniqueKeys",
-    "foreignKeys",
-    "fields",
-    "routines",
-    "sequences",
-    "enums",
-    "embeddables",
-    "udts",
-    "attributes"
+
 })
 @SuppressWarnings({
     "all"
@@ -43,7 +30,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Matchers implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31902L;
+    private final static long serialVersionUID = 31908L;
     @XmlElementWrapper(name = "catalogs")
     @XmlElement(name = "catalog")
     protected List<MatchersCatalogType> catalogs;

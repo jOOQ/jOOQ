@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.19.2.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.19.8.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.19.2.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.19.8.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -157,7 +157,7 @@
 
   <complexType name="Strategy">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Definitions of custom naming strategies (declarative or programmatic) to define how generated Java objects should be named.]]></jxb:javadoc></jxb:class></appinfo></annotation>
-    <choice>
+    <all>
       <element name="name" type="string" minOccurs="0" maxOccurs="1" default="org.jooq.codegen.DefaultGeneratorStrategy">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The class used to provide a naming strategy for generated source code. You may override this with your custom naming strategy. This cannot be combined with a matcher configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -169,12 +169,12 @@
       <element name="matchers" type="tns:Matchers" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The matcher strategy configuration used when applying an XML-based strategy. This cannot be combined with a named strategy configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-    </choice>
+    </all>
   </complexType>
 
   <complexType name="Matchers">
     <annotation><appinfo><jxb:class><jxb:javadoc><![CDATA[Declarative naming strategy configuration.]]></jxb:javadoc></jxb:class></appinfo></annotation>
-    <sequence>
+    <all>
       <element name="catalogs" type="tns:MatchersCatalogsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for catalog names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -230,7 +230,7 @@
       <element name="attributes" type="tns:MatchersAttributesType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Declarative naming strategy configuration for UDT attribute names.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-    </sequence>
+    </all>
   </complexType>
 
   <complexType name="MatchersCatalogsType">

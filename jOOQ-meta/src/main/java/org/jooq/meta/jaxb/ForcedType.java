@@ -29,7 +29,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class ForcedType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31902L;
+    private final static long serialVersionUID = 31908L;
     @XmlElement(defaultValue = "0")
     protected Integer priority = 0;
     @XmlJavaTypeAdapter(StringAdapter.class)

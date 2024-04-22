@@ -75,8 +75,11 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.getExecuteDeleteWithoutWhere;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_FROM;
@@ -239,6 +242,18 @@ implements
         limit = numberOfRows;
     }
 
+    static final Field<?>[] keyFields(Context<?> ctx, Table<?> table) {
+
+        // [#16569] [#16571] The PostgreSQL ctid is not unique in a logically partitioned table
+        return table.getKeys().isEmpty()
+            ? ctx.family() == POSTGRES
+                ? new Field[] { field(systemName("tableoid")), table.rowid() }
+                : new Field[] { table.rowid() }
+            : (table.getPrimaryKey() != null
+                ? table.getPrimaryKey()
+                : table.getKeys().get(0)).getFieldsArray();
+    }
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final void accept0(Context<?> ctx) {
@@ -299,12 +314,7 @@ implements
         boolean noSupportParametersInWhere = false;
 
         if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
-            Field<?>[] keyFields =
-                  table().getKeys().isEmpty()
-                ? new Field[] { table().rowid() }
-                : (table().getPrimaryKey() != null
-                    ? table().getPrimaryKey()
-                    : table().getKeys().get(0)).getFieldsArray();
+            Field<?>[] keyFields = keyFields(ctx, table());
 
             ctx.start(DELETE_WHERE)
                .formatSeparator()

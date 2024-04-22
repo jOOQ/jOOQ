@@ -718,12 +718,7 @@ implements
         acceptFrom(ctx);
 
         if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
-            Field<?>[] keyFields =
-                table().getKeys().isEmpty()
-              ? new Field[] { table().rowid() }
-              : (table().getPrimaryKey() != null
-                  ? table().getPrimaryKey()
-                  : table().getKeys().get(0)).getFieldsArray();
+            Field<?>[] keyFields = DeleteQueryImpl.keyFields(ctx, table());
 
             ctx.start(UPDATE_WHERE)
                .formatSeparator()

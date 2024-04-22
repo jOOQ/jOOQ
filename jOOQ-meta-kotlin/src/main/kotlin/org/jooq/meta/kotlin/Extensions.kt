@@ -310,13 +310,6 @@ fun MatchersFieldType.fieldGetter(block: MatcherRule.() -> Unit) {
     block(fieldGetter)
 }
 
-fun MatchersFieldType.daoMember(block: MatcherRule.() -> Unit) {
-    if (daoMember == null)
-        daoMember = MatcherRule()
-
-    block(daoMember)
-}
-
 fun Matchers.routines(block: MutableList<MatchersRoutineType>.() -> Unit) {
     block(routines)
 }

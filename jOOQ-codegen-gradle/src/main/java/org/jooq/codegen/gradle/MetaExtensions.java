@@ -492,12 +492,6 @@ public class MetaExtensions {
             action.execute(o);
             setFieldGetter(o);
         }
-
-        public void daoMember(Action<MatcherRuleExtension> action) {
-            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
-            action.execute(o);
-            setDaoMember(o);
-        }
     }
 
     public static class MatchersRoutineTypeExtension extends MatchersRoutineType {

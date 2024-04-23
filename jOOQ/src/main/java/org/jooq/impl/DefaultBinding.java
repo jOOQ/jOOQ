@@ -1429,7 +1429,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     // [#5586] [#5613] TODO: Improve PostgreSQL array deserialisation.
                     // [#5633] Special treatment for byte[][] types.
                     // [#14010] UDT arrays should skip the Convert utility
-                    if (cdt.isBinary() || cdt.isUDT())
+                    // [#16581] OffsetTime[] is returned as Time[] by Array::getArray
+                    if (cdt.isBinary() || cdt.isUDT() || cdt.getType() == OffsetTime.class)
                         throw new ControlFlowSignal("GOTO the next array deserialisation strategy");
                     else
                         return (T) convertArray(array, (Class<? extends Object[]>) dataType.getType());

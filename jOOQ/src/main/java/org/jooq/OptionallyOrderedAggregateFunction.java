@@ -37,35 +37,6 @@
  */
 package org.jooq;
 
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DUCKDB;
-// ...
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.TRINO;
-import static org.jooq.SQLDialect.YUGABYTEDB;
-
-import java.util.Collection;
-
-import org.jetbrains.annotations.NotNull;
-
 /**
  * An ordered-set aggregate function.
  * <p>
@@ -89,35 +60,10 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface OrderedAggregateFunction<T> {
+public interface OptionallyOrderedAggregateFunction<T>
+extends
+    OrderedAggregateFunction<T>,
+    AggregateFilterStep<T>
+{
 
-    /**
-     * Add an <code>WITHIN GROUP (ORDER BY …)</code> clause to the ordered
-     * aggregate function.
-     */
-    @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    AggregateFilterStep<T> withinGroupOrderBy(OrderField<?>... fields);
-
-    /**
-     * Add an <code>WITHIN GROUP (ORDER BY …)</code> clause to the ordered
-     * aggregate function.
-     */
-    @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    AggregateFilterStep<T> withinGroupOrderBy(Collection<? extends OrderField<?>> fields);
-
-    /**
-     * Add an <code>ORDER BY …</code> clause to the ordered aggregate function.
-     */
-    @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    AggregateFilterStep<T> orderBy(OrderField<?>... fields);
-
-    /**
-     * Add an <code>ORDER BY …</code> clause to the ordered aggregate function.
-     */
-    @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    AggregateFilterStep<T> orderBy(Collection<? extends OrderField<?>> fields);
 }

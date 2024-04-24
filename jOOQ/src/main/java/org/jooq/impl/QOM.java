@@ -8028,6 +8028,41 @@ public final class QOM {
     }
 
     /**
+     * The <code>MAX BY</code> function.
+     * <p>
+     * Evaluate <code>value</code> at the row having the maximum value for <code>by</code>.
+     */
+    public /*sealed*/ interface MaxBy<T>
+        extends
+            org.jooq.OptionallyOrderedAggregateFunction<T>
+        //permits
+        //    MaxBy
+    {
+
+        /**
+         * The returned value.
+         */
+        @NotNull Field<T> $value();
+
+        /**
+         * The expression to use to evaluate the maximum.
+         */
+        @NotNull Field<?> $by();
+
+        /**
+         * The returned value.
+         */
+        @CheckReturnValue
+        @NotNull MaxBy<T> $value(Field<T> value);
+
+        /**
+         * The expression to use to evaluate the maximum.
+         */
+        @CheckReturnValue
+        @NotNull MaxBy<T> $by(Field<?> by);
+    }
+
+    /**
      * The <code>MEDIAN</code> function.
      */
     public /*sealed*/ interface Median
@@ -8056,6 +8091,41 @@ public final class QOM {
         @NotNull Min<T> $field(Field<T> field);
         @CheckReturnValue
         @NotNull Min<T> $distinct(boolean distinct);
+    }
+
+    /**
+     * The <code>MIN BY</code> function.
+     * <p>
+     * Evaluate <code>value</code> at the row having the minimum value for <code>by</code>.
+     */
+    public /*sealed*/ interface MinBy<T>
+        extends
+            org.jooq.OptionallyOrderedAggregateFunction<T>
+        //permits
+        //    MinBy
+    {
+
+        /**
+         * The returned value.
+         */
+        @NotNull Field<T> $value();
+
+        /**
+         * The expression to use to evaluate the minimum
+         */
+        @NotNull Field<?> $by();
+
+        /**
+         * The returned value.
+         */
+        @CheckReturnValue
+        @NotNull MinBy<T> $value(Field<T> value);
+
+        /**
+         * The expression to use to evaluate the minimum
+         */
+        @CheckReturnValue
+        @NotNull MinBy<T> $by(Field<?> by);
     }
 
     /**

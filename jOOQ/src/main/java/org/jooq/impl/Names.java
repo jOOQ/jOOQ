@@ -69,6 +69,8 @@ final class Names {
     static final Name N_ADD_YEARS                   = systemName("add_years");
     static final Name N_ANY                         = systemName("any");
     static final Name N_ARBITRARY                   = systemName("arbitrary");
+    static final Name N_argMax                      = systemName("argMax");
+    static final Name N_argMin                      = systemName("argMin");
     static final Name N_ARRAY                       = systemName("array");
     static final Name N_ARRAY_AGG                   = systemName("array_agg");
     static final Name N_ARRAY_CONSTRUCT             = systemName("array_construct");
@@ -521,9 +523,11 @@ final class Names {
     static final Name N_LTRIM                       = systemName("ltrim");
     static final Name N_MAP_KEYS                    = systemName("map_keys");
     static final Name N_MAX                         = systemName("max");
+    static final Name N_MAX_BY                      = systemName("max_by");
     static final Name N_MD5                         = systemName("md5");
     static final Name N_MEDIAN                      = systemName("median");
     static final Name N_MIN                         = systemName("min");
+    static final Name N_MIN_BY                      = systemName("min_by");
     static final Name N_NEWID                       = systemName("newid");
     static final Name N_NONE_MATCH                  = systemName("none_match");
     static final Name N_NULLIF                      = systemName("nullif");

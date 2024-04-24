@@ -1418,6 +1418,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         t = byte[][].class;
                     }
 
+                    // [#16585] Another HSQLDB bug regarding LocalTime:
+                    // See also: https://sourceforge.net/p/hsqldb/bugs/1702/
+                    else if (t == LocalTime[].class) {
+                        a = (Object[]) Convert.convertArray(a, Time[].class);
+                        t = Time[].class;
+                    }
+
                     ctx.statement().setArray(ctx.index(), new MockArray(ctx.family(), a, t));
                     break;
                 }

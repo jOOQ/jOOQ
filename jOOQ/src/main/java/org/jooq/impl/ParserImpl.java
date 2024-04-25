@@ -254,6 +254,7 @@ import static org.jooq.impl.DSL.log10;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.ltrim;
 import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.maxBy;
 import static org.jooq.impl.DSL.maxDistinct;
 import static org.jooq.impl.DSL.md5;
 import static org.jooq.impl.DSL.median;
@@ -261,6 +262,7 @@ import static org.jooq.impl.DSL.microsecond;
 import static org.jooq.impl.DSL.millennium;
 import static org.jooq.impl.DSL.millisecond;
 import static org.jooq.impl.DSL.min;
+import static org.jooq.impl.DSL.minBy;
 import static org.jooq.impl.DSL.minDistinct;
 import static org.jooq.impl.DSL.minute;
 import static org.jooq.impl.DSL.mode;
@@ -663,6 +665,7 @@ import org.jooq.MergeMatchedWhereStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
+import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.Name.Quoted;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
@@ -12150,6 +12153,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (filter == null && !basic)
             over = filter = parseOrderedSetFunctionIf();
         if (filter == null && !basic)
+            over = filter = parseMinMaxByFunctionIf();
+        if (filter == null && !basic)
             over = filter = parseArrayAggFunctionIf();
         if (filter == null && !basic)
             over = filter = parseMultisetAggFunctionIf();
@@ -12532,6 +12537,31 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         ordered1 = parseModeIf();
         if (ordered1 != null)
             return ordered1.withinGroupOrderBy(parseWithinGroup1());
+
+        return null;
+    }
+
+    private final AggregateFilterStep<?> parseMinMaxByFunctionIf() {
+        boolean minBy = parseFunctionNameIf("MIN_BY", "ARG_MIN", "argMin");
+        boolean maxBy = !minBy && parseFunctionNameIf("MAX_BY", "ARG_MAX", "argMax");
+
+        if (minBy || maxBy) {
+            parse('(');
+            parseSetQuantifier();
+            Field<?> f1 = parseField();
+            parse(',');
+            Field<?> f2 = parseField();
+
+            List<SortField<?>> sort = null;
+
+            if (parseKeywordIf("ORDER BY"))
+                sort = parseList(',', c -> c.parseSortField());
+
+            parse(')');
+
+            OptionallyOrderedAggregateFunction<?> s1 = minBy ? minBy(f1, f2) : maxBy(f1, f2);
+            return sort == null ? s1 : s1.orderBy(sort);
+        }
 
         return null;
     }

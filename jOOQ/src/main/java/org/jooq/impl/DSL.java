@@ -304,6 +304,7 @@ import org.jooq.Name;
 import org.jooq.Name.Quoted;
 import org.jooq.Null;
 import org.jooq.Operator;
+import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
@@ -24618,6 +24619,20 @@ public class DSL {
     }
 
     /**
+     * The <code>MAX_BY</code> function.
+     * <p>
+     * Evaluate <code>value</code> at the row having the maximum value for <code>by</code>.
+     *
+     * @param value The returned value.
+     * @param by The expression to use to evaluate the maximum.
+     */
+    @NotNull
+    @Support({ DUCKDB, TRINO })
+    public static <T> OptionallyOrderedAggregateFunction<T> maxBy(Field<T> value, Field<?> by) {
+        return new MaxBy<>(value, by);
+    }
+
+    /**
      * The <code>MEDIAN</code> function.
      */
     @NotNull
@@ -24642,6 +24657,20 @@ public class DSL {
     @Support
     public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
         return new Min<>(field, true);
+    }
+
+    /**
+     * The <code>MIN_BY</code> function.
+     * <p>
+     * Evaluate <code>value</code> at the row having the minimum value for <code>by</code>.
+     *
+     * @param value The returned value.
+     * @param by The expression to use to evaluate the minimum
+     */
+    @NotNull
+    @Support({ DUCKDB, TRINO })
+    public static <T> OptionallyOrderedAggregateFunction<T> minBy(Field<T> value, Field<?> by) {
+        return new MinBy<>(value, by);
     }
 
     /**

@@ -12192,7 +12192,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-
         }
         else if (filter != null && !basic && parseKeywordIf("FILTER")) {
             parse('(');
@@ -12551,12 +12550,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field<?> f1 = parseField();
             parse(',');
             Field<?> f2 = parseField();
-
-            List<SortField<?>> sort = null;
-
-            if (parseKeywordIf("ORDER BY"))
-                sort = parseList(',', c -> c.parseSortField());
-
+            List<SortField<?>> sort = parseAggregateOrderByIf();
             parse(')');
 
             OptionallyOrderedAggregateFunction<?> s1 = minBy ? minBy(f1, f2) : maxBy(f1, f2);
@@ -12566,17 +12560,31 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return null;
     }
 
+    private final List<SortField<?>> parseAggregateOrderBy() {
+        List<SortField<?>> sort = parseAggregateOrderByIf();
+
+        if (sort == null)
+            throw expected("ORDER BY");
+
+        return sort;
+    }
+
+    private final List<SortField<?>> parseAggregateOrderByIf() {
+        List<SortField<?>> sort = null;
+
+        if (parseKeywordIf("ORDER BY"))
+            sort = parseList(',', c -> c.parseSortField());
+
+        return sort;
+    }
+
     private final AggregateFilterStep<?> parseArrayAggFunctionIf() {
         if (parseKeywordIf("ARRAY_AGG", "groupArray")) {
             parse('(');
 
             boolean distinct = parseSetQuantifier();
             Field<?> a1 = parseField();
-            List<SortField<?>> sort = null;
-
-            if (parseKeywordIf("ORDER BY"))
-                sort = parseList(',', c -> c.parseSortField());
-
+            List<SortField<?>> sort = parseAggregateOrderByIf();
             parse(')');
 
             ArrayAggOrderByStep<?> s1 = distinct
@@ -12593,14 +12601,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (parseKeywordIf("MULTISET_AGG")) {
             parse('(');
             parseKeywordIf("ALL");
-
             List<Field<?>> fields = parseList(',', c -> c.parseField());
-            List<SortField<?>> sort = null;
-
-            if (parseKeywordIf("ORDER BY"))
-                sort = parseList(',', c -> c.parseSortField());
-
+            List<SortField<?>> sort = parseAggregateOrderByIf();
             parse(')');
+
             ArrayAggOrderByStep<?> s1 = multisetAgg(fields);
             return sort == null ? s1 : s1.orderBy(sort);
         }
@@ -12773,6 +12777,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     parse(')');
 
                     return result;
+                }
+            }
+
+            case ANY_VALUE: {
+                if (parseKeywordIf("HAVING")) {
+                    boolean min = parseKeywordIf("MIN");
+
+                    if (!min)
+                        parseKeyword("MAX");
+
+                    Field<?> f = parseField();
+                    List<SortField<?>> sort = parseAggregateOrderByIf();
+                    parse(')');
+
+                    OptionallyOrderedAggregateFunction<?> s1 = min ? minBy(arg, f) : maxBy(arg, f);
+                    return sort == null ? s1 : s1.orderBy(sort);
                 }
             }
         }

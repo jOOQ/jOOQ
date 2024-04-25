@@ -107,6 +107,23 @@ implements
 
 
 
+
+
+
+            case H2:
+            case HSQLDB:
+            case POSTGRES:
+            case YUGABYTEDB: {
+                List<SortField<?>> o = new ArrayList<>();
+                o.add(arguments.get(1).sortDefault());
+
+                if (!isEmpty(withinGroupOrderBy))
+                    o.addAll(withinGroupOrderBy);
+
+                ctx.visit(arrayGet(fo(DSL.arrayAgg(arguments.get(0)).orderBy(o)), inline(1)));
+                break;
+            }
+
             default:
                 acceptFunctionName(ctx);
                 ctx.sql('(');

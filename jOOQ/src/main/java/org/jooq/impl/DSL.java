@@ -24627,7 +24627,7 @@ public class DSL {
      * @param by The expression to use to evaluate the maximum.
      */
     @NotNull
-    @Support({ DUCKDB, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> OptionallyOrderedAggregateFunction<T> maxBy(Field<T> value, Field<?> by) {
         return new MaxBy<>(value, by);
     }
@@ -24668,7 +24668,7 @@ public class DSL {
      * @param by The expression to use to evaluate the minimum
      */
     @NotNull
-    @Support({ DUCKDB, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> OptionallyOrderedAggregateFunction<T> minBy(Field<T> value, Field<?> by) {
         return new MinBy<>(value, by);
     }

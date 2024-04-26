@@ -447,20 +447,43 @@ public final class Internal {
 
     /**
      * Factory method for sequences.
+     *
+     * @deprecated - 3.20.0 - [#15723] - Regenerate your code.
      */
+    @Deprecated
     @NotNull
     public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, DataType<T> type) {
-        return new SequenceImpl<>(name, schema, type, false);
+        return createSequence(name, schema, null, type);
+    }
+
+    /**
+     * Factory method for sequences.
+     *
+     * @deprecated - 3.20.0 - [#15723] - Regenerate your code.
+     */
+    @Deprecated
+    @NotNull
+    public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, DataType<T> type, Number startWith, Number incrementBy, Number minvalue, Number maxvalue, boolean cycle, Number cache) {
+        return createSequence(name, schema, null, type, startWith, incrementBy, minvalue, maxvalue, cycle, cache);
     }
 
     /**
      * Factory method for sequences.
      */
     @NotNull
-    public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, DataType<T> type, Number startWith, Number incrementBy, Number minvalue, Number maxvalue, boolean cycle, Number cache) {
+    public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, Comment comment, DataType<T> type) {
+        return new SequenceImpl<>(name, schema, comment, type, false);
+    }
+
+    /**
+     * Factory method for sequences.
+     */
+    @NotNull
+    public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, Comment comment, DataType<T> type, Number startWith, Number incrementBy, Number minvalue, Number maxvalue, boolean cycle, Number cache) {
         return new SequenceImpl<>(
             DSL.name(name),
             schema,
+            comment,
             type,
             false,
             startWith != null ? Tools.field(startWith, type) : null,
@@ -490,7 +513,10 @@ public final class Internal {
 
     /**
      * Factory method for domain specifications.
+     *
+     * @deprecated - 3.20.0 - [#15723] - Regenerate your code.
      */
+    @Deprecated
     @NotNull
     public static final <T> Domain<T> createDomain(Schema schema, Name name, DataType<T> type, Check<?>... checks) {
         return createDomain(schema, name, type, null, null, checks);
@@ -499,6 +525,16 @@ public final class Internal {
     /**
      * Factory method for domain specifications.
      */
+    public static final <T> Domain<T> createDomain(Schema schema, Name name, Comment comment, DataType<T> type, Check<?>... checks) {
+        return createDomain(schema, name, comment, type, null, null, checks);
+    }
+
+    /**
+     * Factory method for domain specifications.
+     *
+     * @deprecated - 3.20.0 - [#15723] - Regenerate your code.
+     */
+    @Deprecated
     @NotNull
     public static final <T, U> Domain<U> createDomain(Schema schema, Name name, DataType<T> type, Converter<T, U> converter, Check<?>... checks) {
         return createDomain(schema, name, type, converter, null, checks);
@@ -508,6 +544,17 @@ public final class Internal {
      * Factory method for domain specifications.
      */
     @NotNull
+    public static final <T, U> Domain<U> createDomain(Schema schema, Name name, Comment comment, DataType<T> type, Converter<T, U> converter, Check<?>... checks) {
+        return createDomain(schema, name, comment, type, converter, null, checks);
+    }
+
+    /**
+     * Factory method for domain specifications.
+     *
+     * @deprecated - 3.20.0 - [#15723] - Regenerate your code.
+     */
+    @Deprecated
+    @NotNull
     public static final <T, U> Domain<U> createDomain(Schema schema, Name name, DataType<T> type, Binding<T, U> binding, Check<?>... checks) {
         return createDomain(schema, name, type, null, binding, checks);
     }
@@ -516,14 +563,33 @@ public final class Internal {
      * Factory method for domain specifications.
      */
     @NotNull
+    public static final <T, U> Domain<U> createDomain(Schema schema, Name name, Comment comment, DataType<T> type, Binding<T, U> binding, Check<?>... checks) {
+        return createDomain(schema, name, comment, type, null, binding, checks);
+    }
+
+    /**
+     * Factory method for domain specifications.
+     *
+     * @deprecated - 3.20.0 - [#15723] - Regenerate your code.
+     */
+    @Deprecated
+    @NotNull
     public static final <T, X, U> Domain<U> createDomain(Schema schema, Name name, DataType<T> type, Converter<X, U> converter, Binding<T, X> binding, Check<?>... checks) {
+        return createDomain(schema, name, null, type, converter, binding, checks);
+    }
+
+    /**
+     * Factory method for domain specifications.
+     */
+    @NotNull
+    public static final <T, X, U> Domain<U> createDomain(Schema schema, Name name, Comment comment, DataType<T> type, Converter<X, U> converter, Binding<T, X> binding, Check<?>... checks) {
         Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
         DataType<U> actualType =
             converter == null && binding == null
           ? (DataType<U>) type
           : type.asConvertedDataType(actualBinding);
 
-        return new DomainImpl<>(schema, name, actualType, checks);
+        return new DomainImpl<>(schema, name, comment, actualType, checks);
     }
 
 

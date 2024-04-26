@@ -39,6 +39,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="action_reference_new_table" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="action_reference_old_row" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="action_reference_new_row" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -105,6 +106,8 @@ public class Trigger implements Serializable, XMLAppendable
     @XmlElement(name = "action_reference_new_row")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String actionReferenceNewRow;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String comment;
 
     public String getTriggerCatalog() {
         return triggerCatalog;
@@ -234,6 +237,14 @@ public class Trigger implements Serializable, XMLAppendable
         this.actionReferenceNewRow = value;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String value) {
+        this.comment = value;
+    }
+
     public Trigger withTriggerCatalog(String value) {
         setTriggerCatalog(value);
         return this;
@@ -314,6 +325,11 @@ public class Trigger implements Serializable, XMLAppendable
         return this;
     }
 
+    public Trigger withComment(String value) {
+        setComment(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("trigger_catalog", triggerCatalog);
@@ -332,6 +348,7 @@ public class Trigger implements Serializable, XMLAppendable
         builder.append("action_reference_new_table", actionReferenceNewTable);
         builder.append("action_reference_old_row", actionReferenceOldRow);
         builder.append("action_reference_new_row", actionReferenceNewRow);
+        builder.append("comment", comment);
     }
 
     @Override
@@ -497,6 +514,15 @@ public class Trigger implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (comment == null) {
+            if (other.comment!= null) {
+                return false;
+            }
+        } else {
+            if (!comment.equals(other.comment)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -520,6 +546,7 @@ public class Trigger implements Serializable, XMLAppendable
         result = ((prime*result)+((actionReferenceNewTable == null)? 0 :actionReferenceNewTable.hashCode()));
         result = ((prime*result)+((actionReferenceOldRow == null)? 0 :actionReferenceOldRow.hashCode()));
         result = ((prime*result)+((actionReferenceNewRow == null)? 0 :actionReferenceNewRow.hashCode()));
+        result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         return result;
     }
 

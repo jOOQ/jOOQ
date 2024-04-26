@@ -77,6 +77,7 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
@@ -107,14 +108,12 @@ import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_PROC;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_SEQUENCE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
-import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -144,8 +143,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 // ...
-// ...
-// ...
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
@@ -164,7 +161,7 @@ import org.jooq.meta.DefaultEnumDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
-// ...
+import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -175,7 +172,6 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
-// ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
@@ -189,8 +185,6 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -686,9 +680,56 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             .orderBy(1, 2, 3);
     }
 
+    private static final Field<String> objDescription(Field<Long> oid) {
+        return DSL.function(unquotedName("obj_description"), VARCHAR, oid);
+    }
+
     @Override
     public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
-        return null;
+        Table<?> c =
+            select(
+                PG_CLASS.pgNamespace().NSPNAME.as("schema_name"),
+                PG_CLASS.RELNAME.as("table_name"),
+                inline(null, VARCHAR).as("column_name"),
+                objDescription(PG_CLASS.OID).as("remarks"))
+            .from(PG_CLASS)
+            .where(objDescription(PG_CLASS.OID).isNotNull())
+            .unionAll(
+                select(
+                    PG_NAMESPACE.NSPNAME,
+                    inline(null, VARCHAR),
+                    inline(null, VARCHAR),
+                    objDescription(PG_NAMESPACE.OID).as("remarks"))
+                .from(PG_NAMESPACE)
+                .where(objDescription(PG_NAMESPACE.OID).isNotNull()))
+            .unionAll(
+                select(
+                    PG_PROC.pgNamespace().NSPNAME,
+                    PG_PROC.PRONAME,
+                    inline(null, VARCHAR),
+                    objDescription(PG_PROC.OID).as("remarks"))
+                .from(PG_PROC)
+                .where(objDescription(PG_PROC.OID).isNotNull()))
+            .unionAll(
+                select(
+                    PG_TYPE.pgNamespace().NSPNAME,
+                    PG_TYPE.TYPNAME,
+                    inline(null, VARCHAR),
+                    objDescription(PG_TYPE.OID).as("remarks"))
+                .from(PG_TYPE)
+                .where(objDescription(PG_TYPE.OID).isNotNull()))
+            .asTable("c");
+
+        return create()
+            .select(
+                currentCatalog().as("catalog_name"),
+                c.field("schema_name", VARCHAR),
+                c.field("table_name", VARCHAR),
+                c.field("column_name", VARCHAR),
+                c.field("remarks", VARCHAR))
+            .from(c)
+            .where(c.field("schema_name", VARCHAR).in(schemas))
+            .orderBy(1, 2, 3, 4);
     }
 
     @Override

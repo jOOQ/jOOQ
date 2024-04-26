@@ -20,9 +20,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Strategy", propOrder = {
-    "name",
-    "java",
-    "matchers"
+
 })
 @SuppressWarnings({
     "all"

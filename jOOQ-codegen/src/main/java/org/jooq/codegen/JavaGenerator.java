@@ -65,6 +65,7 @@ import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
 import static org.jooq.tools.StringUtils.isBlank;
+import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.File;
 import java.io.IOException;
@@ -3334,6 +3335,7 @@ public class JavaGenerator extends AbstractGenerator {
             : null;
         final String packageId = pkg == null ? null : out.ref(getStrategy().getFullJavaIdentifier(pkg), 2);
         final String udtId = out.ref(getStrategy().getJavaIdentifier(udt), 2);
+        final String comment = comment(udt);
 
         printPackage(out, udt);
 
@@ -3362,10 +3364,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         if (scala) {
-            out.println("%sclass %s extends %s[%s](%s.name(\"%s\"), null, %s, %s)[[before= with ][separator= with ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+            out.println("%sclass %s extends %s[%s](%s.name(\"%s\"), null, %s, %s.comment(\"[[%s]]\"), %s)[[before= with ][separator= with ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), packageId, DSL.class, asList(escapeString(comment)), synthetic, interfaces);
         }
         else if (kotlin) {
-            out.println("%sopen class %s : %s<%s>(%s.name(\"%s\"), null, %s, %s)[[before=, ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
+            out.println("%sopen class %s : %s<%s>(%s.name(\"%s\"), null, %s, %s.comment(\"[[%s]]\"), %s)[[before=, ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), packageId, DSL.class, asList(escapeString(comment)), synthetic, interfaces);
 
             out.println();
             out.println("public companion object {");
@@ -3433,7 +3435,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.println("private %s() {", className);
-            out.println("super(%s.name(\"%s\"), null, %s, %s);", DSL.class, udt.getOutputName(), packageId, synthetic);
+            out.println("super(%s.name(\"%s\"), null, %s, %s.comment(\"[[%s]]\"), %s);", DSL.class, udt.getOutputName(), packageId, DSL.class, asList(escapeString(comment)), synthetic);
             out.println("}");
         }
 
@@ -3837,13 +3839,18 @@ public class JavaGenerator extends AbstractGenerator {
             final String domainTypeRef = getJavaTypeReference(domain.getDatabase(), domain.getType(resolver(out)), out);
             final List<String> converter = out.ref(list(domain.getType(resolver(out)).getConverter()));
             final List<String> binding = out.ref(list(domain.getType(resolver(out)).getBinding()));
+            final String comment = comment(domain);
 
-            out.javadocAndAnnotations(domain, "The domain <code>%s</code>.", domain.getQualifiedOutputName());
+            if (generateCommentsOnDomains() && !isEmpty(comment))
+                out.javadocAndAnnotations(domain, comment);
+            else
+                out.javadocAndAnnotations(domain, "The domain <code>%s</code>.", domain.getQualifiedOutputName());
 
             if (scala) {
                 out.println("%sval %s: %s[%s] = %s.createDomain(", visibility(), scalaWhitespaceSuffix(id), Domain.class, domainType, Internal.class);
                 out.println("  %s", schemaId != null ? "schema" : null);
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
+                out.println(", %s.comment(\"[[%s]]\")", DSL.class, asList(escapeString(comment)));
                 out.println(", %s", domainTypeRef);
                 if (!converter.isEmpty() || !binding.isEmpty())
                     out.println(converterTemplate(converter) + converterTemplate(binding), converter, binding);
@@ -3857,6 +3864,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%sval %s: %s<%s> = %s.createDomain(", visibility(), id, Domain.class, domainType, Internal.class);
                 out.println("  %s", schemaId != null ? "schema()" : null);
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
+                out.println(", %s.comment(\"[[%s]]\")", DSL.class, asList(escapeString(comment)));
                 out.println(", %s", domainTypeRef);
                 if (!converter.isEmpty() || !binding.isEmpty())
                     out.println(converterTemplate(converter) + converterTemplate(binding), converter, binding);
@@ -3871,6 +3879,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%sstatic final %s<%s> %s = %s.createDomain(", visibility(), Domain.class, domainType, id, Internal.class);
                 out.println("  %s", schemaId != null ? "schema()" : null);
                 out.println(", %s.name(\"%s\")", DSL.class, escapeString(domain.getOutputName()));
+                out.println(", %s.comment(\"[[%s]]\")", DSL.class, asList(escapeString(comment)));
                 out.println(", %s", domainTypeRef);
                 if (!converter.isEmpty() || !binding.isEmpty())
                     out.println(converterTemplate(converter) + converterTemplate(binding), converter, binding);
@@ -8243,14 +8252,18 @@ public class JavaGenerator extends AbstractGenerator {
                 ? out.ref(getStrategy().getFullJavaIdentifier(schema), 2)
                 : null;
             final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType(resolver(out)), out);
+            final String comment = comment(sequence);
 
             if (!printDeprecationIfUnknownType(out, seqTypeFull))
-                out.javadocAndAnnotations(sequence, "The sequence <code>%s</code>", sequence.getQualifiedOutputName());
+                if (generateCommentsOnSequences() && !isEmpty(comment))
+                    out.javadocAndAnnotations(sequence, comment);
+                else
+                    out.javadocAndAnnotations(sequence, "The sequence <code>%s</code>", sequence.getQualifiedOutputName());
 
             boolean flags = generateSequenceFlags();
 
             if (scala)
-                out.println("%sval %s: %s[%s] = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s)",
+                out.println("%sval %s: %s[%s] = %s.createSequence(\"%s\", %s, %s.comment(\"[[%s]]\"), %s, %s, %s, %s, %s, %s, %s)",
                     visibility(),
                     scalaWhitespaceSuffix(seqId),
                     Sequence.class,
@@ -8258,6 +8271,8 @@ public class JavaGenerator extends AbstractGenerator {
                     Internal.class,
                     seqName,
                     schemaId,
+                    DSL.class,
+                    asList(escapeString(comment)),
                     typeRef,
                     flags ? numberLiteral(sequence.getStartWith()) : "null",
                     flags ? numberLiteral(sequence.getIncrementBy()) : "null",
@@ -8267,7 +8282,7 @@ public class JavaGenerator extends AbstractGenerator {
                     flags ? numberLiteral(sequence.getCache()) : "null"
                 );
             else if (kotlin)
-                out.println("%sval %s: %s<%s> = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s)",
+                out.println("%sval %s: %s<%s> = %s.createSequence(\"%s\", %s, %s.comment(\"[[%s]]\"), %s, %s, %s, %s, %s, %s, %s)",
                     visibility(),
                     seqId,
                     Sequence.class,
@@ -8275,6 +8290,8 @@ public class JavaGenerator extends AbstractGenerator {
                     Internal.class,
                     seqName,
                     schemaId,
+                    DSL.class,
+                    asList(escapeString(comment)),
                     typeRef,
                     flags ? numberLiteral(sequence.getStartWith()) : "null",
                     flags ? numberLiteral(sequence.getIncrementBy()) : "null",
@@ -8284,7 +8301,7 @@ public class JavaGenerator extends AbstractGenerator {
                     flags ? numberLiteral(sequence.getCache()) : "null"
                 );
             else
-                out.println("%sstatic final %s<%s> %s = %s.createSequence(\"%s\", %s, %s, %s, %s, %s, %s, %s, %s);",
+                out.println("%sstatic final %s<%s> %s = %s.createSequence(\"%s\", %s, %s.comment(\"[[%s]]\"), %s, %s, %s, %s, %s, %s, %s);",
                     visibility(),
                     Sequence.class,
                     seqType,
@@ -8292,6 +8309,8 @@ public class JavaGenerator extends AbstractGenerator {
                     Internal.class,
                     seqName,
                     schemaId,
+                    DSL.class,
+                    asList(escapeString(comment)),
                     typeRef,
                     flags ? numberLiteral(sequence.getStartWith()) : "null",
                     flags ? numberLiteral(sequence.getIncrementBy()) : "null",
@@ -8687,6 +8706,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(schema);
         final String classExtends = out.ref(getStrategy().getJavaClassExtends(schema));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(schema, Mode.DEFAULT));
+        final String comment = comment(schema);
 
         printPackage(out, schema);
 
@@ -8702,12 +8722,12 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, schema, Mode.DEFAULT);
 
         if (scala) {
-            out.println("%sclass %s extends %s(\"%s\", %s)[[before= with ][separator= with ][%s]] {",
-                visibility(), className, classExtends, escapeString(schema.getOutputName()), catalogId, interfaces);
+            out.println("%sclass %s extends %s(%s.name(\"%s\"), %s, %s.comment(\"[[%s]]\"))[[before= with ][separator= with ][%s]] {",
+                visibility(), className, classExtends, DSL.class, escapeString(schema.getOutputName()), catalogId, DSL.class, asList(escapeString(comment)), interfaces);
         }
         else if (kotlin) {
-            out.println("%sopen class %s : %s(\"%s\", %s)[[before=, ][%s]] {",
-                visibility(), className, classExtends, escapeString(schema.getOutputName()), catalogId, interfaces);
+            out.println("%sopen class %s : %s(%s.name(\"%s\"), %s, %s.comment(\"[[%s]]\"))[[before=, ][%s]] {",
+                visibility(), className, classExtends, DSL.class, escapeString(schema.getOutputName()), catalogId, DSL.class, asList(escapeString(comment)), interfaces);
 
             out.println("public companion object {");
             out.javadoc("The reference instance of <code>%s</code>", schemaName);
@@ -8758,7 +8778,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (!scala && !kotlin) {
             out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.println("private %s() {", className);
-            out.println("super(\"%s\", null);", escapeString(schema.getOutputName()));
+            out.println("super(%s.name(\"%s\"), null, %s.comment(\"[[%s]]\"));", DSL.class, escapeString(schema.getOutputName()), DSL.class, asList(escapeString(comment)));
             out.println("}");
         }
 
@@ -9427,6 +9447,7 @@ public class JavaGenerator extends AbstractGenerator {
             ? out.ref(getStrategy().getFullJavaIdentifier(schema), 2)
             : null;
         final List<String> packageId = out.ref(getStrategy().getFullJavaIdentifiers(routine.getPackage()), 2);
+        final String comment = comment(routine);
 
         printPackage(out, routine);
 
@@ -9460,13 +9481,13 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, routine, Mode.DEFAULT);
 
         if (scala) {
-            out.println("%sclass %s extends %s[%s](\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before= with ][separator= with ][%s]] {",
-                visibility(), className, classExtends, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
+            out.println("%sclass %s extends %s[%s](\"%s\", %s[[before=, ][%s]], %s.comment(\"[[%s]]\")[[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before= with ][separator= with ][%s]] {",
+                visibility(), className, classExtends, returnType, escapeString(routine.getName()), schemaId, packageId, DSL.class, asList(escapeString(comment)), returnTypeRef, returnConverter, returnBinding, interfaces);
         }
         else {
             if (kotlin) {
-                out.println("%sopen class %s : %s<%s>(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before=, ][%s]] {",
-                    visibility(), className, classExtends, returnType, escapeString(routine.getName()), schemaId, packageId, returnTypeRef, returnConverter, returnBinding, interfaces);
+                out.println("%sopen class %s : %s<%s>(\"%s\", %s[[before=, ][%s]], %s.comment(\"[[%s]]\")[[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ")[[before=, ][%s]] {",
+                    visibility(), className, classExtends, returnType, escapeString(routine.getName()), schemaId, packageId, DSL.class, asList(escapeString(comment)), returnTypeRef, returnConverter, returnBinding, interfaces);
             }
             else {
                 out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {",
@@ -9512,7 +9533,8 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.javadoc("Create a new routine call instance");
             out.println("%s%s() {", visibility(), className);
-            out.println("super(\"%s\", %s[[before=, ][%s]][[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ");", routine.getName(), schemaId, packageId, returnTypeRef, returnConverter, returnBinding);
+            out.println("super(\"%s\", %s[[before=, ][%s]], %s.comment(\"[[%s]]\")[[before=, ][%s]]" + converterTemplate(returnConverter) + converterTemplate(returnBinding) + ");",
+                routine.getName(), schemaId, packageId, DSL.class, asList(escapeString(comment)), returnTypeRef, returnConverter, returnBinding);
 
 
             if (routine.getAllParameters().size() > 0)
@@ -10211,11 +10233,13 @@ public class JavaGenerator extends AbstractGenerator {
             || definition instanceof ColumnDefinition && generateCommentsOnColumns()
             || definition instanceof EmbeddableDefinition && generateCommentsOnEmbeddables()
             || definition instanceof UDTDefinition && generateCommentsOnUDTs()
+            || definition instanceof EnumDefinition && generateCommentsOnUDTs()
             || definition instanceof AttributeDefinition && generateCommentsOnAttributes()
             || definition instanceof PackageDefinition && generateCommentsOnPackages()
             || definition instanceof RoutineDefinition && generateCommentsOnRoutines()
             || definition instanceof ParameterDefinition && generateCommentsOnParameters()
             || definition instanceof SequenceDefinition && generateCommentsOnSequences()
+            || definition instanceof DomainDefinition && generateCommentsOnDomains()
              ? StringUtils.defaultIfBlank(definition.getComment(), "")
              : "";
     }

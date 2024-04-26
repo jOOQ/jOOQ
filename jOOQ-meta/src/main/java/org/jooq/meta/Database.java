@@ -145,6 +145,26 @@ public interface Database extends AutoCloseable {
     List<SequenceDefinition> getSequences(SchemaDefinition schema);
 
     /**
+     * Get a sequence in this database by name.
+     */
+    SequenceDefinition getSequence(SchemaDefinition schema, String name);
+
+    /**
+     * Get a sequence in this database by name.
+     */
+    SequenceDefinition getSequence(SchemaDefinition schema, String name, boolean ignoreCase);
+
+    /**
+     * Get a sequence in this database by name.
+     */
+    SequenceDefinition getSequence(SchemaDefinition schema, Name name);
+
+    /**
+     * Get a sequence in this database by name.
+     */
+    SequenceDefinition getSequence(SchemaDefinition schema, Name name, boolean ignoreCase);
+
+    /**
      * The identities contained in this database.
      */
     List<IdentityDefinition> getIdentities(SchemaDefinition schema);
@@ -420,6 +440,26 @@ public interface Database extends AutoCloseable {
      * database.
      */
     List<RoutineDefinition> getRoutines(SchemaDefinition schema);
+
+    /**
+     * Get a routine in this database by name.
+     */
+    RoutineDefinition getRoutine(SchemaDefinition schema, String name);
+
+    /**
+     * Get a routine in this database by name.
+     */
+    RoutineDefinition getRoutine(SchemaDefinition schema, String name, boolean ignoreCase);
+
+    /**
+     * Get a routine in this database by name.
+     */
+    RoutineDefinition getRoutine(SchemaDefinition schema, Name name);
+
+    /**
+     * Get a routine in this database by name.
+     */
+    RoutineDefinition getRoutine(SchemaDefinition schema, Name name, boolean ignoreCase);
 
     /**
      * The packages contained in this database.

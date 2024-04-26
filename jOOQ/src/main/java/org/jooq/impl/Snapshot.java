@@ -44,36 +44,26 @@ import static org.jooq.impl.Tools.map;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
-import org.jooq.Comment;
-import org.jooq.Condition;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
-import org.jooq.Name;
 // ...
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
-import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableField;
-// ...
-// ...
-// ...
 // ...
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * An implementation of {@code Meta} which can be used to create fully
@@ -182,7 +172,7 @@ final class Snapshot extends AbstractMeta {
 
     private class SnapshotDomain<T> extends DomainImpl<T> {
         SnapshotDomain(SnapshotSchema schema, Domain<T> domain) {
-            super(schema, domain.getQualifiedName(), domain.getDataType(), domain.getChecks().toArray(EMPTY_CHECK));
+            super(schema, domain.getQualifiedName(), domain.getCommentPart(), domain.getDataType(), domain.getChecks().toArray(EMPTY_CHECK));
         }
     }
 
@@ -298,6 +288,7 @@ final class Snapshot extends AbstractMeta {
             super(
                 sequence.getQualifiedName(),
                 schema,
+                sequence.getCommentPart(),
                 sequence.getDataType(),
                 false,
                 sequence.getStartWith(),

@@ -42,6 +42,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingInt;
+import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
@@ -232,6 +233,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaDomain<?> id = new InformationSchemaDomain<Object>(
                 schema,
                 name(d.getDomainName()),
+                comment(d.getComment()),
                 (DataType) type(d.getDataType(), length, precision, scale, nullable, false, false, null, null),
                 checks.toArray(EMPTY_CHECK)
             );
@@ -548,6 +550,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaSequence is = new InformationSchemaSequence(
                 xs.getSequenceName(),
                 schema,
+                comment(xs.getComment()),
                 type(typeName, length, precision, scale, nullable, false, false, null, null),
                 startWith,
                 incrementBy,
@@ -796,8 +799,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
     private static final class InformationSchemaDomain<T> extends DomainImpl<T> {
 
-        InformationSchemaDomain(Schema schema, Name name, DataType<T> type, Check<?>[] checks) {
-            super(schema, name, type, checks);
+        InformationSchemaDomain(Schema schema, Name name, Comment comment, DataType<T> type, Check<?>[] checks) {
+            super(schema, name, comment, type, checks);
         }
     }
 
@@ -827,9 +830,10 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
     private static final class InformationSchemaSequence<N extends Number> extends SequenceImpl<N> {
 
-        InformationSchemaSequence(String name, Schema schema, DataType<N> type, Number startWith, Number incrementBy, Number minvalue, Number maxvalue, Boolean cycle, Number cache) {
+        InformationSchemaSequence(String name, Schema schema, Comment comment, DataType<N> type, Number startWith, Number incrementBy, Number minvalue, Number maxvalue, Boolean cycle, Number cache) {
             super(DSL.name(name),
                 schema,
+                comment,
                 type,
                 false,
                 startWith != null ? Tools.field(startWith, type) : null,

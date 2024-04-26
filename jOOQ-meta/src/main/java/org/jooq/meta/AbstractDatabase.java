@@ -47,14 +47,11 @@ import static org.jooq.Log.Level.ERROR;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
-// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
-import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
@@ -62,7 +59,6 @@ import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
-import static org.jooq.meta.hsqldb.information_schema.Tables.TRIGGERS;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -121,10 +117,10 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
-// ...
-// ...
-// ...
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
+// ...
 import org.jooq.conf.ParseWithMetaLookups;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.exception.DataAccessException;
@@ -133,7 +129,6 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
 import org.jooq.impl.QOM;
 import org.jooq.impl.SQLDataType;
-import org.jooq.meta.hsqldb.information_schema.tables.Triggers;
 import org.jooq.meta.jaxb.CatalogMappingType;
 import org.jooq.meta.jaxb.CommentType;
 import org.jooq.meta.jaxb.CustomType;
@@ -1886,6 +1881,26 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final SequenceDefinition getSequence(SchemaDefinition schema, String name) {
+        return getSequence(schema, name, false);
+    }
+
+    @Override
+    public final SequenceDefinition getSequence(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getSequences(schema), name, ignoreCase);
+    }
+
+    @Override
+    public final SequenceDefinition getSequence(SchemaDefinition schema, Name name) {
+        return getSequence(schema, name, false);
+    }
+
+    @Override
+    public final SequenceDefinition getSequence(SchemaDefinition schema, Name name, boolean ignoreCase) {
+        return getDefinition(getSequences(schema), name, ignoreCase);
+    }
+
+    @Override
     public final List<IdentityDefinition> getIdentities(SchemaDefinition schema) {
         if (identities == null) {
             identities = new ArrayList<>();
@@ -3175,6 +3190,26 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final RoutineDefinition getRoutine(SchemaDefinition schema, String name) {
+        return getRoutine(schema, name, false);
+    }
+
+    @Override
+    public final RoutineDefinition getRoutine(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getRoutines(schema), name, ignoreCase);
+    }
+
+    @Override
+    public final RoutineDefinition getRoutine(SchemaDefinition schema, Name name) {
+        return getRoutine(schema, name, false);
+    }
+
+    @Override
+    public final RoutineDefinition getRoutine(SchemaDefinition schema, Name name, boolean ignoreCase) {
+        return getDefinition(getRoutines(schema), name, ignoreCase);
+    }
+
+    @Override
     public final List<PackageDefinition> getPackages(SchemaDefinition schema) {
         if (packages == null) {
             packages = new ArrayList<>();
@@ -4048,15 +4083,31 @@ public abstract class AbstractDatabase implements Database {
 
                     if (schema != null) {
                         String name = r.value3();
-                        Definition o = getTable(schema, name);
+                        Definition o = null;
 
-                        if (o != null) {
-                            if (!isEmpty(r.value4()))
-                                if (o instanceof TableDefinition t)
-                                    o = t.getColumn(r.value4());
-
-                            result.put(o, r.value5());
+                        if (isEmpty(name)) {
+                            o = schema;
                         }
+                        else {
+                            o = getTable(schema, name);
+
+                            if (o != null && !isEmpty(r.value4())) {
+                                o = ((TableDefinition) o).getColumn(r.value4());
+                            }
+                            else {
+                                if (o == null)
+                                    o = getDomain(schema, name);
+                                if (o == null)
+                                    o = getRoutine(schema, name);
+                                if (o == null)
+                                    o = getSequence(schema, name);
+                                if (o == null)
+                                    o = getUDT(schema, name);
+                            }
+                        }
+
+                        if (o != null)
+                            result.put(o, r.value5());
                     }
             }));
         }

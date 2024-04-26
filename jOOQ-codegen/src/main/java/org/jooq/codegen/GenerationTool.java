@@ -919,6 +919,8 @@ public class GenerationTool {
                 generator.setGenerateCommentsOnSchemas(g.getGenerate().isCommentsOnSchemas());
             if (g.getGenerate().isCommentsOnSequences() != null)
                 generator.setGenerateCommentsOnSequences(g.getGenerate().isCommentsOnSequences());
+            if (g.getGenerate().isCommentsOnDomains() != null)
+                generator.setGenerateCommentsOnDomains(g.getGenerate().isCommentsOnDomains());
             if (g.getGenerate().isCommentsOnTables() != null)
                 generator.setGenerateCommentsOnTables(g.getGenerate().isCommentsOnTables());
             if (g.getGenerate().isCommentsOnEmbeddables() != null)

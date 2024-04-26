@@ -60,7 +60,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.param;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultBinding.DefaultBooleanBinding.BIND_AS_1_0;
 import static org.jooq.impl.Keywords.K_BEGIN;
@@ -103,7 +102,6 @@ import static org.jooq.impl.Tools.configurationOrThrow;
 // ...
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.getRecordQualifier;
-import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 
 import java.sql.CallableStatement;
@@ -128,6 +126,7 @@ import org.jooq.BindContext;
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
@@ -158,13 +157,10 @@ import org.jooq.UDTRecord;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.DefaultBinding.DefaultBooleanBinding;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.reflect.Reflect;
-
-// ...
 
 /**
  * A common base class for stored procedures
@@ -249,46 +245,124 @@ implements
     // Constructors
     // ------------------------------------------------------------------------
 
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected AbstractRoutine(String name, Schema schema) {
-        this(name, schema, null, null, null, null);
+        this(name, schema, (Package) null, (DataType<?>) null, null, null);
     }
 
+    protected AbstractRoutine(String name, Schema schema, Comment comment) {
+        this(name, schema, (Package) null, comment, (DataType<?>) null, null, null);
+    }
+
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected AbstractRoutine(String name, Schema schema, Package pkg) {
-        this(name, schema, pkg, null, null, null);
+        this(name, schema, pkg, (DataType<?>) null, null, null);
     }
 
+    protected AbstractRoutine(String name, Schema schema, Package pkg, Comment comment) {
+        this(name, schema, pkg, comment, (DataType<?>) null, null, null);
+    }
+
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected AbstractRoutine(String name, Schema schema, DataType<T> type) {
-        this(name, schema, null, type, null, null);
+        this(name, schema, (Package) null, type, null, null);
     }
 
+    protected AbstractRoutine(String name, Schema schema, Comment comment, DataType<T> type) {
+        this(name, schema, (Package) null, comment, type, null, null);
+    }
+
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected <X> AbstractRoutine(String name, Schema schema, DataType<X> type, Converter<X, T> converter) {
-        this(name, schema, null, type, converter, null);
+        this(name, schema, (Package) null, type, converter, null);
     }
 
+    protected <X> AbstractRoutine(String name, Schema schema, Comment comment, DataType<X> type, Converter<X, T> converter) {
+        this(name, schema, (Package) null, comment, type, converter, null);
+    }
+
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected <X> AbstractRoutine(String name, Schema schema, DataType<X> type, Binding<X, T> binding) {
-        this(name, schema, null, type, null, binding);
+        this(name, schema, (Package) null, type, null, binding);
     }
 
+    protected <X> AbstractRoutine(String name, Schema schema, Comment comment, DataType<X> type, Binding<X, T> binding) {
+        this(name, schema, (Package) null, comment, type, null, binding);
+    }
 
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected <X, Y> AbstractRoutine(String name, Schema schema, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
-        this(name, schema, null, type, converter, binding);
+        this(name, schema, (Package) null, type, converter, binding);
     }
 
+    protected <X, Y> AbstractRoutine(String name, Schema schema, Comment comment, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
+        this(name, schema, null, comment, type, converter, binding);
+    }
+
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<T> type) {
         this(name, schema, pkg, type, null, null);
     }
 
+    protected AbstractRoutine(String name, Schema schema, Package pkg, Comment comment, DataType<T> type) {
+        this(name, schema, pkg, comment, type, null, null);
+    }
+
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected <X> AbstractRoutine(String name, Schema schema, Package pkg, DataType<X> type, Converter<X, T> converter) {
         this(name, schema, pkg, type, converter, null);
     }
 
+    protected <X> AbstractRoutine(String name, Schema schema, Package pkg, Comment comment, DataType<X> type, Converter<X, T> converter) {
+        this(name, schema, pkg, comment, type, converter, null);
+    }
+
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected <X> AbstractRoutine(String name, Schema schema, Package pkg, DataType<X> type, Binding<X, T> binding) {
         this(name, schema, pkg, type, null, binding);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    protected <X> AbstractRoutine(String name, Schema schema, Package pkg, Comment comment, DataType<X> type, Binding<X, T> binding) {
+        this(name, schema, pkg, comment, type, null, binding);
+    }
+
+    /**
+     * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
+     */
+    @Deprecated
     protected <X, Y> AbstractRoutine(String name, Schema schema, Package pkg, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
-        super(qualify(pkg != null ? pkg : schema, DSL.name(name)), CommentImpl.NO_COMMENT);
+        this(name, schema, pkg, null, type, converter, binding);
+    }
+
+    protected <X, Y> AbstractRoutine(String name, Schema schema, Package pkg, Comment comment, DataType<X> type, Converter<Y, T> converter, Binding<X, Y> binding) {
+        super(qualify(pkg != null ? pkg : schema, DSL.name(name)), comment);
 
         this.resultIndexes = new HashMap<>();
 

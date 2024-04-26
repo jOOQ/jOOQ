@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import org.jooq.Binding;
 import org.jooq.Catalog;
+import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -111,7 +112,11 @@ implements
     }
 
     public UDTImpl(Name name, Schema schema, Package pkg, boolean synthetic) {
-        super(qualify(pkg != null ? pkg : schema, name), CommentImpl.NO_COMMENT);
+        this(name, schema, pkg, null, synthetic);
+    }
+
+    public UDTImpl(Name name, Schema schema, Package pkg, Comment comment, boolean synthetic) {
+        super(qualify(pkg != null ? pkg : schema, name), comment);
 
         this.fields = new FieldsImpl<>();
         this.schema = schema;

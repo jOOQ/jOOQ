@@ -13685,6 +13685,7 @@ public class DSL {
         return new SequenceImpl<>(
             name.unqualifiedName(),
             name.qualified() ? schema(name.qualifier()) : null,
+            CommentImpl.NO_COMMENT,
             type,
             false
         );
@@ -15274,7 +15275,7 @@ public class DSL {
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     @PlainSQL
     public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
-        return new SequenceImpl<>(sql, null, type, true);
+        return new SequenceImpl<>(sql, null, CommentImpl.NO_COMMENT, type, true);
     }
 
     /**
@@ -15372,6 +15373,7 @@ public class DSL {
         return new DomainImpl<>(
             name.qualified() ? schema(name.qualifier()) : null,
             name.unqualifiedName(),
+            CommentImpl.NO_COMMENT,
             new DefaultDataType<>(null, type.getSQLDataType(), name)
         );
     }

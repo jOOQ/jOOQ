@@ -63,6 +63,7 @@ import static org.jooq.impl.Tools.getMappedSchema;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -112,20 +113,21 @@ implements
 
     @Deprecated
     public SequenceImpl(String name, Schema schema, DataType<T> type) {
-        this(name, schema, type, false);
+        this(name, schema, null, type, false);
     }
 
-    SequenceImpl(String name, Schema schema, DataType<T> type, boolean nameIsPlainSQL) {
-        this(DSL.name(name), schema, type, nameIsPlainSQL);
+    SequenceImpl(String name, Schema schema, Comment comment, DataType<T> type, boolean nameIsPlainSQL) {
+        this(DSL.name(name), schema, comment, type, nameIsPlainSQL);
     }
 
-    SequenceImpl(Name name, Schema schema, DataType<T> type, boolean nameIsPlainSQL) {
-        this(name, schema, type, nameIsPlainSQL, null, null, null, null, false, null);
+    SequenceImpl(Name name, Schema schema, Comment comment, DataType<T> type, boolean nameIsPlainSQL) {
+        this(name, schema, comment, type, nameIsPlainSQL, null, null, null, null, false, null);
     }
 
     SequenceImpl(
         Name name,
         Schema schema,
+        Comment comment,
         DataType<T> type,
         boolean nameIsPlainSQL,
         Field<T> startWith,
@@ -135,7 +137,7 @@ implements
         boolean cycle,
         Field<T> cache
     ) {
-        super(qualify(schema, name), CommentImpl.NO_COMMENT, type);
+        super(qualify(schema, name), comment, type);
 
         this.schema = schema;
         this.nameIsPlainSQL = nameIsPlainSQL;

@@ -1980,7 +1980,7 @@ final class Interpreter {
 
         private final class InterpretedDomain extends DomainImpl {
             InterpretedDomain(Schema schema) {
-                super(schema, MutableDomain.this.name(), dataType, interpretedChecks());
+                super(schema, MutableDomain.this.name(), comment(), dataType, interpretedChecks());
             }
         }
     }
@@ -2017,7 +2017,10 @@ final class Interpreter {
 
         private final class InterpretedSequence extends SequenceImpl<T> {
             InterpretedSequence(Schema schema) {
-                super(MutableSequence.this.name(), schema,
+                super(
+                    MutableSequence.this.name(),
+                    schema,
+                    MutableSequence.this.comment(),
                     MutableSequence.this.dataType != null
                         ? MutableSequence.this.dataType
                         : (DataType<T>) SQLDataType.BIGINT,

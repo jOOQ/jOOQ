@@ -45,6 +45,7 @@ import java.util.List;
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Check;
+import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
@@ -64,13 +65,20 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-class DomainImpl<T> extends AbstractNamed implements Domain<T>, UNotYetImplemented {
+class DomainImpl<T>
+extends
+    AbstractNamed
+implements
+    Domain<T>,
+    UNotYetImplemented
+{
+
     private final Schema      schema;
     private final Check<?>[]  checks;
     private final DataType<T> type;
 
-    DomainImpl(Schema schema, Name name, DataType<T> type, Check<?>... checks) {
-        super(qualify(schema, name), null);
+    DomainImpl(Schema schema, Name name, Comment comment, DataType<T> type, Check<?>... checks) {
+        super(qualify(schema, name), comment);
 
         this.schema = schema;
         this.checks = checks;

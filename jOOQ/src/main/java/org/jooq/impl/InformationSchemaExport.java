@@ -185,6 +185,7 @@ final class InformationSchemaExport {
             id.setDomainSchema(schemaName);
 
         id.setDomainName(domainName);
+        id.setComment(d.getComment());
         id.setDataType(d.getDataType().getTypeName(configuration));
 
         if (d.getDataType().lengthDefined())
@@ -237,6 +238,7 @@ final class InformationSchemaExport {
             iq.setSequenceSchema(schemaName);
 
         iq.setSequenceName(q.getName());
+        iq.setComment(q.getComment());
         iq.setDataType(q.getDataType().getTypeName(configuration));
 
         if (q.getDataType().lengthDefined())

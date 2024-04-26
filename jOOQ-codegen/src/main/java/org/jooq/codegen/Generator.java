@@ -1069,6 +1069,16 @@ public interface Generator {
     void setGenerateCommentsOnSequences(boolean commentsOnSequences);
 
     /**
+     * Whether SQL comments on domains should be generated as Javadoc.
+     */
+    boolean generateCommentsOnDomains();
+
+    /**
+     * Whether SQL comments on domains should be generated as Javadoc.
+     */
+    void setGenerateCommentsOnDomains(boolean commentsOnDomains);
+
+    /**
      * Whether SQL comments on tables should be generated as Javadoc.
      */
     boolean generateCommentsOnTables();

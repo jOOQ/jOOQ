@@ -165,6 +165,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateCommentsOnRoutines                         = true;
     boolean                            generateCommentsOnSchemas                          = true;
     boolean                            generateCommentsOnSequences                        = true;
+    boolean                            generateCommentsOnDomains                          = true;
     boolean                            generateCommentsOnTables                           = true;
     boolean                            generateCommentsOnUDTs                             = true;
     boolean                            generateCommentsOnEmbeddables                      = true;
@@ -1237,6 +1238,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateCommentsOnSequences(boolean commentsOnSequences) {
         this.generateCommentsOnSequences = commentsOnSequences;
+    }
+
+    @Override
+    public boolean generateCommentsOnDomains() {
+        return generateComments() && generateCommentsOnDomains;
+    }
+
+    @Override
+    public void setGenerateCommentsOnDomains(boolean commentsOnDomains) {
+        this.generateCommentsOnDomains = commentsOnDomains;
     }
 
     @Override

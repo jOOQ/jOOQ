@@ -22,20 +22,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Matchers", propOrder = {
-    "catalogs",
-    "schemas",
-    "tables",
-    "indexes",
-    "primaryKeys",
-    "uniqueKeys",
-    "foreignKeys",
-    "fields",
-    "routines",
-    "sequences",
-    "enums",
-    "embeddables",
-    "udts",
-    "attributes"
+
 })
 @SuppressWarnings({
     "all"

@@ -215,6 +215,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean commentsOnSequences = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean commentsOnDomains = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean commentsOnLinks = true;
     @XmlElement(defaultValue = "true")
     protected Boolean commentsOnQueues = true;
@@ -2454,6 +2456,30 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Turn off generation of all SQL comments as Javadoc on all domains.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isCommentsOnDomains() {
+        return commentsOnDomains;
+    }
+
+    /**
+     * Turn off generation of all SQL comments as Javadoc on all domains.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setCommentsOnDomains(Boolean value) {
+        this.commentsOnDomains = value;
+    }
+
+    /**
      * Turn off generation of all SQL comments as Javadoc on all links.
      * 
      * @return
@@ -3968,6 +3994,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Turn off generation of all SQL comments as Javadoc on all domains.
+     * 
+     */
+    public Generate withCommentsOnDomains(Boolean value) {
+        setCommentsOnDomains(value);
+        return this;
+    }
+
+    /**
      * Turn off generation of all SQL comments as Javadoc on all links.
      * 
      */
@@ -4344,6 +4379,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("commentsOnRoutines", commentsOnRoutines);
         builder.append("commentsOnParameters", commentsOnParameters);
         builder.append("commentsOnSequences", commentsOnSequences);
+        builder.append("commentsOnDomains", commentsOnDomains);
         builder.append("commentsOnLinks", commentsOnLinks);
         builder.append("commentsOnQueues", commentsOnQueues);
         builder.append("commentsOnKeys", commentsOnKeys);
@@ -5212,6 +5248,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (commentsOnDomains == null) {
+            if (other.commentsOnDomains!= null) {
+                return false;
+            }
+        } else {
+            if (!commentsOnDomains.equals(other.commentsOnDomains)) {
+                return false;
+            }
+        }
         if (commentsOnLinks == null) {
             if (other.commentsOnLinks!= null) {
                 return false;
@@ -5562,6 +5607,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((commentsOnRoutines == null)? 0 :commentsOnRoutines.hashCode()));
         result = ((prime*result)+((commentsOnParameters == null)? 0 :commentsOnParameters.hashCode()));
         result = ((prime*result)+((commentsOnSequences == null)? 0 :commentsOnSequences.hashCode()));
+        result = ((prime*result)+((commentsOnDomains == null)? 0 :commentsOnDomains.hashCode()));
         result = ((prime*result)+((commentsOnLinks == null)? 0 :commentsOnLinks.hashCode()));
         result = ((prime*result)+((commentsOnQueues == null)? 0 :commentsOnQueues.hashCode()));
         result = ((prime*result)+((commentsOnKeys == null)? 0 :commentsOnKeys.hashCode()));

@@ -2825,6 +2825,10 @@ jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></an
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all sequences.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="commentsOnDomains" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all domains.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="commentsOnLinks" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Turn off generation of all SQL comments as Javadoc on all links.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

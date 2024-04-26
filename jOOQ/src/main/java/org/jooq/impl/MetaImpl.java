@@ -56,12 +56,14 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.IGNITE;
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 // ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
@@ -139,12 +141,15 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.UniqueKey;
 import org.jooq.conf.ParseUnknownFunctions;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -163,6 +168,7 @@ final class MetaImpl extends AbstractMeta {
     private static final Set<SQLDialect> NO_SUPPORT_SCHEMAS               = SQLDialect.supportedBy(FIREBIRD, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_INDEXES               = SQLDialect.supportedBy(TRINO);
     private static final Set<SQLDialect> SUPPORTS_CATALOGS                = SQLDialect.supportedBy(DUCKDB);
+    private static final Set<SQLDialect> RTRIM_META_SQL_STRINGS           = SQLDialect.supportedBy(FIREBIRD);
 
 
 
@@ -561,7 +567,7 @@ final class MetaImpl extends AbstractMeta {
 
             if (sql != null) {
                 Result<Record> result = meta(meta ->
-                    withCatalog(DSL.catalog(catalog), DSL.using(meta.getConnection(), dialect()), ctx ->
+                    withCatalog(DSL.catalog(catalog), ctx(meta), ctx ->
                         ctx.resultQuery(
                             sql,
                             NO_SUPPORT_SCHEMAS.contains(dialect())
@@ -589,6 +595,13 @@ final class MetaImpl extends AbstractMeta {
                     ), v);
                 });
             }
+        }
+
+        private final DSLContext ctx(DatabaseMetaData meta) throws SQLException {
+            if (RTRIM_META_SQL_STRINGS.contains(dialect()))
+                return DSL.using(meta.getConnection(), dialect(), new Settings().withFetchTrimmedStrings(true));
+            else
+                return DSL.using(meta.getConnection(), dialect());
         }
 
         private final void initUksSQLite(String catalog, String schema) {
@@ -742,7 +755,7 @@ final class MetaImpl extends AbstractMeta {
                     : M_SEQUENCES(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), dialect()).resultQuery(sql, MetaSchema.this.getName()).fetch());
+                    Result<Record> result = meta(meta -> ctx(meta).resultQuery(sql, MetaSchema.this.getName()).fetch());
 
                     // TODO Support catalogs as well
                     Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
@@ -766,7 +779,7 @@ final class MetaImpl extends AbstractMeta {
 
                 if (sql != null) {
                     Result<Record> result = meta(meta ->
-                        withCatalog(getCatalog(), DSL.using(meta.getConnection(), dialect()), ctx ->
+                        withCatalog(getCatalog(), ctx(meta), ctx ->
                             ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
                         )
                     );
@@ -803,7 +816,7 @@ final class MetaImpl extends AbstractMeta {
 
                 if (sql != null) {
                     Result<Record> result = meta(meta ->
-                        withCatalog(getCatalog(), DSL.using(meta.getConnection(), dialect()), ctx ->
+                        withCatalog(getCatalog(), ctx(meta), ctx ->
                             ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
                         )
                     );

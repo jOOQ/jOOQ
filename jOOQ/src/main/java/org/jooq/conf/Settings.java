@@ -130,6 +130,8 @@ public class Settings
     protected Boolean bindOffsetDateTimeType = false;
     @XmlElement(defaultValue = "false")
     protected Boolean bindOffsetTimeType = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean fetchTrimmedStrings = false;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchTriggerValuesAfterSQLServerOutput = true;
     @XmlElement(defaultValue = "WHEN_NEEDED")
@@ -1579,6 +1581,40 @@ public class Settings
      */
     public void setBindOffsetTimeType(Boolean value) {
         this.bindOffsetTimeType = value;
+    }
+
+    /**
+     * Whether right trim fetched strings from JDBC {@link java.sql.ResultSet}.
+     * <p>
+     * By default, jOOQ's internal {@link String} data type {@link org.jooq.Binding} fetched strings
+     * as returned by JDBC. With this flag enabled, jOOQ will always right-trim such strings, which
+     * can be useful in database products that will often right-pad strings with a fixed amount of
+     * useless whitespaces.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isFetchTrimmedStrings() {
+        return fetchTrimmedStrings;
+    }
+
+    /**
+     * Whether right trim fetched strings from JDBC {@link java.sql.ResultSet}.
+     * <p>
+     * By default, jOOQ's internal {@link String} data type {@link org.jooq.Binding} fetched strings
+     * as returned by JDBC. With this flag enabled, jOOQ will always right-trim such strings, which
+     * can be useful in database products that will often right-pad strings with a fixed amount of
+     * useless whitespaces.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setFetchTrimmedStrings(Boolean value) {
+        this.fetchTrimmedStrings = value;
     }
 
     /**
@@ -7185,6 +7221,20 @@ public class Settings
     }
 
     /**
+     * Whether right trim fetched strings from JDBC {@link java.sql.ResultSet}.
+     * <p>
+     * By default, jOOQ's internal {@link String} data type {@link org.jooq.Binding} fetched strings
+     * as returned by JDBC. With this flag enabled, jOOQ will always right-trim such strings, which
+     * can be useful in database products that will often right-pad strings with a fixed amount of
+     * useless whitespaces.
+     * 
+     */
+    public Settings withFetchTrimmedStrings(Boolean value) {
+        setFetchTrimmedStrings(value);
+        return this;
+    }
+
+    /**
      * Fetch trigger values after SQL Server <code>OUTPUT</code> clause.
      * <p>
      * SQL Server <code>OUTPUT</code> statements do not support fetching trigger generated values.
@@ -9521,6 +9571,7 @@ public class Settings
         builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
+        builder.append("fetchTrimmedStrings", fetchTrimmedStrings);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("fetchTriggerValuesAfterReturning", fetchTriggerValuesAfterReturning);
         builder.append("fetchIntermediateResult", fetchIntermediateResult);
@@ -10077,6 +10128,15 @@ public class Settings
             }
         } else {
             if (!bindOffsetTimeType.equals(other.bindOffsetTimeType)) {
+                return false;
+            }
+        }
+        if (fetchTrimmedStrings == null) {
+            if (other.fetchTrimmedStrings!= null) {
+                return false;
+            }
+        } else {
+            if (!fetchTrimmedStrings.equals(other.fetchTrimmedStrings)) {
                 return false;
             }
         }
@@ -11809,6 +11869,7 @@ public class Settings
         result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
+        result = ((prime*result)+((fetchTrimmedStrings == null)? 0 :fetchTrimmedStrings.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterReturning == null)? 0 :fetchTriggerValuesAfterReturning.hashCode()));
         result = ((prime*result)+((fetchIntermediateResult == null)? 0 :fetchIntermediateResult.hashCode()));

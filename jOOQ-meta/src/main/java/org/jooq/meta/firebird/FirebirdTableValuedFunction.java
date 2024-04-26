@@ -40,7 +40,6 @@ package org.jooq.meta.firebird;
 import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nvl;
-import static org.jooq.impl.DSL.trim;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
@@ -91,7 +90,7 @@ public class FirebirdTableValuedFunction extends AbstractTableDefinition {
         for (Record record : create()
                 .select(
                     p.RDB$PARAMETER_NUMBER,
-                    trim(p.RDB$PARAMETER_NAME).as(p.RDB$PARAMETER_NAME),
+                    p.RDB$PARAMETER_NAME,
                     p.RDB$DESCRIPTION,
                     p.RDB$DEFAULT_VALUE,
                     bitOr(nvl(p.RDB$NULL_FLAG, inline((short) 0)), nvl(f.RDB$NULL_FLAG, inline((short) 0))).as(p.RDB$NULL_FLAG),

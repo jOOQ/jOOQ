@@ -40,7 +40,6 @@ package org.jooq.meta.firebird;
 import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nvl;
-import static org.jooq.impl.DSL.trim;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
@@ -103,7 +102,7 @@ public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
                     .select(
                         p.RDB$PARAMETER_NUMBER,
                         p.RDB$PARAMETER_TYPE,
-                        trim(p.RDB$PARAMETER_NAME).as(p.RDB$PARAMETER_NAME),
+                        p.RDB$PARAMETER_NAME,
                         FIELD_TYPE(f).as("FIELD_TYPE"),
                         CHARACTER_LENGTH(f).as("CHAR_LEN"),
                         f.RDB$FIELD_PRECISION,
@@ -120,7 +119,7 @@ public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
                     .select(
                         a.RDB$ARGUMENT_POSITION.as(p.RDB$PARAMETER_NUMBER),
                         inline(0).as(p.RDB$PARAMETER_TYPE),
-                        trim(a.RDB$ARGUMENT_NAME).as(p.RDB$PARAMETER_NAME),
+                        a.RDB$ARGUMENT_NAME.as(p.RDB$PARAMETER_NAME),
                         FIELD_TYPE(f).as("FIELD_TYPE"),
                         CHARACTER_LENGTH(f).as("CHAR_LEN"),
                         f.RDB$FIELD_PRECISION,

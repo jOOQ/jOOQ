@@ -8045,4 +8045,20 @@ final class Tools {
 
 
 
+
+    static final String rtrim(String string) {
+        if (string == null)
+            return null;
+
+        int l = string.length();
+        int i = l - 1;
+
+        while (i >= 0 && Character.isWhitespace(string.charAt(i)))
+            i--;
+
+        if (i < l - 1)
+            return string.substring(0, i + 1);
+        else
+            return string;
+    }
 }

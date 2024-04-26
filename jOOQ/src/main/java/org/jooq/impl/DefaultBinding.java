@@ -109,6 +109,7 @@ import static org.jooq.impl.DefaultBinding.DefaultJSONBBinding.EMULATE_AS_BLOB;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBinding.patchSnowflakeJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetXML;
+import static org.jooq.impl.DefaultBinding.DefaultStringBinding.autoRtrim;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.DefaultExecuteContext.localExecuteContext;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
@@ -176,9 +177,11 @@ import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.needsBackslashEscaping;
 import static org.jooq.impl.Tools.newRecord;
+import static org.jooq.impl.Tools.rtrim;
 import static org.jooq.impl.Tools.uncoerce;
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.tools.StringUtils.defaultIfNull;
+import static org.jooq.tools.StringUtils.isEmpty;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
@@ -3924,7 +3927,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
             else if (object instanceof Clob clob) {
                 try {
-                    return clob.getSubString(1, asInt(clob.length()));
+                    return autoRtrim(ctx, clob.getSubString(1, asInt(clob.length())));
                 }
                 finally {
                     JDBCUtils.safeFree(clob);
@@ -4657,17 +4660,24 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            return ctx.resultSet().getString(ctx.index());
+            return autoRtrim(ctx, ctx.resultSet().getString(ctx.index()));
+        }
+
+        static final String autoRtrim(Scope ctx, String string) {
+            if (!isEmpty(string) && TRUE.equals(ctx.settings().isFetchTrimmedStrings()))
+                return rtrim(string);
+            else
+                return string;
         }
 
         @Override
         final String get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return ctx.statement().getString(ctx.index());
+            return autoRtrim(ctx, ctx.statement().getString(ctx.index()));
         }
 
         @Override
         final String get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return ctx.input().readString();
+            return autoRtrim(ctx, ctx.input().readString());
         }
 
         @Override
@@ -4743,7 +4753,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
                 return fallback.get0(ctx);
             else
-                return ctx.resultSet().getNString(ctx.index());
+                return autoRtrim(ctx, ctx.resultSet().getNString(ctx.index()));
         }
 
         @Override
@@ -4751,7 +4761,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
                 return fallback.get0(ctx);
             else
-                return ctx.statement().getNString(ctx.index());
+                return autoRtrim(ctx, ctx.statement().getNString(ctx.index()));
         }
 
         @Override
@@ -4759,7 +4769,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
                 return fallback.get0(ctx);
             else
-                return ctx.input().readNString();
+                return autoRtrim(ctx, ctx.input().readNString());
         }
 
         @Override

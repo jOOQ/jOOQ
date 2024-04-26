@@ -122,7 +122,7 @@ public class FirebirdDataType {
     protected static final DataType<byte[]>   __LONGVARBINARY       = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "blob");
     protected static final DataType<String>   __LONGVARCHAR         = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARCHAR, "varchar", "varchar(4000)");
     protected static final DataType<String>   __NCHAR               = new BuiltInDataType<>(FAMILY, SQLDataType.NCHAR, "char");
-    protected static final DataType<String>   __NCLOB               = new BuiltInDataType<>(FAMILY, SQLDataType.NCLOB, "clob");
+    protected static final DataType<String>   __NCLOB               = new BuiltInDataType<>(FAMILY, SQLDataType.NCLOB, "blob sub_type text");
     protected static final DataType<String>   __NVARCHAR            = new BuiltInDataType<>(FAMILY, SQLDataType.NVARCHAR, "varchar", "varchar(4000)");
     protected static final DataType<Byte>     __TINYINT             = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINT, "smallint");
     protected static final DataType<byte[]>   __VARBINARY           = new BuiltInDataType<>(FAMILY, SQLDataType.VARBINARY, "blob");

@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.quotedName;
 import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
@@ -84,6 +85,7 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
+import org.jooq.conf.RenderQuotedNames;
 // ...
 // ...
 // ...
@@ -148,11 +150,16 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
     }
 
     @Override
+    protected RenderQuotedNames getRenderQuotedNames() {
+        return RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED;
+    }
+
+    @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
         final List<IndexDefinition> result = new ArrayList<>();
 
         final Field<String> fIndexName = field("il.name", String.class).as("index_name");
-        final Field<Boolean> fUnique = field("il.\"unique\"", boolean.class).as("unique");
+        final Field<Boolean> fUnique = field("il.\"unique\"", boolean.class).as(quotedName("unique"));
         final Field<Integer> fSeqno = field("ii.seqno", int.class).add(one()).as("seqno");
         final Field<String> fColumnName = field("ii.name", String.class).as("column_name");
 

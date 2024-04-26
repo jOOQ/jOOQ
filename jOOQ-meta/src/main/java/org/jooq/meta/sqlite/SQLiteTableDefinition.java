@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.quotedName;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
@@ -115,7 +116,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
 
         Field<String> fName = field(name("name"), String.class);
         Field<String> fType = field(name("type"), String.class);
-        Field<Boolean> fNotnull = field(name("notnull"), boolean.class);
+        Field<Boolean> fNotnull = field(quotedName("notnull"), boolean.class);
         Field<String> fDefaultValue = field(name("dflt_value"), String.class);
         Field<Integer> fPk = field(name("pk"), int.class);
         Field<Integer> fHidden = field(name("hidden"), int.class);

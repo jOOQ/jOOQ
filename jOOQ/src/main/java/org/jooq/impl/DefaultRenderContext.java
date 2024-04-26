@@ -98,10 +98,7 @@ import org.jooq.tools.StringUtils;
 class DefaultRenderContext extends AbstractContext<RenderContext> implements RenderContext {
 
     private static final JooqLogger       log                = JooqLogger.getLogger(DefaultRenderContext.class);
-
-    private static final Pattern          IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
     private static final Pattern          NEWLINE            = Pattern.compile("[\\n\\r]");
-    private static final Set<String>      SQLITE_KEYWORDS;
 
     final StringBuilder                   sql;
     private final QueryPartList<Param<?>> bindValues;
@@ -654,24 +651,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
         SQLDialect family = family();
 
-        // Quoting is needed when explicitly requested...
-        boolean needsQuote =
-
-            // [#2367] ... but in SQLite, quoting "normal" literals is generally
-            // asking for trouble, as SQLite bends the rules here, see
-            // http://www.sqlite.org/lang_keywords.html for details ...
-            (family != SQLITE && quote())
-
-        ||
-
-            // [#2367] ... yet, do quote when an identifier is a SQLite keyword
-            (family == SQLITE && SQLITE_KEYWORDS.contains(literal.toUpperCase(renderLocale(configuration().settings()))))
-
-        ||
-
-            // [#1982] [#3360] ... yet, do quote when an identifier contains special characters
-            (family == SQLITE && !IDENTIFIER_PATTERN.matcher(literal).matches());
-
         literal = applyNameCase(literal);
 
 
@@ -680,7 +659,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
 
 
-        if (needsQuote) {
+        if (quote()) {
             char[][][] quotes = QUOTES.get(family);
 
             char start = quotes[QUOTE_START_DELIMITER][0][0];
@@ -823,152 +802,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // ------------------------------------------------------------------------
 
     static {
-        SQLITE_KEYWORDS = new HashSet<>();
-
-        // [#2367] Taken from http://www.sqlite.org/lang_keywords.html
-        SQLITE_KEYWORDS.addAll(Arrays.asList(
-            "ABORT",
-            "ACTION",
-            "ADD",
-            "AFTER",
-            "ALL",
-            "ALTER",
-            "ANALYZE",
-            "AND",
-            "AS",
-            "ASC",
-            "ATTACH",
-            "AUTOINCREMENT",
-            "BEFORE",
-            "BEGIN",
-            "BETWEEN",
-            "BY",
-            "CASCADE",
-            "CASE",
-            "CAST",
-            "CHECK",
-            "COLLATE",
-            "COLUMN",
-            "COMMIT",
-            "CONFLICT",
-            "CONSTRAINT",
-            "CREATE",
-            "CROSS",
-            "CURRENT",
-            "CURRENT_DATE",
-            "CURRENT_TIME",
-            "CURRENT_TIMESTAMP",
-            "DATABASE",
-            "DEFAULT",
-            "DEFERRABLE",
-            "DEFERRED",
-            "DELETE",
-            "DESC",
-            "DETACH",
-            "DISTINCT",
-            "DO",
-            "DROP",
-            "EACH",
-            "ELSE",
-            "END",
-            "ESCAPE",
-            "EXCEPT",
-            "EXCLUDE",
-            "EXCLUSIVE",
-            "EXISTS",
-            "EXPLAIN",
-            "FAIL",
-            "FILTER",
-            "FOLLOWING",
-            "FOR",
-            "FOREIGN",
-            "FROM",
-            "FULL",
-            "GLOB",
-            "GROUP",
-            "GROUPS",
-            "HAVING",
-            "IF",
-            "IGNORE",
-            "IMMEDIATE",
-            "IN",
-            "INDEX",
-            "INDEXED",
-            "INITIALLY",
-            "INNER",
-            "INSERT",
-            "INSTEAD",
-            "INTERSECT",
-            "INTO",
-            "IS",
-            "ISNULL",
-            "JOIN",
-            "KEY",
-            "LEFT",
-            "LIKE",
-            "LIMIT",
-            "MATCH",
-            "NATURAL",
-            "NO",
-            "NOT",
-            "NOTHING",
-            "NOTNULL",
-            "NULL",
-            "OF",
-            "OFFSET",
-            "ON",
-            "OR",
-            "ORDER",
-            "OTHERS",
-            "OUTER",
-            "OVER",
-            "PARTITION",
-            "PLAN",
-            "PRAGMA",
-            "PRECEDING",
-            "PRIMARY",
-            "QUERY",
-            "RAISE",
-            "RANGE",
-            "RECURSIVE",
-            "REFERENCES",
-            "REGEXP",
-            "REINDEX",
-            "RELEASE",
-            "RENAME",
-            "REPLACE",
-            "RESTRICT",
-            "RIGHT",
-            "ROLLBACK",
-            "ROW",
-            "ROWS",
-            "SAVEPOINT",
-            "SELECT",
-            "SET",
-            "TABLE",
-            "TEMP",
-            "TEMPORARY",
-            "THEN",
-            "TIES",
-            "TO",
-            "TRANSACTION",
-            "TRIGGER",
-            "UNBOUNDED",
-            "UNION",
-            "UNIQUE",
-            "UPDATE",
-            "USING",
-            "VACUUM",
-            "VALUES",
-            "VIEW",
-            "VIRTUAL",
-            "WHEN",
-            "WHERE",
-            "WINDOW",
-            "WITH",
-            "WITHOUT"
-        ));
-
 
 
         /*

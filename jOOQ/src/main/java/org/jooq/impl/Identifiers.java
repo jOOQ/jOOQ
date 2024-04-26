@@ -77,6 +77,7 @@ final class Identifiers {
 
                 case MARIADB:
                 case MYSQL:
+                case SQLITE:
                     QUOTES.put(family, new char[][][] {
                         { { '`'      }, { '"'      } },
                         { { '`'      }, { '"'      } },

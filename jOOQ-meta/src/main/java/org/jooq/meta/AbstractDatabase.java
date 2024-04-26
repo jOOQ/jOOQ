@@ -4078,7 +4078,7 @@ public abstract class AbstractDatabase implements Database {
         if (this instanceof ResultQueryDatabase d) {
             Optional
                 .ofNullable(d.comments(getInputSchemata()))
-                .ifPresent(q -> q.forEach(r -> {
+                .ifPresent(q -> q.fetch().forEach(r -> {
                     SchemaDefinition schema = getSchema(r.value2());
 
                     if (schema != null) {

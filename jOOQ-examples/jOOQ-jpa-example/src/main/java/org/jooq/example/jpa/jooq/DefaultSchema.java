@@ -14,6 +14,7 @@ import org.jooq.example.jpa.jooq.tables.Actor;
 import org.jooq.example.jpa.jooq.tables.Film;
 import org.jooq.example.jpa.jooq.tables.FilmActor;
 import org.jooq.example.jpa.jooq.tables.Language;
+import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 
 
@@ -54,7 +55,7 @@ public class DefaultSchema extends SchemaImpl {
      * No further instances allowed
      */
     private DefaultSchema() {
-        super("", null);
+        super(DSL.name(""), null, DSL.comment(""));
     }
 
 

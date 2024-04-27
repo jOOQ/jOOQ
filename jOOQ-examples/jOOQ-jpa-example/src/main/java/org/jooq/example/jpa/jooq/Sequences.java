@@ -5,6 +5,7 @@ package org.jooq.example.jpa.jooq;
 
 
 import org.jooq.Sequence;
+import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 
@@ -18,5 +19,5 @@ public class Sequences {
     /**
      * The sequence <code>HIBERNATE_SEQUENCE</code>
      */
-    public static final Sequence<Long> HIBERNATE_SEQUENCE = Internal.createSequence("HIBERNATE_SEQUENCE", DefaultSchema.DEFAULT_SCHEMA, SQLDataType.BIGINT, null, null, null, null, false, null);
+    public static final Sequence<Long> HIBERNATE_SEQUENCE = Internal.createSequence("HIBERNATE_SEQUENCE", DefaultSchema.DEFAULT_SCHEMA, DSL.comment(""), SQLDataType.BIGINT, null, null, null, null, false, null);
 }

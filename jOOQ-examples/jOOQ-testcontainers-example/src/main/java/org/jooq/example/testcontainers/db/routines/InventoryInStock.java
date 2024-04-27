@@ -8,6 +8,7 @@ import org.jooq.Field;
 import org.jooq.Parameter;
 import org.jooq.example.testcontainers.db.Public;
 import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 
@@ -34,7 +35,7 @@ public class InventoryInStock extends AbstractRoutine<Boolean> {
      * Create a new routine call instance
      */
     public InventoryInStock() {
-        super("inventory_in_stock", Public.PUBLIC, SQLDataType.BOOLEAN);
+        super("inventory_in_stock", Public.PUBLIC, DSL.comment(""), SQLDataType.BOOLEAN);
 
         setReturnParameter(RETURN_VALUE);
         addInParameter(P_INVENTORY_ID);

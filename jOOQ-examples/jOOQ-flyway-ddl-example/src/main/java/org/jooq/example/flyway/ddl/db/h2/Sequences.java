@@ -5,6 +5,7 @@ package org.jooq.example.flyway.ddl.db.h2;
 
 
 import org.jooq.Sequence;
+import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 
@@ -18,5 +19,5 @@ public class Sequences {
     /**
      * The sequence <code>FLYWAY_TEST.S_AUTHOR_ID</code>
      */
-    public static final Sequence<Long> S_AUTHOR_ID = Internal.createSequence("S_AUTHOR_ID", FlywayTest.FLYWAY_TEST, SQLDataType.BIGINT, null, null, null, null, false, null);
+    public static final Sequence<Long> S_AUTHOR_ID = Internal.createSequence("S_AUTHOR_ID", FlywayTest.FLYWAY_TEST, DSL.comment(""), SQLDataType.BIGINT, null, null, null, null, false, null);
 }

@@ -12,6 +12,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.example.flyway.ddl.db.h2.tables.Author;
 import org.jooq.example.flyway.ddl.db.h2.tables.Book;
+import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 
 
@@ -42,7 +43,7 @@ public class FlywayTest extends SchemaImpl {
      * No further instances allowed
      */
     private FlywayTest() {
-        super("FLYWAY_TEST", null);
+        super(DSL.name("FLYWAY_TEST"), null, DSL.comment(""));
     }
 
 

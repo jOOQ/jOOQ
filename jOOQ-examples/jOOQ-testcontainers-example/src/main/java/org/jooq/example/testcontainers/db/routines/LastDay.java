@@ -11,6 +11,7 @@ import org.jooq.Field;
 import org.jooq.Parameter;
 import org.jooq.example.testcontainers.db.Public;
 import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 
@@ -37,7 +38,7 @@ public class LastDay extends AbstractRoutine<LocalDate> {
      * Create a new routine call instance
      */
     public LastDay() {
-        super("last_day", Public.PUBLIC, SQLDataType.LOCALDATE);
+        super("last_day", Public.PUBLIC, DSL.comment(""), SQLDataType.LOCALDATE);
 
         setReturnParameter(RETURN_VALUE);
         addInParameter(_1);

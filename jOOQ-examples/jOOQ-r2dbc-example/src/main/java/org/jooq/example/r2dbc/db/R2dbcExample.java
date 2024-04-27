@@ -11,6 +11,7 @@ import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.example.r2dbc.db.tables.Author;
 import org.jooq.example.r2dbc.db.tables.Book;
+import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 
 
@@ -41,7 +42,7 @@ public class R2dbcExample extends SchemaImpl {
      * No further instances allowed
      */
     private R2dbcExample() {
-        super("R2DBC_EXAMPLE", null);
+        super(DSL.name("R2DBC_EXAMPLE"), null, DSL.comment(""));
     }
 
 

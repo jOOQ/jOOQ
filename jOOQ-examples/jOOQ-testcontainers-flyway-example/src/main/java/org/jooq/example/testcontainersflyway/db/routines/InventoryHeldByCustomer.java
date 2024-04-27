@@ -8,6 +8,7 @@ import org.jooq.Field;
 import org.jooq.Parameter;
 import org.jooq.example.testcontainersflyway.db.Public;
 import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 
@@ -36,7 +37,7 @@ public class InventoryHeldByCustomer extends AbstractRoutine<Integer> {
      * Create a new routine call instance
      */
     public InventoryHeldByCustomer() {
-        super("inventory_held_by_customer", Public.PUBLIC, SQLDataType.INTEGER);
+        super("inventory_held_by_customer", Public.PUBLIC, DSL.comment(""), SQLDataType.INTEGER);
 
         setReturnParameter(RETURN_VALUE);
         addInParameter(P_INVENTORY_ID);

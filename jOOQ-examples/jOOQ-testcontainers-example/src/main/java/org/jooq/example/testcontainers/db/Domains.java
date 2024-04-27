@@ -24,6 +24,7 @@ public class Domains {
     public static final Domain<Integer> YEAR = Internal.createDomain(
           schema()
         , DSL.name("year")
+        , DSL.comment("")
         , SQLDataType.INTEGER
         , Internal.createCheck(null, null, "CHECK (((VALUE >= 1901) AND (VALUE <= 2155)))")
     );

@@ -11,6 +11,7 @@ import org.jooq.Field;
 import org.jooq.Parameter;
 import org.jooq.example.testcontainersflyway.db.Public;
 import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 
@@ -42,7 +43,7 @@ public class GetCustomerBalance extends AbstractRoutine<BigDecimal> {
      * Create a new routine call instance
      */
     public GetCustomerBalance() {
-        super("get_customer_balance", Public.PUBLIC, SQLDataType.NUMERIC);
+        super("get_customer_balance", Public.PUBLIC, DSL.comment(""), SQLDataType.NUMERIC);
 
         setReturnParameter(RETURN_VALUE);
         addInParameter(P_CUSTOMER_ID);

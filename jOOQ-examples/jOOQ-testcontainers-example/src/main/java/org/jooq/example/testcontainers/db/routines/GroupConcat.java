@@ -8,6 +8,7 @@ import org.jooq.Field;
 import org.jooq.Parameter;
 import org.jooq.example.testcontainers.db.Public;
 import org.jooq.impl.AbstractRoutine;
+import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 
@@ -34,7 +35,7 @@ public class GroupConcat extends AbstractRoutine<String> {
      * Create a new routine call instance
      */
     public GroupConcat() {
-        super("group_concat", Public.PUBLIC, SQLDataType.CLOB);
+        super("group_concat", Public.PUBLIC, DSL.comment(""), SQLDataType.CLOB);
 
         setReturnParameter(RETURN_VALUE);
         addInParameter(_1);

@@ -40,6 +40,7 @@ package org.jooq.meta.firebird;
 import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.trim;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
@@ -88,7 +89,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
         // DatabaseMetaData implementation
         for (Record record : create()
                 .select(
-                    r.RDB$FIELD_NAME,
+                    trim(r.RDB$FIELD_NAME).as(r.RDB$FIELD_NAME),
                     r.RDB$DESCRIPTION,
                     r.RDB$DEFAULT_VALUE,
                     bitOr(nvl(r.RDB$NULL_FLAG, inline((short) 0)), nvl(f.RDB$NULL_FLAG, inline((short) 0))).as(r.RDB$NULL_FLAG),
@@ -101,7 +102,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     f.RDB$FIELD_PRECISION,
                     FIELD_SCALE(f).as("FIELD_SCALE"),
                     FIELD_TYPE(f).as("FIELD_TYPE"),
-                    f.RDB$FIELD_NAME.as("DOMAIN_NAME"),
+                    trim(f.RDB$FIELD_NAME).as("DOMAIN_NAME"),
                     r.RDB$DESCRIPTION,
                     (((FirebirdDatabase) getDatabase()).is30() ? r.RDB$IDENTITY_TYPE : inline((short) 0)).as(r.RDB$IDENTITY_TYPE)
                 )

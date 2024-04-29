@@ -715,7 +715,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     protected DSLContext create0() {
-        return DSL.using(getConnection(), SQLDialect.FIREBIRD, new Settings().withFetchTrimmedStrings(true));
+        return DSL.using(getConnection(), SQLDialect.FIREBIRD, new Settings().withFetchTrimmedCharValues(true));
     }
 
     static Field<String> FIELD_TYPE(Rdb$fields f) {

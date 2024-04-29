@@ -319,13 +319,13 @@ This flag allows for reverting to pre-jOOQ 3.14 behaviour, where the default is 
 For details, see <a href="https://github.com/jOOQ/jOOQ/issues/9902">https://github.com/jOOQ/jOOQ/issues/9902</a>.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="fetchTrimmedStrings" type="boolean" minOccurs="0" maxOccurs="1" default="false">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether right trim fetched strings from JDBC {@link java.sql.ResultSet}.
+      <element name="fetchTrimmedCharValues" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether right trim fetched <code>CHAR</code> typed strings from JDBC {@link java.sql.ResultSet}.
 <p>
 By default, jOOQ's internal {@link String} data type {@link org.jooq.Binding} fetched strings
-as returned by JDBC. With this flag enabled, jOOQ will always right-trim such strings, which
-can be useful in database products that will often right-pad strings with a fixed amount of
-useless whitespaces.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+as returned by JDBC. With this flag enabled, jOOQ will always right-trim <code>CHAR</code> 
+typed strings, which can be useful in database products that will often use this historic
+fixed length string type, especially in dictionary views.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="fetchTriggerValuesAfterSQLServerOutput" type="boolean" minOccurs="0" maxOccurs="1" default="true">

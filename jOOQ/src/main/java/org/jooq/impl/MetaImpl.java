@@ -599,7 +599,7 @@ final class MetaImpl extends AbstractMeta {
 
         private final DSLContext ctx(DatabaseMetaData meta) throws SQLException {
             if (RTRIM_META_SQL_STRINGS.contains(dialect()))
-                return DSL.using(meta.getConnection(), dialect(), new Settings().withFetchTrimmedStrings(true));
+                return DSL.using(meta.getConnection(), dialect(), new Settings().withFetchTrimmedCharValues(true));
             else
                 return DSL.using(meta.getConnection(), dialect());
         }

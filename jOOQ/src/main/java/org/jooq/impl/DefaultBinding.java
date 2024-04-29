@@ -3927,7 +3927,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
             else if (object instanceof Clob clob) {
                 try {
-                    return autoRtrim(ctx, clob.getSubString(1, asInt(clob.length())));
+                    return clob.getSubString(1, asInt(clob.length()));
                 }
                 finally {
                     JDBCUtils.safeFree(clob);
@@ -4660,24 +4660,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-            return autoRtrim(ctx, ctx.resultSet().getString(ctx.index()));
-        }
-
-        static final String autoRtrim(Scope ctx, String string) {
-            if (!isEmpty(string) && TRUE.equals(ctx.settings().isFetchTrimmedStrings()))
-                return rtrim(string);
-            else
-                return string;
+            return autoRtrim(ctx, dataType, ctx.resultSet().getString(ctx.index()));
         }
 
         @Override
         final String get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            return autoRtrim(ctx, ctx.statement().getString(ctx.index()));
+            return autoRtrim(ctx, dataType, ctx.statement().getString(ctx.index()));
         }
 
         @Override
         final String get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
-            return autoRtrim(ctx, ctx.input().readString());
+            return autoRtrim(ctx, dataType, ctx.input().readString());
         }
 
         @Override
@@ -4690,6 +4683,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             return Types.VARCHAR;
+        }
+
+        static final String autoRtrim(Scope ctx, DataType<String> type, String string) {
+            if (type.hasFixedLength() && !isEmpty(string) && TRUE.equals(ctx.settings().isFetchTrimmedCharValues()))
+                return rtrim(string);
+            else
+                return string;
         }
     }
 
@@ -4753,7 +4753,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
                 return fallback.get0(ctx);
             else
-                return autoRtrim(ctx, ctx.resultSet().getNString(ctx.index()));
+                return autoRtrim(ctx, dataType, ctx.resultSet().getNString(ctx.index()));
         }
 
         @Override
@@ -4761,7 +4761,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
                 return fallback.get0(ctx);
             else
-                return autoRtrim(ctx, ctx.statement().getNString(ctx.index()));
+                return autoRtrim(ctx, dataType, ctx.statement().getNString(ctx.index()));
         }
 
         @Override
@@ -4769,7 +4769,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
                 return fallback.get0(ctx);
             else
-                return autoRtrim(ctx, ctx.input().readNString());
+                return autoRtrim(ctx, dataType, ctx.input().readNString());
         }
 
         @Override

@@ -69,6 +69,7 @@ import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.SQLDataType.BLOB;
+import static org.jooq.impl.SQLDataType.CHAR;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.NCHAR;
 import static org.jooq.impl.SQLDataType.NCLOB;
@@ -476,6 +477,17 @@ implements
     public final boolean hasLength() {
         Class<?> tType = tType0();
         return (tType == byte[].class || tType == String.class) && !isLob();
+    }
+
+    @Override
+    public final boolean hasFixedLength() {
+        AbstractDataType<T> t = (AbstractDataType<T>) getSQLDataType();
+        return t == CHAR
+            || t == NCHAR
+
+            // [#9540] [#10368] In case the constant literals haven't been initialised yet
+            || CHAR == null && "char".equals(t.typeName0())
+            || NCHAR == null && "nchar".equals(t.typeName0());
     }
 
     @Override

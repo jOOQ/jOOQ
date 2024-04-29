@@ -1219,6 +1219,13 @@ public interface DataType<T> extends Named {
     boolean hasLength();
 
     /**
+     * Whether this data type has a fixed length.
+     *
+     * @return Whether this data type has a fixed length
+     */
+    boolean hasFixedLength();
+
+    /**
      * Whether the precision returned by {@link #length()} is defined.
      * <p>
      * The default length is <code>0</code> for all data types. If a data type

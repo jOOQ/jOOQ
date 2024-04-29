@@ -131,7 +131,7 @@ public class Settings
     @XmlElement(defaultValue = "false")
     protected Boolean bindOffsetTimeType = false;
     @XmlElement(defaultValue = "false")
-    protected Boolean fetchTrimmedStrings = false;
+    protected Boolean fetchTrimmedCharValues = false;
     @XmlElement(defaultValue = "true")
     protected Boolean fetchTriggerValuesAfterSQLServerOutput = true;
     @XmlElement(defaultValue = "WHEN_NEEDED")
@@ -1584,37 +1584,37 @@ public class Settings
     }
 
     /**
-     * Whether right trim fetched strings from JDBC {@link java.sql.ResultSet}.
+     * Whether right trim fetched <code>CHAR</code> typed strings from JDBC {@link java.sql.ResultSet}.
      * <p>
      * By default, jOOQ's internal {@link String} data type {@link org.jooq.Binding} fetched strings
-     * as returned by JDBC. With this flag enabled, jOOQ will always right-trim such strings, which
-     * can be useful in database products that will often right-pad strings with a fixed amount of
-     * useless whitespaces.
+     * as returned by JDBC. With this flag enabled, jOOQ will always right-trim <code>CHAR</code> 
+     * typed strings, which can be useful in database products that will often use this historic
+     * fixed length string type, especially in dictionary views.
      * 
      * @return
      *     possible object is
      *     {@link Boolean }
      *     
      */
-    public Boolean isFetchTrimmedStrings() {
-        return fetchTrimmedStrings;
+    public Boolean isFetchTrimmedCharValues() {
+        return fetchTrimmedCharValues;
     }
 
     /**
-     * Whether right trim fetched strings from JDBC {@link java.sql.ResultSet}.
+     * Whether right trim fetched <code>CHAR</code> typed strings from JDBC {@link java.sql.ResultSet}.
      * <p>
      * By default, jOOQ's internal {@link String} data type {@link org.jooq.Binding} fetched strings
-     * as returned by JDBC. With this flag enabled, jOOQ will always right-trim such strings, which
-     * can be useful in database products that will often right-pad strings with a fixed amount of
-     * useless whitespaces.
+     * as returned by JDBC. With this flag enabled, jOOQ will always right-trim <code>CHAR</code> 
+     * typed strings, which can be useful in database products that will often use this historic
+     * fixed length string type, especially in dictionary views.
      * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *     
      */
-    public void setFetchTrimmedStrings(Boolean value) {
-        this.fetchTrimmedStrings = value;
+    public void setFetchTrimmedCharValues(Boolean value) {
+        this.fetchTrimmedCharValues = value;
     }
 
     /**
@@ -7221,16 +7221,16 @@ public class Settings
     }
 
     /**
-     * Whether right trim fetched strings from JDBC {@link java.sql.ResultSet}.
+     * Whether right trim fetched <code>CHAR</code> typed strings from JDBC {@link java.sql.ResultSet}.
      * <p>
      * By default, jOOQ's internal {@link String} data type {@link org.jooq.Binding} fetched strings
-     * as returned by JDBC. With this flag enabled, jOOQ will always right-trim such strings, which
-     * can be useful in database products that will often right-pad strings with a fixed amount of
-     * useless whitespaces.
+     * as returned by JDBC. With this flag enabled, jOOQ will always right-trim <code>CHAR</code> 
+     * typed strings, which can be useful in database products that will often use this historic
+     * fixed length string type, especially in dictionary views.
      * 
      */
-    public Settings withFetchTrimmedStrings(Boolean value) {
-        setFetchTrimmedStrings(value);
+    public Settings withFetchTrimmedCharValues(Boolean value) {
+        setFetchTrimmedCharValues(value);
         return this;
     }
 
@@ -9571,7 +9571,7 @@ public class Settings
         builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
-        builder.append("fetchTrimmedStrings", fetchTrimmedStrings);
+        builder.append("fetchTrimmedCharValues", fetchTrimmedCharValues);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("fetchTriggerValuesAfterReturning", fetchTriggerValuesAfterReturning);
         builder.append("fetchIntermediateResult", fetchIntermediateResult);
@@ -10131,12 +10131,12 @@ public class Settings
                 return false;
             }
         }
-        if (fetchTrimmedStrings == null) {
-            if (other.fetchTrimmedStrings!= null) {
+        if (fetchTrimmedCharValues == null) {
+            if (other.fetchTrimmedCharValues!= null) {
                 return false;
             }
         } else {
-            if (!fetchTrimmedStrings.equals(other.fetchTrimmedStrings)) {
+            if (!fetchTrimmedCharValues.equals(other.fetchTrimmedCharValues)) {
                 return false;
             }
         }
@@ -11869,7 +11869,7 @@ public class Settings
         result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
-        result = ((prime*result)+((fetchTrimmedStrings == null)? 0 :fetchTrimmedStrings.hashCode()));
+        result = ((prime*result)+((fetchTrimmedCharValues == null)? 0 :fetchTrimmedCharValues.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterReturning == null)? 0 :fetchTriggerValuesAfterReturning.hashCode()));
         result = ((prime*result)+((fetchIntermediateResult == null)? 0 :fetchIntermediateResult.hashCode()));

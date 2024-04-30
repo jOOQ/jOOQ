@@ -90,6 +90,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DeleteQueryImpl.mergeUsing;
 import static org.jooq.impl.InlineDerivedTable.hasInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables0;
@@ -180,11 +181,11 @@ import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
 import org.jooq.UpdateQuery;
+import org.jooq.impl.DeleteQueryImpl.MergeUsing;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.UnmodifiableMap;
 import org.jooq.impl.QOM.Update;
-import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -658,29 +659,12 @@ implements
         // TODO: What if there are SET ROW = ROW assignment(s)?
         // TODO: What if there are SET ROW = (SELECT ..) assignment(s)?
 
-        Table<?> s;
-        boolean patchSource = true;
         Condition c = condition;
+        Table<?> t = table(ctx);
         FieldMapForUpdate um = updateMap;
+        MergeUsing mu = mergeUsing(from, t, c, orderBy, limit);
 
-        if (orderBy.isEmpty() && limit == null) {
-            if (from.size() == 1 && from.get(0) instanceof TableImpl && !(patchSource = false))
-                s = from.get(0);
-            else
-                s = select().from(from).asTable("s");
-        }
-
-        // TODO [#13326]: Avoid the JOIN if it isn't strictly necessary
-        //                (i.e. if ORDER BY references only from, not table)
-        else
-            s = select(from.fields())
-                .from(from)
-                .join(table).on(condition)
-                .orderBy(orderBy)
-                .limit(limit)
-                .asTable("s");
-
-        if (patchSource && ctx.configuration().requireCommercial(() -> "The UPDATE .. FROM to MERGE transformation requires commercial only logic for non-trivial FROM clauses. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
+        if (mu.patchSource() && ctx.configuration().requireCommercial(() -> "The UPDATE .. FROM to MERGE transformation requires commercial only logic for non-trivial FROM clauses. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
 
 
 
@@ -698,7 +682,7 @@ implements
 
         }
 
-        ctx.visit(mergeInto(table).using(s).on(c).whenMatchedThenUpdate().set(um));
+        ctx.visit(mergeInto(table).using(mu.table()).on(c).whenMatchedThenUpdate().set(um));
     }
 
     final boolean updatesField(Field<?> field) {

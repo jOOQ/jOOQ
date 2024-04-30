@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
@@ -80,6 +81,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.getExecuteDeleteWithoutWhere;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.mergeInto;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
@@ -105,6 +107,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -123,6 +126,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.SortField;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
 import org.jooq.conf.ParamType;
@@ -152,6 +156,8 @@ implements
     static final Set<SQLDialect>        REQUIRE_REPEAT_FROM_IN_USING     = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>        NO_SUPPORT_REPEAT_FROM_IN_USING  = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>        REQUIRES_WHERE                   = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect>        EMULATE_USING_WITH_MERGE         = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
+
 
 
 
@@ -303,6 +309,11 @@ implements
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final void accept1(Context<?> ctx) {
+        if (!using.isEmpty() && EMULATE_USING_WITH_MERGE.contains(ctx.dialect())) {
+            acceptUsingAsMerge(ctx);
+            return;
+        }
+
         ctx.start(DELETE_DELETE)
            .visit(K_DELETE).sql(' ');
 
@@ -437,6 +448,78 @@ implements
         ctx.start(DELETE_RETURNING);
         toSQLReturning(ctx);
         ctx.end(DELETE_RETURNING);
+    }
+
+    static final record MergeUsing(Table<?> table, boolean patchSource) {
+
+    }
+
+    static final MergeUsing mergeUsing(
+        TableList tables,
+        Table<?> table,
+        Condition condition,
+        SortFieldList orderBy,
+        Field<? extends Number> limit
+    ) {
+        boolean patchSource = true;
+
+        if (orderBy.isEmpty() && limit == null) {
+            if (tables.size() == 1 && tables.get(0) instanceof TableImpl && !(patchSource = false))
+                return new MergeUsing(tables.get(0), patchSource);
+            else
+                return new MergeUsing(select().from(tables).asTable("s"), patchSource);
+        }
+
+        // TODO [#13326]: Avoid the JOIN if it isn't strictly necessary
+        //                (i.e. if ORDER BY references only from, not table)
+        else
+            return new MergeUsing(
+                select(tables.fields())
+                .from(tables)
+                .join(table).on(condition)
+                .orderBy(orderBy)
+                .limit(limit)
+                .asTable("s"),
+                patchSource
+            );
+
+    }
+
+    private final void acceptUsingAsMerge(Context<?> ctx) {
+        // TODO: What about RETURNING?
+        // TODO: What if there are multiple FROM tables?
+        // TODO: What if there are SET ROW = ROW assignment(s)?
+        // TODO: What if there are SET ROW = (SELECT ..) assignment(s)?
+
+        Condition c = condition;
+        Table<?> t = table(ctx);
+        TableList u;
+
+        // [#15637] Same semantics as NO_SUPPORT_REPEAT_FROM_IN_USING
+        if (containsDeclaredTable(using, t)) {
+            u = new TableList(using);
+            u.remove(t);
+        }
+        else
+            u = using;
+
+        MergeUsing mu = mergeUsing(u, t, c, orderBy, limit);
+
+        if (mu.patchSource() && ctx.configuration().requireCommercial(() -> "The DELETE .. USING to MERGE transformation requires commercial only logic for non-trivial USING clauses. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        ctx.visit(mergeInto(table).using(mu.table()).on(c).whenMatchedThenDelete());
     }
 
     static final void acceptLimit(Context<?> ctx, Field<? extends Number> limit) {

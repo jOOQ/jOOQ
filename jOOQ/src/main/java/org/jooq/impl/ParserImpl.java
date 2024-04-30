@@ -75,6 +75,7 @@ import static org.jooq.impl.DSL.acos;
 import static org.jooq.impl.DSL.acosh;
 import static org.jooq.impl.DSL.acoth;
 import static org.jooq.impl.DSL.all;
+import static org.jooq.impl.DSL.and;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.anyValue;
 import static org.jooq.impl.DSL.arrayAgg;
@@ -279,6 +280,7 @@ import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.octetLength;
 import static org.jooq.impl.DSL.oldTable;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.or;
 import static org.jooq.impl.DSL.orderBy;
 import static org.jooq.impl.DSL.out;
 import static org.jooq.impl.DSL.overlay;
@@ -424,6 +426,7 @@ import static org.jooq.impl.DSL.xmlquery;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.DSL.xmlserializeDocument;
 import static org.jooq.impl.DSL.xmltable;
+import static org.jooq.impl.DSL.xor;
 import static org.jooq.impl.DSL.year;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.DefaultParseContext.FunctionKeyword.FK_AND;
@@ -8795,6 +8798,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if (parseFunctionNameIf("ADD"))
                     return parseFunctionArgs2(Field::add);
+                else if (parseFunctionNameIf("AND"))
+                    return parseFunctionArgs2((f1, f2) -> and(condition(f1), condition(f2)));
 
                 break;
 
@@ -9247,6 +9252,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if (parseFunctionNameIf("OBJECT_KEYS"))
                     return parseFunctionArgs1(DSL::jsonKeys);
+                else if (parseFunctionNameIf("OR"))
+                    return parseFunctionArgs2((f1, f2) -> or(condition(f1), condition(f2)));
 
                 break;
 
@@ -9649,6 +9656,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if ((field = parseFieldXMLSerializeIf()) != null)
                     return field;
+                else if (parseFunctionNameIf("XOR"))
+                    return parseFunctionArgs2((f1, f2) -> xor(condition(f1), condition(f2)));
 
                 break;
 

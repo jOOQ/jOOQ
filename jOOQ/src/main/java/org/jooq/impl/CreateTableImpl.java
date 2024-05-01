@@ -51,7 +51,7 @@ import static org.jooq.SQLDialect.*;
 import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
-import org.jooq.conf.*;
+import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.WithOrWithoutData;
 import org.jooq.impl.QOM.TableCommitAction;
 import org.jooq.tools.StringUtils;
@@ -63,6 +63,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
 
 
 /**

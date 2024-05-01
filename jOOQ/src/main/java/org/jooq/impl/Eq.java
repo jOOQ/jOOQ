@@ -55,7 +55,6 @@ import org.jooq.conf.*;
 import org.jooq.tools.*;
 
 import java.util.*;
-import java.util.function.*;
 
 
 /**
@@ -116,8 +115,8 @@ implements
         Field<T> arg1,
         org.jooq.Comparator op,
         Field<T> arg2,
-        BiFunction<RowN, Select<?>, Condition> compareRowSubquery,
-        BiFunction<RowN, RowN, Condition> compareRowRow,
+        Function2<RowN, Select<?>, Condition> compareRowSubquery,
+        Function2<RowN, RowN, Condition> compareRowRow,
         Function3<? super Context<?>, ? super Field<T>, ? super Field<T>, ? extends Context<?>> acceptDefault
     ) {
         boolean field1Embeddable = arg1.getDataType().isEmbeddable();

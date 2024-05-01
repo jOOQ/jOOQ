@@ -389,16 +389,6 @@ implements
             accept0(ctx);
     }
 
-    private static final void executeImmediateIf(boolean wrap, Context<?> ctx, Consumer<? super Context<?>> runnable) {
-        if (wrap) {
-            executeImmediate(ctx, runnable);
-        }
-        else {
-            runnable.accept(ctx);
-            ctx.sql(';');
-        }
-    }
-
     private final void accept0(Context<?> ctx) {
         boolean bc = comment != null && EMULATE_COMMENT_IN_BLOCK.contains(ctx.dialect());
         boolean bi = !$indexes().isEmpty() && EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect());

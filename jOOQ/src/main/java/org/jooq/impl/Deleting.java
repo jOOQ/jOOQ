@@ -135,4 +135,3 @@ package org.jooq.impl;
 
 
 
-

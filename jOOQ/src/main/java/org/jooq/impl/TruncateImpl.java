@@ -57,7 +57,6 @@ import org.jooq.impl.QOM.Cascade;
 import org.jooq.tools.*;
 
 import java.util.*;
-import java.util.function.*;
 
 
 /**

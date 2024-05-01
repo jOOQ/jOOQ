@@ -168,4 +168,3 @@ package org.jooq.impl;
 
 
 
-

@@ -4574,7 +4574,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             do {
                 int p = position();
 
-                ConstraintTypeStep constraint = parseConstraintNameSpecification();
+                ConstraintTypeStep constraint = parseConstraintNameSpecificationIf();
 
                 if (parsePrimaryKeyClusteredNonClusteredKeywordIf()) {
                     if (primary)
@@ -4916,7 +4916,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         readonly |= type.readonly();
 
         for (;;) {
-            ConstraintTypeStep inlineConstraint = parseConstraintNameSpecification();
+            ConstraintTypeStep inlineConstraint = parseConstraintNameSpecificationIf();
 
             if (!nullable) {
                 if (parseKeywordIf("NULL")) {
@@ -5509,7 +5509,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         switch (characterUpper()) {
             case 'A':
                 if (parseKeywordIf("ADD"))
-                    return parseAlterTableAdd(s1, tableName);
+                    return parseAlterTableAdd(s1, tableName, false);
                 else if (parseKeywordIf("ALTER"))
                     if (parseKeywordIf("CONSTRAINT"))
                         return parseAlterTableAlterConstraint(s1);
@@ -5663,15 +5663,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return s1.comment(parseOptionsDescription());
 
                 break;
+
+            case 'W':
+                if (parseKeywordIf("WITH CHECK ADD"))
+                    return parseAlterTableAdd(s1, tableName, true);
+
+                break;
         }
 
-        throw expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME", "SET");
+        throw expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME", "SET", "WITH");
     }
 
-    private final DDLQuery parseAlterTableAdd(AlterTableStep s1, Table<?> tableName) {
+    private final DDLQuery parseAlterTableAdd(AlterTableStep s1, Table<?> tableName, boolean constraintOnly) {
         List<TableElement> list = new ArrayList<>();
 
-        if (parseIndexOrKeyIf()) {
+        if (!constraintOnly && parseIndexOrKeyIf()) {
             Name name = parseIdentifierIf();
 
             return name == null
@@ -5681,18 +5687,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         if (parseIf('(')) {
             do
-                parseAlterTableAddFieldsOrConstraints(list);
+                parseAlterTableAddFieldsOrConstraints(list, constraintOnly);
             while (parseIf(','));
 
             parse(')');
         }
-        else if (parseKeywordIf("COLUMN IF NOT EXISTS")
-              || parseKeywordIf("IF NOT EXISTS")) {
+        else if (!constraintOnly && (
+                 parseKeywordIf("COLUMN IF NOT EXISTS")
+              || parseKeywordIf("IF NOT EXISTS"))) {
             return parseAlterTableAddFieldFirstBeforeLast(s1.addColumnIfNotExists(parseAlterTableAddField(null)));
         }
         else {
             do
-                parseAlterTableAddFieldsOrConstraints(list);
+                parseAlterTableAddFieldsOrConstraints(list, constraintOnly);
             while (
                 parseKeywordIf("ADD") ||
                 parseIf(',') && (parseKeywordIf("ADD") || !peekKeyword("ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME"))
@@ -5730,8 +5737,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             || parseKeywordIf("KEY");
     }
 
-    private final void parseAlterTableAddFieldsOrConstraints(List<TableElement> list) {
-        ConstraintTypeStep constraint = parseConstraintNameSpecification();
+    private final void parseAlterTableAddFieldsOrConstraints(List<TableElement> list, boolean constraintOnly) {
+        ConstraintTypeStep constraint = parseConstraintNameSpecificationIf();
 
         if (parsePrimaryKeyClusteredNonClusteredKeywordIf())
             list.add(parsePrimaryKeySpecification(constraint, false).constraint());
@@ -5743,11 +5750,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             list.add(parseCheckSpecification(constraint));
         else if (constraint != null)
             throw expected("CHECK", "FOREIGN KEY", "PRIMARY KEY", "UNIQUE");
-        else if (parseKeywordIf("COLUMN") || true)
+        else if (!constraintOnly && (parseKeywordIf("COLUMN") || true))
             parseAlterTableAddField(list);
     }
 
-    private final ConstraintTypeStep parseConstraintNameSpecification() {
+    private final ConstraintTypeStep parseConstraintNameSpecificationIf() {
         if (parseKeywordIf("CONSTRAINT") && !peekKeyword("PRIMARY KEY", "UNIQUE", "FOREIGN KEY", "CHECK"))
             return constraint(parseIdentifier());
 
@@ -6325,7 +6332,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         constraintLoop:
         for (;;) {
-            ConstraintTypeStep constraint = parseConstraintNameSpecification();
+            ConstraintTypeStep constraint = parseConstraintNameSpecificationIf();
 
             // TODO: NOT NULL constraints
             if (parseKeywordIf("CHECK")) {
@@ -6353,7 +6360,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : dsl.alterDomain(domainName);
 
         if (parseKeywordIf("ADD")) {
-            ConstraintTypeStep constraint = parseConstraintNameSpecification();
+            ConstraintTypeStep constraint = parseConstraintNameSpecificationIf();
 
             // TODO: NOT NULL constraints
             if (parseKeywordIf("CHECK"))

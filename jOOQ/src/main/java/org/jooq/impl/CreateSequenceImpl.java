@@ -56,7 +56,6 @@ import org.jooq.impl.QOM.CycleOption;
 import org.jooq.tools.*;
 
 import java.util.*;
-import java.util.function.*;
 
 
 /**

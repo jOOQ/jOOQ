@@ -56,7 +56,6 @@ import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.tools.*;
 
 import java.util.*;
-import java.util.function.*;
 
 
 /**
@@ -266,11 +265,11 @@ implements
     }
 
     static final Field<?> absentOnNullIf(
-        BooleanSupplier test,
+        Function0<Boolean> test,
         Function1<Field<?>, Field<?>> e,
         Field<?> array
     ) {
-        if (test.getAsBoolean())
+        if (test.get())
             return function(N_FILTER, array.getDataType(),
                 array,
                 DSL.field("e -> {0}", BOOLEAN, e.apply(DSL.field(raw("e"), array.getDataType())).isNotNull())

@@ -54,7 +54,7 @@ import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.QOM.WithOrWithoutData;
 import org.jooq.impl.QOM.TableCommitAction;
-import org.jooq.tools.*;
+import org.jooq.tools.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

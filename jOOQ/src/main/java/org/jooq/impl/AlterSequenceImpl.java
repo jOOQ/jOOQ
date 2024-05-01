@@ -53,7 +53,7 @@ import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.*;
 import org.jooq.impl.QOM.CycleOption;
-import org.jooq.tools.*;
+import org.jooq.tools.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

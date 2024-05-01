@@ -48,7 +48,6 @@ import static org.jooq.DatePart.HOUR;
 import static org.jooq.DatePart.MINUTE;
 import static org.jooq.DatePart.MONTH;
 import static org.jooq.DatePart.SECOND;
-import static org.jooq.DatePart.YEAR;
 import static org.jooq.JoinType.JOIN;
 // ...
 // ...
@@ -82,9 +81,7 @@ import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.arrayAppend;
 import static org.jooq.impl.DSL.arrayConcat;
-import static org.jooq.impl.DSL.arrayFilter;
 import static org.jooq.impl.DSL.arrayGet;
-import static org.jooq.impl.DSL.arrayMap;
 import static org.jooq.impl.DSL.arrayOverlap;
 import static org.jooq.impl.DSL.arrayPrepend;
 import static org.jooq.impl.DSL.arrayRemove;
@@ -105,7 +102,6 @@ import static org.jooq.impl.DSL.binaryMd5;
 import static org.jooq.impl.DSL.binaryOctetLength;
 import static org.jooq.impl.DSL.binaryOverlay;
 import static org.jooq.impl.DSL.binaryRtrim;
-import static org.jooq.impl.DSL.binarySubstring;
 import static org.jooq.impl.DSL.binaryTrim;
 import static org.jooq.impl.DSL.bitAnd;
 import static org.jooq.impl.DSL.bitAndAgg;
@@ -482,7 +478,6 @@ import static org.jooq.impl.SQLDataType.TINYINT;
 import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
-import static org.jooq.impl.SQLDataType.YEAR;
 import static org.jooq.impl.SelectQueryImpl.EMULATE_SELECT_INTO_AS_CTAS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_FOR_UPDATE_OF_FIELDS;
 import static org.jooq.impl.Tools.CONFIG;
@@ -668,8 +663,8 @@ import org.jooq.MergeMatchedWhereStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
-import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.Name.Quoted;
+import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
@@ -760,8 +755,6 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -5521,7 +5514,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     if (parseKeywordIf("CONSTRAINT"))
                         return parseAlterTableAlterConstraint(s1);
                     else if ((parseKeywordIf("COLUMN") || true))
-                        return parseAlterTableAlterColumn(s1);
+                        return parseAlterTableAlterColumn(tableName, s1);
 
                 break;
 
@@ -5623,7 +5616,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     else if (parseKeywordIf("COMMENT"))
                         return s1.comment(parseComment());
                     else if ((parseKeywordIf("COLUMN") || true))
-                        return parseAlterTableAlterColumn(s1);
+                        return parseAlterTableAlterColumn(tableName, s1);
 
                 break;
 
@@ -5784,7 +5777,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return result;
     }
 
-    private final DDLQuery parseAlterTableAlterColumn(AlterTableStep s1) {
+    private final DDLQuery parseAlterTableAlterColumn(Table<?> table, AlterTableStep s1) {
         boolean paren = parseIf('(');
         TableField<?, ?> field = parseFieldName();
 
@@ -5804,6 +5797,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 return s1.alter(field).setNotNull();
             else if (parseKeywordIf("SET DEFAULT", "DEFAULT"))
                 return s1.alter(field).default_((Field) toField(parseConcat()));
+            else if (peekKeyword("SET OPTIONS") && parseKeywordIf("SET"))
+                return dsl.commentOnColumn(field(table.getQualifiedName().append(field.getUnqualifiedName()))).is(parseOptionsDescription());
             else if (parseKeywordIf("TO", "RENAME TO", "RENAME AS"))
                 return s1.renameColumn(field).to(parseFieldName());
             else if (parseKeywordIf("TYPE", "SET DATA TYPE"))

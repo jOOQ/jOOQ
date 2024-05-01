@@ -58,7 +58,6 @@ import org.jooq.tools.*;
 
 import java.util.*;
 import java.util.function.*;
-import java.util.stream.*;
 
 
 /**
@@ -362,21 +361,15 @@ implements
 
 
     final QOM.UnmodifiableList<? extends Field<?>> $columns() {
-        return QOM.unmodifiable(
-            tableElements.stream().filter(e -> e instanceof Field<?>).map(e -> (Field<?>) e).collect(Collectors.toList())
-        );
+        return QOM.unmodifiable(map(filter(tableElements, e -> e instanceof Field<?>), e -> (Field<?>) e));
     }
 
     final QOM.UnmodifiableList<? extends Constraint> $constraints() {
-        return QOM.unmodifiable(
-            tableElements.stream().filter(e -> e instanceof Constraint).map(e -> (Constraint) e).collect(Collectors.toList())
-        );
+        return QOM.unmodifiable(map(filter(tableElements, e -> e instanceof Constraint), e -> (Constraint) e));
     }
 
     final QOM.UnmodifiableList<? extends Index> $indexes() {
-        return QOM.unmodifiable(
-            tableElements.stream().filter(e -> e instanceof Index).map(e -> (Index) e).collect(Collectors.toList())
-        );
+        return QOM.unmodifiable(map(filter(tableElements, e -> e instanceof Index), e -> (Index) e));
     }
 
     private final boolean supportsIfNotExists(Context<?> ctx) {

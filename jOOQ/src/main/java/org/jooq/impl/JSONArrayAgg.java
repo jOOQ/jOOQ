@@ -79,6 +79,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 import java.util.Collection;
 import java.util.Set;
 
+import org.jooq.AggregateFilterStep;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -294,11 +295,11 @@ implements
         );
     }
 
-    static final Field<?> arrayAggEmulation(boolean distinct, Field<?> field, SortFieldList orderBy) {
-        return Tools.apply(
-            distinct ? arrayAggDistinct(field) : arrayAgg(field),
-            agg -> Tools.isEmpty(orderBy) ? agg : agg.orderBy(orderBy)
-        );
+     final Field<?> arrayAggEmulation(boolean d, Field<?> field, SortFieldList orderBy) {
+        return fo(Tools.apply(
+            d ? arrayAggDistinct(field) : arrayAgg(field),
+            agg -> (AggregateFilterStep<?>) (Tools.isEmpty(orderBy) ? agg : agg.orderBy(orderBy))
+        ));
     }
 
 

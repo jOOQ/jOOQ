@@ -43,11 +43,15 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_MATERIALIZED;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
@@ -121,10 +125,17 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
         if (ctx.declareCTE()) {
             QueryPart s = query;
 
-            // [#4474] TODO: Is there a case where we could handle ResultQuery as well?
-            if (NO_SUPPORT_COLUMN_LIST.contains(ctx.dialect()) && query instanceof Select) {
+            // [#4474] [#16629] Support this for ResultQuery as well
+            if (NO_SUPPORT_COLUMN_LIST.contains(ctx.dialect())) {
                 ctx.visit(name.name);
-                s = new AliasedSelect<>((Select<R>) query, false, true, false, name.fieldNames);
+
+                if (query instanceof Select<R> q)
+                    s = new AliasedSelect<>(q, false, true, false, name.fieldNames);
+                else
+                    s = DSL.resultQuery("{0} union all {1}",
+                            select(map(name.fieldNames, n -> inline((Object) null).as(n))).where(falseCondition()),
+                            query
+                        );
             }
             else
                 ctx.visit(name);

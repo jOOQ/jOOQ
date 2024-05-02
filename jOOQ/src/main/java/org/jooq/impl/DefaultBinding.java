@@ -1438,7 +1438,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
                 }
 
-                case CLICKHOUSE:
+                case CLICKHOUSE: {
+                    Object[] a = value;
+
+                    // [#7539] Work around a JDBC bug: https://github.com/ClickHouse/clickhouse-java/issues/1626
+                    if (a instanceof Date[]) {
+                        a = (Object[]) Convert.convertArray(a, LocalDate[].class);
+                    }
+
+                    ctx.statement().setObject(ctx.index(), a);
+                    break;
+                }
+
                 case H2: {
                     ctx.statement().setObject(ctx.index(), value);
                     break;

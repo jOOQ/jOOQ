@@ -168,7 +168,7 @@ implements
                 break;
 
             case CLICKHOUSE:
-                ctx.visit(function(N_JSONExtractRaw, JSON, field, isub(index, one())));
+                ctx.visit(function(N_JSONExtractRaw, JSON, field, iadd(index, one())));
                 break;
 
             default:

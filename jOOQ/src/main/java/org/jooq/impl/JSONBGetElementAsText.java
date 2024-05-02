@@ -140,7 +140,7 @@ implements
                 break;
 
             case CLICKHOUSE:
-                ctx.visit(function(N_JSONExtractRaw, JSONB, field, isub(index, one())));
+                ctx.visit(function(N_JSONExtractRaw, JSONB, field, iadd(index, one())));
                 break;
 
             default:

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Names.N_ARRAY_TABLE;
@@ -231,13 +233,26 @@ implements
                 else
                     return DSL.table("{0}", array);
 
+            case CLICKHOUSE:
+                return new ClickHouseUnnest();
+
             // [#756] The standard SQL behaviour
             default:
                 return new StandardUnnest();
         }
     }
 
-    private class StandardUnnest extends DialectArrayTable {
+    private final class ClickHouseUnnest extends DialectArrayTable {
+
+        @Override
+        public final void accept(Context<?> ctx) {
+            ctx.visitSubquery(
+                select(DSL.function(systemName("arrayJoin"), array.getDataType().getArrayComponentDataType(), DSL.cast(array, array)))
+            );
+        }
+    }
+
+    private final class StandardUnnest extends DialectArrayTable {
 
         @Override
         public final void accept(Context<?> ctx) {

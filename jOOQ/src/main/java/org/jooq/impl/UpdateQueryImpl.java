@@ -748,9 +748,6 @@ implements
            .declareTables(declareTables)
            .end(UPDATE_UPDATE);
 
-        // [#16634] Prevent unnecessary FROM clause in some dialects, e.g. HANA
-        boolean hasFrom = !from.isEmpty() && !NO_SUPPORT_FROM.contains(ctx.dialect());
-
 
 
 
@@ -773,8 +770,7 @@ implements
 
 
 
-        if (hasFrom)
-            acceptFrom(ctx);
+        acceptFrom(ctx);
 
         ConditionProviderImpl where0 = new ConditionProviderImpl();
         if (limitEmulation(ctx)) {
@@ -807,7 +803,7 @@ implements
                 ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
 
             ctx.formatSeparator()
-               .visit(K_WHERE).sql(' ').visit(where0);
+               .visit(K_WHERE).sql(' ').visit(where0.getWhere());
 
             if (noQualifyInWhere)
                 ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
@@ -844,7 +840,10 @@ implements
 
     private final void acceptFrom(Context<?> ctx) {
         ctx.start(UPDATE_FROM);
-        TableList f = new TableList();
+
+        // [#16634] Prevent unnecessary FROM clause in some dialects, e.g. HANA
+        if (!NO_SUPPORT_FROM.contains(ctx.dialect())) {
+            TableList f = new TableList();
 
 
 
@@ -855,7 +854,7 @@ implements
 
 
 
-        f.addAll(from);
+            f.addAll(from);
 
 
 
@@ -864,10 +863,11 @@ implements
 
 
 
-        if (!f.isEmpty())
-            ctx.formatSeparator()
-               .visit(K_FROM).sql(' ')
-               .declareTables(true, c -> c.visit(f));
+            if (!f.isEmpty())
+                ctx.formatSeparator()
+                   .visit(K_FROM).sql(' ')
+                   .declareTables(true, c -> c.visit(f));
+        }
 
         ctx.end(UPDATE_FROM);
     }

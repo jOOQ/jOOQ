@@ -451,7 +451,7 @@ implements
                     ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
 
                 ctx.formatSeparator()
-                   .visit(K_WHERE).sql(' ').visit(where0);
+                   .visit(K_WHERE).sql(' ').visit(where0.getWhere());
 
                 if (noQualifyInWhere)
                     ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);

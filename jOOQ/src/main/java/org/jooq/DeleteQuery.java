@@ -89,19 +89,19 @@ public interface DeleteQuery<R extends Record> extends ConditionProvider, Delete
     /**
      * Add tables to the <code>USING</code> clause.
      */
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     void addUsing(TableLike<?> table);
 
     /**
      * Add tables to the <code>USING</code> clause.
      */
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     void addUsing(TableLike<?>... tables);
 
     /**
      * Add tables to the <code>USING</code> clause.
      */
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     void addUsing(Collection<? extends TableLike<?>> tables);
 
     // ------------------------------------------------------------------------

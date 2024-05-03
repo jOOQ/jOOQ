@@ -38,6 +38,7 @@
 
 package org.jooq.impl;
 
+import static java.util.Collections.emptyMap;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_RETURNING;
@@ -48,6 +49,7 @@ import static org.jooq.Clause.DELETE_WHERE;
 // ...
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
+// ...
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
@@ -67,6 +69,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -75,6 +78,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 // ...
@@ -82,11 +86,13 @@ import static org.jooq.conf.SettingsTools.getExecuteDeleteWithoutWhere;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.mergeInto;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DeleteQueryImpl.keyFieldsCondition;
 import static org.jooq.impl.InlineDerivedTable.hasInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables0;
@@ -99,12 +105,17 @@ import static org.jooq.impl.Keywords.K_ROWS;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Tools.containsDeclaredTable;
+import static org.jooq.impl.Tools.fieldName;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNQUALIFY_LOCAL_SCOPE;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -115,6 +126,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 // ...
@@ -152,11 +164,16 @@ implements
 
     // LIMIT is supported but not ORDER BY
     static final Set<SQLDialect>        NO_SUPPORT_ORDER_BY_LIMIT        = SQLDialect.supportedBy(IGNITE);
+
+    // LIMIT is supported only in the absence of USING
+    static final Set<SQLDialect>        NO_SUPPORT_LIMIT_WITH_USING      = SQLDialect.supportedUntil(MARIADB, MYSQL);
+
     static final Set<SQLDialect>        SUPPORT_MULTITABLE_DELETE        = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>        REQUIRE_REPEAT_FROM_IN_USING     = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>        NO_SUPPORT_REPEAT_FROM_IN_USING  = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>        NO_SUPPORT_REPEAT_FROM_IN_USING  = SQLDialect.supportedBy(DUCKDB, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect>        REQUIRES_WHERE                   = SQLDialect.supportedBy(CLICKHOUSE);
     static final Set<SQLDialect>        EMULATE_USING_WITH_MERGE         = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
+    static final Set<SQLDialect>        NO_SUPPORT_USING                 = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, IGNITE, SQLITE, TRINO, YUGABYTEDB);
 
 
 
@@ -294,6 +311,16 @@ implements
         ctx.scopeEnd();
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    static final Condition keyFieldsCondition(Context<?> ctx, Table<?> t1, MergeUsing mu) {
+        Field<?>[] keyFields = keyFields(ctx, t1);
+
+        if (keyFields.length == 1)
+            return keyFields[0].eq((Field) mu.table().field((Field<?>) (mu.lookup().isEmpty() ? keyFields[0] : mu.lookup().get(keyFields[0]))));
+        else
+            return row(keyFields).eq(row(mu.table().fields(mu.lookup().isEmpty() ? keyFields : map(keyFields, f -> mu.lookup().get(f), Field<?>[]::new))));
+    }
+
     static final Field<?>[] keyFields(Context<?> ctx, Table<?> table) {
 
         // [#16569] [#16571] The PostgreSQL ctid is not unique in a logically partitioned table
@@ -301,9 +328,9 @@ implements
             ? ctx.family() == POSTGRES
                 ? new Field[] { field(systemName("tableoid")), table.rowid() }
                 : new Field[] { table.rowid() }
-            : (table.getPrimaryKey() != null
+            : table.fields((table.getPrimaryKey() != null
                 ? table.getPrimaryKey()
-                : table.getKeys().get(0)).getFieldsArray();
+                : table.getKeys().get(0)).getFieldsArray());
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -324,6 +351,10 @@ implements
 
         // [#11925] In MySQL, the tables in FROM must be repeated in USING
         boolean hasUsing = !using.isEmpty() || multiTableJoin || specialDeleteAsSyntax && Tools.alias(t) != null;
+
+        // [#16632] If LIMIT is emulated in a self-joined subquery, then USING must be pushed down into the subquery as well
+        if (hasUsing && limitEmulation(ctx))
+            hasUsing = false;
 
         // [#11924] Multiple tables listed in the FROM clause mean this is a
         //          MySQL style multi table DELETE
@@ -348,22 +379,21 @@ implements
             ctx.visit(K_FROM).sql(' ').declareTables(!specialDeleteAsSyntax, c -> c.visit(t));
 
         // [#14011] Additional predicates that are added for various reasons
-        Condition moreWhere = noCondition();
+        ConditionProviderImpl where0 = new ConditionProviderImpl();
+        TableList u;
+
+        if (REQUIRE_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && !containsDeclaredTable(using, t)) {
+            u = new TableList(t);
+            u.addAll(using);
+        }
+        else if (NO_SUPPORT_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && containsDeclaredTable(using, t)) {
+            u = new TableList(using);
+            u.remove(t);
+        }
+        else
+            u = using;
+
         if (hasUsing) {
-            TableList u;
-
-            if (REQUIRE_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && !containsDeclaredTable(using, t)) {
-                u = new TableList(t);
-                u.addAll(using);
-            }
-            else if (NO_SUPPORT_REPEAT_FROM_IN_USING.contains(ctx.dialect()) && containsDeclaredTable(using, t)) {
-                u = new TableList(using);
-                u.remove(t);
-            }
-            else
-                u = using;
-
-
 
 
 
@@ -391,52 +421,46 @@ implements
 
 
         boolean noSupportParametersInWhere = false;
-        if (moreWhere instanceof NoCondition && REQUIRES_WHERE.contains(ctx.dialect()))
-            moreWhere = trueCondition();
-
-        Condition where = DSL.and(getWhere(), moreWhere);
         boolean noQualifyInWhere = NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect());
 
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
-            Field<?>[] keyFields = keyFields(ctx, table());
+        if (limitEmulation(ctx)) {
 
-            ctx.start(DELETE_WHERE)
-               .formatSeparator()
-               .visit(K_WHERE).sql(' ');
+            // [#16632] Push down USING table list here
+            TableList t0 = new TableList();
+            if (!containsDeclaredTable(u, t))
+                t0.add(t);
+            t0.addAll(u);
 
+            Field<?>[] keyFields = keyFields(ctx, t);
+
+            if (keyFields.length == 1)
+                where0.addConditions(keyFields[0].in(select((Field) keyFields[0]).from(t0).where(getWhere()).orderBy(orderBy).limit(limit)));
+            else
+                where0.addConditions(row(keyFields).in(select(keyFields).from(t0).where(getWhere()).orderBy(orderBy).limit(limit)));
+        }
+        else if (hasWhere())
+            where0.addConditions(getWhere());
+        else if (!where0.hasWhere() && REQUIRES_WHERE.contains(ctx.dialect()))
+            where0.addConditions(trueCondition());
+
+        ctx.start(DELETE_WHERE);
+
+        if (where0.hasWhere()) {
             ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
                 if (noQualifyInWhere)
                     ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
 
-                if (keyFields.length == 1)
-                    c.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(where).orderBy(orderBy).limit(limit)));
-                else
-                    c.visit(row(keyFields).in(select(keyFields).from(table()).where(where).orderBy(orderBy).limit(limit)));
+                ctx.formatSeparator()
+                   .visit(K_WHERE).sql(' ').visit(where0);
 
                 if (noQualifyInWhere)
                     ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
             });
-
-            ctx.end(DELETE_WHERE);
         }
-        else {
-            ctx.start(DELETE_WHERE);
 
-            if (!(where instanceof NoCondition))
-                ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
-                    c.formatSeparator().visit(K_WHERE).sql(' ');
+        ctx.end(DELETE_WHERE);
 
-                    if (noQualifyInWhere)
-                        ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
-
-                    ctx.visit(where);
-
-                    if (noQualifyInWhere)
-                        ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
-                });
-
-            ctx.end(DELETE_WHERE);
-
+        if (!limitEmulation(ctx)) {
             if (!orderBy.isEmpty())
                 ctx.formatSeparator()
                    .visit(K_ORDER_BY).sql(' ')
@@ -450,9 +474,24 @@ implements
         ctx.end(DELETE_RETURNING);
     }
 
-    static final record MergeUsing(Table<?> table, boolean patchSource) {
+    private final boolean limitEmulation(Context<?> ctx) {
+        if (limit != null) {
+            if (NO_SUPPORT_LIMIT.contains(ctx.dialect()))
+                return true;
+            if (NO_SUPPORT_LIMIT_WITH_USING.contains(ctx.dialect()) && !using.isEmpty())
+                return true;
+        }
 
+        if (!orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect()))
+            return true;
+
+        if (!using.isEmpty() && NO_SUPPORT_USING.contains(ctx.dialect()))
+            return true;
+
+        return false;
     }
+
+    static final record MergeUsing(Table<?> table, Map<Field<?>, Field<?>> lookup) {}
 
     static final MergeUsing mergeUsing(
         TableList tables,
@@ -461,28 +500,32 @@ implements
         SortFieldList orderBy,
         Field<? extends Number> limit
     ) {
-        boolean patchSource = true;
-
-        if (orderBy.isEmpty() && limit == null) {
-            if (tables.size() == 1 && tables.get(0) instanceof TableImpl && !(patchSource = false))
-                return new MergeUsing(tables.get(0), patchSource);
-            else
-                return new MergeUsing(select().from(tables).asTable("s"), patchSource);
+        if (orderBy.isEmpty() && limit == null && tables.size() == 1 && tables.get(0) instanceof TableImpl) {
+            return new MergeUsing(tables.get(0), emptyMap());
         }
 
         // TODO [#13326]: Avoid the JOIN if it isn't strictly necessary
         //                (i.e. if ORDER BY references only from, not table)
-        else
+        else {
+            Map<Field<?>, Field<?>> lookup = new LinkedHashMap<>();
+            Name s = name("s");
+
+            int i = 0;
+            for (Field<?> f : table.fields())
+                lookup.put(f, field(s.append(fieldName(++i)), f.getDataType()));
+            for (Field<?> f : tables.fields())
+                lookup.put(f, field(s.append(fieldName(++i)), f.getDataType()));
+
             return new MergeUsing(
-                select(tables.fields())
+                select(map(lookup.entrySet(), e -> e.getKey().as(e.getValue())))
                 .from(tables)
                 .join(table).on(condition)
                 .orderBy(orderBy)
                 .limit(limit)
-                .asTable("s"),
-                patchSource
+                .asTable(s),
+                lookup
             );
-
+        }
     }
 
     private final void acceptUsingAsMerge(Context<?> ctx) {
@@ -504,22 +547,7 @@ implements
             u = using;
 
         MergeUsing mu = mergeUsing(u, t, c, orderBy, limit);
-
-        if (mu.patchSource() && ctx.configuration().requireCommercial(() -> "The DELETE .. USING to MERGE transformation requires commercial only logic for non-trivial USING clauses. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
-
-
-
-
-
-
-
-
-
-
-
-        }
-
-        ctx.visit(mergeInto(table).using(mu.table()).on(c).whenMatchedThenDelete());
+        ctx.visit(mergeInto(table).using(mu.table()).on(mu.lookup().isEmpty() ? c : keyFieldsCondition(ctx, t, mu)).whenMatchedThenDelete());
     }
 
     static final void acceptLimit(Context<?> ctx, Field<? extends Number> limit) {

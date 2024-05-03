@@ -103,21 +103,21 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * Add a <code>USING</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     DeleteWhereStep<R> using(TableLike<?> table);
 
     /**
      * Add a <code>USING</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     DeleteWhereStep<R> using(TableLike<?>... tables);
 
     /**
      * Add a <code>USING</code> clause to the query.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     DeleteWhereStep<R> using(Collection<? extends TableLike<?>> tables);
 
     /**
@@ -132,7 +132,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     @PlainSQL
     DeleteWhereStep<R> using(SQL sql);
 
@@ -148,7 +148,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     @PlainSQL
     DeleteWhereStep<R> using(String sql);
 
@@ -165,7 +165,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     @PlainSQL
     DeleteWhereStep<R> using(String sql, Object... bindings);
 
@@ -182,7 +182,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     @PlainSQL
     DeleteWhereStep<R> using(String sql, QueryPart... parts);
 
@@ -192,6 +192,6 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
      * @see DSL#table(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support
     DeleteWhereStep<R> using(Name name);
 }

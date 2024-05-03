@@ -373,7 +373,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support
     void addFrom(TableLike<?> from);
 
     /**
@@ -381,7 +381,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support
     void addFrom(TableLike<?>... from);
 
     /**
@@ -389,7 +389,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      *
      * @param from The added tables
      */
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, SQLITE })
+    @Support
     void addFrom(Collection<? extends TableLike<?>> from);
 
     // ------------------------------------------------------------------------

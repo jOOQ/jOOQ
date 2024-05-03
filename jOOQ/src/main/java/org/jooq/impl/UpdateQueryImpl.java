@@ -51,13 +51,14 @@ import static org.jooq.Clause.UPDATE_WHERE;
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
-import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.*;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 // ...
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -90,10 +91,12 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DeleteQueryImpl.keyFieldsCondition;
 import static org.jooq.impl.DeleteQueryImpl.mergeUsing;
 import static org.jooq.impl.InlineDerivedTable.hasInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables0;
+import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_SET;
@@ -208,6 +211,7 @@ implements
 
     static final Set<SQLDialect>        REQUIRES_WHERE                = SQLDialect.supportedBy(CLICKHOUSE);
     static final Set<SQLDialect>        EMULATE_FROM_WITH_MERGE       = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
+    static final Set<SQLDialect>        NO_SUPPORT_FROM               = SQLDialect.supportedUntil(CLICKHOUSE, IGNITE, MARIADB, MYSQL, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>        EMULATE_RETURNING_WITH_UPSERT = SQLDialect.supportedBy(MARIADB);
 
     // LIMIT is not supported at all
@@ -216,7 +220,6 @@ implements
     // LIMIT is supported but not ORDER BY
     static final Set<SQLDialect>        NO_SUPPORT_ORDER_BY_LIMIT     = SQLDialect.supportedBy(IGNITE);
     static final Set<SQLDialect>        NO_SUPPORT_UPDATE_JOIN        = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, YUGABYTEDB);
-
     // https://github.com/ClickHouse/ClickHouse/issues/61020
     static final Set<SQLDialect>        NO_SUPPORT_QUALIFY_IN_WHERE   = SQLDialect.supportedBy(CLICKHOUSE);
 
@@ -664,8 +667,7 @@ implements
         FieldMapForUpdate um = updateMap;
         MergeUsing mu = mergeUsing(from, t, c, orderBy, limit);
 
-        if (mu.patchSource() && ctx.configuration().requireCommercial(() -> "The UPDATE .. FROM to MERGE transformation requires commercial only logic for non-trivial FROM clauses. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
-
+        if (!mu.lookup().isEmpty() && ctx.configuration().requireCommercial(() -> "The UPDATE .. FROM to MERGE transformation requires commercial only logic for non-trivial FROM clauses. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
 
 
 
@@ -682,7 +684,7 @@ implements
 
         }
 
-        ctx.visit(mergeInto(table).using(mu.table()).on(c).whenMatchedThenUpdate().set(um));
+        ctx.visit(mergeInto(table).using(mu.table()).on(mu.lookup().isEmpty() ? c : keyFieldsCondition(ctx, t, mu)).whenMatchedThenUpdate().set(um));
     }
 
     final boolean updatesField(Field<?> field) {
@@ -746,6 +748,9 @@ implements
            .declareTables(declareTables)
            .end(UPDATE_UPDATE);
 
+        // [#16634] Prevent unnecessary FROM clause in some dialects, e.g. HANA
+        boolean hasFrom = !from.isEmpty() && !NO_SUPPORT_FROM.contains(ctx.dialect());
+
 
 
 
@@ -768,51 +773,49 @@ implements
 
 
 
-        acceptFrom(ctx);
-        boolean noQualifyInWhere = NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect());
+        if (hasFrom)
+            acceptFrom(ctx);
 
-        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
-            Field<?>[] keyFields = DeleteQueryImpl.keyFields(ctx, table());
+        ConditionProviderImpl where0 = new ConditionProviderImpl();
+        if (limitEmulation(ctx)) {
 
-            ctx.start(UPDATE_WHERE)
-               .formatSeparator()
-               .visit(K_WHERE).sql(' ');
+            // [#16632] Push down USING table list here
+            TableList t0 = new TableList();
+            if (!containsDeclaredTable(from, t))
+                t0.add(t);
+            t0.addAll(from);
+
+            Field<?>[] keyFields = DeleteQueryImpl.keyFields(ctx, t);
+
+            if (keyFields.length == 1)
+                where0.addConditions(keyFields[0].in(select((Field) keyFields[0]).from(t0).where(getWhere()).orderBy(orderBy).limit(limit)));
+            else
+                where0.addConditions(row(keyFields).in(select(keyFields).from(t0).where(getWhere()).orderBy(orderBy).limit(limit)));
+        }
+
+        if (hasWhere() && (from.isEmpty() || !NO_SUPPORT_FROM.contains(ctx.dialect())))
+            where0.addConditions(getWhere());
+        else if (!where0.hasWhere() && REQUIRES_WHERE.contains(ctx.dialect()))
+            where0.addConditions(trueCondition());
+
+        ctx.start(UPDATE_WHERE);
+
+        if (where0.hasWhere()) {
+            boolean noQualifyInWhere = NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect());
 
             if (noQualifyInWhere)
                 ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
 
-            if (keyFields.length == 1)
-                ctx.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
-            else
-                ctx.visit(row(keyFields).in(select(keyFields).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
+            ctx.formatSeparator()
+               .visit(K_WHERE).sql(' ').visit(where0);
 
             if (noQualifyInWhere)
                 ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
-
-            ctx.end(UPDATE_WHERE);
         }
-        else {
-            ctx.start(UPDATE_WHERE);
 
-            if (hasWhere()) {
-                ctx.formatSeparator()
-                   .visit(K_WHERE).sql(' ');
+        ctx.end(UPDATE_WHERE);
 
-                if (noQualifyInWhere)
-                    ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, true);
-
-                ctx.visit(getWhere());
-
-                if (noQualifyInWhere)
-                    ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
-            }
-            else if (REQUIRES_WHERE.contains(ctx.dialect()))
-                ctx.formatSeparator()
-                   .visit(K_WHERE).sql(' ')
-                   .visit(trueCondition());
-
-            ctx.end(UPDATE_WHERE);
-
+        if (!limitEmulation(ctx)) {
             if (!orderBy.isEmpty())
                 ctx.formatSeparator()
                    .visit(K_ORDER_BY).sql(' ')
@@ -824,6 +827,19 @@ implements
         ctx.start(UPDATE_RETURNING);
         toSQLReturning(ctx);
         ctx.end(UPDATE_RETURNING);
+    }
+
+    private final boolean limitEmulation(Context<?> ctx) {
+        if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()))
+            return true;
+
+        if (!orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect()))
+            return true;
+
+        if (!from.isEmpty() && NO_SUPPORT_FROM.contains(ctx.dialect()))
+            return true;
+
+        return false;
     }
 
     private final void acceptFrom(Context<?> ctx) {

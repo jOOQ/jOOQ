@@ -115,6 +115,27 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case H2:
             case HSQLDB:
             case POSTGRES:
@@ -148,6 +169,12 @@ implements
             case CLICKHOUSE:
                 ctx.visit(N_argMin);
                 break;
+
+
+
+
+
+
 
             default:
                 super.acceptFunctionName(ctx);

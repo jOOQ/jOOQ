@@ -355,7 +355,11 @@ implements
     }
 
     final void acceptOrderBy(Context<?> ctx) {
-        if (!Tools.isEmpty(withinGroupOrderBy)) {
+        acceptOrderBy(ctx, withinGroupOrderBy);
+    }
+
+    static final void acceptOrderBy(Context<?> ctx, SortFieldList orderBy) {
+        if (!Tools.isEmpty(orderBy)) {
             switch (ctx.family()) {
 
 
@@ -364,7 +368,7 @@ implements
 
 
                 default:
-                    ctx.sql(' ').visit(K_ORDER_BY).sql(' ').visit(withinGroupOrderBy);
+                    ctx.sql(' ').visit(K_ORDER_BY).sql(' ').visit(orderBy);
                     break;
             }
         }

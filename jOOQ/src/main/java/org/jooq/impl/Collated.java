@@ -37,17 +37,16 @@
  */
 package org.jooq.impl;
 
+// ...
+import static org.jooq.impl.DSL.collation;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Keywords.K_COLLATE;
-
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 import org.jooq.Binding;
 import org.jooq.Collation;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 // ...
@@ -57,8 +56,8 @@ import org.jooq.QueryPart;
  */
 final class Collated extends AbstractField<String> implements QOM.Collated {
 
-    private final Field<?>  field;
-    private final Collation collation;
+    final Field<?>  field;
+    final Collation collation;
 
     Collated(Field<?> field, Collation collation) {
         super(field.getQualifiedName(), type(field).collation(collation), field.getCommentPart(), binding(field));
@@ -81,10 +80,16 @@ final class Collated extends AbstractField<String> implements QOM.Collated {
     public final void accept(Context<?> ctx) {
 
         // [#8011] Collations are vendor-specific storage clauses, which we might need to ignore
-        if (ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
-            ctx.sql("((").visit(field).sql(") ").visit(K_COLLATE).sql(' ').visit(collation).sql(')');
-        else
+        if (ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") != null)
             ctx.visit(field);
+
+
+
+
+
+
+        else
+            ctx.sql("((").visit(field).sql(") ").visit(K_COLLATE).sql(' ').visit(collation).sql(')');
     }
 
     // -------------------------------------------------------------------------

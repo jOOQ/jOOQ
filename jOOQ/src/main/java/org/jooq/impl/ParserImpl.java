@@ -14468,11 +14468,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
             case 'M':
-                if (parseFunctionNameIf("MAX"))
+                if (parseFunctionNameIf("MAX", "MAXIMUM"))
                     return ComputationalOperation.MAX;
                 else if (parseFunctionNameIf("MEDIAN"))
                     return ComputationalOperation.MEDIAN;
-                else if (parseFunctionNameIf("MIN"))
+                else if (parseFunctionNameIf("MIN", "MINIMUM"))
                     return ComputationalOperation.MIN;
                 else if (parseFunctionNameIf("MUL"))
                     return ComputationalOperation.PRODUCT;

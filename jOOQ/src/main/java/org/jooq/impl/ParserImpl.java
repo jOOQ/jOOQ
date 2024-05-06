@@ -61,6 +61,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
@@ -9604,6 +9605,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return field;
                 else if (parseFunctionNameIf("TRANSFORM"))
                     return parseArrayLambdaFunction(DSL::arrayMap);
+                else if (parseDialect() == SQLITE && parseFunctionNameIf("TOTAL"))
+                    return coalesce(
+                        parseAggregateFunctionIf(false,
+                            (AggregateFunction<?>) parseGeneralSetFunctionIf(ComputationalOperation.SUM)
+                        ),
+                        inline(BigDecimal.ZERO)
+                    );
 
                 break;
 
@@ -12743,9 +12751,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<?> parseGeneralSetFunctionIf() {
+        return parseGeneralSetFunctionIf(parseComputationalOperationIf());
+    }
+
+    private final Field<?> parseGeneralSetFunctionIf(ComputationalOperation operation) {
         boolean distinct;
         Field arg;
-        ComputationalOperation operation = parseComputationalOperationIf();
 
         if (operation == null)
             return null;

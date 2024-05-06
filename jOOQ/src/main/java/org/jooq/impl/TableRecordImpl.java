@@ -43,6 +43,7 @@ import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -110,7 +111,13 @@ import org.jooq.tools.JooqLogger;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class TableRecordImpl<R extends TableRecord<R>> extends AbstractQualifiedRecord<R> implements TableRecord<R> {
+public class TableRecordImpl<R extends TableRecord<R>>
+extends
+    AbstractQualifiedRecord<R>
+implements
+    TableRecord<R>
+{
+
     private static final JooqLogger      log                              = JooqLogger.getLogger(TableRecordImpl.class);
     private static final Set<SQLDialect> REFRESH_GENERATED_KEYS           = SQLDialect.supportedBy(DERBY, H2, MARIADB, MYSQL);
     private static final Set<SQLDialect> REFRESH_GENERATED_KEYS_ON_UPDATE = SQLDialect.supportedBy(HSQLDB);

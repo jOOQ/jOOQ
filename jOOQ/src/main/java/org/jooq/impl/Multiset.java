@@ -315,13 +315,11 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                             if (multisetCondition)
                                 returning = order.orderBy(t.fields());
 
-                            Select<Record1<JSONB>> s = patchOracleArrayAggBug(
-                                ctx,
-                                select(DSL.coalesce(
+                            Select<Record1<JSONB>> s = new SelectImpl(configuration(), null)
+                                .select(DSL.coalesce(
                                     returningClob(ctx, returning),
                                     returningClob(ctx, jsonbArray())
-                                )).from(t)
-                            );
+                                )).from(t);
 
                             if (multisetCondition && NO_SUPPORT_JSONB_COMPARE.contains(ctx.dialect()))
                                 ctx.visit(DSL.field(s).cast(VARCHAR));

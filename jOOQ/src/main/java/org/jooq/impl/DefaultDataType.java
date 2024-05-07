@@ -849,9 +849,15 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                 It is strongly recommended not looking up DataType<T> references from Class<T> references by
                 relying on the internal static type registry. For example, avoid calling DSL.val(Object) or
                 DSL.val(Object, Class), and call DSL.val(Object, DataType), providing an explicit DataType
-                reference to jOOQ if your DataType uses a Converter or a Binding. If you think jOOQ should
-                be able to infer your user type in your particular query, please report a bug here:
-                https://jooq.org/bug
+                reference to jOOQ if your DataType uses a Converter or a Binding.
+
+                Such a DataType reference can be obtained, for example, using:
+
+                - Generated TABLE.COLUMN.getDataType(), if you attached a Converter/Binding to generated code
+                - From a base type, e.g. SQLDataType.VARCHAR.asConvertedDataType(converterOrBinding)
+
+                If you think jOOQ should be able to infer your user type in your particular query,
+                please report a bug here: https://jooq.org/bug
 
                 See https://github.com/jOOQ/jOOQ/issues/15286 for more details.
                 """.replace("{result}", "" + result), e);

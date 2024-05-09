@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd"
-    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd"
+    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.20.1.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.20.1.xsd"
     elementFormDefault="qualified">
 
     <element name="information_schema">

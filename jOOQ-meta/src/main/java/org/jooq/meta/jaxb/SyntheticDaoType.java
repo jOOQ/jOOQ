@@ -30,7 +30,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="methods" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.0.xsd}SyntheticDaoMethodsType" minOccurs="0"/&gt;
+ *         &lt;element name="methods" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd}SyntheticDaoMethodsType" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;

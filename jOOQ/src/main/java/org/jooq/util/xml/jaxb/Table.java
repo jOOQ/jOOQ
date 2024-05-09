@@ -26,7 +26,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="table_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="table_type" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}TableType" minOccurs="0"/&gt;
+ *         &lt;element name="table_type" type="{http://www.jooq.org/xsd/jooq-meta-3.20.1.xsd}TableType" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;

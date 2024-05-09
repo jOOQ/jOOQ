@@ -216,8 +216,7 @@ public interface Generator {
     void setGenerateInstanceFields(boolean generateInstanceFields);
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should be generated.
+     * Whether a {@code Generated} annotation should be generated.
      */
     boolean generateGeneratedAnnotation();
 
@@ -232,44 +231,37 @@ public interface Generator {
     VisibilityModifier generateVisibilityModifier();
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should be generated.
+     * Whether a {@code Generated} annotation should be generated.
      */
     void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should be generated.
+     * Whether a {@code Generated} annotation should be generated.
      */
     GeneratedAnnotationType generateGeneratedAnnotationType();
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should be generated.
+     * Whether a {@code Generated} annotation should be generated.
      */
     void setGenerateGeneratedAnnotationType(GeneratedAnnotationType generateGeneratedAnnotationType);
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should include the <code>date</code> attribute.
+     * Whether the {@code Generated} annotation should include the <code>date</code> attribute.
      */
     boolean generateGeneratedAnnotationDate();
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should include the <code>date</code> attribute.
+     * Whether the {@code Generated} annotation should include the <code>date</code> attribute.
      */
     void setGenerateGeneratedAnnotationDate(boolean generateGeneratedAnnotationDate);
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should include the jOOQ version.
+     * Whether the {@code Generated} annotation should include the jOOQ version.
      */
     boolean generateGeneratedAnnotationJooqVersion();
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should include the jOOQ version.
+     * Whether the {@code Generated} annotation should include the jOOQ version.
      */
     void setGenerateGeneratedAnnotationJooqVersion(boolean generateGeneratedAnnotationJooqVersion);
 

@@ -86,7 +86,7 @@ implements
         ListAgg result;
 
         if (separator == null)
-            result = new ListAgg(distinct, field, inline(","));
+            result = new ListAgg(distinct, field, ListAgg.DEFAULT_SEPARATOR);
         else
             result = new ListAgg(distinct, field, separator);
 

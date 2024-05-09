@@ -100,13 +100,15 @@ implements
     UNotYetImplemented
 {
 
-    private static final Set<SQLDialect> SET_GROUP_CONCAT_MAX_LEN     = SQLDialect.supportedBy(MARIADB, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_GROUP_CONCAT         = SQLDialect.supportedBy(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-    private static final Set<SQLDialect> SUPPORT_STRING_AGG           = SQLDialect.supportedBy(DUCKDB, POSTGRES);
+    static final Set<SQLDialect> SET_GROUP_CONCAT_MAX_LEN     = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> SUPPORT_GROUP_CONCAT         = SQLDialect.supportedBy(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> SUPPORT_STRING_AGG           = SQLDialect.supportedBy(DUCKDB, POSTGRES);
 
 
 
 
+
+    static final Field<String>   DEFAULT_SEPARATOR            = DSL.inline(",");
 
     ListAgg(boolean distinct, Field<?> arg) {
         super(distinct, N_LISTAGG, VARCHAR, arg);
@@ -205,12 +207,17 @@ implements
         acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
         acceptOrderBy(ctx);
 
-        if (arguments.size() > 1)
-            if (ctx.family() == SQLITE)
-                ctx.sql(", ").visit(arguments.get(1));
+        if (arguments.size() > 1) {
+            if (ctx.family() == SQLITE) {
+
+                // [#16666] SQLite's GROUP_CONCAT(DISTINCT ..) function doesn't support a second argument
+                if (!distinct || !DEFAULT_SEPARATOR.equals(arguments.get(1)))
+                    ctx.sql(", ").visit(arguments.get(1));
+            }
             else
                 ctx.sql(' ').visit(K_SEPARATOR).sql(' ')
                    .visit(arguments.get(1));
+        }
 
         ctx.sql(')');
 

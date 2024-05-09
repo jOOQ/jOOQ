@@ -41,7 +41,7 @@ import org.jooq.codegen.DefaultGeneratorStrategy;
 import org.jooq.meta.Definition;
 
 /**
- * A generator strategy that prefixes / suffixes class names and other artefacts
+ * A generator strategy that prefixes / suffixes class names and other artifacts
  * with values taken from JVM parameters.
  * <p>
  * An example variant of the default naming strategy

@@ -1628,7 +1628,7 @@ public class Database implements Serializable, XMLAppendable
      * <li>The value is a constant, such as a Maven property</li>
      * </ul>
      * <p>
-     * Schema versions will be generated into a {@code Generated} annotation on generated artefacts.
+     * Schema versions will be generated into a {@code Generated} annotation on generated artifacts.
      * 
      */
     public String getSchemaVersionProvider() {
@@ -1648,7 +1648,7 @@ public class Database implements Serializable, XMLAppendable
      * <li>The value is a constant, such as a Maven property</li>
      * </ul>
      * <p>
-     * Schema versions will be generated into a {@code Generated} annotation on generated artefacts.
+     * Schema versions will be generated into a {@code Generated} annotation on generated artifacts.
      * 
      */
     public void setSchemaVersionProvider(String value) {
@@ -1667,7 +1667,7 @@ public class Database implements Serializable, XMLAppendable
      *   SELECT statement may contain a named variable called :catalog_name</li>
      * <li>The value is a constant, such as a Maven property</li>
      * <p>
-     * Catalog versions will be generated into a {@code Generated} annotation on generated artefacts.
+     * Catalog versions will be generated into a {@code Generated} annotation on generated artifacts.
      * 
      */
     public String getCatalogVersionProvider() {
@@ -1686,7 +1686,7 @@ public class Database implements Serializable, XMLAppendable
      *   SELECT statement may contain a named variable called :catalog_name</li>
      * <li>The value is a constant, such as a Maven property</li>
      * <p>
-     * Catalog versions will be generated into a {@code Generated} annotation on generated artefacts.
+     * Catalog versions will be generated into a {@code Generated} annotation on generated artifacts.
      * 
      */
     public void setCatalogVersionProvider(String value) {
@@ -2798,7 +2798,7 @@ public class Database implements Serializable, XMLAppendable
      * <li>The value is a constant, such as a Maven property</li>
      * </ul>
      * <p>
-     * Schema versions will be generated into a {@code Generated} annotation on generated artefacts.
+     * Schema versions will be generated into a {@code Generated} annotation on generated artifacts.
      * 
      */
     public Database withSchemaVersionProvider(String value) {
@@ -2818,7 +2818,7 @@ public class Database implements Serializable, XMLAppendable
      *   SELECT statement may contain a named variable called :catalog_name</li>
      * <li>The value is a constant, such as a Maven property</li>
      * <p>
-     * Catalog versions will be generated into a {@code Generated} annotation on generated artefacts.
+     * Catalog versions will be generated into a {@code Generated} annotation on generated artifacts.
      * 
      */
     public Database withCatalogVersionProvider(String value) {

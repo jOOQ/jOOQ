@@ -106,7 +106,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts.
+     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artifacts.
      * 
      */
     public String getUser() {
@@ -114,7 +114,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts.
+     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artifacts.
      * 
      */
     public void setUser(String value) {
@@ -249,7 +249,7 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
-     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artefacts.
+     * The JDBC connection user. Be sure this user has all required GRANTs to the dictionary views/tables to generate the desired artifacts.
      * 
      */
     public Jdbc withUser(String value) {

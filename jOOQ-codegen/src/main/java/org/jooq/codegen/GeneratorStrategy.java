@@ -56,7 +56,7 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 
 /**
- * A strategy for naming various artefacts generated from {@link Definition}'s
+ * A strategy for naming various artifacts generated from {@link Definition}'s
  *
  * @author Lukas Eder
  */
@@ -594,7 +594,7 @@ public interface GeneratorStrategy {
 
     /**
      * @return The overload suffix to be applied when generating overloaded
-     *         routine artefacts, e.g.
+     *         routine artifacts, e.g.
      *         <code>"_OverloadIndex_" + overloadIndex</code>
      */
     String getOverloadSuffix(Definition definition, Mode mode, String overloadIndex);

@@ -64,7 +64,7 @@ import org.jooq.tools.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * General mapping of generated artefacts onto run-time substitutes.
+ * General mapping of generated artifacts onto run-time substitutes.
  * <p>
  * There are several use cases, when the run-time schema configuration may be
  * different from the compile-time (or code-generation-time) schema

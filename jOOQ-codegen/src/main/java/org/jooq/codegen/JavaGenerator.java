@@ -10327,6 +10327,9 @@ public class JavaGenerator extends AbstractGenerator {
                 case JAVAX_ANNOTATION_PROCESSING_GENERATED:
                     generated = "javax.annotation.processing.Generated";
                     break;
+                case JAKARTA_ANNOTATION_GENERATED:
+                    generated = "jakarta.annotation.Generated";
+                    break;
                 case ORG_JOOQ_GENERATED:
                     generated = Generated.class.getName();
                     break;

@@ -2508,21 +2508,19 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
       </element>
 
       <element name="generatedAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.processing.Generated} annotation to indicate
-jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Use the {@link org.jooq.Generated} annotation specified by {@link #getGeneratedAnnotationType()} in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="generatedAnnotationType" type="tns:GeneratedAnnotationType" default="DETECT_FROM_JDK" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate the {@link javax.annotation.processing.Generated} annotation to indicate
-jOOQ version used for source code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Specify the type of {@link org.jooq.Generated} annotation to use in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="generatedAnnotationDate" type="boolean" default="false" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link javax.annotation.processing.Generated} annotation should include the <code>date</code> attribute.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link org.jooq.Generated} annotation specified by {@link #getGeneratedAnnotationType()} should include the <code>date</code> attribute.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="generatedAnnotationJooqVersion" type="boolean" default="true" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link javax.annotation.processing.Generated} annotation should include the jOOQ version.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link org.jooq.Generated} annotation specified by {@link #getGeneratedAnnotationType()} should include the jOOQ version.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="nonnullAnnotation" type="boolean" default="false" minOccurs="0" maxOccurs="1">
@@ -3074,6 +3072,7 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
       <enumeration value="DETECT_FROM_JDK"/>
       <enumeration value="JAVAX_ANNOTATION_GENERATED"/>
       <enumeration value="JAVAX_ANNOTATION_PROCESSING_GENERATED"/>
+      <enumeration value="JAKARTA_ANNOTATION_GENERATED"/>
       <enumeration value="ORG_JOOQ_GENERATED"/>
     </restriction>
   </simpleType>

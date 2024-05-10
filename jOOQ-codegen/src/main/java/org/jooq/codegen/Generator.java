@@ -43,6 +43,7 @@ import java.util.Locale;
 
 import org.jooq.Condition;
 import org.jooq.Constants;
+import org.jooq.Generated;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Name;
@@ -216,12 +217,6 @@ public interface Generator {
     void setGenerateInstanceFields(boolean generateInstanceFields);
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should be generated.
-     */
-    boolean generateGeneratedAnnotation();
-
-    /**
      * The {@link VisibilityModifier} that should be used in generated code.
      */
     void setGenerateVisibilityModifier(VisibilityModifier generateVisibilityModifier);
@@ -232,44 +227,54 @@ public interface Generator {
     VisibilityModifier generateVisibilityModifier();
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should be generated.
+     * Whether a {@link Generated} annotation specified by
+     * {@link #generateGeneratedAnnotationType()} should be used in generated
+     * code.
+     */
+    boolean generateGeneratedAnnotation();
+
+    /**
+     * Whether a {@link Generated} annotation specified by
+     * {@link #generateGeneratedAnnotationType()} should be used in generated
+     * code.
      */
     void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should be generated.
+     * The type of {@link Generated} annotation to be used in generated code.
      */
     GeneratedAnnotationType generateGeneratedAnnotationType();
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should be generated.
+     * The type of {@link Generated} annotation to be used in generated code.
      */
     void setGenerateGeneratedAnnotationType(GeneratedAnnotationType generateGeneratedAnnotationType);
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should include the <code>date</code> attribute.
+     * Whether the {@link Generated} annotation specified by
+     * {@link #generateGeneratedAnnotationType()} should include the
+     * <code>date</code> attribute.
      */
     boolean generateGeneratedAnnotationDate();
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should include the <code>date</code> attribute.
+     * Whether the {@link Generated} annotation specified by
+     * {@link #generateGeneratedAnnotationType()} should include the
+     * <code>date</code> attribute.
      */
     void setGenerateGeneratedAnnotationDate(boolean generateGeneratedAnnotationDate);
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should include the jOOQ version.
+     * Whether the {@link Generated} annotation specified by
+     * {@link #generateGeneratedAnnotationType()} should include the jOOQ
+     * version.
      */
     boolean generateGeneratedAnnotationJooqVersion();
 
     /**
-     * Whether the {@link javax.annotation.processing.Generated} annotation
-     * should include the jOOQ version.
+     * Whether the {@link Generated} annotation specified by
+     * {@link #generateGeneratedAnnotationType()} should include the jOOQ
+     * version.
      */
     void setGenerateGeneratedAnnotationJooqVersion(boolean generateGeneratedAnnotationJooqVersion);
 

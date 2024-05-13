@@ -468,8 +468,9 @@ implements
 
 
 
+    @SuppressWarnings("rawtypes")
     final void addValues0(Row row, Row value) {
-        updateMap.put(row, value);
+        updateMap.put(row, ((AbstractRow) value).convertTo(row));
     }
 
     final void addValues0(Row row, Select<?> select) {

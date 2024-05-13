@@ -8158,6 +8158,27 @@ public class JavaGenerator extends AbstractGenerator {
         if (string == null)
             return null;
 
+        // [#10007] [#10318] Very long strings cannot be handled by the javac compiler.
+        int max = 16384;
+        if (string.length() <= max)
+            return escapeString0(string);
+
+        StringBuilder sb = new StringBuilder("\" + \"");
+        for (int i = 0; i < string.length(); i += max) {
+            if (i > 0)
+                sb.append("\".toString() + \"");
+
+            // [#16662] Delay escaping the string for individual split parts to avoid edge cases
+            sb.append(escapeString0(string.substring(i, Math.min(i + max, string.length()))));
+        }
+
+        return sb.append("\".toString() + \"").toString();
+    }
+
+    private String escapeString0(String string) {
+        if (string == null)
+            return null;
+
         // [#3450] Escape also the escape sequence, among other things that break Java strings.
         String result = string.replace("\\", "\\\\")
                               .replace("\"", "\\\"")
@@ -8168,20 +8189,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (kotlin)
             result = result.replace("$", "\\$");
 
-        // [#10007] [#10318] Very long strings cannot be handled by the javac compiler.
-        int max = 16384;
-        if (result.length() <= max)
-            return result;
-
-        StringBuilder sb = new StringBuilder("\" + \"");
-        for (int i = 0; i < result.length(); i += max) {
-            if (i > 0)
-                sb.append("\".toString() + \"");
-
-            sb.append(result, i, Math.min(i + max, result.length()));
-        }
-
-        return sb.append("\".toString() + \"").toString();
+        return result;
     }
 
     /**

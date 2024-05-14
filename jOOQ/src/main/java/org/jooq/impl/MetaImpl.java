@@ -607,6 +607,7 @@ final class MetaImpl extends AbstractMeta {
         private final void initUksSQLite(String catalog, String schema) {
             ukCache = new LinkedHashMap<>();
 
+            Map<String, String> tables =
             dsl().resultQuery(
                     """
                     select m.tbl_name, m.sql
@@ -620,38 +621,60 @@ final class MetaImpl extends AbstractMeta {
                     order by m.tbl_name
                     """
                   )
-                 .fetchMap(field("tbl_name", VARCHAR), field("sql", VARCHAR))
-                 .forEach((table, sql) -> {
-                     try {
-                         Field<String> fCatalogName = field("catalog_name", VARCHAR);
-                         Field<String> fSchemaName = field("schema_name", VARCHAR);
-                         Field<String> fTableName = field("table_name", VARCHAR);
-                         Field<String> fConstraintName = field("constraint_name", VARCHAR);
-                         Field<String> fColumnName = field("column_name", VARCHAR);
-                         Field<Integer> fSequenceNo = field("sequence_no", INTEGER);
+                 .fetchMap(field("tbl_name", VARCHAR), field("sql", VARCHAR));
 
-                         Field<?>[] fields = {
-                             fCatalogName, fSchemaName, fTableName, fConstraintName, fColumnName, fSequenceNo
-                         };
+            // [#16675] Attempt to interpret the entire schema DDL in one go, to resolve foreign keys correctly
+            StringBuilder sb = new StringBuilder();
+            for (String sql : tables.values())
+                sb.append(sql).append(';');
 
-                         for (Table<?> t : dsl().meta(Source.of(sql)).getTables(table)) {
-                             Result<Record> result = dsl().newResult(fields);
+            Meta m = null;
 
-                             int i = 0;
-                             for (UniqueKey<?> uk : t.getUniqueKeys())
-                                 for (Field<?> ukField : uk.getFields())
-                                     result.add(dsl()
-                                         .newRecord(fCatalogName, fSchemaName, fTableName, fConstraintName, fColumnName, fSequenceNo)
-                                         .values(catalog, schema, table, uk.getName(), ukField.getName(), i++)
-                                     );
+            try {
+                m = dsl()
+                    .configuration()
+                    .deriveSettings(s -> s.withInterpreterDelayForeignKeyDeclarations(true))
+                    .dsl()
+                    .meta(sb.toString());
+            }
+            catch (ParserException | DataDefinitionException e) {
+                log.info("Cannot parse or interpret sql: " + sb.toString(), e);
+            }
 
-                             ukCache.put(name(catalog, schema, table), result);
-                         }
+            Meta meta = m;
+
+            tables.forEach((table, sql) -> {
+                try {
+                     Field<String> fCatalogName = field("catalog_name", VARCHAR);
+                     Field<String> fSchemaName = field("schema_name", VARCHAR);
+                     Field<String> fTableName = field("table_name", VARCHAR);
+                     Field<String> fConstraintName = field("constraint_name", VARCHAR);
+                     Field<String> fColumnName = field("column_name", VARCHAR);
+                     Field<Integer> fSequenceNo = field("sequence_no", INTEGER);
+
+                     Field<?>[] fields = {
+                         fCatalogName, fSchemaName, fTableName, fConstraintName, fColumnName, fSequenceNo
+                     };
+
+                     // [#16675] If the previous schema wide DDL interpretation failed, fall back to table-by table interpretation
+                     for (Table<?> t : (meta != null ? meta : dsl().meta(sql)).getTables(table)) {
+                         Result<Record> result = dsl().newResult(fields);
+
+                         int i = 0;
+                         for (UniqueKey<?> uk : t.getUniqueKeys())
+                             for (Field<?> ukField : uk.getFields())
+                                 result.add(dsl()
+                                     .newRecord(fCatalogName, fSchemaName, fTableName, fConstraintName, fColumnName, fSequenceNo)
+                                     .values(catalog, schema, table, uk.getName(), ukField.getName(), i++)
+                                 );
+
+                         ukCache.put(name(catalog, schema, table), result);
                      }
-                     catch (ParserException | DataDefinitionException e) {
-                         log.info("Cannot parse or interpret sql for table " + table + ": " + sql, e);
-                     }
-                 });
+                 }
+                 catch (ParserException | DataDefinitionException e) {
+                     log.info("Cannot parse or interpret sql for table " + table + ": " + sql, e);
+                 }
+            });
         }
 
 

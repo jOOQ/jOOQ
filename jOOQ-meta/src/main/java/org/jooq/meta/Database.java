@@ -62,6 +62,7 @@ import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.SyntheticColumnType;
 import org.jooq.meta.jaxb.SyntheticDaoType;
+import org.jooq.meta.jaxb.SyntheticDefaultType;
 import org.jooq.meta.jaxb.SyntheticEnumType;
 import org.jooq.meta.jaxb.SyntheticForeignKeyType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
@@ -1372,6 +1373,11 @@ public interface Database extends AutoCloseable {
     List<SyntheticIdentityType> getConfiguredSyntheticIdentities();
 
     /**
+     * Get the configured synthetic defaults.
+     */
+    List<SyntheticDefaultType> getConfiguredSyntheticDefaults();
+
+    /**
      * Get the configured synthetic enums.
      */
     List<SyntheticEnumType> getConfiguredSyntheticEnums();
@@ -1446,6 +1452,16 @@ public interface Database extends AutoCloseable {
      * Retrieve the not-yet used synthetic identities.
      */
     List<SyntheticIdentityType> getUnusedSyntheticIdentities();
+
+    /**
+     * Mark a synthetic default as used.
+     */
+    void markUsed(SyntheticDefaultType default_);
+
+    /**
+     * Retrieve the not-yet used synthetic defaults.
+     */
+    List<SyntheticDefaultType> getUnusedSyntheticDefaults();
 
     /**
      * Mark a synthetic enum as used.

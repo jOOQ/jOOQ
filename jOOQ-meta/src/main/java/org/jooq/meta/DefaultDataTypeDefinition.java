@@ -82,7 +82,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private GenerationOption       generationOption;
     private XMLTypeDefinition      xmlTypeDefinition;
     private boolean                identity;
-    private final String           defaultValue;
+    private String                 defaultValue;
     private final int              length;
     private final int              precision;
     private final int              scale;
@@ -259,6 +259,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     public final DefaultDataTypeDefinition identity(boolean i) {
         this.identity = i;
+        return this;
+    }
+
+    public final DefaultDataTypeDefinition defaultValue(String d) {
+        this.defaultValue = d;
         return this;
     }
 

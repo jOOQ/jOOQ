@@ -765,6 +765,12 @@ public class MetaExtensions {
             setIdentities(l);
         }
 
+        public void defaults(Action<SyntheticDefaultTypeListExtension> action) {
+            SyntheticDefaultTypeListExtension l = objects.newInstance(SyntheticDefaultTypeListExtension.class, objects);
+            action.execute(l);
+            setDefaults(l);
+        }
+
         public void enums(Action<SyntheticEnumTypeListExtension> action) {
             SyntheticEnumTypeListExtension l = objects.newInstance(SyntheticEnumTypeListExtension.class, objects);
             action.execute(l);
@@ -838,6 +844,16 @@ public class MetaExtensions {
 
         @Inject
         public SyntheticIdentityTypeExtension(ObjectFactory objects) {
+            this.objects = objects;
+        }
+    }
+
+    public static class SyntheticDefaultTypeExtension extends SyntheticDefaultType {
+
+        final ObjectFactory objects;
+
+        @Inject
+        public SyntheticDefaultTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
     }
@@ -1463,6 +1479,22 @@ public class MetaExtensions {
 
         public void identity(Action<SyntheticIdentityTypeExtension> action) {
             SyntheticIdentityTypeExtension o = objects.newInstance(SyntheticIdentityTypeExtension.class, objects);
+            action.execute(o);
+            add(o);
+        }
+    }
+
+    public static class SyntheticDefaultTypeListExtension extends ArrayList<SyntheticDefaultType> {
+
+        final ObjectFactory objects;
+
+        @Inject
+        public SyntheticDefaultTypeListExtension(ObjectFactory objects) {
+            this.objects = objects;
+        }
+
+        public void default_(Action<SyntheticDefaultTypeExtension> action) {
+            SyntheticDefaultTypeExtension o = objects.newInstance(SyntheticDefaultTypeExtension.class, objects);
             action.execute(o);
             add(o);
         }

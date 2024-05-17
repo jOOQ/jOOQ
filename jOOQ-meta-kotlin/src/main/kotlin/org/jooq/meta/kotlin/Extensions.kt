@@ -567,6 +567,17 @@ fun MutableList<SyntheticIdentityType>.identity(block: SyntheticIdentityType.() 
     add(e)
 }
 
+fun SyntheticObjectsType.defaults(block: MutableList<SyntheticDefaultType>.() -> Unit) {
+    block(defaults)
+}
+
+@JvmName("mutableListSyntheticDefaultType")
+fun MutableList<SyntheticDefaultType>.default_(block: SyntheticDefaultType.() -> Unit) {
+    val e = SyntheticDefaultType()
+    block(e)
+    add(e)
+}
+
 fun SyntheticObjectsType.enums(block: MutableList<SyntheticEnumType>.() -> Unit) {
     block(enums)
 }

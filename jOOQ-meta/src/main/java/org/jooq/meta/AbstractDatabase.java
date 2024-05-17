@@ -143,6 +143,7 @@ import org.jooq.meta.jaxb.RegexFlag;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.SyntheticColumnType;
 import org.jooq.meta.jaxb.SyntheticDaoType;
+import org.jooq.meta.jaxb.SyntheticDefaultType;
 import org.jooq.meta.jaxb.SyntheticEnumType;
 import org.jooq.meta.jaxb.SyntheticForeignKeyType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
@@ -253,6 +254,8 @@ public abstract class AbstractDatabase implements Database {
     private Set<SyntheticReadonlyRowidType>                                      unusedSyntheticReadonlyRowids           = new HashSet<>();
     private List<SyntheticIdentityType>                                          configuredSyntheticIdentities           = new ArrayList<>();
     private Set<SyntheticIdentityType>                                           unusedSyntheticIdentities               = new HashSet<>();
+    private List<SyntheticDefaultType>                                           configuredSyntheticDefaults             = new ArrayList<>();
+    private Set<SyntheticDefaultType>                                            unusedSyntheticDefaults                 = new HashSet<>();
     private List<SyntheticEnumType>                                              configuredSyntheticEnums                = new ArrayList<>();
     private Set<SyntheticEnumType>                                               unusedSyntheticEnums                    = new HashSet<>();
     private List<SyntheticPrimaryKeyType>                                        configuredSyntheticPrimaryKeys          = new ArrayList<>();
@@ -3573,6 +3576,7 @@ public abstract class AbstractDatabase implements Database {
             getConfiguredSyntheticReadonlyColumns().addAll(configuredSyntheticObjects.getReadonlyColumns());
             getConfiguredSyntheticReadonlyRowids().addAll(configuredSyntheticObjects.getReadonlyRowids());
             getConfiguredSyntheticIdentities().addAll(configuredSyntheticObjects.getIdentities());
+            getConfiguredSyntheticDefaults().addAll(configuredSyntheticObjects.getDefaults());
             getConfiguredSyntheticEnums().addAll(configuredSyntheticObjects.getEnums());
             getConfiguredSyntheticPrimaryKeys().addAll(configuredSyntheticObjects.getPrimaryKeys());
             getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticObjects.getUniqueKeys());
@@ -3584,6 +3588,7 @@ public abstract class AbstractDatabase implements Database {
             unusedSyntheticReadonlyColumns.addAll(configuredSyntheticObjects.getReadonlyColumns());
             unusedSyntheticReadonlyRowids.addAll(configuredSyntheticObjects.getReadonlyRowids());
             unusedSyntheticIdentities.addAll(configuredSyntheticObjects.getIdentities());
+            unusedSyntheticDefaults.addAll(configuredSyntheticObjects.getDefaults());
             unusedSyntheticEnums.addAll(configuredSyntheticObjects.getEnums());
             unusedSyntheticPrimaryKeys.addAll(configuredSyntheticObjects.getPrimaryKeys());
             unusedSyntheticUniqueKeys.addAll(configuredSyntheticObjects.getUniqueKeys());
@@ -3597,6 +3602,8 @@ public abstract class AbstractDatabase implements Database {
 
             if (!configuredSyntheticObjects.getColumns().isEmpty())
                 log.info("Commercial feature", "Synthetic columns are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+            if (!configuredSyntheticObjects.getDefaults().isEmpty())
+                log.info("Commercial feature", "Synthetic defaults are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
             if (!configuredSyntheticObjects.getEnums().isEmpty())
                 log.info("Commercial feature", "Synthetic enums are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
             if (!configuredSyntheticObjects.getReadonlyColumns().isEmpty())
@@ -3640,6 +3647,14 @@ public abstract class AbstractDatabase implements Database {
             configuredSyntheticIdentities = new ArrayList<>();
 
         return configuredSyntheticIdentities;
+    }
+
+    @Override
+    public List<SyntheticDefaultType> getConfiguredSyntheticDefaults() {
+        if (configuredSyntheticDefaults == null)
+            configuredSyntheticDefaults = new ArrayList<>();
+
+        return configuredSyntheticDefaults;
     }
 
     @Override
@@ -3711,6 +3726,11 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public void markUsed(SyntheticDefaultType default_) {
+        unusedSyntheticDefaults.remove(default_);
+    }
+
+    @Override
     public void markUsed(SyntheticEnumType e) {
         unusedSyntheticEnums.remove(e);
     }
@@ -3753,6 +3773,11 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public List<SyntheticIdentityType> getUnusedSyntheticIdentities() {
         return new ArrayList<>(unusedSyntheticIdentities);
+    }
+
+    @Override
+    public List<SyntheticDefaultType> getUnusedSyntheticDefaults() {
+        return new ArrayList<>(unusedSyntheticDefaults);
     }
 
     @Override

@@ -1475,6 +1475,10 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="identities" type="tns:SyntheticIdentitiesType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic identity configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="defaults" type="tns:SyntheticDefaultsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic default configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="enums" type="tns:SyntheticEnumsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic enum configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -1600,6 +1604,33 @@ Use this along with the synthetic primary key feature to replace existing primar
 
       <element name="fields" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic identity.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="SyntheticDefaultsType">
+    <sequence>
+      <element name="default" type="tns:SyntheticDefaultType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticDefaultType">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic default configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="tables" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all tables on which to apply this synthetic default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="fields" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all fields on which to apply this synthetic default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="expression" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default expression to apply to the field. This is expected to be a valid SQL expression, e.g. <code>'some string'</code>, not <code>some string</code>]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">

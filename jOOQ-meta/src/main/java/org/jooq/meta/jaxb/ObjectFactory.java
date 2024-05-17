@@ -254,6 +254,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyntheticDefaultType }
+     * 
+     */
+    public SyntheticDefaultType createSyntheticDefaultType() {
+        return new SyntheticDefaultType();
+    }
+
+    /**
      * Create an instance of {@link SyntheticEnumType }
      * 
      */

@@ -43,6 +43,7 @@ import static java.util.Collections.singletonList;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.meta.jaxb.SyntheticDefaultType;
 import org.jooq.meta.jaxb.SyntheticEnumType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
@@ -60,6 +61,7 @@ public class DefaultColumnDefinition
     private static final JooqLogger              log = JooqLogger.getLogger(DefaultColumnDefinition.class);
     private final int                            position;
     private final boolean                        identity;
+    private final String                         defaultValue;
     private final boolean                        hidden;
     private final boolean                        readonly;
     private transient List<EmbeddableDefinition> replacedByEmbeddables;
@@ -102,6 +104,7 @@ public class DefaultColumnDefinition
 
         this.position = position;
         this.identity = identity || isSyntheticIdentity(this);
+        this.defaultValue = getSyntheticDefault(this);
         this.hidden = hidden;
         this.readonly = readonly || isSyntheticReadonlyColumn(this, this.identity);
 
@@ -110,6 +113,7 @@ public class DefaultColumnDefinition
             dd.identity(this.identity);
             dd.hidden(this.hidden);
             dd.readonly(this.readonly);
+            dd.defaultValue(this.defaultValue);
 
 
 
@@ -134,6 +138,25 @@ public class DefaultColumnDefinition
         }
 
         return false;
+    }
+
+    @SuppressWarnings("unused")
+    private static String getSyntheticDefault(DefaultColumnDefinition column) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return column.getDefinedType().getDefaultValue();
     }
 
     private static boolean isSyntheticReadonlyColumn(DefaultColumnDefinition column, boolean identity) {

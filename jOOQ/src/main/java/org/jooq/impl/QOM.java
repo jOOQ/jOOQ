@@ -7473,6 +7473,78 @@ public final class QOM {
     }
 
     /**
+     * The <code>JSON KEY EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSON object
+     */
+    public /*sealed*/ interface JSONKeyExists
+        extends
+            UOperator2<Field<JSON>, Field<String>, JSONKeyExists>,
+            org.jooq.Condition
+        //permits
+        //    JSONKeyExists
+    {
+
+        /**
+         * The JSON object
+         */
+        @NotNull default Field<JSON> $json() { return $arg1(); }
+
+        /**
+         * The JSON object
+         */
+        @CheckReturnValue
+        @NotNull default JSONKeyExists $json(Field<JSON> newJson) { return $arg1(newJson); }
+
+        /**
+         * The key in the JSON object
+         */
+        @NotNull default Field<String> $key() { return $arg2(); }
+
+        /**
+         * The key in the JSON object
+         */
+        @CheckReturnValue
+        @NotNull default JSONKeyExists $key(Field<String> newKey) { return $arg2(newKey); }
+    }
+
+    /**
+     * The <code>JSONB KEY EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSONB object
+     */
+    public /*sealed*/ interface JSONBKeyExists
+        extends
+            UOperator2<Field<JSONB>, Field<String>, JSONBKeyExists>,
+            org.jooq.Condition
+        //permits
+        //    JSONBKeyExists
+    {
+
+        /**
+         * The JSONB object
+         */
+        @NotNull default Field<JSONB> $json() { return $arg1(); }
+
+        /**
+         * The JSONB object
+         */
+        @CheckReturnValue
+        @NotNull default JSONBKeyExists $json(Field<JSONB> newJson) { return $arg1(newJson); }
+
+        /**
+         * The key in the JSONB object
+         */
+        @NotNull default Field<String> $key() { return $arg2(); }
+
+        /**
+         * The key in the JSONB object
+         */
+        @CheckReturnValue
+        @NotNull default JSONBKeyExists $key(Field<String> newKey) { return $arg2(newKey); }
+    }
+
+    /**
      * The <code>JSON KEYS</code> function.
      * <p>
      * Retrieve all keys from a JSON object as an array of strings.

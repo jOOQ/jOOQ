@@ -219,6 +219,7 @@ import static org.jooq.impl.DSL.jsonGetAttribute;
 import static org.jooq.impl.DSL.jsonGetAttributeAsText;
 import static org.jooq.impl.DSL.jsonGetElement;
 import static org.jooq.impl.DSL.jsonGetElementAsText;
+import static org.jooq.impl.DSL.jsonKeyExists;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonObjectAgg;
 import static org.jooq.impl.DSL.jsonTable;
@@ -230,6 +231,7 @@ import static org.jooq.impl.DSL.jsonbGetAttribute;
 import static org.jooq.impl.DSL.jsonbGetAttributeAsText;
 import static org.jooq.impl.DSL.jsonbGetElement;
 import static org.jooq.impl.DSL.jsonbGetElementAsText;
+import static org.jooq.impl.DSL.jsonbKeyExists;
 import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.jsonbObjectAgg;
 import static org.jooq.impl.DSL.key;
@@ -8164,7 +8166,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final FieldOrRow parseCollated() {
-        FieldOrRow r = parseNumericOp();
+        FieldOrRow r = parseOp();
 
         if (r instanceof Field) {
             if (parseKeywordIf("COLLATE"))
@@ -8213,7 +8215,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Field<?> parseFieldNumericOpParenthesised() {
         parse('(');
-        Field<?> r = toField(parseNumericOp());
+        Field<?> r = toField(parseOp());
         parse(')');
 
         return r;
@@ -8318,7 +8320,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     // Any numeric operator of low precedence
     // See https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-PRECEDENCE
-    private final FieldOrRow parseNumericOp() {
+    private final FieldOrRow parseOp() {
         FieldOrRow l = parseSum();
 
         if (l instanceof Field)
@@ -8363,6 +8365,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         else
                             l = jsonbGetAttribute((Field) l, r);
                 }
+                else if (parseIf("??") || parseIf("?"))
+                    if (((Field) l).getType() == JSON.class)
+                        return jsonKeyExists((Field) l, (Field) parseSum());
+                    else
+                        return jsonbKeyExists((Field) l, (Field) parseSum());
                 else
                     break;
 
@@ -8749,7 +8756,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("ATANH"))
                     return atanh((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("ATN2", "ATAN2"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), DSL::atan2);
+                    return parseFunctionArgs2(() -> toField(parseOp()), DSL::atan2);
 
                 else if (parseFunctionNameIf("ASCII_CHAR"))
                     return chr((Field) parseFieldParenthesised());
@@ -8816,9 +8823,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("BITCOUNT", "BIT_COUNT"))
                     return bitCount((Field) parseFieldNumericOpParenthesised());
                 else if (parseKeywordIf("BIT_LSHIFT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shl(f1, f2));
+                    return parseFunctionArgs2(() -> toField(parseOp()), (f1, f2) -> shl(f1, f2));
                 else if (parseKeywordIf("BIT_RSHIFT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shr(f1, f2));
+                    return parseFunctionArgs2(() -> toField(parseOp()), (f1, f2) -> shr(f1, f2));
                 else if (parseFunctionNameIf("BYTE_LENGTH"))
                     return octetLength((Field) parseFieldParenthesised());
                 else if ((field = parseFieldBitwiseFunctionIf()) != null)
@@ -9103,6 +9110,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs1(DSL::jsonArrayLength);
                 else if (parseFunctionNameIf("JSON_KEYS", "JSONExtractKeys"))
                     return parseFunctionArgs1(DSL::jsonKeys);
+                else if (parseFunctionNameIf("JSON_KEY_EXISTS"))
+                    return parseFunctionArgs2(DSL::jsonKeyExists);
                 else if (parseFunctionNameIf("JSON_INSERT"))
                     return parseFunctionArgs3(DSL::jsonInsert);
                 else if (parseFunctionNameIf("JSON_REMOVE"))
@@ -9117,6 +9126,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs1(DSL::jsonbArrayLength);
                 else if (parseFunctionNameIf("JSONB_KEYS"))
                     return parseFunctionArgs1(DSL::jsonbKeys);
+                else if (parseFunctionNameIf("JSONB_KEY_EXISTS"))
+                    return parseFunctionArgs2(DSL::jsonbKeyExists);
                 else if (parseFunctionNameIf("JSONB_INSERT"))
                     return parseFunctionArgs3(DSL::jsonbInsert);
                 else if (parseFunctionNameIf("JSONB_REMOVE"))
@@ -9155,7 +9166,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 }
                 else if (parseKeywordIf("LSHIFT", "LEFT_SHIFT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shl(f1, f2));
+                    return parseFunctionArgs2(() -> toField(parseOp()), (f1, f2) -> shl(f1, f2));
                 else if ((field = parseFieldLeastIf()) != null)
                     return field;
                 else if ((field = parseFieldLeadLagIf()) != null)
@@ -9266,7 +9277,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if ((field = parseFieldPercentRankIf()) != null)
                     return field;
                 else if (parseFunctionNameIf("POWER", "POW"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), DSL::power);
+                    return parseFunctionArgs2(() -> toField(parseOp()), DSL::power);
                 else if (parseFunctionNameIf("PI") && parseEmptyParens())
                     return pi();
 
@@ -9331,7 +9342,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("RATIO_TO_REPORT"))
                     return parseFunctionArgs1(f -> parseWindowFunction(null, null, ratioToReport(f)));
                 else if (parseKeywordIf("RSHIFT", "RIGHT_SHIFT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shr(f1, f2));
+                    return parseFunctionArgs2(() -> toField(parseOp()), (f1, f2) -> shr(f1, f2));
                 else if (parseFunctionNameIf("ROOT"))
                     return parseFunctionArgs2(DSL::sqrt, DSL::root);
                 else if (parseFunctionNameIf("ROW"))
@@ -9381,9 +9392,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseFunctionNameIf("SIN"))
                     return sin((Field) parseFieldNumericOpParenthesised());
                 else if (parseKeywordIf("SHL", "SHIFTLEFT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shl(f1, f2));
+                    return parseFunctionArgs2(() -> toField(parseOp()), (f1, f2) -> shl(f1, f2));
                 else if (parseKeywordIf("SHR", "SHIFTRIGHT"))
-                    return parseFunctionArgs2(() -> toField(parseNumericOp()), (f1, f2) -> shr(f1, f2));
+                    return parseFunctionArgs2(() -> toField(parseOp()), (f1, f2) -> shr(f1, f2));
                 else if ((field = parseFieldSysConnectByPathIf()) != null)
                     return field;
                 else if ((field = parseFieldCastIf()) != null)
@@ -9900,13 +9911,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             if (parseKeywordIf("DISTINCT", "ALL"))
                 agg = true;
-            Field<?> x = toField(parseNumericOp());
+            Field<?> x = toField(parseOp());
 
             if (agg && parse(')') || parseIf(')'))
                 return parseAggregateFunctionIf(false, bitAndAgg((Field) x));
 
             parse(',');
-            Field<?> y = toField(parseNumericOp());
+            Field<?> y = toField(parseOp());
             parse(')');
 
             return bitAnd((Field) x, (Field) y);
@@ -9921,13 +9932,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             if (parseKeywordIf("DISTINCT", "ALL"))
                 agg = true;
-            Field<?> x = toField(parseNumericOp());
+            Field<?> x = toField(parseOp());
 
             if (agg && parse(')') || parseIf(')'))
                 return parseAggregateFunctionIf(false, bitNandAgg((Field) x));
 
             parse(',');
-            Field<?> y = toField(parseNumericOp());
+            Field<?> y = toField(parseOp());
             parse(')');
 
             return bitNand((Field) x, (Field) y);
@@ -9944,13 +9955,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             if (parseKeywordIf("DISTINCT", "ALL"))
                 agg = true;
-            Field<?> x = toField(parseNumericOp());
+            Field<?> x = toField(parseOp());
 
             if (agg && parse(')') || parseIf(')'))
                 return parseAggregateFunctionIf(false, bitOrAgg((Field) x));
 
             parse(',');
-            Field<?> y = toField(parseNumericOp());
+            Field<?> y = toField(parseOp());
             parse(')');
 
             return bitOr((Field) x, (Field) y);
@@ -9965,13 +9976,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             parse('(');
             if (parseKeywordIf("DISTINCT", "ALL"))
                 agg = true;
-            Field<?> x = toField(parseNumericOp());
+            Field<?> x = toField(parseOp());
 
             if (agg && parse(')') || parseIf(')'))
                 return parseAggregateFunctionIf(false, bitNorAgg((Field) x));
 
             parse(',');
-            Field<?> y = toField(parseNumericOp());
+            Field<?> y = toField(parseOp());
             parse(')');
 
             return bitNor((Field) x, (Field) y);
@@ -9985,13 +9996,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BIN_XOR_AGG")) ||
             (agg = parseKeywordIf("groupBitXor"))) {
             parse('(');
-            Field<?> x = toField(parseNumericOp());
+            Field<?> x = toField(parseOp());
 
             if (agg && parse(')') || parseIf(')'))
                 return parseAggregateFunctionIf(false, bitXorAgg((Field) x));
 
             parse(',');
-            Field<?> y = toField(parseNumericOp());
+            Field<?> y = toField(parseOp());
             parse(')');
 
             return bitXor((Field) x, (Field) y);
@@ -10004,38 +10015,38 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             (agg = parseKeywordIf("BIN_XNOR_AGG")) ||
             (agg = parseKeywordIf("groupBitXnor"))) {
             parse('(');
-            Field<?> x = toField(parseNumericOp());
+            Field<?> x = toField(parseOp());
 
             if (agg && parse(')') || parseIf(')'))
                 return parseAggregateFunctionIf(false, bitXNorAgg((Field) x));
 
             parse(',');
-            Field<?> y = toField(parseNumericOp());
+            Field<?> y = toField(parseOp());
             parse(')');
 
             return bitXNor((Field) x, (Field) y);
         }
         else if (parseKeywordIf("BIT_NOT", "BITNOT", "BIN_NOT", "BITWISE_NOT")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp());
+            Field<?> x = toField(parseOp());
             parse(')');
 
             return bitNot((Field) x);
         }
         else if (parseKeywordIf("BIN_SHL", "BITSHIFTLEFT", "BITWISE_LEFT_SHIFT")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp());
+            Field<?> x = toField(parseOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp());
+            Field<?> y = toField(parseOp());
             parse(')');
 
             return shl((Field) x, (Field) y);
         }
         else if (parseKeywordIf("BIN_SHR", "BITSHIFTRIGHT", "BITWISE_RIGHT_SHIFT")) {
             parse('(');
-            Field<?> x = toField(parseNumericOp());
+            Field<?> x = toField(parseOp());
             parse(',');
-            Field<?> y = toField(parseNumericOp());
+            Field<?> y = toField(parseOp());
             parse(')');
 
             return shr((Field) x, (Field) y);
@@ -10690,8 +10701,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldLogIf() {
         if (parseFunctionNameIf("LOG")) {
             parse('(');
-            Field f1 = toField(parseNumericOp());
-            Field f2 = parseIf(',') ? toField(parseNumericOp()) : null;
+            Field f1 = toField(parseOp());
+            Field f2 = parseIf(',') ? toField(parseOp()) : null;
             parse(')');
 
             switch (parseFamily()) {
@@ -10752,7 +10763,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return DSL.trunc((Field) arg1, p);
                 }
                 else {
-                    Field<?> arg2 = toField(parseNumericOp());
+                    Field<?> arg2 = toField(parseOp());
                     parse(')');
                     return DSL.trunc((Field) arg1, (Field) arg2);
                 }
@@ -10779,8 +10790,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Field<?> parseFieldRoundIf() {
         if (parseFunctionNameIf("ROUND")) {
             parse('(');
-            Field arg1 = toField(parseNumericOp());
-            Field arg2 = parseIf(',') ? toField(parseNumericOp()) : null;
+            Field arg1 = toField(parseOp());
+            Field arg2 = parseIf(',') ? toField(parseOp()) : null;
             parse(')');
 
             return arg2 == null ? round(arg1) : round(arg1, arg2);
@@ -11836,10 +11847,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field f1 = parseField();
             if (substr || !(keywords = parseKeywordIf("FROM")))
                 parse(',');
-            Field f2 = toField(parseNumericOp());
+            Field f2 = toField(parseOp());
             Field f3 =
                     ((keywords && parseKeywordIf("FOR")) || (!keywords && parseIf(',')))
-                ? (Field) toField(parseNumericOp())
+                ? (Field) toField(parseOp())
                 : null;
             parse(')');
 

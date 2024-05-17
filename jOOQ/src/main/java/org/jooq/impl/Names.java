@@ -481,6 +481,7 @@ final class Names {
     static final Name N_JSONB_GET_ELEMENT_AS_TEXT   = systemName("jsonb_get_element_as_text");
     static final Name N_JSONB_INSERT                = systemName("jsonb_insert");
     static final Name N_JSONB_KEYS                  = systemName("jsonb_keys");
+    static final Name N_JSONB_KEY_EXISTS            = systemName("jsonb_key_exists");
     static final Name N_JSONB_OBJECT                = systemName("jsonb_object");
     static final Name N_JSONB_REMOVE                = systemName("jsonb_remove");
     static final Name N_JSONB_REPLACE               = systemName("jsonb_replace");
@@ -497,6 +498,7 @@ final class Names {
     static final Name N_JSON_GET_ELEMENT_AS_TEXT    = systemName("json_get_element_as_text");
     static final Name N_JSON_INSERT                 = systemName("json_insert");
     static final Name N_JSON_KEYS                   = systemName("json_keys");
+    static final Name N_JSON_KEY_EXISTS             = systemName("json_key_exists");
     static final Name N_JSON_LENGTH                 = systemName("json_length");
     static final Name N_JSON_MODIFY                 = systemName("json_modify");
     static final Name N_JSON_OBJECT                 = systemName("json_object");

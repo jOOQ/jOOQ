@@ -23916,6 +23916,118 @@ public class DSL {
     }
 
     /**
+     * The <code>JSON_KEY_EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSON object
+     *
+     * @param json The JSON object
+     * @param key The key in the JSON object
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Condition jsonKeyExists(JSON json, @Stringly.Param String key) {
+        return new JSONKeyExists(Tools.field(json), Tools.field(key));
+    }
+
+    /**
+     * The <code>JSON_KEY_EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSON object
+     *
+     * @param json The JSON object
+     * @param key The key in the JSON object
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Condition jsonKeyExists(JSON json, Field<String> key) {
+        return new JSONKeyExists(Tools.field(json), key);
+    }
+
+    /**
+     * The <code>JSON_KEY_EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSON object
+     *
+     * @param json The JSON object
+     * @param key The key in the JSON object
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Condition jsonKeyExists(Field<JSON> json, @Stringly.Param String key) {
+        return new JSONKeyExists(json, Tools.field(key));
+    }
+
+    /**
+     * The <code>JSON_KEY_EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSON object
+     *
+     * @param json The JSON object
+     * @param key The key in the JSON object
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Condition jsonKeyExists(Field<JSON> json, Field<String> key) {
+        return new JSONKeyExists(json, key);
+    }
+
+    /**
+     * The <code>JSONB_KEY_EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSONB object
+     *
+     * @param json The JSONB object
+     * @param key The key in the JSONB object
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Condition jsonbKeyExists(JSONB json, @Stringly.Param String key) {
+        return new JSONBKeyExists(Tools.field(json), Tools.field(key));
+    }
+
+    /**
+     * The <code>JSONB_KEY_EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSONB object
+     *
+     * @param json The JSONB object
+     * @param key The key in the JSONB object
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Condition jsonbKeyExists(JSONB json, Field<String> key) {
+        return new JSONBKeyExists(Tools.field(json), key);
+    }
+
+    /**
+     * The <code>JSONB_KEY_EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSONB object
+     *
+     * @param json The JSONB object
+     * @param key The key in the JSONB object
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Condition jsonbKeyExists(Field<JSONB> json, @Stringly.Param String key) {
+        return new JSONBKeyExists(json, Tools.field(key));
+    }
+
+    /**
+     * The <code>JSONB_KEY_EXISTS</code> function.
+     * <p>
+     * Check if a key exists in a JSONB object
+     *
+     * @param json The JSONB object
+     * @param key The key in the JSONB object
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Condition jsonbKeyExists(Field<JSONB> json, Field<String> key) {
+        return new JSONBKeyExists(json, key);
+    }
+
+    /**
      * The <code>JSON_KEYS</code> function.
      * <p>
      * Retrieve all keys from a JSON object as an array of strings.

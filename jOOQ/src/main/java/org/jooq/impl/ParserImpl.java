@@ -2310,9 +2310,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         parseKeywordIf("FROM");
-        Table<?> table = scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM)));
+        Table<?> table = scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORD_LOOKUP_IN_DELETE_FROM)));
         DeleteUsingStep<?> s1 = with == null ? dsl.delete(table) : with.delete(table);
-        DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_DELETE_FROM))))) : s1;
+        DeleteWhereStep<?> s2 = parseKeywordIf("USING", "FROM") ? s1.using(parseList(',', t -> scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORD_LOOKUP_IN_DELETE_FROM))))) : s1;
         DeleteOrderByStep<?> s3 = parseKeywordIf("ALL")
             ? s2
             : parseKeywordIf("WHERE")
@@ -2503,9 +2503,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // percent = parseKeywordIf("PERCENT") && requireProEdition();
         }
 
-        Table<?> table = scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM)));
+        Table<?> table = scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORD_LOOKUP_IN_UPDATE_FROM)));
         UpdateSetFirstStep<?> s1 = (with == null ? dsl.update(table) : with.update(table));
-        List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', t -> scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM)))) : null;
+        List<Table<?>> from = parseKeywordIf("FROM") ? parseList(',', t -> scope.scope(parseJoinedTable(() -> peekKeyword(KEYWORD_LOOKUP_IN_UPDATE_FROM)))) : null;
 
         parseKeyword("SET");
         UpdateFromStep<?> s2;
@@ -2530,7 +2530,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         UpdateWhereStep<?> s3 = from != null
             ? s2.from(from)
             : parseKeywordIf("FROM")
-            ? s2.from(parseList(',', t -> parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_UPDATE_FROM))))
+            ? s2.from(parseList(',', t -> parseJoinedTable(() -> peekKeyword(KEYWORD_LOOKUP_IN_UPDATE_FROM))))
             : s2;
         UpdateOrderByStep<?> s4 = parseKeywordIf("ALL")
             ? s3
@@ -7147,7 +7147,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Table<?> parseTable() {
-        return parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_SELECT_FROM));
+        return parseJoinedTable(() -> peekKeyword(KEYWORD_LOOKUP_IN_SELECT_FROM));
     }
 
     private final Table<?> parseLateral(BooleanSupplier forbiddenKeywords) {
@@ -7972,7 +7972,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                     if (parseKeywordIf("AS"))
                         alias = parseIdentifier(true, false);
-                    else if (!peekKeyword(KEYWORDS_IN_SELECT) && !peekKeyword(KEYWORDS_IN_STATEMENTS))
+                    else if (!peekKeyword(KEYWORD_LOOKUP_IN_SELECT) && !peekKeyword(KEYWORD_LOOKUP_IN_STATEMENTS))
                         alias = parseIdentifierIf(true, false);
                 }
 
@@ -14966,6 +14966,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return true;
     }
 
+    private final boolean peekKeyword(KeywordLookup lookup) {
+        int pos = afterWhitespace(position(), false);
+        int p = lookup.lookup(sql, pos, i -> afterWhitespace(i, false));
+
+        if (p == pos)
+            return false;
+
+        // [#8806] A keyword that is followed by a period is very likely an identifier
+        if (isIdentifierPart(p) || character(p) == '.')
+            return false;
+
+        return true;
+    }
+
     private final boolean parseWhitespaceIf() {
         positionBeforeWhitespace = position();
         position(afterWhitespace(positionBeforeWhitespace));
@@ -15179,6 +15193,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "WITH",
     };
 
+    private static final KeywordLookup KEYWORD_LOOKUP_IN_STATEMENTS = KeywordLookup.from(KEYWORDS_IN_STATEMENTS);
+
     private static final String[] KEYWORDS_IN_SELECT = {
         "CONNECT BY",
         "EXCEPT",
@@ -15209,6 +15225,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "WHERE",
         "WINDOW",
     };
+
+    private static final KeywordLookup KEYWORD_LOOKUP_IN_SELECT = KeywordLookup.from(KEYWORDS_IN_SELECT);
 
     private static final String[] KEYWORDS_IN_FROM = {
         "ANTI JOIN",
@@ -15270,6 +15288,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         "USING"
     };
 
+    private static final KeywordLookup KEYWORD_LOOKUP_IN_FROM = KeywordLookup.from(KEYWORDS_IN_FROM);
+
     private static final String[] KEYWORDS_IN_SELECT_FROM;
 
     static {
@@ -15314,6 +15334,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         KEYWORDS_IN_SELECT_FROM = set.toArray(EMPTY_STRING);
     }
 
+    private static final KeywordLookup KEYWORD_LOOKUP_IN_SELECT_FROM = KeywordLookup.from(KEYWORDS_IN_SELECT_FROM);
+
     private static final String[] KEYWORDS_IN_UPDATE_FROM;
 
     static {
@@ -15321,6 +15343,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         set.addAll(asList("FROM", "SET", "WHERE", "ORDER BY", "LIMIT", "RETURNING"));
         KEYWORDS_IN_UPDATE_FROM = set.toArray(EMPTY_STRING);
     }
+
+    private static final KeywordLookup KEYWORD_LOOKUP_IN_UPDATE_FROM = KeywordLookup.from(KEYWORDS_IN_UPDATE_FROM);
 
     private static final String[] KEYWORDS_IN_DELETE_FROM;
 
@@ -15330,6 +15354,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         set.addAll(asList(KEYWORDS_IN_STATEMENTS));
         KEYWORDS_IN_DELETE_FROM = set.toArray(EMPTY_STRING);
     }
+
+    private static final KeywordLookup KEYWORD_LOOKUP_IN_DELETE_FROM = KeywordLookup.from(KEYWORDS_IN_DELETE_FROM);
 
     private static final String[] PIVOT_KEYWORDS      = {
         "FOR"

@@ -139,3 +139,12 @@ interface ObjIntFunction<T, R> {
 interface ObjIntPredicate<T> {
     boolean test(T t, int i);
 }
+
+/**
+ * A missing primitive type {@link Function} for ints resturning ints.
+ */
+@FunctionalInterface
+interface IntToIntFunction {
+    int applyAsInt(int i);
+}
+

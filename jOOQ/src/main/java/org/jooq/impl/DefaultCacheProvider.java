@@ -48,8 +48,7 @@ import org.jooq.CacheContext;
 import org.jooq.CacheProvider;
 
 /**
- * A default implementation producing a {@link ConcurrentHashMap} in most cases,
- * or a synchronized LRU cache where appropriate.
+ * A default implementation a synchronized LRU cache where appropriate.
  *
  * @author Lukas Eder
  */
@@ -58,14 +57,12 @@ final class DefaultCacheProvider implements CacheProvider {
     @Override
     public Map<Object, Object> provide(CacheContext ctx) {
         switch (ctx.cacheType()) {
-
-            // TODO: Is there a better implementation than wrapping LinkedHashMap
-            // in synchronizedMap(), i.e. one that does not use a monitor?
             case CACHE_PARSING_CONNECTION:
-                return synchronizedMap(new LRUCache<>(defaultIfNull(ctx.settings().getCacheParsingConnectionLRUCacheSize(), 8912)));
+                return synchronizedMap(new LRUCache<>(defaultIfNull(ctx.settings().getCacheParsingConnectionLRUCacheSize(), 8192)));
 
+            // [#16696] Resizing this will be possible starting from jOOQ 3.20
             default:
-                return new ConcurrentHashMap<>();
+                return synchronizedMap(new LRUCache<>(8192));
         }
     }
 }

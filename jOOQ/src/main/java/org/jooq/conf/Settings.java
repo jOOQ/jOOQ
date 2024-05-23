@@ -388,6 +388,10 @@ public class Settings
     protected Boolean cacheParsingConnection = true;
     @XmlElement(defaultValue = "8192")
     protected Integer cacheParsingConnectionLRUCacheSize = 8192;
+    @XmlElement(defaultValue = "8192")
+    protected Integer cacheRecordMappersLRUCacheSize = 8192;
+    @XmlElement(defaultValue = "32768")
+    protected Integer reflectionCacheLRUCacheSize = 32768;
     @XmlElement(defaultValue = "true")
     protected Boolean cachePreparedStatementInLoader = true;
     @XmlElement(defaultValue = "THROW_ALL")
@@ -5268,7 +5272,7 @@ public class Settings
     }
 
     /**
-     * The default implementation of the ParsingConnection cache's LRU cache size.
+     * The default value of the ParsingConnection cache's LRU cache size.
      * 
      */
     public Integer getCacheParsingConnectionLRUCacheSize() {
@@ -5276,11 +5280,43 @@ public class Settings
     }
 
     /**
-     * The default implementation of the ParsingConnection cache's LRU cache size.
+     * The default value of the ParsingConnection cache's LRU cache size.
      * 
      */
     public void setCacheParsingConnectionLRUCacheSize(Integer value) {
         this.cacheParsingConnectionLRUCacheSize = value;
+    }
+
+    /**
+     * The default value of the RecordMapper cache's LRU cache size.
+     * 
+     */
+    public Integer getCacheRecordMappersLRUCacheSize() {
+        return cacheRecordMappersLRUCacheSize;
+    }
+
+    /**
+     * The default value of the RecordMapper cache's LRU cache size.
+     * 
+     */
+    public void setCacheRecordMappersLRUCacheSize(Integer value) {
+        this.cacheRecordMappersLRUCacheSize = value;
+    }
+
+    /**
+     * The default value of the reflection cache's LRU cache size.
+     * 
+     */
+    public Integer getReflectionCacheLRUCacheSize() {
+        return reflectionCacheLRUCacheSize;
+    }
+
+    /**
+     * The default value of the reflection cache's LRU cache size.
+     * 
+     */
+    public void setReflectionCacheLRUCacheSize(Integer value) {
+        this.reflectionCacheLRUCacheSize = value;
     }
 
     /**
@@ -8814,11 +8850,29 @@ public class Settings
     }
 
     /**
-     * The default implementation of the ParsingConnection cache's LRU cache size.
+     * The default value of the ParsingConnection cache's LRU cache size.
      * 
      */
     public Settings withCacheParsingConnectionLRUCacheSize(Integer value) {
         setCacheParsingConnectionLRUCacheSize(value);
+        return this;
+    }
+
+    /**
+     * The default value of the RecordMapper cache's LRU cache size.
+     * 
+     */
+    public Settings withCacheRecordMappersLRUCacheSize(Integer value) {
+        setCacheRecordMappersLRUCacheSize(value);
+        return this;
+    }
+
+    /**
+     * The default value of the reflection cache's LRU cache size.
+     * 
+     */
+    public Settings withReflectionCacheLRUCacheSize(Integer value) {
+        setReflectionCacheLRUCacheSize(value);
         return this;
     }
 
@@ -9688,6 +9742,8 @@ public class Settings
         builder.append("cacheRecordMappers", cacheRecordMappers);
         builder.append("cacheParsingConnection", cacheParsingConnection);
         builder.append("cacheParsingConnectionLRUCacheSize", cacheParsingConnectionLRUCacheSize);
+        builder.append("cacheRecordMappersLRUCacheSize", cacheRecordMappersLRUCacheSize);
+        builder.append("reflectionCacheLRUCacheSize", reflectionCacheLRUCacheSize);
         builder.append("cachePreparedStatementInLoader", cachePreparedStatementInLoader);
         builder.append("throwExceptions", throwExceptions);
         builder.append("fetchWarnings", fetchWarnings);
@@ -11184,6 +11240,24 @@ public class Settings
                 return false;
             }
         }
+        if (cacheRecordMappersLRUCacheSize == null) {
+            if (other.cacheRecordMappersLRUCacheSize!= null) {
+                return false;
+            }
+        } else {
+            if (!cacheRecordMappersLRUCacheSize.equals(other.cacheRecordMappersLRUCacheSize)) {
+                return false;
+            }
+        }
+        if (reflectionCacheLRUCacheSize == null) {
+            if (other.reflectionCacheLRUCacheSize!= null) {
+                return false;
+            }
+        } else {
+            if (!reflectionCacheLRUCacheSize.equals(other.reflectionCacheLRUCacheSize)) {
+                return false;
+            }
+        }
         if (cachePreparedStatementInLoader == null) {
             if (other.cachePreparedStatementInLoader!= null) {
                 return false;
@@ -11986,6 +12060,8 @@ public class Settings
         result = ((prime*result)+((cacheRecordMappers == null)? 0 :cacheRecordMappers.hashCode()));
         result = ((prime*result)+((cacheParsingConnection == null)? 0 :cacheParsingConnection.hashCode()));
         result = ((prime*result)+((cacheParsingConnectionLRUCacheSize == null)? 0 :cacheParsingConnectionLRUCacheSize.hashCode()));
+        result = ((prime*result)+((cacheRecordMappersLRUCacheSize == null)? 0 :cacheRecordMappersLRUCacheSize.hashCode()));
+        result = ((prime*result)+((reflectionCacheLRUCacheSize == null)? 0 :reflectionCacheLRUCacheSize.hashCode()));
         result = ((prime*result)+((cachePreparedStatementInLoader == null)? 0 :cachePreparedStatementInLoader.hashCode()));
         result = ((prime*result)+((throwExceptions == null)? 0 :throwExceptions.hashCode()));
         result = ((prime*result)+((fetchWarnings == null)? 0 :fetchWarnings.hashCode()));

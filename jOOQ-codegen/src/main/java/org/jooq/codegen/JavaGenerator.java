@@ -4847,7 +4847,8 @@ public class JavaGenerator extends AbstractGenerator {
             if (generateSpringAnnotations())
                 out.println("@%s(readOnly = true)", transactional);
 
-            out.println("%sabstract class %s<R : %s<R>, P, T>(table: %s<R>, type: %s<P>, configuration: %s?) : %s<R, P, T>(table, type, configuration) {",
+            // [#16691] P : Any is needed because of KT-68407
+            out.println("%sabstract class %s<R : %s<R>, P : Any, T>(table: %s<R>, type: %s<P>, configuration: %s?) : %s<R, P, T>(table, type, configuration) {",
                 visibility(), className, UpdatableRecord.class, Table.class, Class.class, Configuration.class, DAOImpl.class);
 
             out.println();

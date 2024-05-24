@@ -7,9 +7,12 @@ package org.jooq.example.testcontainers.db.tables;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.function.Function;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Function1;
+import org.jooq.Functions;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Schema;
@@ -177,6 +180,13 @@ public class RewardsReport extends TableImpl<CustomerRecord> {
     @Override
     public RewardsReport rename(Table<?> name) {
         return new RewardsReport(name.getQualifiedName(), null, parameters);
+    }
+
+    /**
+     * Apply this table to a function, see also {@link Functions#let(Function1)}
+     */
+    public <R> R let(Function<? super RewardsReport, ? extends R> function) {
+        return function.apply(this);
     }
 
     /**

@@ -8,10 +8,13 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function1;
+import org.jooq.Functions;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.InverseForeignKey;
@@ -220,6 +223,13 @@ public class Actor extends TableImpl<ActorRecord> {
     @Override
     public Actor rename(Table<?> name) {
         return new Actor(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Apply this table to a function, see also {@link Functions#let(Function1)}
+     */
+    public <R> R let(Function<? super Actor, ? extends R> function) {
+        return function.apply(this);
     }
 
     /**

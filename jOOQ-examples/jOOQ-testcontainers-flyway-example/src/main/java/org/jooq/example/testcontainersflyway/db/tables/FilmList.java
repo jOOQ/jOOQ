@@ -6,9 +6,12 @@ package org.jooq.example.testcontainersflyway.db.tables;
 
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Function1;
+import org.jooq.Functions;
 import org.jooq.Name;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
@@ -174,6 +177,13 @@ public class FilmList extends TableImpl<FilmListRecord> {
     @Override
     public FilmList rename(Table<?> name) {
         return new FilmList(name.getQualifiedName(), null);
+    }
+
+    /**
+     * Apply this table to a function, see also {@link Functions#let(Function1)}
+     */
+    public <R> R let(Function<? super FilmList, ? extends R> function) {
+        return function.apply(this);
     }
 
     /**

@@ -1348,7 +1348,15 @@ UpdatableRecord.store() and UpdatableRecord.update().]]></jxb:javadoc></jxb:prop
       </element>
 
       <element name="cacheParsingConnectionLRUCacheSize" type="int" minOccurs="0" maxOccurs="1" default="8192">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default implementation of the ParsingConnection cache's LRU cache size.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default value of the ParsingConnection cache's LRU cache size.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="cacheRecordMappersLRUCacheSize" type="int" minOccurs="0" maxOccurs="1" default="8192">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default value of the RecordMapper cache's LRU cache size.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="reflectionCacheLRUCacheSize" type="int" minOccurs="0" maxOccurs="1" default="32768">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default value of the reflection cache's LRU cache size.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="cachePreparedStatementInLoader" type="boolean" minOccurs="0" maxOccurs="1" default="true">

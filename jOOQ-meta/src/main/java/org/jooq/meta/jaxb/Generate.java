@@ -270,6 +270,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean renameMethodOverrides = true;
     @XmlElement(defaultValue = "true")
     protected Boolean asMethodOverrides = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean letMethods = true;
     @XmlElement(defaultValue = "false")
     protected Boolean hiddenColumnsInRecords = false;
     @XmlElement(defaultValue = "false")
@@ -3072,6 +3074,30 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether to generate <code>let</code> methods on generated {@link org.jooq.Table} types.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isLetMethods() {
+        return letMethods;
+    }
+
+    /**
+     * Whether to generate <code>let</code> methods on generated {@link org.jooq.Table} types.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setLetMethods(Boolean value) {
+        this.letMethods = value;
+    }
+
+    /**
      * Whether hidden columns should be generated in records.
      * <p>
      * This feature is available in the commercial distribution only.
@@ -4248,6 +4274,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether to generate <code>let</code> methods on generated {@link org.jooq.Table} types.
+     * 
+     */
+    public Generate withLetMethods(Boolean value) {
+        setLetMethods(value);
+        return this;
+    }
+
+    /**
      * Whether hidden columns should be generated in records.
      * <p>
      * This feature is available in the commercial distribution only.
@@ -4399,6 +4434,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("whereMethodOverrides", whereMethodOverrides);
         builder.append("renameMethodOverrides", renameMethodOverrides);
         builder.append("asMethodOverrides", asMethodOverrides);
+        builder.append("letMethods", letMethods);
         builder.append("hiddenColumnsInRecords", hiddenColumnsInRecords);
         builder.append("hiddenColumnsInPojos", hiddenColumnsInPojos);
         builder.append("hiddenColumnsInInterfaces", hiddenColumnsInInterfaces);
@@ -5476,6 +5512,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (letMethods == null) {
+            if (other.letMethods!= null) {
+                return false;
+            }
+        } else {
+            if (!letMethods.equals(other.letMethods)) {
+                return false;
+            }
+        }
         if (hiddenColumnsInRecords == null) {
             if (other.hiddenColumnsInRecords!= null) {
                 return false;
@@ -5627,6 +5672,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((whereMethodOverrides == null)? 0 :whereMethodOverrides.hashCode()));
         result = ((prime*result)+((renameMethodOverrides == null)? 0 :renameMethodOverrides.hashCode()));
         result = ((prime*result)+((asMethodOverrides == null)? 0 :asMethodOverrides.hashCode()));
+        result = ((prime*result)+((letMethods == null)? 0 :letMethods.hashCode()));
         result = ((prime*result)+((hiddenColumnsInRecords == null)? 0 :hiddenColumnsInRecords.hashCode()));
         result = ((prime*result)+((hiddenColumnsInPojos == null)? 0 :hiddenColumnsInPojos.hashCode()));
         result = ((prime*result)+((hiddenColumnsInInterfaces == null)? 0 :hiddenColumnsInInterfaces.hashCode()));

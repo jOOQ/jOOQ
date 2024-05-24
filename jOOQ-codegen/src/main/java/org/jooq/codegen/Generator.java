@@ -1443,6 +1443,16 @@ public interface Generator {
     void setGenerateRenameMethodOverrides(boolean renameMethodOverrides);
 
     /**
+     * Whether to generate let methods on {@link Table} types.
+     */
+    boolean generateLetMethods();
+
+    /**
+     * Whether to generate let methods on {@link Table} types.
+     */
+    void setGenerateLetMethods(boolean letMethods);
+
+    /**
      * Whether to generate overrides for {@link Table#as(Name)} and related
      * overloads.
      */

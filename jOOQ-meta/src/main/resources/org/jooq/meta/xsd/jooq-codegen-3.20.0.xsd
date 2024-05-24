@@ -3005,6 +3005,10 @@ This flag is ignored in the commercial Java 6 distribution of jOOQ 3.9+ ]]></jxb
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to generate overrides for {@link org.jooq.Table#as(org.jooq.Name)} and related overloads.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="letMethods" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to generate <code>let</code> methods on generated {@link org.jooq.Table} types.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="hiddenColumnsInRecords" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether hidden columns should be generated in records.
 <p>

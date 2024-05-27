@@ -49,12 +49,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Entity;
-
 import org.jooq.Name;
 import org.jooq.SQLDialect;
-import org.jooq.impl.JPAConverter;
+import org.jooq.jpa.extensions.JPAConverter;
 import org.jooq.meta.extensions.AbstractInterpretingDatabase;
 import org.jooq.meta.h2.H2Database;
 import org.jooq.meta.jaxb.ForcedType;
@@ -69,6 +66,9 @@ import org.hibernate.tool.schema.TargetType;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
+
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Entity;
 
 /**
  * The JPA database.

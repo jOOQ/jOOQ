@@ -127,6 +127,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
     private transient ExecutorProvider                  executorProvider;
     private transient CacheProvider                     cacheProvider;
     private transient TransactionProvider               transactionProvider;
+    private transient AnnotatedPojoMemberProvider       annotatedPojoMemberProvider;
     private transient ConstructorPropertiesProvider     constructorPropertiesProvider;
     private transient RecordMapperProvider              recordMapperProvider;
     private transient RecordUnmapperProvider            recordUnmapperProvider;
@@ -208,6 +209,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             null,
             null,
             null,
+            null,
 
 
 
@@ -240,6 +242,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             configuration.executorProvider,
             configuration.cacheProvider,
             configuration.transactionProvider,
+            configuration.annotatedPojoMemberProvider,
             configuration.constructorPropertiesProvider,
             configuration.recordMapperProvider,
             configuration.recordUnmapperProvider,
@@ -284,6 +287,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         ExecutorProvider executorProvider,
         CacheProvider cacheProvider,
         TransactionProvider transactionProvider,
+        AnnotatedPojoMemberProvider annotatedPojoMemberProvider,
         ConstructorPropertiesProvider constructorPropertiesProvider,
         RecordMapperProvider recordMapperProvider,
         RecordUnmapperProvider recordUnmapperProvider,
@@ -317,6 +321,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         set(executorProvider);
         set(cacheProvider);
         set(transactionProvider);
+        set(annotatedPojoMemberProvider);
         set(constructorPropertiesProvider);
         set(recordMapperProvider);
         set(recordUnmapperProvider);
@@ -385,6 +390,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -423,6 +429,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -461,6 +468,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -499,6 +507,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -542,6 +551,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             newExecutorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -580,6 +590,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             newCacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -618,6 +629,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             newTransactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -656,7 +668,47 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             newConstructorPropertiesProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            migrationListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            unwrapperProvider,
+            charsetProvider,
+            converterProvider,
+            formattingProvider,
+
+
+
+
+
+
+            clock,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    @Override
+    public final Configuration derive(AnnotatedPojoMemberProvider newAnnotatedPojoMemberProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            interpreterConnectionProvider,
+            systemConnectionProvider,
+            connectionFactory,
+            metaProvider,
+            commitProvider,
+            executorProvider,
+            cacheProvider,
+            transactionProvider,
+            newAnnotatedPojoMemberProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -699,6 +751,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             newRecordMapperProvider,
             recordUnmapperProvider,
@@ -742,6 +795,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             newRecordUnmapperProvider,
@@ -780,6 +834,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -818,6 +873,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -856,6 +912,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -894,6 +951,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -932,6 +990,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -970,6 +1029,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -1013,6 +1073,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -1051,6 +1112,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -1089,6 +1151,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -1127,6 +1190,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -1305,6 +1369,10 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
+
+
+
     @Override
     public final Configuration derive(Clock newClock) {
         return new DefaultConfiguration(
@@ -1317,6 +1385,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -1355,6 +1424,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -1393,6 +1463,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            annotatedPojoMemberProvider,
             constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
@@ -1503,6 +1574,12 @@ public class DefaultConfiguration extends AbstractConfiguration {
         else
             this.transactionProvider = new NoTransactionProvider();
 
+        return this;
+    }
+
+    @Override
+    public final Configuration set(AnnotatedPojoMemberProvider newAnnotatedPojoMemberProvider) {
+        this.annotatedPojoMemberProvider = newAnnotatedPojoMemberProvider;
         return this;
     }
 
@@ -1773,6 +1850,13 @@ public class DefaultConfiguration extends AbstractConfiguration {
     }
 
     /**
+     * @see #set(AnnotatedPojoMemberProvider)
+     */
+    public final void setAnnotatedPojoMemberProvider(AnnotatedPojoMemberProvider newAnnotatedPojoMemberProvider) {
+        set(newAnnotatedPojoMemberProvider);
+    }
+
+    /**
      * @see #set(ConstructorPropertiesProvider)
      */
     public final void setConstructorPropertiesProvider(ConstructorPropertiesProvider newConstructorPropertiesProvider) {
@@ -2038,6 +2122,13 @@ public class DefaultConfiguration extends AbstractConfiguration {
     }
 
     @Override
+    public final AnnotatedPojoMemberProvider annotatedPojoMemberProvider() {
+        return annotatedPojoMemberProvider != null
+             ? annotatedPojoMemberProvider
+             : new LegacyAnnotatedPojoMemberProvider();
+    }
+
+    @Override
     public final ConstructorPropertiesProvider constructorPropertiesProvider() {
         return constructorPropertiesProvider != null
              ? constructorPropertiesProvider
@@ -2223,6 +2314,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         oos.writeObject(serializableOrNull(metaProvider));
         oos.writeObject(serializableOrNull(commitProvider));
         oos.writeObject(serializableOrNull(transactionProvider));
+        oos.writeObject(serializableOrNull(annotatedPojoMemberProvider));
         oos.writeObject(serializableOrNull(constructorPropertiesProvider));
         oos.writeObject(serializableOrNull(recordMapperProvider));
         oos.writeObject(serializableOrNull(recordUnmapperProvider));
@@ -2280,6 +2372,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         metaProvider = (MetaProvider) ois.readObject();
         commitProvider = (CommitProvider) ois.readObject();
         transactionProvider = (TransactionProvider) ois.readObject();
+        annotatedPojoMemberProvider = (AnnotatedPojoMemberProvider) ois.readObject();
         constructorPropertiesProvider = (ConstructorPropertiesProvider) ois.readObject();
         recordMapperProvider = (RecordMapperProvider) ois.readObject();
         recordUnmapperProvider = (RecordUnmapperProvider) ois.readObject();

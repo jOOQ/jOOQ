@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>jooq-beans-extensions</artifactId>
-    <name>jOOQ Beans Extensions Beans</name>
+    <name>jOOQ Beans Extensions</name>
 
     <licenses>
         <license>

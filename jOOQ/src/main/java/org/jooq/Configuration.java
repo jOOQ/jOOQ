@@ -53,6 +53,7 @@ import javax.sql.DataSource;
 
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.AnnotatedPojoMemberProvider;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
@@ -415,6 +416,12 @@ public interface Configuration extends Serializable {
     CharsetProvider charsetProvider();
 
     /**
+     * Get this configuration's underlying annotated POJO member provider.
+     */
+    @NotNull
+    AnnotatedPojoMemberProvider annotatedPojoMemberProvider();
+
+    /**
      * Get this configuration's underlying constructor properties provider.
      */
     @NotNull
@@ -765,6 +772,19 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration set(TransactionProvider newTransactionProvider);
+
+    /**
+     * Change this configuration to hold a new annotated POJO member provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newAnnotatedPojoMemberProvider The new annotated POJO member
+     *            provider to be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration set(AnnotatedPojoMemberProvider newAnnotatedPojoMemberProvider);
 
     /**
      * Change this configuration to hold a new constructor properties provider.
@@ -1518,6 +1538,17 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(TransactionProvider newTransactionProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new annotated POJO
+     * member provider.
+     *
+     * @param newAnnotatedPojoMemberProvider The new annotated POJO member
+     *            provider to be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration derive(AnnotatedPojoMemberProvider newAnnotatedPojoMemberProvider);
 
     /**
      * Create a derived configuration from this one, with a new constructor

@@ -77,6 +77,7 @@ import org.jooq.UnwrapperProvider;
 import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.impl.AbstractConfiguration;
+import org.jooq.impl.AnnotatedPojoMemberProvider;
 import org.jooq.impl.DefaultDSLContext;
 
 import io.r2dbc.spi.ConnectionFactory;
@@ -168,6 +169,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public TransactionProvider transactionProvider() {
         return delegate.transactionProvider();
+    }
+
+    @Override
+    public AnnotatedPojoMemberProvider annotatedPojoMemberProvider() {
+        return delegate.annotatedPojoMemberProvider();
     }
 
     @Override
@@ -346,6 +352,11 @@ public class MockConfiguration extends AbstractConfiguration {
         return this;
     }
 
+    @Override
+    public Configuration set(AnnotatedPojoMemberProvider newAnnotatedPojoMemberProvider) {
+        delegate.set(newAnnotatedPojoMemberProvider);
+        return this;
+    }
     @Override
     public Configuration set(ConstructorPropertiesProvider newConstructorPropertiesProvider) {
         delegate.set(newConstructorPropertiesProvider);
@@ -541,6 +552,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public Configuration derive(TransactionProvider newTransactionProvider) {
         return new MockConfiguration(delegate.derive(newTransactionProvider), provider);
+    }
+
+    @Override
+    public Configuration derive(AnnotatedPojoMemberProvider newAnnotatedPojoMemberProvider) {
+        return new MockConfiguration(delegate.derive(newAnnotatedPojoMemberProvider), provider);
     }
 
     @Override

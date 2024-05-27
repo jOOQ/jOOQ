@@ -35,16 +35,17 @@
  *
  *
  */
-package org.jooq.impl;
+package org.jooq.jpa.extensions;
 
 import java.lang.reflect.Method;
 
-import jakarta.persistence.AttributeConverter;
-
 import org.jooq.ConverterContext;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.AbstractContextConverter;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.reflect.Reflect;
+
+import jakarta.persistence.AttributeConverter;
 
 
 /**

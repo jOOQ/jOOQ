@@ -47,8 +47,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import jakarta.persistence.Column;
-
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.DefaultRecordMapper;
@@ -1036,22 +1034,22 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * Loading of data is equivalent to loading {@link #fromArray(Object...)},
      * transforming the {@link Iterable} to an array, first.
      * <p>
-     * <h5>If any JPA {@link Column} annotations are found on the {@link Class}
-     * of the provided <code>source</code>, only those are used. Matching
-     * candidates are:</h5>
+     * <h5>If any JPA {@link jakarta.persistence.Column} annotations are found
+     * on the {@link Class} of the provided <code>source</code>, only those are
+     * used. Matching candidates are:</h5>
      * <p>
      * <ul>
      * <li>Public no-argument instance methods annotated with
-     * <code>Column</code></li>
+     * <code>jakarta.persistence.Column</code></li>
      * <li>Public no-argument instance methods starting with <code>getXXX</code>
      * or <code>isXXX</code>, if there exists a matching public single-argument
      * <code>setXXX()</code> instance method that is annotated with
-     * <code>Column</code></li>
-     * <li>Public instance member fields annotated with <code>Column</code></li>
+     * <code>jakarta.persistence.Column</code></li>
+     * <li>Public instance member fields annotated with <code>jakarta.persistence.Column</code></li>
      * </ul>
      * Additional matching rules:
      * <ul>
-     * <li>{@link Column#name()} must match {@link Field#getName()}. All other
+     * <li>{@link jakarta.persistence.Column#name()} must match {@link Field#getName()}. All other
      * annotation attributes are ignored</li>
      * <li>Only the first match per field is used</li>
      * <li>Matching methods have a higher priority than matching member
@@ -1061,7 +1059,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <li>Static methods / member fields are ignored</li>
      * </ul>
      * <p>
-     * <h5>If there are no JPA <code>Column</code> annotations, or jOOQ can't
+     * <h5>If there are no JPA <code>jakarta.persistence.Column</code> annotations, or jOOQ can't
      * find the <code>jakarta.persistence</code> API on the classpath, jOOQ will
      * map members by naming convention:</h5>
      * <p>

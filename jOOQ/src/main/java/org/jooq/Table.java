@@ -96,7 +96,6 @@ import org.jooq.impl.QOM.JoinHint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import jakarta.persistence.JoinTable;
 
 /**
  * A table.

@@ -14,12 +14,6 @@ module org.jooq {
     // - InformationSchema (org.jooq.util.xml.jaxb)
     requires static jakarta.xml.bind;
 
-    // Various utilities can make use of JPA annotations, when present, including:
-    // - The DefaultRecordMapper
-    // - The JPADatabase in the code generator
-    // - The EntityManagerConnectionProvider
-    requires static jakarta.persistence;
-
     // The runtime Java compiler is used to generate enum types on the fly.
     // This dependency may be removed in the future.
     requires static java.compiler;

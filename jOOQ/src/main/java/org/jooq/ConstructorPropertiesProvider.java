@@ -44,14 +44,14 @@ import org.jooq.impl.DefaultRecordMapper;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * An SPI that can be used to provider <code>java.beans</code> style constructor
+ * An SPI that can be used to provide <code>java.beans</code> style constructor
  * properties to the {@link DefaultRecordMapper}.
  * <p>
  * Starting with jOOQ 3.20 and <a href=
  * "https://github.com/jOOQ/jOOQ/issues/7585">https://github.com/jOOQ/jOOQ/issues/7585</a>,
  * the {@link java.beans.ConstructorProperties} annotation support has been
- * moved out of the core library to the
- * <code>jOOQ-mapper-extensions-beans</code> module, to allow for:
+ * moved out of the core library to the <code>jOOQ-beans-extensions</code>
+ * module, to allow for:
  * <p>
  * <ul>
  * <li>Removal of the dependency on the <code>java.beans</code> JDK module from
@@ -61,6 +61,7 @@ import org.jetbrains.annotations.Nullable;
  * </ul>
  * <p>
  * Implementations can be provided to
+ * {@link Configuration#constructorPropertiesProvider()}.
  *
  * @author Lukas Eder
  */

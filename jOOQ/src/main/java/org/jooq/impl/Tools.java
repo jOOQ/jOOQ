@@ -96,7 +96,6 @@ import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.exception.DataAccessException.sqlStateClass;
-import static org.jooq.exception.SQLStateClass.C23_INTEGRITY_CONSTRAINT_VIOLATION;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
@@ -123,7 +122,6 @@ import static org.jooq.impl.DDLStatementType.DROP_VIEW;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.asterisk;
-import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.keyword;
@@ -141,6 +139,8 @@ import static org.jooq.impl.Identifiers.QUOTES;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER;
 import static org.jooq.impl.Identifiers.QUOTE_END_DELIMITER_ESCAPED;
 import static org.jooq.impl.Identifiers.QUOTE_START_DELIMITER;
+import static org.jooq.impl.Internal.getInstanceMembers;
+import static org.jooq.impl.Internal.getInstanceMethods;
 import static org.jooq.impl.Keywords.K_ALIAS;
 import static org.jooq.impl.Keywords.K_ALWAYS;
 import static org.jooq.impl.Keywords.K_AS;
@@ -214,7 +214,6 @@ import static org.jooq.impl.ScalarSubquery.NO_SUPPORT_CORRELATED_SUBQUERY;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.SubqueryCharacteristics.SET_OPERATION;
-import static org.jooq.impl.Tools.executeImmediate;
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -223,7 +222,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -359,7 +357,6 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.conf.StatementType;
 import org.jooq.conf.ThrowExceptions;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataException;
@@ -373,7 +370,6 @@ import org.jooq.exception.SQLStateClass;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.QOM.Quantifier;
-import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
@@ -385,14 +381,12 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
+import org.jooq.util.xml.jaxb.Column;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import io.r2dbc.spi.R2dbcException;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
 /**
  * General internal jOOQ utilities
@@ -1073,12 +1067,6 @@ final class Tools {
      * A lock for the initialisation of other static members
      */
     private static final Object          initLock                                   = new Object();
-
-    /**
-     * Indicating whether JPA (<code>jakarta.persistence</code>) is on the
-     * classpath.
-     */
-    private static volatile JPANamespace jpaNamespace;
 
     /**
      * Indicating whether Kotlin (<code>kotlin.*</code>) is on the classpath.
@@ -4280,41 +4268,6 @@ final class Tools {
     // XXX: Reflection utilities used for POJO mapping
     // ------------------------------------------------------------------------
 
-    /**
-     * Check if JPA classes can be loaded. This is only done once per JVM!
-     */
-    static final JPANamespace jpaNamespace() {
-        if (jpaNamespace == null) {
-            synchronized (initLock) {
-                if (jpaNamespace == null) {
-                    try {
-                        Class.forName(Column.class.getName());
-                        jpaNamespace = JPANamespace.JAKARTA;
-                    }
-                    catch (Throwable e) {
-                        try {
-
-                            // [#14180] Break the maven-bundle-plugin class analyser, to prevent
-                            //          adding a package import to MANIFEST.MF for this lookup
-                            Class.forName(new String("javax.persistence.") + new String("Column"));
-                            jpaNamespace = JPANamespace.JAVAX;
-                            JooqLogger.getLogger(Tools.class, "isJPAAvailable", 1).info("javax.persistence.Column was found on the classpath instead of jakarta.persistence.Column. jOOQ 3.16 requires you to upgrade to Jakarta EE if you wish to use JPA annotations in your DefaultRecordMapper");
-                        }
-                        catch (Throwable ignore) {
-                            jpaNamespace = JPANamespace.NONE;
-                        }
-                    }
-                }
-            }
-        }
-
-        return jpaNamespace;
-    }
-
-    enum JPANamespace {
-        JAVAX, JAKARTA, NONE
-    }
-
     static final boolean isKotlinAvailable() {
         if (isKotlinAvailable == null) {
             synchronized (initLock) {
@@ -4408,52 +4361,11 @@ final class Tools {
      * or methods
      */
     static final boolean hasColumnAnnotations(final Configuration configuration, final Class<?> type) {
-        return Cache.run(configuration, () -> {
-            switch (Tools.jpaNamespace()) {
-                case JAVAX:
-                    if (anyMatch(type.getAnnotations(), isJavaxPersistenceAnnotation()))
-                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " is annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
-
-                    if (anyMatch(map(type.getMethods(), m -> anyMatch(m.getAnnotations(), isJavaxPersistenceAnnotation())), b -> b))
-                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " has methods annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
-
-                    if (anyMatch(map(type.getDeclaredMethods(), m -> anyMatch(m.getAnnotations(), isJavaxPersistenceAnnotation())), b -> b))
-                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " has methods annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
-
-                    if (anyMatch(map(type.getFields(), f -> anyMatch(f.getAnnotations(), isJavaxPersistenceAnnotation())), b -> b))
-                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " has fields annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
-
-                    if (anyMatch(map(type.getDeclaredFields(), f -> anyMatch(f.getAnnotations(), isJavaxPersistenceAnnotation())), b -> b))
-                        JooqLogger.getLogger(Tools.class, "hasColumnAnnotations", 1).warn("Type " + type + " has fields annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
-
-                    return false;
-
-                case JAKARTA:
-
-                    // An @Entity or @Table usually has @Column annotations, too
-                    if (type.getAnnotation(Entity.class) != null)
-                        return true;
-
-                    if (type.getAnnotation(jakarta.persistence.Table.class) != null)
-                        return true;
-
-                    if (anyMatch(getInstanceMembers(type), m ->
-                            m.getAnnotation(Column.class) != null
-                         || m.getAnnotation(Id.class) != null))
-                        return true;
-                    else
-                        return anyMatch(getInstanceMethods(type), m -> m.getAnnotation(Column.class) != null);
-
-                case NONE:
-                default:
-                    return false;
-            }
-
-        }, REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS, () -> type);
-    }
-
-    private static final ThrowingPredicate<? super Annotation, RuntimeException> isJavaxPersistenceAnnotation() {
-        return a -> a.annotationType().getName().startsWith("javax.persistence.");
+        return Cache.run(configuration,
+            () -> configuration.annotatedPojoMemberProvider().hasAnnotations(type),
+            REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS,
+            () -> type
+        );
     }
 
     static final <T extends AccessibleObject> T accessible(T object, boolean makeAccessible) {
@@ -4470,36 +4382,13 @@ final class Tools {
         final boolean makeAccessible
     ) {
         return Cache.run(configuration, () -> {
-            List<java.lang.reflect.Field> result = new ArrayList<>();
+            List<java.lang.reflect.Field> result = configuration.annotatedPojoMemberProvider().getMembers(type, name);
 
-            for (java.lang.reflect.Field member : getInstanceMembers(type)) {
-                Column column = member.getAnnotation(Column.class);
-
-                if (column != null) {
-                    if (namesMatch(name, column.name()))
-                        result.add(accessible(member, makeAccessible));
-                }
-
-                else {
-                    Id id = member.getAnnotation(Id.class);
-
-                    if (id != null)
-                        if (namesMatch(name, member.getName()))
-                            result.add(accessible(member, makeAccessible));
-                }
-            }
+            if (makeAccessible)
+                result.forEach(Reflect::accessible);
 
             return result;
         }, REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, () -> Cache.key(type, name, makeAccessible));
-    }
-
-    private static final boolean namesMatch(String name, String annotation) {
-
-        // [#4128] JPA @Column.name() properties are case-insensitive, unless
-        // the names are quoted using double quotes.
-        return annotation.startsWith("\"")
-            ? ('"' + name + '"').equals(annotation)
-            : name.equalsIgnoreCase(annotation);
     }
 
     /**
@@ -4540,40 +4429,8 @@ final class Tools {
         return Cache.run(configuration, () -> {
             Set<SourceMethod> set = new LinkedHashSet<>();
 
-            for (Method method : getInstanceMethods(type)) {
-                Column column = method.getAnnotation(Column.class);
-
-                if (column != null && namesMatch(name, column.name())) {
-
-                    // Annotated setter
-                    if (method.getParameterTypes().length == 1) {
-                        set.add(new SourceMethod(accessible(method, makeAccessible)));
-                    }
-
-                    // Annotated getter with matching setter
-                    else if (method.getParameterTypes().length == 0) {
-                        String m = method.getName();
-                        String suffix = m.startsWith("get")
-                                      ? m.substring(3)
-                                      : m.startsWith("is")
-                                      ? m.substring(2)
-                                      : null;
-
-                        if (suffix != null) {
-                            try {
-
-                                // [#7953] [#8496] Search the hierarchy for a matching setter
-                                Method setter = getInstanceMethod(type, "set" + suffix, new Class[] { method.getReturnType() });
-
-                                // Setter annotation is more relevant
-                                if (setter.getAnnotation(Column.class) == null)
-                                    set.add(new SourceMethod(accessible(setter, makeAccessible)));
-                            }
-                            catch (NoSuchMethodException ignore) {}
-                        }
-                    }
-                }
-            }
+            for (Method m : configuration.annotatedPojoMemberProvider().getSetters(type, name))
+                set.add(new SourceMethod(accessible(m, makeAccessible)));
 
             return SourceMethod.methods(set);
         }, REFLECTION_CACHE_GET_ANNOTATED_SETTERS, () -> Cache.key(type, name, makeAccessible));
@@ -4589,44 +4446,12 @@ final class Tools {
         final boolean makeAccessible
     ) {
         return Cache.run(configuration, () -> {
-            for (Method method : getInstanceMethods(type)) {
-                Column column = method.getAnnotation(Column.class);
+            List<Method> result = configuration.annotatedPojoMemberProvider().getGetters(type, name);
 
-                if (column != null && namesMatch(name, column.name())) {
+            if (makeAccessible)
+                result.forEach(Reflect::accessible);
 
-                    // Annotated getter
-                    if (method.getParameterTypes().length == 0) {
-                        return accessible(method, makeAccessible);
-                    }
-
-                    // Annotated setter with matching getter
-                    else if (method.getParameterTypes().length == 1) {
-                        String m = method.getName();
-
-                        if (m.startsWith("set")) {
-                            try {
-                                Method getter1 = type.getMethod("get" + m.substring(3));
-
-                                // Getter annotation is more relevant
-                                if (getter1.getAnnotation(Column.class) == null)
-                                    return accessible(getter1, makeAccessible);
-                            }
-                            catch (NoSuchMethodException ignore1) {}
-
-                            try {
-                                Method getter2 = type.getMethod("is" + m.substring(3));
-
-                                // Getter annotation is more relevant
-                                if (getter2.getAnnotation(Column.class) == null)
-                                    return accessible(getter2, makeAccessible);
-                            }
-                            catch (NoSuchMethodException ignore2) {}
-                        }
-                    }
-                }
-            }
-
-            return null;
+            return result.isEmpty() ? null : result.get(0);
         }, REFLECTION_CACHE_GET_ANNOTATED_GETTER, () -> Cache.key(type, name, makeAccessible));
     }
 
@@ -4748,69 +4573,6 @@ final class Tools {
             return method.toString();
         }
     }
-
-    private static final Method getInstanceMethod(Class<?> type, String name, Class<?>[] parameters) throws NoSuchMethodException {
-
-        // first priority: find a public method with exact signature match in class hierarchy
-        try {
-            return type.getMethod(name, parameters);
-        }
-
-        // second priority: find a private method with exact signature match on declaring class
-        catch (NoSuchMethodException e) {
-            do {
-                try {
-                    return type.getDeclaredMethod(name, parameters);
-                }
-                catch (NoSuchMethodException ignore) {}
-
-                type = type.getSuperclass();
-            }
-            while (type != null);
-
-            throw new NoSuchMethodException();
-        }
-    }
-
-    /**
-     * All the public and declared methods of a type.
-     * <p>
-     * This method returns each method only once. Public methods are returned
-     * first in the resulting set while declared methods are returned
-     * afterwards, from lowest to highest type in the type hierarchy.
-     */
-    private static final Set<Method> getInstanceMethods(Class<?> type) {
-        Set<Method> result = new LinkedHashSet<>();
-
-        for (Method method : type.getMethods())
-            if ((method.getModifiers() & Modifier.STATIC) == 0)
-                result.add(method);
-
-        do
-            for (Method method : type.getDeclaredMethods())
-                if ((method.getModifiers() & Modifier.STATIC) == 0)
-                    result.add(method);
-        while ((type = type.getSuperclass()) != null);
-
-        return result;
-    }
-
-    private static final List<java.lang.reflect.Field> getInstanceMembers(Class<?> type) {
-        List<java.lang.reflect.Field> result = new ArrayList<>();
-
-        for (java.lang.reflect.Field field : type.getFields())
-            if ((field.getModifiers() & Modifier.STATIC) == 0)
-                result.add(field);
-
-        do
-            for (java.lang.reflect.Field field : type.getDeclaredFields())
-                if ((field.getModifiers() & Modifier.STATIC) == 0)
-                    result.add(field);
-        while ((type = type.getSuperclass()) != null);
-
-        return result;
-    }
-
     /**
      * Get a property name associated with a getter/setter method name.
      */

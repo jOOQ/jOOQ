@@ -107,7 +107,6 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 
-import jakarta.persistence.Column;
 
 /**
  * This is the default implementation for <code>RecordMapper</code> types, which
@@ -160,32 +159,33 @@ import jakarta.persistence.Column;
  * If such a {@link Converter} is found, that one is used to map to
  * <code>E</code>.
  * <p>
- * <h5>If a default constructor is available and any JPA {@link Column}
- * annotations are found on the provided <code>&lt;E&gt;</code>, only those are
- * used:</h5>
+ * <h5>If a default constructor is available and any JPA
+ * {@link jakarta.persistence.Column} annotations are found on the provided
+ * <code>&lt;E&gt;</code>, only those are used:</h5>
  * <p>
  * <ul>
  * <li>If <code>&lt;E&gt;</code> contains single-argument instance methods of
- * any visibility annotated with <code>Column</code>, those methods are
- * invoked</li>
+ * any visibility annotated with <code>jakarta.persistence.Column</code>, those
+ * methods are invoked</li>
  * <li>If <code>&lt;E&gt;</code> contains no-argument instance methods of any
  * visibility starting with <code>getXXX</code> or <code>isXXX</code>, annotated
- * with <code>Column</code>, then matching <code>setXXX()</code> instance
- * methods of any visibility are invoked</li>
+ * with <code>jakarta.persistence.Column</code>, then matching
+ * <code>setXXX()</code> instance methods of any visibility are invoked</li>
  * <li>If <code>&lt;E&gt;</code> contains instance member fields of any
- * visibility annotated with <code>Column</code>, those members are set</li>
+ * visibility annotated with <code>jakarta.persistence.Column</code>, those
+ * members are set</li>
  * </ul>
  * Additional rules:
  * <ul>
  * <li>The same annotation can be re-used for several methods/members</li>
- * <li>{@link Column#name()} must match {@link Field#getName()}. All other
- * annotation attributes are ignored</li>
+ * <li>{@link jakarta.persistence.Column#name()} must match
+ * {@link Field#getName()}. All other annotation attributes are ignored</li>
  * <li>Static methods / member fields are ignored</li>
  * <li>Final member fields are ignored</li>
  * </ul>
  * <p>
  * <h5>If a default constructor is available and if there are no JPA
- * <code>Column</code> annotations, or jOOQ can't find the
+ * <code>jakarta.persistence.Column</code> annotations, or jOOQ can't find the
  * <code>jakarta.persistence</code> API on the classpath, jOOQ will map
  * <code>Record</code> values by naming convention:</h5>
  * <p>

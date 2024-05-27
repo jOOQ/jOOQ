@@ -47,8 +47,11 @@ import static org.jooq.impl.Tools.qualify;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -1187,5 +1190,48 @@ public final class Internal {
     @Deprecated(forRemoval = true)
     public static final <U> List<U> convert(Collection<?> collection, Converter<?, ? extends U> converter) throws DataTypeException {
         return Convert.convert(collection, converter);
+    }
+
+    /**
+     * All the public and declared methods of a type.
+     * <p>
+     * This method returns each method only once. Public methods are returned
+     * first in the resulting set while declared methods are returned
+     * afterwards, from lowest to highest type in the type hierarchy.
+     */
+    public static final Set<Method> getInstanceMethods(Class<?> type) {
+        Set<Method> result = new LinkedHashSet<>();
+
+        for (Method method : type.getMethods())
+            if ((method.getModifiers() & Modifier.STATIC) == 0)
+                result.add(method);
+
+        do
+            for (Method method : type.getDeclaredMethods())
+                if ((method.getModifiers() & Modifier.STATIC) == 0)
+                    result.add(method);
+        while ((type = type.getSuperclass()) != null);
+
+        return result;
+    }
+
+    /**
+     * A utility to look up all declared instance members of a type and its
+     * hierarchy.
+     */
+    public static final List<java.lang.reflect.Field> getInstanceMembers(Class<?> type) {
+        List<java.lang.reflect.Field> result = new ArrayList<>();
+
+        for (java.lang.reflect.Field field : type.getFields())
+            if ((field.getModifiers() & Modifier.STATIC) == 0)
+                result.add(field);
+
+        do
+            for (java.lang.reflect.Field field : type.getDeclaredFields())
+                if ((field.getModifiers() & Modifier.STATIC) == 0)
+                    result.add(field);
+        while ((type = type.getSuperclass()) != null);
+
+        return result;
     }
 }

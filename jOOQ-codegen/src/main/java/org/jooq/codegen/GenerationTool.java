@@ -973,8 +973,6 @@ public class GenerationTool {
                 generator.setGenerateRenameMethodOverrides(g.getGenerate().isRenameMethodOverrides());
             if (g.getGenerate().isAsMethodOverrides() != null)
                 generator.setGenerateAsMethodOverrides(g.getGenerate().isAsMethodOverrides());
-            if (g.getGenerate().isLetMethods() != null)
-                generator.setGenerateLetMethods(g.getGenerate().isLetMethods());
 
 
             if (!isBlank(d.getSchemaVersionProvider()))

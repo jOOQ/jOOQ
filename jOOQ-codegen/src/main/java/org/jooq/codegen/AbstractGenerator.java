@@ -191,7 +191,6 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateWhereMethodOverrides                       = true;
     boolean                            generateRenameMethodOverrides                      = true;
     boolean                            generateAsMethodOverrides                          = true;
-    boolean                            generateLetMethods                                 = true;
 
     protected GeneratorStrategyWrapper strategy;
     protected String                   targetEncoding                                     = "UTF-8";
@@ -1535,16 +1534,6 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateAsMethodOverrides(boolean asMethodOverrides) {
         this.generateAsMethodOverrides = asMethodOverrides;
-    }
-
-    @Override
-    public boolean generateLetMethods() {
-        return generateLetMethods;
-    }
-
-    @Override
-    public void setGenerateLetMethods(boolean generateLetMethods) {
-        this.generateLetMethods = generateLetMethods;
     }
 
     // ----

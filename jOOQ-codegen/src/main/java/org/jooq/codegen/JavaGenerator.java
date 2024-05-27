@@ -39,6 +39,7 @@ package org.jooq.codegen;
 
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static java.util.Collections.singletonList;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.counting;
@@ -84,6 +85,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -114,8 +116,6 @@ import org.jooq.Domain;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function1;
-import org.jooq.Functions;
 import org.jooq.Generated;
 import org.jooq.Identity;
 import org.jooq.Index;
@@ -7705,13 +7705,6 @@ public class JavaGenerator extends AbstractGenerator {
                 else
                     out.println("return new %s(name.getQualifiedName(), null);", className);
 
-                out.println("}");
-            }
-
-            if (generateLetMethods()) {
-                out.javadoc("Apply this table to a function, see also {@link %s#let(%s)}", Functions.class, Function1.class);
-                out.println("%s<R> R let(%s<? super %s, ? extends R> function) {", visibilityPublic(), Function.class, className);
-                out.println("return function.apply(this);");
                 out.println("}");
             }
 

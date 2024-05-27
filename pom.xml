@@ -116,6 +116,11 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
+                <artifactId>jooq-beans-extensions</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
                 <artifactId>jooq-postgres-extensions</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -841,6 +846,7 @@
         <module>jOOQ-checker</module>
         <module>jOOQ-jackson-extensions</module>
         <module>jOOQ-postgres-extensions</module>
+        <module>jOOQ-beans-extensions</module>
 
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>

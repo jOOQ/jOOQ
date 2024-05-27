@@ -14,10 +14,6 @@ module org.jooq {
     // - InformationSchema (org.jooq.util.xml.jaxb)
     requires static jakarta.xml.bind;
 
-    // The DefaultRecordMapper makes use of JavaBeans utilities, including:
-    // - Support for ConstructorProperties
-    requires static java.desktop;
-
     // Various utilities can make use of JPA annotations, when present, including:
     // - The DefaultRecordMapper
     // - The JPADatabase in the code generator

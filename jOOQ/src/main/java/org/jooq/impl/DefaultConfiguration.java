@@ -60,6 +60,7 @@ import org.jooq.CharsetProvider;
 import org.jooq.CommitProvider;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.ConstructorPropertiesProvider;
 import org.jooq.ConverterProvider;
 import org.jooq.DSLContext;
 import org.jooq.DiagnosticsListener;
@@ -126,6 +127,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
     private transient ExecutorProvider                  executorProvider;
     private transient CacheProvider                     cacheProvider;
     private transient TransactionProvider               transactionProvider;
+    private transient ConstructorPropertiesProvider     constructorPropertiesProvider;
     private transient RecordMapperProvider              recordMapperProvider;
     private transient RecordUnmapperProvider            recordUnmapperProvider;
     private transient RecordListenerProvider[]          recordListenerProviders;
@@ -205,6 +207,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             null,
             null,
             null,
+            null,
 
 
 
@@ -237,6 +240,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             configuration.executorProvider,
             configuration.cacheProvider,
             configuration.transactionProvider,
+            configuration.constructorPropertiesProvider,
             configuration.recordMapperProvider,
             configuration.recordUnmapperProvider,
             configuration.recordListenerProviders,
@@ -280,6 +284,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         ExecutorProvider executorProvider,
         CacheProvider cacheProvider,
         TransactionProvider transactionProvider,
+        ConstructorPropertiesProvider constructorPropertiesProvider,
         RecordMapperProvider recordMapperProvider,
         RecordUnmapperProvider recordUnmapperProvider,
         RecordListenerProvider[] recordListenerProviders,
@@ -312,6 +317,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         set(executorProvider);
         set(cacheProvider);
         set(transactionProvider);
+        set(constructorPropertiesProvider);
         set(recordMapperProvider);
         set(recordUnmapperProvider);
         set(recordListenerProviders);
@@ -379,6 +385,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -416,6 +423,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -453,6 +461,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -490,6 +499,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -532,6 +542,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             newExecutorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -569,6 +580,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             newCacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -606,6 +618,45 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             newTransactionProvider,
+            constructorPropertiesProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            migrationListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            unwrapperProvider,
+            charsetProvider,
+            converterProvider,
+            formattingProvider,
+
+
+
+
+
+
+            clock,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    @Override
+    public final Configuration derive(ConstructorPropertiesProvider newConstructorPropertiesProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            interpreterConnectionProvider,
+            systemConnectionProvider,
+            connectionFactory,
+            metaProvider,
+            commitProvider,
+            executorProvider,
+            cacheProvider,
+            transactionProvider,
+            newConstructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -648,6 +699,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             newRecordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -690,6 +742,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             newRecordUnmapperProvider,
             recordListenerProviders,
@@ -727,6 +780,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             newRecordListenerProviders,
@@ -764,6 +818,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -801,6 +856,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -838,6 +894,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -875,6 +932,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -912,6 +970,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -954,6 +1013,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -991,6 +1051,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -1028,6 +1089,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -1065,6 +1127,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -1238,6 +1301,10 @@ public class DefaultConfiguration extends AbstractConfiguration {
 
 
 
+
+
+
+
     @Override
     public final Configuration derive(Clock newClock) {
         return new DefaultConfiguration(
@@ -1250,6 +1317,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -1287,6 +1355,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -1324,6 +1393,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             executorProvider,
             cacheProvider,
             transactionProvider,
+            constructorPropertiesProvider,
             recordMapperProvider,
             recordUnmapperProvider,
             recordListenerProviders,
@@ -1433,6 +1503,12 @@ public class DefaultConfiguration extends AbstractConfiguration {
         else
             this.transactionProvider = new NoTransactionProvider();
 
+        return this;
+    }
+
+    @Override
+    public final Configuration set(ConstructorPropertiesProvider newConstructorPropertiesProvider) {
+        this.constructorPropertiesProvider = newConstructorPropertiesProvider;
         return this;
     }
 
@@ -1697,6 +1773,13 @@ public class DefaultConfiguration extends AbstractConfiguration {
     }
 
     /**
+     * @see #set(ConstructorPropertiesProvider)
+     */
+    public final void setConstructorPropertiesProvider(ConstructorPropertiesProvider newConstructorPropertiesProvider) {
+        set(newConstructorPropertiesProvider);
+    }
+
+    /**
      * @see #set(RecordMapper)
      */
     public final void setRecordMapper(RecordMapper<?, ?> newRecordMapper) {
@@ -1955,6 +2038,13 @@ public class DefaultConfiguration extends AbstractConfiguration {
     }
 
     @Override
+    public final ConstructorPropertiesProvider constructorPropertiesProvider() {
+        return constructorPropertiesProvider != null
+             ? constructorPropertiesProvider
+             : new LegacyConstructorPropertiesProvider();
+    }
+
+    @Override
     public final RecordMapperProvider recordMapperProvider() {
 
         // [#3915] Avoid permanently referencing such a DefaultRecordMapperProvider from this
@@ -2133,6 +2223,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         oos.writeObject(serializableOrNull(metaProvider));
         oos.writeObject(serializableOrNull(commitProvider));
         oos.writeObject(serializableOrNull(transactionProvider));
+        oos.writeObject(serializableOrNull(constructorPropertiesProvider));
         oos.writeObject(serializableOrNull(recordMapperProvider));
         oos.writeObject(serializableOrNull(recordUnmapperProvider));
         oos.writeObject(cloneSerializables(executeListenerProviders));
@@ -2189,6 +2280,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         metaProvider = (MetaProvider) ois.readObject();
         commitProvider = (CommitProvider) ois.readObject();
         transactionProvider = (TransactionProvider) ois.readObject();
+        constructorPropertiesProvider = (ConstructorPropertiesProvider) ois.readObject();
         recordMapperProvider = (RecordMapperProvider) ois.readObject();
         recordUnmapperProvider = (RecordUnmapperProvider) ois.readObject();
         executeListenerProviders = (ExecuteListenerProvider[]) ois.readObject();

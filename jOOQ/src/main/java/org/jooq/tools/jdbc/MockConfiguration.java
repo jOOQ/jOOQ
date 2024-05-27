@@ -51,6 +51,7 @@ import org.jooq.CharsetProvider;
 import org.jooq.CommitProvider;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.ConstructorPropertiesProvider;
 import org.jooq.ConverterProvider;
 import org.jooq.DSLContext;
 import org.jooq.DiagnosticsListenerProvider;
@@ -167,6 +168,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public TransactionProvider transactionProvider() {
         return delegate.transactionProvider();
+    }
+
+    @Override
+    public ConstructorPropertiesProvider constructorPropertiesProvider() {
+        return delegate.constructorPropertiesProvider();
     }
 
     @Override
@@ -337,6 +343,12 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public Configuration set(TransactionProvider newTransactionProvider) {
         delegate.set(newTransactionProvider);
+        return this;
+    }
+
+    @Override
+    public Configuration set(ConstructorPropertiesProvider newConstructorPropertiesProvider) {
+        delegate.set(newConstructorPropertiesProvider);
         return this;
     }
 
@@ -529,6 +541,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public Configuration derive(TransactionProvider newTransactionProvider) {
         return new MockConfiguration(delegate.derive(newTransactionProvider), provider);
+    }
+
+    @Override
+    public Configuration derive(ConstructorPropertiesProvider newConstructorPropertiesProvider) {
+        return new MockConfiguration(delegate.derive(newConstructorPropertiesProvider), provider);
     }
 
     @Override

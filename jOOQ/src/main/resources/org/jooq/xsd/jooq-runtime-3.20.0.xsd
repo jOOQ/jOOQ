@@ -1409,7 +1409,7 @@ IDENTITY values, and if {@link #returnAllOnUpdatableRecord} is active, also othe
       </element>
       
       <element name="mapConstructorPropertiesParameterNames" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained from the {@link org.jooq.ConstructorPropertiesProvider} SPI (default implementation in the <code>jOOQ-beans-extensions</code> module) should be considered by the DefaultRecordMapper.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="mapConstructorParameterNames" type="boolean" minOccurs="0" maxOccurs="1" default="false">

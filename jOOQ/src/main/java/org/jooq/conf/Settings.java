@@ -5578,7 +5578,7 @@ public class Settings
     }
 
     /**
-     * Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.
+     * Whether constructor parameter names obtained from the {@link org.jooq.ConstructorPropertiesProvider} SPI (default implementation in the <code>jOOQ-beans-extensions</code> module) should be considered by the DefaultRecordMapper.
      * 
      * @return
      *     possible object is
@@ -5590,7 +5590,7 @@ public class Settings
     }
 
     /**
-     * Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.
+     * Whether constructor parameter names obtained from the {@link org.jooq.ConstructorPropertiesProvider} SPI (default implementation in the <code>jOOQ-beans-extensions</code> module) should be considered by the DefaultRecordMapper.
      * 
      * @param value
      *     allowed object is
@@ -8981,7 +8981,7 @@ public class Settings
     }
 
     /**
-     * Whether constructor parameter names obtained from the {@link java.beans.ConstructorProperties} annotation should be considered by the DefaultRecordMapper.
+     * Whether constructor parameter names obtained from the {@link org.jooq.ConstructorPropertiesProvider} SPI (default implementation in the <code>jOOQ-beans-extensions</code> module) should be considered by the DefaultRecordMapper.
      * 
      */
     public Settings withMapConstructorPropertiesParameterNames(Boolean value) {

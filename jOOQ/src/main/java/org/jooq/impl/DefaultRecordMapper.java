@@ -52,19 +52,14 @@ import static org.jooq.impl.Tools.getMatchingMembers;
 import static org.jooq.impl.Tools.getMatchingSetters;
 import static org.jooq.impl.Tools.getPropertyName;
 import static org.jooq.impl.Tools.hasColumnAnnotations;
-import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
-import java.beans.ConstructorProperties;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Executable;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -73,7 +68,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.RecordComponent;
 import java.lang.reflect.Type;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -84,23 +78,21 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import jakarta.persistence.Column;
-
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.ConstructorPropertiesProvider;
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
 import org.jooq.Field;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Record;
-import org.jooq.Record1;
 import org.jooq.RecordMapper;
 import org.jooq.RecordMapperProvider;
 import org.jooq.RecordType;
@@ -114,6 +106,8 @@ import org.jooq.exception.MappingException;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
+
+import jakarta.persistence.Column;
 
 /**
  * This is the default implementation for <code>RecordMapper</code> types, which
@@ -224,8 +218,11 @@ import org.jooq.tools.reflect.ReflectException;
  * used</h5>
  * <p>
  * <ul>
- * <li>The standard JavaBeans {@link ConstructorProperties} annotation is used
- * to match constructor arguments against POJO members or getters.</li>
+ * <li>The standard JavaBeans {@link java.beans.ConstructorProperties}
+ * annotation is used to match constructor arguments against POJO members or
+ * getters, if the default {@link ConstructorPropertiesProvider} can look up the
+ * implementation from the <code>jOOQ-mapper-extensions-beans</code> module, or
+ * if you provide your own.</li>
  * <li>If the property names provided to the constructor match the record's
  * columns via the aforementioned naming conventions, that information is used.
  * </li>
@@ -440,11 +437,13 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         // [#1837] [#10349] [#11123] If any java.beans.ConstructorProperties annotations are
         // present use those rather than matching constructors by the number of arguments
         if (debugCPSettings = !FALSE.equals(configuration.settings().isMapConstructorPropertiesParameterNames())) {
+            ConstructorPropertiesProvider cpp = configuration.constructorPropertiesProvider();
+
             for (Constructor<E> constructor : constructors) {
-                ConstructorProperties properties = constructor.getAnnotation(ConstructorProperties.class);
+                String[] properties = cpp.properties(constructor);
 
                 if (properties != null) {
-                    delegate = new ImmutablePOJOMapper(constructor, constructor.getParameterTypes(), Arrays.asList(properties.value()), true);
+                    delegate = new ImmutablePOJOMapper(constructor, constructor.getParameterTypes(), Arrays.asList(properties), true);
                     return;
                 }
             }
@@ -635,7 +634,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         return debug == null ? "check skipped" : debug.toString();
     }
 
-    private List<String> collectParameterNames(Parameter[] parameters) {
+    private static final List<String> collectParameterNames(Parameter[] parameters) {
         return Arrays.stream(parameters).map(Parameter::getName).collect(Collectors.toList());
     }
 
@@ -1211,7 +1210,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
     }
 
-    private static <E> E attach(E attachable, Record record) {
+    private static final <E> E attach(E attachable, Record record) {
         // [#2869] Attach the mapped outcome if it is Attachable and if the context's
         // Settings.attachRecords flag is set
         if (attachable instanceof Attachable a)

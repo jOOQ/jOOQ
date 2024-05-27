@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.beans.Introspector.decapitalize;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -58,6 +56,7 @@ import javax.xml.namespace.QName;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.XML;
+import org.jooq.tools.StringUtils;
 
 /**
  * A binding that binds JAXB-annotated {@link Object} types to {@link SQLXML}
@@ -120,7 +119,7 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
 
                 Object o = u;
                 if (root == null)
-                    o = new JAXBElement<>(new QName(decapitalize(toType().getSimpleName())), toType(), u);
+                    o = new JAXBElement<>(new QName(toLCNoAcronyms(toType().getSimpleName())), toType(), u);
 
                 Marshaller m = ctx.createMarshaller();
                 m.setProperty(Marshaller.JAXB_FRAGMENT, true);
@@ -130,6 +129,17 @@ public class AbstractXMLasObjectBinding<T> extends AbstractXMLBinding<T> {
             catch (JAXBException e) {
                 throw new DataBindingException(e);
             }
+        }
+
+        private static final String toLCNoAcronyms(String s) {
+            if (StringUtils.isEmpty(s))
+                return s;
+            
+            // [#7585] See also java.beans.Introspector::decapitalize
+            else if (s.length() > 1 && Character.isUpperCase(s.charAt(0)) && Character.isUpperCase(s.charAt(1)))
+                return s;
+            else
+                return StringUtils.toLC(s);
         }
 
         private void writeObject(ObjectOutputStream oos) throws IOException {

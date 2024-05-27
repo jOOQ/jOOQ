@@ -68,7 +68,8 @@ import org.jooq.tools.JooqLogger;
  * @author Lukas Eder
  */
 public abstract class AbstractConfiguration implements Configuration {
-    private static final JooqLogger log              = JooqLogger.getLogger(AbstractConfiguration.class);
+
+    private static final JooqLogger log = JooqLogger.getLogger(AbstractConfiguration.class);
 
     @Override
     public final Configuration set(RecordListener... newRecordListeners) {

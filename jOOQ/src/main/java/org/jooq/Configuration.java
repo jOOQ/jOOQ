@@ -415,6 +415,12 @@ public interface Configuration extends Serializable {
     CharsetProvider charsetProvider();
 
     /**
+     * Get this configuration's underlying constructor properties provider.
+     */
+    @NotNull
+    ConstructorPropertiesProvider constructorPropertiesProvider();
+
+    /**
      * Get this configuration's underlying record mapper provider.
      */
     @NotNull
@@ -759,6 +765,19 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration set(TransactionProvider newTransactionProvider);
+
+    /**
+     * Change this configuration to hold a new constructor properties provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newConstructorPropertiesProvider The new constructor properties
+     *            provider to be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    @NotNull
+    Configuration set(ConstructorPropertiesProvider newConstructorPropertiesProvider);
 
     /**
      * Change this configuration to hold a new record mapper.
@@ -1499,6 +1518,17 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(TransactionProvider newTransactionProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new constructor
+     * properties provider.
+     *
+     * @param newConstructorPropertiesProvider The new constructor properties
+     *            provider to be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    @NotNull
+    Configuration derive(ConstructorPropertiesProvider newConstructorPropertiesProvider);
 
     /**
      * Create a derived configuration from this one, with a new record mapper.

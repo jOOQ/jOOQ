@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
+import org.jooq.impl.Expression.Associativity;
 
 
 /**
@@ -112,7 +113,15 @@ implements
 
 
 
-        ctx.sql('(').visit(arg1).sql(" - ").visit(arg2).sql(')');
+        ctx.sql('(');
+        Expression.<Field<T>, Sub<T>>acceptAssociative(
+            ctx,
+            this,
+            q -> new Expression.Expr<>(q.arg1, Operators.OP_MINUS, q.arg2),
+            c -> c.sql(' '),
+            Associativity.LEFT
+        );
+        ctx.sql(')');
     }
 
     @Override

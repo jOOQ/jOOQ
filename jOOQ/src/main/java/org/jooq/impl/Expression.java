@@ -882,12 +882,19 @@ implements
 
     static final record Expr<Q extends QueryPart>(Q lhs, QueryPart op, Q rhs) {}
 
+    static enum Associativity {
+        BOTH,
+        LEFT,
+        RIGHT
+    }
+
     @SuppressWarnings("unchecked")
     static final <Q1 extends QueryPart, Q2 extends Q1> void acceptAssociative(
         Context<?> ctx,
         Q2 exp,
         Function<? super Q2, ? extends Expr<Q1>> expProvider,
-        Consumer<? super Context<?>> formatSeparator
+        Consumer<? super Context<?>> formatSeparator,
+        Associativity associativity
     ) {
         Expr<Q1> e = expProvider.apply(exp);
         Class<Q2> expType = (Class<Q2>) exp.getClass();
@@ -907,7 +914,7 @@ implements
 
                 // [#10665] Associativity is only given for two operands of the same data type
                 // [#12896] ... and if the feature is enabled
-                boolean associativity = (
+                boolean a = (
                       p.lhs instanceof Typed && p.rhs instanceof Typed
                     ? ((Typed<?>) p.lhs).getDataType().equals(((Typed<?>) p.rhs).getDataType())
                     : true
@@ -915,12 +922,12 @@ implements
 
                 // [#14356] Delay processing of RHS to emulate depth first
                 //          traversal.
-                if (associativity && expType.isInstance(p.rhs))
+                if (a && associativity != Associativity.LEFT && expType.isInstance(p.rhs))
                     queue.push(expProvider.apply((Q2) p.rhs));
                 else
                     queue.push(p.rhs);
 
-                if (associativity && expType.isInstance(p.lhs))
+                if (a && associativity != Associativity.RIGHT && expType.isInstance(p.lhs))
                     queue.push(expProvider.apply((Q2) p.lhs));
                 else
                     elements.add(p.lhs);

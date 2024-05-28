@@ -52,6 +52,7 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.ParamType;
+import org.jooq.impl.Expression.Associativity;
 import org.jooq.tools.StringUtils;
 
 import java.util.ArrayList;
@@ -122,7 +123,8 @@ implements
                 ctx,
                 this,
                 q -> new Expression.Expr<>(q.arg1, Operator.OR.toKeyword(), q.arg2),
-                Context::formatSeparator
+                Context::formatSeparator,
+                Associativity.BOTH
             );
             ctx.sqlIndentEnd(')');
         }

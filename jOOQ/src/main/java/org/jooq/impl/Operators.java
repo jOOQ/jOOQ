@@ -58,6 +58,7 @@ final class Operators {
     static final SQL OP_GT     = raw(">");
     static final SQL OP_HAT    = raw("^");
     static final SQL OP_LT     = raw("<");
+    static final SQL OP_MINUS  = raw("-");
     static final SQL OP_NUM    = raw("#");
     static final SQL OP_PERCNT = raw("%");
     static final SQL OP_PLUS   = raw("+");

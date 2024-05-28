@@ -63,7 +63,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.jooq.conf.TransformUnneededArithmeticExpressions;
-import org.jooq.impl.Expression.Associativity;
 
 
 /**
@@ -119,7 +118,7 @@ implements
             this,
             q -> new Expression.Expr<>(q.arg1, Operators.OP_SOL, q.arg2),
             c -> c.sql(' '),
-            Associativity.LEFT
+            Expression.Associativity.LEFT
         );
         ctx.sql(')');
     }

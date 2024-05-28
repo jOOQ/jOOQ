@@ -46,7 +46,7 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
-import org.jooq.tools.JooqLogger;
+import org.jooq.exception.ConfigurationException;
 
 /**
  * Class maintaining backwards compatible behaviour, without formal declaration
@@ -55,8 +55,6 @@ import org.jooq.tools.JooqLogger;
  * @author Lukas Eder
  */
 final class LegacyAnnotatedPojoMemberProvider implements AnnotatedPojoMemberProvider {
-
-    static final JooqLogger log = JooqLogger.getLogger(AnnotatedPojoMemberProvider.class, 5);
 
     @Override
     public List<Field> getMembers(Class<?> type, String name) {
@@ -80,8 +78,8 @@ final class LegacyAnnotatedPojoMemberProvider implements AnnotatedPojoMemberProv
             || anyMatch(type.getDeclaredMethods(), hasPersistenceAnnotations())
             || anyMatch(type.getFields(), hasPersistenceAnnotations())
             || anyMatch(type.getDeclaredFields(), hasPersistenceAnnotations())
-        ) {
-            log.warn("JPA annotation usage", """
+        )
+            throw new ConfigurationException("""
                 No explicit AnnotatedPojoMemberProvider is configured.
 
                 Jakarta Persistence annotations are present on POJO {pojo}
@@ -94,9 +92,7 @@ final class LegacyAnnotatedPojoMemberProvider implements AnnotatedPojoMemberProv
 
                 If you wish to continue working with the Jakarta Persistence annotations, use the
                 jOOQ-jpa-extensions module and its DefaultAnnotatedPojoMemberProvider implementation
-                """.replace("{pojo}", type.getName())
-            );
-        }
+                """.replace("{pojo}", type.getName()));
 
         return false;
     }

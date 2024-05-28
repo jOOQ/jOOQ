@@ -2179,7 +2179,26 @@ final class Tools {
     }
 
     static final IllegalArgumentException indexFail(Fields row, Field<?> field) {
-        return new IllegalArgumentException("Field (" + field + ") is not contained in Row " + row);
+        if (lookupNested(row, field))
+            return new IllegalArgumentException("Field " + field + " is not contained at the top level of row type containing nested row types. Unnest the nested row type first and access the field from there: " + row);
+        else
+            return new IllegalArgumentException("Field " + field + " is not contained in row type " + row);
+    }
+
+    private static final boolean lookupNested(Fields row, Field<?> field) {
+
+        // [#15085] [#16721] Help users spot the problem if they accidentally nest row types
+        if (row.field(field) != null)
+            return true;
+
+        for (Field<?> f : row.fields()) {
+            if (f instanceof AbstractRowAsField<?> rf) {
+                if (lookupNested(rf.fields0(), field))
+                    return true;
+            }
+        }
+
+        return false;
     }
 
     static final int indexOrFail(Fields row, Field<?> field) {
@@ -2192,7 +2211,7 @@ final class Tools {
     }
 
     static final IllegalArgumentException indexFail(Fields row, String fieldName) {
-        throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
+        return indexFail(row, DSL.name(fieldName));
     }
 
     static final int indexOrFail(Fields row, String fieldName) {
@@ -2205,7 +2224,7 @@ final class Tools {
     }
 
     static final IllegalArgumentException indexFail(Fields row, Name fieldName) {
-        throw new IllegalArgumentException("Field (" + fieldName + ") is not contained in Row " + row);
+        return indexFail(row, DSL.field(fieldName));
     }
 
     static final int indexOrFail(Fields row, Name fieldName) {
@@ -2218,7 +2237,23 @@ final class Tools {
     }
 
     static final IllegalArgumentException indexFail(Fields row, int fieldIndex) {
-        throw new IllegalArgumentException("Field (" + fieldIndex + ") is not contained in Row " + row);
+        if (fieldIndex < countFlattened(row, 0))
+            return new IllegalArgumentException("No field at index " + fieldIndex + " is not contained at the top level of row type containing nested row types. Unnest the nested row types first and access the field from there: " + row);
+        else
+            return new IllegalArgumentException("No field at index " + fieldIndex + " in row type " + row);
+    }
+
+    private static final int countFlattened(Fields row, int count) {
+
+        // [#15085] [#16721] Help users spot the problem if they accidentally nest row types
+        for (Field<?> f : row.fields()) {
+            if (f instanceof AbstractRowAsField<?> rf)
+                count += countFlattened(rf.fields0(), count);
+            else
+                count++;
+        }
+
+        return count;
     }
 
     static final int indexOrFail(Fields row, int fieldIndex) {

@@ -38,9 +38,11 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.converterOrFail;
+import static org.jooq.impl.Tools.indexFail;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.newRecord;
@@ -77,7 +79,14 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
-final class FieldsImpl<R extends Record> extends AbstractQueryPart implements RecordType<R>, Mappable<R>, UTransient {
+final class FieldsImpl<R extends Record>
+extends
+    AbstractQueryPart
+implements
+    RecordType<R>,
+    Mappable<R>,
+    UTransient
+{
 
     private static final JooqLogger log = JooqLogger.getLogger(FieldsImpl.class);
     Field<?>[]                      fields;
@@ -403,7 +412,7 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
         if (index >= 0 && index < fields.length)
             return index;
 
-        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fields);
+        throw indexFail(this, index);
     }
 
     @Override
@@ -630,5 +639,10 @@ final class FieldsImpl<R extends Record> extends AbstractQueryPart implements Re
     @Override
     public int hashCode() {
         return Arrays.hashCode(fields);
+    }
+
+    @Override
+    public String toString() {
+        return row(fields).toString();
     }
 }

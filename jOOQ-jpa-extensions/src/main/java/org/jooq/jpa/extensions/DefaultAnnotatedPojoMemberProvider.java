@@ -10,7 +10,6 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -23,6 +22,7 @@ import org.jooq.tools.JooqLogger;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * The default {@link AnnotatedPojoMemberProvider} implementation that looks up
@@ -232,16 +232,12 @@ public class DefaultAnnotatedPojoMemberProvider implements AnnotatedPojoMemberPr
                 if (hasJavaxPersistenceAnnotation().test(type))
                     logHasAnnotations.warn("Type " + type + " is annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
 
-                if (Stream.of(type.getMethods()).anyMatch(hasJavaxPersistenceAnnotation()))
+                if (Stream.of(type.getMethods()).anyMatch(hasJavaxPersistenceAnnotation())
+                    || Stream.of(type.getDeclaredMethods()).anyMatch(hasJavaxPersistenceAnnotation()))
                     logHasAnnotations.warn("Type " + type + " has methods annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
 
-                if (Stream.of(type.getDeclaredMethods()).anyMatch(hasJavaxPersistenceAnnotation()))
-                    logHasAnnotations.warn("Type " + type + " has methods annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
-
-                if (Stream.of(type.getFields()).anyMatch(hasJavaxPersistenceAnnotation()))
-                    logHasAnnotations.warn("Type " + type + " has fields annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
-
-                if (Stream.of(type.getDeclaredFields()).anyMatch(hasJavaxPersistenceAnnotation()))
+                if (Stream.of(type.getFields()).anyMatch(hasJavaxPersistenceAnnotation())
+                    || Stream.of(type.getDeclaredFields()).anyMatch(hasJavaxPersistenceAnnotation()))
                     logHasAnnotations.warn("Type " + type + " has fields annotated with javax.persistence annotation for usage in DefaultRecordMapper, but starting from jOOQ 3.16, only JakartaEE annotations are supported.");
 
                 return false;
@@ -252,7 +248,7 @@ public class DefaultAnnotatedPojoMemberProvider implements AnnotatedPojoMemberPr
                 if (type.getAnnotation(Entity.class) != null)
                     return true;
 
-                if (type.getAnnotation(jakarta.persistence.Table.class) != null)
+                if (type.getAnnotation(Table.class) != null)
                     return true;
 
                 if (getInstanceMembers(type).stream().anyMatch(m ->

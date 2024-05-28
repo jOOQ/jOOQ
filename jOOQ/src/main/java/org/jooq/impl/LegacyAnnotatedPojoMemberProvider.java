@@ -37,13 +37,15 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.anyMatch;
+
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
-import org.jooq.ConstructorPropertiesProvider;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -54,9 +56,7 @@ import org.jooq.tools.JooqLogger;
  */
 final class LegacyAnnotatedPojoMemberProvider implements AnnotatedPojoMemberProvider {
 
-    static final JooqLogger log = JooqLogger.getLogger(AnnotatedPojoMemberProvider.class, 1);
-
-    // [#16500] TODO: Implement these, or throw an exception
+    static final JooqLogger log = JooqLogger.getLogger(AnnotatedPojoMemberProvider.class, 5);
 
     @Override
     public List<Field> getMembers(Class<?> type, String name) {
@@ -75,6 +75,42 @@ final class LegacyAnnotatedPojoMemberProvider implements AnnotatedPojoMemberProv
 
     @Override
     public boolean hasAnnotations(Class<?> type) {
+        if (hasPersistenceAnnotations().test(type)
+            || anyMatch(type.getMethods(), hasPersistenceAnnotations())
+            || anyMatch(type.getDeclaredMethods(), hasPersistenceAnnotations())
+            || anyMatch(type.getFields(), hasPersistenceAnnotations())
+            || anyMatch(type.getDeclaredFields(), hasPersistenceAnnotations())
+        ) {
+            log.warn("JPA annotation usage", """
+                No explicit AnnotatedPojoMemberProvider is configured.
+
+                Jakarta Persistence annotations are present on POJO {pojo}
+                without any explicit AnnotatedPojoMemberProvider configuration.
+
+                Starting from jOOQ 3.20, the Configuration.annotatedPojoMemberProvider() SPI is required for the
+                DefaultRecordMapper to map a Record to a POJO that is annotated with Jakarta Persistence annotations.
+                This LegacyAnnotatedPojoMemberProvider detects potential regressions in the mapping logic
+                place using reflection. This implementation is due for removal in a future version of jOOQ.
+
+                If you wish to continue working with the Jakarta Persistence annotations, use the
+                jOOQ-jpa-extensions module and its DefaultAnnotatedPojoMemberProvider implementation
+                """.replace("{pojo}", type.getName())
+            );
+        }
+
         return false;
+    }
+
+    private static final ThrowingPredicate<? super AnnotatedElement, RuntimeException> hasPersistenceAnnotations() {
+        return a -> anyMatch(a.getAnnotations(), isPersistenceAnnotation());
+    }
+
+    private static final ThrowingPredicate<? super Annotation, RuntimeException> isPersistenceAnnotation() {
+        return a -> {
+            String name = a.annotationType().getName();
+
+            return name.startsWith("javax.persistence.")
+                || name.startsWith("jakarta.persistence.");
+        };
     }
 }

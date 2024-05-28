@@ -8,13 +8,10 @@ import java.time.Year;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
 
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function1;
-import org.jooq.Functions;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Path;
@@ -74,7 +71,7 @@ public class Film extends TableImpl<FilmRecord> {
     /**
      * The column <code>FILM.RELEASE_YEAR</code>.
      */
-    public final TableField<FilmRecord, Year> RELEASE_YEAR = createField(DSL.name("RELEASE_YEAR"), SQLDataType.INTEGER, this, "", new org.jooq.impl.JPAConverter(org.jooq.example.jpa.converters.YearConverter.class));
+    public final TableField<FilmRecord, Year> RELEASE_YEAR = createField(DSL.name("RELEASE_YEAR"), SQLDataType.INTEGER, this, "", new org.jooq.jpa.extensions.JPAConverter(org.jooq.example.jpa.converters.YearConverter.class));
 
     /**
      * The column <code>FILM.TITLE</code>.
@@ -252,13 +249,6 @@ public class Film extends TableImpl<FilmRecord> {
     @Override
     public Film rename(Table<?> name) {
         return new Film(name.getQualifiedName(), null);
-    }
-
-    /**
-     * Apply this table to a function, see also {@link Functions#let(Function1)}
-     */
-    public <R> R let(Function<? super Film, ? extends R> function) {
-        return function.apply(this);
     }
 
     /**

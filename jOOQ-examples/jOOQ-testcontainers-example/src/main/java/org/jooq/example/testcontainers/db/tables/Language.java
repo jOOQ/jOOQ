@@ -6,13 +6,10 @@ package org.jooq.example.testcontainers.db.tables;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.function.Function;
 
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function1;
-import org.jooq.Functions;
 import org.jooq.Identity;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
@@ -213,13 +210,6 @@ public class Language extends TableImpl<LanguageRecord> {
     @Override
     public Language rename(Table<?> name) {
         return new Language(name.getQualifiedName(), null);
-    }
-
-    /**
-     * Apply this table to a function, see also {@link Functions#let(Function1)}
-     */
-    public <R> R let(Function<? super Language, ? extends R> function) {
-        return function.apply(this);
     }
 
     /**

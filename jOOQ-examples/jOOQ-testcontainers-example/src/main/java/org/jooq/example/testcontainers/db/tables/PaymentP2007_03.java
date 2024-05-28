@@ -9,14 +9,11 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
 
 import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Function1;
-import org.jooq.Functions;
 import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.InverseForeignKey;
@@ -258,13 +255,6 @@ public class PaymentP2007_03 extends TableImpl<PaymentP2007_03Record> {
     @Override
     public PaymentP2007_03 rename(Table<?> name) {
         return new PaymentP2007_03(name.getQualifiedName(), null);
-    }
-
-    /**
-     * Apply this table to a function, see also {@link Functions#let(Function1)}
-     */
-    public <R> R let(Function<? super PaymentP2007_03, ? extends R> function) {
-        return function.apply(this);
     }
 
     /**

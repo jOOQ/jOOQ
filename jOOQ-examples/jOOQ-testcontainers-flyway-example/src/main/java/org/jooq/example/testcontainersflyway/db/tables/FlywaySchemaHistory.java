@@ -8,12 +8,9 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
 
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.Function1;
-import org.jooq.Functions;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.PlainSQL;
@@ -189,13 +186,6 @@ public class FlywaySchemaHistory extends TableImpl<FlywaySchemaHistoryRecord> {
     @Override
     public FlywaySchemaHistory rename(Table<?> name) {
         return new FlywaySchemaHistory(name.getQualifiedName(), null);
-    }
-
-    /**
-     * Apply this table to a function, see also {@link Functions#let(Function1)}
-     */
-    public <R> R let(Function<? super FlywaySchemaHistory, ? extends R> function) {
-        return function.apply(this);
     }
 
     /**

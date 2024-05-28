@@ -4,12 +4,8 @@
 package org.jooq.example.testcontainers.db.tables;
 
 
-import java.util.function.Function;
-
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.Function1;
-import org.jooq.Functions;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -126,13 +122,6 @@ public class FilmInStock extends TableImpl<FilmInStockRecord> {
     @Override
     public FilmInStock rename(Table<?> name) {
         return new FilmInStock(name.getQualifiedName(), null, parameters);
-    }
-
-    /**
-     * Apply this table to a function, see also {@link Functions#let(Function1)}
-     */
-    public <R> R let(Function<? super FilmInStock, ? extends R> function) {
-        return function.apply(this);
     }
 
     /**

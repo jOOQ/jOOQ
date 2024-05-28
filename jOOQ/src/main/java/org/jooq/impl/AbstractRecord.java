@@ -386,7 +386,7 @@ implements
         if (index >= 0 && index < values.length)
             return index;
 
-        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fields);
+        throw indexFail(fields, index);
     }
 
     /**

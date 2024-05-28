@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static org.jooq.Records.intoList;
 import static org.jooq.Records.intoResultGroups;
+import static org.jooq.impl.Tools.indexFail;
 import static org.jooq.impl.Tools.indexOrFail;
 
 import java.lang.reflect.Array;
@@ -1068,7 +1069,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
         if (index >= 0 && index < fields.size())
             return index;
 
-        throw new IllegalArgumentException("No field at index " + index + " in Record type " + fields);
+        throw indexFail(fields, index);
     }
 
     // -------------------------------------------------------------------------

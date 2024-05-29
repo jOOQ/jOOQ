@@ -118,10 +118,10 @@ implements
 
         {
             ctx.sqlIndentStart('(');
-            Expression.<Condition, And>acceptAssociative(
+            Expression.acceptAssociative(
                 ctx,
-                this,
-                q -> new Expression.Expr<>(q.arg1, Operator.AND.toKeyword(), q.arg2),
+                (QOM.UOperator2) this,
+                Operator.AND.toKeyword(),
                 Context::formatSeparator
             );
             ctx.sqlIndentEnd(')');

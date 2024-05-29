@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>jooq-jpa-extensions</artifactId>
-    <name>jOOQ JPA Extensions Beans</name>
+    <name>jOOQ JPA Extensions</name>
 
     <licenses>
         <license>

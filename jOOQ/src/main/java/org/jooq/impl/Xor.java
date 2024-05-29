@@ -115,10 +115,10 @@ implements
         }
         else {
             ctx.sqlIndentStart('(');
-            Expression.<Condition, Xor>acceptAssociative(
+            Expression.acceptAssociative(
                 ctx,
                 this,
-                q -> new Expression.Expr<>(q.arg1, Operator.XOR.toKeyword(), q.arg2),
+                Operator.XOR.toKeyword(),
                 Context::formatSeparator
             );
             ctx.sqlIndentEnd(')');

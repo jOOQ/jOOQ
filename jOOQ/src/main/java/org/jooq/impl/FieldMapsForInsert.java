@@ -220,6 +220,10 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
+
+
+
                 case TRINO:
                 case MARIADB: {
                     if (supportsValues(ctx))

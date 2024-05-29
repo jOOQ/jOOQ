@@ -206,24 +206,20 @@ implements
             accept1(ctx);
     }
 
-    private final boolean implicitJoinAsScalarSubquery(Context<?> ctx, TableImpl<?> t, Table<?> root) {
+    static final boolean implicitJoinAsScalarSubquery(Context<?> ctx, TableImpl<?> t, Table<?> root) {
         return
 
             // [#15755] Never apply the scalar subquery rendering when we're already rendering an implicit
             //          join tree. Otherwise, we'd get useless subqueries in the ON clauses.
             !TRUE.equals(ctx.data(DATA_RENDER_IMPLICIT_JOIN))
-
+            && !ctx.inScope(t)
             && (
 
                 // [#15754] Explicit scalar subqueries can be configured for implicit to-one paths
-                (t.childPath != null
-                    && ctx.settings().getRenderImplicitJoinType() == SCALAR_SUBQUERY
-                    && !ctx.inScope(t))
+                (t.childPath != null && ctx.settings().getRenderImplicitJoinType() == SCALAR_SUBQUERY)
 
                 // [#15755] The default is to render scalar subqueries for implicit to-many paths
-                || (t.parentPath != null
-                    && (ctx.settings().getRenderImplicitJoinToManyType() == SCALAR_SUBQUERY)
-                    && !ctx.inScope(t))
+                || (t.parentPath != null && (ctx.settings().getRenderImplicitJoinToManyType() == SCALAR_SUBQUERY))
 
                 // [#7508] Implicit join path references inside of DML queries have to
                 //         be emulated differently

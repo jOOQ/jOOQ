@@ -234,7 +234,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 List<TableImpl<?>> tables = new ArrayList<>();
 
                 // [#14985] Traverse paths only when referencing paths (!forceNew),
-                //          not when declaring them in FROM (forceNew)
+                //          not when declaring them in FROM or USING (forceNew)
                 if (!forceNew) {
                     while ((child = TableImpl.path(root)) != null) {
 

@@ -93,6 +93,7 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DeleteQueryImpl.keyFieldsCondition;
 import static org.jooq.impl.DeleteQueryImpl.mergeUsing;
+import static org.jooq.impl.DeleteQueryImpl.traverseJoinsAndAddPathConditions;
 import static org.jooq.impl.InlineDerivedTable.hasInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables0;
@@ -103,9 +104,12 @@ import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.SQLDataType.INTEGER;
+import static org.jooq.impl.SelectQueryImpl.addPathConditions;
+import static org.jooq.impl.SelectQueryImpl.prependPathJoins;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.containsDeclaredTable;
 import static org.jooq.impl.Tools.findAny;
+import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNQUALIFY_LOCAL_SCOPE;
 
 import java.util.Arrays;
@@ -749,6 +753,9 @@ implements
            .declareTables(declareTables)
            .end(UPDATE_UPDATE);
 
+        ConditionProviderImpl where0 = new ConditionProviderImpl();
+        TableList f = getFrom(ctx, where0);
+
 
 
 
@@ -771,9 +778,8 @@ implements
 
 
 
-        acceptFrom(ctx);
+        acceptFrom(ctx, where0, f);
 
-        ConditionProviderImpl where0 = new ConditionProviderImpl();
         if (limitEmulation(ctx)) {
 
             // [#16632] Push down USING table list here
@@ -839,12 +845,11 @@ implements
         return false;
     }
 
-    private final void acceptFrom(Context<?> ctx) {
-        ctx.start(UPDATE_FROM);
+    private final TableList getFrom(Context<?> ctx, ConditionProviderImpl where0) {
+        TableList f = new TableList();
 
         // [#16634] Prevent unnecessary FROM clause in some dialects, e.g. HANA
         if (!NO_SUPPORT_FROM.contains(ctx.dialect())) {
-            TableList f = new TableList();
 
 
 
@@ -865,10 +870,20 @@ implements
 
 
             if (!f.isEmpty())
-                ctx.formatSeparator()
-                   .visit(K_FROM).sql(' ')
-                   .declareTables(true, c -> c.visit(f));
+                f = traverseJoinsAndAddPathConditions(ctx, where0, f);
         }
+
+        return f;
+    }
+
+    private final void acceptFrom(Context<?> ctx, ConditionProviderImpl where0, TableList f) {
+        ctx.start(UPDATE_FROM);
+
+        // [#16634] Prevent unnecessary FROM clause in some dialects, e.g. HANA
+        if (!f.isEmpty())
+            ctx.formatSeparator()
+               .visit(K_FROM).sql(' ')
+               .declareTables(true, c -> c.visit(f));
 
         ctx.end(UPDATE_FROM);
     }

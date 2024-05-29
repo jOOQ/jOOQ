@@ -87,12 +87,10 @@ import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.mergeInto;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.DeleteQueryImpl.keyFieldsCondition;
 import static org.jooq.impl.InlineDerivedTable.hasInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables0;
@@ -104,6 +102,8 @@ import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_ROWS;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.SelectQueryImpl.addPathConditions;
+import static org.jooq.impl.SelectQueryImpl.prependPathJoins;
 import static org.jooq.impl.Tools.containsDeclaredTable;
 import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.map;
@@ -112,13 +112,11 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNQUALIFY_LOCAL_SCOPE;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -138,7 +136,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.SortField;
 import org.jooq.Table;
-import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
 import org.jooq.conf.ParamType;
@@ -407,7 +404,7 @@ implements
 
 
 
-            TableList u0 = u;
+            TableList u0 = traverseJoinsAndAddPathConditions(ctx, where0, u);
             ctx.formatSeparator()
                .visit(K_USING)
                .sql(' ')
@@ -474,6 +471,21 @@ implements
         ctx.end(DELETE_RETURNING);
     }
 
+    static final TableList traverseJoinsAndAddPathConditions(Context<?> ctx, ConditionProviderImpl where0, TableList u) {
+
+        // [#15636] Allow for explicit path joins in USING
+        traverseJoins(u, x -> {
+            if (x instanceof TableImpl)
+                ctx.scopeRegister(x, true);
+        });
+
+        // [#14985] [#15755] Add skipped join segments from path joins
+        u = prependPathJoins(ctx, where0, u);
+        addPathConditions(ctx, where0, u);
+
+        return u;
+    }
+
     private final boolean limitEmulation(Context<?> ctx) {
         if (limit != null) {
             if (NO_SUPPORT_LIMIT.contains(ctx.dialect()))
@@ -500,7 +512,14 @@ implements
         SortFieldList orderBy,
         Field<? extends Number> limit
     ) {
-        if (orderBy.isEmpty() && limit == null && tables.size() == 1 && tables.get(0) instanceof TableImpl) {
+
+        // [#15636] Cannot use the simplified emulation when there are join paths in the table list (USING or FROM clause)
+        if (orderBy.isEmpty()
+            && limit == null
+            && tables.size() == 1
+            && tables.get(0) instanceof TableImpl
+            && TableImpl.path(tables.get(0)) == null
+        ) {
             return new MergeUsing(tables.get(0), emptyMap());
         }
 

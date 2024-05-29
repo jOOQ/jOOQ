@@ -49,6 +49,7 @@ import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.JoinTable.onKey0;
+import static org.jooq.impl.TableFieldImpl.implicitJoinAsScalarSubquery;
 import static org.jooq.impl.Tools.DATAKEY_RESET_IN_SUBQUERY_SCOPE;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;

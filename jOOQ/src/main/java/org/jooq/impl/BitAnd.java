@@ -160,10 +160,10 @@ implements
 
             default:
                 ctx.sql('(');
-                Expression.<Field<T>, BitAnd<T>>acceptAssociative(
+                Expression.acceptAssociative(
                     ctx,
                     this,
-                    q -> new Expression.Expr<>(q.arg1, Operators.OP_AMP, q.arg2),
+                    Operators.OP_AMP,
                     c -> c.sql(' ')
                 );
                 ctx.sql(')');

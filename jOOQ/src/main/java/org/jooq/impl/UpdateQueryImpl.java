@@ -726,6 +726,7 @@ implements
         // [#14011] Additional predicates that are added for various reasons
         Condition moreWhere = noCondition();
         Table<?> t = table(ctx);
+        ctx.scopeRegister(t, true);
 
 
 
@@ -735,6 +736,15 @@ implements
 
 
 
+
+        ConditionProviderImpl where0 = new ConditionProviderImpl();
+        TableList f = getFrom(ctx, where0);
+        Table<?> t0 = t;
+
+        // [#16732] Emulate UPDATE .. FROM with UPDATE .. JOIN where possible
+        if (!f.isEmpty() && NO_SUPPORT_FROM.contains(ctx.dialect()) && !NO_SUPPORT_UPDATE_JOIN.contains(ctx.dialect()))
+            for (Table<?> x : f)
+                t0 = t0.crossJoin(x);
 
         ctx.start(UPDATE_UPDATE)
            .visit(K_UPDATE)
@@ -749,12 +759,9 @@ implements
 
 
            )
-           .visit(t)
+           .visit(t0)
            .declareTables(declareTables)
            .end(UPDATE_UPDATE);
-
-        ConditionProviderImpl where0 = new ConditionProviderImpl();
-        TableList f = getFrom(ctx, where0);
 
 
 
@@ -783,20 +790,20 @@ implements
         if (limitEmulation(ctx)) {
 
             // [#16632] Push down USING table list here
-            TableList t0 = new TableList();
+            TableList t1 = new TableList();
             if (!containsDeclaredTable(from, t))
-                t0.add(t);
-            t0.addAll(from);
+                t1.add(t);
+            t1.addAll(from);
 
             Field<?>[] keyFields = DeleteQueryImpl.keyFields(ctx, t);
 
             if (keyFields.length == 1)
-                where0.addConditions(keyFields[0].in(select((Field) keyFields[0]).from(t0).where(getWhere()).orderBy(orderBy).limit(limit)));
+                where0.addConditions(keyFields[0].in(select((Field) keyFields[0]).from(t1).where(getWhere()).orderBy(orderBy).limit(limit)));
             else
-                where0.addConditions(row(keyFields).in(select(keyFields).from(t0).where(getWhere()).orderBy(orderBy).limit(limit)));
+                where0.addConditions(row(keyFields).in(select(keyFields).from(t1).where(getWhere()).orderBy(orderBy).limit(limit)));
         }
 
-        if (hasWhere() && (from.isEmpty() || !NO_SUPPORT_FROM.contains(ctx.dialect())))
+        if (hasWhere() && (from.isEmpty() || supportFromOrUpdateJoin(ctx)))
             where0.addConditions(getWhere());
         else if (!where0.hasWhere() && REQUIRES_WHERE.contains(ctx.dialect()))
             where0.addConditions(trueCondition());
@@ -839,7 +846,7 @@ implements
         if (!orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect()))
             return true;
 
-        if (!from.isEmpty() && NO_SUPPORT_FROM.contains(ctx.dialect()))
+        if (!from.isEmpty() && !supportFromOrUpdateJoin(ctx))
             return true;
 
         return false;
@@ -849,7 +856,7 @@ implements
         TableList f = new TableList();
 
         // [#16634] Prevent unnecessary FROM clause in some dialects, e.g. HANA
-        if (!NO_SUPPORT_FROM.contains(ctx.dialect())) {
+        if (supportFromOrUpdateJoin(ctx)) {
 
 
 
@@ -876,14 +883,20 @@ implements
         return f;
     }
 
+    private final boolean supportFromOrUpdateJoin(Context<?> ctx) {
+        return !NO_SUPPORT_FROM.contains(ctx.dialect()) || !NO_SUPPORT_UPDATE_JOIN.contains(ctx.dialect());
+    }
+
     private final void acceptFrom(Context<?> ctx, ConditionProviderImpl where0, TableList f) {
         ctx.start(UPDATE_FROM);
 
         // [#16634] Prevent unnecessary FROM clause in some dialects, e.g. HANA
-        if (!f.isEmpty())
-            ctx.formatSeparator()
-               .visit(K_FROM).sql(' ')
-               .declareTables(true, c -> c.visit(f));
+        if (!NO_SUPPORT_FROM.contains(ctx.dialect())) {
+            if (!f.isEmpty())
+                ctx.formatSeparator()
+                   .visit(K_FROM).sql(' ')
+                   .declareTables(true, c -> c.visit(f));
+        }
 
         ctx.end(UPDATE_FROM);
     }

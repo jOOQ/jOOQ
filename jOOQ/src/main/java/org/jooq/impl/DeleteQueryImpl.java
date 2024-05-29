@@ -342,6 +342,7 @@ implements
            .visit(K_DELETE).sql(' ');
 
         Table<?> t = table(ctx);
+        ctx.scopeRegister(t, true);
 
         boolean multiTableJoin = (SUPPORT_MULTITABLE_DELETE.contains(ctx.dialect()) && t instanceof JoinTable);
         boolean specialDeleteAsSyntax = SPECIAL_DELETE_AS_SYNTAX.contains(ctx.dialect());

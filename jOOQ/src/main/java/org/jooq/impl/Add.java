@@ -113,10 +113,10 @@ implements
 
 
         ctx.sql('(');
-        Expression.<Field<T>, Add<T>>acceptAssociative(
+        Expression.acceptAssociative(
             ctx,
             this,
-            q -> new Expression.Expr<>(q.arg1, Operators.OP_PLUS, q.arg2),
+            Operators.OP_PLUS,
             c -> c.sql(' '),
             Expression.Associativity.BOTH
         );

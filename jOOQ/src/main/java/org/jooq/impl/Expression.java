@@ -95,6 +95,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -107,6 +108,7 @@ import org.jooq.Function2;
 import org.jooq.Param;
 // ...
 import org.jooq.QueryPart;
+import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Typed;
 import org.jooq.conf.ParamType;
@@ -880,7 +882,7 @@ implements
         }
     }
 
-    static final record Expr<Q extends QueryPart>(Q lhs, QueryPart op, Q rhs) {}
+    static final record Expr<Q extends QueryPart>(Q lhs, Q rhs) {}
 
     static enum Associativity {
         BOTH,
@@ -889,60 +891,69 @@ implements
     }
 
     @SuppressWarnings("unchecked")
-    static final <Q1 extends QueryPart, Q2 extends Q1> void acceptAssociative(
+    static final <Q1 extends QueryPart, Q2 extends UOperator2<Q1, Q1, Q2>> void acceptAssociative(
         Context<?> ctx,
         Q2 exp,
-        Function<? super Q2, ? extends Expr<Q1>> expProvider,
+        QueryPart operator,
         Consumer<? super Context<?>> formatSeparator,
         Associativity associativity
     ) {
-        Expr<Q1> e = expProvider.apply(exp);
         Class<Q2> expType = (Class<Q2>) exp.getClass();
 
-        List<Q1> elements = new ArrayList<>();
+        // [#16725] Run this associative operand flattening logic only if there are any nested expressions
+        if (!ON.equals(ctx.settings().getRenderOptionalAssociativityParentheses())
+            && (exp.$arg1().getClass() == expType || exp.$arg2().getClass() == expType)
+        ) {
+            Expr<Q1> e = new Expr<>(exp.$arg1(), exp.$arg2());
+            List<Q1> elements = new ArrayList<>();
 
-        // Effectively Deque<Q1|Expr<Q1>>
-        Deque<Object> queue = new ArrayDeque<>();
-        queue.push(e);
+            // Effectively Deque<Q1|Expr<Q1>>
+            Deque<Object> queue = new ArrayDeque<>();
+            queue.push(e);
 
-        // [#14356] Iterative breadth first tree traversal trading stack space
-        //          for heap space to prevent StackOverflowError if tree is
-        //          10000+ elements deep
-        for (Object o; (o = queue.pollFirst()) != null;) {
-            if (o instanceof Expr) {
-                Expr<Q1> p = (Expr<Q1>) o;
+            // [#14356] Iterative breadth first tree traversal trading stack space
+            //          for heap space to prevent StackOverflowError if tree is
+            //          10000+ elements deep
+            for (Object o; (o = queue.pollFirst()) != null;) {
+                if (o instanceof Expr) {
+                    Expr<Q1> p = (Expr<Q1>) o;
 
-                // [#10665] Associativity is only given for two operands of the same data type
-                // [#12896] ... and if the feature is enabled
-                boolean a = (
-                      p.lhs instanceof Typed && p.rhs instanceof Typed
-                    ? ((Typed<?>) p.lhs).getDataType().equals(((Typed<?>) p.rhs).getDataType())
-                    : true
-                ) && !ON.equals(ctx.settings().getRenderOptionalAssociativityParentheses());
+                    // [#10665] Associativity is only given for two operands of the same data type
+                    // [#12896] ... and if the feature is enabled
+                    boolean a =
+                          p.lhs instanceof Typed && p.rhs instanceof Typed
+                        ? ((Typed<?>) p.lhs).getDataType().equals(((Typed<?>) p.rhs).getDataType())
+                        : true;
 
-                // [#14356] Delay processing of RHS to emulate depth first
-                //          traversal.
-                if (a && associativity != Associativity.LEFT && expType.isInstance(p.rhs))
-                    queue.push(expProvider.apply((Q2) p.rhs));
+                    // [#14356] Delay processing of RHS to emulate depth first traversal.
+                    if (a && associativity != Associativity.LEFT && expType.isInstance(p.rhs))
+                        queue.push(new Expr<>(((Q2) p.rhs).$arg1(), ((Q2) p.rhs).$arg2()));
+                    else
+                        queue.push(p.rhs);
+
+                    if (a && associativity != Associativity.RIGHT && expType.isInstance(p.lhs))
+                        queue.push(new Expr<>(((Q2) p.lhs).$arg1(), ((Q2) p.lhs).$arg2()));
+                    else
+                        elements.add(p.lhs);
+                }
                 else
-                    queue.push(p.rhs);
-
-                if (a && associativity != Associativity.RIGHT && expType.isInstance(p.lhs))
-                    queue.push(expProvider.apply((Q2) p.lhs));
-                else
-                    elements.add(p.lhs);
+                    elements.add((Q1) o);
             }
-            else
-                elements.add((Q1) o);
+
+            for (int i = 0; i < elements.size(); i++) {
+                if (i > 0) {
+                    formatSeparator.accept(ctx);
+                    ctx.visit(operator).sql(' ');
+                }
+
+                ctx.visit(elements.get(i));
+            }
         }
-
-        for (int i = 0; i < elements.size(); i++) {
-            if (i > 0) {
-                formatSeparator.accept(ctx);
-                ctx.visit(e.op).sql(' ');
-            }
-
-            ctx.visit(elements.get(i));
+        else {
+            ctx.visit(exp.$arg1());
+            formatSeparator.accept(ctx);
+            ctx.visit(operator).sql(' ');
+            ctx.visit(exp.$arg2());
         }
     }
 

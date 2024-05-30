@@ -479,9 +479,9 @@ public final class QOM {
     /**
      * The <code>INSERT</code> statement.
      */
-    public interface Insert<R extends Record>
+    public interface Insert<R extends org.jooq.Record>
         extends
-            DMLQuery<R>
+            org.jooq.DMLQuery<R>
     {
         @Nullable With $with();
         @NotNull  Table<R> $into();
@@ -523,9 +523,9 @@ public final class QOM {
     /**
      * An <code>INSERT</code> statement with a <code>RETURNING</code> clause.
      */
-    public interface InsertReturning<R extends Record>
+    public interface InsertReturning<R extends org.jooq.Record>
         extends
-            ResultQuery<R>
+            org.jooq.ResultQuery<R>
     {
         @NotNull Insert<?> $insert();
         @CheckReturnValue
@@ -538,9 +538,9 @@ public final class QOM {
     /**
      * The <code>UPDATE</code> statement.
      */
-    public interface Update<R extends Record>
+    public interface Update<R extends org.jooq.Record>
         extends
-            DMLQuery<R>
+            org.jooq.DMLQuery<R>
     {
         @Nullable With $with();
         @NotNull  Table<R> $table();
@@ -566,9 +566,9 @@ public final class QOM {
     /**
      * An <code>UPDATE</code> statement with a <code>RETURNING</code> clause.
      */
-    public interface UpdateReturning<R extends Record>
+    public interface UpdateReturning<R extends org.jooq.Record>
         extends
-            ResultQuery<R>
+            org.jooq.ResultQuery<R>
     {
         @NotNull Update<?> $update();
         @CheckReturnValue
@@ -581,9 +581,9 @@ public final class QOM {
     /**
      * The <code>DELETE</code> statement.
      */
-    public interface Delete<R extends Record>
+    public interface Delete<R extends org.jooq.Record>
         extends
-            DMLQuery<R>
+            org.jooq.DMLQuery<R>
     {
         @Nullable With $with();
         @NotNull  Table<R> $from();
@@ -606,9 +606,9 @@ public final class QOM {
     /**
      * An <code>DELETE</code> statement with a <code>RETURNING</code> clause.
      */
-    public interface DeleteReturning<R extends Record>
+    public interface DeleteReturning<R extends org.jooq.Record>
         extends
-            ResultQuery<R>
+            org.jooq.ResultQuery<R>
     {
         @NotNull Delete<?> $delete();
         @CheckReturnValue

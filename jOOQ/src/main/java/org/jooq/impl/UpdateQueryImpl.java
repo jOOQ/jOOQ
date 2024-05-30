@@ -595,7 +595,7 @@ implements
                     }
 
                     if (where.hasWhere())
-                        d.addConditionsForInlineDerivedTable(where);
+                        d.addConditionsForInlineDerivedTable(where.getWhere());
                 },
                 transformInlineDerivedTables0(ctx, t, where, false)
             ).accept0(ctx);
@@ -723,19 +723,8 @@ implements
     final void accept2(Context<?> ctx) {
         boolean declareTables = ctx.declareTables();
 
-        // [#14011] Additional predicates that are added for various reasons
-        Condition moreWhere = noCondition();
         Table<?> t = table(ctx);
         ctx.scopeRegister(t, true);
-
-
-
-
-
-
-
-
-
 
         ConditionProviderImpl where0 = new ConditionProviderImpl();
         TableList f = getFrom(ctx, where0);

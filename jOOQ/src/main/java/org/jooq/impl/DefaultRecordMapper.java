@@ -161,7 +161,10 @@ import org.jooq.tools.reflect.ReflectException;
  * <p>
  * <h5>If a default constructor is available and any JPA
  * {@link jakarta.persistence.Column} annotations are found on the provided
- * <code>&lt;E&gt;</code>, only those are used:</h5>
+ * <code>&lt;E&gt;</code> type, and the <code>jOOQ-jpa-extensions</code> module
+ * is found on the classpath and configured in
+ * {@link Configuration#annotatedPojoMemberProvider()}, only those are
+ * used:</h5>
  * <p>
  * <ul>
  * <li>If <code>&lt;E&gt;</code> contains single-argument instance methods of
@@ -226,9 +229,11 @@ import org.jooq.tools.reflect.ReflectException;
  * <li>If the property names provided to the constructor match the record's
  * columns via the aforementioned naming conventions, that information is used.
  * </li>
- * <li>If those POJO members or getters have JPA annotations, those will be used
- * according to the aforementioned rules, in order to map <code>Record</code>
- * values onto constructor arguments.</li>
+ * <li>If those POJO members or getters have JPA annotations, and the
+ * <code>jOOQ-jpa-extensions</code> module is found on the classpath and
+ * configured in {@link Configuration#annotatedPojoMemberProvider()}, those will
+ * be used according to the aforementioned rules, in order to map
+ * <code>Record</code> values onto constructor arguments.</li>
  * <li>If those POJO members or getters don't have JPA annotations, the
  * aforementioned naming conventions will be used, in order to map
  * <code>Record</code> values onto constructor arguments.</li>

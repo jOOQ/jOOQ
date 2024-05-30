@@ -1036,7 +1036,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <p>
      * <h5>If any JPA {@link jakarta.persistence.Column} annotations are found
      * on the {@link Class} of the provided <code>source</code>, only those are
-     * used. Matching candidates are:</h5>
+     * used (assuming the <code>jOOQ-jpa-extensions</code> module is on the
+     * classpath and {@link Configuration#annotatedPojoMemberProvider()}
+     * configures it. Matching candidates are:</h5>
      * <p>
      * <ul>
      * <li>Public no-argument instance methods annotated with
@@ -1045,12 +1047,13 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * or <code>isXXX</code>, if there exists a matching public single-argument
      * <code>setXXX()</code> instance method that is annotated with
      * <code>jakarta.persistence.Column</code></li>
-     * <li>Public instance member fields annotated with <code>jakarta.persistence.Column</code></li>
+     * <li>Public instance member fields annotated with
+     * <code>jakarta.persistence.Column</code></li>
      * </ul>
      * Additional matching rules:
      * <ul>
-     * <li>{@link jakarta.persistence.Column#name()} must match {@link Field#getName()}. All other
-     * annotation attributes are ignored</li>
+     * <li>{@link jakarta.persistence.Column#name()} must match
+     * {@link Field#getName()}. All other annotation attributes are ignored</li>
      * <li>Only the first match per field is used</li>
      * <li>Matching methods have a higher priority than matching member
      * fields</li>
@@ -1059,9 +1062,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <li>Static methods / member fields are ignored</li>
      * </ul>
      * <p>
-     * <h5>If there are no JPA <code>jakarta.persistence.Column</code> annotations, or jOOQ can't
-     * find the <code>jakarta.persistence</code> API on the classpath, jOOQ will
-     * map members by naming convention:</h5>
+     * <h5>If there are no JPA <code>jakarta.persistence.Column</code>
+     * annotations, or jOOQ can't find the <code>jakarta.persistence</code> API
+     * on the classpath, jOOQ will map members by naming convention:</h5>
      * <p>
      * If {@link Field#getName()} is <code>MY_field</code> (case-sensitive!),
      * then this field's value will be fetched from the first of these:

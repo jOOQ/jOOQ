@@ -5530,7 +5530,7 @@ public class Settings
     }
 
     /**
-     * Whether JPA annotations should be considered by the DefaultRecordMapper.
+     * Whether JPA annotations should be considered by the {@link org.jooq.impl.DefaultRecordMapper}, assuming the <code>jOOQ-jpa-extensions</code> is on the classpath.
      * 
      * @return
      *     possible object is
@@ -5542,7 +5542,7 @@ public class Settings
     }
 
     /**
-     * Whether JPA annotations should be considered by the DefaultRecordMapper.
+     * Whether JPA annotations should be considered by the {@link org.jooq.impl.DefaultRecordMapper}, assuming the <code>jOOQ-jpa-extensions</code> is on the classpath.
      * 
      * @param value
      *     allowed object is
@@ -8963,7 +8963,7 @@ public class Settings
     }
 
     /**
-     * Whether JPA annotations should be considered by the DefaultRecordMapper.
+     * Whether JPA annotations should be considered by the {@link org.jooq.impl.DefaultRecordMapper}, assuming the <code>jOOQ-jpa-extensions</code> is on the classpath.
      * 
      */
     public Settings withMapJPAAnnotations(Boolean value) {

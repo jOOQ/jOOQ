@@ -1401,7 +1401,7 @@ IDENTITY values, and if {@link #returnAllOnUpdatableRecord} is active, also othe
       </element>
 
       <element name="mapJPAAnnotations" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether JPA annotations should be considered by the DefaultRecordMapper.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether JPA annotations should be considered by the {@link org.jooq.impl.DefaultRecordMapper}, assuming the <code>jOOQ-jpa-extensions</code> is on the classpath.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="mapRecordComponentParameterNames" type="boolean" minOccurs="0" maxOccurs="1" default="false">

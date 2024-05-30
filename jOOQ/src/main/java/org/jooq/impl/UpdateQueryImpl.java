@@ -787,7 +787,8 @@ implements
 
         acceptFrom(ctx, where0, f);
 
-        if (limitEmulation(ctx)) {
+        boolean limitEmulation = limitEmulation(ctx);
+        if (limitEmulation) {
 
             // [#16632] Push down USING table list here
             TableList t1 = new TableList();
@@ -803,7 +804,7 @@ implements
                 where0.addConditions(row(keyFields).in(select(keyFields).from(t1).where(getWhere()).orderBy(orderBy).limit(limit)));
         }
 
-        if (hasWhere() && (from.isEmpty() || supportFromOrUpdateJoin(ctx)))
+        if (hasWhere() && !limitEmulation)
             where0.addConditions(getWhere());
         else if (!where0.hasWhere() && REQUIRES_WHERE.contains(ctx.dialect()))
             where0.addConditions(trueCondition());

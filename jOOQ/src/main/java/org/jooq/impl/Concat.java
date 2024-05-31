@@ -46,6 +46,10 @@ import static org.jooq.impl.Names.N_CONCAT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.castAllIfNeeded;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;

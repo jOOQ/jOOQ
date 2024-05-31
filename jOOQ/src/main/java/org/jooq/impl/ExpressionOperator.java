@@ -37,7 +37,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.raw;
+
 import org.jooq.Name;
+import org.jooq.QueryPart;
+import org.jooq.SQL;
 
 /**
  * The operator used in <code>Expression</code>
@@ -74,6 +78,7 @@ enum ExpressionOperator {
     ;
 
     private final String  sql;
+    private final SQL     queryPart;
     private final Name    name;
     private final boolean associative;
     private final boolean commutative;
@@ -84,6 +89,7 @@ enum ExpressionOperator {
 
     private ExpressionOperator(String sql, boolean associative, boolean commutative) {
         this.sql = sql;
+        this.queryPart = raw(sql);
         this.name = DSL.name(name().toLowerCase());
         this.associative = associative;
         this.commutative = commutative;
@@ -91,6 +97,10 @@ enum ExpressionOperator {
 
     final String toSQL() {
         return sql;
+    }
+
+    final QueryPart toQueryPart() {
+        return queryPart;
     }
 
     final Name toName() {

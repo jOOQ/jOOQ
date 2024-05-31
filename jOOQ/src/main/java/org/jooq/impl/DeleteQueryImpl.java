@@ -272,7 +272,7 @@ implements
                     }
 
                     if (where.hasWhere())
-                        d.addConditions(where.getWhere());
+                        d.addConditions(where);
                 },
                 transformInlineDerivedTables0(ctx, t, where, false)
             ).accept0(ctx);

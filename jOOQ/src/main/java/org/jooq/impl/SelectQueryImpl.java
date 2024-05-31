@@ -551,7 +551,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             result.groupBy.addAll(groupBy);
             result.groupByDistinct = groupByDistinct;
             result.having.setWhere(having.getWhere());
-            if (window != null)
+            if (isNotEmpty(window))
                 result.addWindow(window);
             result.qualify.setWhere(qualify.getWhere());
         }

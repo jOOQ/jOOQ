@@ -858,7 +858,9 @@
         <module>jOOQ-meta-extensions</module>
         <module>jOOQ-meta-extensions-hibernate</module>
         <module>jOOQ-meta-extensions-liquibase</module>
+
         <module>jOOQ-meta-kotlin</module>
+
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
         <module>jOOQ-migrations-maven</module>
@@ -875,6 +877,8 @@
 
 
         <module>jOOQ-xtend</module>
+
+
 
 
 

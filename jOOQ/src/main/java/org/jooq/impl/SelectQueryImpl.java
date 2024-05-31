@@ -205,10 +205,12 @@ import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.concat;
 import static org.jooq.impl.Tools.containsUnaliasedTable;
+import static org.jooq.impl.Tools.deleteQueryImpl;
 import static org.jooq.impl.Tools.fieldArray;
 import static org.jooq.impl.Tools.hasAmbiguousNames;
 import static org.jooq.impl.Tools.hasAmbiguousNamesInTables;
 import static org.jooq.impl.Tools.hasName;
+import static org.jooq.impl.Tools.insertQueryImpl;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.isInlineVal0;
 import static org.jooq.impl.Tools.isNotEmpty;
@@ -221,6 +223,7 @@ import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
+import static org.jooq.impl.Tools.updateQueryImpl;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_INSERT_SELECT;
@@ -583,7 +586,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             result.groupBy.addAll(groupBy);
             result.groupByDistinct = groupByDistinct;
             result.having.setWhere(having.getWhere());
-            if (window != null)
+            if (isNotEmpty(window))
                 result.addWindow0(window);
             result.qualify.setWhere(qualify.getWhere());
         }
@@ -1458,6 +1461,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final void accept(Context<?> ctx) {
         Table<?> dmlTable;
+        Table<?> dcdTable;
         List<Table<?>> dmlTables;
 
         // [#6583] [#8609] [#14742] Work around MySQL's self-reference-in-DML-subquery restriction
@@ -1542,7 +1546,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-        else if (withReadOnly && NO_SUPPORT_WITH_READ_ONLY.contains(ctx.dialect()))
+
+        else if (withReadOnly && NO_SUPPORT_WITH_READ_ONLY.contains(ctx.dialect())) {
             ctx.visit(copy(s -> {
                 s.withReadOnly = false;
 
@@ -1554,6 +1559,38 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     && !s.hasUnions())
                     s.union((Select<R>) DSL.select(map(s.getSelect(), (Field<?> f) -> inline((Object) null, f))).where(falseCondition()));
             }));
+        }
+        else if (from.size() == 1
+            && (dcdTable = unalias(from.get(0))) instanceof DataChangeDeltaTable
+            && ((DataChangeDeltaTable<?>) dcdTable).emulateUsingReturning(ctx)
+            && ctx.configuration().requireCommercial(() -> "Data change delta table emulations are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition.")
+
+
+
+        ) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
         else
             accept0(ctx);
     }

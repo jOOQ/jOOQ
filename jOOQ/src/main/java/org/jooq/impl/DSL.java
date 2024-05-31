@@ -12256,7 +12256,7 @@ public class DSL {
      * {@link Delete} statement was applied.
      */
     @NotNull
-    @Support({ H2 })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES })
     public static <R extends Record> Table<R> oldTable(Update<R> query) {
         return new DataChangeDeltaTable<>(ResultOption.OLD, query);
     }
@@ -12267,7 +12267,7 @@ public class DSL {
      * {@link Delete} statement was applied.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES })
     public static <R extends Record> Table<R> oldTable(Delete<R> query) {
         return new DataChangeDeltaTable<>(ResultOption.OLD, query);
     }
@@ -12336,7 +12336,7 @@ public class DSL {
      * version of the modified data.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES })
     public static <R extends Record> Table<R> finalTable(Insert<R> query) {
         return new DataChangeDeltaTable<>(ResultOption.FINAL, query);
     }
@@ -12352,7 +12352,7 @@ public class DSL {
      * version of the modified data.
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ FIREBIRD, H2, MARIADB, POSTGRES })
     public static <R extends Record> Table<R> finalTable(Update<R> query) {
         return new DataChangeDeltaTable<>(ResultOption.FINAL, query);
     }

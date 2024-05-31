@@ -695,7 +695,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         ctx.data().remove(DATA_DML_TARGET_TABLE);
     }
 
-    private final boolean fetchTriggerValuesAfterReturning(Scope ctx) {
+    final boolean fetchTriggerValuesAfterReturning(Scope ctx) {
         if (this instanceof Delete)
             return false;
 

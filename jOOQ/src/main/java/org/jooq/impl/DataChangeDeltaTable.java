@@ -41,8 +41,12 @@ package org.jooq.impl;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.resultQuery;
@@ -87,12 +91,15 @@ implements
     QOM.DataChangeDeltaTable<R>
 {
 
-    private final Set<SQLDialect> EMULATE_USING_CTE = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> EMULATE_USING_CTE             = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> EMULATE_OLD_USING_RETURNING   = SQLDialect.supportedBy(FIREBIRD, MARIADB);
+    static final Set<SQLDialect> EMULATE_NEW_USING_RETURNING   = SQLDialect.supportedBy();
+    static final Set<SQLDialect> EMULATE_FINAL_USING_RETURNING = SQLDialect.supportedBy(FIREBIRD, MARIADB);
 
-    private final ResultOption    resultOption;
-    private final DMLQuery<R>     query;
-    private final Table<R>        table;
-    private final Name            alias;
+    final ResultOption           resultOption;
+    final DMLQuery<R>            query;
+    final Table<R>               table;
+    final Name                   alias;
 
     DataChangeDeltaTable(ResultOption resultOption, DMLQuery<R> query) {
         this(resultOption, query, table(query));
@@ -124,6 +131,19 @@ implements
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
+
+    final boolean emulateUsingReturning(Context<?> ctx) {
+        switch (resultOption) {
+            case OLD:
+                return EMULATE_OLD_USING_RETURNING.contains(ctx.dialect());
+            case NEW:
+                return EMULATE_NEW_USING_RETURNING.contains(ctx.dialect());
+            case FINAL:
+                return EMULATE_FINAL_USING_RETURNING.contains(ctx.dialect());
+            default:
+                throw new IllegalStateException("Unsupported result option: " + resultOption);
+        }
+    }
 
     @Override
     public final void accept(Context<?> ctx) {

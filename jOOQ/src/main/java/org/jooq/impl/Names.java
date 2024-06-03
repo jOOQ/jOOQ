@@ -184,6 +184,7 @@ final class Names {
     static final Name N_JSON_UNQUOTE                = systemName("json_unquote");
     static final Name N_JSON_VALUE                  = systemName("json_value");
     static final Name N_jsonMergePatch              = systemName("jsonMergePatch");
+    static final Name N_KEY                         = systemName("key");
     static final Name N_LAG                         = systemName("lag");
     static final Name N_lagInFrame                  = systemName("lagInFrame");
     static final Name N_LAST_VALUE                  = systemName("last_value");
@@ -508,7 +509,6 @@ final class Names {
     static final Name N_JSON_SET                    = systemName("json_set");
     static final Name N_JSON_TRANSFORM              = systemName("json_transform");
     static final Name N_JSON_VALID                  = systemName("json_valid");
-    static final Name N_KEY                         = systemName("key");
     static final Name N_LCASE                       = systemName("lcase");
     static final Name N_LEFT                        = systemName("left");
     static final Name N_LEN                         = systemName("len");

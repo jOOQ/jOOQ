@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.*;
 import static org.jooq.impl.Internal.*;
-import static org.jooq.impl.JSONEntryImpl.jsonMerge;
 import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
@@ -212,7 +211,7 @@ implements
 
                 // Workaround for https://jira.mariadb.org/browse/MDEV-13701
                 if (entries.size() > 1) {
-                    ctx.visit(jsonMerge(ctx, "{}",
+                    ctx.visit(JSONEntryImpl.jsonMerge(ctx, "{}",
                         map(entries, onNull == JSONOnNull.ABSENT_ON_NULL
                             ? e -> DSL.nvl2(e.value(), jsonObject(e), jsonObject())
                             : e -> jsonObject(e)
@@ -222,7 +221,7 @@ implements
                 }
                 else if (!entries.isEmpty() && isJSONArray((first = entries.iterator().next()).value())) {
                     ctx.visit(jsonObject(
-                        key(first.key()).value(jsonMerge(ctx, "[]", first.value()))
+                        key(first.key()).value(JSONEntryImpl.jsonMerge(ctx, "[]", first.value()))
                     ));
                 }
                 else

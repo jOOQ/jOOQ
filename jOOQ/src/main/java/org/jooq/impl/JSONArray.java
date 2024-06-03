@@ -37,56 +37,31 @@
  */
 package org.jooq.impl;
 
-// ...
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.impl.DSL.array;
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.jsonArray;
-import static org.jooq.impl.DSL.jsonArrayAgg;
-import static org.jooq.impl.DSL.jsonTable;
-import static org.jooq.impl.DSL.jsonbArrayAgg;
-import static org.jooq.impl.DSL.rand;
-import static org.jooq.impl.DSL.row;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.values;
-import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
-import static org.jooq.impl.Names.N_ARRAY_CONSTRUCT;
-import static org.jooq.impl.Names.N_ARRAY_CONSTRUCT_COMPACT;
-import static org.jooq.impl.Names.N_JSONB_BUILD_ARRAY;
-import static org.jooq.impl.Names.N_JSON_ARRAY;
-import static org.jooq.impl.Names.N_JSON_BUILD_ARRAY;
-import static org.jooq.impl.Names.N_JSON_EXTRACT;
-import static org.jooq.impl.Names.N_JSON_MODIFY;
-import static org.jooq.impl.Names.N_JSON_QUERY;
-import static org.jooq.impl.Names.N_JSON_TREE;
-import static org.jooq.impl.Names.N_KEY;
-import static org.jooq.impl.Names.N_T;
-import static org.jooq.impl.Names.N_TUPLE;
-import static org.jooq.impl.Names.N_VALUE;
-import static org.jooq.impl.Names.N_toJSONString;
-import static org.jooq.impl.SQLDataType.JSON;
-import static org.jooq.impl.SQLDataType.JSONB;
-import static org.jooq.impl.SQLDataType.OTHER;
-import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import java.util.Collection;
-
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.Function4;
-import org.jooq.JSON;
-import org.jooq.JSONArrayNullStep;
-import org.jooq.JSONArrayReturningStep;
-import org.jooq.Param;
-// ...
-import org.jooq.Row1;
-import org.jooq.Table;
+import org.jooq.*;
+import org.jooq.Function1;
+import org.jooq.Record;
+import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.tools.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 
 
@@ -172,7 +147,7 @@ implements
 
     @Override
     public void accept(Context<?> ctx) {
-        QueryPartCollectionView<Field<?>> mapped = QueryPartCollectionView.wrap((Collection<Field<?>>) fields).map(jsonCastMapper(ctx));
+        QueryPartCollectionView<Field<?>> mapped = QueryPartCollectionView.wrap((Collection<Field<?>>) fields).map(JSONEntryImpl.jsonCastMapper(ctx));
 
         switch (ctx.family()) {
 

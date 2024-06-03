@@ -105,15 +105,15 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
             }
 
             case FIREBIRD:
-                ctx.visit(function(N_MINVALUE, getDataType(), args.toArray(EMPTY_FIELD)));
+                ctx.visit(function(N_MINVALUE, getDataType(), args));
                 return;
 
             case SQLITE:
-                ctx.visit(function(N_MIN, getDataType(), args.toArray(EMPTY_FIELD)));
+                ctx.visit(function(N_MIN, getDataType(), args));
                 return;
 
             default:
-                ctx.visit(function(N_LEAST, getDataType(), args.toArray(EMPTY_FIELD)));
+                ctx.visit(function(N_LEAST, getDataType(), args));
                 return;
         }
     }

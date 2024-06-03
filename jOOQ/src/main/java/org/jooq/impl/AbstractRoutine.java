@@ -2421,7 +2421,7 @@ implements
                 name != null ? name(name) : AbstractRoutine.this.getQualifiedName(ctx),
                 returnType,
                 false,
-                fields.toArray(EMPTY_FIELD)
+                fields
             );
 
             // [#3592] Decrease SQL -> PL/SQL context switches with Oracle Scalar Subquery Caching

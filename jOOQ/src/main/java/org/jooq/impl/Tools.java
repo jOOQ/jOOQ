@@ -7380,6 +7380,17 @@ final class Tools {
              : field;
     }
 
+    static final List<Field<?>> nullSafe(Collection<? extends Field<?>> fields) {
+        if (fields == null)
+            return emptyList();
+
+        List<Field<?>> result = new ArrayList<>(fields.size());
+        for (Field<?> f : fields)
+            result.add(nullSafe(f));
+
+        return result;
+    }
+
     static final Field<?>[] nullSafe(Field<?>... fields) {
         if (fields == null)
             return EMPTY_FIELD;

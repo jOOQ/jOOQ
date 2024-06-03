@@ -105,15 +105,15 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
             }
 
             case FIREBIRD:
-                ctx.visit(function(N_MAXVALUE, getDataType(), args.toArray(EMPTY_FIELD)));
+                ctx.visit(function(N_MAXVALUE, getDataType(), args));
                 return;
 
             case SQLITE:
-                ctx.visit(function(N_MAX, getDataType(), args.toArray(EMPTY_FIELD)));
+                ctx.visit(function(N_MAX, getDataType(), args));
                 return;
 
             default:
-                ctx.visit(function(N_GREATEST, getDataType(), args.toArray(EMPTY_FIELD)));
+                ctx.visit(function(N_GREATEST, getDataType(), args));
                 return;
         }
     }

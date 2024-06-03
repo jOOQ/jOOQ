@@ -13000,7 +13000,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // [#10107] Completely ignore functions in the DDLDatabase
             return isDDLDatabase()
                  ? inline((Object) null)
-                 : function(name, Object.class, arguments.toArray(EMPTY_FIELD));
+                 : function(name, Object.class, arguments);
         }
 
 

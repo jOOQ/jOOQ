@@ -15920,7 +15920,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static <T> Field<T> function(String name, Class<T> type, Field<?>... arguments) {
-        return function(name, getDataType(type), Tools.nullSafe(arguments));
+        return function(name, type, asList(arguments));
     }
 
     /**
@@ -15941,7 +15941,7 @@ public class DSL {
     @Support
     @PlainSQL
     public static <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {
-        return new org.jooq.impl.Function<>(name, type, Tools.nullSafe(arguments));
+        return function(name, type, asList(arguments));
     }
 
     /**
@@ -15963,7 +15963,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> function(Name name, Class<T> type, Field<?>... arguments) {
-        return function(name, getDataType(type), Tools.nullSafe(arguments));
+        return function(name, type, asList(arguments));
     }
 
     /**
@@ -15977,6 +15977,92 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> function(Name name, DataType<T> type, Field<?>... arguments) {
+        return function(name, type, asList(arguments));
+    }
+
+    /**
+     * <code>function()</code> can be used to access native or user-defined
+     * functions that are not yet or insufficiently supported by jOOQ.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #function(String, DataType, Field...)}.
+     *
+     * @param name The function name (without parentheses)
+     * @param type The function return type (a type that is supported by
+     *            {@link SQLDataType})
+     * @param arguments The function arguments
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    public static <T> Field<T> function(String name, Class<T> type, Collection<? extends Field<?>> arguments) {
+        return function(name, getDataType(type), Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>function()</code> can be used to access native or user-defined
+     * functions that are not yet or insufficiently supported by jOOQ.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param name The function name (without parentheses)
+     * @param type The function return type
+     * @param arguments The function arguments
+     * @see SQL
+     */
+    @NotNull
+    @Support
+    @PlainSQL
+    public static <T> Field<T> function(String name, DataType<T> type, Collection<? extends Field<?>> arguments) {
+        return new org.jooq.impl.Function<>(name, type, Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>function()</code> can be used to access native or user-defined
+     * functions that are not yet or insufficiently supported by jOOQ.
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #function(Name, DataType, Field...)}.
+     *
+     * @param name The function name (possibly qualified)
+     * @param type The function return type (a type that is supported by
+     *            {@link SQLDataType})
+     * @param arguments The function arguments
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> function(Name name, Class<T> type, Collection<? extends Field<?>> arguments) {
+        return function(name, getDataType(type), Tools.nullSafe(arguments));
+    }
+
+    /**
+     * <code>function()</code> can be used to access native or user-defined
+     * functions that are not yet or insufficiently supported by jOOQ.
+     *
+     * @param name The function name (possibly qualified)
+     * @param type The function return type
+     * @param arguments The function arguments
+     */
+    @NotNull
+    @Support
+    public static <T> Field<T> function(Name name, DataType<T> type, Collection<? extends Field<?>> arguments) {
         return new org.jooq.impl.Function<>(name, type, Tools.nullSafe(arguments));
     }
 

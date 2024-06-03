@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
+import java.util.Collection;
+
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -54,15 +56,15 @@ final class Function<T> extends AbstractFunction<T> {
 
     private final QueryPartList<Field<?>> arguments;
 
-    Function(String name, DataType<T> type, Field<?>... arguments) {
+    Function(String name, DataType<T> type, Collection<? extends Field<?>> arguments) {
         this(unquotedName(name), type, arguments);
     }
 
-    Function(Name name, DataType<T> type, Field<?>... arguments) {
+    Function(Name name, DataType<T> type, Collection<? extends Field<?>> arguments) {
         this(name, type, true, arguments);
     }
 
-    Function(Name name, DataType<T> type, boolean applySchemaMapping, Field<?>... arguments) {
+    Function(Name name, DataType<T> type, boolean applySchemaMapping, Collection<? extends Field<?>> arguments) {
         super(name, type, applySchemaMapping);
 
         this.arguments = new QueryPartList<>(arguments);

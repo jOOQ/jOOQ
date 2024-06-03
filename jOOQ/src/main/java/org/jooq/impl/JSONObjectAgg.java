@@ -41,12 +41,18 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonObject;
+import static org.jooq.impl.DSL.key;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
+import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
+import static org.jooq.impl.Keywords.K_NESTED;
+import static org.jooq.impl.Keywords.K_PATH;
+import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_FIELD;
@@ -55,14 +61,19 @@ import static org.jooq.impl.Names.N_JSON_GROUP_OBJECT;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_PARSE;
+import static org.jooq.impl.Names.N_JSON_TRANSFORM;
 import static org.jooq.impl.Names.N_MAP;
 import static org.jooq.impl.Names.N_MAP_FILTER;
 import static org.jooq.impl.Names.N_OBJECT_AGG;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+
+import java.util.function.Function;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Context;
@@ -103,6 +114,30 @@ implements
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -292,9 +327,15 @@ implements
 
 
     private final void acceptStandard(Context<?> ctx) {
-        ctx.visit(N_JSON_OBJECTAGG).sql('(').visit(entry);
+        acceptStandard(ctx, null, onNull);
+    }
 
-        JSONNull jsonNull = new JSONNull(onNull);
+    private final void acceptStandard(Context<?> ctx, Function<? super Field<?>, ? extends Field<?>> mapper, JSONOnNull onNull0) {
+        JSONEntry<?> entry0 = mapper == null ? entry : key(entry.key()).value(mapper.apply(entry.value()));
+
+        ctx.visit(N_JSON_OBJECTAGG).sql('(').visit(entry0);
+
+        JSONNull jsonNull = new JSONNull(onNull0);
         if (jsonNull.rendersContent(ctx))
             ctx.sql(' ').visit(jsonNull);
 

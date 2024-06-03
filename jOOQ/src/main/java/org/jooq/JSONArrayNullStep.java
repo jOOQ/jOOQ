@@ -84,7 +84,7 @@ public interface JSONArrayNullStep<T> extends JSONArrayReturningStep<T> {
      * <p>
      * Exclude <code>NULL</code> values in output JSON.
      */
-    @Support({ H2, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @NotNull @CheckReturnValue
     JSONArrayReturningStep<T> absentOnNull();
 }

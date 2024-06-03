@@ -179,6 +179,7 @@ final class Names {
     static final Name N_JSON_QUERY                  = systemName("json_query");
     static final Name N_JSON_QUOTE                  = systemName("json_quote");
     static final Name N_JSON_TABLE                  = systemName("json_table");
+    static final Name N_JSON_TREE                   = systemName("json_tree");
     static final Name N_JSON_TYPE                   = systemName("json_type");
     static final Name N_JSON_UNQUOTE                = systemName("json_unquote");
     static final Name N_JSON_VALUE                  = systemName("json_value");
@@ -507,6 +508,7 @@ final class Names {
     static final Name N_JSON_SET                    = systemName("json_set");
     static final Name N_JSON_TRANSFORM              = systemName("json_transform");
     static final Name N_JSON_VALID                  = systemName("json_valid");
+    static final Name N_KEY                         = systemName("key");
     static final Name N_LCASE                       = systemName("lcase");
     static final Name N_LEFT                        = systemName("left");
     static final Name N_LEN                         = systemName("len");

@@ -278,6 +278,22 @@ implements
                 break;
             }
 
+            case SQLITE: {
+                if (onNull == JSONOnNull.ABSENT_ON_NULL) {
+                    Field<String> key = DSL.field(N_KEY, VARCHAR);
+                    Field<T> value = DSL.field(N_VALUE, getDataType());
+
+                    ctx.visit(DSL.field(
+                        select(jsonObjectAgg(key, value).filterWhere(value.isNotNull().and(key.isNotNull())))
+                        .from("{0}({1})", N_JSON_TREE, $onNull(JSONOnNull.NULL_ON_NULL))
+                    ));
+                }
+                else
+                    acceptStandard(ctx);
+
+                break;
+            }
+
             default:
                 acceptStandard(ctx);
                 break;

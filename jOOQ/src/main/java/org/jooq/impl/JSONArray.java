@@ -38,7 +38,9 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.Keywords.*;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.SQLDataType.*;
@@ -147,7 +149,7 @@ implements
 
     @Override
     public void accept(Context<?> ctx) {
-        QueryPartCollectionView<Field<?>> mapped = QueryPartCollectionView.wrap((Collection<Field<?>>) fields).map(JSONEntryImpl.jsonCastMapper(ctx));
+        QueryPartCollectionView<Field<?>> mapped = QueryPartCollectionView.wrap((Collection<Field<?>>) fields).map(jsonCastMapper(ctx));
 
         switch (ctx.family()) {
 
@@ -236,48 +238,68 @@ implements
                 break;
             }
 
-            default: {
-                JSONNull jsonNull;
-                JSONReturning jsonReturning;
+            case SQLITE: {
+                if (onNull == JSONOnNull.ABSENT_ON_NULL) {
+                    Field<String> key = DSL.field(N_KEY, VARCHAR);
+                    Field<T> value = DSL.field(N_VALUE, getDataType());
 
-                // Workaround for https://github.com/h2database/h2database/issues/2496
-                if (fields.isEmpty() && ctx.family() == H2)
-                    jsonNull = new JSONNull(JSONOnNull.NULL_ON_NULL);
-                else if (fields.isEmpty() && JSONNull.NO_SUPPORT_NULL_ON_EMPTY.contains(ctx.dialect()))
-                    jsonNull = new JSONNull(null);
-                else
-                    jsonNull = new JSONNull(onNull);
-
-
-
-
-
-
-
-                jsonReturning = new JSONReturning(returning);
-
-                Field<T> jsonArray = CustomField.of(N_JSON_ARRAY, getDataType(), c ->
-                    c.visit(N_JSON_ARRAY).sql('(').visit(QueryPartListView.wrap(mapped, jsonNull, jsonReturning).separator("")).sql(')')
-                );
-
-                switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-                    default:
-                        ctx.visit(jsonArray);
-                        break;
+                    ctx.visit(DSL.field(
+                        select(jsonArrayAgg(value).filterWhere(value.isNotNull().and(key.isNotNull())))
+                        .from("{0}({1})", N_JSON_TREE, $onNull(JSONOnNull.NULL_ON_NULL))
+                    ));
                 }
+                else
+                    acceptStandard(ctx, mapped);
+
                 break;
             }
+
+            default: {
+                acceptStandard(ctx, mapped);
+                break;
+            }
+        }
+    }
+
+    private final void acceptStandard(Context<?> ctx, QueryPartCollectionView<Field<?>> mapped) {
+        JSONNull jsonNull;
+        JSONReturning jsonReturning;
+
+        // Workaround for https://github.com/h2database/h2database/issues/2496
+        if (fields.isEmpty() && ctx.family() == H2)
+            jsonNull = new JSONNull(JSONOnNull.NULL_ON_NULL);
+        else if (fields.isEmpty() && JSONNull.NO_SUPPORT_NULL_ON_EMPTY.contains(ctx.dialect()))
+            jsonNull = new JSONNull(null);
+        else
+            jsonNull = new JSONNull(onNull);
+
+
+
+
+
+
+
+        jsonReturning = new JSONReturning(returning);
+
+        Field<T> jsonArray = CustomField.of(N_JSON_ARRAY, getDataType(), c ->
+            c.visit(N_JSON_ARRAY).sql('(').visit(QueryPartListView.wrap(mapped, jsonNull, jsonReturning).separator("")).sql(')')
+        );
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(jsonArray);
+                break;
         }
     }
 

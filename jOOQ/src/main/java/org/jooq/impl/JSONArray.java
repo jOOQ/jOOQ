@@ -37,33 +37,56 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.*;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.Internal.*;
+// ...
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.impl.DSL.array;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.jsonArray;
+import static org.jooq.impl.DSL.jsonArrayAgg;
+import static org.jooq.impl.DSL.jsonTable;
+import static org.jooq.impl.DSL.jsonbArrayAgg;
+import static org.jooq.impl.DSL.rand;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
-import static org.jooq.impl.Keywords.*;
-import static org.jooq.impl.Names.*;
-import static org.jooq.impl.SQLDataType.*;
-import static org.jooq.impl.Tools.*;
-import static org.jooq.impl.Tools.BooleanDataKey.*;
-import static org.jooq.impl.Tools.ExtendedDataKey.*;
-import static org.jooq.impl.Tools.SimpleDataKey.*;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.impl.Names.N_ARRAY_CONSTRUCT;
+import static org.jooq.impl.Names.N_ARRAY_CONSTRUCT_COMPACT;
+import static org.jooq.impl.Names.N_JSONB_BUILD_ARRAY;
+import static org.jooq.impl.Names.N_JSON_ARRAY;
+import static org.jooq.impl.Names.N_JSON_BUILD_ARRAY;
+import static org.jooq.impl.Names.N_JSON_EXTRACT;
+import static org.jooq.impl.Names.N_JSON_MODIFY;
+import static org.jooq.impl.Names.N_JSON_QUERY;
+import static org.jooq.impl.Names.N_JSON_TREE;
+import static org.jooq.impl.Names.N_KEY;
+import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.Names.N_TUPLE;
+import static org.jooq.impl.Names.N_VALUE;
+import static org.jooq.impl.Names.N_toJSONString;
+import static org.jooq.impl.SQLDataType.JSON;
+import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.map;
 
-import org.jooq.*;
-import org.jooq.Function1;
-import org.jooq.Record;
-import org.jooq.conf.ParamType;
+import java.util.Collection;
+
+import org.jooq.Context;
+import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.Function4;
+import org.jooq.JSON;
+import org.jooq.JSONArrayNullStep;
+import org.jooq.JSONArrayReturningStep;
+import org.jooq.Param;
+// ...
+import org.jooq.Row1;
+import org.jooq.Table;
 import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.tools.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 
 
 
@@ -235,6 +258,30 @@ implements
                     e -> e,
                     array(map(fields, e -> JSONEntryImpl.jsonCast(ctx, e).cast(JSON)))
                 ).cast(JSON));
+                break;
+            }
+
+            case MARIADB: {
+                if (onNull == JSONOnNull.ABSENT_ON_NULL) {
+                    Field<T> value = DSL.field(N_VALUE, getDataType());
+
+                    ctx.visit(
+                        DSL.coalesce(
+                            DSL.field(
+                            select(jsonArrayAgg(function(N_JSON_EXTRACT, getDataType(), value, inline("$"))))
+                            .from(jsonTable((Field<JSON>) $onNull(JSONOnNull.NULL_ON_NULL), inline("$[*]"))
+                                .column(value, SQLDataType.JSON).path("$").as(N_T))
+                            .where(value.ne((Field) inline("null")))
+
+                            // [#10113] Workaround for https://jira.mariadb.org/projects/MDEV/issues/MDEV-34284
+                            .and(rand().isNotNull())
+                        ),
+                        jsonArray()
+                    ));
+                }
+                else
+                    acceptStandard(ctx, mapped);
+
                 break;
             }
 

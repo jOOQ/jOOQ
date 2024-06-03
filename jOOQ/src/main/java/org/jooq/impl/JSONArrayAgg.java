@@ -49,13 +49,16 @@ import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.groupConcatDistinct;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.orderBy;
+import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.JSONEntryImpl.jsonMerge;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
+import static org.jooq.impl.Keywords.K_NESTED;
+import static org.jooq.impl.Keywords.K_PATH;
+import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_FILTER;
@@ -65,19 +68,21 @@ import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_ARRAY;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
+import static org.jooq.impl.Names.N_JSON_TRANSFORM;
 import static org.jooq.impl.Names.N_toJSONString;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
+import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.Context;
@@ -133,6 +138,21 @@ implements
                 ctx.visit(jsonMerge(ctx, "[]", groupConcatEmulation(ctx)));
                 break;
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -321,18 +341,24 @@ implements
 
 
     private final void acceptStandard(Context<?> ctx) {
+        acceptStandard(ctx, null, onNull);
+    }
+
+    private final void acceptStandard(Context<?> ctx, Function<? super Field<?>, ? extends Field<?>> mapper, JSONOnNull onNull0) {
         ctx.visit(N_JSON_ARRAYAGG).sql('(');
         acceptDistinct(ctx);
 
+        QueryPartListView<Field<?>> arguments0 = mapper == null ? arguments : wrap(arguments).map(mapper);
 
 
 
 
 
-        acceptArguments3(ctx, arguments, jsonCastMapper(ctx));
+
+        acceptArguments3(ctx, arguments0, jsonCastMapper(ctx));
         acceptOrderBy(ctx);
 
-        JSONNull jsonNull = new JSONNull(onNull);
+        JSONNull jsonNull = new JSONNull(onNull0);
         if (jsonNull.rendersContent(ctx))
             ctx.sql(' ').visit(jsonNull);
 

@@ -275,6 +275,7 @@ final class Keywords {
     static final Keyword K_MONTH                    = keyword("month");
     static final Keyword K_MULTISET                 = keyword("multiset");
     static final Keyword K_NAME                     = keyword("name");
+    static final Keyword K_NESTED                   = keyword("nested");
     static final Keyword K_NEW                      = keyword("new");
     static final Keyword K_NEXT                     = keyword("next");
     static final Keyword K_NEXTVAL                  = keyword("nextval");

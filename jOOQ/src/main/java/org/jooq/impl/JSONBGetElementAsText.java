@@ -135,6 +135,7 @@ implements
                 ctx.visit(function(N_JSON_UNQUOTE, JSONB, DSL.nullif(function(N_JSON_EXTRACT, JSONB, field, inline("$[").concat(index).concat(inline("]"))).cast(VARCHAR), inline("null"))));
                 break;
 
+
             case SQLITE:
                 ctx.visit(function(N_JSON_EXTRACT, JSONB, field, inline("$[").concat(index).concat(inline("]"))));
                 break;

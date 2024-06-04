@@ -116,6 +116,7 @@ implements
             case MARIADB:
                 return false;
 
+
             case SQLITE:
                 return false;
 
@@ -168,6 +169,7 @@ implements
             case MARIADB:
                 ctx.visit(function(N_JSON_UNQUOTE, JSONB, DSL.nullif(function(N_JSON_EXTRACT, JSONB, field, inline("$.").concat(attribute)).cast(VARCHAR), inline("null"))));
                 break;
+
 
             case SQLITE:
                 ctx.visit(function(N_JSON_EXTRACT, JSONB, field, inline("$.").concat(attribute)));

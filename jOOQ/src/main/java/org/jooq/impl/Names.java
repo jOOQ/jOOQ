@@ -499,6 +499,7 @@ final class Names {
     static final Name N_JSON_ARRAY                  = systemName("json_array");
     static final Name N_JSON_ARRAY_LENGTH           = systemName("json_array_length");
     static final Name N_JSON_EXTRACT                = systemName("json_extract");
+    static final Name N_JSON_EXTRACT_ARRAY          = systemName("json_extract_array");
     static final Name N_JSON_GET_ATTRIBUTE          = systemName("json_get_attribute");
     static final Name N_JSON_GET_ATTRIBUTE_AS_TEXT  = systemName("json_get_attribute_as_text");
     static final Name N_JSON_GET_ELEMENT            = systemName("json_get_element");

@@ -372,6 +372,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
     static final Set<SQLDialect>         SUPPORT_FULL_WITH_TIES                  = SQLDialect.supportedBy(CLICKHOUSE, H2, MARIADB, POSTGRES, TRINO);
     static final Set<SQLDialect>         EMULATE_DISTINCT_ON                     = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS         = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTEDB);
@@ -2548,6 +2550,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         //         See also org.jooq.impl.Dual for details.
         boolean hasFrom = !tablelist.isEmpty()
             || REQUIRES_FROM_CLAUSE.contains(context.dialect())
+
 
 
 

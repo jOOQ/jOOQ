@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.jsonGetAttribute;
 import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.JSONExists.Behaviour.ERROR;
 import static org.jooq.impl.JSONExists.Behaviour.FALSE;
@@ -49,6 +50,7 @@ import static org.jooq.impl.Keywords.K_JSON_EXISTS;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Names.N_JSONB_PATH_EXISTS;
 import static org.jooq.impl.Names.N_JSON_CONTAINS_PATH;
+import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_JSON_TYPE;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.Tools.castIfNeeded;
@@ -128,6 +130,12 @@ final class JSONExists extends AbstractCondition implements JSONExistsOnStep, UN
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
 
             case MYSQL:
                 ctx.visit(N_JSON_CONTAINS_PATH).sql('(').visit(json).sql(", 'one', ").visit(path).sql(')');

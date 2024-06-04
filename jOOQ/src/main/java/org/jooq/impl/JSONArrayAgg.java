@@ -68,7 +68,9 @@ import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_ARRAY;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
+import static org.jooq.impl.Names.N_JSON_STRIP_NULLS;
 import static org.jooq.impl.Names.N_JSON_TRANSFORM;
+import static org.jooq.impl.Names.N_TO_JSON;
 import static org.jooq.impl.Names.N_toJSONString;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
@@ -138,6 +140,24 @@ implements
                 ctx.visit(jsonMerge(ctx, "[]", groupConcatEmulation(ctx)));
                 break;
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

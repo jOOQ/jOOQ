@@ -306,6 +306,7 @@ final class Names {
     static final Name N_TIMESTAMP_SUB               = systemName("timestamp_sub");
     static final Name N_toJSONString                = systemName("toJSONString");
     static final Name N_TO_CLOB                     = systemName("to_clob");
+    static final Name N_TO_JSON                     = systemName("to_json");
     static final Name N_TO_NUMBER                   = systemName("to_number");
     static final Name N_TO_VARIANT                  = systemName("to_variant");
     static final Name N_TRUNCATE                    = systemName("truncate");

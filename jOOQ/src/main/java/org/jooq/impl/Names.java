@@ -160,14 +160,17 @@ final class Names {
     static final Name N_JSON                        = systemName("json");
     static final Name N_JSONB_AGG                   = systemName("jsonb_agg");
     static final Name N_JSONB_BUILD_ARRAY           = systemName("jsonb_build_array");
+    static final Name N_JSONB_BUILD_OBJECT          = systemName("jsonb_build_object");
     static final Name N_JSONB_OBJECT_AGG            = systemName("jsonb_object_agg");
     static final Name N_JSONB_PATH_EXISTS           = systemName("jsonb_path_exists");
     static final Name N_JSONB_PATH_QUERY_ARRAY      = systemName("jsonb_path_query_array");
     static final Name N_JSONB_PATH_QUERY_FIRST      = systemName("jsonb_path_query_first");
+    static final Name N_JSONB_STRIP_NULLS           = systemName("jsonb_strip_nulls");
     static final Name N_JSONPATH                    = systemName("jsonpath");
     static final Name N_JSON_AGG                    = systemName("json_agg");
     static final Name N_JSON_ARRAYAGG               = systemName("json_arrayagg");
     static final Name N_JSON_BUILD_ARRAY            = systemName("json_build_array");
+    static final Name N_JSON_BUILD_OBJECT           = systemName("json_build_object");
     static final Name N_JSON_CONTAINS_PATH          = systemName("json_contains_path");
     static final Name N_JSON_GROUP_ARRAY            = systemName("json_group_array");
     static final Name N_JSON_GROUP_OBJECT           = systemName("json_group_object");
@@ -178,6 +181,7 @@ final class Names {
     static final Name N_JSON_PARSE                  = systemName("json_parse");
     static final Name N_JSON_QUERY                  = systemName("json_query");
     static final Name N_JSON_QUOTE                  = systemName("json_quote");
+    static final Name N_JSON_STRIP_NULLS            = systemName("json_strip_nulls");
     static final Name N_JSON_TABLE                  = systemName("json_table");
     static final Name N_JSON_TREE                   = systemName("json_tree");
     static final Name N_JSON_TYPE                   = systemName("json_type");

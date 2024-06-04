@@ -153,14 +153,25 @@ implements
             case POSTGRES:
             case YUGABYTEDB:
                 if (onNull == JSONOnNull.ABSENT_ON_NULL)
-                    ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_strip_nulls" : "json_strip_nulls")).sql('(');
+                    ctx.visit(getDataType().getType() == JSONB.class ? N_JSONB_STRIP_NULLS : N_JSON_STRIP_NULLS).sql('(');
 
-                ctx.visit(unquotedName(getDataType().getType() == JSONB.class ? "jsonb_build_object" : "json_build_object")).sql('(').visit(QueryPartCollectionView.wrap(entries)).sql(')');
+                ctx.visit(getDataType().getType() == JSONB.class ? N_JSONB_BUILD_OBJECT : N_JSON_BUILD_OBJECT).sql('(').visit(QueryPartCollectionView.wrap(entries)).sql(')');
 
                 if (onNull == JSONOnNull.ABSENT_ON_NULL)
                     ctx.sql(')');
 
                 break;
+
+
+
+
+
+
+
+
+
+
+
 
 
 

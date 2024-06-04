@@ -24916,6 +24916,54 @@ public class DSL {
     }
 
     /**
+     * The <code>PERCENTILE_CONT</code> function.
+     * <p>
+     * Calculate the <code>PERCENTILE_CONT</code> inverse distribution aggregate function.
+     *
+     * @param percentile is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> percentileCont(Number percentile) {
+        return new PercentileCont(Tools.field(percentile));
+    }
+
+    /**
+     * The <code>PERCENTILE_CONT</code> function.
+     * <p>
+     * Calculate the <code>PERCENTILE_CONT</code> inverse distribution aggregate function.
+     */
+    @NotNull
+    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> percentile) {
+        return new PercentileCont(percentile);
+    }
+
+    /**
+     * The <code>PERCENTILE_DISC</code> function.
+     * <p>
+     * Calculate the <code>PERCENTILE_DISC</code> inverse distribution aggregate function.
+     *
+     * @param percentile is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number percentile) {
+        return new PercentileDisc(Tools.field(percentile));
+    }
+
+    /**
+     * The <code>PERCENTILE_DISC</code> function.
+     * <p>
+     * Calculate the <code>PERCENTILE_DISC</code> inverse distribution aggregate function.
+     */
+    @NotNull
+    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> percentile) {
+        return new PercentileDisc(percentile);
+    }
+
+    /**
      * The <code>REGR_AVGX</code> function.
      * <p>
      * Calculate the average of the independent values (x). This standard SQL function may
@@ -32328,66 +32376,6 @@ public class DSL {
     @Support({ H2, POSTGRES, YUGABYTEDB })
     public static OrderedAggregateFunction<BigDecimal> cumeDist(Collection<? extends Field<?>> fields) {
         return new DefaultAggregateFunction<>(N_CUME_DIST, SQLDataType.NUMERIC, fields.toArray(EMPTY_FIELD));
-    }
-
-    /**
-     * The
-     * <code>percentile_cont([number]) within group (order by [column])</code>
-     * function.
-     * <p>
-     * While most dialects support this as an aggregate function,
-     * {@link SQLDialect#BIGQUERY}, {@link SQLDialect#SQLSERVER}, and
-     * {@link SQLDialect#REDSHIFT} support only its window function variant.
-     */
-    @NotNull
-    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<BigDecimal> percentileCont(Number number) {
-        return percentileCont(val(number));
-    }
-
-    /**
-     * The
-     * <code>percentile_cont([number]) within group (order by [column])</code>
-     * function.
-     * <p>
-     * While most dialects support this as an aggregate function,
-     * {@link SQLDialect#BIGQUERY}, {@link SQLDialect#SQLSERVER}, and
-     * {@link SQLDialect#REDSHIFT} support only its window function variant.
-     */
-    @NotNull
-    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(N_PERCENTILE_CONT, SQLDataType.NUMERIC, Tools.nullSafe(field));
-    }
-
-    /**
-     * The
-     * <code>percentile_disc([number]) within group (order by [column])</code>
-     * function.
-     * <p>
-     * While most dialects support this as an aggregate function,
-     * {@link SQLDialect#BIGQUERY}, {@link SQLDialect#SQLSERVER}, and
-     * {@link SQLDialect#REDSHIFT} support only its window function variant.
-     */
-    @NotNull
-    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number number) {
-        return percentileDisc(val(number));
-    }
-
-    /**
-     * The
-     * <code>percentile_disc([number]) within group (order by [column])</code>
-     * function.
-     * <p>
-     * While most dialects support this as an aggregate function,
-     * {@link SQLDialect#BIGQUERY}, {@link SQLDialect#SQLSERVER}, and
-     * {@link SQLDialect#REDSHIFT} support only its window function variant.
-     */
-    @NotNull
-    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> field) {
-        return new DefaultAggregateFunction<>(N_PERCENTILE_DISC, SQLDataType.NUMERIC, Tools.nullSafe(field));
     }
 
     // -------------------------------------------------------------------------

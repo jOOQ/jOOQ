@@ -8106,6 +8106,7 @@ public final class QOM {
      */
     public /*sealed*/ interface MaxBy<T>
         extends
+            QueryPart,
             org.jooq.OptionallyOrderedAggregateFunction<T>
         //permits
         //    MaxBy
@@ -8172,6 +8173,7 @@ public final class QOM {
      */
     public /*sealed*/ interface MinBy<T>
         extends
+            QueryPart,
             org.jooq.OptionallyOrderedAggregateFunction<T>
         //permits
         //    MinBy
@@ -8227,6 +8229,40 @@ public final class QOM {
         @NotNull Product $field(Field<? extends Number> field);
         @CheckReturnValue
         @NotNull Product $distinct(boolean distinct);
+    }
+
+    /**
+     * The <code>PERCENTILE CONT</code> function.
+     * <p>
+     * Calculate the <code>PERCENTILE_CONT</code> inverse distribution aggregate function.
+     */
+    public /*sealed*/ interface PercentileCont
+        extends
+            QueryPart,
+            org.jooq.OrderedAggregateFunction<BigDecimal>
+        //permits
+        //    PercentileCont
+    {
+        @NotNull Field<? extends Number> $percentile();
+        @CheckReturnValue
+        @NotNull PercentileCont $percentile(Field<? extends Number> percentile);
+    }
+
+    /**
+     * The <code>PERCENTILE DISC</code> function.
+     * <p>
+     * Calculate the <code>PERCENTILE_DISC</code> inverse distribution aggregate function.
+     */
+    public /*sealed*/ interface PercentileDisc
+        extends
+            QueryPart,
+            org.jooq.OrderedAggregateFunction<BigDecimal>
+        //permits
+        //    PercentileDisc
+    {
+        @NotNull Field<? extends Number> $percentile();
+        @CheckReturnValue
+        @NotNull PercentileDisc $percentile(Field<? extends Number> percentile);
     }
 
     /**

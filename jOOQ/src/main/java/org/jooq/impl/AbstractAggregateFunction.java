@@ -222,7 +222,7 @@ implements
     /**
      * Render function arguments and argument modifiers
      */
-    private final void toSQLArguments(Context<?> ctx) {
+    final void toSQLArguments(Context<?> ctx) {
         acceptFunctionName(ctx);
         ctx.sql('(');
         acceptArguments0(ctx);

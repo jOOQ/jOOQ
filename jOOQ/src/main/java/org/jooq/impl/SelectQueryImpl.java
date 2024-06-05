@@ -377,6 +377,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
     static final Set<SQLDialect>         SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, MARIADB, POSTGRES, TRINO);
     static final Set<SQLDialect>         EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTEDB);
@@ -3364,6 +3366,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+    @SuppressWarnings("unchecked")
     private final void toSQLOrderBy(
         final Context<?> ctx,
         final List<Field<?>> originalFields,
@@ -3455,6 +3458,30 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                             return i >= 0 ? t1.$field(inline(i + 1)) : t1;
                         });
                     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     ctx.visit(actualOrderBy);
                 }

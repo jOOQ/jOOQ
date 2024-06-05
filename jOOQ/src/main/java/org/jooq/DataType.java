@@ -988,6 +988,36 @@ public interface DataType<T> extends Named {
     CharacterSet characterSet();
 
     /**
+     * Return a new data type like this, with the {@link #identity(boolean)}
+     * flag set to <code>true</code>.
+     * <p>
+     * [#5709] The IDENTITY flag imposes a NOT NULL constraint, and removes all
+     * DEFAULT values.
+     * <p>
+     * This is the same as calling <code>identity(true)</code>.
+     *
+     * @return The new data type
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    DataType<T> autoIncrement();
+
+    /**
+     * Return a new data type like this, with the {@link #identity(boolean)}
+     * flag set to <code>true</code>.
+     * <p>
+     * [#5709] The IDENTITY flag imposes a NOT NULL constraint, and removes all
+     * DEFAULT values.
+     * <p>
+     * This is the same as calling <code>identity(true)</code>.
+     *
+     * @return The new data type
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    DataType<T> generatedByDefaultAsIdentity();
+
+    /**
      * Return a new data type like this, with a new identity flag.
      * <p>
      * [#5709] The IDENTITY flag imposes a NOT NULL constraint, and removes all

@@ -338,6 +338,16 @@ implements
     public abstract DataType<T> identity(boolean i);
 
     @Override
+    public final DataType<T> autoIncrement() {
+        return identity(true);
+    }
+
+    @Override
+    public final DataType<T> generatedByDefaultAsIdentity() {
+        return identity(true);
+    }
+
+    @Override
     public final DataType<T> defaultValue(T d) {
         return default_(d);
     }

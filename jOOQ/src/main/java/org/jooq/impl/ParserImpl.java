@@ -160,6 +160,7 @@ import static org.jooq.impl.DSL.deg;
 import static org.jooq.impl.DSL.denseRank;
 import static org.jooq.impl.DSL.digits;
 import static org.jooq.impl.DSL.domain;
+import static org.jooq.impl.DSL.dual;
 import static org.jooq.impl.DSL.epoch;
 import static org.jooq.impl.DSL.every;
 import static org.jooq.impl.DSL.excluded;
@@ -416,6 +417,7 @@ import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_UPDATE;
+import static org.jooq.impl.Names.N_DUAL;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 // ...
@@ -1831,12 +1833,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 intoTable = parseTableName();
         }
 
-        if (parseKeywordIf("FROM"))
+        if (parseKeywordIf("FROM")) {
             from = parseList(',', ParseContext::parseTable);
 
-        // TODO is there a better way?
-        if (from != null && from.size() == 1 && from.get(0).getName().equalsIgnoreCase("dual"))
-            from = null;
+            // [#16762] No explicit DUAL tables should be present at the top level, by default
+            if (from.size() == 1)
+                from.removeIf(t -> t instanceof Dual);
+        }
+
 
         // [#9061] Register tables in scope as early as possible
         // TODO: Move this into parseTables() so lateral joins can profit from lookups (?)
@@ -15298,6 +15302,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     if ((tables = meta.getTables(name(schema.getCatalog(), schema.getSchema()).append(name))).size() == 1)
                         return tables.get(0);
         }
+
+        // [#16762] It should always be possible to lookup the DUAL pseudo table
+        if (Dual.isDual(name))
+            return dual();
 
         if (metaLookups() == THROW_ON_FAILURE) {
             position(positionBeforeName);

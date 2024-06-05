@@ -74,11 +74,9 @@ final class Dual extends AbstractTable<Record> implements QOM.Dual {
 
 
 
-
-
-
-
-
+    private static final Name          DUAL_DB2       = DSL.unquotedName("SYSIBM", "DUAL");
+    private static final Name          DUAL_SYBASE    = DSL.unquotedName("SYS", "DUMMY");
+    private static final Name          DUAL_ORACLE    = DSL.unquotedName("DUAL");
     private static final Name          DUAL_FIREBIRD  = DSL.unquotedName("RDB$DATABASE");
     private static final Name          DUAL_CUBRID    = DSL.unquotedName("db_root");
     private static final Name          DUAL_DERBY     = DSL.unquotedName("SYSIBM", "SYSDUMMY1");
@@ -93,6 +91,13 @@ final class Dual extends AbstractTable<Record> implements QOM.Dual {
         super(TableOptions.expression(), N_DUAL, (Schema) null);
 
         this.force = force;
+    }
+
+    static final boolean isDual(Name name) {
+        return DUAL_ORACLE.equalsIgnoreCase(name)
+            || DUAL_SYBASE.equalsIgnoreCase(name)
+            || DUAL_DB2.equalsIgnoreCase(name)
+            || DUAL_DERBY.equalsIgnoreCase(name);
     }
 
     @Override

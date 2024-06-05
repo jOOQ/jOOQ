@@ -5047,6 +5047,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     ? primaryKey(fieldName)
                     : inlineConstraint.primaryKey(fieldName)));
 
+                parseUniqueIndexStorageClausesIf();
+
                 // [#13880] Remove all lexically preceding inline UNIQUE KEYs as
                 //          soon as a PRIMARY KEY is encountered
                 if (uniqueConstraint != null)
@@ -5059,6 +5061,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             else if (parseKeywordIf("UNIQUE")) {
                 if (!parseKeywordIf("KEY"))
                     parseKeywordIf("INDEX");
+
+                parseUniqueIndexStorageClausesIf();
 
                 if (!unique)
                     constraints.add(uniqueConstraint = parseConstraintEnforcementIf(inlineConstraint == null
@@ -5250,6 +5254,81 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return true;
     }
 
+    private final boolean parseUniqueIndexStorageClausesIf() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final DDLQuery parseCreateType() {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Name name = parseName();
@@ -5333,6 +5412,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : constraint.primaryKey(k.fields());
 
         parseUsingIndexTypeIf();
+        parseUniqueIndexStorageClausesIf();
         return new PrimaryKeySpecification(parseConstraintEnforcementIf(e), k.identity());
     }
 
@@ -5352,6 +5432,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : constraint.unique(fieldNames);
 
         parseUsingIndexTypeIf();
+        parseUniqueIndexStorageClausesIf();
         return parseConstraintEnforcementIf(e);
     }
 

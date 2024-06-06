@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 // ...
@@ -245,7 +246,8 @@ implements
         return computedOnClient(configuration)
             && generationOption(configuration) != GenerationOption.VIRTUAL
             && (generatedAlwaysAsGenerator().supports(GeneratorStatementType.INSERT) ||
-                generatedAlwaysAsGenerator().supports(GeneratorStatementType.UPDATE));
+                generatedAlwaysAsGenerator().supports(GeneratorStatementType.UPDATE))
+            && !FALSE.equals(configuration.settings().isComputedOnClientStored());
     }
 
     @Override
@@ -257,7 +259,8 @@ implements
     public final boolean computedOnClientStoredOn(GeneratorStatementType statementType, Configuration configuration) {
         return computedOnClient(configuration)
             && generationOption(configuration) != GenerationOption.VIRTUAL
-            && generatedAlwaysAsGenerator().supports(statementType);
+            && generatedAlwaysAsGenerator().supports(statementType)
+            && !FALSE.equals(configuration.settings().isComputedOnClientStored());
     }
 
     @Override
@@ -269,7 +272,8 @@ implements
     public final boolean computedOnClientVirtual(Configuration configuration) {
         return computedOnClient(configuration)
             && generationOption(configuration) == GenerationOption.VIRTUAL
-            && generatedAlwaysAsGenerator().supports(GeneratorStatementType.SELECT);
+            && generatedAlwaysAsGenerator().supports(GeneratorStatementType.SELECT)
+            && !FALSE.equals(configuration.settings().isComputedOnClientVirtual());
     }
 
     @Override

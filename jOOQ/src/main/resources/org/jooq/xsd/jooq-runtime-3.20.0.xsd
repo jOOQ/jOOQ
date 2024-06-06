@@ -1475,6 +1475,14 @@ This can be useful if a schema was generated using a dialect that supports compu
 deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="computedOnClientVirtual" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether <code>VIRTUAL</code> client side computed columns should be applied to queries. This feature is available only in commercial distributions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="computedOnClientStored" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether <code>STORED</code> client side computed columns should be applied to queries (including audit columns). This feature is available only in commercial distributions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="executeUpdateWithoutWhere" type="jooq-runtime:ExecuteWithoutWhere" minOccurs="0" maxOccurs="1" default="LOG_DEBUG">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

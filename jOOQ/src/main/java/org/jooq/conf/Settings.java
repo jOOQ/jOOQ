@@ -447,6 +447,10 @@ public class Settings
     protected NestedCollectionEmulation emulateMultiset = NestedCollectionEmulation.DEFAULT;
     @XmlElement(defaultValue = "false")
     protected Boolean emulateComputedColumns = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean computedOnClientVirtual = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean computedOnClientStored = true;
     @XmlElement(defaultValue = "LOG_DEBUG")
     @XmlSchemaType(name = "string")
     protected ExecuteWithoutWhere executeUpdateWithoutWhere = ExecuteWithoutWhere.LOG_DEBUG;
@@ -5888,6 +5892,54 @@ public class Settings
     }
 
     /**
+     * Whether <code>VIRTUAL</code> client side computed columns should be applied to queries. This feature is available only in commercial distributions.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isComputedOnClientVirtual() {
+        return computedOnClientVirtual;
+    }
+
+    /**
+     * Whether <code>VIRTUAL</code> client side computed columns should be applied to queries. This feature is available only in commercial distributions.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setComputedOnClientVirtual(Boolean value) {
+        this.computedOnClientVirtual = value;
+    }
+
+    /**
+     * Whether <code>STORED</code> client side computed columns should be applied to queries (including audit columns). This feature is available only in commercial distributions.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isComputedOnClientStored() {
+        return computedOnClientStored;
+    }
+
+    /**
+     * Whether <code>STORED</code> client side computed columns should be applied to queries (including audit columns). This feature is available only in commercial distributions.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setComputedOnClientStored(Boolean value) {
+        this.computedOnClientStored = value;
+    }
+
+    /**
      * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      * 
      */
@@ -9123,6 +9175,24 @@ public class Settings
     }
 
     /**
+     * Whether <code>VIRTUAL</code> client side computed columns should be applied to queries. This feature is available only in commercial distributions.
+     * 
+     */
+    public Settings withComputedOnClientVirtual(Boolean value) {
+        setComputedOnClientVirtual(value);
+        return this;
+    }
+
+    /**
+     * Whether <code>STORED</code> client side computed columns should be applied to queries (including audit columns). This feature is available only in commercial distributions.
+     * 
+     */
+    public Settings withComputedOnClientStored(Boolean value) {
+        setComputedOnClientStored(value);
+        return this;
+    }
+
+    /**
      * [#6771] Specifies whether UPDATE statements are allowed to be executed lacking a WHERE clause. This has no effect on rendering the statements SQL string.
      * 
      */
@@ -9770,6 +9840,8 @@ public class Settings
         builder.append("emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly", emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly);
         builder.append("emulateMultiset", emulateMultiset);
         builder.append("emulateComputedColumns", emulateComputedColumns);
+        builder.append("computedOnClientVirtual", computedOnClientVirtual);
+        builder.append("computedOnClientStored", computedOnClientStored);
         builder.append("executeUpdateWithoutWhere", executeUpdateWithoutWhere);
         builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
         builder.append("interpreterDialect", interpreterDialect);
@@ -11492,6 +11564,24 @@ public class Settings
                 return false;
             }
         }
+        if (computedOnClientVirtual == null) {
+            if (other.computedOnClientVirtual!= null) {
+                return false;
+            }
+        } else {
+            if (!computedOnClientVirtual.equals(other.computedOnClientVirtual)) {
+                return false;
+            }
+        }
+        if (computedOnClientStored == null) {
+            if (other.computedOnClientStored!= null) {
+                return false;
+            }
+        } else {
+            if (!computedOnClientStored.equals(other.computedOnClientStored)) {
+                return false;
+            }
+        }
         if (executeUpdateWithoutWhere == null) {
             if (other.executeUpdateWithoutWhere!= null) {
                 return false;
@@ -12088,6 +12178,8 @@ public class Settings
         result = ((prime*result)+((emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly == null)? 0 :emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly.hashCode()));
         result = ((prime*result)+((emulateMultiset == null)? 0 :emulateMultiset.hashCode()));
         result = ((prime*result)+((emulateComputedColumns == null)? 0 :emulateComputedColumns.hashCode()));
+        result = ((prime*result)+((computedOnClientVirtual == null)? 0 :computedOnClientVirtual.hashCode()));
+        result = ((prime*result)+((computedOnClientStored == null)? 0 :computedOnClientStored.hashCode()));
         result = ((prime*result)+((executeUpdateWithoutWhere == null)? 0 :executeUpdateWithoutWhere.hashCode()));
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));

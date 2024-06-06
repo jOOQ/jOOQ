@@ -379,6 +379,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
     static final Set<SQLDialect>         SUPPORT_FULL_WITH_TIES          = SQLDialect.supportedBy(H2, MARIADB, POSTGRES, TRINO);
     static final Set<SQLDialect>         EMULATE_DISTINCT_ON             = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_FOR_UPDATE_OF_FIELDS = SQLDialect.supportedBy(MYSQL, POSTGRES, YUGABYTEDB);
@@ -2688,15 +2690,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // WINDOW clause
         // -------------
-        context.start(SELECT_WINDOW);
 
-        if (Tools.isNotEmpty(window) && !NO_SUPPORT_WINDOW_CLAUSE.contains(context.dialect()))
-            context.formatSeparator()
-                   .visit(K_WINDOW)
-                   .separatorRequired(true)
-                   .declareWindows(true, c -> c.visit(window));
 
-        context.end(SELECT_WINDOW);
+
+        acceptWindow(context);
 
         // QUALIFY clause
         // -------------
@@ -2708,6 +2705,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                    // [#15188] Callers ensure that the two QUALIFY conditions are mutually exclusive
                    .visit(additionalQualify != null ? additionalQualify : getQualify().getWhere());
+
+
+
+
+
 
         // ORDER BY clause for local subselect
         // -----------------------------------
@@ -2782,6 +2784,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
             true, unionOrderBy, unionLimit
         ));
+    }
+
+    private void acceptWindow(Context<?> context) {
+        context.start(SELECT_WINDOW);
+
+        if (Tools.isNotEmpty(window) && !NO_SUPPORT_WINDOW_CLAUSE.contains(context.dialect()))
+            context.formatSeparator()
+                   .visit(K_WINDOW)
+                   .separatorRequired(true)
+                   .declareWindows(true, c -> c.visit(window));
+
+        context.end(SELECT_WINDOW);
     }
 
 

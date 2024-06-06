@@ -647,6 +647,7 @@ final class Names {
     static final Name N_TO_CHAR                     = systemName("to_char");
     static final Name N_TO_DATE                     = systemName("to_date");
     static final Name N_TO_HEX                      = systemName("to_hex");
+    static final Name N_TO_JSON_STRING              = systemName("to_json_string");
     static final Name N_TO_TIMESTAMP                = systemName("to_timestamp");
     static final Name N_TRANSFORM                   = systemName("transform");
     static final Name N_TRANSLATE                   = systemName("translate");

@@ -156,6 +156,7 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
+import org.jooq.codegen.TypeDefinition;
 import org.jooq.codegen.GenerationUtil.BaseType;
 import org.jooq.codegen.GeneratorStrategy.Mode;
 import org.jooq.codegen.GeneratorWriter.CloseResult;
@@ -10564,18 +10565,21 @@ public class JavaGenerator extends AbstractGenerator {
 
         @Override
         public String resolve(Name name) {
+            TypeDefinition typeDefinition = new TypeDefinition(
+                name.last(),
+                0,
+                0,
+                name,
+                null,
+                Object.class.getName()
+            );
             return getType(
                 database,
 
                 // [#15276] TODO: Handle SQL Server catalogs
                 database.getSchema(name.qualifier().last()),
                 out,
-                name.last(),
-                0,
-                0,
-                name,
-                null,
-                Object.class.getName(),
+                typeDefinition,
                 mode == null ? Mode.RECORD : mode,
                 null
             );
@@ -10706,16 +10710,18 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected String getJavaType(DataTypeDefinition type, JavaWriter out, Mode udtMode) {
-        return getType(
-            type.getDatabase(),
-            type.getSchema(),
-            out,
+        TypeDefinition typeDefinition=new TypeDefinition(  
             type.getType(),
             type.getPrecision(),
             type.getScale(),
             type.getQualifiedUserType(),
             type.getJavaType(),
-            Object.class.getName(),
+            Object.class.getName());
+        return getType(
+            type.getDatabase(),
+            type.getSchema(),
+            out,
+            typeDefinition,
             udtMode,
             type.getXMLTypeDefinition()
         );
@@ -10730,16 +10736,16 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType) {
-        return getType(db, schema, out, t, p, s, u, javaType, defaultType, Mode.RECORD);
+    protected String getType(Database db, SchemaDefinition schema, JavaWriter out, TypeDefinition typeDef) {
+        return getType(db, schema, out, typeDef, Mode.RECORD);
     }
 
-    protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType, Mode udtMode) {
-        return getType(db, schema, out, t, p, s, u, javaType, defaultType, udtMode, null);
+    protected String getType(Database db, SchemaDefinition schema, JavaWriter out, TypeDefinition typeDef, Mode udtMode) {
+        return getType(db, schema, out, typeDef, udtMode, null);
     }
 
-    protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType, Mode udtMode, XMLTypeDefinition xmlType) {
-        String type = defaultType;
+    protected String getType(Database db, SchemaDefinition schema, JavaWriter out, TypeDefinition typeDef, Mode udtMode, XMLTypeDefinition xmlType) {
+        String type = typeDef.getDefaultType();
 
         // XML types
         if (xmlType != null) {
@@ -10747,82 +10753,56 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // Custom types
-        else if (javaType != null) {
-            type = javaType;
+        else if (typeDef.getJavaType() != null) {
+            type = typeDef.getJavaType();
         }
 
         // Array types
-        else if (db.isArrayType(t)) {
+        else if (db.isArrayType(typeDef.getType())) {
 
             // [#4388] TODO: Improve array handling
-            BaseType bt = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
+            BaseType bt = GenerationUtil.getArrayBaseType(db.getDialect(), typeDef.getType(), typeDef.getUserType());
 
             // [#9067] Prevent StackOverflowErrors
-            String newT = t.equals(bt.t()) ? "OTHER" : bt.t();
+            String newT = typeDef.getType().equals(bt.t()) ? "OTHER" : bt.t();
 
             // [#10309] TODO: The schema should be taken from baseType, if available. Might be different than the argument schema.
             //          When can this happen?
-            String baseType = getType(db, schema, out, newT, p, s, bt.u(), javaType, defaultType, udtMode);
-
-            if (scala)
-                type = "scala.Array[" + baseType + "]";
-            else if (kotlin)
-                type = "kotlin.Array<" + baseType + "?>";
-            else
-                type = baseType + "[]";
-        }
-
-        // Check for Oracle-style VARRAY types
-        else if (db.getArray(schema, u) != null) {
-            boolean udtArray = db.getArray(schema, u).getElementType(resolver(out)).isUDT();
-
-            if (udtMode == Mode.POJO || (udtMode == Mode.INTERFACE && !udtArray)) {
-                if (scala)
-                    type = "java.util.List[" + getJavaType(db.getArray(schema, u).getElementType(resolver(out, udtMode)), out, udtMode) + "]";
-                else
-                    type = "java.util.List<" + getJavaType(db.getArray(schema, u).getElementType(resolver(out, udtMode)), out, udtMode) + ">";
+            TypeDefinition typeDefinition= new TypeDefinition(newT, typeDef.getPrecision(), typeDef.getScale(), bt.u(), typeDef.getJavaType(), typeDef.getDefaultType());
+            String baseType = getType(db, schema, out, typeDefinition, udtMode);
             }
-            else if (udtMode == Mode.INTERFACE) {
-                if (scala)
-                    type = "java.util.List[_ <:" + getJavaType(db.getArray(schema, u).getElementType(resolver(out, udtMode)), out, udtMode) + "]";
-                else
-                    type = "java.util.List<? extends " + getJavaType(db.getArray(schema, u).getElementType(resolver(out, udtMode)), out, udtMode) + ">";
-            }
-            else {
-                type = getStrategy().getFullJavaClassName(db.getArray(schema, u), Mode.RECORD);
-            }
-        }
+        
 
         // Check for DOMAIN types
-        else if (db.getDomain(schema, u) != null) {
-            type = getJavaType(db.getDomain(schema, u).getType(resolver(out)), out);
+        else if (db.getDomain(schema, typeDef.getUserType()) != null) {
+            type = getJavaType(db.getDomain(schema, typeDef.getUserType()).getType(resolver(out)), out);
         }
 
         // Check for ENUM types
-        else if (db.getEnum(schema, u) != null) {
-            type = getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM);
+        else if (db.getEnum(schema, typeDef.getUserType()) != null) {
+            type = getStrategy().getFullJavaClassName(db.getEnum(schema, typeDef.getUserType()), Mode.ENUM);
         }
 
         // Check for UDTs
-        else if (db.getUDT(schema, u) != null) {
-            type = getStrategy().getFullJavaClassName(db.getUDT(schema, u), udtMode);
+        else if (db.getUDT(schema, typeDef.getUserType()) != null) {
+            type = getStrategy().getFullJavaClassName(db.getUDT(schema, typeDef.getUserType()), udtMode);
         }
 
         // [#3942] [#7863] Dialects that support tables as UDTs
         // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
-        else if (SUPPORT_TABLE_AS_UDT.contains(db.getDialect()) && db.getTable(schema, u) != null) {
-            type = getStrategy().getFullJavaClassName(db.getTable(schema, u), udtMode);
+        else if (SUPPORT_TABLE_AS_UDT.contains(db.getDialect()) && db.getTable(schema, typeDef.getUserType()) != null) {
+            type = getStrategy().getFullJavaClassName(db.getTable(schema, typeDef.getUserType()), udtMode);
         }
 
         // Check for custom types
-        else if (u != null && db.getConfiguredCustomType(u.last()) != null) {
-            type = u.last();
+        else if (typeDef.getUserType() != null && db.getConfiguredCustomType(typeDef.getUserType().last()) != null) {
+            type = typeDef.getUserType().last();
         }
 
         // Try finding a basic standard SQL type according to the current dialect
         else {
             try {
-                Class<?> clazz = mapTypes(getDataType(db, t, p, s)).getType();
+                Class<?> clazz = mapTypes(getDataType(db, typeDef.getJavaType(), typeDef.getScale(), typeDef.getPrecision())).getType();
                 if (scala && clazz == byte[].class)
                     type = "scala.Array[scala.Byte]";
                 else if (kotlin && clazz == byte[].class)
@@ -10845,7 +10825,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
             }
             catch (SQLDialectNotSupportedException e) {
-                if (defaultType == null) {
+                if (typeDef.getDefaultType() == null) {
                     throw e;
                 }
             }

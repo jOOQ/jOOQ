@@ -151,7 +151,7 @@ final class Dual extends AbstractTable<Record> implements QOM.Dual {
                     break;
 
                 case HSQLDB:
-                    ctx.sql('(').visit(K_VALUES).sql("(1)) ").visit(K_AS).sql(' ').visit(N_DUAL).sql('(').visit(N_DUAL).sql(')');
+                    ctx.sql('(').visit(K_VALUES).sql(" (1)) ").visit(K_AS).sql(' ').visit(N_DUAL).sql(" (").visit(N_DUAL).sql(')');
                     break;
 
                 case CUBRID:

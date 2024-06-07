@@ -11899,12 +11899,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         }
         else if (filter != null && !basic && parseKeywordIf("FILTER")) {
-            parse('(');
-            parseKeyword("WHERE");
-            condition = parseCondition();
-            parse(')');
-
-            result = over = filter.filterWhere(condition);
+            result = over = parseAggregateFilter(filter);
         }
         else if (filter != null)
             result = filter;
@@ -11923,6 +11918,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         return result;
+    }
+
+    private final Field<?> parseAggregateFilterIf(AggregateFilterStep<?> filter) {
+        return parseKeywordIf("FILTER") ? parseAggregateFilter(filter) : filter;
+    }
+
+    private final WindowBeforeOverStep<?> parseAggregateFilter(AggregateFilterStep<?> filter) {
+        parse('(');
+        parseKeyword("WHERE");
+        Condition condition = parseCondition();
+        parse(')');
+
+        return filter.filterWhere(condition);
     }
 
     private final Field<?> parseSpecialAggregateFunctionIf() {
@@ -11988,7 +11996,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // Hypothetical set function
             List<Field<?>> args = parseList(',', c -> c.parseField());
             parse(')');
-            return rank(args).withinGroupOrderBy(parseWithinGroupN());
+            return parseAggregateFilterIf(rank(args).withinGroupOrderBy(parseWithinGroupN()));
         }
 
         return null;
@@ -12006,7 +12014,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // Hypothetical set function
             List<Field<?>> args = parseList(',', c -> c.parseField());
             parse(')');
-            return denseRank(args).withinGroupOrderBy(parseWithinGroupN());
+            return parseAggregateFilterIf(denseRank(args).withinGroupOrderBy(parseWithinGroupN()));
         }
 
         return null;
@@ -12024,7 +12032,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // Hypothetical set function
             List<Field<?>> args = parseList(',', c -> c.parseField());
             parse(')');
-            return percentRank(args).withinGroupOrderBy(parseWithinGroupN());
+            return parseAggregateFilterIf(percentRank(args).withinGroupOrderBy(parseWithinGroupN()));
         }
 
         return null;
@@ -12042,7 +12050,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             // Hypothetical set function
             List<Field<?>> args = parseList(',', c -> c.parseField());
             parse(')');
-            return cumeDist(args).withinGroupOrderBy(parseWithinGroupN());
+            return parseAggregateFilterIf(cumeDist(args).withinGroupOrderBy(parseWithinGroupN()));
         }
 
         return null;

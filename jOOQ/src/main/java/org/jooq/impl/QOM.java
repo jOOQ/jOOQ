@@ -8232,6 +8232,74 @@ public final class QOM {
     }
 
     /**
+     * The <code>RANK</code> function.
+     * <p>
+     * The <code>RANK</code> hypothetical set aggregate function.
+     */
+    public /*sealed*/ interface RankAgg
+        extends
+            QueryPart,
+            org.jooq.OrderedAggregateFunction<Integer>
+        //permits
+        //    RankAgg
+    {
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        @CheckReturnValue
+        @NotNull RankAgg $fields(Collection<? extends Field<?>> fields);
+    }
+
+    /**
+     * The <code>DENSE RANK</code> function.
+     * <p>
+     * The <code>DENSE_RANK</code> hypothetical set aggregate function.
+     */
+    public /*sealed*/ interface DenseRankAgg
+        extends
+            QueryPart,
+            org.jooq.OrderedAggregateFunction<Integer>
+        //permits
+        //    DenseRankAgg
+    {
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        @CheckReturnValue
+        @NotNull DenseRankAgg $fields(Collection<? extends Field<?>> fields);
+    }
+
+    /**
+     * The <code>PERCENT RANK</code> function.
+     * <p>
+     * The <code>PERCENT_RANK</code> hypothetical set aggregate function.
+     */
+    public /*sealed*/ interface PercentRankAgg
+        extends
+            QueryPart,
+            org.jooq.OrderedAggregateFunction<BigDecimal>
+        //permits
+        //    PercentRankAgg
+    {
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        @CheckReturnValue
+        @NotNull PercentRankAgg $fields(Collection<? extends Field<?>> fields);
+    }
+
+    /**
+     * The <code>CUME DIST</code> function.
+     * <p>
+     * The <code>CUME_DIST</code> hypothetical set aggregate function.
+     */
+    public /*sealed*/ interface CumeDistAgg
+        extends
+            QueryPart,
+            org.jooq.OrderedAggregateFunction<BigDecimal>
+        //permits
+        //    CumeDistAgg
+    {
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        @CheckReturnValue
+        @NotNull CumeDistAgg $fields(Collection<? extends Field<?>> fields);
+    }
+
+    /**
      * The <code>PERCENTILE CONT</code> function.
      * <p>
      * Calculate the <code>PERCENTILE_CONT</code> inverse distribution aggregate function.

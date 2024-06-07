@@ -24916,6 +24916,94 @@ public class DSL {
     }
 
     /**
+     * The <code>RANK</code> function.
+     * <p>
+     * The <code>RANK</code> hypothetical set aggregate function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
+        return new RankAgg(Arrays.asList(fields));
+    }
+
+    /**
+     * The <code>RANK</code> function.
+     * <p>
+     * The <code>RANK</code> hypothetical set aggregate function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<Integer> rank(Collection<? extends Field<?>> fields) {
+        return new RankAgg(new QueryPartList<>(fields));
+    }
+
+    /**
+     * The <code>DENSE_RANK</code> function.
+     * <p>
+     * The <code>DENSE_RANK</code> hypothetical set aggregate function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
+        return new DenseRankAgg(Arrays.asList(fields));
+    }
+
+    /**
+     * The <code>DENSE_RANK</code> function.
+     * <p>
+     * The <code>DENSE_RANK</code> hypothetical set aggregate function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<Integer> denseRank(Collection<? extends Field<?>> fields) {
+        return new DenseRankAgg(new QueryPartList<>(fields));
+    }
+
+    /**
+     * The <code>PERCENT_RANK</code> function.
+     * <p>
+     * The <code>PERCENT_RANK</code> hypothetical set aggregate function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> percentRank(Field<?>... fields) {
+        return new PercentRankAgg(Arrays.asList(fields));
+    }
+
+    /**
+     * The <code>PERCENT_RANK</code> function.
+     * <p>
+     * The <code>PERCENT_RANK</code> hypothetical set aggregate function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> percentRank(Collection<? extends Field<?>> fields) {
+        return new PercentRankAgg(new QueryPartList<>(fields));
+    }
+
+    /**
+     * The <code>CUME_DIST</code> function.
+     * <p>
+     * The <code>CUME_DIST</code> hypothetical set aggregate function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
+        return new CumeDistAgg(Arrays.asList(fields));
+    }
+
+    /**
+     * The <code>CUME_DIST</code> function.
+     * <p>
+     * The <code>CUME_DIST</code> hypothetical set aggregate function.
+     */
+    @NotNull
+    @Support({ H2, POSTGRES, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> cumeDist(Collection<? extends Field<?>> fields) {
+        return new CumeDistAgg(new QueryPartList<>(fields));
+    }
+
+    /**
      * The <code>PERCENTILE_CONT</code> function.
      * <p>
      * Calculate the <code>PERCENTILE_CONT</code> inverse distribution aggregate function.
@@ -32296,86 +32384,6 @@ public class DSL {
     @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static OrderedAggregateFunctionOfDeferredType mode() {
         return new ModeDeferred();
-    }
-
-    /**
-     * The <code>rank(expr) within group (order by [order clause])</code>
-     * ordered-set aggregate function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<Integer> rank(Field<?>... fields) {
-        return new DefaultAggregateFunction<>(N_RANK, SQLDataType.INTEGER, fields);
-    }
-
-    /**
-     * The <code>rank(expr) within group (order by [order clause])</code>
-     * ordered-set aggregate function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<Integer> rank(Collection<? extends Field<?>> fields) {
-        return new DefaultAggregateFunction<>(N_RANK, SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
-    }
-
-    /**
-     * The <code>dense_rank(expr) within group (order by [order clause])</code>
-     * ordered-set aggregate function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<Integer> denseRank(Field<?>... fields) {
-        return new DefaultAggregateFunction<>(N_DENSE_RANK, SQLDataType.INTEGER, fields);
-    }
-
-    /**
-     * The <code>dense_rank(expr) within group (order by [order clause])</code>
-     * ordered-set aggregate function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<Integer> denseRank(Collection<? extends Field<?>> fields) {
-        return new DefaultAggregateFunction<>(N_DENSE_RANK, SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
-    }
-
-    /**
-     * The <code>percent_rank(expr) within group (order by [order clause])</code>
-     * ordered-set aggregate function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<Integer> percentRank(Field<?>... fields) {
-        return new DefaultAggregateFunction<>(N_PERCENT_RANK, SQLDataType.INTEGER, fields);
-    }
-
-    /**
-     * The <code>percent_rank(expr) within group (order by [order clause])</code>
-     * ordered-set aggregate function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<Integer> percentRank(Collection<? extends Field<?>> fields) {
-        return new DefaultAggregateFunction<>(N_PERCENT_RANK, SQLDataType.INTEGER, fields.toArray(EMPTY_FIELD));
-    }
-
-    /**
-     * The <code>cume_dist(expr) within group (order by [order clause])</code>
-     * ordered-set aggregate function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<BigDecimal> cumeDist(Field<?>... fields) {
-        return new DefaultAggregateFunction<>(N_CUME_DIST, SQLDataType.NUMERIC, fields);
-    }
-
-    /**
-     * The <code>cume_dist(expr) within group (order by [order clause])</code>
-     * ordered-set aggregate function.
-     */
-    @NotNull
-    @Support({ H2, POSTGRES, YUGABYTEDB })
-    public static OrderedAggregateFunction<BigDecimal> cumeDist(Collection<? extends Field<?>> fields) {
-        return new DefaultAggregateFunction<>(N_CUME_DIST, SQLDataType.NUMERIC, fields.toArray(EMPTY_FIELD));
     }
 
     // -------------------------------------------------------------------------

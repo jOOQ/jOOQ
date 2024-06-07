@@ -98,7 +98,6 @@ final class Names {
     static final Name N_covarPop                    = systemName("covarPop");
     static final Name N_covarSamp                   = systemName("covarSamp");
     static final Name N_CUBE                        = systemName("cube");
-    static final Name N_CUME_DIST                   = systemName("cume_dist");
     static final Name N_CURRENT_BIGDATETIME         = systemName("current_bigdatetime");
     static final Name N_CURRENT_DATE                = systemName("current_date");
     static final Name N_CURRENT_TIME                = systemName("current_time");
@@ -118,7 +117,6 @@ final class Names {
     static final Name N_DECODE_ORACLE               = systemName("decode_oracle");
     static final Name N_DEFAULT                     = systemName("default");
     static final Name N_DELETED                     = systemName("deleted");
-    static final Name N_DENSE_RANK                  = systemName("dense_rank");
     static final Name N_DIV                         = systemName("div");
     static final Name N_DUAL                        = systemName("dual");
     static final Name N_ELEMENT_AT                  = systemName("element_at");
@@ -234,13 +232,11 @@ final class Names {
     static final Name N_ORDINAL                     = systemName("ordinal");
     static final Name N_OREPLACE                    = systemName("oreplace");
     static final Name N_PARSE_JSON                  = systemName("parse_json");
-    static final Name N_PERCENT_RANK                = systemName("percent_rank");
     static final Name N_PIVOT                       = systemName("pivot");
     static final Name N_PLPGSQL                     = systemName("plpgsql");
     static final Name N_PLUS                        = systemName("plus");
     static final Name N_POWER                       = systemName("power");
     static final Name N_RANDOMBLOB                  = systemName("randomblob");
-    static final Name N_RANK                        = systemName("rank");
     static final Name N_RATIO_TO_REPORT             = systemName("ratio_to_report");
     static final Name N_RAWTOHEX                    = systemName("rawtohex");
     static final Name N_RECORD                      = systemName("record");
@@ -444,6 +440,7 @@ final class Names {
     static final Name N_COUNT                       = systemName("count");
     static final Name N_COVAR_POP                   = systemName("covar_pop");
     static final Name N_COVAR_SAMP                  = systemName("covar_samp");
+    static final Name N_CUME_DIST                   = systemName("cume_dist");
     static final Name N_CURRENTUSER                 = systemName("currentuser");
     static final Name N_CURRENT_CATALOG             = systemName("current_catalog");
     static final Name N_CURRENT_DATABASE            = systemName("current_database");
@@ -456,6 +453,7 @@ final class Names {
     static final Name N_DB_NAME                     = systemName("db_name");
     static final Name N_DEGREES                     = systemName("degrees");
     static final Name N_DELETING                    = systemName("deleting");
+    static final Name N_DENSE_RANK                  = systemName("dense_rank");
     static final Name N_DIGITS                      = systemName("digits");
     static final Name N_E                           = systemName("e");
     static final Name N_EXCLUDED                    = systemName("excluded");
@@ -546,6 +544,7 @@ final class Names {
     static final Name N_OVERLAY                     = systemName("overlay");
     static final Name N_PERCENTILE_CONT             = systemName("percentile_cont");
     static final Name N_PERCENTILE_DISC             = systemName("percentile_disc");
+    static final Name N_PERCENT_RANK                = systemName("percent_rank");
     static final Name N_PI                          = systemName("pi");
     static final Name N_POSITION                    = systemName("position");
     static final Name N_POW                         = systemName("pow");
@@ -556,6 +555,7 @@ final class Names {
     static final Name N_RAND                        = systemName("rand");
     static final Name N_RANDOM                      = systemName("random");
     static final Name N_RANDOM_UUID                 = systemName("random_uuid");
+    static final Name N_RANK                        = systemName("rank");
     static final Name N_REGR_AVGX                   = systemName("regr_avgx");
     static final Name N_REGR_AVGY                   = systemName("regr_avgy");
     static final Name N_REGR_COUNT                  = systemName("regr_count");

@@ -142,6 +142,14 @@ implements
     }
 
     AbstractAggregateFunction(boolean distinct, Name name, DataType<T> type, Field<?>... arguments) {
+        this(distinct, name, type, Arrays.asList(arguments));
+    }
+
+    AbstractAggregateFunction(boolean distinct, String name, DataType<T> type, Collection<? extends Field<?>> arguments) {
+        this(distinct, DSL.unquotedName(name), type, arguments);
+    }
+
+    AbstractAggregateFunction(boolean distinct, Name name, DataType<T> type, Collection<? extends Field<?>> arguments) {
         super(name, type);
 
         this.distinct = distinct;

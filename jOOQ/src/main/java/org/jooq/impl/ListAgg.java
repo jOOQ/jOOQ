@@ -185,7 +185,7 @@ implements
     }
 
     @Override
-    final boolean applyFilter(Context<?> ctx, Field<?> arg, int i) {
+    final boolean applyFilterToArgument(Context<?> ctx, Field<?> arg, int i) {
         return i == 0;
     }
 

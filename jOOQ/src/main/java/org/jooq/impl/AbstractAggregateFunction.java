@@ -165,7 +165,7 @@ implements
     /**
      * Render <code>KEEP (DENSE_RANK [FIRST | LAST] ORDER BY {…})</code> clause
      */
-    private final void acceptKeepDenseRankOrderByClause(Context<?> ctx) {
+    final void acceptKeepDenseRankOrderByClause(Context<?> ctx) {
         if (!Tools.isEmpty(keepDenseRankOrderBy)) {
 
             switch (ctx.family()) {
@@ -210,6 +210,8 @@ implements
 
                     if (withinGroupOrderBy.isEmpty())
                         ctx.visit(K_NULL);
+                    else if (filter.hasWhere() && !supportsFilter(ctx) && applyFilterToWithinGroup(ctx))
+                        ctx.visit(wrap(withinGroupOrderBy).map((arg, i) -> DSL.when(filter, arg.$field()).sort(arg.$sortOrder())));
                     else
                         ctx.visit(withinGroupOrderBy);
 
@@ -298,15 +300,19 @@ implements
 
 
         else
-            ctx.visit(wrap(args).map((arg, i) -> applyFilter(ctx, arg, i) ? DSL.when(filter, arg == ASTERISK.get() ? one() : arg) : arg).map(fun));
+            ctx.visit(wrap(args).map((arg, i) -> applyFilterToArgument(ctx, arg, i) ? DSL.when(filter, arg == ASTERISK.get() ? one() : arg) : arg).map(fun));
     }
 
-    Field<?> applyMap(Context<?> ctx, Field<?> arg) {
+    /* non-final */ Field<?> applyMap(Context<?> ctx, Field<?> arg) {
         return arg;
     }
 
-    boolean applyFilter(Context<?> ctx, Field<?> arg, int i) {
+    /* non-final */ boolean applyFilterToArgument(Context<?> ctx, Field<?> arg, int i) {
         return true;
+    }
+
+    /* non-final */ boolean applyFilterToWithinGroup(Context<?> ctx) {
+        return false;
     }
 
 

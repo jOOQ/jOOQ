@@ -119,6 +119,16 @@ implements
         }
     }
 
+    @Override
+    final boolean applyFilterToArgument(Context<?> ctx, Field<?> arg, int i) {
+        return false;
+    }
+
+    @Override
+    final boolean applyFilterToWithinGroup(Context<?> ctx) {
+        return true;
+    }
+
 
 
     // -------------------------------------------------------------------------

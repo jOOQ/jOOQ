@@ -411,7 +411,21 @@ public interface DataType<T> extends Named {
      * @param object The object to be converted
      * @return The converted object
      * @throws DataTypeException If conversion fails.
+     * @deprecated - 3.20.0 - [#16810] - Static data type conversion has been a
+     *             controversial historic feature of jOOQ. While occasionally
+     *             useful for internal data types (such as {@link String} to
+     *             {@link Integer} conversion, etc.) it doesn't work well with
+     *             user defined types. 1) This method does not go through
+     *             {@link Configuration#converterProvider()}, 2) nor does it
+     *             provide an appropriate {@link ConverterContext} to a
+     *             {@link ContextConverter}, leading to subtle bugs. 3) It also
+     *             doesn't make any guarantees related to what user defined
+     *             types can be passed to it. This is why this method is
+     *             deprecated and will be removed in a future jOOQ version. Use
+     *             {@link #getConverter()} on this type, instead, and use that
+     *             for data type conversions.
      */
+    @Deprecated(forRemoval = true)
     T convert(Object object);
 
     /**
@@ -424,7 +438,21 @@ public interface DataType<T> extends Named {
      * @param objects The objects to be converted
      * @return The converted objects
      * @throws DataTypeException If conversion fails.
+     * @deprecated - 3.20.0 - [#16810] - Static data type conversion has been a
+     *             controversial historic feature of jOOQ. While occasionally
+     *             useful for internal data types (such as {@link String} to
+     *             {@link Integer} conversion, etc.) it doesn't work well with
+     *             user defined types. 1) This method does not go through
+     *             {@link Configuration#converterProvider()}, 2) nor does it
+     *             provide an appropriate {@link ConverterContext} to a
+     *             {@link ContextConverter}, leading to subtle bugs. 3) It also
+     *             doesn't make any guarantees related to what user defined
+     *             types can be passed to it. This is why this method is
+     *             deprecated and will be removed in a future jOOQ version. Use
+     *             {@link #getConverter()} on this type, instead, and use that
+     *             for data type conversions.
      */
+    @Deprecated(forRemoval = true)
     T @NotNull [] convert(Object... objects);
 
     /**
@@ -437,7 +465,21 @@ public interface DataType<T> extends Named {
      * @param objects The objects to be converted
      * @return The converted objects
      * @throws DataTypeException If conversion fails.
+     * @deprecated - 3.20.0 - [#16810] - Static data type conversion has been a
+     *             controversial historic feature of jOOQ. While occasionally
+     *             useful for internal data types (such as {@link String} to
+     *             {@link Integer} conversion, etc.) it doesn't work well with
+     *             user defined types. 1) This method does not go through
+     *             {@link Configuration#converterProvider()}, 2) nor does it
+     *             provide an appropriate {@link ConverterContext} to a
+     *             {@link ContextConverter}, leading to subtle bugs. 3) It also
+     *             doesn't make any guarantees related to what user defined
+     *             types can be passed to it. This is why this method is
+     *             deprecated and will be removed in a future jOOQ version. Use
+     *             {@link #getConverter()} on this type, instead, and use that
+     *             for data type conversions.
      */
+    @Deprecated(forRemoval = true)
     @NotNull
     List<T> convert(Collection<?> objects);
 

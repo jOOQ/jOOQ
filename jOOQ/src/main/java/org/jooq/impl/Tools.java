@@ -3675,29 +3675,22 @@ final class Tools {
     /**
      * Type-safely copy a value from one record to another
      */
-    static final <T> void setValue(Record target, Field<T> targetField, Record source, Field<?> sourceField) {
-        setValue(target, targetField, source.get(sourceField));
-    }
-
-    /**
-     * Type-safely copy a value from one record to another
-     */
-    static final <T> void setValue(AbstractRecord target, Field<T> targetField, int targetIndex, Record source, int sourceIndex) {
-        setValue(target, targetField, targetIndex, source.get(sourceIndex));
+    static final <T> void setValue(Record target, Field<T> targetField, Record source, Field<?> sourceField, ConverterContext cc) {
+        setValue(target, targetField, source.get(sourceField), cc);
     }
 
     /**
      * Type-safely set a value to a record
      */
-    static final <T> void setValue(Record target, Field<T> targetField, Object value) {
-        target.set(targetField, targetField.getDataType().convert(value));
+    static final <T> void setValue(Record target, Field<T> targetField, Object value, ConverterContext cc) {
+        target.set(targetField, ((AbstractDataType<T>) targetField.getDataType()).convert(value, cc));
     }
 
     /**
      * Type-safely set a value to a record
      */
-    static final <T> void setValue(AbstractRecord target, Field<T> targetField, int targetIndex, Object value) {
-        target.set(targetField, targetIndex, targetField.getDataType().convert(value));
+    static final <T> void setValue(AbstractRecord target, Field<T> targetField, int targetIndex, Object value, ConverterContext cc) {
+        target.set(targetField, targetIndex, ((AbstractDataType<T>) targetField.getDataType()).convert(value, cc));
     }
 
     /**

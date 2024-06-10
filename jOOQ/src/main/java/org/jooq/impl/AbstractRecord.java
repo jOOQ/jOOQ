@@ -67,6 +67,7 @@ import org.jooq.Attachable;
 import org.jooq.CSVFormat;
 import org.jooq.ChartFormat;
 import org.jooq.Converter;
+import org.jooq.ConverterContext;
 import org.jooq.DataType;
 import org.jooq.EmbeddableRecord;
 import org.jooq.Field;
@@ -718,10 +719,12 @@ implements
 
     class TransferRecordState<R extends Record> implements ThrowingFunction<R, R, MappingException> {
 
-        private final Field<?>[] targetFields;
+        final ConverterContext converterContext;
+        final Field<?>[]       targetFields;
 
         TransferRecordState(Field<?>[] targetFields) {
             this.targetFields = targetFields;
+            this.converterContext = converterContext(AbstractRecord.this);
         }
 
         @Override
@@ -755,7 +758,7 @@ implements
                         Field<?> sourceField = field(targetField);
 
                         if (sourceField != null)
-                            Tools.setValue(target, targetField, source, sourceField);
+                            Tools.setValue(target, targetField, source, sourceField, converterContext);
                     }
                 }
 
@@ -910,11 +913,13 @@ implements
      * public for broader use...?
      */
     protected final void from(Record source) {
+        ConverterContext cc = Tools.converterContext(this);
+
         for (Field<?> field : fields.fields.fields) {
             Field<?> sourceField = source.field(field);
 
             if (sourceField != null && source.changed(sourceField))
-                Tools.setValue(this, field, source, sourceField);
+                Tools.setValue(this, field, source, sourceField, cc);
         }
     }
 

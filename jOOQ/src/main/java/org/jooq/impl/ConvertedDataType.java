@@ -47,6 +47,7 @@ import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.ConverterContext;
 import org.jooq.Converters;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -300,7 +301,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     }
 
     @Override
-    public final U convert(Object object) {
+    final U convert(Object object, ConverterContext cc) {
         if (getConverter().toType().isInstance(object))
             return (U) object;
 
@@ -316,7 +317,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
         // [#3200] Try to convert arbitrary objects to T
         else
-            return ((ContextConverter<T, U>) getConverter()).from(delegate.convert(object), converterContext());
+            return ((ContextConverter<T, U>) getConverter()).from(delegate.convert(object, cc), cc);
     }
 
     @Override

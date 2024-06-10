@@ -45,13 +45,13 @@ import static org.jooq.impl.Tools.newRecord;
 
 import java.sql.Array;
 import java.sql.SQLException;
-import java.sql.Struct;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
+import org.jooq.ConverterContext;
 import org.jooq.Field;
 import org.jooq.Generator;
 import org.jooq.Nullability;
@@ -155,9 +155,9 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         return recordType;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     @Override
-    public Result<R> convert(Object object) {
+    final Result<R> convert(Object object, ConverterContext cc) {
 
         // [#12269] [#13403] Don't re-copy perfectly fine results.
         if (object instanceof Result && ((Result<?>) object).fieldsRow().equals(row))
@@ -187,11 +187,11 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
             return result;
         }
         else if (object instanceof Object[] a) {
-            return convert((Object) asList(a));
+            return convert(asList(a), cc);
         }
         else if (object instanceof Array a) {
             try {
-                return convert((Object) asList((Object[]) a.getArray()));
+                return convert(asList((Object[]) a.getArray()), cc);
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while accessing array", e);
@@ -200,6 +200,6 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         else if (object == null)
             return new ResultImpl<>(CONFIG.get(), row);
         else
-            return super.convert(object);
+            return super.convert(object, cc);
     }
 }

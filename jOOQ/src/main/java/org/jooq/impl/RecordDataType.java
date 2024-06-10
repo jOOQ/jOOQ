@@ -50,6 +50,7 @@ import java.util.Map.Entry;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
+import org.jooq.ConverterContext;
 import org.jooq.Field;
 import org.jooq.Generator;
 import org.jooq.Nullability;
@@ -158,7 +159,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public R convert(Object object) {
+    final R convert(Object object, ConverterContext cc) {
 
         // [#12269] [#13403] Don't re-copy perfectly fine results.
         if (object instanceof Record && ((Record) object).fieldsRow().equals(row))
@@ -188,6 +189,6 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
                 });
         }
         else
-            return super.convert(object);
+            return super.convert(object, cc);
     }
 }

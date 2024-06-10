@@ -44,6 +44,7 @@ import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.ConverterContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Generator;
@@ -136,13 +137,13 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public U convert(Object object) {
+    final U convert(Object object, ConverterContext cc) {
         if (getConverter().toType().isInstance(object))
             return (U) object;
 
         // [#3200] Try to convert arbitrary objects to T
         else
-            return ((ContextConverter<T, U>) getConverter()).from(delegate.convert(object), converterContext());
+            return ((ContextConverter<T, U>) getConverter()).from(delegate.convert(object, cc), cc);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

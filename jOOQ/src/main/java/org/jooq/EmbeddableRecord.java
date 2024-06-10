@@ -39,7 +39,20 @@ package org.jooq;
 
 
 /**
- * A record originating from a single table
+ * An embeddable record.
+ * <p>
+ * Embeddable records are implemented purely as a code generation feature where
+ * columns in a {@link Table} should be grouped to form a synthetic
+ * {@link UDTRecord} type. Examples of common embeddable types are:
+ * <p>
+ * <ul>
+ * <li>Keys (composite or not)</li>
+ * <li>Amount / currency</li>
+ * </ul>
+ * <p>
+ * Embeddable records are not strictly tied to individual tables that reference
+ * them, but can be shared among tables, and even appear multiple times in the
+ * same table.
  *
  * @param <R> The embeddable record type
  * @author Lukas Eder

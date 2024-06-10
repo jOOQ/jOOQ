@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 import static org.jooq.impl.Internal.arrayType;
+import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.SQLDataType.BLOB;
@@ -86,6 +87,7 @@ import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
+import org.jooq.ConverterContext;
 import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
@@ -765,7 +767,11 @@ implements
     }
 
     @Override
-    public /* non-final */ T convert(Object object) {
+    public final T convert(Object object) {
+        return convert(object, converterContext());
+    }
+
+    /* non-final */ T convert(Object object, ConverterContext cc) {
 
         // [#1441] Avoid unneeded type conversions to improve performance
         if (object == null)

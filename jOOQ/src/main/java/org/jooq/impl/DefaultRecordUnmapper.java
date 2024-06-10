@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.getAnnotatedGetter;
 import static org.jooq.impl.Tools.getAnnotatedMembers;
 import static org.jooq.impl.Tools.getMatchingGetter;
@@ -49,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Configuration;
+import org.jooq.ConverterContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordType;
@@ -77,6 +79,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
     private final Class<? extends AbstractRecord> recordType;
     private final Field<?>[]                      fields;
     private final Configuration                   configuration;
+    private final ConverterContext                converterContext;
     private RecordUnmapper<E, R>                  delegate;
 
     public DefaultRecordUnmapper(Class<? extends E> type, RecordType<R> rowType, Configuration configuration) {
@@ -86,6 +89,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         this.recordType = Tools.recordType(rowType.size());
         this.fields = rowType.fields();
         this.configuration = configuration;
+        this.converterContext = converterContext(configuration);
 
         init();
     }
@@ -110,31 +114,31 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         return Tools.newRecord(false, recordType, row, configuration).operate(null);
     }
 
-    private static final void setValue(Record record, Object source, java.lang.reflect.Field member, Field<?> field)
+    private static final void setValue(Record record, Object source, java.lang.reflect.Field member, Field<?> field, ConverterContext converterContext)
         throws IllegalAccessException {
 
         Class<?> mType = member.getType();
 
         if (mType.isPrimitive()) {
             if (mType == byte.class)
-                Tools.setValue(record, field, member.getByte(source));
+                Tools.setValue(record, field, member.getByte(source), converterContext);
             else if (mType == short.class)
-                Tools.setValue(record, field, member.getShort(source));
+                Tools.setValue(record, field, member.getShort(source), converterContext);
             else if (mType == int.class)
-                Tools.setValue(record, field, member.getInt(source));
+                Tools.setValue(record, field, member.getInt(source), converterContext);
             else if (mType == long.class)
-                Tools.setValue(record, field, member.getLong(source));
+                Tools.setValue(record, field, member.getLong(source), converterContext);
             else if (mType == float.class)
-                Tools.setValue(record, field, member.getFloat(source));
+                Tools.setValue(record, field, member.getFloat(source), converterContext);
             else if (mType == double.class)
-                Tools.setValue(record, field, member.getDouble(source));
+                Tools.setValue(record, field, member.getDouble(source), converterContext);
             else if (mType == boolean.class)
-                Tools.setValue(record, field, member.getBoolean(source));
+                Tools.setValue(record, field, member.getBoolean(source), converterContext);
             else if (mType == char.class)
-                Tools.setValue(record, field, member.getChar(source));
+                Tools.setValue(record, field, member.getChar(source), converterContext);
         }
         else
-            Tools.setValue(record, field, member.get(source));
+            Tools.setValue(record, field, member.get(source), converterContext);
     }
 
     private final class ArrayUnmapper implements RecordUnmapper<E, R> {
@@ -147,7 +151,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
                 AbstractRecord record = (AbstractRecord) newRecord();
 
                 for (int i = 0; i < size && i < array.length; i++)
-                    Tools.setValue(record, rowType.field(i), i, array[i]);
+                    Tools.setValue(record, rowType.field(i), i, array[i], converterContext);
 
                 return (R) record;
             }
@@ -167,7 +171,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
                 AbstractRecord record = (AbstractRecord) newRecord();
 
                 for (int i = 0; i < size && it.hasNext(); i++)
-                    Tools.setValue(record, rowType.field(i), i, it.next());
+                    Tools.setValue(record, rowType.field(i), i, it.next(), converterContext);
 
                 return (R) record;
             }
@@ -192,7 +196,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
 
                     // Set only those values contained in the map
                     if (map.containsKey(name))
-                        Tools.setValue(record, fields[i], map.get(name));
+                        Tools.setValue(record, fields[i], map.get(name), converterContext);
                 }
 
                 return (R) record;
@@ -230,9 +234,9 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
 
                     // Use only the first applicable method or member
                     if (method != null)
-                        Tools.setValue(record, field, method.invoke(source));
+                        Tools.setValue(record, field, method.invoke(source), converterContext);
                     else if (members.size() > 0)
-                        setValue(record, source, members.get(0), field);
+                        setValue(record, source, members.get(0), field, converterContext);
                 }
 
                 return (R) record;

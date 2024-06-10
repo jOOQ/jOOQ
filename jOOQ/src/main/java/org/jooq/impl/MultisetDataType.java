@@ -48,6 +48,7 @@ import java.util.Map.Entry;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
+import org.jooq.ConverterContext;
 import org.jooq.Field;
 import org.jooq.Generator;
 import org.jooq.Nullability;
@@ -147,9 +148,9 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         return recordType;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     @Override
-    public Result<R> convert(Object object) {
+    final Result<R> convert(Object object, ConverterContext cc) {
 
         // [#12269] [#13403] Don't re-copy perfectly fine results.
         if (object instanceof Result && ((Result<?>) object).fieldsRow().equals(row))
@@ -181,6 +182,6 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         else if (object == null)
             return new ResultImpl<>(CONFIG.get(), row);
         else
-            return super.convert(object);
+            return super.convert(object, cc);
     }
 }

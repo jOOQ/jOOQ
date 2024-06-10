@@ -909,9 +909,9 @@ implements
     }
 
     /**
-     * This method was implemented with [#799]. It may be useful to make it
-     * public for broader use...?
+     * @deprecated - 3.20.0 - [#16815] - Do not reuse this method.
      */
+    @Deprecated(forRemoval = true)
     protected final void from(Record source) {
         ConverterContext cc = Tools.converterContext(this);
 

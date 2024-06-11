@@ -66,60 +66,11 @@ public class CodegenPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        CodegenPluginExtension jooq = project.getExtensions().create("jooq",
-            CodegenPluginExtension.class
+        project.getPlugins().apply(CodegenBasePlugin.class);
+
+        project.getTasks().withType(CodegenTask.class, task ->
+                // [#16275] [#16316] This default produces unnecessary re-generations of code. We currently don't know our inputs.
+                task.getOutputs().upToDateWhen(upToDateSpec -> false)
         );
-
-        Configuration codegenClasspath = project.getConfigurations().create("jooqCodegen");
-        codegenClasspath.setDescription("The classpath used for code generation, including JDBC drivers, code generation extensions, etc.");
-
-        jooq.getExecutions().create("", configuration -> {
-            configuration.unnamed = true;
-        });
-
-        List<NamedConfiguration> named = new ArrayList<>();
-
-        jooq.getExecutions().configureEach(configuration -> {
-            if (!configuration.unnamed)
-                named.add(configuration);
-
-            project.getTasks().register(
-                CodegenTask.taskName(configuration),
-                CodegenTask.class,
-                configuration,
-                codegenClasspath
-            ).configure(configureTask(project, named, configuration));
-        });
-    }
-
-    private static Action<CodegenTask> configureTask(
-        Project project,
-        List<NamedConfiguration> named,
-        NamedConfiguration configuration
-    ) {
-        return task -> {
-            if (configuration.unnamed) {
-                task.named.addAll(named);
-
-                for (NamedConfiguration other : named)
-                    task.dependsOn(CodegenTask.taskName(other));
-            }
-
-            task.setDescription("jOOQ code generation" + (configuration.unnamed ? " for all executions" : " for the " + configuration.name + " execution"));
-            task.setGroup("jOOQ");
-
-            task.doFirst(t -> {
-                SourceSetContainer source = project
-                    .getExtensions()
-                    .findByType(SourceSetContainer.class);
-
-                if (source != null) {
-                    source.configureEach(sourceSet -> {
-                        if (sourceSet.getName().equals("main"))
-                            sourceSet.getJava().srcDir(task.getOutputDirectory());
-                    });
-                }
-            });
-        };
     }
 }

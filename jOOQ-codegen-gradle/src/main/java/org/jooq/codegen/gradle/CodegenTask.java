@@ -82,9 +82,6 @@ public class CodegenTask extends DefaultTask {
         this.providers = providers;
         this.codegenClasspath = codegenClasspath;
         this.named = new ArrayList<>();
-
-        // [#16275] [#16316] This default produces unnecessary re-generations of code. We currently don't know our inputs.
-        getOutputs().upToDateWhen(task -> false);
     }
 
     @TaskAction

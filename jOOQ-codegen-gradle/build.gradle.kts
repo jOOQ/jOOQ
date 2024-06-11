@@ -39,5 +39,12 @@ gradlePlugin {
             tags.set(listOf("jooq"))
             implementationClass = "org.jooq.codegen.gradle.CodegenPlugin"
         }
+        create("jooqCodegenBasePlugin") {
+            id = "${group}.jooq-codegen-gradle-base"
+            displayName = "jooq-codegen-gradle-base"
+            description = "jOOQ code generation base plugin for Gradle"
+            tags.set(listOf("jooq"))
+            implementationClass = "org.jooq.codegen.gradle.CodegenBasePlugin"
+        }
     }
 }

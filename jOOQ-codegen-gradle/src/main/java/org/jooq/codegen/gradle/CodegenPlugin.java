@@ -40,22 +40,10 @@ package org.jooq.codegen.gradle;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.tasks.SourceSetContainer;
-import org.gradle.api.tasks.TaskProvider;
-import org.jetbrains.annotations.NotNull;
-import org.jooq.tools.StringUtils;
-import org.jooq.util.jaxb.tools.MiniJAXB;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 /**
  * The jOOQ Codegen Plugin
@@ -88,12 +76,11 @@ public class CodegenPlugin implements Plugin<Project> {
                 CodegenTask.class,
                 configuration,
                 codegenClasspath
-            ).configure(configureTask(project, named, configuration));
+            ).configure(configureTask(named, configuration));
         });
     }
 
     private static Action<CodegenTask> configureTask(
-        Project project,
         List<NamedConfiguration> named,
         NamedConfiguration configuration
     ) {
@@ -107,19 +94,7 @@ public class CodegenPlugin implements Plugin<Project> {
 
             task.setDescription("jOOQ code generation" + (configuration.unnamed ? " for all executions" : " for the " + configuration.name + " execution"));
             task.setGroup("jOOQ");
-
-            task.doFirst(t -> {
-                SourceSetContainer source = project
-                    .getExtensions()
-                    .findByType(SourceSetContainer.class);
-
-                if (source != null) {
-                    source.configureEach(sourceSet -> {
-                        if (sourceSet.getName().equals("main"))
-                            sourceSet.getJava().srcDir(task.getOutputDirectory());
-                    });
-                }
-            });
+            task.doFirst(CodegenTask::registerSourceSet);
         };
     }
 }

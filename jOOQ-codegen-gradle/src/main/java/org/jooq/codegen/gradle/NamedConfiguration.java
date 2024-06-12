@@ -39,11 +39,9 @@ package org.jooq.codegen.gradle;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
-import org.gradle.api.file.Directory;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
-import org.gradle.api.provider.Property;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Generator;
@@ -52,9 +50,6 @@ import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.codegen.gradle.MetaExtensions.*;
 
 import javax.inject.Inject;
-
-import groovy.lang.*;
-import org.codehaus.groovy.runtime.*;
 
 import java.io.File;
 

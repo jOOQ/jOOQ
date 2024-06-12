@@ -39,17 +39,17 @@ package org.jooq.codegen.gradle;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import org.gradle.api.file.Directory;
+import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.ProjectLayout;
+import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.tasks.*;
 import org.gradle.work.InputChanges;
 import org.jooq.codegen.GenerationTool;
-import org.jooq.meta.jaxb.Target;
 import org.jooq.tools.StringUtils;
 
 import javax.inject.Inject;
@@ -59,7 +59,8 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
+
+import static java.lang.Boolean.FALSE;
 
 /**
  * The code generation task.
@@ -71,20 +72,59 @@ public class CodegenTask extends DefaultTask {
     final FileCollection           codegenClasspath;
     final ProviderFactory          providers;
     final List<NamedConfiguration> named;
+    final Property<Boolean>        caching;
+    final Project                  project;
 
     @Inject
     public CodegenTask(
         NamedConfiguration configuration,
         FileCollection codegenClasspath,
-        ProviderFactory providers
+        ProviderFactory providers,
+        ObjectFactory objects,
+        Project project
     ) {
         this.configuration = configuration;
         this.providers = providers;
         this.codegenClasspath = codegenClasspath;
         this.named = new ArrayList<>();
+        this.caching = objects.property(Boolean.class).convention(true);
+        this.project = project;
 
-        // [#16275] [#16316] This default produces unnecessary re-generations of code. We currently don't know our inputs.
-        getOutputs().upToDateWhen(task -> false);
+        getOutputs().cacheIf("Caching is activated only in the presence of explicit inputs and when output isn't up to date", CodegenTask::upToDate);
+
+        // [#16318] When the task is up-to-date, we still have to register our source set contributions, which
+        //          apparently aren't being cached by gradle's build cache.
+        getOutputs().upToDateWhen(task -> upToDate(task) && registerSourceSet(task));
+    }
+
+    static boolean registerSourceSet(Task t) {
+        if (t instanceof CodegenTask task) {
+            SourceSetContainer source = task.project
+                .getExtensions()
+                .findByType(SourceSetContainer.class);
+
+            if (source != null)
+                source.named("main", sourceSet -> sourceSet.getJava().srcDir(task.getOutputDirectory()));
+        }
+
+        return true;
+    }
+
+    @SuppressWarnings("unchecked")
+    static boolean upToDate(Task task) {
+
+        // [#16318] Allow for turning off the feature
+        if (task.hasProperty("caching") && FALSE.equals(((Property<Boolean>) task.property("caching")).get()))
+            return false;
+
+        TaskInputs inputs = task.getInputs();
+
+        // [#16318] .jar files from the classpath don't count as inputs
+        return !inputs.getFiles().filter(f -> !f.getName().endsWith(".jar")).isEmpty()
+            || inputs.getHasSourceFiles()
+
+            // There are input properties other than our own declared @Input
+            || inputs.getProperties().size() > 2;
     }
 
     @TaskAction
@@ -109,10 +149,15 @@ public class CodegenTask extends DefaultTask {
     }
 
     @Input
-    public Provider<String> getInput() {
+    public Provider<String> getConfiguration() {
         return providers.provider(() ->
             configuration.getConfiguration().toString()
         );
+    }
+
+    @Input
+    public Property<Boolean> getCaching() {
+        return caching;
     }
 
     @Classpath

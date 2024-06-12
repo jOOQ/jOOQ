@@ -94,7 +94,6 @@ public class CodegenPlugin implements Plugin<Project> {
 
             task.setDescription("jOOQ code generation" + (configuration.unnamed ? " for all executions" : " for the " + configuration.name + " execution"));
             task.setGroup("jOOQ");
-            task.doFirst(CodegenTask::registerSourceSet);
         };
     }
 }

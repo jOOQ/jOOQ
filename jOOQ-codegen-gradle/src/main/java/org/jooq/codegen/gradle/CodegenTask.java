@@ -94,7 +94,7 @@ public class CodegenTask extends DefaultTask {
 
         // [#16318] When the task is up-to-date, we still have to register our source set contributions, which
         //          apparently aren't being cached by gradle's build cache.
-        getOutputs().upToDateWhen(task -> upToDate(task) && registerSourceSet(task));
+        getOutputs().upToDateWhen(task -> registerSourceSet(task) && upToDate(task));
     }
 
     static boolean registerSourceSet(Task t) {

@@ -73,22 +73,19 @@ public class CodegenTask extends DefaultTask {
     final ProviderFactory          providers;
     final List<NamedConfiguration> named;
     final Property<Boolean>        caching;
-    final Project                  project;
 
     @Inject
     public CodegenTask(
         NamedConfiguration configuration,
         FileCollection codegenClasspath,
         ProviderFactory providers,
-        ObjectFactory objects,
-        Project project
+        ObjectFactory objects
     ) {
         this.configuration = configuration;
         this.providers = providers;
         this.codegenClasspath = codegenClasspath;
         this.named = new ArrayList<>();
         this.caching = objects.property(Boolean.class).convention(true);
-        this.project = project;
 
         getOutputs().cacheIf("Caching is activated only in the presence of explicit inputs and when output isn't up to date", CodegenTask::upToDate);
 
@@ -99,7 +96,7 @@ public class CodegenTask extends DefaultTask {
 
     static boolean registerSourceSet(Task t) {
         if (t instanceof CodegenTask task) {
-            SourceSetContainer source = task.project
+            SourceSetContainer source = task.getProject()
                 .getExtensions()
                 .findByType(SourceSetContainer.class);
 

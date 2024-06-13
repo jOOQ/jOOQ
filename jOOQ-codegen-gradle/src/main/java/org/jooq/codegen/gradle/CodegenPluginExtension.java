@@ -37,23 +37,15 @@
  */
 package org.jooq.codegen.gradle;
 
-import org.gradle.api.*;
+import org.gradle.api.Action;
+import org.gradle.api.NamedDomainObjectContainer;
+import org.gradle.api.Project;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ProviderFactory;
-import org.gradle.internal.service.scopes.Scope;
-import org.gradle.internal.service.scopes.ServiceScope;
-import org.jooq.meta.jaxb.Configuration;
-import org.jooq.util.jaxb.tools.MiniJAXB;
-import org.jooq.codegen.gradle.MetaExtensions.*;
+import org.jooq.codegen.gradle.MetaExtensions.ConfigurationExtension;
 
 import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
-
-import groovy.lang.*;
 
 /**
  * The configuration object of the jooq plugin extension.
@@ -84,6 +76,10 @@ public class CodegenPluginExtension {
 
     public void configuration(Action<ConfigurationExtension> action) {
         defaultConfiguration().configuration(action);
+    }
+
+    public void delayedConfiguration(Action<ConfigurationExtension> action) {
+        defaultConfiguration().delayedConfiguration(action);
     }
 
     public NamedDomainObjectContainer<NamedConfiguration> getExecutions() {

@@ -40,7 +40,6 @@ package org.jooq.codegen.gradle;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.file.DirectoryProperty;
-import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
@@ -60,7 +59,6 @@ public class NamedConfiguration {
 
     final ObjectFactory            objects;
     final Project                  project;
-    final ProjectLayout            layout;
     final String                   name;
     Action<ConfigurationExtension> action;
     boolean                        unnamed;
@@ -72,12 +70,10 @@ public class NamedConfiguration {
     public NamedConfiguration(
         ObjectFactory objects,
         Project project,
-        ProjectLayout layout,
         String name
     ) {
         this.objects = objects;
         this.project = project;
-        this.layout = layout;
         this.name = name;
         this.unnamed = false;
         this.configuration = init(new Configuration());
@@ -120,6 +116,12 @@ public class NamedConfiguration {
 
     public void configuration(Action<ConfigurationExtension> action) {
         this.action = action;
+        executeAction();
+    }
+
+    public void delayedConfiguration(Action<ConfigurationExtension> action) {
+        project.getLogger().info("Delayed configuration is an experimental feature, which is subject to change in the future. Please illustrate your use-case here to help better understand why this is needed: https://github.com/jOOQ/jOOQ/issues/16821");
+        this.action = action;
     }
 
     void executeAction() {
@@ -139,11 +141,11 @@ public class NamedConfiguration {
 
             // [#16133] Make sure the CodegenTask's OutputDirectory takes into account any basedir config
             if (configuration.getBasedir() == null)
-                configuration.setBasedir(layout.getProjectDirectory().getAsFile().getAbsolutePath());
+                configuration.setBasedir(project.getLayout().getProjectDirectory().getAsFile().getAbsolutePath());
             else if (!new File(directory).isAbsolute())
                 directory = new File(configuration.getBasedir(), directory).getAbsolutePath();
 
-            outputDirectory.value(layout.getProjectDirectory().dir(directory));
+            outputDirectory.value(project.getLayout().getProjectDirectory().dir(directory));
             outputDirectorySet = true;
             action = null;
         }

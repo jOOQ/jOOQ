@@ -54,20 +54,20 @@ public class CodegenPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        CodegenPluginExtension jooq = project.getExtensions().create("jooq",
+        CodegenPluginExtension extension = project.getExtensions().create("jooq",
             CodegenPluginExtension.class
         );
 
         Configuration codegenClasspath = project.getConfigurations().create("jooqCodegen");
         codegenClasspath.setDescription("The classpath used for code generation, including JDBC drivers, code generation extensions, etc.");
 
-        jooq.getExecutions().create("", configuration -> {
+        extension.getExecutions().create("", configuration -> {
             configuration.unnamed = true;
         });
 
         List<NamedConfiguration> named = new ArrayList<>();
 
-        jooq.getExecutions().configureEach(configuration -> {
+        extension.getExecutions().configureEach(configuration -> {
             if (!configuration.unnamed)
                 named.add(configuration);
 
@@ -80,7 +80,7 @@ public class CodegenPlugin implements Plugin<Project> {
         });
     }
 
-    private static Action<CodegenTask> configureTask(
+    static Action<CodegenTask> configureTask(
         List<NamedConfiguration> named,
         NamedConfiguration configuration
     ) {
@@ -94,6 +94,9 @@ public class CodegenPlugin implements Plugin<Project> {
 
             task.setDescription("jOOQ code generation" + (configuration.unnamed ? " for all executions" : " for the " + configuration.name + " execution"));
             task.setGroup("jOOQ");
+
+            if (task.configuration.action == null)
+                CodegenTask.registerSourceSet(task);
         };
     }
 }

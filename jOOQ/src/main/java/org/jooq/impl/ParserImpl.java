@@ -9494,7 +9494,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ASBINARY") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ASBINARY", "ST_ASWKB") && requireProEdition()) {
 
 
 
@@ -9593,7 +9593,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (!ignoreProEdition() && parseFunctionNameIf("ST_NUMINTERIORRING", "ST_NUMINTERIORRINGS") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_NUMINTERIORRING", "ST_NUMINTERIORRINGS", "ST_NINTERIORRINGS") && requireProEdition()) {
 
 
 

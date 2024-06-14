@@ -284,7 +284,6 @@ final class Names {
     static final Name N_STRING_AGG                  = systemName("string_agg");
     static final Name N_STRING_SPLIT                = systemName("string_split");
     static final Name N_STR_REPLACE                 = systemName("str_replace");
-    static final Name N_ST_NUMINTERIORRINGS         = systemName("st_numinteriorrings");
     static final Name N_SUB                         = systemName("sub");
     static final Name N_SUBSTR                      = systemName("substr");
     static final Name N_SYSTEM_RANGE                = systemName("system_range");
@@ -602,6 +601,7 @@ final class Names {
     static final Name N_ST_AREA                     = systemName("st_area");
     static final Name N_ST_ASBINARY                 = systemName("st_asbinary");
     static final Name N_ST_ASTEXT                   = systemName("st_astext");
+    static final Name N_ST_ASWKB                    = systemName("st_aswkb");
     static final Name N_ST_CENTROID                 = systemName("st_centroid");
     static final Name N_ST_CONTAINS                 = systemName("st_contains");
     static final Name N_ST_CROSSES                  = systemName("st_crosses");
@@ -621,8 +621,10 @@ final class Names {
     static final Name N_ST_ISCLOSED                 = systemName("st_isclosed");
     static final Name N_ST_ISEMPTY                  = systemName("st_isempty");
     static final Name N_ST_LENGTH                   = systemName("st_length");
+    static final Name N_ST_NINTERIORRINGS           = systemName("st_ninteriorrings");
     static final Name N_ST_NUMGEOMETRIES            = systemName("st_numgeometries");
     static final Name N_ST_NUMINTERIORRING          = systemName("st_numinteriorring");
+    static final Name N_ST_NUMINTERIORRINGS         = systemName("st_numinteriorrings");
     static final Name N_ST_NUMPOINTS                = systemName("st_numpoints");
     static final Name N_ST_OVERLAPS                 = systemName("st_overlaps");
     static final Name N_ST_POINTN                   = systemName("st_pointn");

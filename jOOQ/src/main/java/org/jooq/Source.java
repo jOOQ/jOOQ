@@ -104,6 +104,11 @@ public final class Source {
      * <li>A file system resource</li>
      * <li>A non-resource string (see {@link #of(String)})
      * </ul>
+     * <p>
+     * Note that if users expect a resource descriptor to resolve, but the
+     * resource is not found, instead of throwing an exception on
+     * {@link #reader()} or {@link #readString()}, this will just produce the
+     * input string again, as if {@link #of(String)} was called.
      */
     public static final Source resolve(String string) {
         return new Source(string, null, null, null, null, null, null, null, -1, true);
@@ -119,6 +124,11 @@ public final class Source {
      * <li>A file system resource</li>
      * <li>A non-resource string (see {@link #of(String)})
      * </ul>
+     * <p>
+     * Note that if users expect a resource descriptor to resolve, but the
+     * resource is not found, instead of throwing an exception on
+     * {@link #reader()} or {@link #readString()}, this will just produce the
+     * input string again, as if {@link #of(String)} was called.
      */
     public static final Source resolve(String string, String charsetName) {
         return new Source(string, null, charsetName, null, null, null, null, null, -1, true);
@@ -134,6 +144,11 @@ public final class Source {
      * <li>A file system resource</li>
      * <li>A non-resource string (see {@link #of(String)})
      * </ul>
+     * <p>
+     * Note that if users expect a resource descriptor to resolve, but the
+     * resource is not found, instead of throwing an exception on
+     * {@link #reader()} or {@link #readString()}, this will just produce the
+     * input string again, as if {@link #of(String)} was called.
      */
     public static final Source resolve(String string, Charset charset) {
         return new Source(string, null, null, charset, null, null, null, null, -1, true);
@@ -149,6 +164,11 @@ public final class Source {
      * <li>A file system resource</li>
      * <li>A non-resource string (see {@link #of(String)})
      * </ul>
+     * <p>
+     * Note that if users expect a resource descriptor to resolve, but the
+     * resource is not found, instead of throwing an exception on
+     * {@link #reader()} or {@link #readString()}, this will just produce the
+     * input string again, as if {@link #of(String)} was called.
      */
     public static final Source resolve(String string, CharsetDecoder charsetDecoder) {
         return new Source(string, null, null, null, charsetDecoder, null, null, null, -1, true);

@@ -49,6 +49,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
@@ -68,6 +69,7 @@ public final class Source {
     private final InputStream    inputStream;
     private final File           file;
     private final int            length;
+    private final boolean        resolve;
 
     private Source(
         String string,
@@ -78,7 +80,8 @@ public final class Source {
         Reader reader,
         InputStream inputStream,
         File file,
-        int length
+        int length,
+        boolean resolve
     ) {
         this.string = string;
         this.bytes = bytes;
@@ -89,13 +92,73 @@ public final class Source {
         this.inputStream = inputStream;
         this.file = file;
         this.length = length;
+        this.resolve = resolve;
+    }
+
+    /**
+     * Create a source from a string that may represent a resource.
+     * <p>
+     * The following resource types are attempted to be resolved, in order:
+     * <ul>
+     * <li>A classpath resource</li>
+     * <li>A file system resource</li>
+     * <li>A non-resource string (see {@link #of(String)})
+     * </ul>
+     */
+    public static final Source resolve(String string) {
+        return new Source(string, null, null, null, null, null, null, null, -1, true);
+    }
+
+    /**
+     * Create a source from a string that may represent a resource using a
+     * specific character set.
+     * <p>
+     * The following resource types are attempted to be resolved, in order:
+     * <ul>
+     * <li>A classpath resource</li>
+     * <li>A file system resource</li>
+     * <li>A non-resource string (see {@link #of(String)})
+     * </ul>
+     */
+    public static final Source resolve(String string, String charsetName) {
+        return new Source(string, null, charsetName, null, null, null, null, null, -1, true);
+    }
+
+    /**
+     * Create a source from a string that may represent a resource using a
+     * specific character set.
+     * <p>
+     * The following resource types are attempted to be resolved, in order:
+     * <ul>
+     * <li>A classpath resource</li>
+     * <li>A file system resource</li>
+     * <li>A non-resource string (see {@link #of(String)})
+     * </ul>
+     */
+    public static final Source resolve(String string, Charset charset) {
+        return new Source(string, null, null, charset, null, null, null, null, -1, true);
+    }
+
+    /**
+     * Create a source from a string that may represent a resource using a
+     * specific character set.
+     * <p>
+     * The following resource types are attempted to be resolved, in order:
+     * <ul>
+     * <li>A classpath resource</li>
+     * <li>A file system resource</li>
+     * <li>A non-resource string (see {@link #of(String)})
+     * </ul>
+     */
+    public static final Source resolve(String string, CharsetDecoder charsetDecoder) {
+        return new Source(string, null, null, null, charsetDecoder, null, null, null, -1, true);
     }
 
     /**
      * Create a source from a string.
      */
     public static final Source of(String string) {
-        return new Source(string, null, null, null, null, null, null, null, -1);
+        return new Source(string, null, null, null, null, null, null, null, -1, false);
     }
 
     /**
@@ -109,49 +172,49 @@ public final class Source {
      * Create a source from binary data using a specific character set.
      */
     public static final Source of(byte[] bytes, String charsetName) {
-        return new Source(null, bytes, charsetName, null, null, null, null, null, -1);
+        return new Source(null, bytes, charsetName, null, null, null, null, null, -1, false);
     }
 
     /**
      * Create a source from binary data using a specific character set.
      */
     public static final Source of(byte[] bytes, Charset charset) {
-        return new Source(null, bytes, null, charset, null, null, null, null, -1);
+        return new Source(null, bytes, null, charset, null, null, null, null, -1, false);
     }
 
     /**
      * Create a source from binary data using a specific character set.
      */
     public static final Source of(byte[] bytes, CharsetDecoder charsetDecoder) {
-        return new Source(null, bytes, null, null, charsetDecoder, null, null, null, -1);
+        return new Source(null, bytes, null, null, charsetDecoder, null, null, null, -1, false);
     }
 
     /**
      * Create a source from a file.
      */
     public static final Source of(File file) {
-        return new Source(null, null, null, null, null, null, null, file, -1);
+        return new Source(null, null, null, null, null, null, null, file, -1, false);
     }
 
     /**
      * Create a source from a file using a specific character set.
      */
     public static final Source of(File file, String charsetName) {
-        return new Source(null, null, charsetName, null, null, null, null, file, -1);
+        return new Source(null, null, charsetName, null, null, null, null, file, -1, false);
     }
 
     /**
      * Create a source from a file using a specific character set.
      */
     public static final Source of(File file, Charset charset) {
-        return new Source(null, null, null, charset, null, null, null, file, -1);
+        return new Source(null, null, null, charset, null, null, null, file, -1, false);
     }
 
     /**
      * Create a source from a file using a specific character set.
      */
     public static final Source of(File file, CharsetDecoder charsetDecoder) {
-        return new Source(null, null, null, null, charsetDecoder, null, null, file, -1);
+        return new Source(null, null, null, null, charsetDecoder, null, null, file, -1, false);
     }
 
     /**
@@ -165,7 +228,7 @@ public final class Source {
      * Create a source from a reader.
      */
     public static final Source of(Reader reader, int length) {
-        return new Source(null, null, null, null, null, reader, null, null, length);
+        return new Source(null, null, null, null, null, reader, null, null, length, false);
     }
 
     /**
@@ -200,28 +263,28 @@ public final class Source {
      * Create a source from an input stream.
      */
     public static final Source of(InputStream inputStream, int length) {
-        return new Source(null, null, null, null, null, null, inputStream, null, length);
+        return new Source(null, null, null, null, null, null, inputStream, null, length, false);
     }
 
     /**
      * Create a source from an input stream using a specific character set.
      */
     public static final Source of(InputStream inputStream, int length, String charsetName) {
-        return new Source(null, null, charsetName, null, null, null, inputStream, null, length);
+        return new Source(null, null, charsetName, null, null, null, inputStream, null, length, false);
     }
 
     /**
      * Create a source from an input stream using a specific character set.
      */
     public static final Source of(InputStream inputStream, int length, Charset charset) {
-        return new Source(null, null, null, charset, null, null, inputStream, null, length);
+        return new Source(null, null, null, charset, null, null, inputStream, null, length, false);
     }
 
     /**
      * Create a source from an input stream using a specific character set.
      */
     public static final Source of(InputStream inputStream, int length, CharsetDecoder charsetDecoder) {
-        return new Source(null, null, null, null, charsetDecoder, null, inputStream, null, length);
+        return new Source(null, null, null, null, charsetDecoder, null, inputStream, null, length, false);
     }
 
     /**
@@ -232,23 +295,39 @@ public final class Source {
      */
     public final Reader reader() throws IOException {
         try {
-            if (string != null)
+            if (string != null) {
+                if (resolve) {
+                    InputStream s = Source.class.getResourceAsStream(string);
+
+                    if (s != null)
+                        return new Source(null, null, charsetName, charset, charsetDecoder, null, s, null, length, false).reader();
+
+                    File f = new File(string);
+
+                    if (f.exists())
+                        return new Source(null, null, charsetName, charset, charsetDecoder, null, null, f, length, false).reader();
+                }
+
                 return new StringReader(string);
-            else if (bytes != null)
+            }
+            else if (bytes != null) {
                 if (length > -1)
                     return inputStreamReader(new ByteArrayInputStream(bytes, 0, length));
                 else
                     return inputStreamReader(new ByteArrayInputStream(bytes));
-            else if (reader != null)
+            }
+            else if (reader != null) {
                 if (length > -1)
                     return new LengthLimitedReader(reader, length);
                 else
                     return reader;
-            else if (inputStream != null)
+            }
+            else if (inputStream != null) {
                 if (length > -1)
                     return inputStreamReader(new LengthLimitedInputStream(inputStream, length));
                 else
                     return inputStreamReader(inputStream);
+            }
             else if (file != null)
                 return new BufferedReader(inputStreamReader(new FileInputStream(file)));
             else

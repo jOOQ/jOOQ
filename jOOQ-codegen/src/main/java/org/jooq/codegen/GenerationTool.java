@@ -74,6 +74,7 @@ import javax.sql.DataSource;
 import org.jooq.Constants;
 import org.jooq.DSLContext;
 import org.jooq.Log.Level;
+import org.jooq.Source;
 import org.jooq.impl.DSL;
 import org.jooq.meta.CatalogVersionProvider;
 import org.jooq.meta.ClassUtils;
@@ -367,8 +368,13 @@ public class GenerationTool {
 
                             setConnection(c);
 
+                            // [#16823] TODO: Move execution logic into the core library
                             if (j.getInitScript() != null)
-                                for (String sql : j.getInitScript().split(defaultIfBlank(j.getInitSeparator(), ";")))
+                                for (String sql : Source
+                                    .resolve(j.getInitScript())
+                                    .readString()
+                                    .split(defaultIfBlank(j.getInitSeparator(), ";"))
+                                )
                                     if (!StringUtils.isBlank(sql))
                                         ctx.execute(sql);
                         }

@@ -11,4 +11,6 @@ module org.jooq.beans.extensions {
 
     // JPA annotations
     requires static jakarta.persistence;
+
+    exports org.jooq.jpa.extensions;
 }

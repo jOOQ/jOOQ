@@ -12,4 +12,6 @@ module org.jooq.beans.extensions {
     // The DefaultRecordMapper makes use of JavaBeans utilities, including:
     // - Support for ConstructorProperties
     requires transitive java.desktop;
+
+    exports org.jooq.beans.extensions;
 }

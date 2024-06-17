@@ -2250,6 +2250,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     break;
 
+                case DUCKDB:
+                    ctx.render()
+                       .visit(K_CAST)
+                       .sql("('")
+                       .sql(escapeHexDigitPairs(convertBytesToHex(value)))
+                       .sql("' ")
+                       .visit(K_AS)
+                       .sql(' ')
+                       .visit(BLOB)
+                       .sql(')');
+
+                    break;
+
                 case DERBY:
                     ctx.render()
                        .visit(K_CAST)
@@ -2318,6 +2331,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     break;
             }
+        }
+
+        final String escapeHexDigitPairs(String hex) {
+            StringBuilder sb = new StringBuilder();
+            int l = hex.length();
+
+            for (int i = 0; i < l; i += 2)
+                sb.append("\\x").append(hex.charAt(i)).append(hex.charAt(i + 1));
+
+            return sb.toString();
         }
 
         @Override

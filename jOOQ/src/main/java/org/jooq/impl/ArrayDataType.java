@@ -46,9 +46,13 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Generator;
 import org.jooq.Nullability;
+import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A wrapper for anonymous array data types
@@ -146,6 +150,16 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     public final String getCastTypeName(Configuration configuration) {
         String castTypeName = elementType.getCastTypeName(configuration);
         return getArrayType(configuration, castTypeName);
+    }
+
+    @Override
+    public final Row getRow() {
+        return elementType.getRow();
+    }
+
+    @Override
+    public final Class<? extends Record> getRecordType() {
+        return elementType.getRecordType();
     }
 
     @Override

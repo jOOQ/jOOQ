@@ -85,10 +85,13 @@ final class ListHandler<R extends Record> {
                     for (int i = 0; i < attributes.length && i < row.size(); i++) {
                         DataType<?> t = row.field(i).getDataType();
 
-                        if ((t.isMultiset() || t.isArray()) && attributes[i] instanceof List<?> l)
-                            attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(l);
-                        else if ((t.isMultiset() || t.isArray()) && attributes[i] instanceof Array a)
-                            attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(asList((Object[]) a.getArray()));
+                        // [#16839] t.getRow() is null for scalar arrays, e.g. ARRAY (SELECT 1)
+                        if (t.isMultiset() || t.isArray() && t.getRow() != null) {
+                            if (attributes[i] instanceof List<?> l)
+                                attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(l);
+                            else if (attributes[i] instanceof Array a)
+                                attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(asList((Object[]) a.getArray()));
+                        }
                         else if (t.isRecord() && attributes[i] instanceof Struct x)
                             attributes[i] = new ListHandler(ctx, (AbstractRow<?>) t.getRow(), t.getRecordType()).read(asList(x)).get(0);
                     }

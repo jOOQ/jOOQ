@@ -3635,7 +3635,7 @@ final class Tools {
 
                         if (m.contains("constraint violated: duplicate key"))
                             return new IntegrityConstraintViolationException("SQL [" + sql + "]; " + e.getMessage(), e);
-                        else if (m.contains("constraint Error: not nullL constraint failed"));
+                        else if (m.contains("constraint error: not null constraint failed"));
                             return new IntegrityConstraintViolationException("SQL [" + sql + "]; " + e.getMessage(), e);
                     }
                 }

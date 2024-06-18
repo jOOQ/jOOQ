@@ -604,6 +604,8 @@ final class Names {
     static final Name N_ST_ASWKB                    = systemName("st_aswkb");
     static final Name N_ST_CENTROID                 = systemName("st_centroid");
     static final Name N_ST_CONTAINS                 = systemName("st_contains");
+    static final Name N_ST_COVEREDBY                = systemName("st_coveredby");
+    static final Name N_ST_COVERS                   = systemName("st_covers");
     static final Name N_ST_CROSSES                  = systemName("st_crosses");
     static final Name N_ST_DIFFERENCE               = systemName("st_difference");
     static final Name N_ST_DISJOINT                 = systemName("st_disjoint");

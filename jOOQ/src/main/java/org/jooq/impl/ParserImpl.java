@@ -6856,6 +6856,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseProFunctionNameIf("ST_COVEREDBY", "SDO_COVEREDBY")) {
+
+
+
+                }
+                else if (parseProFunctionNameIf("ST_COVERS", "SDO_COVERS")) {
+
+
+
+                }
                 else if (parseProFunctionNameIf("ST_CROSSES")) {
 
 

@@ -627,6 +627,7 @@ final class Names {
     static final Name N_ST_NUMINTERIORRINGS         = systemName("st_numinteriorrings");
     static final Name N_ST_NUMPOINTS                = systemName("st_numpoints");
     static final Name N_ST_OVERLAPS                 = systemName("st_overlaps");
+    static final Name N_ST_PERIMETER                = systemName("st_perimeter");
     static final Name N_ST_POINTN                   = systemName("st_pointn");
     static final Name N_ST_SRID                     = systemName("st_srid");
     static final Name N_ST_STARTPOINT               = systemName("st_startpoint");
@@ -634,8 +635,14 @@ final class Names {
     static final Name N_ST_UNION                    = systemName("st_union");
     static final Name N_ST_WITHIN                   = systemName("st_within");
     static final Name N_ST_X                        = systemName("st_x");
+    static final Name N_ST_XMAX                     = systemName("st_xmax");
+    static final Name N_ST_XMIN                     = systemName("st_xmin");
     static final Name N_ST_Y                        = systemName("st_y");
+    static final Name N_ST_YMAX                     = systemName("st_ymax");
+    static final Name N_ST_YMIN                     = systemName("st_ymin");
     static final Name N_ST_Z                        = systemName("st_z");
+    static final Name N_ST_ZMAX                     = systemName("st_zmax");
+    static final Name N_ST_ZMIN                     = systemName("st_zmin");
     static final Name N_SUBSTRING                   = systemName("substring");
     static final Name N_SUBSTRING_INDEX             = systemName("substring_index");
     static final Name N_SUFFIX                      = systemName("suffix");

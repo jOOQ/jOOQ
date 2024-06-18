@@ -377,6 +377,12 @@ import static org.jooq.impl.DSL.square;
 // ...
 // ...
 // ...
+// ...
+// ...
+// ...
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -9608,6 +9614,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_PERIMETER") && requireProEdition()) {
+
+
+
+                }
                 else if (!ignoreProEdition() && parseFunctionNameIf("ST_POINTN") && requireProEdition()) {
 
 
@@ -9633,7 +9644,45 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (!ignoreProEdition() && parseFunctionNameIf("SDO_GEOM.SDO_MIN_MBR_ORDINATE") && requireProEdition()) {
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+                else if (!ignoreProEdition() && parseFunctionNameIf("SDO_GEOM.SDO_MAX_MBR_ORDINATE") && requireProEdition()) {
+
+
+
+
+
+
+
+
+
+
+
+
+                }
                 else if (!ignoreProEdition() && parseFunctionNameIf("ST_X") && requireProEdition()) {
+
+
+
+                }
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_XMIN") && requireProEdition()) {
+
+
+
+                }
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_XMAX") && requireProEdition()) {
 
 
 
@@ -9643,7 +9692,27 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_YMIN") && requireProEdition()) {
+
+
+
+                }
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_YMAX") && requireProEdition()) {
+
+
+
+                }
                 else if (!ignoreProEdition() && parseFunctionNameIf("ST_Z") && requireProEdition()) {
+
+
+
+                }
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ZMIN") && requireProEdition()) {
+
+
+
+                }
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ZMAX") && requireProEdition()) {
 
 
 

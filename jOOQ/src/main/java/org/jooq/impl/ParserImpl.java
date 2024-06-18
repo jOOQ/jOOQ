@@ -9609,7 +9609,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (!ignoreProEdition() && parseFunctionNameIf("ST_NUMPOINTS") && requireProEdition()) {
+                else if (!ignoreProEdition() && parseFunctionNameIf("ST_NPOINTS", "ST_NUMPOINTS") && requireProEdition()) {
 
 
 

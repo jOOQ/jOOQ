@@ -112,25 +112,32 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case CUBRID:
             case FIREBIRD: {
-                // [#10179] Avoid 3VL when not necessary
-                if (condition instanceof AbstractCondition && !((AbstractCondition) condition).isNullable())
-                    ctx.visit(DSL.when(condition, inline(true))
-                                 .else_(inline(false)));
-
-                // [#3206] Implement 3VL if necessary or unknown
-                else
-                    ctx.visit(DSL.when(condition, inline(true))
-                                 .when(not(condition), inline(false)));
+                AbstractCondition.acceptCase(ctx, condition);
                 break;
             }
 
             default:
-                if (condition instanceof AbstractField && ((AbstractField<?>) condition).parenthesised(ctx))
-                    ctx.visit(condition);
-                else
-                    ctx.sql('(').visit(condition).sql(')');
+                acceptStandard(ctx);
                 break;
         }
     }
@@ -145,6 +152,13 @@ implements
 
 
 
+
+    private final void acceptStandard(Context<?> ctx) {
+        if (condition instanceof AbstractField && ((AbstractField<?>) condition).parenthesised(ctx))
+            ctx.visit(condition);
+        else
+            ctx.sql('(').visit(condition).sql(')');
+    }
 
     @Override
     public final boolean hasName(Context<?> ctx) {

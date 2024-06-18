@@ -43,6 +43,8 @@ import static org.jooq.Operator.OR;
 import static org.jooq.Operator.XOR;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.Names.N_CONDITION;
 
@@ -236,4 +238,21 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
     }
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: Utilities
+    // -------------------------------------------------------------------------
+
+    static final void acceptCase(Context<?> ctx, Condition condition) {
+
+        // [#10179] Avoid 3VL when not necessary
+        if (condition instanceof AbstractCondition && !((AbstractCondition) condition).isNullable())
+            ctx.visit(DSL.when(condition, inline(true))
+                         .else_(inline(false)));
+
+        // [#3206] Implement 3VL if necessary or unknown
+        else
+            ctx.visit(DSL.when(condition, inline(true))
+                         .when(DSL.not(condition), inline(false)));
+    }
 }

@@ -383,6 +383,8 @@ import static org.jooq.impl.DSL.square;
 // ...
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.impl.DSL.stddevPop;
 import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
@@ -6896,6 +6898,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseProFunctionNameIf("ST_ISSIMPLE")) {
+
+
+
+                }
+                else if (parseProFunctionNameIf("ST_ISVALID")) {
+
+
+
+                }
                 else if (parseProFunctionNameIf("ST_OVERLAPS", "SDO_OVERLAPS")) {
 
 
@@ -8638,6 +8650,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final FieldOrRow parseMethodCallIf0(FieldOrRow r) {
+
+
+
+
 
 
 

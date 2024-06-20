@@ -622,6 +622,8 @@ final class Names {
     static final Name N_ST_INTERSECTS               = systemName("st_intersects");
     static final Name N_ST_ISCLOSED                 = systemName("st_isclosed");
     static final Name N_ST_ISEMPTY                  = systemName("st_isempty");
+    static final Name N_ST_ISSIMPLE                 = systemName("st_issimple");
+    static final Name N_ST_ISVALID                  = systemName("st_isvalid");
     static final Name N_ST_LENGTH                   = systemName("st_length");
     static final Name N_ST_NINTERIORRINGS           = systemName("st_ninteriorrings");
     static final Name N_ST_NUMGEOMETRIES            = systemName("st_numgeometries");

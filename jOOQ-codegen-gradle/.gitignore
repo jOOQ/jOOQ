@@ -1,6 +1,7 @@
 target
 .idea
 .gradle
+.g
 *.iml
 build
 bin

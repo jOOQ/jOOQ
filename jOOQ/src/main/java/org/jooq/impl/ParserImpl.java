@@ -9291,7 +9291,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (!ignoreProEdition() && parseFunctionNameIf("ST_GEOMETRYN") && requireProEdition()) {
+                else if (parseProFunctionNameIf("ST_GEOMETRYN", "SDO_UTIL.EXTRACT")) {
 
 
 

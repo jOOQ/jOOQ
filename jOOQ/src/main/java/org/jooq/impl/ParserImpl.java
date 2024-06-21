@@ -9586,7 +9586,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseProFunctionNameIf("ST_GEOMETRYN")) {
+                else if (parseProFunctionNameIf("ST_GEOMETRYN", "SDO_UTIL.EXTRACT")) {
 
 
 

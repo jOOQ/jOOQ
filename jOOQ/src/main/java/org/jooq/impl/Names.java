@@ -637,6 +637,7 @@ final class Names {
     static final Name N_ST_SRID                     = systemName("st_srid");
     static final Name N_ST_STARTPOINT               = systemName("st_startpoint");
     static final Name N_ST_TOUCHES                  = systemName("st_touches");
+    static final Name N_ST_TRANSFORM                = systemName("st_transform");
     static final Name N_ST_UNION                    = systemName("st_union");
     static final Name N_ST_WITHIN                   = systemName("st_within");
     static final Name N_ST_X                        = systemName("st_x");

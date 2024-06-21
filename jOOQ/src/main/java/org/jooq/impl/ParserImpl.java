@@ -9670,6 +9670,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
+                else if (parseProFunctionNameIf("ST_TRANSFORM", "SDO_CS.TRANSFORM")) {
+
+
+
+                }
                 else if (parseProFunctionNameIf("ST_UNION")) {
 
 

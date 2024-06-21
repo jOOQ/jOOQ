@@ -9281,7 +9281,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (!ignoreProEdition() && parseFunctionNameIf("ST_ENDPOINT") && requireProEdition()) {
+                else if (parseProFunctionNameIf("ST_ENDPOINT", "SDO_LRS.GEOM_SEGMENT_END_PT")) {
 
 
 
@@ -9365,7 +9365,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (!ignoreProEdition() && parseFunctionNameIf("ST_STARTPOINT") && requireProEdition()) {
+                else if (parseProFunctionNameIf("ST_STARTPOINT", "SDO_LRS.GEOM_SEGMENT_START_PT")) {
 
 
 
@@ -14342,6 +14342,22 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final boolean peekFunctionNameIf(String name) {
         return peekKeyword(name, false, false, true);
+    }
+
+    private final boolean parseProFunctionNameIf(String name) {
+        return !ignoreProEdition() && parseFunctionNameIf(name) && requireProEdition();
+    }
+
+    private final boolean parseProFunctionNameIf(String name1, String name2) {
+        return !ignoreProEdition() && parseFunctionNameIf(name1, name2) && requireProEdition();
+    }
+
+    private final boolean parseProFunctionNameIf(String name1, String name2, String name3) {
+        return !ignoreProEdition() && parseFunctionNameIf(name1, name2, name3) && requireProEdition();
+    }
+
+    private final boolean parseProFunctionNameIf(String... names) {
+        return !ignoreProEdition() && parseFunctionNameIf(names) && requireProEdition();
     }
 
     @Override

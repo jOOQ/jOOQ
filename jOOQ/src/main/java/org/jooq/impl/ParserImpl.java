@@ -9576,7 +9576,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseProFunctionNameIf("ST_ENDPOINT")) {
+                else if (parseProFunctionNameIf("ST_ENDPOINT", "SDO_LRS.GEOM_SEGMENT_END_PT")) {
 
 
 
@@ -9665,7 +9665,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                 }
-                else if (parseProFunctionNameIf("ST_STARTPOINT")) {
+                else if (parseProFunctionNameIf("ST_STARTPOINT", "SDO_LRS.GEOM_SEGMENT_START_PT")) {
 
 
 

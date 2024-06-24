@@ -602,6 +602,7 @@ final class Names {
     static final Name N_ST_ASBINARY                 = systemName("st_asbinary");
     static final Name N_ST_ASTEXT                   = systemName("st_astext");
     static final Name N_ST_ASWKB                    = systemName("st_aswkb");
+    static final Name N_ST_BOUNDARY                 = systemName("st_boundary");
     static final Name N_ST_CENTROID                 = systemName("st_centroid");
     static final Name N_ST_CONTAINS                 = systemName("st_contains");
     static final Name N_ST_COVEREDBY                = systemName("st_coveredby");

@@ -609,6 +609,7 @@ final class Names {
     static final Name N_ST_COVERS                   = systemName("st_covers");
     static final Name N_ST_CROSSES                  = systemName("st_crosses");
     static final Name N_ST_DIFFERENCE               = systemName("st_difference");
+    static final Name N_ST_DIMENSION                = systemName("st_dimension");
     static final Name N_ST_DISJOINT                 = systemName("st_disjoint");
     static final Name N_ST_DISTANCE                 = systemName("st_distance");
     static final Name N_ST_ENDPOINT                 = systemName("st_endpoint");

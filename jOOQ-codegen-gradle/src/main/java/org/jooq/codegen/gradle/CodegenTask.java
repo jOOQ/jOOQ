@@ -100,8 +100,12 @@ public class CodegenTask extends DefaultTask {
                 .getExtensions()
                 .findByType(SourceSetContainer.class);
 
-            if (source != null)
-                source.named("main", sourceSet -> sourceSet.getJava().srcDir(task.getOutputDirectory()));
+            if (source != null) {
+                SourceSet main = source.findByName("main");
+
+                if (main != null)
+                    main.getJava().srcDir(task.getOutputDirectory());
+            }
         }
 
         return true;

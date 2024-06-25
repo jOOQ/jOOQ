@@ -1186,6 +1186,7 @@ final class Tools {
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect>         DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
     static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT     = SQLDialect.supportedBy(SQLITE);
+    static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT_FOR_LOBS = SQLDialect.supportedBy(MYSQL);
 
 
 
@@ -6047,6 +6048,11 @@ final class Tools {
             //          expressions, not if actual parentheses are rendered.
             if (REQUIRES_PARENTHESISED_DEFAULT.contains(ctx.dialect()))
                 ctx.sql('(').visit(v).sql(')');
+
+            // [#16853] MySQL LOB types can't have defaults. Except if we parenthesise them, then they can o_O
+            else if (REQUIRES_PARENTHESISED_DEFAULT_FOR_LOBS.contains(ctx.dialect()) && (type.isLob() || type.isJSON() || type.isSpatial()))
+                ctx.sql('(').visit(v).sql(')');
+
             else
                 ctx.visit(v);
         }

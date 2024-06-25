@@ -78,7 +78,6 @@ import org.jooq.tools.JooqLogger;
 public class SQLiteTableDefinition extends AbstractTableDefinition {
 
     private static final JooqLogger log = JooqLogger.getLogger(SQLiteTableDefinition.class);
-    private static Boolean          existsSqliteSequence;
     private Table<?>                interpretedTable;
 
     public SQLiteTableDefinition(SchemaDefinition schema, String name, String comment) {
@@ -188,7 +187,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                     break identityCheck;
 
                 // [#6854] sqlite_sequence only contains identity information once a table contains records.
-                identity |= existsSqliteSequence() && create()
+                identity |= ((SQLiteDatabase) getDatabase()).existsSqliteSequence() && create()
                     .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
                     .get(0, Boolean.class);
 
@@ -231,17 +230,5 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         }
 
         return result;
-    }
-
-    private boolean existsSqliteSequence() {
-        if (existsSqliteSequence == null) {
-            existsSqliteSequence = create()
-                .selectCount()
-                .from(SQLITE_MASTER)
-                .where(lower(SQLiteMaster.NAME).eq("sqlite_sequence"))
-                .fetchOne(0, boolean.class);
-        }
-
-        return existsSqliteSequence;
     }
 }

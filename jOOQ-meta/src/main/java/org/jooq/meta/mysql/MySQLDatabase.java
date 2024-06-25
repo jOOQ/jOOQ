@@ -70,6 +70,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.mysql.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
+import static org.jooq.meta.mysql.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.mysql.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
 import static org.jooq.meta.mysql.information_schema.Tables.ROUTINES;
 import static org.jooq.meta.mysql.information_schema.Tables.SCHEMATA;
@@ -146,6 +147,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class MySQLDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
+    private Boolean is5_5;
     private Boolean is5_7;
     private Boolean is8;
     private Boolean is8_0_16;
@@ -301,6 +303,22 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                  || configuredDialectIsNotFamilyAndSupports(asList(MARIADB), () -> exists(COLUMNS.GENERATION_EXPRESSION));
 
         return is5_7;
+    }
+
+    protected boolean is5_5() {
+
+        // Check if this is a MySQL 5.5 or later database
+        if (is5_5 == null) {
+            try {
+                create().selectOne().from(PARAMETERS).limit(1).fetchOne();
+                is5_5 = true;
+            }
+            catch (Exception e) {
+                is5_5 = false;
+            }
+        }
+
+        return is5_5;
     }
 
     @Override

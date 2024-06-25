@@ -75,6 +75,7 @@ import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.MetaSQL.M_COMMENTS;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
@@ -661,12 +662,19 @@ final class MetaImpl extends AbstractMeta {
                          Result<Record> result = dsl().newResult(fields);
 
                          int i = 0;
-                         for (UniqueKey<?> uk : t.getUniqueKeys())
+                         for (UniqueKey<?> uk : t.getUniqueKeys()) {
+
+                             // [#16854] Generate a system name for unnamed constraints
+                             String ukName = StringUtils.isEmpty(uk.getName())
+                                 ? "uk_" + Internal.hash(row(uk.getFields()))
+                                 : uk.getName();
+
                              for (Field<?> ukField : uk.getFields())
                                  result.add(dsl()
                                      .newRecord(fCatalogName, fSchemaName, fTableName, fConstraintName, fColumnName, fSequenceNo)
-                                     .values(catalog, schema, table, uk.getName(), ukField.getName(), i++)
+                                     .values(catalog, schema, table, ukName, ukField.getName(), i++)
                                  );
+                         }
 
                          ukCache.put(name(catalog, schema, table), result);
                      }

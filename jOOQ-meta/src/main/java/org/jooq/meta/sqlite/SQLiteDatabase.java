@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.list;
+import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
@@ -470,5 +471,19 @@ public class SQLiteDatabase extends AbstractDatabase {
             snapshot = create().meta().snapshot();
 
         return snapshot;
+    }
+
+    private Boolean existsSqliteSequence;
+
+    boolean existsSqliteSequence() {
+        if (existsSqliteSequence == null) {
+            existsSqliteSequence = create()
+                .selectCount()
+                .from(SQLITE_MASTER)
+                .where(SQLiteMaster.NAME.lower().eq("sqlite_sequence"))
+                .fetchOne(0, boolean.class);
+        }
+
+        return existsSqliteSequence;
     }
 }

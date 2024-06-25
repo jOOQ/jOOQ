@@ -59,8 +59,6 @@ import org.jooq.tools.StringUtils;
  */
 public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
 
-    private static Boolean is55;
-
     private final String   params;
     private final String   returns;
     private final ProcType procType;
@@ -83,7 +81,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
 
     @Override
     protected void init0() {
-        if (is55())
+        if (((MySQLDatabase) getDatabase()).is5_5())
             init55();
         else
             init54();
@@ -207,21 +205,5 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
         );
 
         return new DefaultParameterDefinition(this, paramName, columnIndex, type);
-    }
-
-    private boolean is55() {
-
-        // Check if this is a MySQL 5.5 or later database
-        if (is55 == null) {
-            try {
-                create().selectOne().from(PARAMETERS).limit(1).fetchOne();
-                is55 = true;
-            }
-            catch (Exception e) {
-                is55 = false;
-            }
-        }
-
-        return is55;
     }
 }

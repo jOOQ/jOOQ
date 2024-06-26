@@ -73,6 +73,7 @@ import org.jooq.SQLDialect;
 import org.jooq.TableOptions.TableType;
 // ...
 // ...
+import org.jooq.conf.RenderMapping;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.ArrayDefinition;
@@ -103,7 +104,15 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
     @Override
     protected DSLContext create0() {
-        return DSL.using(getConnection(), SQLDialect.DUCKDB);
+        DSLContext ctx = DSL.using(getConnection(), SQLDialect.DUCKDB);
+
+        // Cannot fully qualify column references of table valued functions
+        // But don't do this with the INFORMATION_SCHEMA!
+        ctx.settings().setRenderMapping(new RenderMapping()
+            .withDefaultCatalog(DUCKDB_TABLES.getCatalog().getName())
+            .withDefaultSchema(DUCKDB_TABLES.getSchema().getName())
+        );
+        return ctx;
     }
 
     @Override

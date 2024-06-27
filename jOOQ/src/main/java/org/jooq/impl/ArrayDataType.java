@@ -175,6 +175,11 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         switch (configuration.family()) {
 
 
+
+
+
+
+
             case POSTGRES:
             case YUGABYTEDB:
                 return dataType + "[]";

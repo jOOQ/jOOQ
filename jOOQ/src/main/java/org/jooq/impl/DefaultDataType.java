@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.util.Collections.unmodifiableCollection;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -110,6 +111,7 @@ import org.jooq.Field;
 import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.Nullability;
+// ...
 import org.jooq.QualifiedRecord;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
@@ -143,6 +145,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION  = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
     private static final Set<SQLDialect>                        SUPPORT_POSTGRES_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION   = SQLDialect.supportedBy(H2, HSQLDB);
+
+
+
+
 
     /**
      * A pattern for data type name normalisation.
@@ -693,6 +699,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                 // [#9609] H2 might still report an untyped array, too
                 else if (result == null && SUPPORT_HSQLDB_ARRAY_NOTATION.contains(dialect) && upper.equals("ARRAY"))
                     result = SQLDataType.OTHER.getArrayDataType();
+
+
+
+
+
 
 
 

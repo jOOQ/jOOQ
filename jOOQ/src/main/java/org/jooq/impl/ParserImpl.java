@@ -6831,7 +6831,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 // Work around a missing feature in unnest()
                 if (!f.getType().isArray())
-                    f = f.coerce(f.getDataType().getArrayDataType());
+                    f = f.coerce(f.getDataType().array());
 
                 result = unnest(f);
             }
@@ -12068,8 +12068,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
         switch (character) {
             case 'A':
-                if (parseKeywordOrIdentifierIf("ARRAY"))
-                    return OTHER.getArrayDataType();
+                if (parseKeywordOrIdentifierIf("ARRAY")) {
+                    if (peek('('))
+                        return parseParenthesised(c -> parseDataTypeIf(parseUnknownTypes).getArrayDataType());
+                    else if (peek('<'))
+                        return parseParenthesised('<', c -> parseDataTypeIf(parseUnknownTypes).getArrayDataType(), '>');
+                    else
+                        return OTHER.getArrayDataType();
+                }
                 else if (parseKeywordIf("AUTO_INCREMENT")) {
                     parseDataTypeIdentityArgsIf();
                     return INTEGER.identity(true);

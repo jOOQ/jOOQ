@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Collections.unmodifiableCollection;
 // ...
+// ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.DUCKDB;
@@ -113,6 +114,7 @@ import org.jooq.Field;
 import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.Nullability;
+// ...
 import org.jooq.QualifiedRecord;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
@@ -149,6 +151,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private static final Set<SQLDialect>                        SUPPORT_POSTGRES_SUFFIX_ARRAY_NOTATION = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION          = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>                        SUPPORT_TRINO_ARRAY_NOTATION           = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
+
+
+
+
 
     /**
      * A pattern for data type name normalisation.
@@ -735,6 +741,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                 // [#11485] Trino lists arrays as array(component_type)
                 else if (arrayCheck && SUPPORT_TRINO_ARRAY_NOTATION.contains(dialect) && upper.startsWith("ARRAY("))
                     result = getDataType(dialect, typeName.substring(6, typeName.length() - 1)).getArrayDataType();
+
+
+
+
+
 
                 // [#366] Don't log a warning here. The warning is logged when
                 // catching the exception in jOOQ-codegen

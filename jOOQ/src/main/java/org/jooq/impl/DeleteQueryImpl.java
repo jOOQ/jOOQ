@@ -328,7 +328,7 @@ implements
         boolean hasUsing = !using.isEmpty() || multiTableJoin || specialDeleteAsSyntax && Tools.alias(t) != null;
 
         // [#14011] Additional predicates that are added for various reasons
-        Condition moreWhere = noCondition();
+        ConditionProviderImpl where0 = new ConditionProviderImpl();
         if (hasUsing) {
             TableList u;
 
@@ -372,12 +372,12 @@ implements
 
         boolean noSupportParametersInWhere = false;
 
+        if (hasWhere())
+            where0.addConditions(getWhere());
 
 
 
 
-
-        Condition where = DSL.and(getWhere(), moreWhere);
 
         if (limit != null && NO_SUPPORT_LIMIT.contains(ctx.dialect()) || !orderBy.isEmpty() && NO_SUPPORT_ORDER_BY_LIMIT.contains(ctx.dialect())) {
             Field<?>[] keyFields = keyFields(ctx, table());
@@ -388,10 +388,10 @@ implements
 
             ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
                 if (keyFields.length == 1) {
-                    c.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(where).orderBy(orderBy).limit(limit)));
+                    c.visit(keyFields[0].in(select((Field) keyFields[0]).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
                 }
                 else
-                    c.visit(row(keyFields).in(select(keyFields).from(table()).where(where).orderBy(orderBy).limit(limit)));
+                    c.visit(row(keyFields).in(select(keyFields).from(table()).where(getWhere()).orderBy(orderBy).limit(limit)));
             });
 
             ctx.end(DELETE_WHERE);
@@ -399,11 +399,11 @@ implements
         else {
             ctx.start(DELETE_WHERE);
 
-            if (!(where instanceof NoCondition))
+            if (where0.hasWhere())
                 ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c ->
                     c.formatSeparator()
                        .visit(K_WHERE).sql(' ')
-                       .visit(where)
+                       .visit(where0.getWhere())
                 );
 
             ctx.end(DELETE_WHERE);

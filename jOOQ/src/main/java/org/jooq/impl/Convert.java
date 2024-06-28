@@ -99,6 +99,7 @@ import java.util.regex.Pattern;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.ConverterProvider;
+import org.jooq.Converters.UnknownType;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
@@ -1725,6 +1726,28 @@ final class Convert {
                 return new DataTypeException(message + ". Check your classpath to see if Jackson or Gson is available to jOOQ.");
             else if (from instanceof XML && !_XML.JAXB_AVAILABLE)
                 return new DataTypeException(message + ". Check your classpath to see if JAXB is available to jOOQ.");
+
+            // [#16872] [#16884]
+            else if (UnknownType.class.isAssignableFrom(toClass))
+                return new DataTypeException(message +
+                    """
+
+                    UnknownType conversion errors appear mainly when using ad-hoc converters together with
+                    reflective conversion or mapping. Ad-hoc converter calls, such as when using:
+
+                    - DataType<T>.asConvertedDataTypeFrom(Function<T, U>)
+                    - Field<T>.convertFrom(Function<T, U>)
+                    - Row[N].mapping(Function[N]<TN.., U>)
+
+                    .. don't know anything about the user type <U> because it is erased by the compiler.
+                    Reflective conversion or mapping tends to need a Class<U> reference. Workarounds include:
+
+                    - Pass the Class<U> literal to an overload of the above method
+                    - Avoid combining ad-hoc conversion with reflective conversion or mapping
+
+                    If you think you've encountered a bug where the conversion should still work, please
+                    report it here: https://jooq.org/bug
+                    """);
             else
                 return new DataTypeException(message);
         }

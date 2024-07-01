@@ -3461,6 +3461,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultOffsetDateTimeBinding<U> extends InternalBinding<OffsetDateTime, U> {
 
+
+
+
+
+
+
+
         DefaultOffsetDateTimeBinding(DataType<OffsetDateTime> dataType, Converter<OffsetDateTime, U> converter) {
             super(dataType, converter);
         }
@@ -3544,6 +3551,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final OffsetDateTime get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
                 return ctx.resultSet().getObject(ctx.index(), OffsetDateTime.class);
+
+
+
+
+
+
             else
                 return OffsetDateTimeParser.offsetDateTime(ctx.resultSet().getString(ctx.index()));
         }
@@ -3552,6 +3565,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final OffsetDateTime get0(BindingGetStatementContext<U> ctx) throws SQLException {
             if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
                 return ctx.statement().getObject(ctx.index(), OffsetDateTime.class);
+
+
+
+
+
+
             else
                 return OffsetDateTimeParser.offsetDateTime(ctx.statement().getString(ctx.index()));
         }
@@ -3561,6 +3580,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
                 return ctx.input().readObject(OffsetDateTime.class);
+
+
+
 
 
 
@@ -3583,6 +3605,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#5779] [#9902] Use the JDBC 4.2 TIME[STAMP]_WITH_TIMEZONE types by default
             if (!FALSE.equals(configuration.settings().isBindOffsetDateTimeType()))
                 return Types.TIMESTAMP_WITH_TIMEZONE;
+
+
+
 
 
 

@@ -174,7 +174,7 @@ public interface Fields {
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
      * converted {@link DataType} reference explicitly to
-     * {@link #cast(DataType)}.
+     * {@link #field(Name, DataType)}.
      *
      * @param name The unqualified name of the field
      * @param type The type to coerce the resulting field to
@@ -243,7 +243,7 @@ public interface Fields {
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
      * converted {@link DataType} reference explicitly to
-     * {@link #cast(DataType)}.
+     * {@link #field(Name, DataType)}.
      *
      * @param name The qualified name of the field
      * @param type The type to coerce the resulting field to
@@ -295,7 +295,7 @@ public interface Fields {
      * types from {@link SQLDataType}. If you're using any custom data types by
      * means of a {@link Converter} or {@link Binding}, it's better to pass that
      * converted {@link DataType} reference explicitly to
-     * {@link #cast(DataType)}.
+     * {@link #field(Name, DataType)}.
      *
      * @param index The 0-based index of the field
      * @param type The type to coerce the resulting field to

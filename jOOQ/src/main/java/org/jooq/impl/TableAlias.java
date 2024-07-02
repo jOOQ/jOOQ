@@ -202,6 +202,12 @@ final class TableAlias<R extends Record> extends AbstractTable<R> implements QOM
 
 
 
+
+
+
+
+
+
     // ------------------------------------------------------------------------
     // XXX: Object API
     // ------------------------------------------------------------------------

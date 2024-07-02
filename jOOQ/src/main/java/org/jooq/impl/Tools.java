@@ -6126,7 +6126,7 @@ final class Tools {
                     ctx.sql(typeName);
             }
         }
-        else if (type.hasPrecision() && type.precision() > 0 && (!type.isTimestamp() || !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))) {
+        else if (type.hasPrecision() && type.precisionDefined() && (!type.isTimestamp() || !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))) {
 
             // [#6745] [#9473] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
             if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect()))

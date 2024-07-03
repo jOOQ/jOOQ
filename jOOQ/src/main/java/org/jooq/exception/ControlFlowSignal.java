@@ -51,8 +51,12 @@ import org.jooq.UpdatableRecord;
  * actually executing the SQL</li>
  * </ul>
  * <p>
- * Typically, a <code>ControlFlowException</code> is thrown from within an
+ * Typically, a {@code ControlFlowSignal} is thrown from within an
  * {@link ExecuteListener}.
+ *
+ * <p>
+ * This class extends {@code RuntimeException} in order to be unchecked; it does not
+ * represent an exception, however - it represents a control flow signal.
  *
  * @author Lukas Eder
  * @see ExecuteListener
@@ -60,12 +64,16 @@ import org.jooq.UpdatableRecord;
 public class ControlFlowSignal extends RuntimeException {
 
     /**
-     * Create a new <code>ControlFlowException</code>.
+     * Create a new {@code ControlFlowSignal}.
      */
-    public ControlFlowSignal() {}
+    public ControlFlowSignal() {
+
+        // [#12582] Use more efficient instantiation without suppression or stack trace.
+        super(null, null, false, false);
+    }
 
     /**
-     * Create a new <code>ControlFlowException</code>.
+     * Create a new {@code ControlFlowSignal} with an explicit {@code message}.
      */
     public ControlFlowSignal(String message) {
 

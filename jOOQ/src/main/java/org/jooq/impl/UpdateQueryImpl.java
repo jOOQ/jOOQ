@@ -215,7 +215,7 @@ implements
 
     static final Set<SQLDialect>        REQUIRES_WHERE                = SQLDialect.supportedBy(CLICKHOUSE);
     static final Set<SQLDialect>        EMULATE_FROM_WITH_MERGE       = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
-    static final Set<SQLDialect>        NO_SUPPORT_FROM               = SQLDialect.supportedUntil(CLICKHOUSE, IGNITE, MARIADB, MYSQL, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>        NO_SUPPORT_FROM               = SQLDialect.supportedUntil(CLICKHOUSE, IGNITE, MARIADB, MYSQL, TRINO);
     static final Set<SQLDialect>        EMULATE_RETURNING_WITH_UPSERT = SQLDialect.supportedBy(MARIADB);
 
     // LIMIT is not supported at all

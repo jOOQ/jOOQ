@@ -170,7 +170,7 @@ implements
     static final Set<SQLDialect>        NO_SUPPORT_REPEAT_FROM_IN_USING  = SQLDialect.supportedBy(DUCKDB, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect>        REQUIRES_WHERE                   = SQLDialect.supportedBy(CLICKHOUSE);
     static final Set<SQLDialect>        EMULATE_USING_WITH_MERGE         = SQLDialect.supportedBy(DERBY, FIREBIRD, H2, HSQLDB);
-    static final Set<SQLDialect>        NO_SUPPORT_USING                 = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, IGNITE, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>        NO_SUPPORT_USING                 = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, IGNITE, SQLITE, TRINO);
 
 
 

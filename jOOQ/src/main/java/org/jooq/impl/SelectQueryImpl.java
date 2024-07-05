@@ -386,6 +386,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     static final Set<SQLDialect>         NO_SUPPORT_LIMIT_ZERO                   = SQLDialect.supportedBy(DERBY, HSQLDB);
     static final Set<SQLDialect>         WRAP_EXP_BODY_IN_DERIVED_TABLE_LIMIT    = SQLDialect.supportedUntil(CLICKHOUSE);
     static final Set<SQLDialect>         WRAP_EXP_BODY_IN_DERIVED_TABLE_ORDER_BY = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect>         WRAP_UNION_SUBQ_IN_DERIVED_TABLE_LIMIT  = SQLDialect.supportedBy(FIREBIRD);
 
 
 
@@ -3419,12 +3420,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
-
-
     @SuppressWarnings("unchecked")
     private final void toSQLOrderBy(
         final Context<?> ctx,
@@ -3441,7 +3436,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // [#6197] When emulating WITH TIES using RANK() in a subquery, we must avoid rendering the
         //         subquery's ORDER BY clause
-        if (!getLimit().withTies()
+        if (!actualLimit.withTies()
             // Dialects with native support
             || SUPPORT_FULL_WITH_TIES.contains(ctx.dialect())
 
@@ -3678,7 +3673,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
     private static final Set<SQLDialect> NO_SUPPORT_UNION_PARENTHESES = SQLDialect.supportedBy(SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_CTE_IN_UNION      = SQLDialect.supportedBy(HSQLDB, MARIADB, TRINO);
     private static final Set<SQLDialect> UNION_PARENTHESIS            = SQLDialect.supportedUntil(DERBY);
@@ -3704,7 +3698,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         SelectQueryImpl<?> s;
 
         // [#10711] Some derived tables are needed if dialects don't support CTE in union subqueries
-        return NO_SUPPORT_CTE_IN_UNION.contains(context.dialect()) && (s = selectQueryImpl(s1)) != null && s.with != null;
+        return NO_SUPPORT_CTE_IN_UNION.contains(context.dialect())
+                    && (s = selectQueryImpl(s1)) != null
+                    && s.with != null
+            || WRAP_UNION_SUBQ_IN_DERIVED_TABLE_LIMIT.contains(context.dialect())
+                    && (s = selectQueryImpl(s1)) != null
+                    && (s.limit.isApplicable() || !s.orderBy.isEmpty());
     }
 
     private final boolean unionParensRequired(Context<?> context) {
@@ -3799,6 +3798,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         switch (ctx.family()) {
             case FIREBIRD:
+                if (derivedTableRequired)
+                    ctx.sql(parenthesis);
+
                 break;
 
             default:

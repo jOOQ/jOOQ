@@ -3163,6 +3163,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
         }
 
         ctx.end(SELECT_ORDER_BY);
@@ -3172,7 +3177,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                .formatNewLine()
                .sql(") x");
 
-        if (TRUE.equals(ctx.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE))) {
+        if (TRUE.equals(ctx.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE))
+
+
+
+        ) {
             if (actualLimit.isApplicable()) {
                 ctx.visit(actualLimit);
             }
@@ -3200,6 +3209,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         ;
     }
+
+
+
+
+
 
 
 

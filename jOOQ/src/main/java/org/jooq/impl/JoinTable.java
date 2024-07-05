@@ -312,14 +312,13 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
                         ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN, semiAntiJoinPredicates);
                     }
 
-                    Condition c = extractCondition(!using.isEmpty() ? usingCondition() : condition);
                     switch (translatedType) {
                         case LEFT_SEMI_JOIN:
-                            semiAntiJoinPredicates.add(exists(selectOne().from(rhs).where(c)));
+                            semiAntiJoinPredicates.add(exists(selectOne().from(rhs).where(condition())));
                             break;
 
                         case LEFT_ANTI_JOIN:
-                            semiAntiJoinPredicates.add(notExists(selectOne().from(rhs).where(c)));
+                            semiAntiJoinPredicates.add(notExists(selectOne().from(rhs).where(condition())));
                             break;
                     }
 
@@ -682,6 +681,19 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         }
 
         return DSL.and(conditions);
+    }
+
+    final boolean hasCondition() {
+        return condition.hasWhere() || !using.isEmpty();
+    }
+
+    final Condition condition() {
+        if (condition.hasWhere())
+            return condition.getWhere();
+        else if (!using.isEmpty())
+            return usingCondition();
+        else
+            return noCondition();
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

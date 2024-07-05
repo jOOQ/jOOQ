@@ -618,7 +618,7 @@ implements
 
     @Override
     final void accept1(Context<?> ctx) {
-        if (!from.isEmpty() && EMULATE_FROM_WITH_MERGE.contains(ctx.dialect())) {
+        if ((!from.isEmpty() || table(ctx) instanceof JoinTable) && EMULATE_FROM_WITH_MERGE.contains(ctx.dialect())) {
             acceptFromAsMerge(ctx);
             return;
         }
@@ -667,10 +667,12 @@ implements
         // TODO: What if there are SET ROW = ROW assignment(s)?
         // TODO: What if there are SET ROW = (SELECT ..) assignment(s)?
 
-        Condition c = condition;
+        ConditionProviderImpl c = new ConditionProviderImpl(condition);
         Table<?> t = table(ctx);
+        TableList from0 = new TableList(from);
+        t = emulateUpdateJoin(t, from0, c);
         FieldMapForUpdate um = updateMap;
-        MergeUsing mu = mergeUsing(from, t, c, orderBy, limit);
+        MergeUsing mu = mergeUsing(from0, t, c, orderBy, limit);
 
         if (!mu.lookup().isEmpty() && ctx.configuration().requireCommercial(() -> "The UPDATE .. FROM to MERGE transformation requires commercial only logic for non-trivial FROM clauses. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition")) {
 
@@ -690,7 +692,7 @@ implements
 
         }
 
-        ctx.visit(mergeInto(table).using(mu.table()).on(mu.lookup().isEmpty() ? c : keyFieldsCondition(ctx, t, mu)).whenMatchedThenUpdate().set(um));
+        ctx.visit(mergeInto(t).using(mu.table()).on(mu.lookup().isEmpty() ? c : keyFieldsCondition(ctx, t, mu)).whenMatchedThenUpdate().set(um));
     }
 
     final boolean updatesField(Field<?> field) {
@@ -732,9 +734,15 @@ implements
         Table<?> t0 = t;
 
         // [#16732] Emulate UPDATE .. FROM with UPDATE .. JOIN where possible
-        if (!f.isEmpty() && NO_SUPPORT_FROM.contains(ctx.dialect()) && !NO_SUPPORT_UPDATE_JOIN.contains(ctx.dialect()))
+        if (!f.isEmpty() && NO_SUPPORT_FROM.contains(ctx.dialect()) && !NO_SUPPORT_UPDATE_JOIN.contains(ctx.dialect())) {
             for (Table<?> x : f)
                 t0 = t0.crossJoin(x);
+        }
+
+        // [#11158] Emulate UPDATE .. JOIN with UPDATE .. FROM where possible
+        else if (NO_SUPPORT_UPDATE_JOIN.contains(ctx.dialect()) && !NO_SUPPORT_FROM.contains(ctx.dialect())) {
+            t0 = emulateUpdateJoin(t0, f, where0);
+        }
 
         ctx.start(UPDATE_UPDATE)
            .visit(K_UPDATE)
@@ -828,6 +836,22 @@ implements
         ctx.start(UPDATE_RETURNING);
         toSQLReturning(ctx);
         ctx.end(UPDATE_RETURNING);
+    }
+
+    private final Table<?> emulateUpdateJoin(Table<?> t0, TableList from0, ConditionProviderImpl where0) {
+        if (t0 instanceof CrossJoin j) {
+            t0 = j.$table1();
+            from0.add(j.$table2());
+        }
+        else if (t0 instanceof Join j) {
+            t0 = j.$table1();
+            from0.add(j.$table2());
+            where0.addConditions(((JoinTable<?>) j).condition());
+        }
+
+        // [#11158] TODO: We could also emulate LeftSemiJoin and LeftAntiJoin here, though it's unlikely anyone does that.
+
+        return t0;
     }
 
     private final boolean limitEmulation(Context<?> ctx) {

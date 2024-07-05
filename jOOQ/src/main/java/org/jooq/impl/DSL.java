@@ -12346,6 +12346,11 @@ public class DSL {
      * In clauses that project fields to a given {@link Record} type, the
      * {@link #noField()} simply projects <code>NULL</code> and cannot be used
      * to avoid the clause.
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link Field} is meant to be used with the
+     * {@link DSL} API only, not with the {@link QOM} API, which cannot offer
+     * any no-op operations. The behaviour when used with the {@link QOM} API is
+     * undefined.
      */
     @NotNull
     @Support
@@ -12382,6 +12387,11 @@ public class DSL {
      * {@link SQLDataType}. If you're using any custom data types by means of a
      * {@link Converter} or {@link Binding}, it's better to pass that converted
      * {@link DataType} reference explicitly to {@link #noField(DataType)}.
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link Field} is meant to be used with the
+     * {@link DSL} API only, not with the {@link QOM} API, which cannot offer
+     * any no-op operations. The behaviour when used with the {@link QOM} API is
+     * undefined.
      *
      * @param type A class to derive the {@link Field#getDataType()} from.
      */
@@ -12414,6 +12424,11 @@ public class DSL {
      * In clauses that project fields to a given {@link Record} type, the
      * {@link #noField()} simply projects <code>NULL</code> and cannot be used
      * to avoid the clause.
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link Field} is meant to be used with the
+     * {@link DSL} API only, not with the {@link QOM} API, which cannot offer
+     * any no-op operations. The behaviour when used with the {@link QOM} API is
+     * undefined.
      *
      * @param type A type to derive the {@link Field#getDataType()} from.
      */
@@ -12446,6 +12461,11 @@ public class DSL {
      * In clauses that project fields to a given {@link Record} type, the
      * {@link #noField()} simply projects <code>NULL</code> and cannot be used
      * to avoid the clause.
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link Field} is meant to be used with the
+     * {@link DSL} API only, not with the {@link QOM} API, which cannot offer
+     * any no-op operations. The behaviour when used with the {@link QOM} API is
+     * undefined.
      *
      * @param type A field to derive the {@link Field#getDataType()} from.
      */
@@ -15161,6 +15181,11 @@ public class DSL {
      * <pre><code>
      * SELECT * FROM t
      * </code></pre>
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link Condition} is meant to be used with the
+     * {@link DSL} API only, not with the {@link QOM} API, which cannot offer
+     * any no-op operations. The behaviour when used with the {@link QOM} API is
+     * undefined.
      */
     @NotNull
     @Support

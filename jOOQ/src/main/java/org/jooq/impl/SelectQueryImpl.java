@@ -2519,7 +2519,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context,
             originalFields, alternativeFields,
             false, wrapQueryExpressionBodyInDerivedTable,
-            orderBy, limit
+            false, orderBy, limit
         );
 
         // SET operations like UNION, EXCEPT, INTERSECT
@@ -2584,7 +2584,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context,
             originalFields, alternativeFields,
             wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
-            unionOrderBy, unionLimit
+            true, unionOrderBy, unionLimit
         ));
     }
 
@@ -3051,6 +3051,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         final List<Field<?>> alternativeFields,
         final boolean wrapQueryExpressionInDerivedTable,
         final boolean wrapQueryExpressionBodyInDerivedTable,
+        final boolean isUnionOrderBy,
         QueryPartListView<SortField<?>> actualOrderBy,
         Limit actualLimit
     ) {

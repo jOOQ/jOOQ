@@ -371,6 +371,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
     final WithImpl                                       with;
     private final SelectFieldList<SelectFieldOrAsterisk> select;
     private Table<?>                                     intoTable;
@@ -3207,6 +3209,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final boolean wrapQueryExpressionBodyInDerivedTable(Context<?> ctx) {
         return false
+
+
 
 
 

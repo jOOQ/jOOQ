@@ -403,6 +403,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
     final WithImpl                                       with;
     private final SelectFieldList<SelectFieldOrAsterisk> select;
     private Table<?>                                     intoTable;
@@ -3603,6 +3605,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#2059] [#7539] Some dialects require query in derived table when using ORDER BY
         return !unionOp.isEmpty() && (
                WRAP_EXP_BODY_IN_DERIVED_TABLE_LIMIT.contains(ctx.dialect()) && getLimit().isApplicable()
+
+
+
             || WRAP_EXP_BODY_IN_DERIVED_TABLE_ORDER_BY.contains(ctx.dialect()) && !getOrderBy().isEmpty()
         );
     }

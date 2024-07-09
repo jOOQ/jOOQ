@@ -1764,7 +1764,7 @@ final class Tools {
     }
 
     static final <T> Field<T> unqualified(Field<T> field) {
-        return DSL.field(field.getUnqualifiedName(), field.getDataType());
+        return field instanceof TableField ? DSL.field(field.getUnqualifiedName(), field.getDataType()) : field;
     }
 
     static final <T> SortField<T> unqualified(SortField<T> field) {

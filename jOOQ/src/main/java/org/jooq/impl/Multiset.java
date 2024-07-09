@@ -41,21 +41,26 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 // ...
 // ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.*;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonbArray;
+import static org.jooq.impl.DSL.noField;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 // ...
 // ...
-import static org.jooq.impl.DSL.toHex;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
@@ -73,6 +78,7 @@ import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -84,10 +90,12 @@ import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.sortable;
+import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -109,6 +117,7 @@ import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONObjectReturningStep;
 import org.jooq.Name;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -117,6 +126,8 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
+import org.jooq.SelectOrderByStep;
+import org.jooq.SortField;
 import org.jooq.Spatial;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -172,6 +183,40 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             ctx.data(DATA_MULTISET_CONTENT, true, c -> accept0(c, false));
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @SuppressWarnings("unchecked")
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
@@ -180,6 +225,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                 Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(N_T, (Name[]) null);
 
                 switch (ctx.family()) {
+
 
 
 
@@ -256,6 +302,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                 Table<?> t = new AliasedSelect<>(select, true, false, FORCE_LIMIT_IN_DERIVED_TABLE.contains(ctx.dialect()), fieldNames(fields.size())).as(N_T, (Name[]) null);
 
                 switch (ctx.family()) {
+
 
 
 

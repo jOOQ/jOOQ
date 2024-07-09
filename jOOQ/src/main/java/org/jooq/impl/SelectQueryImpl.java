@@ -3616,6 +3616,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
             || WRAP_EXP_BODY_IN_DERIVED_TABLE_ORDER_BY.contains(ctx.dialect()) && !getOrderBy().isEmpty()
         );
     }

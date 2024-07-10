@@ -379,7 +379,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     static final record AliasOverride(List<Field<?>> originalFields, List<Field<?>> aliasedFields) {}
 
     private final QueryPart typeSpecificReplacements(QueryPart part) {
-        if (!declareFields() && part instanceof Field) {
+        if (!declareFields() && part instanceof Field<?> f) {
 
             // [#2080] Override the actual alias in case a synthetic alias is generated
             // in the SELECT clause
@@ -387,9 +387,12 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             // Don't combine the effects of DATA_OVERRIDE_ALIASES_IN_ORDER_BY with DATA_UNALIAS_ALIASES_IN_ORDER_BY
             if (override != null && !TRUE.equals(data(DATA_UNALIAS_ALIASED_EXPRESSIONS))) {
-                for (int i = 0; i < override.originalFields().size(); i++)
-                    if (part.equals(override.originalFields().get(i)))
-                        part = field(name(override.aliasedFields().get(i).getName()));
+
+                // [#16946] Ignore qualification of field if unambiguous
+                int i = new FieldsImpl<>(override.originalFields()).indexOf(f);
+
+                if (i >= 0 && i < override.aliasedFields().size())
+                    return field(name(override.aliasedFields().get(i).getName()), f.getDataType());
             }
         }
 

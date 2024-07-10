@@ -40,23 +40,19 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.JoinType.JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
-// ...
-// ...
-// ...
-// ...
-// ...
-// ...
 import static org.jooq.conf.InvocationOrder.REVERSE;
 import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.DATAKEY_RESET_IN_SUBQUERY_SCOPE;
 import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.lazy;
-import static org.jooq.impl.Tools.traverseJoins;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_NESTED_SET_OPERATIONS;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
+import static org.jooq.impl.Tools.SimpleDataKey.DATA_OVERRIDE_ALIASES_IN_ORDER_BY;
 
 import java.sql.PreparedStatement;
 import java.text.DecimalFormat;
@@ -71,7 +67,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.function.Consumer;
 
 import org.jooq.BindContext;
@@ -102,9 +97,6 @@ import org.jooq.conf.RenderImplicitJoinType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
-import org.jooq.exception.DataAccessException;
-import org.jooq.impl.QOM.UEmpty;
-import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.DataKey;
 import org.jooq.impl.Tools.DataKeyScopeStackPart;
 import org.jooq.tools.StringUtils;
@@ -115,11 +107,6 @@ import org.jooq.tools.StringUtils;
  */
 @SuppressWarnings("unchecked")
 abstract class AbstractContext<C extends Context<C>> extends AbstractScope implements Context<C> {
-
-
-
-
-
 
     final ExecuteContext                           ctx;
     final PreparedStatement                        stmt;
@@ -176,27 +163,14 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         VisitListenerProvider[] providers = configuration.visitListenerProviders();
 
-        // [#2080] [#3935] Currently, the InternalVisitListener is not used everywhere
-        boolean useInternalVisitListener =
-            false
-
-
-
-            ;
-
         // [#6758] Avoid this allocation if unneeded
-        VisitListener[] visitListeners = providers.length > 0 || useInternalVisitListener
-            ? new VisitListener[providers.length + (useInternalVisitListener ? 1 : 0)]
+        VisitListener[] visitListeners = providers.length > 0
+            ? new VisitListener[providers.length]
             : null;
 
         if (visitListeners != null) {
             for (int i = 0; i < providers.length; i++)
                 visitListeners[i] = providers[i].provide();
-
-
-
-
-
 
             this.visitContext = new DefaultVisitContext();
             this.visitParts = new ArrayDeque<>();
@@ -298,6 +272,10 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 }
             }
 
+            // [#16928] Apply type specific replacements that can't be implemented in individual types,
+            //          and for which an internal VisitListener is overkill
+            part = typeSpecificReplacements(part);
+
             // Issue start clause events
             // -----------------------------------------------------------------
             Clause[] clauses = Tools.isNotEmpty(visitListenersStart) ? clause(part) : null;
@@ -382,6 +360,26 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
 
         return (C) this;
+    }
+
+    static final record AliasOverride(List<Field<?>> originalFields, List<Field<?>> aliasedFields) {}
+
+    private final QueryPart typeSpecificReplacements(QueryPart part) {
+        if (!declareFields() && part instanceof Field) {
+
+            // [#2080] Override the actual alias in case a synthetic alias is generated
+            // in the SELECT clause
+            AliasOverride override = (AliasOverride) data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY);
+
+            // Don't combine the effects of DATA_OVERRIDE_ALIASES_IN_ORDER_BY with DATA_UNALIAS_ALIASES_IN_ORDER_BY
+            if (override != null && !TRUE.equals(data(DATA_UNALIAS_ALIASED_EXPRESSIONS))) {
+                for (int i = 0; i < override.originalFields().size(); i++)
+                    if (part.equals(override.originalFields().get(i)))
+                        part = field(name(override.aliasedFields().get(i).getName()));
+            }
+        }
+
+        return part;
     }
 
     @Override

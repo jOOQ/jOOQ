@@ -194,6 +194,7 @@ import static org.jooq.impl.Keywords.K_WITH_READ_ONLY;
 import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Names.N_LEVEL;
 import static org.jooq.impl.Names.N_ROWNUM;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
@@ -204,6 +205,7 @@ import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.concat;
@@ -507,6 +509,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         START,
         WHERE,
         QUALIFY,
+        UNION,
         END;
 
         final boolean between(CopyClause startInclusive, CopyClause endExclusive) {
@@ -626,9 +629,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             result.withReadOnly = withReadOnly;
             result.option = option;
             result.intoTable = intoTable;
+        }
 
-            // TODO: Should the remaining union subqueries also be copied?
-            result.union.addAll(union);
+        if (CopyClause.UNION.between(start, end)) {
+            result.union.addAll(map(union, l -> new QueryPartList<>(map(l, (Select<?> s) -> apply(selectQueryImpl(s), q -> q.copy(x -> {}))))));
             result.unionOp.addAll(unionOp);
             result.unionOrderBy.addAll(unionOrderBy);
 
@@ -648,6 +652,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final SelectQueryImpl<R> copy(Consumer<? super SelectQueryImpl<R>> finisher, WithImpl newWith) {
         SelectQueryImpl<R> result = copyTo(CopyClause.END, false, new SelectQueryImpl<>(configuration(), newWith));
+        finisher.accept(result);
+        return result;
+    }
+
+    private final SelectQueryImpl<R> copyAfter(CopyClause clause, Consumer<? super SelectQueryImpl<R>> finisher) {
+        SelectQueryImpl<R> result = copyAfter(clause, false, new SelectQueryImpl<>(configuration(), with));
         finisher.accept(result);
         return result;
     }
@@ -1331,26 +1341,25 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         Field<Integer> rn = rowNumber().over(partitionBy(partitionBy).orderBy(orderBy)).as("rn");
 
-        SelectQueryImpl<R> copy = copy(x -> {});
-        copy.distinctOn.clear();
-        copy.select.add(rn);
-        copy.orderBy.clear();
-        copy.limit.clear();
+        SelectQueryImpl<R> copy = copy(x -> {
+            x.distinctOn.clear();
+            x.select.add(rn);
+            x.orderBy.clear();
+            x.limit.clear();
+            x.unionOp.clear();
+            x.union.clear();
+            x.unionOrderBy.clear();
+            x.unionSeek.clear();
+            x.unionLimit.clear();
+        });
 
-        SelectLimitStep<?> s1 =
-        DSL.select(new QualifiedSelectFieldList(table(name("t")), select))
-           .from(copy.asTable("t"))
-           .where(rn.eq(one()))
-           .orderBy(map(orderBy, (SortField<?> o) -> unqualified(o)));
-
-        if (limit.limit != null) {
-            SelectLimitPercentStep<?> s2 = s1.limit(limit.limit);
-            SelectWithTiesStep<?> s3 = limit.percent ? s2.percent() : s2;
-            SelectOffsetStep<?> s4 = limit.withTies ? s3.withTies() : s3;
-            return limit.offset != null ? s4.offset(limit.offset) : s4;
-        }
-        else
-            return limit.offset != null ? s1.offset(limit.offset) : s1;
+        return copyAfter(CopyClause.UNION, x -> {
+            x.select.addAll(new QualifiedSelectFieldList(table(N_T), select));
+            x.from.add(copy.asTable(N_T));
+            x.condition.addConditions(rn.eq(one()));
+            x.orderBy.addAll(map(orderBy, (SortField<?> o) -> unqualified(o)));
+            x.limit.from(limit);
+        });
     }
 
 

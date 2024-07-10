@@ -298,6 +298,8 @@ import org.jooq.TableRecord;
 import org.jooq.WindowDefinition;
 import org.jooq.XML;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.AbstractContext.JoinNode;
+import org.jooq.impl.AbstractContext.AliasOverride;
 import org.jooq.impl.ForLock.ForLockMode;
 import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.QOM.CompareCondition;
@@ -1656,14 +1658,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         Name[] selectAliases = (Name[]) context.data(DATA_SELECT_ALIASES);
 
         try {
-            List<Field<?>> originalFields = null;
-            List<Field<?>> alternativeFields = null;
+            AliasOverride aliasOverride = null;
 
             if (selectAliases != null) {
+                List<Field<?>> originalFields = null;
+                List<Field<?>> alternativeFields = null;
+
                 context.data().remove(DATA_SELECT_ALIASES);
                 alternativeFields = map(originalFields = getSelect(),
                     (f, i) -> i < selectAliases.length ? f.as(selectAliases[i]) : f
                 );
+
+                aliasOverride = new AliasOverride(originalFields, alternativeFields);
             }
 
             if (TRUE.equals(renderTrailingLimit))
@@ -1798,7 +1804,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
                     else
-                        toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
+                        toSQLReferenceLimitDefault(context, aliasOverride);
 
                     break;
                 }
@@ -1808,7 +1814,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-                    toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
+                    toSQLReferenceLimitDefault(context, aliasOverride);
                     break;
                 }
 
@@ -1819,7 +1825,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     if (getLimit().isApplicable() && (getLimit().withTies() || getLimit().isExpression()))
                         toSQLReferenceLimitWithWindowFunctions(context);
                     else
-                        toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
+                        toSQLReferenceLimitDefault(context, aliasOverride);
 
                     break;
                 }
@@ -1836,14 +1842,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     if (getLimit().isApplicable() && getLimit().withTies())
                         toSQLReferenceLimitWithWindowFunctions(context);
                     else
-                        toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
+                        toSQLReferenceLimitDefault(context, aliasOverride);
 
                     break;
                 }
 
                 // By default, render the dialect's limit clause
                 default: {
-                    toSQLReferenceLimitDefault(context, originalFields, alternativeFields);
+                    toSQLReferenceLimitDefault(context, aliasOverride);
                     break;
                 }
             }
@@ -1940,8 +1946,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     /**
      * The default LIMIT / OFFSET clause in most dialects
      */
-    private final void toSQLReferenceLimitDefault(Context<?> context, List<Field<?>> originalFields, List<Field<?>> alternativeFields) {
-        context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true, c -> toSQLReference0(context, originalFields, alternativeFields));
+    private final void toSQLReferenceLimitDefault(Context<?> context, AliasOverride aliasOverride) {
+        context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, true, c -> toSQLReference0(context, aliasOverride));
     }
 
     /**
@@ -1955,15 +1961,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // AUTHOR.ID as v1, BOOK.ID as v2, BOOK.TITLE as v3
         // Enforce x.* or just * if we have no known field names (e.g. when plain SQL tables are involved)
-        final List<Field<?>> alternativeFields = new ArrayList<>(originalFields.size());
+        final List<Field<?>> aliasedFields = new ArrayList<>(originalFields.size());
 
         if (originalFields.isEmpty())
-            alternativeFields.add(DSL.field("*"));
+            aliasedFields.add(DSL.field("*"));
         else
-            alternativeFields.addAll(aliasedFields(originalFields));
+            aliasedFields.addAll(aliasedFields(originalFields));
 
-        alternativeFields.add(CustomField.of("rn", SQLDataType.INTEGER, c -> {
-            boolean wrapQueryExpressionBodyInDerivedTable = wrapQueryExpressionBodyInDerivedTable(c);
+        aliasedFields.add(CustomField.of("rn", SQLDataType.INTEGER, c -> {
+            boolean wrapQueryExpressionBodyInDerivedTable = wrapQueryExpressionBodyInDerivedTable(c, true);
 
             // [#3575] Ensure that no column aliases from the surrounding SELECT clause
             // are referenced from the below ranking functions' ORDER BY clause.
@@ -1971,7 +1977,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             boolean q = c.qualify();
 
-            c.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY, new Object[] { originalFields, alternativeFields });
+            c.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY, new AliasOverride(originalFields, aliasedFields));
             if (wrapQueryExpressionBodyInDerivedTable)
                 c.qualify(false);
 
@@ -2008,7 +2014,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
            .visit(K_FROM).sqlIndentStart(" (")
            .subquery(true);
 
-        toSQLReference0(ctx, originalFields, alternativeFields);
+        toSQLReference0(ctx, new AliasOverride(originalFields, aliasedFields));
 
         ctx.subquery(false)
            .sqlIndentEnd(") ")
@@ -2115,7 +2121,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * This part is common to any type of limited query
      */
     @SuppressWarnings("unchecked")
-    private final void toSQLReference0(Context<?> context, List<Field<?>> originalFields, List<Field<?>> alternativeFields) {
+    private final void toSQLReference0(
+        Context<?> context,
+        AliasOverride aliasOverride
+    ) {
         SQLDialect family = context.family();
         boolean qualify = context.qualify();
 
@@ -2167,7 +2176,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
+            || wrapQueryExpressionBodyInDerivedTable(context, aliasOverride != null)
 
         // [#7459] In the presence of UNIONs and other set operations, the SEEK
         //         predicate must be applied on a derived table, not on the individual subqueries
@@ -2184,10 +2193,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                    .formatNewLine()
                    .sql("t.*");
 
-            if (alternativeFields != null && originalFields.size() < alternativeFields.size())
+            if (aliasOverride != null && aliasOverride.originalFields().size() < aliasOverride.aliasedFields().size())
                 context.sql(", ")
                        .formatSeparator()
-                       .declareFields(true, c -> c.visit(alternativeFields.get(alternativeFields.size() - 1)));
+                       .declareFields(true, c -> c.visit(aliasOverride.aliasedFields().get(aliasOverride.aliasedFields().size() - 1)));
 
             context.formatIndentEnd()
                    .formatSeparator()
@@ -2218,7 +2227,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 unionParenthesis(
                     context,
                     '(',
-                    alternativeFields != null ? alternativeFields : getSelect(),
+                    aliasOverride != null ? aliasOverride.aliasedFields() : getSelect(),
                     derivedTableRequired(context, this),
                     unionParensRequired = unionOpNesting || unionParensRequired(context)
                 );
@@ -2272,11 +2281,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         // [#2335] When emulating LIMIT .. OFFSET, the SELECT clause needs to generate
         // non-ambiguous column names as ambiguous column names are not allowed in subqueries
-        if (alternativeFields != null)
-            if (wrapQueryExpressionBodyInDerivedTable && originalFields.size() < alternativeFields.size())
-                context.visit(new SelectFieldList<>(alternativeFields.subList(0, originalFields.size())));
+        if (aliasOverride != null)
+            if (wrapQueryExpressionBodyInDerivedTable && aliasOverride.originalFields().size() < aliasOverride.aliasedFields().size())
+                context.visit(new SelectFieldList<>(aliasOverride.aliasedFields().subList(0, aliasOverride.originalFields().size())));
             else
-                context.visit(new SelectFieldList<>(alternativeFields));
+                context.visit(new SelectFieldList<>(aliasOverride.aliasedFields()));
 
         // The default behaviour
         else
@@ -2518,8 +2527,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // ORDER BY clause for local subselect
         // -----------------------------------
         toSQLOrderBy(
-            context,
-            originalFields, alternativeFields,
+            context, aliasOverride,
             false, wrapQueryExpressionBodyInDerivedTable,
             false, orderBy, limit
         );
@@ -2583,8 +2591,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // ORDER BY clause for UNION
         // -------------------------
         context.qualify(false, c -> toSQLOrderBy(
-            context,
-            originalFields, alternativeFields,
+            context, aliasOverride,
             wrapQueryExpressionInDerivedTable, wrapQueryExpressionBodyInDerivedTable,
             true, unionOrderBy, unionLimit
         ));
@@ -3049,8 +3056,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @SuppressWarnings("unchecked")
     private final void toSQLOrderBy(
         final Context<?> ctx,
-        final List<Field<?>> originalFields,
-        final List<Field<?>> alternativeFields,
+        final AliasOverride aliasOverride,
         final boolean wrapQueryExpressionInDerivedTable,
         final boolean wrapQueryExpressionBodyInDerivedTable,
         final boolean isUnionOrderBy,
@@ -3215,8 +3221,14 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return !getSeek().isEmpty() && !getOrderBy().isEmpty() && !unionOp.isEmpty();
     }
 
-    private final boolean wrapQueryExpressionBodyInDerivedTable(Context<?> ctx) {
-        return false
+    private final boolean wrapQueryExpressionBodyInDerivedTable(Context<?> ctx, boolean hasAlternativeFields) {
+
+        // [#2059] [#7539] Some dialects require query in derived table when using ORDER BY
+        return !unionOp.isEmpty() && (
+
+            // [#16928] "Alternative fields" such as ROW_NUMBER() calculations only work with UNIONs when the
+            //          UNION is nested.
+            hasAlternativeFields
 
 
 
@@ -3227,8 +3239,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-        ;
+        );
     }
 
 

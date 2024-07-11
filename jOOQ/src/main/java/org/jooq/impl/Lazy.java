@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.function.Supplier;
 
 /**
@@ -60,14 +63,14 @@ import java.util.function.Supplier;
  *
  * @author Lukas Eder
  */
-final class Lazy<T> {
+final class Lazy<T> implements Serializable {
 
     static <T> Lazy<T> of(Supplier<? extends T> supplier) {
         return new Lazy<>(supplier);
     }
 
-    private final Supplier<? extends T> supplier;
-    private volatile T                  value;
+    private transient Supplier<? extends T> supplier;
+    private volatile T                      value;
 
     private Lazy(Supplier<? extends T> supplier) {
         this.supplier = supplier;
@@ -83,5 +86,11 @@ final class Lazy<T> {
         }
 
         return value;
+    }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        get();
+
+        oos.defaultWriteObject();
     }
 }

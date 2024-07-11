@@ -108,12 +108,12 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
             else
                 return query.asTable(alias, aliases);
         else
-            return new TableAlias<>(this, alias, c -> true);
+            return new TableAlias<>(this, alias, true);
     }
 
     @Override
     public final Table<R> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<>(this, alias, fieldAliases, c -> true);
+        return new TableAlias<>(this, alias, fieldAliases, true);
     }
 
     @Override

@@ -74,18 +74,18 @@ implements
     transient FieldsImpl<R> aliasedFields;
 
     TableAlias(Table<R> table, Name alias) {
-        this(table, alias, null, c -> false);
+        this(table, alias, null, false);
     }
 
-    TableAlias(Table<R> table, Name alias, Predicate<Context<?>> wrapInParentheses) {
+    TableAlias(Table<R> table, Name alias, boolean wrapInParentheses) {
         this(table, alias, null, wrapInParentheses);
     }
 
     TableAlias(Table<R> table, Name alias, Name[] fieldAliases) {
-        this(table, alias, fieldAliases, c -> false);
+        this(table, alias, fieldAliases, false);
     }
 
-    TableAlias(Table<R> table, Name alias, Name[] fieldAliases, Predicate<Context<?>> wrapInParentheses) {
+    TableAlias(Table<R> table, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
         super(table.getOptions(), alias, table.getSchema());
 
         this.alias = new Alias<>(table, this, alias, fieldAliases, wrapInParentheses);

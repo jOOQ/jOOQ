@@ -141,13 +141,13 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     final Q                              wrapping;
     final Name                           alias;
     final Name[]                         fieldAliases;
-    final Predicate<Context<?>>          wrapInParentheses;
+    final boolean                        wrapInParentheses;
 
     Alias(Q wrapped, Q wrapping, Name alias) {
-        this(wrapped, wrapping, alias, null, c -> false);
+        this(wrapped, wrapping, alias, null, false);
     }
 
-    Alias(Q wrapped, Q wrapping, Name alias, Name[] fieldAliases, Predicate<Context<?>> wrapInParentheses) {
+    Alias(Q wrapped, Q wrapping, Name alias, Name[] fieldAliases, boolean wrapInParentheses) {
         this.wrapped = wrapped;
         this.wrapping = wrapping;
         this.alias = alias;
@@ -411,12 +411,10 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     }
 
     private final void toSQLWrapped(Context<?> ctx) {
-        boolean wrap = wrapInParentheses.test(ctx);
-
-        if (wrap)
-            ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, false, c -> toSQLWrapped(c, wrap));
+        if (wrapInParentheses)
+            ctx.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, false, c -> toSQLWrapped(c, wrapInParentheses));
         else
-            toSQLWrapped(ctx, wrap);
+            toSQLWrapped(ctx, wrapInParentheses);
     }
 
     private final void toSQLWrapped(Context<?> ctx, boolean wrap) {

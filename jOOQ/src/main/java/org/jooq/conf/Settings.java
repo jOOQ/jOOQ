@@ -4736,6 +4736,7 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
      * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
+     * <li>{@link org.jooq.SQLDialect#TERADATA} : 2536</li>
      * </ul>
      * 
      */
@@ -4752,6 +4753,7 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
      * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
+     * <li>{@link org.jooq.SQLDialect#TERADATA} : 2536</li>
      * </ul>
      * 
      */
@@ -8662,6 +8664,7 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
      * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
+     * <li>{@link org.jooq.SQLDialect#TERADATA} : 2536</li>
      * </ul>
      * 
      */

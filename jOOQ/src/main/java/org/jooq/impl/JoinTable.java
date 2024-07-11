@@ -610,12 +610,12 @@ implements
 
     @Override
     public final Table<Record> as(Name alias) {
-        return new TableAlias<>(this, alias, c -> true);
+        return new TableAlias<>(this, alias, true);
     }
 
     @Override
     public final Table<Record> as(Name alias, Name... fieldAliases) {
-        return new TableAlias<>(this, alias, fieldAliases, c -> true);
+        return new TableAlias<>(this, alias, fieldAliases, true);
     }
 
     @Override

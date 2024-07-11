@@ -480,6 +480,7 @@ final class Tools {
          * <li>{@link SQLDialect#POSTGRES} : 32767</li>
          * <li>{@link SQLDialect#SQLITE} : 999</li>
          * <li>{@link SQLDialect#SQLSERVER} : 2100</li>
+         * <li>{@link org.jooq.SQLDialect#TERADATA} : 2536</li>
          * </ul>
          */
         DATA_FORCE_STATIC_STATEMENT,

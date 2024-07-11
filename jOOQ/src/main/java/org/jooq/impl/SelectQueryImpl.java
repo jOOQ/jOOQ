@@ -618,7 +618,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         }
 
         if (CopyClause.UNION.between(start, end)) {
-            result.union.addAll(map(union, l -> new QueryPartList<>(map(l, (Select<?> s) -> apply(selectQueryImpl(s), q -> q.copy(x -> {}))))));
+            for (QueryPartList<Select<?>> u : union) {
+                QueryPartList<Select<?>> l = new QueryPartList<>();
+
+                for (Select<?> s : u) {
+                    SelectQueryImpl<?> q = selectQueryImpl(s);
+
+                    if (q != null)
+                        q = q.copy(x -> {});
+
+                    l.add(q);
+                }
+
+                result.union.add(l);
+            }
+
             result.unionOp.addAll(unionOp);
             result.unionOrderBy.addAll(unionOrderBy);
 

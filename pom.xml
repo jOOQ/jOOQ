@@ -942,7 +942,6 @@
             <id>all-modules</id>
             <modules>
                 <!-- all modules which are not already listed as submodules -->
-                <module>jOOQ-examples</module>
 
 
 

@@ -32812,6 +32812,72 @@ public class DSL {
 
     /**
      * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcat(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
+    public static OrderedAggregateFunction<String> stringAgg(Field<?> field) {
+        return listAgg(field);
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcat(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
+    public static OrderedAggregateFunction<String> stringAgg(Field<?> field, String separator) {
+        return listAgg(field, separator);
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcat(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
+    public static OrderedAggregateFunction<String> stringAgg(Field<?> field, Field<String> separator) {
+        return listAgg(field, separator);
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcatDistinct(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static OrderedAggregateFunction<String> stringAggDistinct(Field<?> field) {
+        return listAggDistinct(field);
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcatDistinct(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static OrderedAggregateFunction<String> stringAggDistinct(Field<?> field, String separator) {
+        return listAggDistinct(field, separator);
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     *
+     * @see #groupConcatDistinct(Field)
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static OrderedAggregateFunction<String> stringAggDistinct(Field<?> field, Field<String> separator) {
+        return listAggDistinct(field, separator);
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
      * <p>
      * This is natively supported by
      * <ul>

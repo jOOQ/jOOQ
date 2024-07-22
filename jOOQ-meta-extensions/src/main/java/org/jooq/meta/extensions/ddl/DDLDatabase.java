@@ -95,6 +95,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
     protected void export() throws Exception {
         Settings defaultSettings = new Settings();
         String scripts = getProperties().getProperty("scripts");
+        String scriptsDelimiter = getProperties().getProperty("scriptsDelimiter", ";");
         String sql = getProperties().getProperty("sql");
         String encoding = getProperties().getProperty("encoding", "UTF-8");
         String sort = getProperties().getProperty("sort", "semantic").toLowerCase();
@@ -157,13 +158,16 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
             if (!isBlank(sql))
                 load(ctx, Source.of(sql));
 
-            if (!isBlank(scripts))
-                new FilePattern()
-                        .encoding(encoding)
-                        .basedir(new File(getBasedir()))
-                        .pattern(scripts)
-                        .sort(Sort.of(sort))
-                        .load(source -> DDLDatabase.this.load(ctx, source));
+            if (!isBlank(scripts)) {
+                String[] scriptsList = scripts.split(scriptsDelimiter);
+                for (String scriptsPaths : scriptsList)
+                    new FilePattern()
+                            .encoding(encoding)
+                            .basedir(new File(getBasedir()))
+                            .pattern(scriptsPaths)
+                            .sort(Sort.of(sort))
+                            .load(source -> DDLDatabase.this.load(ctx, source));
+            }
         }
         catch (ParserException e) {
             log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://jooq.org/bug", e);

@@ -14,7 +14,7 @@
  * Other licenses:
  * -----------------------------------------------------------------------------
  * Commercial licenses for this work are available. These replace the above
- * ASL 2.0 and offer limited warranties, support, maintenance, and commercial
+ * Apache-2.0 and offer limited warranties, support, maintenance, and commercial
  * database integrations.
  *
  * For more information, please visit: https://www.jooq.org/legal/licensing

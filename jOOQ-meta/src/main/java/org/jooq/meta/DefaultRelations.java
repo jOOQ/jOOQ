@@ -67,6 +67,9 @@ public class DefaultRelations implements Relations {
     private transient Map<ColumnDefinition, List<UniqueKeyDefinition>>      uniqueKeysByColumn;
     private transient Map<ColumnDefinition, List<UniqueKeyDefinition>>      keysByColumn;
     private transient Map<ColumnDefinition, List<ForeignKeyDefinition>>     foreignKeysByColumn;
+    private transient Map<TableDefinition, List<UniqueKeyDefinition>>       uniqueKeysByTable;
+    private transient Map<TableDefinition, List<UniqueKeyDefinition>>       keysByTable;
+    private transient Map<TableDefinition, List<ForeignKeyDefinition>>      foreignKeysByTable;
     private transient Map<TableDefinition, List<CheckConstraintDefinition>> checkConstraintsByTable;
 
     public void addPrimaryKey(String keyName, TableDefinition table, ColumnDefinition column) {
@@ -367,20 +370,19 @@ public class DefaultRelations implements Relations {
 	        for (UniqueKeyDefinition uniqueKey : uniqueKeys.values())
                 for (ColumnDefinition keyColumn : uniqueKey.getKeyColumns())
                     uniqueKeysByColumn.computeIfAbsent(keyColumn, c -> new ArrayList<>()).add(uniqueKey);
+
+	        uniqueKeysByColumn.forEach((t, l) -> t.getDatabase().sort(l));
         }
 
-        List<UniqueKeyDefinition> list = uniqueKeysByColumn.get(column);
-        return list != null ? list : emptyList();
+	    return nonNull(uniqueKeysByColumn, column);
     }
 
     @Override
     public List<UniqueKeyDefinition> getUniqueKeys(TableDefinition table) {
-        Set<UniqueKeyDefinition> result = new LinkedHashSet<>();
+        if (uniqueKeysByTable == null)
+            uniqueKeysByTable = initByTable(uniqueKeys);
 
-        for (ColumnDefinition column : table.getColumns())
-            result.addAll(getUniqueKeys(column));
-
-        return new ArrayList<>(result);
+        return nonNull(uniqueKeysByTable, table);
     }
 
     @Override
@@ -390,12 +392,12 @@ public class DefaultRelations implements Relations {
         for (TableDefinition table : schema.getDatabase().getTables(schema))
             result.addAll(getUniqueKeys(table));
 
-        return new ArrayList<>(result);
+        return sort(new ArrayList<>(result));
     }
 
     @Override
     public List<UniqueKeyDefinition> getUniqueKeys() {
-        return new ArrayList<>(uniqueKeys.values());
+        return sort(new ArrayList<>(uniqueKeys.values()));
     }
 
     @Override
@@ -406,20 +408,19 @@ public class DefaultRelations implements Relations {
             for (UniqueKeyDefinition uniqueKey : keys.values())
                 for (ColumnDefinition keyColumn : uniqueKey.getKeyColumns())
                     keysByColumn.computeIfAbsent(keyColumn, c -> new ArrayList<>()).add(uniqueKey);
+
+            keysByColumn.forEach((t, l) -> t.getDatabase().sort(l));
         }
 
-        List<UniqueKeyDefinition> list = keysByColumn.get(column);
-        return list != null ? list : emptyList();
+        return nonNull(keysByColumn, column);
     }
 
     @Override
     public List<UniqueKeyDefinition> getKeys(TableDefinition table) {
-        Set<UniqueKeyDefinition> result = new LinkedHashSet<>();
+        if (keysByTable == null)
+            keysByTable = initByTable(keys);
 
-        for (ColumnDefinition column : table.getColumns())
-            result.addAll(getKeys(column));
-
-        return new ArrayList<>(result);
+        return nonNull(keysByTable, table);
     }
 
     @Override
@@ -429,12 +430,12 @@ public class DefaultRelations implements Relations {
         for (TableDefinition table : schema.getDatabase().getTables(schema))
             result.addAll(getKeys(table));
 
-        return new ArrayList<>(result);
+        return sort(new ArrayList<>(result));
     }
 
     @Override
     public List<UniqueKeyDefinition> getKeys() {
-        return new ArrayList<>(keys.values());
+        return sort(new ArrayList<>(keys.values()));
     }
 
     @Override
@@ -445,33 +446,46 @@ public class DefaultRelations implements Relations {
             for (ForeignKeyDefinition foreignKey : foreignKeys.values())
                 for (ColumnDefinition keyColumn : foreignKey.getKeyColumns())
                     foreignKeysByColumn.computeIfAbsent(keyColumn, c -> new ArrayList<>()).add(foreignKey);
+
+            foreignKeysByColumn.forEach((t, l) -> t.getDatabase().sort(l));
         }
 
-
-        List<ForeignKeyDefinition> list = foreignKeysByColumn.get(column);
-        return list != null ? list : emptyList();
+        return nonNull(foreignKeysByColumn, column);
 	}
 
     @Override
     public List<ForeignKeyDefinition> getForeignKeys(TableDefinition table) {
-        Set<ForeignKeyDefinition> result = new LinkedHashSet<>();
+        if (foreignKeysByTable == null)
+            foreignKeysByTable = initByTable(foreignKeys);
 
-        for (ColumnDefinition column : table.getColumns())
-            result.addAll(getForeignKeys(column));
-
-        return new ArrayList<>(result);
+        return nonNull(foreignKeysByTable, table);
     }
 
     @Override
     public List<CheckConstraintDefinition> getCheckConstraints(TableDefinition table) {
-        if (checkConstraintsByTable == null) {
-            checkConstraintsByTable = new LinkedHashMap<>();
-            checkConstraints.forEach((k, v) -> checkConstraintsByTable.computeIfAbsent(k.table, t -> new ArrayList<>()).add(v));
-            checkConstraintsByTable.forEach((t, l) -> table.getDatabase().sort(l));
-        }
+        if (checkConstraintsByTable == null)
+            checkConstraintsByTable = initByTable(checkConstraints);
 
-        List<CheckConstraintDefinition> list = checkConstraintsByTable.get(table);
+        return nonNull(checkConstraintsByTable, table);
+    }
+
+    private static <D extends Definition> Map<TableDefinition, List<D>> initByTable(
+        Map<Key, D> map
+    ) {
+        Map<TableDefinition, List<D>> result = new LinkedHashMap<>();
+        map.forEach((k, v) -> result.computeIfAbsent(k.table, t -> new ArrayList<>()).add(v));
+        result.forEach((t, l) -> t.getDatabase().sort(l));
+
+        return result;
+    }
+
+    private static <K extends Definition, V extends Definition> List<V> nonNull(Map<K, List<V>> map, K key) {
+        List<V> list = map.get(key);
         return list != null ? list : emptyList();
+    }
+
+    private static <D extends Definition> List<D> sort(List<D> list) {
+        return list.isEmpty() ? list : list.get(0).getDatabase().sort(list);
     }
 
     private static Key key(TableDefinition definition, String keyName) {

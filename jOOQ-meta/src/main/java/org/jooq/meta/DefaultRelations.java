@@ -144,7 +144,11 @@ public class DefaultRelations implements Relations {
         // Remove the existing key from the column -> key mapping
         primaryKeysByColumn = null;
         uniqueKeysByColumn = null;
+        uniqueKeysByTable = null;
         keysByColumn = null;
+        keysByTable = null;
+        foreignKeysByColumn = null;
+        foreignKeysByTable = null;
 
         // Remove the existing key from the primary key mapping (not from the unique key mapping!)
         Iterator<Entry<Key, UniqueKeyDefinition>> it = primaryKeys.entrySet().iterator();

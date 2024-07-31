@@ -39,6 +39,7 @@ package org.jooq.codegen.gradle;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.file.Directory;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.model.ObjectFactory;
 import org.jooq.codegen.GenerationTool;
@@ -64,6 +65,7 @@ public class NamedConfiguration {
     boolean                        unnamed;
     private Configuration          configuration;
     private DirectoryProperty      outputDirectory;
+    private Directory              projectDirectory;
     private boolean                outputDirectorySet;
 
     @Inject
@@ -78,6 +80,7 @@ public class NamedConfiguration {
         this.unnamed = false;
         this.configuration = init(new Configuration());
         this.outputDirectory = objects.directoryProperty();
+        this.projectDirectory = project.getLayout().getProjectDirectory();
     }
 
     static final Configuration init(Configuration configuration) {
@@ -141,11 +144,11 @@ public class NamedConfiguration {
 
             // [#16133] Make sure the CodegenTask's OutputDirectory takes into account any basedir config
             if (configuration.getBasedir() == null)
-                configuration.setBasedir(project.getLayout().getProjectDirectory().getAsFile().getAbsolutePath());
+                configuration.setBasedir(projectDirectory.getAsFile().getAbsolutePath());
             else if (!new File(directory).isAbsolute())
                 directory = new File(configuration.getBasedir(), directory).getAbsolutePath();
 
-            outputDirectory.value(project.getLayout().getProjectDirectory().dir(directory));
+            outputDirectory.value(projectDirectory.dir(directory));
             outputDirectorySet = true;
             action = null;
         }

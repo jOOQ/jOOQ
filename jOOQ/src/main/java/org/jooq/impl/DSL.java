@@ -34443,6 +34443,8 @@ public class DSL {
 
         if (t instanceof LegacyConvertedDataType l)
             return new DataTypeProxy(l);
+        else if (t.isArray() && t.getArrayComponentDataType() != SQLDataType.OTHER)
+            return t;
         else if (t != SQLDataType.OTHER)
             return t;
         else

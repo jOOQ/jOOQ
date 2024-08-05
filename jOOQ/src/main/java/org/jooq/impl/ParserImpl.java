@@ -7056,7 +7056,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Table<?> parseTable() {
-        return parseJoinedTable(() -> peekKeyword(KEYWORDS_IN_SELECT_FROM));
+        return parseJoinedTable(() -> peekKeyword(delimiterRequired
+            ? KEYWORDS_IN_FROM
+            : KEYWORDS_IN_SELECT_FROM
+        ));
     }
 
     private final Table<?> parseLateral(BooleanSupplier forbiddenKeywords) {
@@ -7871,7 +7874,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                     if (parseKeywordIf("AS"))
                         alias = parseIdentifier(true, false);
-                    else if (!peekKeyword(KEYWORDS_IN_SELECT) && !peekKeyword(KEYWORDS_IN_STATEMENTS))
+                    else if (!peekKeyword(KEYWORDS_IN_SELECT) && (delimiterRequired || !peekKeyword(KEYWORDS_IN_STATEMENTS)))
                         alias = parseIdentifierIf(true, false);
                 }
 
@@ -14996,6 +14999,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private int                         bindIndex       = 0;
     private final Map<String, Param<?>> bindParams      = new LinkedHashMap<>();
     private String                      delimiter       = ";";
+    private boolean                     delimiterRequired = false;
     private LanguageContext             languageContext = LanguageContext.QUERY;
     private EnumSet<FunctionKeyword>    forbidden       = EnumSet.noneOf(FunctionKeyword.class);
     private ParseScope                  scope           = new ParseScope();
@@ -15032,6 +15036,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         // [#8722] This is an undocumented flag that allows for collecting parameters from the parser
         //         Do not rely on this flag. It will change incompatibly in the future.
         this.bindParamListener = (Consumer<Param<?>>) dsl.configuration().data("org.jooq.parser.param-collector");
+        this.delimiterRequired = TRUE.equals(dsl.configuration().data("org.jooq.parser.delimiter-required"));
 
 
 

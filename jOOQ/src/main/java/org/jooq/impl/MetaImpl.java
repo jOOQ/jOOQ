@@ -605,18 +605,19 @@ final class MetaImpl extends AbstractMeta {
                      for (Table<?> t : (meta != null ? meta : dsl().meta(sql)).getTables(table)) {
                          Result<Record> result = dsl().newResult(fields);
 
-                         int i = 0;
+                         int keyNo = 0;
                          for (UniqueKey<?> uk : t.getUniqueKeys()) {
+                             int colNo = 0;
 
                              // [#16854] Generate a system name for unnamed constraints
                              String ukName = StringUtils.isEmpty(uk.getName())
-                                 ? "uk_" + Internal.hash(row(uk.getFields()))
+                                 ? "uk_" + table + "_" + (++keyNo) + "_" + Internal.hash(row(uk.getFields()))
                                  : uk.getName();
 
                              for (Field<?> ukField : uk.getFields())
                                  result.add(dsl()
                                      .newRecord(fCatalogName, fSchemaName, fTableName, fConstraintName, fColumnName, fSequenceNo)
-                                     .values(catalog, schema, table, ukName, ukField.getName(), i++)
+                                     .values(catalog, schema, table, ukName, ukField.getName(), colNo++)
                                  );
                          }
 

@@ -3140,27 +3140,24 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                     }
                 }
 
+                actualOrderBy = new QueryPartListView<>(actualOrderBy).map(t1 -> {
+                    Field<?> in = ((SortFieldImpl<?>) t1).getField();
+                    Field<?> out = getResolveProjection(ctx, in);
+                    return in == out ? t1 : ((SortFieldImpl<?>) t1).transform(out);
+                });
 
+                // [#2080] DB2, Oracle, and Sybase can deal with column aliases from the SELECT clause
+                // but in case the aliases have been overridden to emulate OFFSET pagination, the
+                // overrides must also apply to the ORDER BY clause
+                if (aliasOverride != null) {
+                    QueryPart o = actualOrderBy;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                {
+                    ctx.qualify(
+                        !wrapQueryExpressionBodyInDerivedTable && ctx.qualify(),
+                        c1 -> c1.data(DATA_OVERRIDE_ALIASES_IN_ORDER_BY, aliasOverride, c2 -> c2.visit(o))
+                    );
+                }
+                else {
 
 
 

@@ -906,7 +906,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         // Recurse for arrays
         if (byte[].class != type && type.isArray()) {
-            return (DataType<T>) getDataType(dialect, type.getComponentType()).getArrayDataType();
+            return (DataType<T>) getDataType(dialect, (Class<T>) type.getComponentType(), fallbackDataType).getArrayDataType();
         }
 
         // Base types are registered statically

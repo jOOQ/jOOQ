@@ -66,6 +66,7 @@ import java.util.regex.Pattern;
 
 import org.jooq.Check;
 import org.jooq.Comment;
+import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.CreateDomainAsStep;
@@ -183,7 +184,12 @@ final class DDL {
             return q.as("");
 
         try {
-            Query[] queries = ctx.parser().parse(options.source()).queries();
+
+            // [#16979] Internal, undocumented flag to prevent
+            // [#17013] TODO: Use new Settings instead, once implemented
+            Configuration c = ctx.configuration().derive();
+            c.data("org.jooq.parser.delimiter-required", true);
+            Query[] queries = c.dsl().parser().parse(options.source()).queries();
 
             if (queries.length > 0) {
                 if (queries[0] instanceof CreateViewImpl<?> cv)

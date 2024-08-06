@@ -58,14 +58,17 @@ import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_FIELD;
 import static org.jooq.impl.Names.N_JSONB_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_OBJECT;
+import static org.jooq.impl.Names.N_JSON_OBJECT;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
 import static org.jooq.impl.Names.N_JSON_PARSE;
+import static org.jooq.impl.Names.N_JSON_STRIP_NULLS;
 import static org.jooq.impl.Names.N_JSON_TRANSFORM;
 import static org.jooq.impl.Names.N_MAP;
 import static org.jooq.impl.Names.N_MAP_FILTER;
 import static org.jooq.impl.Names.N_OBJECT_AGG;
 import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.Names.N_TO_JSON;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.QueryPartListView.wrap;
@@ -114,6 +117,10 @@ implements
     @Override
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
 
 
 
@@ -247,6 +254,30 @@ implements
 
         acceptOverClause(ctx);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2455,6 +2455,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         });
         ConditionProviderImpl where = new ConditionProviderImpl();
 
+        if (TRUE.equals(context.data().get(BooleanDataKey.DATA_SELECT_NO_DATA)))
+            where.addConditions(falseCondition());
+
         // [#14985] [#15755] Add skipped join segments from path joins
         tablelist = prependPathJoins(context, where, tablelist);
 
@@ -2658,14 +2661,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // ------------
         context.start(SELECT_WHERE);
 
-        if (TRUE.equals(context.data().get(BooleanDataKey.DATA_SELECT_NO_DATA)))
-            context.formatSeparator()
-                   .visit(K_WHERE)
-                   .sql(' ')
-                   .visit(falseCondition());
-        else if (!where.hasWhere() && semiAntiJoinPredicates == null && !TRUE.equals(context.data().get(BooleanDataKey.DATA_MANDATORY_WHERE_CLAUSE)))
-            ;
-        else {
+        if (where.hasWhere() || semiAntiJoinPredicates != null || TRUE.equals(context.data().get(BooleanDataKey.DATA_MANDATORY_WHERE_CLAUSE))) {
             ConditionProviderImpl actual = new ConditionProviderImpl();
 
             if (semiAntiJoinPredicates != null)

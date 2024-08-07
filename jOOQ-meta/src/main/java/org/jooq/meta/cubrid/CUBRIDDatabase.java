@@ -243,18 +243,12 @@ public class CUBRIDDatabase extends AbstractDatabase {
                 String columnType = record.get("Type", String.class);
                 String name = table + "_" + column;
 
-                ColumnDefinition columnDefinition = tableDefinition.getColumn(column);
-
-                // [#1137] Avoid generating enum classes for enum types that
-                // are explicitly forced to another type
-                if (getConfiguredForcedType(columnDefinition) == null) {
-                    DefaultEnumDefinition definition = new DefaultEnumDefinition(getSchemata().get(0), name, "", true);
-                    for (String string : columnType.replaceAll("ENUM\\(|\\)", "").split(",")) {
-                        definition.addLiteral(string.trim().replaceAll("'", ""));
-                    }
-
-                    result.add(definition);
+                DefaultEnumDefinition definition = new DefaultEnumDefinition(getSchemata().get(0), name, "", true);
+                for (String string : columnType.replaceAll("ENUM\\(|\\)", "").split(",")) {
+                    definition.addLiteral(string.trim().replaceAll("'", ""));
                 }
+
+                result.add(definition);
             }
         }
 

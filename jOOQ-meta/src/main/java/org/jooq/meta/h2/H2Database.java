@@ -969,18 +969,13 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                     ColumnDefinition columnDefinition = tableDefinition.getColumn(r.value3());
 
                     if (columnDefinition != null) {
+                        String name = r.value2() + "_" + r.value3();
+                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "", true);
 
-                        // [#1137] Avoid generating enum classes for enum types that
-                        // are explicitly forced to another type
-                        if (getConfiguredForcedType(columnDefinition, columnDefinition.getType()) == null) {
-                            String name = r.value2() + "_" + r.value3();
-                            DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "", true);
+                        for (String string : r.value4())
+                            definition.addLiteral(string);
 
-                            for (String string : r.value4())
-                                definition.addLiteral(string);
-
-                            result.add(definition);
-                        }
+                        result.add(definition);
                     }
                 }
             });
@@ -1019,25 +1014,20 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 ColumnDefinition columnDefinition = tableDefinition.getColumn(r.column);
 
                 if (columnDefinition != null) {
+                    String name = r.table + "_" + r.column;
+                    DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "", true);
 
-                    // [#1137] Avoid generating enum classes for enum types that
-                    // are explicitly forced to another type
-                    if (getConfiguredForcedType(columnDefinition, columnDefinition.getType()) == null) {
-                        String name = r.table + "_" + r.column;
-                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, "", true);
+                    CSVReader reader = new CSVReader(
+                        new StringReader(r.type.replaceAll("(^enum\\()|(\\)[^)]*$)", ""))
+                       ,','  // Separator
+                       ,'\'' // Quote character
+                       ,true // Strict quotes
+                    );
 
-                        CSVReader reader = new CSVReader(
-                            new StringReader(r.type.replaceAll("(^enum\\()|(\\)[^)]*$)", ""))
-                           ,','  // Separator
-                           ,'\'' // Quote character
-                           ,true // Strict quotes
-                        );
+                    for (String string : reader.next())
+                        definition.addLiteral(string);
 
-                        for (String string : reader.next())
-                            definition.addLiteral(string);
-
-                        result.add(definition);
-                    }
+                    result.add(definition);
                 }
             }
         }

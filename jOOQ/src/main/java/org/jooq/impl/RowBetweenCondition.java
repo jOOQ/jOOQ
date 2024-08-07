@@ -77,10 +77,8 @@ import org.jooq.BetweenAndStepN;
 import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -179,8 +177,8 @@ implements
     private Row                              maxValue;
 
     RowBetweenCondition(Row row, Row minValue, boolean not, boolean symmetric) {
-        this.row = row;
-        this.minValue = minValue;
+        this.row = ((AbstractRow<?>) row).convertTo(minValue);
+        this.minValue = ((AbstractRow<?>) minValue).convertTo(row);
         this.not = not;
         this.symmetric = symmetric;
     }
@@ -188,7 +186,7 @@ implements
     RowBetweenCondition(Row row, Row minValue, boolean not, boolean symmetric, Row maxValue) {
         this(row, minValue, not, symmetric);
 
-        this.maxValue = maxValue;
+        this.maxValue = ((AbstractRow<?>) maxValue).convertTo(row);
     }
 
     // ------------------------------------------------------------------------
@@ -430,140 +428,117 @@ implements
 
     @Override
     public final Condition and(Row1<T1> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row2<T1, T2> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row3<T1, T2, T3> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row4<T1, T2, T3, T4> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row5<T1, T2, T3, T4, T5> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row6<T1, T2, T3, T4, T5, T6> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row7<T1, T2, T3, T4, T5, T6, T7> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row8<T1, T2, T3, T4, T5, T6, T7, T8> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
     public final Condition and(RowN r) {
-        this.maxValue = r;
-        return this;
+        return and0(r);
     }
 
     @Override
@@ -679,6 +654,11 @@ implements
     @Override
     public final Condition and(Record record) {
         return and(new RowImplN(Tools.fieldsArray(record.intoArray(), record.fields())));
+    }
+
+    private final Condition and0(Row r) {
+        this.maxValue = ((AbstractRow<?>) r).convertTo(row);
+        return this;
     }
 
     // ------------------------------------------------------------------------

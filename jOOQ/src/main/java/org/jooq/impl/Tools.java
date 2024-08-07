@@ -545,7 +545,7 @@ final class Tools {
         /**
          * [#7139] No data must be selected in the <code>SELECT</code> statement.
          */
-        DATA_SELECT_NO_DATA,
+        DATA_SELECT_NO_DATA(true, null, 1),
 
         /**
          * [#3381] Omit the {@link Clause#SELECT_INTO}, as it is being emulated.

@@ -140,15 +140,29 @@ implements
 
         @Override
         public void accept(Context<?> ctx) {
+            switch (ctx.family()) {
+
+
+
+
+
+
+                default:
+                    accept0(ctx, index);
+                    break;
+            }
+        }
+
+        private void accept0(Context<?> ctx, Field<?> i) {
 
             // [#13808] When using an array element reference as a store assignment
             //          target, the parentheses must not be rendered
             if (array instanceof TableField || Boolean.TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)))
-                ctx.visit(array).sql('[').visit(index).sql(']');
+                ctx.visit(array).sql('[').visit(i).sql(']');
 
             // [#12480] For expressions the parens might be required
             else
-                ctx.sql('(').visit(array).sql(')').sql('[').visit(index).sql(']');
+                ctx.sql('(').visit(array).sql(')').sql('[').visit(i).sql(']');
         }
     }
 

@@ -84,12 +84,7 @@ import org.jooq.impl.QOM.UNotYetImplemented;
 /**
  * @author Lukas Eder
  */
-final class RowIsDistinctFrom
-extends
-    AbstractCondition
-implements
-    UNotYetImplemented
-{
+final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplemented {
     private static final Set<SQLDialect> EMULATE_DISTINCT            = SQLDialect.supportedBy(CUBRID, DERBY);
 
     // An emulation may be required only for the version where a subquery is used
@@ -104,8 +99,8 @@ implements
     private final boolean                not;
 
     RowIsDistinctFrom(Row lhs, Row rhs, boolean not) {
-        this.lhs = ((AbstractRow<?>) lhs).convertTo(rhs);
-        this.rhsRow = ((AbstractRow<?>) rhs).convertTo(lhs);
+        this.lhs = lhs;
+        this.rhsRow = rhs;
         this.rhsSelect = null;
         this.not = not;
     }

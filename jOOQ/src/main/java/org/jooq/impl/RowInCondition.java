@@ -80,30 +80,22 @@ import org.jooq.impl.QOM.UNotYetImplemented;
 /**
  * @author Lukas Eder
  */
-final class RowInCondition
-extends
-    AbstractCondition
-implements
-    UNotYetImplemented
-{
-
-    private static final Clause[]        CLAUSES_IN     = { CONDITION, CONDITION_IN };
-    private static final Clause[]        CLAUSES_IN_NOT = { CONDITION, CONDITION_NOT_IN };
+final class RowInCondition extends AbstractCondition implements UNotYetImplemented {
+    private static final Clause[]              CLAUSES_IN     = { CONDITION, CONDITION_IN };
+    private static final Clause[]              CLAUSES_IN_NOT = { CONDITION, CONDITION_NOT_IN };
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
-    private static final Set<SQLDialect> EMULATE_IN       = SQLDialect.supportedBy(DERBY, FIREBIRD, SQLITE);
+    private static final Set<SQLDialect>       EMULATE_IN       = SQLDialect.supportedBy(DERBY, FIREBIRD, SQLITE);
 
-    private final Row                    left;
-    private final QueryPartList<Row>     right;
-    private final boolean                not;
+    private final Row                          left;
+    private final QueryPartList<? extends Row> right;
+    private final boolean                      not;
 
     RowInCondition(Row left, QueryPartList<? extends Row> right, boolean not) {
         this.left = left;
-        this.right = new QueryPartList<>(right);
+        this.right = right;
         this.not = not;
-
-        this.right.replaceAll(r -> ((AbstractRow<?>) r).convertTo(left));
     }
 
     @Override

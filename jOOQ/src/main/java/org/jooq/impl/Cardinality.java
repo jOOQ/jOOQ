@@ -110,6 +110,7 @@ implements
                 ctx.visit(function(N_LENGTH, getDataType(), array));
                 break;
 
+
             case DUCKDB:
                 ctx.visit(function(N_ARRAY_LENGTH, getDataType(), array));
                 break;

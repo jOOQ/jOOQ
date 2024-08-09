@@ -256,6 +256,7 @@ final class Names {
     static final Name N_ROWSFROM                    = systemName("rowsfrom");
     static final Name N_ROW_NUMBER                  = systemName("row_number");
     static final Name N_SAFE_CAST                   = systemName("safe_cast");
+    static final Name N_SAFE_ORDINAL                = systemName("safe_ordinal");
     static final Name N_SECONDS_BETWEEN             = systemName("seconds_between");
     static final Name N_SEQ4                        = systemName("seq4");
     static final Name N_SEQ8                        = systemName("seq8");

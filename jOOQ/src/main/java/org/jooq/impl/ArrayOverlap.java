@@ -100,6 +100,7 @@ implements
             case H2:
                 return false;
 
+
             case HSQLDB:
                 return false;
 
@@ -130,6 +131,7 @@ implements
                     .intersect(select(asterisk()).from(unnest(array2)))
                 ));
                 break;
+
 
             case HSQLDB:
                 ctx.visit(exists(

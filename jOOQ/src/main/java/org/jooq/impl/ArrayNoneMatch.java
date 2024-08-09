@@ -96,6 +96,7 @@ implements
         switch (ctx.family()) {
 
 
+
             case CLICKHOUSE:
             case DUCKDB:
             case H2:
@@ -115,6 +116,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 

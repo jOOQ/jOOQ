@@ -56,7 +56,6 @@ import static org.jooq.Geometry.geometry;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -286,6 +285,7 @@ import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -298,6 +298,9 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
+import org.jooq.tools.json.JSONArray;
+import org.jooq.tools.json.JSONObject;
+import org.jooq.tools.json.JSONParser;
 import org.jooq.tools.json.JSONValue;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
@@ -1470,6 +1473,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final Object[] get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 case POSTGRES:

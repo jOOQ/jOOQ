@@ -53,33 +53,28 @@ import javax.inject.Inject;
 public class CodegenPluginExtension {
 
     final ObjectFactory                                  objects;
-    final Project                                        project;
     final NamedDomainObjectContainer<NamedConfiguration> executions;
+    final NamedConfiguration                             defaultExecution;
 
     @Inject
     public CodegenPluginExtension(
         ObjectFactory objects,
-        Project project,
-        ProviderFactory providers,
         ProjectLayout layout
     ) {
         this.objects = objects;
-        this.project = project;
-        this.executions = objects.domainObjectContainer(NamedConfiguration.class,
-            name -> objects.newInstance(NamedConfiguration.class, objects, name)
+        this.defaultExecution = new NamedConfiguration(objects, layout, "", null);
+        this.executions = objects.domainObjectContainer(NamedConfiguration.class, name -> "".equals(name)
+            ? defaultExecution
+            : objects.newInstance(NamedConfiguration.class, objects, name, defaultExecution)
         );
     }
 
-    NamedConfiguration defaultConfiguration() {
-        return executions.getByName("");
-    }
-
     public void configuration(Action<ConfigurationExtension> action) {
-        defaultConfiguration().configuration(action);
+        defaultExecution.configuration(action);
     }
 
     public void delayedConfiguration(Action<ConfigurationExtension> action) {
-        defaultConfiguration().delayedConfiguration(action);
+        defaultExecution.delayedConfiguration(action);
     }
 
     public NamedDomainObjectContainer<NamedConfiguration> getExecutions() {

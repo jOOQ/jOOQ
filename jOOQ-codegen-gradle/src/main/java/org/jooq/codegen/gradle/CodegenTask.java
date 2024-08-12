@@ -39,7 +39,6 @@ package org.jooq.codegen.gradle;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
@@ -91,24 +90,7 @@ public class CodegenTask extends DefaultTask {
 
         // [#16318] When the task is up-to-date, we still have to register our source set contributions, which
         //          apparently aren't being cached by gradle's build cache.
-        getOutputs().upToDateWhen(task -> registerSourceSet(task) && upToDate(task));
-    }
-
-    static boolean registerSourceSet(Task t) {
-        if (t instanceof CodegenTask task) {
-            SourceSetContainer source = task.getProject()
-                .getExtensions()
-                .findByType(SourceSetContainer.class);
-
-            if (source != null) {
-                SourceSet main = source.findByName("main");
-
-                if (main != null)
-                    main.getJava().srcDir(task.getOutputDirectory());
-            }
-        }
-
-        return true;
+        getOutputs().upToDateWhen(task -> upToDate(task));
     }
 
     @SuppressWarnings("unchecked")

@@ -38,14 +38,14 @@
 package org.jooq.codegen.gradle;
 
 import org.gradle.api.Action;
-import org.gradle.api.Project;
-import org.gradle.api.file.Directory;
 import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.model.ObjectFactory;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Generator;
 import org.jooq.meta.jaxb.Target;
+import org.jooq.tools.JooqLogger;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.codegen.gradle.MetaExtensions.*;
 
@@ -58,29 +58,32 @@ import java.io.File;
  */
 public class NamedConfiguration {
 
+    static final JooqLogger        log = JooqLogger.getLogger(NamedConfiguration.class);
+
     final ObjectFactory            objects;
-    final Project                  project;
+    final ProjectLayout            projectLayout;
     final String                   name;
+    final NamedConfiguration       defaultConfiguration;
     Action<ConfigurationExtension> action;
     boolean                        unnamed;
     private Configuration          configuration;
     private DirectoryProperty      outputDirectory;
-    private Directory              projectDirectory;
     private boolean                outputDirectorySet;
 
     @Inject
     public NamedConfiguration(
         ObjectFactory objects,
-        Project project,
-        String name
+        ProjectLayout projectLayout,
+        String name,
+        NamedConfiguration defaultConfiguration
     ) {
         this.objects = objects;
-        this.project = project;
+        this.projectLayout = projectLayout;
         this.name = name;
         this.unnamed = false;
         this.configuration = init(new Configuration());
         this.outputDirectory = objects.directoryProperty();
-        this.projectDirectory = project.getLayout().getProjectDirectory();
+        this.defaultConfiguration = defaultConfiguration == null ? this : defaultConfiguration;
     }
 
     static final Configuration init(Configuration configuration) {
@@ -105,7 +108,6 @@ public class NamedConfiguration {
 
     void configuration0(Configuration configuration) {
         if (!unnamed) {
-            NamedConfiguration defaultConfiguration = project.getExtensions().getByType(CodegenPluginExtension.class).defaultConfiguration();
             defaultConfiguration.executeAction();
             this.configuration = MiniJAXB.append(copy(defaultConfiguration.configuration), copy(this.configuration));
         }
@@ -123,7 +125,7 @@ public class NamedConfiguration {
     }
 
     public void delayedConfiguration(Action<ConfigurationExtension> action) {
-        project.getLogger().info("Delayed configuration is an experimental feature, which is subject to change in the future. Please illustrate your use-case here to help better understand why this is needed: https://github.com/jOOQ/jOOQ/issues/16821");
+        log.info("Delayed configuration is an experimental feature, which is subject to change in the future. Please illustrate your use-case here to help better understand why this is needed: https://github.com/jOOQ/jOOQ/issues/16821");
         this.action = action;
     }
 
@@ -132,6 +134,7 @@ public class NamedConfiguration {
             ConfigurationExtension c = objects.newInstance(ConfigurationExtension.class, objects);
             init(c);
             action.execute(c);
+            action = null;
             configuration0(c);
 
             // [#15944] Override default target directory
@@ -144,13 +147,12 @@ public class NamedConfiguration {
 
             // [#16133] Make sure the CodegenTask's OutputDirectory takes into account any basedir config
             if (configuration.getBasedir() == null)
-                configuration.setBasedir(projectDirectory.getAsFile().getAbsolutePath());
+                configuration.setBasedir(projectLayout.getProjectDirectory().getAsFile().getAbsolutePath());
             else if (!new File(directory).isAbsolute())
                 directory = new File(configuration.getBasedir(), directory).getAbsolutePath();
 
-            outputDirectory.value(projectDirectory.dir(directory));
+            outputDirectory.value(projectLayout.getProjectDirectory().dir(directory));
             outputDirectorySet = true;
-            action = null;
         }
     }
 

@@ -41,6 +41,8 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,8 +97,18 @@ public class CodegenPlugin implements Plugin<Project> {
             task.setDescription("jOOQ code generation" + (configuration.unnamed ? " for all executions" : " for the " + configuration.name + " execution"));
             task.setGroup("jOOQ");
 
-            if (task.configuration.action == null)
-                CodegenTask.registerSourceSet(task);
+            if (task.configuration.action == null) {
+                SourceSetContainer source = task.getProject()
+                    .getExtensions()
+                    .findByType(SourceSetContainer.class);
+
+                if (source != null) {
+                    SourceSet main = source.findByName("main");
+
+                    if (main != null)
+                        main.getJava().srcDir(task.getOutputDirectory());
+                }
+            }
         };
     }
 }

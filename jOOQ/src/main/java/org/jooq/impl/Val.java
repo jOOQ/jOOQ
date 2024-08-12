@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.joining;
 // ...
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
@@ -47,6 +48,7 @@ import static org.jooq.impl.AbstractRowAsField.acceptMultisetContent;
 import static org.jooq.impl.AbstractRowAsField.forceMultisetContent;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.sql;
+import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Names.N_NULLIF;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.OTHER;
@@ -79,6 +81,7 @@ import org.jooq.Param;
 import org.jooq.Parser;
 // ...
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.UEmpty;
@@ -204,6 +207,12 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
             else
                 acceptDefaultEmbeddable(ctx);
         }
+
+
+
+
+
+
         else if (ctx instanceof RenderContext r) {
             ParamType paramType = ctx.paramType();
 

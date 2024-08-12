@@ -109,6 +109,12 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
 
 
 
+
+
+
+
+
+
         visitSubquery(ctx, query(), DERIVED_TABLE, false);
     }
 

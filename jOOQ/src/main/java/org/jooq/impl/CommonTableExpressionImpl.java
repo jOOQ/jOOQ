@@ -112,6 +112,13 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
 
 
 
+
+
+
+
+
+
+
         if (ctx.declareCTE()) {
             QueryPart s = query;
 

@@ -89,6 +89,11 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
 
 
 
+
+
+
+
+
         // In the WINDOW clause, always declare window definitions
         if (ctx.declareWindows()) {
             ctx.visit(name)

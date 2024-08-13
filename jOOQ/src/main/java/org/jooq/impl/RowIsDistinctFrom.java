@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
+import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -70,6 +71,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_IS;
 import static org.jooq.impl.Keywords.K_NOT;
@@ -101,6 +103,7 @@ implements
 
     static final Set<SQLDialect> EMULATE_DISTINCT            = SQLDialect.supportedBy(CUBRID, DERBY);
     static final Set<SQLDialect> EMULATE_WITH_ARRAYS         = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect> EMULATE_WITH_UNION          = SQLDialect.supportedBy(FIREBIRD);
 
     // An emulation may be required only for the version where a subquery is used
     // E.g. in HSQLDB: https://sourceforge.net/p/hsqldb/bugs/1579/
@@ -142,6 +145,12 @@ implements
         if (EMULATE_DISTINCT.contains(ctx.dialect()) || rhsSelect != null && EMULATE_DISTINCT_SELECT.contains(ctx.dialect())) {
             Select<Record> intersect = select(lhs.fields()).intersect(rhsSelect != null ? rhsSelect : select(rhsRow.fields()));
             ctx.visit(not ? exists(intersect) : notExists(intersect));
+        }
+
+        // [#17057] When INTERSECT isn't available, just use UNION with OFFSET
+        else if (EMULATE_WITH_UNION.contains(ctx.dialect())) {
+            Select<Record> union = select(lhs.fields()).union(rhsSelect != null ? rhsSelect : select(rhsRow.fields())).offset(one());
+            ctx.visit(not ? notExists(union) : exists(union));
         }
 
         // MySQL knows the <=> operator

@@ -101,6 +101,7 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+
             case DUCKDB:
             case H2:
             case HSQLDB:
@@ -115,6 +116,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 

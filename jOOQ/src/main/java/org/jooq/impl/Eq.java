@@ -124,7 +124,7 @@ implements
         Field<T> arg2,
         Function2<RowN, Select<?>, Condition> compareRowSubquery,
         Function2<RowN, RowN, Condition> compareRowRow,
-        Function3<? super Context<?>, ? super Field<T>, ? super Field<T>, ? extends Context<?>> acceptDefault
+        Function3<? super Context<?>, ? super Field<?>, ? super Field<?>, ? extends Context<?>> acceptDefault
     ) {
         boolean field1Embeddable = arg1.getDataType().isEmbeddable();
         SelectQueryImpl<?> s;
@@ -142,6 +142,10 @@ implements
                 && arg2.getDataType().isMultiset()
                 && !Boolean.TRUE.equals(ctx.data(DATA_MULTISET_CONDITION)))
             ctx.data(DATA_MULTISET_CONDITION, true, c -> c.visit(condition));
+
+
+
+
 
 
 

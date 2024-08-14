@@ -47,6 +47,7 @@ import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.LONGNVARCHAR;
 import static org.jooq.impl.SQLDataType.NCHAR;
 import static org.jooq.impl.SQLDataType.NCLOB;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
@@ -757,11 +758,14 @@ implements
         return t == NCHAR
             || t == NCLOB
             || t == NVARCHAR
+            || t == LONGNVARCHAR
 
             // [#9540] [#10368] In case the constant literals haven't been initialised yet
             || NCHAR == null && "nchar".equals(t.typeName0())
             || NCLOB == null && "nclob".equals(t.typeName0())
-            || NVARCHAR == null && "nvarchar".equals(t.typeName0());
+            || NVARCHAR == null && "nvarchar".equals(t.typeName0())
+            || LONGNVARCHAR == null && "longnvarchar".equals(t.typeName0())
+        ;
     }
 
     @Override

@@ -188,28 +188,27 @@ public final class Decfloat extends Number implements Data {
         if (coefficient != null || special != null)
             return;
 
-        switch (data) {
-            case "+NaN":
-            case "NaN":
+        String lc;
+        switch (lc = data.toLowerCase()) {
+            case "+nan":
+            case "nan":
                 special = Special.NAN;
                 break;
 
-            case "+Infinity":
-            case "Infinity":
-            case "+Inf":
-            case "Inf":
+            case "+infinity":
+            case "infinity":
+            case "+inf":
+            case "inf":
                 special = Special.POSITIVE_INFINITY;
                 break;
 
-            case "-Infinity":
-            case "-Inf":
+            case "-infinity":
+            case "-inf":
                 special = Special.NEGATIVE_INFINITY;
                 break;
 
             default: {
-                int i = data.indexOf("E");
-                if (i == -1)
-                    i = data.indexOf("e");
+                int i = lc.indexOf("e");
 
                 try {
                     if (i == -1) {

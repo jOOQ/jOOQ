@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import java.io.Serializable;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,7 +49,7 @@ import org.jetbrains.annotations.Nullable;
  * consistent with jOOQ's general way of returning <code>NULL</code> from
  * {@link Result} and {@link Record} methods.
  */
-public final class XML implements Serializable {
+public final class XML implements Data {
 
     private final String data;
 
@@ -59,6 +57,7 @@ public final class XML implements Serializable {
         this.data = String.valueOf(data);
     }
 
+    @Override
     @NotNull
     public final String data() {
         return data;

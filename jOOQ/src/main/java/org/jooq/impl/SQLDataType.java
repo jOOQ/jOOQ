@@ -91,6 +91,7 @@ import java.util.UUID;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
+import org.jooq.Decfloat;
 import org.jooq.Geography;
 import org.jooq.Geometry;
 import org.jooq.JSON;
@@ -776,6 +777,32 @@ public final class SQLDataType {
      * This data type is supported only by the commercial editions of jOOQ.
      */
     public static final DataType<Geometry> GEOMETRY = new BuiltInDataType<>(Geometry.class, "geometry");
+
+    /**
+     * The {@link Decfloat} type.
+     * <p>
+     * This is not a JDBC standard. This type handles DECFLOAT types where they
+     * are supported.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/decfloatTypes</code> to
+     * <code>false</code>.
+     */
+    public static final DataType<Decfloat> DECFLOAT = new BuiltInDataType<>(Decfloat.class, "decfloat(p)");
+
+    /**
+     * The {@link Decfloat} type.
+     * <p>
+     * This is not a JDBC standard. This type handles DECFLOAT types where they
+     * are supported.
+     * <p>
+     * If you want to opt out of code generation support for this type, you can
+     * specify <code>/configuration/generator/generate/decfloatTypes</code> to
+     * <code>false</code>.
+     */
+    public static final DataType<Decfloat> DECFLOAT(int precision) {
+        return DECFLOAT.precision(precision, 0);
+    }
 
     // -------------------------------------------------------------------------
     // Static initialisation of dialect-specific data types

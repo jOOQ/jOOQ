@@ -50,6 +50,8 @@ import static java.util.Arrays.asList;
 import static java.util.function.Function.identity;
 import static java.util.regex.Matcher.quoteReplacement;
 import static org.jooq.ContextConverter.scoped;
+import static org.jooq.Decfloat.decfloat;
+import static org.jooq.Decfloat.decfloatOrNull;
 import static org.jooq.Geography.geography;
 import static org.jooq.Geometry.geometry;
 // ...
@@ -257,6 +259,7 @@ import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.Converters;
 import org.jooq.DataType;
+import org.jooq.Decfloat;
 import org.jooq.EnumType;
 import org.jooq.ExecuteScope;
 import org.jooq.Field;
@@ -376,6 +379,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return new DefaultDateBinding(dataType, converter);
         else if (type == DayToSecond.class)
             return new DefaultDayToSecondBinding(dataType, converter);
+        else if (type == Decfloat.class)
+            return new DefaultDecfloatBinding(dataType, converter);
         else if (type == Double.class || type == double.class)
             return new DefaultDoubleBinding(dataType, converter);
         else if (type == Float.class || type == float.class)
@@ -871,6 +876,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             ) {
                 switch (ctx.family()) {
                     case TRINO:
+                        return true;
+                }
+            }
+
+            if (dataType.getType() == Decfloat.class) {
+                switch (ctx.family()) {
+
+
+                    case FIREBIRD:
+                    case H2:
                         return true;
                 }
             }
@@ -1966,6 +1981,43 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
             return Types.DECIMAL;
+        }
+    }
+
+    static final class DefaultDecfloatBinding<U> extends InternalBinding<Decfloat, U> {
+
+        DefaultDecfloatBinding(DataType<Decfloat> dataType, Converter<Decfloat, U> converter) {
+            super(dataType, converter);
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, Decfloat value) throws SQLException {
+            ctx.statement().setString(ctx.index(), value.data());
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, Decfloat value) throws SQLException {
+            ctx.output().writeString(value.data());
+        }
+
+        @Override
+        final Decfloat get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            return decfloatOrNull(ctx.resultSet().getString(ctx.index()));
+        }
+
+        @Override
+        final Decfloat get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            return decfloatOrNull(ctx.statement().getString(ctx.index()));
+        }
+
+        @Override
+        final Decfloat get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            return decfloatOrNull(ctx.input().readString());
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) {
+            return Types.VARCHAR;
         }
     }
 

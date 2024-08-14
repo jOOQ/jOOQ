@@ -37,7 +37,6 @@
  */
 package org.jooq;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import org.jooq.tools.json.JSONParser;
@@ -75,7 +74,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * The {@link #data()} content, however, is not normalised.
  */
-public final class JSONB implements Serializable {
+public final class JSONB implements Data {
 
     private final String     data;
     private transient Object parsed;
@@ -84,6 +83,7 @@ public final class JSONB implements Serializable {
         this.data = String.valueOf(data);
     }
 
+    @Override
     @NotNull
     public final String data() {
         return data;

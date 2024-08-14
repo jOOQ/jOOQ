@@ -37,10 +37,6 @@
  */
 package org.jooq;
 
-import java.io.Serializable;
-
-import org.jetbrains.annotations.NotNull;
-
 /**
  * A wrapper type for spatial data obtained from the database.
  * <p>
@@ -54,9 +50,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * This data type is supported only by the commercial editions of jOOQ.
  */
-public interface Spatial extends Serializable {
+public interface Spatial extends Data {
 
-    @NotNull
-    String data();
 }
 

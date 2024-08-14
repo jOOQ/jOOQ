@@ -48,6 +48,7 @@ import java.time.Year;
 import java.util.UUID;
 
 import org.jooq.DataType;
+import org.jooq.Decfloat;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Record;
@@ -149,6 +150,7 @@ public class H2DataType {
     public static final DataType<JSONB>             JSONB                        = new BuiltInDataType<>(FAMILY, SQLDataType.JSONB, "json");
     public static final DataType<YearToMonth>       INTERVALYEARTOMONTH          = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
     public static final DataType<DayToSecond>       INTERVALDAYTOSECOND          = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALDAYTOSECOND, "interval day to second", "interval day(9) to second");
+    public static final DataType<Decfloat>          DECFLOAT                     = new BuiltInDataType<>(FAMILY, SQLDataType.DECFLOAT, "decfloat");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.H2, SQLDataTypes

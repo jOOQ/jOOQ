@@ -37,8 +37,6 @@
  */
 package org.jooq;
 
-import java.io.Serializable;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -68,7 +66,7 @@ import org.jetbrains.annotations.Nullable;
  * <li>{@link #toString()}</li>
  * </ul>
  */
-public final class JSON implements Serializable {
+public final class JSON implements Data {
 
     private final String data;
 
@@ -76,6 +74,7 @@ public final class JSON implements Serializable {
         this.data = String.valueOf(data);
     }
 
+    @Override
     @NotNull
     public final String data() {
         return data;

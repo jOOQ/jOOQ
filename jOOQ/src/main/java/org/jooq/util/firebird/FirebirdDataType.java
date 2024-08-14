@@ -47,6 +47,7 @@ import java.time.Year;
 import java.util.UUID;
 
 import org.jooq.DataType;
+import org.jooq.Decfloat;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.SQLDialect;
@@ -103,6 +104,7 @@ public class FirebirdDataType {
     public static final DataType<Time>        TIME                  = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time");
     public static final DataType<Timestamp>   TIMESTAMP             = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp");
     public static final DataType<byte[]>      BLOB                  = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "blob");
+    public static final DataType<Decfloat>     DECFLOAT             = new BuiltInDataType<>(FAMILY, SQLDataType.DECFLOAT, "decfloat");
 
     // TODO Below are HSQLDB data types. Fix this
 

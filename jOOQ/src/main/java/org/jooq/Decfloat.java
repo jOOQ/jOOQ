@@ -212,8 +212,13 @@ public final class Decfloat extends Number implements Data {
                     i = data.indexOf("e");
 
                 try {
-                    coefficient = new BigDecimal(data.substring(0, i)).stripTrailingZeros();
-                    exponent = Integer.parseInt(data.substring(i + 1));
+                    if (i == -1) {
+                        coefficient = new BigDecimal(data).stripTrailingZeros();
+                    }
+                    else {
+                        coefficient = new BigDecimal(data.substring(0, i)).stripTrailingZeros();
+                        exponent = Integer.parseInt(data.substring(i + 1));
+                    }
                 }
 
                 // [#10880] If we cannot represent the value internally, then we'll just work with data

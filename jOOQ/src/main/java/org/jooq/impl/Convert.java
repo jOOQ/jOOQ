@@ -41,6 +41,7 @@ import static java.time.temporal.ChronoField.INSTANT_SECONDS;
 import static java.time.temporal.ChronoField.MILLI_OF_DAY;
 import static java.time.temporal.ChronoField.MILLI_OF_SECOND;
 import static org.jooq.ContextConverter.scoped;
+import static org.jooq.Decfloat.decfloat;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.impl.Tools.configuration;
@@ -100,6 +101,7 @@ import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.ConverterProvider;
 import org.jooq.Converters.UnknownType;
+import org.jooq.Decfloat;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.JSON;
@@ -177,6 +179,8 @@ final class Convert {
 
         trueValues.add("1");
         trueValues.add("1.0");
+        trueValues.add("1E0");
+        trueValues.add("1e0");
         trueValues.add("y");
         trueValues.add("Y");
         trueValues.add("yes");
@@ -192,6 +196,8 @@ final class Convert {
 
         falseValues.add("0");
         falseValues.add("0.0");
+        falseValues.add("0E0");
+        falseValues.add("0e0");
         falseValues.add("n");
         falseValues.add("N");
         falseValues.add("no");
@@ -991,6 +997,12 @@ final class Convert {
                     catch (NumberFormatException e) {
                         return null;
                     }
+                }
+                else if (toClass == Decfloat.class) {
+                    if (wrapperFrom == Boolean.class)
+                        return (U) (((Boolean) from) ? decfloat("1") : decfloat("0"));
+
+                    return (U) decfloat(from.toString());
                 }
                 else if (toClass == Year.class) {
                     if (Number.class.isAssignableFrom(wrapperFrom))

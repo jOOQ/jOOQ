@@ -418,6 +418,7 @@ implements
 
         return tType == BigInteger.class
             || tType == BigDecimal.class
+            || tType == Decfloat.class
             || tType == Timestamp.class
             || tType == Time.class
             || tType == LocalDateTime.class
@@ -532,6 +533,8 @@ implements
             return Types.BIGINT;
         else if (tType == BigDecimal.class)
             return Types.DECIMAL;
+        else if (tType == Decfloat.class)
+            return Types.FLOAT;
         else if (tType == Byte.class)
             return Types.TINYINT;
         else if (tType == byte[].class)

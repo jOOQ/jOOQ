@@ -186,6 +186,10 @@ final class SQLDataTypes {
         public static final DataType<DayToSecond>  INTERVALDAYTOSECOND      = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALDAYTOSECOND, "interval day to second", "interval day(9) to second");
         public static final DataType<JSON>         JSON                     = new BuiltInDataType<>(FAMILY, SQLDataType.JSON, "json");
         public static final DataType<JSONB>        JSONB                    = new BuiltInDataType<>(FAMILY, SQLDataType.JSONB, "json");
+        public static final DataType<UByte>        UTINYINT                 = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINTUNSIGNED, "utinyint");
+        public static final DataType<UShort>       USMALLINT                = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINTUNSIGNED, "usmallint");
+        public static final DataType<UInteger>     UINTEGER                 = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGERUNSIGNED, "uinteger");
+        public static final DataType<ULong>        UBIGINT                  = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINTUNSIGNED, "ubigint");
 
         // -------------------------------------------------------------------------
         // Compatibility types for supported SQLDialect.DUCKDB, SQLDataTypes
@@ -198,10 +202,6 @@ final class SQLDataTypes {
         protected static final DataType<String>    __LONGVARCHAR            = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARCHAR, "varchar(l)");
         protected static final DataType<byte[]>    __LONGVARBINARY          = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "varbinary(l)");
         protected static final DataType<String>    __NVARCHAR               = new BuiltInDataType<>(FAMILY, SQLDataType.NVARCHAR, "varchar(l)");
-        protected static final DataType<UByte>     __TINYINTUNSIGNED        = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINTUNSIGNED, "smallint");
-        protected static final DataType<UShort>    __SMALLINTUNSIGNED       = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINTUNSIGNED, "int");
-        protected static final DataType<UInteger>  __INTEGERUNSIGNED        = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGERUNSIGNED, "bigint");
-        protected static final DataType<ULong>     __BIGINTUNSIGNED         = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINTUNSIGNED, "decimal(p, s)");
         protected static final DataType<Year>      __YEAR                   = new BuiltInDataType<>(FAMILY, SQLDataType.YEAR, "smallint");
 
         // -------------------------------------------------------------------------

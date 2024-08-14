@@ -13766,6 +13766,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return SQLDataType.UUID;
                 else if (parseKeywordOrIdentifierIf("UNIQUEIDENTIFIER"))
                     return SQLDataType.UUID;
+                else if (parseKeywordOrIdentifierIf("UTINYINT"))
+                    return SQLDataType.TINYINTUNSIGNED;
+                else if (parseKeywordOrIdentifierIf("USMALLINT"))
+                    return SQLDataType.SMALLINTUNSIGNED;
+                else if (parseKeywordOrIdentifierIf("UINTEGER"))
+                    return SQLDataType.INTEGERUNSIGNED;
+                else if (parseKeywordOrIdentifierIf("UBIGINT"))
+                    return SQLDataType.BIGINTUNSIGNED;
 
                 break;
 

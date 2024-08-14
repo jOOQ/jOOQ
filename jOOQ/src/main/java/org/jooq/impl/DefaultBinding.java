@@ -4321,6 +4321,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 ; // Not supported
             else if (type == Date.class)
                 return converter.from((T) Date.valueOf(string), ctx.converterContext());
+            else if (type == Decfloat.class)
+                return converter.from((T) Decfloat.decfloat(string), ctx.converterContext());
             else if (type == Double.class)
                 return converter.from((T) Double.valueOf(string), ctx.converterContext());
             else if (type == Float.class)

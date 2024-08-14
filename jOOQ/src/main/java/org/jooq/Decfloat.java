@@ -52,7 +52,7 @@ import org.jetbrains.annotations.Nullable;
  * <code>data() == null</code>. This is consistent with jOOQ's general way of
  * returning <code>NULL</code> from {@link Result} and {@link Record} methods.
  */
-public class Decfloat implements Data {
+public final class Decfloat extends Number implements Data {
 
     private final String         data;
     private transient BigDecimal coefficient;
@@ -96,6 +96,34 @@ public class Decfloat implements Data {
     public static final Decfloat decfloatOrNull(String data) {
         return data == null ? null : decfloat(data);
     }
+
+    // ------------------------------------------------------------------------
+    // The Number API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final double doubleValue() {
+        return Double.valueOf(data);
+    }
+
+    @Override
+    public final float floatValue() {
+        return Float.valueOf(data);
+    }
+
+    @Override
+    public final int intValue() {
+        return (int) doubleValue();
+    }
+
+    @Override
+    public final long longValue() {
+        return (long) doubleValue();
+    }
+
+    // ------------------------------------------------------------------------
+    // The Object API
+    // ------------------------------------------------------------------------
 
     @Override
     public int hashCode() {
@@ -156,7 +184,7 @@ public class Decfloat implements Data {
         return String.valueOf(data);
     }
 
-    private void parse() {
+    private final void parse() {
         if (coefficient != null || special != null)
             return;
 

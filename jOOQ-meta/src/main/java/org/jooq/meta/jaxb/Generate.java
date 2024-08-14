@@ -254,6 +254,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean jsonTypes = true;
     @XmlElement(defaultValue = "true")
     protected Boolean intervalTypes = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean decfloatTypes = true;
     @XmlElement(defaultValue = "\\n")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String newline = "\\n";
@@ -2936,6 +2938,30 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * A flag indicating whether the DECFLOAT type support should be enabled.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDecfloatTypes() {
+        return decfloatTypes;
+    }
+
+    /**
+     * A flag indicating whether the DECFLOAT type support should be enabled.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDecfloatTypes(Boolean value) {
+        this.decfloatTypes = value;
+    }
+
+    /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
      * 
      */
@@ -4185,6 +4211,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * A flag indicating whether the DECFLOAT type support should be enabled.
+     * 
+     */
+    public Generate withDecfloatTypes(Boolean value) {
+        setDecfloatTypes(value);
+        return this;
+    }
+
+    /**
      * The newline characters to be used in generated code. Whitespace characters can be used, e.g. \n, \r\n
      * 
      */
@@ -4392,6 +4427,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("xmlTypes", xmlTypes);
         builder.append("jsonTypes", jsonTypes);
         builder.append("intervalTypes", intervalTypes);
+        builder.append("decfloatTypes", decfloatTypes);
         builder.append("newline", newline);
         builder.append("indentation", indentation);
         builder.append("printMarginForBlockComment", printMarginForBlockComment);
@@ -5413,6 +5449,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (decfloatTypes == null) {
+            if (other.decfloatTypes!= null) {
+                return false;
+            }
+        } else {
+            if (!decfloatTypes.equals(other.decfloatTypes)) {
+                return false;
+            }
+        }
         if (newline == null) {
             if (other.newline!= null) {
                 return false;
@@ -5620,6 +5665,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((xmlTypes == null)? 0 :xmlTypes.hashCode()));
         result = ((prime*result)+((jsonTypes == null)? 0 :jsonTypes.hashCode()));
         result = ((prime*result)+((intervalTypes == null)? 0 :intervalTypes.hashCode()));
+        result = ((prime*result)+((decfloatTypes == null)? 0 :decfloatTypes.hashCode()));
         result = ((prime*result)+((newline == null)? 0 :newline.hashCode()));
         result = ((prime*result)+((indentation == null)? 0 :indentation.hashCode()));
         result = ((prime*result)+((printMarginForBlockComment == null)? 0 :printMarginForBlockComment.hashCode()));

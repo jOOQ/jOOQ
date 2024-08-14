@@ -43,6 +43,7 @@ import java.util.Locale;
 
 import org.jooq.Condition;
 import org.jooq.Constants;
+import org.jooq.Decfloat;
 import org.jooq.Generated;
 import org.jooq.JSON;
 import org.jooq.JSONB;
@@ -1354,7 +1355,19 @@ public interface Generator {
      * A flag indicating whether the {@link Interval} type support should be
      * enabled.
      */
-    void setGenerateIntervalTypes(boolean generateJsonTypes);
+    void setGenerateIntervalTypes(boolean generateIntervalTypes);
+
+    /**
+     * A flag indicating whether the {@link Decfloat} type support should be
+     * enabled.
+     */
+    boolean generateDecfloatTypes();
+
+    /**
+     * A flag indicating whether the {@link Decfloat} type support should be
+     * enabled.
+     */
+    void setGenerateDecfloatTypes(boolean generateDecfloatTypes);
 
     /**
      * Whether empty catalogs should still be generated.

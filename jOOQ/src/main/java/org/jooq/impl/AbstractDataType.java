@@ -73,6 +73,7 @@ import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CHAR;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.LONGNVARCHAR;
 import static org.jooq.impl.SQLDataType.NCHAR;
 import static org.jooq.impl.SQLDataType.NCLOB;
 import static org.jooq.impl.SQLDataType.NVARCHAR;
@@ -114,6 +115,7 @@ import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.DataType;
+import org.jooq.Decfloat;
 import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
 import org.jooq.EnumType;
@@ -864,6 +866,14 @@ implements
     }
 
     @Override
+    public final boolean isDecimal() {
+        Class<?> tType = tType0();
+        return BigInteger.class == tType
+            || BigDecimal.class == tType
+            || Decfloat.class == tType;
+    }
+
+    @Override
     public final boolean isInteger() {
         Class<?> tType = tType0();
         return UNumber.class.isAssignableFrom(tType)
@@ -879,6 +889,7 @@ implements
         Class<?> tType = tType0();
         return Float.class == tType
             || Double.class == tType
+            || Decfloat.class == tType
         ;
     }
 
@@ -898,11 +909,14 @@ implements
         return t == NCHAR
             || t == NCLOB
             || t == NVARCHAR
+            || t == LONGNVARCHAR
 
             // [#9540] [#10368] In case the constant literals haven't been initialised yet
             || NCHAR == null && "nchar".equals(t.typeName0())
             || NCLOB == null && "nclob".equals(t.typeName0())
-            || NVARCHAR == null && "nvarchar".equals(t.typeName0());
+            || NVARCHAR == null && "nvarchar".equals(t.typeName0())
+            || LONGNVARCHAR == null && "longnvarchar".equals(t.typeName0())
+        ;
     }
 
     @Override

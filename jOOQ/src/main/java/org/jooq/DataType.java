@@ -1322,6 +1322,7 @@ public interface DataType<T> extends Named {
      * <li> {@link SQLDataType#DECIMAL}</li>
      * <li> {@link SQLDataType#DECIMAL_INTEGER}</li>
      * <li> {@link SQLDataType#NUMERIC}</li>
+     * <li> {@link SQLDataType#DECFLOAT}</li>
      * </ul>
      *
      * @see #isNumeric()
@@ -1349,9 +1350,23 @@ public interface DataType<T> extends Named {
      * <li> {@link SQLDataType#FLOAT}</li>
      * <li> {@link SQLDataType#DOUBLE}</li>
      * <li> {@link SQLDataType#REAL}</li>
+     * <li> {@link SQLDataType#DECFLOAT}</li>
      * </ul>
      */
     boolean isFloat();
+
+    /**
+     * Whether this data type is any decimal numeric data type.
+     * <p>
+     * This applies to any of these types:
+     * <ul>
+     * <li> {@link SQLDataType#DECIMAL}</li>
+     * <li> {@link SQLDataType#DECIMAL_INTEGER}</li>
+     * <li> {@link SQLDataType#NUMERIC}</li>
+     * <li> {@link SQLDataType#DECFLOAT}</li>
+     * </ul>
+     */
+    boolean isDecimal();
 
     /**
      * Whether this data type is any boolean data type.
@@ -1408,6 +1423,7 @@ public interface DataType<T> extends Named {
      * <li> {@link SQLDataType#OFFSETTIME}</li>
      * <li> {@link SQLDataType#OFFSETDATETIME}</li>
      * <li> {@link SQLDataType#INSTANT}</li>
+     * <li> {@link SQLDataType#YEAR}</li>
      * </ul>
      *
      * @see #isDate()
@@ -1460,6 +1476,8 @@ public interface DataType<T> extends Named {
      * <li> {@link SQLDataType#LOCALDATETIME}</li>
      * <li> {@link SQLDataType#OFFSETTIME}</li>
      * <li> {@link SQLDataType#OFFSETDATETIME}</li>
+     * <li> {@link SQLDataType#INSTANT}</li>
+     * <li> {@link SQLDataType#YEAR}</li>
      * <li> {@link YearToSecond}</li>
      * <li> {@link YearToMonth}</li>
      * <li> {@link DayToSecond}</li>

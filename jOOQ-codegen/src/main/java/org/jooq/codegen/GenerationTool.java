@@ -961,6 +961,8 @@ public class GenerationTool {
                 generator.setGenerateJsonTypes(g.getGenerate().isJsonTypes());
             if (g.getGenerate().isIntervalTypes() != null)
                 generator.setGenerateIntervalTypes(g.getGenerate().isIntervalTypes());
+            if (g.getGenerate().isDecfloatTypes() != null)
+                generator.setGenerateDecfloatTypes(g.getGenerate().isDecfloatTypes());
             if (g.getGenerate().isEmptyCatalogs() != null)
                 generator.setGenerateEmptyCatalogs(g.getGenerate().isEmptyCatalogs());
             if (g.getGenerate().isEmptySchemas() != null)

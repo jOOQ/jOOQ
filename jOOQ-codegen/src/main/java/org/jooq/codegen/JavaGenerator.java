@@ -11097,7 +11097,8 @@ public class JavaGenerator extends AbstractGenerator {
             dataType.isSpatial() && !generateSpatialTypes() ||
             dataType.isJSON() && !generateJsonTypes() ||
             dataType.isXML() && !generateXmlTypes() ||
-            dataType.isInterval() && !generateIntervalTypes()
+            dataType.isInterval() && !generateIntervalTypes() ||
+            dataType.isFloat() && dataType.isDecimal() && !generateDecfloatTypes()
         )
             result = SQLDataType.OTHER;
 

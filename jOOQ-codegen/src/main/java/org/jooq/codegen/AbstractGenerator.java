@@ -181,6 +181,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateXmlTypes                                   = true;
     boolean                            generateJsonTypes                                  = true;
     boolean                            generateIntervalTypes                              = true;
+    boolean                            generateDecfloatTypes                              = true;
     boolean                            generateTableValuedFunctions                       = false;
     boolean                            generateEmptyCatalogs                              = false;
     boolean                            generateEmptySchemas                               = false;
@@ -1442,6 +1443,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateIntervalTypes(boolean generateIntervalTypes) {
         this.generateIntervalTypes = generateIntervalTypes;
+    }
+
+    @Override
+    public boolean generateDecfloatTypes() {
+        return generateDecfloatTypes;
+    }
+
+    @Override
+    public void setGenerateDecfloatTypes(boolean generateDecfloatTypes) {
+        this.generateDecfloatTypes = generateDecfloatTypes;
     }
 
     @Override

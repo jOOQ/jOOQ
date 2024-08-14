@@ -166,6 +166,7 @@ import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
+import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
@@ -398,7 +399,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
 
-            if (foreignKeyTable != null && uniqueKeyTable != null)
+            if (foreignKeyTable != null && uniqueKeyTable != null) {
                 relations.addForeignKey(
                     foreignKey,
                     foreignKeyTable,
@@ -408,6 +409,25 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     uniqueKeyTable.getColumn(uniqueKeyColumn),
                     true
                 );
+
+                for (IndexDefinition index : getIndexes(uniqueKeyTable)) {
+                    if (index.getName().equals(uniqueKey)) {
+                        for (UniqueKeyDefinition uk : uniqueKeyTable.getKeys()) {
+                            if (uk.getKeyColumns().equals(index.getIndexColumns().stream().map(i -> i.getColumn()).collect(toList()))) {
+                                relations.addForeignKey(
+                                    foreignKey,
+                                    foreignKeyTable,
+                                    foreignKeyTable.getColumn(foreignKeyColumn),
+                                    uk.getName(),
+                                    uniqueKeyTable,
+                                    uniqueKeyTable.getColumn(uniqueKeyColumn),
+                                    true
+                                );
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -1309,6 +1309,7 @@ public interface DataType<T> extends Named {
      * <li> {@link SQLDataType#OFFSETTIME}</li>
      * <li> {@link SQLDataType#OFFSETDATETIME}</li>
      * <li> {@link SQLDataType#INSTANT}</li>
+     * <li> {@link SQLDataType#YEAR}</li>
      * </ul>
      *
      * @see #isDate()
@@ -1361,6 +1362,8 @@ public interface DataType<T> extends Named {
      * <li> {@link SQLDataType#LOCALDATETIME}</li>
      * <li> {@link SQLDataType#OFFSETTIME}</li>
      * <li> {@link SQLDataType#OFFSETDATETIME}</li>
+     * <li> {@link SQLDataType#INSTANT}</li>
+     * <li> {@link SQLDataType#YEAR}</li>
      * <li> {@link YearToSecond}</li>
      * <li> {@link YearToMonth}</li>
      * <li> {@link DayToSecond}</li>

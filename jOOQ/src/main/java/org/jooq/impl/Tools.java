@@ -52,6 +52,7 @@ import static org.jooq.ContextConverter.scoped;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -1189,6 +1190,7 @@ final class Tools {
     static final Set<SQLDialect>         SUPPORT_POSTGRES_LITERALS          = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
     static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
+    static final Set<SQLDialect>         NO_SUPPORT_TIME_PRECISION          = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect>         DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
     static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT     = SQLDialect.supportedBy(SQLITE);
     static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT_FOR_LOBS = SQLDialect.supportedBy(MYSQL);
@@ -6052,7 +6054,13 @@ final class Tools {
                     ctx.sql(typeName);
             }
         }
-        else if (type.hasPrecision() && type.precisionDefined() && (!type.isDateTime() || !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))) {
+        else if (type.hasPrecision()
+            && type.precisionDefined()
+            && (!type.isDateTime()
+               || type.isTime() && !NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect())
+               || !type.isTime() && !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect())
+            )
+        ) {
 
             // [#6745] [#9473] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
             if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect()))

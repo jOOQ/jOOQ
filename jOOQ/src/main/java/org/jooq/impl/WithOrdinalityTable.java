@@ -74,6 +74,7 @@ import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 // ...
 import static org.jooq.impl.Tools.visitSubquery;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 
 import java.util.List;
 import java.util.Set;
@@ -91,6 +92,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 // ...
 import org.jooq.impl.QOM.Aliasable;
+import org.jooq.impl.Tools.BooleanDataKey;
 
 /**
  * @author Lukas Eder
@@ -236,7 +238,18 @@ implements
                 break;
         }
 
-        visitSubquery(ctx, s, DERIVED_TABLE, true);
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                visitSubquery(ctx, s, DERIVED_TABLE, true);
+                break;
+        }
     }
 
 

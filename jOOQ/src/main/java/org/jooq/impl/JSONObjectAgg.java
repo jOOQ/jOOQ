@@ -51,6 +51,7 @@ import static org.jooq.impl.Keywords.K_NESTED;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_PATH;
 import static org.jooq.impl.Keywords.K_REPLACE;
+import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_FIELD;
@@ -63,6 +64,7 @@ import static org.jooq.impl.Names.N_JSON_STRIP_NULLS;
 import static org.jooq.impl.Names.N_JSON_TRANSFORM;
 import static org.jooq.impl.Names.N_MAP;
 import static org.jooq.impl.Names.N_MAP_FILTER;
+import static org.jooq.impl.Names.N_MAP_FROM_ENTRIES;
 import static org.jooq.impl.Names.N_OBJECT_AGG;
 import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.Names.N_TO_JSON;
@@ -196,26 +198,20 @@ implements
 
     private final void acceptDuckDB(Context<?> ctx) {
         ctx.visit(N_TO_JSON).sql('(');
-        ctx.visit(N_MAP).sql('(');
-        acceptDuckDBArrayAgg(ctx, entry.key(), entry.value());
-        ctx.sql(", ");
-        acceptDuckDBArrayAgg(ctx, entry.value(), entry.value());
-        ctx.sql(')');
-        ctx.sql(')');
-    }
-
-    private final void acceptDuckDBArrayAgg(Context<?> ctx, Field<?> f1, Field<?> f2) {
+        ctx.visit(N_MAP_FROM_ENTRIES).sql('(');
         ctx.visit(N_ARRAY_AGG).sql('(');
-        ctx.visit(jsonCast(ctx, f1));
-        ctx.sql(' ').visit(K_ORDER_BY).sql(' ').visit(entry.key());
-        ctx.sql(")");
+        ctx.visit(K_ROW).sql('(').visit(entry.key()).sql(", ").visit(jsonCast(ctx, entry.value())).sql(')');
+        ctx.sql(')');
 
         if (onNull == ABSENT_ON_NULL)
-            acceptFilterClause(ctx, f(f2.isNotNull()));
+            acceptFilterClause(ctx, f(entry.value().isNotNull()));
         else
             acceptFilterClause(ctx);
 
         acceptOverClause(ctx);
+
+        ctx.sql(')');
+        ctx.sql(')');
     }
 
     private final void acceptTrino(Context<?> ctx) {

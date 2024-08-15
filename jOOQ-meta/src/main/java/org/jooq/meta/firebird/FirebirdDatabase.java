@@ -719,6 +719,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
         return DSL.using(getConnection(), SQLDialect.FIREBIRD, new Settings().withFetchTrimmedCharValues(true));
     }
 
+    // See https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref40/fblangref-appx04-fields.html
     static Field<String> FIELD_TYPE(Rdb$fields f) {
         return decode().value(f.RDB$FIELD_TYPE)
                 .when((short) 7, decode()
@@ -745,6 +746,8 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                      .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
                     .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
                     .otherwise("BIGINT"))
+                .when((short) 24, "DECFLOAT(16)")
+                .when((short) 25, "DECFLOAT(34)")
                 .when((short) 27, "DOUBLE")
                 .when((short) 35, "TIMESTAMP")
                 .when((short) 37, "VARCHAR")

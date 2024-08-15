@@ -595,8 +595,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     static final Field<?> castForJSON(Context<?> ctx, Field<?> field) {
         DataType<?> t = field.getDataType();
 
-        // [#10880] Many dialects don't support NaN and other float values in JSON documents as numbers
-        if (t.isDecimal() && t.isFloat()) {
+        // [#10880] [#17067] Many dialects don't support NaN and other float values in JSON documents as numbers
+        if (t.isFloat()) {
             switch (ctx.family()) {
 
                 case H2:

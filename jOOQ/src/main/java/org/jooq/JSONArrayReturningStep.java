@@ -73,7 +73,7 @@ public interface JSONArrayReturningStep<T> extends Field<T> {
     /**
      * Add the <code>RETURNING</code> clause to the <code>JSON ARRAY</code> function.
      */
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @NotNull @CheckReturnValue
     Field<T> returning(DataType<?> returning);
 }

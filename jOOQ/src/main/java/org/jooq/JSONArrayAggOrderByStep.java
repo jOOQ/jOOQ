@@ -43,6 +43,7 @@ import org.jetbrains.annotations.*;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -68,13 +69,13 @@ public interface JSONArrayAggOrderByStep<J> extends JSONArrayAggNullStep<J> {
      * Add an <code>ORDER BY</code> clause to the function.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     JSONArrayAggNullStep<J> orderBy(OrderField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the function.
      */
     @NotNull
-    @Support({ H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
     JSONArrayAggNullStep<J> orderBy(Collection<? extends OrderField<?>> fields);
 }

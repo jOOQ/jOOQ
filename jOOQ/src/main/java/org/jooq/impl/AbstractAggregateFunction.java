@@ -542,6 +542,14 @@ implements
      * Apply this aggregate function's <code>FILTER</code> and <code>OVER</code>
      * clauses to an argument aggregate function.
      */
+    final <U> Field<U> fo(AggregateFilterStep<U> function, Condition condition) {
+        return o(function.filterWhere(f(condition)));
+    }
+
+    /**
+     * Apply this aggregate function's <code>FILTER</code> and <code>OVER</code>
+     * clauses to an argument aggregate function.
+     */
     final <U> Field<U> o(WindowBeforeOverStep<U> function) {
         if (windowSpecification != null)
             return function.over(windowSpecification);

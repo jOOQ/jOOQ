@@ -99,6 +99,7 @@ implements
 
 
             case CLICKHOUSE:
+            case DUCKDB:
             case MARIADB:
             case MYSQL:
             case SQLITE:
@@ -130,6 +131,7 @@ implements
 
 
             case CLICKHOUSE:
+            case DUCKDB:
             case MARIADB:
             case MYSQL:
             case SQLITE:

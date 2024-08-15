@@ -42,6 +42,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -66,20 +67,20 @@ public interface JSONEntryValueStep {
      * The JSON entry value.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     <T> JSONEntry<T> value(T value);
 
     /**
      * The JSON entry value.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     <T> JSONEntry<T> value(Field<T> value);
 
     /**
      * The JSON entry value.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     <T> JSONEntry<T> value(Select<? extends Record1<T>> value);
 }

@@ -38,19 +38,17 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.key;
-import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
-import static org.jooq.impl.JSONEntryImpl.jsonCastMapper;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NESTED;
+import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_PATH;
 import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
@@ -61,7 +59,6 @@ import static org.jooq.impl.Names.N_JSON_GROUP_OBJECT;
 import static org.jooq.impl.Names.N_JSON_OBJECT;
 import static org.jooq.impl.Names.N_JSON_OBJECTAGG;
 import static org.jooq.impl.Names.N_JSON_OBJECT_AGG;
-import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_JSON_STRIP_NULLS;
 import static org.jooq.impl.Names.N_JSON_TRANSFORM;
 import static org.jooq.impl.Names.N_MAP;
@@ -78,7 +75,6 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import java.util.function.Function;
 
-import org.jooq.AggregateFunction;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -88,8 +84,6 @@ import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 // ...
 import org.jooq.impl.QOM.JSONOnNull;
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -186,6 +180,10 @@ implements
                 acceptSQLite(ctx);
                 break;
 
+            case DUCKDB:
+                acceptDuckDB(ctx);
+                break;
+
             case TRINO:
                 acceptTrino(ctx);
                 break;
@@ -194,6 +192,30 @@ implements
                 acceptStandard(ctx);
                 break;
         }
+    }
+
+    private final void acceptDuckDB(Context<?> ctx) {
+        ctx.visit(N_TO_JSON).sql('(');
+        ctx.visit(N_MAP).sql('(');
+        acceptDuckDBArrayAgg(ctx, entry.key(), entry.value());
+        ctx.sql(", ");
+        acceptDuckDBArrayAgg(ctx, entry.value(), entry.value());
+        ctx.sql(')');
+        ctx.sql(')');
+    }
+
+    private final void acceptDuckDBArrayAgg(Context<?> ctx, Field<?> f1, Field<?> f2) {
+        ctx.visit(N_ARRAY_AGG).sql('(');
+        ctx.visit(jsonCast(ctx, f1));
+        ctx.sql(' ').visit(K_ORDER_BY).sql(' ').visit(entry.key());
+        ctx.sql(")");
+
+        if (onNull == ABSENT_ON_NULL)
+            acceptFilterClause(ctx, f(f2.isNotNull()));
+        else
+            acceptFilterClause(ctx);
+
+        acceptOverClause(ctx);
     }
 
     private final void acceptTrino(Context<?> ctx) {

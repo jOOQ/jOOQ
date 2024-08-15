@@ -124,7 +124,6 @@ final class Names {
     static final Name N_ENCODE                      = systemName("encode");
     static final Name N_EVERY                       = systemName("every");
     static final Name N_EXTRACT                     = systemName("extract");
-    static final Name N_FILTER                      = systemName("filter");
     static final Name N_FIRST_VALUE                 = systemName("first_value");
     static final Name N_FLASHBACK                   = systemName("flashback");
     static final Name N_FUNCTION                    = systemName("function");
@@ -170,6 +169,7 @@ final class Names {
     static final Name N_JSON_BUILD_ARRAY            = systemName("json_build_array");
     static final Name N_JSON_BUILD_OBJECT           = systemName("json_build_object");
     static final Name N_JSON_CONTAINS_PATH          = systemName("json_contains_path");
+    static final Name N_JSON_EXTRACT_STRING         = systemName("json_extract_string");
     static final Name N_JSON_GROUP_ARRAY            = systemName("json_group_array");
     static final Name N_JSON_GROUP_OBJECT           = systemName("json_group_object");
     static final Name N_JSON_MERGE                  = systemName("json_merge");
@@ -462,6 +462,7 @@ final class Names {
     static final Name N_EXISTS                      = systemName("exists");
     static final Name N_EXP                         = systemName("exp");
     static final Name N_FIELD                       = systemName("field");
+    static final Name N_FILTER                      = systemName("filter");
     static final Name N_FLOOR                       = systemName("floor");
     static final Name N_FORMAT                      = systemName("format");
     static final Name N_GENERATE_UUID               = systemName("generate_uuid");

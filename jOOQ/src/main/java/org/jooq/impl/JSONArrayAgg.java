@@ -219,6 +219,14 @@ implements
                 acceptOverClause(ctx);
                 break;
 
+            case DUCKDB: {
+                Field<?> agg = arrayAggEmulation(distinct, arguments.get(0), withinGroupOrderBy);
+
+                ctx.visit(N_TO_JSON).sql('(').visit(agg).sql(')');
+
+                break;
+            }
+
             case CLICKHOUSE: {
                 Field<?> agg = arrayAggEmulation(distinct, arguments.get(0), withinGroupOrderBy);
 
@@ -335,11 +343,14 @@ implements
         );
     }
 
-     final Field<?> arrayAggEmulation(boolean d, Field<?> field, SortFieldList orderBy) {
-        return fo(Tools.apply(
-            d ? arrayAggDistinct(field) : arrayAgg(field),
-            agg -> (AggregateFilterStep<?>) (Tools.isEmpty(orderBy) ? agg : agg.orderBy(orderBy))
-        ));
+    final Field<?> arrayAggEmulation(boolean d, Field<?> field, SortFieldList orderBy) {
+        return fo(
+            Tools.apply(
+                d ? arrayAggDistinct(field) : arrayAgg(field),
+                agg -> (AggregateFilterStep<?>) (Tools.isEmpty(orderBy) ? agg : agg.orderBy(orderBy))
+            ),
+            onNull == JSONOnNull.ABSENT_ON_NULL ? f(field.isNotNull()) : DSL.noCondition()
+        );
     }
 
 
@@ -392,7 +403,7 @@ implements
         acceptOverClause(ctx);
     }
 
-    private void acceptDistinct(Context<?> ctx) {
+    private final void acceptDistinct(Context<?> ctx) {
         if (distinct)
             ctx.visit(K_DISTINCT).sql(' ');
     }

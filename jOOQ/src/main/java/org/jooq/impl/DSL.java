@@ -23463,7 +23463,7 @@ public class DSL {
      * The <code>JSON_ARRAY</code> function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSON> jsonArray(Field<?>... fields) {
         return new JSONArray(SQLDataType.JSON, Arrays.asList(fields));
     }
@@ -23472,7 +23472,7 @@ public class DSL {
      * The <code>JSON_ARRAY</code> function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSON> jsonArray(Collection<? extends Field<?>> fields) {
         return new JSONArray(SQLDataType.JSON, new QueryPartList<>(fields));
     }
@@ -23481,7 +23481,7 @@ public class DSL {
      * The <code>JSONB_ARRAY</code> function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSONB> jsonbArray(Field<?>... fields) {
         return new JSONArray(SQLDataType.JSONB, Arrays.asList(fields));
     }
@@ -23490,7 +23490,7 @@ public class DSL {
      * The <code>JSONB_ARRAY</code> function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
         return new JSONArray(SQLDataType.JSONB, new QueryPartList<>(fields));
     }
@@ -23499,7 +23499,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(JSONEntry<?>... entries) {
         return new JSONObject(SQLDataType.JSON, Arrays.asList(entries));
     }
@@ -23508,7 +23508,7 @@ public class DSL {
      * The <code>JSON_OBJECT</code> function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject(SQLDataType.JSON, new QueryPartList<>(entries));
     }
@@ -23517,7 +23517,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(JSONEntry<?>... entries) {
         return new JSONObject(SQLDataType.JSONB, Arrays.asList(entries));
     }
@@ -23526,7 +23526,7 @@ public class DSL {
      * The <code>JSONB_OBJECT</code> function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(Collection<? extends JSONEntry<?>> entries) {
         return new JSONObject(SQLDataType.JSONB, new QueryPartList<>(entries));
     }
@@ -23540,7 +23540,7 @@ public class DSL {
      * @param index The 0-based JSON array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(JSON field, int index) {
         return new JSONGetElement(Tools.field(field), Tools.field(index));
     }
@@ -23554,7 +23554,7 @@ public class DSL {
      * @param index The 0-based JSON array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(JSON field, Field<Integer> index) {
         return new JSONGetElement(Tools.field(field), index);
     }
@@ -23568,7 +23568,7 @@ public class DSL {
      * @param index The 0-based JSON array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(Field<JSON> field, int index) {
         return new JSONGetElement(field, Tools.field(index));
     }
@@ -23582,7 +23582,7 @@ public class DSL {
      * @param index The 0-based JSON array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetElement(Field<JSON> field, Field<Integer> index) {
         return new JSONGetElement(field, index);
     }
@@ -23596,7 +23596,7 @@ public class DSL {
      * @param index The 0-based JSONB array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(JSONB field, int index) {
         return new JSONBGetElement(Tools.field(field), Tools.field(index));
     }
@@ -23610,7 +23610,7 @@ public class DSL {
      * @param index The 0-based JSONB array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(JSONB field, Field<Integer> index) {
         return new JSONBGetElement(Tools.field(field), index);
     }
@@ -23624,7 +23624,7 @@ public class DSL {
      * @param index The 0-based JSONB array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(Field<JSONB> field, int index) {
         return new JSONBGetElement(field, Tools.field(index));
     }
@@ -23638,7 +23638,7 @@ public class DSL {
      * @param index The 0-based JSONB array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetElement(Field<JSONB> field, Field<Integer> index) {
         return new JSONBGetElement(field, index);
     }
@@ -23652,7 +23652,7 @@ public class DSL {
      * @param index The 0-based JSON array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetElementAsText(JSON field, int index) {
         return new JSONGetElementAsText(Tools.field(field), Tools.field(index));
     }
@@ -23666,7 +23666,7 @@ public class DSL {
      * @param index The 0-based JSON array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetElementAsText(JSON field, Field<Integer> index) {
         return new JSONGetElementAsText(Tools.field(field), index);
     }
@@ -23680,7 +23680,7 @@ public class DSL {
      * @param index The 0-based JSON array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetElementAsText(Field<JSON> field, int index) {
         return new JSONGetElementAsText(field, Tools.field(index));
     }
@@ -23694,7 +23694,7 @@ public class DSL {
      * @param index The 0-based JSON array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetElementAsText(Field<JSON> field, Field<Integer> index) {
         return new JSONGetElementAsText(field, index);
     }
@@ -23708,7 +23708,7 @@ public class DSL {
      * @param index The 0-based JSONB array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetElementAsText(JSONB field, int index) {
         return new JSONBGetElementAsText(Tools.field(field), Tools.field(index));
     }
@@ -23722,7 +23722,7 @@ public class DSL {
      * @param index The 0-based JSONB array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetElementAsText(JSONB field, Field<Integer> index) {
         return new JSONBGetElementAsText(Tools.field(field), index);
     }
@@ -23736,7 +23736,7 @@ public class DSL {
      * @param index The 0-based JSONB array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetElementAsText(Field<JSONB> field, int index) {
         return new JSONBGetElementAsText(field, Tools.field(index));
     }
@@ -23750,7 +23750,7 @@ public class DSL {
      * @param index The 0-based JSONB array index
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetElementAsText(Field<JSONB> field, Field<Integer> index) {
         return new JSONBGetElementAsText(field, index);
     }
@@ -23764,7 +23764,7 @@ public class DSL {
      * @param attribute The JSON object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(JSON field, @Stringly.Param String attribute) {
         return new JSONGetAttribute(Tools.field(field), Tools.field(attribute));
     }
@@ -23778,7 +23778,7 @@ public class DSL {
      * @param attribute The JSON object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(JSON field, Field<String> attribute) {
         return new JSONGetAttribute(Tools.field(field), attribute);
     }
@@ -23792,7 +23792,7 @@ public class DSL {
      * @param attribute The JSON object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(Field<JSON> field, @Stringly.Param String attribute) {
         return new JSONGetAttribute(field, Tools.field(attribute));
     }
@@ -23806,7 +23806,7 @@ public class DSL {
      * @param attribute The JSON object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonGetAttribute(Field<JSON> field, Field<String> attribute) {
         return new JSONGetAttribute(field, attribute);
     }
@@ -23820,7 +23820,7 @@ public class DSL {
      * @param attribute The JSONB object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(JSONB field, @Stringly.Param String attribute) {
         return new JSONBGetAttribute(Tools.field(field), Tools.field(attribute));
     }
@@ -23834,7 +23834,7 @@ public class DSL {
      * @param attribute The JSONB object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(JSONB field, Field<String> attribute) {
         return new JSONBGetAttribute(Tools.field(field), attribute);
     }
@@ -23848,7 +23848,7 @@ public class DSL {
      * @param attribute The JSONB object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(Field<JSONB> field, @Stringly.Param String attribute) {
         return new JSONBGetAttribute(field, Tools.field(attribute));
     }
@@ -23862,7 +23862,7 @@ public class DSL {
      * @param attribute The JSONB object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbGetAttribute(Field<JSONB> field, Field<String> attribute) {
         return new JSONBGetAttribute(field, attribute);
     }
@@ -23876,7 +23876,7 @@ public class DSL {
      * @param attribute The JSON object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetAttributeAsText(JSON field, @Stringly.Param String attribute) {
         return new JSONGetAttributeAsText(Tools.field(field), Tools.field(attribute));
     }
@@ -23890,7 +23890,7 @@ public class DSL {
      * @param attribute The JSON object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetAttributeAsText(JSON field, Field<String> attribute) {
         return new JSONGetAttributeAsText(Tools.field(field), attribute);
     }
@@ -23904,7 +23904,7 @@ public class DSL {
      * @param attribute The JSON object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetAttributeAsText(Field<JSON> field, @Stringly.Param String attribute) {
         return new JSONGetAttributeAsText(field, Tools.field(attribute));
     }
@@ -23918,7 +23918,7 @@ public class DSL {
      * @param attribute The JSON object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonGetAttributeAsText(Field<JSON> field, Field<String> attribute) {
         return new JSONGetAttributeAsText(field, attribute);
     }
@@ -23933,7 +23933,7 @@ public class DSL {
      * @param attribute The JSONB object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetAttributeAsText(JSONB field, @Stringly.Param String attribute) {
         return new JSONBGetAttributeAsText(Tools.field(field), Tools.field(attribute));
     }
@@ -23948,7 +23948,7 @@ public class DSL {
      * @param attribute The JSONB object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetAttributeAsText(JSONB field, Field<String> attribute) {
         return new JSONBGetAttributeAsText(Tools.field(field), attribute);
     }
@@ -23963,7 +23963,7 @@ public class DSL {
      * @param attribute The JSONB object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetAttributeAsText(Field<JSONB> field, @Stringly.Param String attribute) {
         return new JSONBGetAttributeAsText(field, Tools.field(attribute));
     }
@@ -23978,7 +23978,7 @@ public class DSL {
      * @param attribute The JSONB object attribute name
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<String> jsonbGetAttributeAsText(Field<JSONB> field, Field<String> attribute) {
         return new JSONBGetAttributeAsText(field, attribute);
     }
@@ -23991,7 +23991,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonArrayLength(JSON field) {
         return new JSONArrayLength(Tools.field(field));
     }
@@ -24002,7 +24002,7 @@ public class DSL {
      * Calculate the length of a JSON array.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonArrayLength(Field<JSON> field) {
         return new JSONArrayLength(field);
     }
@@ -24015,7 +24015,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonbArrayLength(JSONB field) {
         return new JSONBArrayLength(Tools.field(field));
     }
@@ -24026,7 +24026,7 @@ public class DSL {
      * Calculate the length of a JSONB array.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static Field<Integer> jsonbArrayLength(Field<JSONB> field) {
         return new JSONBArrayLength(field);
     }
@@ -24040,7 +24040,7 @@ public class DSL {
      * @param key The key in the JSON object
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Condition jsonKeyExists(JSON json, @Stringly.Param String key) {
         return new JSONKeyExists(Tools.field(json), Tools.field(key));
     }
@@ -24054,7 +24054,7 @@ public class DSL {
      * @param key The key in the JSON object
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Condition jsonKeyExists(JSON json, Field<String> key) {
         return new JSONKeyExists(Tools.field(json), key);
     }
@@ -24068,7 +24068,7 @@ public class DSL {
      * @param key The key in the JSON object
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Condition jsonKeyExists(Field<JSON> json, @Stringly.Param String key) {
         return new JSONKeyExists(json, Tools.field(key));
     }
@@ -24082,7 +24082,7 @@ public class DSL {
      * @param key The key in the JSON object
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Condition jsonKeyExists(Field<JSON> json, Field<String> key) {
         return new JSONKeyExists(json, key);
     }
@@ -24096,7 +24096,7 @@ public class DSL {
      * @param key The key in the JSONB object
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Condition jsonbKeyExists(JSONB json, @Stringly.Param String key) {
         return new JSONBKeyExists(Tools.field(json), Tools.field(key));
     }
@@ -24110,7 +24110,7 @@ public class DSL {
      * @param key The key in the JSONB object
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Condition jsonbKeyExists(JSONB json, Field<String> key) {
         return new JSONBKeyExists(Tools.field(json), key);
     }
@@ -24124,7 +24124,7 @@ public class DSL {
      * @param key The key in the JSONB object
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Condition jsonbKeyExists(Field<JSONB> json, @Stringly.Param String key) {
         return new JSONBKeyExists(json, Tools.field(key));
     }
@@ -24138,7 +24138,7 @@ public class DSL {
      * @param key The key in the JSONB object
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Condition jsonbKeyExists(Field<JSONB> json, Field<String> key) {
         return new JSONBKeyExists(json, key);
     }
@@ -24151,7 +24151,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonKeys(JSON field) {
         return new JSONKeys(Tools.field(field));
     }
@@ -24162,7 +24162,7 @@ public class DSL {
      * Retrieve all keys from a JSON object as an array of strings.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSON> jsonKeys(Field<JSON> field) {
         return new JSONKeys(field);
     }
@@ -24175,7 +24175,7 @@ public class DSL {
      * @param field is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbKeys(JSONB field) {
         return new JSONBKeys(Tools.field(field));
     }
@@ -24186,7 +24186,7 @@ public class DSL {
      * Retrieve all keys from a JSONB object as an array of strings.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<JSONB> jsonbKeys(Field<JSONB> field) {
         return new JSONBKeys(field);
     }
@@ -30184,7 +30184,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, String path) {
         return jsonValue(json, Tools.field(path));
     }
@@ -30193,7 +30193,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSON, json, path, null);
     }
@@ -30202,7 +30202,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, String path) {
         return jsonbValue(json, Tools.field(path));
     }
@@ -30211,7 +30211,7 @@ public class DSL {
      * The JSON value extractor function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSONB, json, path, null);
     }
@@ -30223,7 +30223,7 @@ public class DSL {
      * This is the same as calling {@link #jsonEntry(String, Field)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONEntryValueStep key(String key) {
         return key(Tools.field(key));
     }
@@ -30235,7 +30235,7 @@ public class DSL {
      * This is the same as calling {@link #jsonEntry(Field, Field)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONEntryValueStep key(Field<String> key) {
         return new JSONEntryImpl<>(key);
     }
@@ -30248,7 +30248,7 @@ public class DSL {
      * {@link Field#getName()} as a key.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(Field<T> value) {
         return jsonEntry(value.getName(), value);
     }
@@ -30258,7 +30258,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(String key, T value) {
         return jsonEntry(Tools.field(key), Tools.field(value));
     }
@@ -30268,7 +30268,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(String key, Field<T> value) {
         return jsonEntry(Tools.field(key), value);
     }
@@ -30278,7 +30278,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(String key, Select<? extends Record1<T>> value) {
         return jsonEntry(Tools.field(key), field(value));
     }
@@ -30288,7 +30288,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, T value) {
         return jsonEntry(key, Tools.field(value));
     }
@@ -30298,7 +30298,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
         return new JSONEntryImpl<>(key, value);
     }
@@ -30308,7 +30308,7 @@ public class DSL {
      * {@link #jsonObject(JSONEntry...)}.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Select<? extends Record1<T>> value) {
         return jsonEntry(key, field(value));
     }
@@ -30317,7 +30317,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(String key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -30326,7 +30326,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Field<?> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -30335,7 +30335,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject(Field<String> key, Select<? extends Record1<?>> value) {
         return jsonObject(jsonEntry(key, value));
     }
@@ -30351,7 +30351,7 @@ public class DSL {
      *             {@link #jsonObject(JSONEntry...)} instead.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @Deprecated(forRemoval = true, since = "3.19")
     public static JSONObjectNullStep<JSON> jsonObject(Field<?>... entries) {
         return new JSONObject(SQLDataType.JSON, Tools.jsonEntries(entries));
@@ -30361,7 +30361,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(String key, Field<?> value) {
         return jsonbObject(jsonEntry(key, value));
     }
@@ -30370,7 +30370,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<String> key, Field<?> value) {
         return jsonbObject(jsonEntry(key, value));
     }
@@ -30379,7 +30379,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<String> key, Select<? extends Record1<?>> value) {
         return jsonbObject(jsonEntry(key, value));
     }
@@ -30395,7 +30395,7 @@ public class DSL {
      *             {@link #jsonObject(JSONEntry...)} instead.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @Deprecated(forRemoval = true, since = "3.19")
     public static JSONObjectNullStep<JSONB> jsonbObject(Field<?>... entries) {
         return new JSONObject(SQLDataType.JSONB, Tools.jsonEntries(entries));
@@ -30405,7 +30405,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSON> jsonObject() {
         return jsonObject(Tools.EMPTY_JSONENTRY);
     }
@@ -30414,7 +30414,7 @@ public class DSL {
      * The JSON object constructor.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectNullStep<JSONB> jsonbObject() {
         return jsonbObject(Tools.EMPTY_JSONENTRY);
     }
@@ -30423,7 +30423,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSON, value, false);
     }
@@ -30432,7 +30432,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAgg(Field<?> value) {
         return new JSONArrayAgg<>(JSONB, value, false);
     }
@@ -30441,7 +30441,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, SQLITE, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, SQLITE, TRINO })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAggDistinct(Field<?> value) {
         return new JSONArrayAgg<>(JSON, value, true);
     }
@@ -30450,7 +30450,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSONB> jsonbArrayAggDistinct(Field<?> value) {
         return new JSONArrayAgg<>(JSONB, value, true);
     }
@@ -30462,7 +30462,7 @@ public class DSL {
      * {@link Field#getName()} as a key.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(Field<?> value) {
         return jsonObjectAgg(jsonEntry(value));
     }
@@ -30471,7 +30471,7 @@ public class DSL {
      * The JSON object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(String key, Field<?> value) {
         return jsonObjectAgg(Tools.field(key), value);
     }
@@ -30480,7 +30480,7 @@ public class DSL {
      * The JSON object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(Field<String> key, Field<?> value) {
         return jsonObjectAgg(jsonEntry(key, value));
     }
@@ -30489,7 +30489,7 @@ public class DSL {
      * The JSON object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSON> jsonObjectAgg(JSONEntry<?> entry) {
         return new JSONObjectAgg<>(JSON, entry);
     }
@@ -30501,7 +30501,7 @@ public class DSL {
      * {@link Field#getName()} as a key.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(Field<?> field) {
         return jsonbObjectAgg(jsonEntry(field));
     }
@@ -30510,7 +30510,7 @@ public class DSL {
      * The JSONB object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(String key, Field<?> value) {
         return jsonbObjectAgg(Tools.field(key), value);
     }
@@ -30519,7 +30519,7 @@ public class DSL {
      * The JSONB object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(Field<String> key, Field<?> value) {
         return jsonbObjectAgg(jsonEntry(key, value));
     }
@@ -30528,7 +30528,7 @@ public class DSL {
      * The JSONB object aggregate function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONObjectAggNullStep<JSONB> jsonbObjectAgg(JSONEntry<?> entry) {
         return new JSONObjectAgg<>(JSONB, entry);
     }
@@ -30537,7 +30537,7 @@ public class DSL {
      * The JSON exists predicate.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static JSONExistsOnStep jsonExists(Field<JSON> field, String path) {
         return jsonExists(field, Tools.field(path));
     }
@@ -30546,7 +30546,7 @@ public class DSL {
      * The JSON exists predicate.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONExistsOnStep jsonExists(Field<JSON> field, Field<String> path) {
         return new JSONExists(field, Tools.nullSafe(path));
     }
@@ -30555,7 +30555,7 @@ public class DSL {
      * The JSONB exists predicate.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONExistsOnStep jsonbExists(Field<JSONB> field, String path) {
         return jsonbExists(field, Tools.field(path));
     }
@@ -30564,7 +30564,7 @@ public class DSL {
      * The JSONB exists predicate.
      */
     @NotNull
-    @Support({ CLICKHOUSE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONExistsOnStep jsonbExists(Field<JSONB> field, Field<String> path) {
         return new JSONExists(field, Tools.nullSafe(path));
     }

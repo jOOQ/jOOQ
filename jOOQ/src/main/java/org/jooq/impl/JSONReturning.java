@@ -40,6 +40,7 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -67,7 +68,7 @@ implements
     UTransient
 {
 
-    static final Set<SQLDialect> NO_SUPPORT_RETURNING = SQLDialect.supportedBy(H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_RETURNING = SQLDialect.supportedBy(DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     final DataType<?>            type;
 
     JSONReturning(DataType<?> type) {

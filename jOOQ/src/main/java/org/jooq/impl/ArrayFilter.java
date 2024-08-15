@@ -113,6 +113,9 @@ implements
             case CLICKHOUSE:
                 return false;
 
+            case TRINO:
+                return true;
+
             default:
                 return true;
         }
@@ -147,6 +150,10 @@ implements
 
             case CLICKHOUSE:
                 ctx.visit(DSL.function(N_arrayFilter, getDataType(), DSL.field("{0}", OTHER, predicate), array));
+                break;
+
+            case TRINO:
+                ctx.visit(function(N_FILTER, getDataType(), array, DSL.field("{0}", OTHER, predicate)));
                 break;
 
             default:

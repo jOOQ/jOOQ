@@ -112,6 +112,9 @@ implements
             case SQLITE:
                 return false;
 
+            case DUCKDB:
+                return false;
+
             case CLICKHOUSE:
                 return false;
 
@@ -153,6 +156,10 @@ implements
 
             case SQLITE:
                 ctx.visit(DSL.field(select(jsonArrayAgg(DSL.field(name("key")))).from("json_each({0})", field)));
+                break;
+
+            case DUCKDB:
+                ctx.visit(function(N_TO_JSON, getDataType(), function(N_JSON_KEYS, VARCHAR.array(), field)));
                 break;
 
             case CLICKHOUSE:

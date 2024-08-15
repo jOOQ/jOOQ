@@ -53,6 +53,7 @@ import static org.jooq.impl.Keywords.K_ERROR;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Names.N_JSONB_PATH_QUERY_FIRST;
 import static org.jooq.impl.Names.N_JSON_EXTRACT;
+import static org.jooq.impl.Names.N_JSON_EXTRACT_STRING;
 import static org.jooq.impl.Names.N_JSON_VALUE;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -188,6 +189,10 @@ implements
             case MYSQL:
             case SQLITE:
                 ctx.visit(function(N_JSON_EXTRACT, json.getDataType(), json, path));
+                break;
+
+            case DUCKDB:
+                ctx.visit(function(N_JSON_EXTRACT_STRING, json.getDataType(), json, path));
                 break;
 
 

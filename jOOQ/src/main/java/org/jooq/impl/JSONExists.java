@@ -127,6 +127,7 @@ final class JSONExists extends AbstractCondition implements JSONExistsOnStep, UN
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -155,6 +156,10 @@ final class JSONExists extends AbstractCondition implements JSONExistsOnStep, UN
 
             case CLICKHOUSE:
                 ctx.visit(function(systemName("JSON_EXISTS"), getDataType(), json, path));
+                break;
+
+            case DUCKDB:
+                ctx.visit(jsonGetAttribute((Field) json, path).isNotNull());
                 break;
 
             default:

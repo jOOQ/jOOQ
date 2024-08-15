@@ -44,6 +44,7 @@ import org.jetbrains.annotations.*;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -70,6 +71,6 @@ public interface JSONArrayAggReturningStep<T> extends AggregateFilterStep<T> {
      * function.
      */
     @NotNull
-    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AggregateFilterStep<T> returning(DataType<?> returning);
 }

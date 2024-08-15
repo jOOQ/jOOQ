@@ -4212,14 +4212,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     if (object == null)
                         return null;
 
-                    return readMultiset(ctx, dataType);
+                    return readMultiset(ctx, dataType, !(object instanceof Struct));
                 }
 
                 default:
                     if (UDTRecord.class.isAssignableFrom(dataType.getType()))
                         return localExecuteContext(ctx.executeContext(), () -> (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx)));
                     else
-                        return readMultiset(ctx, dataType);
+                        return readMultiset(ctx, dataType, true);
             }
         }
 
@@ -4243,12 +4243,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        static final <R extends Record> R readMultiset(BindingGetResultSetContext<?> ctx, DataType<R> type) throws SQLException {
+        static final <R extends Record> R readMultiset(BindingGetResultSetContext<?> ctx, DataType<R> type, boolean skipDegree1) throws SQLException {
             AbstractRow<R> row = (AbstractRow<R>) type.getRow();
             Result<R> result;
 
             // [#12930] AbstractRowAsField doesn't unnecessarily nest Row1
-            if (row.size() == 1 && emulateMultiset(ctx.configuration()) != NestedCollectionEmulation.NATIVE) {
+            // [#17074] Do this only if requested (e.g. native ROW may be generated despite JSON MULTISET emulation at the top level)
+            if (skipDegree1 && row.size() == 1 && emulateMultiset(ctx.configuration()) != NestedCollectionEmulation.NATIVE) {
                 result = new ResultImpl<>(ctx.configuration(), row);
                 result.add(newRecord(true, (Class<R>) type.getRecordType(), row, ctx.configuration()).operate(r -> {
                     DefaultBindingGetResultSetContext<?> c = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), ctx.resultSet(), ctx.index());
@@ -4545,6 +4546,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         )
         throws SQLException {
             NestedCollectionEmulation emulation = emulateMultiset(ctx.configuration());
+
+            // [#17074] Native capable dialects may render ROW at the top level despite JSON being requested.
+            //          This probably hints at a design problem somewhere, which we'll investigate once more
+            //          dialects support NATIVE implementations
+            switch (ctx.family()) {
+                case DUCKDB:
+                    if (ctx.resultSet().getObject(ctx.index()) instanceof Struct)
+                        emulation = NestedCollectionEmulation.NATIVE;
+
+                    break;
+            }
 
             switch (emulation) {
                 case JSON:

@@ -247,7 +247,7 @@ implements
                     ctx.visit(JSONObject.absentOnNullIf(
                         () -> onNull == JSONOnNull.ABSENT_ON_NULL,
                         e -> e,
-                        array(map(fields, e -> JSONEntryImpl.jsonCast(ctx, e).cast(JSON)))
+                        DSL.<JSON>array(map(fields, e -> JSONEntryImpl.jsonCast(ctx, e).cast(JSON)))
                     ).cast(JSON));
                 }
 

@@ -296,7 +296,7 @@ implements
                         absentOnNullIf(
                             () -> onNull == JSONOnNull.ABSENT_ON_NULL,
                             e -> DSL.field("{0}[2]", e.getDataType(), e),
-                            array(map(entries, e -> function(N_ROW, JSON, e.key(), JSONEntryImpl.jsonCast(ctx, e.value()).cast(JSON))))
+                            DSL.<JSON>array(map(entries, e -> function(N_ROW, JSON, e.key(), JSONEntryImpl.jsonCast(ctx, e.value()).cast(JSON))))
                         )
                     ).cast(JSON));
                 }

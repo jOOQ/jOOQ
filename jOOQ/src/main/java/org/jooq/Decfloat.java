@@ -98,6 +98,33 @@ public final class Decfloat extends Number implements Data {
     }
 
     // ------------------------------------------------------------------------
+    // The Float API
+    // ------------------------------------------------------------------------
+
+    /**
+     * Check whether this value is the {@link Decfloat} equivalent of {@link Double#NaN}.
+     */
+    public final boolean isNaN() {
+        return special == Special.NAN;
+    }
+
+    /**
+     * Check whether this value is the {@link Decfloat} equivalent of
+     * {@link Double#POSITIVE_INFINITY}.
+     */
+    public final boolean isPositiveInfinity() {
+        return special == Special.POSITIVE_INFINITY;
+    }
+
+    /**
+     * Check whether this value is the {@link Decfloat} equivalent of
+     * {@link Double#NEGATIVE_INFINITY}.
+     */
+    public final boolean isNegativeInfinity() {
+        return special == Special.NEGATIVE_INFINITY;
+    }
+
+    // ------------------------------------------------------------------------
     // The Number API
     // ------------------------------------------------------------------------
 
@@ -179,7 +206,7 @@ public final class Decfloat extends Number implements Data {
             }
         }
         else if (coefficient != null)
-            return coefficient + "E" + exponent;
+            return exponent != 0 ? (coefficient + "E" + exponent) : coefficient.toString();
 
         return String.valueOf(data);
     }
@@ -212,12 +239,14 @@ public final class Decfloat extends Number implements Data {
 
                 try {
                     if (i == -1) {
-                        coefficient = new BigDecimal(data).stripTrailingZeros();
+                        coefficient = new BigDecimal(data);
                     }
                     else {
-                        coefficient = new BigDecimal(data.substring(0, i)).stripTrailingZeros();
+                        coefficient = new BigDecimal(data.substring(0, i));
                         exponent = Integer.parseInt(data.substring(i + 1));
                     }
+
+                    normalise();
                 }
 
                 // [#10880] If we cannot represent the value internally, then we'll just work with data
@@ -225,6 +254,19 @@ public final class Decfloat extends Number implements Data {
                 break;
             }
         }
+    }
+
+    private final void normalise() {
+        int scale = coefficient.scale();
+        int precision = coefficient.precision();
+
+        int n = precision - scale - 1;
+        if (n != 0) {
+            coefficient = coefficient.movePointLeft(n);
+            exponent += n;
+        }
+
+        coefficient = coefficient.stripTrailingZeros();
     }
 
     private enum Special {

@@ -171,7 +171,7 @@ implements
             for (ForeignKeyDefinition fk : uk.getForeignKeys())
                 result.add(fk.getInverse());
 
-        return result;
+        return getDatabase().sort(result);
     }
 
     @Override
@@ -217,7 +217,7 @@ implements
             }
         }
 
-        return result;
+        return getDatabase().sort(result);
     }
 
     @Override

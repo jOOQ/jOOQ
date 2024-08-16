@@ -56,6 +56,7 @@ import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
+import static org.jooq.impl.Tools.NO_SUPPORT_TIME_PRECISION;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -459,7 +460,10 @@ final class Diff {
                     if (!type.precisionDefined())
                         return true;
 
-                    if (NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
+                    if (type.isTime() && NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect()))
+                        return true;
+
+                    if (!type.isTime() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
                         return true;
 
                     if (FALSE.equals(ctx.settings().isMigrationIgnoreDefaultTimestampPrecisionDiffs()))

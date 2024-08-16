@@ -148,6 +148,7 @@ import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.CHAR;
 import static org.jooq.impl.SQLDataType.DATE;
+import static org.jooq.impl.SQLDataType.DECFLOAT;
 import static org.jooq.impl.SQLDataType.DECIMAL_INTEGER;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -1991,6 +1992,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void sqlInline0(org.jooq.BindingSQLContext<U> ctx, Decfloat value) throws SQLException {
+
+            // [#5249] [#6912] [#8063] [#11701] [#11076] Special inlining of special floating point values
+            if (value.isNaN())
+                ctx.render().visit(nan(ctx, DECFLOAT));
+            else if (value.isPositiveInfinity())
+                ctx.render().visit(infinity(ctx, DECFLOAT, false));
+            else if (value.isNegativeInfinity())
+                ctx.render().visit(infinity(ctx, DECFLOAT, true));
+            else if (REQUIRES_LITERAL_CAST.contains(ctx.dialect()))
+                ctx.render().visit(field(ctx.render().floatFormat().format(value)).cast(DECFLOAT));
+            else
+                ctx.render().sql(value.data());
+
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, Decfloat value) throws SQLException {
             ctx.statement().setString(ctx.index(), value.data());
         }
@@ -2976,7 +2994,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Double value) {
 
-            // [#5249] [#6912] [#8063] [#11701] Special inlining of special floating point values
+            // [#5249] [#6912] [#8063] [#11701] [#11076] Special inlining of special floating point values
             if (value.isNaN())
                 ctx.render().visit(nan(ctx, DOUBLE));
             else if (value == Double.POSITIVE_INFINITY)
@@ -3173,12 +3191,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Float value) {
 
-            // [#5249] [#6912] [#8063] [#11701] Special inlining of special floating point values
+            // [#5249] [#6912] [#8063] [#11701] [#11076] Special inlining of special floating point values
             if (value.isNaN())
                 ctx.render().visit(nan(ctx, REAL));
-            else if (value == Double.POSITIVE_INFINITY)
+            else if (value == Float.POSITIVE_INFINITY)
                 ctx.render().visit(infinity(ctx, REAL, false));
-            else if (value == Double.NEGATIVE_INFINITY)
+            else if (value == Float.NEGATIVE_INFINITY)
                 ctx.render().visit(infinity(ctx, REAL, true));
             else if (REQUIRES_LITERAL_CAST.contains(ctx.dialect()))
                 ctx.render().visit(field(ctx.render().floatFormat().format(value)).cast(REAL));

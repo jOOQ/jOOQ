@@ -688,6 +688,12 @@ final class Tools {
          * not the query itself.
          */
         DATA_RENDER_IMPLICIT_JOIN,
+
+        /**
+         * [#17088] Tell the {@link RenderContext} that we're rendering for
+         * R2DBC.
+         */
+        DATA_RENDER_FOR_R2DBC
         ;
 
         private final boolean resetInSubqueryScope;

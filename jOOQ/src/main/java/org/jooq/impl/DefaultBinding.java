@@ -872,10 +872,30 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
 
             if (dataType.getType() == OffsetDateTime.class ||
-                dataType.getType() == OffsetTime.class ||
                 dataType.getType() == Instant.class
             ) {
                 switch (ctx.family()) {
+
+
+
+
+
+
+
+                    case TRINO:
+                        return true;
+                }
+            }
+
+            if (dataType.getType() == OffsetTime.class) {
+                switch (ctx.family()) {
+
+
+
+
+
+
+
                     case TRINO:
                         return true;
                 }
@@ -3611,11 +3631,35 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void sqlBind0(BindingSQLContext<U> ctx, OffsetDateTime value) throws SQLException {
+            switch (ctx.family()) {
+
+                // [#17088] The R2DBC H2 driver binds strings as CLOB, which cannot be converted to TIMESTAMPTZ
+                case H2:
+                    if (isR2dbc(ctx)) {
+                        Cast.renderCast(ctx.render(),
+                            c -> super.sqlBind0(ctx, value),
+                            c -> c.sql(VARCHAR.getCastTypeName(c.configuration()))
+                        );
+                    }
+                    else
+                        super.sqlBind0(ctx, value);
+
+                    break;
+
+                default:
+                    super.sqlBind0(ctx, value);
+                    break;
+            }
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, OffsetDateTime value) throws SQLException {
             SQLDialect family = ctx.family();
 
             if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
                 ctx.statement().setObject(ctx.index(), value);
+
 
 
 
@@ -3645,6 +3689,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final OffsetDateTime get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
                 return ctx.resultSet().getObject(ctx.index(), OffsetDateTime.class);
+
+
+
+
 
 
 
@@ -3895,7 +3943,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             (BiFunction<Instant, ConverterContext, OffsetDateTime> & Serializable) (i, x) -> OffsetDateTime.ofInstant(i, ZoneOffset.UTC)
         );
 
-        private final DefaultOffsetDateTimeBinding<U>           delegate;
+        private final DefaultOffsetDateTimeBinding<U>                  delegate;
 
         DefaultInstantBinding(DataType<Instant> dataType, Converter<Instant, U> converter) {
             super(dataType, converter);
@@ -3911,6 +3959,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Instant value) throws SQLException {
             delegate.sqlInline0(ctx, CONVERTER.to(value, ctx.converterContext()));
+        }
+
+        @Override
+        final void sqlBind0(BindingSQLContext<U> ctx, Instant value) throws SQLException {
+            delegate.sqlBind0(ctx, CONVERTER.to(value, ctx.converterContext()));
         }
 
         @Override

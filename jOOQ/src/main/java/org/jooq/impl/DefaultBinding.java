@@ -2946,7 +2946,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         static final Field<?> nan(BindingSQLContext<?> ctx, DataType<?> type) {
             switch (ctx.family()) {
                 case FIREBIRD:
-                    return log(inline(1), inline(1));
+                    if (type.isDecimal())
+                        return inline("NaN").cast(type);
+                    else
+                        return log(inline(1), inline(1));
                 case HSQLDB:
                     return inline(0.0).div(field("0.0e0", (DataType) type));
                 default:
@@ -2958,7 +2961,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         static final Field<?> infinity(BindingSQLContext<?> ctx, DataType<?> type, boolean negative) {
             switch (ctx.family()) {
                 case FIREBIRD:
-                    return log(negative ? inline(0.5) : inline(1.5), inline(1));
+                    if (type.isDecimal())
+                        return inline(negative ? "-Infinity" : "Infinity").cast(type);
+                    else
+                        return log(negative ? inline(0.5) : inline(1.5), inline(1));
                 case HSQLDB:
                     return inline(negative ? -1.0 : 1.0).div(field("0.0e0", (DataType) type));
                 default:

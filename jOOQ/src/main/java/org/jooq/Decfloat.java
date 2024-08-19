@@ -219,6 +219,7 @@ public final class Decfloat extends Number implements Data {
         switch (lc = data.toLowerCase()) {
             case "+nan":
             case "nan":
+            case "-nan":
                 special = Special.NAN;
                 break;
 

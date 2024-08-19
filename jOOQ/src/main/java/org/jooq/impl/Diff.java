@@ -460,10 +460,10 @@ final class Diff {
                     if (!type.precisionDefined())
                         return true;
 
-                    if (type.isTime() && NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect()))
+                    if ((type.isTime() || type.isTimeWithTimeZone()) && NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect()))
                         return true;
 
-                    if (!type.isTime() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
+                    if (!type.isTime() && !type.isTimeWithTimeZone() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
                         return true;
 
                     if (FALSE.equals(ctx.settings().isMigrationIgnoreDefaultTimestampPrecisionDiffs()))

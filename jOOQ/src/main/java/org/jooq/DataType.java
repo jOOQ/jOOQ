@@ -1339,6 +1339,17 @@ public interface DataType<T> extends Named {
     boolean isTimestamp();
 
     /**
+     * Whether this data type is any timestamp type.
+     * <p>
+     * This applies to any of these types.
+     * <ul>
+     * <li>{@link SQLDataType#TIMESTAMPWITHTIMEZONE}</li>
+     * <li>{@link SQLDataType#INSTANT}</li>
+     * </ul>
+     */
+    boolean isTimestampWithTimeZone();
+
+    /**
      * Whether this data type is any time type.
      * <p>
      * This applies to any of these types.
@@ -1348,6 +1359,16 @@ public interface DataType<T> extends Named {
      * </ul>
      */
     boolean isTime();
+
+    /**
+     * Whether this data type is any time type.
+     * <p>
+     * This applies to any of these types.
+     * <ul>
+     * <li>{@link SQLDataType#TIMEWITHTIMEZONE}</li>
+     * </ul>
+     */
+    boolean isTimeWithTimeZone();
 
     /**
      * Whether this data type is any date or time type.

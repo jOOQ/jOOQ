@@ -863,11 +863,24 @@ implements
     }
 
     @Override
+    public final boolean isTimestampWithTimeZone() {
+        Class<?> tType = tType0();
+        return java.time.OffsetDateTime.class.isAssignableFrom(tType)
+            || java.time.Instant.class.isAssignableFrom(tType)
+        ;
+    }
+
+    @Override
     public final boolean isTime() {
         Class<?> tType = tType0();
         return java.sql.Time.class.isAssignableFrom(tType)
             || java.time.LocalTime.class.isAssignableFrom(tType)
         ;
+    }
+
+    @Override
+    public final boolean isTimeWithTimeZone() {
+        return java.time.OffsetTime.class.isAssignableFrom(tType0());
     }
 
     @Override

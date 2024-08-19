@@ -75,7 +75,7 @@ public class DefaultUniqueKeyDefinition extends AbstractConstraintDefinition imp
 
     @Override
     public List<ForeignKeyDefinition> getForeignKeys() {
-        return foreignKeys;
+        return getDatabase().sort(foreignKeys);
     }
 
     @Override

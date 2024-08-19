@@ -3611,6 +3611,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // [#5895] HSQLDB derives the specific data type from the literal
 
 
+                case FIREBIRD:
                 case HSQLDB:
                 case TRINO:
                     ctx.render().visit(K_TIMESTAMP).sql(" '").sql(escape(format(value, family), ctx.render())).sql('\'');
@@ -3671,6 +3672,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+            else if (family == FIREBIRD)
+                ctx.statement().setString(ctx.index(), value.toString());
 
             else
                 ctx.statement().setString(ctx.index(), format(value, family));
@@ -3845,6 +3849,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             switch (ctx.family()) {
                 // [#5895] HSQLDB derives the specific data type from the literal
+                case FIREBIRD:
                 case HSQLDB:
                 case TRINO:
                     ctx.render().visit(K_TIME).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');
@@ -3881,6 +3886,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 ctx.statement().setString(ctx.index(), string);
             }
+
+            else if (ctx.family() == FIREBIRD)
+                ctx.statement().setString(ctx.index(), value.toString());
             else
                 ctx.statement().setObject(ctx.index(), value);
         }

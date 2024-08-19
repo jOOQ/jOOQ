@@ -749,6 +749,8 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 .when((short) 24, "DECFLOAT(16)")
                 .when((short) 25, "DECFLOAT(34)")
                 .when((short) 27, "DOUBLE")
+                .when((short) 28, "TIME WITH TIME ZONE")
+                .when((short) 29, "TIMESTAMP WITH TIME ZONE")
                 .when((short) 35, "TIMESTAMP")
                 .when((short) 37, "VARCHAR")
                 .when((short) 40, "CSTRING")

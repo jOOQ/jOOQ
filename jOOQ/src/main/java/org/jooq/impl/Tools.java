@@ -1191,7 +1191,7 @@ final class Tools {
     static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         SUPPORT_POSTGRES_LITERALS          = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         DEFAULT_BEFORE_NULL                = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
-    static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY);
+    static final Set<SQLDialect>         NO_SUPPORT_TIMESTAMP_PRECISION     = SQLDialect.supportedBy(DERBY, FIREBIRD);
     static final Set<SQLDialect>         NO_SUPPORT_TIME_PRECISION          = SQLDialect.supportedBy(DERBY, FIREBIRD);
     static final Set<SQLDialect>         DEFAULT_TIMESTAMP_NOT_NULL         = SQLDialect.supportedBy(MARIADB);
     static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT     = SQLDialect.supportedBy(SQLITE);
@@ -6214,8 +6214,8 @@ final class Tools {
         else if (type.hasPrecision()
             && type.precisionDefined()
             && (!type.isDateTime()
-               || type.isTime() && !NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect())
-               || !type.isTime() && !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect())
+               || (type.isTime() || type.isTimeWithTimeZone()) && !NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect())
+               || !type.isTime() && !type.isTimeWithTimeZone() && !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect())
             )
         ) {
 

@@ -672,8 +672,8 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     private final Condition pathConditionIfInCurrentScope(Context<?> ctx, TableImpl<?> ti) {
 
         // [#15936] Don't add path correlation predicates to JOIN .. ON clauses.
-    	//          It's wrong for OUTER JOIN or some nested join trees, and they're already
-    	//          being added in SelectQueryImpl
+        //          It's wrong for OUTER JOIN or some nested join trees, and they're already
+        //          being added in SelectQueryImpl
         return ctx.inCurrentScope(ti.path) ? ti.pathCondition() : noCondition();
     }
 

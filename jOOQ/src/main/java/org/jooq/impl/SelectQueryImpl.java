@@ -2942,6 +2942,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             Table<?> t0 = result.get(i);
             Table<?> t1 = prependPathJoins(ctx, where, t0, CROSS_JOIN);
 
+            // [#15936] If join tree leaves contain paths, generate the path correlation predicate here
+            // [#15967] But only if they're in scope, and not in the current scope
+            traverseJoins(t1, where, null, l -> true, r -> true, null,
+                (w, t) -> {
+                    if (TableImpl.path(t) != null && t instanceof TableImpl<?> ti) {
+                        if (ctx.inScope(ti.path) && !ctx.inCurrentScope(ti.path))
+                            w.addConditions(ti.pathCondition());
+                    }
+
+                    return w;
+                }
+            );
+
             if (t0 != t1)
                 result.set(i, t1);
         }

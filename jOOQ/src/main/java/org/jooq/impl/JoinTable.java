@@ -615,8 +615,8 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
             && ctx.data(DATA_RENDER_IMPLICIT_JOIN) == null
         ) {
             toSQLJoinCondition(ctx, DSL.and(
-                lhs instanceof TableImpl<?> ti ? ti.pathCondition() : noCondition(),
-                rhs instanceof TableImpl<?> ti ? ti.pathCondition() : noCondition(),
+                lhs instanceof TableImpl<?> ti ? pathConditionIfInCurrentScope(ctx, ti) : noCondition(),
+                rhs instanceof TableImpl<?> ti ? pathConditionIfInCurrentScope(ctx, ti) : noCondition(),
                 condition.getWhere()
             ));
         }
@@ -624,6 +624,14 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         // Regular JOIN condition
         else
             toSQLJoinCondition(ctx, condition);
+    }
+
+    private final Condition pathConditionIfInCurrentScope(Context<?> ctx, TableImpl<?> ti) {
+
+        // [#15936] Don't add path correlation predicates to JOIN .. ON clauses.
+    	//          It's wrong for OUTER JOIN or some nested join trees, and they're already
+    	//          being added in SelectQueryImpl
+        return ctx.inCurrentScope(ti.path) ? ti.pathCondition() : noCondition();
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

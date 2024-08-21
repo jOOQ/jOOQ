@@ -647,12 +647,6 @@ final class Tools {
         DATA_ROW_CONTENT,
 
         /**
-         * [#12072] In some cases, it's recommended to generate an explicit
-         * <code>ELSE NULL</code> clause in a <code>CASE</code> expression.
-         */
-        DATA_FORCE_CASE_ELSE_NULL,
-
-        /**
          * [#12092] Whether the @@group_concat_max_len value has already been
          * set.
          */

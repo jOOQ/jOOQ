@@ -354,19 +354,31 @@ class GenerationUtil {
      * Check if a character can be used in a kotlin identifier.
      * <p>
      * See <a href=
-     * "https://kotlinlang.org/spec/syntax-and-grammar.html#grammar-rule-QuotedSymbol">https://kotlinlang.org/spec/syntax-and-grammar.html#grammar-rule-QuotedSymbol</a>
+     * "https://kotlinlang.org/docs/reference/grammar.html#Identifier">https://kotlinlang.org/docs/reference/grammar.html#Identifier</a>
      */
     private static boolean isKotlinIdentifierPart(char c) {
-        return c != '\r'
-            && c != '\n'
-            && c != '`'
-            && c != '('
-            && c != ')'
-            && c != '{'
-            && c != '}'
-            && c != '['
-            && c != ']'
-            && c != '.';
+        switch (c) {
+            case '\r':
+            case '\n':
+            case '`':
+            case '.':
+            case ';':
+            case ':':
+            case '\\':
+            case '/':
+            case '[':
+            case ']':
+            // [#17099] These used to be listed, but aren't actually forbidden:
+            // case '(':
+            // case ')':
+            // case '{':
+            // case '}':
+            case '<':
+            case '>':
+                return false;
+            default:
+                return true;
+        }
     }
 
     /**

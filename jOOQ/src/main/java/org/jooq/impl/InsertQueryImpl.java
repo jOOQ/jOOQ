@@ -1176,7 +1176,7 @@ implements
             Condition and = null;
 
             for (Field<?> field : fields) {
-                Field<Object> f = (Field<Object>) field;
+                Field<Object> f = (Field<Object>) orElse(table().field(field), () -> field);
                 Condition other = matchByConflictingKey(ctx, f, s.field(f));
                 and = (and == null) ? other : and.and(other);
             }

@@ -37,17 +37,14 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.Keywords.K_CASE;
 import static org.jooq.impl.Keywords.K_ELSE;
 import static org.jooq.impl.Keywords.K_END;
-import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_SWITCH;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Names.NQ_CASE;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
 import java.util.Map;
 
@@ -201,9 +198,6 @@ implements
             ctx.formatSeparator()
                .visit(K_ELSE).sql(' ')
                .visit(else_);
-        else if (TRUE.equals(ctx.data(DATA_FORCE_CASE_ELSE_NULL)))
-            ctx.formatSeparator()
-               .visit(K_ELSE).sql(' ').visit(K_NULL);
 
         ctx.formatIndentEnd()
            .formatSeparator()

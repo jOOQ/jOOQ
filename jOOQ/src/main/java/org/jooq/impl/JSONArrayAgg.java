@@ -80,7 +80,6 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_CASE_ELSE_NULL;
 
 import java.util.Collection;
 import java.util.Set;
@@ -369,8 +368,6 @@ implements
 
 
 
-
-
     private final void acceptStandard(Context<?> ctx) {
         acceptStandard(ctx, null, onNull);
     }
@@ -378,15 +375,7 @@ implements
     private final void acceptStandard(Context<?> ctx, Function<? super Field<?>, ? extends Field<?>> mapper, JSONOnNull onNull0) {
         ctx.visit(N_JSON_ARRAYAGG).sql('(');
         acceptDistinct(ctx);
-
-        QueryPartListView<Field<?>> arguments0 = mapper == null ? arguments : wrap(arguments).map(mapper);
-
-
-
-
-
-
-        acceptArguments3(ctx, arguments0, jsonCastMapper(ctx));
+        acceptArguments3(ctx, mapper == null ? arguments : wrap(arguments).map(mapper), jsonCastMapper(ctx));
         acceptOrderBy(ctx);
 
         JSONNull jsonNull = new JSONNull(onNull0);

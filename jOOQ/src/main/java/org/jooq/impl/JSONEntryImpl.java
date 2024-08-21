@@ -80,6 +80,7 @@ import org.jooq.Field;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
 import org.jooq.Param;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record1;
 // ...
@@ -277,6 +278,21 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
         return field;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @SuppressWarnings("unchecked")
     private static Field<String> booleanCase(Field<?> field) {
         return case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false"));
@@ -327,10 +343,6 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     private static final boolean emulateMultisetWithJSON(Scope scope) {
         return emulateMultiset(scope.configuration()) == NestedCollectionEmulation.JSON
             || emulateMultiset(scope.configuration()) == NestedCollectionEmulation.JSONB;
-    }
-
-    static final Field<?> booleanValAsVarchar(Field<?> field) {
-        return field instanceof Val<?> v ? v.convertTo0(VARCHAR) : booleanCase(field);
     }
 
     static final Field<?> jsonMerge(Scope scope, String empty, Field<?>... fields) {

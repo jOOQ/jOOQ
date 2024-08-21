@@ -3865,7 +3865,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println("def valueOf(s: %s): %s = s match {", String.class, className);
             for (int i = 0; i < identifiers.size(); i++) {
-                out.println("case \"%s\" => %s", literals.get(i), identifiers.get(i));
+                out.println("case \"%s\" => %s", escapeString(literals.get(i)), identifiers.get(i));
             }
             out.println("case _ => throw new %s()", IllegalArgumentException.class);
             out.println("}");
@@ -3906,7 +3906,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%senum class %s(@get:JvmName(\"literal\") public val literal: String)[[before= : ][%s]] {", visibility(), className, interfaces);
 
             for (int i = 0; i < literals.size(); i++)
-                out.println("%s(\"%s\")%s", identifiers.get(i), literals.get(i), (i == literals.size() - 1) ? ";" : ",");
+                out.println("%s(\"%s\")%s", identifiers.get(i), escapeString(literals.get(i)), (i == literals.size() - 1) ? ";" : ",");
 
             out.println("%soverride fun getCatalog(): %s? = %s",
                 visibilityPublic(), Catalog.class, enumHasNoSchema ? "null" : "schema.catalog");
@@ -3929,7 +3929,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             for (int i = 0; i < literals.size(); i++) {
                 out.println();
-                out.println("%s(\"%s\")%s", identifiers.get(i), literals.get(i), (i == literals.size() - 1) ? ";" : ",");
+                out.println("%s(\"%s\")%s", identifiers.get(i), escapeString(literals.get(i)), (i == literals.size() - 1) ? ";" : ",");
             }
 
             out.println();

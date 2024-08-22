@@ -300,8 +300,9 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     private static final Field<?> booleanJsonExtract(Field<Boolean> field) {
         return Tools.isVal(field, v -> v.isInline())
             ? field
-            : when(field, booleanJsonExtract0(inline(true)))
-             .when(not(field), booleanJsonExtract0(inline(false)));
+            : case_(field)
+                .when(inline(true), booleanJsonExtract0(inline(true)))
+                .when(inline(false), booleanJsonExtract0(inline(false)));
     }
 
     private static final Field<JSON> booleanJsonExtract0(Field<?> field) {

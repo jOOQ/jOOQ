@@ -46,28 +46,20 @@ import static org.jooq.impl.Tools.isRendersSeparator;
 import static org.jooq.impl.Tools.last;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.Function0;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 // ...
 // ...
 import org.jooq.impl.QOM.UnmodifiableCollection;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like
@@ -128,6 +120,10 @@ implements
         return wrapped;
     }
 
+    private final boolean isComplex(Context<?> ctx) {
+        return anyMatch(this, e -> Tools.isComplex(ctx, e));
+    }
+
     @Override
     public boolean isSimple(Context<?> ctx) {
         return allMatch(this, e -> Tools.isSimple(ctx, e));
@@ -146,6 +142,14 @@ implements
         return !isEmpty();
     }
 
+    final boolean format(Context<?> ctx, int size) {
+        return ctx.format() && (
+            size == 1 && isComplex(ctx)
+         || size >= 2 && !isSimple(ctx)
+         || size > 4
+        );
+    }
+
     @Override
     public /* non-final */ void accept(Context<?> ctx) {
         BitSet rendersContent = new BitSet(size());
@@ -155,7 +159,7 @@ implements
             rendersContent.set(i++, ((QueryPartInternal) e).rendersContent(ctx));
 
         int size = rendersContent.cardinality();
-        boolean format = ctx.format() && (size >= 2 && !isSimple(ctx) || size > 4);
+        boolean format = format(ctx, size);
         boolean previousQualify = ctx.qualify();
         boolean previousAlreadyIndented = TRUE.equals(ctx.data(DATA_LIST_ALREADY_INDENTED));
         boolean indent = format && !previousAlreadyIndented;
@@ -213,7 +217,7 @@ implements
 
                         ctx.data(
                             DATA_LIST_ALREADY_INDENTED,
-                            t instanceof QueryPartCollectionView && ((QueryPartCollectionView<?>) t).size() > 1,
+                            t instanceof QueryPartCollectionView && ((QueryPartCollectionView<?>) t).format(ctx, ((QueryPartCollectionView<?>) t).size()),
                             c -> acceptElement(c, t)
                         );
                     }

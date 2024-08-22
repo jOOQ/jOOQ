@@ -67,6 +67,7 @@ extends
     AbstractCaseSimple<V, T, CaseSimple<V, T>>
 implements
     CaseWhenStep<V, T>,
+    ComplexQueryPart,
     QOM.CaseSimple<V, T>
 {
 

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.getMappedSchema;
+import static org.jooq.impl.Tools.isComplex;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -62,6 +63,8 @@ abstract class AbstractFunction<T> extends AbstractField<T> implements QOM.Funct
 
     @Override
     public final void accept(Context<?> ctx) {
+        QueryPart args = arguments();
+
         switch (ctx.family()) {
 
 
@@ -72,7 +75,11 @@ abstract class AbstractFunction<T> extends AbstractField<T> implements QOM.Funct
 
             default: {
                 acceptFunctionName(ctx, applySchemaMapping, getQualifiedName());
-                ctx.sql('(').visit(arguments()).sql(')');
+
+                if (ctx.format() && isComplex(ctx, args))
+                    ctx.sqlIndentStart('(').visit(args).sqlIndentEnd(')');
+                else
+                    ctx.sql('(').visit(args).sql(')');
 
                 break;
             }

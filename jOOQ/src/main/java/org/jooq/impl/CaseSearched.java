@@ -73,6 +73,7 @@ extends
     AbstractField<T>
 implements
     CaseConditionStep<T>,
+    ComplexQueryPart,
     QOM.CaseSearched<T>
 {
 

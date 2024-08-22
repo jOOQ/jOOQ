@@ -107,7 +107,14 @@ import org.jooq.conf.NestedCollectionEmulation;
  *
  * @author Lukas Eder
  */
-final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, JSONEntryValueStep {
+final class JSONEntryImpl<T>
+extends
+    AbstractQueryPart
+implements
+    JSONEntry<T>,
+    JSONEntryValueStep,
+    ComplexCheckQueryPart
+{
 
     static final Set<SQLDialect> SUPPORT_JSON_MERGE_PRESERVE = SQLDialect.supportedBy(MARIADB, MYSQL);
 
@@ -121,6 +128,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
     JSONEntryImpl(Field<String> key, Field<T> value) {
         this.key = key;
         this.value = value;
+    }
+
+    @Override
+    public final boolean isComplex(Context<?> ctx) {
+        return Tools.isComplex(ctx, value);
     }
 
     @Override

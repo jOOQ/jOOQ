@@ -4097,6 +4097,11 @@ final class Tools {
         return part instanceof AbstractWindowFunction && ((AbstractWindowFunction<?>) part).isWindow();
     }
 
+    static final boolean isComplex(Context<?> ctx, QueryPart part) {
+        return part instanceof ComplexQueryPart
+            || part instanceof ComplexCheckQueryPart && ((ComplexCheckQueryPart) part).isComplex(ctx);
+    }
+
     static final boolean isSimple(Context<?> ctx, QueryPart part) {
         return part instanceof SimpleQueryPart
             || part instanceof SimpleCheckQueryPart && ((SimpleCheckQueryPart) part).isSimple(ctx);

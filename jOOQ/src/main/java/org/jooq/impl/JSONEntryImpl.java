@@ -50,6 +50,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.inlined;
+import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.toChar;
 import static org.jooq.impl.DSL.when;
@@ -59,6 +60,7 @@ import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_VALUE;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON;
+import static org.jooq.impl.Names.N_JSON_ARRAY;
 import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
@@ -228,7 +230,7 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                 if (type.getSQLDataType() == BIT)
                     return field.cast(BOOLEAN);
                 else if (isType(type, Boolean.class))
-                    return inlined(field);
+                    return booleanJsonExtract((Field<Boolean>) field);
                 else if (castJSONTypes && type.isJSON())
                     if (ctx.family() == MYSQL)
                         return field.cast(field.getDataType());
@@ -347,8 +349,19 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
 
 
 
+    private static final Field<?> booleanJsonExtract(Field<Boolean> field) {
+        return Tools.isVal1(field, v -> v.isInline())
+            ? field
+            : when(field, booleanJsonExtract0(inline(true)))
+             .when(not(field), booleanJsonExtract0(inline(false)));
+    }
+
+    private static final Field<JSON> booleanJsonExtract0(Field<?> field) {
+        return function(N_JSON_EXTRACT, JSON, function(N_JSON_ARRAY, JSON, field), inline("$[0]"));
+    }
+
     @SuppressWarnings("unchecked")
-    private static Field<String> booleanCase(Field<?> field) {
+    private static final Field<String> booleanCase(Field<?> field) {
         return case_((Field<Boolean>) field).when(inline(true), inline("true")).when(inline(false), inline("false"));
     }
 

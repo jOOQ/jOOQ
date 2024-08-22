@@ -1144,8 +1144,8 @@ implements
             Condition and = null;
 
             for (Field<?> field : fields) {
-                Field<Object> f = (Field<Object>) field;
-                Condition other = matchByConflictingKey(ctx, f, (Field<Object>) map.get(f));
+                Field<Object> f = (Field<Object>) orElse(table().field(field), () -> field);
+                Condition other = matchByConflictingKey(f, (Field<Object>) map.get(f));
                 and = (and == null) ? other : and.and(other);
             }
 
@@ -1177,7 +1177,7 @@ implements
 
             for (Field<?> field : fields) {
                 Field<Object> f = (Field<Object>) orElse(table().field(field), () -> field);
-                Condition other = matchByConflictingKey(ctx, f, s.field(f));
+                Condition other = matchByConflictingKey(f, s.field(f));
                 and = (and == null) ? other : and.and(other);
             }
 
@@ -1187,8 +1187,8 @@ implements
         return or;
     }
 
-    private final <T> Condition matchByConflictingKey(Context<?> ctx, Field<T> f, Field<T> v) {
-        return f.eq(v);
+    private final <T> Condition matchByConflictingKey(Field<T> field, Field<T> v) {
+        return field.eq(v);
     }
 
     @Override

@@ -113,12 +113,9 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
             String inOut = record.get(PARAMETERS.PARAMETER_MODE);
             String dataType = record.get(PARAMETERS.DATA_TYPE);
 
-            // [#519] Some types have unsigned versions
-            if (getDatabase().supportsUnsignedTypes()) {
-                if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
-                    if (record.get(PARAMETERS.DTD_IDENTIFIER).toLowerCase().contains("unsigned")) {
-                        dataType += "unsigned";
-                    }
+            if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
+                if (record.get(PARAMETERS.DTD_IDENTIFIER).toLowerCase().contains("unsigned")) {
+                    dataType += "unsigned";
                 }
             }
 

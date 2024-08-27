@@ -114,9 +114,6 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 
             String dataType = record.get(COLUMNS.DATA_TYPE);
 
-            // [#519] Some types have unsigned versions
-            boolean unsigned = getDatabase().supportsUnsignedTypes();
-
             // [#7719]
             boolean displayWidths = getDatabase().integerDisplayWidths();
 
@@ -132,7 +129,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
             boolean generated = generationOption != null;
 
             columnTypeFix:
-            if (unsigned || displayWidths) {
+            if (displayWidths) {
                 if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
                     String columnType = record.get(COLUMNS.COLUMN_TYPE).toLowerCase();
 
@@ -149,7 +146,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                         String mUnsigned = matcher.group(3);
 
                         dataType = mType
-                                 + (unsigned && mUnsigned != null ? mUnsigned : "")
+                                 + (mUnsigned != null ? mUnsigned : "")
                                  + (displayWidths && mPrecision != null ? mPrecision : "");
                     }
                 }

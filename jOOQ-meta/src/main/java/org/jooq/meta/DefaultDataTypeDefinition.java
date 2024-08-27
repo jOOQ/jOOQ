@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.jooq.Name;
 import org.jooq.SQLDialect;
@@ -66,6 +67,8 @@ import org.jooq.types.UShort;
  * @author Lukas Eder
  */
 public class DefaultDataTypeDefinition implements DataTypeDefinition {
+
+    private static final Pattern   P_UNSIGNED = Pattern.compile("(?i:\\s*unsigned)");
 
     private final Database         database;
     private final SchemaDefinition schema;
@@ -165,6 +168,10 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String generator, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
+
+        // [#519] [#17135] Some types have unsigned versions
+        if (!database.supportsUnsignedTypes() && typeName.toLowerCase().endsWith("unsigned"))
+            typeName = P_UNSIGNED.matcher(typeName).replaceFirst("");
 
         // [#3420] Some databases report NULL as a data type, e.g. Oracle for (some) AQ tables
         this.type = typeName == null ? "OTHER" : typeName;

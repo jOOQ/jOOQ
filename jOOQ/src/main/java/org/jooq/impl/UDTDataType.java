@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import org.jooq.ConverterContext;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;

@@ -37,6 +37,11 @@
  */
 package org.jooq;
 
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * UDT definition.
  * <p>
@@ -63,4 +68,23 @@ public interface UDT<R extends UDTRecord<R>> extends RecordQualifier<R> {
      * </ul>
      */
     boolean isSynthetic();
+
+    /**
+     * Get the supertype of this {@link UDT}, or <code>null</code> if this type
+     * has no supertype.
+     */
+    @Nullable
+    UDT<?> getSupertype();
+
+    /**
+     * Get the subtypes of this {@link UDT} or an empty list, if there are no
+     * known subtypes.
+     */
+    @NotNull
+    List<UDT<?>> getSubtypes();
+
+    /**
+     * Check if this type is a supertype or the same type as another {@link UDT} type.
+     */
+    boolean isAssignableFrom(UDT<?> other);
 }

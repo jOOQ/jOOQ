@@ -617,6 +617,12 @@ public interface GeneratorStrategy {
         RECORD,
 
         /**
+         * The record type mode. This is used when a {@link UDTDefinition}'s
+         * record type interface is being rendered.
+         */
+        RECORD_TYPE,
+
+        /**
          * The pojo mode. This is used when a {@link TableDefinition}'s pojo
          * class is being rendered
          */

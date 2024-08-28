@@ -358,7 +358,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    static final <T, U> Binding<T, U> binding(DataType<T> dataType, Converter<T, U> converter) {
+    static final <T, U> Binding<T, U> binding(DataType<? extends T> dataType, Converter<T, U> converter) {
         Class<?> type = converter.fromType();
 
         // Concrete types
@@ -550,7 +550,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    static final <T, X, U> Binding<T, U> newBinding(final Converter<X, U> converter, final DataType<T> dataType, final Binding<T, X> binding) {
+    static final <T, X, U> Binding<T, U> newBinding(final Converter<X, U> converter, final DataType<? extends T> dataType, final Binding<T, X> binding) {
         final Binding<T, U> theBinding;
 
 
@@ -622,7 +622,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         try {
             if (QualifiedRecord.class.isAssignableFrom(type)) {
                 Class<QualifiedRecord<?>> t = (Class<QualifiedRecord<?>>) type;
-                result.put(getMappedUDTName(scope, t), t);
+
+                // [#644] Prevent infinite recursion between fields and subtypes
+                if (result.putIfAbsent(getMappedUDTName(scope, t), t) == null) {
 
 
 
@@ -635,9 +637,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-                for (Field<?> field : getRecordQualifier(t).fields())
-                    typeMap(field.getType(), scope, result);
+                    RecordQualifier<?> q = getRecordQualifier(t);
+                    for (Field<?> field : q.fields())
+                        typeMap(field.getType(), scope, result);
+
+                    // [#644] Put subtypes into the type map as well
+                    if (q instanceof UDT<?> u) {
+                        for (UDT<?> s : u.getSubtypes())
+                            typeMap(s.getRecordType(), scope, result);
+                    }
+                }
             }
+
 
 
 
@@ -1650,6 +1661,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return null;
         }
     }
+
+
+
+
+
+
+
+
 
 
 

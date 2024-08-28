@@ -603,26 +603,17 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
                     sb.append(subPackage);
                 }
 
-                // Record are yet in another subpackage
-                if (mode == Mode.RECORD) {
+                // Other subpackages
+                if (mode == Mode.RECORD)
                     sb.append(".records");
-                }
-
-                // POJOs too
-                else if (mode == Mode.POJO) {
+                else if (mode == Mode.RECORD_TYPE)
+                    sb.append(".recordtypes");
+                else if (mode == Mode.POJO)
                     sb.append(".pojos");
-                }
-
-                // DAOs too
-                else if (mode == Mode.DAO) {
+                else if (mode == Mode.DAO)
                     sb.append(".daos");
-                }
-
-                // Interfaces too
-                else if (mode == Mode.INTERFACE) {
+                else if (mode == Mode.INTERFACE)
                     sb.append(".interfaces");
-                }
-
 
 
 
@@ -679,6 +670,8 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             result.append("Dao");
         else if (mode == Mode.INTERFACE)
             result.insert(0, "I");
+        else if (mode == Mode.RECORD_TYPE)
+            result.append("RecordType");
         else if (mode == Mode.PATH)
             result.append("Path");
 

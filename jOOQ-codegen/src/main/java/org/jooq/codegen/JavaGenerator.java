@@ -154,6 +154,7 @@ import org.jooq.TableOptions;
 // ...
 import org.jooq.UDT;
 import org.jooq.UDTField;
+import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.codegen.GenerationUtil.BaseType;
@@ -779,6 +780,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (generateUDTs()) {
                 generateUDTRecords(schema);
+                generateUDTRecordTypes(schema);
 
                 if (generatePojos())
                     generateUDTPojos(schema);
@@ -1712,6 +1714,15 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateInterfaces())
             interfaces.add(out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE)));
 
+        if (tableUdtOrEmbeddable instanceof UDTDefinition u) {
+            if (u.getSupertype() != null || !u.getSubtypes().isEmpty()) {
+                interfaces.add(out.ref(getStrategy().getFullJavaClassName(u, Mode.RECORD_TYPE))
+                    + "<"
+                    + className
+                    + ">");
+            }
+        }
+
         if (scala) {
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
                 out.println("%sclass %s extends %s[%s](%s.%s.getDataType.getRow)[[before= with ][separator= with ][%s]] {",
@@ -2169,6 +2180,104 @@ public class JavaGenerator extends AbstractGenerator {
         out.println("}");
     }
 
+    protected void generateUDTRecordType(UDTDefinition udt) {
+        JavaWriter out = newJavaWriter(udt, Mode.RECORD_TYPE);
+        log.info("Generating record type", out.file().getName());
+        generateRecordType0(udt, out);
+        closeJavaWriter(out);
+    }
+
+    private final void generateRecordType0(UDTDefinition udt, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(udt, Mode.RECORD_TYPE);
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, Mode.RECORD_TYPE));
+
+        interfaces.add(out.ref(UDTRecord.class) + "<R>");
+
+        if (udt.getSupertype() != null)
+            interfaces.add(out.ref(getStrategy().getFullJavaClassName(udt.getSupertype(), Mode.RECORD_TYPE)) + "<R>");
+
+        printPackage(out, udt, Mode.RECORD_TYPE);
+        generateUDTRecordTypeClassJavadoc(udt, out);
+
+        printClassAnnotations(out, udt, Mode.RECORD_TYPE);
+
+        if (scala)
+            out.println("%strait %s[R <: %s[R] ] extends [[%s]] {", visibility(), className, UDTRecord.class, interfaces);
+        else if (kotlin)
+            out.println("%sinterface %s<R : %s<R>> : [[%s]] {", visibility(), className, UDTRecord.class, interfaces);
+        else
+            out.println("%sinterface %s<R extends %s<R>> extends [[%s]] {", visibility(), className, UDTRecord.class, interfaces);
+
+        List<? extends TypedElementDefinition<?>> typedElements = getTypedElements(udt);
+        for (int i = 0; i < typedElements.size(); i++) {
+            TypedElementDefinition<?> column = typedElements.get(i);
+
+            if (!generateImmutableInterfaces())
+                generateUDTRecordTypeSetter(column, i, out);
+
+            generateUDTRecordTypeGetter(column, i, out);
+        }
+
+        generateUDTRecordTypeClassFooter(udt, out);
+        out.println("}");
+    }
+
+    /**
+     * Subclasses may override this method to provide their own record type setters.
+     */
+    protected void generateUDTRecordTypeSetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
+        generateUDTRecordTypeSetter0(column, index, out);
+    }
+
+    private final void generateUDTRecordTypeSetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.RECORD_TYPE);
+        final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
+        final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD_TYPE);
+        final String typeFull = getJavaType(column.getType(resolver(out, Mode.RECORD_TYPE)), out, Mode.RECORD_TYPE);
+        final String type = out.ref(typeFull);
+        final String name = column.getQualifiedOutputName();
+
+        if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
+            out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
+
+        if (scala)
+            out.println("%sdef %s(value: %s): %s", visibilityPublic(), setter, type, setterReturnType);
+        // The property is already defined in the getter
+        else if (kotlin) {}
+        else
+            out.println("%s%s %s([[before=@][after= ][%s]]%s value);", visibilityPublic(), setterReturnType, setter, list(nullableOrNonnullAnnotation(out, column)), varargsIfArray(type));
+    }
+
+    /**
+     * Subclasses may override this method to provide their own record type getters.
+     */
+    protected void generateUDTRecordTypeGetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
+        generateUDTRecordTypeGetter0(column, index, out);
+    }
+
+    private final void generateUDTRecordTypeGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
+        final String member = getStrategy().getJavaMemberName(column, Mode.RECORD_TYPE);
+        final String getter = getStrategy().getJavaGetterName(column, Mode.RECORD_TYPE);
+        final String typeFull = getJavaType(column.getType(resolver(out, Mode.RECORD_TYPE)), out, Mode.RECORD_TYPE);
+        final String type = out.ref(typeFull);
+        final String name = column.getQualifiedOutputName();
+
+        if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
+            out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
+
+        printValidationAnnotation(out, column);
+        printNullableOrNonnullAnnotation(out, column);
+        if (kotlin && !generateImmutableInterfaces())
+            printKotlinSetterAnnotation(out, column, Mode.RECORD_TYPE);
+
+        if (scala)
+            out.println("%sdef %s: %s", visibilityPublic(), scalaWhitespaceSuffix(getter), type);
+        else if (kotlin)
+            out.println("%s%s %s: %s%s", visibilityPublic(), (generateImmutableInterfaces() ? "val" : "var"), member, type, kotlinNullability(out, column, Mode.RECORD_TYPE));
+        else
+            out.println("%s%s %s();", visibilityPublic(), type, getter);
+    }
+
     @FunctionalInterface
     private interface EmbeddableFilter {
         void accept(List<Definition> result, Set<EmbeddableDefinition> duplicates, int index, EmbeddableDefinition embeddable);
@@ -2584,13 +2693,13 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String getJavaType(Definition column, JavaWriter out) {
-        return getJavaType(column, out, Mode.RECORD);
+        return getJavaType(column, out, Mode.DEFAULT);
     }
 
     private String getJavaType(Definition column, JavaWriter out, Mode mode) {
         return column instanceof EmbeddableDefinition
-            ? getStrategy().getFullJavaClassName(column, mode)
-            : getJavaType(((TypedElementDefinition<?>) column).getType(resolver(out)), out);
+            ? getStrategy().getFullJavaClassName(column, mode == Mode.DEFAULT ? Mode.RECORD : mode)
+            : getJavaType(((TypedElementDefinition<?>) column).getType(resolver(out)), out, mode);
     }
 
     private String getJavaTypeRef(Definition column, JavaWriter out) {
@@ -2677,7 +2786,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#3117] Avoid covariant setters for UDTs when generating interfaces
         if (generateInterfaces() && !generateImmutableInterfaces() && (isUDT || isArray)) {
-            final String columnTypeFull = getJavaType(column.getType(resolver(out, Mode.RECORD)), out, Mode.RECORD);
+            final String columnTypeFull = getJavaType(column.getType(resolver(out, Mode.DEFAULT)), out, Mode.DEFAULT);
             final String columnType = out.ref(columnTypeFull);
             final String columnTypeInterface = out.ref(getJavaType(column.getType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));
 
@@ -3456,6 +3565,40 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
+        if (udt.getSupertype() != null) {
+            final String superUdtId = out.ref(getStrategy().getFullJavaIdentifier(udt.getSupertype()), 2);
+
+            // [#644] TODO
+            if (scala) {
+            }
+            // [#644] TODO
+            else if (kotlin) {
+            }
+            else {
+                out.overrideInherit();
+                out.println("%s%s<?> getSupertype() {", visibilityPublic(), UDT.class);
+                out.println("return %s;", superUdtId);
+                out.println("}");
+            }
+        }
+
+        if (!udt.getSubtypes().isEmpty()) {
+            final List<String> subUdtIds = out.ref(getStrategy().getFullJavaIdentifiers(udt.getSubtypes()), 2);
+
+            // [#644] TODO
+            if (scala) {
+            }
+            // [#644] TODO
+            else if (kotlin) {
+            }
+            else {
+                out.overrideInherit();
+                out.println("%s%s<%s<?>> getSubtypes() {", visibilityPublic(), List.class, UDT.class);
+                out.println("return %s.asList([[%s]]);", Arrays.class, subUdtIds);
+                out.println("}");
+            }
+        }
+
         generateUDTClassFooter(udt, out);
         out.println("}");
         closeJavaWriter(out);
@@ -3702,6 +3845,41 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateUDTRecordClassJavadoc(UDTDefinition udt, JavaWriter out) {
+        if (generateCommentsOnUDTs())
+            printClassJavadoc(out, udt);
+        else
+            printClassJavadoc(out, udt, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
+    }
+
+    /**
+     * Generating UDT record types
+     */
+    protected void generateUDTRecordTypes(SchemaDefinition schema) {
+        log.info("Generating UDT record types");
+
+        for (UDTDefinition udt : database.getUDTs(schema)) {
+            try {
+                if (udt.getSupertype() != null || !udt.getSubtypes().isEmpty())
+                    generateUDTRecordType(udt);
+            }
+            catch (Exception e) {
+                log.error("Error while generating UDT record types " + udt, e);
+            }
+        }
+
+        watch.splitInfo("UDT record types generated");
+    }
+
+    /**
+     * Subclasses may override this method to provide udt record class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateUDTRecordTypeClassFooter(UDTDefinition udt, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateUDTRecordTypeClassJavadoc(UDTDefinition udt, JavaWriter out) {
         if (generateCommentsOnUDTs())
             printClassJavadoc(out, udt);
         else
@@ -10702,7 +10880,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected String getJavaType(DataTypeDefinition type, JavaWriter out) {
-        return getJavaType(type, out, Mode.RECORD);
+        return getJavaType(type, out, Mode.DEFAULT);
     }
 
     protected String getJavaType(DataTypeDefinition type, JavaWriter out, Mode udtMode) {
@@ -10731,7 +10909,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType) {
-        return getType(db, schema, out, t, p, s, u, javaType, defaultType, Mode.RECORD);
+        return getType(db, schema, out, t, p, s, u, javaType, defaultType, Mode.DEFAULT);
     }
 
     protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType, Mode udtMode) {
@@ -10739,7 +10917,9 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected String getType(Database db, SchemaDefinition schema, JavaWriter out, String t, int p, int s, Name u, String javaType, String defaultType, Mode udtMode, XMLTypeDefinition xmlType) {
+        UDTDefinition udt;
         String type = defaultType;
+        Mode udtDefaultMode = udtMode == Mode.DEFAULT ? Mode.RECORD : udtMode;
 
         // XML types
         if (xmlType != null) {
@@ -10762,7 +10942,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // [#10309] TODO: The schema should be taken from baseType, if available. Might be different than the argument schema.
             //          When can this happen?
-            String baseType = getType(db, schema, out, newT, p, s, bt.u(), javaType, defaultType, udtMode);
+            String baseType = getType(db, schema, out, newT, p, s, bt.u(), javaType, defaultType, udtDefaultMode);
 
             if (scala)
                 type = "scala.Array[" + baseType + "]";
@@ -10804,14 +10984,17 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // Check for UDTs
-        else if (db.getUDT(schema, u) != null) {
-            type = getStrategy().getFullJavaClassName(db.getUDT(schema, u), udtMode);
+        else if ((udt = db.getUDT(schema, u)) != null) {
+            if (udt.getSubtypes().isEmpty() || udtMode == Mode.RECORD || udtMode == Mode.POJO || udtMode == Mode.INTERFACE)
+                type = getStrategy().getFullJavaClassName(udt, udtDefaultMode);
+            else
+                type = getStrategy().getFullJavaClassName(udt, Mode.RECORD_TYPE) + "<?>";
         }
 
         // [#3942] [#7863] Dialects that support tables as UDTs
         // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
         else if (SUPPORT_TABLE_AS_UDT.contains(db.getDialect()) && db.getTable(schema, u) != null) {
-            type = getStrategy().getFullJavaClassName(db.getTable(schema, u), udtMode);
+            type = getStrategy().getFullJavaClassName(db.getTable(schema, u), udtDefaultMode);
         }
 
         // Check for custom types

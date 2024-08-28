@@ -76,4 +76,14 @@ public interface UDTDefinition extends PackageDefinition {
      */
     @Override
     boolean isSynthetic();
+
+    /**
+     * The subtypes of this UDT, if any.
+     */
+    List<UDTDefinition> getSubtypes();
+
+    /**
+     * The supertype of this UDT, if any.
+     */
+    UDTDefinition getSupertype();
 }

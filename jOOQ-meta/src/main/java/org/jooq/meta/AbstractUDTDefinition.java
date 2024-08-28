@@ -53,6 +53,8 @@ implements
 
     private List<RoutineDefinition> routines;
     private final boolean           synthetic;
+    private SchemaDefinition        supertypeSchema;
+    private String                  supertypeName;
 
     public AbstractUDTDefinition(SchemaDefinition schema, String name, String comment) {
         this(schema, null, name, false, comment);
@@ -63,9 +65,15 @@ implements
     }
 
     public AbstractUDTDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, boolean synthetic, String comment) {
+        this(schema, pkg, name, synthetic, comment, null, null);
+    }
+
+    public AbstractUDTDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, boolean synthetic, String comment, SchemaDefinition supertypeSchema, String supertypeName) {
         super(schema, pkg, name, comment);
 
         this.synthetic = synthetic;
+        this.supertypeSchema = supertypeSchema;
+        this.supertypeName = supertypeName;
     }
 
     @Override
@@ -106,5 +114,15 @@ implements
     @Override
     public boolean isSynthetic() {
         return synthetic;
+    }
+
+    @Override
+    public UDTDefinition getSupertype() {
+        return supertypeSchema == null ? null : getDatabase().getUDT(supertypeSchema, supertypeName);
+    }
+
+    @Override
+    public List<UDTDefinition> getSubtypes() {
+        return getDatabase().getSubtypes(this);
     }
 }

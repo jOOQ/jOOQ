@@ -412,6 +412,11 @@ public interface Database extends AutoCloseable {
     List<UDTDefinition> getUDTs(PackageDefinition pkg);
 
     /**
+     * Get the subtypes of a UDT, if any.
+     */
+    List<UDTDefinition> getSubtypes(UDTDefinition udt);
+
+    /**
      * The Arrays defined in this database.
      */
     List<ArrayDefinition> getArrays(SchemaDefinition schema);

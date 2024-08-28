@@ -643,7 +643,7 @@ public final class Internal {
      * Factory method for parameters.
      */
     @NotNull
-    public static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed) {
+    public static final <T> Parameter<T> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed) {
         return createParameter(name, type, isDefaulted, isUnnamed, null, null);
     }
 
@@ -651,7 +651,7 @@ public final class Internal {
      * Factory method for parameters.
      */
     @NotNull
-    public static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<T, U> converter) {
+    public static final <T, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed, Converter<T, U> converter) {
         return createParameter(name, type, isDefaulted, isUnnamed, converter, null);
     }
 
@@ -659,7 +659,7 @@ public final class Internal {
      * Factory method for parameters.
      */
     @NotNull
-    public static final <T, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Binding<T, U> binding) {
+    public static final <T, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed, Binding<T, U> binding) {
         return createParameter(name, type, isDefaulted, isUnnamed, null, binding);
     }
 
@@ -668,7 +668,7 @@ public final class Internal {
      */
     @NotNull
     @SuppressWarnings("unchecked")
-    public static final <T, X, U> Parameter<U> createParameter(String name, DataType<T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
+    public static final <T, X, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
         final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
         final DataType<U> actualType = converter == null && binding == null
             ? (DataType<U>) type

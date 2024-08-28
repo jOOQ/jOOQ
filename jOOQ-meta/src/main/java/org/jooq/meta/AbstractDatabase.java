@@ -330,6 +330,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<XMLSchemaCollectionDefinition>> xmlSchemaCollectionsBySchema;
     private transient Map<SchemaDefinition, List<UDTDefinition>>                 udtsBySchema;
     private transient Map<PackageDefinition, List<UDTDefinition>>                udtsByPackage;
+    private transient Map<UDTDefinition, List<UDTDefinition>>                    subtypesByUdt;
     private transient Map<SchemaDefinition, List<ArrayDefinition>>               arraysBySchema;
     private transient Map<SchemaDefinition, List<RoutineDefinition>>             routinesBySchema;
     private transient Map<SchemaDefinition, List<PackageDefinition>>             packagesBySchema;
@@ -3102,6 +3103,14 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public List<UDTDefinition> getSubtypes(UDTDefinition udt) {
+        if (subtypesByUdt == null)
+            subtypesByUdt = new LinkedHashMap<>();
+
+        return filterSupertype(getUDTs(), udt, subtypesByUdt);
+    }
+
+    @Override
     public final Relations getRelations() {
         if (relations == null) {
             relations = new DefaultRelations();
@@ -3299,6 +3308,23 @@ public abstract class AbstractDatabase implements Database {
 
         for (T definition : definitions)
             if (definition.getPackage() != null && definition.getPackage().equals(pkg))
+                result.add(definition);
+
+        return result;
+    }
+
+    final List<UDTDefinition> filterSupertype(List<UDTDefinition> definitions, UDTDefinition supertype, Map<UDTDefinition, List<UDTDefinition>> cache) {
+        return cache.computeIfAbsent(supertype, u -> filterSupertype(definitions, u));
+    }
+
+    final List<UDTDefinition> filterSupertype(List<UDTDefinition> definitions, UDTDefinition u) {
+        if (u == null)
+            return definitions;
+
+        List<UDTDefinition> result = new ArrayList<>();
+
+        for (UDTDefinition definition : definitions)
+            if (definition.getSupertype() != null && definition.getSupertype().equals(u))
                 result.add(definition);
 
         return result;

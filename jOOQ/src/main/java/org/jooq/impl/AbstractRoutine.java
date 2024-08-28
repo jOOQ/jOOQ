@@ -273,11 +273,11 @@ implements
      * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
      */
     @Deprecated
-    protected AbstractRoutine(String name, Schema schema, DataType<T> type) {
+    protected AbstractRoutine(String name, Schema schema, DataType<? extends T> type) {
         this(name, schema, (Package) null, type, null, null);
     }
 
-    protected AbstractRoutine(String name, Schema schema, Comment comment, DataType<T> type) {
+    protected AbstractRoutine(String name, Schema schema, Comment comment, DataType<? extends T> type) {
         this(name, schema, (Package) null, comment, type, null, null);
     }
 
@@ -321,11 +321,11 @@ implements
      * @deprecated - 3.20.0 - [#15723] - Re-generate your code.
      */
     @Deprecated
-    protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<T> type) {
+    protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<? extends T> type) {
         this(name, schema, pkg, type, null, null);
     }
 
-    protected AbstractRoutine(String name, Schema schema, Package pkg, Comment comment, DataType<T> type) {
+    protected AbstractRoutine(String name, Schema schema, Package pkg, Comment comment, DataType<? extends T> type) {
         this(name, schema, pkg, comment, type, null, null);
     }
 

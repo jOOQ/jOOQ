@@ -1667,7 +1667,9 @@ public class JavaGenerator extends AbstractGenerator {
             ? out.ref(getStrategy().getFullJavaIdentifier(tableUdtOrEmbeddable), 2)
             : null;
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.RECORD));
-        final String abstract_ = tableUdtOrEmbeddable instanceof UDTDefinition && !((UDTDefinition) tableUdtOrEmbeddable).isInstantiable() ? "abstract " : "";
+        final String abstract_ = "";
+        // [#644] TODO Get this to work
+        // tableUdtOrEmbeddable instanceof UDTDefinition && !((UDTDefinition) tableUdtOrEmbeddable).isInstantiable() ? "abstract " : "";
 
         printPackage(out, tableUdtOrEmbeddable, Mode.RECORD);
 
@@ -2172,7 +2174,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (!replacingEmbeddablesAndUnreplacedColumns.equals(embeddablesOrColumns))
             generateRecordConstructor(tableUdtOrEmbeddable, out, embeddablesOrColumns, false);
 
-        if (generatePojos())
+        if (generatePojos() && !(tableUdtOrEmbeddable instanceof UDTDefinition && ((UDTDefinition) tableUdtOrEmbeddable).isInTypeHierarchy()))
             generateRecordConstructor(tableUdtOrEmbeddable, out, replacingEmbeddablesAndUnreplacedColumns, true);
 
         if (tableUdtOrEmbeddable instanceof TableDefinition)
@@ -2213,9 +2215,9 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("%sinterface %s<R extends %s<R>> extends [[%s]] {", visibility(), className, UDTRecord.class, interfaces);
 
-        List<? extends TypedElementDefinition<?>> typedElements = getTypedElements(udt);
+        List<AttributeDefinition> typedElements = udt.getAttributes();
         for (int i = 0; i < typedElements.size(); i++) {
-            TypedElementDefinition<?> column = typedElements.get(i);
+            AttributeDefinition column = typedElements.get(i);
 
             if (!generateImmutableInterfaces())
                 generateUDTRecordTypeSetter(column, i, out);
@@ -2230,42 +2232,54 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * Subclasses may override this method to provide their own record type setters.
      */
-    protected void generateUDTRecordTypeSetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
+    protected void generateUDTRecordTypeSetter(AttributeDefinition column, int index, JavaWriter out) {
         generateUDTRecordTypeSetter0(column, index, out);
     }
 
-    private final void generateUDTRecordTypeSetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
+    private final void generateUDTRecordTypeSetter0(AttributeDefinition column, @SuppressWarnings("unused") int index, JavaWriter out) {
         final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.RECORD_TYPE);
         final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
         final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD_TYPE);
         final String typeFull = getJavaType(column.getType(resolver(out, Mode.RECORD_TYPE)), out, Mode.RECORD_TYPE);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
+        final boolean override =
+               column.getContainer().getSupertype() != null
+            && column.getContainer().getSupertype().getAttributes().stream().anyMatch(c -> c.getName().equals(column.getName()))
+            || !kotlin && getStrategy().getJavaSetterOverride(column, Mode.RECORD)
+            ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.RECORD);
 
         if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
             out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
         if (scala)
-            out.println("%sdef %s(value: %s): %s", visibilityPublic(), setter, type, setterReturnType);
+            out.println("%s%sdef %s(value: %s): %s", visibility(override), override ? "override " : "", setter, type, setterReturnType);
         // The property is already defined in the getter
         else if (kotlin) {}
-        else
+        else {
+            out.overrideIf(override);
             out.println("%s%s %s([[before=@][after= ][%s]]%s value);", visibilityPublic(), setterReturnType, setter, list(nullableOrNonnullAnnotation(out, column)), varargsIfArray(type));
+        }
     }
 
     /**
      * Subclasses may override this method to provide their own record type getters.
      */
-    protected void generateUDTRecordTypeGetter(TypedElementDefinition<?> column, int index, JavaWriter out) {
+    protected void generateUDTRecordTypeGetter(AttributeDefinition column, int index, JavaWriter out) {
         generateUDTRecordTypeGetter0(column, index, out);
     }
 
-    private final void generateUDTRecordTypeGetter0(TypedElementDefinition<?> column, @SuppressWarnings("unused") int index, JavaWriter out) {
+    private final void generateUDTRecordTypeGetter0(AttributeDefinition column, @SuppressWarnings("unused") int index, JavaWriter out) {
         final String member = getStrategy().getJavaMemberName(column, Mode.RECORD_TYPE);
         final String getter = getStrategy().getJavaGetterName(column, Mode.RECORD_TYPE);
         final String typeFull = getJavaType(column.getType(resolver(out, Mode.RECORD_TYPE)), out, Mode.RECORD_TYPE);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
+        final boolean override =
+            column.getContainer().getSupertype() != null
+         && column.getContainer().getSupertype().getAttributes().stream().anyMatch(c -> c.getName().equals(column.getName()))
+         || !kotlin && getStrategy().getJavaSetterOverride(column, Mode.RECORD)
+         ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.RECORD);
 
         if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
             out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
@@ -2275,12 +2289,16 @@ public class JavaGenerator extends AbstractGenerator {
         if (kotlin && !generateImmutableInterfaces())
             printKotlinSetterAnnotation(out, column, Mode.RECORD_TYPE);
 
-        if (scala)
-            out.println("%sdef %s: %s", visibilityPublic(), scalaWhitespaceSuffix(getter), type);
-        else if (kotlin)
-            out.println("%s%s %s: %s%s", visibilityPublic(), (generateImmutableInterfaces() ? "val" : "var"), member, type, kotlinNullability(out, column, Mode.RECORD_TYPE));
-        else
+        if (scala) {
+            out.println("%s%sdef %s: %s", visibility(override), override ? "override " : "", scalaWhitespaceSuffix(getter), type);
+        }
+        else if (kotlin) {
+            out.println("%s%s%s %s: %s%s", visibilityPublic(), (override || generateInterfaces() ? "override " : ""), (generateImmutableInterfaces() ? "val" : "var"), member, type, kotlinNullability(out, column, Mode.RECORD_TYPE));
+        }
+        else {
+            out.overrideIf(override);
             out.println("%s%s %s();", visibilityPublic(), type, getter);
+        }
     }
 
     @FunctionalInterface
@@ -5664,7 +5682,9 @@ public class JavaGenerator extends AbstractGenerator {
             : "";
         final String superName = out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, Mode.POJO));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.POJO));
-        final String abstract_ = tableUdtOrEmbeddable instanceof UDTDefinition && !((UDTDefinition) tableUdtOrEmbeddable).isInstantiable() ? "abstract " : "";
+        final String abstract_ = "";
+        // [#644] TODO Get this to work
+        // tableUdtOrEmbeddable instanceof UDTDefinition && !((UDTDefinition) tableUdtOrEmbeddable).isInstantiable() ? "abstract " : "";
 
         if (generateInterfaces())
             interfaces.add(interfaceName);

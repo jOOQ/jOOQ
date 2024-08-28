@@ -119,6 +119,11 @@ implements
     }
 
     @Override
+    public boolean isInTypeHierarchy() {
+        return getSupertype() != null || !getSubtypes().isEmpty();
+    }
+
+    @Override
     public UDTDefinition getSupertype() {
         return supertypeSchema == null ? null : getDatabase().getUDT(supertypeSchema, supertypeName);
     }

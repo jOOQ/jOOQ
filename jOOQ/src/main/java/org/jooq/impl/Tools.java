@@ -219,10 +219,10 @@ import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PRE
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;

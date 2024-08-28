@@ -78,6 +78,11 @@ public interface UDTDefinition extends PackageDefinition {
     boolean isSynthetic();
 
     /**
+     * Whether this UDT has either subtypes or supertypes or both.
+     */
+    boolean isInTypeHierarchy();
+
+    /**
      * The subtypes of this UDT, if any.
      */
     List<UDTDefinition> getSubtypes();

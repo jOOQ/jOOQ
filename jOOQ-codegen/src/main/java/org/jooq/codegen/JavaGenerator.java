@@ -1667,6 +1667,7 @@ public class JavaGenerator extends AbstractGenerator {
             ? out.ref(getStrategy().getFullJavaIdentifier(tableUdtOrEmbeddable), 2)
             : null;
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.RECORD));
+        final String abstract_ = tableUdtOrEmbeddable instanceof UDTDefinition && !((UDTDefinition) tableUdtOrEmbeddable).isInstantiable() ? "abstract " : "";
 
         printPackage(out, tableUdtOrEmbeddable, Mode.RECORD);
 
@@ -1725,8 +1726,9 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (scala) {
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("%sclass %s extends %s[%s](%s.%s.getDataType.getRow)[[before= with ][separator= with ][%s]] {",
+                out.println("%s%sclass %s extends %s[%s](%s.%s.getDataType.getRow)[[before= with ][separator= with ][%s]] {",
                     visibility(),
+                    abstract_,
                     className,
                     baseClass,
                     className,
@@ -1735,8 +1737,9 @@ public class JavaGenerator extends AbstractGenerator {
                     interfaces
                 );
             else
-                out.println("%sclass %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {",
+                out.println("%s%sclass %s extends %s[%s](%s)[[before= with ][separator= with ][%s]] {",
                     visibility(),
+                    abstract_,
                     className,
                     baseClass,
                     className,
@@ -1747,8 +1750,9 @@ public class JavaGenerator extends AbstractGenerator {
         else if (kotlin) {
             String constructorVisibility = generateKotlinNotNullRecordAttributes() ? " private constructor" : "";
             if (tableUdtOrEmbeddable instanceof EmbeddableDefinition)
-                out.println("%sopen class %s%s() : %s<%s>(%s.%s.dataType.row)[[before=, ][%s]] {",
+                out.println("%s%sopen class %s%s() : %s<%s>(%s.%s.dataType.row)[[before=, ][%s]] {",
                     visibility(),
+                    abstract_,
                     className,
                     constructorVisibility,
                     baseClass,
@@ -1758,8 +1762,9 @@ public class JavaGenerator extends AbstractGenerator {
                     interfaces
                 );
             else
-                out.println("%sopen class %s%s() : %s<%s>(%s)[[before=, ][%s]] {",
+                out.println("%s%sopen class %s%s() : %s<%s>(%s)[[before=, ][%s]] {",
                     visibility(),
+                    abstract_,
                     className,
                     constructorVisibility,
                     baseClass,
@@ -1769,7 +1774,7 @@ public class JavaGenerator extends AbstractGenerator {
                 );
         }
         else
-            out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, baseClass, className, interfaces);
+            out.println("%s%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), abstract_, className, baseClass, className, interfaces);
 
         out.printSerial();
 
@@ -5659,6 +5664,7 @@ public class JavaGenerator extends AbstractGenerator {
             : "";
         final String superName = out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, Mode.POJO));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.POJO));
+        final String abstract_ = tableUdtOrEmbeddable instanceof UDTDefinition && !((UDTDefinition) tableUdtOrEmbeddable).isInstantiable() ? "abstract " : "";
 
         if (generateInterfaces())
             interfaces.add(interfaceName);
@@ -5679,7 +5685,7 @@ public class JavaGenerator extends AbstractGenerator {
             printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
 
         if (scala) {
-            out.println("%s%sclass %s(", visibility(), (generatePojosAsScalaCaseClasses() ? "case " : ""), className);
+            out.println("%s%s%sclass %s(", visibility(), abstract_, (generatePojosAsScalaCaseClasses() ? "case " : ""), className);
 
             forEach(getTypedElements(tableUdtOrEmbeddable), (column, separator) -> {
                 out.println("%s%s %s: %s%s",
@@ -5694,7 +5700,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")[[before= extends ][%s]][[before= with ][separator= with ][%s]] {", first(superTypes), remaining(superTypes));
         }
         else if (kotlin) {
-            out.println("%s%sclass %s(", visibility(), (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
+            out.println("%s%s%sclass %s(", visibility(), abstract_, (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
 
             forEach(getTypedElements(tableUdtOrEmbeddable), (column, separator) -> {
                 final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
@@ -5741,7 +5747,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println(")[[before= implements ][%s]] {", interfaces);
             }
             else {
-                out.println("%sclass %s[[before= extends ][%s]][[before= implements ][%s]] {", visibility(), className, list(superName), interfaces);
+                out.println("%s%sclass %s[[before= extends ][%s]][[before= implements ][%s]] {", visibility(), abstract_, className, list(superName), interfaces);
             }
 
             if (generateSerializablePojos() || generateSerializableInterfaces())

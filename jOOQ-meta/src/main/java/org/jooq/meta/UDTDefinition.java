@@ -86,4 +86,9 @@ public interface UDTDefinition extends PackageDefinition {
      * The supertype of this UDT, if any.
      */
     UDTDefinition getSupertype();
+
+    /**
+     * Whether the UDT is instantiable.
+     */
+    boolean isInstantiable();
 }

@@ -879,6 +879,7 @@
 
         <module>jOOQ-kotlin</module>
         <module>jOOQ-kotlin-coroutines</module>
+        <module>jOOQ-scala_3.5</module>
 
 
 

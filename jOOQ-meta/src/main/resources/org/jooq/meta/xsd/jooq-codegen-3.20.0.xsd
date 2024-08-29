@@ -2659,7 +2659,7 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
       </element>
       
       <element name="pojosAsScalaCaseClasses" type="boolean" default="true" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs as case classes, when using the ScalaGenerator.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs as case classes, when using the ScalaGenerator or Scala3Generator.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="pojosAsKotlinDataClasses" type="boolean" default="true" minOccurs="0" maxOccurs="1">

@@ -1286,7 +1286,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate POJOs as case classes, when using the ScalaGenerator.
+     * Generate POJOs as case classes, when using the ScalaGenerator or Scala3Generator.
      * 
      * @return
      *     possible object is
@@ -1298,7 +1298,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate POJOs as case classes, when using the ScalaGenerator.
+     * Generate POJOs as case classes, when using the ScalaGenerator or Scala3Generator.
      * 
      * @param value
      *     allowed object is
@@ -3573,7 +3573,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate POJOs as case classes, when using the ScalaGenerator.
+     * Generate POJOs as case classes, when using the ScalaGenerator or Scala3Generator.
      * 
      */
     public Generate withPojosAsScalaCaseClasses(Boolean value) {

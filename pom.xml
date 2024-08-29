@@ -261,6 +261,11 @@
 
             <dependency>
                 <groupId>org.jooq</groupId>
+                <artifactId>jooq-scala_3.5</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
                 <artifactId>jooq-scala_2.13</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -393,7 +398,7 @@
             <dependency>
                 <groupId>org.scalatest</groupId>
                 <artifactId>scalatest_3</artifactId>
-                <version>3.2.14</version>
+                <version>3.2.19</version>
                 <scope>test</scope>
             </dependency>
 

@@ -76,15 +76,17 @@ public class EmbeddableRecordImpl<R extends EmbeddableRecord<R>> extends Abstrac
         super((AbstractRow<?>) fields);
     }
 
+    // [#12180] scalac 3 requires overriding this method to work around an interoperability regression
     @SuppressWarnings("unchecked")
     @Override
-    public final <T> R with(Field<T> field, T value) {
+    public /* non-final */ <T> R with(Field<T> field, T value) {
         return (R) super.with(field, value);
     }
 
+    // [#12180] scalac 3 requires overriding this method to work around an interoperability regression
     @SuppressWarnings("unchecked")
     @Override
-    public final <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+    public /* non-final */ <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
         return (R) super.with(field, value, converter);
     }
 

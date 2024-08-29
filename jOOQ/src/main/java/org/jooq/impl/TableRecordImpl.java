@@ -79,6 +79,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -480,5 +481,17 @@ implements
     private static final boolean isType(Field<?> f, Predicate<? super DataType<?>> predicate) {
         DataType<?> t = f.getDataType();
         return predicate.test(t) || t.isEmbeddable() && anyMatch(t.getRow().fields(), x -> predicate.test(x.getDataType()));
+    }
+
+    // [#12180] scalac 3 requires overriding this method to work around an interoperability regression
+    @Override
+    public /* non-final */ <T> R with(Field<T> field, T value) {
+        return super.with(field, value);
+    }
+
+    // [#12180] scalac 3 requires overriding this method to work around an interoperability regression
+    @Override
+    public /* non-final */ <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        return super.with(field, value, converter);
     }
 }

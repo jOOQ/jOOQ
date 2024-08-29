@@ -39,12 +39,10 @@ package org.jooq.codegen;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
-import static org.jooq.codegen.Language.JAVA;
-import static org.jooq.codegen.Language.KOTLIN;
-import static org.jooq.codegen.Language.SCALA;
 import static org.jooq.codegen.GenerationUtil.ExpressionType.CONSTRUCTOR_REFERENCE;
 import static org.jooq.codegen.GenerationUtil.ExpressionType.EXPRESSION;
-import static org.jooq.impl.DSL.name;
+import static org.jooq.codegen.Language.JAVA;
+import static org.jooq.codegen.Language.KOTLIN;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -53,12 +51,8 @@ import java.util.regex.Pattern;
 
 import org.jooq.Name;
 import org.jooq.SQLDialect;
-import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.meta.DataTypeDefinition;
-import org.jooq.meta.Database;
 import org.jooq.meta.DefaultDataTypeDefinition;
-import org.jooq.meta.SchemaDefinition;
-import org.jooq.util.h2.H2DataType;
 
 /**
  * @author Lukas Eder
@@ -112,6 +106,9 @@ class GenerationUtil {
         "protected",
         "public",
         "return",
+        // [#12180] Sealed isn't a keyword in most Java contexts, but the scalac 3 compiler doesn't
+        //          seem to implement this correctly
+        "sealed",
         "short",
         "static",
         "strictfp",
@@ -423,7 +420,7 @@ class GenerationUtil {
     private static String convertToIdentifier0(String literal, Language language) {
         if (language == JAVA && JAVA_KEYWORDS.contains(literal))
             return literal + "_";
-        if (language == SCALA && SCALA_KEYWORDS.contains(literal))
+        if (language.isScala() && SCALA_KEYWORDS.contains(literal))
             return "`" + literal + "`";
         if (language == KOTLIN && KOTLIN_KEYWORDS.contains(literal))
             return "`" + literal + "`";
@@ -431,7 +428,7 @@ class GenerationUtil {
         StringBuilder sb = new StringBuilder();
 
         if ("".equals(literal))
-            if (language == SCALA)
+            if (language.isScala())
                 return "`_`";
             else if (language == KOTLIN)
                 return "`_`";
@@ -442,13 +439,13 @@ class GenerationUtil {
             char c = literal.charAt(i);
 
             // [#5424] Scala setters, by convention, end in "property_=", where "=" is an operator and "_" precedes it
-            if (language == SCALA && i == literal.length() - 1 && literal.length() >= 2 && literal.charAt(i - 1) == '_' && isScalaOperator(c))
+            if (language.isScala() && i == literal.length() - 1 && literal.length() >= 2 && literal.charAt(i - 1) == '_' && isScalaOperator(c))
                 sb.append(c);
-            else if (language == SCALA && !isScalaIdentifierPart(c))
+            else if (language.isScala() && !isScalaIdentifierPart(c))
                 sb.append(escape(c));
             else if (language == JAVA && !Character.isJavaIdentifierPart(c))
                 sb.append(escape(c));
-            else if (language == SCALA && i == 0 && !isScalaIdentifierStart(c))
+            else if (language.isScala() && i == 0 && !isScalaIdentifierStart(c))
                 sb.append("_").append(c);
             else if (language == JAVA && i == 0 && !Character.isJavaIdentifierStart(c))
                 sb.append("_").append(c);

@@ -53,8 +53,6 @@ import org.jooq.Field;
 import org.jooq.QualifiedRecord;
 import org.jooq.RecordQualifier;
 import org.jooq.Row;
-import org.jooq.SQLDialect;
-import org.jooq.Scope;
 
 /**
  * @author Lukas Eder
@@ -78,15 +76,17 @@ abstract class AbstractQualifiedRecord<R extends QualifiedRecord<R>> extends Abs
         return qualifier;
     }
 
+    // [#12180] scalac 3 requires overriding this method to work around an interoperability regression
     @SuppressWarnings("unchecked")
     @Override
-    public final <T> R with(Field<T> field, T value) {
+    public /* non-final */ <T> R with(Field<T> field, T value) {
         return (R) super.with(field, value);
     }
 
+    // [#12180] scalac 3 requires overriding this method to work around an interoperability regression
     @SuppressWarnings("unchecked")
     @Override
-    public final <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+    public /* non-final */ <T, U> R with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
         return (R) super.with(field, value, converter);
     }
 

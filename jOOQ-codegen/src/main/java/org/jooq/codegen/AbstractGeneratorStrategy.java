@@ -129,6 +129,7 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         switch (language) {
             case KOTLIN:
             case SCALA:
+            case SCALA_3:
                 if (pkg.contains("`"))
                     pkg = pkg.replaceAll("`([^`]+)`", "$1");
 

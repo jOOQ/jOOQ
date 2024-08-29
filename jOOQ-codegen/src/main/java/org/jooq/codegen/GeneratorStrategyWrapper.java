@@ -265,7 +265,7 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
 
             // [#5457] In Scala, we must not "override" any inherited members, even if they're private
             //         or package private, and thus not visible
-            if (getTargetLanguage() == Language.SCALA)
+            if (getTargetLanguage().isScala())
                 for (Field f : clazz.getDeclaredFields())
                     result.add(f.getName());
         }

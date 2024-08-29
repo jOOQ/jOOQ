@@ -37,45 +37,20 @@
  */
 package org.jooq.codegen;
 
+import static org.jooq.codegen.Language.SCALA_3;
+
+import org.jooq.tools.JooqLogger;
+
 /**
- * The language used by a {@link Generator}.
+ * @author Lukas Eder
  */
-public enum Language {
+public class Scala3Generator extends JavaGenerator {
 
-    /**
-     * The Java language
-     */
-    JAVA,
+    private static final JooqLogger log = JooqLogger.getLogger(Scala3Generator.class);
 
-    /**
-     * The Scala 2 language
-     */
-    SCALA,
+    public Scala3Generator() {
+        super(SCALA_3);
 
-    /**
-     * The Scala 3 language
-     */
-    SCALA_3,
-
-    /**
-     * The Kotlin language
-     */
-    KOTLIN,
-
-    /**
-     * XML
-     */
-    XML;
-
-    public boolean isJava() {
-        return this == JAVA;
-    }
-
-    public boolean isScala() {
-        return this == SCALA || this == SCALA_3;
-    }
-
-    public boolean isKotlin() {
-        return this == KOTLIN;
+        log.warn("Scala 3 support is experimental in jOOQ. Please report any findings here, if any: https://github.com/jOOQ/jOOQ/issues/12180");
     }
 }

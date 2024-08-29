@@ -11080,7 +11080,7 @@ public class JavaGenerator extends AbstractGenerator {
     private String varargSplice() {
         switch (language) {
             case SCALA:
-                return "_ :*";
+                return ":_*";
             case SCALA_3:
             default:
                 return "*";

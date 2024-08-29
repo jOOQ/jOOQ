@@ -2199,9 +2199,9 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, udt, Mode.RECORD_TYPE);
 
         if (scala)
-            out.println("%strait %s[R <: %s[R] ] extends [[separator= with ][%s]] {", visibility(), className, UDTRecord.class, interfaces);
+            out.println("%strait %s[R <: %s[R] ][[before= extends ][separator= with ][%s]] {", visibility(), className, interfaces);
         else if (kotlin)
-            out.println("%sinterface %s<R : %s<R>> : [[%s]] {", visibility(), className, UDTRecord.class, interfaces);
+            out.println("%sinterface %s<R : %s<R>>[[before= : ][%s]] {", visibility(), className, interfaces);
         else
             out.println("%sinterface %s[[before= extends ][%s]] {", visibility(), className, interfaces);
 

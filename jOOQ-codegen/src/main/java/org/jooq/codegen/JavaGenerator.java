@@ -2239,7 +2239,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(column.getContainer(), Mode.RECORD_TYPE);
         final String setterReturnType = generateFluentSetters() ? className : tokenVoid;
         final String setter = getStrategy().getJavaSetterName(column, Mode.RECORD_TYPE);
-        final String typeFull = getJavaType(column.getType(resolver(out, Mode.RECORD_TYPE)), out, Mode.RECORD_TYPE);
+        final String typeFull = getJavaType(column.getType(resolver(out)), out);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
         final boolean override =
@@ -2270,7 +2270,7 @@ public class JavaGenerator extends AbstractGenerator {
     private final void generateUDTRecordTypeGetter0(AttributeDefinition column, @SuppressWarnings("unused") int index, JavaWriter out) {
         final String member = getStrategy().getJavaMemberName(column, Mode.RECORD_TYPE);
         final String getter = getStrategy().getJavaGetterName(column, Mode.RECORD_TYPE);
-        final String typeFull = getJavaType(column.getType(resolver(out, Mode.RECORD_TYPE)), out, Mode.RECORD_TYPE);
+        final String typeFull = getJavaType(column.getType(resolver(out)), out);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
         final boolean override =

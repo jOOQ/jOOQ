@@ -1,1 +1,0 @@
-jOOQ-Scala Extensions

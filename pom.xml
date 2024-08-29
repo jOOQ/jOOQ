@@ -264,11 +264,11 @@
                 <artifactId>jooq-scala_3.5</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-scala_2.13</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+
+
+
+
+
 
 
 
@@ -879,7 +879,7 @@
 
         <module>jOOQ-kotlin</module>
         <module>jOOQ-kotlin-coroutines</module>
-        <module>jOOQ-scala_2.13</module>
+
 
 
 

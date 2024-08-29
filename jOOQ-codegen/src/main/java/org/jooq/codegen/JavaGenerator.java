@@ -1705,11 +1705,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#6072] Generate these super types only if configured to do so
         if (generateRecordsImplementingRecordN() && degree > 0 && degree <= Constants.MAX_ROW_DEGREE) {
             rowType = refRowType(out, replacingEmbeddablesAndUnreplacedColumns);
-
-            if (scala)
-                rowTypeRecord = out.ref(Record.class.getName() + degree) + "[" + rowType + "]";
-            else
-                rowTypeRecord = out.ref(Record.class.getName() + degree) + "<" + rowType + ">";
+            rowTypeRecord = out.ref(Record.class.getName() + degree) + typeVariable(rowType);
 
             interfaces.add(rowTypeRecord);
         }
@@ -1718,12 +1714,8 @@ public class JavaGenerator extends AbstractGenerator {
             interfaces.add(out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE)));
 
         if (tableUdtOrEmbeddable instanceof UDTDefinition u) {
-            if (u.getSupertype() != null || !u.getSubtypes().isEmpty()) {
-                interfaces.add(out.ref(getStrategy().getFullJavaClassName(u, Mode.RECORD_TYPE))
-                    + "<"
-                    + className
-                    + ">");
-            }
+            if (u.getSupertype() != null || !u.getSubtypes().isEmpty())
+                interfaces.add(out.ref(getStrategy().getFullJavaClassName(u, Mode.RECORD_TYPE)));
         }
 
         if (scala) {
@@ -2198,10 +2190,8 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(udt, Mode.RECORD_TYPE);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, Mode.RECORD_TYPE));
 
-        interfaces.add(out.ref(UDTRecord.class) + "<R>");
-
         if (udt.getSupertype() != null)
-            interfaces.add(out.ref(getStrategy().getFullJavaClassName(udt.getSupertype(), Mode.RECORD_TYPE)) + "<R>");
+            interfaces.add(out.ref(getStrategy().getFullJavaClassName(udt.getSupertype(), Mode.RECORD_TYPE)));
 
         printPackage(out, udt, Mode.RECORD_TYPE);
         generateUDTRecordTypeClassJavadoc(udt, out);
@@ -2209,11 +2199,11 @@ public class JavaGenerator extends AbstractGenerator {
         printClassAnnotations(out, udt, Mode.RECORD_TYPE);
 
         if (scala)
-            out.println("%strait %s[R <: %s[R] ] extends [[%s]] {", visibility(), className, UDTRecord.class, interfaces);
+            out.println("%strait %s[R <: %s[R] ] extends [[separator= with ][%s]] {", visibility(), className, UDTRecord.class, interfaces);
         else if (kotlin)
             out.println("%sinterface %s<R : %s<R>> : [[%s]] {", visibility(), className, UDTRecord.class, interfaces);
         else
-            out.println("%sinterface %s<R extends %s<R>> extends [[%s]] {", visibility(), className, UDTRecord.class, interfaces);
+            out.println("%sinterface %s[[before= extends ][%s]] {", visibility(), className, interfaces);
 
         List<AttributeDefinition> typedElements = udt.getAttributes();
         for (int i = 0; i < typedElements.size(); i++) {
@@ -2244,8 +2234,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
         final boolean override =
-               column.getContainer().getSupertype() != null
-            && column.getContainer().getSupertype().getAttributes().stream().anyMatch(c -> c.getName().equals(column.getName()))
+                udtAttributeOverride(column)
             || !kotlin && getStrategy().getJavaSetterOverride(column, Mode.RECORD)
             ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.RECORD);
 
@@ -2276,8 +2265,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
         final boolean override =
-            column.getContainer().getSupertype() != null
-         && column.getContainer().getSupertype().getAttributes().stream().anyMatch(c -> c.getName().equals(column.getName()))
+            udtAttributeOverride(column)
          || !kotlin && getStrategy().getJavaSetterOverride(column, Mode.RECORD)
          ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.RECORD);
 
@@ -2299,6 +2287,17 @@ public class JavaGenerator extends AbstractGenerator {
             out.overrideIf(override);
             out.println("%s%s %s();", visibilityPublic(), type, getter);
         }
+    }
+
+    private final boolean udtAttributeOverride(TypedElementDefinition<?> column) {
+        if (column instanceof AttributeDefinition a) {
+            UDTDefinition s = a.getContainer().getSupertype();
+
+            if (s != null)
+                return s.getAttributes().stream().anyMatch(c -> c.getName().equals(column.getName()));
+        }
+
+        return false;
     }
 
     @FunctionalInterface
@@ -2764,6 +2763,7 @@ public class JavaGenerator extends AbstractGenerator {
         final boolean isArray = column.getType(resolver(out)).isArray();
         final boolean isUDTArray = column.getType(resolver(out)).isUDTArray();
         final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDT
+            || column instanceof AttributeDefinition && ((AttributeDefinition) column).getContainer().isInTypeHierarchy()
             || !kotlin && getStrategy().getJavaSetterOverride(column, Mode.RECORD)
             ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.RECORD);
 
@@ -2790,7 +2790,7 @@ public class JavaGenerator extends AbstractGenerator {
                 printValidationAnnotation(out, column);
                 printKotlinSetterAnnotation(out, column, Mode.RECORD);
 
-                out.println("%sopen %svar %s: %s%s", visibility(generateInterfaces()), (override || generateInterfaces() ? "override " : ""), member, type, kotlinNullability(out, column, Mode.RECORD));
+                out.println("%sopen %svar %s: %s%s", visibility(override || generateInterfaces()), (override || generateInterfaces() ? "override " : ""), member, type, kotlinNullability(out, column, Mode.RECORD));
                 out.tab(1).println("set(value): %s = set(%s, value)", setterReturnType, index);
             }
             else {
@@ -5334,10 +5334,7 @@ public class JavaGenerator extends AbstractGenerator {
                 generics.append(separator);
             });
 
-            if (scala)
-                tType = Record.class.getName() + keyColumns.size() + "[" + generics + "]";
-            else
-                tType = Record.class.getName() + keyColumns.size() + "<" + generics + ">";
+            tType = Record.class.getName() + keyColumns.size() + typeVariable(generics);
         }
         else {
             tType = Record.class.getName();
@@ -11014,7 +11011,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (udt.getSubtypes().isEmpty() || udtMode == Mode.RECORD || udtMode == Mode.POJO || udtMode == Mode.INTERFACE)
                 type = getStrategy().getFullJavaClassName(udt, udtDefaultMode);
             else
-                type = getStrategy().getFullJavaClassName(udt, Mode.RECORD_TYPE) + "<?>";
+                type = getStrategy().getFullJavaClassName(udt, Mode.RECORD_TYPE);
         }
 
         // [#3942] [#7863] Dialects that support tables as UDTs
@@ -11064,6 +11061,26 @@ public class JavaGenerator extends AbstractGenerator {
             type = "Any";
 
         return type;
+    }
+
+    private String wildcard() {
+        switch (language) {
+            case KOTLIN:
+                return "<*>";
+            case SCALA:
+                return "[_]";
+            default:
+                return "<?>";
+        }
+    }
+
+    private String typeVariable(CharSequence variable) {
+        switch (language) {
+            case SCALA:
+                return "[" + variable + "]";
+            default:
+                return "<" + variable + ">";
+        }
     }
 
     protected String getTypeReference(

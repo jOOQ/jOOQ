@@ -133,7 +133,7 @@ public final class Internal {
 
     public static final <R extends Record, T, P extends UDTPathTableField<R, ?, T>> P createUDTPathTableField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         Table<R> table,
         Class<P> returnType
     ) {
@@ -142,7 +142,7 @@ public final class Internal {
 
     public static final <R extends Record, T, P extends UDTPathTableField<R, ?, T>> P createUDTPathTableField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         Table<R> table,
         String comment,
         Class<P> returnType
@@ -152,7 +152,7 @@ public final class Internal {
 
     public static final <R extends Record, T, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         Table<R> table,
         String comment,
         Class<P> returnType,
@@ -163,7 +163,7 @@ public final class Internal {
 
     public static final <R extends Record, T, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         Table<R> table,
         String comment,
         Class<P> returnType,
@@ -174,7 +174,7 @@ public final class Internal {
 
     public static final <R extends Record, T, X, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         Table<R> table,
         String comment,
         Class<P> returnType,
@@ -186,7 +186,7 @@ public final class Internal {
 
     public static final <R extends Record, TR extends Table<R>, T, P extends UDTPathTableField<R, ?, T>> P createUDTPathTableField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         TR table,
         String comment,
         Class<P> returnType,
@@ -197,7 +197,7 @@ public final class Internal {
 
     public static final <R extends Record, TR extends Table<R>, T, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         TR table,
         String comment,
         Class<P> returnType,
@@ -209,7 +209,7 @@ public final class Internal {
 
     public static final <R extends Record, TR extends Table<R>, T, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         TR table,
         String comment,
         Class<P> returnType,
@@ -222,7 +222,7 @@ public final class Internal {
     @SuppressWarnings("unchecked")
     public static final <R extends Record, TR extends Table<R>, T, X, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         TR table,
         String comment,
         Class<P> returnType,
@@ -256,7 +256,7 @@ public final class Internal {
 
     public static final <T, P extends UDTField<?, T>> P createUDTPathField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         UDTPathField<?, ?, ?> qualifier,
         Class<P> returnType
     ) {
@@ -265,7 +265,7 @@ public final class Internal {
 
     public static final <T, P extends UDTField<?, T>> P createUDTPathField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         UDTPathField<?, ?, ?> qualifier,
         String comment,
         Class<P> returnType
@@ -275,7 +275,7 @@ public final class Internal {
 
     public static final <T, U, P extends UDTField<?, U>> P createUDTPathField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         UDTPathField<?, ?, ?> qualifier,
         String comment,
         Class<P> returnType,
@@ -286,7 +286,7 @@ public final class Internal {
 
     public static final <T, U, P extends UDTField<?, U>> P createUDTPathField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         UDTPathField<?, ?, ?> qualifier,
         String comment,
         Class<P> returnType,
@@ -297,7 +297,7 @@ public final class Internal {
 
     public static final <T, X, U, P extends UDTField<?, U>> P createUDTPathField(
         Name name,
-        DataType<T> type,
+        DataType<? extends T> type,
         UDTPathField<?, ?, ?> qualifier,
         String comment,
         Class<P> returnType,

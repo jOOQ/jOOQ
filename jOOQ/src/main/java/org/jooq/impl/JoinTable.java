@@ -110,6 +110,7 @@ import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.containsTable;
 import static org.jooq.impl.Tools.containsUnaliasedTable;
+import static org.jooq.impl.Tools.embeddedFieldsRow;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitAutoAliased;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_COLLECT_SEMI_ANTI_JOIN;
@@ -812,12 +813,28 @@ implements
             Field f1 = fk.field(references[i]);
             Field f2 = pk.field(referenced[i]);
 
+
+
+
+
+
+
+
+
+
             // [#2870] TODO: If lhs or rhs are aliased tables, extract the appropriate fields from them
             result = result.and(f1.equal(f2));
         }
 
         return result;
     }
+
+
+
+
+
+
+
 
     private enum OnKeyExceptionReason {
         AMBIGUOUS, NOT_FOUND

@@ -8286,7 +8286,9 @@ public class JavaGenerator extends AbstractGenerator {
                         return "[[before=, ][%s()]]";
 
                     case JAVA:
-                    case SCALA:
+
+
+
                     case SCALA_3:
                     default:
                         return "[[before=, ][new %s()]]";
@@ -8310,7 +8312,9 @@ public class JavaGenerator extends AbstractGenerator {
                         return "[[before=.asConvertedDataType(][after=)][%s()]]";
 
                     case JAVA:
-                    case SCALA:
+
+
+
                     case SCALA_3:
                     default:
                         return "[[before=.asConvertedDataType(][after=)][new %s()]]";
@@ -10798,7 +10802,9 @@ public class JavaGenerator extends AbstractGenerator {
             String rawtype;
 
             switch (language) {
-                case SCALA:
+
+
+
                 case SCALA_3:
                     rawtype = type.replaceAll("\\[.*\\]", "");
                     break;
@@ -10813,7 +10819,9 @@ public class JavaGenerator extends AbstractGenerator {
             boolean generic = !rawtype.equals(type);
 
             switch (language) {
-                case SCALA:
+
+
+
                 case SCALA_3:
                     return "classOf[" + out.ref(type) + "]";
 
@@ -10833,7 +10841,9 @@ public class JavaGenerator extends AbstractGenerator {
             String typeParams = type.replace(rawtype, "");
 
             switch (language) {
-                case SCALA:
+
+
+
                 case SCALA_3:
                     return "new " + out.ref(rawtype) + typeParams.replace("<", "[").replace(">", "]");
 
@@ -11079,8 +11089,10 @@ public class JavaGenerator extends AbstractGenerator {
 
     private String varargSplice() {
         switch (language) {
-            case SCALA:
-                return ":_*";
+
+
+
+
             case SCALA_3:
             default:
                 return "*";
@@ -11091,8 +11103,10 @@ public class JavaGenerator extends AbstractGenerator {
         switch (language) {
             case KOTLIN:
                 return "*";
-            case SCALA:
-                return "_";
+
+
+
+
             case SCALA_3:
             default:
                 return "?";
@@ -11101,7 +11115,9 @@ public class JavaGenerator extends AbstractGenerator {
 
     private String typeVariable(CharSequence variable) {
         switch (language) {
-            case SCALA:
+
+
+
             case SCALA_3:
                 return "[" + variable + "]";
             default:

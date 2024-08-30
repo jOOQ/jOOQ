@@ -43,27 +43,31 @@ package org.jooq.codegen;
 public enum Language {
 
     /**
-     * The Java language
+     * The Java language.
      */
     JAVA,
 
     /**
-     * The Scala 2 language
+     * The Scala 2 language.
+     * <p>
+     * Starting from jOOQ 3.20, Scala 2 support is available in commercial
+     * distributions only. Please upgrade to Scala 3 (using Scala3Generator), or
+     * to a commercial jOOQ edition.
      */
     SCALA,
 
     /**
-     * The Scala 3 language
+     * The Scala 3 language.
      */
     SCALA_3,
 
     /**
-     * The Kotlin language
+     * The Kotlin language.
      */
     KOTLIN,
 
     /**
-     * XML
+     * XML.
      */
     XML;
 

@@ -127,9 +127,11 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         // [#13866] Backticks that were used to escape identifiers conflicting
         //          with keywords shouldn't appear in file names.
         switch (language) {
-            case KOTLIN:
-            case SCALA:
+
+
+
             case SCALA_3:
+            case KOTLIN:
                 if (pkg.contains("`"))
                     pkg = pkg.replaceAll("`([^`]+)`", "$1");
 

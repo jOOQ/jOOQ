@@ -39,12 +39,20 @@ package org.jooq.codegen;
 
 import static org.jooq.codegen.Language.SCALA;
 
+import org.jooq.impl.DefaultConfiguration;
+
 /**
+ * Starting from jOOQ 3.20, Scala 2 support is available in commercial
+ * distributions only. Please upgrade to Scala 3 (using
+ * {@link Scala3Generator}), or to a commercial jOOQ edition.
+ *
  * @author Lukas Eder
  */
 public class ScalaGenerator extends JavaGenerator {
 
     public ScalaGenerator() {
         super(SCALA);
+
+        new DefaultConfiguration().requireCommercial(() -> "Starting from jOOQ 3.20, Scala 2 support is available in commercial distributions only. Please upgrade to Scala 3 (using Scala3Generator), or to a commercial jOOQ edition");
     }
 }

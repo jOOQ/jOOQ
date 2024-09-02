@@ -2494,27 +2494,24 @@ public class JavaGenerator extends AbstractGenerator {
                     if (kotlin)
                         if (pojoArgument)
                             if (kotlinEffectivelyNotNull(out, e, Mode.RECORD))
-                                out.println("this.%s = %s(%s)",
+                                out.println("this.%s = %s(value.%s)",
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
                                     getStrategy().getJavaMemberName(column, Mode.POJO));
                             else
-                                out.println("this.%s = %s(%s) ?: %s([[%s]])",
+                                out.println("this.%s = %s(value.%s)",
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                    getStrategy().getJavaMemberName(column, Mode.POJO),
-                                    out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                    Collections.nCopies(e.getColumns().size(), "null"));
+                                    getStrategy().getJavaMemberName(column, Mode.POJO));
                         else if (kotlinEffectivelyNotNull(out, e, Mode.RECORD))
                             out.println("this.%s = %s",
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
                                 getStrategy().getJavaMemberName(column, Mode.POJO));
                         else
-                            out.println("this.%s = %s ?: %s([[%s]])",
+                            out.println("this.%s = %s ?: %s()",
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
-                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                Collections.nCopies(e.getColumns().size(), "null"));
+                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)));
 
                     // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
                     else if (scala)
@@ -5832,11 +5829,15 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 0; i < embeddables.size(); i++) {
                 EmbeddableDefinition embeddable = embeddables.get(i);
 
+
+
+
+
+
+
+
                 if (!generateImmutablePojos())
                     generateEmbeddablePojoSetter(embeddable, i, out);
-
-
-
 
 
 

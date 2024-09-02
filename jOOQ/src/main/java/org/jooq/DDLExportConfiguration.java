@@ -50,28 +50,55 @@ import java.util.Set;
  */
 public final class DDLExportConfiguration {
 
-    private final EnumSet<DDLFlag> flags;
+    /**
+     * Whether to inline foreign key constraint definitions with the table
+     * definition.
+     */
+    public enum InlineForeignKeyConstraints {
 
-    private final boolean          createSchemaIfNotExists;
-    private final boolean          createTableIfNotExists;
-    private final boolean          createIndexIfNotExists;
-    private final boolean          createDomainIfNotExists;
-    private final boolean          createSequenceIfNotExists;
-    private final boolean          createViewIfNotExists;
-    private final boolean          createOrReplaceView;
+        /**
+         * Always inline the foreign key constraint definitions.
+         */
+        ALWAYS,
 
-    private final boolean          respectCatalogOrder;
-    private final boolean          respectSchemaOrder;
-    private final boolean          respectTableOrder;
-    private final boolean          respectColumnOrder;
-    private final boolean          respectConstraintOrder;
-    private final boolean          respectIndexOrder;
-    private final boolean          respectDomainOrder;
-    private final boolean          respectSequenceOrder;
+        /**
+         * Inline foreign key constraint definitions only when needed.
+         * <p>
+         * This can be necessary if {@link AlterTableStep#add(Constraint)} isn't
+         * supported, such as in SQLite, see [#16470]. This is the default.
+         */
+        WHEN_NEEDED,
 
-    private final boolean          defaultSequenceFlags;
+        /**
+         * Never inline foreign key constraint definitions.
+         */
+        NEVER
+    }
 
-    private final boolean          includeConstraintsOnViews;
+
+    private final EnumSet<DDLFlag>            flags;
+
+    private final boolean                     createSchemaIfNotExists;
+    private final boolean                     createTableIfNotExists;
+    private final boolean                     createIndexIfNotExists;
+    private final boolean                     createDomainIfNotExists;
+    private final boolean                     createSequenceIfNotExists;
+    private final boolean                     createViewIfNotExists;
+    private final boolean                     createOrReplaceView;
+
+    private final boolean                     respectCatalogOrder;
+    private final boolean                     respectSchemaOrder;
+    private final boolean                     respectTableOrder;
+    private final boolean                     respectColumnOrder;
+    private final boolean                     respectConstraintOrder;
+    private final boolean                     respectIndexOrder;
+    private final boolean                     respectDomainOrder;
+    private final boolean                     respectSequenceOrder;
+
+    private final boolean                     defaultSequenceFlags;
+
+    private final boolean                     includeConstraintsOnViews;
+    private final InlineForeignKeyConstraints inlineForeignKeyConstraints;
 
     /**
      * Create a new default export configuration instance.
@@ -99,7 +126,8 @@ public final class DDLExportConfiguration {
 
             false,
 
-            false
+            false,
+            InlineForeignKeyConstraints.WHEN_NEEDED
         );
     }
 
@@ -125,7 +153,8 @@ public final class DDLExportConfiguration {
 
         boolean defaultSequenceFlags,
 
-        boolean includeConstraintsOnViews
+        boolean includeConstraintsOnViews,
+        InlineForeignKeyConstraints inlineForeignKeyConstraints
     ) {
         this.flags = EnumSet.copyOf(flags);
 
@@ -149,6 +178,7 @@ public final class DDLExportConfiguration {
         this.defaultSequenceFlags = defaultSequenceFlags;
 
         this.includeConstraintsOnViews = includeConstraintsOnViews;
+        this.inlineForeignKeyConstraints = inlineForeignKeyConstraints;
     }
 
     /**
@@ -187,7 +217,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -224,7 +255,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -261,7 +293,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -298,7 +331,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -335,7 +369,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -372,7 +407,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -409,7 +445,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -446,7 +483,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -481,7 +519,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -516,7 +555,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -551,7 +591,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -586,7 +627,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -621,7 +663,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -656,7 +699,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -691,7 +735,8 @@ public final class DDLExportConfiguration {
             newRespectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -726,7 +771,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             newRespectSequenceOrder,
             defaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -761,7 +807,8 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             newDefaultSequenceFlags,
-            includeConstraintsOnViews
+            includeConstraintsOnViews,
+            inlineForeignKeyConstraints
         );
     }
 
@@ -794,7 +841,44 @@ public final class DDLExportConfiguration {
             respectDomainOrder,
             respectSequenceOrder,
             defaultSequenceFlags,
-            newIncludeConstraintsOnViews
+            newIncludeConstraintsOnViews,
+            inlineForeignKeyConstraints
+        );
+    }
+
+    /**
+     * Whether to inline foreign key constraint definitions with the table
+     * definition.
+     */
+    public final InlineForeignKeyConstraints inlineForeignKeyConstraints() {
+        return inlineForeignKeyConstraints;
+    }
+
+    /**
+     * Whether to inline foreign key constraint definitions with the table
+     * definition.
+     */
+    public final DDLExportConfiguration inlineForeignKeyConstraints(InlineForeignKeyConstraints newInlineForeignKeyConstraints) {
+        return new DDLExportConfiguration(
+            flags,
+            createSchemaIfNotExists,
+            createTableIfNotExists,
+            createIndexIfNotExists,
+            createDomainIfNotExists,
+            createSequenceIfNotExists,
+            createViewIfNotExists,
+            createOrReplaceView,
+            respectCatalogOrder,
+            respectSchemaOrder,
+            respectTableOrder,
+            respectColumnOrder,
+            respectConstraintOrder,
+            respectIndexOrder,
+            respectDomainOrder,
+            respectSequenceOrder,
+            defaultSequenceFlags,
+            includeConstraintsOnViews,
+            newInlineForeignKeyConstraints
         );
     }
 }

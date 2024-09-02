@@ -2208,18 +2208,15 @@ public class JavaGenerator extends AbstractGenerator {
                     // TODO: Setters of X properties cannot accept X? in Kotlin: https://twitter.com/lukaseder/status/1296371561214234624
                     if (kotlin)
                         if (pojoArgument)
-                            out.println("this.%s = %s(%s) ?: %s([[%s]])",
+                            out.println("this.%s = %s(value.%s)",
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
                                 out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                getStrategy().getJavaMemberName(column, Mode.POJO),
-                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                Collections.nCopies(((EmbeddableDefinition) column).getColumns().size(), "null"));
+                                getStrategy().getJavaMemberName(column, Mode.POJO));
                         else
-                            out.println("this.%s = %s ?: %s([[%s]])",
+                            out.println("this.%s = %s ?: %s()",
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
                                 getStrategy().getJavaMemberName(column, Mode.POJO),
-                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                Collections.nCopies(((EmbeddableDefinition) column).getColumns().size(), "null"));
+                                out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)));
 
                     // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
                     else if (scala)
@@ -5254,11 +5251,15 @@ public class JavaGenerator extends AbstractGenerator {
             for (int i = 0; i < embeddables.size(); i++) {
                 EmbeddableDefinition embeddable = embeddables.get(i);
 
+
+
+
+
+
+
+
                 if (!generateImmutablePojos())
                     generateEmbeddablePojoSetter(embeddable, i, out);
-
-
-
 
 
 

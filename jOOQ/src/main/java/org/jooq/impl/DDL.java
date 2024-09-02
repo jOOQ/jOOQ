@@ -49,12 +49,14 @@ import static org.jooq.DDLFlag.SEQUENCE;
 import static org.jooq.DDLFlag.TABLE;
 import static org.jooq.DDLFlag.UNIQUE;
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
 import static org.jooq.impl.Comparators.TABLE_VIEW_COMP;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,6 +102,7 @@ import org.jooq.TableOptions;
 import org.jooq.TableOptions.OnCommit;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
+import org.jooq.DDLExportConfiguration.InlineForeignKeyConstraints;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -108,11 +111,12 @@ import org.jooq.tools.StringUtils;
  */
 final class DDL {
 
-    private static final JooqLogger      log = JooqLogger.getLogger(DDL.class);
+    private static final JooqLogger      log                             = JooqLogger.getLogger(DDL.class);
 
 
 
 
+    static final Set<SQLDialect>         NO_SUPPORT_ALTER_ADD_CONSTRAINT = SQLDialect.supportedBy(SQLITE);
 
     private final DSLContext             ctx;
     private final DDLExportConfiguration configuration;
@@ -267,7 +271,7 @@ final class DDL {
     }
 
     final List<Query> createTableOrView(Table<?> table) {
-        return createTableOrView(table, constraints(table));
+        return createTableOrView(table, constraints(table, true));
     }
 
     final List<Query> createIndex(Table<?> table) {
@@ -295,19 +299,20 @@ final class DDL {
     }
 
     final List<Query> alterTableAddConstraints(Table<?> table) {
-        return alterTableAddConstraints(table, constraints(table));
+        return alterTableAddConstraints(table, constraints(table, true));
     }
 
     final List<Query> alterTableAddConstraints(Table<?> table, List<Constraint> constraints) {
         return map(constraints, c -> ctx.alterTable(table).add(c));
     }
 
-    final List<Constraint> constraints(Table<?> table) {
+    final List<Constraint> constraints(Table<?> table, boolean includeForeignKeys) {
         List<Constraint> result = new ArrayList<>();
 
         result.addAll(primaryKeys(table));
         result.addAll(uniqueKeys(table));
-        result.addAll(foreignKeys(table));
+        if (includeForeignKeys)
+            result.addAll(foreignKeys(table));
         result.addAll(checks(table));
 
         return result;
@@ -417,10 +422,7 @@ final class DDL {
 
                     if (!hasConstraintsUsingIndexes(table)) {
                         tablesWithInlineConstraints.add(table);
-
-                        constraints.addAll(primaryKeys(table));
-                        constraints.addAll(uniqueKeys(table));
-                        constraints.addAll(checks(table));
+                        constraints.addAll(constraints(table, inlineForeignKeyDefinitions()));
                     }
 
                     queries.addAll(createTableOrView(table, constraints));
@@ -453,7 +455,7 @@ final class DDL {
                             queries.add(ctx.alterTable(table).add(constraint));
         }
 
-        if (configuration.flags().contains(FOREIGN_KEY))
+        if (configuration.flags().contains(FOREIGN_KEY) && !inlineForeignKeyDefinitions())
             for (Schema schema : schemas)
                 for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                     for (Constraint constraint : foreignKeys(table))
@@ -475,6 +477,13 @@ final class DDL {
                     queries.addAll(commentOn(table));
 
         return ctx.queries(queries);
+    }
+
+    private final boolean inlineForeignKeyDefinitions() {
+        return configuration.flags().contains(TABLE) && (
+            configuration.inlineForeignKeyConstraints() == InlineForeignKeyConstraints.ALWAYS
+         || configuration.inlineForeignKeyConstraints() == InlineForeignKeyConstraints.WHEN_NEEDED && NO_SUPPORT_ALTER_ADD_CONSTRAINT.contains(ctx.dialect())
+        );
     }
 
     private final <R extends Record> boolean hasConstraintsUsingIndexes(Table<R> table) {

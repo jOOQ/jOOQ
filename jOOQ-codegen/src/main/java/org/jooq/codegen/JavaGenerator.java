@@ -5608,11 +5608,20 @@ public class JavaGenerator extends AbstractGenerator {
         if (tableUdtOrEmbeddable instanceof TableDefinition) {
             List<EmbeddableDefinition> embeddables = ((TableDefinition) tableUdtOrEmbeddable).getReferencedEmbeddables();
 
+            embeddablesLoop:
             for (int i = 0; i < embeddables.size(); i++) {
                 EmbeddableDefinition embeddable = embeddables.get(i);
 
                 if (!generateImmutablePojos())
                     generateEmbeddablePojoSetter(embeddable, i, out);
+
+
+
+
+
+
+
+
                 generateEmbeddablePojoGetter(embeddable, i, out);
             }
         }
@@ -5829,11 +5838,10 @@ public class JavaGenerator extends AbstractGenerator {
         forEach(embeddable.getColumns(), (column, separator) -> {
             if (kotlin)
                 out.tab(1).println("%s%s", getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO), separator);
+            else if (generatePojosAsJavaRecordClasses())
+                out.println("%s%s%s", getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO), emptyparens, separator);
             else
-                out.println("%s%s%s", generatePojosAsJavaRecordClasses()
-                    ? getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO)
-                    : getStrategy().getJavaGetterName(column.getReferencingColumn(), Mode.POJO), emptyparens, separator
-                );
+                out.println("this.%s%s", getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO), separator);
         });
 
         if (scala)
@@ -5933,10 +5941,10 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
-                final String s = getStrategy().getJavaSetterName(column.getReferencingColumn(), Mode.POJO);
+                final String s = getStrategy().getJavaMemberName(column.getReferencingColumn(), Mode.POJO);
                 final String g = getStrategy().getJavaGetterName(column, Mode.POJO);
 
-                out.println("%s(value.%s%s)%s", s, g, emptyparens, semicolon);
+                out.println("this.%s = value.%s%s%s", s, g, emptyparens, semicolon);
             }
         }
 

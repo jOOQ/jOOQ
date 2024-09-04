@@ -2413,7 +2413,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.RECORD);
-        final String pojoNameFull = getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.POJO);
+        final String pojoNameFull = getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, generateInterfaces() ? Mode.INTERFACE : Mode.POJO);
         final String tableIdentifier = !(tableUdtOrEmbeddable instanceof EmbeddableDefinition)
             ? out.ref(getStrategy().getFullJavaIdentifier(tableUdtOrEmbeddable), 2)
             : null;
@@ -2428,7 +2428,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             for (Definition column : columns) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
-                final String type = getJavaTypeRef(column, out);
+                final String type = getJavaTypeRef(column, out, generateInterfaces() ? Mode.INTERFACE : Mode.RECORD);
 
                 if (scala) {
                     arguments.add(columnMember + " : " + type);
@@ -2533,7 +2533,7 @@ public class JavaGenerator extends AbstractGenerator {
                             out.println("%s(new %s(value.%s()));",
                                 getStrategy().getJavaSetterName(column, Mode.RECORD),
                                 out.ref(getStrategy().getFullJavaClassName(column, Mode.RECORD)),
-                                generatePojosAsJavaRecordClasses()
+                                generatePojosAsJavaRecordClasses() && !generateInterfaces()
                                     ? getStrategy().getJavaMemberName(column, Mode.POJO)
                                     : getStrategy().getJavaGetterName(column, Mode.DEFAULT));
                         else
@@ -2629,7 +2629,7 @@ public class JavaGenerator extends AbstractGenerator {
                         if (pojoArgument) {
 
                             // [#16039] Make sure we reuse this where needed
-                            final String getterName = generatePojosAsJavaRecordClasses()
+                            final String getterName = generatePojosAsJavaRecordClasses() && !generateInterfaces()
                                 ? getStrategy().getJavaMemberName(column, Mode.POJO)
                                 : getStrategy().getJavaGetterName(column, Mode.POJO);
 
@@ -2898,6 +2898,8 @@ public class JavaGenerator extends AbstractGenerator {
         final String setter = getStrategy().getJavaSetterName(embeddable, Mode.RECORD);
         final String typeFull = getStrategy().getFullJavaClassName(embeddable, generateInterfaces() ? Mode.INTERFACE : Mode.RECORD);
         final String type = out.ref(typeFull);
+        final String typeFullRecord = getStrategy().getFullJavaClassName(embeddable, Mode.RECORD);
+        final String typeRecord = out.ref(typeFullRecord);
         final String name = embeddable.getQualifiedOutputName();
         final boolean override = generateInterfaces() && !generateImmutableInterfaces()
             || !kotlin && getStrategy().getJavaMemberOverride(embeddable, Mode.RECORD)
@@ -2919,28 +2921,50 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s%s %s([[before=@][after= ][%s]]%s value) {", visibility(override), setterReturnType, setter, list(nonnullAnnotation(out)), type);
         }
 
+        final Wrap wrap = wrap(embeddable, out, Mode.RECORD);
+
         if (index > -1) {
-            if (kotlin)
+            if (kotlin) {
+                if (generateInterfaces()) {
+                    out.println("if (!(value is %s))", typeRecord);
+                    out.println("set(%s, %svalue%s)%s", index, wrap.prefix(), wrap.suffix(), semicolon);
+                    out.println("else");
+                }
+
                 out.tab(1).println("set(%s, value)", index);
-            else
+            }
+            else {
+                if (generateInterfaces()) {
+                    if (scala)
+                        out.println("if (!value.isInstanceOf[%s]))", typeRecord);
+                    else
+                        out.println("if (!(value instanceof %s))", typeRecord);
+
+                    out.println("set(%s, %svalue%s)%s", index, wrap.prefix(), wrap.suffix(), semicolon);
+                    out.println("else");
+                }
+
                 out.println("set(%s, value)%s", index, semicolon);
+            }
         }
         else {
             for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
                 final int position = column.getReferencingColumnPosition() - 1;
 
-                if (kotlin)
+                if (kotlin) {
                     out.tab(1).println("set(%s, value.%s)",
                         position,
                         getStrategy().getJavaMemberName(column, Mode.RECORD)
                     );
-                else
+                }
+                else {
                     out.println("set(%s, value.%s%s)%s",
                         position,
                         getStrategy().getJavaGetterName(column, Mode.RECORD),
                         emptyparens,
                         semicolon
                     );
+                }
             }
         }
 
@@ -5928,8 +5952,8 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println(separator1);
                 out.print("[[before=@][after= ][%s]]%s %s",
                     list(nullableAnnotation),
-                    getJavaTypeRef(column, out, Mode.POJO),
-                    getStrategy().getJavaMemberName(column, generateInterfaces() ? Mode.INTERFACE : Mode.POJO));
+                    getJavaTypeRef(column, out, generateInterfaces() ? Mode.INTERFACE : Mode.POJO),
+                    getStrategy().getJavaMemberName(column, Mode.POJO));
                 separator1 = ",";
             }
 
@@ -5938,12 +5962,37 @@ public class JavaGenerator extends AbstractGenerator {
 
             for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                final Wrap wrap = wrap(column, out, Mode.POJO);
 
-                out.println("this.%s = %s;", columnMember, columnMember);
+                out.println("this.%s = %s%s%s;", columnMember, wrap.prefix(), columnMember, wrap.suffix());
             }
 
             out.println("}");
         }
+    }
+
+    static final record Wrap(String prefix, String suffix) {}
+
+    private Wrap wrap(Definition column, JavaWriter out, Mode mode) {
+        return wrap(column, out, mode, generateInterfaces());
+    }
+
+    private Wrap wrap(Definition column, JavaWriter out, Mode mode, boolean check) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return new Wrap("", "");
     }
 
     /**
@@ -5963,10 +6012,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sdef this(value: %s) = this(", visibility(), generateInterfaces() ? interfaceName : className);
 
             forEach(replacingEmbeddablesAndUnreplacedColumns, (column, separator) -> {
-                out.println("value.%s%s",
+                Wrap wrap = wrap(column, out, Mode.POJO);
+
+                out.println("%svalue.%s%s%s",
+                    wrap.prefix(),
                     generateInterfaces()
                         ? getStrategy().getJavaGetterName(column, Mode.INTERFACE)
                         : getStrategy().getJavaMemberName(column, Mode.POJO),
+                    wrap.suffix(),
                     separator
                 );
             });
@@ -5997,29 +6050,18 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
-                    String prefix = "";
-                    String suffix = "";
-
-
-
-
-
-
-
-
-
-
+                    Wrap wrap = wrap(column, out, Mode.POJO);
 
                     out.println("this.%s = %svalue.%s%s%s;",
                         getStrategy().getJavaMemberName(column, Mode.POJO),
-                        prefix,
+                        wrap.prefix(),
                         generateInterfaces()
                             ? getStrategy().getJavaGetterName(column, Mode.INTERFACE)
                             : getStrategy().getJavaMemberName(column, Mode.POJO),
                         generateInterfaces()
                             ? "()"
                             : "",
-                        suffix
+                        wrap.suffix()
                     );
                 }
             }
@@ -6204,8 +6246,6 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(embeddable.getReferencingTable(), Mode.POJO);
         final String columnTypeFull = getStrategy().getFullJavaClassName(embeddable, override ? Mode.INTERFACE : Mode.POJO);
         final String columnType = out.ref(columnTypeFull);
-        final String columnTypeFullPojo = getStrategy().getFullJavaClassName(embeddable, Mode.POJO);
-        final String columnTypePojo = out.ref(columnTypeFullPojo);
         final String columnSetterReturnType = generateFluentSetters() ? className : tokenVoid;
         final String columnSetter = getStrategy().getJavaSetterName(embeddable, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(embeddable, Mode.POJO);
@@ -6242,8 +6282,6 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
         else {
-
-
 
 
 
@@ -9197,8 +9235,8 @@ public class JavaGenerator extends AbstractGenerator {
         printFromAndInto(out, table, Mode.DEFAULT);
     }
 
-    private void printFromAndInto(JavaWriter out, Definition tableOrUDT, Mode mode) {
-        String qualified = out.ref(getStrategy().getFullJavaClassName(tableOrUDT, Mode.INTERFACE));
+    private void printFromAndInto(JavaWriter out, Definition tableUdtOrEmbeddable, Mode mode) {
+        String qualified = out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE));
 
         out.header("FROM and INTO");
         boolean override = generateInterfaces() && !generateImmutableInterfaces();
@@ -9216,17 +9254,19 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%svoid from(%s from) {", visibilityPublic(), qualified);
         }
 
-        for (TypedElementDefinition<?> column : getTypedElements(tableOrUDT)) {
+        List<Definition> replacingEmbeddablesAndUnreplacedColumns = replacingEmbeddablesAndUnreplacedColumns(tableUdtOrEmbeddable);
+        for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
             final String setter = getStrategy().getJavaSetterName(column, Mode.INTERFACE);
             final String getter = getStrategy().getJavaGetterName(column, Mode.INTERFACE);
             final String member = getStrategy().getJavaMemberName(column, Mode.INTERFACE);
+            final Wrap wrap = wrap(column, out, Mode.POJO, generateImmutableInterfaces() && !generatePojosAsJavaRecordClasses());
 
             if (scala)
-                out.println("%s(from.%s)", setter, getter);
+                out.println("%s(%sfrom.%s%s)", setter, wrap.prefix(), getter, wrap.suffix());
             else if (kotlin)
                 out.println("this.%s = from.%s", member, member);
             else
-                out.println("%s(from.%s());", setter, getter);
+                out.println("%s(%sfrom.%s()%s);", setter, wrap.prefix(), getter, wrap.suffix());
         }
 
         // [#14727] Make sure the same behaviour as from(Object) is implemented

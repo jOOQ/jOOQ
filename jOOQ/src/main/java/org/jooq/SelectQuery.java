@@ -130,7 +130,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ CLICKHOUSE, CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addDistinctOn(SelectFieldOrAsterisk... fields);
 
     /**
@@ -138,7 +138,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * This also sets the <code>distinct</code> flag to <code>true</code>
      */
-    @Support({ CLICKHOUSE, CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     void addDistinctOn(Collection<? extends SelectFieldOrAsterisk> fields);
 
     /**
@@ -860,7 +860,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     void addOffset(Number offset);
 
     /**
@@ -873,7 +873,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * emulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support
     void addOffset(Field<? extends Number> offset);
 
     /**

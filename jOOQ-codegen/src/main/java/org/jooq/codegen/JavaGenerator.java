@@ -2936,7 +2936,7 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 if (generateInterfaces()) {
                     if (scala)
-                        out.println("if (!value.isInstanceOf[%s]))", typeRecord);
+                        out.println("if (!value.isInstanceOf[%s])", typeRecord);
                     else
                         out.println("if (!(value instanceof %s))", typeRecord);
 

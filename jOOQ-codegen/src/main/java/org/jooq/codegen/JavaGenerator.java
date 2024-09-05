@@ -5798,7 +5798,8 @@ public class JavaGenerator extends AbstractGenerator {
             ? out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE))
             : "";
         final String superName =
-            udtSupertype(tableUdtOrEmbeddable) != null
+        // [#644] [#17189] TODO: Support this in ScalaGenerator
+            !scala && udtSupertype(tableUdtOrEmbeddable) != null
             ? out.ref(getStrategy().getFullJavaClassName(udtSupertype(tableUdtOrEmbeddable), Mode.POJO)) + (kotlin
                 ? "(" + udtSupertype(tableUdtOrEmbeddable)
                         .getAttributes()

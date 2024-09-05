@@ -2302,7 +2302,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    private final boolean udtAttributeOverride(TypedElementDefinition<?> column) {
+    private final boolean udtAttributeOverride(Definition column) {
         if (column instanceof AttributeDefinition a) {
             UDTDefinition s = a.getContainer().getSupertype();
 
@@ -2315,6 +2315,10 @@ public class JavaGenerator extends AbstractGenerator {
 
     private final UDTDefinition udtSupertype(Definition definition) {
         return definition instanceof UDTDefinition u ? u.getSupertype() : null;
+    }
+
+    private final List<UDTDefinition> udtSubtypes(Definition definition) {
+        return definition instanceof UDTDefinition u ? u.getSubtypes() : Collections.emptyList();
     }
 
     @FunctionalInterface
@@ -5795,9 +5799,17 @@ public class JavaGenerator extends AbstractGenerator {
             : "";
         final String superName =
             udtSupertype(tableUdtOrEmbeddable) != null
-            ? out.ref(getStrategy().getFullJavaClassName(udtSupertype(tableUdtOrEmbeddable), Mode.POJO))
+            ? out.ref(getStrategy().getFullJavaClassName(udtSupertype(tableUdtOrEmbeddable), Mode.POJO)) + (kotlin
+                ? "(" + udtSupertype(tableUdtOrEmbeddable)
+                        .getAttributes()
+                        .stream()
+                        .map(a -> getStrategy().getJavaMemberName(a, Mode.POJO))
+                        .collect(joining(", ")) +
+                  ")"
+                : "")
             : out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, Mode.POJO));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.POJO));
+        final boolean open = !udtSubtypes(tableUdtOrEmbeddable).isEmpty();
         final String abstract_ = "";
         // [#644] TODO Get this to work
         // tableUdtOrEmbeddable instanceof UDTDefinition && !((UDTDefinition) tableUdtOrEmbeddable).isInstantiable() ? "abstract " : "";
@@ -5839,12 +5851,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")[[before= extends ][%s]][[before= with ][separator= with ][%s]] {", first(superTypes), remaining(superTypes));
         }
         else if (kotlin) {
-            out.println("%s%s%sclass %s(", visibility(), abstract_, (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
+            out.println("%s%s%s%sclass %s(", visibility(), abstract_, open ? "open " : "", (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
 
             forEach(replacingEmbeddablesAndUnreplacedColumns, (column, separator) -> {
                 final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String nullability = kotlinNullability(out, column, Mode.POJO);
-                final boolean override = getStrategy().getJavaMemberOverride(column, Mode.POJO);
+                final boolean override =
+                       udtAttributeOverride(column)
+                    || getStrategy().getJavaMemberOverride(column, Mode.POJO);
 
                 if (column instanceof ColumnDefinition)
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -5855,9 +5869,10 @@ public class JavaGenerator extends AbstractGenerator {
                         printKotlinSetterAnnotation(out, ted, Mode.POJO);
                 }
 
-                out.println("%s%s%s %s: %s%s%s%s",
+                out.println("%s%s%s%s %s: %s%s%s%s",
                     visibility(generateInterfaces()),
                     generateInterfaces() || override ? "override " : "",
+                    open && !override ? "open " : "",
                     generateImmutablePojos() ? "val" : "var",
                     member,
                     getJavaTypeRef(column, out, Mode.POJO),

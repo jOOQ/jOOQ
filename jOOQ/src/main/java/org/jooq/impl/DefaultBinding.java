@@ -230,6 +230,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.Converters;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.ExecuteScope;
@@ -715,6 +716,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return converter;
         }
 
+        static final Configuration originalConfiguration(Scope ctx) {
+            if (ctx instanceof ExecuteScope es) {
+                if (es.executeContext() instanceof DefaultExecuteContext dec) {
+                    return dec.originalConfiguration();
+                }
+            }
+
+            return ctx.configuration();
+        }
+
+        static final DSLContext originalScope(Scope ctx) {
+            if (ctx instanceof ExecuteScope es) {
+                if (es.executeContext() instanceof DefaultExecuteContext dec) {
+                    return dec.originalConfiguration().dsl();
+                }
+            }
+
+            return ctx.dsl();
+        }
+
         private final boolean shouldCast(BindingSQLContext<U> ctx, T converted) {
 
             // [#10662] A few dialects require casts for NULL literals
@@ -1059,7 +1080,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             U value = converter().from(get0(ctx));
 
             if (attachable)
-                value = attach(value, ctx.configuration());
+                value = attach(value, originalConfiguration(ctx));
 
             ctx.value(value);
         }
@@ -1069,7 +1090,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             U value = converter().from(get0(ctx));
 
             if (attachable)
-                value = attach(value, ctx.configuration());
+                value = attach(value, originalConfiguration(ctx));
 
             ctx.value(value);
         }
@@ -1079,7 +1100,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             U value = converter().from(get0(ctx));
 
             if (attachable)
-                value = attach(value, ctx.configuration());
+                value = attach(value, originalConfiguration(ctx));
 
             ctx.value(value);
         }
@@ -4233,22 +4254,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         static final <R extends Record> Result<R> readMultisetXML(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
             if (s.startsWith("<"))
-                return new XMLHandler<>(ctx.dsl(), row, recordType).read(s);
+                return new XMLHandler<>(originalScope(ctx), row, recordType).read(s);
             else
                 return readMultisetScalar(ctx, row, recordType, s);
         }
 
         static final <R extends Record> Result<R> readMultisetJSON(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
             if (s.startsWith("{") || s.startsWith("["))
-                return new JSONReader<>(ctx.dsl(), row, recordType, true).read(new StringReader(s), true);
+                return new JSONReader<>(originalScope(ctx), row, recordType, true).read(new StringReader(s), true);
             else
                 return readMultisetScalar(ctx, row, recordType, s);
         }
 
         static final <R extends Record> Result<R> readMultisetScalar(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
-            Result<R> result = new ResultImpl<>(ctx.configuration(), row);
+            Configuration c = originalConfiguration(ctx);
+            Result<R> result = new ResultImpl<>(c, row);
 
-            result.add(newRecord(true, recordType, row, ctx.configuration()).operate(r -> {
+            result.add(newRecord(true, recordType, row, c).operate(r -> {
                 r.from(asList(s));
                 return r;
             }));

@@ -65,6 +65,7 @@ import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
 import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.tools.StringUtils.isEmpty;
+import static org.jooq.tools.StringUtils.toUC;
 
 import java.io.File;
 import java.io.IOException;
@@ -6057,19 +6058,20 @@ public class JavaGenerator extends AbstractGenerator {
 
 
             if (wrap) {
-                String className = out.ref(getStrategy().getFullJavaClassName(definition, mode));
+                String typeName = out.ref(getStrategy().getFullJavaClassName(definition, mode));
+                String memberName = getStrategy().getJavaMemberName(column, mode);
 
                 switch (language) {
                     case KOTLIN: {
 
                         // [#15892] [#17176] TODO: Arrays
-                        return new Wrap("" + className + "(", ")");
+                        return new Wrap("" + typeName + "(", ")");
                     }
                     default: {
-                        if (array)
-                            return new Wrap(out.ref(Optional.class) + ".ofNullable(", ").map(e -> " + out.ref(Stream.class) + ".of(e).map(" + className + "::new).toArray(" + className + "[]::new)).orElse(null)");
+                        if (definition instanceof UDTDefinition && generateInterfaces())
+                            return new Wrap("to" + toUC(memberName) + "(", ")");
                         else
-                            return new Wrap("new " + className + "(", ")");
+                            return new Wrap("new " + typeName + "(", ")");
                     }
                 }
             }
@@ -6451,25 +6453,37 @@ public class JavaGenerator extends AbstractGenerator {
                 // [#3082] TODO Handle <interfaces/> + ARRAY also for Scala
 
                 out.println("%sdef %s(%s: %s): %s = {", visibility(), columnSetter, scalaWhitespaceSuffix(columnMember), columnTypeInterface, columnSetterReturnType);
-                out.println("if (%s == null)", columnMember);
-                out.println("this.%s = null", columnMember);
-
-                if (isUDT && udt != null)
-                    generatePojoSetterSubtypeChecks0(out, index, column, udt);
-
-                out.println("else");
-                out.println("this.%s = %s.into(new %s)", columnMember, columnMember, columnType);
+                out.println("this.%s = to%s(%s)", columnMember, toUC(columnMember), columnMember);
 
                 if (generateFluentSetters())
                     out.println("this");
 
                 out.println("}");
+                out.println();
+                out.println("private def to%s(%s: %s): %s = {", toUC(columnMember), scalaWhitespaceSuffix(columnMember), columnTypeInterface, columnType);
+                out.println("if (%s == null)", columnMember);
+                out.println("return null");
+
+                if (isUDT && udt != null)
+                    generatePojoSetterSubtypeChecks0(out, index, column, udt);
+
+                out.println("else");
+                out.println("return %s.into(new %s)", columnMember, columnType);
+                out.println("}");
             }
             else {
                 out.override();
                 out.println("%s%s %s(%s %s) {", visibility(), columnSetterReturnType, columnSetter, varargsIfArray(columnTypeInterface), columnMember);
+                out.println("this.%s = to%s(%s);", columnMember, toUC(columnMember), columnMember);
+
+                if (generateFluentSetters())
+                    out.println("return this;");
+
+                out.println("}");
+                out.println();
+                out.println("private %s to%s(%s %s) {", columnType, toUC(columnMember), varargsIfArray(columnTypeInterface), columnMember);
                 out.println("if (%s == null)", columnMember);
-                out.println("this.%s = null;", columnMember);
+                out.println("return null;");
 
                 if (isUDT) {
                     if (udt != null)
@@ -6481,10 +6495,10 @@ public class JavaGenerator extends AbstractGenerator {
                         final UDTDefinition columnBaseType = column.getDatabase().getUDT(column.getSchema(), column.getType().getQualifiedUserType());
                         final String columnBaseTypeName = out.ref(getStrategy().getFullJavaClassName(columnBaseType, Mode.POJO));
 
-                        out.println("this.%s = %s.of(%s).map(u -> u.into(new %s())).toArray(%s[]::new);", columnMember, Stream.class, columnMember, columnBaseTypeName, columnBaseTypeName);
+                        out.println("return %s.of(%s).map(u -> u.into(new %s())).toArray(%s[]::new);", Stream.class, columnMember, columnBaseTypeName, columnBaseTypeName);
                     }
                     else
-                        out.println("this.%s = %s.into(new %s());", columnMember, columnMember, columnType);
+                        out.println("return %s.into(new %s());", columnMember, columnType);
                 }
                 else if (isUDTArray) {
                     final ArrayDefinition array = database.getArray(column.getType(resolver(out)).getSchema(), column.getType(resolver(out)).getQualifiedUserType());
@@ -6492,15 +6506,14 @@ public class JavaGenerator extends AbstractGenerator {
                     final String componentTypeInterface = out.ref(getJavaType(array.getElementType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));
 
                     out.println("else {");
-                    out.println("this.%s = new %s();", columnMember, ArrayList.class);
+                    out.println("%s r = new %s();", List.class, columnMember, ArrayList.class);
                     out.println();
                     out.println("for (%s i : %s)", componentTypeInterface, columnMember);
-                    out.println("this.%s.add(i.into(new %s()));", columnMember, componentType);
+                    out.println("r.add(i.into(new %s()));", componentType);
+                    out.println();
+                    out.println("return r");
                     out.println("}");
                 }
-
-                if (generateFluentSetters())
-                    out.println("return this;");
 
                 out.println("}");
             }
@@ -6518,13 +6531,13 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.println("else if (%s.isInstanceOf[%s])", columnMember, interfaceType);
-                out.println("this.%s = %s.asInstanceOf[%s].into(new %s)", columnMember, columnMember, interfaceType, pojoType);
+                out.println("return %s.asInstanceOf[%s].into(new %s)", columnMember, interfaceType, pojoType);
             }
             // TODO:
             else if (kotlin) {}
             else {
                 out.println("else if (%s instanceof %s)", columnMember, interfaceType);
-                out.println("this.%s = ((%s) %s).into(new %s());", columnMember, interfaceType, columnMember, pojoType);
+                out.println("return ((%s) %s).into(new %s());", interfaceType, columnMember, pojoType);
             }
         }
     }

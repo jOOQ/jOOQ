@@ -1718,7 +1718,7 @@ public class JavaGenerator extends AbstractGenerator {
             interfaces.add(out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE)));
         }
         else if (tableUdtOrEmbeddable instanceof UDTDefinition u) {
-            if (u.getSupertype() != null || !u.getSubtypes().isEmpty())
+            if (u.isInTypeHierarchy())
                 interfaces.add(out.ref(getStrategy().getFullJavaClassName(u, Mode.RECORD_TYPE)));
         }
 
@@ -2312,6 +2312,10 @@ public class JavaGenerator extends AbstractGenerator {
         return false;
     }
 
+    private final UDTDefinition udtSupertype(Definition definition) {
+        return definition instanceof UDTDefinition u ? u.getSupertype() : null;
+    }
+
     @FunctionalInterface
     private interface EmbeddableFilter {
         void accept(List<Definition> result, Set<EmbeddableDefinition> duplicates, int index, EmbeddableDefinition embeddable);
@@ -2431,7 +2435,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             for (Definition column : columns) {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
-                final String type = getJavaTypeRef(column, out, generateInterfaces() ? Mode.INTERFACE : Mode.RECORD);
+                final String type = getJavaTypeRef(column, out, generateInterfaces() ? Mode.INTERFACE : Mode.DEFAULT);
 
                 if (scala) {
                     arguments.add(columnMember + " : " + type);
@@ -2831,6 +2835,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String columnTypeFull = getJavaType(column.getType(resolver(out, Mode.DEFAULT)), out, Mode.DEFAULT);
             final String columnType = out.ref(columnTypeFull);
             final String columnTypeInterface = out.ref(getJavaType(column.getType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));
+            final UDTDefinition udt = column.getDatabase().getUDT(column.getSchema(), column.getType().getUserType());
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
@@ -2843,6 +2848,15 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%sdef %s(value: %s): %s = {", visibility(), setter, columnTypeInterface, setterReturnType);
                 out.println("if (value == null)");
                 out.println("set(%s, null)", index);
+
+                if (!isArrayOfUDTs) {
+                    out.println("else if (value.instanceOf[%s])", Record.class);
+                    out.println("set(%s, value)", index);
+
+                    if (isUDT && udt != null)
+                        generateRecordSetterSubtypeChecks0(out, index, udt);
+                }
+
                 out.println("else");
                 out.println("set(%s, value.into(new %s()))", index, out.ref(recordTypeFull));
 
@@ -2862,6 +2876,14 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("set(%s, null);", index);
 
                 if (isUDT) {
+                    if (!isArrayOfUDTs) {
+                        out.println("else if (value instanceof %s)", Record.class);
+                        out.println("set(%s, value);", index);
+
+                        if (udt != null)
+                            generateRecordSetterSubtypeChecks0(out, index, udt);
+                    }
+
                     out.println("else");
 
                     if (isArrayOfUDTs) {
@@ -2897,6 +2919,26 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("return this;");
 
                 out.println("}");
+            }
+        }
+    }
+
+    private void generateRecordSetterSubtypeChecks0(JavaWriter out, int index, UDTDefinition udt) {
+        for (UDTDefinition subtype : udt.getSubtypes()) {
+            generateRecordSetterSubtypeChecks0(out, index, subtype);
+
+            String recordType = out.ref(getStrategy().getFullJavaClassName(subtype, Mode.RECORD));
+            String interfaceType = out.ref(getStrategy().getFullJavaClassName(subtype, Mode.INTERFACE));
+
+            if (scala) {
+                out.println("else if (value.isInstanceOf[%s])", interfaceType);
+                out.println("set(%s, value.asInstanceOf[%s].into(new %s()))", index, interfaceType, recordType);
+            }
+            // TODO:
+            else if (kotlin) {}
+            else {
+                out.println("else if (value instanceof %s)", interfaceType);
+                out.println("set(%s, ((%s) value).into(new %s()));", index, interfaceType, recordType);
             }
         }
     }
@@ -3245,10 +3287,8 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.INTERFACE));
 
-        if (tableUdtOrEmbeddable instanceof UDTDefinition u) {
-            if (u.getSupertype() != null)
-                interfaces.add(out.ref(getStrategy().getFullJavaClassName(u.getSupertype(), Mode.INTERFACE)));
-        }
+        if (udtSupertype(tableUdtOrEmbeddable) != null)
+            interfaces.add(out.ref(getStrategy().getFullJavaClassName(udtSupertype(tableUdtOrEmbeddable), Mode.INTERFACE)));
 
         printPackage(out, tableUdtOrEmbeddable, Mode.INTERFACE);
         if (tableUdtOrEmbeddable instanceof TableDefinition)
@@ -3944,7 +3984,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
             try {
-                if (udt.getSupertype() != null || !udt.getSubtypes().isEmpty())
+                if (udt.isInTypeHierarchy())
                     generateUDTRecordType(udt);
             }
             catch (Exception e) {
@@ -5752,7 +5792,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String interfaceName = generateInterfaces()
             ? out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE))
             : "";
-        final String superName = out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, Mode.POJO));
+        final String superName =
+            udtSupertype(tableUdtOrEmbeddable) != null
+            ? out.ref(getStrategy().getFullJavaClassName(udtSupertype(tableUdtOrEmbeddable), Mode.POJO))
+            : out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, Mode.POJO));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.POJO));
         final String abstract_ = "";
         // [#644] TODO Get this to work
@@ -6400,6 +6443,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#3117] To avoid covariant setters on POJOs, we need to generate two setter overloads
         if (generateInterfaces() && (isUDT || isUDTArray)) {
             final String columnTypeInterface = out.ref(getJavaType(column.getType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));
+            final UDTDefinition udt = column.getDatabase().getUDT(column.getSchema(), column.getType().getUserType());
 
             out.println();
 
@@ -6409,6 +6453,10 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%sdef %s(%s: %s): %s = {", visibility(), columnSetter, scalaWhitespaceSuffix(columnMember), columnTypeInterface, columnSetterReturnType);
                 out.println("if (%s == null)", columnMember);
                 out.println("this.%s = null", columnMember);
+
+                if (isUDT && udt != null)
+                    generatePojoSetterSubtypeChecks0(out, index, column, udt);
+
                 out.println("else");
                 out.println("this.%s = %s.into(new %s)", columnMember, columnMember, columnType);
 
@@ -6424,6 +6472,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("this.%s = null;", columnMember);
 
                 if (isUDT) {
+                    if (udt != null)
+                        generatePojoSetterSubtypeChecks0(out, index, column, udt);
+
                     out.println("else");
 
                     if (isArrayOfUDTs) {
@@ -6452,6 +6503,28 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("return this;");
 
                 out.println("}");
+            }
+        }
+    }
+
+    private void generatePojoSetterSubtypeChecks0(JavaWriter out, int index, TypedElementDefinition<?> column, UDTDefinition udt) {
+        final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+        for (UDTDefinition subtype : udt.getSubtypes()) {
+            generatePojoSetterSubtypeChecks0(out, index, column, subtype);
+
+            String pojoType = out.ref(getStrategy().getFullJavaClassName(subtype, Mode.POJO));
+            String interfaceType = out.ref(getStrategy().getFullJavaClassName(subtype, Mode.INTERFACE));
+
+            if (scala) {
+                out.println("else if (%s.isInstanceOf[%s])", columnMember, interfaceType);
+                out.println("this.%s = %s.asInstanceOf[%s].into(new %s)", columnMember, columnMember, interfaceType, pojoType);
+            }
+            // TODO:
+            else if (kotlin) {}
+            else {
+                out.println("else if (%s instanceof %s)", columnMember, interfaceType);
+                out.println("this.%s = ((%s) %s).into(new %s());", columnMember, interfaceType, columnMember, pojoType);
             }
         }
     }
@@ -9360,10 +9433,8 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        if (tableUdtOrEmbeddable instanceof UDTDefinition u) {
-            if (u.getSupertype() != null)
-                printFromAndInto0(out, u.getSupertype(), mode);
-        }
+        if (udtSupertype(tableUdtOrEmbeddable) != null)
+            printFromAndInto0(out, udtSupertype(tableUdtOrEmbeddable), mode);
     }
 
     protected void printReferences(JavaWriter out, List<? extends Definition> definitions, Class<?> type) {

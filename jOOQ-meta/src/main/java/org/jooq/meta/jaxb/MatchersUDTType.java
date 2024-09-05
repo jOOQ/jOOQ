@@ -46,6 +46,9 @@ public class MatchersUDTType implements Serializable, XMLAppendable
     protected String recordExtends;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String recordImplements;
+    protected MatcherRule recordTypeClass;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String recordTypeImplements;
     protected MatcherRule interfaceClass;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String interfaceImplements;
@@ -256,6 +259,38 @@ public class MatchersUDTType implements Serializable, XMLAppendable
     }
 
     /**
+     * This rule influences the naming of the generated record type that is implemented by hierarchical {@link org.jooq.UDTRecord} objects.
+     * 
+     */
+    public MatcherRule getRecordTypeClass() {
+        return recordTypeClass;
+    }
+
+    /**
+     * This rule influences the naming of the generated record type that is implemented by hierarchical {@link org.jooq.UDTRecord} objects.
+     * 
+     */
+    public void setRecordTypeClass(MatcherRule value) {
+        this.recordTypeClass = value;
+    }
+
+    /**
+     * This string provides additional interfaces that a generated record type that is implemented by hierarchical {@link org.jooq.UDTRecord} should implement.
+     * 
+     */
+    public String getRecordTypeImplements() {
+        return recordTypeImplements;
+    }
+
+    /**
+     * This string provides additional interfaces that a generated record type that is implemented by hierarchical {@link org.jooq.UDTRecord} should implement.
+     * 
+     */
+    public void setRecordTypeImplements(String value) {
+        this.recordTypeImplements = value;
+    }
+
+    /**
      * This rule influences the naming of the generated interface implemented by the {@link org.jooq.UDTRecord} and/or the POJO.
      * 
      */
@@ -447,6 +482,24 @@ public class MatchersUDTType implements Serializable, XMLAppendable
     }
 
     /**
+     * This rule influences the naming of the generated record type that is implemented by hierarchical {@link org.jooq.UDTRecord} objects.
+     * 
+     */
+    public MatchersUDTType withRecordTypeClass(MatcherRule value) {
+        setRecordTypeClass(value);
+        return this;
+    }
+
+    /**
+     * This string provides additional interfaces that a generated record type that is implemented by hierarchical {@link org.jooq.UDTRecord} should implement.
+     * 
+     */
+    public MatchersUDTType withRecordTypeImplements(String value) {
+        setRecordTypeImplements(value);
+        return this;
+    }
+
+    /**
      * This rule influences the naming of the generated interface implemented by the {@link org.jooq.UDTRecord} and/or the POJO.
      * 
      */
@@ -504,6 +557,8 @@ public class MatchersUDTType implements Serializable, XMLAppendable
         builder.append("recordClass", recordClass);
         builder.append("recordExtends", recordExtends);
         builder.append("recordImplements", recordImplements);
+        builder.append("recordTypeClass", recordTypeClass);
+        builder.append("recordTypeImplements", recordTypeImplements);
         builder.append("interfaceClass", interfaceClass);
         builder.append("interfaceImplements", interfaceImplements);
         builder.append("pojoClass", pojoClass);
@@ -629,6 +684,24 @@ public class MatchersUDTType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (recordTypeClass == null) {
+            if (other.recordTypeClass!= null) {
+                return false;
+            }
+        } else {
+            if (!recordTypeClass.equals(other.recordTypeClass)) {
+                return false;
+            }
+        }
+        if (recordTypeImplements == null) {
+            if (other.recordTypeImplements!= null) {
+                return false;
+            }
+        } else {
+            if (!recordTypeImplements.equals(other.recordTypeImplements)) {
+                return false;
+            }
+        }
         if (interfaceClass == null) {
             if (other.interfaceClass!= null) {
                 return false;
@@ -692,6 +765,8 @@ public class MatchersUDTType implements Serializable, XMLAppendable
         result = ((prime*result)+((recordClass == null)? 0 :recordClass.hashCode()));
         result = ((prime*result)+((recordExtends == null)? 0 :recordExtends.hashCode()));
         result = ((prime*result)+((recordImplements == null)? 0 :recordImplements.hashCode()));
+        result = ((prime*result)+((recordTypeClass == null)? 0 :recordTypeClass.hashCode()));
+        result = ((prime*result)+((recordTypeImplements == null)? 0 :recordTypeImplements.hashCode()));
         result = ((prime*result)+((interfaceClass == null)? 0 :interfaceClass.hashCode()));
         result = ((prime*result)+((interfaceImplements == null)? 0 :interfaceImplements.hashCode()));
         result = ((prime*result)+((pojoClass == null)? 0 :pojoClass.hashCode()));

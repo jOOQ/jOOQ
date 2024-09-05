@@ -758,6 +758,14 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated {@link org.jooq.UDTRecord} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="recordTypeClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated record type that is implemented by hierarchical {@link org.jooq.UDTRecord} objects.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordTypeImplements" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This string provides additional interfaces that a generated record type that is implemented by hierarchical {@link org.jooq.UDTRecord} should implement.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="interfaceClass" type="tns:MatcherRule" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[This rule influences the naming of the generated interface implemented by the {@link org.jooq.UDTRecord} and/or the POJO.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -819,6 +827,18 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
       <element name="recordMemberOverride" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether an "override" modifier in generated record members (properties) should be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="recordTypeSetterOverride" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether an "override" modifier in generated record type setters should be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordTypeGetterOverride" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether an "override" modifier in generated record type getters should be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordTypeMemberOverride" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether an "override" modifier in generated record type members (properties) should be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="interfaceSetterOverride" type="boolean" minOccurs="0" maxOccurs="1" default="false">

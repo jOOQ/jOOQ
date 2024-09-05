@@ -416,6 +416,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                     MatchersAttributeType::isRecordSetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
+            case RECORD_TYPE:
+                return getJavaOverride0(definition,
+                    field -> false,
+                    MatchersAttributeType::isRecordTypeSetterOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
             case INTERFACE:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isInterfaceSetterOverride,
@@ -458,6 +464,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return getJavaOverride0(definition,
                     MatchersFieldType::isRecordGetterOverride,
                     MatchersAttributeType::isRecordGetterOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+            case RECORD_TYPE:
+                return getJavaOverride0(definition,
+                    field -> false,
+                    MatchersAttributeType::isRecordTypeGetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case INTERFACE:
@@ -629,11 +641,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             String result = null;
 
             switch (mode) {
-                case DEFAULT:   result = match(definition, udt.getExpression(), udt.getUdtImplements());       break;
-                case INTERFACE: result = match(definition, udt.getExpression(), udt.getInterfaceImplements()); break;
-                case POJO:      result = match(definition, udt.getExpression(), udt.getPojoImplements());      break;
-                case RECORD:    result = match(definition, udt.getExpression(), udt.getRecordImplements());    break;
-                case PATH:      result = match(definition, udt.getExpression(), udt.getPathImplements());      break;
+                case DEFAULT:     result = match(definition, udt.getExpression(), udt.getUdtImplements());        break;
+                case INTERFACE:   result = match(definition, udt.getExpression(), udt.getInterfaceImplements());  break;
+                case POJO:        result = match(definition, udt.getExpression(), udt.getPojoImplements());       break;
+                case RECORD:      result = match(definition, udt.getExpression(), udt.getRecordImplements());     break;
+                case RECORD_TYPE: result = match(definition, udt.getExpression(), udt.getRecordTypeImplements()); break;
+                case PATH:        result = match(definition, udt.getExpression(), udt.getPathImplements());       break;
             }
 
             if (result != null)
@@ -708,11 +721,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             String result = null;
 
             switch (mode) {
-                case DEFAULT:   result = match(definition, udt.getExpression(), udt.getUdtClass());               break;
-                case INTERFACE: result = match(definition, udt.getExpression(), udt.getInterfaceClass());         break;
-                case POJO:      result = match(definition, udt.getExpression(), udt.getPojoClass());              break;
-                case RECORD:    result = match(definition, udt.getExpression(), udt.getRecordClass());            break;
-                case PATH:      result = match(definition, udt.getExpression(), udt.getPathClass());              break;
+                case DEFAULT:     result = match(definition, udt.getExpression(), udt.getUdtClass());               break;
+                case INTERFACE:   result = match(definition, udt.getExpression(), udt.getInterfaceClass());         break;
+                case POJO:        result = match(definition, udt.getExpression(), udt.getPojoClass());              break;
+                case RECORD:      result = match(definition, udt.getExpression(), udt.getRecordClass());            break;
+                case RECORD_TYPE: result = match(definition, udt.getExpression(), udt.getRecordTypeClass());        break;
+                case PATH:        result = match(definition, udt.getExpression(), udt.getPathClass());              break;
             }
 
             if (result != null)
@@ -824,6 +838,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
                 return getJavaOverride0(definition,
                     MatchersFieldType::isRecordMemberOverride,
                     MatchersAttributeType::isRecordMemberOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
+            case RECORD_TYPE:
+                return getJavaOverride0(definition,
+                    field -> false,
+                    MatchersAttributeType::isRecordTypeMemberOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case INTERFACE:

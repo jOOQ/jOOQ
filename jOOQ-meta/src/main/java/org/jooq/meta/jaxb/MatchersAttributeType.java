@@ -42,6 +42,12 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "false")
     protected Boolean recordMemberOverride = false;
     @XmlElement(defaultValue = "false")
+    protected Boolean recordTypeSetterOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean recordTypeGetterOverride = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean recordTypeMemberOverride = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean interfaceSetterOverride = false;
     @XmlElement(defaultValue = "false")
     protected Boolean interfaceGetterOverride = false;
@@ -204,6 +210,78 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
      */
     public void setRecordMemberOverride(Boolean value) {
         this.recordMemberOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record type setters should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRecordTypeSetterOverride() {
+        return recordTypeSetterOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record type setters should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRecordTypeSetterOverride(Boolean value) {
+        this.recordTypeSetterOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record type getters should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRecordTypeGetterOverride() {
+        return recordTypeGetterOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record type getters should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRecordTypeGetterOverride(Boolean value) {
+        this.recordTypeGetterOverride = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record type members (properties) should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRecordTypeMemberOverride() {
+        return recordTypeMemberOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record type members (properties) should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRecordTypeMemberOverride(Boolean value) {
+        this.recordTypeMemberOverride = value;
     }
 
     /**
@@ -423,6 +501,33 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether an "override" modifier in generated record type setters should be generated.
+     * 
+     */
+    public MatchersAttributeType withRecordTypeSetterOverride(Boolean value) {
+        setRecordTypeSetterOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record type getters should be generated.
+     * 
+     */
+    public MatchersAttributeType withRecordTypeGetterOverride(Boolean value) {
+        setRecordTypeGetterOverride(value);
+        return this;
+    }
+
+    /**
+     * Whether an "override" modifier in generated record type members (properties) should be generated.
+     * 
+     */
+    public MatchersAttributeType withRecordTypeMemberOverride(Boolean value) {
+        setRecordTypeMemberOverride(value);
+        return this;
+    }
+
+    /**
      * Whether an "override" modifier in generated interface setters should be generated.
      * 
      */
@@ -486,6 +591,9 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
         builder.append("recordSetterOverride", recordSetterOverride);
         builder.append("recordGetterOverride", recordGetterOverride);
         builder.append("recordMemberOverride", recordMemberOverride);
+        builder.append("recordTypeSetterOverride", recordTypeSetterOverride);
+        builder.append("recordTypeGetterOverride", recordTypeGetterOverride);
+        builder.append("recordTypeMemberOverride", recordTypeMemberOverride);
         builder.append("interfaceSetterOverride", interfaceSetterOverride);
         builder.append("interfaceGetterOverride", interfaceGetterOverride);
         builder.append("interfaceMemberOverride", interfaceMemberOverride);
@@ -585,6 +693,33 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (recordTypeSetterOverride == null) {
+            if (other.recordTypeSetterOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!recordTypeSetterOverride.equals(other.recordTypeSetterOverride)) {
+                return false;
+            }
+        }
+        if (recordTypeGetterOverride == null) {
+            if (other.recordTypeGetterOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!recordTypeGetterOverride.equals(other.recordTypeGetterOverride)) {
+                return false;
+            }
+        }
+        if (recordTypeMemberOverride == null) {
+            if (other.recordTypeMemberOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!recordTypeMemberOverride.equals(other.recordTypeMemberOverride)) {
+                return false;
+            }
+        }
         if (interfaceSetterOverride == null) {
             if (other.interfaceSetterOverride!= null) {
                 return false;
@@ -654,6 +789,9 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
         result = ((prime*result)+((recordSetterOverride == null)? 0 :recordSetterOverride.hashCode()));
         result = ((prime*result)+((recordGetterOverride == null)? 0 :recordGetterOverride.hashCode()));
         result = ((prime*result)+((recordMemberOverride == null)? 0 :recordMemberOverride.hashCode()));
+        result = ((prime*result)+((recordTypeSetterOverride == null)? 0 :recordTypeSetterOverride.hashCode()));
+        result = ((prime*result)+((recordTypeGetterOverride == null)? 0 :recordTypeGetterOverride.hashCode()));
+        result = ((prime*result)+((recordTypeMemberOverride == null)? 0 :recordTypeMemberOverride.hashCode()));
         result = ((prime*result)+((interfaceSetterOverride == null)? 0 :interfaceSetterOverride.hashCode()));
         result = ((prime*result)+((interfaceGetterOverride == null)? 0 :interfaceGetterOverride.hashCode()));
         result = ((prime*result)+((interfaceMemberOverride == null)? 0 :interfaceMemberOverride.hashCode()));

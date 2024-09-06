@@ -3348,7 +3348,7 @@ public class JavaGenerator extends AbstractGenerator {
             printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
 
         if (scala)
-            out.println("%strait %s[[before= extends ][%s]] {", visibility(), className, interfaces);
+            out.println("%strait %s[[before= extends ][separator= with ][%s]] {", visibility(), className, interfaces);
         else if (kotlin)
             out.println("%sinterface %s[[before= : ][%s]] {", visibility(), className, interfaces);
         else
@@ -5837,8 +5837,7 @@ public class JavaGenerator extends AbstractGenerator {
             ? out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE))
             : "";
         final String superName =
-        // [#644] [#17189] TODO: Support this in ScalaGenerator
-            !scala && udtSupertype(tableUdtOrEmbeddable) != null
+              udtSupertype(tableUdtOrEmbeddable) != null
             ? out.ref(getStrategy().getFullJavaClassName(udtSupertype(tableUdtOrEmbeddable), Mode.POJO)) + (kotlin
                 ? "(" + udtSupertype(tableUdtOrEmbeddable)
                         .getAttributes()

@@ -41,6 +41,7 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
+import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 
@@ -132,7 +133,7 @@ implements
         if (Record.class.isAssignableFrom(arrayType)) {
             try {
                 return new FieldsImpl<>(map(
-                    ((Record) arrayType.getDeclaredConstructor().newInstance()).fields(),
+                    getRecordQualifier(arrayType).fields(),
                     f -> DSL.field(alias.append(f.getUnqualifiedName()), f.getDataType())
                 ));
             }

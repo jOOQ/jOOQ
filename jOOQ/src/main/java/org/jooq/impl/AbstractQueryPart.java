@@ -239,20 +239,4 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     protected final DataAccessException translate(String sql, SQLException e) {
         return Tools.translate(sql, e);
     }
-
-    private static final JooqLogger log = JooqLogger.getLogger(AbstractQueryPart.class, "serialization", 100);
-
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-
-        if (log.isWarnEnabled())
-            log.warn("DEPRECATION", "A QueryPart of type " + getClass() + " has been deserialised. Serialization support is deprecated in jOOQ. Please contact https://github.com/jOOQ/jOOQ/issues/11506 and state your use-case to see if it can be implemented otherwise.");
-    }
-
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject();
-
-        if (log.isWarnEnabled())
-            log.warn("DEPRECATION", "A QueryPart of type " + getClass() + " has been serialised. Serialization support is deprecated in jOOQ. Please contact https://github.com/jOOQ/jOOQ/issues/11506 and state your use-case to see if it can be implemented otherwise.");
-    }
 }

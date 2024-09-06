@@ -42,6 +42,8 @@ import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
+import static org.jooq.impl.Tools.getRecordQualifier;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 
 // ...
@@ -120,7 +122,7 @@ final class ArrayTable extends AbstractTable<Record> implements UNotYetImplement
         if (Record.class.isAssignableFrom(arrayType)) {
             try {
                 return new FieldsImpl<>(map(
-                    ((Record) arrayType.getDeclaredConstructor().newInstance()).fields(),
+                    getRecordQualifier(arrayType).fields(),
                     f -> DSL.field(name(alias.last(), f.getName()), f.getDataType())
                 ));
             }

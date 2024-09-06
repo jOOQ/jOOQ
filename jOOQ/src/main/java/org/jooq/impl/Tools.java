@@ -3688,7 +3688,7 @@ final class Tools {
 
     static final RecordQualifier<?> getRecordQualifier(Class<?> t) {
         try {
-            return ((QualifiedRecord<?>) t.getDeclaredConstructor().newInstance()).getQualifier();
+            return ((QualifiedRecord<?>) Reflect.accessible(t.getDeclaredConstructor()).newInstance()).getQualifier();
         }
         catch (Exception e) {
             throw new IllegalArgumentException(e);

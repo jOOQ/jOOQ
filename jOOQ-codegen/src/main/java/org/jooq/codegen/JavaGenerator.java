@@ -3067,7 +3067,7 @@ public class JavaGenerator extends AbstractGenerator {
             printTableJPAAnnotation(out, (TableDefinition) tableUdtOrEmbeddable);
 
         if (scala)
-            out.println("%strait %s[[before= extends ][%s]] {", visibility(), className, interfaces);
+            out.println("%strait %s[[before= extends ][separator= with ][%s]] {", visibility(), className, interfaces);
         else if (kotlin)
             out.println("%sinterface %s[[before= : ][%s]] {", visibility(), className, interfaces);
         else

@@ -53,9 +53,11 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_AND;
@@ -75,6 +77,7 @@ import static org.jooq.impl.QOM.FrameExclude.TIES;
 import static org.jooq.impl.QOM.FrameUnits.GROUPS;
 import static org.jooq.impl.QOM.FrameUnits.RANGE;
 import static org.jooq.impl.QOM.FrameUnits.ROWS;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.isEmpty;
@@ -194,6 +197,8 @@ implements
                 Field<Integer> constant;
 
                 switch (ctx.family()) {
+
+
 
 
 

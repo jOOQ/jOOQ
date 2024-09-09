@@ -221,6 +221,7 @@ implements
         switch (ctx.family()) {
 
 
+
             case DUCKDB:
                 if (nullTreatment == NullTreatment.IGNORE_NULLS)
                     ctx.sql(' ').visit(K_IGNORE_NULLS);
@@ -231,6 +232,7 @@ implements
 
     final void acceptNullTreatment(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 

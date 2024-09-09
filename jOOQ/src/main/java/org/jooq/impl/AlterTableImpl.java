@@ -254,6 +254,8 @@ implements
 
 
 
+
+
     private final Table<?>               table;
     private final boolean                ifExists;
     private boolean                      ifExistsColumn;
@@ -1222,7 +1224,16 @@ implements
             if (unqualify)
                 ctx.qualify(false);
 
-            ctx.visit(renameObject || renameTable ? K_TO : K_RENAME_TO).sql(' ')
+            Keyword renameToKeyword = K_RENAME_TO;
+
+            if (renameObject || renameTable)
+                renameToKeyword = K_TO;
+
+
+
+
+
+            ctx.visit(renameToKeyword).sql(' ')
                .visit(renameTo);
 
             if (unqualify)
@@ -1254,6 +1265,7 @@ implements
                        .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;
+
 
 
 

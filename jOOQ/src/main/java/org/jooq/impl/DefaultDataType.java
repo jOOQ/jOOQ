@@ -88,6 +88,8 @@ import static org.jooq.impl.SQLDataType.TINYINT;
 import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
+import static org.jooq.impl.Tools.NO_SUPPORT_TIME_PRECISION;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.tools.reflect.Reflect.wrapper;
 
@@ -107,6 +109,7 @@ import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
@@ -118,6 +121,7 @@ import org.jooq.Nullability;
 import org.jooq.QualifiedRecord;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -1113,5 +1117,18 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                 d = d.precision(p);
 
         return d;
+    }
+
+    static final boolean unsupportedDatetimePrecision(Scope ctx, DataType<?> type) {
+        if (!type.isDateTime())
+            return false;
+        else if (!type.precisionDefined())
+            return false;
+        else if ((type.isTime() || type.isTimeWithTimeZone()) && NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect()))
+            return true;
+        else if (!type.isTime() && !type.isTimeWithTimeZone() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
+            return true;
+        else
+            return false;
     }
 }

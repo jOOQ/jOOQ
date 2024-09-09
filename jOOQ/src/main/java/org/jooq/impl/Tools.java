@@ -133,6 +133,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.DefaultDataType.unsupportedDatetimePrecision;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultParseContext.SUPPORTS_HASH_COMMENT_SYNTAX;
 import static org.jooq.impl.DerivedTable.NO_SUPPORT_CORRELATED_DERIVED_TABLE;
@@ -5494,6 +5495,7 @@ final class Tools {
 
 
 
+
             case FIREBIRD: {
                 begin(ctx, c -> {
                     executeImmediate(c, runnable);
@@ -6136,10 +6138,7 @@ final class Tools {
         }
         else if (type.hasPrecision()
             && type.precisionDefined()
-            && (!type.isDateTime()
-               || (type.isTime() || type.isTimeWithTimeZone()) && !NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect())
-               || !type.isTime() && !type.isTimeWithTimeZone() && !NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect())
-            )
+            && !unsupportedDatetimePrecision(ctx, type)
         ) {
 
             // [#6745] [#9473] The DataType.getCastTypeName() cannot be used in some dialects, for DDL

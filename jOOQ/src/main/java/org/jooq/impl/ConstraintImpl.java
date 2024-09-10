@@ -166,6 +166,10 @@ implements
 
 
 
+
+
+
+
     private Field<?>[]                   unique;
     private Field<?>[]                   primaryKey;
     private Field<?>[]                   foreignKey;
@@ -270,6 +274,10 @@ implements
 
             if (!enforced)
                 acceptEnforced(ctx, enforced);
+
+
+
+
 
 
 
@@ -1178,10 +1186,19 @@ implements
         return identity != null && primaryKey != null && primaryKey.length == 1 && primaryKey[0].getName().equals(identity.getName());
     }
 
-    final boolean supported(Context<?> ctx) {
+    final boolean supported(Context<?> ctx, Table<?> onTable) {
         return primaryKey != null && !NO_SUPPORT_PK.contains(ctx.dialect())
             || unique != null && !NO_SUPPORT_UK.contains(ctx.dialect())
-            || references != null && !NO_SUPPORT_FK.contains(ctx.dialect())
+            || references != null && !NO_SUPPORT_FK.contains(ctx.dialect()) && supportedSelfReference(ctx, onTable)
             || check != null && !NO_SUPPORT_CHECK.contains(ctx.dialect());
+    }
+
+    final boolean supportedSelfReference(Context<?> ctx, Table<?> onTable) {
+
+
+
+
+
+        return true;
     }
 }

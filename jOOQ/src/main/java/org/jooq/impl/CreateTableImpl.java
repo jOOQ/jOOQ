@@ -544,7 +544,7 @@ implements
 
                 // [#6841] SQLite has a weird requirement of the PRIMARY KEY keyword being on the column directly,
                 //         when there is an identity. Thus, we must not repeat the primary key specification here.
-                if (((ConstraintImpl) constraint).supported(ctx) && (ctx.family() != SQLITE || !matchingPrimaryKey(constraint, identity)))
+                if (((ConstraintImpl) constraint).supported(ctx, table) && (ctx.family() != SQLITE || !matchingPrimaryKey(constraint, identity)))
                     ctx.sql(',')
                        .formatSeparator()
                        .visit(constraint);

@@ -65,6 +65,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
@@ -131,7 +132,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
-import org.jooq.Source;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -149,8 +149,6 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * An implementation of the public {@link Meta} type.

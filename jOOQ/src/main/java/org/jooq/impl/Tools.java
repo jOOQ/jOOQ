@@ -4827,6 +4827,7 @@ final class Tools {
 
 
 
+
     /**
      * [#3681] Consume all {@link ResultSet}s from a JDBC {@link Statement}.
      */

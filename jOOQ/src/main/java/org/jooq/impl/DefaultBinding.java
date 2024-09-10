@@ -2295,6 +2295,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 default:
                     return Types.BOOLEAN;
             }

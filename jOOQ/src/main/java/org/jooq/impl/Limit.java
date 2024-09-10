@@ -505,6 +505,7 @@ final class Limit extends AbstractQueryPart implements UTransient {
 
         this.offset = offset;
         this.offsetOrZero = offset == null ? ZERO.get() : offset;
+        this.offsetPlusOne = offset == null ? ONE.get() : iadd(offset, one());
     }
 
     final void setLimit(Number l) {

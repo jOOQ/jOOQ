@@ -1126,7 +1126,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             return false;
         else if ((type.isTime() || type.isTimeWithTimeZone()) && NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect()))
             return true;
-        else if (!type.isTime() && !type.isTimeWithTimeZone() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
+        else if (!type.isTime() && !type.isTimeWithTimeZone() && Tools.NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
             return true;
         else
             return false;

@@ -1367,7 +1367,7 @@ public final class QOM {
 
     public /*sealed*/ interface FieldAlias<T>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             Aliasable<Field<?>>
         /*permits
             FieldAlias*/
@@ -1383,7 +1383,7 @@ public final class QOM {
 
     public /*sealed*/ interface Function<T>
         extends
-            Field<T>
+            org.jooq.Field<T>
         /*permits
             org.jooq.impl.Function,
             org.jooq.impl.Function1*/
@@ -1393,7 +1393,7 @@ public final class QOM {
 
     public /*sealed*/ interface Cast<T>
         extends
-            Field<T>
+            org.jooq.Field<T>
         /*permits
             Cast*/
     {
@@ -1402,7 +1402,7 @@ public final class QOM {
 
     public /*sealed*/ interface Coerce<T>
         extends
-            Field<T>
+            org.jooq.Field<T>
         /*permits
             Coerce*/
     {
@@ -1411,7 +1411,7 @@ public final class QOM {
 
     public /*sealed*/ interface Default<T>
         extends
-            Field<T>,
+            org.jooq.Field<T>,
             UEmpty
         /*permits
             Default*/
@@ -1419,7 +1419,7 @@ public final class QOM {
 
     public /*sealed*/ interface Collated
         extends
-            Field<String>
+            org.jooq.Field<String>
         /*permits
             Collated*/
     {
@@ -1429,7 +1429,7 @@ public final class QOM {
 
     public /*sealed*/ interface Array<T>
         extends
-            Field<T[]>
+            org.jooq.Field<T[]>
         /*permits
             org.jooq.impl.Array*/
     {
@@ -1438,7 +1438,7 @@ public final class QOM {
 
     public /*sealed*/ interface ArrayQuery<T>
         extends
-            Field<T[]>
+            org.jooq.Field<T[]>
         /*permits
             ArrayQuery*/
     {

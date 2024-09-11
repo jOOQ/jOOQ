@@ -105,6 +105,7 @@ public final class Decfloat extends Number implements Data {
      * Check whether this value is the {@link Decfloat} equivalent of {@link Double#NaN}.
      */
     public final boolean isNaN() {
+        parse();
         return special == Special.NAN;
     }
 
@@ -113,6 +114,7 @@ public final class Decfloat extends Number implements Data {
      * {@link Double#POSITIVE_INFINITY}.
      */
     public final boolean isPositiveInfinity() {
+        parse();
         return special == Special.POSITIVE_INFINITY;
     }
 
@@ -121,6 +123,7 @@ public final class Decfloat extends Number implements Data {
      * {@link Double#NEGATIVE_INFINITY}.
      */
     public final boolean isNegativeInfinity() {
+        parse();
         return special == Special.NEGATIVE_INFINITY;
     }
 

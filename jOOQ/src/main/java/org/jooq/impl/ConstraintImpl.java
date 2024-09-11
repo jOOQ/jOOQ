@@ -152,13 +152,13 @@ implements
 
 
 {
-    private static final Clause[]        CLAUSES                      = { CONSTRAINT };
-    private static final Set<SQLDialect> NO_SUPPORT_NAMED             = SQLDialect.supportedBy();
-    private static final Set<SQLDialect> NO_SUPPORT_NAMED_PK          = SQLDialect.supportedBy(CLICKHOUSE);
-    private static final Set<SQLDialect> NO_SUPPORT_PK                = SQLDialect.supportedBy(TRINO);
-    private static final Set<SQLDialect> NO_SUPPORT_UK                = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
-    private static final Set<SQLDialect> NO_SUPPORT_FK                = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
-    private static final Set<SQLDialect> NO_SUPPORT_CHECK             = SQLDialect.supportedBy(IGNITE, TRINO);
+    private static final Clause[] CLAUSES                      = { CONSTRAINT };
+    static final Set<SQLDialect>  NO_SUPPORT_NAMED             = SQLDialect.supportedBy();
+    static final Set<SQLDialect>  NO_SUPPORT_NAMED_PK          = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect>  NO_SUPPORT_PK                = SQLDialect.supportedBy(TRINO);
+    static final Set<SQLDialect>  NO_SUPPORT_UK                = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
+    static final Set<SQLDialect>  NO_SUPPORT_FK                = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
+    static final Set<SQLDialect>  NO_SUPPORT_CHECK             = SQLDialect.supportedBy(IGNITE, TRINO);
 
 
 
@@ -170,15 +170,15 @@ implements
 
 
 
-    private Field<?>[]                   unique;
-    private Field<?>[]                   primaryKey;
-    private Field<?>[]                   foreignKey;
-    private Table<?>                     referencesTable;
-    private Field<?>[]                   references;
-    private Action                       onDelete;
-    private Action                       onUpdate;
-    private Condition                    check;
-    private boolean                      enforced = true;
+    private Field<?>[]            unique;
+    private Field<?>[]            primaryKey;
+    private Field<?>[]            foreignKey;
+    private Table<?>              referencesTable;
+    private Field<?>[]            references;
+    private Action                onDelete;
+    private Action                onUpdate;
+    private Condition             check;
+    private boolean               enforced                     = true;
 
     ConstraintImpl() {
         this(null);

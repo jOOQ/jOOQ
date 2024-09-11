@@ -2316,6 +2316,15 @@ public class JavaGenerator extends AbstractGenerator {
         return false;
     }
 
+    private boolean supportPojoInheritance() {
+        if (scala)
+            return !generatePojosAsScalaCaseClasses();
+        else if (kotlin)
+            return !generatePojosAsKotlinDataClasses();
+        else
+            return !generatePojosAsJavaRecordClasses();
+    }
+
     private final UDTDefinition udtSupertype(Definition definition) {
         return definition instanceof UDTDefinition u ? u.getSupertype() : null;
     }
@@ -2923,7 +2932,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.println();
-                out.println("private %s to%s(%s %s) {", type, toUC(member), varargsIfArray(typeInterface), member);
+                out.println("private static %s to%s(%s %s) {", type, toUC(member), varargsIfArray(typeInterface), member);
                 out.println("if (%s == null)", member);
                 out.println("return null;");
 
@@ -5848,7 +5857,7 @@ public class JavaGenerator extends AbstractGenerator {
             ? out.ref(getStrategy().getFullJavaClassName(tableUdtOrEmbeddable, Mode.INTERFACE))
             : "";
         final String superName =
-              udtSupertype(tableUdtOrEmbeddable) != null
+              udtSupertype(tableUdtOrEmbeddable) != null && supportPojoInheritance()
             ? out.ref(getStrategy().getFullJavaClassName(udtSupertype(tableUdtOrEmbeddable), Mode.POJO)) + (kotlin || scala
                 ? "(" + udtSupertype(tableUdtOrEmbeddable)
                         .getAttributes()
@@ -5859,7 +5868,6 @@ public class JavaGenerator extends AbstractGenerator {
                 : "")
             : out.ref(getStrategy().getJavaClassExtends(tableUdtOrEmbeddable, Mode.POJO));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(tableUdtOrEmbeddable, Mode.POJO));
-        final boolean open = !udtSubtypes(tableUdtOrEmbeddable).isEmpty();
         final String abstract_ = "";
         // [#644] TODO Get this to work
         // tableUdtOrEmbeddable instanceof UDTDefinition && !((UDTDefinition) tableUdtOrEmbeddable).isInstantiable() ? "abstract " : "";
@@ -5891,7 +5899,7 @@ public class JavaGenerator extends AbstractGenerator {
             forEach(replacingEmbeddablesAndUnreplacedColumns, (column, separator) -> {
                 out.println("%s%s%s: %s%s",
                     visibility(generateInterfaces()),
-                    udtAttributeOverride(column)
+                    udtAttributeOverride(column) && supportPojoInheritance()
                         ? ""
                         : generateImmutablePojos()
                         ? "val "
@@ -5905,13 +5913,15 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")[[before= extends ][%s]][[before= with ][separator= with ][%s]] {", first(superTypes), remaining(superTypes));
         }
         else if (kotlin) {
+            final boolean open = supportPojoInheritance() && !udtSubtypes(tableUdtOrEmbeddable).isEmpty();
+
             out.println("%s%s%s%sclass %s(", visibility(), abstract_, open ? "open " : "", (generatePojosAsKotlinDataClasses() ? "data " : ""), className);
 
             forEach(replacingEmbeddablesAndUnreplacedColumns, (column, separator) -> {
                 final String member = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String nullability = kotlinNullability(out, column, Mode.POJO);
                 final boolean override =
-                       udtAttributeOverride(column)
+                       udtAttributeOverride(column) && supportPojoInheritance()
                     || getStrategy().getJavaMemberOverride(column, Mode.POJO);
 
                 if (column instanceof ColumnDefinition)
@@ -5993,19 +6003,19 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
         else {
-            if (!generatePojosAsJavaRecordClasses()) {
 
-                // [#1363] [#7055] copy constructor
-                generatePojoCopyConstructor(tableUdtOrEmbeddable, out);
+            // [#1363] [#7055] [#17232] copy constructor
+            generatePojoCopyConstructor(tableUdtOrEmbeddable, out);
 
-                // Multi-constructor
+            // [#17232] Multi-constructor should only be generated on non-records, or if it's different from the
+            //          record's canonical constructor (with interfaces)
+            if (!generatePojosAsJavaRecordClasses() || generateInterfaces() && replacingEmbeddablesAndUnreplacedColumns.stream().anyMatch(c -> columnTypeDefinition(c) != null))
                 generatePojoMultiConstructor(tableUdtOrEmbeddable, out);
-            }
 
             for (int i = 0; i < embeddablesAndUnreplacedColumns.size(); i++) {
                 Definition column = embeddablesAndUnreplacedColumns.get(i);
 
-                if (scala && udtAttributeOverride(column))
+                if (scala && udtAttributeOverride(column) && supportPojoInheritance())
                     continue;
 
                 if (!generatePojosAsJavaRecordClasses() || generateInterfaces() || isNonReplacingEmbeddable(column)) {
@@ -6125,34 +6135,63 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
             out.println(") {");
 
-            if (udtSupertype(tableUdtOrEmbeddable) != null) {
-                out.println("super(");
+            if (generatePojosAsJavaRecordClasses()) {
+                out.println("this(");
 
-                List<Definition> overrides = replacingEmbeddablesAndUnreplacedColumns
-                    .stream()
-                    .filter(this::udtAttributeOverride)
-                    .collect(toList());
-
-                forEach(overrides, (column, separator) -> {
+                forEach(replacingEmbeddablesAndUnreplacedColumns, (column, separator) -> {
                     final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-                    Wrap wrap = wrapInterface(column, out, Mode.POJO);
+                    final Wrap wrap = wrapInterface(column, out, Mode.POJO);
 
                     out.println("%s%s%s%s", wrap.prefix(), columnMember, wrap.suffix(), separator);
                 });
 
                 out.println(");");
-                out.println();
             }
+            else {
+                if (udtSupertype(tableUdtOrEmbeddable) != null) {
+                    out.println("super(");
 
-            for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
-                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-                final Wrap wrap = wrapInterface(column, out, Mode.POJO);
+                    List<Definition> overrides = replacingEmbeddablesAndUnreplacedColumns
+                        .stream()
+                        .filter(this::udtAttributeOverride)
+                        .collect(toList());
 
-                out.println("this.%s = %s%s%s;", columnMember, wrap.prefix(), columnMember, wrap.suffix());
+                    forEach(overrides, (column, separator) -> {
+                        final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                        Wrap wrap = wrapInterface(column, out, Mode.POJO);
+
+                        out.println("%s%s%s%s", wrap.prefix(), columnMember, wrap.suffix(), separator);
+                    });
+
+                    out.println(");");
+                    out.println();
+                }
+
+                for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
+                    final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+                    final Wrap wrap = wrapInterface(column, out, Mode.POJO);
+
+                    out.println("this.%s = %s%s%s;", columnMember, wrap.prefix(), columnMember, wrap.suffix());
+                }
             }
 
             out.println("}");
         }
+    }
+
+    private Definition columnTypeDefinition(Definition column) {
+        if (column instanceof TypedElementDefinition<?> e) {
+            if (e.getType().isUDT())
+                return e.getDatabase().getUDT(e.getSchema(), e.getType().getQualifiedUserType());
+        }
+
+
+
+
+
+
+
+        return null;
     }
 
     static final record Wrap(String prefix, String suffix) {}
@@ -6163,21 +6202,9 @@ public class JavaGenerator extends AbstractGenerator {
 
     private Wrap wrapInterface(Definition column, JavaWriter out, Mode mode, boolean check) {
         if (check) {
-            boolean wrap = false;
-            Definition definition = null;
+            Definition definition = columnTypeDefinition(column);
 
-            if (column instanceof TypedElementDefinition<?> e) {
-                wrap = e.getType().isUDT();
-                definition = e.getDatabase().getUDT(e.getSchema(), e.getType().getQualifiedUserType());
-            }
-
-
-
-
-
-
-
-            if (wrap) {
+            if (definition != null) {
                 String typeName = out.ref(getStrategy().getFullJavaClassName(definition, mode));
                 String memberName = getStrategy().getJavaMemberName(column, mode);
 
@@ -6584,7 +6611,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("if (%s == null)", columnMember);
                 out.println("return null");
 
-                if (isUDT)
+                if (isUDT && supportPojoInheritance())
                     generatePojoSetterSubtypeChecks0(out, index, column, udt);
 
                 out.println("else");
@@ -6607,12 +6634,13 @@ public class JavaGenerator extends AbstractGenerator {
 
             else {
                 out.println();
-                out.println("private %s to%s(%s %s) {", columnType, toUC(columnMember), varargsIfArray(columnTypeInterface), columnMember);
+                out.println("private static %s to%s(%s %s) {", columnType, toUC(columnMember), varargsIfArray(columnTypeInterface), columnMember);
                 out.println("if (%s == null)", columnMember);
                 out.println("return null;");
 
                 if (isUDT) {
-                    generatePojoSetterSubtypeChecks0(out, index, column, udt);
+                    if (supportPojoInheritance())
+                        generatePojoSetterSubtypeChecks0(out, index, column, udt);
 
                     out.println("else");
 

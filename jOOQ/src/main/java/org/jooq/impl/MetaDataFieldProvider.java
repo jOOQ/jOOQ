@@ -130,30 +130,38 @@ final class MetaDataFieldProvider implements Serializable {
                 DataType<?> dataType = SQLDataType.OTHER;
                 String type = meta.getColumnTypeName(i);
 
-                try {
-                    dataType = DefaultDataType.getDataType(
-                        configuration.family(),
-                        type,
-                        precision,
-                        scale,
-                        !FALSE.equals(configuration.settings().isForceIntegerTypesOnZeroScaleDecimals())
-                    );
+                // [#17203] jconn4 has a bug here where for some data types (e.g. timestamp), it doesn't return anything
+                if (type != null) {
+                    try {
+                        dataType = DefaultDataType.getDataType(
+                            configuration.family(),
+                            type,
+                            precision,
+                            scale,
+                            !FALSE.equals(configuration.settings().isForceIntegerTypesOnZeroScaleDecimals())
+                        );
 
-                    if (dataType.hasPrecision())
-                        dataType = dataType.precision(precision);
-                    if (dataType.hasScale())
-                        dataType = dataType.scale(scale);
+                        if (dataType.hasPrecision())
+                            dataType = dataType.precision(precision);
+                        if (dataType.hasScale())
+                            dataType = dataType.scale(scale);
 
-                    // JDBC doesn't distinguish between precision and length
-                    if (dataType.hasLength())
-                        dataType = dataType.length(precision);
+                        // JDBC doesn't distinguish between precision and length
+                        if (dataType.hasLength())
+                            dataType = dataType.length(precision);
+                    }
+
+                    // [#650, #667] All types should be known at this point, but in plain
+                    // SQL environments, it is possible that user-defined types, or vendor-specific
+                    // types (e.g. such as PostgreSQL's json type) will cause this exception.
+                    catch (SQLDialectNotSupportedException e) {
+                        if (log.isDebugEnabled())
+                            log.debug("Not supported by dialect", e.getMessage());
+                    }
                 }
-
-                // [#650, #667] All types should be known at this point, but in plain
-                // SQL environments, it is possible that user-defined types, or vendor-specific
-                // types (e.g. such as PostgreSQL's json type) will cause this exception.
-                catch (SQLDialectNotSupportedException e) {
-                    log.debug("Not supported by dialect", e.getMessage());
+                else {
+                    if (log.isDebugEnabled())
+                        log.debug("No type name is available at column index: " + i);
                 }
 
                 fields[i - 1] = field(name, dataType);

@@ -1479,9 +1479,16 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Object[] value) throws SQLException {
             switch (ctx.family()) {
+                case POSTGRES: {
+
+                    // [#12485] Passing the array string as OTHER (OID = unspecified) may prevent poor
+                    //          decisions by the PostgreSQL optimiser.
+                    ctx.statement().setObject(ctx.index(), toPGArrayString(value), Types.OTHER);
+                    break;
+                }
 
 
-                case POSTGRES:
+
                 case YUGABYTEDB: {
                     ctx.statement().setString(ctx.index(), toPGArrayString(value));
                     break;

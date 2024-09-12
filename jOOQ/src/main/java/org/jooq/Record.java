@@ -592,6 +592,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     /**
      * Check if this record has been touched since it was created or fetched
      * from the database.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @see #original()
      * @see #touched(Field)
@@ -603,6 +606,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     /**
      * Check if a field's value has been touched since the record was created or
      * fetched from the database, using {@link #field(Field)} for lookup.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @see #touched()
      * @see #original(Field)
@@ -612,6 +618,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     /**
      * Check if a field's value has been touched since the record was created or
      * fetched from the database, using {@link #field(int)} for lookup.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @param fieldIndex The 0-based field index in this record.
      * @see #touched()
@@ -622,6 +631,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     /**
      * Check if a field's value has been touched since the record was created or
      * fetched from the database, using {@link #field(String)} for lookup.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @see #touched()
      * @see #original(String)
@@ -631,6 +643,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     /**
      * Check if a field's value has been touched since the record was created or
      * fetched from the database, using {@link #field(Name)} for lookup.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @see #touched()
      * @see #original(Name)
@@ -642,7 +657,10 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <p>
      * If the <code>touched</code> argument is <code>false</code>, the
      * {@link #original()} values will be reset to the corresponding "current"
-     * values as well
+     * values as well.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @see #touched()
      * @see #touched(Field, boolean)
@@ -657,7 +675,10 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <p>
      * If the <code>touched</code> argument is <code>false</code>, the
      * {@link #original(Field)} value will be reset to the corresponding
-     * "current" value as well
+     * "current" value as well.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @see #touched()
      * @see #touched(Field)
@@ -670,7 +691,10 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <p>
      * If the <code>touched</code> argument is <code>false</code>, the
      * {@link #original(int)} value will be reset to the corresponding "current"
-     * value as well
+     * value as well.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @param fieldIndex The 0-based field index in this record.
      * @see #touched()
@@ -684,7 +708,10 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <p>
      * If the <code>touched</code> argument is <code>false</code>, the
      * {@link #touched(String)} value will be reset to the corresponding
-     * "current" value as well
+     * "current" value as well.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @see #touched()
      * @see #touched(String)
@@ -697,12 +724,78 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <p>
      * If the <code>touched</code> argument is <code>false</code>, the
      * {@link #original(Name)} value will be reset to the corresponding
-     * "current" value as well
+     * "current" value as well.
+     * <p>
+     * A record may have been {@link #touched()} (a setter was called) without
+     * having been {@link #modified()} (a value was changed).
      *
      * @see #touched()
      * @see #touched(Name)
      */
     void touched(Name fieldName, boolean touched);
+
+    /**
+     * Check if this record has been modified since it was created or fetched
+     * from the database.
+     * <p>
+     * When a record is {@link #modified()}, then it has always been
+     * {@link #touched()} as well.
+     *
+     * @see #original()
+     * @see #modified(Field)
+     * @see #modified(int)
+     * @see #modified(String)
+     */
+    boolean modified();
+
+    /**
+     * Check if a field's value has been modified since the record was created or
+     * fetched from the database, using {@link #field(Field)} for lookup.
+     * <p>
+     * When a record is {@link #modified()}, then it has always been
+     * {@link #touched()} as well.
+     *
+     * @see #modified()
+     * @see #original(Field)
+     */
+    boolean modified(Field<?> field);
+
+    /**
+     * Check if a field's value has been modified since the record was created or
+     * fetched from the database, using {@link #field(int)} for lookup.
+     * <p>
+     * When a record is {@link #modified()}, then it has always been
+     * {@link #touched()} as well.
+     *
+     * @param fieldIndex The 0-based field index in this record.
+     * @see #modified()
+     * @see #original(int)
+     */
+    boolean modified(int fieldIndex);
+
+    /**
+     * Check if a field's value has been modified since the record was created or
+     * fetched from the database, using {@link #field(String)} for lookup.
+     * <p>
+     * When a record is {@link #modified()}, then it has always been
+     * {@link #touched()} as well.
+     *
+     * @see #modified()
+     * @see #original(String)
+     */
+    boolean modified(String fieldName);
+
+    /**
+     * Check if a field's value has been modified since the record was created or
+     * fetched from the database, using {@link #field(Name)} for lookup.
+     * <p>
+     * When a record is {@link #modified()}, then it has always been
+     * {@link #touched()} as well.
+     *
+     * @see #modified()
+     * @see #original(Name)
+     */
+    boolean modified(Name fieldName);
 
     /**
      * Reset all values to their {@link #original()} values and all

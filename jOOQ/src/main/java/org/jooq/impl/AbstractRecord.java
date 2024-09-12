@@ -553,6 +553,37 @@ implements
     }
 
     @Override
+    public final boolean modified() {
+        for (int i = 0; i < size(); i++)
+            if (modified(i))
+                return true;
+
+
+        return false;
+    }
+
+    @Override
+    public final boolean modified(Field<?> field) {
+        return modified(indexOrFail(fields, field));
+    }
+
+    @Override
+    public final boolean modified(int fieldIndex) {
+        int i = safeIndex(fieldIndex);
+        return touched.get(i) && !deepEqual(values[i], originals[i]);
+    }
+
+    @Override
+    public final boolean modified(String fieldName) {
+        return modified(indexOrFail(fields, fieldName));
+    }
+
+    @Override
+    public final boolean modified(Name fieldName) {
+        return modified(indexOrFail(fields, fieldName));
+    }
+
+    @Override
     public final void reset() {
         touched.clear();
 

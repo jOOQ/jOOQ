@@ -268,7 +268,6 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
             try {
                 appendWrapped(String.format(string, translated.toArray()), indent.toString());
-                appendWrapped(String.format(string, translated.toArray()), indent.toString());
             }
             catch (Exception e) {
                 throw new RuntimeException("Error when formatting " + string + " with args " + Arrays.asList(args) + " in file " + file, e);

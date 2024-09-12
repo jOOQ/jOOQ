@@ -2806,8 +2806,8 @@ final class Tools {
 
     static final ObjIntPredicate<Record> recordDirtyTrackingPredicate(Attachable attachable) {
         return RecordDirtyTracking.MODIFIED.equals(configuration(attachable).settings().getRecordDirtyTracking())
-            ? Record::touched
-            : Record::modified;
+            ? Record::modified
+            : Record::touched;
     }
 
 

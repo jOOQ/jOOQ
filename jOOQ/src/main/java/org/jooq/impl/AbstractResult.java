@@ -47,6 +47,7 @@ import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Tools.recordDirtyTrackingPredicate;
 import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.StringUtils.rightPad;
@@ -163,6 +164,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             int size = fields.size();
             final int[] decimalPlaces = new int[size];
             final int[] widths = new int[size];
+            ObjIntPredicate<Record> dirty = recordDirtyTrackingPredicate(this);
 
             for (int index = 0; index < size; index++) {
                 if (Number.class.isAssignableFrom(fields.field(index).getType())) {
@@ -173,7 +175,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                     // Collect all decimal places for the column values
                     for (R record : buffer)
-                        decimalPlacesList.add(decimalPlaces(format0(record.get(index), record.touched(index), true)));
+                        decimalPlacesList.add(decimalPlaces(format0(record.get(index), dirty.test(record, index), true)));
 
                     // Find max
                     decimalPlaces[index] = Collections.max(decimalPlacesList);
@@ -197,7 +199,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                 // Add column values width
                 for (R record : buffer) {
-                    String value = format0(record.get(index), record.touched(index), true);
+                    String value = format0(record.get(index), dirty.test(record, index), true);
 
                     // Align number values before width is calculated
                     if (isNumCol)
@@ -283,7 +285,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         StringUtils.replace(
                             StringUtils.replace(
                                 StringUtils.replace(
-                                    format0(record.get(index), record.touched(index), true), "\n", "{lf}"
+                                    format0(record.get(index), dirty.test(record, index), true), "\n", "{lf}"
                                 ), "\r", "{cr}"
                             ), "\t", "{tab}"
                         );

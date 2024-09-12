@@ -268,6 +268,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.MatchResult;
@@ -354,6 +355,7 @@ import org.jooq.conf.BackslashEscaping;
 import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.ParseNameCase;
+import org.jooq.conf.RecordDirtyTracking;
 import org.jooq.conf.RenderDefaultNullability;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.RenderQuotedNames;
@@ -2790,16 +2792,25 @@ final class Tools {
     /**
      * Turn a {@link Record} into a {@link Map}
      */
-    static final Map<Field<?>, Object> mapOfTouchedValues(Record record) {
+    static final Map<Field<?>, Object> mapOfTouchedValues(Attachable attachable, Record record) {
         Map<Field<?>, Object> result = new LinkedHashMap<>();
         int size = record.size();
+        ObjIntPredicate<Record> dirty = recordDirtyTrackingPredicate(attachable);
 
         for (int i = 0; i < size; i++)
-            if (record.touched(i))
+            if (dirty.test(record, i))
                 result.put(record.field(i), record.get(i));
 
         return result;
     }
+
+    static final ObjIntPredicate<Record> recordDirtyTrackingPredicate(Attachable attachable) {
+        return RecordDirtyTracking.MODIFIED.equals(configuration(attachable).settings().getRecordDirtyTracking())
+            ? Record::touched
+            : Record::modified;
+    }
+
+
 
     /**
      * Extract the first item from an iterable or <code>null</code>, if there is

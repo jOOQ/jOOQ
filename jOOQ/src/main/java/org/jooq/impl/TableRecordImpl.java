@@ -65,6 +65,7 @@ import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.let;
+import static org.jooq.impl.Tools.recordDirtyTrackingPredicate;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -308,9 +309,10 @@ implements
     final List<Field<?>> addTouchedValues(Field<?>[] storeFields, StoreQuery<R> query, boolean forUpdate) {
         FieldsImpl<Record> f = new FieldsImpl<>(storeFields);
         List<Field<?>> result = new ArrayList<>();
+        ObjIntPredicate<Record> dirty = recordDirtyTrackingPredicate(query);
 
         for (Field<?> field : fields.fields.fields) {
-            if (touched(field) && f.field(field) != null && writable(field, forUpdate)) {
+            if (dirty.test(this, indexOf(field)) && f.field(field) != null && writable(field, forUpdate)) {
                 addValue(query, field, forUpdate);
                 result.add(field);
             }

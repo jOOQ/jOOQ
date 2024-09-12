@@ -1328,6 +1328,10 @@ This flag has no effect when "executeWithOptimisticLocking" is turned off.]]></j
       <element name="updateUnchangedRecords" type="jooq-runtime:UpdateUnchangedRecords" minOccurs="0" maxOccurs="1" default="NEVER">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether {@link org.jooq.UpdatableRecord#update()} calls should be executed if the record is unchanged. This also affects the <code>UPDATE</code> part of {@link org.jooq.UpdatableRecord#store()} and {@link org.jooq.UpdatableRecord#merge()} calls.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="recordDirtyTracking" type="jooq-runtime:RecordDirtyTracking" minOccurs="0" maxOccurs="1" default="TOUCHED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether {@link org.jooq.UpdatableRecord#store()} and related calls should be based on {@link org.jooq.Record#touched()} or {@link org.jooq.Record#modified()} semantics. This also affects copying records into explicit statements.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="updatablePrimaryKeys" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether primary key values are deemed to be "updatable" in jOOQ.
@@ -2395,6 +2399,17 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
     
       <!-- Update unchanged records by setting record values to the values from the record, e.g. SET a = :a, b = :b. This is the same as calling record.changed(true) prior to updating. -->
       <enumeration value="SET_NON_PRIMARY_KEY_TO_RECORD_VALUES"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="RecordDirtyTracking">
+    <restriction base="string">
+    
+      <!-- Dirty tracking is based on Record.touched() semantics -->
+      <enumeration value="TOUCHED"/>
+      
+      <!-- Dirty tracking is based on Record.modified() semantics -->
+      <enumeration value="MODIFIED"/>
     </restriction>
   </simpleType>
   

@@ -60,6 +60,7 @@ import static org.jooq.impl.RecordDelegate.RecordLifecycleType.STORE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.UPDATE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_TABLE_FIELD;
+import static org.jooq.impl.Tools.recordDirtyTrackingPredicate;
 import static org.jooq.impl.Tools.settings;
 
 import java.math.BigInteger;
@@ -204,10 +205,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             executeUpdate = fetched;
         }
         else {
+            ObjIntPredicate<Record> dirty = recordDirtyTrackingPredicate(this);
             for (TableField<R, ?> field : keys) {
 
                 // If any primary key value is null or touched
-                if (touched(field) ||
+                if (dirty.test(this, indexOf(field)) ||
 
                 // [#3237] or if a NOT NULL primary key value is null, then execute an INSERT
                    (field.getDataType().nullable() == false && get(field) == null)) {

@@ -456,6 +456,13 @@ fun MatchersUDTType.recordClass(block: MatcherRule.() -> Unit) {
     block(recordClass)
 }
 
+fun MatchersUDTType.recordTypeClass(block: MatcherRule.() -> Unit) {
+    if (recordTypeClass == null)
+        recordTypeClass = MatcherRule()
+
+    block(recordTypeClass)
+}
+
 fun MatchersUDTType.interfaceClass(block: MatcherRule.() -> Unit) {
     if (interfaceClass == null)
         interfaceClass = MatcherRule()

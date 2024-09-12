@@ -378,6 +378,9 @@ public class Settings
     @XmlElement(defaultValue = "NEVER")
     @XmlSchemaType(name = "string")
     protected UpdateUnchangedRecords updateUnchangedRecords = UpdateUnchangedRecords.NEVER;
+    @XmlElement(defaultValue = "TOUCHED")
+    @XmlSchemaType(name = "string")
+    protected RecordDirtyTracking recordDirtyTracking = RecordDirtyTracking.TOUCHED;
     @XmlElement(defaultValue = "false")
     protected Boolean updatablePrimaryKeys = false;
     @XmlElement(defaultValue = "true")
@@ -5176,6 +5179,22 @@ public class Settings
     }
 
     /**
+     * Whether {@link org.jooq.UpdatableRecord#store()} and related calls should be based on {@link org.jooq.Record#touched()} or {@link org.jooq.Record#modified()} semantics. This also affects copying records into explicit statements.
+     * 
+     */
+    public RecordDirtyTracking getRecordDirtyTracking() {
+        return recordDirtyTracking;
+    }
+
+    /**
+     * Whether {@link org.jooq.UpdatableRecord#store()} and related calls should be based on {@link org.jooq.Record#touched()} or {@link org.jooq.Record#modified()} semantics. This also affects copying records into explicit statements.
+     * 
+     */
+    public void setRecordDirtyTracking(RecordDirtyTracking value) {
+        this.recordDirtyTracking = value;
+    }
+
+    /**
      * Whether primary key values are deemed to be "updatable" in jOOQ.
      * <p>
      * Setting this to "true" will allow for updating primary key values through
@@ -8866,6 +8885,15 @@ public class Settings
     }
 
     /**
+     * Whether {@link org.jooq.UpdatableRecord#store()} and related calls should be based on {@link org.jooq.Record#touched()} or {@link org.jooq.Record#modified()} semantics. This also affects copying records into explicit statements.
+     * 
+     */
+    public Settings withRecordDirtyTracking(RecordDirtyTracking value) {
+        setRecordDirtyTracking(value);
+        return this;
+    }
+
+    /**
      * Whether primary key values are deemed to be "updatable" in jOOQ.
      * <p>
      * Setting this to "true" will allow for updating primary key values through
@@ -9810,6 +9838,7 @@ public class Settings
         builder.append("attachRecords", attachRecords);
         builder.append("insertUnchangedRecords", insertUnchangedRecords);
         builder.append("updateUnchangedRecords", updateUnchangedRecords);
+        builder.append("recordDirtyTracking", recordDirtyTracking);
         builder.append("updatablePrimaryKeys", updatablePrimaryKeys);
         builder.append("reflectionCaching", reflectionCaching);
         builder.append("cacheRecordMappers", cacheRecordMappers);
@@ -11270,6 +11299,15 @@ public class Settings
                 return false;
             }
         }
+        if (recordDirtyTracking == null) {
+            if (other.recordDirtyTracking!= null) {
+                return false;
+            }
+        } else {
+            if (!recordDirtyTracking.equals(other.recordDirtyTracking)) {
+                return false;
+            }
+        }
         if (updatablePrimaryKeys == null) {
             if (other.updatablePrimaryKeys!= null) {
                 return false;
@@ -12148,6 +12186,7 @@ public class Settings
         result = ((prime*result)+((attachRecords == null)? 0 :attachRecords.hashCode()));
         result = ((prime*result)+((insertUnchangedRecords == null)? 0 :insertUnchangedRecords.hashCode()));
         result = ((prime*result)+((updateUnchangedRecords == null)? 0 :updateUnchangedRecords.hashCode()));
+        result = ((prime*result)+((recordDirtyTracking == null)? 0 :recordDirtyTracking.hashCode()));
         result = ((prime*result)+((updatablePrimaryKeys == null)? 0 :updatablePrimaryKeys.hashCode()));
         result = ((prime*result)+((reflectionCaching == null)? 0 :reflectionCaching.hashCode()));
         result = ((prime*result)+((cacheRecordMappers == null)? 0 :cacheRecordMappers.hashCode()));

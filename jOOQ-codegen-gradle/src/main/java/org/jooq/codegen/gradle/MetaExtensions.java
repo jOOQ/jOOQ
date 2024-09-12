@@ -621,6 +621,12 @@ public class MetaExtensions {
             setRecordClass(o);
         }
 
+        public void recordTypeClass(Action<MatcherRuleExtension> action) {
+            MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
+            action.execute(o);
+            setRecordTypeClass(o);
+        }
+
         public void interfaceClass(Action<MatcherRuleExtension> action) {
             MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
             action.execute(o);

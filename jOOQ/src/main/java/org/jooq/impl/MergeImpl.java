@@ -1020,7 +1020,7 @@ implements
 
     @Override
     public final MergeImpl set(Record record) {
-        return set(Tools.mapOfTouchedValues(record));
+        return set(Tools.mapOfTouchedValues(this, record));
     }
 
     @Override

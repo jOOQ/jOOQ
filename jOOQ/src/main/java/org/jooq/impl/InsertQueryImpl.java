@@ -104,6 +104,7 @@ import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.orElse;
 import static org.jooq.impl.Tools.qualify;
+import static org.jooq.impl.Tools.recordDirtyTrackingPredicate;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
@@ -306,8 +307,10 @@ implements
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final void setRecordForUpdate(R record) {
+        ObjIntPredicate<Record> dirty = recordDirtyTrackingPredicate(this);
+
         for (int i = 0; i < record.size(); i++)
-            if (record.touched(i))
+            if (dirty.test(record, i))
                 addValueForUpdate((Field) record.field(i), record.get(i));
     }
 

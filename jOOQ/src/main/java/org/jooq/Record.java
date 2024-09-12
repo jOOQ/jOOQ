@@ -739,7 +739,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * from the database.
      * <p>
      * When a record is {@link #modified()}, then it has always been
-     * {@link #touched()} as well.
+     * {@link #touched()} as well. Unlike the {@link #touched()} property, this
+     * property cannot be set and is derived only from the comparison between
+     * this record and the {@link #original()} record.
      *
      * @see #original()
      * @see #modified(Field)
@@ -749,11 +751,13 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     boolean modified();
 
     /**
-     * Check if a field's value has been modified since the record was created or
-     * fetched from the database, using {@link #field(Field)} for lookup.
+     * Check if a field's value has been modified since the record was created
+     * or fetched from the database, using {@link #field(Field)} for lookup.
      * <p>
      * When a record is {@link #modified()}, then it has always been
-     * {@link #touched()} as well.
+     * {@link #touched()} as well. Unlike the {@link #touched(Field)} property,
+     * this property cannot be set and is derived only from the comparison
+     * between #get(Field) and {@link #original(Field)} values.
      *
      * @see #modified()
      * @see #original(Field)
@@ -761,11 +765,13 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     boolean modified(Field<?> field);
 
     /**
-     * Check if a field's value has been modified since the record was created or
-     * fetched from the database, using {@link #field(int)} for lookup.
+     * Check if a field's value has been modified since the record was created
+     * or fetched from the database, using {@link #field(int)} for lookup.
      * <p>
      * When a record is {@link #modified()}, then it has always been
-     * {@link #touched()} as well.
+     * {@link #touched()} as well. Unlike the {@link #touched(int)} property,
+     * this property cannot be set and is derived only from the comparison
+     * between #get(int) and {@link #original(int)} values.
      *
      * @param fieldIndex The 0-based field index in this record.
      * @see #modified()
@@ -774,11 +780,13 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     boolean modified(int fieldIndex);
 
     /**
-     * Check if a field's value has been modified since the record was created or
-     * fetched from the database, using {@link #field(String)} for lookup.
+     * Check if a field's value has been modified since the record was created
+     * or fetched from the database, using {@link #field(String)} for lookup.
      * <p>
      * When a record is {@link #modified()}, then it has always been
-     * {@link #touched()} as well.
+     * {@link #touched()} as well. Unlike the {@link #touched(String)} property,
+     * this property cannot be set and is derived only from the comparison
+     * between #get(String) and {@link #original(String)} values.
      *
      * @see #modified()
      * @see #original(String)
@@ -790,7 +798,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * fetched from the database, using {@link #field(Name)} for lookup.
      * <p>
      * When a record is {@link #modified()}, then it has always been
-     * {@link #touched()} as well.
+     * {@link #touched()} as well. Unlike the {@link #touched(Name)} property,
+     * this property cannot be set and is derived only from the comparison
+     * between #get(Name) and {@link #original(Name)} values.
      *
      * @see #modified()
      * @see #original(Name)

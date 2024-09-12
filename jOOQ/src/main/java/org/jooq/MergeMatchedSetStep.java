@@ -56,6 +56,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Map;
 
+import org.jooq.conf.Settings;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -153,9 +155,11 @@ public interface MergeMatchedSetStep<R extends Record> {
      * statement's <code>WHEN MATCHED</code> clause.
      * <p>
      * This is the same as calling {@link #set(Map)} with the argument record
-     * treated as a <code>Map&lt;Field&lt;?&gt;, Object&gt;</code>, except that the
-     * {@link Record#touched()} flags are taken into consideration in order to
-     * update only touched values.
+     * treated as a <code>Map&lt;Field&lt;?&gt;, Object&gt;</code>, except that
+     * the {@link Record#touched()} flags (or {@link Record#modified()} flags,
+     * depending on the query's {@link Settings#getRecordDirtyTracking()}
+     * configuration) are taken into consideration in order to update only
+     * touched (or modified) values.
      *
      * @see #set(Map)
      */

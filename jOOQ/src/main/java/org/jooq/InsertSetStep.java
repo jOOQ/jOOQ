@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jooq.conf.Settings;
+
 import org.jetbrains.annotations.*;
 
 // ...
@@ -339,9 +341,11 @@ public interface InsertSetStep<R extends Record> {
      * Set values in the <code>INSERT</code> statement.
      * <p>
      * This is the same as calling {@link #set(Map)} with the argument record
-     * treated as a <code>Map&lt;Field&lt;?&gt;, Object&gt;</code>, except that the
-     * {@link Record#touched()} flags are taken into consideration in order to
-     * update only touched values.
+     * treated as a <code>Map&lt;Field&lt;?&gt;, Object&gt;</code>, except that
+     * the {@link Record#touched()} flags (or {@link Record#modified()} flags,
+     * depending on the query's {@link Settings#getRecordDirtyTracking()}
+     * configuration) are taken into consideration in order to update only
+     * touched (or modified) values.
      *
      * @see #set(Map)
      */

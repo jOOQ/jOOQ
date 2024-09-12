@@ -177,7 +177,15 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             blockComment = false;
 
         if (indentTabsAllLines < 0 && !Boolean.getBoolean("mute-indentation-error"))
-            new IllegalStateException("A formatting error has been produced by https://github.com/jOOQ/jOOQ/issues/10196").printStackTrace(System.err);
+            new IllegalStateException("""
+                A formatting error has been produced
+
+                This is most likely due to a mismatch of opening and closing brackets, e.g. [], {}, ().
+                The problematic file is {file}
+
+                See also https://github.com/jOOQ/jOOQ/issues/10196
+                """.replace("{file}", "" + file)
+            ).printStackTrace(System.err);
 
         int indentTabsThisLine0 = indentTabsThisLine;
         StringBuilder indent = new StringBuilder();
@@ -266,7 +274,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 appendWrapped(String.format(string, translated.toArray()), indent.toString());
             }
             catch (Exception e) {
-                throw new RuntimeException("Error when formatting " + string + " with args " + Arrays.asList(args), e);
+                throw new RuntimeException("Error when formatting " + string + " with args " + Arrays.asList(args) + " in file " + file, e);
             }
         }
         else
@@ -490,7 +498,16 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
     protected String beforeClose(String string) {
         if (indentTabsAllLines > 0 && !Boolean.getBoolean("mute-indentation-error"))
-            new IllegalStateException("A formatting error has been produced by https://github.com/jOOQ/jOOQ/issues/10196").printStackTrace(System.err);
+            new IllegalStateException(
+                """
+                A formatting error has been produced
+
+                This is most likely due to a mismatch of opening and closing brackets, e.g. [], {}, ().
+                The problematic file is {file}
+
+                See also https://github.com/jOOQ/jOOQ/issues/10196
+                """.replace("{file}", "" + file)
+            ).printStackTrace(System.err);
 
         return string;
     }

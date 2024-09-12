@@ -2720,7 +2720,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             // [#14817] [#14727] Make sure the same behaviour as from(Object) is implemented
-            out.println("resetChangedOnNotNull()%s", semicolon);
+            out.println("resetTouchedOnNotNull()%s", semicolon);
 
             if (pojoArgument && degree > 0)
                 out.println("}");
@@ -9640,7 +9640,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#14727] Make sure the same behaviour as from(Object) is implemented
         if (mode == Mode.RECORD)
-            out.println("resetChangedOnNotNull()%s", semicolon);
+            out.println("resetTouchedOnNotNull()%s", semicolon);
 
         out.println("}");
 

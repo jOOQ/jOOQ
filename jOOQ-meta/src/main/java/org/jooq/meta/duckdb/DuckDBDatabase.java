@@ -115,15 +115,25 @@ import org.jetbrains.annotations.NotNull;
  */
 public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatabase {
 
-    private Boolean is0100;
+    private Boolean is_0_10_0;
+    private Boolean is_1_1_0;
 
-    boolean is0100() {
+    boolean is_0_10_0() {
 
         // [#16289] The COMMENTS fields were introduced with DuckDB 0.10.0
-        if (is0100 == null)
-            is0100 = configuredDialectIsNotFamilyAndSupports(asList(DUCKDB), () -> exists(DUCKDB_TABLES.COMMENT));
+        if (is_0_10_0 == null)
+            is_0_10_0 = configuredDialectIsNotFamilyAndSupports(asList(DUCKDB), () -> exists(DUCKDB_TABLES.COMMENT));
 
-        return is0100;
+        return is_0_10_0;
+    }
+
+    boolean is_1_1_0() {
+
+        // [#16492] The CONSTRAINT_NAME field was introduced with DuckDB 1.1.0
+        if (is_1_1_0 == null)
+            is_1_1_0 = configuredDialectIsNotFamilyAndSupports(asList(DUCKDB), () -> exists(DUCKDB_CONSTRAINTS.CONSTRAINT_NAME));
+
+        return is_1_1_0;
     }
 
     @Override
@@ -152,7 +162,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
             if (catalog != null) {
                 SchemaDefinition schema = catalog.getSchema(record.get(DUCKDB_CONSTRAINTS.SCHEMA_NAME));
-                String key = record.get(DUCKDB_CONSTRAINTS.CONSTRAINT_TEXT);
+                String key = record.get(DUCKDB_CONSTRAINTS.CONSTRAINT_NAME);
                 String tableName = record.get(DUCKDB_CONSTRAINTS.TABLE_NAME);
                 String columnName = record.get(DUCKDB_CONSTRAINTS.CONSTRAINT_COLUMN_NAMES, String.class);
 
@@ -170,7 +180,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
             if (catalog != null) {
                 SchemaDefinition schema = catalog.getSchema(record.get(DUCKDB_CONSTRAINTS.SCHEMA_NAME));
-                String key = record.get(DUCKDB_CONSTRAINTS.CONSTRAINT_TEXT);
+                String key = record.get(DUCKDB_CONSTRAINTS.CONSTRAINT_NAME);
                 String tableName = record.get(DUCKDB_CONSTRAINTS.TABLE_NAME);
                 String columnName = record.get(DUCKDB_CONSTRAINTS.CONSTRAINT_COLUMN_NAMES, String.class);
 
@@ -197,13 +207,15 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
                 DUCKDB_CONSTRAINTS.DATABASE_NAME,
                 DUCKDB_CONSTRAINTS.SCHEMA_NAME,
                 DUCKDB_CONSTRAINTS.TABLE_NAME,
-                DUCKDB_CONSTRAINTS.DATABASE_NAME
-                    .concat(inline("__"))
-                    .concat(DUCKDB_CONSTRAINTS.SCHEMA_NAME)
-                    .concat(inline("__"))
-                    .concat(DUCKDB_CONSTRAINTS.TABLE_NAME)
-                    .concat(inline("__"))
-                    .concat(DUCKDB_CONSTRAINTS.CONSTRAINT_TEXT).as(DUCKDB_CONSTRAINTS.CONSTRAINT_TEXT),
+                is_1_1_0()
+                    ? DUCKDB_CONSTRAINTS.CONSTRAINT_NAME
+                    : DUCKDB_CONSTRAINTS.DATABASE_NAME
+                        .concat(inline("__"))
+                        .concat(DUCKDB_CONSTRAINTS.SCHEMA_NAME)
+                        .concat(inline("__"))
+                        .concat(DUCKDB_CONSTRAINTS.TABLE_NAME)
+                        .concat(inline("__"))
+                        .concat(DUCKDB_CONSTRAINTS.CONSTRAINT_TEXT).as(DUCKDB_CONSTRAINTS.CONSTRAINT_NAME),
                 field("unnest({0})", VARCHAR, DUCKDB_CONSTRAINTS.CONSTRAINT_COLUMN_NAMES).as(DUCKDB_CONSTRAINTS.CONSTRAINT_COLUMN_NAMES),
                 field("unnest({0})", INTEGER, DUCKDB_CONSTRAINTS.CONSTRAINT_COLUMN_INDEXES).as(DUCKDB_CONSTRAINTS.CONSTRAINT_COLUMN_INDEXES)
             )
@@ -240,7 +252,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
             .join(pkKcu)
                 .on(pkKcu.CONSTRAINT_SCHEMA.eq(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA))
                 .and(pkKcu.CONSTRAINT_NAME.eq(TABLE_CONSTRAINTS.CONSTRAINT_NAME))
-                .and(pkKcu.ORDINAL_POSITION.eq(fkKcu.POSITION_IN_UNIQUE_CONSTRAINT))
+                .and(pkKcu.ORDINAL_POSITION.eq(fkKcu.POSITION_IN_UNIQUE_CONSTRAINT.coerce(pkKcu.ORDINAL_POSITION)))
             .where(fkKcu.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 fkKcu.TABLE_SCHEMA.asc(),
@@ -474,7 +486,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
                 DUCKDB_TABLES.SCHEMA_NAME,
                 DUCKDB_TABLES.TABLE_NAME,
                 inline(TableType.TABLE.name()).as("table_type"),
-                is0100()
+                is_0_10_0()
                     ? DUCKDB_TABLES.COMMENT
                     : inline(null, VARCHAR).as(DUCKDB_TABLES.COMMENT)
             )
@@ -488,7 +500,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
                     DUCKDB_VIEWS.SCHEMA_NAME,
                     DUCKDB_VIEWS.VIEW_NAME,
                     inline(TableType.VIEW.name()).as("table_type"),
-                    is0100()
+                    is_0_10_0()
                         ? DUCKDB_VIEWS.COMMENT
                         : inline(null, VARCHAR).as(DUCKDB_VIEWS.COMMENT)
                 )

@@ -1574,13 +1574,13 @@ final class Tools {
      * [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
      * then we should let the database apply DEFAULT values
      */
-    static final void resetChangedOnNotNull(Record record) {
+    static final void resetTouchedOnNotNull(Record record) {
         int size = record.size();
 
         for (int i = 0; i < size; i++)
             if (record.get(i) == null)
                 if (!record.field(i).getDataType().nullable())
-                    record.changed(i, false);
+                    record.touched(i, false);
     }
 
     /**
@@ -2790,12 +2790,12 @@ final class Tools {
     /**
      * Turn a {@link Record} into a {@link Map}
      */
-    static final Map<Field<?>, Object> mapOfChangedValues(Record record) {
+    static final Map<Field<?>, Object> mapOfTouchedValues(Record record) {
         Map<Field<?>, Object> result = new LinkedHashMap<>();
         int size = record.size();
 
         for (int i = 0; i < size; i++)
-            if (record.changed(i))
+            if (record.touched(i))
                 result.put(record.field(i), record.get(i));
 
         return result;
@@ -3748,7 +3748,7 @@ final class Tools {
 
         target.values[targetIndex] = targetType.convert(source.get(sourceIndex));
         target.originals[targetIndex] = targetType.convert(source.original(sourceIndex));
-        target.changed.set(targetIndex, source.changed(sourceIndex));
+        target.touched.set(targetIndex, source.touched(sourceIndex));
     }
 
     /**
@@ -4291,7 +4291,7 @@ final class Tools {
      */
     static final <T> void addCondition(org.jooq.ConditionProvider provider, Record record, Field<T> field) {
 
-        // [#2764] If primary keys are allowed to be changed, the
+        // [#2764] If primary keys are allowed to be touched, the
         if (updatablePrimaryKeys(settings(record)))
             provider.addConditions(condition(field, record.original(field)));
         else

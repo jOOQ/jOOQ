@@ -197,7 +197,7 @@ final class JSONReader<R extends Record> {
                         else
                             r.fromMap(record);
 
-                        r.changed(false);
+                        r.touched(false);
                         return r;
                     }));
                 }
@@ -220,7 +220,7 @@ final class JSONReader<R extends Record> {
                     else
                         result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
                             r.from(record);
-                            r.changed(false);
+                            r.touched(false);
                             return r;
                         }));
                 }
@@ -299,7 +299,7 @@ final class JSONReader<R extends Record> {
 
                 record.set(i, newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
                     r.from(l);
-                    r.changed(false);
+                    r.touched(false);
                     return r;
                 }));
             }

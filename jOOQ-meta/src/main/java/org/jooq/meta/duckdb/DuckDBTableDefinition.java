@@ -92,7 +92,7 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
                 when(
                     DUCKDB_TYPES.LOGICAL_TYPE.eq(inline("STRUCT")),
                     DUCKDB_TYPES.TYPE_NAME).as(DUCKDB_TYPES.TYPE_NAME),
-                ((DuckDBDatabase) getDatabase()).is0100()
+                ((DuckDBDatabase) getDatabase()).is_0_10_0()
                     ? DUCKDB_COLUMNS.COMMENT
                     : inline(null, VARCHAR).as(DUCKDB_COLUMNS.COMMENT)
             )

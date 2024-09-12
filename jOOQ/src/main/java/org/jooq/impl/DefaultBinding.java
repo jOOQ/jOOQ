@@ -4393,7 +4393,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     DefaultBindingGetResultSetContext<?> c = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), ctx.resultSet(), ctx.index());
                     r.field(0).getBinding().get((BindingGetResultSetContext) c);
                     r.fromArray(c.value());
-                    r.changed(false);
+                    r.touched(false);
                     return r;
                 }));
             }
@@ -4592,7 +4592,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                             for (int i = 0; i < row.size(); i++)
                                 pgSetValue(ctx, r, row.field(i), values.get(i));
 
-                            r.changed(false);
+                            r.touched(false);
                             return r;
                         });
         }
@@ -4753,7 +4753,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             result.add(newRecord(true, recordType, row, c).operate(r -> {
                 r.from(asList(s));
-                r.changed(false);
+                r.touched(false);
                 return r;
             }));
 

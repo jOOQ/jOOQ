@@ -48,7 +48,6 @@ import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.indexFail;
 import static org.jooq.impl.Tools.indexOrFail;
-import static org.jooq.impl.Tools.resetChangedOnNotNull;
 import static org.jooq.impl.Tools.settings;
 
 import java.io.Writer;
@@ -131,7 +130,7 @@ implements
     final AbstractRow<? extends AbstractRecord> fields;
     final Object[]                              values;
     final Object[]                              originals;
-    final BitSet                                changed;
+    final BitSet                                touched;
     boolean                                     fetched;
 
     /**
@@ -156,7 +155,7 @@ implements
         this.fields = (AbstractRow<? extends AbstractRecord>) fields;
         this.values = new Object[size];
         this.originals = new Object[size];
-        this.changed = new BitSet(size);
+        this.touched = new BitSet(size);
     }
 
     // ------------------------------------------------------------------------
@@ -319,35 +318,34 @@ implements
 
         // Normal fields' changed flag is always set to true
         if (key == null || !key.getFields().contains(field)) {
-            changed.set(index);
+            touched.set(index);
         }
 
         // The primary key's changed flag might've been set previously
-        else if (changed.get(index)) {
-            changed.set(index);
+        else if (touched.get(index)) {
+            touched.set(index);
         }
 
         // [#2764] Users may override updatability of primary key values
         else if (updatablePrimaryKeys(settings(this))) {
-            changed.set(index);
+            touched.set(index);
         }
 
         // [#2698] If the primary key has not yet been set
         else if (originals[index] == null) {
-            changed.set(index);
+            touched.set(index);
         }
 
-        // [#979] If the primary key is being changed, all other fields' flags
+        // [#979] If the primary key is being touched, all other fields' flags
         // need to be set to true for in case this record is stored again, an
         // INSERT statement will thus be issued
         else {
 
-            // [#945] Be sure that changed is never reset to false
-            changed.set(index, changed.get(index) || !StringUtils.equals(values[index], value));
+            // [#945] Be sure that touched is never reset to false
+            touched.set(index, touched.get(index) || !StringUtils.equals(values[index], value));
 
-            if (changed.get(index)) {
-                changed(true);
-            }
+            if (touched.get(index))
+                touched(true);
         }
 
         values[index] = value;
@@ -379,7 +377,7 @@ implements
 
             values[targetIndex] = record.get(sourceIndex);
             originals[targetIndex] = record.original(sourceIndex);
-            changed.set(targetIndex, record.changed(sourceIndex));
+            touched.set(targetIndex, record.touched(sourceIndex));
         }
     }
 
@@ -432,33 +430,93 @@ implements
     }
 
     @Override
+    @Deprecated
     public final boolean changed() {
-        return !changed.isEmpty();
+        return touched();
     }
 
     @Override
+    @Deprecated
     public final boolean changed(Field<?> field) {
-        return changed(indexOrFail(fields, field));
+        return touched(field);
     }
 
     @Override
+    @Deprecated
     public final boolean changed(int fieldIndex) {
-        return changed.get(safeIndex(fieldIndex));
+        return touched(fieldIndex);
     }
 
     @Override
+    @Deprecated
     public final boolean changed(String fieldName) {
-        return changed(indexOrFail(fields, fieldName));
+        return touched(fieldName);
     }
 
     @Override
+    @Deprecated
     public final boolean changed(Name fieldName) {
-        return changed(indexOrFail(fields, fieldName));
+        return touched(fieldName);
     }
 
     @Override
+    @Deprecated
     public final void changed(boolean c) {
-        changed.set(0, values.length, c);
+        touched(c);
+    }
+
+    @Override
+    @Deprecated
+    public final void changed(Field<?> field, boolean c) {
+        touched(field, c);
+    }
+
+    @Override
+    @Deprecated
+    public final void changed(int fieldIndex, boolean c) {
+        touched(fieldIndex, c);
+    }
+
+    @Override
+    @Deprecated
+    public final void changed(String fieldName, boolean c) {
+        touched(fieldName, c);
+    }
+
+    @Override
+    @Deprecated
+    public final void changed(Name fieldName, boolean c) {
+        touched(fieldName, c);
+    }
+
+    @Override
+    public final boolean touched() {
+        return !touched.isEmpty();
+    }
+
+    @Override
+    public final boolean touched(Field<?> field) {
+        return touched(indexOrFail(fields, field));
+    }
+
+    @Override
+    public final boolean touched(int fieldIndex) {
+        return touched.get(safeIndex(fieldIndex));
+    }
+
+    @Override
+    public final boolean touched(String fieldName) {
+        return touched(indexOrFail(fields, fieldName));
+    }
+
+    @Override
+    public final boolean touched(Name fieldName) {
+        return touched(indexOrFail(fields, fieldName));
+    }
+
+    @Override
+    public final void touched(boolean c) {
+        touched.set(0, values.length, c);
 
         // [#1995] If a value is meant to be "unchanged", the "original" should
         // match the supposedly "unchanged" value.
@@ -468,15 +526,15 @@ implements
     }
 
     @Override
-    public final void changed(Field<?> field, boolean c) {
-        changed(indexOrFail(fields, field), c);
+    public final void touched(Field<?> field, boolean c) {
+        touched(indexOrFail(fields, field), c);
     }
 
     @Override
-    public final void changed(int fieldIndex, boolean c) {
+    public final void touched(int fieldIndex, boolean c) {
         safeIndex(fieldIndex);
 
-        changed.set(fieldIndex, c);
+        touched.set(fieldIndex, c);
 
         // [#1995] If a value is meant to be "unchanged", the "original" should
         // match the supposedly "unchanged" value.
@@ -485,18 +543,18 @@ implements
     }
 
     @Override
-    public final void changed(String fieldName, boolean c) {
-        changed(indexOrFail(fields, fieldName), c);
+    public final void touched(String fieldName, boolean c) {
+        touched(indexOrFail(fields, fieldName), c);
     }
 
     @Override
-    public final void changed(Name fieldName, boolean c) {
-        changed(indexOrFail(fields, fieldName), c);
+    public final void touched(Name fieldName, boolean c) {
+        touched(indexOrFail(fields, fieldName), c);
     }
 
     @Override
     public final void reset() {
-        changed.clear();
+        touched.clear();
 
         System.arraycopy(originals, 0, values, 0, originals.length);
     }
@@ -510,7 +568,7 @@ implements
     public final void reset(int fieldIndex) {
         safeIndex(fieldIndex);
 
-        changed.clear(fieldIndex);
+        touched.clear(fieldIndex);
         values[fieldIndex] = originals[fieldIndex];
     }
 
@@ -748,7 +806,7 @@ implements
 
                             t.values[targetIndex] = targetType.convert(values[sourceIndex]);
                             t.originals[targetIndex] = targetType.convert(originals[sourceIndex]);
-                            t.changed.set(targetIndex, changed.get(sourceIndex));
+                            t.touched.set(targetIndex, touched.get(sourceIndex));
                         }
                     }
                 }
@@ -793,14 +851,24 @@ implements
 
         // [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
         // then we should let the database apply DEFAULT values
-        Tools.resetChangedOnNotNull(this);
+        Tools.resetTouchedOnNotNull(this);
+    }
+
+    /**
+     * Generated subclasses may call this method.
+     *
+     * @deprecated - [#12494] - 3.20.0 - Please re-generate your code
+     */
+    @Deprecated
+    protected /* non-final */ void resetChangedOnNotNull() {
+        resetTouchedOnNotNull();
     }
 
     /**
      * Generated subclasses may call this method.
      */
-    protected /* non-final */ void resetChangedOnNotNull() {
-        Tools.resetChangedOnNotNull(this);
+    protected /* non-final */ void resetTouchedOnNotNull() {
+        Tools.resetTouchedOnNotNull(this);
     }
 
     private final Object prepareArrayOrIterableForUnmap(Object source, int[] targetIndexMapping) {
@@ -918,7 +986,7 @@ implements
         for (Field<?> field : fields.fields.fields) {
             Field<?> sourceField = source.field(field);
 
-            if (sourceField != null && source.changed(sourceField))
+            if (sourceField != null && source.touched(sourceField))
                 Tools.setValue(this, field, source, sourceField, cc);
         }
     }
@@ -931,7 +999,7 @@ implements
             int j = indexMapping == null ? i : indexMapping[i];
 
             // [#12697] Don't re-apply data type conversion, assuming it already happened
-            if (source.field(j) != null && source.changed(j))
+            if (source.field(j) != null && source.touched(j))
                 set((Field) field(j), j, source.get(j));
         }
     }

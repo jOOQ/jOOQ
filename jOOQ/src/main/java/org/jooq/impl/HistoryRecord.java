@@ -277,6 +277,6 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
         setStatusMessage(statusMessage);
         setResolution(resolution);
         setResolutionMessage(resolutionMessage);
-        resetChangedOnNotNull();
+        resetTouchedOnNotNull();
     }
 }

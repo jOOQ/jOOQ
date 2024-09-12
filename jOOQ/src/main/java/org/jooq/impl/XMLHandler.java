@@ -124,7 +124,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             }
 
             r.from(values);
-            r.changed(false);
+            r.touched(false);
             return r;
         }
     }

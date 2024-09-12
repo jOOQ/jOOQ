@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.jooq.Catalog;
 import org.jooq.Table;
+import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.meta.duckdb.system.System;
 import org.jooq.meta.duckdb.system.main.tables.DuckdbColumns;
@@ -78,7 +79,7 @@ public class Main extends SchemaImpl {
      * No further instances allowed
      */
     private Main() {
-        super("main", null);
+        super(DSL.name("main"), null, DSL.comment(""));
     }
 
 

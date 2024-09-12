@@ -67,59 +67,34 @@ public class Tables extends TableImpl<Record> {
     public final TableField<Record, String> TABLE_TYPE = createField(DSL.name("table_type"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.tables.self_referencing_column_name</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> SELF_REFERENCING_COLUMN_NAME = createField(DSL.name("self_referencing_column_name"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> SELF_REFERENCING_COLUMN_NAME = createField(DSL.name("self_referencing_column_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.tables.reference_generation</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> REFERENCE_GENERATION = createField(DSL.name("reference_generation"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> REFERENCE_GENERATION = createField(DSL.name("reference_generation"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.tables.user_defined_type_catalog</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> USER_DEFINED_TYPE_CATALOG = createField(DSL.name("user_defined_type_catalog"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> USER_DEFINED_TYPE_CATALOG = createField(DSL.name("user_defined_type_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.tables.user_defined_type_schema</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> USER_DEFINED_TYPE_SCHEMA = createField(DSL.name("user_defined_type_schema"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> USER_DEFINED_TYPE_SCHEMA = createField(DSL.name("user_defined_type_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.tables.user_defined_type_name</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> USER_DEFINED_TYPE_NAME = createField(DSL.name("user_defined_type_name"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> USER_DEFINED_TYPE_NAME = createField(DSL.name("user_defined_type_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column
@@ -136,6 +111,11 @@ public class Tables extends TableImpl<Record> {
      * The column <code>system.information_schema.tables.commit_action</code>.
      */
     public final TableField<Record, String> COMMIT_ACTION = createField(DSL.name("commit_action"), SQLDataType.VARCHAR, this, "");
+
+    /**
+     * The column <code>system.information_schema.tables.TABLE_COMMENT</code>.
+     */
+    public final TableField<Record, String> TABLE_COMMENT = createField(DSL.name("TABLE_COMMENT"), SQLDataType.VARCHAR, this, "");
 
     private Tables(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

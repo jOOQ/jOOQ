@@ -175,6 +175,11 @@ implements
     }
 
     @Override
+    public final boolean touched(Record record) {
+        return record.touched(this);
+    }
+
+    @Override
     public final void reset(Record record) {
         record.reset(this);
     }

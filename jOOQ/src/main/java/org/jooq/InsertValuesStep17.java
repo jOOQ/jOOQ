@@ -126,7 +126,7 @@ public interface InsertValuesStep17<R extends Record, T1, T2, T3, T4, T5, T6, T7
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      * <p>
-     * <strong>Note</strong>: Irrespective of individual {@link Record#changed()}
+     * <strong>Note</strong>: Irrespective of individual {@link Record#touched()}
      * flag values, all record values are copied to the <code>VALUES</code> clause
      * using {@link Record#intoArray()}, to match insert columns by position, not
      * by name. If you prefer omitting unchanged values and adding values by field
@@ -144,7 +144,7 @@ public interface InsertValuesStep17<R extends Record, T1, T2, T3, T4, T5, T6, T7
      * This is equivalent to calling the other values clauses multiple times, but
      * allows for dynamic construction of row arrays.
      * <p>
-     * <strong>Note</strong>: Irrespective of individual {@link Record#changed()}
+     * <strong>Note</strong>: Irrespective of individual {@link Record#touched()}
      * flag values, all record values are copied to the <code>VALUES</code> clause
      * using {@link Record#intoArray()}, to match insert columns by position, not
      * by name. If you prefer omitting unchanged values and adding values by field

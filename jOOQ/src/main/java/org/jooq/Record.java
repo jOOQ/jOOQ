@@ -326,12 +326,12 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     /**
      * Set a value into this record, using {@link #field(Field)} for lookup.
      * <p>
-     * This will always set the {@link #changed(Field)} flag for the given
+     * This will always set the {@link #touched(Field)} flag for the given
      * <code>field</code>, no matter if setting the value actually changes the
      * value.
      * <p>
      * Changing {@link Table#getPrimaryKey()} values will set all
-     * {@link #changed()} flags to true, in order to produce complete
+     * {@link #touched()} flags to true, in order to produce complete
      * <code>INSERT</code> statements on subsequent
      * {@link UpdatableRecord#store()} operations.
      *
@@ -344,12 +344,12 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
     /**
      * Set a value into this record, using {@link #field(Field)} for lookup.
      * <p>
-     * This will always set the {@link #changed(Field)} flag for the given
+     * This will always set the {@link #touched(Field)} flag for the given
      * <code>field</code>, no matter if setting the value actually changes the
      * value.
      * <p>
      * Changing {@link Table#getPrimaryKey()} values will set all
-     * {@link #changed()} flags to true, in order to produce complete
+     * {@link #touched()} flags to true, in order to produce complete
      * <code>INSERT</code> statements on subsequent
      * {@link UpdatableRecord#store()} operations.
      *
@@ -462,7 +462,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * @see #changed(Field)
      * @see #changed(int)
      * @see #changed(String)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched()} instead.
      */
+    @Deprecated(forRemoval = true)
     boolean changed();
 
     /**
@@ -471,7 +473,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      *
      * @see #changed()
      * @see #original(Field)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(Field)} instead.
      */
+    @Deprecated(forRemoval = true)
     boolean changed(Field<?> field);
 
     /**
@@ -481,7 +485,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * @param fieldIndex The 0-based field index in this record.
      * @see #changed()
      * @see #original(int)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(int)} instead.
      */
+    @Deprecated(forRemoval = true)
     boolean changed(int fieldIndex);
 
     /**
@@ -490,7 +496,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      *
      * @see #changed()
      * @see #original(String)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(String)} instead.
      */
+    @Deprecated(forRemoval = true)
     boolean changed(String fieldName);
 
     /**
@@ -499,7 +507,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      *
      * @see #changed()
      * @see #original(Name)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(Name)} instead.
      */
+    @Deprecated(forRemoval = true)
     boolean changed(Name fieldName);
 
     /**
@@ -513,7 +523,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * @see #changed(Field, boolean)
      * @see #changed(int, boolean)
      * @see #changed(String, boolean)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(boolean)} instead.
      */
+    @Deprecated(forRemoval = true)
     void changed(boolean changed);
 
     /**
@@ -526,7 +538,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      *
      * @see #changed()
      * @see #changed(Field)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(Field, boolean)} instead.
      */
+    @Deprecated(forRemoval = true)
     void changed(Field<?> field, boolean changed);
 
     /**
@@ -540,7 +554,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * @param fieldIndex The 0-based field index in this record.
      * @see #changed()
      * @see #changed(int)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(int, boolean)} instead.
      */
+    @Deprecated(forRemoval = true)
     void changed(int fieldIndex, boolean changed);
 
     /**
@@ -553,7 +569,9 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      *
      * @see #changed()
      * @see #changed(String)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(String, boolean)} instead.
      */
+    @Deprecated(forRemoval = true)
     void changed(String fieldName, boolean changed);
 
     /**
@@ -566,25 +584,142 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      *
      * @see #changed()
      * @see #changed(Name)
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(Name, boolean)} instead.
      */
+    @Deprecated(forRemoval = true)
     void changed(Name fieldName, boolean changed);
 
     /**
+     * Check if this record has been touched since it was created or fetched
+     * from the database.
+     *
+     * @see #original()
+     * @see #touched(Field)
+     * @see #touched(int)
+     * @see #touched(String)
+     */
+    boolean touched();
+
+    /**
+     * Check if a field's value has been touched since the record was created or
+     * fetched from the database, using {@link #field(Field)} for lookup.
+     *
+     * @see #touched()
+     * @see #original(Field)
+     */
+    boolean touched(Field<?> field);
+
+    /**
+     * Check if a field's value has been touched since the record was created or
+     * fetched from the database, using {@link #field(int)} for lookup.
+     *
+     * @param fieldIndex The 0-based field index in this record.
+     * @see #touched()
+     * @see #original(int)
+     */
+    boolean touched(int fieldIndex);
+
+    /**
+     * Check if a field's value has been touched since the record was created or
+     * fetched from the database, using {@link #field(String)} for lookup.
+     *
+     * @see #touched()
+     * @see #original(String)
+     */
+    boolean touched(String fieldName);
+
+    /**
+     * Check if a field's value has been touched since the record was created or
+     * fetched from the database, using {@link #field(Name)} for lookup.
+     *
+     * @see #touched()
+     * @see #original(Name)
+     */
+    boolean touched(Name fieldName);
+
+    /**
+     * Set all of this record's internal touched flags to the supplied value.
+     * <p>
+     * If the <code>touched</code> argument is <code>false</code>, the
+     * {@link #original()} values will be reset to the corresponding "current"
+     * values as well
+     *
+     * @see #touched()
+     * @see #touched(Field, boolean)
+     * @see #touched(int, boolean)
+     * @see #touched(String, boolean)
+     */
+    void touched(boolean touched);
+
+    /**
+     * Set this record's internal touched flag to the supplied value for a given
+     * field, using {@link #field(Field)} for lookup.
+     * <p>
+     * If the <code>touched</code> argument is <code>false</code>, the
+     * {@link #original(Field)} value will be reset to the corresponding
+     * "current" value as well
+     *
+     * @see #touched()
+     * @see #touched(Field)
+     */
+    void touched(Field<?> field, boolean touched);
+
+    /**
+     * Set this record's internal touched flag to the supplied value for a given
+     * field.
+     * <p>
+     * If the <code>touched</code> argument is <code>false</code>, the
+     * {@link #original(int)} value will be reset to the corresponding "current"
+     * value as well
+     *
+     * @param fieldIndex The 0-based field index in this record.
+     * @see #touched()
+     * @see #touched(int)
+     */
+    void touched(int fieldIndex, boolean touched);
+
+    /**
+     * Set this record's internal touched flag to the supplied value for a given
+     * field, using {@link #field(String)} for lookup.
+     * <p>
+     * If the <code>touched</code> argument is <code>false</code>, the
+     * {@link #touched(String)} value will be reset to the corresponding
+     * "current" value as well
+     *
+     * @see #touched()
+     * @see #touched(String)
+     */
+    void touched(String fieldName, boolean touched);
+
+    /**
+     * Set this record's internal touched flag to the supplied value for a given
+     * field, using {@link #field(Name)} for lookup.
+     * <p>
+     * If the <code>touched</code> argument is <code>false</code>, the
+     * {@link #original(Name)} value will be reset to the corresponding
+     * "current" value as well
+     *
+     * @see #touched()
+     * @see #touched(Name)
+     */
+    void touched(Name fieldName, boolean touched);
+
+    /**
      * Reset all values to their {@link #original()} values and all
-     * {@link #changed()} flags to <code>false</code>.
+     * {@link #touched()} flags to <code>false</code>.
      */
     void reset();
 
     /**
      * Reset a given value to its {@link #original(Field)} value and its
-     * {@link #changed(Field)} flag to <code>false</code>, using
+     * {@link #touched(Field)} flag to <code>false</code>, using
      * {@link #field(Field)} for lookup.
      */
     void reset(Field<?> field);
 
     /**
      * Reset a given value to its {@link #original(int)} value and its
-     * {@link #changed(int)} flag to <code>false</code>.
+     * {@link #touched(int)} flag to <code>false</code>.
      *
      * @param fieldIndex The 0-based field index in this record.
      */
@@ -592,14 +727,14 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
 
     /**
      * Reset a given value to its {@link #original(String)} value and its
-     * {@link #changed(String)} flag to <code>false</code>, using
+     * {@link #touched(String)} flag to <code>false</code>, using
      * {@link #field(String)} for lookup.
      */
     void reset(String fieldName);
 
     /**
      * Reset a given value to its {@link #original(Name)} value and its
-     * {@link #changed(Name)} flag to <code>false</code>, using
+     * {@link #touched(Name)} flag to <code>false</code>, using
      * {@link #field(Name)} for lookup.
      */
     void reset(Name fieldName);
@@ -1085,7 +1220,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * <p>
      * <h5>General notes</h5>
      * <p>
-     * The resulting record will have its internal "changed" flags set to true
+     * The resulting record will have its internal "touched" flags set to true
      * for all values. This means that {@link UpdatableRecord#store()} will
      * perform an <code>INSERT</code> statement. If you wish to store the record
      * using an <code>UPDATE</code> statement, use

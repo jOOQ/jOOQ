@@ -180,7 +180,7 @@ implements
     final int storeInsert0(Field<?>[] storeFields) {
         DSLContext create = create();
         InsertQuery<R> insert = create.insertQuery(getTable());
-        List<Field<?>> changedFields = addChangedValues(storeFields, insert, false);
+        List<Field<?>> changedFields = addTouchedValues(storeFields, insert, false);
 
         if (changedFields.isEmpty()) {
 
@@ -209,7 +209,7 @@ implements
 
             if (result > 0) {
                 for (Field<?> changedField : changedFields)
-                    changed(changedField, false);
+                    touched(changedField, false);
 
                 // [#1596] If insert was successful, update timestamp and/or version columns
                 setRecordVersionAndTimestamp(version, timestamp);
@@ -289,7 +289,7 @@ implements
 
             values[fieldIndex] = value;
             originals[fieldIndex] = value;
-            changed.clear(fieldIndex);
+            touched.clear(fieldIndex);
         }
         if (timestamp != null) {
             TableField<R, ?> field = getTable().getRecordTimestamp();
@@ -298,19 +298,19 @@ implements
 
             values[fieldIndex] = value;
             originals[fieldIndex] = value;
-            changed.clear(fieldIndex);
+            touched.clear(fieldIndex);
         }
     }
 
     /**
-     * Set all changed values of this record to a store query.
+     * Set all touched values of this record to a store query.
      */
-    final List<Field<?>> addChangedValues(Field<?>[] storeFields, StoreQuery<R> query, boolean forUpdate) {
+    final List<Field<?>> addTouchedValues(Field<?>[] storeFields, StoreQuery<R> query, boolean forUpdate) {
         FieldsImpl<Record> f = new FieldsImpl<>(storeFields);
         List<Field<?>> result = new ArrayList<>();
 
         for (Field<?> field : fields.fields.fields) {
-            if (changed(field) && f.field(field) != null && writable(field, forUpdate)) {
+            if (touched(field) && f.field(field) != null && writable(field, forUpdate)) {
                 addValue(query, field, forUpdate);
                 result.add(field);
             }

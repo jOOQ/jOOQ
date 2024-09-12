@@ -101,6 +101,22 @@ public class DuckdbConstraints extends TableImpl<Record> {
      */
     public final TableField<Record, String[]> CONSTRAINT_COLUMN_NAMES = createField(DSL.name("constraint_column_names"), SQLDataType.VARCHAR.array(), this, "");
 
+    /**
+     * The column <code>system.main.duckdb_constraints.constraint_name</code>.
+     */
+    public final TableField<Record, String> CONSTRAINT_NAME = createField(DSL.name("constraint_name"), SQLDataType.VARCHAR, this, "");
+
+    /**
+     * The column <code>system.main.duckdb_constraints.referenced_table</code>.
+     */
+    public final TableField<Record, String> REFERENCED_TABLE = createField(DSL.name("referenced_table"), SQLDataType.VARCHAR, this, "");
+
+    /**
+     * The column
+     * <code>system.main.duckdb_constraints.referenced_column_names</code>.
+     */
+    public final TableField<Record, String[]> REFERENCED_COLUMN_NAMES = createField(DSL.name("referenced_column_names"), SQLDataType.VARCHAR.array(), this, "");
+
     private DuckdbConstraints(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }

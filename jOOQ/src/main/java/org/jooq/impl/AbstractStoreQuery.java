@@ -73,7 +73,7 @@ implements
     @Override
     public final void setRecord(R record) {
         for (int i = 0; i < record.size(); i++)
-            if (record.changed(i))
+            if (record.touched(i))
                 addValue((Field) record.field(i), record.get(i));
     }
 

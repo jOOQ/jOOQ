@@ -394,7 +394,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             HistoryRecord record = history.currentHistoryRecord(false);
 
             if (record == null || !StringUtils.equals(e.record.getId(), record.getId())) {
-                e.record.changed(true);
+                e.record.touched(true);
                 e.record.insert();
             }
 

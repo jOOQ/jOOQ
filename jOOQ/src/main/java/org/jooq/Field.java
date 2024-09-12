@@ -4107,8 +4107,26 @@ extends
      *    .map(MY_TABLE.ID::changed)
      *    .forEach(System.out::println);
      * </code></pre>
+     *
+     * @deprecated - [#12494] - 3.20.0 - Use {@link #touched(Record)} instead.
      */
+    @Deprecated(forRemoval = true)
     boolean changed(Record record);
+
+    /**
+     * The inverse operation of {@link Record#touched(Field)}.
+     * <p>
+     * This method can be used in its method reference form conveniently on a
+     * generated table, for instance, when mapping records in a stream:
+     * <pre><code>
+     * DSL.using(configuration)
+     *    .fetch("select * from t")
+     *    .stream()
+     *    .map(MY_TABLE.ID::touched)
+     *    .forEach(System.out::println);
+     * </code></pre>
+     */
+    boolean touched(Record record);
 
     /**
      * The inverse operation of {@link Record#reset(Field)}.

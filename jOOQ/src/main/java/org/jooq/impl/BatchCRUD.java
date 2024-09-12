@@ -256,7 +256,7 @@ final class BatchCRUD extends AbstractBatch {
         //    calls to store() will insert them again
         // 2. Stored records should be marked as unchanged
         for (TableRecord<?> record : records) {
-            record.changed(action == Action.DELETE);
+            record.touched(action == Action.DELETE);
 
             // [#3362] If new records (fetched = false) are batch-stored twice in a row, the second
             // batch-store needs to generate an UPDATE statement.

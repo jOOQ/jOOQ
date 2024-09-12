@@ -307,7 +307,7 @@ implements
     @Override
     public final void setRecordForUpdate(R record) {
         for (int i = 0; i < record.size(); i++)
-            if (record.changed(i))
+            if (record.touched(i))
                 addValueForUpdate((Field) record.field(i), record.get(i));
     }
 

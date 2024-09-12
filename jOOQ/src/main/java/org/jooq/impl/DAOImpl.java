@@ -479,9 +479,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
             if (forUpdate && pk != null)
                 for (Field<?> field : pk)
-                    record.changed(field, false);
+                    record.touched(field, false);
 
-            Tools.resetChangedOnNotNull(record);
+            Tools.resetTouchedOnNotNull(record);
             result.add(record);
         }
 

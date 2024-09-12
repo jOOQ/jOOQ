@@ -257,7 +257,7 @@ public class LoggerListener implements ExecuteListener {
             for (Parameter<?> param : routine.getOutParameters())
                 result.setValue((Field) fields.get(i++), routine.getValue(param));
 
-            result.changed(false);
+            result.touched(false);
         }
 
         return result;

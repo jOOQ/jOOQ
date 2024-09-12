@@ -132,14 +132,14 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <li>If this record was created by client code, an <code>INSERT</code>
      * statement is executed</li>
      * <li>If this record was loaded by jOOQ and the primary key value was
-     * changed, an <code>INSERT</code> statement is executed (unless
+     * touched, an <code>INSERT</code> statement is executed (unless
      * {@link Settings#isUpdatablePrimaryKeys()} is set). jOOQ expects that
      * primary key values will never change due to the principle of
      * normalisation in RDBMS. So if client code changes primary key values,
      * this is interpreted by jOOQ as client code wanting to duplicate this
      * record.</li>
      * <li>If this record was loaded by jOOQ, and the primary key value was not
-     * changed, an <code>UPDATE</code> statement is executed.</li>
+     * touched, an <code>UPDATE</code> statement is executed.</li>
      * </ul>
      * <p>
      * In either statement type, only those fields are inserted/updated, which
@@ -231,9 +231,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <h3>Statement execution enforcement</h3>
      * <p>
      * If you want to control statement re-execution, regardless if the values
-     * in this record were changed, you can explicitly set the changed flags for
-     * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to storing. Consider also setting
+     * in this record were touched, you can explicitly set the touched flags for
+     * all values with {@link #touched(boolean)} or for single values with
+     * {@link #touched(Field, boolean)}, prior to storing. Consider also setting
      * the flags {@link Settings#getUpdateUnchangedRecords()} and/or
      * {@link Settings#isInsertUnchangedRecords()} appropriately to control if
      * the record should be "touched" without any changes (<code>UPDATE</code>)
@@ -290,9 +290,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * statement (or no statement) will always be executed.
      * <p>
      * If you want to enforce re-insertion this record's values, regardless if
-     * the values in this record were changed, you can explicitly set the
-     * changed flags for all values with {@link #changed(boolean)} or for single
-     * values with {@link #changed(Field, boolean)}, prior to insertion.
+     * the values in this record were touched, you can explicitly set the
+     * touched flags for all values with {@link #touched(boolean)} or for single
+     * values with {@link #touched(Field, boolean)}, prior to insertion.
      * <p>
      * This is the same as calling <code>record.insert(record.fields())</code>
      *
@@ -340,9 +340,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * statement (or no statement) will always be executed.
      * <p>
      * If you want to enforce statement execution, regardless if the values in
-     * this record were changed, you can explicitly set the changed flags for
-     * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to updating, or alternatively,
+     * this record were touched, you can explicitly set the touched flags for
+     * all values with {@link #touched(boolean)} or for single values with
+     * {@link #touched(Field, boolean)}, prior to updating, or alternatively,
      * use {@link Settings#getUpdateUnchangedRecords()}.
      * <p>
      * This is the same as calling <code>record.update(record.fields())</code>
@@ -401,9 +401,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * on whether the lock values are present already in the record.
      * <p>
      * If you want to enforce statement execution, regardless if the values in
-     * this record were changed, you can explicitly set the changed flags for
-     * all values with {@link #changed(boolean)} or for single values with
-     * {@link #changed(Field, boolean)}, prior to insertion.
+     * this record were touched, you can explicitly set the touched flags for
+     * all values with {@link #touched(boolean)} or for single values with
+     * {@link #touched(Field, boolean)}, prior to insertion.
      * <p>
      * This is the same as calling <code>record.merge(record.fields())</code>
      *
@@ -504,7 +504,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <li>{@link #valuesRow()} will have been restored to the respective values
      * from the database</li>
      * <li>{@link #original()} will match this record</li>
-     * <li>{@link #changed()} will be <code>false</code></li>
+     * <li>{@link #touched()} will be <code>false</code></li>
      * </ul>
      * <p>
      * Refreshing can trigger any of the following actions:
@@ -532,7 +532,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <li>{@link #valuesRow()} will have been restored to the respective values
      * from the database</li>
      * <li>{@link #original()} will match this record</li>
-     * <li>{@link #changed()} will be <code>false</code></li>
+     * <li>{@link #touched()} will be <code>false</code></li>
      * </ul>
      * <p>
      * Refreshing can trigger any of the following actions:
@@ -560,7 +560,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <li>{@link #valuesRow()} will have been restored to the respective values
      * from the database</li>
      * <li>{@link #original()} will match this record</li>
-     * <li>{@link #changed()} will be <code>false</code></li>
+     * <li>{@link #touched()} will be <code>false</code></li>
      * </ul>
      * <p>
      * Refreshing can trigger any of the following actions:

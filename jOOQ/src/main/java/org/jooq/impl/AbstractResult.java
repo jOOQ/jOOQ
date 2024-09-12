@@ -173,7 +173,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                     // Collect all decimal places for the column values
                     for (R record : buffer)
-                        decimalPlacesList.add(decimalPlaces(format0(record.get(index), record.changed(index), true)));
+                        decimalPlacesList.add(decimalPlaces(format0(record.get(index), record.touched(index), true)));
 
                     // Find max
                     decimalPlaces[index] = Collections.max(decimalPlacesList);
@@ -197,7 +197,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                 // Add column values width
                 for (R record : buffer) {
-                    String value = format0(record.get(index), record.changed(index), true);
+                    String value = format0(record.get(index), record.touched(index), true);
 
                     // Align number values before width is calculated
                     if (isNumCol)
@@ -283,7 +283,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         StringUtils.replace(
                             StringUtils.replace(
                                 StringUtils.replace(
-                                    format0(record.get(index), record.changed(index), true), "\n", "{lf}"
+                                    format0(record.get(index), record.touched(index), true), "\n", "{lf}"
                                 ), "\r", "{cr}"
                             ), "\t", "{tab}"
                         );
@@ -1402,10 +1402,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
      * @param visual Whether the formatted output is to be consumed visually
      *            (HTML, TEXT) or by a machine (CSV, JSON, XML)
      */
-    static final String format0(Object value, boolean changed, boolean visual) {
+    static final String format0(Object value, boolean touched, boolean visual) {
 
         // [#2741] TODO: This logic will be externalised in new SPI
-        String formatted = changed && visual ? "*" : "";
+        String formatted = touched && visual ? "*" : "";
 
         if (value == null) {
             formatted += visual ? "{null}" : null;

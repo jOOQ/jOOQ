@@ -59,37 +59,22 @@ public class Schemata extends TableImpl<Record> {
     public final TableField<Record, String> SCHEMA_OWNER = createField(DSL.name("schema_owner"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.schemata.default_character_set_catalog</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_CATALOG = createField(DSL.name("default_character_set_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.schemata.default_character_set_schema</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_SCHEMA = createField(DSL.name("default_character_set_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.schemata.default_character_set_name</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> DEFAULT_CHARACTER_SET_NAME = createField(DSL.name("default_character_set_name"), SQLDataType.VARCHAR, this, "");
 
     /**
      * The column <code>system.information_schema.schemata.sql_path</code>.
@@ -141,6 +126,19 @@ public class Schemata extends TableImpl<Record> {
         return Keys.SYNTHETIC_PK_SCHEMATA;
     }
 
+    private transient Columns _columns;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>system.information_schema.columns</code> table
+     */
+    public Columns columns() {
+        if (_columns == null)
+            _columns = new Columns(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+
+        return _columns;
+    }
+
     private transient KeyColumnUsage _keyColumnUsage;
 
     /**
@@ -178,19 +176,6 @@ public class Schemata extends TableImpl<Record> {
             _tableConstraints = new TableConstraints(this, null, Keys.SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _tableConstraints;
-    }
-
-    private transient Columns _columns;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>system.information_schema.columns</code> table
-     */
-    public Columns columns() {
-        if (_columns == null)
-            _columns = new Columns(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
-
-        return _columns;
     }
 
     private transient Tables _tables;

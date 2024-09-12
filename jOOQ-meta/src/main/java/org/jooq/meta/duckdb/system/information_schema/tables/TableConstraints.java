@@ -177,17 +177,18 @@ public class TableConstraints extends TableImpl<Record> {
         return _schemata;
     }
 
-    private transient KeyColumnUsage _keyColumnUsage;
+    private transient ReferentialConstraints _referencedConstraint;
 
     /**
      * Get the implicit to-many join path to the
-     * <code>system.information_schema.key_column_usage</code> table
+     * <code>system.information_schema.referential_constraints</code> table, via
+     * the <code>REFERENCED_CONSTRAINT</code> key
      */
-    public KeyColumnUsage keyColumnUsage() {
-        if (_keyColumnUsage == null)
-            _keyColumnUsage = new KeyColumnUsage(this, null, Keys.SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_TABLE_CONSTRAINTS.getInverseKey());
+    public ReferentialConstraints referencedConstraint() {
+        if (_referencedConstraint == null)
+            _referencedConstraint = new ReferentialConstraints(this, null, Keys.REFERENCED_CONSTRAINT.getInverseKey());
 
-        return _keyColumnUsage;
+        return _referencedConstraint;
     }
 
     private transient ReferentialConstraints _referencingConstraint;
@@ -204,18 +205,17 @@ public class TableConstraints extends TableImpl<Record> {
         return _referencingConstraint;
     }
 
-    private transient ReferentialConstraints _referencedConstraint;
+    private transient KeyColumnUsage _keyColumnUsage;
 
     /**
      * Get the implicit to-many join path to the
-     * <code>system.information_schema.referential_constraints</code> table, via
-     * the <code>REFERENCED_CONSTRAINT</code> key
+     * <code>system.information_schema.key_column_usage</code> table
      */
-    public ReferentialConstraints referencedConstraint() {
-        if (_referencedConstraint == null)
-            _referencedConstraint = new ReferentialConstraints(this, null, Keys.REFERENCED_CONSTRAINT.getInverseKey());
+    public KeyColumnUsage keyColumnUsage() {
+        if (_keyColumnUsage == null)
+            _keyColumnUsage = new KeyColumnUsage(this, null, Keys.SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_TABLE_CONSTRAINTS.getInverseKey());
 
-        return _referencedConstraint;
+        return _keyColumnUsage;
     }
 
     @Override

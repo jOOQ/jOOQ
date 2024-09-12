@@ -93,15 +93,10 @@ public class Columns extends TableImpl<Record> {
     public final TableField<Record, Integer> CHARACTER_MAXIMUM_LENGTH = createField(DSL.name("character_maximum_length"), SQLDataType.INTEGER, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.character_octet_length</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, Integer> CHARACTER_OCTET_LENGTH = createField(DSL.name("character_octet_length"), SQLDataType.INTEGER, this, "");
 
     /**
      * The column
@@ -121,345 +116,178 @@ public class Columns extends TableImpl<Record> {
     public final TableField<Record, Integer> NUMERIC_SCALE = createField(DSL.name("numeric_scale"), SQLDataType.INTEGER, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.datetime_precision</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> DATETIME_PRECISION = createField(DSL.name("datetime_precision"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, Integer> DATETIME_PRECISION = createField(DSL.name("datetime_precision"), SQLDataType.INTEGER, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.interval_type</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> INTERVAL_TYPE = createField(DSL.name("interval_type"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> INTERVAL_TYPE = createField(DSL.name("interval_type"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.interval_precision</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> INTERVAL_PRECISION = createField(DSL.name("interval_precision"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, Integer> INTERVAL_PRECISION = createField(DSL.name("interval_precision"), SQLDataType.INTEGER, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.character_set_catalog</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> CHARACTER_SET_CATALOG = createField(DSL.name("character_set_catalog"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> CHARACTER_SET_CATALOG = createField(DSL.name("character_set_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.character_set_schema</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> CHARACTER_SET_SCHEMA = createField(DSL.name("character_set_schema"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> CHARACTER_SET_SCHEMA = createField(DSL.name("character_set_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.character_set_name</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> CHARACTER_SET_NAME = createField(DSL.name("character_set_name"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> CHARACTER_SET_NAME = createField(DSL.name("character_set_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.collation_catalog</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> COLLATION_CATALOG = createField(DSL.name("collation_catalog"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> COLLATION_CATALOG = createField(DSL.name("collation_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.collation_schema</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> COLLATION_SCHEMA = createField(DSL.name("collation_schema"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> COLLATION_SCHEMA = createField(DSL.name("collation_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.collation_name</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> COLLATION_NAME = createField(DSL.name("collation_name"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> COLLATION_NAME = createField(DSL.name("collation_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.domain_catalog</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> DOMAIN_CATALOG = createField(DSL.name("domain_catalog"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> DOMAIN_CATALOG = createField(DSL.name("domain_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.domain_schema</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> DOMAIN_SCHEMA = createField(DSL.name("domain_schema"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> DOMAIN_SCHEMA = createField(DSL.name("domain_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.domain_name</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> DOMAIN_NAME = createField(DSL.name("domain_name"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> DOMAIN_NAME = createField(DSL.name("domain_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.udt_catalog</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> UDT_CATALOG = createField(DSL.name("udt_catalog"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> UDT_CATALOG = createField(DSL.name("udt_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.udt_schema</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> UDT_SCHEMA = createField(DSL.name("udt_schema"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> UDT_SCHEMA = createField(DSL.name("udt_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.udt_name</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> UDT_NAME = createField(DSL.name("udt_name"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> UDT_NAME = createField(DSL.name("udt_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.scope_catalog</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> SCOPE_CATALOG = createField(DSL.name("scope_catalog"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> SCOPE_CATALOG = createField(DSL.name("scope_catalog"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.scope_schema</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> SCOPE_SCHEMA = createField(DSL.name("scope_schema"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> SCOPE_SCHEMA = createField(DSL.name("scope_schema"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.scope_name</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> SCOPE_NAME = createField(DSL.name("scope_name"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> SCOPE_NAME = createField(DSL.name("scope_name"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.maximum_cardinality</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> MAXIMUM_CARDINALITY = createField(DSL.name("maximum_cardinality"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, Long> MAXIMUM_CARDINALITY = createField(DSL.name("maximum_cardinality"), SQLDataType.BIGINT, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.dtd_identifier</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> DTD_IDENTIFIER = createField(DSL.name("dtd_identifier"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> DTD_IDENTIFIER = createField(DSL.name("dtd_identifier"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.is_self_referencing</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IS_SELF_REFERENCING = createField(DSL.name("is_self_referencing"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, Boolean> IS_SELF_REFERENCING = createField(DSL.name("is_self_referencing"), SQLDataType.BOOLEAN, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.is_identity</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IS_IDENTITY = createField(DSL.name("is_identity"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, Boolean> IS_IDENTITY = createField(DSL.name("is_identity"), SQLDataType.BOOLEAN, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.identity_generation</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IDENTITY_GENERATION = createField(DSL.name("identity_generation"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> IDENTITY_GENERATION = createField(DSL.name("identity_generation"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.identity_start</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IDENTITY_START = createField(DSL.name("identity_start"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> IDENTITY_START = createField(DSL.name("identity_start"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.identity_increment</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IDENTITY_INCREMENT = createField(DSL.name("identity_increment"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> IDENTITY_INCREMENT = createField(DSL.name("identity_increment"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.identity_maximum</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IDENTITY_MAXIMUM = createField(DSL.name("identity_maximum"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> IDENTITY_MAXIMUM = createField(DSL.name("identity_maximum"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.identity_minimum</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IDENTITY_MINIMUM = createField(DSL.name("identity_minimum"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> IDENTITY_MINIMUM = createField(DSL.name("identity_minimum"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.identity_cycle</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IDENTITY_CYCLE = createField(DSL.name("identity_cycle"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, Boolean> IDENTITY_CYCLE = createField(DSL.name("identity_cycle"), SQLDataType.BOOLEAN, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.is_generated</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IS_GENERATED = createField(DSL.name("is_generated"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> IS_GENERATED = createField(DSL.name("is_generated"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column
+     * <code>system.information_schema.columns.generation_expression</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> GENERATION_EXPRESSION = createField(DSL.name("generation_expression"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, String> GENERATION_EXPRESSION = createField(DSL.name("generation_expression"), SQLDataType.VARCHAR, this, "");
 
     /**
-     * @deprecated Unknown data type. If this is a qualified, user-defined type,
-     * it may have been excluded from code generation. If this is a built-in
-     * type, you can define an explicit {@link org.jooq.Binding} to specify how
-     * this type should be handled. Deprecation can be turned off using
-     * {@literal <deprecationOnUnknownTypes/>} in your code generator
-     * configuration.
+     * The column <code>system.information_schema.columns.is_updatable</code>.
      */
-    @Deprecated
-    public final TableField<Record, Object> IS_UPDATABLE = createField(DSL.name("is_updatable"), SQLDataType.OTHER, this, "");
+    public final TableField<Record, Boolean> IS_UPDATABLE = createField(DSL.name("is_updatable"), SQLDataType.BOOLEAN, this, "");
+
+    /**
+     * The column <code>system.information_schema.columns.COLUMN_COMMENT</code>.
+     */
+    public final TableField<Record, String> COLUMN_COMMENT = createField(DSL.name("COLUMN_COMMENT"), SQLDataType.VARCHAR, this, "");
 
     private Columns(Name alias, Table<Record> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -503,20 +331,7 @@ public class Columns extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.asList(Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA);
-    }
-
-    private transient Tables _tables;
-
-    /**
-     * Get the implicit join path to the
-     * <code>system.information_schema.tables</code> table.
-     */
-    public Tables tables() {
-        if (_tables == null)
-            _tables = new Tables(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES, null);
-
-        return _tables;
+        return Arrays.asList(Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES);
     }
 
     private transient Schemata _schemata;
@@ -530,6 +345,19 @@ public class Columns extends TableImpl<Record> {
             _schemata = new Schemata(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
+    }
+
+    private transient Tables _tables;
+
+    /**
+     * Get the implicit join path to the
+     * <code>system.information_schema.tables</code> table.
+     */
+    public Tables tables() {
+        if (_tables == null)
+            _tables = new Tables(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES, null);
+
+        return _tables;
     }
 
     @Override

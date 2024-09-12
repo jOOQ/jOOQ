@@ -97,7 +97,7 @@ final class ListHandler<R extends Record> {
                     }
 
                     r.fromArray(attributes);
-                    r.changed(false);
+                    r.touched(false);
                     return r;
                 }
                 else

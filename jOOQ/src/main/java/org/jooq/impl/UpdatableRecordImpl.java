@@ -206,8 +206,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         else {
             for (TableField<R, ?> field : keys) {
 
-                // If any primary key value is null or changed
-                if (changed(field) ||
+                // If any primary key value is null or touched
+                if (touched(field) ||
 
                 // [#3237] or if a NOT NULL primary key value is null, then execute an INSERT
                    (field.getDataType().nullable() == false && get(field) == null)) {
@@ -294,13 +294,13 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         Q query,
         boolean merge
     ) {
-        List<Field<?>> changedFields = addChangedValues(storeFields, query, merge);
+        List<Field<?>> touchedFields = addTouchedValues(storeFields, query, merge);
 
         // [#11552] These conditions should be omitted in the MERGE case
         if (!merge)
             Tools.addConditions(query, this, keys);
 
-        if (changedFields.isEmpty()) {
+        if (touchedFields.isEmpty()) {
             switch (StringUtils.defaultIfNull(create().settings().getUpdateUnchangedRecords(), UpdateUnchangedRecords.NEVER)) {
 
                 // Don't store records if no value was set by client code
@@ -326,9 +326,9 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                 case SET_NON_PRIMARY_KEY_TO_RECORD_VALUES:
                     for (Field<?> field : storeFields)
                         if (!asList(keys).contains(field))
-                            changed(field, true);
+                            touched(field, true);
 
-                    addChangedValues(storeFields, query, merge);
+                    addTouchedValues(storeFields, query, merge);
                     break;
             }
         }
@@ -362,8 +362,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             checkIfChanged(result, version, timestamp);
 
             if (result > 0) {
-                for (Field<?> changedField : changedFields)
-                    changed(changedField, false);
+                for (Field<?> touchedField : touchedFields)
+                    touched(touchedField, false);
 
                 // [#1859] If an update was successful try fetching the generated
                 getReturningIfNeeded(query, key);
@@ -420,7 +420,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // [#673] [#3363] If store() is called after delete(), a new INSERT should
         // be executed and the record should be recreated
         finally {
-            changed(true);
+            touched(true);
             fetched = false;
         }
     }

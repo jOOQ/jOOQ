@@ -92,7 +92,7 @@ public class KeyColumnUsage extends TableImpl<Record> {
      * The column
      * <code>system.information_schema.key_column_usage.ordinal_position</code>.
      */
-    public final TableField<Record, Integer> ORDINAL_POSITION = createField(DSL.name("ordinal_position"), SQLDataType.INTEGER, this, "");
+    public final TableField<Record, Long> ORDINAL_POSITION = createField(DSL.name("ordinal_position"), SQLDataType.BIGINT, this, "");
 
     /**
      * The column

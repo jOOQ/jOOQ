@@ -145,20 +145,21 @@ public class ReferentialConstraints extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.asList(Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, Keys.REFERENCING_CONSTRAINT, Keys.REFERENCED_CONSTRAINT);
+        return Arrays.asList(Keys.REFERENCED_CONSTRAINT, Keys.REFERENCING_CONSTRAINT, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient Schemata _schemata;
+    private transient TableConstraints _referencedConstraint;
 
     /**
      * Get the implicit join path to the
-     * <code>system.information_schema.schemata</code> table.
+     * <code>system.information_schema.table_constraints</code> table, via the
+     * <code>REFERENCED_CONSTRAINT</code> key.
      */
-    public Schemata schemata() {
-        if (_schemata == null)
-            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
+    public TableConstraints referencedConstraint() {
+        if (_referencedConstraint == null)
+            _referencedConstraint = new TableConstraints(this, Keys.REFERENCED_CONSTRAINT, null);
 
-        return _schemata;
+        return _referencedConstraint;
     }
 
     private transient TableConstraints _referencingConstraint;
@@ -175,18 +176,17 @@ public class ReferentialConstraints extends TableImpl<Record> {
         return _referencingConstraint;
     }
 
-    private transient TableConstraints _referencedConstraint;
+    private transient Schemata _schemata;
 
     /**
      * Get the implicit join path to the
-     * <code>system.information_schema.table_constraints</code> table, via the
-     * <code>REFERENCED_CONSTRAINT</code> key.
+     * <code>system.information_schema.schemata</code> table.
      */
-    public TableConstraints referencedConstraint() {
-        if (_referencedConstraint == null)
-            _referencedConstraint = new TableConstraints(this, Keys.REFERENCED_CONSTRAINT, null);
+    public Schemata schemata() {
+        if (_schemata == null)
+            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
 
-        return _referencedConstraint;
+        return _schemata;
     }
 
     @Override

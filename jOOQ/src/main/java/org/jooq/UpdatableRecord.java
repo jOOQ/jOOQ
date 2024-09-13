@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import java.sql.Statement;
 import java.util.Collection;
 
+import org.jooq.conf.RecordDirtyTracking;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
@@ -218,23 +219,37 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * Possible statements are
      * <ul>
-     * <li><pre><code>
+     * <li>
+     *
+     * <pre>
+     * <code>
      * INSERT INTO [table] ([modified fields, including keys])
-     * VALUES ([modified values, including keys])</code></pre></li>
-     * <li><pre><code>
+     * VALUES ([modified values, including keys])</code>
+     * </pre>
+     *
+     * </li>
+     * <li>
+     *
+     * <pre>
+     * <code>
      * UPDATE [table]
      * SET [modified fields = modified values, excluding keys]
      * WHERE [key fields = key values]
-     * AND [version/timestamp fields = version/timestamp values]</code></pre></li>
+     * AND [version/timestamp fields = version/timestamp values]</code>
+     * </pre>
+     *
+     * </li>
      * </ul>
      * <p>
      * <h3>Statement execution enforcement</h3>
      * <p>
      * If you want to control statement re-execution, regardless if the values
-     * in this record were touched, you can explicitly set the touched flags for
-     * all values with {@link #touched(boolean)} or for single values with
-     * {@link #touched(Field, boolean)}, prior to storing. Consider also setting
-     * the flags {@link Settings#getUpdateUnchangedRecords()} and/or
+     * in this record were {@link #modified()}, you can explicitly set the
+     * touched flags for all values with {@link #touched(boolean)} or for single
+     * values with {@link #touched(Field, boolean)}, prior to storing, if
+     * {@link Settings#getRecordDirtyTracking()} is set to
+     * {@link RecordDirtyTracking#TOUCHED}. Consider also setting the flags
+     * {@link Settings#getUpdateUnchangedRecords()} and/or
      * {@link Settings#isInsertUnchangedRecords()} appropriately to control if
      * the record should be "touched" without any changes (<code>UPDATE</code>)
      * or inserted with default values (<code>INSERT</code>).
@@ -292,7 +307,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * If you want to enforce re-insertion this record's values, regardless if
      * the values in this record were touched, you can explicitly set the
      * touched flags for all values with {@link #touched(boolean)} or for single
-     * values with {@link #touched(Field, boolean)}, prior to insertion.
+     * values with {@link #touched(Field, boolean)}, prior to insertion, if
+     * {@link Settings#getRecordDirtyTracking()} is set to
+     * {@link RecordDirtyTracking#TOUCHED}
      * <p>
      * This is the same as calling <code>record.insert(record.fields())</code>
      *
@@ -340,10 +357,12 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * statement (or no statement) will always be executed.
      * <p>
      * If you want to enforce statement execution, regardless if the values in
-     * this record were touched, you can explicitly set the touched flags for
-     * all values with {@link #touched(boolean)} or for single values with
-     * {@link #touched(Field, boolean)}, prior to updating, or alternatively,
-     * use {@link Settings#getUpdateUnchangedRecords()}.
+     * this record were {@link #modified()}, you can explicitly set the touched
+     * flags for all values with {@link #touched(boolean)} or for single values
+     * with {@link #touched(Field, boolean)}, prior to updating, if
+     * {@link Settings#getRecordDirtyTracking()} is set to
+     * {@link RecordDirtyTracking#TOUCHED}, or alternatively, use
+     * {@link Settings#getUpdateUnchangedRecords()}.
      * <p>
      * This is the same as calling <code>record.update(record.fields())</code>
      *
@@ -401,9 +420,11 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * on whether the lock values are present already in the record.
      * <p>
      * If you want to enforce statement execution, regardless if the values in
-     * this record were touched, you can explicitly set the touched flags for
-     * all values with {@link #touched(boolean)} or for single values with
-     * {@link #touched(Field, boolean)}, prior to insertion.
+     * this record were {@link #modified()}, you can explicitly set the touched
+     * flags for all values with {@link #touched(boolean)} or for single values
+     * with {@link #touched(Field, boolean)}, prior to merging, if
+     * {@link Settings#getRecordDirtyTracking()} is set to
+     * {@link RecordDirtyTracking#TOUCHED}.
      * <p>
      * This is the same as calling <code>record.merge(record.fields())</code>
      *
@@ -505,6 +526,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * from the database</li>
      * <li>{@link #original()} will match this record</li>
      * <li>{@link #touched()} will be <code>false</code></li>
+     * <li>{@link #modified()} will be <code>false</code></li>
      * </ul>
      * <p>
      * Refreshing can trigger any of the following actions:
@@ -533,6 +555,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * from the database</li>
      * <li>{@link #original()} will match this record</li>
      * <li>{@link #touched()} will be <code>false</code></li>
+     * <li>{@link #modified()} will be <code>false</code></li>
      * </ul>
      * <p>
      * Refreshing can trigger any of the following actions:
@@ -561,6 +584,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * from the database</li>
      * <li>{@link #original()} will match this record</li>
      * <li>{@link #touched()} will be <code>false</code></li>
+     * <li>{@link #modified()} will be <code>false</code></li>
      * </ul>
      * <p>
      * Refreshing can trigger any of the following actions:

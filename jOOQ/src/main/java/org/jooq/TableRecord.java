@@ -69,10 +69,10 @@ public interface TableRecord<R extends TableRecord<R>> extends QualifiedRecord<R
      * Store this record to the database using an <code>INSERT</code> statement.
      * <p>
      * If you want to enforce re-insertion this record's values, regardless if
-     * the values in this record were touched, you can explicitly set the
-     * touched flags for all values with {@link #touched(boolean)} or for single
-     * values with {@link #touched(Field, boolean)}, prior to insertion, if
-     * {@link Settings#getRecordDirtyTracking()} is set to
+     * the values in this record were {@link #modified()}, you can explicitly
+     * set the touched flags for all values with {@link #touched(boolean)} or
+     * for single values with {@link #touched(Field, boolean)}, prior to
+     * insertion, if {@link Settings#getRecordDirtyTracking()} is set to
      * {@link RecordDirtyTracking#TOUCHED}
      *
      * @return <code>1</code> if the record was stored to the database. <code>0

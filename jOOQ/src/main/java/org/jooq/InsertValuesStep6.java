@@ -123,15 +123,17 @@ public interface InsertValuesStep6<R extends Record, T1, T2, T3, T4, T5, T6> ext
     /**
      * Add multiple rows of values to the insert statement.
      * <p>
-     * This is equivalent to calling the other values clauses multiple times, but
-     * allows for dynamic construction of row arrays.
+     * This is equivalent to calling the other values clauses multiple times,
+     * but allows for dynamic construction of row arrays.
      * <p>
-     * <strong>Note</strong>: Irrespective of individual {@link Record#touched()}
-     * flag values, all record values are copied to the <code>VALUES</code> clause
-     * using {@link Record#intoArray()}, to match insert columns by position, not
-     * by name. If you prefer omitting unchanged values and adding values by field
-     * name rather than by index, use {@link InsertSetStep#set(Record...)} instead.
-     * That syntax is available only if you omit the explicit insert columns list.
+     * <strong>Note</strong>: Irrespective of individual
+     * {@link Record#touched()} or {@link Record#modified()} flag values, all
+     * record values are copied to the <code>VALUES</code> clause using
+     * {@link Record#intoArray()}, to match insert columns by position, not by
+     * name. If you prefer omitting untouched or unmodified values and adding
+     * values by field name rather than by index, use
+     * {@link InsertSetStep#set(Record...)} instead. That syntax is available
+     * only if you omit the explicit insert columns list.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -141,15 +143,17 @@ public interface InsertValuesStep6<R extends Record, T1, T2, T3, T4, T5, T6> ext
     /**
      * Add multiple rows of values to the insert statement.
      * <p>
-     * This is equivalent to calling the other values clauses multiple times, but
-     * allows for dynamic construction of row arrays.
+     * This is equivalent to calling the other values clauses multiple times,
+     * but allows for dynamic construction of row arrays.
      * <p>
-     * <strong>Note</strong>: Irrespective of individual {@link Record#touched()}
-     * flag values, all record values are copied to the <code>VALUES</code> clause
-     * using {@link Record#intoArray()}, to match insert columns by position, not
-     * by name. If you prefer omitting unchanged values and adding values by field
-     * name rather than by index, use {@link InsertSetStep#set(Record...)} instead.
-     * That syntax is available only if you omit the explicit insert columns list.
+     * <strong>Note</strong>: Irrespective of individual
+     * {@link Record#touched()} or {@link Record#modified()} flag values, all
+     * record values are copied to the <code>VALUES</code> clause using
+     * {@link Record#intoArray()}, to match insert columns by position, not by
+     * name. If you prefer omitting untouched or unmodified values and adding
+     * values by field name rather than by index, use
+     * {@link InsertSetStep#set(Record...)} instead. That syntax is available
+     * only if you omit the explicit insert columns list.
      */
     @NotNull @CheckReturnValue
     @Support

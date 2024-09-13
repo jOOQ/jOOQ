@@ -15379,14 +15379,19 @@ public interface DSLContext extends Scope {
      * This executes the following statement:
      *
      * <pre>
-     * <code>INSERT INTO [table] ([modified columns in record])
-     * VALUES ([modified values in record])</code>
+     * <code>INSERT INTO [table] ([touched or modified columns in record])
+     * VALUES ([touched or modified values in record])</code>
      * </pre>
      * <p>
      * Unlike {@link UpdatableRecord#insert()}, this does not change any of the
      * argument <code>record</code>'s internal {@link Record#touched()} flags,
      * such that a subsequent call to {@link UpdatableRecord#insert()} might
      * lead to another <code>INSERT</code> statement being executed.
+     * <p>
+     * This context's {@link Settings#getRecordDirtyTracking()} may be used to
+     * specify whether {@link Record#touched()} or only
+     * {@link Record#modified()} fields are being taken into consideration for
+     * the <code>INSERT</code> statement.
      * <p>
      * Also any optimistic locking related {@link Settings} do not apply for
      * this method.
@@ -15409,6 +15414,11 @@ public interface DSLContext extends Scope {
      * WHERE [record is supplied record]</code>
      * </pre>
      * <p>
+     * This context's {@link Settings#getRecordDirtyTracking()} may be used to
+     * specify whether {@link Record#touched()} or only
+     * {@link Record#modified()} fields are being taken into consideration for
+     * the <code>INSERT</code> statement.
+     * <p>
      * Any optimistic locking related {@link Settings} do not apply for this
      * method.
      *
@@ -15426,9 +15436,14 @@ public interface DSLContext extends Scope {
      *
      * <pre>
      * <code>UPDATE [table]
-     * SET [modified values in record]
+     * SET [touched or modified values in record]
      * WHERE [condition]</code>
      * </pre>
+     * <p>
+     * This context's {@link Settings#getRecordDirtyTracking()} may be used to
+     * specify whether {@link Record#touched()} or only
+     * {@link Record#modified()} fields are being taken into consideration for
+     * the <code>INSERT</code> statement.
      * <p>
      * Any optimistic locking related {@link Settings} do not apply for this
      * method.

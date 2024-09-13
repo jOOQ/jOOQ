@@ -59,14 +59,13 @@ import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.STORE;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.UPDATE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.EMPTY_TABLE_FIELD;
 import static org.jooq.impl.Tools.recordDirtyTrackingPredicate;
 import static org.jooq.impl.Tools.settings;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -423,6 +422,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // be executed and the record should be recreated
         finally {
             touched(true);
+            asList(originals).replaceAll(e -> null);
             fetched = false;
         }
     }

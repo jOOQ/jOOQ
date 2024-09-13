@@ -520,9 +520,8 @@ implements
 
         // [#1995] If a value is meant to be "unchanged", the "original" should
         // match the supposedly "unchanged" value.
-        if (!c) {
+        if (!c)
             System.arraycopy(values, 0, originals, 0, values.length);
-        }
     }
 
     @Override

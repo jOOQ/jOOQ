@@ -255,6 +255,16 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * or inserted with default values (<code>INSERT</code>).
      * <p>
      * This is the same as calling <code>record.store(record.fields())</code>
+     * <h5>Effects on this record</h5>
+     * <p>
+     * After a successful {@link #store()} operation, this record will have:
+     * <ul>
+     * <li>Its {@link #valuesRow()} unchanged</li>
+     * <li>Its {@link #original()} values set to the same values as
+     * {@link #valuesRow()}.</li>
+     * <li>Its {@link #touched()} flags set to <code>false</code></li>
+     * <li>Its {@link #modified()} flags set to <code>false</code></li>
+     * </ul>
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
@@ -312,6 +322,15 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * {@link RecordDirtyTracking#TOUCHED}
      * <p>
      * This is the same as calling <code>record.insert(record.fields())</code>
+     * <h5>Effects on this record</h5>
+     * <p>
+     * After a successful {@link #insert()} operation, this record will have:
+     * <ul>
+     * <li>Its {@link #valuesRow()} unchanged</li>
+     * <li>Its {@link #original()} values set to the same values as {@link #valuesRow()}.</li>
+     * <li>Its {@link #touched()} flags set to <code>false</code></li>
+     * <li>Its {@link #modified()} flags set to <code>false</code></li>
+     * </ul>
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary and
@@ -365,6 +384,16 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * {@link Settings#getUpdateUnchangedRecords()}.
      * <p>
      * This is the same as calling <code>record.update(record.fields())</code>
+     * <h5>Effects on this record</h5>
+     * <p>
+     * After a successful {@link #update()} operation, this record will have:
+     * <ul>
+     * <li>Its {@link #valuesRow()} unchanged</li>
+     * <li>Its {@link #original()} values set to the same values as
+     * {@link #valuesRow()}.</li>
+     * <li>Its {@link #touched()} flags set to <code>false</code></li>
+     * <li>Its {@link #modified()} flags set to <code>false</code></li>
+     * </ul>
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
@@ -427,6 +456,16 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * {@link RecordDirtyTracking#TOUCHED}.
      * <p>
      * This is the same as calling <code>record.merge(record.fields())</code>
+     * <h5>Effects on this record</h5>
+     * <p>
+     * After a successful {@link #merge()} operation, this record will have:
+     * <ul>
+     * <li>Its {@link #valuesRow()} unchanged</li>
+     * <li>Its {@link #original()} values set to the same values as
+     * {@link #valuesRow()}.</li>
+     * <li>Its {@link #touched()} flags set to <code>false</code></li>
+     * <li>Its {@link #modified()} flags set to <code>false</code></li>
+     * </ul>
      *
      * @return <code>1</code> if the record was merged to the database. <code>0
      *         </code> if merging was not necessary.
@@ -498,12 +537,25 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * See {@link SelectQuery#setForUpdate(boolean)} for more details</li>
      * </ul>
+     * <h5>Effects on this record</h5>
+     * <p>
+     * After a successful {@link #delete()} operation, this record will have:
+     * <ul>
+     * <li>Its {@link #valuesRow()} unchanged</li>
+     * <li>Its {@link #original()} values reset to <code>null</code></li>
+     * <li>Its {@link #touched()} flags set to <code>true</code></li>
+     * <li>Its {@link #modified()} flags set to <code>true</code></li>
+     * </ul>
      * <h5>Statement examples</h5>
      * <p>
-     * The executed statement is <pre><code>
+     * The executed statement is
+     *
+     * <pre>
+     * <code>
      * DELETE FROM [table]
      * WHERE [key fields = key values]
-     * AND [version/timestamp fields = version/timestamp values]</code></pre>
+     * AND [version/timestamp fields = version/timestamp values]</code>
+     * </pre>
      * <p>
      * This is in fact the same as calling
      * <code>delete(getTable().getPrimaryKey().getFieldsArray())</code>
@@ -608,6 +660,15 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * Duplicate this record (in memory) and reset all fields from the primary
      * key or main unique key, such that a subsequent call to {@link #store()}
      * will result in an <code>INSERT</code> statement.
+     * <h5>Effects on this record</h5>
+     * <p>
+     * After a {@link #copy()} operation, the resulting record will have:
+     * <ul>
+     * <li>Its {@link #valuesRow()} just like the source record</li>
+     * <li>Its {@link #original()} values set <code>null</code>.</li>
+     * <li>Its {@link #touched()} flags set to <code>true</code></li>
+     * <li>Its {@link #modified()} flags set to <code>false</code></li>
+     * </ul>
      *
      * @return A new record, distinct from <code>this</code> record.
      */

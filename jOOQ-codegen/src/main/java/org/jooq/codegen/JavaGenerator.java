@@ -5190,6 +5190,28 @@ public class JavaGenerator extends AbstractGenerator {
                 });
 
                 out.println(")[[before= implements ][%s]] {", interfaces);
+
+                if (replacingEmbeddablesAndUnreplacedColumns.size() >= 255)
+                    log.warn(
+                        """
+                        {object} has more than 254 {elements}. There's no workaround that the code generator could implement out of the box.
+
+                        Workarounds that could be implemented in your configuration include:
+                        - Excluding the object from the code generation
+                        - Switching to a different POJO style that doesn't require mandatory canonical constructors
+                        - Use replacing embeddables to reduce the column number: https://www.jooq.org/doc/latest/manual/code-generation/codegen-embeddable-types/codegen-embeddable-types-replacing-fields/
+                        """.replace("{object}",
+                              tableUdtOrEmbeddable instanceof EmbeddableDefinition
+                            ? "Embeddable " + tableUdtOrEmbeddable
+                            : tableUdtOrEmbeddable instanceof UDTDefinition
+                            ? "UDT " + tableUdtOrEmbeddable
+                            : "Table " + tableUdtOrEmbeddable
+                        ).replace("{elements}",
+                               tableUdtOrEmbeddable instanceof UDTDefinition
+                            ? "attributes"
+                            : "columns"
+                    ));
+
             }
             else {
                 out.println("%sclass %s[[before= extends ][%s]][[before= implements ][%s]] {", visibility(), className, list(superName), interfaces);

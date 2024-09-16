@@ -5191,7 +5191,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.println(")[[before= implements ][%s]] {", interfaces);
 
-                if (replacingEmbeddablesAndUnreplacedColumns.size() >= 255)
+                if (getTypedElements(tableUdtOrEmbeddable).size() >= 255)
                     log.warn(
                         """
                         {object} has more than 254 {elements}. There's no workaround that the code generator could implement out of the box.

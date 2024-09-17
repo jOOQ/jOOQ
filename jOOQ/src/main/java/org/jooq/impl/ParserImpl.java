@@ -680,6 +680,7 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
+import org.jooq.Named;
 import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
@@ -2654,7 +2655,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 parseKeyword("THEN INSERT");
                 parse('(');
-                insertColumns = Tools.fieldsByName(parseIdentifiers().toArray(EMPTY_NAME));
+                insertColumns = parseUniqueList("identifier", ',', c -> parseFieldName());
                 parse(')');
                 parseKeyword("VALUES");
                 parse('(');
@@ -13362,13 +13363,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final List<Name> parseIdentifiers() {
-        LinkedHashSet<Name> result = new LinkedHashSet<>();
-
-        do
-            if (!result.add(parseIdentifier()))
-                throw exception("Duplicate identifier encountered");
-        while (parseIf(','));
-        return new ArrayList<>(result);
+        return parseUniqueList("identifier", ',', c -> parseIdentifier());
     }
 
     @Override
@@ -14537,6 +14532,25 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         while (separator.test(this));
 
         return result;
+    }
+
+    private final <T> List<T> parseUniqueList(String objectType, char separator, Function<? super ParseContext, ? extends T> element) {
+        return parseUniqueList(objectType, c -> c.parseIf(separator), element);
+    }
+
+    private final <T> List<T> parseUniqueList(String objectType, String separator, Function<? super ParseContext, ? extends T> element) {
+        return parseUniqueList(objectType, c -> c.parseIf(separator), element);
+    }
+
+    private final <T> List<T> parseUniqueList(String objectType, Predicate<? super ParseContext> separator, Function<? super ParseContext, ? extends T> element) {
+        Set<T> result = new LinkedHashSet<>();
+
+        do
+            if (!result.add(element.apply(this)))
+                throw exception("Duplicate " + objectType + " encountered: ");
+        while (separator.test(this));
+
+        return new ArrayList<>(result);
     }
 
     @Override

@@ -38,6 +38,7 @@
 package org.jooq.meta.duckdb;
 
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_COLUMNS;
 
 import java.sql.SQLException;
@@ -48,6 +49,7 @@ import java.util.Random;
 
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.QOM;
 import org.jooq.meta.AbstractUDTDefinition;
@@ -71,11 +73,12 @@ public class DuckDBUDTDefinition extends AbstractUDTDefinition {
         // A current limitation of DuckDB 0.8.1 requires a workaround where we create
         // a dummy table containing a reference to the UDT in order to reverse engineer
         // its structure, see https://github.com/duckdb/duckdb/discussions/8832
-        Name name = name("dummy_" + Math.abs(new Random().nextInt()));
+        // [#17251] Cross schema references still don't work: https://github.com/duckdb/duckdb/issues/13981
+        Name name = unquotedName(getSchema().getName(), "dummy_" + Math.abs(new Random().nextInt()));
 
         try {
             create().createTable(name)
-                    .column("dummy", new DefaultDataType<>(null, Object.class, getName()))
+                    .column("dummy", new DefaultDataType<>(null, Object.class, unquotedName(getSchema().getName(), getName()).toString()))
                     .execute();
 
             String struct =

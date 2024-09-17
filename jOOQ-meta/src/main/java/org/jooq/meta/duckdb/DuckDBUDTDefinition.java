@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.duckdb;
 
+import static org.jooq.impl.DSL.currentSchema;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_COLUMNS;
@@ -79,11 +80,13 @@ public class DuckDBUDTDefinition extends AbstractUDTDefinition {
         // a dummy table containing a reference to the UDT in order to reverse engineer
         // its structure, see https://github.com/duckdb/duckdb/discussions/8832
         // [#17251] Cross schema references still don't work: https://github.com/duckdb/duckdb/issues/13981
-        Name name = unquotedName(getSchema().getName(), "dummy_" + Math.abs(new Random().nextInt()));
+        String currentSchema = create().fetchValue(currentSchema());
+        Name name = unquotedName("dummy_" + Math.abs(new Random().nextInt()));
 
         try {
+            create().setSchema(getSchema().getName()).execute();
             create().createTable(name)
-                    .column("dummy", new DefaultDataType<>(null, Object.class, unquotedName(getSchema().getName(), getName()).toString()))
+                    .column("dummy", new DefaultDataType<>(null, Object.class, getName()))
                     .execute();
 
             String struct =
@@ -135,6 +138,7 @@ public class DuckDBUDTDefinition extends AbstractUDTDefinition {
             }
         }
         finally {
+            create().setSchema(currentSchema).execute();
             create().dropTableIfExists(name).execute();
         }
 

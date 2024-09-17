@@ -2598,7 +2598,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 parseKeyword("THEN INSERT");
                 parse('(');
-                insertColumns = parseUniqueList("identifier", ',', c -> parseFieldName());
+                insertColumns = parseUniqueList("identifier", ',', c -> parseFieldName()).toArray(EMPTY_FIELD);
                 parse(')');
                 parseKeyword("VALUES");
                 parse('(');

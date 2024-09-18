@@ -1068,15 +1068,15 @@ final class MetaImpl extends AbstractMeta {
             });
 
             Map<Name, Schema> schemas = new HashMap<>();
-            for (Schema schema : getSchemas())
-                schemas.put(schema.getQualifiedName(), schema);
+            for (Schema s : getSchemas())
+                schemas.put(s.getQualifiedName(), s);
 
             List<ForeignKey<Record, ?>> references = new ArrayList<>(groups.size());
             groups.forEach((k, v) -> {
 
                 // [#7377] The schema may be null instead of "" in some dialects
                 // [#12243] [#12240] Not all dialects have catalog support
-                Schema schema = schemas.get(
+                Schema s = schemas.get(
                     hasCatalog(getCatalog())
                     ? name(
                         defaultString(k.get(0, String.class)),
@@ -1085,43 +1085,46 @@ final class MetaImpl extends AbstractMeta {
                     : name(defaultString(k.get(1, String.class)))
                 );
 
-                Table<Record> pkTable = (Table<Record>) lookupTable(schema, k.get(2, String.class));
+                // [#17263] Schema could be filtered through cross schema references
+                if (s != null) {
+                    Table<Record> pkTable = (Table<Record>) lookupTable(s, k.get(2, String.class));
 
-                // [#16782] Dangling FK references are possible in some RDBMS that allow for
-                //          temporarily deactivating FK checks, e.g. MySQL via SET FOREIGN_KEY_CHECKS=0
-                if (pkTable != null) {
-                    String fkName = k.get(3, String.class);
-                    String pkName = k.get(4, String.class);
+                    // [#16782] Dangling FK references are possible in some RDBMS that allow for
+                    //          temporarily deactivating FK checks, e.g. MySQL via SET FOREIGN_KEY_CHECKS=0
+                    if (pkTable != null) {
+                        String fkName = k.get(3, String.class);
+                        String pkName = k.get(4, String.class);
 
-                    TableField<Record, ?>[] pkFields = new TableField[v.size()];
-                    TableField<Record, ?>[] fkFields = new TableField[v.size()];
+                        TableField<Record, ?>[] pkFields = new TableField[v.size()];
+                        TableField<Record, ?>[] fkFields = new TableField[v.size()];
 
-                    for (int i = 0; i < v.size(); i++) {
-                        Record record = v.get(i);
-                        String pkFieldName = record.get(3, String.class);
-                        String fkFieldName = record.get(7, String.class);
+                        for (int i = 0; i < v.size(); i++) {
+                            Record record = v.get(i);
+                            String pkFieldName = record.get(3, String.class);
+                            String fkFieldName = record.get(7, String.class);
 
-                        pkFields[i] = (TableField<Record, ?>) pkTable.field(pkFieldName);
-                        fkFields[i] = (TableField<Record, ?>)         field(fkFieldName);
+                            pkFields[i] = (TableField<Record, ?>) pkTable.field(pkFieldName);
+                            fkFields[i] = (TableField<Record, ?>)         field(fkFieldName);
 
-                        // [#2656] TODO: Find a more generally reusable way to perform case insensitive lookups
-                        if (pkFields[i] == null)
-                            if ((pkFields[i] = lookup(pkTable, pkFieldName)) == null)
-                                return;
+                            // [#2656] TODO: Find a more generally reusable way to perform case insensitive lookups
+                            if (pkFields[i] == null)
+                                if ((pkFields[i] = lookup(pkTable, pkFieldName)) == null)
+                                    return;
 
-                        if (fkFields[i] == null)
-                            if ((fkFields[i] = lookup(this, fkFieldName)) == null)
-                                return;
+                            if (fkFields[i] == null)
+                                if ((fkFields[i] = lookup(this, fkFieldName)) == null)
+                                    return;
+                        }
+
+                        references.add(new ReferenceImpl<>(
+                            this,
+                            name(fkName),
+                            fkFields,
+                            new MetaUniqueKey(pkTable, pkName, pkFields, true), // TODO: Can we know whether it is a PK or UK?
+                            pkFields,
+                            true
+                        ));
                     }
-
-                    references.add(new ReferenceImpl<>(
-                        this,
-                        name(fkName),
-                        fkFields,
-                        new MetaUniqueKey(pkTable, pkName, pkFields, true), // TODO: Can we know whether it is a PK or UK?
-                        pkFields,
-                        true
-                    ));
                 }
             });
 

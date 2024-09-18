@@ -60,6 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
@@ -154,6 +155,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
 
         init(source);
+    }
+
+    @Override
+    final AbstractMeta filtered0(Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter) {
+        return this;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

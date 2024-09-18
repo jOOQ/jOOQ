@@ -43,6 +43,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
@@ -66,6 +67,11 @@ final class TableMetaImpl extends AbstractMeta {
         super(configuration);
 
         this.tables = tables;
+    }
+
+    @Override
+    final AbstractMeta filtered0(Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter) {
+        return this;
     }
 
     @Override

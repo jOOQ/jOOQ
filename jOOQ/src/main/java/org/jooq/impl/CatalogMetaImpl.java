@@ -71,6 +71,11 @@ final class CatalogMetaImpl extends AbstractMeta {
     }
 
     @Override
+    final AbstractMeta filtered0(Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter) {
+        return this;
+    }
+
+    @Override
     final List<Catalog> getCatalogs0() {
         return Arrays.asList(catalogs);
     }

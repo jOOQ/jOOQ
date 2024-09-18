@@ -73,6 +73,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
@@ -158,6 +160,11 @@ final class Interpreter {
         applyDelayedForeignKeys();
 
         return new AbstractMeta(configuration) {
+
+            @Override
+            final AbstractMeta filtered0(Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter) {
+                return this;
+            }
 
             @Override
             final List<Catalog> getCatalogs0() throws DataAccessException {

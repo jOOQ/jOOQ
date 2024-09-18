@@ -110,6 +110,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
@@ -183,10 +184,29 @@ final class MetaImpl extends AbstractMeta {
     private final boolean                inverseSchemaCatalog;
 
     MetaImpl(Configuration configuration, DatabaseMetaData databaseMetaData) {
-        super(configuration);
+        this(configuration, databaseMetaData, null, null);
+    }
+
+    private MetaImpl(
+        Configuration configuration,
+        DatabaseMetaData databaseMetaData,
+        Predicate<? super Catalog> catalogFilter,
+        Predicate<? super Schema> schemaFilter
+    ) {
+        super(configuration, catalogFilter, schemaFilter);
 
         this.databaseMetaData = databaseMetaData;
         this.inverseSchemaCatalog = INVERSE_SCHEMA_CATALOG.contains(dialect());
+    }
+
+    @Override
+    final AbstractMeta filtered0(Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter) {
+        return new MetaImpl(
+            configuration(),
+            databaseMetaData,
+            FilteredMeta.and(this.catalogFilter, catalogFilter),
+            FilteredMeta.and(this.schemaFilter, schemaFilter)
+        );
     }
 
     final boolean hasCatalog(Catalog catalog) {
@@ -281,8 +301,12 @@ final class MetaImpl extends AbstractMeta {
                     SQLDataType.VARCHAR // TABLE_CATALOG
                 ));
 
-                for (String name : catalogs.getValues(0, String.class))
-                    result.add(new MetaCatalog(name));
+                for (String name : catalogs.getValues(0, String.class)) {
+                    MetaCatalog c = new MetaCatalog(name);
+
+                    if (catalogFilter == null || catalogFilter.test(c))
+                        result.add(c);
+                }
             }
         }
 

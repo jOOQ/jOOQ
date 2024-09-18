@@ -44,6 +44,7 @@ import static org.jooq.impl.Tools.map;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
@@ -82,6 +83,11 @@ final class Snapshot extends AbstractMeta {
         getCatalogs();
         delegate = null;
         resolveReferences();
+    }
+
+    @Override
+    final AbstractMeta filtered0(Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter) {
+        return this;
     }
 
     private final void resolveReferences() {

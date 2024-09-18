@@ -226,7 +226,7 @@ final class MetaImpl extends AbstractMeta {
             return function.apply(c, s);
     }
 
-    private final Result<Record> meta(ThrowingFunction<DatabaseMetaData, Result<Record>, SQLException> function) {
+    private final <R> R meta(ThrowingFunction<DatabaseMetaData, R, SQLException> function) {
         if (databaseMetaData == null)
             return dsl().connectionResult(connection -> function.apply(connection.getMetaData()));
 
@@ -351,6 +351,8 @@ final class MetaImpl extends AbstractMeta {
         return result;
     }
 
+    private static final record Schemas(Result<Record> schemas, boolean empty) {}
+
     private final class MetaCatalog extends CatalogImpl {
 
         MetaCatalog(String name) {
@@ -360,6 +362,7 @@ final class MetaImpl extends AbstractMeta {
         @Override
         public final List<Schema> getSchemas() {
             List<Schema> result = new ArrayList<>();
+            boolean empty = false;
 
 
 
@@ -371,7 +374,11 @@ final class MetaImpl extends AbstractMeta {
 
 
             if (!inverseSchemaCatalog) {
-                Result<Record> schemas = meta(meta -> {
+                Schemas schemas = meta(meta -> {
+
+
+
+
 
 
 
@@ -394,11 +401,13 @@ final class MetaImpl extends AbstractMeta {
 
 
                     // [#2681] Work around a flaw in the MySQL JDBC driver
-                    return dsl().fetch(meta.getSchemas(), VARCHAR); // TABLE_SCHEM
+                    return new Schemas(dsl().fetch(meta.getSchemas(), VARCHAR), false); // TABLE_SCHEM
                 });
 
-                for (String name : schemas.getValues(0, String.class))
-                    result.add(new MetaSchema(name, MetaCatalog.this));
+                for (String name : schemas.schemas().getValues(0, String.class))
+                    result.add(new MetaSchema(name, MetaCatalog.this, false));
+
+                empty = schemas.empty();
             }
 
             // [#2760] MySQL JDBC confuses "catalog" and "schema"
@@ -409,18 +418,19 @@ final class MetaImpl extends AbstractMeta {
                 ));
 
                 for (String name : schemas.getValues(0, String.class))
-                    result.add(new MetaSchema(name, MetaCatalog.this));
+                    result.add(new MetaSchema(name, MetaCatalog.this, false));
             }
 
             // There should always be at least one (empty) schema in a database
             if (result.isEmpty())
-                result.add(new MetaSchema("", MetaCatalog.this));
+                result.add(new MetaSchema("", MetaCatalog.this, empty));
 
             return result;
         }
     }
 
     private final class MetaSchema extends SchemaImpl {
+        private final boolean                                empty;
         private transient volatile Map<Name, Result<Record>> columnCache;
         private transient volatile Map<Name, Result<Record>> ukCache;
         private transient volatile Map<Name, Result<Record>> sequenceCache;
@@ -430,12 +440,17 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-        MetaSchema(String name, Catalog catalog) {
+        MetaSchema(String name, Catalog catalog, boolean empty) {
             super(name, catalog);
+
+            this.empty = empty;
         }
 
         @Override
         public final synchronized List<Table<?>> getTables() {
+            if (empty)
+                return emptyList();
+
             Result<Record> tables = meta(meta -> {
                 String[] types;
 
@@ -768,6 +783,9 @@ final class MetaImpl extends AbstractMeta {
         @SuppressWarnings("unchecked")
         @Override
         public List<Sequence<?>> getSequences() {
+            if (empty)
+                return emptyList();
+
             Result<Record> result = getSequences0();
 
             return result != null

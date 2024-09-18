@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.impl.Tools.map;
 
@@ -79,26 +78,29 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     // [#9010] TODO: Allow for opting out of this cache
     private Map<Name, Catalog>                cachedCatalogs;
-    private Map<Name, Schema>                 cachedQualifiedSchemas;
-    private Map<Name, Table<?>>               cachedQualifiedTables;
-    private Map<Name, Domain<?>>              cachedQualifiedDomains;
-    private Map<Name, Sequence<?>>            cachedQualifiedSequences;
-    private Map<Name, UniqueKey<?>>           cachedQualifiedPrimaryKeys;
-    private Map<Name, UniqueKey<?>>           cachedQualifiedUniqueKeys;
-    private Map<Name, ForeignKey<?, ?>>       cachedQualifiedForeignKeys;
-    private Map<Name, Index>                  cachedQualifiedIndexes;
-    private Map<Name, List<Schema>>           cachedUnqualifiedSchemas;
-    private Map<Name, List<Table<?>>>         cachedUnqualifiedTables;
-    private Map<Name, List<Domain<?>>>        cachedUnqualifiedDomains;
-    private Map<Name, List<Sequence<?>>>      cachedUnqualifiedSequences;
-    private Map<Name, List<UniqueKey<?>>>     cachedUnqualifiedPrimaryKeys;
-    private Map<Name, List<UniqueKey<?>>>     cachedUnqualifiedUniqueKeys;
-    private Map<Name, List<ForeignKey<?, ?>>> cachedUnqualifiedForeignKeys;
-    private Map<Name, List<Index>>            cachedUnqualifiedIndexes;
+    private Cached<Schema>                    cachedSchemas;
+    private Cached<Table<?>>                  cachedTables;
+    private Cached<Domain<?>>                 cachedDomains;
+    private Cached<Sequence<?>>               cachedSequences;
+    private Cached<UniqueKey<?>>              cachedPrimaryKeys;
+    private Cached<UniqueKey<?>>              cachedUniqueKeys;
+    private Cached<ForeignKey<?, ?>>          cachedForeignKeys;
+    private Cached<Index>                     cachedIndexes;
+    final Predicate<? super Catalog>          catalogFilter;
+    final Predicate<? super Schema>           schemaFilter;
 
     AbstractMeta(Configuration configuration) {
-        super(configuration);
+        this(configuration, null, null);
     }
+
+    AbstractMeta(Configuration configuration, Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter) {
+        super(configuration);
+
+        this.catalogFilter = catalogFilter;
+        this.schemaFilter = schemaFilter;
+    }
+
+    abstract AbstractMeta filtered0(Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter);
 
     @Override
     public final Catalog getCatalog(String name) {
@@ -107,26 +109,61 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final Catalog getCatalog(Name name) {
-        initCatalogs();
-        return cachedCatalogs.get(name);
+        return getCachedCatalogs().get(name);
     }
 
     @Override
     public final List<Catalog> getCatalogs() {
-        initCatalogs();
-        return Collections.unmodifiableList(new ArrayList<>(cachedCatalogs.values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedCatalogs().values()));
     }
 
-    private final void initCatalogs() {
-        if (cachedCatalogs == null) {
-            cachedCatalogs = new LinkedHashMap<>();
+    private final Map<Name, Catalog> getCachedCatalogs() {
+        Map<Name, Catalog> c = cachedCatalogs;
+
+        if (c == null) {
+            c = new LinkedHashMap<>();
 
             for (Catalog catalog : getCatalogs0())
-                cachedCatalogs.put(catalog.getQualifiedName(), catalog);
+                c.put(catalog.getQualifiedName(), catalog);
         }
+
+        if (caching())
+            cachedCatalogs = c;
+
+        return c;
     }
 
     abstract List<Catalog> getCatalogs0();
+
+    private static final record Cached<N extends Named>(Map<Name, N> qualified, Map<Name, List<N>> unqualified) {
+        Cached() {
+            this(new LinkedHashMap<>(), new LinkedHashMap<>());
+        }
+
+        final void init(Iterable<N> i) {
+            if (qualified().isEmpty()) {
+                for (N object : i) {
+                    Name q = object.getQualifiedName();
+                    Name u = object.getUnqualifiedName();
+
+                    qualified().put(q, object);
+                    unqualified().computeIfAbsent(u, n -> new ArrayList<>()).add(object);
+                }
+            }
+        }
+
+        final List<N> get(Name name) {
+            N object = qualified().get(name);
+            if (object != null)
+                return Collections.singletonList(object);
+
+            List<N> list = unqualified().get(name);
+            if (list == null)
+                return Collections.emptyList();
+            else
+                return Collections.unmodifiableList(list);
+        }
+    }
 
     @Override
     public final List<Schema> getSchemas(String name) {
@@ -135,22 +172,29 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<Schema> getSchemas(Name name) {
-        initSchemas();
-        return get(name, () -> getSchemas0().iterator(), cachedQualifiedSchemas, cachedUnqualifiedSchemas);
+        return getCachedSchemas().get(name);
     }
 
     @Override
     public final List<Schema> getSchemas() {
-        initSchemas();
-        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedSchemas.values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedSchemas().qualified().values()));
     }
 
-    private final void initSchemas() {
-        if (cachedQualifiedSchemas == null) {
-            cachedQualifiedSchemas = new LinkedHashMap<>();
-            cachedUnqualifiedSchemas = new LinkedHashMap<>();
-            get(name(""), () -> getSchemas0().iterator(), cachedQualifiedSchemas, cachedUnqualifiedSchemas);
+    private final Cached<Schema> getCachedSchemas() {
+        Cached<Schema> s = cachedSchemas;
+
+        if (s == null) {
+            s = new Cached<>();
+            s.init(schemaFilter != null
+                ? () -> Tools.filter(getSchemas0().iterator(), schemaFilter)
+                : () -> getSchemas0().iterator()
+            );
         }
+
+        if (caching())
+            cachedSchemas = s;
+
+        return s;
     }
 
     List<Schema> getSchemas0() {
@@ -164,22 +208,26 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<Table<?>> getTables(Name name) {
-        initTables();
-        return get(name, () -> getTables().iterator(), cachedQualifiedTables, cachedUnqualifiedTables);
+        return getCachedTables().get(name);
     }
 
     @Override
     public final List<Table<?>> getTables() {
-        initTables();
-        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedTables.values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedTables().qualified().values()));
     }
 
-    private final void initTables() {
-        if (cachedQualifiedTables == null) {
-            cachedQualifiedTables = new LinkedHashMap<>();
-            cachedUnqualifiedTables = new LinkedHashMap<>();
-            get(name(""), () -> getTables0().iterator(), cachedQualifiedTables, cachedUnqualifiedTables);
+    private final Cached<Table<?>> getCachedTables() {
+        Cached<Table<?>> t = cachedTables;
+
+        if (t == null) {
+            t = new Cached<>();
+            t.init(() -> getTables0().iterator());
         }
+
+        if (caching())
+            cachedTables = t;
+
+        return t;
     }
 
     List<Table<?>> getTables0() {
@@ -193,22 +241,27 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<Domain<?>> getDomains(Name name) {
-        initDomains();
-        return get(name, () -> getDomains().iterator(), cachedQualifiedDomains, cachedUnqualifiedDomains);
+        return getCachedDomains().get(name);
     }
 
     @Override
     public final List<Domain<?>> getDomains() {
-        initDomains();
-        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedDomains.values()));
+        getCachedDomains();
+        return Collections.unmodifiableList(new ArrayList<>(getCachedDomains().qualified().values()));
     }
 
-    private final void initDomains() {
-        if (cachedQualifiedDomains == null) {
-            cachedQualifiedDomains = new LinkedHashMap<>();
-            cachedUnqualifiedDomains = new LinkedHashMap<>();
-            get(name(""), () -> getDomains0().iterator(), cachedQualifiedDomains, cachedUnqualifiedDomains);
+    private final Cached<Domain<?>> getCachedDomains() {
+        Cached<Domain<?>> d = cachedDomains;
+
+        if (d == null) {
+            d = new Cached<>();
+            d.init(() -> getDomains0().iterator());
         }
+
+        if (caching())
+            cachedDomains = d;
+
+        return d;
     }
 
     List<Domain<?>> getDomains0() {
@@ -222,22 +275,26 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<Sequence<?>> getSequences(Name name) {
-        initSequences();
-        return get(name, () -> getSequences().iterator(), cachedQualifiedSequences, cachedUnqualifiedSequences);
+        return getCachedSequences().get(name);
     }
 
     @Override
     public final List<Sequence<?>> getSequences() {
-        initSequences();
-        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedSequences.values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedSequences().qualified().values()));
     }
 
-    private final void initSequences() {
-        if (cachedQualifiedSequences == null) {
-            cachedQualifiedSequences = new LinkedHashMap<>();
-            cachedUnqualifiedSequences = new LinkedHashMap<>();
-            get(name(""), () -> getSequences0().iterator(), cachedQualifiedSequences, cachedUnqualifiedSequences);
+    private final Cached<Sequence<?>> getCachedSequences() {
+        Cached<Sequence<?>> s = cachedSequences;
+
+        if (s == null) {
+            s = new Cached<>();
+            s.init(() -> getSequences0().iterator());
         }
+
+        if (caching())
+            cachedSequences = s;
+
+        return s;
     }
 
     final List<Sequence<?>> getSequences0() {
@@ -251,22 +308,26 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<UniqueKey<?>> getPrimaryKeys(Name name) {
-        initPrimaryKeys();
-        return get(name, () -> getPrimaryKeys().iterator(), cachedQualifiedPrimaryKeys, cachedUnqualifiedPrimaryKeys);
+        return getCachedPrimaryKeys().get(name);
     }
 
     @Override
     public final List<UniqueKey<?>> getPrimaryKeys() {
-        initPrimaryKeys();
-        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedPrimaryKeys.values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedPrimaryKeys().qualified().values()));
     }
 
-    private final void initPrimaryKeys() {
-        if (cachedQualifiedPrimaryKeys == null) {
-            cachedQualifiedPrimaryKeys = new LinkedHashMap<>();
-            cachedUnqualifiedPrimaryKeys = new LinkedHashMap<>();
-            get(name(""), () -> getPrimaryKeys0().iterator(), cachedQualifiedPrimaryKeys, cachedUnqualifiedPrimaryKeys);
+    private final Cached<UniqueKey<?>> getCachedPrimaryKeys() {
+        Cached<UniqueKey<?>> k = cachedPrimaryKeys;
+
+        if (k == null) {
+            k = new Cached<>();
+            k.init(() -> getPrimaryKeys0().iterator());
         }
+
+        if (caching())
+            cachedPrimaryKeys = k;
+
+        return k;
     }
 
     List<UniqueKey<?>> getPrimaryKeys0() {
@@ -286,22 +347,26 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<UniqueKey<?>> getUniqueKeys(Name name) {
-        initUniqueKeys();
-        return get(name, () -> getUniqueKeys().iterator(), cachedQualifiedUniqueKeys, cachedUnqualifiedUniqueKeys);
+        return getCachedUniqueKeys().get(name);
     }
 
     @Override
     public final List<UniqueKey<?>> getUniqueKeys() {
-        initUniqueKeys();
-        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedUniqueKeys.values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedUniqueKeys().qualified().values()));
     }
 
-    private final void initUniqueKeys() {
-        if (cachedQualifiedUniqueKeys == null) {
-            cachedQualifiedUniqueKeys = new LinkedHashMap<>();
-            cachedUnqualifiedUniqueKeys = new LinkedHashMap<>();
-            get(name(""), () -> getUniqueKeys0().iterator(), cachedQualifiedUniqueKeys, cachedUnqualifiedUniqueKeys);
+    private final Cached<UniqueKey<?>> getCachedUniqueKeys() {
+        Cached<UniqueKey<?>> k = cachedUniqueKeys;
+
+        if (k == null) {
+            k = new Cached<>();
+            k.init(() -> getUniqueKeys0().iterator());
         }
+
+        if (caching())
+            cachedUniqueKeys = k;
+
+        return k;
     }
 
     List<UniqueKey<?>> getUniqueKeys0() {
@@ -315,22 +380,26 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<ForeignKey<?, ?>> getForeignKeys(Name name) {
-        initForeignKeys();
-        return get(name, () -> getForeignKeys().iterator(), cachedQualifiedForeignKeys, cachedUnqualifiedForeignKeys);
+        return getCachedForeignKeys().get(name);
     }
 
     @Override
     public final List<ForeignKey<?, ?>> getForeignKeys() {
-        initForeignKeys();
-        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedForeignKeys.values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedForeignKeys().qualified().values()));
     }
 
-    private final void initForeignKeys() {
-        if (cachedQualifiedForeignKeys == null) {
-            cachedQualifiedForeignKeys = new LinkedHashMap<>();
-            cachedUnqualifiedForeignKeys = new LinkedHashMap<>();
-            get(name(""), () -> getForeignKeys0().iterator(), cachedQualifiedForeignKeys, cachedUnqualifiedForeignKeys);
+    private final Cached<ForeignKey<?, ?>> getCachedForeignKeys() {
+        Cached<ForeignKey<?, ?>> k = cachedForeignKeys;
+
+        if (k == null) {
+            k = new Cached<>();
+            k.init(() -> getForeignKeys0().iterator());
         }
+
+        if (caching())
+            cachedForeignKeys = k;
+
+        return k;
     }
 
     List<ForeignKey<?, ?>> getForeignKeys0() {
@@ -344,48 +413,34 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<Index> getIndexes(Name name) {
-        initIndexes();
-        return get(name, () -> getIndexes().iterator(), cachedQualifiedIndexes, cachedUnqualifiedIndexes);
+        return getCachedIndexes().get(name);
     }
 
     @Override
     public final List<Index> getIndexes() {
-        initIndexes();
-        return Collections.unmodifiableList(new ArrayList<>(cachedQualifiedIndexes.values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedIndexes().qualified().values()));
     }
 
-    private final void initIndexes() {
-        if (cachedQualifiedIndexes == null) {
-            cachedQualifiedIndexes = new LinkedHashMap<>();
-            cachedUnqualifiedIndexes = new LinkedHashMap<>();
-            get(name(""), () -> getIndexes0().iterator(), cachedQualifiedIndexes, cachedUnqualifiedIndexes);
+    private final Cached<Index> getCachedIndexes() {
+        Cached<Index> i = cachedIndexes;
+
+        if (i == null) {
+            i = new Cached<>();
+            i.init(() -> getIndexes0().iterator());
         }
+
+        if (caching())
+            cachedIndexes = i;
+
+        return i;
     }
 
     List<Index> getIndexes0() {
         return flatMap(getTables(), t -> t.getIndexes());
     }
 
-    private final <T extends Named> List<T> get(Name name, Iterable<T> i, Map<Name, T> qualified, Map<Name, List<T>> unqualified) {
-        if (qualified.isEmpty()) {
-            for (T object : i) {
-                Name q = object.getQualifiedName();
-                Name u = object.getUnqualifiedName();
-
-                qualified.put(q, object);
-                unqualified.computeIfAbsent(u, n -> new ArrayList<>()).add(object);
-            }
-        }
-
-        T object = qualified.get(name);
-        if (object != null)
-            return Collections.singletonList(object);
-
-        List<T> list = unqualified.get(name);
-        if (list == null)
-            return Collections.emptyList();
-        else
-            return Collections.unmodifiableList(list);
+    private boolean caching() {
+        return true;
     }
 
     @Override

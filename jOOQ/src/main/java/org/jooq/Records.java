@@ -586,7 +586,7 @@ public final class Records {
     public static final <T1, R extends Record1<T1>, U> RecordMapper<R, U> mapping(
         Function1<? super T1, ? extends U> function
     ) {
-        return r -> function.apply(r.value1());
+        return r -> r == null ? null : function.apply(r.value1());
     }
 
     /**
@@ -600,7 +600,7 @@ public final class Records {
     public static final <T1, T2, R extends Record2<T1, T2>, U> RecordMapper<R, U> mapping(
         Function2<? super T1, ? super T2, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2());
     }
 
     /**
@@ -614,7 +614,7 @@ public final class Records {
     public static final <T1, T2, T3, R extends Record3<T1, T2, T3>, U> RecordMapper<R, U> mapping(
         Function3<? super T1, ? super T2, ? super T3, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3());
     }
 
     /**
@@ -628,7 +628,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, R extends Record4<T1, T2, T3, T4>, U> RecordMapper<R, U> mapping(
         Function4<? super T1, ? super T2, ? super T3, ? super T4, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4());
     }
 
     /**
@@ -642,7 +642,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, R extends Record5<T1, T2, T3, T4, T5>, U> RecordMapper<R, U> mapping(
         Function5<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5());
     }
 
     /**
@@ -656,7 +656,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, R extends Record6<T1, T2, T3, T4, T5, T6>, U> RecordMapper<R, U> mapping(
         Function6<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6());
     }
 
     /**
@@ -670,7 +670,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, R extends Record7<T1, T2, T3, T4, T5, T6, T7>, U> RecordMapper<R, U> mapping(
         Function7<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7());
     }
 
     /**
@@ -684,7 +684,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, R extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>, U> RecordMapper<R, U> mapping(
         Function8<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8());
     }
 
     /**
@@ -698,7 +698,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, R extends Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>, U> RecordMapper<R, U> mapping(
         Function9<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9());
     }
 
     /**
@@ -712,7 +712,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>, U> RecordMapper<R, U> mapping(
         Function10<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10());
     }
 
     /**
@@ -726,7 +726,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>, U> RecordMapper<R, U> mapping(
         Function11<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11());
     }
 
     /**
@@ -740,7 +740,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, R extends Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>, U> RecordMapper<R, U> mapping(
         Function12<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12());
     }
 
     /**
@@ -754,7 +754,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, R extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>, U> RecordMapper<R, U> mapping(
         Function13<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13());
     }
 
     /**
@@ -768,7 +768,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, R extends Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>, U> RecordMapper<R, U> mapping(
         Function14<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14());
     }
 
     /**
@@ -782,7 +782,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, R extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>, U> RecordMapper<R, U> mapping(
         Function15<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15());
     }
 
     /**
@@ -796,7 +796,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, R extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>, U> RecordMapper<R, U> mapping(
         Function16<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16());
     }
 
     /**
@@ -810,7 +810,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, R extends Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>, U> RecordMapper<R, U> mapping(
         Function17<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17());
     }
 
     /**
@@ -824,7 +824,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, R extends Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>, U> RecordMapper<R, U> mapping(
         Function18<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18());
     }
 
     /**
@@ -838,7 +838,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, R extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>, U> RecordMapper<R, U> mapping(
         Function19<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19());
     }
 
     /**
@@ -852,7 +852,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, R extends Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>, U> RecordMapper<R, U> mapping(
         Function20<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19(), r.value20());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19(), r.value20());
     }
 
     /**
@@ -866,7 +866,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, R extends Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>, U> RecordMapper<R, U> mapping(
         Function21<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? super T21, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19(), r.value20(), r.value21());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19(), r.value20(), r.value21());
     }
 
     /**
@@ -880,7 +880,7 @@ public final class Records {
     public static final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, R extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>, U> RecordMapper<R, U> mapping(
         Function22<? super T1, ? super T2, ? super T3, ? super T4, ? super T5, ? super T6, ? super T7, ? super T8, ? super T9, ? super T10, ? super T11, ? super T12, ? super T13, ? super T14, ? super T15, ? super T16, ? super T17, ? super T18, ? super T19, ? super T20, ? super T21, ? super T22, ? extends U> function
     ) {
-        return r -> function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19(), r.value20(), r.value21(), r.value22());
+        return r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3(), r.value4(), r.value5(), r.value6(), r.value7(), r.value8(), r.value9(), r.value10(), r.value11(), r.value12(), r.value13(), r.value14(), r.value15(), r.value16(), r.value17(), r.value18(), r.value19(), r.value20(), r.value21(), r.value22());
     }
 
 

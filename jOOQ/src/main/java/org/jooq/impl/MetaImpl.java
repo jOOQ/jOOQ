@@ -1290,6 +1290,7 @@ final class MetaImpl extends AbstractMeta {
                     ? column.get(22, boolean.class)                      // IS_AUTOINCREMENT
                     : false;
 
+                switch (family()) {
 
 
 
@@ -1300,6 +1301,22 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
+
+
+
+
+
+
+
+
+                    // [#17284] Computed columns are reported as defaults
+                    case DERBY:
+                        if (defaultValue != null && defaultValue.toUpperCase().startsWith("GENERATED ALWAYS AS"))
+                            defaultValue = null;
+
+                        break;
+                }
 
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType type;

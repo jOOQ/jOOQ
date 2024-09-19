@@ -42,7 +42,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.AbstractConverter;
 import org.jooq.impl.AbstractContextConverter;
 import org.jooq.impl.IdentityConverter;
 import org.jooq.impl.SQLDataType;
@@ -147,7 +146,14 @@ public final class Converters<T, U> extends AbstractContextConverter<T, U> {
         if (converter instanceof IdentityConverter)
             return (ContextConverter<U, T>) converter;
         else
-            return ContextConverter.of(converter.toType(), converter.fromType(), converter::to, converter::from);
+            return ContextConverter.of(
+                converter.toType(),
+                converter.fromType(),
+                converter::to,
+                converter::from,
+                converter.toSupported(),
+                converter.fromSupported()
+            );
     }
 
     /**
@@ -212,6 +218,24 @@ public final class Converters<T, U> extends AbstractContextConverter<T, U> {
             result = chain[i].to(result, scope);
 
         return (T) result;
+    }
+
+    @Override
+    public final boolean fromSupported() {
+        for (int i = 0; i < chain.length; i++)
+            if (!chain[i].fromSupported())
+                return false;
+
+        return true;
+    }
+
+    @Override
+    public final boolean toSupported() {
+        for (int i = 0; i < chain.length; i++)
+            if (!chain[i].toSupported())
+                return false;
+
+        return true;
     }
 
     @Override

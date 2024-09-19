@@ -1572,17 +1572,40 @@ final class Tools {
         }
     }
 
+    private static final JooqLogger logResetTouchedOnNotNull = JooqLogger.getLogger(Tools.class, "logResetTouchedOnNotNull", 5);
+
     /**
      * [#2700] [#3582] If a POJO attribute is NULL, but the column is NOT NULL
      * then we should let the database apply DEFAULT values
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     static final void resetTouchedOnNotNull(Record record) {
         int size = record.size();
+        ConverterContext c = null;
 
-        for (int i = 0; i < size; i++)
-            if (record.get(i) == null)
-                if (!record.field(i).getDataType().nullable())
+        for (int i = 0; i < size; i++) {
+            Field field = record.field(i);
+
+            // [#17224] Reset the touched value only if T typed value is null, not U type!
+            // [#17272] Read only converters (such as Field.convertFrom()) can't convert back to the T type
+            try {
+                if (!field.getDataType().nullable() &&
+                    field.getConverter().toSupported() &&
+                    scoped(field.getConverter()).to(record.get(i), c == null ? c = converterContext(record) : c) == null
+                )
                     record.touched(i, false);
+            }
+            catch (Exception e) {
+                logResetTouchedOnNotNull.warn(
+                    "Exception in Converter",
+                    """
+                    An exception when calling in {converter}.to(). If this converter doesn't support the to()
+                    method, it is recommended to override Converter.toSupported() to prevent this call.
+                    """.replace("{converter}", field.getConverter().getClass().getName()),
+                    e
+                );
+            }
+        }
     }
 
     /**

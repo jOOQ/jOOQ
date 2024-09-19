@@ -61,6 +61,16 @@ final class ArrayConverter<T, U> extends AbstractContextConverter<T[], U[]> {
     }
 
     @Override
+    public final boolean fromSupported() {
+        return converter.fromSupported();
+    }
+
+    @Override
+    public final boolean toSupported() {
+        return converter.toSupported();
+    }
+
+    @Override
     public final U[] from(T[] t, ConverterContext scope) {
         return Convert.convertArray(t, converter);
     }

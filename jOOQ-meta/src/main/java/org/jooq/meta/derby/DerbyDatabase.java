@@ -420,16 +420,22 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
         return create()
             .select(
                 inline(null, VARCHAR).cast(VARCHAR).as("catalog"),
-                SYSTABLES.sysschemas().SCHEMANAME,
+                SYSSCHEMAS.SCHEMANAME,
                 SYSTABLES.TABLENAME,
                 SYSVIEWS.VIEWDEFINITION)
             .from(SYSTABLES)
+
+            // [#17280] Avoid implicit joining (i.e. aliasing) SYSSCHEMAS due to a bug in Derby:
+            //          https://issues.apache.org/jira/browse/DERBY-7170
+            .join(SYSSCHEMAS)
+                .on(SYSTABLES.SCHEMAID.eq(SYSSCHEMAS.SCHEMAID))
             .leftJoin(SYSVIEWS)
                 .on(SYSTABLES.TABLEID.eq(SYSVIEWS.TABLEID))
+
             // [#6797] The cast is necessary if a non-standard collation is used
-            .where(SYSTABLES.sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(schemas))
+            .where(SYSSCHEMAS.SCHEMANAME.cast(VARCHAR(32672)).in(schemas))
             .orderBy(
-                SYSTABLES.sysschemas().SCHEMANAME,
+                SYSSCHEMAS.SCHEMANAME,
                 SYSTABLES.TABLENAME);
     }
 
@@ -437,7 +443,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
     public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
         return create().select(
                     inline(null, VARCHAR).cast(VARCHAR).as("catalog"),
-                    SYSSEQUENCES.sysschemas().SCHEMANAME,
+                    SYSSCHEMAS.SCHEMANAME,
                     SYSSEQUENCES.SEQUENCENAME,
                     SYSSEQUENCES.SEQUENCEDATATYPE,
                     inline(null, INTEGER).cast(INTEGER).as("numeric_precision"),
@@ -458,10 +464,16 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                     inline(null, BIGINT).cast(BIGINT).as("cache")
                 )
                 .from(SYSSEQUENCES)
+
+                // [#17280] Avoid implicit joining (i.e. aliasing) SYSSCHEMAS due to a bug in Derby:
+                //          https://issues.apache.org/jira/browse/DERBY-7170
+                .join(SYSSCHEMAS)
+                    .on(SYSSEQUENCES.SCHEMAID.eq(SYSSCHEMAS.SCHEMAID))
+
                 // [#6797] The cast is necessary if a non-standard collation is used
-                .where(SYSSEQUENCES.sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(schemas))
+                .where(SYSSCHEMAS.SCHEMANAME.cast(VARCHAR(32672)).in(schemas))
                 .orderBy(
-                    SYSSEQUENCES.sysschemas().SCHEMANAME,
+                    SYSSCHEMAS.SCHEMANAME,
                     SYSSEQUENCES.SEQUENCENAME);
     }
 
@@ -470,7 +482,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
         List<SequenceDefinition> result = new ArrayList<>();
 
         for (Record record : sequences(getInputSchemata())) {
-            SchemaDefinition schema = getSchema(record.get(SYSSEQUENCES.sysschemas().SCHEMANAME));
+            SchemaDefinition schema = getSchema(record.get(SYSSCHEMAS.SCHEMANAME));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this,
@@ -500,7 +512,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
         List<TableDefinition> result = new ArrayList<>();
 
         for (Record record : create().select(
-                    SYSTABLES.sysschemas().SCHEMANAME,
+                    SYSSCHEMAS.SCHEMANAME,
                     SYSTABLES.TABLENAME,
                     SYSTABLES.TABLEID,
                     when(SYSTABLES.TABLETYPE.eq(inline("V")), inline(TableType.VIEW.name()))
@@ -509,13 +521,19 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                 .from(SYSTABLES)
                 .leftJoin(SYSVIEWS)
                     .on(SYSTABLES.TABLEID.eq(SYSVIEWS.TABLEID))
+
+                // [#17280] Avoid implicit joining (i.e. aliasing) SYSSCHEMAS due to a bug in Derby:
+                //          https://issues.apache.org/jira/browse/DERBY-7170
+                .join(SYSSCHEMAS)
+                    .on(SYSTABLES.SCHEMAID.eq(SYSSCHEMAS.SCHEMAID))
+
                 // [#6797] The cast is necessary if a non-standard collation is used
-                .where(SYSTABLES.sysschemas().SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
+                .where(SYSSCHEMAS.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
                 .orderBy(
-                    SYSTABLES.sysschemas().SCHEMANAME,
+                    SYSSCHEMAS.SCHEMANAME,
                     SYSTABLES.TABLENAME)) {
 
-            SchemaDefinition schema = getSchema(record.get(SYSTABLES.sysschemas().SCHEMANAME));
+            SchemaDefinition schema = getSchema(record.get(SYSSCHEMAS.SCHEMANAME));
             String name = record.get(SYSTABLES.TABLENAME);
             String id = record.get(SYSTABLES.TABLEID);
             TableType tableType = record.get("table_type", TableType.class);

@@ -1135,7 +1135,10 @@ final class MetaImpl extends AbstractMeta {
 
                 groups.forEach((k, v) -> {
                     v.sortAsc(5);
-                    result.add(createUniqueKey(v, 4, 3, false));
+                    UniqueKey<Record> key = createUniqueKey(v, 4, 3, false);
+
+                    if (key != null)
+                        result.add(key);
                 });
             }
 
@@ -1393,6 +1396,12 @@ final class MetaImpl extends AbstractMeta {
                         for (Field<?> field : fields())
                             if (field.getName().equalsIgnoreCase(name))
                                 f[i] = (TableField<Record, ?>) field;
+
+                    // [#17288] Ignore the key if columns cannot be looked up.
+                    if (f[i] == null) {
+                        log.info("Cannot look up unique key column " + columnName + " in table: " + this + ". Consider reporting https://jooq.org/bug");
+                        return null;
+                    }
                 }
 
                 String indexName = result.get(0).get(keyName, String.class);

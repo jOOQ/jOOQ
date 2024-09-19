@@ -253,8 +253,6 @@ public interface DSLContext extends Scope {
     /**
      * A JDBC connection that proxies the underlying connection to run the jOOQ
      * Diagnostics Pack on executed queries.
-     * <p>
-     * <strong>This is experimental functionality.</strong>
      */
     @NotNull
     Connection diagnosticsConnection();

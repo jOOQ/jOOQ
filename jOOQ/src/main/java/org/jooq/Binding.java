@@ -87,7 +87,10 @@ public interface Binding<T, U> extends Serializable {
      * ({@link Converter#fromType()} and {@link Converter#toType()} are needed
      * by jOOQ's internals), the conversion implementation (i.e.
      * {@link Converter#from(Object)} and {@link Converter#to(Object)}) isn't
-     * strictly required if implementations don't rely on it.
+     * strictly required if implementations don't rely on it. If these
+     * conversion implementations are non-functional, it is advised to hint at
+     * this fact in {@link Converter#fromSupported()} and
+     * {@link Converter#toSupported()}.
      */
     @NotNull
     Converter<T, U> converter();

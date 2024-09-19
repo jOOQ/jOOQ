@@ -1169,7 +1169,7 @@ final class MetaImpl extends AbstractMeta {
 
                     // [#17288] Ignore the key if columns cannot be looked up.
                     if (f[i] == null) {
-                        log.info("Cannot look up unique key column " + columnName + " in table: " + this + ". Consider reporting https://jooq.org/bug");
+                        log.info("Cannot look up unique key column " + name + " in table: " + this + ". Consider reporting https://jooq.org/bug");
                         return null;
                     }
                 }

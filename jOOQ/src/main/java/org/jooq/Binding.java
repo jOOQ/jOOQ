@@ -82,6 +82,12 @@ public interface Binding<T, U> extends Serializable {
     /**
      * A converter that can convert between the database type and the custom
      * type.
+     * <p>
+     * While the {@link Converter} property of a binding is not optional
+     * ({@link Converter#fromType()} and {@link Converter#toType()} are needed
+     * by jOOQ's internals), the conversion implementation (i.e.
+     * {@link Converter#from(Object)} and {@link Converter#to(Object)}) isn't
+     * strictly required if implementations don't rely on it.
      */
     @NotNull
     Converter<T, U> converter();

@@ -104,6 +104,9 @@ public interface Converter<T, U> extends Serializable {
 
     /**
      * Read and convert a database object to a user object.
+     * <p>
+     * Implementations that don't support this conversion are expected to
+     * override {@link #fromSupported()} to indicate lack of support.
      *
      * @param databaseObject The database object.
      * @return The user object.
@@ -112,6 +115,9 @@ public interface Converter<T, U> extends Serializable {
 
     /**
      * Convert and write a user object to a database object.
+     * <p>
+     * Implementations that don't support this conversion are expected to
+     * override {@link #toSupported()} to indicate lack of support.
      *
      * @param userObject The user object.
      * @return The database object.
@@ -155,7 +161,31 @@ public interface Converter<T, U> extends Serializable {
     }
 
     /**
+     * Whether this is a write only converter.
+     * <p>
+     * A write only converter implements only {@link #to(Object)} but not
+     * {@link #from(Object)}.
+     */
+    default boolean fromSupported() {
+        return true;
+    }
+
+    /**
+     * Whether this is a read only converter.
+     * <p>
+     * A read only converter implements only {@link #from(Object)} but not
+     * {@link #to(Object)}.
+     */
+    default boolean toSupported() {
+        return true;
+    }
+
+    /**
      * Construct a new converter from functions.
+     * <p>
+     * The resulting {@link Converter} is expected to return <code>true</code>
+     * on both {@link Converter#fromSupported()} and
+     * {@link Converter#toSupported()}.
      *
      * @param <T> the database type.
      * @param <U> the user type.
@@ -174,7 +204,44 @@ public interface Converter<T, U> extends Serializable {
         Function<? super T, ? extends U> from,
         Function<? super U, ? extends T> to
     ) {
+        return of(fromType, toType, from, to, true, true);
+    }
+
+    /**
+     * Construct a new converter from functions.
+     *
+     * @param <T> the database type.
+     * @param <U> the user type.
+     * @param fromType The database type.
+     * @param toType The user type.
+     * @param from A function converting from T to U when reading from the
+     *            database.
+     * @param to A function converting from U to T when writing to the database.
+     * @param fromSupported Whether the from function is supported.
+     * @param toSupported Whether the to function is supported.
+     * @return The converter.
+     * @see Converter
+     */
+    @NotNull
+    static <T, U> Converter<T, U> of(
+        Class<T> fromType,
+        Class<U> toType,
+        Function<? super T, ? extends U> from,
+        Function<? super U, ? extends T> to,
+        boolean fromSupported,
+        boolean toSupported
+    ) {
         return new AbstractContextConverter<T, U>(fromType, toType) {
+
+            @Override
+            public final boolean fromSupported() {
+                return fromSupported;
+            }
+
+            @Override
+            public final boolean toSupported() {
+                return toSupported;
+            }
 
             @Override
             public final U from(T t, ConverterContext scope) {
@@ -190,6 +257,9 @@ public interface Converter<T, U> extends Serializable {
 
     /**
      * Construct a new read-only converter from a function.
+     * <p>
+     * The resulting {@link Converter} returns false on
+     * {@link Converter#toSupported()}.
      *
      * @param <T> the database type
      * @param <U> the user type
@@ -207,11 +277,14 @@ public interface Converter<T, U> extends Serializable {
         Class<U> toType,
         Function<? super T, ? extends U> from
     ) {
-        return of(fromType, toType, from, notImplemented());
+        return of(fromType, toType, from, notImplemented(), true, false);
     }
 
     /**
      * Construct a new write-only converter from a function.
+     * <p>
+     * The resulting {@link Converter} returns false on
+     * {@link Converter#fromSupported()}.
      *
      * @param <T> the database type
      * @param <U> the user type
@@ -229,7 +302,7 @@ public interface Converter<T, U> extends Serializable {
         Class<U> toType,
         Function<? super U, ? extends T> to
     ) {
-        return of(fromType, toType, notImplemented(), to);
+        return of(fromType, toType, notImplemented(), to, false, true);
     }
 
     /**
@@ -250,6 +323,10 @@ public interface Converter<T, U> extends Serializable {
      * assertNull(converter.from(null));
      * assertNull(converter.to(null));
      * </code></pre>
+     * <p>
+     * The resulting {@link Converter} is expected to return <code>true</code>
+     * on both {@link Converter#fromSupported()} and
+     * {@link Converter#toSupported()}.
      *
      * @param <T> the database type
      * @param <U> the user type
@@ -272,6 +349,51 @@ public interface Converter<T, U> extends Serializable {
     }
 
     /**
+     * Construct a new converter from functions.
+     * <p>
+     * This works like {@link Converter#of(Class, Class, Function, Function)},
+     * except that both conversion {@link Function}s are decorated with a
+     * function that always returns <code>null</code> for <code>null</code>
+     * inputs.
+     * <p>
+     * Example:
+     * <p>
+     * <pre><code>
+     * Converter&lt;String, Integer&gt; converter =
+     *   Converter.ofNullable(String.class, Integer.class, Integer::parseInt, Object::toString);
+     *
+     * // No exceptions thrown
+     * assertNull(converter.from(null));
+     * assertNull(converter.to(null));
+     * </code></pre>
+     * <p>
+     * The resulting {@link Converter} is expected to return <code>true</code>
+     * on both {@link Converter#fromSupported()} and
+     * {@link Converter#toSupported()}.
+     *
+     * @param <T> the database type
+     * @param <U> the user type
+     * @param fromType The database type
+     * @param toType The user type
+     * @param from A function converting from T to U when reading from the
+     *            database.
+     * @param to A function converting from U to T when writing to the database.
+     * @return The converter.
+     * @see Converter
+     */
+    @NotNull
+    static <T, U> Converter<T, U> ofNullable(
+        Class<T> fromType,
+        Class<U> toType,
+        Function<? super T, ? extends U> from,
+        Function<? super U, ? extends T> to,
+        boolean fromSupported,
+        boolean toSupported
+    ) {
+        return of(fromType, toType, nullable(from), nullable(to), fromSupported, toSupported);
+    }
+
+    /**
      * Construct a new read-only converter from a function.
      * <p>
      * This works like {@link Converter#from(Class, Class, Function)}, except
@@ -287,6 +409,9 @@ public interface Converter<T, U> extends Serializable {
      * // No exceptions thrown
      * assertNull(converter.from(null));
      * </code></pre>
+     * <p>
+     * The resulting {@link Converter} returns false on
+     * {@link Converter#toSupported()}.
      *
      * @param <T> the database type.
      * @param <U> the user type.
@@ -303,7 +428,7 @@ public interface Converter<T, U> extends Serializable {
         Class<U> toType,
         Function<? super T, ? extends U> from
     ) {
-        return of(fromType, toType, nullable(from), notImplemented());
+        return of(fromType, toType, nullable(from), notImplemented(), true, false);
     }
 
     /**
@@ -322,6 +447,8 @@ public interface Converter<T, U> extends Serializable {
      * // No exceptions thrown
      * assertNull(converter.to(null));
      * </code></pre>
+     * The resulting {@link Converter} returns false on
+     * {@link Converter#fromSupported()}.
      *
      * @param <T> the database type
      * @param <U> the user type
@@ -337,6 +464,6 @@ public interface Converter<T, U> extends Serializable {
         Class<U> toType,
         Function<? super U, ? extends T> to
     ) {
-        return of(fromType, toType, notImplemented(), nullable(to));
+        return of(fromType, toType, notImplemented(), nullable(to), false, true);
     }
 }

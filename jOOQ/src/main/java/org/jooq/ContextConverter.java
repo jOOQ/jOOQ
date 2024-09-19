@@ -64,6 +64,9 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
 
     /**
      * Read and convert a database object to a user object.
+     * <p>
+     * Implementations that don't support this conversion are expected to
+     * override {@link #fromSupported()} to indicate lack of support.
      *
      * @param databaseObject The database object.
      * @param ctx The context of this conversion.
@@ -73,6 +76,9 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
 
     /**
      * Convert and write a user object to a database object.
+     * <p>
+     * Implementations that don't support this conversion are expected to
+     * override {@link #toSupported()} to indicate lack of support.
      *
      * @param userObject The user object.
      * @param ctx The context of this conversion.
@@ -127,6 +133,16 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
         else
             return new AbstractContextConverter<T, U>(converter.fromType(), converter.toType()) {
                 @Override
+                public boolean fromSupported() {
+                    return converter.fromSupported();
+                }
+
+                @Override
+                public boolean toSupported() {
+                    return converter.toSupported();
+                }
+
+                @Override
                 public U from(T t, ConverterContext scope) {
                     return converter.from(t);
                 }
@@ -140,6 +156,9 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
 
     /**
      * Construct a new read-only converter from a function.
+     * <p>
+     * The resulting {@link Converter} returns false on
+     * {@link Converter#toSupported()}.
      *
      * @param <T> the database type
      * @param <U> the user type
@@ -162,6 +181,9 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
 
     /**
      * Construct a new write-only converter from a function.
+     * <p>
+     * The resulting {@link Converter} returns false on
+     * {@link Converter#fromSupported()}.
      *
      * @param <T> the database type
      * @param <U> the user type
@@ -184,6 +206,10 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
 
     /**
      * Construct a new converter from functions.
+     * <p>
+     * The resulting {@link Converter} is expected to return <code>true</code>
+     * on both {@link Converter#fromSupported()} and
+     * {@link Converter#toSupported()}.
      *
      * @param <T> the database type.
      * @param <U> the user type.
@@ -202,7 +228,44 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
         BiFunction<? super T, ? super ConverterContext, ? extends U> from,
         BiFunction<? super U, ? super ConverterContext, ? extends T> to
     ) {
+        return of(fromType, toType, from, to, true, true);
+    }
+
+    /**
+     * Construct a new converter from functions.
+     *
+     * @param <T> the database type.
+     * @param <U> the user type.
+     * @param fromType The database type.
+     * @param toType The user type.
+     * @param from A function converting from T to U when reading from the
+     *            database.
+     * @param to A function converting from U to T when writing to the database.
+     * @param fromSupported Whether the from function is supported.
+     * @param toSupported Whether the to function is supported.
+     * @return The converter.
+     * @see Converter
+     */
+    @NotNull
+    static <T, U> ContextConverter<T, U> of(
+        Class<T> fromType,
+        Class<U> toType,
+        BiFunction<? super T, ? super ConverterContext, ? extends U> from,
+        BiFunction<? super U, ? super ConverterContext, ? extends T> to,
+        boolean fromSupported,
+        boolean toSupported
+    ) {
         return new AbstractContextConverter<T, U>(fromType, toType) {
+
+            @Override
+            public final boolean fromSupported() {
+                return fromSupported;
+            }
+
+            @Override
+            public final boolean toSupported() {
+                return toSupported;
+            }
 
             @Override
             public final U from(T t, ConverterContext scope) {
@@ -234,6 +297,10 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
      * assertNull(converter.from(null));
      * assertNull(converter.to(null));
      * </code></pre>
+     * <p>
+     * The resulting {@link Converter} is expected to return <code>true</code>
+     * on both {@link Converter#fromSupported()} and
+     * {@link Converter#toSupported()}.
      *
      * @param <T> the database type
      * @param <U> the user type
@@ -252,7 +319,50 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
         BiFunction<? super T, ? super ConverterContext, ? extends U> from,
         BiFunction<? super U, ? super ConverterContext, ? extends T> to
     ) {
-        return of(fromType, toType, nullable(from), nullable(to));
+        return of(fromType, toType, nullable(from), nullable(to), true, true);
+    }
+
+    /**
+     * Construct a new converter from functions.
+     * <p>
+     * This works like {@link Converter#of(Class, Class, Function, Function)},
+     * except that both conversion {@link Function}s are decorated with a
+     * function that always returns <code>null</code> for <code>null</code>
+     * inputs.
+     * <p>
+     * Example:
+     * <p>
+     * <pre><code>
+     * Converter&lt;String, Integer&gt; converter =
+     *   Converter.ofNullable(String.class, Integer.class, Integer::parseInt, Object::toString);
+     *
+     * // No exceptions thrown
+     * assertNull(converter.from(null));
+     * assertNull(converter.to(null));
+     * </code></pre>
+     *
+     * @param <T> the database type
+     * @param <U> the user type
+     * @param fromType The database type
+     * @param toType The user type
+     * @param from A function converting from T to U when reading from the
+     *            database.
+     * @param to A function converting from U to T when writing to the database.
+     * @param fromSupported Whether the from function is supported.
+     * @param toSupported Whether the to function is supported.
+     * @return The converter.
+     * @see Converter
+     */
+    @NotNull
+    static <T, U> ContextConverter<T, U> ofNullable(
+        Class<T> fromType,
+        Class<U> toType,
+        BiFunction<? super T, ? super ConverterContext, ? extends U> from,
+        BiFunction<? super U, ? super ConverterContext, ? extends T> to,
+        boolean fromSupported,
+        boolean toSupported
+    ) {
+        return of(fromType, toType, nullable(from), nullable(to), fromSupported, toSupported);
     }
 
     /**
@@ -271,6 +381,9 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
      * // No exceptions thrown
      * assertNull(converter.from(null));
      * </code></pre>
+     * <p>
+     * The resulting {@link Converter} returns false on
+     * {@link Converter#toSupported()}.
      *
      * @param <T> the database type.
      * @param <U> the user type.
@@ -306,6 +419,9 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
      * // No exceptions thrown
      * assertNull(converter.to(null));
      * </code></pre>
+     * <p>
+     * The resulting {@link Converter} returns false on
+     * {@link Converter#fromSupported()}.
      *
      * @param <T> the database type
      * @param <U> the user type

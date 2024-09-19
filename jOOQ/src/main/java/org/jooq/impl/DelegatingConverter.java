@@ -54,6 +54,16 @@ public class DelegatingConverter<T, U> extends AbstractContextConverter<T, U> {
     }
 
     @Override
+    public final boolean fromSupported() {
+        return delegate.fromSupported();
+    }
+
+    @Override
+    public final boolean toSupported() {
+        return delegate.toSupported();
+    }
+
+    @Override
     public final U from(T t, ConverterContext scope) {
         return delegate.from(t, scope);
     }

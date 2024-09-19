@@ -1255,6 +1255,18 @@ public interface DataType<T> extends Named {
     boolean isFloat();
 
     /**
+     * Whether this data type is any decimal numeric data type.
+     * <p>
+     * This applies to any of these types:
+     * <ul>
+     * <li> {@link SQLDataType#DECIMAL}</li>
+     * <li> {@link SQLDataType#DECIMAL_INTEGER}</li>
+     * <li> {@link SQLDataType#NUMERIC}</li>
+     * </ul>
+     */
+    boolean isDecimal();
+
+    /**
      * Whether this data type is any boolean data type.
      * <p>
      * This applies to any of these types:

@@ -794,6 +794,13 @@ implements
     }
 
     @Override
+    public final boolean isDecimal() {
+        Class<?> tType = tType0();
+        return BigInteger.class == tType
+            || BigDecimal.class == tType;
+    }
+
+    @Override
     public final boolean isInteger() {
         Class<?> tType = tType0();
         return UNumber.class.isAssignableFrom(tType)

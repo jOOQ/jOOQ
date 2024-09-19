@@ -899,6 +899,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
 
+            // [#2902] The xerial driver binds BigDecimal as String, which may produce
+            //         wrong results
+            if (dataType.isDecimal()) {
+                switch (ctx.family()) {
+                    case SQLITE:
+                        return true;
+                }
+            }
+
 
 
 

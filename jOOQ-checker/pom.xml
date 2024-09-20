@@ -66,13 +66,13 @@
             <artifactId>checker</artifactId>
         </dependency>
 
-        <!-- [#12884] [#14055]
-             Explicit upgrade of transitive dependency due to CVE-2021-22569
+        <!-- [#12884] [#14055] [#17315]
+             Explicit upgrade of transitive dependency due to CVE-2021-22569, CVE-2024-7254
              TODO: Remove again when https://github.com/google/error-prone/pull/2819 is released  -->
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>3.16.3</version>
+            <version>3.25.5</version>
         </dependency>
         <dependency>
             <groupId>com.google.errorprone</groupId>

@@ -176,7 +176,7 @@ public class JPADatabase extends AbstractInterpretingDatabase {
 
         // [#17274] Don't swallow errors during the exports
         export.setHaltOnError(true);
-        export.create(EnumSet.of(TargetType.DATABASE), metadata.buildMetadata());
+        export.createOnly(EnumSet.of(TargetType.DATABASE), metadata.buildMetadata());
 
         if (useAttributeConverters)
             loadAttributeConverters(metadata.getAnnotatedClasses());

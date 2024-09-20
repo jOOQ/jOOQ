@@ -173,7 +173,10 @@ public class JPADatabase extends AbstractInterpretingDatabase {
 
         // Hibernate 5.2 broke 5.0 API again. Here's how to do this now:
         SchemaExport export = new SchemaExport();
-        export.create(EnumSet.of(TargetType.DATABASE), metadata.buildMetadata());
+
+        // [#17274] Don't swallow errors during the exports
+        export.setHaltOnError(true);
+        export.createOnly(EnumSet.of(TargetType.DATABASE), metadata.buildMetadata());
 
         if (useAttributeConverters)
             loadAttributeConverters(metadata.getAnnotatedClasses());

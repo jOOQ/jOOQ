@@ -74,6 +74,14 @@
             <artifactId>protobuf-java</artifactId>
             <version>3.25.5</version>
         </dependency>
+        
+        <!-- [#17327]
+             Explicit upgrade of transitive dependency due to CVE-2023-2976 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>32.1.3-jre</version>
+        </dependency>
         <dependency>
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_core</artifactId>

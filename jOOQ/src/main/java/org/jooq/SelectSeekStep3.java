@@ -122,6 +122,9 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
      * </code></pre>
      * <p>
+     * The seek column list length must match the <code>ORDER BY</code> expression
+     * list length.
+     * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
      * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
@@ -174,6 +177,9 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * <pre><code>
      * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
      * </code></pre>
+     * <p>
+     * The seek column list length must match the <code>ORDER BY</code> expression
+     * list length.
      * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
@@ -228,6 +234,9 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
      * </code></pre>
      * <p>
+     * The seek column list length must match the <code>ORDER BY</code> expression
+     * list length.
+     * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
      * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
@@ -280,6 +289,9 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * WHERE (id &gt; 3) OR (id = 3 AND code &gt; 'abc')
      * </code></pre>
      * <p>
+     * The seek column list length must match the <code>ORDER BY</code> expression
+     * list length.
+     * <p>
      * The <code>SEEK AFTER</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
      * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
@@ -331,6 +343,9 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * <pre><code>
      * WHERE (id &lt; 3) OR (id = 3 AND code &lt; 'abc')
      * </code></pre>
+     * <p>
+     * The seek column list length must match the <code>ORDER BY</code> expression
+     * list length.
      * <p>
      * The <code>SEEK BEFORE</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
@@ -385,6 +400,9 @@ public interface SelectSeekStep3<R extends Record, T1, T2, T3> extends SelectLim
      * <pre><code>
      * WHERE (id &lt; 3) OR (id = 3 AND code &lt; 'abc')
      * </code></pre>
+     * <p>
+     * The seek column list length must match the <code>ORDER BY</code> expression
+     * list length.
      * <p>
      * The <code>SEEK BEFORE</code> method currently does not support seeking
      * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,

@@ -1597,12 +1597,18 @@ implements
 
 
     private final List<? extends Field<?>> seekValues(Object[] values) {
-        if (getQuery() instanceof SelectQueryImpl<R> s)
+        if (getQuery() instanceof SelectQueryImpl<R> s) {
+            List<Field<?>> fields = s.getOrderBy().fields();
+
+            if (fields.size() != values.length)
+                throw new IllegalArgumentException("Seek list length (" + Arrays.asList(values) + ") must match ORDER BY expression list length (" + s.getOrderBy() + ")");
+
             return Tools.fields(values, map(
-                s.getOrderBy().fields(),
+                fields,
                 (Field<?> f) -> f.getDataType(),
                 DataType[]::new
             ));
+        }
         else
             return Tools.fields(values);
     }

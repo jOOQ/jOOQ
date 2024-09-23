@@ -837,9 +837,17 @@ final class MetaImpl extends AbstractMeta {
             return Tools.<List<Index>, RuntimeException>ignoreNPE(
                 () -> {
                     Result<Record> result = removeSystemIndexes(meta(meta -> {
-                        System.out.println(this);
+                        String tableName;
 
-                        try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getIndexInfo(c, s, getName(), false, true))) {
+
+
+
+
+
+
+                        tableName = getName();
+
+                        try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getIndexInfo(c, s, tableName, false, true))) {
                             return dsl().fetch(
                                 rs,
                                 String.class,  // TABLE_CAT

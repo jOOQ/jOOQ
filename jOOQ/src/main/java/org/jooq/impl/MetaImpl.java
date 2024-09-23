@@ -1027,6 +1027,8 @@ final class MetaImpl extends AbstractMeta {
             return Tools.<List<Index>, RuntimeException>ignoreNPE(
                 () -> {
                     Result<Record> result = removeSystemIndexes(meta(meta -> {
+                        System.out.println(this);
+
                         try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getIndexInfo(c, s, getName(), false, true))) {
                             return dsl().fetch(
                                 rs,
@@ -1049,7 +1051,7 @@ final class MetaImpl extends AbstractMeta {
                         }
 
                         catch (SQLFeatureNotSupportedException e) {
-                            log.debug("Cannot call DatabaseMetaData::getIndexInfo", e);
+                            log.debug("Cannot call DatabaseMetaData::getIndexInfo for table " + this, e);
 
                             return dsl().newResult(asList(
                                 DSL.field("TABLE_CAT", VARCHAR),
@@ -1197,7 +1199,7 @@ final class MetaImpl extends AbstractMeta {
                     );
                 }
                 catch (SQLFeatureNotSupportedException e) {
-                    log.debug("Cannot call DatabaseMetaData::getImportedKeys", e);
+                    log.debug("Cannot call DatabaseMetaData::getImportedKeys for table " + this, e);
 
                     return dsl().newResult(asList(
                         DSL.field("PKTABLE_CAT", VARCHAR),
@@ -1522,7 +1524,7 @@ final class MetaImpl extends AbstractMeta {
                     // [#15303] Register unknown data types in the type registry, to at least maintain
                     //          type information.
                     if (log.isDebugEnabled())
-                        log.debug("Unknown type", "Registering unknown data type: " + typeName);
+                        log.debug("Unknown type", "Registering unknown data type: " + typeName + " for column " + columnName + " of table " + this);
 
                     type = new DefaultDataType(family(), Object.class, typeName);
                 }
@@ -1538,7 +1540,7 @@ final class MetaImpl extends AbstractMeta {
                     if (!hasAutoIncrement)
                         type = type.identity(hasAutoIncrement = isAutoIncrement);
                     else
-                        log.info("Multiple identities", "jOOQ does not support tables with multiple identities. Identity is ignored on column: " + columnName);
+                        log.info("Multiple identities", "jOOQ does not support tables with multiple identities. Identity is ignored on column " + columnName + " of table " + this);
 
                 if (nullable == DatabaseMetaData.columnNoNulls)
                     type = type.nullable(false);
@@ -1570,7 +1572,7 @@ final class MetaImpl extends AbstractMeta {
                                     type = type.defaultValue(ctx.parser().parseField(defaultValue));
                                 }
                                 catch (ParserException e) {
-                                    log.info("Cannot parse default expression (to skip parsing, use Settings.parseMetaViewDefaultExpressions): " + defaultValue, e);
+                                    log.info("Cannot parse default expression (to skip parsing, use Settings.parseMetaViewDefaultExpressions): " + defaultValue + " of column " + columnName + " in table " + this, e);
                                     type = type.defaultValue(DSL.field(defaultValue, type));
                                 }
                             }
@@ -1586,7 +1588,7 @@ final class MetaImpl extends AbstractMeta {
                     // [#8469] Rather than catching exceptions after conversions, we should use the
                     //         parser to parse default values, if they're expressions
                     catch (DataTypeException e) {
-                        log.warn("Default value", "Could not load default value: " + defaultValue + " for type: " + type, e);
+                        log.warn("Default value", "Could not load default value: " + defaultValue + " for type: " + type + " of column " + columnName + " in table " + this, e);
                     }
                 }
 

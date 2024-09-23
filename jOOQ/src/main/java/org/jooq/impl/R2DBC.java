@@ -196,8 +196,12 @@ final class R2DBC {
         }
 
         @Override
-        public void cancel() {
-            complete(() -> {});
+        public final void cancel() {
+            complete(onCancel());
+        }
+
+        /* non-final */ Runnable onCancel() {
+            return () -> {};
         }
 
         final boolean moreRequested() {
@@ -402,7 +406,8 @@ final class R2DBC {
 
         @Override
         public final void onSubscribe(Subscription s) {
-            // Stores the Subscription that handles the connection establishment.
+
+            // [#17094] Stores the Subscription that handles the connection establishment.
             subscription.set(s);
             s.request(1);
         }
@@ -423,9 +428,11 @@ final class R2DBC {
         @Override
         public final void onComplete() {}
 
-        public final void cancel() {
+        final void cancelSubscription() {
             subscription.updateAndGet(s -> {
-                if (s != null) { s.cancel(); }
+                if (s != null)
+                    s.cancel();
+
                 return null;
             });
         }
@@ -664,9 +671,10 @@ final class R2DBC {
         }
 
         @Override
-        public final void cancel() {
-            // Safely cancels the connection acquisition if not yet established.
-            complete(() -> delegate().cancel());
+        final Runnable onCancel() {
+
+            // [#17094] Safely cancels the connection acquisition if not yet established.
+            return () -> delegate().cancelSubscription();
         }
 
         @Override

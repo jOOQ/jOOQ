@@ -196,7 +196,11 @@ final class R2DBC {
 
         @Override
         public final void cancel() {
-            complete(() -> {});
+            complete(onCancel());
+        }
+
+        /* non-final */ Runnable onCancel() {
+            return () -> {};
         }
 
         final boolean moreRequested() {
@@ -374,14 +378,19 @@ final class R2DBC {
 
         final AbstractNonBlockingSubscription<T> downstream;
         final AtomicReference<Connection>        connection;
+        final AtomicReference<Subscription>      subscription;
 
         ConnectionSubscriber(AbstractNonBlockingSubscription<T> downstream) {
             this.downstream = downstream;
             this.connection = new AtomicReference<>();
+            this.subscription = new AtomicReference<>();
         }
 
         @Override
         public final void onSubscribe(Subscription s) {
+
+            // [#17094] Stores the Subscription that handles the connection establishment.
+            subscription.set(s);
             s.request(1);
         }
 
@@ -400,6 +409,15 @@ final class R2DBC {
 
         @Override
         public final void onComplete() {}
+
+        final void cancelSubscription() {
+            subscription.updateAndGet(s -> {
+                if (s != null)
+                    s.cancel();
+
+                return null;
+            });
+        }
     }
 
     static final class QueryExecutionSubscriber<T, Q extends Query> extends ConnectionSubscriber<T> {
@@ -632,6 +650,13 @@ final class R2DBC {
         final void request2(Subscription s) {
             if (moreRequested())
                 s.request(1);
+        }
+
+        @Override
+        final Runnable onCancel() {
+
+            // [#17094] Safely cancels the connection acquisition if not yet established.
+            return () -> delegate().cancelSubscription();
         }
 
         @Override

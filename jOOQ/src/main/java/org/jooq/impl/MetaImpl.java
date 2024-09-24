@@ -226,15 +226,31 @@ final class MetaImpl extends AbstractMeta {
             return function.apply(c, s);
     }
 
-    private final <R> R meta(ThrowingFunction<DatabaseMetaData, R, SQLException> function) {
+    private final <R> R meta(
+        Supplier<String> errorMessage,
+        ThrowingFunction<DatabaseMetaData, R, SQLException> function
+    ) {
         if (databaseMetaData == null)
-            return dsl().connectionResult(connection -> function.apply(connection.getMetaData()));
+            return dsl().connectionResult(connection -> meta0(errorMessage, function, connection.getMetaData()));
+        else
+            return meta0(errorMessage, function, databaseMetaData);
+    }
 
+    private static final <R> R meta0(
+        Supplier<String> errorMessage,
+        ThrowingFunction<DatabaseMetaData, R, SQLException> function,
+        DatabaseMetaData databaseMetaData
+    ) {
         try {
             return function.apply(databaseMetaData);
         }
         catch (SQLException e) {
-            throw new DataAccessException("Error while running MetaFunction", e);
+            String m = errorMessage.get();
+
+            if (StringUtils.isEmpty(m))
+                throw new DataAccessException("Error querying DatabaseMetaData", e);
+            else
+                throw new DataAccessException("Error querying DatabaseMetaData: " + m, e);
         }
     }
 
@@ -374,7 +390,8 @@ final class MetaImpl extends AbstractMeta {
 
 
             if (!inverseSchemaCatalog) {
-                Schemas schemas = meta(meta -> {
+                Schemas schemas = meta(() -> "Error while fetching schemas for catalog: " + this,
+                    meta -> {
 
 
 
@@ -412,7 +429,7 @@ final class MetaImpl extends AbstractMeta {
 
             // [#2760] MySQL JDBC confuses "catalog" and "schema"
             else {
-                Result<Record> schemas = meta(meta -> dsl().fetch(
+                Result<Record> schemas = meta(() -> "Error while fetching catalogs", meta -> dsl().fetch(
                     meta.getCatalogs(),
                     SQLDataType.VARCHAR  // TABLE_CATALOG
                 ));
@@ -451,7 +468,7 @@ final class MetaImpl extends AbstractMeta {
             if (empty)
                 return emptyList();
 
-            Result<Record> tables = meta(meta -> {
+            Result<Record> tables = meta(() -> "Error while fetching tables for schema: " + this, meta -> {
                 String[] types;
 
                 switch (family()) {
@@ -600,7 +617,7 @@ final class MetaImpl extends AbstractMeta {
             String sql = sqlF.apply(dialect());
 
             if (sql != null) {
-                Result<Record> result = meta(meta ->
+                Result<Record> result = meta(() -> "", meta ->
                     withCatalog(DSL.catalog(catalog), DSL.using(meta.getConnection(), dialect()), ctx ->
                         ctx.resultQuery(
                             sql,
@@ -763,7 +780,7 @@ final class MetaImpl extends AbstractMeta {
         }
 
         private final Result<Record> getColumns0(final String catalog, final String schema, final String table) {
-            return meta(meta -> {
+            return meta(() -> "Error while fetching columns for table " + table + " in schema " + this, meta -> {
                 try (ResultSet rs = catalogSchema(catalog, schema, (c, s) -> meta.getColumns(c, s, table, "%"))) {
                     // Work around a bug in the SQL Server JDBC driver by
                     // coercing data types to the expected types
@@ -816,7 +833,10 @@ final class MetaImpl extends AbstractMeta {
                     : M_SEQUENCES(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(meta -> DSL.using(meta.getConnection(), dialect()).resultQuery(sql, MetaSchema.this.getName()).fetch());
+                    Result<Record> result = meta(
+                        () -> "Error while fetching sequences for schema: " + this,
+                        meta -> DSL.using(meta.getConnection(), dialect()).resultQuery(sql, MetaSchema.this.getName()).fetch()
+                    );
 
                     // TODO Support catalogs as well
                     Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
@@ -839,7 +859,7 @@ final class MetaImpl extends AbstractMeta {
                 String sql = M_SOURCES(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(meta ->
+                    Result<Record> result = meta(() -> "Error while fetching sources for schema " + this, meta ->
                         withCatalog(getCatalog(), DSL.using(meta.getConnection(), dialect()), ctx ->
                             ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
                         )
@@ -876,7 +896,7 @@ final class MetaImpl extends AbstractMeta {
                 String sql = M_COMMENTS(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(meta ->
+                    Result<Record> result = meta(() -> "Error while fetching comments for schema: " + this, meta ->
                         withCatalog(getCatalog(), DSL.using(meta.getConnection(), dialect()), ctx ->
                             ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
                         )
@@ -1026,7 +1046,7 @@ final class MetaImpl extends AbstractMeta {
             // See https://github.com/h2database/h2database/issues/3236
             return Tools.<List<Index>, RuntimeException>ignoreNPE(
                 () -> {
-                    Result<Record> result = removeSystemIndexes(meta(meta -> {
+                    Result<Record> result = removeSystemIndexes(meta(() -> "Error while fetching indexes for table: " + this, meta -> {
                         String tableName;
 
 
@@ -1163,7 +1183,7 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-            Result<Record> result = meta(meta -> {
+            Result<Record> result = meta(() -> "Error while fetching primary key for table: " + this, meta -> {
                 try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getPrimaryKeys(c, s, getName()))) {
                     return dsl().fetch(
                         rs,
@@ -1185,7 +1205,7 @@ final class MetaImpl extends AbstractMeta {
         @Override
         @SuppressWarnings("unchecked")
         public final List<ForeignKey<Record, ?>> getReferences() {
-            Result<Record> result = meta(meta -> {
+            Result<Record> result = meta(() -> "Error while fetching references for table: " + this, meta -> {
                 try (ResultSet rs = catalogSchema(getCatalog(), getSchema(), (c, s) -> meta.getImportedKeys(c, s, getName()))) {
                     return dsl().fetch(
                         rs,
@@ -1622,7 +1642,7 @@ final class MetaImpl extends AbstractMeta {
         @Override
         @SuppressWarnings("unchecked")
         public final List<ForeignKey<?, Record>> getReferences() {
-            Result<Record> result = meta(meta -> {
+            Result<Record> result = meta(() -> "Error while fetching references for unique key: " + this, meta -> {
                 try (ResultSet rs = catalogSchema(
                     getTable().getCatalog(),
                     getTable().getSchema(),

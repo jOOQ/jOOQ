@@ -102,6 +102,12 @@ implements
 
 
 
+
+
+            case MARIADB:
+            case MYSQL:
+                return true;
+
             case CLICKHOUSE:
                 return true;
 
@@ -134,6 +140,13 @@ implements
 
 
 
+
+
+
+            case MARIADB:
+            case MYSQL:
+                ctx.visit(function(N_DATABASE, getDataType()));
+                break;
 
             case CLICKHOUSE:
                 ctx.visit(function(N_currentDatabase, getDataType()));

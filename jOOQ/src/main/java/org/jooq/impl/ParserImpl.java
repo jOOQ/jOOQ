@@ -6723,10 +6723,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     @Override
     public final Table<?> parseTable() {
-        return parseTable(() -> peekKeyword(delimiterRequired
-            ? KEYWORDS_IN_FROM
-            : KEYWORDS_IN_SELECT_FROM
-        ));
+        return parseTable(() -> peekKeyword(KEYWORDS_IN_SELECT_FROM) || (!delimiterRequired && peekKeyword(KEYWORDS_IN_STATEMENTS)));
     }
 
     private final Table<?> parseTable(BooleanSupplier forbiddenKeywords) {
@@ -14010,7 +14007,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     static {
         Set<String> set = new TreeSet<>(asList(KEYWORDS_IN_FROM));
-        set.addAll(asList(KEYWORDS_IN_STATEMENTS));
 
         set.addAll(asList(
             "CONNECT BY",

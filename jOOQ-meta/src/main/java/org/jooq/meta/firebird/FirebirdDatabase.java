@@ -404,7 +404,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 inline(null, VARCHAR).as("schema"),
                 trim(RDB$RELATIONS.RDB$RELATION_NAME),
                 when(lower(RDB$RELATIONS.RDB$VIEW_SOURCE).like(inline("create%")), trim(RDB$RELATIONS.RDB$VIEW_SOURCE))
-                .else_(inline("create view \"").concat(trim(RDB$RELATIONS.RDB$RELATION_NAME)).concat(inline("\" as ")).concat(RDB$RELATIONS.RDB$VIEW_SOURCE)).as("view_source"))
+                .else_(prependCreateView(trim(RDB$RELATIONS.RDB$RELATION_NAME), RDB$RELATIONS.RDB$VIEW_SOURCE, '"')).as("view_source"))
             .from(RDB$RELATIONS)
             .orderBy(trim(RDB$RELATIONS.RDB$RELATION_NAME));
     }
@@ -520,7 +520,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                     trim(when(RDB$RELATIONS.RDB$RELATION_TYPE.eq(inline((short) 1)), inline(TableType.VIEW.name()))
                         .else_(inline(TableType.TABLE.name()))).as("table_type"),
                     when(lower(RDB$RELATIONS.RDB$VIEW_SOURCE).like(inline("create%")), trim(RDB$RELATIONS.RDB$VIEW_SOURCE))
-                        .else_(inline("create view \"").concat(trim(RDB$RELATIONS.RDB$RELATION_NAME)).concat("\" as ").concat(RDB$RELATIONS.RDB$VIEW_SOURCE)).as("view_source"))
+                        .else_(prependCreateView(trim(RDB$RELATIONS.RDB$RELATION_NAME), RDB$RELATIONS.RDB$VIEW_SOURCE, '"')).as("view_source"))
                 .from(RDB$RELATIONS)
                 .unionAll(
                      select(

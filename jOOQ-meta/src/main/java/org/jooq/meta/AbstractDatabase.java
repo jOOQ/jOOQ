@@ -49,14 +49,19 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
 import static org.jooq.impl.DSL.rowNumber;
+import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.trim;
+import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.AbstractTypedElementDefinition.customType;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
@@ -697,6 +702,22 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final boolean existAll(Table<?>... t) {
         return Stream.of(t).allMatch(this::exists);
+    }
+
+    @Internal
+    protected Field<String> prependCreateView(Field<String> tableName, Field<String> viewDefinition, char quote) {
+        return
+            when(upper(substring(trim(viewDefinition), inline(1), inline(1))).eq(substring(trim(viewDefinition), inline(1), inline(1))),
+                concat(inline("CREATE VIEW " + quote), tableName, inline(quote + " AS "), viewDefinition))
+            .else_(concat(inline("create view " + quote), tableName, inline(quote + " as "), viewDefinition));
+    }
+
+    @Internal
+    protected Field<String> prependCreateMaterializedView(Field<String> tableName, Field<String> viewDefinition, char quote) {
+        return
+            when(upper(substring(trim(viewDefinition), inline(1), inline(1))).eq(substring(trim(viewDefinition), inline(1), inline(1))),
+                concat(inline("CREATE MATERIALIZED VIEW " + quote), tableName, inline(quote + " AS "), viewDefinition))
+            .else_(concat(inline("create materialized view " + quote), tableName, inline(quote + " as "), viewDefinition));
     }
 
     final boolean matches(Pattern pattern, Definition definition) {

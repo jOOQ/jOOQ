@@ -187,6 +187,8 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
  * with a non-capitalised version of it: <code>information_schema</code>. Hence
@@ -683,17 +685,15 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#9483] Some dialects include materialized views in the INFORMATION_SCHEMA.VIEWS view
         PgClass c = PG_CLASS.as("c");
+        Field<String> pgGetViewdef = field("pg_get_viewdef({0})", VARCHAR, c.OID);
 
         return create()
             .select(
                 currentCatalog(),
                 c.pgNamespace().NSPNAME,
                 c.RELNAME,
-                when(c.RELKIND.eq(inline("m")), inline("create materialized view \""))
-                    .else_(inline("create view \""))
-                    .concat(c.RELNAME)
-                    .concat(inline("\" as "))
-                    .concat(field("pg_get_viewdef({0})", VARCHAR, c.OID)))
+                when(c.RELKIND.eq(inline("m")), prependCreateMaterializedView(c.RELNAME, pgGetViewdef, '"'))
+                .else_(prependCreateView(c.RELNAME, pgGetViewdef, '"')).as("view_definition"))
             .from(c)
             .where(c.RELKIND.in(inline("v"), inline("m")))
             .and(c.pgNamespace().NSPNAME.in(schemas))

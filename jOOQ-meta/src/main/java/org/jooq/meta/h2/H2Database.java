@@ -149,6 +149,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.h2.H2DataType;
 
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -653,7 +654,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 VIEWS.TABLE_CATALOG,
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME,
-                concat(inline("create view \""), VIEWS.TABLE_NAME, inline("\" as "), VIEWS.VIEW_DEFINITION).as(VIEWS.VIEW_DEFINITION))
+                prependCreateView(VIEWS.TABLE_NAME, VIEWS.VIEW_DEFINITION, '"').as(VIEWS.VIEW_DEFINITION))
             .from(VIEWS)
             .where(VIEWS.TABLE_SCHEMA.in(schemas))
             .orderBy(

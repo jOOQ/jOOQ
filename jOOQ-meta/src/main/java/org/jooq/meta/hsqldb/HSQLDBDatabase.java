@@ -531,7 +531,7 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
                     trim(when(SYSTEM_TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                         .else_(inline(TableType.TABLE.name()))).as("table_type"),
                     when(lower(VIEWS.VIEW_DEFINITION).like(inline("create%")), VIEWS.VIEW_DEFINITION)
-                        .else_(inline("create view \"").concat(SYSTEM_TABLES.TABLE_NAME).concat("\" as ").concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION)
+                        .else_(prependCreateView(SYSTEM_TABLES.TABLE_NAME, VIEWS.VIEW_DEFINITION, '"')).as(VIEWS.VIEW_DEFINITION)
                 )
                 .from(SYSTEM_TABLES)
                 .leftJoin(VIEWS)

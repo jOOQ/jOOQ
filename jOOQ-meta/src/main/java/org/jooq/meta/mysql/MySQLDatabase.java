@@ -479,7 +479,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                 VIEWS.TABLE_SCHEMA,
                 VIEWS.TABLE_NAME,
                 when(lower(VIEWS.VIEW_DEFINITION).like(inline("create%")), VIEWS.VIEW_DEFINITION)
-                .else_(inline("create view `").concat(VIEWS.TABLE_NAME).concat(inline("` as ")).concat(VIEWS.VIEW_DEFINITION)).as(VIEWS.VIEW_DEFINITION))
+                .else_(prependCreateView(VIEWS.TABLE_NAME, VIEWS.VIEW_DEFINITION, '`')).as(VIEWS.VIEW_DEFINITION))
             .from(VIEWS)
             .where(VIEWS.TABLE_SCHEMA.in(schemas))
             .orderBy(

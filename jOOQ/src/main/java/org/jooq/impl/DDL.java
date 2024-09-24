@@ -120,6 +120,7 @@ import org.jooq.TableOptions.TableType;
 // ...
 // ...
 import org.jooq.UniqueKey;
+import org.jooq.impl.QOM.CreateView;
 import org.jooq.DDLExportConfiguration.InlineForeignKeyConstraints;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -678,6 +679,24 @@ final class DDL {
 
         return input;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

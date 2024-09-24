@@ -576,7 +576,9 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
         for (Record record : create().select(
                 TABLES.TABLE_SCHEMA,
                 TABLES.TABLE_NAME,
-                TABLES.TABLE_COMMENT,
+
+                // [#17344] MySQL's INFORMATION_SCHEMA.TABLES.TABLE_COMMENT just adds a dummy 'VIEW' REMARK to all views, which we should ignore
+                when(TABLES.TABLE_TYPE.ne(inline("VIEW")), TABLES.TABLE_COMMENT).as(TABLES.TABLE_COMMENT),
                 when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                     .else_(inline(TableType.TABLE.name())).as("table_type"))
             .from(TABLES)

@@ -544,6 +544,20 @@ final class MetaImpl extends AbstractMeta {
                     : TableType.TABLE;
 
 
+                switch (dsl().family()) {
+
+
+                    case MYSQL:
+                    case MARIADB: {
+
+                        // [#17344] MySQL's INFORMATION_SCHEMA.TABLES.TABLE_COMMENT just adds a dummy 'VIEW' REMARK to all views, which we should ignore
+                        if (tableType == TableType.VIEW)
+                            remarks = null;
+
+                        break;
+                    }
+                }
+
                 return new MetaTable(
                     name,
                     this,

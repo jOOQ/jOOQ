@@ -60,6 +60,8 @@ import java.util.stream.Collectors;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.impl.Internal;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Common utilities related to {@link Record} types and constructing
  * {@link RecordMapper}.
@@ -635,6 +637,50 @@ public final class Records {
                 return r;
             }
         );
+    }
+
+    /**
+     * Create a {@link RecordMapper} that turns {@link Record} values containing
+     * all <code>null</code> values into a <code>null</code> record value.
+     * <p>
+     * This is useful, for example, when nesting records from implicit path
+     * joins following optional foreign keys, where a
+     * <code>(NULL, NULL, …, NULL)</code> record isn't so useful.
+     */
+    public static final <R extends Record> RecordMapper<R, @Nullable R> nullOnAllNull() {
+        return r -> {
+            if (r == null)
+                return null;
+
+            int size = r.size();
+            for (int i = 0; i < size; i++)
+                if (r.get(i) != null)
+                    return r;
+
+            return null;
+        };
+    }
+
+    /**
+     * Create a {@link RecordMapper} that turns {@link Record} values containing
+     * any <code>null</code> value into a <code>null</code> record value.
+     * <p>
+     * This is useful, for example, when nesting records from implicit path
+     * joins following optional foreign keys, where a
+     * <code>(NULL, NULL, …, NULL)</code> record isn't so useful.
+     */
+    public static final <R extends Record> RecordMapper<R, @Nullable R> nullOnAnyNull() {
+        return r -> {
+            if (r == null)
+                return null;
+
+            int size = r.size();
+            for (int i = 0; i < size; i++)
+                if (r.get(i) == null)
+                    return null;
+
+            return r;
+        };
     }
 
 

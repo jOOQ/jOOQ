@@ -209,7 +209,7 @@ final class DDL {
         return asList(s0);
     }
 
-    static final Pattern P_CREATE_VIEW = Pattern.compile("^(?i:\\bcreate\\b.*?\\bview\\b.*?\\bas\\b\\s+)(.*)$");
+    static final Pattern P_CREATE_VIEW = Pattern.compile("^(?i:\\s*\\bcreate\\b.*?\\bview\\b.*?\\bas\\b\\s+)(.*)$");
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private final Query applyAs(CreateViewAsStep q, TableOptions options) {
@@ -251,7 +251,7 @@ final class DDL {
 
         // [#15238] If the command prefix is supplied, use a heursitic where the view
         //          body is expected to start after the first "AS" keyword
-        if (options.source().toLowerCase().startsWith("create"))
+        if (options.source().trim().toLowerCase().startsWith("create"))
             return q.as(P_CREATE_VIEW.matcher(options.source()).replaceFirst("$1"));
         else
             return q.as(options.source());

@@ -2982,7 +2982,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                         ;
                     else
-                        throw expected("FUNCTION", "PACKAGE", "PROCEDURE", "PUBLIC SYNONYM", "SYNONYM", "TRIGGER", "VIEW");
+                        throw expected("ALIAS", "FUNCTION", "PACKAGE", "PROCEDURE", "PUBLIC ALIAS", "PUBLIC SYNONYM", "SYNONYM", "TRIGGER", "VIEW");
                 }
 
                 break;

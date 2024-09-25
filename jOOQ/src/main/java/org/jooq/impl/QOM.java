@@ -132,6 +132,7 @@ import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.Spatial;
 import org.jooq.Statement;
+// ...
 import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableLike;
@@ -2307,6 +2308,32 @@ public final class QOM {
         @NotNull CreateSequence<T> $noCache(boolean noCache);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>DROP DATABASE</code> statement.
      */
@@ -2443,6 +2470,29 @@ public final class QOM {
         @CheckReturnValue
         @NotNull DropSequence $ifExists(boolean ifExists);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * The <code>DROP TABLE</code> statement.

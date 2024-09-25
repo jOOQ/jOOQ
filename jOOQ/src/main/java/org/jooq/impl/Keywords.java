@@ -415,6 +415,7 @@ final class Keywords {
     static final Keyword K_STORED                   = keyword("stored");
     static final Keyword K_STORING                  = keyword("storing");
     static final Keyword K_STRUCT                   = keyword("struct");
+    static final Keyword K_SYNONYM                  = keyword("synonym");
     static final Keyword K_SWITCH                   = keyword("switch");
     static final Keyword K_SYMMETRIC                = keyword("symmetric");
     static final Keyword K_SYSTEM                   = keyword("system");

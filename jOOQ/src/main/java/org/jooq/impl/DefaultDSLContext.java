@@ -226,6 +226,7 @@ import org.jooq.Sequence;
 import org.jooq.Source;
 import org.jooq.Statement;
 import org.jooq.Stringly;
+// ...
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -3758,6 +3759,82 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return new CreateSequenceImpl(configuration(), sequence, true);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public org.jooq.DropDatabaseFinalStep dropDatabase(@Stringly.Name String database) {
         return new DropDatabaseImpl(configuration(), DSL.catalog(DSL.name(database)), false);
@@ -3963,6 +4040,82 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     public org.jooq.DropSequenceFinalStep dropSequenceIfExists(Sequence<?> sequence) {
         return new DropSequenceImpl(configuration(), sequence, true);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public org.jooq.DropTableStep dropTable(@Stringly.Name String table) {

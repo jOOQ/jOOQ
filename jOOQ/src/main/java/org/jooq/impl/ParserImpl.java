@@ -393,6 +393,7 @@ import static org.jooq.impl.DSL.stddevSamp;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.sumDistinct;
 // ...
+// ...
 import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.tan;
@@ -595,6 +596,7 @@ import org.jooq.CreateIndexWhereStep;
 // ...
 import org.jooq.CreateSequenceAsStep;
 import org.jooq.CreateSequenceFlagsStep;
+// ...
 import org.jooq.CreateTableAsStep;
 import org.jooq.CreateTableCommentStep;
 import org.jooq.CreateTableElementListStep;
@@ -715,6 +717,7 @@ import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Statement;
+// ...
 import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableField;
@@ -772,6 +775,8 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -2876,6 +2881,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeyword("CREATE");
 
         switch (characterUpper()) {
+            case 'A':
+                if (parseProKeywordIf("ALIAS"))
+
+
+
+                    ;
+                break;
+
             case 'C':
                 if (parseKeywordIf("CACHED TABLE"))
                     return parseCreateTable(false);
@@ -2958,8 +2971,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                         ;
+                    else if (parseProKeywordIf("PUBLIC SYNONYM", "PUBLIC ALIAS"))
+
+
+
+                        ;
+                    else if (parseProKeywordIf("SYNONYM", "ALIAS"))
+
+
+
+                        ;
                     else
-                        throw expected("FUNCTION", "PACKAGE", "PROCEDURE", "TRIGGER", "VIEW");
+                        throw expected("FUNCTION", "PACKAGE", "PROCEDURE", "PUBLIC SYNONYM", "SYNONYM", "TRIGGER", "VIEW");
                 }
 
                 break;
@@ -2968,6 +2991,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
                 else if (parseProKeywordIf("PROC", "PROCEDURE"))
+
+
+
+                    ;
+                else if (parseProKeywordIf("PUBLIC SYNONYM", "PUBLIC ALIAS"))
 
 
 
@@ -2988,8 +3016,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseCreateSequence();
                 else if (parseKeywordIf("SPATIAL INDEX") && requireUnsupportedSyntax())
                     return parseCreateIndex(false);
-                else if (parseKeywordIf("SYNONYM"))
-                    throw notImplemented("CREATE SYNONYM", "https://github.com/jOOQ/jOOQ/issues/9574");
+                else if (parseProKeywordIf("SYNONYM"))
+
+
+
+                    ;
 
                 break;
 
@@ -3028,6 +3059,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         throw expected(
+            "ALIAS",
             "FUNCTION",
             "GENERATOR",
             "GLOBAL TEMPORARY TABLE",
@@ -3035,8 +3067,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             "OR ALTER",
             "OR REPLACE",
             "PROCEDURE",
+            "PUBLIC ALIAS",
+            "PUBLIC SYNONYM",
             "SCHEMA",
             "SEQUENCE",
+            "SYNONYM",
             "TABLE",
             "TEMPORARY TABLE",
             "TRIGGER",
@@ -3139,6 +3174,14 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         parseKeyword("DROP");
 
         switch (characterUpper()) {
+            case 'A':
+                if (parseProKeywordIf("ALIAS"))
+
+
+
+                    ;
+                break;
+
             case 'D':
                 if (parseKeywordIf("DATABASE"))
                     return parseDropDatabase();
@@ -3192,6 +3235,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                     ;
+                else if (parseProKeywordIf("PUBLIC ALIAS", "PUBLIC SYNONYM"))
+
+
+
+                    ;
 
                 break;
 
@@ -3210,6 +3258,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         DropSchemaStep::cascade,
                         DropSchemaStep::restrict
                     );
+                else if (parseProKeywordIf("SYNONYM"))
+
+
+
+                    ;
 
                 break;
 
@@ -3264,12 +3317,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         throw expected(
+            "ALIAS",
             "GENERATOR",
             "FUNCTION",
             "INDEX",
             "PROCEDURE",
+            "PUBLIC ALIAS",
+            "PUBLIC SYNONYM",
             "SCHEMA",
             "SEQUENCE",
+            "SYNONYM",
             "TABLE",
             "TEMPORARY TABLE",
             "TRIGGER",
@@ -4427,6 +4484,25 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return s;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final DDLQuery parseAlterSequence() {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Sequence<?> sequenceName = parseSequenceName();
@@ -4567,6 +4643,25 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             ? dsl.dropSequenceIfExists(sequenceName)
             : dsl.dropSequence(sequenceName);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final DDLQuery parseCreateTable(boolean temporary) {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
@@ -13254,6 +13349,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     private final Sequence<?> parseSequenceName() {
         return sequence(parseName());
     }
+
+
+
+
+
+
+
+
+
 
     private final Name parseIndexName() {
         Name result = parseNameIf();

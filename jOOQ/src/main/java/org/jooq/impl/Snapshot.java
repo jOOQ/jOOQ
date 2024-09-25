@@ -58,6 +58,7 @@ import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
+// ...
 import org.jooq.Table;
 import org.jooq.TableField;
 // ...
@@ -129,6 +130,7 @@ final class Snapshot extends AbstractMeta {
 
 
 
+
         SnapshotSchema(SnapshotCatalog catalog, Schema schema) {
             super(schema.getQualifiedName(), catalog, schema.getCommentPart());
 
@@ -136,6 +138,7 @@ final class Snapshot extends AbstractMeta {
             tables = map(schema.getTables(), t -> new SnapshotTable<>(this, t));
             sequences = map(schema.getSequences(), s -> new SnapshotSequence<>(this, s));
             udts = map(schema.getUDTs(), u -> new SnapshotUDT<>(this, u));
+
 
 
 
@@ -165,6 +168,11 @@ final class Snapshot extends AbstractMeta {
         public final List<UDT<?>> getUDTs() {
             return unmodifiableList(udts);
         }
+
+
+
+
+
 
 
 
@@ -306,6 +314,17 @@ final class Snapshot extends AbstractMeta {
             );
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

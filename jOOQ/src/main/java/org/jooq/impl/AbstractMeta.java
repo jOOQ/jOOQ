@@ -66,6 +66,7 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Sequence;
+// ...
 import org.jooq.Table;
 import org.jooq.TableField;
 // ...
@@ -87,6 +88,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     private Cached<UniqueKey<?>>              cachedUniqueKeys;
     private Cached<ForeignKey<?, ?>>          cachedForeignKeys;
     private Cached<Index>                     cachedIndexes;
+
 
 
 
@@ -271,6 +273,39 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     List<Domain<?>> getDomains0() {
         return flatMap(getSchemas(), s -> s.getDomains());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -495,6 +530,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
 
 
+
             null,
             null,
             null,
@@ -511,6 +547,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             filter,
             null,
             null,
+
 
 
 
@@ -533,6 +570,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
 
 
+
             null,
             null,
             null,
@@ -552,6 +590,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
 
 
+
             null,
             null,
             null,
@@ -559,6 +598,25 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -592,6 +650,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
 
 
+
             filter,
             null,
             null,
@@ -608,6 +667,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+
 
 
 
@@ -630,6 +690,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
 
 
+
             null,
             null,
             filter,
@@ -649,6 +710,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
 
 
+
             null,
             null,
             null,
@@ -665,6 +727,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+
 
 
 

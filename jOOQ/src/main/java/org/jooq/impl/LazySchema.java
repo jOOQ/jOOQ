@@ -38,8 +38,6 @@
 package org.jooq.impl;
 
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.jooq.Catalog;
@@ -47,19 +45,19 @@ import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Domain;
 import org.jooq.ForeignKey;
-import org.jooq.Function1;
 import org.jooq.Index;
 import org.jooq.Internal;
 import org.jooq.Name;
+import org.jooq.QueryPart;
+// ...
 import org.jooq.Schema;
 import org.jooq.Sequence;
+// ...
 import org.jooq.Table;
 // ...
 // ...
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
-import org.jooq.QueryPart;
-// ...
 
 /**
  * A schema that references a lazy initialisable {@link Schema} singleton, for
@@ -234,6 +232,21 @@ public final class LazySchema extends AbstractNamed implements Schema {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final List<Sequence<?>> getSequences() {
         return schema().getSequences();
@@ -283,6 +296,11 @@ public final class LazySchema extends AbstractNamed implements Schema {
     public final Stream<Domain<?>> domainStream() {
         return schema().domainStream();
     }
+
+
+
+
+
 
 
 

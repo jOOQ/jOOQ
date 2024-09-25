@@ -112,6 +112,7 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.SortOrder;
+// ...
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.OnCommit;
@@ -425,6 +426,15 @@ final class DDL {
 
 
 
+
+
+
+
+
+
+
+
+
     final List<Query> alterTableAddConstraints(Table<?> table) {
         return alterTableAddConstraints(table, constraints(table, true));
     }
@@ -607,6 +617,11 @@ final class DDL {
             for (Schema schema : schemas)
                 for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                     queries.addAll(commentOn(table));
+
+
+
+
+
 
 
 

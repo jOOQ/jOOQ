@@ -109,6 +109,7 @@ import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Statement;
+// ...
 import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableField;
@@ -155,6 +156,8 @@ final class Interpreter {
     private final Map<Name, Index>                               interpretedIndexes     = new HashMap<>();
     private final Map<Name, MutableDomain.InterpretedDomain>     interpretedDomains     = new HashMap<>();
     private final Map<Name, MutableSequence.InterpretedSequence> interpretedSequences   = new HashMap<>();
+
+
 
 
 
@@ -241,6 +244,10 @@ final class Interpreter {
             accept0(q);
         else if (query instanceof DropDomainImpl q)
             accept0(q);
+
+
+
+
 
 
 
@@ -449,20 +456,16 @@ final class Interpreter {
         }
     }
 
+    private final <N extends MutableNamed> void drop(List<N> list, N item) {
+        Iterator<N> it = list.iterator();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        while (it.hasNext()) {
+            if (it.next().nameEquals(item.name())) {
+                it.remove();
+                break;
+            }
+        }
+    }
 
     private final void dropColumns(MutableTable table, List<MutableField> fields, Cascade cascade) {
         Iterator<MutableIndex> it1 = table.indexes.iterator();
@@ -1015,6 +1018,30 @@ final class Interpreter {
 
         schema.sequences.remove(existing);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1712,6 +1739,10 @@ final class Interpreter {
         List<MutableDomain>   domains   = new MutableNamedList<>();
         List<MutableSequence> sequences = new MutableNamedList<>();
 
+
+
+
+
         MutableSchema(UnqualifiedName name, MutableCatalog catalog) {
             super(name);
 
@@ -1721,15 +1752,23 @@ final class Interpreter {
 
         @Override
         final void onDrop() {
-            for (MutableTable table : tables)
+            for (MutableTable table : tables) {
                 for (MutableForeignKey referencingKey : table.referencingKeys())
                     referencingKey.table.foreignKeys.remove(referencingKey);
+
+
+
+
+            }
 
             // TODO: Cascade domains?
 
             tables.clear();
             domains.clear();
             sequences.clear();
+
+
+
         }
 
         @Override
@@ -1757,6 +1796,15 @@ final class Interpreter {
             return find(sequences, s);
         }
 
+
+
+
+
+
+
+
+
+
         private final class InterpretedSchema extends SchemaImpl {
             InterpretedSchema(MutableCatalog.InterpretedCatalog catalog) {
                 super(MutableSchema.this.name(), catalog, MutableSchema.this.comment());
@@ -1776,18 +1824,28 @@ final class Interpreter {
             public final List<Sequence<?>> getSequences() {
                 return map(sequences, s -> s.interpretedSequence());
             }
+
+
+
+
+
+
+
+
+
         }
     }
 
-    private final class MutableTable extends MutableNamed  {
+    private final class MutableTable extends MutableNamed {
         MutableSchema           schema;
         TableOptions            options;
-        List<MutableField>      fields      = new MutableNamedList<>();
+        List<MutableField>      fields              = new MutableNamedList<>();
         MutableUniqueKey        primaryKey;
-        List<MutableUniqueKey>  uniqueKeys  = new MutableNamedList<>();
-        List<MutableForeignKey> foreignKeys = new MutableNamedList<>();
-        List<MutableCheck>      checks      = new MutableNamedList<>();
-        List<MutableIndex>      indexes     = new MutableNamedList<>();
+        List<MutableUniqueKey>  uniqueKeys          = new MutableNamedList<>();
+        List<MutableForeignKey> foreignKeys         = new MutableNamedList<>();
+        List<MutableCheck>      checks              = new MutableNamedList<>();
+        List<MutableIndex>      indexes             = new MutableNamedList<>();
+
 
 
 
@@ -2041,6 +2099,49 @@ final class Interpreter {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

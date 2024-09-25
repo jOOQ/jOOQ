@@ -90,6 +90,7 @@ public final class DDLExportConfiguration {
 
 
 
+
     private final boolean                     respectCatalogOrder;
     private final boolean                     respectSchemaOrder;
     private final boolean                     respectTableOrder;
@@ -98,6 +99,7 @@ public final class DDLExportConfiguration {
     private final boolean                     respectIndexOrder;
     private final boolean                     respectDomainOrder;
     private final boolean                     respectSequenceOrder;
+
 
 
 
@@ -127,6 +129,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             false,
             false,
             false,
@@ -135,6 +138,7 @@ public final class DDLExportConfiguration {
             false,
             false,
             false,
+
 
 
 
@@ -162,6 +166,7 @@ public final class DDLExportConfiguration {
 
 
 
+
         boolean respectCatalogOrder,
         boolean respectSchemaOrder,
         boolean respectTableOrder,
@@ -170,6 +175,7 @@ public final class DDLExportConfiguration {
         boolean respectIndexOrder,
         boolean respectDomainOrder,
         boolean respectSequenceOrder,
+
 
 
 
@@ -194,6 +200,7 @@ public final class DDLExportConfiguration {
 
 
 
+
         this.respectCatalogOrder = respectCatalogOrder;
         this.respectSchemaOrder = respectSchemaOrder;
         this.respectTableOrder = respectTableOrder;
@@ -202,6 +209,7 @@ public final class DDLExportConfiguration {
         this.respectIndexOrder = respectIndexOrder;
         this.respectDomainOrder = respectDomainOrder;
         this.respectSequenceOrder = respectSequenceOrder;
+
 
 
 
@@ -244,6 +252,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -252,6 +261,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -290,6 +300,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -298,6 +309,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -336,6 +348,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -344,6 +357,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -382,6 +396,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -390,6 +405,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -428,6 +444,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -436,6 +453,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -474,6 +492,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -482,6 +501,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -520,6 +540,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -528,6 +549,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -566,6 +588,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -574,6 +597,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -612,6 +636,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -620,6 +645,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -658,6 +684,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -669,11 +696,60 @@ public final class DDLExportConfiguration {
 
 
 
+
             defaultSequenceFlags,
             includeConstraintsOnViews,
             inlineForeignKeyConstraints
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -750,6 +826,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             newRespectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -758,6 +835,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -794,6 +872,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             newRespectSchemaOrder,
             respectTableOrder,
@@ -802,6 +881,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -838,6 +918,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             newRespectTableOrder,
@@ -846,6 +927,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -882,6 +964,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -890,6 +973,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -926,6 +1010,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -934,6 +1019,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -970,6 +1056,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -978,6 +1065,7 @@ public final class DDLExportConfiguration {
             newRespectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -1014,6 +1102,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -1022,6 +1111,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             newRespectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -1058,6 +1148,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -1069,11 +1160,58 @@ public final class DDLExportConfiguration {
 
 
 
+
             defaultSequenceFlags,
             includeConstraintsOnViews,
             inlineForeignKeyConstraints
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1148,6 +1286,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -1156,6 +1295,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -1190,6 +1330,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -1198,6 +1339,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 
@@ -1234,6 +1376,7 @@ public final class DDLExportConfiguration {
 
 
 
+
             respectCatalogOrder,
             respectSchemaOrder,
             respectTableOrder,
@@ -1242,6 +1385,7 @@ public final class DDLExportConfiguration {
             respectIndexOrder,
             respectDomainOrder,
             respectSequenceOrder,
+
 
 
 

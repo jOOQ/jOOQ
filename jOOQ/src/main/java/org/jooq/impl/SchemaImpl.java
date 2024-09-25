@@ -61,6 +61,7 @@ import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Schema;
 import org.jooq.Sequence;
+// ...
 import org.jooq.Table;
 // ...
 import org.jooq.UDT;
@@ -228,6 +229,16 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
     @Override
     public final Sequence<?> getSequence(String name) {
         return find(name, getSequences());
@@ -328,6 +339,16 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
     /**
      * {@inheritDoc}
      * <p>
@@ -372,6 +393,11 @@ implements
     public final Stream<Domain<?>> domainStream() {
         return getDomains().stream();
     }
+
+
+
+
+
 
 
 

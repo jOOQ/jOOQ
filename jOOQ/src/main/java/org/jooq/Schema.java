@@ -293,6 +293,32 @@ public interface Schema extends Named {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Stream all sequences contained in this schema.
      */

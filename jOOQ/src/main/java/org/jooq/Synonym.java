@@ -47,3 +47,10 @@ package org.jooq;
 
 
 
+
+
+
+
+
+
+

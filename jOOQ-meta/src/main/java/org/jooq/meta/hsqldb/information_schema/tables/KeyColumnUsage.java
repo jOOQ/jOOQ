@@ -27,7 +27,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each column used in s primary key or unique constraint
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class KeyColumnUsage extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;

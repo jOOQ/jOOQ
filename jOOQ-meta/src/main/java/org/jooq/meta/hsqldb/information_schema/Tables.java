@@ -17,6 +17,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.Schemata;
 import org.jooq.meta.hsqldb.information_schema.tables.Sequences;
 import org.jooq.meta.hsqldb.information_schema.tables.SystemColumns;
 import org.jooq.meta.hsqldb.information_schema.tables.SystemIndexinfo;
+import org.jooq.meta.hsqldb.information_schema.tables.SystemSynonyms;
 import org.jooq.meta.hsqldb.information_schema.tables.SystemTables;
 import org.jooq.meta.hsqldb.information_schema.tables.TableConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Triggers;
@@ -26,7 +27,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.Views;
 /**
  * Convenience access to all tables in INFORMATION_SCHEMA.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
 
     /**
@@ -95,6 +96,11 @@ public class Tables {
      * this database
      */
     public static final SystemIndexinfo SYSTEM_INDEXINFO = SystemIndexinfo.SYSTEM_INDEXINFO;
+
+    /**
+     * the synonyms for tables and other objects defined in this database
+     */
+    public static final SystemSynonyms SYSTEM_SYNONYMS = SystemSynonyms.SYSTEM_SYNONYMS;
 
     /**
      * the accessible tables defined within this database

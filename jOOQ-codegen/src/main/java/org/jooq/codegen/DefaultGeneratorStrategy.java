@@ -88,6 +88,7 @@ import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
+// ...
 import org.jooq.meta.SyntheticDaoDefinition;
 import org.jooq.meta.TableDefinition;
 // ...
@@ -448,6 +449,8 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
 
 
+
+
         else if (UniqueKeyDefinition.class.isAssignableFrom(objectType))
             return "UniqueKeyNames";
         else
@@ -495,6 +498,8 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return "Sequences";
         else if (TableDefinition.class.isAssignableFrom(objectType))
             return "Tables";
+
+
 
 
 

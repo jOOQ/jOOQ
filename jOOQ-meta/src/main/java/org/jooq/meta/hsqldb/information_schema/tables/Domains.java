@@ -25,7 +25,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each domain identified
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Domains extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;

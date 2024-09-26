@@ -5,13 +5,9 @@ package org.jooq.meta.hsqldb.information_schema.tables;
 
 
 import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
-import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -29,7 +25,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each trigger definition
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Triggers extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
@@ -167,10 +163,6 @@ public class Triggers extends TableImpl<Record> {
         this(DSL.name("TRIGGERS"), null);
     }
 
-    public <O extends Record> Triggers(Table<O> path, ForeignKey<O, Record> childPath, InverseForeignKey<O, Record> parentPath) {
-        super(path, childPath, parentPath, TRIGGERS);
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : InformationSchema.INFORMATION_SCHEMA;
@@ -179,24 +171,6 @@ public class Triggers extends TableImpl<Record> {
     @Override
     public UniqueKey<Record> getPrimaryKey() {
         return Keys.SYNTHETIC_PK_TRIGGERS;
-    }
-
-    @Override
-    public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.asList(Keys.SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES);
-    }
-
-    private transient Tables _tables;
-
-    /**
-     * Get the implicit join path to the <code>INFORMATION_SCHEMA.TABLES</code>
-     * table.
-     */
-    public Tables tables() {
-        if (_tables == null)
-            _tables = new Tables(this, Keys.SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES, null);
-
-        return _tables;
     }
 
     @Override

@@ -27,7 +27,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * the view descriptors of the accessible views defined within this database
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Views extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;

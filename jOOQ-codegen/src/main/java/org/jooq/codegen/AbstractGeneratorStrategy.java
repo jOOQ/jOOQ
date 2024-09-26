@@ -175,6 +175,7 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
 
 
 
+
             || definition instanceof IndexDefinition
             || definition instanceof IdentityDefinition
             || definition instanceof ConstraintDefinition

@@ -22,7 +22,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
  * information about the indices of each accessible table defined within this
  * database
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class SystemIndexinfo extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;

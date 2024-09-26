@@ -415,6 +415,16 @@ public interface Generator {
 
 
 
+
+
+
+
+
+
+
+
+
+
     /**
      * Whether Sequences should be generated.
      */
@@ -867,6 +877,18 @@ public interface Generator {
      * Whether global domain references should be generated
      */
     void setGenerateGlobalDomainReferences(boolean globalDomainReferences);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -27,7 +27,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each column of table of view
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Columns extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
@@ -343,20 +343,7 @@ public class Columns extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.asList(Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA);
-    }
-
-    private transient Tables _tables;
-
-    /**
-     * Get the implicit join path to the <code>INFORMATION_SCHEMA.TABLES</code>
-     * table.
-     */
-    public Tables tables() {
-        if (_tables == null)
-            _tables = new Tables(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES, null);
-
-        return _tables;
+        return Arrays.asList(Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES);
     }
 
     private transient Schemata _schemata;
@@ -370,6 +357,19 @@ public class Columns extends TableImpl<Record> {
             _schemata = new Schemata(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
+    }
+
+    private transient Tables _tables;
+
+    /**
+     * Get the implicit join path to the <code>INFORMATION_SCHEMA.TABLES</code>
+     * table.
+     */
+    public Tables tables() {
+        if (_tables == null)
+            _tables = new Tables(this, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES, null);
+
+        return _tables;
     }
 
     @Override

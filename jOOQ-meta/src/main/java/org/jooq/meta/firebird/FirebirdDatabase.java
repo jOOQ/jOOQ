@@ -696,6 +696,11 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
 
 
+
+
+
+
+
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
         List<XMLSchemaCollectionDefinition> result = new ArrayList<>();

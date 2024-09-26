@@ -91,6 +91,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean triggers = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean synonyms = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean udts = true;
     @XmlElement(defaultValue = "true")
     protected Boolean queues = true;
@@ -168,6 +170,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean globalDomainReferences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean globalTriggerReferences = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean globalSynonymReferences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean globalTableReferences = true;
     @XmlElement(defaultValue = "true")
@@ -924,7 +928,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate Sequence classes. 
+     * Generate Sequence classes.
      * 
      * @return
      *     possible object is
@@ -936,7 +940,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate Sequence classes. 
+     * Generate Sequence classes.
      * 
      * @param value
      *     allowed object is
@@ -948,7 +952,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate Trigger classes. 
+     * Generate Trigger classes.
      * 
      * @return
      *     possible object is
@@ -960,7 +964,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate Trigger classes. 
+     * Generate Trigger classes.
      * 
      * @param value
      *     allowed object is
@@ -972,7 +976,31 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate UDT classes. 
+     * Generate Synonym classes.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isSynonyms() {
+        return synonyms;
+    }
+
+    /**
+     * Generate Synonym classes.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setSynonyms(Boolean value) {
+        this.synonyms = value;
+    }
+
+    /**
+     * Generate UDT classes.
      * 
      * @return
      *     possible object is
@@ -984,7 +1012,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate UDT classes. 
+     * Generate UDT classes.
      * 
      * @param value
      *     allowed object is
@@ -1899,6 +1927,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setGlobalTriggerReferences(Boolean value) {
         this.globalTriggerReferences = value;
+    }
+
+    /**
+     * Turn off generation of global synonym references.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isGlobalSynonymReferences() {
+        return globalSynonymReferences;
+    }
+
+    /**
+     * Turn off generation of global synonym references.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setGlobalSynonymReferences(Boolean value) {
+        this.globalSynonymReferences = value;
     }
 
     /**
@@ -3438,7 +3490,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate Sequence classes. 
+     * Generate Sequence classes.
      * 
      */
     public Generate withSequences(Boolean value) {
@@ -3447,7 +3499,7 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate Trigger classes. 
+     * Generate Trigger classes.
      * 
      */
     public Generate withTriggers(Boolean value) {
@@ -3456,7 +3508,16 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
-     * Generate UDT classes. 
+     * Generate Synonym classes.
+     * 
+     */
+    public Generate withSynonyms(Boolean value) {
+        setSynonyms(value);
+        return this;
+    }
+
+    /**
+     * Generate UDT classes.
      * 
      */
     public Generate withUdts(Boolean value) {
@@ -3803,6 +3864,15 @@ public class Generate implements Serializable, XMLAppendable
      */
     public Generate withGlobalTriggerReferences(Boolean value) {
         setGlobalTriggerReferences(value);
+        return this;
+    }
+
+    /**
+     * Turn off generation of global synonym references.
+     * 
+     */
+    public Generate withGlobalSynonymReferences(Boolean value) {
+        setGlobalSynonymReferences(value);
         return this;
     }
 
@@ -4346,6 +4416,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("routines", routines);
         builder.append("sequences", sequences);
         builder.append("triggers", triggers);
+        builder.append("synonyms", synonyms);
         builder.append("udts", udts);
         builder.append("queues", queues);
         builder.append("links", links);
@@ -4385,6 +4456,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("globalSchemaReferences", globalSchemaReferences);
         builder.append("globalDomainReferences", globalDomainReferences);
         builder.append("globalTriggerReferences", globalTriggerReferences);
+        builder.append("globalSynonymReferences", globalSynonymReferences);
         builder.append("globalTableReferences", globalTableReferences);
         builder.append("globalSequenceReferences", globalSequenceReferences);
         builder.append("globalUDTReferences", globalUDTReferences);
@@ -4717,6 +4789,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!triggers.equals(other.triggers)) {
+                return false;
+            }
+        }
+        if (synonyms == null) {
+            if (other.synonyms!= null) {
+                return false;
+            }
+        } else {
+            if (!synonyms.equals(other.synonyms)) {
                 return false;
             }
         }
@@ -5068,6 +5149,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!globalTriggerReferences.equals(other.globalTriggerReferences)) {
+                return false;
+            }
+        }
+        if (globalSynonymReferences == null) {
+            if (other.globalSynonymReferences!= null) {
+                return false;
+            }
+        } else {
+            if (!globalSynonymReferences.equals(other.globalSynonymReferences)) {
                 return false;
             }
         }
@@ -5584,6 +5674,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
         result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
         result = ((prime*result)+((triggers == null)? 0 :triggers.hashCode()));
+        result = ((prime*result)+((synonyms == null)? 0 :synonyms.hashCode()));
         result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));
         result = ((prime*result)+((queues == null)? 0 :queues.hashCode()));
         result = ((prime*result)+((links == null)? 0 :links.hashCode()));
@@ -5623,6 +5714,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((globalSchemaReferences == null)? 0 :globalSchemaReferences.hashCode()));
         result = ((prime*result)+((globalDomainReferences == null)? 0 :globalDomainReferences.hashCode()));
         result = ((prime*result)+((globalTriggerReferences == null)? 0 :globalTriggerReferences.hashCode()));
+        result = ((prime*result)+((globalSynonymReferences == null)? 0 :globalSynonymReferences.hashCode()));
         result = ((prime*result)+((globalTableReferences == null)? 0 :globalTableReferences.hashCode()));
         result = ((prime*result)+((globalSequenceReferences == null)? 0 :globalSequenceReferences.hashCode()));
         result = ((prime*result)+((globalUDTReferences == null)? 0 :globalUDTReferences.hashCode()));

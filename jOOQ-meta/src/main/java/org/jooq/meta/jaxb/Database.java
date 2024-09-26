@@ -82,6 +82,8 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean includeTriggers = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean includeSynonyms = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean includeSequences = true;
     @XmlElement(defaultValue = "true")
     protected Boolean includeIndexes = true;
@@ -871,6 +873,34 @@ public class Database implements Serializable, XMLAppendable
      */
     public void setIncludeTriggers(Boolean value) {
         this.includeTriggers = value;
+    }
+
+    /**
+     * This flag indicates whether synonyms should be included in output produced by this database.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIncludeSynonyms() {
+        return includeSynonyms;
+    }
+
+    /**
+     * This flag indicates whether synonyms should be included in output produced by this database.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIncludeSynonyms(Boolean value) {
+        this.includeSynonyms = value;
     }
 
     /**
@@ -2467,6 +2497,17 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * This flag indicates whether synonyms should be included in output produced by this database.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Database withIncludeSynonyms(Boolean value) {
+        setIncludeSynonyms(value);
+        return this;
+    }
+
+    /**
      * This flag indicates whether sequences should be included in output produced by this database
      * 
      */
@@ -3181,6 +3222,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("includeUDTs", includeUDTs);
         builder.append("includeDomains", includeDomains);
         builder.append("includeTriggers", includeTriggers);
+        builder.append("includeSynonyms", includeSynonyms);
         builder.append("includeSequences", includeSequences);
         builder.append("includeIndexes", includeIndexes);
         builder.append("includePrimaryKeys", includePrimaryKeys);
@@ -3459,6 +3501,15 @@ public class Database implements Serializable, XMLAppendable
             }
         } else {
             if (!includeTriggers.equals(other.includeTriggers)) {
+                return false;
+            }
+        }
+        if (includeSynonyms == null) {
+            if (other.includeSynonyms!= null) {
+                return false;
+            }
+        } else {
+            if (!includeSynonyms.equals(other.includeSynonyms)) {
                 return false;
             }
         }
@@ -3969,6 +4020,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((includeUDTs == null)? 0 :includeUDTs.hashCode()));
         result = ((prime*result)+((includeDomains == null)? 0 :includeDomains.hashCode()));
         result = ((prime*result)+((includeTriggers == null)? 0 :includeTriggers.hashCode()));
+        result = ((prime*result)+((includeSynonyms == null)? 0 :includeSynonyms.hashCode()));
         result = ((prime*result)+((includeSequences == null)? 0 :includeSequences.hashCode()));
         result = ((prime*result)+((includeIndexes == null)? 0 :includeIndexes.hashCode()));
         result = ((prime*result)+((includePrimaryKeys == null)? 0 :includePrimaryKeys.hashCode()));

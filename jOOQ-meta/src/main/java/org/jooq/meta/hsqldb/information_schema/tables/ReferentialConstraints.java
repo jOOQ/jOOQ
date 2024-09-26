@@ -27,7 +27,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each foreign key constraint
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class ReferentialConstraints extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
@@ -143,20 +143,21 @@ public class ReferentialConstraints extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.asList(Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, Keys.REFERENCING_CONSTRAINT, Keys.REFERENCED_CONSTRAINT);
+        return Arrays.asList(Keys.REFERENCED_CONSTRAINT, Keys.REFERENCING_CONSTRAINT, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA);
     }
 
-    private transient Schemata _schemata;
+    private transient TableConstraints _referencedConstraint;
 
     /**
      * Get the implicit join path to the
-     * <code>INFORMATION_SCHEMA.SCHEMATA</code> table.
+     * <code>INFORMATION_SCHEMA.TABLE_CONSTRAINTS</code> table, via the
+     * <code>REFERENCED_CONSTRAINT</code> key.
      */
-    public Schemata schemata() {
-        if (_schemata == null)
-            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
+    public TableConstraints referencedConstraint() {
+        if (_referencedConstraint == null)
+            _referencedConstraint = new TableConstraints(this, Keys.REFERENCED_CONSTRAINT, null);
 
-        return _schemata;
+        return _referencedConstraint;
     }
 
     private transient TableConstraints _referencingConstraint;
@@ -173,18 +174,17 @@ public class ReferentialConstraints extends TableImpl<Record> {
         return _referencingConstraint;
     }
 
-    private transient TableConstraints _referencedConstraint;
+    private transient Schemata _schemata;
 
     /**
      * Get the implicit join path to the
-     * <code>INFORMATION_SCHEMA.TABLE_CONSTRAINTS</code> table, via the
-     * <code>REFERENCED_CONSTRAINT</code> key.
+     * <code>INFORMATION_SCHEMA.SCHEMATA</code> table.
      */
-    public TableConstraints referencedConstraint() {
-        if (_referencedConstraint == null)
-            _referencedConstraint = new TableConstraints(this, Keys.REFERENCED_CONSTRAINT, null);
+    public Schemata schemata() {
+        if (_schemata == null)
+            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_REFERENTIAL_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
 
-        return _referencedConstraint;
+        return _schemata;
     }
 
     @Override

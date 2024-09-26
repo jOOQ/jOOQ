@@ -28,7 +28,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each table or view
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
@@ -181,19 +181,6 @@ public class Tables extends TableImpl<Record> {
             _columns = new Columns(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_TABLES.getInverseKey());
 
         return _columns;
-    }
-
-    private transient Triggers _triggers;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>INFORMATION_SCHEMA.TRIGGERS</code> table
-     */
-    public Triggers triggers() {
-        if (_triggers == null)
-            _triggers = new Triggers(this, null, Keys.SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES.getInverseKey());
-
-        return _triggers;
     }
 
     private transient Views _views;

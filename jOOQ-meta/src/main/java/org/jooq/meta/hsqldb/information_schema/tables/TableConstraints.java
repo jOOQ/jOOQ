@@ -28,7 +28,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each table constraint associated with a table
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class TableConstraints extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
@@ -164,6 +164,34 @@ public class TableConstraints extends TableImpl<Record> {
         return _schemata;
     }
 
+    private transient ReferentialConstraints _referencedConstraint;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table, via the
+     * <code>REFERENCED_CONSTRAINT</code> key
+     */
+    public ReferentialConstraints referencedConstraint() {
+        if (_referencedConstraint == null)
+            _referencedConstraint = new ReferentialConstraints(this, null, Keys.REFERENCED_CONSTRAINT.getInverseKey());
+
+        return _referencedConstraint;
+    }
+
+    private transient ReferentialConstraints _referencingConstraint;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table, via the
+     * <code>REFERENCING_CONSTRAINT</code> key
+     */
+    public ReferentialConstraints referencingConstraint() {
+        if (_referencingConstraint == null)
+            _referencingConstraint = new ReferentialConstraints(this, null, Keys.REFERENCING_CONSTRAINT.getInverseKey());
+
+        return _referencingConstraint;
+    }
+
     private transient CheckConstraints _checkConstraints;
 
     /**
@@ -188,34 +216,6 @@ public class TableConstraints extends TableImpl<Record> {
             _keyColumnUsage = new KeyColumnUsage(this, null, Keys.SYNTHETIC_FK_KEY_COLUMN_USAGE__SYNTHETIC_PK_TABLE_CONSTRAINTS.getInverseKey());
 
         return _keyColumnUsage;
-    }
-
-    private transient ReferentialConstraints _referencingConstraint;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table, via the
-     * <code>REFERENCING_CONSTRAINT</code> key
-     */
-    public ReferentialConstraints referencingConstraint() {
-        if (_referencingConstraint == null)
-            _referencingConstraint = new ReferentialConstraints(this, null, Keys.REFERENCING_CONSTRAINT.getInverseKey());
-
-        return _referencingConstraint;
-    }
-
-    private transient ReferentialConstraints _referencedConstraint;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS</code> table, via the
-     * <code>REFERENCED_CONSTRAINT</code> key
-     */
-    public ReferentialConstraints referencedConstraint() {
-        if (_referencedConstraint == null)
-            _referencedConstraint = new ReferentialConstraints(this, null, Keys.REFERENCED_CONSTRAINT.getInverseKey());
-
-        return _referencedConstraint;
     }
 
     @Override

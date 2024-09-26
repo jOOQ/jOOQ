@@ -703,6 +703,11 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
 
 
+
+
+
+
+
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
         List<XMLSchemaCollectionDefinition> result = new ArrayList<>();

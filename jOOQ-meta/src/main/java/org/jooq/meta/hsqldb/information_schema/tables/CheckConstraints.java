@@ -28,7 +28,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each domain constraint, table check constraint, and assertion.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class CheckConstraints extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
@@ -119,20 +119,7 @@ public class CheckConstraints extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.asList(Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS, Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA);
-    }
-
-    private transient TableConstraints _tableConstraints;
-
-    /**
-     * Get the implicit join path to the
-     * <code>INFORMATION_SCHEMA.TABLE_CONSTRAINTS</code> table.
-     */
-    public TableConstraints tableConstraints() {
-        if (_tableConstraints == null)
-            _tableConstraints = new TableConstraints(this, Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS, null);
-
-        return _tableConstraints;
+        return Arrays.asList(Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS);
     }
 
     private transient Schemata _schemata;
@@ -146,6 +133,19 @@ public class CheckConstraints extends TableImpl<Record> {
             _schemata = new Schemata(this, Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
 
         return _schemata;
+    }
+
+    private transient TableConstraints _tableConstraints;
+
+    /**
+     * Get the implicit join path to the
+     * <code>INFORMATION_SCHEMA.TABLE_CONSTRAINTS</code> table.
+     */
+    public TableConstraints tableConstraints() {
+        if (_tableConstraints == null)
+            _tableConstraints = new TableConstraints(this, Keys.SYNTHETIC_FK_CHECK_CONSTRAINTS__SYNTHETIC_PK_TABLE_CONSTRAINTS, null);
+
+        return _tableConstraints;
     }
 
     private transient DomainConstraints _domainConstraints;

@@ -146,6 +146,7 @@ import org.jooq.SelectField;
 import org.jooq.Sequence;
 import org.jooq.SortOrder;
 import org.jooq.Stringly;
+// ...
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -208,6 +209,7 @@ import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
+// ...
 import org.jooq.meta.SyntheticDaoDefinition;
 import org.jooq.meta.TableDefinition;
 // ...
@@ -531,6 +533,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
         log.info("  udts", generateUDTs());
         log.info("  relations", generateRelations()
             + ((!generateRelations && generateTables) ? " (forced to true because of <tables/>)" :
@@ -605,6 +608,7 @@ public class JavaGenerator extends AbstractGenerator {
         return generateEmptySchemas()
                || !database.getArrays(schema).isEmpty()
                || !database.getDomains(schema).isEmpty()
+
 
 
 
@@ -706,6 +710,7 @@ public class JavaGenerator extends AbstractGenerator {
         boolean hasEnums = database.getEnums(schema).size() > 0;
         boolean hasDomains = database.getDomains(schema).size() > 0;
         boolean hasRoutines = database.getRoutines(schema).size() > 0 || hasTableValuedFunctions(schema);
+
 
 
 
@@ -827,6 +832,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (database.getConfiguredSyntheticDaos().size() > 0)
             generateSyntheticDaos(schema);
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -9187,6 +9202,86 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private String numberLiteral(Number n) {
         if (n instanceof BigInteger) {
             BigInteger bi = (BigInteger) n;
@@ -9276,6 +9371,8 @@ public class JavaGenerator extends AbstractGenerator {
                 return s.getDatabase().getSequences(s);
             else if (objectType == TableDefinition.class)
                 return s.getTables();
+
+
 
 
 
@@ -9553,6 +9650,8 @@ public class JavaGenerator extends AbstractGenerator {
         // [#681] Avoid referencing domain literals, if they're not generated
         if (generateGlobalDomainReferences())
             printReferences(out, database.getDomains(schema), Domain.class);
+
+
 
 
 

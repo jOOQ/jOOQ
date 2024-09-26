@@ -376,6 +376,42 @@ public interface Database extends AutoCloseable {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The UDTs defined in this database.
      */
@@ -735,6 +771,16 @@ public interface Database extends AutoCloseable {
      * whether domains should be included.
      */
     boolean getIncludeDomains();
+
+
+
+
+
+
+
+
+
+
 
 
 

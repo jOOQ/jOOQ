@@ -610,6 +610,11 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
 
 
 
+
+
+
+
+
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
         List<XMLSchemaCollectionDefinition> result = new ArrayList<>();

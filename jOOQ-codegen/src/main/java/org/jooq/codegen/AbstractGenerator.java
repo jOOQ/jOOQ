@@ -97,6 +97,7 @@ abstract class AbstractGenerator implements Generator {
 
 
 
+
     boolean                            generateSequences                                  = true;
     boolean                            generateSequenceFlags                              = true;
     boolean                            generateUDTs                                       = true;
@@ -142,6 +143,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateGlobalSequenceReferences                   = true;
     boolean                            generateGlobalTableReferences                      = true;
     boolean                            generateGlobalDomainReferences                     = true;
+
 
 
 
@@ -585,6 +587,16 @@ abstract class AbstractGenerator implements Generator {
 
 
 
+
+
+
+
+
+
+
+
+
+
     @Override
     public boolean generateSequenceFlags() {
         return generateSequenceFlags;
@@ -988,6 +1000,16 @@ abstract class AbstractGenerator implements Generator {
     public void setGenerateGlobalDomainReferences(boolean globalDomainReferences) {
         this.generateGlobalDomainReferences = globalDomainReferences;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -93,6 +93,7 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Statement;
 import org.jooq.Support;
+// ...
 import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableField;
@@ -594,6 +595,20 @@ public final class Internal {
 
         return new DomainImpl<>(schema, name, comment, actualType, checks);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

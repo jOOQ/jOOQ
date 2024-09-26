@@ -618,6 +618,7 @@ public class GenerationTool {
 
 
 
+
             database.setIncludeSequences(!FALSE.equals(d.isIncludeSequences()));
             database.setIncludeTables(!FALSE.equals(d.isIncludeTables()));
             database.setIncludeEmbeddables(!FALSE.equals(d.isIncludeEmbeddables()));
@@ -795,6 +796,8 @@ public class GenerationTool {
 
 
 
+
+
             if (g.getGenerate().isSequences() != null)
                 generator.setGenerateSequences(g.getGenerate().isSequences());
             if (g.getGenerate().isSequenceFlags() != null)
@@ -873,6 +876,8 @@ public class GenerationTool {
                 generator.setGenerateGlobalCatalogReferences(g.getGenerate().isGlobalCatalogReferences());
             if (g.getGenerate().isGlobalDomainReferences() != null)
                 generator.setGenerateGlobalDomainReferences(g.getGenerate().isGlobalDomainReferences());
+
+
 
 
 

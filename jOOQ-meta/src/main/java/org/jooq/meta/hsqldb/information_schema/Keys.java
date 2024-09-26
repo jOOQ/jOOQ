@@ -29,7 +29,7 @@ import org.jooq.meta.hsqldb.information_schema.tables.Views;
  * A class modelling foreign key relationships and constraints of tables in
  * INFORMATION_SCHEMA.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Keys {
 
     // -------------------------------------------------------------------------
@@ -64,7 +64,6 @@ public class Keys {
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Sequences.SEQUENCES, DSL.name("SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA"), new TableField[] { Sequences.SEQUENCES.SEQUENCE_CATALOG, Sequences.SEQUENCES.SEQUENCE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(TableConstraints.TABLE_CONSTRAINTS, DSL.name("SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA"), new TableField[] { TableConstraints.TABLE_CONSTRAINTS.CONSTRAINT_CATALOG, TableConstraints.TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Tables.TABLES, DSL.name("SYNTHETIC_FK_TABLES__SYNTHETIC_PK_SCHEMATA"), new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
-    public static final ForeignKey<Record, Record> SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES = Internal.createForeignKey(Triggers.TRIGGERS, DSL.name("SYNTHETIC_FK_TRIGGERS__SYNTHETIC_PK_TABLES"), new TableField[] { Triggers.TRIGGERS.EVENT_OBJECT_CATALOG, Triggers.TRIGGERS.EVENT_OBJECT_SCHEMA }, Keys.SYNTHETIC_PK_TABLES, new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA = Internal.createForeignKey(Views.VIEWS, DSL.name("SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA"), new TableField[] { Views.VIEWS.TABLE_CATALOG, Views.VIEWS.TABLE_SCHEMA }, Keys.SYNTHETIC_PK_SCHEMATA, new TableField[] { Schemata.SCHEMATA.CATALOG_NAME, Schemata.SCHEMATA.SCHEMA_NAME }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES = Internal.createForeignKey(Views.VIEWS, DSL.name("SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_TABLES"), new TableField[] { Views.VIEWS.TABLE_CATALOG, Views.VIEWS.TABLE_SCHEMA, Views.VIEWS.TABLE_NAME }, Keys.SYNTHETIC_PK_TABLES, new TableField[] { Tables.TABLES.TABLE_CATALOG, Tables.TABLES.TABLE_SCHEMA, Tables.TABLES.TABLE_NAME }, true);
 }

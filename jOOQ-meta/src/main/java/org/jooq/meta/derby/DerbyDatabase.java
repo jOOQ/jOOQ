@@ -602,6 +602,11 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
 
 
+
+
+
+
+
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
         List<XMLSchemaCollectionDefinition> result = new ArrayList<>();

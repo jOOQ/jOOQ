@@ -71,6 +71,7 @@ import static org.jooq.meta.hsqldb.information_schema.Tables.SCHEMATA;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SEQUENCES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_INDEXINFO;
+import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_SYNONYMS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_TABLES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TRIGGERS;
@@ -130,14 +131,18 @@ import org.jooq.meta.TableDefinition;
 // ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
+import org.jooq.meta.hsqldb.information_schema.Tables;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Columns;
 import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Domains;
 import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
+import org.jooq.meta.hsqldb.information_schema.tables.SystemSynonyms;
 import org.jooq.meta.hsqldb.information_schema.tables.Triggers;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The HSQLDB database
@@ -640,6 +645,26 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
         return new ArrayList<>(result.values());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

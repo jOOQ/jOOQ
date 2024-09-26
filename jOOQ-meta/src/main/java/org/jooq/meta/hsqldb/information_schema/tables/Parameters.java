@@ -21,7 +21,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 /**
  * one row for each routine parameter
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Parameters extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;

@@ -25,7 +25,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each schema
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Schemata extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
@@ -139,6 +139,19 @@ public class Schemata extends TableImpl<Record> {
         return _checkConstraints;
     }
 
+    private transient Columns _columns;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>INFORMATION_SCHEMA.COLUMNS</code> table
+     */
+    public Columns columns() {
+        if (_columns == null)
+            _columns = new Columns(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+
+        return _columns;
+    }
+
     private transient DomainConstraints _domainConstraints;
 
     /**
@@ -178,6 +191,32 @@ public class Schemata extends TableImpl<Record> {
         return _referentialConstraints;
     }
 
+    private transient Routines _routines;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>INFORMATION_SCHEMA.ROUTINES</code> table
+     */
+    public Routines routines() {
+        if (_routines == null)
+            _routines = new Routines(this, null, Keys.SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+
+        return _routines;
+    }
+
+    private transient Sequences _sequences;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>INFORMATION_SCHEMA.SEQUENCES</code> table
+     */
+    public Sequences sequences() {
+        if (_sequences == null)
+            _sequences = new Sequences(this, null, Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
+
+        return _sequences;
+    }
+
     private transient TableConstraints _tableConstraints;
 
     /**
@@ -189,19 +228,6 @@ public class Schemata extends TableImpl<Record> {
             _tableConstraints = new TableConstraints(this, null, Keys.SYNTHETIC_FK_TABLE_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _tableConstraints;
-    }
-
-    private transient Columns _columns;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>INFORMATION_SCHEMA.COLUMNS</code> table
-     */
-    public Columns columns() {
-        if (_columns == null)
-            _columns = new Columns(this, null, Keys.SYNTHETIC_FK_COLUMNS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
-
-        return _columns;
     }
 
     private transient Tables _tables;
@@ -228,32 +254,6 @@ public class Schemata extends TableImpl<Record> {
             _views = new Views(this, null, Keys.SYNTHETIC_FK_VIEWS__SYNTHETIC_PK_SCHEMATA.getInverseKey());
 
         return _views;
-    }
-
-    private transient Routines _routines;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>INFORMATION_SCHEMA.ROUTINES</code> table
-     */
-    public Routines routines() {
-        if (_routines == null)
-            _routines = new Routines(this, null, Keys.SYNTHETIC_FK_ROUTINES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
-
-        return _routines;
-    }
-
-    private transient Sequences _sequences;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>INFORMATION_SCHEMA.SEQUENCES</code> table
-     */
-    public Sequences sequences() {
-        if (_sequences == null)
-            _sequences = new Sequences(this, null, Keys.SYNTHETIC_FK_SEQUENCES__SYNTHETIC_PK_SCHEMATA.getInverseKey());
-
-        return _sequences;
     }
 
     @Override

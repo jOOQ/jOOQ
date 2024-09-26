@@ -28,7 +28,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each routine
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Routines extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;

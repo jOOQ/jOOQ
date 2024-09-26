@@ -28,7 +28,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each external sequence generator
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Sequences extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;

@@ -117,6 +117,7 @@ import org.jooq.Parser;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Record14;
+import org.jooq.Record6;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -213,6 +214,7 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
     private boolean                                                              includeSequences                        = true;
     private boolean                                                              includeIndexes                          = true;
     private boolean                                                              includeCheckConstraints                 = true;
@@ -306,6 +308,7 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
     private List<XMLSchemaCollectionDefinition>                                  xmlSchemaCollections;
     private List<UDTDefinition>                                                  udts;
     private List<ArrayDefinition>                                                arrays;
@@ -328,6 +331,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<TableDefinition, List<EmbeddableDefinition>>           embeddablesByReferencingTable;
     private transient Map<SchemaDefinition, List<EnumDefinition>>                enumsBySchema;
     private transient Map<SchemaDefinition, List<DomainDefinition>>              domainsBySchema;
+
 
 
 
@@ -1325,6 +1329,16 @@ public abstract class AbstractDatabase implements Database {
     public final void setIncludeDomains(boolean includeDomains) {
         this.includeDomains = includeDomains;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3024,6 +3038,54 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final List<ArrayDefinition> getArrays(SchemaDefinition schema) {
         if (arrays == null) {
@@ -4186,6 +4248,51 @@ public abstract class AbstractDatabase implements Database {
 
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

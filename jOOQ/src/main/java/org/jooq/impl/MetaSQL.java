@@ -15,6 +15,7 @@ final class MetaSQL {
     private static final EnumMap<SQLDialect, String> M_SOURCES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_COMMENTS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_TRIGGERS = new EnumMap<>(SQLDialect.class);
+    private static final EnumMap<SQLDialect, String> M_SYNONYMS = new EnumMap<>(SQLDialect.class);
 
     static final String M_UNIQUE_KEYS(SQLDialect dialect) {
         String result = M_UNIQUE_KEYS.get(dialect);
@@ -49,6 +50,11 @@ final class MetaSQL {
     static final String M_TRIGGERS(SQLDialect dialect) {
         String result = M_TRIGGERS.get(dialect);
         return result != null ? result : M_TRIGGERS.get(dialect.family());
+    }
+
+    static final String M_SYNONYMS(SQLDialect dialect) {
+        String result = M_SYNONYMS.get(dialect);
+        return result != null ? result : M_SYNONYMS.get(dialect.family());
     }
 
     static {
@@ -363,6 +369,10 @@ final class MetaSQL {
         M_COMMENTS.put(HSQLDB, "select c.TABLE_CAT, c.TABLE_SCHEM, c.TABLE_NAME, c.COLUMN_NAME, c.REMARKS from (select INFORMATION_SCHEMA.SYSTEM_TABLES.TABLE_CAT, INFORMATION_SCHEMA.SYSTEM_TABLES.TABLE_SCHEM, INFORMATION_SCHEMA.SYSTEM_TABLES.TABLE_NAME, null as COLUMN_NAME, INFORMATION_SCHEMA.SYSTEM_TABLES.REMARKS from INFORMATION_SCHEMA.SYSTEM_TABLES where INFORMATION_SCHEMA.SYSTEM_TABLES.REMARKS is not null union all select INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG, INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA, INFORMATION_SCHEMA.COLUMNS.TABLE_NAME, INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME, INFORMATION_SCHEMA.SYSTEM_COLUMNS.REMARKS from INFORMATION_SCHEMA.COLUMNS join INFORMATION_SCHEMA.SYSTEM_COLUMNS on (INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG = INFORMATION_SCHEMA.SYSTEM_COLUMNS.TABLE_CAT and INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA = INFORMATION_SCHEMA.SYSTEM_COLUMNS.TABLE_SCHEM and INFORMATION_SCHEMA.COLUMNS.TABLE_NAME = INFORMATION_SCHEMA.SYSTEM_COLUMNS.TABLE_NAME and INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME = INFORMATION_SCHEMA.SYSTEM_COLUMNS.COLUMN_NAME) where INFORMATION_SCHEMA.SYSTEM_COLUMNS.REMARKS is not null) as c where c.TABLE_SCHEM in (cast(? as varchar(128))) order by 1, 2, 3, 4");
         M_COMMENTS.put(POSTGRES, "select current_database() as catalog_name, c.schema_name, c.table_name, c.column_name, c.remarks from (select alias_87241969.nspname as schema_name, pg_catalog.pg_class.relname as table_name, null as column_name, obj_description(pg_catalog.pg_class.oid) as remarks from (pg_catalog.pg_class join pg_catalog.pg_namespace as alias_87241969 on pg_catalog.pg_class.relnamespace = alias_87241969.oid) where obj_description(pg_catalog.pg_class.oid) is not null union all select pg_catalog.pg_namespace.nspname, null, null, obj_description(pg_catalog.pg_namespace.oid) as remarks from pg_catalog.pg_namespace where obj_description(pg_catalog.pg_namespace.oid) is not null union all select alias_120026365.nspname, pg_catalog.pg_proc.proname, null, obj_description(pg_catalog.pg_proc.oid) as remarks from (pg_catalog.pg_proc join pg_catalog.pg_namespace as alias_120026365 on pg_catalog.pg_proc.pronamespace = alias_120026365.oid) where obj_description(pg_catalog.pg_proc.oid) is not null union all select alias_42996861.nspname, pg_catalog.pg_type.typname, null, obj_description(pg_catalog.pg_type.oid) as remarks from (pg_catalog.pg_type join pg_catalog.pg_namespace as alias_42996861 on pg_catalog.pg_type.typnamespace = alias_42996861.oid) where obj_description(pg_catalog.pg_type.oid) is not null) as c where c.schema_name in (?) order by 1, 2, 3, 4");
         M_COMMENTS.put(YUGABYTEDB, "select current_database() as catalog_name, c.schema_name, c.table_name, c.column_name, c.remarks from (select alias_87241969.nspname as schema_name, pg_catalog.pg_class.relname as table_name, null as column_name, obj_description(pg_catalog.pg_class.oid) as remarks from (pg_catalog.pg_class join pg_catalog.pg_namespace as alias_87241969 on pg_catalog.pg_class.relnamespace = alias_87241969.oid) where obj_description(pg_catalog.pg_class.oid) is not null union all select pg_catalog.pg_namespace.nspname, null, null, obj_description(pg_catalog.pg_namespace.oid) as remarks from pg_catalog.pg_namespace where obj_description(pg_catalog.pg_namespace.oid) is not null union all select alias_120026365.nspname, pg_catalog.pg_proc.proname, null, obj_description(pg_catalog.pg_proc.oid) as remarks from (pg_catalog.pg_proc join pg_catalog.pg_namespace as alias_120026365 on pg_catalog.pg_proc.pronamespace = alias_120026365.oid) where obj_description(pg_catalog.pg_proc.oid) is not null union all select alias_42996861.nspname, pg_catalog.pg_type.typname, null, obj_description(pg_catalog.pg_type.oid) as remarks from (pg_catalog.pg_type join pg_catalog.pg_namespace as alias_42996861 on pg_catalog.pg_type.typnamespace = alias_42996861.oid) where obj_description(pg_catalog.pg_type.oid) is not null) as c where c.schema_name in (?) order by 1, 2, 3, 4");
+
+
+
+
 
 
 

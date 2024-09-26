@@ -21,7 +21,7 @@ import org.jooq.meta.hsqldb.information_schema.InformationSchema;
 /**
  * the accessible tables defined within this database
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class SystemTables extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;

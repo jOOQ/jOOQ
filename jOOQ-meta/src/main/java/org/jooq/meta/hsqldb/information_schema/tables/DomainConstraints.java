@@ -27,7 +27,7 @@ import org.jooq.meta.hsqldb.information_schema.Keys;
 /**
  * one row for each check constraint included in a domain definition
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class DomainConstraints extends TableImpl<Record> {
 
     private static final long serialVersionUID = 1L;
@@ -137,20 +137,7 @@ public class DomainConstraints extends TableImpl<Record> {
 
     @Override
     public List<ForeignKey<Record, ?>> getReferences() {
-        return Arrays.asList(Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_CHECK_CONSTRAINTS, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_DOMAINS);
-    }
-
-    private transient Schemata _schemata;
-
-    /**
-     * Get the implicit join path to the
-     * <code>INFORMATION_SCHEMA.SCHEMATA</code> table.
-     */
-    public Schemata schemata() {
-        if (_schemata == null)
-            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
-
-        return _schemata;
+        return Arrays.asList(Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_CHECK_CONSTRAINTS, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_DOMAINS, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA);
     }
 
     private transient CheckConstraints _checkConstraints;
@@ -177,6 +164,19 @@ public class DomainConstraints extends TableImpl<Record> {
             _domains = new Domains(this, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_DOMAINS, null);
 
         return _domains;
+    }
+
+    private transient Schemata _schemata;
+
+    /**
+     * Get the implicit join path to the
+     * <code>INFORMATION_SCHEMA.SCHEMATA</code> table.
+     */
+    public Schemata schemata() {
+        if (_schemata == null)
+            _schemata = new Schemata(this, Keys.SYNTHETIC_FK_DOMAIN_CONSTRAINTS__SYNTHETIC_PK_SCHEMATA, null);
+
+        return _schemata;
     }
 
     @Override

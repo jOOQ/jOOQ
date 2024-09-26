@@ -446,14 +446,7 @@ final class Interpreter {
             cascade(table.uniqueKeys, null, check);
         }
 
-        Iterator<MutableTable> it = tables.iterator();
-
-        while (it.hasNext()) {
-            if (it.next().nameEquals(table.name())) {
-                it.remove();
-                break;
-            }
-        }
+        drop(tables, table);
     }
 
     private final <N extends MutableNamed> void drop(List<N> list, N item) {

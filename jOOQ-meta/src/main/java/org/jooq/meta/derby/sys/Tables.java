@@ -4,6 +4,7 @@
 package org.jooq.meta.derby.sys;
 
 
+import org.jooq.meta.derby.sys.tables.Sysaliases;
 import org.jooq.meta.derby.sys.tables.Syschecks;
 import org.jooq.meta.derby.sys.tables.Syscolumns;
 import org.jooq.meta.derby.sys.tables.Sysconglomerates;
@@ -19,8 +20,13 @@ import org.jooq.meta.derby.sys.tables.Sysviews;
 /**
  * Convenience access to all tables in SYS.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
+
+    /**
+     * The table <code>SYS.SYSALIASES</code>.
+     */
+    public static final Sysaliases SYSALIASES = Sysaliases.SYSALIASES;
 
     /**
      * The table <code>SYS.SYSCHECKS</code>.

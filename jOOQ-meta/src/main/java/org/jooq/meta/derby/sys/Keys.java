@@ -10,6 +10,7 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
+import org.jooq.meta.derby.sys.tables.Sysaliases;
 import org.jooq.meta.derby.sys.tables.Syschecks;
 import org.jooq.meta.derby.sys.tables.Sysconglomerates;
 import org.jooq.meta.derby.sys.tables.Sysconstraints;
@@ -24,7 +25,7 @@ import org.jooq.meta.derby.sys.tables.Sysviews;
 /**
  * A class modelling foreign key relationships and constraints of tables in SYS.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Keys {
 
     // -------------------------------------------------------------------------
@@ -41,6 +42,7 @@ public class Keys {
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSALIASES__SYNTHETIC_PK_SYSSCHEMAS = Internal.createForeignKey(Sysaliases.SYSALIASES, DSL.name("SYNTHETIC_FK_SYSALIASES__SYNTHETIC_PK_SYSSCHEMAS"), new TableField[] { Sysaliases.SYSALIASES.SCHEMAID }, Keys.SYNTHETIC_PK_SYSSCHEMAS, new TableField[] { Sysschemas.SYSSCHEMAS.SCHEMAID }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS = Internal.createForeignKey(Syschecks.SYSCHECKS, DSL.name("SYNTHETIC_FK_SYSCHECKS__SYNTHETIC_PK_SYSCONSTRAINTS"), new TableField[] { Syschecks.SYSCHECKS.CONSTRAINTID }, Keys.SYNTHETIC_PK_SYSCONSTRAINTS, new TableField[] { Sysconstraints.SYSCONSTRAINTS.CONSTRAINTID }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES = Internal.createForeignKey(Sysconglomerates.SYSCONGLOMERATES, DSL.name("SYNTHETIC_FK_SYSCONGLOMERATES__SYNTHETIC_PK_SYSTABLES"), new TableField[] { Sysconglomerates.SYSCONGLOMERATES.TABLEID }, Keys.SYNTHETIC_PK_SYSTABLES, new TableField[] { Systables.SYSTABLES.TABLEID }, true);
     public static final ForeignKey<Record, Record> SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS = Internal.createForeignKey(Sysconstraints.SYSCONSTRAINTS, DSL.name("SYNTHETIC_FK_SYSCONSTRAINTS__SYNTHETIC_PK_SYSSCHEMAS"), new TableField[] { Sysconstraints.SYSCONSTRAINTS.SCHEMAID }, Keys.SYNTHETIC_PK_SYSSCHEMAS, new TableField[] { Sysschemas.SYSSCHEMAS.SCHEMAID }, true);

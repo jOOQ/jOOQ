@@ -48,13 +48,16 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nullif;
+import static org.jooq.impl.DSL.position;
+import static org.jooq.impl.DSL.replace;
+import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.meta.derby.sys.Tables.SYSCHECKS;
-import static org.jooq.meta.derby.sys.Tables.SYSCOLUMNS;
+import static org.jooq.meta.derby.sys.Tables.*;
 import static org.jooq.meta.derby.sys.Tables.SYSCONGLOMERATES;
 import static org.jooq.meta.derby.sys.Tables.SYSCONSTRAINTS;
 import static org.jooq.meta.derby.sys.Tables.SYSKEYS;
@@ -113,7 +116,11 @@ import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
+import org.jooq.meta.derby.sys.tables.Sysaliases;
+import org.jooq.meta.derby.sys.tables.Systables;
 import org.jooq.meta.derby.sys.tables.Systriggers;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -538,6 +545,9 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
                 // [#6797] The cast is necessary if a non-standard collation is used
                 .where(SYSSCHEMAS.SCHEMANAME.cast(VARCHAR(32672)).in(getInputSchemata()))
+
+                // [#9574] Exclude aliases
+                .and(SYSTABLES.TABLETYPE.ne(inline("A")))
                 .orderBy(
                     SYSSCHEMAS.SCHEMANAME,
                     SYSTABLES.TABLENAME)) {
@@ -565,6 +575,20 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

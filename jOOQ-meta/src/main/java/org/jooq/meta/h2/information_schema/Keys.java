@@ -19,9 +19,13 @@ import org.jooq.meta.h2.information_schema.tables.Tables;
 
 
 /**
- * A class modelling foreign key relationships and constraints of tables in 
+ * A class modelling foreign key relationships and constraints of tables in
  * INFORMATION_SCHEMA.
+ *
+ * @deprecated - [#17388] [#17389] - 3.20.0 - Use the classes from the
+ *             <code>information_schema_2</code> package, instead.
  */
+@Deprecated
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 

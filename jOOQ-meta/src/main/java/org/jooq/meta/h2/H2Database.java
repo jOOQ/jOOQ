@@ -57,6 +57,7 @@ import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
@@ -74,6 +75,7 @@ import static org.jooq.meta.h2.information_schema.Tables.SEQUENCES;
 import static org.jooq.meta.h2.information_schema.Tables.TABLES;
 import static org.jooq.meta.h2.information_schema.Tables.TYPE_INFO;
 import static org.jooq.meta.h2.information_schema.Tables.VIEWS;
+import static org.jooq.meta.h2.information_schema_2.Tables.SYNONYMS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.DOMAIN_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
@@ -139,6 +141,7 @@ import org.jooq.meta.TableDefinition;
 // ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
+import org.jooq.meta.h2.information_schema_2.tables.Synonyms;
 import org.jooq.meta.hsqldb.information_schema.Tables;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
@@ -737,6 +740,18 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 SEQUENCES.SEQUENCE_SCHEMA,
                 SEQUENCES.SEQUENCE_NAME);
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

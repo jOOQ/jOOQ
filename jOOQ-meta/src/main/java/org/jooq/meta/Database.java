@@ -311,22 +311,22 @@ public interface Database extends AutoCloseable {
     List<DomainDefinition> getDomains(SchemaDefinition schema);
 
     /**
-     * Get an domain UDT defined in this database by name.
+     * Get a domain UDT defined in this database by name.
      */
     DomainDefinition getDomain(SchemaDefinition schema, String name);
 
     /**
-     * Get an domain UDT defined in this database by name.
+     * Get a domain UDT defined in this database by name.
      */
     DomainDefinition getDomain(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
-     * Get an domain UDT defined in this database by name.
+     * Get a domain UDT defined in this database by name.
      */
     DomainDefinition getDomain(SchemaDefinition schema, Name name);
 
     /**
-     * Get an domain UDT defined in this database by name.
+     * Get a domain UDT defined in this database by name.
      */
     DomainDefinition getDomain(SchemaDefinition schema, Name name, boolean ignoreCase);
 

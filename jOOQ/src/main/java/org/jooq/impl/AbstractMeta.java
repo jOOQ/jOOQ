@@ -61,6 +61,7 @@ import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Named;
+// ...
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Record;

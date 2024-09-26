@@ -2976,13 +2976,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                         ;
-                    else if (parseProKeywordIf("SYNONYM", "ALIAS"))
+                    else if (parseProKeywordIf("PRIVATE SYNONYM", "SYNONYM", "ALIAS"))
 
 
 
                         ;
                     else
-                        throw expected("ALIAS", "FUNCTION", "PACKAGE", "PROCEDURE", "PUBLIC ALIAS", "PUBLIC SYNONYM", "SYNONYM", "TRIGGER", "VIEW");
+                        throw expected("ALIAS", "FUNCTION", "PACKAGE", "PROCEDURE", "PRIVATE SYNONYM", "PUBLIC ALIAS", "PUBLIC SYNONYM", "SYNONYM", "TRIGGER", "VIEW");
                 }
 
                 break;
@@ -2996,6 +2996,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                     ;
                 else if (parseProKeywordIf("PUBLIC SYNONYM", "PUBLIC ALIAS"))
+
+
+
+                    ;
+                else if (parseProKeywordIf("PRIVATE SYNONYM"))
 
 
 
@@ -3066,6 +3071,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             "INDEX",
             "OR ALTER",
             "OR REPLACE",
+            "PRIVATE SYNONYM",
             "PROCEDURE",
             "PUBLIC ALIAS",
             "PUBLIC SYNONYM",

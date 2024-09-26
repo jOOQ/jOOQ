@@ -16018,6 +16018,37 @@ public class DSL {
 
     /**
      * Coerce this field to the type of another field.
+     * <p>
+     * Unlike with {@link DSL#cast(Object, Field)}, coercing doesn't affect the
+     * way the database sees a <code>Field</code>'s type. This is how coercing
+     * affects your SQL:
+     * <p>
+     * <h3>Bind values</h3>
+     *
+     * <pre>
+     * <code>
+     * // This binds an int value to a JDBC PreparedStatement,
+     * // where a String is expected
+     * DSL.val(1).coerce(VARCHAR);
+     *
+     * // This binds an int value to a JDBC PreparedStatement
+     * // and casts it to VARCHAR in SQL
+     * DSL.val(1).cast(VARCHAR);
+     * </code>
+     * </pre>
+     *
+     * <h3>Other Field types</h3>
+     *
+     * <pre>
+     * <code>
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * BOOK.ID.coerce(VARCHAR);
+     *
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * // after casting it to VARCHAR in the database
+     * BOOK.ID.cast(VARCHAR);
+     * </code>
+     * </pre>
      *
      * @see #coerce(Field, Field)
      */
@@ -16029,6 +16060,37 @@ public class DSL {
 
     /**
      * Coerce this field to another type.
+     * <p>
+     * Unlike with {@link DSL#cast(Object, Class)}, coercing doesn't affect the
+     * way the database sees a <code>Field</code>'s type. This is how coercing
+     * affects your SQL:
+     * <p>
+     * <h3>Bind values</h3>
+     *
+     * <pre>
+     * <code>
+     * // This binds an int value to a JDBC PreparedStatement,
+     * // where a String is expected
+     * DSL.val(1).coerce(VARCHAR);
+     *
+     * // This binds an int value to a JDBC PreparedStatement
+     * // and casts it to VARCHAR in SQL
+     * DSL.val(1).cast(VARCHAR);
+     * </code>
+     * </pre>
+     *
+     * <h3>Other Field types</h3>
+     *
+     * <pre>
+     * <code>
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * BOOK.ID.coerce(VARCHAR);
+     *
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * // after casting it to VARCHAR in the database
+     * BOOK.ID.cast(VARCHAR);
+     * </code>
+     * </pre>
      * <p>
      * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
@@ -16050,6 +16112,37 @@ public class DSL {
 
     /**
      * Coerce a field to another type.
+     * <p>
+     * Unlike with {@link DSL#cast(Object, DataType)}, coercing doesn't affect the
+     * way the database sees a <code>Field</code>'s type. This is how coercing
+     * affects your SQL:
+     * <p>
+     * <h3>Bind values</h3>
+     *
+     * <pre>
+     * <code>
+     * // This binds an int value to a JDBC PreparedStatement,
+     * // where a String is expected
+     * DSL.val(1).coerce(VARCHAR);
+     *
+     * // This binds an int value to a JDBC PreparedStatement
+     * // and casts it to VARCHAR in SQL
+     * DSL.val(1).cast(VARCHAR);
+     * </code>
+     * </pre>
+     *
+     * <h3>Other Field types</h3>
+     *
+     * <pre>
+     * <code>
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * BOOK.ID.coerce(VARCHAR);
+     *
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * // after casting it to VARCHAR in the database
+     * BOOK.ID.cast(VARCHAR);
+     * </code>
+     * </pre>
      *
      * @see #coerce(Field, DataType)
      */
@@ -16062,24 +16155,36 @@ public class DSL {
     /**
      * Coerce this field to the type of another field.
      * <p>
-     * Unlike with casting, coercing doesn't affect the way the database sees a
-     * <code>Field</code>'s type. This is how coercing affects your SQL:
-     * <h3>Bind values</h3> <pre><code>
-     * // This binds an int value to a JDBC PreparedStatement
-     * DSL.val(1).coerce(String.class);
+     * Unlike with {@link DSL#cast(Field, Field)}, coercing doesn't affect the
+     * way the database sees a <code>Field</code>'s type. This is how coercing
+     * affects your SQL:
+     * <p>
+     * <h3>Bind values</h3>
+     *
+     * <pre>
+     * <code>
+     * // This binds an int value to a JDBC PreparedStatement,
+     * // where a String is expected
+     * DSL.val(1).coerce(VARCHAR);
      *
      * // This binds an int value to a JDBC PreparedStatement
      * // and casts it to VARCHAR in SQL
-     * DSL.val(1).cast(String.class);
-     * </code></pre>
-     * <h3>Other Field types</h3> <pre><code>
+     * DSL.val(1).cast(VARCHAR);
+     * </code>
+     * </pre>
+     *
+     * <h3>Other Field types</h3>
+     *
+     * <pre>
+     * <code>
      * // This fetches a String value for the BOOK.ID field from JDBC
-     * BOOK.ID.coerce(String.class);
+     * BOOK.ID.coerce(VARCHAR);
      *
      * // This fetches a String value for the BOOK.ID field from JDBC
      * // after casting it to VARCHAR in the database
-     * BOOK.ID.cast(String.class);
-     * </code></pre>
+     * BOOK.ID.cast(VARCHAR);
+     * </code>
+     * </pre>
      *
      * @param <T> The generic type of the coerced field
      * @param field The field to be coerced
@@ -16097,24 +16202,36 @@ public class DSL {
     /**
      * Coerce this field to another type.
      * <p>
-     * Unlike with casting, coercing doesn't affect the way the database sees a
-     * <code>Field</code>'s type. This is how coercing affects your SQL:
-     * <h3>Bind values</h3> <pre><code>
-     * // This binds an int value to a JDBC PreparedStatement
-     * DSL.val(1).coerce(String.class);
+     * Unlike with {@link DSL#cast(Field, Class)}, coercing doesn't affect the
+     * way the database sees a <code>Field</code>'s type. This is how coercing
+     * affects your SQL:
+     * <p>
+     * <h3>Bind values</h3>
+     *
+     * <pre>
+     * <code>
+     * // This binds an int value to a JDBC PreparedStatement,
+     * // where a String is expected
+     * DSL.val(1).coerce(VARCHAR);
      *
      * // This binds an int value to a JDBC PreparedStatement
      * // and casts it to VARCHAR in SQL
-     * DSL.val(1).cast(String.class);
-     * </code></pre>
-     * <h3>Other Field types</h3> <pre><code>
+     * DSL.val(1).cast(VARCHAR);
+     * </code>
+     * </pre>
+     *
+     * <h3>Other Field types</h3>
+     *
+     * <pre>
+     * <code>
      * // This fetches a String value for the BOOK.ID field from JDBC
-     * BOOK.ID.coerce(String.class);
+     * BOOK.ID.coerce(VARCHAR);
      *
      * // This fetches a String value for the BOOK.ID field from JDBC
      * // after casting it to VARCHAR in the database
-     * BOOK.ID.cast(String.class);
-     * </code></pre>
+     * BOOK.ID.cast(VARCHAR);
+     * </code>
+     * </pre>
      * <p>
      * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
@@ -16140,24 +16257,36 @@ public class DSL {
     /**
      * Coerce a field to another type.
      * <p>
-     * Unlike with casting, coercing doesn't affect the way the database sees a
-     * <code>Field</code>'s type. This is how coercing affects your SQL:
-     * <h3>Bind values</h3> <pre><code>
-     * // This binds an int value to a JDBC PreparedStatement
-     * DSL.val(1).coerce(String.class);
+     * Unlike with {@link DSL#cast(Field, DataType)}, coercing doesn't affect the
+     * way the database sees a <code>Field</code>'s type. This is how coercing
+     * affects your SQL:
+     * <p>
+     * <h3>Bind values</h3>
+     *
+     * <pre>
+     * <code>
+     * // This binds an int value to a JDBC PreparedStatement,
+     * // where a String is expected
+     * DSL.val(1).coerce(VARCHAR);
      *
      * // This binds an int value to a JDBC PreparedStatement
      * // and casts it to VARCHAR in SQL
-     * DSL.val(1).cast(String.class);
-     * </code></pre>
-     * <h3>Other Field types</h3> <pre><code>
+     * DSL.val(1).cast(VARCHAR);
+     * </code>
+     * </pre>
+     *
+     * <h3>Other Field types</h3>
+     *
+     * <pre>
+     * <code>
      * // This fetches a String value for the BOOK.ID field from JDBC
-     * BOOK.ID.coerce(String.class);
+     * BOOK.ID.coerce(VARCHAR);
      *
      * // This fetches a String value for the BOOK.ID field from JDBC
      * // after casting it to VARCHAR in the database
-     * BOOK.ID.cast(String.class);
-     * </code></pre>
+     * BOOK.ID.cast(VARCHAR);
+     * </code>
+     * </pre>
      *
      * @param <T> The generic type of the coerced field
      * @param field The field to be coerced
@@ -16212,6 +16341,11 @@ public class DSL {
 
     /**
      * Cast a value to the type of another field.
+     * <p>
+     * Casting converts expressions between data types directly in SQL using SQL
+     * <code>CAST</code> expressions or similar. If you want to convert data
+     * types only in jOOQ without any effect on generated SQL, you can use
+     * {@link DSL#coerce(Object, Field)} instead.
      *
      * @param <T> The generic type of the cast field
      * @param value The value to cast
@@ -16226,6 +16360,11 @@ public class DSL {
 
     /**
      * Cast a field to the type of another field.
+     * <p>
+     * Casting converts expressions between data types directly in SQL using SQL
+     * <code>CAST</code> expressions or similar. If you want to convert data
+     * types only in jOOQ without any effect on generated SQL, you can use
+     * {@link DSL#coerce(Field, Field)} instead.
      *
      * @param <T> The generic type of the cast field
      * @param field The field to cast
@@ -16254,6 +16393,11 @@ public class DSL {
     /**
      * Cast a value to another type.
      * <p>
+     * Casting converts expressions between data types directly in SQL using SQL
+     * <code>CAST</code> expressions or similar. If you want to convert data
+     * types only in jOOQ without any effect on generated SQL, you can use
+     * {@link DSL#coerce(Object, Class)} instead.
+     * <p>
      * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
      * types from {@link SQLDataType}. If you're using any custom data types by
@@ -16275,6 +16419,11 @@ public class DSL {
 
     /**
      * Cast a field to another type.
+     * <p>
+     * Casting converts expressions between data types directly in SQL using SQL
+     * <code>CAST</code> expressions or similar. If you want to convert data
+     * types only in jOOQ without any effect on generated SQL, you can use
+     * {@link DSL#coerce(Field, Class)} instead.
      * <p>
      * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
      * {@link Class} references of types supported by jOOQ internally, i.e.
@@ -16310,6 +16459,11 @@ public class DSL {
 
     /**
      * Cast a value to another type.
+     * <p>
+     * Casting converts expressions between data types directly in SQL using SQL
+     * <code>CAST</code> expressions or similar. If you want to convert data
+     * types only in jOOQ without any effect on generated SQL, you can use
+     * {@link DSL#coerce(Object, DataType)} instead.
      *
      * @param <T> The generic type of the cast field
      * @param value The value to cast
@@ -16324,6 +16478,11 @@ public class DSL {
 
     /**
      * Cast a field to another type.
+     * <p>
+     * Casting converts expressions between data types directly in SQL using SQL
+     * <code>CAST</code> expressions or similar. If you want to convert data
+     * types only in jOOQ without any effect on generated SQL, you can use
+     * {@link DSL#coerce(Field, DataType)} instead.
      *
      * @param <T> The generic type of the cast field
      * @param field The value to cast

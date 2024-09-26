@@ -444,6 +444,17 @@ final class Interpreter {
                 cascade(table.primaryKey, null, check ? RESTRICT : CASCADE);
 
             cascade(table.uniqueKeys, null, check);
+
+
+
+
+
+
+
+
+
+
+
         }
 
         drop(tables, table);
@@ -1011,6 +1022,17 @@ final class Interpreter {
 
         schema.sequences.remove(existing);
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

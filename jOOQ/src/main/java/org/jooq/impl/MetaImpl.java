@@ -499,6 +499,13 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+                    // [#15325] DB2 and Derby also return ALIASES or SYNONYMS, respectively
+                    case DERBY:
+                        types = new String[] { "SYSTEM TABLE", "TABLE", "VIEW" };
+                        break;
+
+
+
 
 
 

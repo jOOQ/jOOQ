@@ -522,60 +522,64 @@ final class MetaImpl extends AbstractMeta {
                 }
             });
 
-            return Tools.map(tables, table -> {
-                String catalog = table.get(0, String.class);
-                String schema = table.get(1, String.class);
-                String name = table.get(2, String.class);
-                String type = table.get(3, String.class);
-                String remarks = table.get(4, String.class);
+            return Tools.map(
 
-                TableType tableType =
-                      "VIEW".equals(type)
-                    ? TableType.VIEW
-                    : "TEMPORARY VIEW".equals(type)
-                    ? TableType.VIEW
-                    : "SYSTEM_VIEW".equals(type) || "SYSTEM VIEW".equals(type)
-                    ? TableType.VIEW
-                    : "GLOBAL TEMPORARY".equals(type)
-                    ? TableType.TEMPORARY
-                    : "LOCAL TEMPORARY".equals(type)
-                    ? TableType.TEMPORARY
-                    : "TEMPORARY".equals(type)
-                    ? TableType.TEMPORARY
-                    : "MATERIALIZED VIEW".equals(type)
-                    ? TableType.MATERIALIZED_VIEW
-                    : TableType.TABLE;
+                // [#15325] Generic exclusion of SYNONYM types
+                Tools.filter(
+                    tables,
+                    table ->
+                        !"SYNONYM".equals(table.get(3, String.class)) &&
+                        !"ALIAS".equals(table.get(3, String.class))
+                ),
+                table -> {
+                    String catalog = table.get(0, String.class);
+                    String schema = table.get(1, String.class);
+                    String name = table.get(2, String.class);
+                    String type = table.get(3, String.class);
+                    String remarks = table.get(4, String.class);
+
+                    TableType tableType =
+                          "VIEW".equals(type)
+                        ? TableType.VIEW
+                        : "TEMPORARY VIEW".equals(type)
+                        ? TableType.VIEW
+                        : "SYSTEM_VIEW".equals(type) || "SYSTEM VIEW".equals(type)
+                        ? TableType.VIEW
+                        : "GLOBAL TEMPORARY".equals(type)
+                        ? TableType.TEMPORARY
+                        : "LOCAL TEMPORARY".equals(type)
+                        ? TableType.TEMPORARY
+                        : "TEMPORARY".equals(type)
+                        ? TableType.TEMPORARY
+                        : "MATERIALIZED VIEW".equals(type)
+                        ? TableType.MATERIALIZED_VIEW
+                        : TableType.TABLE;
 
 
-                switch (dsl().family()) {
+                    switch (dsl().family()) {
 
 
-                    case MYSQL:
-                    case MARIADB: {
+                        case MYSQL:
+                        case MARIADB: {
 
-                        // [#17344] MySQL's INFORMATION_SCHEMA.TABLES.TABLE_COMMENT just adds a dummy 'VIEW' REMARK to all views, which we should ignore
-                        if (tableType == TableType.VIEW)
-                            remarks = null;
+                            // [#17344] MySQL's INFORMATION_SCHEMA.TABLES.TABLE_COMMENT just adds a dummy 'VIEW' REMARK to all views, which we should ignore
+                            if (tableType == TableType.VIEW)
+                                remarks = null;
 
-                        break;
+                            break;
+                        }
                     }
+
+                    return new MetaTable(
+                        name,
+                        this,
+                        getColumns(catalog, schema, name),
+                        getUks(catalog, schema, name),
+                        remarks,
+                        tableType
+                    );
                 }
-
-                return new MetaTable(
-                    name,
-                    this,
-                    getColumns(catalog, schema, name),
-                    getUks(catalog, schema, name),
-                    remarks,
-                    tableType
-                );
-
-//              TODO: Find a more efficient way to do this
-//              Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
-//                                                 .sortAsc("KEY_SEQ");
-//
-//              result.add(new MetaTable(name, this, columnCache.get(name)));
-            });
+            );
         }
 
         private final Result<Record> getUks(String catalog, String schema, String table) {

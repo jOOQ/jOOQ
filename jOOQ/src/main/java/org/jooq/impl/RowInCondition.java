@@ -131,7 +131,7 @@ final class RowInCondition extends AbstractCondition implements UNotYetImplement
                 ctx.visit(left)
                    .sql(' ')
                    .visit((not ? NOT_IN : IN).toKeyword())
-                   .sql(" (").visit(new QueryPartListView<>(AbstractInList.padded(ctx, right))).sql(')');
+                   .sql(" (").visit(new QueryPartListView<>(AbstractInList.padded(ctx, right, Integer.MAX_VALUE))).sql(')');
             }
         }
     }

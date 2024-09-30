@@ -110,7 +110,6 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 abstract class AbstractInList<T> extends AbstractCondition {
 
-    static final int              IN_LIMIT               = 1000;
     static final Set<SQLDialect>  REQUIRES_IN_LIMIT      = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect>  NO_SUPPORT_EMPTY_LISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
 
@@ -124,6 +123,13 @@ abstract class AbstractInList<T> extends AbstractCondition {
     }
 
     abstract Function2<? super RowN, ? super RowN[], ? extends Condition> rowCondition();
+
+    static final int limit(Context<?> ctx) {
+        if (REQUIRES_IN_LIMIT.contains(ctx.dialect()))
+            return 1000;
+
+        return Integer.MAX_VALUE;
+    }
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -153,6 +159,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
     }
 
     private static final <T> void accept1(Context<?> ctx, boolean in, Field<T> field, QueryPartList<Field<T>> values) {
+        int limit = limit(ctx);
 
 
 
@@ -173,58 +180,46 @@ abstract class AbstractInList<T> extends AbstractCondition {
             else
                 ctx.visit(trueCondition());
         }
-        else if (values.size() > IN_LIMIT) {
-            // [#798] Oracle and some other dialects can only hold 1000 values
-            // in an IN (...) clause
-            switch (ctx.family()) {
 
+        // [#798] Oracle and some other dialects can only hold 1000 values
+        // in an IN (...) clause
+        else if (REQUIRES_IN_LIMIT.contains(ctx.dialect()) && values.size() > limit) {
+            ctx.sqlIndentStart('(');
 
+            for (int i = 0; i < values.size(); i += limit) {
+                if (i > 0) {
 
-
-                case FIREBIRD: {
-                    ctx.sqlIndentStart('(');
-
-                    for (int i = 0; i < values.size(); i += IN_LIMIT) {
-                        if (i > 0) {
-
-                            // [#1515] The connector depends on the IN / NOT IN
-                            // operator
-                            if (in)
-                                ctx.formatSeparator()
-                                   .visit(K_OR)
-                                   .sql(' ');
-                            else
-                                ctx.formatSeparator()
-                                   .visit(K_AND)
-                                   .sql(' ');
-                        }
-
-                        toSQLSubValues(ctx, field, in, padded(ctx, values.subList(i, Math.min(i + IN_LIMIT, values.size()))));
-                    }
-
-                    ctx.sqlIndentEnd(')');
-                    break;
+                    // [#1515] The connector depends on the IN / NOT IN
+                    // operator
+                    if (in)
+                        ctx.formatSeparator()
+                           .visit(K_OR)
+                           .sql(' ');
+                    else
+                        ctx.formatSeparator()
+                           .visit(K_AND)
+                           .sql(' ');
                 }
 
-                // Most dialects can handle larger lists
-                default: {
-                    toSQLSubValues(ctx, field, in, values);
-                    break;
-                }
+                toSQLSubValues(ctx, field, in, padded(ctx, values.subList(i, Math.min(i + limit, values.size())), limit));
             }
+
+            ctx.sqlIndentEnd(')');
         }
+
+        // Most dialects can handle larger lists
         else
-            toSQLSubValues(ctx, field, in, padded(ctx, values));
+            toSQLSubValues(ctx, field, in, padded(ctx, values, limit));
     }
 
     static final RowN[] rows(List<? extends Field<?>> values) {
         return map(values, v -> row(embeddedFields(v)), RowN[]::new);
     }
 
-    static final <T> List<T> padded(Context<?> ctx, List<T> list) {
+    static final <T> List<T> padded(Context<?> ctx, List<T> list, int limit) {
         return ctx.paramType() == INDEXED && TRUE.equals(ctx.settings().isInListPadding())
             ? new PaddedList<>(list, REQUIRES_IN_LIMIT.contains(ctx.dialect())
-                ? IN_LIMIT
+                ? limit
                 : Integer.MAX_VALUE,
                   defaultIfNull(ctx.settings().getInListPadBase(), 2))
             : list;

@@ -198,47 +198,34 @@ abstract class AbstractInList<T> extends AbstractCondition {
             else
                 ctx.visit(trueCondition());
         }
-        else if (values.size() > limit) {
-            // [#798] Oracle and some other dialects can only hold 1000 values
-            // in an IN (...) clause
-            switch (ctx.family()) {
-                case DERBY:
 
+        // [#798] Oracle and some other dialects can only hold 1000 values
+        // in an IN (...) clause
+        else if (REQUIRES_IN_LIMIT.contains(ctx.dialect()) && values.size() > limit) {
+            ctx.sqlIndentStart('(');
 
+            for (int i = 0; i < values.size(); i += limit) {
+                if (i > 0) {
 
-
-                case FIREBIRD: {
-                    ctx.sqlIndentStart('(');
-
-                    for (int i = 0; i < values.size(); i += limit) {
-                        if (i > 0) {
-
-                            // [#1515] The connector depends on the IN / NOT IN
-                            // operator
-                            if (in)
-                                ctx.formatSeparator()
-                                   .visit(K_OR)
-                                   .sql(' ');
-                            else
-                                ctx.formatSeparator()
-                                   .visit(K_AND)
-                                   .sql(' ');
-                        }
-
-                        toSQLSubValues(ctx, field, in, padded(ctx, values.subList(i, Math.min(i + limit, values.size())), limit));
-                    }
-
-                    ctx.sqlIndentEnd(')');
-                    break;
+                    // [#1515] The connector depends on the IN / NOT IN
+                    // operator
+                    if (in)
+                        ctx.formatSeparator()
+                           .visit(K_OR)
+                           .sql(' ');
+                    else
+                        ctx.formatSeparator()
+                           .visit(K_AND)
+                           .sql(' ');
                 }
 
-                // Most dialects can handle larger lists
-                default: {
-                    toSQLSubValues(ctx, field, in, padded(ctx, values, limit));
-                    break;
-                }
+                toSQLSubValues(ctx, field, in, padded(ctx, values.subList(i, Math.min(i + limit, values.size())), limit));
             }
+
+            ctx.sqlIndentEnd(')');
         }
+
+        // Most dialects can handle larger lists
         else
             toSQLSubValues(ctx, field, in, padded(ctx, values, limit));
     }

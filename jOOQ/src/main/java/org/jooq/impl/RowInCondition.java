@@ -139,7 +139,7 @@ implements
                 ctx.visit(left)
                    .sql(' ')
                    .visit((not ? NOT_IN : IN).toKeyword())
-                   .sql(" (").visit(new QueryPartListView<>(AbstractInList.padded(ctx, right, AbstractInList.limit(ctx)))).sql(')');
+                   .sql(" (").visit(new QueryPartListView<>(AbstractInList.padded(ctx, right, Integer.MAX_VALUE))).sql(')');
             }
         }
     }

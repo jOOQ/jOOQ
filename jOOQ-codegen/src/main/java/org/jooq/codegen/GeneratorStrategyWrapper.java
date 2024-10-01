@@ -330,6 +330,10 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
         className = delegate.getJavaClassName(definition, mode);
         className = overload(definition, mode, className);
 
+        // [#17402] Don't allow nested Path classes to be named the same as the Table
+        if (definition instanceof TableDefinition && mode == Mode.PATH && className.equals(getJavaClassName(definition)))
+            className += "Path";
+
         return fixJavaClassName(className);
     }
 

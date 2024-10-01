@@ -1116,6 +1116,10 @@ final class Interpreter {
 
 
 
+
+
+
+
     private final void accept0(CreateIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$table();
@@ -1366,11 +1370,19 @@ final class Interpreter {
     }
 
     private static final DataDefinitionException notExists(Named named) {
-        return new DataDefinitionException(named.getClass().getSimpleName() + " does not exist: " + named.getQualifiedName());
+        return notExists(named.getClass().getSimpleName(), named);
     }
 
     private static final DataDefinitionException alreadyExists(Named named) {
-        return new DataDefinitionException(named.getClass().getSimpleName() + " already exists: " + named.getQualifiedName());
+        return alreadyExists(named.getClass().getSimpleName(), named);
+    }
+
+    private static final DataDefinitionException notExists(String type, Named named) {
+        return new DataDefinitionException(type + " does not exist: " + named.getQualifiedName());
+    }
+
+    private static final DataDefinitionException alreadyExists(String type, Named named) {
+        return new DataDefinitionException(type + " already exists: " + named.getQualifiedName());
     }
 
     private static final DataDefinitionException primaryKeyNotExists(Named named) {

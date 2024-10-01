@@ -1800,7 +1800,18 @@ final class Interpreter {
         }
 
         final MutableTable table(Named t) {
-            return find(tables, t);
+            MutableTable mt = find(tables, t);
+
+
+
+
+
+
+
+
+
+
+            return mt;
         }
 
         final MutableDomain domain(Named d) {

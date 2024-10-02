@@ -80,6 +80,7 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.Statement;
+// ...
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions;
@@ -129,6 +130,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
 
 
+
+
+
+
+
     InformationSchemaMetaImpl(Configuration configuration, InformationSchema source) {
         super(configuration);
 
@@ -149,6 +155,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         this.keysByName = new HashMap<>();
         this.referentialKeys = new HashMap<>();
         this.indexesByName = new HashMap<>();
+
+
+
+
+
 
 
 
@@ -620,6 +631,48 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Lookups
         // -------------------------------------------------------------------------------------------------------------
         for (Schema s : schemas)
@@ -633,6 +686,9 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         for (Sequence<?> s : sequences)
             initLookup(sequencesPerSchema, s.getSchema(), s);
+
+
+
 
 
 
@@ -716,6 +772,18 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final List<UniqueKey<?>> getPrimaryKeys0() {
@@ -754,6 +822,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         public final List<Sequence<?>> getSequences() {
             return InformationSchemaMetaImpl.unmodifiableList(sequencesPerSchema.get(this));
         }
+
+
+
+
+
 
 
 
@@ -809,6 +882,20 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             super(schema, name, comment, type, checks);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

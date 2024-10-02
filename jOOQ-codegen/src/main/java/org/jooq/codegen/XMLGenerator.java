@@ -65,6 +65,7 @@ import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
+// ...
 import org.jooq.meta.TableDefinition;
 // ...
 import org.jooq.meta.UniqueKeyDefinition;
@@ -86,6 +87,7 @@ import org.jooq.util.xml.jaxb.Routine;
 import org.jooq.util.xml.jaxb.RoutineType;
 import org.jooq.util.xml.jaxb.Schema;
 import org.jooq.util.xml.jaxb.Sequence;
+import org.jooq.util.xml.jaxb.Synonym;
 import org.jooq.util.xml.jaxb.Table;
 import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableType;
@@ -408,6 +410,20 @@ public class XMLGenerator extends AbstractGenerator {
 
                 for (RoutineDefinition r : db.getRoutines(s))
                     exportRoutine(is, r, catalogName, schemaName);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

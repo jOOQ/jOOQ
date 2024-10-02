@@ -25,6 +25,7 @@
                 <element name="parameters" type="tns:Parameters" minOccurs="0" maxOccurs="1" />
                 <element name="element_types" type="tns:ElementTypes" minOccurs="0" maxOccurs="1" />
                 <element name="triggers" type="tns:Triggers" minOccurs="0" maxOccurs="1" />
+                <element name="synonyms" type="tns:Synonyms" minOccurs="0" maxOccurs="1" />
             </all>
         </complexType>
     </element>
@@ -396,6 +397,25 @@
             <element name="action_reference_new_table" type="string" minOccurs="0" maxOccurs="1" />
             <element name="action_reference_old_row" type="string" minOccurs="0" maxOccurs="1" />
             <element name="action_reference_new_row" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <complexType name="Synonyms">
+        <sequence>
+            <element name="synonym" type="tns:Synonym" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+    </complexType>
+
+    <complexType name="Synonym">
+        <all>
+            <element name="synonym_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="synonym_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="synonym_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="object_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="object_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="object_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="is_public" type="boolean" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>

@@ -828,7 +828,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     //         correct results
     @Override
     public /* non-final */ InformationSchema informationSchema() {
-        return InformationSchemaExport.exportCatalogs(configuration(), getCatalogs());
+        return InformationSchemaExport.export(configuration(), this);
     }
 
     final Table<?> lookupTable(Table<?> table) {

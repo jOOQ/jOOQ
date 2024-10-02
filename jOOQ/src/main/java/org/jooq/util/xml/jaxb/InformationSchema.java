@@ -43,6 +43,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="parameters" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}Parameters" minOccurs="0"/&gt;
  *         &lt;element name="element_types" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}ElementTypes" minOccurs="0"/&gt;
  *         &lt;element name="triggers" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}Triggers" minOccurs="0"/&gt;
+ *         &lt;element name="synonyms" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}Synonyms" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -117,6 +118,9 @@ public class InformationSchema implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "triggers")
     @XmlElement(name = "trigger")
     protected List<Trigger> triggers;
+    @XmlElementWrapper(name = "synonyms")
+    @XmlElement(name = "synonym")
+    protected List<Synonym> synonyms;
 
     public List<Catalog> getCatalogs() {
         if (catalogs == null) {
@@ -314,6 +318,17 @@ public class InformationSchema implements Serializable, XMLAppendable
 
     public void setTriggers(List<Trigger> triggers) {
         this.triggers = triggers;
+    }
+
+    public List<Synonym> getSynonyms() {
+        if (synonyms == null) {
+            synonyms = new ArrayList<Synonym>();
+        }
+        return synonyms;
+    }
+
+    public void setSynonyms(List<Synonym> synonyms) {
+        this.synonyms = synonyms;
     }
 
     public InformationSchema withCatalogs(Catalog... values) {
@@ -694,6 +709,27 @@ public class InformationSchema implements Serializable, XMLAppendable
         return this;
     }
 
+    public InformationSchema withSynonyms(Synonym... values) {
+        if (values!= null) {
+            for (Synonym value: values) {
+                getSynonyms().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withSynonyms(Collection<Synonym> values) {
+        if (values!= null) {
+            getSynonyms().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withSynonyms(List<Synonym> synonyms) {
+        setSynonyms(synonyms);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("catalogs", "catalog", catalogs);
@@ -714,6 +750,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         builder.append("parameters", "parameter", parameters);
         builder.append("element_types", "element_type", elementTypes);
         builder.append("triggers", "trigger", triggers);
+        builder.append("synonyms", "synonym", synonyms);
     }
 
     @Override
@@ -897,6 +934,15 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (synonyms == null) {
+            if (other.synonyms!= null) {
+                return false;
+            }
+        } else {
+            if (!synonyms.equals(other.synonyms)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -922,6 +968,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         result = ((prime*result)+((parameters == null)? 0 :parameters.hashCode()));
         result = ((prime*result)+((elementTypes == null)? 0 :elementTypes.hashCode()));
         result = ((prime*result)+((triggers == null)? 0 :triggers.hashCode()));
+        result = ((prime*result)+((synonyms == null)? 0 :synonyms.hashCode()));
         return result;
     }
 

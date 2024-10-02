@@ -100,6 +100,7 @@ import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
 // ...
+// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -108,6 +109,7 @@ import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
+// ...
 import org.jooq.meta.TableDefinition;
 // ...
 import org.jooq.meta.UDTDefinition;
@@ -125,6 +127,7 @@ import org.jooq.util.xml.jaxb.ReferentialConstraint;
 import org.jooq.util.xml.jaxb.Routine;
 import org.jooq.util.xml.jaxb.Schema;
 import org.jooq.util.xml.jaxb.Sequence;
+import org.jooq.util.xml.jaxb.Synonym;
 import org.jooq.util.xml.jaxb.Table;
 import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableConstraintType;
@@ -594,6 +597,35 @@ public class XMLDatabase extends AbstractDatabase {
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

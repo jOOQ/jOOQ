@@ -181,4 +181,12 @@ public class ObjectFactory {
         return new Trigger();
     }
 
+    /**
+     * Create an instance of {@link Synonym }
+     * 
+     */
+    public Synonym createSynonym() {
+        return new Synonym();
+    }
+
 }

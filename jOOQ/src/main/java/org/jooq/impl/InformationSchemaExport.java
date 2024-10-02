@@ -59,15 +59,16 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Key;
+import org.jooq.Meta;
 import org.jooq.Param;
 import org.jooq.Qualified;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
+// ...
 import org.jooq.Table;
 import org.jooq.UniqueKey;
-import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -142,6 +143,17 @@ final class InformationSchemaExport {
         return result;
     }
 
+    static final InformationSchema export(Configuration configuration, Meta meta) {
+        InformationSchema result = exportCatalogs(configuration, meta.getCatalogs());
+
+
+
+
+
+
+        return result;
+    }
+
     static final InformationSchema exportCatalogs(Configuration configuration, List<Catalog> catalogs) {
         InformationSchema result = new InformationSchema();
 
@@ -165,6 +177,11 @@ final class InformationSchemaExport {
 
                 for (Sequence<?> q : s.getSequences())
                     exportSequence0(configuration, result, q);
+
+
+
+
+
             }
         }
 
@@ -264,6 +281,43 @@ final class InformationSchemaExport {
 
         result.getSequences().add(iq);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static final void exportCatalog0(InformationSchema result, Catalog c) {
         org.jooq.util.xml.jaxb.Catalog ic = new org.jooq.util.xml.jaxb.Catalog();

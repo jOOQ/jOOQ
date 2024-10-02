@@ -805,6 +805,17 @@ fun MutableList<org.jooq.util.xml.jaxb.Trigger>.trigger(block: org.jooq.util.xml
     add(e)
 }
 
+fun InformationSchema.synonyms(block: MutableList<org.jooq.util.xml.jaxb.Synonym>.() -> Unit) {
+    block(synonyms)
+}
+
+@JvmName("mutableListSynonym")
+fun MutableList<org.jooq.util.xml.jaxb.Synonym>.synonym(block: org.jooq.util.xml.jaxb.Synonym.() -> Unit) {
+    val e = org.jooq.util.xml.jaxb.Synonym()
+    block(e)
+    add(e)
+}
+
 // [jooq-tools] END [information-schema]
 
 // ----------------------------------------------------------------------------

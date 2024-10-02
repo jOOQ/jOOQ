@@ -174,8 +174,8 @@ final class Interpreter {
         this.locale = interpreterLocale(configuration.settings());
         this.defaultCatalog = new MutableCatalog(NO_NAME);
         this.catalogs.put(defaultCatalog.name(), defaultCatalog);
-        this.defaultSchema = new MutableSchema(NO_NAME, defaultCatalog);
-        this.publicSchema = new MutableSchema(NO_NAME, defaultCatalog);
+        this.defaultSchema = new MutableSchema(NO_NAME, defaultCatalog, true);
+        this.publicSchema = new MutableSchema(NO_NAME, defaultCatalog, false);
     }
 
     final Meta meta() {
@@ -1456,7 +1456,7 @@ final class Interpreter {
         MutableSchema schema = defaultSchema;
         if ((schema = find(catalog.schemas, input)) == null && create)
             // TODO createSchemaIfNotExists should probably be configurable
-            schema = new MutableSchema((UnqualifiedName) input.getUnqualifiedName(), catalog);
+            schema = new MutableSchema((UnqualifiedName) input.getUnqualifiedName(), catalog, true);
 
         return schema;
     }
@@ -1801,11 +1801,13 @@ final class Interpreter {
 
 
 
-        MutableSchema(UnqualifiedName name, MutableCatalog catalog) {
+        MutableSchema(UnqualifiedName name, MutableCatalog catalog, boolean visible) {
             super(name);
 
             this.catalog = catalog;
-            this.catalog.schemas.add(this);
+
+            if (visible)
+                this.catalog.schemas.add(this);
         }
 
         @Override

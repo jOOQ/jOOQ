@@ -72,7 +72,10 @@ import org.jooq.Table;
 import org.jooq.TableField;
 // ...
 import org.jooq.UniqueKey;
+import org.jooq.exception.DataAccessException;
 import org.jooq.util.xml.jaxb.InformationSchema;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -89,6 +92,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     private Cached<UniqueKey<?>>              cachedUniqueKeys;
     private Cached<ForeignKey<?, ?>>          cachedForeignKeys;
     private Cached<Index>                     cachedIndexes;
+
 
 
 
@@ -274,6 +278,39 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     List<Domain<?>> getDomains0() {
         return flatMap(getSchemas(), s -> s.getDomains());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

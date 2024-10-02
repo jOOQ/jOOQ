@@ -135,27 +135,30 @@ import org.jooq.tools.JooqLogger;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class Interpreter {
 
-    private static final JooqLogger                              log                    = JooqLogger.getLogger(Interpreter.class);
+    private static final JooqLogger                              log                       = JooqLogger.getLogger(Interpreter.class);
 
     private final Configuration                                  configuration;
     private final InterpreterNameLookupCaseSensitivity           caseSensitivity;
     private final Locale                                         locale;
-    private final Map<Name, MutableCatalog>                      catalogs               = new LinkedHashMap<>();
+    private final Map<Name, MutableCatalog>                      catalogs                  = new LinkedHashMap<>();
     private final MutableCatalog                                 defaultCatalog;
     private final MutableSchema                                  defaultSchema;
     private MutableSchema                                        currentSchema;
+    private final MutableSchema                                  publicSchema;
     private boolean                                              delayForeignKeyDeclarations;
     private final Deque<DelayedForeignKey>                       delayedForeignKeyDeclarations;
 
     // Caches
-    private final Map<Name, MutableCatalog.InterpretedCatalog>   interpretedCatalogs    = new HashMap<>();
-    private final Map<Name, MutableSchema.InterpretedSchema>     interpretedSchemas     = new HashMap<>();
-    private final Map<Name, MutableTable.InterpretedTable>       interpretedTables      = new HashMap<>();
-    private final Map<Name, UniqueKeyImpl<Record>>               interpretedUniqueKeys  = new HashMap<>();
-    private final Map<Name, ReferenceImpl<Record, ?>>            interpretedForeignKeys = new HashMap<>();
-    private final Map<Name, Index>                               interpretedIndexes     = new HashMap<>();
-    private final Map<Name, MutableDomain.InterpretedDomain>     interpretedDomains     = new HashMap<>();
-    private final Map<Name, MutableSequence.InterpretedSequence> interpretedSequences   = new HashMap<>();
+    private final Map<Name, MutableCatalog.InterpretedCatalog>   interpretedCatalogs       = new HashMap<>();
+    private final Map<Name, MutableSchema.InterpretedSchema>     interpretedSchemas        = new HashMap<>();
+    private final Map<Name, MutableTable.InterpretedTable>       interpretedTables         = new HashMap<>();
+    private final Map<Name, UniqueKeyImpl<Record>>               interpretedUniqueKeys     = new HashMap<>();
+    private final Map<Name, ReferenceImpl<Record, ?>>            interpretedForeignKeys    = new HashMap<>();
+    private final Map<Name, Index>                               interpretedIndexes        = new HashMap<>();
+    private final Map<Name, MutableDomain.InterpretedDomain>     interpretedDomains        = new HashMap<>();
+    private final Map<Name, MutableSequence.InterpretedSequence> interpretedSequences      = new HashMap<>();
+
+
 
 
 
@@ -172,6 +175,7 @@ final class Interpreter {
         this.defaultCatalog = new MutableCatalog(NO_NAME);
         this.catalogs.put(defaultCatalog.name(), defaultCatalog);
         this.defaultSchema = new MutableSchema(NO_NAME, defaultCatalog);
+        this.publicSchema = new MutableSchema(NO_NAME, defaultCatalog);
     }
 
     final Meta meta() {
@@ -188,6 +192,15 @@ final class Interpreter {
             final List<Catalog> getCatalogs0() throws DataAccessException {
                 return map(catalogs.values(), c -> c.interpretedCatalog());
             }
+
+
+
+
+
+
+
+
+
         };
     }
 
@@ -360,7 +373,7 @@ final class Interpreter {
         MutableSchema schema = getSchema(table.getSchema(), true);
 
         // TODO We're doing this all the time. Can this be factored out without adding too much abstraction?
-        MutableTable existing = schema.table(table);
+        MutableTable existing = schema.table(table, false);
         if (existing != null) {
             if (!query.$ifNotExists())
                 throw alreadyExists(table, existing);
@@ -416,7 +429,7 @@ final class Interpreter {
         if (ms == null)
             throw notExists(impl.$referencesTable().getSchema());
 
-        MutableTable mrf = ms.table(impl.$referencesTable());
+        MutableTable mrf = ms.table(impl.$referencesTable(), true);
         MutableUniqueKey mu = null;
 
         if (mrf == null)
@@ -544,7 +557,7 @@ final class Interpreter {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema());
 
-        MutableTable existing = schema.table(table);
+        MutableTable existing = schema.table(table, true);
         if (existing == null) {
             if (!query.$ifExists())
                 throw notExists(table);
@@ -821,7 +834,7 @@ final class Interpreter {
         Table<?> table = query.$table();
 
         MutableSchema schema = getSchema(table.getSchema());
-        MutableTable existing = schema.table(table);
+        MutableTable existing = schema.table(table, true);
         if (existing == null) {
             if (!query.$ifExists())
                 throw notExists(table);
@@ -839,7 +852,7 @@ final class Interpreter {
     private final void accept0(TruncateImpl<?> query) {
         for (Table<?> table : query.$table()) {
             MutableSchema schema = getSchema(table.getSchema());
-            MutableTable existing = schema.table(table);
+            MutableTable existing = schema.table(table, true);
 
             if (existing == null)
                 throw notExists(table);
@@ -854,7 +867,7 @@ final class Interpreter {
         Table<?> table = query.$view();
         MutableSchema schema = getSchema(table.getSchema(), true);
 
-        MutableTable existing = schema.table(table);
+        MutableTable existing = schema.table(table, false);
         if (existing != null) {
             if (existing.options.type() != VIEW && !query.$materialized())
                 throw objectNotView(table);
@@ -883,7 +896,7 @@ final class Interpreter {
         Table<?> table = query.$view();
         MutableSchema schema = getSchema(table.getSchema());
 
-        MutableTable existing = schema.table(table);
+        MutableTable existing = schema.table(table, true);
         if (existing == null) {
             if (!query.$ifExists())
                 if (query.$materialized())
@@ -910,7 +923,7 @@ final class Interpreter {
         Table<?> table = query.$view();
         MutableSchema schema = getSchema(table.getSchema());
 
-        MutableTable existing = schema.table(table);
+        MutableTable existing = schema.table(table, true);
         if (existing == null) {
             if (!query.$ifExists())
                 if (query.$materialized())
@@ -1120,11 +1133,29 @@ final class Interpreter {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final void accept0(CreateIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema());
-        MutableTable mt = schema.table(table);
+        MutableTable mt = schema.table(table, true);
 
         if (mt == null)
             throw notExists(table);
@@ -1488,7 +1519,7 @@ final class Interpreter {
     }
 
     private final MutableTable table(Table<?> table, boolean throwIfNotExists) {
-        MutableTable result = getSchema(table.getSchema()).table(table);
+        MutableTable result = getSchema(table.getSchema()).table(table, true);
         if (result == null && throwIfNotExists)
             throw notExists(table);
 
@@ -1512,7 +1543,7 @@ final class Interpreter {
 
         if (table != null) {
             ms = getSchema(table.getSchema());
-            mt = ms.table(table);
+            mt = ms.table(table, true);
         }
         else {
             for (MutableTable mt1 : tables()) {
@@ -1545,7 +1576,7 @@ final class Interpreter {
 
 
     private static final boolean checkNotExists(MutableSchema schema, Table<?> table) {
-        MutableTable mt = schema.table(table);
+        MutableTable mt = schema.table(table, true);
 
         if (mt != null)
             throw alreadyExists(table, mt);
@@ -1811,8 +1842,13 @@ final class Interpreter {
             return tables.isEmpty();
         }
 
-        final MutableTable table(Named t) {
+        final MutableTable table(Named t, boolean forLookup) {
             MutableTable mt = find(tables, t);
+
+
+
+
+
 
 
 
@@ -2137,6 +2173,9 @@ final class Interpreter {
             }
         }
     }
+
+
+
 
 
 

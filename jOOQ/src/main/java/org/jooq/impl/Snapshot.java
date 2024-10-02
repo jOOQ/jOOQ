@@ -82,6 +82,9 @@ final class Snapshot extends AbstractMeta {
 
         delegate = meta;
         getCatalogs();
+
+
+
         delegate = null;
         resolveReferences();
     }
@@ -100,6 +103,15 @@ final class Snapshot extends AbstractMeta {
     final List<Catalog> getCatalogs0() throws DataAccessException {
         return map(delegate.getCatalogs(), SnapshotCatalog::new);
     }
+
+
+
+
+
+
+
+
+
 
     private class SnapshotCatalog extends CatalogImpl {
         private final List<SnapshotSchema> schemas;
@@ -314,6 +326,7 @@ final class Snapshot extends AbstractMeta {
             );
         }
     }
+
 
 
 

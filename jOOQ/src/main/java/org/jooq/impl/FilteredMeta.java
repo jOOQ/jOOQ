@@ -131,6 +131,26 @@ final class FilteredMeta extends AbstractMeta {
         return result;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public final FilteredMeta filterCatalogs(Predicate<? super Catalog> filter) {
         return new FilteredMeta(

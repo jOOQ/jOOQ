@@ -291,6 +291,41 @@ public interface Meta extends Scope {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Get all sequence objects from the underlying meta data source.
      *

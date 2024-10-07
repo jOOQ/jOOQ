@@ -51,6 +51,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import org.jooq.Condition;
@@ -83,6 +84,20 @@ implements
 
     static final <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped) {
         return new QueryPartCollectionView<>(wrapped);
+    }
+
+    static final <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped, BiConsumer<? super Context<?>, ? super QueryPart> acceptElement) {
+        return new QueryPartCollectionView<>(wrapped) {
+            @Override
+            protected void acceptElement(Context<?> ctx, T part) {
+
+                // [#11969] See QueryPartCollectionView.acceptElement() method
+                if (part instanceof Condition c)
+                    acceptElement.accept(ctx, DSL.field(c));
+                else
+                    acceptElement.accept(ctx, part);
+            }
+        };
     }
 
     QueryPartCollectionView(Collection<T> wrapped) {

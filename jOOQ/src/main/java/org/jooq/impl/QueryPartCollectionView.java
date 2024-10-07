@@ -41,33 +41,25 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.allMatch;
-import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.isRendersSeparator;
 import static org.jooq.impl.Tools.last;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LIST_ALREADY_INDENTED;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.Function0;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 // ...
 // ...
 import org.jooq.impl.QOM.UnmodifiableCollection;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link List} view, delegating all calls to a wrapped list, but acting like
@@ -86,7 +78,8 @@ permits
 
 
 
-    QueryPartListView
+    QueryPartListView,
+    QueryPartCollectionView.QueryPartCollectionView0
 {
 
     final Collection<T>                    wrapped;
@@ -96,6 +89,31 @@ permits
 
     static final <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped) {
         return new QueryPartCollectionView<>(wrapped);
+    }
+
+    static final class QueryPartCollectionView0<T extends QueryPart> extends QueryPartCollectionView<T> {
+
+        private final BiConsumer<? super Context<?>, ? super QueryPart> acceptElement;
+
+        QueryPartCollectionView0(Collection<T> wrapped, BiConsumer<? super Context<?>, ? super QueryPart> acceptElement) {
+            super(wrapped);
+
+            this.acceptElement = acceptElement;
+        }
+
+        @Override
+        protected void acceptElement(Context<?> ctx, T part) {
+
+            // [#11969] See QueryPartCollectionView.acceptElement() method
+            if (part instanceof Condition c)
+                acceptElement.accept(ctx, DSL.field(c));
+            else
+                acceptElement.accept(ctx, part);
+        }
+    }
+
+    static final <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped, BiConsumer<? super Context<?>, ? super QueryPart> acceptElement) {
+        return new QueryPartCollectionView0<>(wrapped, acceptElement);
     }
 
     QueryPartCollectionView(Collection<T> wrapped) {

@@ -224,6 +224,22 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
+    public RenderContext scopeHide(QueryPart part) {
+        if (scopeStack.inScope())
+            scopeStack.hide(part);
+
+        return this;
+    }
+
+    @Override
+    public RenderContext scopeShow(QueryPart part) {
+        if (scopeStack.inScope())
+            scopeStack.show(part);
+
+        return this;
+    }
+
+    @Override
     public RenderContext scopeRegister(QueryPart part, boolean forceNew, QueryPart mapped) {
         if (scopeStack.inScope()) {
             ScopeStackElement e;

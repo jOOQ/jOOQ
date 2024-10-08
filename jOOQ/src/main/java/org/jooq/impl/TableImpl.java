@@ -483,7 +483,9 @@ implements
         if (ctx.declareTables())
             ctx.scopeMarkStart(this);
 
-        if (ctx.qualifySchema() && (ctx.declareTables()
+        boolean noSchemaMapping = !ctx.declareTables() && getSchema() == null && ctx.inScope(this);
+
+        if (!noSchemaMapping && ctx.qualifySchema() && (ctx.declareTables()
             || (!NO_SUPPORT_QUALIFIED_TVF_CALLS.contains(ctx.dialect()) || parameters == null)
 
 

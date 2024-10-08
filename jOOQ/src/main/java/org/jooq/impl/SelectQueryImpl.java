@@ -2452,7 +2452,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         TableList tablelist = getFrom();
         traverseJoins(tablelist, t -> {
-            if (t instanceof TableImpl)
+            if (t instanceof TableImpl || t instanceof TableAlias)
                 context.scopeRegister(t, true);
         });
         ConditionProviderImpl where = new ConditionProviderImpl();

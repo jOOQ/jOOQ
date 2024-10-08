@@ -392,6 +392,20 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C scopeMarkStart(QueryPart part);
 
     /**
+     * Hide the argument query part from child scopes, if it has been registered
+     * previously.
+     */
+    @NotNull
+    C scopeHide(QueryPart part);
+
+    /**
+     * Show the argument query part in child scopes, if it has been registered
+     * previously.
+     */
+    @NotNull
+    C scopeShow(QueryPart part);
+
+    /**
      * Register a "special" query part in the scope, reusing the object from a
      * higher scope, if available.
      */
@@ -433,6 +447,12 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
      */
     @NotNull
     <Q extends QueryPart> Iterable<Q> scopeParts(Class<? extends Q> type);
+
+    /**
+     * Get all values of a type that are in the current scope.
+     */
+    @NotNull
+    <Q extends QueryPart> Iterable<Q> currentScopeParts(Class<? extends Q> type);
 
     /**
      * Check whether a query part is registered in the current scope or higher.

@@ -67,6 +67,8 @@ extends
     AbstractTable<R>
 implements
     QOM.TableAlias<R>,
+    ScopeMappable,
+    ScopeNestable,
     SimpleCheckQueryPart
 {
 
@@ -149,7 +151,26 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(alias);
+
+        // [#9814] [#12579] Derived tables and similar can't see the current scope
+        if (ctx.declareTables() && !(alias.wrapped instanceof TableImpl)) {
+
+            // [#9814] TODO: Implement LATERAL semantics (without it, lateral join paths will break!)
+            // [#9814] TODO: Once this is implemented, move the logic to Tools.visitSubquery() to be more generic
+            // [#9814] TOOD: Avoid this logic if unnecessary (e.g. RenderTable makes it necessary)
+            // List<Table<?>> tables = collect(ctx.currentScopeParts((Class<Table<?>>) (Class) Table.class));
+            //
+            // for (Table<?> t : tables)
+            //     ctx.scopeHide(t);
+            //
+            // ctx.visit(alias);
+            //
+            // for (Table<?> t : tables)
+            //     ctx.scopeShow(t);
+            ctx.scopeHide(this).visit(alias).scopeShow(this);
+        }
+        else
+            ctx.visit(alias);
     }
 
     @Override // Avoid AbstractTable implementation

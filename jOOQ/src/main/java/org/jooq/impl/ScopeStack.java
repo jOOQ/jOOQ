@@ -58,7 +58,7 @@ import java.util.function.Supplier;
 final class ScopeStack<K, V> implements Iterable<V> {
 
     private int                        scopeLevel = -1;
-    private Map<K, List<V>>            stack;
+    private Map<K, List<Element<V>>>   stack;
     private final ObjIntFunction<K, V> constructor;
 
     ScopeStack() {
@@ -73,7 +73,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
         this.constructor = constructor;
     }
 
-    private final Map<K, List<V>> stack() {
+    private final Map<K, List<Element<V>>> stack() {
         if (stack == null)
             stack = new LinkedHashMap<>();
 
@@ -84,9 +84,9 @@ final class ScopeStack<K, V> implements Iterable<V> {
         int l = scopeLevel + 1;
         if (l >= 0) {
             int size;
-            for (Iterator<Map.Entry<K, List<V>>> it = stack().entrySet().iterator(); it.hasNext(); ) {
-                Map.Entry<K, List<V>> entry = it.next();
-                List<V> list = entry.getValue();
+            for (Iterator<Map.Entry<K, List<Element<V>>>> it = stack().entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<K, List<Element<V>>> entry = it.next();
+                List<Element<V>> list = entry.getValue();
                 while ((size = list.size()) > l || size > 0 && list.get(size - 1) == null)
                     list.remove(size - 1);
                 if (list.isEmpty())
@@ -109,19 +109,41 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     final Iterable<V> iterableAtScopeLevel() {
-        return () -> new ScopeStackIterator<>((k, v) -> v.size() == scopeLevel + 1 ? v.get(scopeLevel) : null, e -> true);
+        return iterableAtScopeLevel(e -> true);
+    }
+
+    final Iterable<V> iterableAtScopeLevel(Predicate<? super V> filter) {
+        return () -> new ScopeStackIterator<>((k, v) -> v.size() == scopeLevel + 1 ? getCurrentScope0(v) : null, filter);
     }
 
     final Iterable<V> iterable(Predicate<? super V> filter) {
-        return () -> new ScopeStackIterator<>((k, v) -> v.get(v.size() - 1), filter);
+        return () -> new ScopeStackIterator<>((k, v) -> get0(v), filter);
     }
 
     final Iterable<K> keyIterableAtScopeLevel() {
-        return () -> new ScopeStackIterator<>((k, v) -> v.size() == scopeLevel + 1 ? k : null, e -> true);
+        return keyIterableAtScopeLevel(e -> true);
+    }
+
+    final Iterable<K> keyIterableAtScopeLevel(Predicate<? super K> filter) {
+        return () -> new ScopeStackIterator<>((k, v) -> v.size() == scopeLevel + 1 ? k : null, filter);
     }
 
     final Iterable<K> keyIterable(Predicate<? super K> filter) {
         return () -> new ScopeStackIterator<>((k, v) -> k, filter);
+    }
+
+    static final class Element<V> {
+        final V value;
+        boolean hidden;
+
+        Element(V value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return "E[" + value + (hidden ? ", hidden" : "") + "]";
+        }
     }
 
     static final record Value<V>(int scopeLevel, V value) {
@@ -129,24 +151,24 @@ final class ScopeStack<K, V> implements Iterable<V> {
             return value == null ? null : new Value<>(scopeLevel, value);
         }
 
-        static <V> Value<V> lastOf(List<V> list) {
+        static <V> Value<V> lastOf(List<Element<V>> list) {
             int size = list.size();
-            V value = list.get(size - 1);
+            V value = getIfNotHidden(list.get(size - 1));
             return of(size - 1, value);
         }
     }
 
     private final class ScopeStackIterator<U> implements Iterator<U> {
-        final Iterator<Entry<K, List<V>>>    it = stack().entrySet().iterator();
-        final Function<Entry<K, List<V>>, U> valueExtractor;
-        final Predicate<? super U>           filter;
-        U                                    next;
+        final Iterator<Entry<K, List<Element<V>>>>    it = stack().entrySet().iterator();
+        final Function<Entry<K, List<Element<V>>>, U> valueExtractor;
+        final Predicate<? super U>                    filter;
+        U                                             next;
 
-        ScopeStackIterator(BiFunction<K, List<V>, U> valueExtractor, Predicate<? super U> filter) {
+        ScopeStackIterator(BiFunction<K, List<Element<V>>, U> valueExtractor, Predicate<? super U> filter) {
             this(e -> valueExtractor.apply(e.getKey(), e.getValue()), filter);
         }
 
-        ScopeStackIterator(Function<Entry<K, List<V>>, U> valueExtractor, Predicate<? super U> filter) {
+        ScopeStackIterator(Function<Entry<K, List<Element<V>>>, U> valueExtractor, Predicate<? super U> filter) {
             this.valueExtractor = valueExtractor;
             this.filter = filter;
         }
@@ -170,8 +192,8 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
         private U move() {
             for (
-                Entry<K, List<V>> e;
-                it.hasNext() && ((e = it.next()).getValue().isEmpty() || ((next = valueExtractor.apply(e)) == null) || !filter.test(next));
+                Entry<K, List<Element<V>>> e;
+                it.hasNext() && ((e = it.next()).getValue().isEmpty() || get0(e.getValue()) == null || ((next = valueExtractor.apply(e)) == null) || !filter.test(next));
                 next = null
             );
 
@@ -193,7 +215,11 @@ final class ScopeStack<K, V> implements Iterable<V> {
         set0(list(key), value);
     }
 
-    private final V get0(List<V> list) {
+    private static final <V> V get0(List<Element<V>> list) {
+        return getIfNotHidden(getElement0(list));
+    }
+
+    private static final <V> Element<V> getElement0(List<Element<V>> list) {
         int i;
 
         if (list == null)
@@ -204,7 +230,16 @@ final class ScopeStack<K, V> implements Iterable<V> {
             return list.get(i - 1);
     }
 
-    private final V getCurrentScope0(List<V> list) {
+    private static final <V> V getIfNotHidden(Element<V> element) {
+        if (element == null)
+            return null;
+        else if (element.hidden)
+            return null;
+        else
+            return element.value;
+    }
+
+    private final V getCurrentScope0(List<Element<V>> list) {
         int i;
 
         if (list == null)
@@ -214,7 +249,25 @@ final class ScopeStack<K, V> implements Iterable<V> {
         else if (scopeLevel >= i)
             return null;
         else
-            return list.get(i - 1);
+            return getIfNotHidden(list.get(i - 1));
+    }
+
+    final V hide(K key) {
+        return hide0(key, true);
+    }
+
+    final V show(K key) {
+        return hide0(key, false);
+    }
+
+    private final V hide0(K key, boolean hidden) {
+        Element<V> e = getElement0(listOrNull(key));
+
+        if (e == null)
+            return null;
+
+        e.hidden = hidden;
+        return e.value;
     }
 
     final V get(K key) {
@@ -233,7 +286,7 @@ final class ScopeStack<K, V> implements Iterable<V> {
     }
 
     final V getOrCreate(K key) {
-        List<V> list = list(key);
+        List<Element<V>> list = list(key);
         V result = get0(list);
         return result != null ? result : create0(key, list);
     }
@@ -242,13 +295,13 @@ final class ScopeStack<K, V> implements Iterable<V> {
         return create0(key, list(key));
     }
 
-    private final V create0(K key, List<V> list) {
+    private final V create0(K key, List<Element<V>> list) {
         V result = constructor.apply(key, scopeLevel);
         set0(list, result);
         return result;
     }
 
-    private final void set0(List<V> list, V value) {
+    private final void set0(List<Element<V>> list, V value) {
         int l = scopeLevel + 1;
         int size = list.size();
         if (size < l) {
@@ -256,14 +309,14 @@ final class ScopeStack<K, V> implements Iterable<V> {
             for (int i = 0; i < nulls; i++)
                 list.add(null);
         }
-        list.set(scopeLevel, value);
+        list.set(scopeLevel, new Element<>(value));
     }
 
-    private final List<V> listOrNull(K key) {
+    private final List<Element<V>> listOrNull(K key) {
         return stack().get(key);
     }
 
-    private final List<V> list(K key) {
+    private final List<Element<V>> list(K key) {
         return stack().computeIfAbsent(key, k -> new ArrayList<>());
     }
 

@@ -910,6 +910,16 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     }
 
     @Override
+    public /* non-final */ C scopeHide(QueryPart part) {
+        return (C) this;
+    }
+
+    @Override
+    public /* non-final */ C scopeShow(QueryPart part) {
+        return (C) this;
+    }
+
+    @Override
     public final C scopeRegister(QueryPart part) {
         return scopeRegister(part, false);
     }
@@ -927,6 +937,11 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     @Override
     public final <Q extends QueryPart> Iterable<Q> scopeParts(Class<? extends Q> type) {
         return (Iterable<Q>) scopeStack.keyIterable(k -> type.isInstance(k));
+    }
+
+    @Override
+    public final <Q extends QueryPart> Iterable<Q> currentScopeParts(Class<? extends Q> type) {
+        return (Iterable<Q>) scopeStack.keyIterableAtScopeLevel(k -> type.isInstance(k));
     }
 
     @Override

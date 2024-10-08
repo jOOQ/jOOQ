@@ -87,7 +87,7 @@ implements
     }
 
     static final <T extends QueryPart> QueryPartCollectionView<T> wrap(Collection<T> wrapped, BiConsumer<? super Context<?>, ? super QueryPart> acceptElement) {
-        return new QueryPartCollectionView<>(wrapped) {
+        return new QueryPartCollectionView<T>(wrapped) {
             @Override
             protected void acceptElement(Context<?> ctx, T part) {
 

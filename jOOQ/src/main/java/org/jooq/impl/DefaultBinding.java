@@ -1961,7 +1961,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, BigDecimal value) {
-            ctx.render().sql(value.toString());
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+                default:
+                    ctx.render().sql(value.toString());
+                    break;
+            }
         }
 
         @Override

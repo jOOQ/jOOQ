@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.Tools.anyMatch;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -66,7 +67,17 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> implements 
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(select(count).from(new AliasedSelect<>(query, true, true, false).as("t")));
+
+        // [#17425] Without native support for nested records, the projected aliases will be off
+        //          There's likely a more generic bug, related to AliasedSelect in general, not just to
+        //          FetchCount, where this fix should be moved, instead
+        AliasedSelect<?> s = new AliasedSelect<>(query, true, true, false);
+
+        ctx.visit(select(count).from(
+            RowAsField.NO_NATIVE_SUPPORT.contains(ctx.dialect()) && anyMatch(query.getSelect(), f -> f.getDataType().isRecord())
+            ? s.as("t", Tools.EMPTY_STRING)
+            : s.as("t")
+        ));
     }
 
     @Override

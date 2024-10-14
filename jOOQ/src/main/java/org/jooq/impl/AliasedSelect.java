@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Names.NQ_SELECT;
 import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.flattenCollection;

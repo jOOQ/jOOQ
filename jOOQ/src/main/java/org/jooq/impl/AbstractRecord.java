@@ -42,11 +42,13 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.converterOrFail;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.indexFail;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.resetChangedOnNotNull;
+import static org.jooq.impl.Tools.nonReplacingEmbeddable;
 import static org.jooq.impl.Tools.settings;
 
 import java.io.Writer;
@@ -324,7 +326,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         if (index >= 0)
             return (T) get(index);
-        else if (Tools.nonReplacingEmbeddable(field))
+        else if (nonReplacingEmbeddable(field))
             return (T) Tools
                 .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
                 .operate(new TransferRecordState<>(embeddedFields(field)));
@@ -414,7 +416,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     final <T> void set(Field<T> field, int index, T value) {
         if (index >= 0)
             set(index, field, value);
-        else if (Tools.nonReplacingEmbeddable(field)) {
+        else if (nonReplacingEmbeddable(field)) {
             Field<?>[] f = embeddedFields(field);
             Object[] v = value instanceof EmbeddableRecord e
                 ? e.intoArray()
@@ -545,7 +547,16 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> T original(Field<T> field) {
-        return (T) original(indexOrFail(fields, field));
+        int index = fields.indexOf(field);
+
+        if (index >= 0)
+            return (T) original(index);
+        else if (nonReplacingEmbeddable(field))
+            return (T) Tools
+                .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
+                .operate(((AbstractRecord) original()).new TransferRecordState<>(embeddedFields(field)));
+        else
+            throw Tools.indexFail(fields, field);
     }
 
     @Override
@@ -601,7 +612,15 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void changed(Field<?> field, boolean c) {
-        changed(indexOrFail(fields, field), c);
+        int index = fields.indexOf(field);
+
+        if (index >= 0)
+            changed(index, c);
+        else if (nonReplacingEmbeddable(field))
+            for (Field<?> f : embeddedFields(field))
+                changed(f, c);
+        else
+            throw Tools.indexFail(fields, field);
     }
 
     @Override
@@ -635,7 +654,15 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void reset(Field<?> field) {
-        reset(indexOrFail(fields, field));
+        int index = fields.indexOf(field);
+
+        if (index >= 0)
+            reset(index);
+        else if (nonReplacingEmbeddable(field))
+            for (Field<?> f : embeddedFields(field))
+                reset(f);
+        else
+            throw Tools.indexFail(fields, field);
     }
 
     @Override

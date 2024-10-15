@@ -581,7 +581,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final boolean changed(Field<?> field) {
-        return changed(indexOrFail(fields, field));
+        int index = fields.indexOf(field);
+
+        if (index >= 0)
+            return changed(index);
+        else if (nonReplacingEmbeddable(field))
+            return anyMatch(embeddedFields(field), f -> changed(f));
+        else
+            throw Tools.indexFail(fields, field);
     }
 
     @Override

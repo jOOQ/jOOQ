@@ -2600,7 +2600,8 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else {
             for (EmbeddableColumnDefinition column : embeddable.getColumns()) {
-                final int position = column.getReferencingColumnPosition() - 1;
+                final ColumnDefinition referencingColumn = column.getReferencingColumn();
+                final int position = referencingColumn.getContainer().getColumns().indexOf(referencingColumn);
 
                 if (kotlin)
                     out.tab(1).println("set(%s, value.%s)",
@@ -2740,7 +2741,8 @@ public class JavaGenerator extends AbstractGenerator {
 
             forEach(embeddable.getColumns(), (column, separator) -> {
                 final String columnType = out.ref(getJavaType(column.getReferencingColumn().getType(resolver(out)), out));
-                final int position = column.getReferencingColumnPosition() - 1;
+                final ColumnDefinition referencingColumn = column.getReferencingColumn();
+                final int position = referencingColumn.getContainer().getColumns().indexOf(referencingColumn);
 
                 if (scala)
                     out.println("get(%s).asInstanceOf[%s]%s", position, columnType, separator);

@@ -44,6 +44,7 @@ import static java.util.stream.Collectors.joining;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
+// ...
 import static org.jooq.conf.RenderImplicitJoinType.DEFAULT;
 import static org.jooq.conf.RenderImplicitJoinType.SCALAR_SUBQUERY;
 import static org.jooq.impl.DSL.select;
@@ -56,6 +57,7 @@ import static org.jooq.impl.Tools.ExtendedDataKey.DATA_RENDER_TABLE;
 import static org.jooq.impl.UpdateQueryImpl.NO_SUPPORT_UPDATE_JOIN;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -68,8 +70,10 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.RowId;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.Update;
@@ -94,9 +98,13 @@ implements
     UEmpty
 {
 
-    private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };
+    private static final Clause[]        CLAUSES                           = { FIELD, FIELD_REFERENCE };
 
-    private final Table<R>        table;
+
+
+
+
+    private final Table<R>               table;
 
     @SuppressWarnings("unchecked")
     TableFieldImpl(Name name, DataType<T> type, Comment comment) {
@@ -246,6 +254,10 @@ implements
                 //          inlined and must generate a derived table, we mustn't fully qualify fields.
                 if (table instanceof TableImpl && ((TableImpl<?>) table).where != null)
                     c.qualify(false, c2 -> c2.visit(table).sql('.'));
+
+
+
+
 
 
 

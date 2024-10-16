@@ -16479,10 +16479,27 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         return tables.get(0);
 
             // [#8616] If name is not qualified, try the search path as well
-            if (!name.qualified())
+            if (!name.qualified()) {
                 for (ParseSearchSchema schema : settings().getParseSearchPath())
                     if ((tables = meta.getTables(name(schema.getCatalog(), schema.getSchema()).append(name))).size() == 1)
                         return tables.get(0);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         // [#16762] It should always be possible to lookup the DUAL pseudo table

@@ -44,7 +44,6 @@ import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -69,6 +68,7 @@ import java.util.stream.Stream;
 import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
+import org.jooq.DDLQuery;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -115,10 +115,6 @@ implements
     private static final Clause[]        CLAUSES_TABLE_ALIAS               = { TABLE, TABLE_ALIAS };
     private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS    = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRES_TVF_TABLE_CONSTRUCTOR    = SQLDialect.supportedBy(HSQLDB);
-
-
-
-
 
     final FieldsImpl<R>                  fields;
     final Alias<Table<R>>                alias;
@@ -380,9 +376,6 @@ implements
 
         if (ctx.qualify() && (ctx.declareTables()
             || (!NO_SUPPORT_QUALIFIED_TVF_CALLS.contains(ctx.dialect()) || parameters == null)
-
-
-
         )) {
             QualifiedImpl.acceptMappedSchemaPrefix(ctx, getSchema());
         }

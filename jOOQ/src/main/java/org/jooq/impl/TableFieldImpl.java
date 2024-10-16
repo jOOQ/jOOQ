@@ -42,6 +42,7 @@ import static java.util.stream.Collectors.joining;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
+// ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.QualifiedName.hashCode0;
@@ -51,6 +52,7 @@ import static org.jooq.impl.Tools.SimpleDataKey.DATA_DML_TARGET_TABLE;
 import static org.jooq.impl.UpdateQueryImpl.NO_SUPPORT_UPDATE_JOIN;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
@@ -62,8 +64,10 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.RowId;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.Update;
@@ -87,9 +91,13 @@ implements
     ScopeMappable
 {
 
-    private static final Clause[] CLAUSES = { FIELD, FIELD_REFERENCE };
+    private static final Clause[]        CLAUSES                           = { FIELD, FIELD_REFERENCE };
 
-    private final Table<R>        table;
+
+
+
+
+    private final Table<R>               table;
 
     @SuppressWarnings("unchecked")
     TableFieldImpl(Name name, DataType<T> type, Comment comment) {
@@ -202,8 +210,16 @@ implements
 
     private final void accept1(Context<?> ctx) {
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
-            if (c.qualify() && getTable() != null)
+            if (c.qualify() && getTable() != null) {
+
+
+
+
+
+
+
                 c.visit(getTable()).sql('.');
+            }
 
             c.visit(getUnqualifiedName());
         });

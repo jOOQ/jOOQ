@@ -305,8 +305,9 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
             return (U) object;
 
         // [#3200] Try to convert arbitrary objects to T
+        // [#16013] [#17428] Avoid repeated conversion in case of chained converters
         else
-            return ((Converter<T, U>) getConverter()).from(delegate.convert(object));
+            return ((Converter<T, U>) getConverter()).from((T) delegate(delegate).convert(object));
     }
 
     @Override

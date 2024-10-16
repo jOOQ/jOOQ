@@ -44,8 +44,6 @@ import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
-// ...
-import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -61,7 +59,6 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.getMappedTable;
-import static org.jooq.impl.Tools.unwrap;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -74,13 +71,13 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Condition;
 import org.jooq.Context;
+import org.jooq.DDLQuery;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Name;
-// ...
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -119,10 +116,6 @@ implements
     private static final Clause[]        CLAUSES_TABLE_ALIAS               = { TABLE, TABLE_ALIAS };
     private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS    = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRES_TVF_TABLE_CONSTRUCTOR    = SQLDialect.supportedBy(HSQLDB);
-
-
-
-
 
     final FieldsImpl<R>                  fields;
     final Alias<Table<R>>                alias;
@@ -485,9 +478,6 @@ implements
 
         if (ctx.qualifySchema() && (ctx.declareTables()
             || (!NO_SUPPORT_QUALIFIED_TVF_CALLS.contains(ctx.dialect()) || parameters == null)
-
-
-
         )) {
             QualifiedImpl.acceptMappedSchemaPrefix(ctx, getSchema());
         }

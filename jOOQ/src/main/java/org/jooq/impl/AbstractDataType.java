@@ -772,6 +772,13 @@ implements
         return convert(object, converterContext());
     }
 
+    static final <T> T convert0(DataType<T> type, Object object, ConverterContext cc) {
+        if (type instanceof AbstractDataType<T> t)
+            return t.convert(object, cc);
+        else
+            return type.convert(object);
+    }
+
     /* non-final */ T convert(Object object, ConverterContext cc) {
 
         // [#1441] Avoid unneeded type conversions to improve performance

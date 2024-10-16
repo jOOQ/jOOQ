@@ -46,6 +46,13 @@ public interface PositionedDefinition extends Definition {
 
     /**
      * The object's 1-based position in the parent.
+     * <p>
+     * [#17434] While in most RDBMS, this value is 1-based and a consecutive
+     * ordinal, there may be cases where a positional value is skipped, either
+     * by what's reported by the RDBMS's dictionary views, or because the
+     * definition is filtered by jOOQ-meta. Users shouldn't rely on the
+     * positions reflecting the actually generated column/attribute/etc.
+     * position.
      */
     int getPosition();
 

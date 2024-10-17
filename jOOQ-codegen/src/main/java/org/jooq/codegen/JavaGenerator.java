@@ -7924,14 +7924,10 @@ public class JavaGenerator extends AbstractGenerator {
 
                         outboundKeyMethodNames.add(keyMethodName);
 
-                        if (scala) {}
+                        if (scala || kotlin) {}
                         else {
                             out.println();
-
-                            if (kotlin)
-                                out.println("private lateinit var _%s: %s", unquotedKeyMethodName, referencedTableClassName);
-                            else
-                                out.println("private transient %s _%s;", referencedTableClassName, keyMethodName);
+                            out.println("private transient %s _%s;", referencedTableClassName, keyMethodName);
                         }
 
                         out.javadoc(
@@ -7944,17 +7940,13 @@ public class JavaGenerator extends AbstractGenerator {
                             out.println("%s%slazy val %s: %s = { new %s(this, %s, null) }", visibility(), keyMethodOverride ? "override " : "", scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, referencedTableClassName, keyFullId);
                         }
                         else if (kotlin) {
-                            out.println("%s%sfun %s(): %s {", visibility(), keyMethodOverride ? "override " : "", keyMethodName, referencedTableClassName);
-                            out.println("if (!this::_%s.isInitialized)", unquotedKeyMethodName);
-                            out.println("_%s = %s(this, %s, null)", unquotedKeyMethodName, referencedTableClassName, keyFullId);
-                            out.println();
-                            out.println("return _%s;", unquotedKeyMethodName);
-                            out.println("}");
-
                             if (generateImplicitJoinPathsAsKotlinProperties()) {
-                                out.println();
-                                out.println("%s%sval %s: %s", visibility(), keyMethodOverride ? "override " : "", keyMethodName, referencedTableClassName);
-                                out.tab(1).println("get(): %s = %s()", referencedTableClassName, keyMethodName);
+                                out.println("%s%sfun %s(): %s = %s", visibility(), keyMethodOverride ? "override " : "", keyMethodName, referencedTableClassName, keyMethodName);
+                                out.println("%s%sval %s: %s by lazy { %s(this, %s, null) }", visibility(), keyMethodOverride ? "override " : "", keyMethodName, referencedTableClassName, referencedTableClassName, keyFullId);
+                            }
+                            else {
+                                out.println("%s%sfun %s(): %s = _%s", visibility(), keyMethodOverride ? "override " : "", keyMethodName, referencedTableClassName, unquotedKeyMethodName);
+                                out.println("private val _%s: %s by lazy { %s(this, %s, null) }", unquotedKeyMethodName, referencedTableClassName, referencedTableClassName, keyFullId);
                             }
                         }
                         else {

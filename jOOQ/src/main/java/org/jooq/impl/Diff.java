@@ -312,6 +312,8 @@ final class Diff {
             if (!c1.equals(c2))
                 if (v2)
                     r.queries.add(ctx.commentOnView(t2).is(c2));
+                else if (m2)
+                    r.queries.add(ctx.commentOnMaterializedView(t2).is(c2));
                 else
                     r.queries.add(ctx.commentOnTable(t2).is(c2));
         }

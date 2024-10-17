@@ -153,8 +153,8 @@ implements
 
 
 
-    private static final Set<SQLDialect> SUPPORTS_COMMENT_ON_VIEW              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, TRINO, YUGABYTEDB);
-    private static final Set<SQLDialect> SUPPORTS_COMMENT_ON_MATERIALIZED_VIEW = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_COMMENT_ON_VIEW              = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_COMMENT_ON_MATERIALIZED_VIEW = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -284,9 +284,9 @@ implements
         ctx.visit(K_COMMENT).sql(' ').visit(K_ON).sql(' ');
 
         if (table != null) {
-            if (isView && SUPPORTS_COMMENT_ON_VIEW.contains(ctx.dialect()))
+            if (isView && !NO_SUPPORT_COMMENT_ON_VIEW.contains(ctx.dialect()))
                 ctx.visit(K_VIEW).sql(' ');
-            else if (isMaterializedView && SUPPORTS_COMMENT_ON_MATERIALIZED_VIEW.contains(ctx.dialect()))
+            else if (isMaterializedView && !NO_SUPPORT_COMMENT_ON_MATERIALIZED_VIEW.contains(ctx.dialect()))
                 ctx.visit(K_MATERIALIZED).sql(' ').visit(K_VIEW).sql(' ');
             else
                 ctx.visit(K_TABLE).sql(' ');

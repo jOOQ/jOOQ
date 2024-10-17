@@ -41,9 +41,9 @@ import static java.lang.Integer.parseInt;
 import static java.util.Arrays.asList;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -251,7 +251,7 @@ final class JSONReader<R extends Record> {
 
             // [#8829] LoaderImpl expects binary data to be encoded in base64,
             //         not according to org.jooq.tools.Convert
-            if (field.getType() == byte[].class && record.get(i) instanceof String) {
+            if (field.getDataType().isBinary() && record.get(i) instanceof String) {
                 String s = (String) record.get(i);
 
                 if (multiset) {

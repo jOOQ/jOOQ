@@ -45,6 +45,7 @@ import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
 // ...
 // ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 // ...
 // ...
@@ -62,6 +63,8 @@ import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.Default.patchDefault;
+import static org.jooq.impl.Default.patchDefaultForInsert;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Names.N_T;
@@ -120,9 +123,8 @@ import org.jooq.impl.Tools.ExtendedDataKey;
  * @author Lukas Eder
  */
 final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImplemented {
-    static final Set<SQLDialect>        CASTS_NEEDED                  = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect>        CASTS_NEEDED_FOR_MERGE        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect>        NO_SUPPORT_DEFAULT_EXPRESSION = SQLDialect.supportedBy(SQLITE);
+    static final Set<SQLDialect>        CASTS_NEEDED           = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>        CASTS_NEEDED_FOR_MERGE = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
     final Table<?>                      table;
     final Map<Field<?>, Field<?>>       empty;
@@ -445,7 +447,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         for (int i = 0; i < rows; i++) {
             int row = i;
             Select<Record> iteration = DSL.select(Tools.map(
-                v.entrySet(), e -> patchDefault0(castNullsIfNeeded(ctx, needsCast, e.getValue().get(row)), e.getKey())
+                v.entrySet(), e -> patchDefault(castNullsIfNeeded(ctx, needsCast, e.getValue().get(row)), e.getKey())
             ));
 
             if (select == null)
@@ -515,7 +517,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
-                ctx.visit(patchDefault(ctx, list.get(row), e.getKey()));
+                ctx.visit(patchDefaultForInsert(ctx, list.get(row), e.getKey()));
                 separator = ", ";
             }
 
@@ -529,20 +531,6 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
         if (!CASTS_NEEDED.contains(ctx.dialect()))
             ctx.castMode(previous);
-    }
-
-    static final Field<?> patchDefault(Context<?> ctx, Field<?> d, Field<?> f) {
-        if (NO_SUPPORT_DEFAULT_EXPRESSION.contains(ctx.dialect()))
-            return patchDefault0(d, f);
-
-        return d;
-    }
-
-    static final Field<?> patchDefault0(Field<?> d, Field<?> f) {
-        if (d instanceof Default)
-            return orElse(f.getDataType().default_(), () -> DSL.inline(null, f));
-
-        return d;
     }
 
 

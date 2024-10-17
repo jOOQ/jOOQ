@@ -37,16 +37,34 @@
  */
 package org.jooq.impl;
 
+// ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Names.N_DEFAULT;
+import static org.jooq.impl.Tools.orElse;
+
+import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
 final class Default<T> extends AbstractField<T> implements QOM.Default<T> {
+
+    static final Set<SQLDialect> NO_SUPPORT_DEFAULT_EXPRESSION_INSERT = SQLDialect.supportedBy(SQLITE);
+    static final Set<SQLDialect> NO_SUPPORT_DEFAULT_EXPRESSION_UPDATE = SQLDialect.supportedBy(CLICKHOUSE, SQLITE);
 
     Default(DataType<T> type) {
         super(N_DEFAULT, type);
@@ -55,5 +73,26 @@ final class Default<T> extends AbstractField<T> implements QOM.Default<T> {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(K_DEFAULT);
+    }
+
+    static final Field<?> patchDefaultForInsert(Context<?> ctx, Field<?> d, Field<?> f) {
+        if (NO_SUPPORT_DEFAULT_EXPRESSION_INSERT.contains(ctx.dialect()))
+            return patchDefault(d, f);
+
+        return d;
+    }
+
+    static final Field<?> patchDefaultForUpdate(Context<?> ctx, Field<?> d, Field<?> f) {
+        if (NO_SUPPORT_DEFAULT_EXPRESSION_UPDATE.contains(ctx.dialect()))
+            return patchDefault(d, f);
+
+        return d;
+    }
+
+    static final Field<?> patchDefault(Field<?> d, Field<?> f) {
+        if (d instanceof Default)
+            return orElse(f.getDataType().default_(), () -> DSL.inline(null, f));
+
+        return d;
     }
 }

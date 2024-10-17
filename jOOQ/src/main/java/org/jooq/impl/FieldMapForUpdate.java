@@ -77,7 +77,7 @@ import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
-import static org.jooq.impl.FieldMapsForInsert.patchDefault;
+import static org.jooq.impl.Default.patchDefaultForUpdate;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.apply;
@@ -237,7 +237,7 @@ extends
                     Field<?> k = multiRow.field(i);
                     Field<?> v = multiValue.field(i);
 
-                    map.put(k, patchDefault(ctx, Tools.field(v, k), k));
+                    map.put(k, patchDefaultForUpdate(ctx, Tools.field(v, k), k));
                 }
 
                 ctx.visit(map);
@@ -344,7 +344,7 @@ extends
 
 
             else
-                ctx.visit(patchDefault(ctx, (Field) value, (Field) key));
+                ctx.visit(patchDefaultForUpdate(ctx, (Field) value, (Field) key));
         }
 
         if (assignmentClause != null)

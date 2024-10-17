@@ -121,6 +121,7 @@ implements
     WindowSpecificationExcludeStep
 {
 
+    private static final Set<SQLDialect> REQUIRES_DEFAULT_FRAME_IN_LEAD_LAG_ORDER_BY = SQLDialect.supportedBy(CLICKHOUSE);
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_LEAD_LAG               = SQLDialect.supportedBy(H2, MARIADB, TRINO);
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_NTILE                  = SQLDialect.supportedBy(CLICKHOUSE, H2);
     private static final Set<SQLDialect> REQUIRES_ORDER_BY_IN_RANK_DENSE_RANK        = SQLDialect.supportedBy(H2, MARIADB);
@@ -213,10 +214,16 @@ implements
             }
         }
 
+        boolean requiresDefaultFrame =
+              w instanceof Lead && REQUIRES_DEFAULT_FRAME_IN_LEAD_LAG_ORDER_BY.contains(ctx.dialect())
+           || w instanceof Lag && REQUIRES_DEFAULT_FRAME_IN_LEAD_LAG_ORDER_BY.contains(ctx.dialect())
+        ;
+
         boolean hasWindowDefinitions = windowDefinition != null;
         boolean hasPartitionBy = !partitionBy.isEmpty();
         boolean hasOrderBy = !o.isEmpty();
         boolean hasFrame = frameStart != null
+            || hasOrderBy && requiresDefaultFrame
 
 
 
@@ -268,6 +275,12 @@ implements
             Integer s = frameStart;
             Integer e = frameEnd;
 
+            if (s == null) {
+                if (requiresDefaultFrame) {
+                    u = FrameUnits.RANGE;
+                    s = Integer.MIN_VALUE;
+                    e = Integer.MAX_VALUE;
+                }
 
 
 
@@ -299,6 +312,7 @@ implements
 
 
 
+            }
 
             ctx.visit(u.keyword).sql(' ');
 

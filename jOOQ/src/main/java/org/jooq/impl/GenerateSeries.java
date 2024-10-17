@@ -184,10 +184,10 @@ implements
             visitSubquery(
                 ctx,
                 step == null
-                    ? select(DSL.field(unquotedName("number"), INTEGER).as(name))
-                        .from(table("{0}({1}, {2})", N_NUMBERS, from, iadd(isub(to, from), one())))
-                    : select(iadd(imul(isub(DSL.field(unquotedName("number"), INTEGER), one()), step), from).as(name))
-                        .from(table("{0}({1}, {2})", N_NUMBERS, one(), idiv(to, step).cast(BIGINT))),
+                    ? select(DSL.field(unquotedName("number"), INTEGER).cast(INTEGER).as(name))
+                        .from(table("{0}({1}, {2})", N_NUMBERS, from, iadd(to, one())))
+                    : select(DSL.field(unquotedName("number"), INTEGER).cast(INTEGER).as(name))
+                        .from(table("{0}({1}, {2}, {3})", N_NUMBERS, from, iadd(to, one()), step)),
                 DERIVED_TABLE
             );
         }

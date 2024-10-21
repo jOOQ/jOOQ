@@ -12,6 +12,7 @@
 
     <artifactId>jooq-codegen</artifactId>
     <name>jOOQ Codegen</name>
+    <description>jOOQ's source code generator</description>
 
     <licenses>
         <license>

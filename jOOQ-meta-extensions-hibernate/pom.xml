@@ -11,6 +11,7 @@
 
     <artifactId>jooq-meta-extensions-hibernate</artifactId>
     <name>jOOQ Meta Extensions Hibernate</name>
+    <description>jOOQ's utilities for meta data source extensions integrating with JPA</description>
 
     <licenses>
         <license>

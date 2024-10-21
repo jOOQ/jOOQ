@@ -11,6 +11,7 @@
 
     <artifactId>jooq-meta</artifactId>
     <name>jOOQ Meta</name>
+    <description>jOOQ's meta data source for the jOOQ-codegen module</description>
 
     <licenses>
         <license>

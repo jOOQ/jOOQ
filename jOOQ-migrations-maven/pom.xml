@@ -12,6 +12,7 @@
     <artifactId>jooq-migrations-maven</artifactId>
     <name>jOOQ Migrations Maven</name>
     <packaging>maven-plugin</packaging>
+    <description>jOOQ database migrations and data change management as a Maven plugin</description>
 
     <licenses>
         <license>

@@ -11,6 +11,7 @@
 
     <artifactId>jooq-meta-extensions-liquibase</artifactId>
     <name>jOOQ Meta Extensions Liquibase</name>
+    <description>jOOQ's utilities for meta data source extensions integrating with Liquibase</description>
 
     <licenses>
         <license>

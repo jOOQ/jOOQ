@@ -12,6 +12,7 @@
 
     <artifactId>jooq-kotlin-coroutines</artifactId>
     <name>jOOQ Kotlin Coroutines</name>
+    <description>jOOQ's utilities for an improved Kotlin coroutines integration via reactive streams</description>
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>

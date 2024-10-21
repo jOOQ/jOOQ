@@ -12,6 +12,7 @@
 
     <artifactId>jooq-checker</artifactId>
     <name>jOOQ Checker</name>
+    <description>jOOQ's checker framework and error prone integration</description>
 
     <licenses>
         <license>

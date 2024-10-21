@@ -11,6 +11,7 @@
 
     <artifactId>jooq-postgres-extensions</artifactId>
     <name>jOOQ Postgres Extensions</name>
+    <description>jOOQ's utilities for an improved PostgreSQL integration (including data types, bindings, etc)</description>
 
     <licenses>
         <license>

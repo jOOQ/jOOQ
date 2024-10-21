@@ -12,6 +12,7 @@
 
     <artifactId>jooq-migrations</artifactId>
     <name>jOOQ Migrations</name>
+    <description>jOOQ database migrations and data change management</description>
 
     <licenses>
         <license>

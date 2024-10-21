@@ -12,6 +12,7 @@
 
     <artifactId>jooq-scala_2.13</artifactId>
     <name>jOOQ Scala 2.13</name>
+    <description>jOOQ's utilities for an improved Scala language integration</description>
 
     <properties>
         <jooq-testdata-dir>${project.basedir}/../.data</jooq-testdata-dir>

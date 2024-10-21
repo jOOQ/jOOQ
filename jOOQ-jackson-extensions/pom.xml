@@ -12,6 +12,7 @@
 
     <artifactId>jooq-jackson-extensions</artifactId>
     <name>jOOQ Jackson Extensions</name>
+    <description>jOOQ's utilities for Jackson interaction of mappers and unmappers as well as converters</description>
 
     <build>
         <plugins>

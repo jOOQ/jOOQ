@@ -11,6 +11,7 @@
 
     <artifactId>jooq-beans-extensions</artifactId>
     <name>jOOQ Beans Extensions</name>
+    <description>jOOQ's utilities for Java Beans interaction of mappers and unmappers</description>
 
     <licenses>
         <license>

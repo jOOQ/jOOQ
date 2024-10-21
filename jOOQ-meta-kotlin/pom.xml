@@ -12,6 +12,7 @@
 
     <artifactId>jooq-meta-kotlin</artifactId>
     <name>jOOQ Meta Kotlin</name>
+    <description>jOOQ's utilities for code generation configuration in Kotlin (e.g. in Gradle)</description>
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>

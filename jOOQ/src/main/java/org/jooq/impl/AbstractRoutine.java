@@ -536,10 +536,13 @@ implements
 
         int i = 0;
 
-        if (returnParameter != null)
-            outValues.put(returnParameter, returnParameter.getDataType().convert(result.getValue(0, i++)));
-        for (Parameter<?> p : outParameters)
-            outValues.put(p, p.getDataType().convert(result.getValue(0, i++)));
+        // [#5844] Table valued functions may return empty results!
+        if (!result.isEmpty()) {
+            if (returnParameter != null)
+                outValues.put(returnParameter, returnParameter.getDataType().convert(result.getValue(0, i++)));
+            for (Parameter<?> p : outParameters)
+                outValues.put(p, p.getDataType().convert(result.getValue(0, i++)));
+        }
 
         return 0;
     }

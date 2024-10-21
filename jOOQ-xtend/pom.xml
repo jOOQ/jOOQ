@@ -11,6 +11,7 @@
 
     <artifactId>jooq-xtend</artifactId>
     <name>jOOQ Xtend</name>
+    <description>jOOQ's utilities for an improved Xtend language integration</description>
 
     <licenses>
         <license>

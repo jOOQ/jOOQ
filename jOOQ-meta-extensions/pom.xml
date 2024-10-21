@@ -11,6 +11,7 @@
 
     <artifactId>jooq-meta-extensions</artifactId>
     <name>jOOQ Meta Extensions</name>
+    <description>jOOQ's utilities for meta data source extensions for use with the code generator</description>
 
     <licenses>
         <license>

@@ -12,6 +12,7 @@
 
     <artifactId>jooq-kotlin</artifactId>
     <name>jOOQ Kotlin</name>
+    <description>jOOQ's utilities for an improved Kotlin language integration</description>
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>

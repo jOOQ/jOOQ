@@ -12,6 +12,7 @@
     <artifactId>jooq-codegen-maven</artifactId>
     <name>jOOQ Codegen Maven</name>
     <packaging>maven-plugin</packaging>
+    <description>jOOQ's source code generator as a Maven plugin</description>
 
     <licenses>
         <license>

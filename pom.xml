@@ -63,7 +63,7 @@
         <hibernate.version>5.6.15.Final</hibernate.version>
         <liquibase.version>4.25.1</liquibase.version>
         <checkerframework.version>3.44.0</checkerframework.version>
-        <spring.version>6.1.3</spring.version>
+        <spring.version>6.1.14</spring.version>
         <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
         <errorprone.version>2.28.0</errorprone.version>
         <testcontainers.version>1.19.8</testcontainers.version>

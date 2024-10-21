@@ -98,7 +98,17 @@ public enum SQLDialect {
 
     /**
      * The ClickHouse dialect family.
+     * <p>
+     * This dialect is in EXPERIMENTAL state. The dialect works very differently
+     * from most more standards compliant dialects, and we're still exploring
+     * how much we should tweak generated SQL to make ClickHouse behave more.
+     * The main difference is in how <code>NULL</code> values are handled. While
+     * <code>NOT NULL</code> being the default modifier on a type is a
+     * reasonable choice, auto-converting all <code>NULL</code> values to the
+     * type's default (e.g. <code>0</code> for <code>INTEGER</code>) seems like
+     * a stretch, and hard to prevent via jOOQ's standardisation.
      */
+    @Experimental
     CLICKHOUSE("ClickHouse", false, true),
 
     /**
@@ -574,6 +584,7 @@ public enum SQLDialect {
     // -------------------------------------------------------------------------
     // SQL dialects for commercial usage
     // -------------------------------------------------------------------------
+
 
 
 

@@ -110,6 +110,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean recordsImplementingRecordN = false;
     @XmlElement(defaultValue = "false")
     protected Boolean enumsAsScalaSealedTraits = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean enumsAsScalaEnums = true;
     @XmlElement(defaultValue = "false")
     protected Boolean pojos = false;
     @XmlElement(defaultValue = "true")
@@ -1215,6 +1217,30 @@ public class Generate implements Serializable, XMLAppendable
     @Deprecated
     public void setEnumsAsScalaSealedTraits(Boolean value) {
         this.enumsAsScalaSealedTraits = value;
+    }
+
+    /**
+     * Generate enums as Scala 3.0 enums (if Scala 3 is supported).
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isEnumsAsScalaEnums() {
+        return enumsAsScalaEnums;
+    }
+
+    /**
+     * Generate enums as Scala 3.0 enums (if Scala 3 is supported).
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setEnumsAsScalaEnums(Boolean value) {
+        this.enumsAsScalaEnums = value;
     }
 
     /**
@@ -3598,6 +3624,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Generate enums as Scala 3.0 enums (if Scala 3 is supported).
+     * 
+     */
+    public Generate withEnumsAsScalaEnums(Boolean value) {
+        setEnumsAsScalaEnums(value);
+        return this;
+    }
+
+    /**
      * Generate POJOs.
      * 
      */
@@ -4426,6 +4461,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("records", records);
         builder.append("recordsImplementingRecordN", recordsImplementingRecordN);
         builder.append("enumsAsScalaSealedTraits", enumsAsScalaSealedTraits);
+        builder.append("enumsAsScalaEnums", enumsAsScalaEnums);
         builder.append("pojos", pojos);
         builder.append("pojosEqualsAndHashCode", pojosEqualsAndHashCode);
         builder.append("pojosToString", pojosToString);
@@ -4879,6 +4915,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!enumsAsScalaSealedTraits.equals(other.enumsAsScalaSealedTraits)) {
+                return false;
+            }
+        }
+        if (enumsAsScalaEnums == null) {
+            if (other.enumsAsScalaEnums!= null) {
+                return false;
+            }
+        } else {
+            if (!enumsAsScalaEnums.equals(other.enumsAsScalaEnums)) {
                 return false;
             }
         }
@@ -5684,6 +5729,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((records == null)? 0 :records.hashCode()));
         result = ((prime*result)+((recordsImplementingRecordN == null)? 0 :recordsImplementingRecordN.hashCode()));
         result = ((prime*result)+((enumsAsScalaSealedTraits == null)? 0 :enumsAsScalaSealedTraits.hashCode()));
+        result = ((prime*result)+((enumsAsScalaEnums == null)? 0 :enumsAsScalaEnums.hashCode()));
         result = ((prime*result)+((pojos == null)? 0 :pojos.hashCode()));
         result = ((prime*result)+((pojosEqualsAndHashCode == null)? 0 :pojosEqualsAndHashCode.hashCode()));
         result = ((prime*result)+((pojosToString == null)? 0 :pojosToString.hashCode()));

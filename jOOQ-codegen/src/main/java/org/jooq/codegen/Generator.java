@@ -516,6 +516,20 @@ public interface Generator {
     void setGenerateEnumsAsScalaSealedTraits(boolean generateEnumsAsScalaSealedTraits);
 
     /**
+     * Whether enums are generated as Scala 3 enums by the
+     * {@link ScalaGenerator}, if Scala 3 is supported.
+     */
+    @Deprecated
+    boolean generateEnumsAsScalaEnums();
+
+    /**
+     * Whether enums are generated as Scala 3 enums by the
+     * {@link ScalaGenerator}, if Scala 3 is supported.
+     */
+    @Deprecated
+    void setGenerateEnumsAsScalaEnums(boolean generateEnumsAsScalaEnums);
+
+    /**
      * Whether POJO's should be generated in addition to records
      */
     boolean generatePojos();

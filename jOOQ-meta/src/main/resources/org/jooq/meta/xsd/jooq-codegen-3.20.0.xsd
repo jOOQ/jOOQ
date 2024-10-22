@@ -2671,6 +2671,10 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
           </appinfo>
         </annotation>
       </element>
+      
+      <element name="enumsAsScalaEnums" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate enums as Scala 3.0 enums (if Scala 3 is supported).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>

@@ -814,6 +814,8 @@ public class GenerationTool {
                 generator.setGenerateRecordsImplementingRecordN(g.getGenerate().isRecordsImplementingRecordN());
             if (g.getGenerate().isEnumsAsScalaSealedTraits() != null)
                 generator.setGenerateEnumsAsScalaSealedTraits(g.getGenerate().isEnumsAsScalaSealedTraits());
+            if (g.getGenerate().isEnumsAsScalaEnums() != null)
+                generator.setGenerateEnumsAsScalaEnums(g.getGenerate().isEnumsAsScalaEnums());
             if (g.getGenerate().isPojos() != null)
                 generator.setGeneratePojos(g.getGenerate().isPojos());
             if (g.getGenerate().isPojosAsJavaRecordClasses() != null)

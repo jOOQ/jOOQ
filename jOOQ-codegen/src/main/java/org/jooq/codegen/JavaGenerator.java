@@ -4487,7 +4487,7 @@ public class JavaGenerator extends AbstractGenerator {
         Language l = language;
 
         try {
-            if (!generateEnumsAsScalaSealedTraits()) {
+            if (!generateEnumsAsScalaSealedTraits() && !generateEnumsAsScalaEnums()) {
                 scala = false;
                 language = l.isScala() ? JAVA : l;
                 getStrategy().setTargetLanguage(language);
@@ -4520,62 +4520,85 @@ public class JavaGenerator extends AbstractGenerator {
         boolean noCatalog = enumHasNoSchema || noSchema || !generateDefaultCatalog(e.getCatalog());
 
         if (scala) {
-            out.println("object %s {", className);
-            out.println();
+            if (generateEnumsAsScalaEnums()) {
+                out.println("%senum %s(val literal: %s) extends %s[%s] with %s[[before= with ][separator= with ][%s]] {", visibility(), className, String.class, Enum.class, className, EnumType.class, interfaces);
 
-            for (String identifier : identifiers)
-                out.println("val %s: %s = %s.%s", scalaWhitespaceSuffix(identifier), className, getStrategy().getJavaPackageName(e), identifier);
+                for (int i = 0; i < literals.size(); i++)
+                    out.println("case %s extends %s(\"%s\")", identifiers.get(i), className, escapeString(literals.get(i)));
 
-            out.println();
-            out.println("def values: %s[%s] = %s(",
-                out.ref("scala.Array"),
-                className,
-                out.ref("scala.Array"));
+                out.println("%soverride def getCatalog: %s = %s",
+                    visibilityPublic(), Catalog.class, noCatalog ? "null" : "getSchema.getCatalog");
 
-            for (int i = 0; i < identifiers.size(); i++) {
-                out.print((i > 0 ? ", " : "  "));
-                out.println(identifiers.get(i));
-            }
+                // [#2135] Only the PostgreSQL database supports schema-scoped enum types
+                out.println("%soverride def getSchema: %s = %s",
+                    visibilityPublic(), Schema.class, noSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
 
-            out.println(")");
-            out.println();
+                out.println("%soverride def getName: %s = %s",
+                    visibilityPublic(), String.class, e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
 
-            out.println("def valueOf(s: %s): %s = s match {", String.class, className);
-            for (int i = 0; i < identifiers.size(); i++) {
-                out.println("case \"%s\" => %s", escapeString(literals.get(i)), identifiers.get(i));
-            }
-            out.println("case _ => throw new %s()", IllegalArgumentException.class);
-            out.println("}");
-            out.println("}");
+                out.println("%soverride def getLiteral: String = literal", visibilityPublic());
 
-            out.println();
-            out.println("sealed trait %s extends %s[[before= with ][separator= with ][%s]] {", className, EnumType.class, interfaces);
-
-            if (noCatalog)
-                out.println("override def getCatalog: %s = null", Catalog.class);
-            else
-                out.println("override def getCatalog: %s = if (getSchema == null) null else getSchema().getCatalog()", Catalog.class);
-
-            // [#2135] Only the PostgreSQL database supports schema-scoped enum types
-            out.println("override def getSchema: %s = %s",
-                Schema.class,
-                noSchema
-                    ? "null"
-                    : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
-            out.println("override def getName: %s = %s",
-                String.class,
-                e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
-
-            generateEnumClassFooter(e, out);
-            out.println("}");
-
-            for (int i = 0; i < literals.size(); i++) {
-                out.println();
-                out.println("case object %s extends %s {", identifiers.get(i), className);
-                out.println("override def getLiteral: %s = \"%s\"",
-                    String.class,
-                    literals.get(i));
+                generateEnumClassFooter(e, out);
                 out.println("}");
+            }
+            else {
+                out.println("object %s {", className);
+                out.println();
+
+                for (String identifier : identifiers)
+                    out.println("val %s: %s = %s.%s", scalaWhitespaceSuffix(identifier), className, getStrategy().getJavaPackageName(e), identifier);
+
+                out.println();
+                out.println("def values: %s[%s] = %s(",
+                    out.ref("scala.Array"),
+                    className,
+                    out.ref("scala.Array"));
+
+                for (int i = 0; i < identifiers.size(); i++) {
+                    out.print((i > 0 ? ", " : "  "));
+                    out.println(identifiers.get(i));
+                }
+
+                out.println(")");
+                out.println();
+
+                out.println("def valueOf(s: %s): %s = s match {", String.class, className);
+                for (int i = 0; i < identifiers.size(); i++) {
+                    out.println("case \"%s\" => %s", escapeString(literals.get(i)), identifiers.get(i));
+                }
+                out.println("case _ => throw new %s()", IllegalArgumentException.class);
+                out.println("}");
+                out.println("}");
+
+                out.println();
+                out.println("sealed trait %s extends %s[[before= with ][separator= with ][%s]] {", className, EnumType.class, interfaces);
+
+                if (noCatalog)
+                    out.println("override def getCatalog: %s = null", Catalog.class);
+                else
+                    out.println("override def getCatalog: %s = if (getSchema == null) null else getSchema().getCatalog()", Catalog.class);
+
+                // [#2135] Only the PostgreSQL database supports schema-scoped enum types
+                out.println("override def getSchema: %s = %s",
+                    Schema.class,
+                    noSchema
+                        ? "null"
+                        : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+                out.println("override def getName: %s = %s",
+                    String.class,
+                    e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
+
+                generateEnumClassFooter(e, out);
+                out.println("}");
+
+                for (int i = 0; i < literals.size(); i++) {
+                    out.println();
+                    out.println("case object %s extends %s {", identifiers.get(i), className);
+                    out.println("override def getLiteral: %s = \"%s\"",
+                        String.class,
+                        literals.get(i));
+                    out.println("}");
+                }
             }
         }
         else if (kotlin) {

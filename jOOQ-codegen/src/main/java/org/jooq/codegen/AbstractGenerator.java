@@ -106,6 +106,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRecords                                    = true;
     boolean                            generateRecordsImplementingRecordN                 = false;
     boolean                            generateEnumsAsScalaSealedTraits                   = false;
+    boolean                            generateEnumsAsScalaEnums                          = true;
     boolean                            generatePojos                                      = false;
     boolean                            generatePojosAsJavaRecordClasses                   = false;
     boolean                            generatePojosAsScalaCaseClasses                    = true;
@@ -674,6 +675,19 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateEnumsAsScalaSealedTraits(boolean generateEnumsAsScalaSealedTraits) {
         this.generateEnumsAsScalaSealedTraits = generateEnumsAsScalaSealedTraits;
+
+        if (generateEnumsAsScalaSealedTraits)
+            log.warn("Deprecation", "The <generateEnumsAsScalaSealedTraits/> flag is deprecated and will be removed in the future.");
+    }
+
+    @Override
+    public boolean generateEnumsAsScalaEnums() {
+        return generateEnumsAsScalaEnums && language == Language.SCALA_3;
+    }
+
+    @Override
+    public void setGenerateEnumsAsScalaEnums(boolean generateEnumsAsScalaEnums) {
+        this.generateEnumsAsScalaEnums = generateEnumsAsScalaEnums;
     }
 
     @Override

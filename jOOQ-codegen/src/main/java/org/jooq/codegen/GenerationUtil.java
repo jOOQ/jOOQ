@@ -43,6 +43,8 @@ import static org.jooq.codegen.GenerationUtil.ExpressionType.CONSTRUCTOR_REFEREN
 import static org.jooq.codegen.GenerationUtil.ExpressionType.EXPRESSION;
 import static org.jooq.codegen.Language.JAVA;
 import static org.jooq.codegen.Language.KOTLIN;
+import static org.jooq.codegen.Language.SCALA;
+import static org.jooq.codegen.Language.SCALA_3;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -157,8 +159,8 @@ class GenerationUtil {
         "this",
         "throw",
         "trait",
-        "try",
         "true",
+        "try",
         "type",
         "val",
         "var",
@@ -176,6 +178,23 @@ class GenerationUtil {
         "#",
         "@"*/
     )));
+
+    private static final Set<String> SCALA3_KEYWORDS;
+
+    static {
+        // See https://docs.scala-lang.org/scala3/reference/syntax.html
+        Set<String> k = new HashSet<>(asList(
+            "enum",
+            "export",
+            "given",
+            "then"/*,
+            "=>>",
+            "?=>"*/
+        ));
+
+        k.addAll(SCALA_KEYWORDS);
+        SCALA3_KEYWORDS = unmodifiableSet(k);
+    }
 
     private static final Set<String> KOTLIN_KEYWORDS = unmodifiableSet(new HashSet<>(asList(
 
@@ -420,7 +439,9 @@ class GenerationUtil {
     private static String convertToIdentifier0(String literal, Language language) {
         if (language == JAVA && JAVA_KEYWORDS.contains(literal))
             return literal + "_";
-        if (language.isScala() && SCALA_KEYWORDS.contains(literal))
+        if (language == SCALA && SCALA_KEYWORDS.contains(literal))
+            return "`" + literal + "`";
+        if (language == SCALA_3 && SCALA3_KEYWORDS.contains(literal))
             return "`" + literal + "`";
         if (language == KOTLIN && KOTLIN_KEYWORDS.contains(literal))
             return "`" + literal + "`";

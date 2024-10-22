@@ -798,7 +798,7 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateSpringAnnotations() {
-        return generateSpringAnnotations;
+        return generateSpringDao() || generateSpringAnnotations;
     }
 
     @Override

@@ -4817,15 +4817,11 @@ public class JavaGenerator extends AbstractGenerator {
         printClassJavadoc(out, catalog, "Spring specific {@link " + out.ref(DAOImpl.class) + "} override.");
         printClassAnnotations(out, catalog, Mode.DEFAULT);
 
-        String transactional = generateSpringAnnotations()
-            ? out.ref("org.springframework.transaction.annotation.Transactional")
-            : null;
+        String transactional = out.ref("org.springframework.transaction.annotation.Transactional");
         String className = "AbstractSpringDAOImpl";
 
         if (scala) {
-            if (generateSpringAnnotations())
-                out.println("@%s(readOnly = true)", transactional);
-
+            out.println("@%s(readOnly = true)", transactional);
             out.println("%sabstract class %s[R <: %s[R], P, T](table: %s[R], klass: java.lang.Class[P], configuration: %s) extends %s[R, P, T](table, klass, configuration) {",
                 visibility(), className, UpdatableRecord.class, Table.class, Configuration.class, DAOImpl.class);
 
@@ -4833,8 +4829,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sdef this(table: %s[R], klass: java.lang.Class[P]) = this(table, klass, null)", visibility(), Table.class);
         }
         else if (kotlin) {
-            if (generateSpringAnnotations())
-                out.println("@%s(readOnly = true)", transactional);
+            out.println("@%s(readOnly = true)", transactional);
 
             // [#16691] P : Any is needed because of KT-68407
             out.println("%sabstract class %s<R : %s<R>, P : Any, T>(table: %s<R>, type: %s<P>, configuration: %s?) : %s<R, P, T>(table, type, configuration) {",
@@ -4844,9 +4839,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sconstructor(table: %s<R>, type: %s<P>) : this(table, type, null)", visibility(), Table.class, Class.class);
         }
         else {
-            if (generateSpringAnnotations())
-                out.println("@%s(readOnly = true)", transactional);
-
+            out.println("@%s(readOnly = true)", transactional);
             out.println("%sabstract class %s<R extends %s<R>, P, T> extends %s<R, P, T> {", visibility(), className, UpdatableRecord.class, DAOImpl.class);
             out.println();
             out.println("protected %s(%s<R> table, %s<P> type) {", className, Table.class, Class.class);

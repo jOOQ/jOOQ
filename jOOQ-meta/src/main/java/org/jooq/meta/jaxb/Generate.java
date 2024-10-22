@@ -116,6 +116,12 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean pojos = false;
     @XmlElement(defaultValue = "true")
     protected Boolean pojosEqualsAndHashCode = true;
+    @XmlElement(defaultValue = "")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String pojosEqualsAndHashCodeColumnIncludeExpression = "";
+    @XmlElement(defaultValue = "")
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String pojosEqualsAndHashCodeColumnExcludeExpression = "";
     @XmlElement(defaultValue = "true")
     protected Boolean pojosToString = true;
     @XmlElement(defaultValue = "false")
@@ -1289,6 +1295,38 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setPojosEqualsAndHashCode(Boolean value) {
         this.pojosEqualsAndHashCode = value;
+    }
+
+    /**
+     * The regular expression matching columns for inclusion in generated equals() and hashCode() methods in POJOs.
+     * 
+     */
+    public String getPojosEqualsAndHashCodeColumnIncludeExpression() {
+        return pojosEqualsAndHashCodeColumnIncludeExpression;
+    }
+
+    /**
+     * The regular expression matching columns for inclusion in generated equals() and hashCode() methods in POJOs.
+     * 
+     */
+    public void setPojosEqualsAndHashCodeColumnIncludeExpression(String value) {
+        this.pojosEqualsAndHashCodeColumnIncludeExpression = value;
+    }
+
+    /**
+     * The regular expression matching columns for exclusion in generated equals() and hashCode() methods in POJOs.
+     * 
+     */
+    public String getPojosEqualsAndHashCodeColumnExcludeExpression() {
+        return pojosEqualsAndHashCodeColumnExcludeExpression;
+    }
+
+    /**
+     * The regular expression matching columns for exclusion in generated equals() and hashCode() methods in POJOs.
+     * 
+     */
+    public void setPojosEqualsAndHashCodeColumnExcludeExpression(String value) {
+        this.pojosEqualsAndHashCodeColumnExcludeExpression = value;
     }
 
     /**
@@ -3651,6 +3689,24 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * The regular expression matching columns for inclusion in generated equals() and hashCode() methods in POJOs.
+     * 
+     */
+    public Generate withPojosEqualsAndHashCodeColumnIncludeExpression(String value) {
+        setPojosEqualsAndHashCodeColumnIncludeExpression(value);
+        return this;
+    }
+
+    /**
+     * The regular expression matching columns for exclusion in generated equals() and hashCode() methods in POJOs.
+     * 
+     */
+    public Generate withPojosEqualsAndHashCodeColumnExcludeExpression(String value) {
+        setPojosEqualsAndHashCodeColumnExcludeExpression(value);
+        return this;
+    }
+
+    /**
      * Generate basic toString() methods in POJOs.
      * 
      */
@@ -4464,6 +4520,8 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("enumsAsScalaEnums", enumsAsScalaEnums);
         builder.append("pojos", pojos);
         builder.append("pojosEqualsAndHashCode", pojosEqualsAndHashCode);
+        builder.append("pojosEqualsAndHashCodeColumnIncludeExpression", pojosEqualsAndHashCodeColumnIncludeExpression);
+        builder.append("pojosEqualsAndHashCodeColumnExcludeExpression", pojosEqualsAndHashCodeColumnExcludeExpression);
         builder.append("pojosToString", pojosToString);
         builder.append("pojosAsJavaRecordClasses", pojosAsJavaRecordClasses);
         builder.append("pojosAsScalaCaseClasses", pojosAsScalaCaseClasses);
@@ -4942,6 +5000,24 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!pojosEqualsAndHashCode.equals(other.pojosEqualsAndHashCode)) {
+                return false;
+            }
+        }
+        if (pojosEqualsAndHashCodeColumnIncludeExpression == null) {
+            if (other.pojosEqualsAndHashCodeColumnIncludeExpression!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosEqualsAndHashCodeColumnIncludeExpression.equals(other.pojosEqualsAndHashCodeColumnIncludeExpression)) {
+                return false;
+            }
+        }
+        if (pojosEqualsAndHashCodeColumnExcludeExpression == null) {
+            if (other.pojosEqualsAndHashCodeColumnExcludeExpression!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosEqualsAndHashCodeColumnExcludeExpression.equals(other.pojosEqualsAndHashCodeColumnExcludeExpression)) {
                 return false;
             }
         }
@@ -5732,6 +5808,8 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((enumsAsScalaEnums == null)? 0 :enumsAsScalaEnums.hashCode()));
         result = ((prime*result)+((pojos == null)? 0 :pojos.hashCode()));
         result = ((prime*result)+((pojosEqualsAndHashCode == null)? 0 :pojosEqualsAndHashCode.hashCode()));
+        result = ((prime*result)+((pojosEqualsAndHashCodeColumnIncludeExpression == null)? 0 :pojosEqualsAndHashCodeColumnIncludeExpression.hashCode()));
+        result = ((prime*result)+((pojosEqualsAndHashCodeColumnExcludeExpression == null)? 0 :pojosEqualsAndHashCodeColumnExcludeExpression.hashCode()));
         result = ((prime*result)+((pojosToString == null)? 0 :pojosToString.hashCode()));
         result = ((prime*result)+((pojosAsJavaRecordClasses == null)? 0 :pojosAsJavaRecordClasses.hashCode()));
         result = ((prime*result)+((pojosAsScalaCaseClasses == null)? 0 :pojosAsScalaCaseClasses.hashCode()));

@@ -65,140 +65,142 @@ import org.jooq.tools.JooqLogger;
  */
 abstract class AbstractGenerator implements Generator {
 
-    private static final JooqLogger    log                                                = JooqLogger.getLogger(AbstractGenerator.class);
+    private static final JooqLogger    log                                                   = JooqLogger.getLogger(AbstractGenerator.class);
 
-    boolean                            generateDeprecated                                 = true;
-    boolean                            generateDeprecationOnUnknownTypes                  = true;
-    boolean                            generateIndexes                                    = true;
-    boolean                            generateRelations                                  = true;
-    boolean                            generateUDTPaths                                   = true;
-    boolean                            generateImplicitJoinPathsToOne                     = true;
-    boolean                            generateImplicitJoinPathsToMany                    = true;
-    boolean                            generateImplicitJoinPathTableSubtypes              = true;
-    boolean                            generateImplicitJoinPathUnusedConstructors         = true;
-    boolean                            generateImplicitJoinPathsAsKotlinProperties        = true;
-    boolean                            generateInstanceFields                             = true;
-    VisibilityModifier                 generateVisibilityModifier                         = VisibilityModifier.DEFAULT;
-    boolean                            generateGeneratedAnnotation                        = false;
-    GeneratedAnnotationType            generatedGeneratedAnnotationType                   = GeneratedAnnotationType.DETECT_FROM_JDK;
-    boolean                            generateGeneratedAnnotationDate                    = false;
-    boolean                            generateGeneratedAnnotationJooqVersion             = true;
-    boolean                            generateNonnullAnnotation                          = false;
-    String                             generatedNonnullAnnotationType                     = "javax.annotation.Nonnull";
-    boolean                            generateNullableAnnotation                         = false;
-    boolean                            generateNullableAnnotationOnWriteOnlyNullableTypes = false;
-    String                             generatedNullableAnnotationType                    = "javax.annotation.Nullable";
-    boolean                            generateConstructorPropertiesAnnotation            = false;
+    boolean                            generateDeprecated                                    = true;
+    boolean                            generateDeprecationOnUnknownTypes                     = true;
+    boolean                            generateIndexes                                       = true;
+    boolean                            generateRelations                                     = true;
+    boolean                            generateUDTPaths                                      = true;
+    boolean                            generateImplicitJoinPathsToOne                        = true;
+    boolean                            generateImplicitJoinPathsToMany                       = true;
+    boolean                            generateImplicitJoinPathTableSubtypes                 = true;
+    boolean                            generateImplicitJoinPathUnusedConstructors            = true;
+    boolean                            generateImplicitJoinPathsAsKotlinProperties           = true;
+    boolean                            generateInstanceFields                                = true;
+    VisibilityModifier                 generateVisibilityModifier                            = VisibilityModifier.DEFAULT;
+    boolean                            generateGeneratedAnnotation                           = false;
+    GeneratedAnnotationType            generatedGeneratedAnnotationType                      = GeneratedAnnotationType.DETECT_FROM_JDK;
+    boolean                            generateGeneratedAnnotationDate                       = false;
+    boolean                            generateGeneratedAnnotationJooqVersion                = true;
+    boolean                            generateNonnullAnnotation                             = false;
+    String                             generatedNonnullAnnotationType                        = "javax.annotation.Nonnull";
+    boolean                            generateNullableAnnotation                            = false;
+    boolean                            generateNullableAnnotationOnWriteOnlyNullableTypes    = false;
+    String                             generatedNullableAnnotationType                       = "javax.annotation.Nullable";
+    boolean                            generateConstructorPropertiesAnnotation               = false;
     Boolean                            generateConstructorPropertiesAnnotationOnPojos;
     Boolean                            generateConstructorPropertiesAnnotationOnRecords;
-    boolean                            useSchemaVersionProvider                           = false;
-    boolean                            useCatalogVersionProvider                          = false;
-    boolean                            generateRoutines                                   = true;
+    boolean                            useSchemaVersionProvider                              = false;
+    boolean                            useCatalogVersionProvider                             = false;
+    boolean                            generateRoutines                                      = true;
 
 
 
 
-    boolean                            generateSequences                                  = true;
-    boolean                            generateSequenceFlags                              = true;
-    boolean                            generateUDTs                                       = true;
-    boolean                            generateTables                                     = true;
-    boolean                            generateEmbeddables                                = true;
-    boolean                            generateRecords                                    = true;
-    boolean                            generateRecordsImplementingRecordN                 = false;
-    boolean                            generateEnumsAsScalaSealedTraits                   = false;
-    boolean                            generateEnumsAsScalaEnums                          = true;
-    boolean                            generatePojos                                      = false;
-    boolean                            generatePojosAsJavaRecordClasses                   = false;
-    boolean                            generatePojosAsScalaCaseClasses                    = true;
-    boolean                            generatePojosAsKotlinDataClasses                   = true;
-    boolean                            generatePojosEqualsAndHashCode                     = true;
-    boolean                            generatePojosToString                              = true;
-    boolean                            generateImmutablePojos                             = false;
-    boolean                            generateSerializablePojos                          = true;
-    boolean                            generateInterfaces                                 = false;
-    boolean                            generateImmutableInterfaces                        = false;
-    boolean                            generateSerializableInterfaces                     = true;
-    boolean                            generateDaos                                       = false;
-    boolean                            generateJooqVersionReference                       = true;
-    boolean                            generateJPAAnnotations                             = false;
-    String                             generateJPAVersion                                 = "";
-    boolean                            generateValidationAnnotations                      = false;
-    boolean                            generateSpringAnnotations                          = false;
-    boolean                            generateSpringDao                                  = false;
-    boolean                            generateKotlinSetterJvmNameAnnotationsOnIsPrefix   = true;
-    boolean                            generateKotlinNotNullPojoAttributes                = false;
-    boolean                            generateKotlinNotNullRecordAttributes              = false;
-    boolean                            generateKotlinNotNullInterfaceAttributes           = false;
-    boolean                            generateKotlinDefaultedNullablePojoAttributes      = true;
-    boolean                            generateKotlinDefaultedNullableRecordAttributes    = true;
-    GeneratedSerialVersionUID          generatedSerialVersionUID                          = GeneratedSerialVersionUID.CONSTANT;
-    int                                maxMembersPerInitialiser                           = 500;
-    boolean                            generateQueues                                     = true;
-    boolean                            generateLinks                                      = true;
-    boolean                            generateKeys                                       = true;
-    boolean                            generateGlobalObjectNames                          = true;
-    boolean                            generateGlobalObjectReferences                     = true;
-    boolean                            generateGlobalCatalogReferences                    = true;
-    boolean                            generateGlobalSchemaReferences                     = true;
-    boolean                            generateGlobalRoutineReferences                    = true;
-    boolean                            generateGlobalSequenceReferences                   = true;
-    boolean                            generateGlobalTableReferences                      = true;
-    boolean                            generateGlobalDomainReferences                     = true;
+    boolean                            generateSequences                                     = true;
+    boolean                            generateSequenceFlags                                 = true;
+    boolean                            generateUDTs                                          = true;
+    boolean                            generateTables                                        = true;
+    boolean                            generateEmbeddables                                   = true;
+    boolean                            generateRecords                                       = true;
+    boolean                            generateRecordsImplementingRecordN                    = false;
+    boolean                            generateEnumsAsScalaSealedTraits                      = false;
+    boolean                            generateEnumsAsScalaEnums                             = true;
+    boolean                            generatePojos                                         = false;
+    boolean                            generatePojosAsJavaRecordClasses                      = false;
+    boolean                            generatePojosAsScalaCaseClasses                       = true;
+    boolean                            generatePojosAsKotlinDataClasses                      = true;
+    boolean                            generatePojosEqualsAndHashCode                        = true;
+    String                             generatePojosEqualsAndHashCodeColumnIncludeExpression = null;
+    String                             generatePojosEqualsAndHashCodeColumnExcludeExpression = null;
+    boolean                            generatePojosToString                                 = true;
+    boolean                            generateImmutablePojos                                = false;
+    boolean                            generateSerializablePojos                             = true;
+    boolean                            generateInterfaces                                    = false;
+    boolean                            generateImmutableInterfaces                           = false;
+    boolean                            generateSerializableInterfaces                        = true;
+    boolean                            generateDaos                                          = false;
+    boolean                            generateJooqVersionReference                          = true;
+    boolean                            generateJPAAnnotations                                = false;
+    String                             generateJPAVersion                                    = "";
+    boolean                            generateValidationAnnotations                         = false;
+    boolean                            generateSpringAnnotations                             = false;
+    boolean                            generateSpringDao                                     = false;
+    boolean                            generateKotlinSetterJvmNameAnnotationsOnIsPrefix      = true;
+    boolean                            generateKotlinNotNullPojoAttributes                   = false;
+    boolean                            generateKotlinNotNullRecordAttributes                 = false;
+    boolean                            generateKotlinNotNullInterfaceAttributes              = false;
+    boolean                            generateKotlinDefaultedNullablePojoAttributes         = true;
+    boolean                            generateKotlinDefaultedNullableRecordAttributes       = true;
+    GeneratedSerialVersionUID          generatedSerialVersionUID                             = GeneratedSerialVersionUID.CONSTANT;
+    int                                maxMembersPerInitialiser                              = 500;
+    boolean                            generateQueues                                        = true;
+    boolean                            generateLinks                                         = true;
+    boolean                            generateKeys                                          = true;
+    boolean                            generateGlobalObjectNames                             = true;
+    boolean                            generateGlobalObjectReferences                        = true;
+    boolean                            generateGlobalCatalogReferences                       = true;
+    boolean                            generateGlobalSchemaReferences                        = true;
+    boolean                            generateGlobalRoutineReferences                       = true;
+    boolean                            generateGlobalSequenceReferences                      = true;
+    boolean                            generateGlobalTableReferences                         = true;
+    boolean                            generateGlobalDomainReferences                        = true;
 
 
 
 
-    boolean                            generateGlobalUDTReferences                        = true;
-    boolean                            generateGlobalQueueReferences                      = true;
-    boolean                            generateGlobalLinkReferences                       = true;
-    boolean                            generateGlobalKeyReferences                        = true;
-    boolean                            generateGlobalIndexReferences                      = true;
-    boolean                            generateDefaultCatalog                             = true;
-    boolean                            generateDefaultSchema                              = true;
-    boolean                            generateJavadoc                                    = true;
-    boolean                            generateComments                                   = true;
-    boolean                            generateCommentsOnAttributes                       = true;
-    boolean                            generateCommentsOnCatalogs                         = true;
-    boolean                            generateCommentsOnColumns                          = true;
-    boolean                            generateCommentsOnKeys                             = true;
-    boolean                            generateCommentsOnLinks                            = true;
-    boolean                            generateCommentsOnPackages                         = true;
-    boolean                            generateCommentsOnParameters                       = true;
-    boolean                            generateCommentsOnQueues                           = true;
-    boolean                            generateCommentsOnRoutines                         = true;
-    boolean                            generateCommentsOnSchemas                          = true;
-    boolean                            generateCommentsOnSequences                        = true;
-    boolean                            generateCommentsOnDomains                          = true;
-    boolean                            generateCommentsOnTables                           = true;
-    boolean                            generateCommentsOnUDTs                             = true;
-    boolean                            generateCommentsOnEmbeddables                      = true;
-    boolean                            generateSources                                    = true;
-    boolean                            generateSourcesOnViews                             = true;
-    boolean                            generateFluentSetters                              = false;
-    boolean                            generateJavaBeansGettersAndSetters                 = false;
-    boolean                            generateUseTableNameForUnambiguousFKs              = true;
-    boolean                            generateVarargsSetters                             = true;
-    String                             generateFullyQualifiedTypes                        = "";
-    boolean                            generateJavaTimeTypes                              = true;
-    boolean                            generateSpatialTypes                               = true;
-    boolean                            generateXmlTypes                                   = true;
-    boolean                            generateJsonTypes                                  = true;
-    boolean                            generateIntervalTypes                              = true;
-    boolean                            generateDecfloatTypes                              = true;
-    boolean                            generateTableValuedFunctions                       = false;
-    boolean                            generateEmptyCatalogs                              = false;
-    boolean                            generateEmptySchemas                               = false;
-    String                             generateNewline                                    = "\n";
+    boolean                            generateGlobalUDTReferences                           = true;
+    boolean                            generateGlobalQueueReferences                         = true;
+    boolean                            generateGlobalLinkReferences                          = true;
+    boolean                            generateGlobalKeyReferences                           = true;
+    boolean                            generateGlobalIndexReferences                         = true;
+    boolean                            generateDefaultCatalog                                = true;
+    boolean                            generateDefaultSchema                                 = true;
+    boolean                            generateJavadoc                                       = true;
+    boolean                            generateComments                                      = true;
+    boolean                            generateCommentsOnAttributes                          = true;
+    boolean                            generateCommentsOnCatalogs                            = true;
+    boolean                            generateCommentsOnColumns                             = true;
+    boolean                            generateCommentsOnKeys                                = true;
+    boolean                            generateCommentsOnLinks                               = true;
+    boolean                            generateCommentsOnPackages                            = true;
+    boolean                            generateCommentsOnParameters                          = true;
+    boolean                            generateCommentsOnQueues                              = true;
+    boolean                            generateCommentsOnRoutines                            = true;
+    boolean                            generateCommentsOnSchemas                             = true;
+    boolean                            generateCommentsOnSequences                           = true;
+    boolean                            generateCommentsOnDomains                             = true;
+    boolean                            generateCommentsOnTables                              = true;
+    boolean                            generateCommentsOnUDTs                                = true;
+    boolean                            generateCommentsOnEmbeddables                         = true;
+    boolean                            generateSources                                       = true;
+    boolean                            generateSourcesOnViews                                = true;
+    boolean                            generateFluentSetters                                 = false;
+    boolean                            generateJavaBeansGettersAndSetters                    = false;
+    boolean                            generateUseTableNameForUnambiguousFKs                 = true;
+    boolean                            generateVarargsSetters                                = true;
+    String                             generateFullyQualifiedTypes                           = "";
+    boolean                            generateJavaTimeTypes                                 = true;
+    boolean                            generateSpatialTypes                                  = true;
+    boolean                            generateXmlTypes                                      = true;
+    boolean                            generateJsonTypes                                     = true;
+    boolean                            generateIntervalTypes                                 = true;
+    boolean                            generateDecfloatTypes                                 = true;
+    boolean                            generateTableValuedFunctions                          = false;
+    boolean                            generateEmptyCatalogs                                 = false;
+    boolean                            generateEmptySchemas                                  = false;
+    String                             generateNewline                                       = "\n";
     String                             generateIndentation;
-    int                                generatePrintMarginForBlockComment                 = 80;
-    GeneratedTextBlocks                generateTextBlocks                                 = GeneratedTextBlocks.DETECT_FROM_JDK;
-    boolean                            generateWhereMethodOverrides                       = true;
-    boolean                            generateRenameMethodOverrides                      = true;
-    boolean                            generateAsMethodOverrides                          = true;
+    int                                generatePrintMarginForBlockComment                    = 80;
+    GeneratedTextBlocks                generateTextBlocks                                    = GeneratedTextBlocks.DETECT_FROM_JDK;
+    boolean                            generateWhereMethodOverrides                          = true;
+    boolean                            generateRenameMethodOverrides                         = true;
+    boolean                            generateAsMethodOverrides                             = true;
 
     protected GeneratorStrategyWrapper strategy;
-    protected String                   targetEncoding                                     = "UTF-8";
-    protected boolean                  targetClean                                        = true;
+    protected String                   targetEncoding                                        = "UTF-8";
+    protected boolean                  targetClean                                           = true;
     final Language                     languageConfigured;
     Language                           language;
     Database                           database;
@@ -1397,6 +1399,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratePojosEqualsAndHashCode(boolean generatePojosEqualsAndHashCode) {
         this.generatePojosEqualsAndHashCode = generatePojosEqualsAndHashCode;
+    }
+
+    @Override
+    public String generatePojosEqualsAndHashCodeColumnIncludeExpression() {
+        return generatePojosEqualsAndHashCodeColumnIncludeExpression;
+    }
+
+    @Override
+    public void setGeneratePojosEqualsAndHashCodeColumnIncludeExpression(String generatePojosEqualsAndHashCodeColumnIncludeExpression) {
+        this.generatePojosEqualsAndHashCodeColumnIncludeExpression = generatePojosEqualsAndHashCodeColumnIncludeExpression;
+    }
+
+    @Override
+    public String generatePojosEqualsAndHashCodeColumnExcludeExpression() {
+        return generatePojosEqualsAndHashCodeColumnExcludeExpression;
+    }
+
+    @Override
+    public void setGeneratePojosEqualsAndHashCodeColumnExcludeExpression(String generatePojosEqualsAndHashCodeColumnExcludeExpression) {
+        this.generatePojosEqualsAndHashCodeColumnExcludeExpression = generatePojosEqualsAndHashCodeColumnExcludeExpression;
     }
 
     @Override

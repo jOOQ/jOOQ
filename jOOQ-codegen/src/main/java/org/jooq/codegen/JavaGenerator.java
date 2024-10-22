@@ -6836,6 +6836,14 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.POJO);
         List<Definition> replacingEmbeddablesAndUnreplacedColumns = replacingEmbeddablesAndUnreplacedColumns(tableUdtOrEmbeddable);
 
+        if (generatePojosEqualsAndHashCodeColumnIncludeExpression() != null ||
+            generatePojosEqualsAndHashCodeColumnExcludeExpression() != null)
+            replacingEmbeddablesAndUnreplacedColumns = database.filterExcludeInclude(
+                replacingEmbeddablesAndUnreplacedColumns,
+                generatePojosEqualsAndHashCodeColumnExcludeExpression(),
+                generatePojosEqualsAndHashCodeColumnIncludeExpression()
+            );
+
         out.println();
 
         if (scala) {

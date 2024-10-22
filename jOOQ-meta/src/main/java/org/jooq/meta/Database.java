@@ -970,6 +970,11 @@ public interface Database extends AutoCloseable {
     <D extends Definition> List<D> filterExcludeInclude(List<D> definitions);
 
     /**
+     * Filter a list of definitions according to the exclude / include expressions passed as arguments.
+     */
+    <D extends Definition> List<D> filterExcludeInclude(List<D> definitions, String exclude, String include);
+
+    /**
      * Sort a list of definitions according to the {@link #getOrderProvider()} defined in this database.
      */
     <D extends Definition> List<D> sort(List<D> definitions);

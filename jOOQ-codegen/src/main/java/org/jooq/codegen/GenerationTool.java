@@ -954,6 +954,10 @@ public class GenerationTool {
                 generator.setGenerateVarargsSetters(g.getGenerate().isVarargSetters());
             if (g.getGenerate().isPojosEqualsAndHashCode() != null)
                 generator.setGeneratePojosEqualsAndHashCode(g.getGenerate().isPojosEqualsAndHashCode());
+            if (g.getGenerate().getPojosEqualsAndHashCodeColumnIncludeExpression() != null)
+                generator.setGeneratePojosEqualsAndHashCodeColumnIncludeExpression(g.getGenerate().getPojosEqualsAndHashCodeColumnIncludeExpression());
+            if (g.getGenerate().getPojosEqualsAndHashCodeColumnExcludeExpression() != null)
+                generator.setGeneratePojosEqualsAndHashCodeColumnExcludeExpression(g.getGenerate().getPojosEqualsAndHashCodeColumnExcludeExpression());
             if (g.getGenerate().isPojosToString() != null)
                 generator.setGeneratePojosToString(g.getGenerate().isPojosToString());
             if (g.getGenerate().getFullyQualifiedTypes() != null)

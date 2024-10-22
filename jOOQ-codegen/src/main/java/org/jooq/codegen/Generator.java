@@ -1291,6 +1291,30 @@ public interface Generator {
     void setGeneratePojosEqualsAndHashCode(boolean generatePojosEqualsAndHashCode);
 
     /**
+     * A regular expression matching columns to include in <code>equals()</code>
+     * and <code>hashCode()</code> methods of generated POJOS.
+     */
+    String generatePojosEqualsAndHashCodeColumnIncludeExpression();
+
+    /**
+     * A regular expression matching columns to include in <code>equals()</code>
+     * and <code>hashCode()</code> methods of generated POJOS.
+     */
+    void setGeneratePojosEqualsAndHashCodeColumnIncludeExpression(String generatePojosEqualsAndHashCodeColumnIncludeExpression);
+
+    /**
+     * A regular expression matching columns to exclude in <code>equals()</code>
+     * and <code>hashCode()</code> methods of generated POJOS.
+     */
+    String generatePojosEqualsAndHashCodeColumnExcludeExpression();
+
+    /**
+     * A regular expression matching columns to exclude in <code>equals()</code>
+     * and <code>hashCode()</code> methods of generated POJOS.
+     */
+    void setGeneratePojosEqualsAndHashCodeColumnExcludeExpression(String generatePojosEqualsAndHashCodeColumnExcludeExpression);
+
+    /**
      * Whether a <code>toString()</code> method should be generated on POJOs
      */
     boolean generatePojosToString();

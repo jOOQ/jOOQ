@@ -3073,45 +3073,43 @@ public abstract class AbstractDatabase implements Database {
 
 
 
-                    log.info("Synonyms fetched", fetchedSize(e, synonyms));
-                });
-            }
-            else
-                log.info("Synonyms excluded");
-        }
 
-        return synonyms;
-    }
 
-    @Override
-    public final List<SynonymDefinition> getSynonyms(SchemaDefinition schema) {
-        if (synonymsBySchema == null)
-            synonymsBySchema = new LinkedHashMap<>();
 
-        return filterSchema(getSynonyms(), schema, synonymsBySchema);
-    }
 
-    @Override
-    public final SynonymDefinition getSynonym(SchemaDefinition schema, String name) {
-        return getSynonym(schema, name, false);
-    }
 
-    @Override
-    public final SynonymDefinition getSynonym(SchemaDefinition schema, String name, boolean ignoreCase) {
-        return getDefinition(getSynonyms(schema), name, ignoreCase);
-    }
 
-    @Override
-    public final SynonymDefinition getSynonym(SchemaDefinition schema, Name name) {
-        return getSynonym(schema, name, false);
-    }
 
-    @Override
-    public final SynonymDefinition getSynonym(SchemaDefinition schema, Name name, boolean ignoreCase) {
-        return getDefinition(getSynonyms(schema), name, ignoreCase);
-    }
 
-    /* [/pro] */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final List<ArrayDefinition> getArrays(SchemaDefinition schema) {
@@ -3536,7 +3534,8 @@ public abstract class AbstractDatabase implements Database {
         return result;
     }
 
-    protected final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String e, String i) {
+    @Override
+    public final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String e, String i) {
         return filterExcludeInclude(definitions, new String[] { e }, new String[] { i != null ? i : ".*" }, emptyList());
     }
 

@@ -13076,6 +13076,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 else if (parseKeywordOrIdentifierIf("NVARCHAR") ||
                          parseKeywordOrIdentifierIf("NVARCHAR2"))
                     return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
+                else if (parseKeywordOrIdentifierIf("NTEXT"))
+                    return parseDataTypeCollation(parseAndIgnoreDataTypeLength(NCLOB));
 
                 break;
 

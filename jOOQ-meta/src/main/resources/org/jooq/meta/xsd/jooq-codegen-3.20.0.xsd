@@ -1525,7 +1525,13 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
-
+      
+      <element name="synonyms" type="tns:SyntheticSynonymsType" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic synonym configuration.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="views" type="tns:SyntheticViewsType" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic view configuration]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1825,6 +1831,39 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching a key field that is referenced by a synthetic key.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
     </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticSynonymsType">
+    <sequence>
+      <element name="synonym" type="tns:SyntheticSynonymType" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  
+  <complexType name="SyntheticSynonymType">
+    <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Synthetic synonym configuration.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+    <all>
+      <element name="catalog" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining catalog of the synonym.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="schema" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The defining schema of the synonym.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="name" type="string" minOccurs="1" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The synonym name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="table" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching a table to which to apply this synthetic synonym.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+    </all>
   </complexType>
   
   <complexType name="SyntheticViewsType">

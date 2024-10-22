@@ -157,6 +157,7 @@ import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
 import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
 import org.jooq.meta.jaxb.SyntheticReadonlyRowidType;
+import org.jooq.meta.jaxb.SyntheticSynonymType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 import org.jooq.meta.jaxb.SyntheticViewType;
 // ...
@@ -271,6 +272,8 @@ public abstract class AbstractDatabase implements Database {
     private Set<SyntheticUniqueKeyType>                                          unusedSyntheticUniqueKeys               = new HashSet<>();
     private List<SyntheticForeignKeyType>                                        configuredSyntheticForeignKeys          = new ArrayList<>();
     private Set<SyntheticForeignKeyType>                                         unusedSyntheticForeignKeys              = new HashSet<>();
+    private List<SyntheticSynonymType>                                           configuredSyntheticSynonyms             = new ArrayList<>();
+    private Set<SyntheticSynonymType>                                            unusedSyntheticSynonyms                 = new HashSet<>();
     private List<SyntheticViewType>                                              configuredSyntheticViews                = new ArrayList<>();
     private Set<SyntheticViewType>                                               unusedSyntheticViews                    = new HashSet<>();
     private List<SyntheticDaoType>                                               configuredSyntheticDaos                 = new ArrayList<>();
@@ -3070,21 +3073,45 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+                    log.info("Synonyms fetched", fetchedSize(e, synonyms));
+                });
+            }
+            else
+                log.info("Synonyms excluded");
+        }
 
+        return synonyms;
+    }
 
+    @Override
+    public final List<SynonymDefinition> getSynonyms(SchemaDefinition schema) {
+        if (synonymsBySchema == null)
+            synonymsBySchema = new LinkedHashMap<>();
 
+        return filterSchema(getSynonyms(), schema, synonymsBySchema);
+    }
 
+    @Override
+    public final SynonymDefinition getSynonym(SchemaDefinition schema, String name) {
+        return getSynonym(schema, name, false);
+    }
 
+    @Override
+    public final SynonymDefinition getSynonym(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getSynonyms(schema), name, ignoreCase);
+    }
 
+    @Override
+    public final SynonymDefinition getSynonym(SchemaDefinition schema, Name name) {
+        return getSynonym(schema, name, false);
+    }
 
+    @Override
+    public final SynonymDefinition getSynonym(SchemaDefinition schema, Name name, boolean ignoreCase) {
+        return getDefinition(getSynonyms(schema), name, ignoreCase);
+    }
 
-
-
-
-
-
-
-
+    /* [/pro] */
 
     @Override
     public final List<ArrayDefinition> getArrays(SchemaDefinition schema) {
@@ -3690,6 +3717,7 @@ public abstract class AbstractDatabase implements Database {
             getConfiguredSyntheticPrimaryKeys().addAll(configuredSyntheticObjects.getPrimaryKeys());
             getConfiguredSyntheticUniqueKeys().addAll(configuredSyntheticObjects.getUniqueKeys());
             getConfiguredSyntheticForeignKeys().addAll(configuredSyntheticObjects.getForeignKeys());
+            getConfiguredSyntheticSynonyms().addAll(configuredSyntheticObjects.getSynonyms());
             getConfiguredSyntheticViews().addAll(configuredSyntheticObjects.getViews());
             getConfiguredSyntheticDaos().addAll(configuredSyntheticObjects.getDaos());
 
@@ -3702,6 +3730,7 @@ public abstract class AbstractDatabase implements Database {
             unusedSyntheticPrimaryKeys.addAll(configuredSyntheticObjects.getPrimaryKeys());
             unusedSyntheticUniqueKeys.addAll(configuredSyntheticObjects.getUniqueKeys());
             unusedSyntheticForeignKeys.addAll(configuredSyntheticObjects.getForeignKeys());
+            unusedSyntheticSynonyms.addAll(configuredSyntheticObjects.getSynonyms());
             unusedSyntheticViews.addAll(configuredSyntheticObjects.getViews());
 
 
@@ -3723,6 +3752,8 @@ public abstract class AbstractDatabase implements Database {
                 log.info("Commercial feature", "Synthetic unique keys are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
             if (!configuredSyntheticObjects.getForeignKeys().isEmpty())
                 log.info("Commercial feature", "Synthetic foreign keys are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
+            if (!configuredSyntheticObjects.getSynonyms().isEmpty())
+                log.info("Commercial feature", "Synthetic synonyms are a commercial only feature. Please upgrade to the jOOQ Professional Edition");
         }
     }
 
@@ -3799,6 +3830,14 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public List<SyntheticSynonymType> getConfiguredSyntheticSynonyms() {
+        if (configuredSyntheticSynonyms == null)
+            configuredSyntheticSynonyms = new ArrayList<>();
+
+        return configuredSyntheticSynonyms;
+    }
+
+    @Override
     public List<SyntheticViewType> getConfiguredSyntheticViews() {
         if (configuredSyntheticViews == null)
             configuredSyntheticViews = new ArrayList<>();
@@ -3860,6 +3899,11 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public void markUsed(SyntheticSynonymType synonym) {
+        unusedSyntheticSynonyms.remove(synonym);
+    }
+
+    @Override
     public void markUsed(SyntheticViewType view) {
         unusedSyntheticViews.remove(view);
     }
@@ -3907,6 +3951,11 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public List<SyntheticForeignKeyType> getUnusedSyntheticForeignKeys() {
         return new ArrayList<>(unusedSyntheticForeignKeys);
+    }
+
+    @Override
+    public List<SyntheticSynonymType> getUnusedSyntheticSynonyms() {
+        return new ArrayList<>(unusedSyntheticSynonyms);
     }
 
     @Override

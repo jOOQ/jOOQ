@@ -801,6 +801,12 @@ public class MetaExtensions {
             setForeignKeys(l);
         }
 
+        public void synonyms(Action<SyntheticSynonymTypeListExtension> action) {
+            SyntheticSynonymTypeListExtension l = objects.newInstance(SyntheticSynonymTypeListExtension.class, objects);
+            action.execute(l);
+            setSynonyms(l);
+        }
+
         public void views(Action<SyntheticViewTypeListExtension> action) {
             SyntheticViewTypeListExtension l = objects.newInstance(SyntheticViewTypeListExtension.class, objects);
             action.execute(l);
@@ -900,6 +906,16 @@ public class MetaExtensions {
 
         @Inject
         public SyntheticForeignKeyTypeExtension(ObjectFactory objects) {
+            this.objects = objects;
+        }
+    }
+
+    public static class SyntheticSynonymTypeExtension extends SyntheticSynonymType {
+
+        final ObjectFactory objects;
+
+        @Inject
+        public SyntheticSynonymTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
     }
@@ -1565,6 +1581,22 @@ public class MetaExtensions {
 
         public void foreignKey(Action<SyntheticForeignKeyTypeExtension> action) {
             SyntheticForeignKeyTypeExtension o = objects.newInstance(SyntheticForeignKeyTypeExtension.class, objects);
+            action.execute(o);
+            add(o);
+        }
+    }
+
+    public static class SyntheticSynonymTypeListExtension extends ArrayList<SyntheticSynonymType> {
+
+        final ObjectFactory objects;
+
+        @Inject
+        public SyntheticSynonymTypeListExtension(ObjectFactory objects) {
+            this.objects = objects;
+        }
+
+        public void synonym(Action<SyntheticSynonymTypeExtension> action) {
+            SyntheticSynonymTypeExtension o = objects.newInstance(SyntheticSynonymTypeExtension.class, objects);
             action.execute(o);
             add(o);
         }

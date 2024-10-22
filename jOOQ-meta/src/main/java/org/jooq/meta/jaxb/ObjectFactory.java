@@ -294,6 +294,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SyntheticSynonymType }
+     * 
+     */
+    public SyntheticSynonymType createSyntheticSynonymType() {
+        return new SyntheticSynonymType();
+    }
+
+    /**
      * Create an instance of {@link SyntheticViewType }
      * 
      */

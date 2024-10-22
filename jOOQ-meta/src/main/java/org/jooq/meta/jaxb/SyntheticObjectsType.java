@@ -58,6 +58,9 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "foreignKeys")
     @XmlElement(name = "foreignKey")
     protected List<SyntheticForeignKeyType> foreignKeys;
+    @XmlElementWrapper(name = "synonyms")
+    @XmlElement(name = "synonym")
+    protected List<SyntheticSynonymType> synonyms;
     @XmlElementWrapper(name = "views")
     @XmlElement(name = "view")
     protected List<SyntheticViewType> views;
@@ -162,6 +165,17 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
 
     public void setForeignKeys(List<SyntheticForeignKeyType> foreignKeys) {
         this.foreignKeys = foreignKeys;
+    }
+
+    public List<SyntheticSynonymType> getSynonyms() {
+        if (synonyms == null) {
+            synonyms = new ArrayList<SyntheticSynonymType>();
+        }
+        return synonyms;
+    }
+
+    public void setSynonyms(List<SyntheticSynonymType> synonyms) {
+        this.synonyms = synonyms;
     }
 
     public List<SyntheticViewType> getViews() {
@@ -375,6 +389,27 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         return this;
     }
 
+    public SyntheticObjectsType withSynonyms(SyntheticSynonymType... values) {
+        if (values!= null) {
+            for (SyntheticSynonymType value: values) {
+                getSynonyms().add(value);
+            }
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withSynonyms(Collection<SyntheticSynonymType> values) {
+        if (values!= null) {
+            getSynonyms().addAll(values);
+        }
+        return this;
+    }
+
+    public SyntheticObjectsType withSynonyms(List<SyntheticSynonymType> synonyms) {
+        setSynonyms(synonyms);
+        return this;
+    }
+
     public SyntheticObjectsType withViews(SyntheticViewType... values) {
         if (values!= null) {
             for (SyntheticViewType value: values) {
@@ -428,6 +463,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         builder.append("primaryKeys", "primaryKey", primaryKeys);
         builder.append("uniqueKeys", "uniqueKey", uniqueKeys);
         builder.append("foreignKeys", "foreignKey", foreignKeys);
+        builder.append("synonyms", "synonym", synonyms);
         builder.append("views", "view", views);
         builder.append("daos", "view", daos);
     }
@@ -532,6 +568,15 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (synonyms == null) {
+            if (other.synonyms!= null) {
+                return false;
+            }
+        } else {
+            if (!synonyms.equals(other.synonyms)) {
+                return false;
+            }
+        }
         if (views == null) {
             if (other.views!= null) {
                 return false;
@@ -566,6 +611,7 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
         result = ((prime*result)+((primaryKeys == null)? 0 :primaryKeys.hashCode()));
         result = ((prime*result)+((uniqueKeys == null)? 0 :uniqueKeys.hashCode()));
         result = ((prime*result)+((foreignKeys == null)? 0 :foreignKeys.hashCode()));
+        result = ((prime*result)+((synonyms == null)? 0 :synonyms.hashCode()));
         result = ((prime*result)+((views == null)? 0 :views.hashCode()));
         result = ((prime*result)+((daos == null)? 0 :daos.hashCode()));
         return result;

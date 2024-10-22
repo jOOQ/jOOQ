@@ -70,6 +70,7 @@ import org.jooq.meta.jaxb.SyntheticObjectsType;
 import org.jooq.meta.jaxb.SyntheticPrimaryKeyType;
 import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
 import org.jooq.meta.jaxb.SyntheticReadonlyRowidType;
+import org.jooq.meta.jaxb.SyntheticSynonymType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 import org.jooq.meta.jaxb.SyntheticViewType;
 
@@ -1455,6 +1456,11 @@ public interface Database extends AutoCloseable {
     List<SyntheticForeignKeyType> getConfiguredSyntheticForeignKeys();
 
     /**
+     * Get the configured synthetic synonyms.
+     */
+    List<SyntheticSynonymType> getConfiguredSyntheticSynonyms();
+
+    /**
      * Get the configured synthetic views.
      */
     List<SyntheticViewType> getConfiguredSyntheticViews();
@@ -1553,6 +1559,16 @@ public interface Database extends AutoCloseable {
      * Retrieve the not-yet used synthetic foreign keys.
      */
     List<SyntheticForeignKeyType> getUnusedSyntheticForeignKeys();
+
+    /**
+     * Mark a synthetic synonym as used.
+     */
+    void markUsed(SyntheticSynonymType synonym);
+
+    /**
+     * Retrieve the not-yet used synthetic synonyms.
+     */
+    List<SyntheticSynonymType> getUnusedSyntheticSynonyms();
 
     /**
      * Mark a synthetic view as used.

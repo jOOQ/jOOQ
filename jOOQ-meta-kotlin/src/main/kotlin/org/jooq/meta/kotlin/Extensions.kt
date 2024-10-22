@@ -629,6 +629,17 @@ fun MutableList<SyntheticForeignKeyType>.foreignKey(block: SyntheticForeignKeyTy
     add(e)
 }
 
+fun SyntheticObjectsType.synonyms(block: MutableList<SyntheticSynonymType>.() -> Unit) {
+    block(synonyms)
+}
+
+@JvmName("mutableListSyntheticSynonymType")
+fun MutableList<SyntheticSynonymType>.synonym(block: SyntheticSynonymType.() -> Unit) {
+    val e = SyntheticSynonymType()
+    block(e)
+    add(e)
+}
+
 fun SyntheticObjectsType.views(block: MutableList<SyntheticViewType>.() -> Unit) {
     block(views)
 }

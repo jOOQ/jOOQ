@@ -1856,7 +1856,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The synonym name.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="table" type="string" minOccurs="0" maxOccurs="1">
+      <element name="table" type="string" minOccurs="1" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching a table to which to apply this synthetic synonym.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

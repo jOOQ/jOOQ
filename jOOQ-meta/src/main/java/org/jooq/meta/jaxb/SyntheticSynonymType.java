@@ -25,7 +25,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="table" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="table" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="ignoreUnused" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -53,6 +53,7 @@ public class SyntheticSynonymType implements Serializable, XMLAppendable
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
+    @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String table;
     @XmlElement(defaultValue = "false")

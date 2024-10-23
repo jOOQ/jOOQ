@@ -402,6 +402,21 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    public final Condition binaryLike(byte[] pattern) {
+        return new BinaryLike(this, Tools.field(pattern));
+    }
+
+    @Override
+    public final Condition binaryLike(Field<byte[]> pattern) {
+        return new BinaryLike(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    public final Condition binaryLike(org.jooq.QuantifiedSelect<? extends Record1<byte[]>> pattern) {
+        return new BinaryLikeQuantified(this, pattern);
+    }
+
+    @Override
     public final Condition eq(T arg2) {
         return new Eq<>(this, Tools.field(arg2, this));
     }
@@ -689,6 +704,21 @@ implements
     @Override
     public final Condition ne(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2) {
         return new NeQuantified<>(this, arg2);
+    }
+
+    @Override
+    public final Condition notBinaryLike(byte[] pattern) {
+        return new NotBinaryLike(this, Tools.field(pattern));
+    }
+
+    @Override
+    public final Condition notBinaryLike(Field<byte[]> pattern) {
+        return new NotBinaryLike(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    public final Condition notBinaryLike(org.jooq.QuantifiedSelect<? extends Record1<byte[]>> pattern) {
+        return new NotBinaryLikeQuantified(this, pattern);
     }
 
     @Override

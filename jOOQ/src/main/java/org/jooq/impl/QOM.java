@@ -2814,6 +2814,44 @@ public final class QOM {
     {}
 
     /**
+     * The <code>BINARY LIKE</code> operator.
+     */
+    public /*sealed*/ interface BinaryLike
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<?>, Field<byte[]>, BinaryLike>,
+            org.jooq.Condition
+        //permits
+        //    BinaryLike
+    {
+        @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BinaryLike $value(Field<?> newValue) { return $arg1(newValue); }
+        @NotNull default Field<byte[]> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default BinaryLike $pattern(Field<byte[]> newPattern) { return $arg2(newPattern); }
+    }
+
+    /**
+     * The <code>BINARY LIKE</code> operator.
+     */
+    public /*sealed*/ interface BinaryLikeQuantified
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<?>, org.jooq.QuantifiedSelect<? extends Record1<byte[]>>, BinaryLikeQuantified>,
+            org.jooq.Condition
+        //permits
+        //    BinaryLikeQuantified
+    {
+        @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BinaryLikeQuantified $value(Field<?> newValue) { return $arg1(newValue); }
+        @NotNull default org.jooq.QuantifiedSelect<? extends Record1<byte[]>> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default BinaryLikeQuantified $pattern(org.jooq.QuantifiedSelect<? extends Record1<byte[]>> newPattern) { return $arg2(newPattern); }
+    }
+
+    /**
      * The <code>EQ</code> operator.
      */
     public /*sealed*/ interface TableEq<R extends Record>
@@ -3196,6 +3234,44 @@ public final class QOM {
         @NotNull default Field<Boolean> $field() { return $arg1(); }
         @CheckReturnValue
         @NotNull default NotField $field(Field<Boolean> newField) { return $arg1(newField); }
+    }
+
+    /**
+     * The <code>NOT BINARY LIKE</code> operator.
+     */
+    public /*sealed*/ interface NotBinaryLike
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<?>, Field<byte[]>, NotBinaryLike>,
+            org.jooq.Condition
+        //permits
+        //    NotBinaryLike
+    {
+        @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default NotBinaryLike $value(Field<?> newValue) { return $arg1(newValue); }
+        @NotNull default Field<byte[]> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default NotBinaryLike $pattern(Field<byte[]> newPattern) { return $arg2(newPattern); }
+    }
+
+    /**
+     * The <code>NOT BINARY LIKE</code> operator.
+     */
+    public /*sealed*/ interface NotBinaryLikeQuantified
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<?>, org.jooq.QuantifiedSelect<? extends Record1<byte[]>>, NotBinaryLikeQuantified>,
+            org.jooq.Condition
+        //permits
+        //    NotBinaryLikeQuantified
+    {
+        @NotNull default Field<?> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default NotBinaryLikeQuantified $value(Field<?> newValue) { return $arg1(newValue); }
+        @NotNull default org.jooq.QuantifiedSelect<? extends Record1<byte[]>> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default NotBinaryLikeQuantified $pattern(org.jooq.QuantifiedSelect<? extends Record1<byte[]>> newPattern) { return $arg2(newPattern); }
     }
 
     /**

@@ -7225,8 +7225,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (peekSelectOrWith(true)) {
                     Select<?> select = parseWithOrSelect();
                     parse(')');
-                    LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select));
-                    return parseEscapeClauseIf(result);
+                    if (binary((Field) left))
+                        return (not ^ notOp) ? ((Field) left).notBinaryLike(any(select)) : ((Field) left).binaryLike(any(select));
+                    else
+                        return parseEscapeClauseIf((not ^ notOp) ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select)));
                 }
                 else {
                     List<Field<?>> fields;
@@ -7237,9 +7239,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         fields = parseList(',', c -> toField(parseConcat()));
                         parse(')');
                     }
-                    Field<String>[] fieldArray = fields.toArray(new Field[0]);
-                    LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(any(fieldArray)) : ((Field<String>) left).like(any(fieldArray));
-                    return parseEscapeClauseIf(result);
+                    if (binary((Field) left))
+                        return (not ^ notOp) ? ((Field<String>) left).notBinaryLike(any((Field<byte[]>[]) fields.toArray(EMPTY_FIELD))) : ((Field<String>) left).binaryLike(any((Field<byte[]>[]) fields.toArray(EMPTY_FIELD)));
+                    else
+                        return parseEscapeClauseIf((not ^ notOp) ? ((Field<String>) left).notLike(any((Field<String>[]) fields.toArray(EMPTY_FIELD))) : ((Field<String>) left).like(any((Field<String>[]) fields.toArray(EMPTY_FIELD))));
                 }
             }
             else if (parseKeywordIf("ALL")) {
@@ -7247,8 +7250,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 if (peekSelectOrWith(true)) {
                     Select<?> select = parseWithOrSelect();
                     parse(')');
-                    LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select));
-                    return parseEscapeClauseIf(result);
+                    if (binary((Field) left))
+                        return (not ^ notOp) ? ((Field) left).notBinaryLike(all(select)) : ((Field) left).binaryLike(all(select));
+                    else
+                        return parseEscapeClauseIf((not ^ notOp) ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select)));
                 }
                 else {
                     List<Field<?>> fields;
@@ -7259,15 +7264,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         fields = parseList(',', c -> toField(parseConcat()));
                         parse(')');
                     }
-                    Field<String>[] fieldArray = fields.toArray(new Field[0]);
-                    LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(all(fieldArray)) : ((Field<String>) left).like(all(fieldArray));
-                    return parseEscapeClauseIf(result);
+                    if (binary((Field) left))
+                        return (not ^ notOp) ? ((Field<String>) left).notBinaryLike(all((Field<byte[]>[]) fields.toArray(EMPTY_FIELD))) : ((Field<String>) left).binaryLike(all((Field<byte[]>[]) fields.toArray(EMPTY_FIELD)));
+                    else
+                        return parseEscapeClauseIf((not ^ notOp) ? ((Field<String>) left).notLike(all((Field<String>[]) fields.toArray(EMPTY_FIELD))) : ((Field<String>) left).like(all((Field<String>[]) fields.toArray(EMPTY_FIELD))));
                 }
             }
             else {
                 Field right = toField(parseConcat());
-                LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLike(right) : ((Field) left).like(right);
-                return parseEscapeClauseIf(like);
+
+                if (binary((Field) left) || binary(right))
+                    return (not ^ notOp) ? ((Field) left).notBinaryLike(right) : ((Field) left).binaryLike(right);
+                else
+                    return parseEscapeClauseIf((not ^ notOp) ? ((Field) left).notLike(right) : ((Field) left).like(right));
             }
         }
         else if (isField && (parseKeywordIf("ILIKE") || parseOperatorIf("~~*") || (notOp = parseOperatorIf("!~~*")))) {

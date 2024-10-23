@@ -706,6 +706,27 @@ extends
     // -------------------------------------------------------------------------
 
     /**
+     * The <code>BINARY_LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition binaryLike(byte[] pattern);
+
+    /**
+     * The <code>BINARY_LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition binaryLike(Field<byte[]> pattern);
+
+    /**
+     * The <code>BINARY_LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition binaryLike(org.jooq.QuantifiedSelect<? extends Record1<byte[]>> pattern);
+
+    /**
      * The <code>EQ</code> operator.
      */
     @NotNull
@@ -1150,6 +1171,27 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition ne(org.jooq.QuantifiedSelect<? extends Record1<T>> arg2);
+
+    /**
+     * The <code>NOT_BINARY_LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition notBinaryLike(byte[] pattern);
+
+    /**
+     * The <code>NOT_BINARY_LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition notBinaryLike(Field<byte[]> pattern);
+
+    /**
+     * The <code>NOT_BINARY_LIKE</code> operator.
+     */
+    @NotNull
+    @Support
+    Condition notBinaryLike(org.jooq.QuantifiedSelect<? extends Record1<byte[]>> pattern);
 
     /**
      * The <code>NOT_EQUAL</code> operator, an alias for the <code>NE</code> operator.
@@ -2363,7 +2405,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, YUGABYTEDB })
     Condition likeIgnoreCase(Field<String> field, char escape);
 
     /**

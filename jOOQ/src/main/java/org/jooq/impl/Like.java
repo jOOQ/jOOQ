@@ -162,40 +162,50 @@ implements
 
     static final void accept0(Context<?> ctx, Field<?> arg1, org.jooq.Comparator op, Field<?> arg2, Character escape) {
 
-        // [#1159] [#1725] Some dialects cannot auto-convert the LHS operand to a
-        // VARCHAR when applying a LIKE predicate
-        switch (op) {
-            case LIKE:
-            case SIMILAR_TO:
-            case NOT_LIKE:
-            case NOT_SIMILAR_TO:
-                if (arg1.getType() != String.class && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
-                    arg1 = castIfNeeded(arg1, String.class);
-                if (arg2.getType() != String.class && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
-                    arg2 = castIfNeeded(arg2, String.class);
-
-                break;
-
-            case LIKE_IGNORE_CASE:
-            case NOT_LIKE_IGNORE_CASE:
-                if (arg1.getType() != String.class)
-                    arg1 = castIfNeeded(arg1, String.class);
-                if (arg2.getType() != String.class)
-                    arg2 = castIfNeeded(arg2, String.class);
-
-                break;
+        // [#16101] BinaryLike needs a cast in all dialects
+        if (arg2.getDataType().isBinary()) {
+            if (arg1.getDataType().isString())
+                arg1 = arg1.cast(VARBINARY);
+            else if (!arg1.getDataType().isBinary())
+                arg1 = arg1.cast(VARCHAR).cast(VARBINARY);
         }
+        else {
 
-        // [#1423] [#9889] PostgreSQL and H2 support ILIKE natively. Other dialects
-        // need to emulate this as LOWER(lhs) LIKE LOWER(rhs)
-        switch (op) {
-            case LIKE_IGNORE_CASE:
-            case NOT_LIKE_IGNORE_CASE:
-                if (NO_SUPPORT_ILIKE.contains(ctx.dialect())) {
-                    arg1 = DSL.lower((Field) arg1);
-                    arg2 = DSL.lower((Field) arg2);
-                    op = (op == org.jooq.Comparator.LIKE_IGNORE_CASE ? org.jooq.Comparator.LIKE : org.jooq.Comparator.NOT_LIKE);
-                }
+            // [#1159] [#1725] Some dialects cannot auto-convert the LHS operand to a
+            // VARCHAR when applying a LIKE predicate
+            switch (op) {
+                case LIKE:
+                case SIMILAR_TO:
+                case NOT_LIKE:
+                case NOT_SIMILAR_TO:
+                    if (arg1.getType() != String.class && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
+                        arg1 = castIfNeeded(arg1, String.class);
+                    if (arg2.getType() != String.class && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
+                        arg2 = castIfNeeded(arg2, String.class);
+
+                    break;
+
+                case LIKE_IGNORE_CASE:
+                case NOT_LIKE_IGNORE_CASE:
+                    if (arg1.getType() != String.class)
+                        arg1 = castIfNeeded(arg1, String.class);
+                    if (arg2.getType() != String.class)
+                        arg2 = castIfNeeded(arg2, String.class);
+
+                    break;
+            }
+
+            // [#1423] [#9889] PostgreSQL and H2 support ILIKE natively. Other dialects
+            // need to emulate this as LOWER(lhs) LIKE LOWER(rhs)
+            switch (op) {
+                case LIKE_IGNORE_CASE:
+                case NOT_LIKE_IGNORE_CASE:
+                    if (NO_SUPPORT_ILIKE.contains(ctx.dialect())) {
+                        arg1 = DSL.lower((Field) arg1);
+                        arg2 = DSL.lower((Field) arg2);
+                        op = (op == org.jooq.Comparator.LIKE_IGNORE_CASE ? org.jooq.Comparator.LIKE : org.jooq.Comparator.NOT_LIKE);
+                    }
+            }
         }
 
         boolean castRhs = castRhs(ctx, arg2);

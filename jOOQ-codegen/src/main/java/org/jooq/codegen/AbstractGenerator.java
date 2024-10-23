@@ -112,6 +112,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generatePojosAsScalaCaseClasses                       = true;
     boolean                            generatePojosAsKotlinDataClasses                      = true;
     boolean                            generatePojosEqualsAndHashCode                        = true;
+    boolean                            generatePojosEqualsAndHashCodePrimaryKeyOnly          = false;
     String                             generatePojosEqualsAndHashCodeColumnIncludeExpression = null;
     String                             generatePojosEqualsAndHashCodeColumnExcludeExpression = null;
     boolean                            generatePojosToString                                 = true;
@@ -1399,6 +1400,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratePojosEqualsAndHashCode(boolean generatePojosEqualsAndHashCode) {
         this.generatePojosEqualsAndHashCode = generatePojosEqualsAndHashCode;
+    }
+
+    @Override
+    public boolean generatePojosEqualsAndHashCodePrimaryKeyOnly() {
+        return generatePojosEqualsAndHashCodePrimaryKeyOnly;
+    }
+
+    @Override
+    public void setGeneratePojosEqualsAndHashCodePrimaryKeyOnly(boolean generatePojosEqualsAndHashCodePrimaryKeyOnly) {
+        this.generatePojosEqualsAndHashCodePrimaryKeyOnly = generatePojosEqualsAndHashCodePrimaryKeyOnly;
     }
 
     @Override

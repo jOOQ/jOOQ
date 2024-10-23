@@ -2723,12 +2723,16 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate basic equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="pojosEqualsAndHashCodeIncludePrimaryKeyOnly" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Include primary key columns only in generated equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="pojosEqualsAndHashCodeColumnIncludeExpression" type="string" default="" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The regular expression matching columns for inclusion in generated equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching columns for inclusion in generated equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="pojosEqualsAndHashCodeColumnExcludeExpression" type="string" default="" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The regular expression matching columns for exclusion in generated equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching columns for exclusion in generated equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="pojosToString" type="boolean" default="true" minOccurs="0" maxOccurs="1">

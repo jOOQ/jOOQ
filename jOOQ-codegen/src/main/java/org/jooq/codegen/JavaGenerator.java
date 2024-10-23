@@ -6836,13 +6836,24 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(tableUdtOrEmbeddable, Mode.POJO);
         List<Definition> replacingEmbeddablesAndUnreplacedColumns = replacingEmbeddablesAndUnreplacedColumns(tableUdtOrEmbeddable);
 
-        if (generatePojosEqualsAndHashCodeColumnIncludeExpression() != null ||
-            generatePojosEqualsAndHashCodeColumnExcludeExpression() != null)
+        // [#17487] Include / exclude specific columns, if requested
+        if (!isEmpty(generatePojosEqualsAndHashCodeColumnIncludeExpression()) ||
+            !isEmpty(generatePojosEqualsAndHashCodeColumnExcludeExpression()))
             replacingEmbeddablesAndUnreplacedColumns = database.filterExcludeInclude(
                 replacingEmbeddablesAndUnreplacedColumns,
                 generatePojosEqualsAndHashCodeColumnExcludeExpression(),
                 generatePojosEqualsAndHashCodeColumnIncludeExpression()
             );
+
+        // [#8705] Retain only primary key columns, if requested
+        if (generatePojosEqualsAndHashCodePrimaryKeyOnly())  {
+            if (tableUdtOrEmbeddable instanceof TableDefinition t) {
+                UniqueKeyDefinition pk = t.getPrimaryKey();
+
+                if (pk != null)
+                    replacingEmbeddablesAndUnreplacedColumns.retainAll(pk.getKeyColumns());
+            }
+        }
 
         out.println();
 

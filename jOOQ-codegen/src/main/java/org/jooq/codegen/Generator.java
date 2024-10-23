@@ -1291,6 +1291,18 @@ public interface Generator {
     void setGeneratePojosEqualsAndHashCode(boolean generatePojosEqualsAndHashCode);
 
     /**
+     * Whether the <code>equals()</code> and <code>hashCode()</code> methods be
+     * generated on POJOs should include primary key columns only.
+     */
+    boolean generatePojosEqualsAndHashCodePrimaryKeyOnly();
+
+    /**
+     * Whether the <code>equals()</code> and <code>hashCode()</code> methods be
+     * generated on POJOs should include primary key columns only.
+     */
+    void setGeneratePojosEqualsAndHashCodePrimaryKeyOnly(boolean generatePojosEqualsAndHashCodePrimaryKeyOnly);
+
+    /**
      * A regular expression matching columns to include in <code>equals()</code>
      * and <code>hashCode()</code> methods of generated POJOS.
      */

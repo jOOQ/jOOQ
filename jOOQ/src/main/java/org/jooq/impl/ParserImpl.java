@@ -98,6 +98,8 @@ import static org.jooq.impl.DSL.avgDistinct;
 import static org.jooq.impl.DSL.begin;
 import static org.jooq.impl.DSL.binaryBitLength;
 import static org.jooq.impl.DSL.binaryLength;
+import static org.jooq.impl.DSL.binaryListAgg;
+import static org.jooq.impl.DSL.binaryListAggDistinct;
 import static org.jooq.impl.DSL.binaryLtrim;
 import static org.jooq.impl.DSL.binaryMd5;
 import static org.jooq.impl.DSL.binaryOctetLength;
@@ -13056,8 +13058,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             : new InverseDistributionFunction(null, f.apply(f2).withinGroupOrderBy(f1));
     }
 
-    private final OrderedAggregateFunction<String> parseListaggFunctionIf() {
-        OrderedAggregateFunction<String> ordered;
+    private final OrderedAggregateFunction<?> parseListaggFunctionIf() {
+        OrderedAggregateFunction<?> ordered;
 
         if (parseFunctionNameIf("LISTAGG", "STRING_AGG")) {
             parse('(');
@@ -13065,9 +13067,21 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Field<?> field = parseField();
 
             if (parseIf(','))
-                ordered = distinct ? listAggDistinct(field, (Field) parseField()) : listAgg(field, (Field) parseField());
+                ordered = distinct
+                    ? binary(field)
+                        ? binaryListAggDistinct(field, (Field) parseField())
+                        : listAggDistinct(field, (Field) parseField())
+                    : binary(field)
+                        ? binaryListAgg(field, (Field) parseField())
+                        : listAgg(field, (Field) parseField());
             else
-                ordered = distinct ? listAggDistinct(field) : listAgg(field);
+                ordered = distinct
+                    ? binary(field)
+                        ? binaryListAggDistinct(field)
+                        : listAggDistinct(field)
+                    : binary(field)
+                        ? binaryListAgg(field)
+                        : listAgg(field);
 
             if (parseKeywordIf("ORDER BY"))
                 ordered.withinGroupOrderBy(parseList(',', c -> c.parseSortField()));

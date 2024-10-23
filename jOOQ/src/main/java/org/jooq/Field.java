@@ -2405,7 +2405,7 @@ extends
      * @see LikeEscapeStep#escape(char)
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Condition likeIgnoreCase(Field<String> field, char escape);
 
     /**

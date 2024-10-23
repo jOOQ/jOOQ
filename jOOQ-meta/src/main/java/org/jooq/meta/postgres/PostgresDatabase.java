@@ -840,7 +840,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                              d.OID,
                              d.TYPBASETYPE,
                              c.CONNAME,
-                             when(c.OID.isNotNull(), array(constraintDef))
+
+                             // [#17489] PG 17 added NOT NULL constraints for domains to this table
+                             when(c.OID.isNotNull().and(c.CONTYPE.ne(inline("n"))), array(constraintDef))
                          )
                         .from(d)
                         .join(n)
@@ -855,9 +857,10 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                              d.OID,
                              d.TYPBASETYPE,
                              c.CONNAME,
-                             decode()
-                                 .when(c.CONBIN.isNull(), src)
-                                 .otherwise(arrayAppend(src, constraintDef))
+
+                             // [#17489] PG 17 added NOT NULL constraints for domains to this table
+                             when(c.CONBIN.isNull().and(c.CONTYPE.ne(inline("n"))), src)
+                             .else_(arrayAppend(src, constraintDef))
                          )
                         .from(name("domains"))
                         .join(d)

@@ -2815,6 +2815,8 @@ public final class QOM {
 
     /**
      * The <code>BINARY LIKE</code> operator.
+     * <p>
+     * The LIKE operator for binary strings
      */
     public /*sealed*/ interface BinaryLike
         extends
@@ -2834,6 +2836,8 @@ public final class QOM {
 
     /**
      * The <code>BINARY LIKE</code> operator.
+     * <p>
+     * The LIKE operator for binary strings
      */
     public /*sealed*/ interface BinaryLikeQuantified
         extends
@@ -3238,6 +3242,8 @@ public final class QOM {
 
     /**
      * The <code>NOT BINARY LIKE</code> operator.
+     * <p>
+     * The NOT LIKE operator for binary strings
      */
     public /*sealed*/ interface NotBinaryLike
         extends
@@ -3257,6 +3263,8 @@ public final class QOM {
 
     /**
      * The <code>NOT BINARY LIKE</code> operator.
+     * <p>
+     * The NOT LIKE operator for binary strings
      */
     public /*sealed*/ interface NotBinaryLikeQuantified
         extends

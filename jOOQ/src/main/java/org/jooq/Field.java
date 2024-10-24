@@ -707,23 +707,29 @@ extends
 
     /**
      * The <code>BINARY_LIKE</code> operator.
+     * <p>
+     * The LIKE operator for binary strings
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     Condition binaryLike(byte[] pattern);
 
     /**
      * The <code>BINARY_LIKE</code> operator.
+     * <p>
+     * The LIKE operator for binary strings
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     Condition binaryLike(Field<byte[]> pattern);
 
     /**
      * The <code>BINARY_LIKE</code> operator.
+     * <p>
+     * The LIKE operator for binary strings
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     Condition binaryLike(org.jooq.QuantifiedSelect<? extends Record1<byte[]>> pattern);
 
     /**
@@ -1174,23 +1180,29 @@ extends
 
     /**
      * The <code>NOT_BINARY_LIKE</code> operator.
+     * <p>
+     * The NOT LIKE operator for binary strings
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     Condition notBinaryLike(byte[] pattern);
 
     /**
      * The <code>NOT_BINARY_LIKE</code> operator.
+     * <p>
+     * The NOT LIKE operator for binary strings
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     Condition notBinaryLike(Field<byte[]> pattern);
 
     /**
      * The <code>NOT_BINARY_LIKE</code> operator.
+     * <p>
+     * The NOT LIKE operator for binary strings
      */
     @NotNull
-    @Support
+    @Support({ POSTGRES, YUGABYTEDB })
     Condition notBinaryLike(org.jooq.QuantifiedSelect<? extends Record1<byte[]>> pattern);
 
     /**

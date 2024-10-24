@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.impl.DSL;
 import org.jooq.meta.TableDefinition;
 import org.jooq.meta.extensions.AbstractInterpretingDatabase;
 import org.jooq.tools.Convert;

@@ -261,6 +261,16 @@ final class ParsingStatement implements CallableStatement {
         return statement().getResultSetHoldability();
     }
 
+    @Override
+    public final SQLWarning getWarnings() throws SQLException {
+        return statement().getWarnings();
+    }
+
+    @Override
+    public final void clearWarnings() throws SQLException {
+        statement().clearWarnings();
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Static statement execution
     // -------------------------------------------------------------------------
@@ -1431,16 +1441,6 @@ final class ParsingStatement implements CallableStatement {
 
     @Override
     public final ParameterMetaData getParameterMetaData() throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final SQLWarning getWarnings() throws SQLException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public final void clearWarnings() throws SQLException {
         throw new SQLFeatureNotSupportedException();
     }
 

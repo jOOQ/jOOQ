@@ -45,6 +45,9 @@ import java.util.Properties;
 import java.util.UUID;
 
 import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.conf.ParseUnknownFunctions;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.meta.SchemaDefinition;
@@ -90,12 +93,19 @@ public abstract class AbstractInterpretingDatabase extends H2Database {
         if (connection == null) {
             try {
                 String unqualifiedSchema = getProperties().getProperty("unqualifiedSchema", "none").toLowerCase();
+
                 publicIsDefault = "none".equals(unqualifiedSchema);
 
                 Properties info = new Properties();
                 info.put("user", "sa");
                 info.put("password", "");
                 connection = new org.h2.Driver().connect("jdbc:h2:mem:jooq-meta-extensions-" + UUID.randomUUID(), info);
+
+                if (Boolean.parseBoolean(getProperties().getProperty("useParsingConnection")))
+                    connection = DSL
+                        .using(connection, SQLDialect.H2, new Settings()
+                            .withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
+                        .parsingConnection();
 
                 export();
             }

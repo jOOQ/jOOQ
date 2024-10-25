@@ -1209,9 +1209,19 @@ public class GenerationTool {
             // [#2801] [#4620]
             else if (className.startsWith("org.jooq.meta.") && className.endsWith("Database")) {
                 log.warn("Type not found", message =
-                      "Your configured database type was not found: " + className + ". This can have several reasons:\n"
-                    + "- You want to use a commercial jOOQ Edition, but you pulled the Open Source Edition from Maven Central.\n"
-                    + "- You have mis-typed your class name.");
+                      """
+                      Your configured database type was not found: " + className + ". This can have several reasons:
+                      - You want to use a commercial jOOQ Edition, but you pulled the Open Source Edition from Maven Central. Maven groupIds are:
+                        - org.jooq                for the Open Source Edition
+                        - org.jooq.pro            for commercial editions with Java 17 support,
+                        - org.jooq.pro-java-11    for commercial editions with Java 11 support,
+                        - org.jooq.pro-java-8     for commercial editions with Java 8 support,
+                        - org.jooq.trial          for the free trial edition with Java 17 support,
+                        - org.jooq.trial-java-11  for the free trial edition with Java 11 support,
+                        - org.jooq.trial-java-8   for the free trial edition with Java 8 support
+                      - You have mis-typed your class name.
+                      """
+                );
             }
 
             if (message == null)

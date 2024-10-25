@@ -859,7 +859,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                              c.CONNAME,
 
                              // [#17489] PG 17 added NOT NULL constraints for domains to this table
-                             when(c.CONBIN.isNull().and(c.CONTYPE.ne(inline("n"))), src)
+                             when(c.CONBIN.isNull().or(c.CONTYPE.ne(inline("n"))), src)
                              .else_(arrayAppend(src, constraintDef))
                          )
                         .from(name("domains"))

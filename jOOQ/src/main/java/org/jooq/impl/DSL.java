@@ -33395,7 +33395,7 @@ public class DSL {
      * Get the aggregated concatenation for a field.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ POSTGRES })
     public static OrderedAggregateFunction<byte[]> binaryListAgg(Field<?> field) {
         return new BinaryListAgg(false, Tools.nullSafe(field));
     }
@@ -33404,7 +33404,7 @@ public class DSL {
      * Get the aggregated concatenation for a field.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ POSTGRES })
     public static OrderedAggregateFunction<byte[]> binaryListAgg(Field<?> field, byte[] separator) {
         return binaryListAgg(field, inline(separator));
     }
@@ -33413,7 +33413,7 @@ public class DSL {
      * Get the aggregated concatenation for a field.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ POSTGRES })
     public static OrderedAggregateFunction<byte[]> binaryListAgg(Field<?> field, Field<byte[]> separator) {
         return new BinaryListAgg(false, Tools.nullSafe(field), separator);
     }
@@ -33422,7 +33422,7 @@ public class DSL {
      * Get the aggregated concatenation for a field.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ POSTGRES })
     public static OrderedAggregateFunction<byte[]> binaryListAggDistinct(Field<?> field) {
         return new BinaryListAgg(true, Tools.nullSafe(field));
     }
@@ -33431,7 +33431,7 @@ public class DSL {
      * Get the aggregated concatenation for a field.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ POSTGRES })
     public static OrderedAggregateFunction<byte[]> binaryListAggDistinct(Field<?> field, byte[] separator) {
         return binaryListAggDistinct(field, inline(separator));
     }
@@ -33440,7 +33440,7 @@ public class DSL {
      * Get the aggregated concatenation for a field.
      */
     @NotNull
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ POSTGRES })
     public static OrderedAggregateFunction<byte[]> binaryListAggDistinct(Field<?> field, Field<byte[]> separator) {
         return new BinaryListAgg(true, Tools.nullSafe(field), separator);
     }

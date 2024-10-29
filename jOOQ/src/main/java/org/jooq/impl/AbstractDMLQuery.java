@@ -796,6 +796,25 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     abstract void accept1(Context<?> ctx);
 
     /**

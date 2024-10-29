@@ -51,6 +51,7 @@ import java.util.Arrays;
 
 import org.jooq.Context;
 import org.jooq.Name;
+import org.jooq.Scope;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.SettingsTools;
 import org.jooq.tools.StringUtils;
@@ -92,18 +93,21 @@ final class UnqualifiedName extends AbstractName {
 
 
 
-        RenderQuotedNames q = SettingsTools.getRenderQuotedNames(ctx.settings());
-
         boolean previous = ctx.quote();
-        boolean current = quoted != SYSTEM && (
-             q == RenderQuotedNames.ALWAYS
-          || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
-          || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED
-        );
 
-        ctx.quote(current);
+        ctx.quote(quoted(ctx));
         ctx.literal(defaultIfNull(name, ""));
         ctx.quote(previous);
+    }
+
+    final boolean quoted(Scope ctx) {
+        RenderQuotedNames q = SettingsTools.getRenderQuotedNames(ctx.settings());
+
+        return quoted != SYSTEM && (
+            q == RenderQuotedNames.ALWAYS
+         || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
+         || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED
+        );
     }
 
     @Override

@@ -131,7 +131,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.schema = schema;
 
         // [#519] [#17135] Some types have unsigned versions
-        if (!database.supportsUnsignedTypes() && typeName.toLowerCase().endsWith("unsigned"))
+        if (!database.supportsUnsignedTypes() && P_UNSIGNED.matcher(typeName).find())
             typeName = P_UNSIGNED.matcher(typeName).replaceFirst("");
 
         // [#3420] Some databases report NULL as a data type, e.g. Oracle for (some) AQ tables

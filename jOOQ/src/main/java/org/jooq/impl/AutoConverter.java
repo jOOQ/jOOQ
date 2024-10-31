@@ -38,9 +38,14 @@
 package org.jooq.impl;
 
 import static org.jooq.ContextConverter.scoped;
+import static org.jooq.impl.Tools.CONFIG;
 
 import org.jooq.Configuration;
+import org.jooq.ContextConverter;
+import org.jooq.Converter;
 import org.jooq.ConverterContext;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A base class for automatic conversion using
@@ -56,12 +61,17 @@ public /* non-final */ class AutoConverter<T, U> extends AbstractContextConverte
 
     @Override
     public U from(T t, ConverterContext ctx) {
-        return scoped(ctx.configuration().converterProvider().provide(fromType(), toType())).from(t, ctx);
+        return delegate(ctx).from(t, ctx);
     }
 
     @Override
     public T to(U u, ConverterContext ctx) {
-        return scoped(ctx.configuration().converterProvider().provide(fromType(), toType())).to(u, ctx);
+        return delegate(ctx).to(u, ctx);
+    }
+
+    private final ContextConverter<T, U> delegate(ConverterContext ctx) {
+        Converter<T, U> c = ctx.configuration().converterProvider().provide(fromType(), toType());
+        return scoped(c != null ? c : CONFIG.get().converterProvider().provide(fromType(), toType()));
     }
 
     @Override

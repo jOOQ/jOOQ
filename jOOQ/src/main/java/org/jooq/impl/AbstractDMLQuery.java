@@ -104,11 +104,8 @@ import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.map;
-<<<<<<< version-3.19.0-branch
 import static org.jooq.impl.Tools.orElse;
-=======
 import static org.jooq.impl.Tools.newRecord;
->>>>>>> 35fce1c [jOOQ/jOOQ#17512] Oracle RETURNING emulation doesn't use configured ConverterProvider from an AutoConverter
 import static org.jooq.impl.Tools.reference;
 import static org.jooq.impl.Tools.removeGenerator;
 import static org.jooq.impl.Tools.row0;

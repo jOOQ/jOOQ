@@ -94,6 +94,7 @@ import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.exception.DataAccessException.sqlStateClass;
+import static org.jooq.impl.AbstractDataType.convert0;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
@@ -3716,14 +3717,14 @@ final class Tools {
      * Type-safely set a value to a record
      */
     static final <T> void setValue(Record target, Field<T> targetField, Object value, ConverterContext cc) {
-        target.set(targetField, ((AbstractDataType<T>) targetField.getDataType()).convert(value, cc));
+        target.set(targetField, convert0(targetField.getDataType(), value, cc));
     }
 
     /**
      * Type-safely set a value to a record
      */
     static final <T> void setValue(AbstractRecord target, Field<T> targetField, int targetIndex, Object value, ConverterContext cc) {
-        target.set(targetField, targetIndex, ((AbstractDataType<T>) targetField.getDataType()).convert(value, cc));
+        target.set(targetField, targetIndex, convert0(targetField.getDataType(), value, cc));
     }
 
     /**

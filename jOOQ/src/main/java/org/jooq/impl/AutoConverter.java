@@ -44,6 +44,7 @@ import org.jooq.Configuration;
 import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
+import org.jooq.exception.DataTypeException;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -71,7 +72,14 @@ public /* non-final */ class AutoConverter<T, U> extends AbstractContextConverte
 
     private final ContextConverter<T, U> delegate(ConverterContext ctx) {
         Converter<T, U> c = ctx.configuration().converterProvider().provide(fromType(), toType());
-        return scoped(c != null ? c : CONFIG.get().converterProvider().provide(fromType(), toType()));
+
+        if (c == null)
+            c = CONFIG.get().converterProvider().provide(fromType(), toType());
+
+        if (c == null)
+            throw new DataTypeException("Cannot auto convert from " + fromType() + " to " + toType());
+        else
+            return scoped(c);
     }
 
     @Override

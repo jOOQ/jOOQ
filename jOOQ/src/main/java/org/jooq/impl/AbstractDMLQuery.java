@@ -73,6 +73,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.conf.SettingsTools.renderLocale;
+import static org.jooq.impl.AbstractDataType.convert0;
 import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
@@ -99,11 +100,15 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.autoAlias;
+import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.reference;
 import static org.jooq.impl.Tools.removeGenerator;
+import static org.jooq.impl.Tools.row0;
+import static org.jooq.impl.Tools.setValue;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.updateQueryImpl;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNALIAS_ALIASED_EXPRESSIONS;
@@ -133,10 +138,12 @@ import java.util.function.BiFunction;
 
 import org.jooq.Asterisk;
 import org.jooq.Binding;
+import org.jooq.BindingGetResultSetContext;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.ConverterContext;
 import org.jooq.DMLQuery;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -1226,6 +1233,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 }
 
                 // These dialects have full JDBC support
+
+
+
 
 
 

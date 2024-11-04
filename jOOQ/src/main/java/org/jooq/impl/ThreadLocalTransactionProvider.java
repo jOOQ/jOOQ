@@ -100,20 +100,16 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
     public void commit(TransactionContext ctx) {
         if (delegateTransactionProvider.nestingLevel(ctx.configuration()) == 1)
             localTxConnection.remove();
-
-        // [#17517] In case of failure during commit(), avoid calling pop() here
-        //          as it will be called in rollback()
-        delegateTransactionProvider.commit(ctx);
         configurations().pop();
+        delegateTransactionProvider.commit(ctx);
     }
 
     @Override
     public void rollback(TransactionContext ctx) {
         if (delegateTransactionProvider.nestingLevel(ctx.configuration()) == 1)
             localTxConnection.remove();
-
-        delegateTransactionProvider.rollback(ctx);
         configurations().pop();
+        delegateTransactionProvider.rollback(ctx);
     }
 
     Configuration configuration(Configuration fallback) {

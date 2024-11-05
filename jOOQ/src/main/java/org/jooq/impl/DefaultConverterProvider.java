@@ -85,6 +85,10 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
         if (tWrapper == uWrapper
             || uWrapper.isAssignableFrom(tWrapper)
             || isCollection(tWrapper) && isCollection(uWrapper)
+
+            // [#17536] If the Class<T> type is omitted (e.g. plain SQL templates), then we
+            //          should delay conversion until the actual value is available
+            || tWrapper == Object.class
             || tWrapper == Optional.class
             || uWrapper == Optional.class
             || uWrapper == String.class

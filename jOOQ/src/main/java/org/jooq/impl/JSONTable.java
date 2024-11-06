@@ -227,7 +227,7 @@ implements
             .from(hasOrdinality
                 ? "jsonb_path_query({0}, cast({1} as jsonpath)) {with} {ordinality} {as} t(j, o)"
                 : "jsonb_path_query({0}, cast({1} as jsonpath)) {as} t(j)",
-                json.getType() == JSONB.class ? json : json.cast(JSONB),
+                json.getDataType().getFromType() == JSONB.class ? json : json.cast(JSONB),
                 path
             ),
             DERIVED_TABLE

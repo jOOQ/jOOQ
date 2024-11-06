@@ -1866,7 +1866,9 @@ implements
     private final boolean pgArgNeedsCasting(Parameter<?> parameter) {
         // [#5264] Overloaded methods always need casting for overload resolution
         //         Some data types also need casting because expressions are automatically promoted to a "higher" type
-        return isOverloaded() || parameter.getType() == Byte.class || parameter.getType() == Short.class;
+        return isOverloaded()
+            || parameter.getDataType().getFromType() == Byte.class
+            || parameter.getDataType().getFromType() == Short.class;
     }
 
 

@@ -148,9 +148,23 @@ public interface DataType<T> extends Named {
 
     /**
      * Retrieve the Java type associated with this data type.
+     * <p>
+     * This is the same as {@link #getUserType()}.
      */
     @NotNull
     Class<T> getType();
+
+    /**
+     * The {@link Converter#fromType()} (or database type) in case this {@link DataType} has a converter.
+     */
+    @NotNull
+    Class<?> getFromType();
+
+    /**
+     * The {@link Converter#toType()} (or user type) in case this {@link DataType} has a converter.
+     */
+    @NotNull
+    Class<T> getToType();
 
     /**
      * Get the defining DOMAIN type or <code>NULL</code> if there is no such

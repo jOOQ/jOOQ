@@ -100,7 +100,7 @@ implements
             Field<?> field = getArguments().get(0);
 
             // TODO: Is 2's complement implemented correctly?
-            if (field.getType() == Byte.class) {
+            if (field.getDataType().getFromType() == Byte.class) {
                 Field<Byte> f = (Field<Byte>) field;
                 Field<Byte> b0 = inline((byte) 0);
                 Field<Byte> b2 = inline((byte) 2);
@@ -116,7 +116,7 @@ implements
                     .plus(case_(fo(DSL.min(case_(DSL.bitAnd(f, inline((byte) 0x80))).when(b0, b0).when(inline((byte) 0x80), inline((byte) 0x80))))).when((byte) 0x80, (byte) 0x80).when(b0, b0))
                 );
             }
-            else if (field.getType() == Short.class) {
+            else if (field.getDataType().getFromType() == Short.class) {
                 Field<Short> f = (Field<Short>) field;
                 Field<Short> s0 = inline((short) 0);
                 Field<Short> s2 = inline((short) 2);
@@ -140,7 +140,7 @@ implements
                     .plus(case_(fo(DSL.min(case_(DSL.bitAnd(f, inline((short) 0x8000))).when(s0, s0).when(inline((short) 0x8000), inline((short) 0x8000))))).when((short) 0x8000, (short) 0x8000).when(s0, s0))
                 );
             }
-            else if (field.getType() == Integer.class) {
+            else if (field.getDataType().getFromType() == Integer.class) {
                 Field<Integer> f = (Field<Integer>) field;
                 Field<Integer> i0 = inline(0);
                 Field<Integer> i2 = inline(2);
@@ -180,7 +180,7 @@ implements
                     .plus(case_(fo(DSL.min(case_(DSL.bitAnd(f, inline(0x80000000))).when(i0, i0).when(inline(0x80000000), inline(0x80000000))))).when(0x80000000, 0x80000000).when(i0, i0))
                 );
             }
-            else if (field.getType() == Long.class) {
+            else if (field.getDataType().getFromType() == Long.class) {
                 Field<Long> f = (Field<Long>) field;
                 Field<Long> l0 = inline(0L);
                 Field<Long> l2 = inline(2L);

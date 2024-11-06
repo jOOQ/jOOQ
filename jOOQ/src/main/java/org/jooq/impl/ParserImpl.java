@@ -7475,7 +7475,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 Field<?> f = parseField();
 
                 // Work around a missing feature in unnest()
-                if (!f.getType().isArray())
+                if (!f.getDataType().isArray())
                     f = f.coerce(f.getDataType().array());
 
                 result = unnest(f);
@@ -8571,12 +8571,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     //          more popular attribute access for now. Also,
                     //          JSONB is likely more popular than JSON.
                     if (r.getDataType().isNumeric())
-                        if (((Field) l).getType() == JSON.class)
+                        if (((Field) l).getDataType().getFromType() == JSON.class)
                             l = jsonGetElementAsText((Field) l, r);
                         else
                             l = jsonbGetElementAsText((Field) l, r);
                     else
-                        if (((Field) l).getType() == JSON.class)
+                        if (((Field) l).getDataType().getFromType() == JSON.class)
                             l = jsonGetAttributeAsText((Field) l, r);
                         else
                             l = jsonbGetAttributeAsText((Field) l, r);
@@ -8589,18 +8589,18 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     //          more popular attribute access for now. Also,
                     //          JSONB is likely more popular than JSON.
                     if (r.getDataType().isNumeric())
-                        if (((Field) l).getType() == JSON.class)
+                        if (((Field) l).getDataType().getFromType() == JSON.class)
                             l = jsonGetElement((Field) l, r);
                         else
                             l = jsonbGetElement((Field) l, r);
                     else
-                        if (((Field) l).getType() == JSON.class)
+                        if (((Field) l).getDataType().getFromType() == JSON.class)
                             l = jsonGetAttribute((Field) l, r);
                         else
                             l = jsonbGetAttribute((Field) l, r);
                 }
                 else if (parseIf("??") || parseIf("?"))
-                    if (((Field) l).getType() == JSON.class)
+                    if (((Field) l).getDataType().getFromType() == JSON.class)
                         return jsonKeyExists((Field) l, (Field) parseSum());
                     else
                         return jsonbKeyExists((Field) l, (Field) parseSum());

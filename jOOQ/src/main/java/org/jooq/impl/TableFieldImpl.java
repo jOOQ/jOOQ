@@ -180,6 +180,7 @@ implements
 
 
 
+
         // [#7508] Implicit join path references inside of DML queries have to
         //         be emulated differently
         if (ctx.topLevelForLanguageContext() instanceof DMLQuery

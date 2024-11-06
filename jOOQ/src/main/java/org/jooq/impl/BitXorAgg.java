@@ -100,7 +100,7 @@ implements
             Field<?> field = getArguments().get(0);
 
             // TODO: Is 2's complement implemented correctly?
-            if (field.getType() == Byte.class) {
+            if (field.getDataType().getFromType() == Byte.class) {
                 Field<Byte> f = (Field<Byte>) field;
                 Field<Byte> b0 = inline((byte) 0);
                 Field<Byte> b2 = inline((byte) 2);
@@ -116,7 +116,7 @@ implements
                     .plus(when(o(DSL.count().filterWhere(bitCheck(f, (byte) 0x80))).mod(b2).eq(one()), inline((byte) 0x80)).else_(b0))
                 );
             }
-            else if (field.getType() == Short.class) {
+            else if (field.getDataType().getFromType() == Short.class) {
                 Field<Short> f = (Field<Short>) field;
                 Field<Short> s0 = inline((short) 0);
                 Field<Short> s2 = inline((short) 2);
@@ -140,7 +140,7 @@ implements
                     .plus(when(o(DSL.count().filterWhere(bitCheck(f, (short) 0x8000))).mod(s2).eq(one()), inline((short) 0x8000)).else_(s0))
                 );
             }
-            else if (field.getType() == Integer.class) {
+            else if (field.getDataType().getFromType() == Integer.class) {
                 Field<Integer> f = (Field<Integer>) field;
                 Field<Integer> i0 = inline(0);
                 Field<Integer> i2 = inline(2);
@@ -180,7 +180,7 @@ implements
                     .plus(when(o(DSL.count().filterWhere(bitCheck(f, 0x80000000))).mod(i2).eq(one()), inline(0x80000000)).else_(i0))
                 );
             }
-            else if (field.getType() == Long.class) {
+            else if (field.getDataType().getFromType() == Long.class) {
                 Field<Long> f = (Field<Long>) field;
                 Field<Long> l0 = inline(0L);
                 Field<Long> l2 = inline(2L);

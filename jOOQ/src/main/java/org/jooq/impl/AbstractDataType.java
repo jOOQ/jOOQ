@@ -108,6 +108,7 @@ import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.ContextConverter;
@@ -983,6 +984,11 @@ implements
     public final boolean isSpatial() {
         Class<?> tType = tType0();
         return tType == Geometry.class || tType == Geography.class;
+    }
+
+    @Override
+    public final boolean isRowId() {
+        return tType0() == RowId.class;
     }
 
     @Override

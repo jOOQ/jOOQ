@@ -105,7 +105,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> decode(Field<T> cryptString, Field<T> keyString) {
-        return function("decode", cryptString.getType(), cryptString, keyString);
+        return function("decode", cryptString.getDataType(), cryptString, keyString);
     }
 
     /**
@@ -141,7 +141,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> encode(Field<T> string, Field<T> keyString) {
-        return function("encode", string.getType(), string, keyString);
+        return function("encode", string.getDataType(), string, keyString);
     }
 
     /**
@@ -168,7 +168,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> aesDecrypt(Field<T> cryptString, Field<T> keyString) {
-        return function("aes_decrypt", cryptString.getType(), cryptString, keyString);
+        return function("aes_decrypt", cryptString.getDataType(), cryptString, keyString);
     }
 
     /**
@@ -195,7 +195,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> aesEncrypt(Field<T> string, Field<T> keyString) {
-        return function("aes_encrypt", string.getType(), string, keyString);
+        return function("aes_encrypt", string.getDataType(), string, keyString);
     }
 
     /**
@@ -231,7 +231,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desDecrypt(Field<T> cryptString) {
-        return function("des_decrypt", cryptString.getType(), cryptString);
+        return function("des_decrypt", cryptString.getDataType(), cryptString);
     }
 
     /**
@@ -267,7 +267,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desDecrypt(Field<T> cryptString, Field<T> keyString) {
-        return function("des_decrypt", cryptString.getType(), cryptString, keyString);
+        return function("des_decrypt", cryptString.getDataType(), cryptString, keyString);
     }
 
     /**
@@ -303,7 +303,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desEncrypt(Field<T> string) {
-        return function("des_encrypt", string.getType(), string);
+        return function("des_encrypt", string.getDataType(), string);
     }
 
     /**
@@ -339,7 +339,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> desEncrypt(Field<T> string, Field<T> keyString) {
-        return function("des_encrypt", string.getType(), string, keyString);
+        return function("des_encrypt", string.getDataType(), string, keyString);
     }
 
     /**
@@ -366,7 +366,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> compress(Field<T> string) {
-        return function("compress", string.getType(), string);
+        return function("compress", string.getDataType(), string);
     }
 
     /**
@@ -393,7 +393,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> uncompress(Field<T> string) {
-        return function("uncompress", string.getType(), string);
+        return function("uncompress", string.getDataType(), string);
     }
 
     /**
@@ -447,7 +447,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> sha1(Field<T> string) {
-        return function("sha1", string.getType(), string);
+        return function("sha1", string.getDataType(), string);
     }
 
     /**
@@ -474,7 +474,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> sha2(Field<T> string, Field<Integer> hashLength) {
-        return function("sha2", string.getType(), string, hashLength);
+        return function("sha2", string.getDataType(), string, hashLength);
     }
 
     /**
@@ -510,7 +510,7 @@ public class MySQLDSL extends DSL {
     @NotNull
     @Support({ MYSQL })
     public static <T> Field<T> password(Field<T> string) {
-        return function("password", string.getType(), string);
+        return function("password", string.getDataType(), string);
     }
 
     // -------------------------------------------------------------------------

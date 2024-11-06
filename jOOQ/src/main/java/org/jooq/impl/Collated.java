@@ -69,12 +69,12 @@ final class Collated extends AbstractField<String> implements QOM.Collated {
 
     @SuppressWarnings("unchecked")
     private static final Binding<?, String> binding(Field<?> field) {
-        return field.getType() == String.class ? (Binding<?, String>) field.getBinding() : SQLDataType.VARCHAR.getBinding();
+        return field.getDataType().isString() ? (Binding<?, String>) field.getBinding() : SQLDataType.VARCHAR.getBinding();
     }
 
     @SuppressWarnings("unchecked")
     private static final DataType<String> type(Field<?> field) {
-        return field.getType() == String.class ? (DataType<String>) field.getDataType() : SQLDataType.VARCHAR;
+        return field.getDataType().isString() ? (DataType<String>) field.getDataType() : SQLDataType.VARCHAR;
     }
 
     @Override

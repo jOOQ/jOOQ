@@ -1609,6 +1609,11 @@ public interface DataType<T> extends Named {
     boolean isUUID();
 
     /**
+     * Whether this data type is a {@link RowId} type.
+     */
+    boolean isRowId();
+
+    /**
      * Whether this data type is an OTHER type.
      * <p>
      * The {@link SQLDataType#OTHER} type maps any unknown data types to a jOOQ

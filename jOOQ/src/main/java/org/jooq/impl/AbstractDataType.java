@@ -576,6 +576,16 @@ implements
     }
 
     @Override
+    public final Class<?> getFromType() {
+        return getConverter().fromType();
+    }
+
+    @Override
+    public final Class<T> getToType() {
+        return getConverter().toType();
+    }
+
+    @Override
     public /* non-final */ String getTypeName() {
         return getTypeName0(CONFIG_UNQUOTED.get());
     }

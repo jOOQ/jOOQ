@@ -154,7 +154,7 @@ implements
     }
 
     private final void bitAndDivEmulation(Context<?> ctx) {
-        if (value.getType() == Byte.class) {
+        if (value.getDataType().getFromType() == Byte.class) {
             @SuppressWarnings("unchecked")
             Field<Byte> f = (Field<Byte>) value;
 
@@ -168,7 +168,7 @@ implements
                 DSL.bitAnd(f, inline((byte) 0x40)).div(inline((byte) 0x40))).add(
                 DSL.bitAnd(f, inline((byte) 0x80)).div(inline((byte) 0x80))).cast(Integer.class));
         }
-        else if (value.getType() == Short.class) {
+        else if (value.getDataType().getFromType() == Short.class) {
             @SuppressWarnings("unchecked")
             Field<Short> f = (Field<Short>) value;
 
@@ -190,7 +190,7 @@ implements
                 DSL.bitAnd(f, inline((short) 0x4000)).div(inline((short) 0x4000))).add(
                 DSL.bitAnd(f, inline((short) 0x8000)).div(inline((short) 0x8000))).cast(Integer.class));
         }
-        else if (value.getType() == Integer.class) {
+        else if (value.getDataType().getFromType() == Integer.class) {
             @SuppressWarnings("unchecked")
             Field<Integer> f = (Field<Integer>) value;
 
@@ -228,7 +228,7 @@ implements
                 DSL.bitAnd(f, inline(0x40000000)).div(inline(0x40000000))).add(
                 DSL.bitAnd(f, inline(0x80000000)).div(inline(0x80000000))));
         }
-        else if (value.getType() == Long.class) {
+        else if (value.getDataType().getFromType() == Long.class) {
             @SuppressWarnings("unchecked")
             Field<Long> f = (Field<Long>) value;
 
@@ -305,7 +305,7 @@ implements
     }
 
     private final void bitAndShrEmulation(Context<?> ctx) {
-        if (value.getType() == Byte.class) {
+        if (value.getDataType().getFromType() == Byte.class) {
             @SuppressWarnings("unchecked")
             Field<Byte> f = (Field<Byte>) value;
 
@@ -320,7 +320,7 @@ implements
                 DSL.shr(DSL.bitAnd(f, inline((byte) 0x40)), inline(++i))).add(
                 DSL.shr(DSL.bitAnd(f, inline((byte) 0x80)), inline(++i))).cast(Integer.class));
         }
-        else if (value.getType() == Short.class) {
+        else if (value.getDataType().getFromType() == Short.class) {
             @SuppressWarnings("unchecked")
             Field<Short> f = (Field<Short>) value;
 
@@ -343,7 +343,7 @@ implements
                 DSL.shr(DSL.bitAnd(f, inline((short) 0x4000)), inline(++i))).add(
                 DSL.shr(DSL.bitAnd(f, inline((short) 0x8000)), inline(++i))).cast(Integer.class));
         }
-        else if (value.getType() == Integer.class) {
+        else if (value.getDataType().getFromType() == Integer.class) {
             @SuppressWarnings("unchecked")
             Field<Integer> f = (Field<Integer>) value;
 
@@ -382,7 +382,7 @@ implements
                 DSL.shr(DSL.bitAnd(f, inline(0x40000000)), inline(++i))).add(
                 DSL.shr(DSL.bitAnd(f, inline(0x80000000)), inline(++i))));
         }
-        else if (value.getType() == Long.class) {
+        else if (value.getDataType().getFromType() == Long.class) {
             @SuppressWarnings("unchecked")
             Field<Long> f = (Field<Long>) value;
 

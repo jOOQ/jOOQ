@@ -1221,32 +1221,30 @@ implements
         static final List<Field<String>> FALSE_VALUES = Tools.map(Convert.FALSE_VALUES, v -> DSL.inline(v));
     }
 
-    @SuppressWarnings({ "unchecked" })
     @Override
     public final Condition isTrue() {
-        Class<?> type = getType();
+        DataType<T> t = getDataType();
 
-        if (type == String.class)
-            return ((Field<String>) this).in(BooleanValues.TRUE_VALUES);
-        else if (Number.class.isAssignableFrom(type))
-            return ((Field<Number>) this).equal(inline((Number) getDataType().convert(1)));
-        else if (Boolean.class.isAssignableFrom(type))
-            return ((Field<Boolean>) this).equal(inline(true, (DataType<Boolean>) getDataType()));
+        if (t.isString())
+            return in(map(BooleanValues.TRUE_VALUES, v -> v.coerce(this)));
+        else if (t.isNumeric())
+            return eq(inline(1).coerce(this));
+        else if (t.isBoolean())
+            return eq(inline(true).coerce(this));
         else
             return castIfNeeded(this, String.class).in(BooleanValues.TRUE_VALUES);
     }
 
-    @SuppressWarnings({ "unchecked" })
     @Override
     public final Condition isFalse() {
-        Class<?> type = getType();
+        DataType<T> t = getDataType();
 
-        if (type == String.class)
-            return ((Field<String>) this).in(BooleanValues.FALSE_VALUES);
-        else if (Number.class.isAssignableFrom(type))
-            return ((Field<Number>) this).equal(inline((Number) getDataType().convert(0)));
-        else if (Boolean.class.isAssignableFrom(type))
-            return ((Field<Boolean>) this).equal(inline(false, (DataType<Boolean>) getDataType()));
+        if (t.isString())
+            return in(map(BooleanValues.FALSE_VALUES, v -> v.coerce(this)));
+        else if (t.isNumeric())
+            return eq(inline(0).coerce(this));
+        else if (t.isBoolean())
+            return eq(inline(false).coerce(this));
         else
             return castIfNeeded(this, String.class).in(BooleanValues.FALSE_VALUES);
     }

@@ -6830,7 +6830,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 Field<?> f = parseField();
 
                 // Work around a missing feature in unnest()
-                if (!f.getType().isArray())
+                if (!f.getDataType().isArray())
                     f = f.coerce(f.getDataType().getArrayType());
 
                 result = unnest(f);

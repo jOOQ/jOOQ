@@ -355,7 +355,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
 
         @Override
         public final void accept(Context<?> ctx) {
-            if (rhs.getType() == YearToSecond.class && !SUPPORT_YEAR_TO_SECOND.contains(ctx.dialect()))
+            if (rhs.getDataType().getFromType() == YearToSecond.class && !SUPPORT_YEAR_TO_SECOND.contains(ctx.dialect()))
                 acceptYTSExpression(ctx);
             else if (rhs.getDataType().isInterval())
                 acceptIntervalExpression(ctx);
@@ -394,7 +394,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
                     if (operator == SUBTRACT)
                         interval = interval.neg();
 
-                    if (rhs.getType() == YearToMonth.class)
+                    if (rhs.getDataType().getFromType() == YearToMonth.class)
                         ctx.visit(N_DATE_ADD).sql('(').visit(lhs).sql(", ").visit(K_INTERVAL).sql(' ')
                            .visit(Tools.field(interval, SQLDataType.VARCHAR)).sql(' ').visit(K_YEAR_MONTH).sql(')');
                     else if (family == CUBRID)
@@ -416,7 +416,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
                     if (needsCast)
                         ctx.visit(K_CAST).sql('(');
 
-                    if (rhs.getType() == YearToMonth.class)
+                    if (rhs.getDataType().getFromType() == YearToMonth.class)
                         ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(N_SQL_TSI_MONTH).sql(", ")
                             .visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(") }");
                     else
@@ -434,7 +434,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
                 }
 
                 case FIREBIRD: {
-                    if (rhs.getType() == YearToMonth.class)
+                    if (rhs.getDataType().getFromType() == YearToMonth.class)
                         ctx.visit(N_DATEADD).sql('(').visit(K_MONTH).sql(", ").visit(p(sign * rhsAsYTM().intValue())).sql(", ").visit(lhs).sql(')');
 
                     // [#10448] Firebird only supports adding integers
@@ -449,7 +449,7 @@ final class Expression<T> extends AbstractTransformable<T> implements UOperator2
                 }
 
                 case SQLITE: {
-                    boolean ytm = rhs.getType() == YearToMonth.class;
+                    boolean ytm = rhs.getDataType().getFromType() == YearToMonth.class;
                     Field<?> interval = p(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());
 
                     if (sign < 0)

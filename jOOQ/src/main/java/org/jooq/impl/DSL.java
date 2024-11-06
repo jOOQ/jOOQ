@@ -12562,7 +12562,7 @@ public class DSL {
 
         // The field is an actual CURSOR or REF CURSOR returned from a stored
         // procedure or from a NESTED TABLE
-        else if (cursor.getType() == Result.class)
+        else if (cursor.getDataType().getFromType() == Result.class)
             return new FunctionTable<Record>(cursor);
 
 
@@ -12576,7 +12576,8 @@ public class DSL {
 
 
         // The field is a regular array
-        else if (cursor.getType().isArray() && cursor.getType() != byte[].class)
+        else if (cursor.getDataType().getFromType().isArray()
+              && cursor.getDataType().getFromType() != byte[].class)
             return new ArrayTable(cursor);
 
         // The field has any other type. Try to make it an array

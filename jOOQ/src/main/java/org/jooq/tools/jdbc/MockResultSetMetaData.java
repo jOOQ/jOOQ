@@ -265,6 +265,6 @@ public class MockResultSetMetaData implements ResultSetMetaData, Serializable {
     public String getColumnClassName(int column) throws SQLException {
         rs.checkNotClosed();
 
-        return rs.result.field(column - 1).getType().getName();
+        return rs.result.field(column - 1).getDataType().getFromType().getName();
     }
 }

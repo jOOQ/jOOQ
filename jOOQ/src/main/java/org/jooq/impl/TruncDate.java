@@ -45,7 +45,6 @@ import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Names.N_DATETIME_TRUNC;
 import static org.jooq.impl.Names.N_DATE_TRUNC;
 import static org.jooq.impl.Names.N_TRUNC;
-import static org.jooq.impl.SQLDataType.DATE;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
 

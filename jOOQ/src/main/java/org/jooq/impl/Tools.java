@@ -1925,6 +1925,19 @@ final class Tools {
      * [#461] [#473] [#2597] [#8234] Some internals need a cast only if necessary.
      */
     @SuppressWarnings("unchecked")
+    static final <T> Field<T>[] castAllIfNeeded(Field<?>[] fields, Class<T> type) {
+        Field<T>[] castFields = new Field[fields.length];
+
+        for (int i = 0; i < fields.length; i++)
+            castFields[i] = castIfNeeded(fields[i], type);
+
+        return castFields;
+    }
+
+    /**
+     * [#461] [#473] [#2597] [#8234] Some internals need a cast only if necessary.
+     */
+    @SuppressWarnings("unchecked")
     static final <T> Field<T>[] castAllIfNeeded(Field<?>[] fields, DataType<T> type) {
         Field<T>[] castFields = new Field[fields.length];
 
@@ -1932,6 +1945,17 @@ final class Tools {
             castFields[i] = castIfNeeded(fields[i], type);
 
         return castFields;
+    }
+
+    /**
+     * [#461] [#473] [#2597] [#8234] Some internals need a cast only if necessary.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> castIfNeeded(Field<?> field, Class<T> type) {
+        if (field.getType().equals(type))
+            return (Field<T>) field;
+        else
+            return field.cast(type);
     }
 
     /**
@@ -4048,8 +4072,9 @@ final class Tools {
                 return escape((Field<String>) field, ESCAPE);
             }
         }
-        else
-            return castIfNeeded(field, VARCHAR);
+        else {
+            return castIfNeeded(field, String.class);
+        }
     }
 
     static final boolean isParam(Field<?> field) {

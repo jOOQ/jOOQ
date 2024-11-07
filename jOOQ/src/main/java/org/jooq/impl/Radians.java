@@ -129,7 +129,7 @@ implements
             case FIREBIRD:
                 ctx.visit(idiv(
                     imul(
-                        castIfNeeded(degrees, NUMERIC),
+                        castIfNeeded(degrees, BigDecimal.class),
                         pi()
                     ),
                     inline(180)

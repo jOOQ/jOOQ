@@ -65,7 +65,6 @@ import static org.jooq.impl.Names.N_SQL_TSI_SECOND;
 import static org.jooq.impl.Names.N_STRFTIME;
 import static org.jooq.impl.Names.N_TIMESTAMPDIFF;
 import static org.jooq.impl.Names.N_TIMESTAMP_DIFF;
-import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.castIfNeeded;
 
@@ -309,7 +308,7 @@ final class DateDiff<T> extends AbstractField<Integer> implements UNotYetImpleme
                 return;
         }
 
-        ctx.visit(castIfNeeded(endDate.minus(startDate), INTEGER));
+        ctx.visit(castIfNeeded(endDate.minus(startDate), Integer.class));
     }
 
     private final Field<Integer> partDiff(DatePart p) {

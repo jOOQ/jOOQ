@@ -179,18 +179,18 @@ implements
                 case NOT_LIKE:
                 case NOT_SIMILAR_TO:
                     if (!arg1.getDataType().isString() && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
-                        arg1 = castIfNeeded(arg1, VARCHAR);
+                        arg1 = castIfNeeded(arg1, String.class);
                     if (!arg2.getDataType().isString() && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
-                        arg2 = castIfNeeded(arg2, VARCHAR);
+                        arg2 = castIfNeeded(arg2, String.class);
 
                     break;
 
                 case LIKE_IGNORE_CASE:
                 case NOT_LIKE_IGNORE_CASE:
                     if (!arg1.getDataType().isString())
-                        arg1 = castIfNeeded(arg1, VARCHAR);
+                        arg1 = castIfNeeded(arg1, String.class);
                     if (!arg2.getDataType().isString())
-                        arg2 = castIfNeeded(arg2, VARCHAR);
+                        arg2 = castIfNeeded(arg2, String.class);
 
                     break;
             }

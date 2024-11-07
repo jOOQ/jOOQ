@@ -67,9 +67,7 @@ import static org.jooq.impl.Names.N_TO_CHAR;
 import static org.jooq.impl.Names.N_TO_NUMBER;
 import static org.jooq.impl.Names.N_TRUNC;
 import static org.jooq.impl.Names.N_WEEKDAY;
-import static org.jooq.impl.SQLDataType.DATE;
 import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
 

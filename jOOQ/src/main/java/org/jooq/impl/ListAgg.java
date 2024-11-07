@@ -244,7 +244,7 @@ implements
         ctx.sql('(');
 
         // The explicit cast is needed in Postgres
-        QueryPartListView<Field<?>> args =  wrap(castIfNeeded((Field<?>) arguments.get(0), VARCHAR));
+        QueryPartListView<Field<?>> args =  wrap(castIfNeeded((Field<?>) arguments.get(0), String.class));
         acceptArguments1(ctx, args);
 
         if (arguments.size() > 1)

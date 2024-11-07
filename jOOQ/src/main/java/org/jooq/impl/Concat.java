@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
 import static org.jooq.impl.Names.N_CONCAT;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.castAllIfNeeded;
 
@@ -137,7 +138,7 @@ final class Concat extends AbstractField<String> implements QOM.Concat {
     private final List<Field<String>> cast(Context<?> ctx, List<Field<String>> result) {
 
         // [#461] Type cast the concat expression, if this isn't a VARCHAR field
-        for (Field<String> f : castAllIfNeeded(arguments, String.class)) {
+        for (Field<String> f : castAllIfNeeded(arguments, VARCHAR)) {
             if (f instanceof Concat c)
                 c.cast(ctx, result);
             else

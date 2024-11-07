@@ -144,7 +144,7 @@ implements
             case FIREBIRD:
                 ctx.visit(idiv(
                     imul(
-                        castIfNeeded(radians, BigDecimal.class),
+                        castIfNeeded(radians, NUMERIC),
                         inline(180)
                     ),
                     pi()

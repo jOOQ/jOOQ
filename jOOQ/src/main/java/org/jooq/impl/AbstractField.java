@@ -41,6 +41,7 @@ import static org.jooq.Clause.FIELD;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.map;
@@ -1232,7 +1233,7 @@ implements
         else if (t.isBoolean())
             return eq(inline(true).coerce(this));
         else
-            return castIfNeeded(this, String.class).in(BooleanValues.TRUE_VALUES);
+            return castIfNeeded(this, VARCHAR).in(BooleanValues.TRUE_VALUES);
     }
 
     @Override
@@ -1246,7 +1247,7 @@ implements
         else if (t.isBoolean())
             return eq(inline(false).coerce(this));
         else
-            return castIfNeeded(this, String.class).in(BooleanValues.FALSE_VALUES);
+            return castIfNeeded(this, VARCHAR).in(BooleanValues.FALSE_VALUES);
     }
 
     @Override
@@ -1504,7 +1505,7 @@ implements
 
     @Override
     public final Condition equalIgnoreCase(Field<String> value) {
-        return DSL.lower(castIfNeeded(this, String.class)).equal(DSL.lower(value));
+        return DSL.lower(castIfNeeded(this, VARCHAR)).equal(DSL.lower(value));
     }
 
     @Override
@@ -1514,7 +1515,7 @@ implements
 
     @Override
     public final Condition notEqualIgnoreCase(Field<String> value) {
-        return DSL.lower(castIfNeeded(this, String.class)).notEqual(DSL.lower(value));
+        return DSL.lower(castIfNeeded(this, VARCHAR)).notEqual(DSL.lower(value));
     }
 
     @Override

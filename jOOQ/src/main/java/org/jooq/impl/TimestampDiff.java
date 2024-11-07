@@ -168,7 +168,7 @@ final class TimestampDiff<T> extends AbstractField<DayToSecond> implements QOM.T
 
             default:
                 // Default implementation for equals() and hashCode()
-                ctx.visit(castIfNeeded(timestamp1.sub(timestamp2), DayToSecond.class));
+                ctx.visit(castIfNeeded(timestamp1.sub(timestamp2), INTERVALDAYTOSECOND));
                 break;
         }
     }

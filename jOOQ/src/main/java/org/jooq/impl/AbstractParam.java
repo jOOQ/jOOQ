@@ -53,6 +53,7 @@ import java.util.Set;
 // ...
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.JSONB;
 import org.jooq.DataType;
 import org.jooq.Name;
 import org.jooq.Param;
@@ -129,6 +130,11 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         }
         else if (value instanceof Object[] o) {
             return "a_" + Internal.hash0(Arrays.hashCode(Arrays.copyOf(o, 16)));
+        }
+
+        // [#17578] Avoid calling potentially costly normalising operations in Data::toString
+        else if (value instanceof JSONB d) {
+            return d.data();
         }
         else
             return String.valueOf(value);

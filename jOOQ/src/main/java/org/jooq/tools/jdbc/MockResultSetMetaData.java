@@ -135,9 +135,8 @@ public class MockResultSetMetaData implements ResultSetMetaData, Serializable {
         rs.checkNotClosed();
 
         Field<?> field = rs.result.field(column - 1);
-        Class<?> type = field.getType();
-
-        return Number.class.isAssignableFrom(type) && !UNumber.class.isAssignableFrom(type);
+        return field.getDataType().isNumeric()
+            && !UNumber.class.isAssignableFrom(field.getDataType().getFromType());
     }
 
     @Override

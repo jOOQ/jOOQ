@@ -98,6 +98,7 @@ import java.util.regex.Pattern;
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
 import org.jooq.ConverterContext;
+import org.jooq.JSONB;
 import org.jooq.Converters.UnknownType;
 import org.jooq.EnumType;
 import org.jooq.Field;

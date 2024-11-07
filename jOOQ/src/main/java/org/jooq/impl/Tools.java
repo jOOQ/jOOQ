@@ -1930,7 +1930,7 @@ final class Tools {
      */
     @SuppressWarnings("unchecked")
     static final <T> Field<T> castIfNeeded(Field<?> field, Class<T> type) {
-        if (field.getType().equals(type))
+        if (field.getDataType().getFromType().equals(type))
             return (Field<T>) field;
         else
             return field.cast(type);

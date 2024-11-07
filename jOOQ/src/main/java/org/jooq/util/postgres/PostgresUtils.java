@@ -50,6 +50,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Converter;
+import org.jooq.JSONB;
 import org.jooq.EnumType;
 import org.jooq.Record;
 import org.jooq.exception.DataTypeException;
@@ -507,14 +508,16 @@ public class PostgresUtils {
      * Create a PostgreSQL string representation of any object.
      */
     public static String toPGString(Object o) {
-        if (o instanceof byte[])
-            return toPGString((byte[]) o);
-        else if (o instanceof Object[])
-            return toPGArrayString((Object[]) o);
-        else if (o instanceof Record)
-            return toPGString((Record) o);
-        else if (o instanceof EnumType)
-            return ((EnumType) o).getLiteral();
+        if (o instanceof byte[] a)
+            return toPGString(a);
+        else if (o instanceof Object[] a)
+            return toPGArrayString(a);
+        else if (o instanceof Record r)
+            return toPGString(r);
+        else if (o instanceof EnumType e)
+            return e.getLiteral();
+        else if (o instanceof JSONB d)
+            return d.data();
         else
             return "" + o;
     }

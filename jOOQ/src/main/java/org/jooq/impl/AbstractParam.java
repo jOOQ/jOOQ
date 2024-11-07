@@ -51,6 +51,7 @@ import java.util.Arrays;
 // ...
 import org.jooq.Clause;
 import org.jooq.Context;
+import org.jooq.JSONB;
 import org.jooq.DataType;
 import org.jooq.Name;
 import org.jooq.Param;
@@ -123,6 +124,11 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         //          identity of the value, but on the value itself
         if (value instanceof byte[] b) {
             return "b_" + Internal.hash0(Arrays.hashCode(Arrays.copyOf(b, 16)));
+        }
+
+        // [#17578] Avoid calling potentially costly normalising operations in Data::toString
+        else if (value instanceof JSONB d) {
+            return d.data();
         }
         else
             return String.valueOf(value);

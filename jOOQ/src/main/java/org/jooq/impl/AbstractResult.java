@@ -78,6 +78,7 @@ import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
+import org.jooq.Data;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Formattable;
@@ -1418,6 +1419,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         else if (value instanceof Object[] a) {
             // [#6545] Nested arrays are handled recursively
             formatted += Arrays.stream(a).map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
+        }
+        else if (value instanceof Data d) {
+            formatted += d.data();
         }
         else if (value instanceof EnumType e) {
             formatted += e.getLiteral();

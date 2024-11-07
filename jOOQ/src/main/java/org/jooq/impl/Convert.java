@@ -100,6 +100,7 @@ import java.util.regex.Pattern;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.ConverterProvider;
+import org.jooq.Data;
 import org.jooq.Converters.UnknownType;
 import org.jooq.Decfloat;
 import org.jooq.EnumType;
@@ -782,6 +783,10 @@ final class Convert {
                 else if (toClass == String.class) {
                     if (from instanceof EnumType e)
                         return (U) e.getLiteral();
+
+                    // [#17497] Avoid potentially costly Data::toString call
+                    else if (from instanceof Data d)
+                        return (U) d.data();
 
                     return (U) from.toString();
                 }

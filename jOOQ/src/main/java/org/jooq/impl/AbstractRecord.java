@@ -1286,17 +1286,16 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return array1.length - array2.length;
     }
 
-    /**
-     * Compare two uncomparable objects
-     */
-    final int compare0(Object object1, Object object2) {
-        return object1 == object2
+    final int compare0(Object o1, Object o2) {
+        return o1 == o2
              ? 0
-             : object1 == null
+             : o1 == null
              ? -1
-             : object2 == null
+             : o2 == null
              ? 1
-             : object1.hashCode() - object2.hashCode();
+             : o1 instanceof Comparable<?> && o1.getClass() == o2.getClass()
+             ? ((Comparable) o1).compareTo(o2)
+             : o1.hashCode() - o2.hashCode();
     }
 
     // -------------------------------------------------------------------------

@@ -6006,7 +6006,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private final ContextConverter<byte[], JSONB> bytesConverter(final Configuration configuration) {
             return ContextConverter.ofNullable(byte[].class, JSONB.class,
                 (t, x) -> JSONB.valueOf(new String(t, configuration.charsetProvider().provide())),
-                (u, x) -> u.toString().getBytes(configuration.charsetProvider().provide())
+                (u, x) -> u.data().getBytes(configuration.charsetProvider().provide())
             );
         }
 

@@ -5734,7 +5734,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private final Converter<byte[], JSONB> bytesConverter(final Configuration configuration) {
             return Converter.ofNullable(byte[].class, JSONB.class,
                 t -> JSONB.valueOf(new String(t, configuration.charsetProvider().provide())),
-                u -> u.toString().getBytes(configuration.charsetProvider().provide())
+                u -> u.data().getBytes(configuration.charsetProvider().provide())
             );
         }
 

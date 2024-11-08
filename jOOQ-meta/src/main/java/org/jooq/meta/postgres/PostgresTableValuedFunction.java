@@ -168,10 +168,9 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 .unionAll(
 
                 // [#3376] The second subselect is expected to return only those
-                // table-valued functions that return a SETOF [ table type ], as that
+                // table-valued functions that return a SETOF [ table or udt type ], as that
                 // table reference is reported via a TYPE_UDT that matches a table
                 // from INFORMATION_SCHEMA.TABLES
-                // [#7406] Exclude composite types
                  select(
                     coalesce(c.COLUMN_NAME, a.ATTRIBUTE_NAME, val(getName())).as(c.COLUMN_NAME),
                     coalesce(c.ORDINAL_POSITION, a.ORDINAL_POSITION, inline(1)).as(c.ORDINAL_POSITION),
@@ -187,8 +186,8 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 .from(r)
 
                 // [#4269] SETOF [ scalar type ] routines don't have any corresponding
-                // entries in INFORMATION_SCHEMA.COLUMNS. Their single result table
-                // column type is contained in ROUTINES
+                // entries in INFORMATION_SCHEMA.COLUMNS or INFORMATION_SCHEMA.ATTRIBUTES.
+                // Their single result table column type is contained in ROUTINES
                 .join(pg_p)
                     .on(pg_p.PRONAME.concat("_").concat(pg_p.OID).eq(r.SPECIFIC_NAME))
                     .and(pg_p.pgNamespace().NSPNAME.eq(r.SPECIFIC_SCHEMA))

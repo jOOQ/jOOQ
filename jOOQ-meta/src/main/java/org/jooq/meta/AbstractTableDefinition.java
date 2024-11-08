@@ -71,6 +71,7 @@ implements
     private final SchemaDefinition      referencedSchema;
     private final String                referencedName;
     private TableDefinition             referencedTable;
+    private Definition                  referencedTableOrUDT;
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
         this(schema, name, comment, TableType.TABLE, null);
@@ -351,6 +352,22 @@ implements
         }
 
         return referencedTable;
+    }
+
+    @Override
+    public final Definition getReferencedTableOrUDT() {
+        if (referencedTableOrUDT == null) {
+            if (referencedSchema != null)
+                referencedTableOrUDT = getDatabase().getTable(referencedSchema, referencedName);
+
+            if (referencedTableOrUDT == null)
+                referencedTableOrUDT = getDatabase().getUDT(referencedSchema, referencedName);
+
+            if (referencedTableOrUDT == null)
+                referencedTableOrUDT = this;
+        }
+
+        return referencedTableOrUDT;
     }
 
     @Override

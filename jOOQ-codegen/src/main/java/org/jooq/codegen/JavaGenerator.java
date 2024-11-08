@@ -1643,7 +1643,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TableDefinition table : database.getTables(schema)) {
             try {
-                if (table.isTableValuedFunction() && table.getReferencedTable() != table)
+                if (table.isTableValuedFunction() && table.getReferencedTableOrUDT() != table)
                     continue;
 
                 generateRecord(table);
@@ -7204,7 +7204,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String tableId = scala
             ? out.ref(getStrategy().getFullJavaIdentifier(table), 2)
             : getStrategy().getJavaIdentifier(table);
-        final String recordType = out.ref(getStrategy().getFullJavaClassName(table.getReferencedTable(), Mode.RECORD));
+        final String recordType = out.ref(getStrategy().getFullJavaClassName(table.getReferencedTableOrUDT(), Mode.RECORD));
         final String classExtends = out.ref(getStrategy().getJavaClassExtends(table, Mode.DEFAULT));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DEFAULT));
         final String schemaId = generateDefaultSchema(schema)
@@ -8578,7 +8578,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#10481] Use the types from replaced embeddables if applicable
         List<Definition> replacingEmbeddablesAndUnreplacedColumns = replacingEmbeddablesAndUnreplacedColumns(table);
         int degree = replacingEmbeddablesAndUnreplacedColumns.size();
-        int referencedDegree = replacingEmbeddablesAndUnreplacedColumns(table.getReferencedTable()).size();
+        int referencedDegree = replacingEmbeddablesAndUnreplacedColumns(table.getReferencedTableOrUDT()).size();
 
         String rowType = refRowType(out, replacingEmbeddablesAndUnreplacedColumns);
         String rowTypeContravariantJava = refRowType(out, replacingEmbeddablesAndUnreplacedColumns, s -> "? super " + s);
@@ -11013,7 +11013,7 @@ public class JavaGenerator extends AbstractGenerator {
             return;
         }
 
-        final String recordClassName = out.ref(getStrategy().getFullJavaClassName(function.getReferencedTable(), Mode.RECORD));
+        final String recordClassName = out.ref(getStrategy().getFullJavaClassName(function.getReferencedTableOrUDT(), Mode.RECORD));
 
         // [#3456] Local variables should not collide with actual function arguments
         final String configurationArgument = disambiguateJavaMemberName(function.getParameters(), "configuration");
@@ -11067,7 +11067,11 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printRecordTypeMethod(JavaWriter out, Definition tableOrUDT) {
-        final String className = out.ref(getStrategy().getFullJavaClassName(tableOrUDT instanceof TableDefinition ? ((TableDefinition) tableOrUDT).getReferencedTable() : tableOrUDT, Mode.RECORD));
+        final String className = out.ref(getStrategy().getFullJavaClassName(
+            tableOrUDT instanceof TableDefinition
+            ? ((TableDefinition) tableOrUDT).getReferencedTableOrUDT()
+            : tableOrUDT, Mode.RECORD
+        ));
 
         out.javadoc("The class holding records for this type");
 

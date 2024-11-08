@@ -236,8 +236,31 @@ public interface TableDefinition extends Definition {
      * <code>true</code> and the table valued function references a table
      * type</li>
      * </ul>
+     *
+     * @deprecated - [#7406] - 3.20.0 - Use {@link #getReferencedTableOrUDT()}
+     *             instead.
      */
+    @Deprecated
     @NotNull
     TableDefinition getReferencedTable();
+
+    /**
+     * The referenced table or UDT type, if this
+     * {@link #isTableValuedFunction()}.
+     * <p>
+     * This returns:
+     * <ul>
+     * <li><code>this</code>, if {@link #isTableValuedFunction()} ==
+     * <code>false</code></li>
+     * <li><code>this</code>, if {@link #isTableValuedFunction()} ==
+     * <code>true</code> but the table valued function doesn't reference a table
+     * type</li>
+     * <li>Another {@link TableDefinition} or {@link UDTDefinition}, if
+     * {@link #isTableValuedFunction()} == <code>true</code> and the table
+     * valued function references a table type</li>
+     * </ul>
+     */
+    @NotNull
+    Definition getReferencedTableOrUDT();
 
 }

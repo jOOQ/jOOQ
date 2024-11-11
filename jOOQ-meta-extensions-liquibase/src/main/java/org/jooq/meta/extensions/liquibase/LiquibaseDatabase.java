@@ -46,6 +46,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -116,6 +117,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
 
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection()));
         String contexts = "";
+        Map<String, Object> changeLogParameters = new LinkedHashMap<>();
 
         // [#9514] Forward all database.xyz properties to matching Liquibase
         //         Database.setXyz() configuration setter calls
@@ -141,6 +143,8 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
 
                 if ("contexts".equals(property))
                     contexts = "" + entry.getValue();
+                else
+                    changeLogParameters.put(property, entry.getValue());
             }
         }
 
@@ -162,6 +166,7 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
             : new DirectoryResourceAccessor(new File(rootPath));
 
         Liquibase liquibase = new Liquibase(scripts, ra, database);
+        changeLogParameters.forEach(liquibase::setChangeLogParameter);
         liquibase.update(contexts);
     }
 

@@ -107,20 +107,20 @@ public class SQLiteDataType {
     public static final DataType<Boolean>    BOOLEAN          = new BuiltInDataType<>(FAMILY, SQLDataType.BOOLEAN, "boolean");
     public static final DataType<Date>       DATE             = new BuiltInDataType<>(FAMILY, SQLDataType.DATE, "date");
     public static final DataType<Timestamp>  DATETIME         = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "datetime");
-    public static final DataType<byte[]>     LONGVARBINARY    = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "longvarbinary");
     public static final DataType<byte[]>     BLOB             = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "blob");
+    public static final DataType<byte[]>     LONGVARBINARY    = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "blob");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDialect.SQLITE, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final DataType<byte[]>   __BINARY           = new BuiltInDataType<>(FAMILY, SQLDataType.BINARY, "longvarbinary");
+    protected static final DataType<byte[]>   __BINARY           = new BuiltInDataType<>(FAMILY, SQLDataType.BINARY, "blob");
     protected static final DataType<Boolean>  __BIT              = new BuiltInDataType<>(FAMILY, SQLDataType.BIT, "boolean");
     protected static final DataType<Double>   __FLOAT            = new BuiltInDataType<>(FAMILY, SQLDataType.FLOAT, "double");
     protected static final DataType<String>   __NCLOB            = new BuiltInDataType<>(FAMILY, SQLDataType.NCLOB, "nclob");
     protected static final DataType<String>   __LONGNVARCHAR     = new BuiltInDataType<>(FAMILY, SQLDataType.LONGNVARCHAR, "nvarchar");
     protected static final DataType<Time>     __TIME             = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "datetime");
-    protected static final DataType<byte[]>   __VARBINARY        = new BuiltInDataType<>(FAMILY, SQLDataType.VARBINARY, "longvarbinary");
+    protected static final DataType<byte[]>   __VARBINARY        = new BuiltInDataType<>(FAMILY, SQLDataType.VARBINARY, "blob");
     protected static final DataType<UByte>    __TINYINTUNSIGNED  = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINTUNSIGNED, "smallint");
     protected static final DataType<UShort>   __SMALLINTUNSIGNED = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINTUNSIGNED, "int");
     protected static final DataType<UInteger> __INTEGERUNSIGNED  = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGERUNSIGNED, "bigint");

@@ -6468,6 +6468,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String pathClassName = getStrategy().getJavaClassName(table, Mode.PATH);
 
                 out.javadoc("A subtype implementing {@link %s} for simplified path-based joins.", Path.class);
+                printClassAnnotations(out, table, Mode.PATH);
                 out.println("%sclass %s(path: %s[_ <: %s], childPath: %s[_ <: %s, %s], parentPath: %s[_ <: %s, %s]) extends %s(path, childPath, parentPath) with %s[%s]",
                     visibility(), pathClassName, Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType, className, Path.class, recordType);
             }
@@ -6850,6 +6851,7 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala) {}
                 else if (kotlin) {
                     out.javadoc("A subtype implementing {@link %s} for simplified path-based joins.", Path.class);
+                    printClassAnnotations(out, table, Mode.PATH);
                     out.println("%sopen class %s : %s, %s<%s> {",
                         visibility(), pathClassName, className, Path.class, recordType);
                     out.println("%sconstructor(path: %s<out %s>, childPath: %s<out %s, %s>?, parentPath: %s<out %s, %s>?): super(path, childPath, parentPath)", visibility(), Table.class, Record.class, ForeignKey.class, Record.class, recordType, InverseForeignKey.class, Record.class, recordType);
@@ -6861,6 +6863,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else {
                     out.javadoc("A subtype implementing {@link %s} for simplified path-based joins.", Path.class);
+                    printClassAnnotations(out, table, Mode.PATH);
                     out.println("%sstatic class %s extends %s implements %s<%s> {", visibility(), pathClassName, className, Path.class, recordType);
                     out.printSerial();
                     out.println("%s<O extends %s> %s(%s<O> path, %s<O, %s> childPath, %s<O, %s> parentPath) {", visibility(), Record.class, pathClassName, Table.class, ForeignKey.class, recordType, InverseForeignKey.class, recordType);
@@ -10364,13 +10367,16 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")");
         }
 
-        if (scala) {}
-        else if (kotlin)
-            out.println("@Suppress(\"UNCHECKED_CAST\")");
-        else if (Internal.javaVersion() >= 21)
-            out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\", \"this-escape\" })", out.ref("java.lang.SuppressWarnings"));
-        else
-            out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\" })", out.ref("java.lang.SuppressWarnings"));
+        // [#17592] Path classes are nested, and thus in scope of the enclosing class's warning suppression.
+        if (!(definition instanceof TableDefinition && mode == Mode.PATH)) {
+            if (scala) {}
+            else if (kotlin)
+                out.println("@Suppress(\"UNCHECKED_CAST\")");
+            else if (Internal.javaVersion() >= 21)
+                out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\", \"this-escape\" })", out.ref("java.lang.SuppressWarnings"));
+            else
+                out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\" })", out.ref("java.lang.SuppressWarnings"));
+        }
 
         out.annotations(definition);
     }

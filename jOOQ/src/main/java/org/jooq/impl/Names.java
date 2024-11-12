@@ -299,6 +299,7 @@ final class Names {
     static final Name N_TIMESTAMP_DIFF              = systemName("timestamp_diff");
     static final Name N_TIMESTAMP_SUB               = systemName("timestamp_sub");
     static final Name N_toJSONString                = systemName("toJSONString");
+    static final Name N_TO_BLOB                     = systemName("to_blob");
     static final Name N_TO_CLOB                     = systemName("to_clob");
     static final Name N_TO_JSON                     = systemName("to_json");
     static final Name N_TO_JSON_STRING              = systemName("to_json_string");

@@ -126,21 +126,21 @@ implements
         Function2<RowN, RowN, Condition> compareRowRow,
         Function3<? super Context<?>, ? super Field<?>, ? super Field<?>, ? extends Context<?>> acceptDefault
     ) {
-        boolean field1Embeddable = arg1.getDataType().isEmbeddable();
+        DataType<T> t1 = arg1.getDataType();
+        DataType<T> t2 = arg2.getDataType();
+        boolean field1Embeddable = t1.isEmbeddable();
         SelectQueryImpl<?> s;
 
         if (field1Embeddable && arg2 instanceof ScalarSubquery)
             ctx.visit(compareRowSubquery.apply(row(embeddedFields(arg1)), ((ScalarSubquery<?>) arg2).query));
-        else if (field1Embeddable && arg2.getDataType().isEmbeddable())
+        else if (field1Embeddable && t2.isEmbeddable())
             ctx.visit(compareRowRow.apply(row(embeddedFields(arg1)), row(embeddedFields(arg2))));
         else if ((op == org.jooq.Comparator.IN || op == org.jooq.Comparator.NOT_IN)
             && (s = Transformations.subqueryWithLimit(arg2)) != null
             && Transformations.NO_SUPPORT_IN_LIMIT.contains(ctx.dialect())) {
             ctx.visit(arg1.compare(op, (Select) select(asterisk()).from(s.asTable("t"))));
         }
-        else if (arg1.getDataType().isMultiset()
-                && arg2.getDataType().isMultiset()
-                && !Boolean.TRUE.equals(ctx.data(DATA_MULTISET_CONDITION)))
+        else if (t1.isMultiset() && t2.isMultiset() && !Boolean.TRUE.equals(ctx.data(DATA_MULTISET_CONDITION)))
             ctx.data(DATA_MULTISET_CONDITION, true, c -> c.visit(condition));
 
 
@@ -158,10 +158,11 @@ implements
 
 
 
+
         else if (arg1 instanceof Array && ((Array<?>) arg1).fields.fields.length == 0)
-            ctx.data(ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE, arg2.getDataType().getArrayComponentDataType(), c -> acceptDefault.apply(c, arg1, arg2));
+            ctx.data(ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE, t2.getArrayComponentDataType(), c -> acceptDefault.apply(c, arg1, arg2));
         else if (arg2 instanceof Array && ((Array<?>) arg2).fields.fields.length == 0)
-            ctx.data(ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE, arg1.getDataType().getArrayComponentDataType(), c -> acceptDefault.apply(c, arg1, arg2));
+            ctx.data(ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE, t1.getArrayComponentDataType(), c -> acceptDefault.apply(c, arg1, arg2));
         else
             acceptDefault.apply(ctx, arg1, arg2);
     }

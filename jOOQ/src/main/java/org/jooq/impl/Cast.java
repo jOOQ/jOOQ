@@ -43,6 +43,7 @@ import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_TRIM;
 import static org.jooq.impl.Names.N_CAST;
+import static org.jooq.impl.Names.N_TO_BLOB;
 import static org.jooq.impl.Names.N_TO_CLOB;
 import static org.jooq.impl.Names.N_TO_DATE;
 import static org.jooq.impl.Names.N_TO_TIMESTAMP;
@@ -234,6 +235,13 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
                 super.accept(ctx);
         }
     }
+
+
+
+
+
+
+
 
 
 

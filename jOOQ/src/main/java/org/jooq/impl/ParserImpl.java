@@ -2452,8 +2452,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     parseKeywordIf("SET");
 
                     // Cast is necessary, see https://github.com/eclipse-jdt/eclipse.jdt.core/issues/99
-                    InsertOnConflictWhereStep<?> where = parseKeywordIf("ALL TO EXCLUDED")
+                    InsertOnConflictWhereStep<?> where =
+                          parseKeywordIf("ALL TO EXCLUDED")
                         ? onDuplicate.onDuplicateKeyUpdate().setAllToExcluded()
+                        : parseKeywordIf("NON KEY TO EXCLUDED")
+                        ? onDuplicate.onDuplicateKeyUpdate().setNonKeyToExcluded()
+                        : parseKeywordIf("NON PRIMARY KEY TO EXCLUDED")
+                        ? onDuplicate.onDuplicateKeyUpdate().setNonPrimaryKeyToExcluded()
+                        : parseKeywordIf("NON CONFLICTING KEY TO EXCLUDED")
+                        ? onDuplicate.onDuplicateKeyUpdate().setNonConflictingKeyToExcluded()
                         : onDuplicate.onDuplicateKeyUpdate().set((Map<?, ?>) data(DATA_PARSE_ON_CONFLICT, true, c -> c.parseSetClauseList()));
 
                     if (parseKeywordIf("WHERE"))
@@ -2489,8 +2496,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     else if (parseKeywordIf("UPDATE SET")) {
 
                         // Cast is necessary, see https://github.com/eclipse-jdt/eclipse.jdt.core/issues/99
-                        InsertOnConflictWhereStep<?> where = parseKeywordIf("ALL TO EXCLUDED")
+                        InsertOnConflictWhereStep<?> where =
+                              parseKeywordIf("ALL TO EXCLUDED")
                             ? doUpdate.doUpdate().setAllToExcluded()
+                            : parseKeywordIf("NON KEY TO EXCLUDED")
+                            ? doUpdate.doUpdate().setNonKeyToExcluded()
+                            : parseKeywordIf("NON PRIMARY KEY TO EXCLUDED")
+                            ? doUpdate.doUpdate().setNonPrimaryKeyToExcluded()
+                            : parseKeywordIf("NON CONFLICTING KEY TO EXCLUDED")
+                            ? doUpdate.doUpdate().setNonConflictingKeyToExcluded()
                             : doUpdate.doUpdate().set((Map<?, ?>) data(DATA_PARSE_ON_CONFLICT, true, c -> c.parseSetClauseList()));
 
                         if (parseKeywordIf("WHERE"))

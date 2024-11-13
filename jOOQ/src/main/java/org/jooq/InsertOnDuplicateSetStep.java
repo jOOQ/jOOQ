@@ -183,4 +183,35 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnDuplicateSetMoreStep<R> setAllToExcluded();
 
+    /**
+     * Sets all non-key columns from the insert column list to
+     * {@link DSL#excluded(Field)}.
+     * <p>
+     * This excludes any {@link Table#getKeys()} columns.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    InsertOnDuplicateSetMoreStep<R> setNonKeyToExcluded();
+
+    /**
+     * Sets all non-primary key columns from the insert column list to
+     * {@link DSL#excluded(Field)}.
+     * <p>
+     * This excludes any {@link Table#getPrimaryKey()} columns.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    InsertOnDuplicateSetMoreStep<R> setNonPrimaryKeyToExcluded();
+
+    /**
+     * Sets all non-conflicting key columns from the insert column list to
+     * {@link DSL#excluded(Field)}.
+     * <p>
+     * This excludes any {@link InsertOnDuplicateStep#onConflict(Field...)}
+     * columns.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    InsertOnDuplicateSetMoreStep<R> setNonConflictingKeyToExcluded();
+
 }

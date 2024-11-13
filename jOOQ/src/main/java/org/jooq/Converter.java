@@ -44,6 +44,7 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 import org.jooq.impl.AbstractConverter;
+import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 
 import org.jetbrains.annotations.NotNull;
@@ -62,9 +63,10 @@ import org.jetbrains.annotations.NotNull;
  * Think of "TO" = "writing". Hence, {@link #toType()} is the user-defined
  * type</li>
  * </ul>
+ * <h3>Reciprocity</h3>
  * <p>
- * Note: In order to avoid unwanted side-effects, it is highly recommended (yet
- * not required) for {@link #from(Object)} and {@link #to(Object)} to be
+ * In order to avoid unwanted side-effects, it is highly recommended (yet not
+ * required) for {@link #from(Object)} and {@link #to(Object)} to be
  * <strong>reciprocal</strong>. The two methods are reciprocal, if for all
  * <code>X and Y</code>, it can be said that
  * <ul>
@@ -84,6 +86,18 @@ import org.jetbrains.annotations.NotNull;
  * values above, an implementation must be able to handle <code>null</code>
  * values.
  * <p>
+ * <h3>When <code>Converter</code> is invoked</h3>
+ * <p>
+ * Unlike {@link Binding}, which is limited to JDBC interactions, a
+ * {@link Converter} can be invoked also outside of the context of reading /
+ * writing data from / to the JDBC driver. This may include converting nested
+ * data structures, such as {@link DSL#multiset(TableLike)} or
+ * {@link DSL#row(SelectField...)}, recursively. These two particular expression
+ * types are special cases. With other nested (but opaque to jOOQ) data
+ * structures, it is not possible to recursively apply a {@link Converter}. For
+ * example, a {@link DSL#jsonObject(JSONEntry...)}, while constructed with jOOQ,
+ * produces "opaque" contents and thus cannot recursively apply
+ * {@link Converter}.
  * <h3>Creating user defined {@link DataType}s</h3>
  * <p>
  * jOOQ provides built in data types through {@link SQLDataType}. Users can
@@ -94,6 +108,29 @@ import org.jetbrains.annotations.NotNull;
  * <code>&lt;forcedType/&gt;</code> configuration, see <a href=
  * "https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-forced-types/">the
  * manual for more details</a>
+ * <p>
+ * <a href=
+ * "https://www.jooq.org/doc/latest/manual/sql-execution/fetching/ad-hoc-converter/">Ad-hoc
+ * converters</a> allow for attaching a converter directly to a SQL expression
+ * in order to keep related logic close together. E.g.:
+ *
+ * <pre>
+ * <code>
+ * Result<Record1<BookId>> result =
+ * ctx.select(BOOK.ID.convertFrom(BookId::new))
+ *    .from(BOOK)
+ *    .fetch();
+ * </code>
+ * </pre>
+ * <p>
+ * In the above example, a one-way only converter (only implementing
+ * {@link #from(Object)}, not {@link #to(Object)}) is attached to the
+ * <code>BOOK.ID</code> {@link Field} expression in order to convert between
+ * e.g. {@link Long} and <code>BookId</code>. While visually embedded in the
+ * query itself, the {@link Converter} is still only applied when reading the
+ * {@link Result}, and like any other kind of {@link Converter} (including those
+ * attached to {@link Field} by the code generator) thus has no effect on the
+ * generated SQL or the contents reported by the database.
  *
  * @author Lukas Eder
  * @param <T> The database type - i.e. any type available from

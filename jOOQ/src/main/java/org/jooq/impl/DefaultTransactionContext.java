@@ -46,8 +46,9 @@ import org.jooq.TransactionContext;
  */
 class DefaultTransactionContext extends AbstractScope implements TransactionContext {
 
-    Transaction                 transaction;
-    Throwable                   cause;
+    Transaction transaction;
+    Throwable   cause;
+    Object      result;
 
     DefaultTransactionContext(Configuration configuration) {
         super(configuration);
@@ -61,6 +62,17 @@ class DefaultTransactionContext extends AbstractScope implements TransactionCont
     @Override
     public final TransactionContext transaction(Transaction t) {
         transaction = t;
+        return this;
+    }
+
+    @Override
+    public final Object result() {
+        return result;
+    }
+
+    @Override
+    public final TransactionContext result(Object r) {
+        this.result = r;
         return this;
     }
 

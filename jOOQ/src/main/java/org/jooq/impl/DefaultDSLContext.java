@@ -528,7 +528,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
                     listeners.beginEnd(ctx);
                 }
 
-                result = transactional.run(ctx.configuration());
+                ctx.result(result = transactional.run(ctx.configuration()));
 
                 try {
                     listeners.commitStart(ctx);

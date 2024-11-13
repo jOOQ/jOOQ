@@ -68,6 +68,27 @@ public interface TransactionContext extends Scope {
     TransactionContext transaction(Transaction transaction);
 
     /**
+     * The result of a {@link TransactionalCallable} or
+     * {@link ContextTransactionalCallable}, if the transaction has completed
+     * successfully.
+     *
+     * @return The result. May be <code>null</code> if the transaction hasn't
+     *         completed yet, or if there was no result (e.g. in a
+     *         {@link TransactionalRunnable} or
+     *         {@link ContextTransactionalRunnable}), or if the result is
+     *         <code>null</code>.
+     */
+    @Nullable
+    Object result();
+
+    /**
+     * Set the result of the {@link TransactionalCallable} or
+     * {@link ContextTransactionalCallable}.
+     */
+    @NotNull
+    TransactionContext result(Object result);
+
+    /**
      * The exception that has caused the rollback.
      *
      * @return The exception. May be <code>null</code>, in particular if the

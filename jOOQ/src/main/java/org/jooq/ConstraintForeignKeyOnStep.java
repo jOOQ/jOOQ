@@ -63,6 +63,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 
+import org.jooq.impl.QOM.ForeignKeyRule;
+
 import org.jetbrains.annotations.NotNull;
 
 
@@ -138,6 +140,17 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
     ConstraintForeignKeyOnStep onDeleteSetDefault();
 
     /**
+     * Add an <code>ON DELETE</code> clause to the <code>FOREIGN KEY</code>
+     * constraint.
+     * <p>
+     * Check the specific clause to see if your dialect supports the particular
+     * rule.
+     */
+    @NotNull
+    @Support
+    ConstraintForeignKeyOnStep onDelete(ForeignKeyRule rule);
+
+    /**
      * Add an <code>ON UPDATE NO ACTION</code> clause to the
      * <code>FOREIGN KEY</code> constraint.
      * <p>
@@ -181,5 +194,16 @@ public interface ConstraintForeignKeyOnStep extends ConstraintEnforcementStep {
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintForeignKeyOnStep onUpdateSetDefault();
+
+    /**
+     * Add an <code>ON UPDATE</code> clause to the <code>FOREIGN KEY</code>
+     * constraint.
+     * <p>
+     * Check the specific clause to see if your dialect supports the particular
+     * rule.
+     */
+    @NotNull
+    @Support
+    ConstraintForeignKeyOnStep onUpdate(ForeignKeyRule rule);
 
 }

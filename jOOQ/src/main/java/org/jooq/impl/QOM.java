@@ -9917,6 +9917,27 @@ public final class QOM {
         }
     }
 
+    /**
+     * The <code>ForeignKeyRule</code> type.
+     * <p>
+     * Specify the update rule or delete rule of a foreign key, when the referenced primary
+     * key is updated or deleted.
+     */
+    public enum ForeignKeyRule {
+        CASCADE(keyword("cascade")),
+        SET_NULL(keyword("set null")),
+        SET_DEFAULT(keyword("set default")),
+        RESTRICT(keyword("restrict")),
+        NO_ACTION(keyword("no action")),
+        ;
+
+        final Keyword keyword;
+
+        private ForeignKeyRule(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
 
 
 

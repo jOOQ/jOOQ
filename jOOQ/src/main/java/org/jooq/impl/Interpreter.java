@@ -44,20 +44,16 @@ import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
 import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.conf.SettingsTools.interpreterLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
-import static org.jooq.impl.QOM.Cascade.CASCADE;
-import static org.jooq.impl.QOM.Cascade.RESTRICT;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.FieldsImpl.internalFieldsRow0;
-import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.QOM.Cascade.CASCADE;
+import static org.jooq.impl.QOM.Cascade.RESTRICT;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.apply;
-import static org.jooq.impl.Tools.dataTypes;
-import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.normaliseNameCase;
 import static org.jooq.impl.Tools.reverseIterable;
@@ -90,7 +86,6 @@ import org.jooq.DataType;
 import org.jooq.Delete;
 import org.jooq.Domain;
 import org.jooq.Field;
-import org.jooq.FieldOrConstraint;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Insert;
@@ -125,11 +120,10 @@ import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
 import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
-import org.jooq.impl.ConstraintImpl.Action;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.CycleOption;
-import org.jooq.impl.QOM.UnmodifiableList;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -2395,9 +2389,8 @@ final class Interpreter {
         MutableUniqueKey   referencedKey;
         List<MutableField> referencedFields;
 
-        // TODO: Support these
-        Action           onDelete;
-        Action           onUpdate;
+        ForeignKeyRule     onDelete;
+        ForeignKeyRule     onUpdate;
 
         MutableForeignKey(
             UnqualifiedName name,
@@ -2405,8 +2398,8 @@ final class Interpreter {
             List<MutableField> fields,
             MutableUniqueKey referencedKey,
             List<MutableField> referencedFields,
-            Action onDelete,
-            Action onUpdate,
+            ForeignKeyRule onDelete,
+            ForeignKeyRule onUpdate,
             boolean enforced
         ) {
             super(name, table, fields, enforced);

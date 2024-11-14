@@ -47,11 +47,11 @@ import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.TRINO;
-import static org.jooq.impl.ConstraintImpl.Action.CASCADE;
-import static org.jooq.impl.ConstraintImpl.Action.NO_ACTION;
-import static org.jooq.impl.ConstraintImpl.Action.RESTRICT;
-import static org.jooq.impl.ConstraintImpl.Action.SET_DEFAULT;
-import static org.jooq.impl.ConstraintImpl.Action.SET_NULL;
+import static org.jooq.impl.QOM.ForeignKeyRule.CASCADE;
+import static org.jooq.impl.QOM.ForeignKeyRule.NO_ACTION;
+import static org.jooq.impl.QOM.ForeignKeyRule.RESTRICT;
+import static org.jooq.impl.QOM.ForeignKeyRule.SET_DEFAULT;
+import static org.jooq.impl.QOM.ForeignKeyRule.SET_NULL;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Keywords.K_CHECK;
@@ -112,7 +112,10 @@ import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.UNotYetImplemented;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -175,8 +178,8 @@ implements
     private Field<?>[]            foreignKey;
     private Table<?>              referencesTable;
     private Field<?>[]            references;
-    private Action                onDelete;
-    private Action                onUpdate;
+    private ForeignKeyRule        onDelete;
+    private ForeignKeyRule        onUpdate;
     private Condition             check;
     private boolean               enforced                     = true;
 
@@ -188,15 +191,15 @@ implements
         super(name, null);
     }
 
-    final Field<?>[]  $unique()          { return unique; }
-    final Field<?>[]  $primaryKey()      { return primaryKey; }
-    final Field<?>[]  $foreignKey()      { return foreignKey; }
-    final Table<?>    $referencesTable() { return referencesTable; }
-    final Field<?>[]  $references()      { return references; }
-    final Action      $onDelete()        { return onDelete; }
-    final Action      $onUpdate()        { return onUpdate; }
-    final Condition   $check()           { return check; }
-    final boolean     $enforced()        { return enforced; }
+    final Field<?>[]     $unique()          { return unique; }
+    final Field<?>[]     $primaryKey()      { return primaryKey; }
+    final Field<?>[]     $foreignKey()      { return foreignKey; }
+    final Table<?>       $referencesTable() { return referencesTable; }
+    final Field<?>[]     $references()      { return references; }
+    final ForeignKeyRule $onDelete()        { return onDelete; }
+    final ForeignKeyRule $onUpdate()        { return onUpdate; }
+    final Condition      $check()           { return check; }
+    final boolean        $enforced()        { return enforced; }
 
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
@@ -433,57 +436,60 @@ implements
     }
 
     @Override
-    public final ConstraintImpl onDeleteNoAction() {
-        onDelete = NO_ACTION;
+    public final ConstraintImpl onDelete(ForeignKeyRule rule) {
+        onDelete = rule;
         return this;
+    }
+
+    @Override
+    public final ConstraintImpl onDeleteNoAction() {
+        return onDelete(NO_ACTION);
     }
 
     @Override
     public final ConstraintImpl onDeleteRestrict() {
-        onDelete = RESTRICT;
-        return this;
+        return onDelete(RESTRICT);
     }
 
     @Override
     public final ConstraintImpl onDeleteCascade() {
-        onDelete = CASCADE;
-        return this;
+        return onDelete(CASCADE);
     }
 
     @Override
     public final ConstraintImpl onDeleteSetNull() {
-        onDelete = SET_NULL;
-        return this;
+        return onDelete(SET_NULL);
     }
 
     @Override
     public final ConstraintImpl onDeleteSetDefault() {
-        onDelete = SET_DEFAULT;
+        return onDelete(SET_DEFAULT);
+    }
+
+    @Override
+    public final ConstraintImpl onUpdate(ForeignKeyRule rule) {
+        onUpdate = rule;
         return this;
     }
 
     @Override
     public final ConstraintImpl onUpdateNoAction() {
-        onUpdate = NO_ACTION;
-        return this;
+        return onUpdate(NO_ACTION);
     }
 
     @Override
     public final ConstraintImpl onUpdateRestrict() {
-        onUpdate = RESTRICT;
-        return this;
+        return onUpdate(RESTRICT);
     }
 
     @Override
     public final ConstraintImpl onUpdateCascade() {
-        onUpdate = CASCADE;
-        return this;
+        return onUpdate(CASCADE);
     }
 
     @Override
     public final ConstraintImpl onUpdateSetNull() {
-        onUpdate = SET_NULL;
-        return this;
+        return onUpdate(SET_NULL);
     }
 
     @Override
@@ -1166,20 +1172,6 @@ implements
     public final ConstraintImpl notEnforced() {
         this.enforced = false;
         return this;
-    }
-
-    enum Action {
-        NO_ACTION("no action"),
-        RESTRICT("restrict"),
-        CASCADE("cascade"),
-        SET_NULL("set null"),
-        SET_DEFAULT("set default");
-
-        Keyword keyword;
-
-        private Action(String sql) {
-            this.keyword = DSL.keyword(sql);
-        }
     }
 
     final boolean matchingPrimaryKey(Field<?> identity) {

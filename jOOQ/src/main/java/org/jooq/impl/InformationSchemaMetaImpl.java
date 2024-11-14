@@ -507,7 +507,12 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                         continue tableConstraintLoop;
                     }
 
-                    ForeignKey<Record, Record> key = Internal.createForeignKey(uniqueKey, table, xc.getConstraintName(), c.toArray(new TableField[0]));
+                    ForeignKey<Record, Record> key = Internal.createForeignKey(
+                        uniqueKey,
+                        table,
+                        xc.getConstraintName(),
+                        c.toArray(new TableField[0])
+                    );
                     table.foreignKeys.add(key);
                     break;
                 }

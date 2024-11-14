@@ -2441,8 +2441,8 @@ final class Interpreter {
                     uk,
                     map(referencedFields, f -> (TableField<Record, ?>) uk.getTable().field(f.name()), TableField[]::new),
                     enforced,
-                    null,
-                    null
+                    onDelete,
+                    onUpdate
                 ));
             }
 

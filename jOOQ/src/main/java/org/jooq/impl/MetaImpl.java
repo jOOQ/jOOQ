@@ -93,6 +93,7 @@ import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isEmpty;
+import static org.jooq.tools.jdbc.JDBCUtils.foreignKeyRule;
 
 import java.io.Serializable;
 import java.sql.DatabaseMetaData;
@@ -151,6 +152,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -1008,23 +1010,6 @@ final class MetaImpl extends AbstractMeta {
         String.class,  // SOURCE_DATA_TYPE
         String.class   // IS_AUTOINCREMENT
     };
-
-    private static final ForeignKeyRule foreignKeyRule(int code) {
-        switch (code) {
-            case DatabaseMetaData.importedKeyCascade:
-                return ForeignKeyRule.CASCADE;
-            case DatabaseMetaData.importedKeyNoAction:
-                return ForeignKeyRule.NO_ACTION;
-            case DatabaseMetaData.importedKeyRestrict:
-                return ForeignKeyRule.RESTRICT;
-            case DatabaseMetaData.importedKeySetDefault:
-                return ForeignKeyRule.SET_DEFAULT;
-            case DatabaseMetaData.importedKeySetNull:
-                return ForeignKeyRule.SET_NULL;
-            default:
-                return null;
-        }
-    }
 
     private static final TableOptions tableOption(DSLContext ctx, MetaSchema schema, String tableName, TableType tableType) {
         String sql = M_SOURCES(ctx.dialect());

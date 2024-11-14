@@ -108,6 +108,7 @@ import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_PROC;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_SEQUENCE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
+import static org.jooq.tools.jdbc.JDBCUtils.foreignKeyRule;
 import static org.jooq.util.postgres.PostgresDSL.arrayAppend;
 
 import java.math.BigDecimal;
@@ -147,6 +148,7 @@ import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -186,6 +188,7 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -405,6 +408,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             String uniqueKey = record.get("pk_name", String.class);
             String uniqueKeyTableName = record.get("pktable_name", String.class);
             String uniqueKeyColumn = record.get("pkcolumn_name", String.class);
+            ForeignKeyRule deleteRule = foreignKeyRule(record.get("delete_rule", int.class));
+            ForeignKeyRule updateRule = foreignKeyRule(record.get("update_rule", int.class));
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
@@ -417,7 +422,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     uniqueKey,
                     uniqueKeyTable,
                     uniqueKeyTable.getColumn(uniqueKeyColumn),
-                    true
+                    true,
+                    deleteRule,
+                    updateRule
                 );
 
                 for (IndexDefinition index : getIndexes(uniqueKeyTable)) {

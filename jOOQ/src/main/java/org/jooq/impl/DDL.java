@@ -79,6 +79,7 @@ import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
+import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.CreateDomainAsStep;
 import org.jooq.CreateDomainConstraintStep;
 import org.jooq.CreateDomainDefaultStep;
@@ -124,9 +125,13 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.UniqueKey;
 import org.jooq.impl.QOM.CreateView;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.DDLExportConfiguration.InlineForeignKeyConstraints;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -486,7 +491,15 @@ final class DDL {
 
         if (configuration.flags().contains(FOREIGN_KEY) && (table.getTableType() != VIEW || configuration.includeConstraintsOnViews()))
             for (ForeignKey<?, ?> key : sortKeysIf(table.getReferences(), !configuration.respectConstraintOrder()))
-                result.add(enforced(constraint(key.getUnqualifiedName()).foreignKey(key.getFieldsArray()).references(key.getKey().getTable(), key.getKeyFieldsArray()), key.enforced()));
+                result.add(enforced(
+                    rules(
+                        constraint(key.getUnqualifiedName()).foreignKey(key.getFieldsArray())
+                            .references(key.getKey().getTable(), key.getKeyFieldsArray()),
+                        key.getDeleteRule(),
+                        key.getUpdateRule()
+                    ),
+                    key.enforced()
+                ));
 
         return result;
     }
@@ -783,6 +796,19 @@ final class DDL {
 
 
 
+
+    private ConstraintEnforcementStep rules(
+        ConstraintForeignKeyOnStep on,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
+        if (deleteRule != null)
+            on = on.onDelete(deleteRule);
+        if (updateRule != null)
+            on = on.onUpdate(updateRule);
+
+        return on;
+    }
 
     private final Constraint enforced(ConstraintEnforcementStep check, boolean enforced) {
         return enforced ? check : check.notEnforced();

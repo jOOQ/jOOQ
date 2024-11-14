@@ -55,6 +55,7 @@ import java.sql.Statement;
 
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.tools.JooqLogger;
 
 import org.jetbrains.annotations.NotNull;
@@ -920,6 +921,27 @@ public class JDBCUtils {
      */
     public static final Boolean wasNull(CallableStatement statement, Boolean value) throws SQLException {
         return (value == null || (!value && statement.wasNull())) ? null : value;
+    }
+
+    /**
+     * Translate the {@link DatabaseMetaData#importedKeyCascade} and various
+     * other flag valuse to the jOOQ {@link ForeignKeyRule} representation.
+     */
+    public static final ForeignKeyRule foreignKeyRule(int code) {
+        switch (code) {
+            case DatabaseMetaData.importedKeyCascade:
+                return ForeignKeyRule.CASCADE;
+            case DatabaseMetaData.importedKeyNoAction:
+                return ForeignKeyRule.NO_ACTION;
+            case DatabaseMetaData.importedKeyRestrict:
+                return ForeignKeyRule.RESTRICT;
+            case DatabaseMetaData.importedKeySetDefault:
+                return ForeignKeyRule.SET_DEFAULT;
+            case DatabaseMetaData.importedKeySetNull:
+                return ForeignKeyRule.SET_NULL;
+            default:
+                return null;
+        }
     }
 
     /**

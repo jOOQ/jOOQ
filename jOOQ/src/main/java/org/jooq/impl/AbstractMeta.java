@@ -877,7 +877,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             map(oldFk.getFieldsArray(), f -> (TableField) fkTable.field(f), TableField[]::new),
             uk,
             map(oldFk.getKeyFieldsArray(), f -> (TableField) ukTable.field(f), TableField[]::new),
-            oldFk.enforced()
+            oldFk.enforced(),
+            oldFk.getDeleteRule(),
+            oldFk.getUpdateRule()
         );
     }
 

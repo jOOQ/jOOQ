@@ -116,7 +116,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * <pre>
  * <code>
- * Result<Record1<BookId>> result =
+ * Result&lt;Record1&lt;BookId>> result =
  * ctx.select(BOOK.ID.convertFrom(BookId::new))
  *    .from(BOOK)
  *    .fetch();

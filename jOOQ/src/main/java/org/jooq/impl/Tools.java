@@ -1830,7 +1830,11 @@ final class Tools {
         return map(fields, (f, i) -> DSL.field(fieldName(i), f.getDataType()).as(f));
     }
 
-    static final <R extends Record, O extends Record> ReferenceImpl<R, O> aliasedKey(ForeignKey<R, O> key, Table<R> child, Table<O> parent) {
+    static final <R extends Record, O extends Record> ReferenceImpl<R, O> aliasedKey(
+        ForeignKey<R, O> key,
+        Table<R> child,
+        Table<O> parent
+    ) {
 
         // [#10603] [#5050] TODO: Solve aliasing constraints more generically
         // [#8762] We can't dereference child.fields() or parent.fields() here yet, because this method is being called by
@@ -1841,7 +1845,9 @@ final class Tools {
             Tools.fieldsByName(child, key.getFieldsArray()),
             key.getKey(),
             Tools.fieldsByName(parent, key.getKeyFieldsArray()),
-            key.enforced()
+            key.enforced(),
+            key.getDeleteRule(),
+            key.getUpdateRule()
         );
     }
 

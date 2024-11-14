@@ -2440,7 +2440,9 @@ final class Interpreter {
                     map(fields, f -> (TableField<Record, ?>) t.field(f.name()), TableField[]::new),
                     uk,
                     map(referencedFields, f -> (TableField<Record, ?>) uk.getTable().field(f.name()), TableField[]::new),
-                    enforced
+                    enforced,
+                    null,
+                    null
                 ));
             }
 

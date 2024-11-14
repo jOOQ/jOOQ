@@ -60,6 +60,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DetachedException;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.UEmpty;
 
 /**
@@ -75,12 +76,35 @@ implements
 
     private final UniqueKey<PARENT>       uk;
     private final TableField<PARENT, ?>[] ukFields;
+    private final ForeignKeyRule          deleteRule;
+    private final ForeignKeyRule          updateRule;
 
-    ReferenceImpl(Table<CHILD> table, Name name, TableField<CHILD, ?>[] fkFields, UniqueKey<PARENT> uk, TableField<PARENT, ?>[] ukFields, boolean enforced) {
+    ReferenceImpl(
+        Table<CHILD> table,
+        Name name,
+        TableField<CHILD, ?>[] fkFields,
+        UniqueKey<PARENT> uk,
+        TableField<PARENT, ?>[] ukFields,
+        boolean enforced,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
         super(table, name, fkFields, enforced);
 
         this.uk = uk;
         this.ukFields = ukFields;
+        this.deleteRule = deleteRule;
+        this.updateRule = updateRule;
+    }
+
+    @Override
+    public final ForeignKeyRule getDeleteRule() {
+        return deleteRule;
+    }
+
+    @Override
+    public final ForeignKeyRule getUpdateRule() {
+        return updateRule;
     }
 
     @Override

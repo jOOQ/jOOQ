@@ -48,7 +48,6 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -513,10 +512,17 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
     }
 
     /**
+     * Get a reference to a {@link Enum} literal.
+     */
+    public String ref(Enum<?> literal) {
+        return literal == null ? null : ref(literal.getClass()) + "." + literal;
+    }
+
+    /**
      * Get a reference to a {@link Class}.
      */
     public String ref(Class<?> clazz) {
-        return clazz == null ? null : ref(clazz.getName());
+        return clazz == null ? null : ref(clazz.getName().replace("$", "."));
     }
 
     /**

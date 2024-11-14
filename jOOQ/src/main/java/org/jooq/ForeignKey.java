@@ -41,6 +41,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.QOM.ForeignKeyRule;
 
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
@@ -59,6 +60,20 @@ import org.jetbrains.annotations.Nullable;
  */
 @SuppressWarnings("unchecked")
 public interface ForeignKey<CHILD extends Record, PARENT extends Record> extends Key<CHILD> {
+
+    /**
+     * The foreign key's <code>ON DELETE</code> rule, or <code>null</code> if
+     * it's not specified, which defaults to {@link ForeignKeyRule#NO_ACTION}.
+     */
+    @Nullable
+    ForeignKeyRule getDeleteRule();
+
+    /**
+     * The foreign key's <code>ON UPDATE</code> rule, or <code>null</code> if
+     * it's not specified, which defaults to {@link ForeignKeyRule#NO_ACTION}.
+     */
+    @Nullable
+    ForeignKeyRule getUpdateRule();
 
     /**
      * The inverse key.

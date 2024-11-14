@@ -42,22 +42,51 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jooq.impl.QOM.ForeignKeyRule;
+
 public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition implements ForeignKeyDefinition {
 
-    private final List<ColumnDefinition>  fkColumns;
-    private final List<ColumnDefinition>  ukColumns;
-    private final UniqueKeyDefinition     uk;
+    private final List<ColumnDefinition> fkColumns;
+    private final List<ColumnDefinition> ukColumns;
+    private final UniqueKeyDefinition    uk;
+    private final ForeignKeyRule         deleteRule;
+    private final ForeignKeyRule         updateRule;
 
-    public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, UniqueKeyDefinition uniqueKey) {
-        this(schema, name, table, uniqueKey, true);
+    public DefaultForeignKeyDefinition(
+        SchemaDefinition schema,
+        String name,
+        TableDefinition table,
+        UniqueKeyDefinition uk
+    ) {
+        this(schema, name, table, uk, true);
     }
 
-    public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, UniqueKeyDefinition uk, boolean enforced) {
+    public DefaultForeignKeyDefinition(
+        SchemaDefinition schema,
+        String name,
+        TableDefinition table,
+        UniqueKeyDefinition uk,
+        boolean enforced
+    ) {
+        this(schema, name, table, uk, enforced, null, null);
+    }
+
+    public DefaultForeignKeyDefinition(
+        SchemaDefinition schema,
+        String name,
+        TableDefinition table,
+        UniqueKeyDefinition uk,
+        boolean enforced,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
         super(schema, table, name, enforced);
 
         this.fkColumns = new ArrayList<>();
         this.ukColumns = new ArrayList<>();
         this.uk = uk;
+        this.deleteRule = deleteRule;
+        this.updateRule = updateRule;
     }
 
     @Override
@@ -104,5 +133,15 @@ public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition im
     @Override
     public InverseForeignKeyDefinition getInverse() {
         return new DefaultInverseForeignKeyDefinition(this);
+    }
+
+    @Override
+    public ForeignKeyRule getDeleteRule() {
+        return deleteRule;
+    }
+
+    @Override
+    public ForeignKeyRule getUpdateRule() {
+        return updateRule;
     }
 }

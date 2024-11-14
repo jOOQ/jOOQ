@@ -50,6 +50,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.tools.JooqLogger;
 
 public class DefaultRelations implements Relations {
@@ -202,7 +203,8 @@ public class DefaultRelations implements Relations {
         TableDefinition foreignKeyTable,
         ColumnDefinition foreignKeyColumn,
         String uniqueKeyName,
-        TableDefinition uniqueKeyTable) {
+        TableDefinition uniqueKeyTable
+    ) {
         addForeignKey(foreignKeyName, foreignKeyTable, foreignKeyColumn, uniqueKeyName, uniqueKeyTable, true);
     }
 
@@ -292,6 +294,30 @@ public class DefaultRelations implements Relations {
         ColumnDefinition uniqueKeyColumn,
         boolean enforced
     ) {
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            uniqueKeyColumn,
+            enforced,
+            null,
+            null
+        );
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        ColumnDefinition uniqueKeyColumn,
+        boolean enforced,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
         // [#2718] Column exclusions may hit foreign key references. Ignore
         // such foreign keys
         Key key = key(foreignKeyTable, foreignKeyName);
@@ -335,7 +361,9 @@ public class DefaultRelations implements Relations {
                     foreignKeyName,
                     foreignKeyColumn.getContainer(),
                     uniqueKey,
-                    enforced
+                    enforced,
+                    deleteRule,
+                    updateRule
                 );
 
                 foreignKeys.put(key, foreignKey);

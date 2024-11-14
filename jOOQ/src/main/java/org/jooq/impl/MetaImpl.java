@@ -148,6 +148,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -1008,6 +1009,23 @@ final class MetaImpl extends AbstractMeta {
         String.class   // IS_AUTOINCREMENT
     };
 
+    private static final ForeignKeyRule foreignKeyRule(int code) {
+        switch (code) {
+            case DatabaseMetaData.importedKeyCascade:
+                return ForeignKeyRule.CASCADE;
+            case DatabaseMetaData.importedKeyNoAction:
+                return ForeignKeyRule.NO_ACTION;
+            case DatabaseMetaData.importedKeyRestrict:
+                return ForeignKeyRule.RESTRICT;
+            case DatabaseMetaData.importedKeySetDefault:
+                return ForeignKeyRule.SET_DEFAULT;
+            case DatabaseMetaData.importedKeySetNull:
+                return ForeignKeyRule.SET_NULL;
+            default:
+                return null;
+        }
+    }
+
     private static final TableOptions tableOption(DSLContext ctx, MetaSchema schema, String tableName, TableType tableType) {
         String sql = M_SOURCES(ctx.dialect());
 
@@ -1282,6 +1300,8 @@ final class MetaImpl extends AbstractMeta {
                 result.field(inverseSchemaCatalog ? 1 : 0),
                 result.field(inverseSchemaCatalog ? 0 : 1),
                 result.field(2),
+                result.field(9),
+                result.field(10),
                 result.field(11),
                 result.field(12),
             });
@@ -1341,7 +1361,9 @@ final class MetaImpl extends AbstractMeta {
                             fkFields,
                             new MetaUniqueKey(pkTable, pkName, pkFields, true), // TODO: Can we know whether it is a PK or UK?
                             pkFields,
-                            true
+                            true,
+                            foreignKeyRule(k.get(10, int.class)),
+                            foreignKeyRule(k.get(9, int.class))
                         ));
                     }
                 }
@@ -1710,6 +1732,8 @@ final class MetaImpl extends AbstractMeta {
                 result.field(inverseSchemaCatalog ? 5 : 4),
                 result.field(inverseSchemaCatalog ? 4 : 5),
                 result.field(6),
+                result.field(9),
+                result.field(10),
                 result.field(11),
                 result.field(12),
             });
@@ -1731,7 +1755,9 @@ final class MetaImpl extends AbstractMeta {
                     map(v, f -> (TableField<Record, ?>) fkTable.field(f.get(7, String.class)), TableField[]::new),
                     this,
                     map(v, f -> (TableField<Record, ?>) getTable().field(f.get(3, String.class)), TableField[]::new),
-                    true
+                    true,
+                    foreignKeyRule(k.get(10, int.class)),
+                    foreignKeyRule(k.get(9, int.class))
                 ));
             });
 

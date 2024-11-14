@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
@@ -115,6 +116,7 @@ import org.jooq.TableField;
 // ...
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -459,7 +461,9 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 fkKcu.TABLE_SCHEMA,
                 fkKcu.TABLE_NAME,
                 fkKcu.COLUMN_NAME,
-                pkKcu.COLUMN_NAME
+                pkKcu.COLUMN_NAME,
+                replace(REFERENTIAL_CONSTRAINTS.DELETE_RULE, inline(" "), inline("_")).as(REFERENTIAL_CONSTRAINTS.DELETE_RULE),
+                replace(REFERENTIAL_CONSTRAINTS.UPDATE_RULE, inline(" "), inline("_")).as(REFERENTIAL_CONSTRAINTS.UPDATE_RULE)
             )
             .from(REFERENTIAL_CONSTRAINTS)
             .join(fkKcu)
@@ -488,6 +492,8 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
             String uniqueKey = record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
             String uniqueKeyTableName = record.get(TABLE_CONSTRAINTS.TABLE_NAME);
             String uniqueKeyColumn = record.get(pkKcu.COLUMN_NAME);
+            ForeignKeyRule deleteRule = record.get(REFERENTIAL_CONSTRAINTS.DELETE_RULE, ForeignKeyRule.class);
+            ForeignKeyRule updateRule = record.get(REFERENTIAL_CONSTRAINTS.UPDATE_RULE, ForeignKeyRule.class);
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
@@ -500,7 +506,9 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                     uniqueKey,
                     uniqueKeyTable,
                     uniqueKeyTable.getColumn(uniqueKeyColumn),
-                    true
+                    true,
+                    deleteRule,
+                    updateRule
                 );
         }
     }

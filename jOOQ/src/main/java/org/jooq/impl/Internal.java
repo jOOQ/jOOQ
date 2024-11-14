@@ -111,6 +111,7 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.CreateTable;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
@@ -432,8 +433,17 @@ public final class Internal {
      * Factory method for foreign keys.
      */
     @NotNull
-    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(Table<R> table, Name name, TableField<R, ?>[] fkFields, UniqueKey<U> uk, TableField<U, ?>[] ukFields, boolean enforced) {
-        ForeignKey<R, U> result = new ReferenceImpl<>(table, name, fkFields, uk, ukFields == null ? uk.getFieldsArray() : ukFields, enforced);
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(
+        Table<R> table,
+        Name name,
+        TableField<R, ?>[] fkFields,
+        UniqueKey<U> uk,
+        TableField<U, ?>[] ukFields,
+        boolean enforced,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
+        ForeignKey<R, U> result = new ReferenceImpl<>(table, name, fkFields, uk, ukFields == null ? uk.getFieldsArray() : ukFields, enforced, deleteRule, updateRule);
 
         if (uk instanceof UniqueKeyImpl<U> u)
             u.references.add(result);
@@ -445,7 +455,52 @@ public final class Internal {
      * Factory method for foreign keys.
      */
     @NotNull
-    public static final <R extends Record, U extends Record, ER extends EmbeddableRecord<ER>> ForeignKey<R, U> createForeignKey(Table<R> table, Name name, TableField<R, ER> fkEmbeddableField, UniqueKey<U> uk, TableField<U, ER> ukEmbeddableField, boolean enforced) {
+    public static final <R extends Record, U extends Record, ER extends EmbeddableRecord<ER>> ForeignKey<R, U> createForeignKey(
+        Table<R> table,
+        Name name,
+        TableField<R, ER> fkEmbeddableField,
+        UniqueKey<U> uk,
+        TableField<U, ER> ukEmbeddableField,
+        boolean enforced,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
+        return createForeignKey(table, name, fields(fkEmbeddableField), uk, fields(ukEmbeddableField), enforced, deleteRule, updateRule);
+    }
+
+    /**
+     * Factory method for foreign keys.
+     * <p>
+     * @deprecated - 3.20.0 - [#9736] - Regenerate your code.
+     */
+    @Deprecated
+    @NotNull
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(
+        Table<R> table,
+        Name name,
+        TableField<R, ?>[] fkFields,
+        UniqueKey<U> uk,
+        TableField<U, ?>[] ukFields,
+        boolean enforced
+    ) {
+        return createForeignKey(table, name, fkFields, uk, ukFields, enforced, null, null);
+    }
+
+    /**
+     * Factory method for foreign keys.
+     * <p>
+     * @deprecated - 3.20.0 - [#9736] - Regenerate your code.
+     */
+    @Deprecated
+    @NotNull
+    public static final <R extends Record, U extends Record, ER extends EmbeddableRecord<ER>> ForeignKey<R, U> createForeignKey(
+        Table<R> table,
+        Name name,
+        TableField<R, ER> fkEmbeddableField,
+        UniqueKey<U> uk,
+        TableField<U, ER> ukEmbeddableField,
+        boolean enforced
+    ) {
         return createForeignKey(table, name, fields(fkEmbeddableField), uk, fields(ukEmbeddableField), enforced);
     }
 

@@ -1569,7 +1569,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     private void printCreateNonEmbeddableForeignKey(JavaWriter out, ForeignKeyDefinition foreignKey) {
         if (scala)
-            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s, Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s)",
+            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s, Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s, %s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
@@ -1583,10 +1583,12 @@ public class JavaGenerator extends AbstractGenerator {
                 TableField.class,
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
                 wildcard(),
-                foreignKey.enforced()
+                foreignKey.enforced(),
+                out.ref(foreignKey.getDeleteRule()),
+                out.ref(foreignKey.getUpdateRule())
             );
         else if (kotlin)
-            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s, arrayOf([[%s]]), %s)",
+            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s, arrayOf([[%s]]), %s, %s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
@@ -1594,10 +1596,12 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()), colRefSegments(null)),
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey())),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getReferencedColumns()), colRefSegments(null)),
-                foreignKey.enforced()
+                foreignKey.enforced(),
+                out.ref(foreignKey.getDeleteRule()),
+                out.ref(foreignKey.getUpdateRule())
             );
         else
-            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s, new %s[] { [[%s]] }, %s)",
+            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s, new %s[] { [[%s]] }, %s, %s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
@@ -1607,9 +1611,13 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()), 2),
                 TableField.class,
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getReferencedColumns()), colRefSegments(null)),
-                foreignKey.enforced()
+                foreignKey.enforced(),
+                out.ref(foreignKey.getDeleteRule()),
+                out.ref(foreignKey.getUpdateRule())
             );
     }
+
+
 
 
 

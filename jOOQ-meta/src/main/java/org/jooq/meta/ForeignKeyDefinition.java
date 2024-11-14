@@ -39,6 +39,8 @@ package org.jooq.meta;
 
 import java.util.List;
 
+import org.jooq.impl.QOM.ForeignKeyRule;
+
 /**
  * An object holding information about a foreign key relationship.
  *
@@ -93,4 +95,14 @@ public interface ForeignKeyDefinition extends ConstraintDefinition {
      * Get the inverse key.
      */
     InverseForeignKeyDefinition getInverse();
+
+    /**
+     * The <code>ON DELETE</code> rule or <code>null</code>, if unspecified.
+     */
+    ForeignKeyRule getDeleteRule();
+
+    /**
+     * The <code>ON UPDATE</code> rule or <code>null</code>, if unspecified.
+     */
+    ForeignKeyRule getUpdateRule();
 }

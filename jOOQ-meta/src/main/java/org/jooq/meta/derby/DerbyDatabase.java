@@ -66,6 +66,7 @@ import static org.jooq.meta.derby.sys.Tables.SYSSEQUENCES;
 import static org.jooq.meta.derby.sys.Tables.SYSTABLES;
 import static org.jooq.meta.derby.sys.Tables.SYSTRIGGERS;
 import static org.jooq.meta.derby.sys.Tables.SYSVIEWS;
+import static org.jooq.meta.hsqldb.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -93,6 +94,7 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -197,15 +199,36 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
         Field<String> ukName = field("pc.constraintname", String.class);
         Field<String> ukTable = field("pt.tablename", String.class);
         Field<String> ukSchema = field("ps.schemaname", String.class);
+        Field<String> fkDeleteRule = field("f.deleterule", String.class);
+        Field<String> fkUpdateRule = field("f.updaterule", String.class);
 
-        for (Record record : create().select(
+        for (Record record : create()
+            .select(
                 fkName,
                 fkTable,
                 fkSchema,
                 fkDescriptor,
                 ukName,
                 ukTable,
-                ukSchema)
+                ukSchema,
+
+                // [#9736] See https://db.apache.org/derby/docs/10.16/ref/rrefsistabs13420.html
+                //         As of 10.17, D is parsed and reported, but not implemented nor documented
+                case_(fkDeleteRule)
+                    .when(inline("R"), inline(ForeignKeyRule.NO_ACTION.name()))
+                    .when(inline("S"), inline(ForeignKeyRule.RESTRICT.name()))
+                    .when(inline("C"), inline(ForeignKeyRule.CASCADE.name()))
+                    .when(inline("U"), inline(ForeignKeyRule.SET_NULL.name()))
+                    .when(inline("D"), inline(ForeignKeyRule.SET_DEFAULT.name()))
+                    .as("deleterule"),
+                case_(fkUpdateRule)
+                    .when(inline("R"), inline(ForeignKeyRule.NO_ACTION.name()))
+                    .when(inline("S"), inline(ForeignKeyRule.RESTRICT.name()))
+                    .when(inline("C"), inline(ForeignKeyRule.CASCADE.name()))
+                    .when(inline("U"), inline(ForeignKeyRule.SET_NULL.name()))
+                    .when(inline("D"), inline(ForeignKeyRule.SET_DEFAULT.name()))
+                    .as("updaterule")
+            )
             .from("sys.sysconstraints   fc")
             .join("sys.sysforeignkeys   f ").on("f.constraintid = fc.constraintid")
             .join("sys.sysconglomerates fg").on("fg.conglomerateid = f.conglomerateid")
@@ -230,6 +253,8 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
+            ForeignKeyRule deleteRule = record.get("deleterule", ForeignKeyRule.class);
+            ForeignKeyRule updateRule = record.get("updaterule", ForeignKeyRule.class);
 
             if (foreignKeyTable != null && uniqueKeyTable != null)
                 for (int i = 0; i < foreignKeyIndexes.size(); i++)
@@ -238,7 +263,10 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                         foreignKeyTable,
                         foreignKeyTable.getColumn(foreignKeyIndexes.get(i)),
                         uniqueKeyName,
-                        uniqueKeyTable
+                        uniqueKeyTable,
+                        true,
+                        deleteRule,
+                        updateRule
                     );
         }
     }

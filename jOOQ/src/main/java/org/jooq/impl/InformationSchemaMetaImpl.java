@@ -49,6 +49,7 @@ import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.Tools.EMPTY_CHECK;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.tools.StringUtils.defaultIfNull;
+import static org.jooq.util.xml.XmlUtils.foreignKeyRule;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 
 import java.math.BigInteger;
@@ -91,8 +92,10 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.StringUtils;
+import org.jooq.util.xml.XmlUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -122,7 +125,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     private final Map<Schema, List<Sequence<?>>>                sequencesPerSchema;
     private final List<UniqueKeyImpl<Record>>                   primaryKeys;
     private final Map<Name, UniqueKeyImpl<Record>>              keysByName;
-    private final Map<Name, Name>                               referentialKeys;
+    private final Map<Name, ReferentialKey>                     referentialKeys;
     private final Map<Name, IndexImpl>                          indexesByName;
 
 
@@ -474,9 +477,15 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         }
 
         for (ReferentialConstraint xr : meta.getReferentialConstraints()) {
+            Name fk = name(xr.getConstraintCatalog(), xr.getConstraintSchema(), xr.getConstraintName());
             referentialKeys.put(
-                name(xr.getConstraintCatalog(), xr.getConstraintSchema(), xr.getConstraintName()),
-                name(xr.getUniqueConstraintCatalog(), xr.getUniqueConstraintSchema(), xr.getUniqueConstraintName())
+                fk,
+                new ReferentialKey(
+                    fk,
+                    name(xr.getUniqueConstraintCatalog(), xr.getUniqueConstraintSchema(), xr.getUniqueConstraintName()),
+                    foreignKeyRule(xr.getDeleteRule()),
+                    foreignKeyRule(xr.getUpdateRule())
+                )
             );
         }
 
@@ -500,7 +509,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                         continue tableConstraintLoop;
                     }
 
-                    UniqueKeyImpl<Record> uniqueKey = keysByName.get(referentialKeys.get(constraintName));
+                    ReferentialKey fk = referentialKeys.get(constraintName);
+                    UniqueKeyImpl<Record> uniqueKey = keysByName.get(fk.uk());
 
                     if (uniqueKey == null) {
                         errors.add("No unique key defined for foreign key " + constraintName);
@@ -511,7 +521,10 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                         uniqueKey,
                         table,
                         xc.getConstraintName(),
-                        c.toArray(new TableField[0])
+                        c.toArray(new TableField[0]),
+                        !FALSE.equals(xc.isEnforced()),
+                        fk.deleteRule(),
+                        fk.updateRule()
                     );
                     table.foreignKeys.add(key);
                     break;
@@ -947,4 +960,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     private static final <T> List<T> unmodifiableList(List<? extends T> list) {
         return list == null ? emptyList() : Collections.unmodifiableList(list);
     }
+
+    private static final record ReferentialKey(Name fk, Name uk, ForeignKeyRule deleteRule, ForeignKeyRule updateRule) {}
 }

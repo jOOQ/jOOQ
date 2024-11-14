@@ -40,6 +40,7 @@ package org.jooq.codegen;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.tools.StringUtils.isBlank;
+import static org.jooq.util.xml.XmlUtils.foreignKeyRule;
 import static org.jooq.util.xml.jaxb.TableConstraintType.CHECK;
 import static org.jooq.util.xml.jaxb.TableConstraintType.FOREIGN_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
@@ -326,6 +327,8 @@ public class XMLGenerator extends AbstractGenerator {
                     rc.setUniqueConstraintCatalog(referenced.getCatalog().getOutputName());
                     rc.setUniqueConstraintSchema(referenced.getSchema().getOutputName());
                     rc.setUniqueConstraintName(referenced.getOutputName());
+                    rc.setDeleteRule(foreignKeyRule(f.getDeleteRule()));
+                    rc.setUpdateRule(foreignKeyRule(f.getUpdateRule()));
 
                     is.getTableConstraints().add(tc);
                     is.getReferentialConstraints().add(rc);

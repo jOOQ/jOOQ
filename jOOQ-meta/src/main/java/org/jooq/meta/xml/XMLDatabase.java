@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isBlank;
+import static org.jooq.util.xml.XmlUtils.foreignKeyRule;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 
@@ -118,6 +119,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
+import org.jooq.util.xml.XmlUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -441,7 +443,9 @@ public class XMLDatabase extends AbstractDatabase {
                                     uniqueKey,
                                     uniqueKeyTable,
                                     usage.getPositionInUniqueConstraint(),
-                                    !FALSE.equals(fktc.isEnforced())
+                                    !FALSE.equals(fktc.isEnforced()),
+                                    foreignKeyRule(fk.getDeleteRule()),
+                                    foreignKeyRule(fk.getUpdateRule())
                                 );
                         }
                     }

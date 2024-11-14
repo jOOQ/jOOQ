@@ -252,6 +252,8 @@
             <element name="unique_constraint_catalog" type="string" minOccurs="0" maxOccurs="1" />
             <element name="unique_constraint_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="unique_constraint_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="delete_rule" type="tns:ForeignKeyRule" minOccurs="0" maxOccurs="1" />
+            <element name="update_rule" type="tns:ForeignKeyRule" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
@@ -482,6 +484,16 @@
             <enumeration value="VIEW"/>
             <enumeration value="MATERIALIZED VIEW"/>
             <enumeration value="GLOBAL TEMPORARY"/>
+        </restriction>
+    </simpleType>
+    
+    <simpleType name="ForeignKeyRule">
+        <restriction base="string">
+            <enumeration value="CASCADE"/>
+            <enumeration value="SET NULL"/>
+            <enumeration value="SET DEFAULT"/>
+            <enumeration value="RESTRICT"/>
+            <enumeration value="NO ACTION"/>
         </restriction>
     </simpleType>
 </schema>

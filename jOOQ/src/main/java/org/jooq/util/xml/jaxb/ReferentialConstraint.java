@@ -5,6 +5,7 @@ import java.io.Serializable;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -28,6 +29,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="unique_constraint_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="unique_constraint_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="unique_constraint_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="delete_rule" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}ForeignKeyRule" minOccurs="0"/&gt;
+ *         &lt;element name="update_rule" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}ForeignKeyRule" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -65,6 +68,12 @@ public class ReferentialConstraint implements Serializable, XMLAppendable
     @XmlElement(name = "unique_constraint_name", required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String uniqueConstraintName;
+    @XmlElement(name = "delete_rule")
+    @XmlSchemaType(name = "string")
+    protected ForeignKeyRule deleteRule;
+    @XmlElement(name = "update_rule")
+    @XmlSchemaType(name = "string")
+    protected ForeignKeyRule updateRule;
 
     public String getConstraintCatalog() {
         return constraintCatalog;
@@ -114,6 +123,22 @@ public class ReferentialConstraint implements Serializable, XMLAppendable
         this.uniqueConstraintName = value;
     }
 
+    public ForeignKeyRule getDeleteRule() {
+        return deleteRule;
+    }
+
+    public void setDeleteRule(ForeignKeyRule value) {
+        this.deleteRule = value;
+    }
+
+    public ForeignKeyRule getUpdateRule() {
+        return updateRule;
+    }
+
+    public void setUpdateRule(ForeignKeyRule value) {
+        this.updateRule = value;
+    }
+
     public ReferentialConstraint withConstraintCatalog(String value) {
         setConstraintCatalog(value);
         return this;
@@ -144,6 +169,16 @@ public class ReferentialConstraint implements Serializable, XMLAppendable
         return this;
     }
 
+    public ReferentialConstraint withDeleteRule(ForeignKeyRule value) {
+        setDeleteRule(value);
+        return this;
+    }
+
+    public ReferentialConstraint withUpdateRule(ForeignKeyRule value) {
+        setUpdateRule(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("constraint_catalog", constraintCatalog);
@@ -152,6 +187,8 @@ public class ReferentialConstraint implements Serializable, XMLAppendable
         builder.append("unique_constraint_catalog", uniqueConstraintCatalog);
         builder.append("unique_constraint_schema", uniqueConstraintSchema);
         builder.append("unique_constraint_name", uniqueConstraintName);
+        builder.append("delete_rule", deleteRule);
+        builder.append("update_rule", updateRule);
     }
 
     @Override
@@ -227,6 +264,24 @@ public class ReferentialConstraint implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (deleteRule == null) {
+            if (other.deleteRule!= null) {
+                return false;
+            }
+        } else {
+            if (!deleteRule.equals(other.deleteRule)) {
+                return false;
+            }
+        }
+        if (updateRule == null) {
+            if (other.updateRule!= null) {
+                return false;
+            }
+        } else {
+            if (!updateRule.equals(other.updateRule)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -240,6 +295,8 @@ public class ReferentialConstraint implements Serializable, XMLAppendable
         result = ((prime*result)+((uniqueConstraintCatalog == null)? 0 :uniqueConstraintCatalog.hashCode()));
         result = ((prime*result)+((uniqueConstraintSchema == null)? 0 :uniqueConstraintSchema.hashCode()));
         result = ((prime*result)+((uniqueConstraintName == null)? 0 :uniqueConstraintName.hashCode()));
+        result = ((prime*result)+((deleteRule == null)? 0 :deleteRule.hashCode()));
+        result = ((prime*result)+((updateRule == null)? 0 :updateRule.hashCode()));
         return result;
     }
 

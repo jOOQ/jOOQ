@@ -216,6 +216,28 @@ public class DefaultRelations implements Relations {
         TableDefinition uniqueKeyTable,
         boolean enforced
     ) {
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            enforced,
+            null,
+            null
+        );
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        boolean enforced,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
         UniqueKeyDefinition uk = keys.get(key(uniqueKeyTable, uniqueKeyName));
         Key key = key(foreignKeyTable, foreignKeyName);
 
@@ -233,7 +255,17 @@ public class DefaultRelations implements Relations {
             return;
         }
 
-        addForeignKey(foreignKeyName, foreignKeyTable, foreignKeyColumn, uniqueKeyName, uniqueKeyTable, getNextUkColumn(key, uk), enforced);
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            getNextUkColumn(key, uk),
+            enforced,
+            deleteRule,
+            updateRule
+        );
     }
 
     private final Map<Key, Integer> nextUkColumnIndex = new HashMap<>();
@@ -258,6 +290,30 @@ public class DefaultRelations implements Relations {
         Integer positionInUniqueKey,
         boolean enforced
     ) {
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            positionInUniqueKey,
+            enforced,
+            null,
+            null
+        );
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        Integer positionInUniqueKey,
+        boolean enforced,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
         if (positionInUniqueKey == null) {
             addForeignKey(
                 foreignKeyName,
@@ -265,7 +321,9 @@ public class DefaultRelations implements Relations {
                 foreignKeyColumn,
                 uniqueKeyName,
                 uniqueKeyTable,
-                enforced
+                enforced,
+                deleteRule,
+                updateRule
             );
         }
         else {
@@ -279,7 +337,9 @@ public class DefaultRelations implements Relations {
                     uniqueKeyName,
                     uniqueKeyTable,
                     uniqueKey.getKeyColumns().get(positionInUniqueKey - 1),
-                    enforced
+                    enforced,
+                    deleteRule,
+                    updateRule
                 );
             }
         }

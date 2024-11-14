@@ -434,6 +434,22 @@ public final class Internal {
      */
     @NotNull
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(
+        UniqueKey<U> key,
+        Table<R> table,
+        String name,
+        TableField<R, ?>[] fields,
+        boolean enforced,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
+        return createForeignKey(table, DSL.name(name), fields, key, key.getFieldsArray(), enforced, deleteRule, updateRule);
+    }
+
+    /**
+     * Factory method for foreign keys.
+     */
+    @NotNull
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(
         Table<R> table,
         Name name,
         TableField<R, ?>[] fkFields,

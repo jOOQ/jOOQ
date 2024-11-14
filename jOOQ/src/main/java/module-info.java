@@ -47,6 +47,7 @@ module org.jooq {
     exports org.jooq.tools.reflect;
     exports org.jooq.types;
     exports org.jooq.util.jaxb.tools;
+    exports org.jooq.util.xml;
     exports org.jooq.util.xml.jaxb;
 
 

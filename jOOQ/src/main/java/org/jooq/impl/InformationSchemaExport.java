@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.tools.StringUtils.isBlank;
+import static org.jooq.util.xml.XmlUtils.foreignKeyRule;
 import static org.jooq.util.xml.jaxb.TableConstraintType.CHECK;
 import static org.jooq.util.xml.jaxb.TableConstraintType.FOREIGN_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
@@ -69,6 +70,7 @@ import org.jooq.SortOrder;
 // ...
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.util.xml.XmlUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -530,9 +532,9 @@ final class InformationSchemaExport {
             result.getKeyColumnUsages().add(kc);
         }
 
-        if (constraintType == FOREIGN_KEY) {
+        if (key instanceof ForeignKey<?, ?> fk) {
             ReferentialConstraint rc = new ReferentialConstraint();
-            UniqueKey<?> uk = ((ForeignKey<?, ?>) key).getKey();
+            UniqueKey<?> uk = fk.getKey();
             String ukCatalogName = catalogName(uk.getTable());
             String ukSchemaName = schemaName(uk.getTable());
 
@@ -550,6 +552,8 @@ final class InformationSchemaExport {
 
             rc.setConstraintName(key.getName());
             rc.setUniqueConstraintName(uk.getName());
+            rc.setDeleteRule(foreignKeyRule(fk.getDeleteRule()));
+            rc.setUpdateRule(foreignKeyRule(fk.getUpdateRule()));
 
             result.getReferentialConstraints().add(rc);
         }

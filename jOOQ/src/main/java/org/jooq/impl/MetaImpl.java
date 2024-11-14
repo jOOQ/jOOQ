@@ -1331,8 +1331,8 @@ final class MetaImpl extends AbstractMeta {
                     // [#16782] Dangling FK references are possible in some RDBMS that allow for
                     //          temporarily deactivating FK checks, e.g. MySQL via SET FOREIGN_KEY_CHECKS=0
                     if (pkTable != null) {
-                        String fkName = k.get(3, String.class);
-                        String pkName = k.get(4, String.class);
+                        String fkName = k.get(5, String.class);
+                        String pkName = k.get(6, String.class);
 
                         TableField<Record, ?>[] pkFields = new TableField[v.size()];
                         TableField<Record, ?>[] fkFields = new TableField[v.size()];
@@ -1362,8 +1362,8 @@ final class MetaImpl extends AbstractMeta {
                             new MetaUniqueKey(pkTable, pkName, pkFields, true), // TODO: Can we know whether it is a PK or UK?
                             pkFields,
                             true,
-                            foreignKeyRule(k.get(10, int.class)),
-                            foreignKeyRule(k.get(9, int.class))
+                            foreignKeyRule(k.get(3, int.class)),
+                            foreignKeyRule(k.get(4, int.class))
                         ));
                     }
                 }
@@ -1751,13 +1751,13 @@ final class MetaImpl extends AbstractMeta {
 
                 references.add(new ReferenceImpl<>(
                     fkTable,
-                    name(k.get(3, String.class)),
+                    name(k.get(5, String.class)),
                     map(v, f -> (TableField<Record, ?>) fkTable.field(f.get(7, String.class)), TableField[]::new),
                     this,
                     map(v, f -> (TableField<Record, ?>) getTable().field(f.get(3, String.class)), TableField[]::new),
                     true,
-                    foreignKeyRule(k.get(10, int.class)),
-                    foreignKeyRule(k.get(9, int.class))
+                    foreignKeyRule(k.get(3, int.class)),
+                    foreignKeyRule(k.get(4, int.class))
                 ));
             });
 

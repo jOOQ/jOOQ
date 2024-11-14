@@ -111,6 +111,7 @@ import org.jooq.TableOptions.TableType;
 // ...
 // ...
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -361,13 +362,16 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        for (Record record : create().select(
+        for (Record record : create()
+                .select(
                     REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA,
                     REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME,
                     REFERENTIAL_CONSTRAINTS.TABLE_NAME,
                     REFERENTIAL_CONSTRAINTS.REFERENCED_TABLE_NAME,
                     REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
                     REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
+                    replace(REFERENTIAL_CONSTRAINTS.DELETE_RULE, inline(" "), inline("_")).as(REFERENTIAL_CONSTRAINTS.DELETE_RULE),
+                    replace(REFERENTIAL_CONSTRAINTS.UPDATE_RULE, inline(" "), inline("_")).as(REFERENTIAL_CONSTRAINTS.UPDATE_RULE),
                     KEY_COLUMN_USAGE.COLUMN_NAME)
                 .from(REFERENTIAL_CONSTRAINTS)
                 .join(KEY_COLUMN_USAGE)
@@ -379,8 +383,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                     KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA.asc(),
                     KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
                     KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
-                .fetch()) {
-
+        ) {
             SchemaDefinition foreignKeySchema = getSchema(record.get(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA));
             SchemaDefinition uniqueKeySchema = getSchema(record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
 
@@ -393,13 +396,19 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
 
+            ForeignKeyRule deleteRule = record.get(REFERENTIAL_CONSTRAINTS.DELETE_RULE, ForeignKeyRule.class);
+            ForeignKeyRule updateRule = record.get(REFERENTIAL_CONSTRAINTS.UPDATE_RULE, ForeignKeyRule.class);
+
             if (foreignKeyTable != null)
                 relations.addForeignKey(
                     foreignKey,
                     foreignKeyTable,
                     foreignKeyTable.getColumn(foreignKeyColumn),
                     getKeyName(uniqueKeyTableName, uniqueKey),
-                    uniqueKeyTable
+                    uniqueKeyTable,
+                    true,
+                    deleteRule,
+                    updateRule
                 );
         }
     }

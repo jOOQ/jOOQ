@@ -1839,7 +1839,7 @@ final class Tools {
         // [#10603] [#5050] TODO: Solve aliasing constraints more generically
         // [#8762] We can't dereference child.fields() or parent.fields() here yet, because this method is being called by
         //         the TableImpl constructor, meaning the fields are not initialised yet.
-        return new ReferenceImpl<>(
+        return new ReferenceImpl<R, O>(
             child,
             key.getQualifiedName(),
             Tools.fieldsByName(child, key.getFieldsArray()),

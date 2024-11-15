@@ -1340,7 +1340,7 @@ final class MetaImpl extends AbstractMeta {
                                     return;
                         }
 
-                        references.add(new ReferenceImpl<>(
+                        references.add(new ReferenceImpl<Record, Record>(
                             this,
                             name(fkName),
                             fkFields,
@@ -1734,7 +1734,7 @@ final class MetaImpl extends AbstractMeta {
                 Schema schema = schemas.get(defaultString(k.get(1, String.class)));
                 Table<Record> fkTable = (Table<Record>) lookupTable(schema, k.get(2, String.class));
 
-                references.add(new ReferenceImpl<>(
+                references.add(new ReferenceImpl<Record, Record>(
                     fkTable,
                     name(k.get(5, String.class)),
                     map(v, f -> (TableField<Record, ?>) fkTable.field(f.get(7, String.class)), TableField[]::new),

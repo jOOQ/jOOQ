@@ -320,7 +320,9 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
                         ukName,
                         ukTable,
                         ukTable.getColumn(ukFields[i].getName(), true),
-                        true
+                        true,
+                        fk.getDeleteRule(),
+                        fk.getUpdateRule()
                     );
                 }
             }

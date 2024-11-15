@@ -55,6 +55,7 @@ import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.trim;
@@ -107,6 +108,7 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -232,7 +234,9 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                     trim(fk.RDB$RELATION_NAME).as("fkTable"),
                     trim(isf.RDB$FIELD_NAME).as("fkField"),
                     trim(pk.RDB$CONSTRAINT_NAME).as("pk"),
-                    trim(pk.RDB$RELATION_NAME).as("pkTable"))
+                    trim(pk.RDB$RELATION_NAME).as("pkTable"),
+                    trim(replace(trim(rc.RDB$DELETE_RULE), inline(" "), inline("_"))).as(rc.RDB$DELETE_RULE),
+                    trim(replace(trim(rc.RDB$UPDATE_RULE), inline(" "), inline("_"))).as(rc.RDB$UPDATE_RULE))
                 .from(fk)
                 .join(rc).on(fk.RDB$CONSTRAINT_NAME.eq(rc.RDB$CONSTRAINT_NAME))
                 .join(pk).on(pk.RDB$CONSTRAINT_NAME.eq(rc.RDB$CONST_NAME_UQ))
@@ -242,7 +246,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 .orderBy(
                     fk.RDB$CONSTRAINT_NAME.asc(),
                     isf.RDB$FIELD_POSITION.asc())
-                .fetch()) {
+        ) {
 
             String pkName = record.get("pk", String.class);
             String pkTable = record.get("pkTable", String.class);
@@ -253,6 +257,8 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
             TableDefinition foreignKeyTable = getTable(getSchemata().get(0), fkTable, true);
             TableDefinition primaryKeyTable = getTable(getSchemata().get(0), pkTable, true);
+            ForeignKeyRule deleteRule = record.get(rc.RDB$DELETE_RULE, ForeignKeyRule.class);
+            ForeignKeyRule updateRule = record.get(rc.RDB$UPDATE_RULE, ForeignKeyRule.class);
 
             if (primaryKeyTable != null && foreignKeyTable != null)
                 relations.addForeignKey(
@@ -260,7 +266,10 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                     foreignKeyTable,
                     foreignKeyTable.getColumn(fkField),
                     pkName,
-                    primaryKeyTable
+                    primaryKeyTable,
+                    true,
+                    deleteRule,
+                    updateRule
                 );
         }
     }

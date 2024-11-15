@@ -660,8 +660,8 @@ abstract class AbstractGenerator implements Generator {
     public boolean generateRecordsIncluded(Definition definition) {
         return generateRecords()
             && !database.filterExcludeInclude(asList(definition),
-                generateRecordsIncludes(),
-                generateRecordsExcludes()
+                generateRecordsExcludes(),
+                generateRecordsIncludes()
             ).isEmpty();
     }
 
@@ -734,8 +734,8 @@ abstract class AbstractGenerator implements Generator {
     public boolean generatePojosIncluded(Definition definition) {
         return generatePojos()
             && !database.filterExcludeInclude(asList(definition),
-                generatePojosIncludes(),
-                generatePojosExcludes()
+                generatePojosExcludes(),
+                generatePojosIncludes()
             ).isEmpty();
     }
 
@@ -858,8 +858,8 @@ abstract class AbstractGenerator implements Generator {
     public boolean generateDaosIncluded(Definition definition) {
         return generateDaos()
             && !database.filterExcludeInclude(asList(definition),
-                generateDaosIncludes(),
-                generateDaosExcludes()
+                generateDaosExcludes(),
+                generateDaosIncludes()
             ).isEmpty();
     }
 

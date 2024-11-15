@@ -813,7 +813,7 @@ public class GenerationTool {
             if (g.getGenerate().getRecordsIncludes() != null)
                 generator.setGenerateRecordsIncludes(g.getGenerate().getRecordsIncludes());
             if (g.getGenerate().getRecordsExcludes() != null)
-                generator.setGenerateRecordsIncludes(g.getGenerate().getRecordsExcludes());
+                generator.setGenerateRecordsExcludes(g.getGenerate().getRecordsExcludes());
             if (g.getGenerate().isRecordsImplementingRecordN() != null)
                 generator.setGenerateRecordsImplementingRecordN(g.getGenerate().isRecordsImplementingRecordN());
             if (g.getGenerate().isEnumsAsScalaSealedTraits() != null)

@@ -53,8 +53,6 @@ import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.WithOrWithoutData;
-import org.jooq.impl.QOM;
-import org.jooq.impl.QOM.PrimaryKey;
 import org.jooq.impl.QOM.TableCommitAction;
 import org.jooq.tools.StringUtils;
 
@@ -468,7 +466,7 @@ implements
         if (ctx.family() == CLICKHOUSE) {
             ctx.formatSeparator().visit(K_ENGINE).sql(' ');
 
-            if (anyMatch(tableElements, e -> e instanceof PrimaryKey))
+            if (anyMatch(tableElements, e -> e instanceof QOM.PrimaryKey))
                 ctx.visit(unquotedName("MergeTree")).sql("()");
             else
                 ctx.visit(unquotedName("Log")).sql("()");

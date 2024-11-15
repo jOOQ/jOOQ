@@ -681,18 +681,92 @@ public final class QOM {
         @NotNull WithOrdinalityTable<?> $table(Table<?> newTable);
     }
 
-    public interface PrimaryKey extends Constraint {
+    /**
+     * A <code>PRIMARY KEY</code> constraint.
+     */
+    public interface PrimaryKey
+        extends
+            org.jooq.Constraint
+    {
+        @Override
+        @NotNull Name $name();
+        @CheckReturnValue
+        @NotNull Constraint $name(Name newName);
+        boolean $enforced();
+        @CheckReturnValue
+        @NotNull Constraint $enforced(boolean newEnforced);
         @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        @CheckReturnValue
+        @NotNull PrimaryKey $fields(UnmodifiableList<? extends Field<?>> newFields);
     }
-    public interface UniqueKey extends Constraint {
+
+    /**
+     * A <code>UNIQUE</code> constraint.
+     */
+    public interface UniqueKey
+        extends
+            org.jooq.Constraint
+    {
+        @Override
+        @NotNull Name $name();
+        @CheckReturnValue
+        @NotNull Constraint $name(Name newName);
+        boolean $enforced();
+        @CheckReturnValue
+        @NotNull Constraint $enforced(boolean newEnforced);
         @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        @CheckReturnValue
+        @NotNull UniqueKey $fields(UnmodifiableList<? extends Field<?>> newFields);
     }
-    public interface ForeignKey extends Constraint {
+
+    /**
+     * A <code>FOREIGN KEY</code> constraint.
+     */
+    public interface ForeignKey
+        extends
+            org.jooq.Constraint
+    {
+        @Override
+        @NotNull Name $name();
+        @CheckReturnValue
+        @NotNull Constraint $name(Name newName);
+        boolean $enforced();
+        @CheckReturnValue
+        @NotNull Constraint $enforced(boolean newEnforced);
         @NotNull UnmodifiableList<? extends Field<?>> $fields();
-        @NotNull Constraint $references();
+        @CheckReturnValue
+        @NotNull ForeignKey $fields(UnmodifiableList<? extends Field<?>> newFields);
+        @NotNull Table<?> $referencesTable();
+        @CheckReturnValue
+        @NotNull ForeignKey $referencesTable(Table<?> newReferencesTable);
+        @NotNull UnmodifiableList<? extends Field<?>> $referencesFields();
+        @CheckReturnValue
+        @NotNull ForeignKey $referencesFields(UnmodifiableList<? extends Field<?>> newReferencesFields);
+        @Nullable ForeignKeyRule $deleteRule();
+        @CheckReturnValue
+        @NotNull ForeignKey $deleteRule(ForeignKeyRule newDeleteRule);
+        @Nullable ForeignKeyRule $updateRule();
+        @CheckReturnValue
+        @NotNull ForeignKey $updateRule(ForeignKeyRule newDeleteRule);
     }
-    public interface Check extends Constraint {
+
+    /**
+     * A <code>CHECK</code> constraint.
+     */
+    public interface Check
+        extends
+            org.jooq.Constraint
+    {
+        @Override
+        @NotNull Name $name();
+        @CheckReturnValue
+        @NotNull Constraint $name(Name newName);
+        boolean $enforced();
+        @CheckReturnValue
+        @NotNull Constraint $enforced(boolean newEnforced);
         @NotNull Condition $condition();
+        @CheckReturnValue
+        @NotNull Check $condition(Condition newCondition);
     }
 
     // -------------------------------------------------------------------------

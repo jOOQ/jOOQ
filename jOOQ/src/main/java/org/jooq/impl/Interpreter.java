@@ -124,6 +124,7 @@ import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.CycleOption;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.PrimaryKey;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -378,7 +379,7 @@ final class Interpreter {
         MutableTable mt = newTable(table, schema, query.$columns(), query.$select(), query.$comment(), query.$temporary() ? TableOptions.temporaryTable(query.$onCommit()) : TableOptions.table());
 
         for (Constraint constraint : query.$constraints())
-            addConstraint(query, (ConstraintImpl) constraint, mt);
+            addConstraint(query, constraint, mt);
 
         for (Index index : query.$indexes()) {
             IndexImpl impl = (IndexImpl) index;
@@ -386,25 +387,25 @@ final class Interpreter {
         }
     }
 
-    private final void addForeignKey(MutableTable mt, ConstraintImpl impl) {
+    private final void addForeignKey(MutableTable mt, QOM.ForeignKey foreignKey) {
         if (delayForeignKeyDeclarations)
-            delayForeignKey(mt, impl);
+            delayForeignKey(mt, foreignKey);
         else
-            addForeignKey0(mt, impl);
+            addForeignKey0(mt, foreignKey);
     }
 
     private static class DelayedForeignKey {
         final MutableTable   table;
-        final ConstraintImpl constraint;
+        final QOM.ForeignKey constraint;
 
-        DelayedForeignKey(MutableTable mt, ConstraintImpl constraint) {
+        DelayedForeignKey(MutableTable mt, QOM.ForeignKey constraint) {
             this.table = mt;
             this.constraint = constraint;
         }
     }
 
-    private final void delayForeignKey(MutableTable mt, ConstraintImpl impl) {
-        delayedForeignKeyDeclarations.add(new DelayedForeignKey(mt, impl));
+    private final void delayForeignKey(MutableTable mt, QOM.ForeignKey foreignKey) {
+        delayedForeignKeyDeclarations.add(new DelayedForeignKey(mt, foreignKey));
     }
 
     private final void applyDelayedForeignKeys() {
@@ -417,20 +418,20 @@ final class Interpreter {
         }
     }
 
-    private final void addForeignKey0(MutableTable mt, ConstraintImpl impl) {
-        MutableSchema ms = getSchema(impl.$referencesTable().getSchema());
+    private final void addForeignKey0(MutableTable mt, QOM.ForeignKey key) {
+        MutableSchema ms = getSchema(key.$referencesTable().getSchema());
 
         if (ms == null)
-            throw notExists(impl.$referencesTable().getSchema());
+            throw notExists(key.$referencesTable().getSchema());
 
-        MutableTable mrf = ms.table(impl.$referencesTable(), true);
+        MutableTable mrf = ms.table(key.$referencesTable(), true);
         MutableUniqueKey mu = null;
 
         if (mrf == null)
-            throw notExists(impl.$referencesTable());
+            throw notExists(key.$referencesTable());
 
-        List<MutableField> mfs = mt.fields(impl.$foreignKey(), true);
-        List<MutableField> mrfs = mrf.fields(impl.$references(), true);
+        List<MutableField> mfs = mt.fields(key.$fields(), true);
+        List<MutableField> mrfs = mrf.fields(key.$referencesFields(), true);
 
         if (!mrfs.isEmpty())
             mu = mrf.uniqueKey(mrfs);
@@ -438,10 +439,10 @@ final class Interpreter {
             mrfs = (mu = mrf.primaryKey).fields;
 
         if (mu == null)
-            throw primaryKeyNotExists(impl.$referencesTable());
+            throw primaryKeyNotExists(key.$referencesTable());
 
         mt.foreignKeys.add(new MutableForeignKey(
-            (UnqualifiedName) impl.getUnqualifiedName(), mt, mfs, mu, mrfs, impl.$onDelete(), impl.$onUpdate(), impl.$enforced()
+            (UnqualifiedName) key.getUnqualifiedName(), mt, mfs, mu, mrfs, key.$deleteRule(), key.$updateRule(), key.$enforced()
         ));
     }
 
@@ -589,7 +590,7 @@ final class Interpreter {
                 for (TableElement fc : query.$add())
                     if (fc instanceof Field<?> f)
                         addField(existing, Integer.MAX_VALUE, (UnqualifiedName) fc.getUnqualifiedName(), f.getDataType());
-                    else if (fc instanceof ConstraintImpl c)
+                    else if (fc instanceof Constraint c)
                         addConstraint(query, c, existing);
                     else
                         throw unsupportedQuery(query);
@@ -615,7 +616,7 @@ final class Interpreter {
                 addField(existing, Integer.MAX_VALUE, name, dataType);
         }
         else if (query.$addConstraint() != null) {
-            addConstraint(query, (ConstraintImpl) query.$addConstraint(), existing);
+            addConstraint(query, query.$addConstraint(), existing);
         }
         else if (query.$alterColumn() != null) {
             MutableField existingField = find(existing.fields, query.$alterColumn());
@@ -666,30 +667,30 @@ final class Interpreter {
             existing.constraint(query.$alterConstraint(), true).enforced = query.$alterConstraintEnforced();
         }
         else if (query.$dropColumns() != null) {
-            List<MutableField> fields = existing.fields(query.$dropColumns().toArray(EMPTY_FIELD), false);
+            List<MutableField> fields = existing.fields(query.$dropColumns(), false);
 
             if (fields.size() < query.$dropColumns().size() && !query.$ifExistsColumn())
-                existing.fields(query.$dropColumns().toArray(EMPTY_FIELD), true);
+                existing.fields(query.$dropColumns(), true);
 
             dropColumns(existing, fields, query.$dropCascade());
         }
         else if (query.$dropConstraint() != null) dropConstraint: {
-            ConstraintImpl impl = (ConstraintImpl) query.$dropConstraint();
+            Constraint constraint = query.$dropConstraint();
 
-            if (impl.getUnqualifiedName().empty()) {
-                if (impl.$foreignKey() != null) {
+            if (constraint.getUnqualifiedName().empty()) {
+                if (constraint instanceof QOM.ForeignKey) {
                     throw new DataDefinitionException("Cannot drop unnamed foreign key");
                 }
-                else if (impl.$check() != null) {
+                else if (constraint instanceof QOM.Check) {
                     throw new DataDefinitionException("Cannot drop unnamed check constraint");
                 }
-                else if (impl.$unique() != null) {
+                else if (constraint instanceof QOM.UniqueKey u) {
                     Iterator<MutableUniqueKey> uks = existing.uniqueKeys.iterator();
 
                     while (uks.hasNext()) {
                         MutableUniqueKey key = uks.next();
 
-                        if (key.fieldsEquals(impl.$unique())) {
+                        if (key.fieldsEquals(u.$fields())) {
                             cascade(key, null, query.$dropCascade());
                             uks.remove();
                             break dropConstraint;
@@ -701,7 +702,7 @@ final class Interpreter {
             else {
                 Iterator<MutableForeignKey> fks = existing.foreignKeys.iterator();
                 while (fks.hasNext()) {
-                    if (fks.next().nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
+                    if (fks.next().nameEquals((UnqualifiedName) constraint.getUnqualifiedName())) {
                         fks.remove();
                         break dropConstraint;
                     }
@@ -713,7 +714,7 @@ final class Interpreter {
                     while (uks.hasNext()) {
                         MutableUniqueKey key = uks.next();
 
-                        if (key.nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
+                        if (key.nameEquals((UnqualifiedName) constraint.getUnqualifiedName())) {
                             cascade(key, null, query.$dropCascade());
                             uks.remove();
                             break dropConstraint;
@@ -725,14 +726,14 @@ final class Interpreter {
                     while (chks.hasNext()) {
                         MutableCheck check = chks.next();
 
-                        if (check.nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
+                        if (check.nameEquals((UnqualifiedName) constraint.getUnqualifiedName())) {
                             chks.remove();
                             break dropConstraint;
                         }
                     }
 
                     if (existing.primaryKey != null) {
-                        if (existing.primaryKey.nameEquals((UnqualifiedName) impl.getUnqualifiedName())) {
+                        if (existing.primaryKey.nameEquals((UnqualifiedName) constraint.getUnqualifiedName())) {
                             cascade(existing.primaryKey, null, query.$dropCascade());
                             existing.primaryKey = null;
                             break dropConstraint;
@@ -745,7 +746,7 @@ final class Interpreter {
             while (it.hasNext()) {
                 DelayedForeignKey key = it.next();
 
-                if (existing.equals(key.table) && key.constraint.getUnqualifiedName().equals(impl.getUnqualifiedName())) {
+                if (existing.equals(key.table) && key.constraint.getUnqualifiedName().equals(constraint.getUnqualifiedName())) {
                     it.remove();
                     break dropConstraint;
                 }
@@ -805,21 +806,22 @@ final class Interpreter {
             existing.fields.add(index, field);
     }
 
-    private final void addConstraint(Query query, ConstraintImpl impl, MutableTable existing) {
-        if (!impl.getUnqualifiedName().empty() && existing.constraint(impl) != null)
-            throw alreadyExists(impl);
+    private final void addConstraint(Query query, Constraint constraint, MutableTable existing) {
+        if (!constraint.getUnqualifiedName().empty() && existing.constraint(constraint) != null)
+            throw alreadyExists(constraint);
 
-        if (impl.$primaryKey() != null)
+        if (constraint instanceof QOM.PrimaryKey p) {
             if (existing.primaryKey != null)
-                throw alreadyExists(impl);
+                throw alreadyExists(constraint);
             else
-                existing.primaryKey = new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$primaryKey(), true), impl.$enforced());
-        else if (impl.$unique() != null)
-            existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) impl.getUnqualifiedName(), existing, existing.fields(impl.$unique(), true), impl.$enforced()));
-        else if (impl.$foreignKey() != null)
-            addForeignKey(existing, impl);
-        else if (impl.$check() != null)
-            existing.checks.add(new MutableCheck((UnqualifiedName) impl.getUnqualifiedName(), existing, impl.$check(), impl.$enforced()));
+                existing.primaryKey = new MutableUniqueKey((UnqualifiedName) constraint.getUnqualifiedName(), existing, existing.fields(p.$fields(), true), p.$enforced());
+        }
+        else if (constraint instanceof QOM.UniqueKey u)
+            existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) constraint.getUnqualifiedName(), existing, existing.fields(u.$fields(), true), u.$enforced()));
+        else if (constraint instanceof QOM.ForeignKey f)
+            addForeignKey(existing, f);
+        else if (constraint instanceof QOM.Check c)
+            existing.checks.add(new MutableCheck((UnqualifiedName) constraint.getUnqualifiedName(), existing, c.$condition(), c.$enforced()));
         else
             throw unsupportedQuery(query);
     }
@@ -1212,8 +1214,8 @@ final class Interpreter {
         // TODO: Support NOT NULL constraints
         if (query.$constraints() != null)
             for (Constraint constraint : query.$constraints())
-                if (((ConstraintImpl) constraint).$check() != null)
-                    md.checks.add(new MutableCheck(constraint));
+                if (constraint instanceof QOM.Check c)
+                    md.checks.add(new MutableCheck(c));
     }
 
     private final void accept0(AlterDomainImpl<?> query) {
@@ -1234,7 +1236,7 @@ final class Interpreter {
             if (find(existing.checks, addConstraint) != null)
                 throw alreadyExists(addConstraint);
 
-            existing.checks.add(new MutableCheck(addConstraint));
+            existing.checks.add(new MutableCheck((QOM.Check) addConstraint));
         }
         else if (query.$dropConstraint() != null) {
             Constraint dropConstraint = query.$dropConstraint();
@@ -1996,7 +1998,7 @@ final class Interpreter {
             return constraint(constraint, false);
         }
 
-        final List<MutableField> fields(Field<?>[] fs, boolean failIfNotFound) {
+        final List<MutableField> fields(Collection<? extends Field<?>> fs, boolean failIfNotFound) {
             List<MutableField> result = new ArrayList<>();
 
             for (Field<?> f : fs) {
@@ -2299,23 +2301,23 @@ final class Interpreter {
             this.fields = fields;
         }
 
-        final boolean fieldsEquals(Field<?>[] f) {
-            if (fields.size() != f.length)
+        final boolean fieldsEquals(List<? extends Field<?>> f) {
+            if (fields.size() != f.size())
                 return false;
             else
-                return allMatch(fields, (x, i) -> x.nameEquals((UnqualifiedName) f[i].getUnqualifiedName()));
+                return allMatch(fields, (x, i) -> x.nameEquals((UnqualifiedName) f.get(i).getUnqualifiedName()));
         }
     }
 
     private final class MutableCheck extends MutableConstraint {
         Condition condition;
 
-        MutableCheck(Constraint constraint) {
+        MutableCheck(QOM.Check check) {
             this(
-                (UnqualifiedName) constraint.getUnqualifiedName(),
+                (UnqualifiedName) check.getUnqualifiedName(),
                 null,
-                ((ConstraintImpl) constraint).$check(),
-                ((ConstraintImpl) constraint).$enforced()
+                check.$condition(),
+                check.$enforced()
             );
         }
 

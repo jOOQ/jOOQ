@@ -341,7 +341,7 @@ implements
 
         if (addConstraint != null) {
             if (ctx.family() == FIREBIRD)
-                ctx.visit(K_ADD).sql(' ').visit(DSL.check(((ConstraintImpl) addConstraint).$check()));
+                ctx.visit(K_ADD).sql(' ').visit(DSL.check(((QOM.Check) addConstraint).$condition()));
             else
                 ctx.visit(K_ADD).sql(' ').visit(addConstraint);
         }

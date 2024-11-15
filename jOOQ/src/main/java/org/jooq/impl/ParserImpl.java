@@ -767,6 +767,7 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.QOM.DocumentOrContent;
 import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.impl.QOM.JoinHint;
+import org.jooq.impl.QOM.PrimaryKey;
 // ...
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.XMLPassingMechanism;
@@ -4720,20 +4721,20 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     PrimaryKeySpecification pk = parsePrimaryKeySpecification(constraint, true);
                     constraints.add(pk.constraint());
                     if (pk.identity()) {
-                        ConstraintImpl c = (ConstraintImpl) pk.constraint();
+                        PrimaryKey c = (PrimaryKey) pk.constraint();
 
                         replacement:
-                        if (c.$primaryKey().length == 1) {
+                        if (c.$fields().size() == 1) {
                             for (int i = 0; i < fields.size(); i++) {
                                 Field<?> f = fields.get(i);
 
-                                if (f.getName().equalsIgnoreCase(c.$primaryKey()[0].getName())) {
+                                if (f.getName().equalsIgnoreCase(c.$fields().get(0).getName())) {
                                     fields.set(i, field(f.getQualifiedName(), f.getDataType().identity(true)));
                                     break replacement;
                                 }
                             }
 
-                            throw expected("Column not found: " + c.$primaryKey()[0].getName());
+                            throw expected("Column not found: " + c.$fields().get(0).getName());
                         }
                         else
                             throw expected("Single column primary key with inline identity");

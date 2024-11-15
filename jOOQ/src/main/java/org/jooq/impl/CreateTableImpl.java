@@ -53,6 +53,8 @@ import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.WithOrWithoutData;
+import org.jooq.impl.QOM;
+import org.jooq.impl.QOM.PrimaryKey;
 import org.jooq.impl.QOM.TableCommitAction;
 import org.jooq.tools.StringUtils;
 
@@ -466,7 +468,7 @@ implements
         if (ctx.family() == CLICKHOUSE) {
             ctx.formatSeparator().visit(K_ENGINE).sql(' ');
 
-            if (anyMatch(tableElements, e -> e instanceof ConstraintImpl && isNotEmpty(((ConstraintImpl) e).$primaryKey())))
+            if (anyMatch(tableElements, e -> e instanceof PrimaryKey))
                 ctx.visit(unquotedName("MergeTree")).sql("()");
             else
                 ctx.visit(unquotedName("Log")).sql("()");
@@ -544,7 +546,7 @@ implements
 
                 // [#6841] SQLite has a weird requirement of the PRIMARY KEY keyword being on the column directly,
                 //         when there is an identity. Thus, we must not repeat the primary key specification here.
-                if (((ConstraintImpl) constraint).supported(ctx, table) && (ctx.family() != SQLITE || !matchingPrimaryKey(constraint, identity)))
+                if (((AbstractConstraint) constraint).supported(ctx, table) && (ctx.family() != SQLITE || !matchingPrimaryKey(constraint, identity)))
                     ctx.sql(',')
                        .formatSeparator()
                        .visit(constraint);
@@ -607,9 +609,9 @@ implements
 
         // [#10551] [#11268] TODO: Make this behaviour configurable
         if (REQUIRE_NON_PK_COLUMNS.contains(ctx.dialect())) {
-            Field<?>[] primaryKeyColumns = primaryKeyColumns();
+            List<? extends Field<?>> primaryKeyColumns = primaryKeyColumns();
 
-            if (primaryKeyColumns != null && primaryKeyColumns.length == $columns().size()) {
+            if (primaryKeyColumns != null && primaryKeyColumns.size() == $columns().size()) {
                 ctx.sql(',').formatSeparator();
                 ctx.visit(DSL.field(name("dummy")));
 
@@ -632,11 +634,11 @@ implements
         return type;
     }
 
-    private final Field<?>[] primaryKeyColumns() {
+    private final List<? extends Field<?>> primaryKeyColumns() {
         return Tools.findAny(
             $constraints(),
-            c -> c instanceof ConstraintImpl && ((ConstraintImpl) c).$primaryKey() != null,
-            c -> ((ConstraintImpl) c).$primaryKey()
+            c -> c instanceof QOM.PrimaryKey,
+            c -> ((QOM.PrimaryKey) c).$fields()
         );
     }
 
@@ -645,7 +647,7 @@ implements
     }
 
     private final boolean matchingPrimaryKey(Constraint constraint, Field<?> identity) {
-        if (constraint instanceof ConstraintImpl c)
+        if (constraint instanceof PrimaryKeyConstraintImpl c)
             return c.matchingPrimaryKey(identity);
 
         return false;

@@ -322,7 +322,7 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
             return name;
 
         // [#1150] Intercept Mode.RECORD calls for tables
-        if (definition instanceof TableDefinition && !generator.generateRecords() && mode == Mode.RECORD)
+        if (definition instanceof TableDefinition && mode == Mode.RECORD && !generator.generateRecordsIncluded(definition))
             return Record.class.getSimpleName();
 
         String className;
@@ -358,7 +358,7 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
     public String getJavaPackageName(Definition definition, Mode mode) {
 
         // [#1150] Intercept Mode.RECORD calls for tables
-        if (!generator.generateRecords() && mode == Mode.RECORD && definition instanceof TableDefinition)
+        if (definition instanceof TableDefinition && mode == Mode.RECORD && !generator.generateRecordsIncluded(definition))
             return Record.class.getPackage().getName();
 
         return fixJavaPackageName(delegate.getJavaPackageName(definition, mode));

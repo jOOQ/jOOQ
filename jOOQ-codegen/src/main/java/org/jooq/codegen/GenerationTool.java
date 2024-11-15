@@ -810,6 +810,10 @@ public class GenerationTool {
                 generator.setGenerateEmbeddables(g.getGenerate().isEmbeddables());
             if (g.getGenerate().isRecords() != null)
                 generator.setGenerateRecords(g.getGenerate().isRecords());
+            if (g.getGenerate().getRecordsIncludes() != null)
+                generator.setGenerateRecordsIncludes(g.getGenerate().getRecordsIncludes());
+            if (g.getGenerate().getRecordsExcludes() != null)
+                generator.setGenerateRecordsIncludes(g.getGenerate().getRecordsExcludes());
             if (g.getGenerate().isRecordsImplementingRecordN() != null)
                 generator.setGenerateRecordsImplementingRecordN(g.getGenerate().isRecordsImplementingRecordN());
             if (g.getGenerate().isEnumsAsScalaSealedTraits() != null)
@@ -818,6 +822,10 @@ public class GenerationTool {
                 generator.setGenerateEnumsAsScalaEnums(g.getGenerate().isEnumsAsScalaEnums());
             if (g.getGenerate().isPojos() != null)
                 generator.setGeneratePojos(g.getGenerate().isPojos());
+            if (g.getGenerate().getPojosIncludes() != null)
+                generator.setGeneratePojosIncludes(g.getGenerate().getPojosIncludes());
+            if (g.getGenerate().getPojosExcludes() != null)
+                generator.setGeneratePojosExcludes(g.getGenerate().getPojosExcludes());
             if (g.getGenerate().isPojosAsJavaRecordClasses() != null)
                 generator.setGeneratePojosAsJavaRecordClasses(g.getGenerate().isPojosAsJavaRecordClasses());
             if (g.getGenerate().isPojosAsScalaCaseClasses() != null)
@@ -836,6 +844,10 @@ public class GenerationTool {
                 generator.setGenerateSerializableInterfaces(g.getGenerate().isSerializableInterfaces());
             if (g.getGenerate().isDaos() != null)
                 generator.setGenerateDaos(g.getGenerate().isDaos());
+            if (g.getGenerate().getDaosIncludes() != null)
+                generator.setGenerateDaosIncludes(g.getGenerate().getDaosIncludes());
+            if (g.getGenerate().getDaosExcludes() != null)
+                generator.setGenerateDaosExcludes(g.getGenerate().getDaosExcludes());
             if (g.getGenerate().isJooqVersionReference() != null)
                 generator.setGenerateJooqVersionReference(g.getGenerate().isJooqVersionReference());
             if (g.getGenerate().isJpaAnnotations() != null)

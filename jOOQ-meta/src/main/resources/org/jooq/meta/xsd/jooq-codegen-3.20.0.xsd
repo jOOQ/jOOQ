@@ -2695,6 +2695,32 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate TableRecord classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="recordsIncludes" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All the object identifiers for which to generate records, by default, all of them.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+Watch out for case-sensitivity. Depending on your database, this might be
+important!
+<p>
+You can create case-insensitive regular expressions
+using this syntax: <code>(?i:expr)</code>
+<p>
+Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="recordsExcludes" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All the object identifiers for which not to generate records.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+Watch out for case-sensitivity. Depending on your database, this might be
+important!
+<p>
+You can create case-insensitive regular expressions
+using this syntax: <code>(?i:expr)</code>
+<p>
+Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="recordsImplementingRecordN" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate TableRecord classes that implement Record[N] super types]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -2717,6 +2743,32 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
 
       <element name="pojos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojosIncludes" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All the object identifiers for which to generate POJOs, by default, all of them.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+Watch out for case-sensitivity. Depending on your database, this might be
+important!
+<p>
+You can create case-insensitive regular expressions
+using this syntax: <code>(?i:expr)</code>
+<p>
+Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="pojosExcludes" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All the object identifiers for which not to generate POJOs.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+Watch out for case-sensitivity. Depending on your database, this might be
+important!
+<p>
+You can create case-insensitive regular expressions
+using this syntax: <code>(?i:expr)</code>
+<p>
+Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="pojosEqualsAndHashCode" type="boolean" default="true" minOccurs="0" maxOccurs="1">
@@ -2773,6 +2825,32 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
 
       <element name="daos" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate DAOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="daosIncludes" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All the object identifiers for which to generate DAOs, by default, all of them.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+Watch out for case-sensitivity. Depending on your database, this might be
+important!
+<p>
+You can create case-insensitive regular expressions
+using this syntax: <code>(?i:expr)</code>
+<p>
+Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="daosExcludes" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[All the object identifiers for which not to generate DAOs.
+<p>
+This is a Java regular expression. Use the pipe to separate several expressions.
+Watch out for case-sensitivity. Depending on your database, this might be
+important!
+<p>
+You can create case-insensitive regular expressions
+using this syntax: <code>(?i:expr)</code>
+<p>
+Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="jooqVersionReference" type="boolean" default="true" minOccurs="0" maxOccurs="1">

@@ -38,6 +38,7 @@
 package org.jooq.codegen;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptySet;
 
 import java.io.File;
@@ -50,6 +51,7 @@ import java.util.stream.Stream;
 
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.Database;
+import org.jooq.meta.Definition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
@@ -104,10 +106,14 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateTables                                        = true;
     boolean                            generateEmbeddables                                   = true;
     boolean                            generateRecords                                       = true;
+    String                             generateRecordsIncludes;
+    String                             generateRecordsExcludes;
     boolean                            generateRecordsImplementingRecordN                    = false;
     boolean                            generateEnumsAsScalaSealedTraits                      = false;
     boolean                            generateEnumsAsScalaEnums                             = true;
     boolean                            generatePojos                                         = false;
+    String                             generatePojosIncludes;
+    String                             generatePojosExcludes;
     boolean                            generatePojosAsJavaRecordClasses                      = false;
     boolean                            generatePojosAsScalaCaseClasses                       = true;
     boolean                            generatePojosAsKotlinDataClasses                      = true;
@@ -122,6 +128,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateImmutableInterfaces                           = false;
     boolean                            generateSerializableInterfaces                        = true;
     boolean                            generateDaos                                          = false;
+    String                             generateDaosIncludes;
+    String                             generateDaosExcludes;
     boolean                            generateJooqVersionReference                          = true;
     boolean                            generateJPAAnnotations                                = false;
     String                             generateJPAVersion                                    = "";
@@ -649,6 +657,15 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    public boolean generateRecordsIncluded(Definition definition) {
+        return generateRecords()
+            && !database.filterExcludeInclude(asList(definition),
+                generateRecordsIncludes(),
+                generateRecordsExcludes()
+            ).isEmpty();
+    }
+
+    @Override
     public boolean generateRecords() {
 
         // [#1280] When DAOs are generated, Records must be generated, too
@@ -658,6 +675,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateRecords(boolean generateRecords) {
         this.generateRecords = generateRecords;
+    }
+
+    @Override
+    public String generateRecordsIncludes() {
+        return generateRecordsIncludes;
+    }
+
+    @Override
+    public void setGenerateRecordsIncludes(String generateRecordsIncludes) {
+        this.generateRecordsIncludes = generateRecordsIncludes;
+    }
+
+    @Override
+    public String generateRecordsExcludes() {
+        return generateRecordsExcludes;
+    }
+
+    @Override
+    public void setGenerateRecordsExcludes(String generateRecordsExcludes) {
+        this.generateRecordsExcludes = generateRecordsExcludes;
     }
 
     @Override
@@ -694,6 +731,15 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    public boolean generatePojosIncluded(Definition definition) {
+        return generatePojos()
+            && !database.filterExcludeInclude(asList(definition),
+                generatePojosIncludes(),
+                generatePojosExcludes()
+            ).isEmpty();
+    }
+
+    @Override
     public boolean generatePojos() {
 
         // [#1339] When immutable POJOs are generated, POJOs must be generated
@@ -706,6 +752,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratePojos(boolean generatePojos) {
         this.generatePojos = generatePojos;
+    }
+
+    @Override
+    public String generatePojosIncludes() {
+        return generatePojosIncludes;
+    }
+
+    @Override
+    public void setGeneratePojosIncludes(String generatePojosIncludes) {
+        this.generatePojosIncludes = generatePojosIncludes;
+    }
+
+    @Override
+    public String generatePojosExcludes() {
+        return generatePojosExcludes;
+    }
+
+    @Override
+    public void setGeneratePojosExcludes(String generatePojosExcludes) {
+        this.generatePojosExcludes = generatePojosExcludes;
     }
 
     @Override
@@ -789,6 +855,15 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    public boolean generateDaosIncluded(Definition definition) {
+        return generateDaos()
+            && !database.filterExcludeInclude(asList(definition),
+                generateDaosIncludes(),
+                generateDaosExcludes()
+            ).isEmpty();
+    }
+
+    @Override
     public boolean generateDaos() {
         return generateDaos;
     }
@@ -796,6 +871,26 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateDaos(boolean generateDaos) {
         this.generateDaos = generateDaos;
+    }
+
+    @Override
+    public String generateDaosIncludes() {
+        return generateDaosIncludes;
+    }
+
+    @Override
+    public void setGenerateDaosIncludes(String generateDaosIncludes) {
+        this.generateDaosIncludes = generateDaosIncludes;
+    }
+
+    @Override
+    public String generateDaosExcludes() {
+        return generateDaosExcludes;
+    }
+
+    @Override
+    public void setGenerateDaosExcludes(String generateDaosExcludes) {
+        this.generateDaosExcludes = generateDaosExcludes;
     }
 
     @Override

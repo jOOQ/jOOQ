@@ -106,6 +106,10 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean embeddables = true;
     @XmlElement(defaultValue = "true")
     protected Boolean records = true;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String recordsIncludes;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String recordsExcludes;
     @XmlElement(defaultValue = "false")
     protected Boolean recordsImplementingRecordN = false;
     @XmlElement(defaultValue = "false")
@@ -114,6 +118,10 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean enumsAsScalaEnums = true;
     @XmlElement(defaultValue = "false")
     protected Boolean pojos = false;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String pojosIncludes;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String pojosExcludes;
     @XmlElement(defaultValue = "true")
     protected Boolean pojosEqualsAndHashCode = true;
     @XmlElement(defaultValue = "true")
@@ -144,6 +152,10 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean serializableInterfaces = true;
     @XmlElement(defaultValue = "false")
     protected Boolean daos = false;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String daosIncludes;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String daosExcludes;
     @XmlElement(defaultValue = "true")
     protected Boolean jooqVersionReference = true;
     @XmlElement(defaultValue = "false")
@@ -1178,6 +1190,74 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * All the object identifiers for which to generate records, by default, all of them.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public String getRecordsIncludes() {
+        return recordsIncludes;
+    }
+
+    /**
+     * All the object identifiers for which to generate records, by default, all of them.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public void setRecordsIncludes(String value) {
+        this.recordsIncludes = value;
+    }
+
+    /**
+     * All the object identifiers for which not to generate records.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public String getRecordsExcludes() {
+        return recordsExcludes;
+    }
+
+    /**
+     * All the object identifiers for which not to generate records.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public void setRecordsExcludes(String value) {
+        this.recordsExcludes = value;
+    }
+
+    /**
      * Generate TableRecord classes that implement Record[N] super types
      * 
      * @return
@@ -1273,6 +1353,74 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setPojos(Boolean value) {
         this.pojos = value;
+    }
+
+    /**
+     * All the object identifiers for which to generate POJOs, by default, all of them.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public String getPojosIncludes() {
+        return pojosIncludes;
+    }
+
+    /**
+     * All the object identifiers for which to generate POJOs, by default, all of them.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public void setPojosIncludes(String value) {
+        this.pojosIncludes = value;
+    }
+
+    /**
+     * All the object identifiers for which not to generate POJOs.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public String getPojosExcludes() {
+        return pojosExcludes;
+    }
+
+    /**
+     * All the object identifiers for which not to generate POJOs.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public void setPojosExcludes(String value) {
+        this.pojosExcludes = value;
     }
 
     /**
@@ -1593,6 +1741,74 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setDaos(Boolean value) {
         this.daos = value;
+    }
+
+    /**
+     * All the object identifiers for which to generate DAOs, by default, all of them.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public String getDaosIncludes() {
+        return daosIncludes;
+    }
+
+    /**
+     * All the object identifiers for which to generate DAOs, by default, all of them.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public void setDaosIncludes(String value) {
+        this.daosIncludes = value;
+    }
+
+    /**
+     * All the object identifiers for which not to generate DAOs.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public String getDaosExcludes() {
+        return daosExcludes;
+    }
+
+    /**
+     * All the object identifiers for which not to generate DAOs.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public void setDaosExcludes(String value) {
+        this.daosExcludes = value;
     }
 
     /**
@@ -3670,6 +3886,42 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * All the object identifiers for which to generate records, by default, all of them.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public Generate withRecordsIncludes(String value) {
+        setRecordsIncludes(value);
+        return this;
+    }
+
+    /**
+     * All the object identifiers for which not to generate records.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public Generate withRecordsExcludes(String value) {
+        setRecordsExcludes(value);
+        return this;
+    }
+
+    /**
      * Generate TableRecord classes that implement Record[N] super types
      * 
      */
@@ -3702,6 +3954,42 @@ public class Generate implements Serializable, XMLAppendable
      */
     public Generate withPojos(Boolean value) {
         setPojos(value);
+        return this;
+    }
+
+    /**
+     * All the object identifiers for which to generate POJOs, by default, all of them.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public Generate withPojosIncludes(String value) {
+        setPojosIncludes(value);
+        return this;
+    }
+
+    /**
+     * All the object identifiers for which not to generate POJOs.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public Generate withPojosExcludes(String value) {
+        setPojosExcludes(value);
         return this;
     }
 
@@ -3828,6 +4116,42 @@ public class Generate implements Serializable, XMLAppendable
      */
     public Generate withDaos(Boolean value) {
         setDaos(value);
+        return this;
+    }
+
+    /**
+     * All the object identifiers for which to generate DAOs, by default, all of them.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public Generate withDaosIncludes(String value) {
+        setDaosIncludes(value);
+        return this;
+    }
+
+    /**
+     * All the object identifiers for which not to generate DAOs.
+     * <p>
+     * This is a Java regular expression. Use the pipe to separate several expressions.
+     * Watch out for case-sensitivity. Depending on your database, this might be
+     * important!
+     * <p>
+     * You can create case-insensitive regular expressions
+     * using this syntax: <code>(?i:expr)</code>
+     * <p>
+     * Whitespace is ignored and comments are possible unless overridden in {@link #getRegexFlags()}.
+     * 
+     */
+    public Generate withDaosExcludes(String value) {
+        setDaosExcludes(value);
         return this;
     }
 
@@ -4550,10 +4874,14 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("tables", tables);
         builder.append("embeddables", embeddables);
         builder.append("records", records);
+        builder.append("recordsIncludes", recordsIncludes);
+        builder.append("recordsExcludes", recordsExcludes);
         builder.append("recordsImplementingRecordN", recordsImplementingRecordN);
         builder.append("enumsAsScalaSealedTraits", enumsAsScalaSealedTraits);
         builder.append("enumsAsScalaEnums", enumsAsScalaEnums);
         builder.append("pojos", pojos);
+        builder.append("pojosIncludes", pojosIncludes);
+        builder.append("pojosExcludes", pojosExcludes);
         builder.append("pojosEqualsAndHashCode", pojosEqualsAndHashCode);
         builder.append("pojosEqualsAndHashCodeIncludePrimaryKeyOnly", pojosEqualsAndHashCodeIncludePrimaryKeyOnly);
         builder.append("pojosEqualsAndHashCodeColumnIncludeExpression", pojosEqualsAndHashCodeColumnIncludeExpression);
@@ -4568,6 +4896,8 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("immutableInterfaces", immutableInterfaces);
         builder.append("serializableInterfaces", serializableInterfaces);
         builder.append("daos", daos);
+        builder.append("daosIncludes", daosIncludes);
+        builder.append("daosExcludes", daosExcludes);
         builder.append("jooqVersionReference", jooqVersionReference);
         builder.append("jpaAnnotations", jpaAnnotations);
         builder.append("jpaVersion", jpaVersion);
@@ -4994,6 +5324,24 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (recordsIncludes == null) {
+            if (other.recordsIncludes!= null) {
+                return false;
+            }
+        } else {
+            if (!recordsIncludes.equals(other.recordsIncludes)) {
+                return false;
+            }
+        }
+        if (recordsExcludes == null) {
+            if (other.recordsExcludes!= null) {
+                return false;
+            }
+        } else {
+            if (!recordsExcludes.equals(other.recordsExcludes)) {
+                return false;
+            }
+        }
         if (recordsImplementingRecordN == null) {
             if (other.recordsImplementingRecordN!= null) {
                 return false;
@@ -5027,6 +5375,24 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!pojos.equals(other.pojos)) {
+                return false;
+            }
+        }
+        if (pojosIncludes == null) {
+            if (other.pojosIncludes!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosIncludes.equals(other.pojosIncludes)) {
+                return false;
+            }
+        }
+        if (pojosExcludes == null) {
+            if (other.pojosExcludes!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosExcludes.equals(other.pojosExcludes)) {
                 return false;
             }
         }
@@ -5153,6 +5519,24 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!daos.equals(other.daos)) {
+                return false;
+            }
+        }
+        if (daosIncludes == null) {
+            if (other.daosIncludes!= null) {
+                return false;
+            }
+        } else {
+            if (!daosIncludes.equals(other.daosIncludes)) {
+                return false;
+            }
+        }
+        if (daosExcludes == null) {
+            if (other.daosExcludes!= null) {
+                return false;
+            }
+        } else {
+            if (!daosExcludes.equals(other.daosExcludes)) {
                 return false;
             }
         }
@@ -5848,10 +6232,14 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));
         result = ((prime*result)+((records == null)? 0 :records.hashCode()));
+        result = ((prime*result)+((recordsIncludes == null)? 0 :recordsIncludes.hashCode()));
+        result = ((prime*result)+((recordsExcludes == null)? 0 :recordsExcludes.hashCode()));
         result = ((prime*result)+((recordsImplementingRecordN == null)? 0 :recordsImplementingRecordN.hashCode()));
         result = ((prime*result)+((enumsAsScalaSealedTraits == null)? 0 :enumsAsScalaSealedTraits.hashCode()));
         result = ((prime*result)+((enumsAsScalaEnums == null)? 0 :enumsAsScalaEnums.hashCode()));
         result = ((prime*result)+((pojos == null)? 0 :pojos.hashCode()));
+        result = ((prime*result)+((pojosIncludes == null)? 0 :pojosIncludes.hashCode()));
+        result = ((prime*result)+((pojosExcludes == null)? 0 :pojosExcludes.hashCode()));
         result = ((prime*result)+((pojosEqualsAndHashCode == null)? 0 :pojosEqualsAndHashCode.hashCode()));
         result = ((prime*result)+((pojosEqualsAndHashCodeIncludePrimaryKeyOnly == null)? 0 :pojosEqualsAndHashCodeIncludePrimaryKeyOnly.hashCode()));
         result = ((prime*result)+((pojosEqualsAndHashCodeColumnIncludeExpression == null)? 0 :pojosEqualsAndHashCodeColumnIncludeExpression.hashCode()));
@@ -5866,6 +6254,8 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((immutableInterfaces == null)? 0 :immutableInterfaces.hashCode()));
         result = ((prime*result)+((serializableInterfaces == null)? 0 :serializableInterfaces.hashCode()));
         result = ((prime*result)+((daos == null)? 0 :daos.hashCode()));
+        result = ((prime*result)+((daosIncludes == null)? 0 :daosIncludes.hashCode()));
+        result = ((prime*result)+((daosExcludes == null)? 0 :daosExcludes.hashCode()));
         result = ((prime*result)+((jooqVersionReference == null)? 0 :jooqVersionReference.hashCode()));
         result = ((prime*result)+((jpaAnnotations == null)? 0 :jpaAnnotations.hashCode()));
         result = ((prime*result)+((jpaVersion == null)? 0 :jpaVersion.hashCode()));

@@ -1651,10 +1651,12 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TableDefinition table : database.getTables(schema)) {
             try {
-                if (table.isTableValuedFunction() && table.getReferencedTableOrUDT() != table)
-                    continue;
+                if (generateRecordsIncluded(table)) {
+                    if (table.isTableValuedFunction() && table.getReferencedTableOrUDT() != table)
+                        continue;
 
-                generateRecord(table);
+                    generateRecord(table);
+                }
             }
             catch (Exception e) {
                 log.error("Error while generating table record " + table, e);
@@ -5219,7 +5221,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TableDefinition table : database.getTables(schema)) {
             try {
-                generateDao(table);
+                if (generateDaosIncluded(table))
+                    generateDao(table);
             }
             catch (Exception e) {
                 log.error("Error while generating table DAO " + table, e);
@@ -5853,7 +5856,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (TableDefinition table : database.getTables(schema)) {
             try {
-                generatePojo(table);
+                if (generatePojosIncluded(table))
+                    generatePojo(table);
             }
             catch (Exception e) {
                 log.error("Error while generating table POJO " + table, e);

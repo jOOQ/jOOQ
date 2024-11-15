@@ -476,9 +476,39 @@ public interface Generator {
     void setGenerateEmbeddables(boolean generateEmbeddables);
 
     /**
+     * Whether TableRecords should be generated in addition to tables for a
+     * specific {@link Definition}.
+     */
+    boolean generateRecordsIncluded(Definition definition);
+
+    /**
      * Whether TableRecords should be generated in addition to tables
      */
     boolean generateRecords();
+
+    /**
+     * A regular expression matching all the object identifiers for which to
+     * generate records, by default, all of them.
+     */
+    void setGenerateRecordsIncludes(String generateRecordsIncludes);
+
+    /**
+     * A regular expression matching all the object identifiers for which to
+     * generate records, by default, all of them.
+     */
+    String generateRecordsIncludes();
+
+    /**
+     * A regular expression matching all the object identifiers for which not to
+     * generate records.
+     */
+    void setGenerateRecordsExcludes(String generateRecordsExcludes);
+
+    /**
+     * A regular expression matching all the object identifiers for which not to
+     * generate records.
+     */
+    String generateRecordsExcludes();
 
     /**
      * Whether TableRecords should be generated in addition to tables
@@ -530,14 +560,44 @@ public interface Generator {
     void setGenerateEnumsAsScalaEnums(boolean generateEnumsAsScalaEnums);
 
     /**
-     * Whether POJO's should be generated in addition to records
+     * Whether POJOs should be generated in addition to tables for a
+     * specific {@link Definition}.
+     */
+    boolean generatePojosIncluded(Definition definition);
+
+    /**
+     * Whether POJOs should be generated in addition to records
      */
     boolean generatePojos();
 
     /**
-     * Whether POJO's should be generated in addition to records
+     * Whether POJOs should be generated in addition to records
      */
     void setGeneratePojos(boolean generatePojos);
+
+    /**
+     * A regular expression matching all the object identifiers for which to
+     * generate POJOs, by default, all of them.
+     */
+    String generatePojosIncludes();
+
+    /**
+     * A regular expression matching all the object identifiers for which to
+     * generate POJOs, by default, all of them.
+     */
+    void setGeneratePojosIncludes(String generatePojosIncludes);
+
+    /**
+     * A regular expression matching all the object identifiers for which not to
+     * generate POJOs.
+     */
+    String generatePojosExcludes();
+
+    /**
+     * A regular expression matching all the object identifiers for which not to
+     * generate POJOs.
+     */
+    void setGeneratePojosExcludes(String generatePojosExcludes);
 
     /**
      * Whether POJOs should be generated as Java records by the
@@ -628,14 +688,44 @@ public interface Generator {
     void setGenerateSerializableInterfaces(boolean generateSerializableInterfaces);
 
     /**
-     * Whether DAO's should be generated in addition to pojos
+     * Whether DAOs should be generated in addition to tables for a
+     * specific {@link Definition}.
+     */
+    boolean generateDaosIncluded(Definition definition);
+
+    /**
+     * Whether DAOs should be generated in addition to pojos
      */
     boolean generateDaos();
 
     /**
-     * Whether DAO's should be generated in addition to pojos
+     * Whether DAOs should be generated in addition to pojos
      */
     void setGenerateDaos(boolean generateDaos);
+
+    /**
+     * A regular expression matching all the object identifiers for which to
+     * generate DAOs, by default, all of them.
+     */
+    String generateDaosIncludes();
+
+    /**
+     * A regular expression matching all the object identifiers for which to
+     * generate DAOs, by default, all of them.
+     */
+    void setGenerateDaosIncludes(String generateDaosIncludes);
+
+    /**
+     * A regular expression matching all the object identifiers for which not to
+     * generate DAOs.
+     */
+    String generateDaosExcludes();
+
+    /**
+     * A regular expression matching all the object identifiers for which not to
+     * generate DAOs.
+     */
+    void setGenerateDaosExcludes(String generateDaosExcludes);
 
     /**
      * Whether generated objects should reference the runtime jOOQ version in

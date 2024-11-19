@@ -35,7 +35,7 @@
  *
  *
  */
-package org.jooq.meta;
+package org.jooq.tools;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
 
@@ -43,12 +43,13 @@ import org.jetbrains.annotations.ApiStatus.Internal;
  * Utilities related to {@link Class} and {@link ClassLoader} actions.
  *
  * @author Lukas Eder
- * @deprecated - [#17632] - 3.20.0 - Use {@link org.jooq.tools.ClassUtils} instead.
  */
-@Deprecated
 @Internal
 public class ClassUtils {
 
+    /**
+     * Try loading a class using various standard means.
+     */
     public static Class<?> loadClass(String className) throws ClassNotFoundException {
         try {
             return Class.forName(className);

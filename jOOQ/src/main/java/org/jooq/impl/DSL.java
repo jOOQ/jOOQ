@@ -134,12 +134,14 @@ import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.mostSpecificArray;
+import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -448,6 +450,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.DocumentOrContent;
 import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.QOM.ResultOption;
+import org.jooq.tools.ClassUtils;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
@@ -623,6 +626,22 @@ public class DSL {
                 return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
             }
             catch (SQLException e) {
+                String driver = JDBCUtils.driver(url);
+
+                if (!Driver.class.getName().equals(driver)) {
+                    try {
+                        Driver d = (Driver) ClassUtils.loadClass(driver).getConstructor().newInstance();
+                        Properties properties = new Properties();
+                        properties.put("user", defaultString(username));
+                        properties.put("password", defaultString(password));
+                        Connection connection = d.connect(url, properties);
+                        return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
+                    }
+                    catch (Exception e2) {
+                        e.addSuppressed(e2);
+                    }
+                }
+
                 throw Tools.translate(CTX.get(), "Error when initialising Connection", e);
             }
         }

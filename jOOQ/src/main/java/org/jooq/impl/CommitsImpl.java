@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableCollection;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 
@@ -399,9 +400,10 @@ final class CommitsImpl implements Commits {
 
     @Override
     public final MigrationsType export() {
-        return new MigrationsType().withCommits(map(this, commit -> new CommitType()
+        return new MigrationsType().withCommits(map(filter(this, c -> !Commit.ROOT.equals(c.id())), commit -> new CommitType()
             .withId(commit.id())
             .withMessage(commit.message())
+            .withAuthor(commit.author())
             .withParents(map(commit.parents(), parent -> new ParentType().withId(parent.id())))
             .withTags(map(commit.tags(), tag -> new TagType().withId(tag.id()).withMessage(tag.message())))
             .withFiles(map(commit.files(), file -> new FileType()

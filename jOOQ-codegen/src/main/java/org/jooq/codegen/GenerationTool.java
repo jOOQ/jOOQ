@@ -69,7 +69,6 @@ import java.util.Properties;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
@@ -79,7 +78,6 @@ import org.jooq.Log.Level;
 import org.jooq.Source;
 import org.jooq.impl.DSL;
 import org.jooq.meta.CatalogVersionProvider;
-import org.jooq.meta.ClassUtils;
 import org.jooq.meta.Database;
 import org.jooq.meta.Databases;
 import org.jooq.meta.Definition;
@@ -96,6 +94,7 @@ import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.jaxb.Strategy;
 import org.jooq.meta.jaxb.Target;
 // ...
+import org.jooq.tools.ClassUtils;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;

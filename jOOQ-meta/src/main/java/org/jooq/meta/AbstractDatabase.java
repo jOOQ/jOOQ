@@ -161,6 +161,7 @@ import org.jooq.meta.jaxb.SyntheticSynonymType;
 import org.jooq.meta.jaxb.SyntheticUniqueKeyType;
 import org.jooq.meta.jaxb.SyntheticViewType;
 // ...
+import org.jooq.tools.ClassUtils;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;

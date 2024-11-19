@@ -131,6 +131,18 @@ public interface Commit extends Node<Commit> {
     Commit commit(String id, String message, Collection<? extends File> delta);
 
     /**
+     * Create a new commit on top of this one.
+     */
+    @NotNull
+    Commit commit(String id, String message, String author, File... delta);
+
+    /**
+     * Create a new commit on top of this one.
+     */
+    @NotNull
+    Commit commit(String id, String message, String author, Collection<? extends File> delta);
+
+    /**
      * Merge two commits.
      */
     @NotNull
@@ -153,4 +165,16 @@ public interface Commit extends Node<Commit> {
      */
     @NotNull
     Commit merge(String id, String message, Commit with, Collection<? extends File> delta);
+
+    /**
+     * Merge two commits.
+     */
+    @NotNull
+    Commit merge(String id, String message, String author, Commit with, File... delta);
+
+    /**
+     * Merge two commits.
+     */
+    @NotNull
+    Commit merge(String id, String message, String author, Commit with, Collection<? extends File> delta);
 }

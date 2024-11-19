@@ -72,7 +72,7 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
     final List<Parent> parents;
 
     private VersionImpl(Configuration configuration, String id, Meta meta, Version root, List<Parent> parents) {
-        super(configuration, id, null, root);
+        super(configuration, id, null, null, root);
 
         this.ctx = configuration.dsl();
         this.meta = meta != null ? meta : init(ctx);

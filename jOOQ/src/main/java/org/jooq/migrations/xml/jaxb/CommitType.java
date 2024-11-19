@@ -24,11 +24,12 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="parents" type="{http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd}ParentsType" minOccurs="0"/&gt;
+ *         &lt;element name="parents" type="{http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd}ParentsType" minOccurs="0"/&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="tags" type="{http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd}TagsType" minOccurs="0"/&gt;
- *         &lt;element name="files" type="{http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd}FilesType" minOccurs="0"/&gt;
+ *         &lt;element name="author" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="tags" type="{http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd}TagsType" minOccurs="0"/&gt;
+ *         &lt;element name="files" type="{http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd}FilesType" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -47,10 +48,11 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class CommitType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 32000L;
     @XmlElement(required = true)
     protected String id;
     protected String message;
+    protected String author;
     @XmlElementWrapper(name = "parents")
     @XmlElement(name = "parent")
     protected List<ParentType> parents;
@@ -75,6 +77,14 @@ public class CommitType implements Serializable, XMLAppendable
 
     public void setMessage(String value) {
         this.message = value;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String value) {
+        this.author = value;
     }
 
     public List<ParentType> getParents() {
@@ -117,6 +127,11 @@ public class CommitType implements Serializable, XMLAppendable
 
     public CommitType withMessage(String value) {
         setMessage(value);
+        return this;
+    }
+
+    public CommitType withAuthor(String value) {
+        setAuthor(value);
         return this;
     }
 
@@ -187,6 +202,7 @@ public class CommitType implements Serializable, XMLAppendable
     public final void appendTo(XMLBuilder builder) {
         builder.append("id", id);
         builder.append("message", message);
+        builder.append("author", author);
         builder.append("parents", "parent", parents);
         builder.append("tags", "tag", tags);
         builder.append("files", "file", files);
@@ -229,6 +245,15 @@ public class CommitType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (author == null) {
+            if (other.author!= null) {
+                return false;
+            }
+        } else {
+            if (!author.equals(other.author)) {
+                return false;
+            }
+        }
         if (parents == null) {
             if (other.parents!= null) {
                 return false;
@@ -265,6 +290,7 @@ public class CommitType implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((id == null)? 0 :id.hashCode()));
         result = ((prime*result)+((message == null)? 0 :message.hashCode()));
+        result = ((prime*result)+((author == null)? 0 :author.hashCode()));
         result = ((prime*result)+((parents == null)? 0 :parents.hashCode()));
         result = ((prime*result)+((tags == null)? 0 :tags.hashCode()));
         result = ((prime*result)+((files == null)? 0 :files.hashCode()));

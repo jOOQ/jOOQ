@@ -48,6 +48,8 @@ import org.jooq.Node;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataMigrationVerificationException;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Lukas Eder
  */
@@ -55,15 +57,17 @@ abstract class AbstractNode<N extends Node<N>> extends AbstractLazyScope impleme
 
     final N      root;
     final String id;
-    String       message;
+    final String message;
+    final String author;
 
     @SuppressWarnings("unchecked")
-    AbstractNode(Configuration configuration, String id, String message, N root) {
+    AbstractNode(Configuration configuration, String id, String message, String author, N root) {
         super(configuration);
 
         this.root = root != null ? root : (N) this;
         this.id = id;
         this.message = defaultIfNull(message, "");
+        this.author = author;
     }
 
     @Override
@@ -74,6 +78,11 @@ abstract class AbstractNode<N extends Node<N>> extends AbstractLazyScope impleme
     @Override
     public final String message() {
         return message;
+    }
+
+    @Override
+    public final String author() {
+        return author;
     }
 
     @Override

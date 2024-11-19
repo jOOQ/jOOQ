@@ -27,7 +27,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="path" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="content" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="contentType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="change" type="{http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd}ChangeType"/&gt;
+ *         &lt;element name="change" type="{http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd}ChangeType"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -46,7 +46,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class FileType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 32000L;
     @XmlElement(required = true)
     protected String path;
     protected String content;

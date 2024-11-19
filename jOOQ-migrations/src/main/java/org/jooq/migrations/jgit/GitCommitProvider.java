@@ -138,7 +138,7 @@ public final class GitCommitProvider implements CommitProvider {
 
             // The commits seem to come in reverse order from jgit.
             Collections.reverse(revCommits);
-            Commit init = commits.root();
+            Commit root = commits.root();
 
             // TODO: This algorithm is quadradic in the worst case. Can we find a better one?
             // TODO: We collect all the commits from git, when we could ignore the empty ones
@@ -150,7 +150,7 @@ public final class GitCommitProvider implements CommitProvider {
                     RevCommit revCommit = it.next();
 
                     if (revCommit.getParents() == null || revCommit.getParents().length == 0) {
-                        commits.add(tag(tags, init.commit(revCommit.getName(), revCommit.getFullMessage(), editFiles(r, revCommit))));
+                        commits.add(tag(tags, root.commit(revCommit.getName(), revCommit.getFullMessage(), revCommit.getAuthorIdent().getName(), editFiles(r, revCommit))));
                         it.remove();
                     }
                     else {
@@ -165,9 +165,9 @@ public final class GitCommitProvider implements CommitProvider {
                                 continue commitLoop;
 
                         if (parents.length == 1)
-                            commits.add(tag(tags, parents[0].commit(revCommit.getName(), revCommit.getFullMessage(), editFiles(r, revCommit))));
+                            commits.add(tag(tags, parents[0].commit(revCommit.getName(), revCommit.getFullMessage(), revCommit.getAuthorIdent().getName(), editFiles(r, revCommit))));
                         else if (parents.length == 2)
-                            commits.add(tag(tags, parents[0].merge(revCommit.getName(), revCommit.getFullMessage(), parents[1], editFiles(r, revCommit))));
+                            commits.add(tag(tags, parents[0].merge(revCommit.getName(), revCommit.getFullMessage(), revCommit.getAuthorIdent().getName(), parents[1], editFiles(r, revCommit))));
                         else
                             throw new UnsupportedOperationException("Merging more than two parents not yet supported");
 
@@ -178,7 +178,7 @@ public final class GitCommitProvider implements CommitProvider {
 
             Status status = g.status().call();
             if (status.hasUncommittedChanges() || !status.getUntracked().isEmpty())
-                commits.add(commit(last != null ? commits.get(last.getName()) : init, status));
+                commits.add(commit(last != null ? commits.get(last.getName()) : root, status));
         }
         catch (Exception e) {
             throw new GitException("Error while providing git versions", e);

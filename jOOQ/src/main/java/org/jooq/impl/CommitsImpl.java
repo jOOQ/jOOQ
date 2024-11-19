@@ -383,8 +383,8 @@ final class CommitsImpl implements Commits {
         }
 
         result = p2 == null
-            ? p1.commit(commit.getId(), commit.getMessage(), files(commit))
-            : p1.merge(commit.getId(), commit.getMessage(), p2, files(commit));
+            ? p1.commit(commit.getId(), commit.getMessage(), commit.getAuthor(), files(commit))
+            : p1.merge(commit.getId(), commit.getMessage(), commit.getAuthor(), p2, files(commit));
 
         for (TagType tag : commit.getTags())
             result = result.tag(tag.getId(), tag.getMessage());

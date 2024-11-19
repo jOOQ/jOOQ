@@ -24,7 +24,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="commits" type="{http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd}CommitsType" minOccurs="0"/&gt;
+ *         &lt;element name="commits" type="{http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd}CommitsType" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -43,7 +43,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class MigrationsType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 32000L;
     @XmlElementWrapper(name = "commits")
     @XmlElement(name = "commit")
     protected List<CommitType> commits;

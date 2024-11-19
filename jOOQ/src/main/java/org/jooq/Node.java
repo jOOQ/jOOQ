@@ -72,6 +72,12 @@ public interface Node<N extends Node<N>> extends Scope {
     String message();
 
     /**
+     * The author of this node.
+     */
+    @Nullable
+    String author();
+
+    /**
      * The root node of the graph.
      */
     @NotNull

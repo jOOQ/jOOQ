@@ -83,8 +83,16 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     final Map<String, File> delta;
     final Map<String, File> files;
 
-    CommitImpl(Configuration configuration, String id, String message, Commit root, List<Commit> parents, Collection<? extends File> delta) {
-        super(configuration, id, message, root);
+    CommitImpl(
+        Configuration configuration,
+        String id,
+        String message,
+        String author,
+        Commit root,
+        List<Commit> parents,
+        Collection<? extends File> delta
+    ) {
+        super(configuration, id, message, author, root);
 
         if (Node.ROOT.equals(id) && root != null)
             throw new DataMigrationVerificationException("Cannot use reserved ID \"root\"");
@@ -97,7 +105,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     }
 
     private CommitImpl(CommitImpl copy) {
-        super(copy.configuration(), copy.id(), copy.message(), copy.root);
+        super(copy.configuration(), copy.id(), copy.message(), copy.author(), copy.root);
 
         this.ctx = copy.ctx;
         this.parents = copy.parents;
@@ -189,12 +197,22 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Commit commit(String newId, String newMessage, File... newFiles) {
-        return commit(newId, newMessage, Arrays.asList(newFiles));
+        return commit(newId, newMessage, null, Arrays.asList(newFiles));
     }
 
     @Override
     public final Commit commit(String newId, String newMessage, Collection<? extends File> newFiles) {
-        return new CommitImpl(configuration(), newId, newMessage, root, Arrays.asList(this), newFiles);
+        return commit(newId, newMessage, null, newFiles);
+    }
+
+    @Override
+    public final Commit commit(String newId, String newMessage, String newAuthor, File... newFiles) {
+        return commit(newId, newMessage, newAuthor, Arrays.asList(newFiles));
+    }
+
+    @Override
+    public final Commit commit(String newId, String newMessage, String newAuthor, Collection<? extends File> newFiles) {
+        return new CommitImpl(configuration(), newId, newMessage, newAuthor, root, Arrays.asList(this), newFiles);
     }
 
     @Override
@@ -209,12 +227,22 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Commit merge(String newId, String newMessage, Commit with, File... newFiles) {
-        return merge(newId, newMessage, with, Arrays.asList(newFiles));
+        return merge(newId, newMessage, null, with, Arrays.asList(newFiles));
     }
 
     @Override
     public final Commit merge(String newId, String newMessage, Commit with, Collection<? extends File> newFiles) {
-        return new CommitImpl(configuration(), newId, newMessage, root, Arrays.asList(this, with), newFiles);
+        return merge(newId, newMessage, null, with, newFiles);
+    }
+
+    @Override
+    public final Commit merge(String newId, String newMessage, String newAuthor, Commit with, File... newFiles) {
+        return merge(newId, newMessage, newAuthor,  with, Arrays.asList(newFiles));
+    }
+
+    @Override
+    public final Commit merge(String newId, String newMessage, String newAuthor, Commit with, Collection<? extends File> newFiles) {
+        return new CommitImpl(configuration(), newId, newMessage, newAuthor, root, Arrays.asList(this, with), newFiles);
     }
 
     @Override
@@ -450,8 +478,11 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         if (!isBlank(message()))
             sb.append(" - ").append(message());
 
+        if (!isBlank(author()))
+            sb.append(", author: " + author());
+
         if (!tags.isEmpty())
-            sb.append(' ').append(tags);
+            sb.append(", tags: ").append(tags);
 
         return sb.toString();
     }

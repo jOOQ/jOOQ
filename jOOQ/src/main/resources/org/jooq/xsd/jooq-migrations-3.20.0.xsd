@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd"
-    targetNamespace="http://www.jooq.org/xsd/jooq-migrations-3.19.0.xsd"
+    xmlns:tns="http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd"
     elementFormDefault="qualified">
 
     <element name="migrations" type="tns:MigrationsType"/>
@@ -23,6 +23,7 @@
             <element name="parents" type="tns:ParentsType" minOccurs="0" maxOccurs="1" />
             <element name="id" type="string" minOccurs="1" maxOccurs="1" />
             <element name="message" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="author" type="string" minOccurs="0" maxOccurs="1" />
             <element name="tags" type="tns:TagsType" minOccurs="0" maxOccurs="1" />
             <element name="files" type="tns:FilesType" minOccurs="0" maxOccurs="1" />
         </all>

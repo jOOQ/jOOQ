@@ -40,7 +40,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class TagType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 32000L;
     @XmlElement(required = true)
     protected String id;
     protected String message;

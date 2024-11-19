@@ -39,8 +39,8 @@ package org.jooq;
 
 import java.util.Collection;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.ApiStatus.Experimental;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A change set describing the exact migration path between the

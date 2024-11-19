@@ -46,6 +46,7 @@ import java.util.Map.Entry;
 import org.jooq.Configuration;
 import org.jooq.Node;
 import org.jooq.exception.DataDefinitionException;
+import org.jooq.exception.DataMigrationVerificationException;
 
 /**
  * @author Lukas Eder
@@ -54,7 +55,7 @@ abstract class AbstractNode<N extends Node<N>> extends AbstractLazyScope impleme
 
     final N      root;
     final String id;
-    final String message;
+    String       message;
 
     @SuppressWarnings("unchecked")
     AbstractNode(Configuration configuration, String id, String message, N root) {

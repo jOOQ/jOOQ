@@ -64,10 +64,12 @@ import org.jooq.DSLContext;
 import org.jooq.File;
 import org.jooq.Files;
 import org.jooq.Meta;
+import org.jooq.Node;
 import org.jooq.Source;
 import org.jooq.Tag;
 import org.jooq.Version;
 import org.jooq.exception.DataMigrationException;
+import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -83,6 +85,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     CommitImpl(Configuration configuration, String id, String message, Commit root, List<Commit> parents, Collection<? extends File> delta) {
         super(configuration, id, message, root);
+
+        if (Node.ROOT.equals(id) && root != null)
+            throw new DataMigrationVerificationException("Cannot use reserved ID \"root\"");
 
         this.ctx = configuration.dsl();
         this.parents = parents;
@@ -363,7 +368,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         }
 
         Map<String, File> versionFiles = new HashMap<>();
-        Version from = version(ctx.migrations().version("init"), id(), versionFiles, history.values());
+        Version from = version(ctx.migrations().version(ROOT), id(), versionFiles, history.values());
         Version to = version(from, resultCommit.id(), versionFiles, result.values());
         return new FilesImpl(from, to, result.values());
     }

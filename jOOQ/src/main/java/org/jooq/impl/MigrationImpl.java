@@ -169,7 +169,16 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
         for (Schema schema : history.lookup(commit.meta().getSchemas()))
             if (!ctx.migratedSchemas().contains(schema))
-                throw new DataMigrationVerificationException("Schema is referenced from commit, but not configured for migration: " + schema);
+                throw new DataMigrationVerificationException(
+                    """
+                    Schema is referenced from commit, but not configured for migration: {schema}
+
+                    All schemas that are referenced from commits in a migration must be configured for
+                    inclusion in the migration
+
+                    TODO doclink
+                    """.replace("{schema}", schema.toString())
+                );
     }
 
     private final Queries revertUntrackedQueries(Set<Schema> includedSchemas) {

@@ -45,7 +45,7 @@ import org.jooq.Configuration;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * The jOOQ Migrations resolve mojo
+ * Mark an outstanding migration as resolved.
  *
  * @author Lukas Eder
  */

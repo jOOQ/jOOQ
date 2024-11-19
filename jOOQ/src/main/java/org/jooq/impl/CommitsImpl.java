@@ -211,6 +211,24 @@ final class CommitsImpl implements Commits {
                 this.tags.add(new TagType().withId(tagArray[0]).withMessage(tagArray.length > 1 ? tagArray[1] : null));
             }
         }
+
+        @Override
+        public String toString() {
+            List<String> strings = new ArrayList<>();
+
+            if (id != null)
+                strings.add("id: " + id);
+            if (version != null)
+                strings.add("version: " + version);
+            if (message != null)
+                strings.add("message: " + message);
+            if (!tags.isEmpty())
+                strings.add("tags: " + tags);
+            if (!parentIds.isEmpty())
+                strings.add("parents: " + parentIds);
+
+            return "File: " + file + " " + strings;
+        }
     }
 
     @Override
@@ -246,7 +264,7 @@ final class CommitsImpl implements Commits {
         List<FileData> list = Stream.of(sql).map(FileData::new).collect(toList());
 
         if (log.isDebugEnabled())
-            list.forEach(f -> log.debug("Reading file", f.basename));
+            list.forEach(f -> log.debug("Reading file", f));
 
         /*
          * An example:
@@ -320,6 +338,11 @@ final class CommitsImpl implements Commits {
     public final Commits load(MigrationsType migrations) {
         Map<String, CommitType> map = new HashMap<>();
 
+        for (CommitType commit : migrations.getCommits())
+            if (Commit.ROOT.equals(commit.getId()))
+                throw new DataMigrationVerificationException("Cannot define reserved commit name \"root\"");
+
+        map.put(Commit.ROOT, new CommitType().withId(root.id()).withMessage(root.message()));
         for (CommitType commit : migrations.getCommits())
             map.put(commit.getId(), commit);
 

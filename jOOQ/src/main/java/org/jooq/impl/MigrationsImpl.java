@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
+import static org.jooq.Commit.ROOT;
 
 import org.jooq.Commit;
 import org.jooq.Commits;
@@ -75,7 +76,7 @@ final class MigrationsImpl extends AbstractScope implements Migrations {
 
     @Override
     public final Commits commits() {
-        return new CommitsImpl(configuration(), new CommitImpl(configuration(), "init", "init", null, emptyList(), emptyList()));
+        return new CommitsImpl(configuration(), new CommitImpl(configuration(), ROOT, ROOT, null, emptyList(), emptyList()));
     }
 
     @Override

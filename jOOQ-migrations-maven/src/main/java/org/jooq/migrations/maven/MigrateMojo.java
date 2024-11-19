@@ -45,7 +45,7 @@ import org.jooq.Migration;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * The jOOQ Migrations migrate mojo
+ * Run a migration.
  *
  * @author Lukas Eder
  */

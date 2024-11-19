@@ -50,12 +50,14 @@ import static org.jooq.impl.HistoryStatus.SUCCESS;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.tools.StringUtils.isBlank;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.jooq.Commit;
@@ -63,6 +65,7 @@ import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.History;
+import org.jooq.HistoryVersion;
 import org.jooq.Schema;
 import org.jooq.Version;
 import org.jooq.conf.InterpreterSearchSchema;
@@ -72,6 +75,7 @@ import org.jooq.conf.MigrationSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationVerificationException;
+import org.jooq.tools.JooqLogger;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -80,10 +84,12 @@ import org.jetbrains.annotations.Nullable;
  */
 class HistoryImpl extends AbstractScope implements History {
 
-    final DSLContext    ctx;
-    final DSLContext    historyCtx;
-    final Commits       commits;
-    final List<Version> versions;
+    private static final JooqLogger log = JooqLogger.getLogger(HistoryImpl.class);
+
+    final DSLContext                ctx;
+    final DSLContext                historyCtx;
+    final Commits                   commits;
+    final List<HistoryVersion>      versions;
 
     HistoryImpl(Configuration configuration) {
         super(configuration);
@@ -97,12 +103,12 @@ class HistoryImpl extends AbstractScope implements History {
     }
 
     @Override
-    public final Iterator<Version> iterator() {
+    public final Iterator<HistoryVersion> iterator() {
         return unmodifiableList(versions).iterator();
     }
 
     @Override
-    public final Version root() {
+    public final HistoryVersion root() {
         if (!isEmpty(versions))
             return versions.get(0);
         else
@@ -110,7 +116,7 @@ class HistoryImpl extends AbstractScope implements History {
     }
 
     @Override
-    public final Version current() {
+    public final HistoryVersion current() {
         if (!isEmpty(versions))
             return versions.get(versions.size() - 1);
         else
@@ -218,11 +224,15 @@ class HistoryImpl extends AbstractScope implements History {
         return false;
     }
 
-    private final List<Version> initVersions() {
-        List<Version> result = new ArrayList<>();
+    private final List<HistoryVersion> initVersions() {
+        List<HistoryVersion> result = new ArrayList<>();
 
         if (existsHistory()) {
-            result.add(commits.root().version());
+            result.add(new HistoryVersionImpl(
+                this,
+                commits.root().version(),
+                null
+            ));
 
             for (HistoryRecord r : historyCtx
                 .selectFrom(HISTORY)
@@ -232,9 +242,20 @@ class HistoryImpl extends AbstractScope implements History {
                 Commit commit = commits.get(r.getMigratedTo());
 
                 if (commit != null)
-                    result.add(commit.version());
+                    result.add(new HistoryVersionImpl(
+                        this,
+                        commit.version(),
+                        r.getMigratedAt().toInstant()
+                    ));
                 else
-                    throw new DataMigrationVerificationException("CommitProvider didn't provide version for ID: " + r.getMigratedTo());
+                    throw new DataMigrationVerificationException(
+                        """
+                        CommitProvider didn't provide version for ID: {id}
+
+                        This may happen if a successful migration has happened in a database, but the source
+                        for this migration is not available.
+                        """.replace("{id}", r.getMigratedTo())
+                    );
             }
         }
 
@@ -256,6 +277,7 @@ class HistoryImpl extends AbstractScope implements History {
                 && historyCtx.settings().getMigrationDefaultSchema() != null)
                 historyCtx.createSchemaIfNotExists("").execute();
 
+            log.info("Initialising history table: " + historyCtx.map(HISTORY));
             historyCtx.meta(HISTORY).ddl().executeBatch();
         }
     }
@@ -270,6 +292,31 @@ class HistoryImpl extends AbstractScope implements History {
              .update();
         else
             throw new DataMigrationVerificationException("No current history record found to resolve");
+    }
+
+    static final record HistoryVersionImpl(History history, Version version, Instant migratedAt) implements HistoryVersion {
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(version);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            HistoryVersionImpl other = (HistoryVersionImpl) obj;
+            return Objects.equals(version, other.version);
+        }
+
+        @Override
+        public String toString() {
+            return "HistoryVersion [version=" + version + ", migratedAt=" + migratedAt + "]";
+        }
     }
 
     // -------------------------------------------------------------------------

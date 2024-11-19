@@ -39,20 +39,25 @@ package org.jooq;
 
 import java.util.List;
 
+import org.jetbrains.annotations.ApiStatus.Experimental;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
  * An abstraction over directed, acyclic graph models.
  * <p>
- * Examples of such models are {@link Version} / {@link Versions} or
- * {@link Commit} / {@link Commits}.
+ * Examples of such models are {@link Version} or {@link Commit} /
+ * {@link Commits}.
  *
  * @author Lukas Eder
  */
 @Experimental
 public interface Node<N extends Node<N>> extends Scope {
+
+    /**
+     * The name of the {@link #root()} node.
+     */
+    String ROOT = "root";
 
     /**
      * The ID of the node, unique within the graph.

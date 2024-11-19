@@ -40,38 +40,33 @@ package org.jooq.migrations.maven;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 
+import org.jooq.Commit;
+import org.jooq.Files;
 import org.jooq.Migration;
+import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.Version;
 import org.jooq.tools.StringUtils;
 
-import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * Log the queries of the outstanding migration.
+ * Clean the configured schemas, dropping all objects.
  *
  * @author Lukas Eder
  */
 @Mojo(
-    name = "log",
+    name = "clean",
     defaultPhase = GENERATE_SOURCES,
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class LogMojo extends AbstractMigrateMojo {
+public class CleanMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
-        if (getLog().isInfoEnabled()) {
-            Query[] queries = migration.queries().queries();
-            log(getLog(), queries);
-        }
-    }
-
-    static final void log(Log log, Query[] queries) {
-        int pad = ("" + queries.length).length();
-
-        for (int i = 0; i < queries.length; i++)
-            log.info("  Query " + StringUtils.leftPad("" + (i + 1), pad) + ": " + queries[i]);
+        Commit root = migration.to().root();
+        root.settings().setMigrationAllowsUndo(true);
+        migration.dsl().migrations().migrateTo(root).execute();
     }
 }

@@ -39,39 +39,54 @@ package org.jooq.migrations.maven;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
+import static org.jooq.tools.StringUtils.isEmpty;
 
+import java.time.Instant;
+
+import org.jooq.HistoryVersion;
 import org.jooq.Migration;
-import org.jooq.Query;
+import org.jooq.Version;
 import org.jooq.tools.StringUtils;
 
-import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * Log the queries of the outstanding migration.
+ * Show the history of currently installed versions on the connected database.
  *
  * @author Lukas Eder
  */
 @Mojo(
-    name = "log",
+    name = "history",
     defaultPhase = GENERATE_SOURCES,
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class LogMojo extends AbstractMigrateMojo {
+public class HistoryMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
         if (getLog().isInfoEnabled()) {
-            Query[] queries = migration.queries().queries();
-            log(getLog(), queries);
+            for (HistoryVersion version : migration.dsl().migrations().history()) {
+                getLog().info(string(version.migratedAt()) + " - Version: " + string(version.version()));
+
+                if (version.version().parents().size() > 1) {
+                    getLog().info("  Merged parents: ");
+
+                    for (Version p : version.version().parents())
+                        getLog().info("  - " + string(p));
+                }
+            }
         }
     }
 
-    static final void log(Log log, Query[] queries) {
-        int pad = ("" + queries.length).length();
+    private final String string(Instant instant) {
+        if (instant == null)
+            return "0000-00-00T00:00:00.000Z";
+        else
+            return StringUtils.rightPad(instant.toString(), 24);
+    }
 
-        for (int i = 0; i < queries.length; i++)
-            log.info("  Query " + StringUtils.leftPad("" + (i + 1), pad) + ": " + queries[i]);
+    private final String string(Version version) {
+        return version.id() + (!isEmpty(version.message()) ? " (" + version.message() + ")" : "");
     }
 }

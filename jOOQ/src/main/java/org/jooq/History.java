@@ -52,7 +52,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 @Experimental
-public interface History extends Iterable<Version>, Scope {
+public interface History extends Iterable<HistoryVersion>, Scope {
 
     /**
      * The root {@link Version}.
@@ -69,7 +69,7 @@ public interface History extends Iterable<Version>, Scope {
      */
     @NotNull
     @Experimental
-    Version root() throws DataMigrationVerificationException;
+    HistoryVersion root() throws DataMigrationVerificationException;
 
     /**
      * The currently installed {@link Version}.
@@ -82,7 +82,7 @@ public interface History extends Iterable<Version>, Scope {
      */
     @NotNull
     @Experimental
-    Version current();
+    HistoryVersion current();
 
     /**
      * Resolve any previous failures in the {@link History}.

@@ -79,11 +79,11 @@ public abstract class AbstractMigrateMojo extends AbstractMigrationsMojo {
             .migrations()
             .migrateTo(commits.latest());
 
-        if (getLog().isInfoEnabled()) {
-            getLog().info("Migration from version: " + migration.from());
-            getLog().info("Migration to version  : " + migration.to());
-            getLog().info("Migration queries     : " + migration.queries().queries().length);
-        }
+        if (getLog().isInfoEnabled())
+            getLog().info(
+                  "Migration loaded from version " + migration.from() + " to version " + migration.to()
+                + " (number of queries: " + migration.queries().queries().length + ")"
+            );
 
         execute1(migration);
     }

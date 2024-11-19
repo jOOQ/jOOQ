@@ -35,30 +35,36 @@
  *
  *
  */
-package org.jooq.migrations.maven;
+package org.jooq;
 
-import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
-import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
+import java.time.Instant;
 
-import org.jooq.Migration;
-
-import org.apache.maven.plugins.annotations.Mojo;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * Verify an outstanding migration.
- *
- * @author Lukas Eder
+ * A {@link Version} in the context of a {@link History}.
  */
-@Mojo(
-    name = "verify",
-    defaultPhase = GENERATE_SOURCES,
-    requiresDependencyResolution = TEST,
-    threadSafe = true
-)
-public class VerifyMojo extends AbstractMigrateMojo {
+public interface HistoryVersion {
 
-    @Override
-    final void execute1(Migration migration) throws Exception {
-        migration.verify();
-    }
+    /**
+     * The version.
+     */
+    @NotNull
+    Version version();
+
+    /**
+     * The history creating this {@link HistoryVersion}.
+     */
+    @NotNull
+    History history();
+
+    /**
+     * The time when this {@link HistoryVersion} was migrated to in the context
+     * of the {@link #history()}.
+     * <p>
+     * This is <code>null</code> for the {@link History#root()} version.
+     */
+    @Nullable
+    Instant migratedAt();
 }

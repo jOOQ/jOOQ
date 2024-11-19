@@ -49,7 +49,8 @@ import org.jooq.CloseableDSLContext;
 import org.jooq.Configuration;
 import org.jooq.conf.MigrationSchema;
 import org.jooq.impl.DSL;
-import org.jooq.tools.StringUtils;
+import org.jooq.tools.ClassUtils;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -160,11 +161,14 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
             // [#2886] Add the surrounding project's dependencies to the current classloader
             Thread.currentThread().setContextClassLoader(pluginClassLoader);
 
+            project.getRuntimeClasspathElements().forEach(System.out::println);
+
             if (jdbc == null || jdbc.url == null)
                 throw new MojoExecutionException("JDBC URL is required");
 
-            if (jdbc.driver != null)
-                Class.forName(jdbc.driver);
+            String driver = driverClass(jdbc);
+            if (driver != null)
+                ClassUtils.loadClass(driver).getConstructor().newInstance();
 
             try (CloseableDSLContext ctx = DSL.using(jdbc.url, defaultIfNull(jdbc.user, jdbc.username), jdbc.password)) {
 
@@ -225,6 +229,17 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
                 getLog().error("Couldn't close the classloader.", e);
             }
         }
+    }
+
+    private String driverClass(Jdbc j) {
+        String result = j.driver;
+
+        if (result == null) {
+            result = JDBCUtils.driver(j.url);
+            getLog().info("Inferring driver " + result + " from URL " + j.url);
+        }
+
+        return result;
     }
 
     abstract void execute0(Configuration configuration) throws Exception;

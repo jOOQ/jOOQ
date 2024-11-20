@@ -195,16 +195,18 @@ final class CommitsImpl implements Commits {
             String basename = name.replace(".sql", "");
 
             // [#9506] File name encoding basedir/[encoding].sql where [encoding] can contain:
-            //         - id/contentType/message.sql
-            //         - id/message.sql
+            //         - id/schemas/path.sql
+            //         - id/increment/[path and message].sql
+            //         - id/[path and message].sql
             //         - id.sql
-            this.path = pattern.path(source.file());
+            String path = pattern.path(source.file());
             java.io.File p1 = new java.io.File(path).getParentFile();
             java.io.File p2 = p1 != null ? p1.getParentFile() : null;
 
             this.contentType = p2 == null
                 ? ContentType.INCREMENT
-                : ContentType.valueOf(p1.getName().toUpperCase());
+                : contentType(p1.getName());
+            this.path = name;
 
             this.id = p1 == null
                 ? basename
@@ -256,6 +258,17 @@ final class CommitsImpl implements Commits {
         }
     }
 
+    static final ContentType contentType(String name) {
+        switch (name.toLowerCase()) {
+            case "schemas": return ContentType.SCHEMA;
+            case "scripts": return ContentType.SCRIPT;
+            case "increments": return ContentType.INCREMENT;
+            case "snapshots": return ContentType.SNAPSHOT;
+            default:
+                throw new IllegalArgumentException("Unsupported content type: " + name);
+        }
+    }
+
     @Override
     public final Commits load(java.io.File directory) throws IOException {
         if (log.isDebugEnabled())
@@ -278,8 +291,7 @@ final class CommitsImpl implements Commits {
         // [#9506] TODO: Turning a directory into a MigrationsType (and various other conversion)
         //               could be made reusable. This is certainly very useful for testing and interop,
         //               e.g. also to support other formats (Flyway, Liquibase) as source
-        TreeMap<String, List<String>> idToMessage = new TreeMap<>();
-        Map<String, CommitType> idToCommit = new HashMap<>();
+        TreeMap<String, CommitType> idToCommit = new TreeMap<>();
 
         List<FileData> list = files.stream().map(s -> new FileData(pattern, s)).collect(toList());
 
@@ -287,10 +299,11 @@ final class CommitsImpl implements Commits {
             list.forEach(f -> log.debug("Reading file", f));
 
         for (FileData f : list)
-            idToMessage.computeIfAbsent(f.id, k -> new ArrayList<>()).add(f.message);
-
-        for (FileData f : list)
-            idToCommit.put(f.id, new CommitType().withId(f.id));
+            idToCommit.putIfAbsent(f.id, new CommitType()
+                .withId(f.id)
+                .withAuthor(f.author)
+                .withMessage(f.message)
+            );
 
         for (FileData f : list) {
             CommitType commit = idToCommit.get(f.id);
@@ -298,14 +311,10 @@ final class CommitsImpl implements Commits {
             // Parents are implicit
             // [#9506] TODO: What cases of implicit parents are possible. What edge cases aren't?
             if (f.parents.isEmpty()) {
-                Entry<String, List<String>> e = idToMessage.lowerEntry(f.id);
+                Entry<String, CommitType> e = idToCommit.lowerEntry(f.id);
 
-                if (e != null) {
-                    if (e.getValue().size() > 1)
-                        throw new DataMigrationVerificationException("Multiple predecessors for " + e.getKey() + ". Implicit parent cannot be detected: " + e.getValue());
-                    else
-                        commit.setParents(asList(new ParentType().withId(e.getValue().get(0))));
-                }
+                if (e != null)
+                    commit.setParents(asList(new ParentType().withId(e.getKey())));
             }
 
             // Parents are explicit
@@ -317,18 +326,12 @@ final class CommitsImpl implements Commits {
                         throw new DataMigrationVerificationException("Parent " + parent + " is not defined");
             }
 
-            commit
-                .withMessage(f.message)
-                .withAuthor(f.author)
-                .withTags(f.tags)
-
-                // [#9506] TODO: Better define paths, relative paths, etc.
-                // [#9506] TOOD: Support other ContentType values than INCREMENT
-                .withFiles(asList(new FileType()
-                    .withPath(f.path)
-                    .withContentType(ContentType.INCREMENT)
-                    .withContent(f.source.readString())
-                ));
+            commit.getFiles().add(new FileType()
+                .withPath(f.path)
+                .withContentType(f.contentType)
+                .withContent(f.source.readString())
+                .withChange(ChangeType.MODIFY)
+            );
         }
 
         return load(new MigrationsType().withCommits(idToCommit.values()));

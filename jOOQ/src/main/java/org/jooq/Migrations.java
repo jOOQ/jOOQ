@@ -98,6 +98,7 @@ public interface Migrations extends Scope {
      * versions.
      */
     @Experimental
+    @CheckReturnValue
     @NotNull
     Migration migrateTo(Commit to);
 

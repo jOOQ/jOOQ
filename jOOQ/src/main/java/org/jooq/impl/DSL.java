@@ -627,6 +627,7 @@ public class DSL {
             }
             catch (SQLException e) {
                 String driver = JDBCUtils.driver(url);
+                Exception cause = e;
 
                 if (!Driver.class.getName().equals(driver)) {
                     try {
@@ -638,11 +639,12 @@ public class DSL {
                         return new DefaultCloseableDSLContext(new DefaultCloseableConnectionProvider(connection), JDBCUtils.dialect(connection));
                     }
                     catch (Exception e2) {
-                        e.addSuppressed(e2);
+                        e2.addSuppressed(e);
+                        cause = e2;
                     }
                 }
 
-                throw Tools.translate(CTX.get(), "Error when initialising Connection", e);
+                throw Tools.translate(CTX.get(), "Error when initialising Connection", cause);
             }
         }
     }

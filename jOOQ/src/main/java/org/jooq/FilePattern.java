@@ -85,6 +85,7 @@ public final class FilePattern {
     private final Sort              sort;
     private final Comparator<File>  comparator;
     private final File              basedir;
+    private transient File          basedirCanonical;
     private final String            pattern;
     private final String            encoding;
     private final Pattern           regexForMatches;
@@ -167,7 +168,7 @@ public final class FilePattern {
         );
     }
 
-    private static final Comparator<File> fileComparator(Sort sort) {
+    public static final Comparator<File> fileComparator(Sort sort) {
         if (sort == null)
             sort = SEMANTIC;
 
@@ -190,6 +191,45 @@ public final class FilePattern {
      */
     public final boolean matches(String path) {
         return regexForMatches.matcher(path.replace("\\", "/")).matches();
+    }
+
+    /**
+     * Get the path of a {@link File} relative to this pattern's
+     * {@link #basedir()}, or <code>null</code> if the file doesn't match this
+     * pattern, or isn't in {@link #basedir()}.
+     */
+    public final String path(File file) {
+        try {
+            if (basedirCanonical == null)
+                basedirCanonical = basedir.getCanonicalFile();
+
+            String b = basedirCanonical.getPath();
+            String f = file.getCanonicalPath();
+
+            if (f.startsWith(b)) {
+                String path = f.substring(b.length()).replace('\\', '/');
+
+                if (path.startsWith("/"))
+                    path = path.substring(1);
+
+                if (matches(path))
+                    return path;
+            }
+
+            return null;
+        }
+        catch (java.io.IOException e) {
+            throw new IOException("Error while reading path of a file", e);
+        }
+    }
+
+    /**
+     * Get the path of a {@link File} relative to this pattern's
+     * {@link #basedir()}, or <code>null</code> if the file doesn't match this
+     * pattern, or isn't in {@link #basedir()}.
+     */
+    public final File pathFile(File file) {
+        return new File(path(file));
     }
 
     /**

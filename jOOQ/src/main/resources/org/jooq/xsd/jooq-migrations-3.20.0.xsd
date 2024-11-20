@@ -5,6 +5,7 @@
     elementFormDefault="qualified">
 
     <element name="migrations" type="tns:MigrationsType"/>
+    <element name="commit" type="tns:CommitType"/>
     
     <complexType name="MigrationsType">
         <all>

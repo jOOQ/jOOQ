@@ -45,7 +45,7 @@ import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -55,14 +55,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-import java.util.stream.Stream;
 
 import org.jooq.Commit;
 import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.ContentType;
 import org.jooq.File;
+import org.jooq.FilePattern;
 import org.jooq.Migrations;
+import org.jooq.Source;
 import org.jooq.Tag;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.migrations.xml.jaxb.ChangeType;
@@ -73,8 +74,6 @@ import org.jooq.migrations.xml.jaxb.ParentType;
 import org.jooq.migrations.xml.jaxb.TagType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.jaxb.tools.MiniJAXB;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -173,43 +172,70 @@ final class CommitsImpl implements Commits {
 
     // [#9506] TODO: Formalise this decoding, and make it part of the public API
     static final class FileData {
-        final java.io.File  file;
-        final String        basename;
-        final String        version;
-        final String        message;
-        final List<TagType> tags;
+        final FilePattern   pattern;
+        final Source        source;
+        final String        path;
         final String        id;
-        final List<String>  parentIds;
+        final String        message;
+        final String        author;
+        final List<TagType> tags;
+        final List<String>  parents;
+        final ContentType   contentType;
 
-        FileData(java.io.File file) {
-            this.file = file;
+        FileData(FilePattern pattern, Source source) {
+            this.pattern = pattern;
+            this.source = source;
 
             // [#9506] TODO: Other naming schemes?
-            this.basename = file.getName().replace(".sql", "");
+            String name = source.name();
 
-            /*
-             * An example:
-             * -----------
-             * v1-a,tag1,tag2
-             * v2-ab
-             * v2-ac
-             * v3-acd
-             * v3-abc.v2-ab,v2-ac
-             * v4-abcd,tag4.v3-abc,v3-acd
-             */
-            String[] idAndParentsArray = basename.split("\\.");
-            String[] idAndTagsArray = idAndParentsArray[0].split(",");
-            this.id = idAndTagsArray[0];
-            this.parentIds = idAndParentsArray.length > 1 ? asList(idAndParentsArray[1].split(",")) : asList();
+            if (name == null)
+                throw new DataMigrationVerificationException("Cannot work with unnamed sources: " + source);
 
-            String[] idArray = this.id.split("-");
-            this.version = idArray[0];
-            this.message = idArray.length > 1 ? idArray[1] : null;
+            String basename = name.replace(".sql", "");
+
+            // [#9506] File name encoding basedir/[encoding].sql where [encoding] can contain:
+            //         - id/contentType/message.sql
+            //         - id/message.sql
+            //         - id.sql
+            this.path = pattern.path(source.file());
+            java.io.File p1 = new java.io.File(path).getParentFile();
+            java.io.File p2 = p1 != null ? p1.getParentFile() : null;
+
+            this.contentType = p2 == null
+                ? ContentType.INCREMENT
+                : ContentType.valueOf(p1.getName().toUpperCase());
+
+            this.id = p1 == null
+                ? basename
+                : p2 == null
+                ? p1.getName()
+                : p2.getName();
+
+            java.io.File meta = new java.io.File(source.file().getParent(), basename + ".xml");
+            CommitType commit = null;
+            if (meta.exists())
+                commit = MiniJAXB.unmarshal(meta, CommitType.class);
+
+            this.message =
+                  commit != null && commit.getMessage() != null
+                ? commit.getMessage()
+                : p2 != null || p1 != null
+                ? basename
+                : null;
+            this.author =
+                  commit != null
+                ? commit.getAuthor()
+                : null;
 
             this.tags = new ArrayList<>();
-            for (int i = 1; i < idAndTagsArray.length; i++) {
-                String[] tagArray = idAndTagsArray[i].split("-");
-                this.tags.add(new TagType().withId(tagArray[0]).withMessage(tagArray.length > 1 ? tagArray[1] : null));
+            this.parents = new ArrayList<>();
+
+            if (commit != null) {
+                for (TagType tag : commit.getTags())
+                    this.tags.add(tag);
+                for (ParentType parent : commit.getParents())
+                    this.parents.add(parent.getId());
             }
         }
 
@@ -219,16 +245,14 @@ final class CommitsImpl implements Commits {
 
             if (id != null)
                 strings.add("id: " + id);
-            if (version != null)
-                strings.add("version: " + version);
             if (message != null)
                 strings.add("message: " + message);
             if (!tags.isEmpty())
                 strings.add("tags: " + tags);
-            if (!parentIds.isEmpty())
-                strings.add("parents: " + parentIds);
+            if (!parents.isEmpty())
+                strings.add("parents: " + parents);
 
-            return "File: " + file + " " + strings;
+            return "File: " + source.file() + " " + strings;
         }
     }
 
@@ -237,47 +261,33 @@ final class CommitsImpl implements Commits {
         if (log.isDebugEnabled())
             log.debug("Reading directory", directory);
 
-        // [#9506] TODO: Offer this also using a different File abstraction, for better testing, etc. (?)
-        // [#9506] TODO: Recurse into subdirectories?
-        // [#9506] TODO: Other suffixes than .sql?
-        java.io.File[] sql = directory.listFiles(f -> f.getName().endsWith(".sql"));
-        java.io.File[] xml = directory.listFiles(f -> f.getName().endsWith(".xml"));
+        FilePattern sqlPattern = new FilePattern().basedir(directory).pattern("**.sql");
+        FilePattern xmlPattern = new FilePattern().basedir(directory).pattern("**.xml");
+        List<Source> sql, xml;
 
-        if (!isEmpty(sql) && !isEmpty(xml))
-            throw new DataMigrationVerificationException("A migration directory can only use either SQL files or XML files, not both.");
-
-        if (!isEmpty(sql))
-            return loadSQL(sql);
-        else if (!isEmpty(xml))
-            return loadXML(xml);
+        if (!isEmpty(sql = sqlPattern.collect()))
+            return loadSQL(sqlPattern, sql);
+        else if (!isEmpty(xml = xmlPattern.collect()))
+            return loadXML(xmlPattern, xml);
         else
             return this;
     }
 
-    private final Commits loadSQL(java.io.File[] sql) throws IOException {
+    private final Commits loadSQL(FilePattern pattern, List<Source> files) throws IOException {
 
         // [#9506] TODO: Turning a directory into a MigrationsType (and various other conversion)
         //               could be made reusable. This is certainly very useful for testing and interop,
         //               e.g. also to support other formats (Flyway, Liquibase) as source
-        TreeMap<String, List<String>> versionToId = new TreeMap<>();
+        TreeMap<String, List<String>> idToMessage = new TreeMap<>();
         Map<String, CommitType> idToCommit = new HashMap<>();
 
-        List<FileData> list = Stream.of(sql).map(FileData::new).collect(toList());
+        List<FileData> list = files.stream().map(s -> new FileData(pattern, s)).collect(toList());
 
         if (log.isDebugEnabled())
             list.forEach(f -> log.debug("Reading file", f));
 
-        /*
-         * An example:
-         * -----------
-         * v1-a
-         * v2-ab, v2-ac
-         * v3-acd
-         * v3-abc.v2-ab,v2-ac
-         * v4-abcd.v3-abc,v3-acd
-         */
         for (FileData f : list)
-            versionToId.computeIfAbsent(f.version, k -> new ArrayList<>()).add(f.id);
+            idToMessage.computeIfAbsent(f.id, k -> new ArrayList<>()).add(f.message);
 
         for (FileData f : list)
             idToCommit.put(f.id, new CommitType().withId(f.id));
@@ -287,8 +297,8 @@ final class CommitsImpl implements Commits {
 
             // Parents are implicit
             // [#9506] TODO: What cases of implicit parents are possible. What edge cases aren't?
-            if (f.parentIds.isEmpty()) {
-                Entry<String, List<String>> e = versionToId.lowerEntry(f.version);
+            if (f.parents.isEmpty()) {
+                Entry<String, List<String>> e = idToMessage.lowerEntry(f.id);
 
                 if (e != null) {
                     if (e.getValue().size() > 1)
@@ -296,12 +306,11 @@ final class CommitsImpl implements Commits {
                     else
                         commit.setParents(asList(new ParentType().withId(e.getValue().get(0))));
                 }
-
             }
 
             // Parents are explicit
             else {
-                for (String parent : f.parentIds)
+                for (String parent : f.parents)
                     if (idToCommit.containsKey(parent))
                         commit.getParents().add(new ParentType().withId(parent));
                     else
@@ -310,26 +319,29 @@ final class CommitsImpl implements Commits {
 
             commit
                 .withMessage(f.message)
+                .withAuthor(f.author)
                 .withTags(f.tags)
 
                 // [#9506] TODO: Better define paths, relative paths, etc.
                 // [#9506] TOOD: Support other ContentType values than INCREMENT
                 .withFiles(asList(new FileType()
-                    .withPath(f.basename)
+                    .withPath(f.path)
                     .withContentType(ContentType.INCREMENT)
-                    .withContent(new String(Files.readAllBytes(f.file.toPath())))
+                    .withContent(f.source.readString())
                 ));
         }
 
         return load(new MigrationsType().withCommits(idToCommit.values()));
     }
 
-    private final Commits loadXML(java.io.File[] xml) {
+    private final Commits loadXML(FilePattern pattern, List<Source> files) throws IOException {
         MigrationsType m = new MigrationsType();
 
-        for (java.io.File f : xml) {
-            MigrationsType u = MiniJAXB.unmarshal(f, MigrationsType.class);
-            m = MiniJAXB.append(m, u);
+        for (Source s : files) {
+            try (Reader reader = s.reader()) {
+                MigrationsType u = MiniJAXB.unmarshal(s.reader(), MigrationsType.class);
+                m = MiniJAXB.append(m, u);
+            }
         }
 
         return load(m);

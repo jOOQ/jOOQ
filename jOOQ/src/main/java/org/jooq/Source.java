@@ -49,11 +49,13 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
 import org.jooq.exception.IOException;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A source of text data.
@@ -308,11 +310,30 @@ public final class Source {
     }
 
     /**
+     * The name of the file if this is a {@link File} based source, or
+     * <code>null</code> if no name is available.
+     */
+    @Nullable
+    public final String name() {
+        return file != null ? file.getName() : null;
+    }
+
+    /**
+     * The file if this is a {@link File} based source, or <code>null</code> if
+     * no file is available.
+     */
+    @Nullable
+    public final File file() {
+        return file;
+    }
+
+    /**
      * Produce a reader from this source.
      *
      * @throws IOException When something goes wrong creating a reader from this
      *             source.
      */
+    @NotNull
     public final Reader reader() throws IOException {
         try {
             if (string != null) {
@@ -415,6 +436,7 @@ public final class Source {
      * @throws IOException When something goes wrong creating a reader from this
      *             source.
      */
+    @NotNull
     public final String readString() throws IOException {
         StringWriter w = new StringWriter();
         Reader r = null;

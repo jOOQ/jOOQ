@@ -168,6 +168,10 @@ public final class FilePattern {
         );
     }
 
+    public final Comparator<File> fileComparator() {
+        return fileComparator(sort());
+    }
+
     public static final Comparator<File> fileComparator(Sort sort) {
         if (sort == null)
             sort = SEMANTIC;

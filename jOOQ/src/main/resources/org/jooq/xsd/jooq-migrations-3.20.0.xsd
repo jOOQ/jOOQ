@@ -22,7 +22,7 @@
     <complexType name="CommitType">
         <all>
             <element name="parents" type="tns:ParentsType" minOccurs="0" maxOccurs="1" />
-            <element name="id" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="id" type="string" minOccurs="0" maxOccurs="1" />
             <element name="message" type="string" minOccurs="0" maxOccurs="1" />
             <element name="author" type="string" minOccurs="0" maxOccurs="1" />
             <element name="tags" type="tns:TagsType" minOccurs="0" maxOccurs="1" />

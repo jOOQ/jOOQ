@@ -339,6 +339,9 @@ class HistoryImpl extends AbstractScope implements History {
 
     @Override
     public String toString() {
-        return "History [" + current() + "]";
+        if (!isEmpty(versions))
+            return "History [" + current() + "]";
+        else
+            return "History []";
     }
 }

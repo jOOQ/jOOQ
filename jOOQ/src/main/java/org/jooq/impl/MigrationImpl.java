@@ -212,11 +212,37 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, HistoryRecord currentRecord) {
         if (ctx.revertUntrackedQueries.queries().length > 0)
-            if (!TRUE.equals(dsl().settings().isMigrationRevertUntracked()))
-                throw new DataMigrationVerificationException(
-                    "Non-empty difference between actual schema and migration from schema: " + ctx.revertUntrackedQueries +
-                    (currentRecord == null ? ("\n\nUse Settings.migrationAutoBaseline to automatically set a baseline") : "")
-                );
+            if (!TRUE.equals(dsl().settings().isMigrationRevertUntracked())) {
+                if (currentRecord == null) {
+                    throw new DataMigrationVerificationException(
+                        """
+                        Non-empty difference between actual schema and migration from schema: {queries}.
+
+                        Possible remedies:
+                        - Use Settings.migrationAutoBaseline to automatically set a baseline.
+                        """.replace("{queries}", "" + ctx.revertUntrackedQueries)
+                    );
+                }
+                else {
+                    throw new DataMigrationVerificationException(
+                        """
+                        Non-empty difference between actual schema and migration from schema: {queries}.
+
+                        This can happen for two reasons:
+                        1) The migration specification of a version that has already been installed has been modified.
+                        2) The database schemas contain untracked objects.
+
+                        Possible remedies if 1):
+                        - Revert changes to the migration specification and move those changes to a new version.
+
+                        Possible remedies if 2):
+                        - Use Settings.migrationRevertUntracked to automatically drop unknown objects (at your own risk!)
+                        - Manually drop or move unknown objects outside of managed schemas.
+                        - Update migration scripts to track missing objects.
+                        """.replace("{queries}", "" + ctx.revertUntrackedQueries)
+                    );
+                }
+            }
             else if (listener != null)
                 execute(ctx, listener, ctx.revertUntrackedQueries);
     }

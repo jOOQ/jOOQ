@@ -1379,11 +1379,32 @@ final class Interpreter {
     }
 
     private static final DataDefinitionException notExists(Named named) {
-        return notExists(named.getClass().getSimpleName(), named);
+        return notExists(typeName(named), named);
     }
 
     private static final DataDefinitionException alreadyExists(Named named) {
-        return alreadyExists(named.getClass().getSimpleName(), named);
+        return alreadyExists(typeName(named), named);
+    }
+
+    private static final String typeName(Named named) {
+
+        // TODO: Move this to the Named interface
+        if (named instanceof Catalog)
+            return "Catalog";
+        else if (named instanceof Schema)
+            return "Schema";
+        else if (named instanceof Table)
+            return "Table";
+        else if (named instanceof Field)
+            return "Field";
+        else if (named instanceof Sequence)
+            return "Sequence";
+        else if (named instanceof Domain)
+            return "Domain";
+        else if (named instanceof Synonym)
+            return "Synonym";
+        else
+            return named.getClass().getSimpleName();
     }
 
     private static final DataDefinitionException notExists(String type, Named named) {

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableCollection;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.isEmpty;
@@ -48,6 +49,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -291,7 +293,10 @@ final class CommitsImpl implements Commits {
         // [#9506] TODO: Turning a directory into a MigrationsType (and various other conversion)
         //               could be made reusable. This is certainly very useful for testing and interop,
         //               e.g. also to support other formats (Flyway, Liquibase) as source
-        TreeMap<String, CommitType> idToCommit = new TreeMap<>();
+        TreeMap<String, CommitType> idToCommit = new TreeMap<>(comparing(
+            java.io.File::new,
+            pattern.fileComparator()
+        ));
 
         List<FileData> list = files.stream().map(s -> new FileData(pattern, s)).collect(toList());
 
@@ -303,6 +308,7 @@ final class CommitsImpl implements Commits {
                 .withId(f.id)
                 .withAuthor(f.author)
                 .withMessage(f.message)
+                .withTags(f.tags)
             );
 
         for (FileData f : list) {
@@ -333,6 +339,9 @@ final class CommitsImpl implements Commits {
                 .withChange(ChangeType.MODIFY)
             );
         }
+
+        if (log.isDebugEnabled())
+            log.debug("Loading files into: " + new MigrationsType().withCommits(idToCommit.values()));
 
         return load(new MigrationsType().withCommits(idToCommit.values()));
     }

@@ -48,6 +48,7 @@ import org.jooq.Migration;
 import org.jooq.Version;
 import org.jooq.tools.StringUtils;
 
+import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
@@ -65,28 +66,30 @@ public class HistoryMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
-        if (getLog().isInfoEnabled()) {
-            for (HistoryVersion version : migration.dsl().migrations().history()) {
-                getLog().info(string(version.migratedAt()) + " - Version: " + string(version.version()));
+        if (getLog().isInfoEnabled())
+            for (HistoryVersion version : migration.dsl().migrations().history())
+                log(getLog(), version);
+    }
 
-                if (version.version().parents().size() > 1) {
-                    getLog().info("  Merged parents: ");
+    static final void log(Log log, HistoryVersion version) {
+        log.info("  " + string(version.migratedAt()) + " - Version: " + string(version.version()));
 
-                    for (Version p : version.version().parents())
-                        getLog().info("  - " + string(p));
-                }
-            }
+        if (version.version().parents().size() > 1) {
+            log.info("  Merged parents: ");
+
+            for (Version p : version.version().parents())
+                log.info("  - " + string(p));
         }
     }
 
-    private final String string(Instant instant) {
+    private static final String string(Instant instant) {
         if (instant == null)
             return "0000-00-00T00:00:00.000Z";
         else
             return StringUtils.rightPad(instant.toString(), 24);
     }
 
-    private final String string(Version version) {
+    private static final String string(Version version) {
         return version.id() + (!isEmpty(version.message()) ? " (" + version.message() + ")" : "");
     }
 }

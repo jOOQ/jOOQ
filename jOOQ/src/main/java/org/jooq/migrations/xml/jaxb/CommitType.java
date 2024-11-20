@@ -25,7 +25,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
  *         &lt;element name="parents" type="{http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd}ParentsType" minOccurs="0"/&gt;
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="author" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="tags" type="{http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd}TagsType" minOccurs="0"/&gt;
@@ -49,7 +49,6 @@ public class CommitType implements Serializable, XMLAppendable
 {
 
     private final static long serialVersionUID = 32000L;
-    @XmlElement(required = true)
     protected String id;
     protected String message;
     protected String author;

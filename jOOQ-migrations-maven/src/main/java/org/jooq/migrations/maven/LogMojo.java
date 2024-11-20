@@ -37,9 +37,16 @@
  */
 package org.jooq.migrations.maven;
 
+import static java.util.stream.Collectors.toList;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import org.jooq.History;
+import org.jooq.HistoryVersion;
 import org.jooq.Migration;
 import org.jooq.Query;
 import org.jooq.tools.StringUtils;
@@ -63,7 +70,31 @@ public class LogMojo extends AbstractMigrateMojo {
     @Override
     final void execute1(Migration migration) throws Exception {
         if (getLog().isInfoEnabled()) {
+            History history = migration.dsl().migrations().history();
+            List<HistoryVersion> versions = StreamSupport
+                .stream(history.spliterator(), false)
+                .collect(toList());
+
+            if (versions.isEmpty()) {
+                getLog().info("No migration history available yet");
+            }
+            else {
+                getLog().info("Migration history");
+
+                for (HistoryVersion version : versions.subList(
+                    Math.max(0, versions.size() - 5),
+                    versions.size()
+                )) {
+                    HistoryMojo.log(getLog(), version);
+                }
+            }
+
             Query[] queries = migration.queries().queries();
+
+            getLog().info("Outstanding queries from " + migration.from() + " to " + migration.to() + ": "
+                + (queries.length == 0 ? "none" : "")
+            );
+
             log(getLog(), queries);
         }
     }

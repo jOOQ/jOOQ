@@ -272,7 +272,7 @@ final class Interpreter {
     private final void accept0(CreateSchemaImpl query) {
         Schema schema = query.$schema();
 
-        if (getSchema(schema, false) != null) {
+        if (getSchema(schema, false, false) != null) {
             if (!query.$ifNotExists())
                 throw alreadyExists(schema);
 
@@ -285,18 +285,14 @@ final class Interpreter {
     private final void accept0(AlterSchemaImpl query) {
         Schema schema = query.$schema();
 
-        MutableSchema oldSchema = getSchema(schema);
-        if (oldSchema == null) {
-            if (!query.$ifExists())
-                throw notExists(schema);
-
+        MutableSchema oldSchema = getSchema(schema, false, !query.$ifExists());
+        if (oldSchema == null)
             return;
-        }
 
         if (query.$renameTo()  != null) {
             Schema renameTo = query.$renameTo();
 
-            if (getSchema(renameTo, false) != null)
+            if (getSchema(renameTo, false, false) != null)
                 throw alreadyExists(renameTo);
 
             oldSchema.name((UnqualifiedName) renameTo.getUnqualifiedName());
@@ -308,16 +304,11 @@ final class Interpreter {
 
     private final void accept0(DropSchemaImpl query) {
         Schema schema = query.$schema();
-        MutableSchema mutableSchema = getSchema(schema);
+        MutableSchema mutableSchema = getSchema(schema, false, !query.$ifExists());
 
-        if (mutableSchema == null) {
-            if (!query.$ifExists())
-                throw notExists(schema);
-
+        if (mutableSchema == null)
             return;
-        }
-
-        if (mutableSchema.isEmpty() || query.$cascade() == Cascade.CASCADE)
+        else if (mutableSchema.isEmpty() || query.$cascade() == Cascade.CASCADE)
             mutableSchema.catalog.schemas.remove(mutableSchema);
         else
             throw schemaNotEmpty(schema);
@@ -380,10 +371,6 @@ final class Interpreter {
 
     private final void addForeignKey0(MutableTable mt, ConstraintImpl impl) {
         MutableSchema ms = getSchema(impl.$referencesTable().getSchema());
-
-        if (ms == null)
-            throw notExists(impl.$referencesTable().getSchema());
-
         MutableTable mrf = ms.table(impl.$referencesTable());
         MutableUniqueKey mu = null;
 
@@ -496,7 +483,6 @@ final class Interpreter {
     private final void accept0(AlterTableImpl query) {
         Table<?> table = query.$table();
         MutableSchema schema = getSchema(table.getSchema());
-
         MutableTable existing = schema.table(table);
         if (existing == null) {
             if (!query.$ifExists())
@@ -1128,11 +1114,7 @@ final class Interpreter {
     }
 
     private final void accept0(SetSchema query) {
-        MutableSchema schema = getSchema(query.$schema());
-        if (schema == null)
-            throw notExists(query.$schema());
-
-        currentSchema = schema;
+        currentSchema = getSchema(query.$schema());
     }
 
     private final void accept0(SetCommand query) {
@@ -1214,6 +1196,10 @@ final class Interpreter {
     }
 
     private final MutableSchema getSchema(Schema input, boolean create) {
+        return getSchema(input, create, true);
+    }
+
+    private final MutableSchema getSchema(Schema input, boolean create, boolean throwIfNotExists) {
         if (input == null)
             return currentSchema(create);
 
@@ -1228,9 +1214,14 @@ final class Interpreter {
             return null;
 
         MutableSchema schema = defaultSchema;
-        if ((schema = find(catalog.schemas, input)) == null && create)
+        if ((schema = find(catalog.schemas, input)) == null) {
+
             // TODO createSchemaIfNotExists should probably be configurable
-            schema = new MutableSchema((UnqualifiedName) input.getUnqualifiedName(), catalog);
+            if (create)
+                schema = new MutableSchema((UnqualifiedName) input.getUnqualifiedName(), catalog);
+            else if (throwIfNotExists)
+                throw notExists(input);
+        }
 
         return schema;
     }
@@ -1249,7 +1240,7 @@ final class Interpreter {
             return defaultSchema;
 
         InterpreterSearchSchema schema = searchPath.get(0);
-        return getSchema(schema(name(schema.getCatalog(), schema.getSchema())), create);
+        return getSchema(schema(name(schema.getCatalog(), schema.getSchema())), create, false);
     }
 
     private final MutableTable newTable(
@@ -1278,7 +1269,8 @@ final class Interpreter {
     }
 
     private final MutableTable table(Table<?> table, boolean throwIfNotExists) {
-        MutableTable result = getSchema(table.getSchema()).table(table);
+        MutableTable result = getSchema(table.getSchema(), false, throwIfNotExists).table(table);
+
         if (result == null && throwIfNotExists)
             throw notExists(table);
 
@@ -1339,7 +1331,10 @@ final class Interpreter {
         MutableTable table = table(DSL.table(field.getQualifiedName().qualifier()), throwIfNotExists);
 
         if (table == null)
-            return null;
+            if (throwIfNotExists)
+                throw notExists(field);
+            else
+                return null;
 
         MutableField result = find(table.fields, field);
 

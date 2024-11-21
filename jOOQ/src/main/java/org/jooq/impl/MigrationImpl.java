@@ -258,9 +258,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         """
                         Non-empty difference between actual schema and migration from schema: {queries}.
 
-                        This can happen for two reasons:
+                        This can happen for at least 3 reasons:
                         1) The migration specification of a version that has already been installed has been modified.
                         2) The database schemas contain untracked objects.
+                        3) There's a false positive reported by the database / org.jooq.Meta. Please consider reporting
+                           it here: https://jooq.org/bug
 
                         Possible remedies if 1):
                         - Revert changes to the migration specification and move those changes to a new version.

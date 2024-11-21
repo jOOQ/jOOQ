@@ -122,4 +122,17 @@ final class DefaultMigrationContext extends AbstractScope implements MigrationCo
     final void query(Query q) {
         this.query = q;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(
+            "MigrationContext for migration from: " + migrationFrom + " to " + migrationTo + "\n"
+            + "Migration queries:\n" + migrationQueries
+            + "Revert untracked queries:\n" + revertUntrackedQueries
+        );
+
+        return sb.toString();
+    }
 }

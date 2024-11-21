@@ -40,11 +40,6 @@ package org.jooq.migrations.jgit;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 
 import org.jooq.Commit;
 import org.jooq.tools.StringUtils;
@@ -58,6 +53,7 @@ import org.jetbrains.annotations.NotNull;
 public class GitConfiguration {
 
     private final File    repository;
+    private final String  basedir;
     private final String  schemaFilePattern;
     private final String  incrementFilePattern;
     private final String  scriptFilePattern;
@@ -71,12 +67,14 @@ public class GitConfiguration {
             null,
             null,
             null,
+            null,
             true
         );
     }
 
     private GitConfiguration(
         File repository,
+        String basedir,
         String schemaFilePattern,
         String incrementFilePattern,
         String scriptFilePattern,
@@ -84,10 +82,11 @@ public class GitConfiguration {
         boolean includeUncommitted
     ) {
         this.repository = repository != null ? repository : new File(".");
-        this.schemaFilePattern = defaultIfNull(schemaFilePattern, "migrations/schema/**");
-        this.incrementFilePattern = defaultIfNull(incrementFilePattern, "migrations/increment/**");
-        this.scriptFilePattern = defaultIfNull(scriptFilePattern, "migrations/script/**");
-        this.snapshotFilePattern = defaultIfNull(snapshotFilePattern, "migrations/snapshot/**");
+        this.basedir = basedir != null ? basedir : "src/main/resources";
+        this.schemaFilePattern = defaultIfNull(schemaFilePattern, "migrations/schemas/**");
+        this.incrementFilePattern = defaultIfNull(incrementFilePattern, "migrations/increments/**");
+        this.scriptFilePattern = defaultIfNull(scriptFilePattern, "migrations/scripts/**");
+        this.snapshotFilePattern = defaultIfNull(snapshotFilePattern, "migrations/snapshots/**");
         this.includeUncommitted = includeUncommitted;
     }
 
@@ -98,6 +97,7 @@ public class GitConfiguration {
     public final GitConfiguration repository(File newRepository) {
         return new GitConfiguration(
             newRepository,
+            basedir,
             schemaFilePattern,
             incrementFilePattern,
             scriptFilePattern,
@@ -115,6 +115,30 @@ public class GitConfiguration {
     }
 
     /**
+     * The base directory of the migration scripts within the {@link #repository()}.
+     */
+    @NotNull
+    public final GitConfiguration basedir(String newBasedir) {
+        return new GitConfiguration(
+            repository,
+            newBasedir,
+            schemaFilePattern,
+            incrementFilePattern,
+            scriptFilePattern,
+            snapshotFilePattern,
+            includeUncommitted
+        );
+    }
+
+    /**
+     * The base directory of the migration scripts within the {@link #repository()}.
+     */
+    @NotNull
+    public final String basedir() {
+        return basedir;
+    }
+
+    /**
      * The patterns of files in the repository to be searched for schema
      * definition files.
      */
@@ -122,6 +146,7 @@ public class GitConfiguration {
     public final GitConfiguration schemaFilePattern(String newSchemaFilePattern) {
         return new GitConfiguration(
             repository,
+            basedir,
             newSchemaFilePattern,
             incrementFilePattern,
             scriptFilePattern,
@@ -147,6 +172,7 @@ public class GitConfiguration {
     public final GitConfiguration incrementFilePattern(String newIncrementFilePattern) {
         return new GitConfiguration(
             repository,
+            basedir,
             schemaFilePattern,
             newIncrementFilePattern,
             scriptFilePattern,
@@ -172,6 +198,7 @@ public class GitConfiguration {
     public final GitConfiguration includeUncommitted(boolean newIncludeUncommitted) {
         return new GitConfiguration(
             repository,
+            basedir,
             schemaFilePattern,
             incrementFilePattern,
             scriptFilePattern,

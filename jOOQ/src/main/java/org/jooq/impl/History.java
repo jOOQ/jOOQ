@@ -22,7 +22,7 @@ import org.jooq.UniqueKey;
 /**
  * The migration history of jOOQ Migrations.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 class History extends TableImpl<HistoryRecord> {
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +63,11 @@ class History extends TableImpl<HistoryRecord> {
      * database version ID.
      */
     final TableField<HistoryRecord, String> MIGRATED_TO = createField(DSL.name("MIGRATED_TO"), SQLDataType.VARCHAR(255).nullable(false), this, "The current database version ID.");
+
+    /**
+     * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_MESSAGE</code>.
+     */
+    final TableField<HistoryRecord, String> MIGRATED_TO_MESSAGE = createField(DSL.name("MIGRATED_TO_MESSAGE"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_TAGS</code>. The

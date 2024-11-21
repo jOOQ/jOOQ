@@ -39,9 +39,12 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static java.util.function.Predicate.not;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.History.HISTORY;
 import static org.jooq.impl.HistoryImpl.initCtx;
 import static org.jooq.impl.HistoryResolution.OPEN;
@@ -50,6 +53,7 @@ import static org.jooq.impl.HistoryStatus.MIGRATING;
 import static org.jooq.impl.HistoryStatus.REVERTING;
 import static org.jooq.impl.HistoryStatus.STARTING;
 import static org.jooq.impl.HistoryStatus.SUCCESS;
+import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.map;
 
 import java.io.PrintWriter;
@@ -57,6 +61,7 @@ import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.jooq.Commit;
 import org.jooq.Commits;
@@ -71,7 +76,11 @@ import org.jooq.MigrationListener;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
+import org.jooq.Table;
 import org.jooq.Tag;
+import org.jooq.conf.InterpreterSearchSchema;
+import org.jooq.conf.MigrationSchema;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.tools.JooqLogger;
@@ -99,6 +108,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
         this.to = to;
         this.history = new HistoryImpl(configuration());
+    }
+
+    static final Schema schema(MigrationSchema schema) {
+        return new SchemaImpl(name(schema.getCatalog(), schema.getSchema()));
     }
 
     @Override
@@ -184,22 +197,38 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final Queries revertUntrackedQueries(Set<Schema> includedSchemas) {
+        MigrationSchema hs = settings().getMigrationHistorySchema();
+        MigrationSchema ds = settings().getMigrationDefaultSchema();
+
+        Set<Table<?>> historyTables = new HashSet<>();
+
+        if (hs != null || ds != null)
+            historyTables.add(table(schema(hs != null ? hs : ds).getQualifiedName().append(HISTORY.getUnqualifiedName())));
+        else
+            historyTables.addAll(map(includedSchemas, s -> table(s.getQualifiedName().append(HISTORY.getUnqualifiedName()))));
+
         Commit currentCommit = currentCommit();
         Meta currentMeta = currentCommit.meta();
-        Meta existingMeta = dsl().meta().filterSchemas(includedSchemas::contains);
+        Meta existingMeta = dsl().meta()
+            .filterSchemas(includedSchemas::contains)
+            .filterTables(not(historyTables::contains));
 
         Set<Schema> expectedSchemas = new HashSet<>();
         expectedSchemas.addAll(history.lookup(from().meta().getSchemas()));
         expectedSchemas.addAll(history.lookup(to().meta().getSchemas()));
         expectedSchemas.retainAll(includedSchemas);
 
+        if (ds != null) {
+            Schema d = DEFAULT_SCHEMA.get();
+
+            if (expectedSchemas.contains(d) && includedSchemas.contains(d))
+                expectedSchemas.add(schema(ds));
+        }
+
         schemaLoop:
         for (Schema schema : existingMeta.getSchemas()) {
             if (!includedSchemas.contains(schema))
                 continue schemaLoop;
-
-            // TODO Why is this qualification necessary?
-            existingMeta = existingMeta.apply(dropTableIfExists(schema.getQualifiedName().append(HISTORY.getUnqualifiedName())).cascade());
 
             if (!expectedSchemas.contains(schema))
                 existingMeta = existingMeta.apply(dropSchemaIfExists(schema).cascade());
@@ -347,6 +376,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             .setMigratedAt(new Timestamp(dsl().configuration().clock().instant().toEpochMilli()))
             .setMigratedFrom(from().id())
             .setMigratedTo(to().id())
+            .setMigratedToMessage(to().message())
             .setMigratedToTags(new JSONArray(map(to().tags(), Tag::id)).toString())
             .setMigrationTime(0L)
             .setSql(queries().toString())
@@ -426,13 +456,18 @@ final class MigrationImpl extends AbstractScope implements Migration {
             dsl().transaction(runnable);
         }
         catch (DataMigrationRedoLogException e) {
+            try {
 
-            // [#9506] Make sure history record is re-created in case it was rolled back.
-            HistoryRecord record = history.currentHistoryRecord(false);
+                // [#9506] Make sure history record is re-created in case it was rolled back.
+                HistoryRecord record = history.currentHistoryRecord(false);
 
-            if (record == null || !StringUtils.equals(e.record.getId(), record.getId())) {
-                e.record.touched(true);
-                e.record.insert();
+                if (record == null || !StringUtils.equals(e.record.getId(), record.getId())) {
+                    e.record.touched(true);
+                    e.record.insert();
+                }
+            }
+            catch (DataAccessException s) {
+                e.addSuppressed(s);
             }
 
             if (e.getCause() instanceof DataMigrationException r)

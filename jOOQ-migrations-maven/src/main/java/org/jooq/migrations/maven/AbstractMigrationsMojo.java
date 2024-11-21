@@ -46,9 +46,12 @@ import java.net.URLClassLoader;
 import java.util.List;
 
 import org.jooq.CloseableDSLContext;
+import org.jooq.CommitProvider;
 import org.jooq.Configuration;
+import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.conf.MigrationSchema;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultCommitProvider;
 import org.jooq.tools.ClassUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 
@@ -146,6 +149,12 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
     @Parameter(property = "jooq.migrate.historySchemaCreateSchemaIfNotExists")
     boolean               historySchemaCreateSchemaIfNotExists;
 
+    /**
+     * The {@link CommitProvider} implementation, defaulting to {@link DefaultCommitProvider}.
+     */
+    @Parameter(property = "jooq.migrate.commitProvider")
+    String                commitProvider;
+
     @Override
     public final void execute() throws MojoExecutionException {
         if (skip) {
@@ -174,13 +183,29 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
 
                 // Initialise Settings
                 // ---------------------------------------------------------------------
+                // TODO [#9506]: What are accepted constructor signatures?
+                if (commitProvider != null)
+                    ctx.configuration().set((CommitProvider) ClassUtils
+                        .loadClass(commitProvider)
+                        .getConstructor(Configuration.class)
+                        .newInstance(ctx.configuration())
+                    );
+
                 ctx.settings().getMigrationSchemata().addAll(schemata);
 
-                if (defaultCatalog != null || defaultSchema != null)
-                    ctx.settings().setMigrationDefaultSchema(new MigrationSchema()
-                        .withCatalog(defaultIfNull(defaultCatalog, ""))
-                        .withSchema(defaultIfNull(defaultSchema, ""))
-                    );
+                if (defaultCatalog != null || defaultSchema != null) {
+                    ctx.settings()
+                        .withMigrationDefaultSchema(new MigrationSchema()
+                            .withCatalog(defaultIfNull(defaultCatalog, ""))
+                            .withSchema(defaultIfNull(defaultSchema, ""))
+                        )
+
+                        // [#9506] TODO: This should be automatic, even for programmatic usage
+                        .withInterpreterSearchPath(new InterpreterSearchSchema()
+                            .withCatalog(defaultIfNull(defaultCatalog, ""))
+                            .withSchema(defaultIfNull(defaultSchema, ""))
+                        );
+                }
 
                 if (historyCatalog != null || historySchema != null)
                     ctx.settings().setMigrationHistorySchema(new MigrationSchema()

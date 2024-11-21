@@ -65,6 +65,7 @@ import org.jooq.File;
 import org.jooq.FilePattern;
 import org.jooq.Migrations;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
@@ -81,7 +82,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link CommitProvider} that produces versions from a git repository.
@@ -98,12 +98,25 @@ public final class GitCommitProvider implements CommitProvider {
     private final FilePattern       incrementFilePattern;
     private final FilePattern       schemaFilePattern;
 
+    public GitCommitProvider(Configuration configuration) {
+        this(configuration, new GitConfiguration());
+    }
+
     public GitCommitProvider(Configuration configuration, GitConfiguration git) {
         this.dsl = configuration.dsl();
         this.migrations = dsl.migrations();
         this.git = git;
-        this.incrementFilePattern = new FilePattern().pattern(git.incrementFilePattern());
-        this.schemaFilePattern = new FilePattern().pattern(git.schemaFilePattern());
+        this.incrementFilePattern = new FilePattern().pattern(combine(git.basedir(), git.incrementFilePattern()));
+        this.schemaFilePattern = new FilePattern().pattern(combine(git.basedir(), git.schemaFilePattern()));
+    }
+
+    private static final String combine(String basedir, String pattern) {
+        if (StringUtils.isEmpty(basedir))
+            return pattern;
+        else if (basedir.endsWith("/"))
+            return basedir + pattern;
+        else
+            return basedir + "/" + pattern;
     }
 
     @Override
@@ -115,6 +128,9 @@ public final class GitCommitProvider implements CommitProvider {
             Repository r = g.getRepository();
             ObjectReader reader = r.newObjectReader()
         ) {
+            // Prevent a "close() called when useCnt is already zero" warning
+            r.incrementOpen();
+
             List<RevCommit> revCommits = new ArrayList<>();
             Map<String, List<RevTag>> tags = new HashMap<>();
             RevCommit last = null;
@@ -311,22 +327,32 @@ public final class GitCommitProvider implements CommitProvider {
         treeWalk.setRecursive(false);
 
         while (treeWalk.next()) {
-            if (treeWalk.isSubtree()) {
+            String path = treeWalk.getPathString();
+
+            if (treeWalk.isSubtree() && include(path)) {
                 treeWalk.enterSubtree();
             }
             else {
-                ContentType contentType = contentType(treeWalk.getPathString());
+                ContentType contentType = contentType(path);
 
-                if (contentType != null)
+                if (contentType != null) {
                     files.add(migrations.file(
-                        treeWalk.getPathString(),
-                        read(repository, revCommit, treeWalk.getPathString()),
+                        path,
+                        read(repository, revCommit, path),
                         contentType
                     ));
+                }
             }
         }
 
         return files;
+    }
+
+    private final boolean include(String path) {
+
+        // [#9506] TODO: resolve . and ..
+        return git.basedir().startsWith(path)
+            || path.startsWith(git.basedir());
     }
 
     private final String read(Repository repository, RevCommit commit, String path) throws IOException {

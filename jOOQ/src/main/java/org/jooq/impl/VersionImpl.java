@@ -41,8 +41,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.jooq.impl.DSL.createSchema;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.schema;
+import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
 
@@ -60,6 +59,7 @@ import org.jooq.Query;
 import org.jooq.Source;
 import org.jooq.Version;
 import org.jooq.conf.InterpreterSearchSchema;
+import org.jooq.conf.MigrationSchema;
 import org.jooq.exception.DataDefinitionException;
 
 /**
@@ -82,12 +82,9 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
     private static final Meta init(DSLContext ctx) {
         Meta result = ctx.meta("");
 
-        // TODO: Instead of reusing interpreter search path, we should have some dedicated
-        //       configuration for this.
-        // TODO: Should this be moved in DSLContext.meta()?
-        List<InterpreterSearchSchema> searchPath = ctx.settings().getInterpreterSearchPath();
-        for (InterpreterSearchSchema schema : searchPath)
-            result = result.apply(createSchema(schema(name(schema.getCatalog(), schema.getSchema()))));
+        MigrationSchema ds = ctx.settings().getMigrationDefaultSchema();
+        if (ds != null)
+            result = result.apply(createSchemaIfNotExists(MigrationImpl.schema(ds)));
 
         return result;
     }

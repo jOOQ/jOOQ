@@ -139,7 +139,7 @@ class HistoryImpl extends AbstractScope implements History {
 
     private final void addSchema(Set<Schema> set, MigrationSchema schema) {
         if (schema != null)
-            set.addAll(lookup(asList(schema(name(schema.getCatalog(), schema.getSchema())))));
+            set.addAll(lookup(asList(MigrationImpl.schema(schema))));
     }
 
     final Collection<Schema> lookup(List<Schema> schemas) {
@@ -186,6 +186,11 @@ class HistoryImpl extends AbstractScope implements History {
                     )
                 );
             }
+
+            result.settings().withInterpreterSearchPath(new InterpreterSearchSchema()
+                .withCatalog(defaultSchema.getCatalog())
+                .withSchema(defaultSchema.getSchema())
+            );
 
             return result;
         }

@@ -299,7 +299,7 @@ final class Diff {
 
                 // TODO: The order of dropping / adding these objects might be incorrect
                 //       as there could be inter-dependencies.
-                appendColumns(r, t1, asList(t1.fields()), asList(t2.fields()));
+                appendColumns(r, t1, t2, asList(t1.fields()), asList(t2.fields()));
                 appendPrimaryKey(r, t1, asList(t1.getPrimaryKey()), asList(t2.getPrimaryKey()));
                 appendUniqueKeys(r, t1, removePrimary(t1.getKeys()), removePrimary(t2.getKeys()));
                 appendForeignKeys(r, t1, t1.getReferences(), t2.getReferences());
@@ -373,7 +373,13 @@ final class Diff {
         return false;
     }
 
-    private final DiffResult appendColumns(DiffResult result, Table<?> t1, List<? extends Field<?>> l1, List<? extends Field<?>> l2) {
+    private final DiffResult appendColumns(
+        DiffResult result,
+        Table<?> t1,
+        Table<?> t2,
+        List<? extends Field<?>> l1,
+        List<? extends Field<?>> l2
+    ) {
         final List<Field<?>> add = new ArrayList<>();
         final List<Field<?>> drop = new ArrayList<>();
 
@@ -413,9 +419,9 @@ final class Diff {
                     if (typeNameDifference(type1, type2))
                         r.queries.add(ctx.alterTable(t1).alter(f1).set(type2.nullability(Nullability.DEFAULT)));
 
-                    if (type1.nullable() && !type2.nullable())
+                    if (type1.nullable() && !type2.nullable() && respectPkNullability(f1, f2))
                         r.queries.add(ctx.alterTable(t1).alter(f1).setNotNull());
-                    else if (!type1.nullable() && type2.nullable())
+                    else if (!type1.nullable() && type2.nullable() && respectPkNullability(f1, f2))
                         r.queries.add(ctx.alterTable(t1).alter(f1).dropNotNull());
 
                     Field<?> d1 = type1.defaultValue();
@@ -433,6 +439,19 @@ final class Diff {
 
                     // [#9656] TODO: Change collation
                     // [#9656] TODO: Change character set
+                }
+
+                private final boolean respectPkNullability(Field<?> f1, Field<?> f2) {
+                    if (FALSE.equals(ctx.settings().isMigrationIgnoreImplicitPrimaryKeyNotNullConstraints()))
+                        return true;
+
+                    UniqueKey<?> pk1 = t1.getPrimaryKey();
+                    UniqueKey<?> pk2 = t2.getPrimaryKey();
+
+                    return pk1 == null
+                        || pk2 == null
+                        || !pk1.getFields().contains(f1)
+                        || !pk2.getFields().contains(f2);
                 }
 
                 private final boolean typeNameDifference(DataType<?> type1, DataType<?> type2) {

@@ -1568,6 +1568,10 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the difference between (possibly synthetically) name constraints and unnamed constraints, if the structure of the constraint is the same.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="migrationIgnoreImplicitPrimaryKeyNotNullConstraints" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns. This flag allows for overriding this behaviour.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="locale" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

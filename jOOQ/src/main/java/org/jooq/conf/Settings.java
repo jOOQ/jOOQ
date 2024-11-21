@@ -493,6 +493,8 @@ public class Settings
     protected Boolean migrationIgnoreDefaultTimestampPrecisionDiffs = true;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationIgnoreUnnamedConstraintDiffs = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean migrationIgnoreImplicitPrimaryKeyNotNullConstraints = true;
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(LocaleAdapter.class)
     protected Locale locale;
@@ -6339,6 +6341,30 @@ public class Settings
     }
 
     /**
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns. This flag allows for overriding this behaviour.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationIgnoreImplicitPrimaryKeyNotNullConstraints() {
+        return migrationIgnoreImplicitPrimaryKeyNotNullConstraints;
+    }
+
+    /**
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns. This flag allows for overriding this behaviour.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationIgnoreImplicitPrimaryKeyNotNullConstraints(Boolean value) {
+        this.migrationIgnoreImplicitPrimaryKeyNotNullConstraints = value;
+    }
+
+    /**
      * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
      * 
      */
@@ -9412,6 +9438,15 @@ public class Settings
     }
 
     /**
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns. This flag allows for overriding this behaviour.
+     * 
+     */
+    public Settings withMigrationIgnoreImplicitPrimaryKeyNotNullConstraints(Boolean value) {
+        setMigrationIgnoreImplicitPrimaryKeyNotNullConstraints(value);
+        return this;
+    }
+
+    /**
      * The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.
      * 
      */
@@ -9927,6 +9962,7 @@ public class Settings
         builder.append("migrationAutoVerification", migrationAutoVerification);
         builder.append("migrationIgnoreDefaultTimestampPrecisionDiffs", migrationIgnoreDefaultTimestampPrecisionDiffs);
         builder.append("migrationIgnoreUnnamedConstraintDiffs", migrationIgnoreUnnamedConstraintDiffs);
+        builder.append("migrationIgnoreImplicitPrimaryKeyNotNullConstraints", migrationIgnoreImplicitPrimaryKeyNotNullConstraints);
         builder.append("locale", locale);
         builder.append("parseDialect", parseDialect);
         builder.append("parseLocale", parseLocale);
@@ -11821,6 +11857,15 @@ public class Settings
                 return false;
             }
         }
+        if (migrationIgnoreImplicitPrimaryKeyNotNullConstraints == null) {
+            if (other.migrationIgnoreImplicitPrimaryKeyNotNullConstraints!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationIgnoreImplicitPrimaryKeyNotNullConstraints.equals(other.migrationIgnoreImplicitPrimaryKeyNotNullConstraints)) {
+                return false;
+            }
+        }
         if (locale == null) {
             if (other.locale!= null) {
                 return false;
@@ -12285,6 +12330,7 @@ public class Settings
         result = ((prime*result)+((migrationAutoVerification == null)? 0 :migrationAutoVerification.hashCode()));
         result = ((prime*result)+((migrationIgnoreDefaultTimestampPrecisionDiffs == null)? 0 :migrationIgnoreDefaultTimestampPrecisionDiffs.hashCode()));
         result = ((prime*result)+((migrationIgnoreUnnamedConstraintDiffs == null)? 0 :migrationIgnoreUnnamedConstraintDiffs.hashCode()));
+        result = ((prime*result)+((migrationIgnoreImplicitPrimaryKeyNotNullConstraints == null)? 0 :migrationIgnoreImplicitPrimaryKeyNotNullConstraints.hashCode()));
         result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
         result = ((prime*result)+((parseLocale == null)? 0 :parseLocale.hashCode()));

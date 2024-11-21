@@ -145,6 +145,7 @@ final class Interpreter {
     private MutableSchema                                        currentSchema;
     private boolean                                              delayForeignKeyDeclarations;
     private final Deque<DelayedForeignKey>                       delayedForeignKeyDeclarations;
+    private transient Query                                      currentQuery;
 
     // Caches
     private final Map<Name, MutableCatalog.InterpretedCatalog>   interpretedCatalogs    = new HashMap<>();
@@ -193,6 +194,7 @@ final class Interpreter {
     // -------------------------------------------------------------------------
 
     final void accept(Query query) {
+        currentQuery = query;
         invalidateCaches();
 
         if (log.isDebugEnabled())
@@ -510,11 +512,11 @@ final class Interpreter {
                     if (cascade == CASCADE)
                         it.remove();
                     else if (fields == null)
-                        throw new DataDefinitionException("Cannot drop constraint " + key + " because other objects depend on it");
+                        throw exception("Cannot drop constraint " + key + " because other objects depend on it");
                     else if (fields.size() == 1)
-                        throw new DataDefinitionException("Cannot drop column " + fields.get(0) + " because other objects depend on it");
+                        throw exception("Cannot drop column " + fields.get(0) + " because other objects depend on it");
                     else
-                        throw new DataDefinitionException("Cannot drop columns " + fields + " because other objects depend on them");
+                        throw exception("Cannot drop columns " + fields + " because other objects depend on them");
                 }
             }
         }
@@ -650,10 +652,10 @@ final class Interpreter {
 
             if (impl.getUnqualifiedName().empty()) {
                 if (impl.$foreignKey() != null) {
-                    throw new DataDefinitionException("Cannot drop unnamed foreign key");
+                    throw exception("Cannot drop unnamed foreign key");
                 }
                 else if (impl.$check() != null) {
-                    throw new DataDefinitionException("Cannot drop unnamed check constraint");
+                    throw exception("Cannot drop unnamed check constraint");
                 }
                 else if (impl.$unique() != null) {
                     Iterator<MutableUniqueKey> uks = existing.uniqueKeys.iterator();
@@ -769,7 +771,7 @@ final class Interpreter {
             if (mf.nameEquals(field.name()))
                 throw columnAlreadyExists(field.qualifiedName());
             else if (mf.type.identity() && dataType.identity())
-                throw new DataDefinitionException("Table can only have one identity: " + mf.qualifiedName());
+                throw exception("Table can only have one identity: " + mf.qualifiedName());
 
         if (index == Integer.MAX_VALUE)
             existing.fields.add(field);
@@ -825,7 +827,7 @@ final class Interpreter {
             else if (!existing.options.type().isTable())
                 throw objectNotTable(table);
             else if (query.$cascade() != Cascade.CASCADE && existing.hasReferencingKeys())
-                throw new DataDefinitionException("Cannot truncate table referenced by other tables. Use CASCADE: " + table);
+                throw exception("Cannot truncate table referenced by other tables. Use CASCADE: " + table);
         }
     }
 
@@ -1215,7 +1217,7 @@ final class Interpreter {
         }
 
         if (query.$cascade() != Cascade.CASCADE && !existing.fields.isEmpty())
-            throw new DataDefinitionException("Domain " + domain.getQualifiedName() + " is still being referenced by fields.");
+            throw exception("Domain " + domain.getQualifiedName() + " is still being referenced by fields.");
 
         List<MutableField> field = new ArrayList<>(existing.fields);
         for (MutableField mf : field)
@@ -1264,56 +1266,60 @@ final class Interpreter {
         return new DataDefinitionException("Unsupported query: " + query.getSQL());
     }
 
-    private static final DataDefinitionException schemaNotEmpty(Schema schema) {
-        return new DataDefinitionException("Schema is not empty: " + schema.getQualifiedName());
+    private final DataDefinitionException exception(String message) {
+        return new DataDefinitionException(message + ". Query: " + currentQuery);
     }
 
-    private static final DataDefinitionException objectNotTable(Table<?> table) {
-        return new DataDefinitionException("Object is not a table: " + table.getQualifiedName());
+    private final DataDefinitionException schemaNotEmpty(Schema schema) {
+        return exception("Schema is not empty: " + schema.getQualifiedName());
     }
 
-    private static final DataDefinitionException objectNotTemporaryTable(Table<?> table) {
-        return new DataDefinitionException("Object is not a temporary table: " + table.getQualifiedName());
+    private final DataDefinitionException objectNotTable(Table<?> table) {
+        return exception("Object is not a table: " + table.getQualifiedName());
     }
 
-    private static final DataDefinitionException objectNotView(Table<?> table) {
-        return new DataDefinitionException("Object is not a view: " + table.getQualifiedName());
+    private final DataDefinitionException objectNotTemporaryTable(Table<?> table) {
+        return exception("Object is not a temporary table: " + table.getQualifiedName());
     }
 
-    private static final DataDefinitionException objectNotMaterializedView(Table<?> table) {
-        return new DataDefinitionException("Object is not a materialized view: " + table.getQualifiedName());
+    private final DataDefinitionException objectNotView(Table<?> table) {
+        return exception("Object is not a view: " + table.getQualifiedName());
     }
 
-    private static final DataDefinitionException viewNotExists(Table<?> view) {
-        return new DataDefinitionException("View does not exist: " + view.getQualifiedName());
+    private final DataDefinitionException objectNotMaterializedView(Table<?> table) {
+        return exception("Object is not a materialized view: " + table.getQualifiedName());
     }
 
-    private static final DataDefinitionException materializedViewNotExists(Table<?> view) {
-        return new DataDefinitionException("Materialized view does not exist: " + view.getQualifiedName());
+    private final DataDefinitionException viewNotExists(Table<?> view) {
+        return exception("View does not exist: " + view.getQualifiedName());
     }
 
-    private static final DataDefinitionException viewAlreadyExists(Table<?> view) {
-        return new DataDefinitionException("View already exists: " + view.getQualifiedName());
+    private final DataDefinitionException materializedViewNotExists(Table<?> view) {
+        return exception("Materialized view does not exist: " + view.getQualifiedName());
     }
 
-    private static final DataDefinitionException materializedViewAlreadyExists(Table<?> view) {
-        return new DataDefinitionException("Materialized view already exists: " + view.getQualifiedName());
+    private final DataDefinitionException viewAlreadyExists(Table<?> view) {
+        return exception("View already exists: " + view.getQualifiedName());
     }
 
-    private static final DataDefinitionException columnAlreadyExists(Name name) {
-        return new DataDefinitionException("Column already exists: " + name);
+    private final DataDefinitionException materializedViewAlreadyExists(Table<?> view) {
+        return exception("Materialized view already exists: " + view.getQualifiedName());
     }
 
-    private static final DataDefinitionException notExists(Named named) {
-        return new DataDefinitionException(named.getClass().getSimpleName() + " does not exist: " + named.getQualifiedName());
+    private final DataDefinitionException columnAlreadyExists(Name name) {
+        return exception("Column already exists: " + name);
     }
 
-    private static final DataDefinitionException alreadyExists(Named named) {
-        return new DataDefinitionException(named.getClass().getSimpleName() + " already exists: " + named.getQualifiedName());
+    private final DataDefinitionException notExists(Named named) {
+        return exception(named.getClass().getSimpleName() + " does not exist: " + named.getQualifiedName());
     }
 
-    private static final DataDefinitionException primaryKeyNotExists(Named named) {
-        return new DataDefinitionException("Primary key does not exist on table: " + named);
+    private final DataDefinitionException alreadyExists(Named named) {
+        return exception(named.getClass().getSimpleName() + " already exists: " + named.getQualifiedName());
+    }
+
+    private final DataDefinitionException primaryKeyNotExists(Named named) {
+        return exception("Primary key does not exist on table: " + named);
     }
 
     // -------------------------------------------------------------------------
@@ -1481,7 +1487,7 @@ final class Interpreter {
 
 
 
-    private static final boolean checkNotExists(MutableSchema schema, Table<?> table) {
+    private final boolean checkNotExists(MutableSchema schema, Table<?> table) {
         MutableTable mt = schema.table(table);
 
         if (mt != null)
@@ -1490,7 +1496,7 @@ final class Interpreter {
         return true;
     }
 
-    private static final DataDefinitionException alreadyExists(Table<?> t, MutableTable mt) {
+    private final DataDefinitionException alreadyExists(Table<?> t, MutableTable mt) {
         if (mt.options.type() == VIEW)
             return viewAlreadyExists(t);
         else if (mt.options.type() == MATERIALIZED_VIEW)
@@ -1545,7 +1551,7 @@ final class Interpreter {
         return null;
     }
 
-    private static final int indexOrFail(List<? extends MutableNamed> list, Named named) {
+    private final int indexOrFail(List<? extends MutableNamed> list, Named named) {
         int result = -1;
 
         // TODO Avoid O(N) lookups. Use Maps instead
@@ -1870,7 +1876,7 @@ final class Interpreter {
                 if (mf != null)
                     result.add(mf);
                 else if (failIfNotFound)
-                    throw new DataDefinitionException("Field does not exist in table: " + f.getQualifiedName());
+                    throw exception("Field does not exist in table: " + f.getQualifiedName());
             }
 
             return result;
@@ -1882,7 +1888,7 @@ final class Interpreter {
                 MutableField mf = find(fields, sf.$field());
 
                 if (mf == null)
-                    throw new DataDefinitionException("Field does not exist in table: " + sf.$field().getQualifiedName());
+                    throw exception("Field does not exist in table: " + sf.$field().getQualifiedName());
 
                 return new MutableSortField(mf, sf.$sortOrder());
             });

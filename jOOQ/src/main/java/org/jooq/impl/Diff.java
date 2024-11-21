@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.IGNITE;
@@ -533,15 +534,20 @@ final class Diff {
         return (r, k1, k2) -> {
             Name n1 = k1.getUnqualifiedName();
             Name n2 = k2.getUnqualifiedName();
+            boolean allowRenames = true;
 
             if (n1.empty() ^ n2.empty()) {
-                drop.drop(r, k1);
-                create.create(r, k2);
+                if (n1.empty() || !TRUE.equals(ctx.settings().isMigrationIgnoreUnnamedConstraintDiffs())) {
+                    drop.drop(r, k1);
+                    create.create(r, k2);
 
-                return;
+                    return;
+                }
+                else
+                    allowRenames = false;
             }
 
-            if (NAMED_COMP.compare(k1, k2) != 0)
+            if (allowRenames && NAMED_COMP.compare(k1, k2) != 0)
 
                 // [#10813] Don't rename constraints in MySQL
                 if (type != PRIMARY_KEY || !NO_SUPPORT_PK_NAMES.contains(ctx.dialect()))

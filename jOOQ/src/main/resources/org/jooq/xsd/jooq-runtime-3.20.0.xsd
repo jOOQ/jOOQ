@@ -1563,6 +1563,10 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
       <element name="migrationIgnoreDefaultTimestampPrecisionDiffs" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the difference between <code>TIMESTAMP</code> and <code>TIMESTAMP(6)</code>, if 6 is the default precision for timestamps on the configured dialect.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="migrationIgnoreUnnamedConstraintDiffs" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the difference between (possibly synthetically) name constraints and unnamed constraints, if the structure of the constraint is the same.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="locale" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any locale dependent logic if there is not a more specific locale available. More specific locales include e.g. {@link #getRenderLocale()}, {@link #getParseLocale()}, or {@link #getInterpreterLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>

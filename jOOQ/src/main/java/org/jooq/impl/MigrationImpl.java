@@ -55,6 +55,7 @@ import static org.jooq.impl.HistoryStatus.STARTING;
 import static org.jooq.impl.HistoryStatus.SUCCESS;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -181,7 +182,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             throw new DataMigrationVerificationException("Commit is not available from CommitProvider: " + commit.id());
 
         for (Schema schema : history.lookup(commit.meta().getSchemas()))
-            if (!ctx.migratedSchemas().contains(schema))
+            if (!isEmpty(schema.getName()) && !ctx.migratedSchemas().contains(schema))
                 throw new DataMigrationVerificationException(
                     """
                     Schema is referenced from commit, but not configured for migration: {schema}.

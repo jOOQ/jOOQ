@@ -214,8 +214,14 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
                     );
 
 
-                ctx.settings().setMigrationSchemataCreateSchemaIfNotExists(schemataCreateSchemaIfNotExists);
-                ctx.settings().setMigrationHistorySchemaCreateSchemaIfNotExists(historySchemaCreateSchemaIfNotExists);
+                ctx.settings()
+                    .withMigrationSchemataCreateSchemaIfNotExists(schemataCreateSchemaIfNotExists)
+                    .withMigrationHistorySchemaCreateSchemaIfNotExists(historySchemaCreateSchemaIfNotExists)
+
+                    // [#9506] [#17646] Users may use unnamed constraints in migration scripts.
+                    //                  When comparing the schema with the existing schema in the database,
+                    //                  we must ignore the database's synthetic constraint names.
+                    .withMigrationIgnoreUnnamedConstraintDiffs(true);
 
                 // Initialise connection
                 // ---------------------------------------------------------------------

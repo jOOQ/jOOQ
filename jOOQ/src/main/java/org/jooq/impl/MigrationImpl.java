@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static java.util.function.Predicate.not;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.dropTableIfExists;
@@ -212,7 +211,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         Meta currentMeta = currentCommit.meta();
         Meta existingMeta = dsl().meta()
             .filterSchemas(includedSchemas::contains)
-            .filterTables(not(historyTables::contains));
+            .filterTables(t -> !historyTables.contains(t));
 
         Set<Schema> expectedSchemas = new HashSet<>();
         expectedSchemas.addAll(history.lookup(from().meta().getSchemas()));

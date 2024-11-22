@@ -39,7 +39,10 @@ package org.jooq.impl;
 
 import static org.jooq.ContentType.INCREMENT;
 import static org.jooq.ContentType.SCHEMA;
+import static org.jooq.ContentType.SNAPSHOT;
 import static org.jooq.impl.Tools.EMPTY_SOURCE;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.filter;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.util.ArrayDeque;
@@ -60,6 +63,7 @@ import java.util.Set;
 
 import org.jooq.Commit;
 import org.jooq.Configuration;
+import org.jooq.ContentType;
 import org.jooq.DSLContext;
 import org.jooq.File;
 import org.jooq.Files;
@@ -295,8 +299,25 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
         boolean recordingResult = false;
         boolean hasDeletions = false;
+        boolean isRoot = equals(root());
+        Commit fromSnapshotCommit = null;
+
+        commitLoop:
         for (Commit commit : commitHistory) {
             List<File> commitFiles = new ArrayList<>(commit.delta());
+
+            // [#9506] Migrations from root to a snapshot can be skipped
+            if (isRoot && anyMatch(commitFiles, f -> f.type() == SNAPSHOT)) {
+                result.clear();
+
+                // [#9506] TODO: Are there impacts on other maps?
+                for (File f : commitFiles)
+                    if (f.type() == SNAPSHOT)
+                        result.put(f.path(), f);
+
+                fromSnapshotCommit = commit;
+                continue commitLoop;
+            }
 
             // Deletions
             Iterator<File> deletions = commitFiles.iterator();
@@ -411,8 +432,11 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
         Map<String, File> versionFiles = new HashMap<>();
         Version from = version(ctx.migrations().version(ROOT), id(), versionFiles, history.values());
+        Version fromSnapshot = fromSnapshotCommit != null
+            ? version(from, fromSnapshotCommit.id(), versionFiles, filter(fromSnapshotCommit.delta(), f -> f.type() == SNAPSHOT))
+            : null;
         Version to = version(from, resultCommit.id(), versionFiles, result.values());
-        return new FilesImpl(from, to, result.values());
+        return new FilesImpl(from, fromSnapshot, to, result.values());
     }
 
     /**
@@ -434,13 +458,10 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         }
     }
 
-    private static final Version version(Version from, String newId, Map<String, File> files, Collection<File> result) {
+    private static final Version version(Version from, String newId, Map<String, File> files, Iterable<File> result) {
         Version to = from;
 
-        List<File> list = new ArrayList<>(result);
-
-        for (int j = 0; j < list.size(); j++) {
-            File file = list.get(j);
+        for (File file : result) {
 
             // [#9506] TODO: This historic Version::id generation used to be necessary to create unique
             //         Version IDs per file path. It doesn't seem to be necessary anymore.

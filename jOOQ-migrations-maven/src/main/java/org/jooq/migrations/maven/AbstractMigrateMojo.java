@@ -39,6 +39,7 @@ package org.jooq.migrations.maven;
 
 import java.io.File;
 
+import org.jooq.Commit;
 import org.jooq.CommitProvider;
 import org.jooq.Commits;
 import org.jooq.Configuration;
@@ -74,11 +75,15 @@ public abstract class AbstractMigrateMojo extends AbstractMigrationsMojo {
             .migrations()
             .migrateTo(cp.provide().latest());
 
-        if (getLog().isInfoEnabled())
+        if (getLog().isInfoEnabled()) {
+            Commit snapshot = migration.fromSnapshot();
+
             getLog().info(
                   "Migration loaded from version " + migration.from() + " to version " + migration.to()
+                + (snapshot != null ? " from snapshot: " + snapshot.id() : "")
                 + " (number of queries: " + migration.queries().queries().length + ")"
             );
+        }
 
         execute1(migration);
     }

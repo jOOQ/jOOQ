@@ -78,6 +78,7 @@ import org.jooq.Query;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.Tag;
+import org.jooq.Version;
 import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.conf.MigrationSchema;
 import org.jooq.exception.DataAccessException;
@@ -87,6 +88,8 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONArray;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -122,6 +125,12 @@ final class MigrationImpl extends AbstractScope implements Migration {
             from = currentCommit();
 
         return from;
+    }
+
+    @Override
+    public final Commit fromSnapshot() {
+        Version version = from().migrateTo(to()).fromSnapshot();
+        return version != null ? commits().get(version.id()) : null;
     }
 
     @Override
@@ -311,7 +320,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 listener.migrationStart(ctx);
 
                 if (from().equals(to())) {
-                    log.info("jOOQ Migrations", "Version " + to().id() + " is already installed as the current version.");
+                    if (log.isInfoEnabled())
+                        log.info("jOOQ Migrations", "Version " + to().id() + " is already installed as the current version.");
                     return;
                 }
 
@@ -326,7 +336,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 // TODO: Add HISTORY.COMMENTS column
                 // TODO: Replace (MIGRATED_AT, MIGRATION_TIME) by (MIGRATION_START, MIGRATION_END)
 
-                log.info("jOOQ Migrations", "Version " + from().id() + " is being migrated to " + to().id());
+                if (log.isInfoEnabled()) {
+                    Commit snapshot = fromSnapshot();
+                    log.info("jOOQ Migrations", "Version " + from().id() + " is being migrated to " + to().id() + (snapshot != null ? " (from snapshot: " + snapshot.id() + ")" : ""));
+                }
 
                 StopWatch watch = new StopWatch();
 
@@ -348,7 +361,9 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     StringWriter s = new StringWriter();
                     e.printStackTrace(new PrintWriter(s));
 
-                    log.error("jOOQ Migrations", "Version " + from().id() + " migration to " + to().id() + " failed: " + e.getMessage());
+                    if (log.isErrorEnabled())
+                        log.error("jOOQ Migrations", "Version " + from().id() + " migration to " + to().id() + " failed: " + e.getMessage());
+
                     log(watch, record, FAILURE, OPEN, s.toString());
                     throw new DataMigrationRedoLogException(record, e);
                 }

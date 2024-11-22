@@ -52,12 +52,13 @@ import org.jooq.Version;
 final class FilesImpl implements Files {
 
     private final Version    from;
+    private final Version    fromSnapshot;
     private final Version    to;
     private final List<File> files;
 
-
-    FilesImpl(Version from, Version to, Collection<? extends File> f) {
+    FilesImpl(Version from, Version fromSnapshot, Version to, Collection<? extends File> f) {
         this.from = from;
+        this.fromSnapshot = fromSnapshot;
         this.to = to;
         this.files = new ArrayList<>(f);
     }
@@ -70,6 +71,11 @@ final class FilesImpl implements Files {
     @Override
     public final Version from() {
         return from;
+    }
+
+    @Override
+    public final Version fromSnapshot() {
+        return fromSnapshot;
     }
 
     @Override

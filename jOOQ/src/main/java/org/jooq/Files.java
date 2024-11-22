@@ -38,6 +38,7 @@
 package org.jooq;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
@@ -61,6 +62,17 @@ public interface Files extends Iterable<File> {
     @NotNull
     @Experimental
     Version from();
+
+    /**
+     * The last {@link ContentType#SNAPSHOT} version that is being migrated
+     * from, or <code>null</code> if there's no snapshot.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
+     */
+    @Nullable
+    @Experimental
+    Version fromSnapshot();
 
     /**
      * The to version to which this migration is done.

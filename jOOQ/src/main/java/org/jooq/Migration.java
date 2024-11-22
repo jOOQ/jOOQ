@@ -42,6 +42,7 @@ import org.jooq.exception.DataMigrationVerificationException;
 
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.ApiStatus.Experimental;
 
 /**
@@ -61,11 +62,20 @@ public interface Migration extends Scope {
     /**
      * The version that is being migrated from.
      */
+    @NotNull
     Commit from();
+
+    /**
+     * The last {@link ContentType#SNAPSHOT} commit that is being migrated from,
+     * or <code>null</code> if there's no snapshot.
+     */
+    @Nullable
+    Commit fromSnapshot();
 
     /**
      * The version that is being migrated to.
      */
+    @NotNull
     Commit to();
 
     /**

@@ -37,15 +37,20 @@
  */
 package org.jooq.migrations.maven;
 
+import static java.lang.Boolean.TRUE;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.EnumSet;
 
+import org.jooq.DDLExportConfiguration;
+import org.jooq.DDLFlag;
 import org.jooq.History;
 import org.jooq.HistoryVersion;
+import org.jooq.Meta;
 import org.jooq.Migration;
 import org.jooq.Queries;
 import org.jooq.exception.DataMigrationVerificationException;
@@ -77,14 +82,26 @@ public class SnapshotMojo extends AbstractMigrateMojo {
         }
 
         HistoryVersion current = history.current();
-        File file = new File(file(directory), current.version().id() + "/snapshots/snapshot.sql");
+        File file = new File(file(directory), current.version().id() + "/snapshots/" + current.version().id() + "-snapshot.sql");
         file.getParentFile().mkdirs();
 
         try (FileWriter f = new FileWriter(file);
             PrintWriter w = new PrintWriter(f)
         ) {
-            getLog().info("Writing snapshot to: " + file + "\n" + current.version().meta());
-            w.println(current.version().meta().toString());
+            DDLExportConfiguration config = new DDLExportConfiguration();
+
+            // Don't create schema in snapshots if it is managed by the migration.
+            if (TRUE.equals(migration.settings().isMigrationSchemataCreateSchemaIfNotExists()))
+                config = config.flags(EnumSet.complementOf(EnumSet.of(DDLFlag.SCHEMA)));
+
+            Meta meta = current.version().meta();
+            String export = meta.ddl(config).toString();
+
+            if (getLog().isInfoEnabled())
+                getLog().info("Writing snapshot to: " + file + "\n" + export);
+
+            w.println(export);
+            w.flush();
         }
     }
 }

@@ -5629,6 +5629,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
         final boolean isUDT = column.getType(resolver(out)).isUDT();
+        final boolean isUDTArray = column.getType(resolver(out)).isUDTArray();
         final boolean isArray = column.getType(resolver(out)).isArray();
         final String name = column.getQualifiedOutputName();
         final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDT;

@@ -108,8 +108,13 @@ class HistoryImpl extends AbstractScope implements History {
     }
 
     @Override
+    public final boolean available() {
+        return !isEmpty(versions);
+    }
+
+    @Override
     public final HistoryVersion root() {
-        if (!isEmpty(versions))
+        if (available())
             return versions.get(0);
         else
             throw new DataMigrationVerificationException("No versions are available");
@@ -117,7 +122,7 @@ class HistoryImpl extends AbstractScope implements History {
 
     @Override
     public final HistoryVersion current() {
-        if (!isEmpty(versions))
+        if (available())
             return versions.get(versions.size() - 1);
         else
             throw new DataMigrationVerificationException("No versions are available");
@@ -344,7 +349,7 @@ class HistoryImpl extends AbstractScope implements History {
 
     @Override
     public String toString() {
-        if (!isEmpty(versions))
+        if (available())
             return "History [" + current() + "]";
         else
             return "History []";

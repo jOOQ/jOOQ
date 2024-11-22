@@ -61,7 +61,6 @@ import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import org.jooq.Commit;
 import org.jooq.Commits;
@@ -79,7 +78,6 @@ import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.Tag;
 import org.jooq.Version;
-import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.conf.MigrationSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationException;
@@ -89,7 +87,6 @@ import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONArray;
 
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -156,6 +153,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     @Override
+    public final Queries untracked() {
+        return untracked(history.schemas()).apply();
+    }
+
+    @Override
     public final void verify() {
         verify0(migrationContext());
     }
@@ -209,7 +211,17 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 );
     }
 
-    private final Queries revertUntrackedQueries(Set<Schema> includedSchemas) {
+    static final record Untracked(Meta current, Meta existing) {
+        Queries revert() {
+            return existing().migrateTo(current());
+        }
+
+        Queries apply() {
+            return current().migrateTo(existing());
+        }
+    }
+
+    private final Untracked untracked(Set<Schema> includedSchemas) {
         MigrationSchema hs = settings().getMigrationHistorySchema();
         MigrationSchema ds = settings().getMigrationDefaultSchema();
 
@@ -249,7 +261,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 currentMeta = currentMeta.apply(createSchemaIfNotExists(schema));
         }
 
-        return existingMeta.migrateTo(currentMeta);
+        return new Untracked(currentMeta, existingMeta);
     }
 
     private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, HistoryRecord currentRecord) {
@@ -258,7 +270,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 if (currentRecord == null) {
                     throw new DataMigrationVerificationException(
                         """
-                        Non-empty difference between actual schema and migration from schema: {queries}.
+                        Non-empty difference between actual schema and migration from schema:
+                        {queries}
 
                         Possible remedies:
                         - Use Settings.migrationAutoBaseline to automatically set a baseline.
@@ -268,7 +281,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 else {
                     throw new DataMigrationVerificationException(
                         """
-                        Non-empty difference between actual schema and migration from schema: {queries}.
+                        Non-empty difference between actual schema and migration from schema:
+                        {queries}.
 
                         This can happen for at least 3 reasons:
                         1) The migration specification of a version that has already been installed has been modified.
@@ -282,7 +296,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         Possible remedies if 2):
                         - Use Settings.migrationRevertUntracked to automatically drop unknown objects (at your own risk!)
                         - Manually drop or move unknown objects outside of managed schemas.
-                        - Update migration scripts to track missing objects.
+                        - Update migration scripts to track missing objects (including adding them automatically).
                         """.replace("{queries}", "" + ctx.revertUntrackedQueries)
                     );
                 }
@@ -300,7 +314,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             from(),
             to(),
             queries(),
-            revertUntrackedQueries(schemas)
+            untracked(schemas).revert()
         );
     }
 

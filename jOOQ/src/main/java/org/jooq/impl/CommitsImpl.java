@@ -364,13 +364,9 @@ final class CommitsImpl implements Commits {
         Map<String, CommitType> map = new HashMap<>();
 
         for (CommitType commit : migrations.getCommits())
-            if (Commit.ROOT.equals(commit.getId()))
-                throw new DataMigrationVerificationException("Cannot define reserved commit name \"root\"");
-
-        map.put(Commit.ROOT, new CommitType().withId(root.id()).withMessage(root.message()));
-        for (CommitType commit : migrations.getCommits())
             map.put(commit.getId(), commit);
 
+        map.putIfAbsent(Commit.ROOT, new CommitType().withId(root.id()).withMessage(root.message()));
         for (CommitType commit : migrations.getCommits())
             load(map, commit);
 
@@ -380,8 +376,15 @@ final class CommitsImpl implements Commits {
     private final Commit load(Map<String, CommitType> map, CommitType commit) {
         Commit result = commitsById.get(commit.getId());
 
-        if (result != null)
+        if (result != null) {
+            if (result.equals(root)) {
+                ((CommitImpl) result).delta.putAll(CommitImpl.map(files(commit), false));
+                ((CommitImpl) result).files = null;
+                ((CommitImpl) result).tags.addAll(map(commit.getTags(), t -> new TagImpl(t.getId(), t.getMessage())));
+            }
+
             return result;
+        }
 
         Commit p1 = root;
         Commit p2 = null;

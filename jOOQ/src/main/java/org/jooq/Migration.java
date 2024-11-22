@@ -85,6 +85,12 @@ public interface Migration extends Scope {
     Queries queries();
 
     /**
+     * The queries that describe the untracked schema objects.
+     */
+    @NotNull
+    Queries untracked();
+
+    /**
      * Verify the correctness of a migration.
      *
      * @throws DataMigrationVerificationException When something went wrong during

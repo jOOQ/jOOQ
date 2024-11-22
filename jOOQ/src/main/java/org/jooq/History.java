@@ -55,6 +55,15 @@ import org.jetbrains.annotations.NotNull;
 public interface History extends Iterable<HistoryVersion>, Scope {
 
     /**
+     * Whether any history is available on the current database.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
+     */
+    @Experimental
+    boolean available();
+
+    /**
      * The root {@link Version}.
      * <p>
      * This corresponds to the {@link Configuration#commitProvider()}'s
@@ -65,7 +74,8 @@ public interface History extends Iterable<HistoryVersion>, Scope {
      * versions.
      *
      * @throws DataMigrationVerificationException If no root version is
-     *             available (e.g. because no migration has happened yet).
+     *             available (e.g. because no migration has happened yet). See
+     *             also {@link #available()}.
      */
     @NotNull
     @Experimental
@@ -78,11 +88,12 @@ public interface History extends Iterable<HistoryVersion>, Scope {
      * versions.
      *
      * @throws DataMigrationVerificationException If no root version is
-     *             available (e.g. because no migration has happened yet).
+     *             available (e.g. because no migration has happened yet). See
+     *             also {@link #available()}.
      */
     @NotNull
     @Experimental
-    HistoryVersion current();
+    HistoryVersion current() throws DataMigrationVerificationException;
 
     /**
      * Resolve any previous failures in the {@link History}.

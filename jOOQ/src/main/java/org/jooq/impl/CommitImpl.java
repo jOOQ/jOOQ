@@ -81,12 +81,12 @@ import org.jooq.tools.StringUtils;
  */
 final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
-    final DSLContext        ctx;
-    final List<Commit>      parents;
-    final List<Tag>         tags;
-    final Map<String, File> delta;
-    final Map<String, File> files;
-    final boolean           valid;
+    final DSLContext            ctx;
+    final List<Commit>          parents;
+    final List<Tag>             tags;
+    final Map<String, File>     delta;
+    transient Map<String, File> files;
+    final boolean               valid;
 
     CommitImpl(
         Configuration configuration,
@@ -107,7 +107,6 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         this.parents = parents;
         this.tags = new ArrayList<>();
         this.delta = map(delta, false);
-        this.files = initFiles();
         this.valid = valid;
     }
 
@@ -123,11 +122,11 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     }
 
     // TODO extract this Map<String, File> type to new type
-    private static final Map<String, File> map(Collection<? extends File> list, boolean applyDeletions) {
+    static final Map<String, File> map(Collection<? extends File> list, boolean applyDeletions) {
         return apply(new LinkedHashMap<>(), list, applyDeletions);
     }
 
-    private static final Map<String, File> apply(Map<String, File> result, Collection<? extends File> list, boolean applyDeletions) {
+    static final Map<String, File> apply(Map<String, File> result, Collection<? extends File> list, boolean applyDeletions) {
         for (File file : list)
             apply(result, file, applyDeletions);
 
@@ -191,6 +190,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Collection<File> files() {
+        if (files == null)
+            files = initFiles();
+
         return files.values();
     }
 

@@ -556,7 +556,7 @@ final class Diff {
             boolean allowRenames = true;
 
             if (n1.empty() ^ n2.empty()) {
-                if (n1.empty() || !TRUE.equals(ctx.settings().isMigrationIgnoreUnnamedConstraintDiffs())) {
+                if (!TRUE.equals(ctx.settings().isMigrationIgnoreUnnamedConstraintDiffs())) {
                     drop.drop(r, k1);
                     create.create(r, k2);
 

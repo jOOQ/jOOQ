@@ -226,7 +226,8 @@ public final class GitCommitProvider implements CommitProvider {
         del(files, status.getMissing());
         del(files, status.getRemoved());
 
-        return commit.commit("uncommitted", "uncommitted", files);
+        // [#9506] TODO: It should be possible to migrate to uncommitted changes in dev mode.
+        return commit.commit("uncommitted", "uncommitted", files).valid(false);
     }
 
     private void add(List<File> files, Set<String> paths) {

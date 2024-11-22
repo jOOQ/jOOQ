@@ -76,7 +76,7 @@ final class MigrationsImpl extends AbstractScope implements Migrations {
 
     @Override
     public final Commits commits() {
-        return new CommitsImpl(configuration(), new CommitImpl(configuration(), ROOT, null, null, null, emptyList(), emptyList()));
+        return new CommitsImpl(configuration(), new CommitImpl(configuration(), ROOT, null, null, null, emptyList(), emptyList(), true));
     }
 
     @Override

@@ -53,6 +53,17 @@ import org.jetbrains.annotations.NotNull;
 public interface Commit extends Node<Commit> {
 
     /**
+     * Whether this commit is a valid commit that can be migrated to.
+     */
+    boolean valid();
+
+    /**
+     * Set the new {@link #valid()} flag for this commit, returning a copy of
+     * the commit itself.
+     */
+    Commit valid(boolean valid);
+
+    /**
      * The files affected by this commit, in no particular order.
      */
     @NotNull

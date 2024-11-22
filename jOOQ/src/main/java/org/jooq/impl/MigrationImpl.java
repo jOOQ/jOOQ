@@ -174,6 +174,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
         validateCommitProvider(ctx, from());
         validateCommitProvider(ctx, to());
         revertUntracked(ctx, null, currentRecord);
+
+        // [#9506] TODO: Better error handling helping the understand see their mistake
+        if (!to().valid())
+            throw new DataMigrationVerificationException("Commit is not a valid commit to migrate to: " + to());
     }
 
     private final void validateCommitProvider(DefaultMigrationContext ctx, Commit commit) {

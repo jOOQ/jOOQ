@@ -82,6 +82,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     final List<Tag>         tags;
     final Map<String, File> delta;
     final Map<String, File> files;
+    final boolean           valid;
 
     CommitImpl(
         Configuration configuration,
@@ -90,7 +91,8 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         String author,
         Commit root,
         List<Commit> parents,
-        Collection<? extends File> delta
+        Collection<? extends File> delta,
+        boolean valid
     ) {
         super(configuration, id, message, author, root);
 
@@ -102,9 +104,10 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         this.tags = new ArrayList<>();
         this.delta = map(delta, false);
         this.files = initFiles();
+        this.valid = valid;
     }
 
-    private CommitImpl(CommitImpl copy) {
+    private CommitImpl(CommitImpl copy, boolean newValid) {
         super(copy.configuration(), copy.id(), copy.message(), copy.author(), copy.root);
 
         this.ctx = copy.ctx;
@@ -112,6 +115,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         this.tags = new ArrayList<>(copy.tags);
         this.delta = copy.delta;
         this.files = copy.files;
+        this.valid = newValid;
     }
 
     // TODO extract this Map<String, File> type to new type
@@ -145,6 +149,16 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     }
 
     @Override
+    public final boolean valid() {
+        return valid;
+    }
+
+    @Override
+    public final Commit valid(boolean newValid) {
+        return new CommitImpl(this, newValid);
+    }
+
+    @Override
     public final List<Commit> parents() {
         return Collections.unmodifiableList(parents);
     }
@@ -155,14 +169,14 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
     }
 
     @Override
-    public final Commit tag(String id) {
-        return tag(id, null);
+    public final Commit tag(String tagId) {
+        return tag(tagId, null);
     }
 
     @Override
-    public final Commit tag(String id, String message) {
-        CommitImpl result = new CommitImpl(this);
-        result.tags.add(new TagImpl(id, message));
+    public final Commit tag(String tagId, String tagMessage) {
+        CommitImpl result = new CommitImpl(this, valid);
+        result.tags.add(new TagImpl(tagId, tagMessage));
         return result;
     }
 
@@ -212,7 +226,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Commit commit(String newId, String newMessage, String newAuthor, Collection<? extends File> newFiles) {
-        return new CommitImpl(configuration(), newId, newMessage, newAuthor, root, Arrays.asList(this), newFiles);
+        return new CommitImpl(configuration(), newId, newMessage, newAuthor, root, Arrays.asList(this), newFiles, valid);
     }
 
     @Override
@@ -242,7 +256,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Commit merge(String newId, String newMessage, String newAuthor, Commit with, Collection<? extends File> newFiles) {
-        return new CommitImpl(configuration(), newId, newMessage, newAuthor, root, Arrays.asList(this, with), newFiles);
+        return new CommitImpl(configuration(), newId, newMessage, newAuthor, root, Arrays.asList(this, with), newFiles, valid);
     }
 
     @Override

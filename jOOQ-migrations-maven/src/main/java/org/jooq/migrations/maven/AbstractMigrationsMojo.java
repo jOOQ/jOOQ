@@ -170,8 +170,6 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
             // [#2886] Add the surrounding project's dependencies to the current classloader
             Thread.currentThread().setContextClassLoader(pluginClassLoader);
 
-            project.getRuntimeClasspathElements().forEach(System.out::println);
-
             if (jdbc == null || jdbc.url == null)
                 throw new MojoExecutionException("JDBC URL is required");
 

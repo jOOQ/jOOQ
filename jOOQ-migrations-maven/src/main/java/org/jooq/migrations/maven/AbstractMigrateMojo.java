@@ -65,6 +65,7 @@ public abstract class AbstractMigrateMojo extends AbstractMigrationsMojo {
             Migrations migrations = configuration.dsl().migrations();
             Commits commits = migrations.commits();
             commits.load(file(directory));
+            cp = (CommitProvider) () -> commits;
         }
 
         Migration migration = configuration
@@ -85,8 +86,8 @@ public abstract class AbstractMigrateMojo extends AbstractMigrationsMojo {
     abstract void execute1(Migration migration) throws Exception;
 
     // [#9506] TODO: Move this utility into the library
-    private File file(String file) {
-        getLog().info("Reading migrations directory: " + file);
+    final File file(String file) {
+        getLog().debug("Reading migrations directory: " + file);
         File f = new File(file);
 
         if (!f.isAbsolute())

@@ -61,6 +61,7 @@ public interface Commit extends Node<Commit> {
      * Set the new {@link #valid()} flag for this commit, returning a copy of
      * the commit itself.
      */
+    @NotNull
     Commit valid(boolean valid);
 
     /**

@@ -1407,8 +1407,10 @@ final class Interpreter {
             return "Sequence";
         else if (named instanceof Domain)
             return "Domain";
-        else if (named instanceof Synonym)
-            return "Synonym";
+
+
+
+
         else
             return named.getClass().getSimpleName();
     }

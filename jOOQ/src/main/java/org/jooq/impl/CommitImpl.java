@@ -441,12 +441,15 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
         for (int j = 0; j < list.size(); j++) {
             File file = list.get(j);
-            String commitId = newId + "-" + file.path();
+
+            // [#9506] TODO: This historic Version::id generation used to be necessary to create unique
+            //         Version IDs per file path. It doesn't seem to be necessary anymore.
+            // String commitId = newId + "-" + file.path();
 
             if (file.type() == SCHEMA)
-                to = to.commit(commitId, sources(apply(files, file, true).values()).toArray(EMPTY_SOURCE));
+                to = to.commit(newId, sources(apply(files, file, true).values()).toArray(EMPTY_SOURCE));
             else
-                to = to.apply(commitId, file.content());
+                to = to.apply(newId, file.content());
         }
 
         return to;

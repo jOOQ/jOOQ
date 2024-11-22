@@ -5700,11 +5700,12 @@ public class JavaGenerator extends AbstractGenerator {
         final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
         final boolean isUDT = column.getType(resolver(out)).isUDT();
-        final boolean isUDTArray = column.getType(resolver(out)).isUDTArray();
+        final boolean isArray = column.getType(resolver(out)).isArray();
         final String name = column.getQualifiedOutputName();
+        final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDT;
 
         // We cannot have covariant setters for arrays because of type erasure
-        if (!(generateInterfaces() && isUDTArray)) {
+        if (!(generateInterfaces() && (isArray || isUDT))) {
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
@@ -5720,7 +5721,7 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
 
-                out.overrideIf(generateInterfaces() && !generateImmutableInterfaces() && !isUDT);
+                out.overrideIf(override);
                 out.println("%s%s %s([[before=@][after= ][%s]]%s %s) {", visibility(), columnSetterReturnType, columnSetter, list(nullableAnnotation), varargsIfArray(columnType), columnMember);
                 out.println("this.%s = %s;", columnMember, columnMember);
 
@@ -5732,7 +5733,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // [#3117] To avoid covariant setters on POJOs, we need to generate two setter overloads
-        if (generateInterfaces() && (isUDT || isUDTArray)) {
+        if (generateInterfaces() && (isUDT || isArray)) {
             final String columnTypeInterface = out.ref(getJavaType(column.getType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));
 
             out.println();
@@ -5752,7 +5753,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("}");
             }
             else {
-                out.override();
+                out.overrideIf(override);
                 out.println("%s%s %s(%s %s) {", visibility(), columnSetterReturnType, columnSetter, varargsIfArray(columnTypeInterface), columnMember);
                 out.println("if (%s == null)", columnMember);
                 out.println("this.%s = null;", columnMember);

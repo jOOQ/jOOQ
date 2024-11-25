@@ -6341,7 +6341,7 @@ public class Settings
     }
 
     /**
-     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns. This flag allows for overriding this behaviour.
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns if the constraint is really implicit for a given dialect. This flag allows for overriding this behaviour.
      * 
      * @return
      *     possible object is
@@ -6353,7 +6353,7 @@ public class Settings
     }
 
     /**
-     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns. This flag allows for overriding this behaviour.
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns if the constraint is really implicit for a given dialect. This flag allows for overriding this behaviour.
      * 
      * @param value
      *     allowed object is
@@ -9438,7 +9438,7 @@ public class Settings
     }
 
     /**
-     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns. This flag allows for overriding this behaviour.
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns if the constraint is really implicit for a given dialect. This flag allows for overriding this behaviour.
      * 
      */
     public Settings withMigrationIgnoreImplicitPrimaryKeyNotNullConstraints(Boolean value) {

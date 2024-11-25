@@ -360,6 +360,7 @@ implements
     static final Set<SQLDialect> EMULATE_COLUMN_COMMENT_IN_BLOCK    = SQLDialect.supportedBy(FIREBIRD, POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect> REQUIRE_EXECUTE_IMMEDIATE          = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect> NO_SUPPORT_NULLABLE_PRIMARY_KEY    = SQLDialect.supportedBy(CLICKHOUSE, MARIADB, MYSQL);
+    static final Set<SQLDialect> SUPPORT_NULLABLE_PRIMARY_KEY       = SQLDialect.supportedBy(SQLITE);
     static final Set<SQLDialect> REQUIRE_NON_PK_COLUMNS             = SQLDialect.supportedBy(IGNITE);
     static final Set<SQLDialect> CREATE_SEQUENCE_FOR_IDENTITY       = SQLDialect.supportedBy(DUCKDB);
 

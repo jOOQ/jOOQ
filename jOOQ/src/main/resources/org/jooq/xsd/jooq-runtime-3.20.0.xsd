@@ -1569,7 +1569,7 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
       </element>
       
       <element name="migrationIgnoreImplicitPrimaryKeyNotNullConstraints" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns. This flag allows for overriding this behaviour.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns if the constraint is really implicit for a given dialect. This flag allows for overriding this behaviour.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="locale" type="string" minOccurs="0" maxOccurs="1">

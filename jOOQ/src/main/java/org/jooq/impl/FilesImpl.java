@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -61,6 +63,10 @@ final class FilesImpl implements Files {
         this.fromSnapshot = fromSnapshot;
         this.to = to;
         this.files = new ArrayList<>(f);
+    }
+
+    static final Files empty(Version version) {
+        return new FilesImpl(version, null, version, emptyList());
     }
 
     @Override

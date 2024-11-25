@@ -70,9 +70,22 @@ public enum ContentType {
      * similar statements, which are applied as increments in a migration using
      * {@link Meta#apply(Queries)}.
      * <p>
-     * Within the same {@link Commit}.
+     * Within the same {@link Commit}, increments are sorted according to their
+     * {@link File#path()}.
      */
     INCREMENT,
+
+    /**
+     * The file contains decrement information.
+     * <p>
+     * Decrements work like {@link #INCREMENT} typed files, but are applied only
+     * when downgrading to a previous version, decrements are sorted in reverse
+     * order according to their {@link File#path()}.
+     * <p>
+     * This API is part of a commercial only feature. To use this feature,
+     * please use the jOOQ Professional Edition or the jOOQ Enterprise Edition.
+     */
+    DECREMENT,
 
     /**
      * The file contains a script.

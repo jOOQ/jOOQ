@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.ContentType.DECREMENT;
 import static org.jooq.ContentType.INCREMENT;
 import static org.jooq.ContentType.SCHEMA;
 import static org.jooq.ContentType.SNAPSHOT;
@@ -63,16 +64,15 @@ import java.util.Set;
 
 import org.jooq.Commit;
 import org.jooq.Configuration;
-import org.jooq.ContentType;
 import org.jooq.DSLContext;
 import org.jooq.File;
 import org.jooq.Files;
 import org.jooq.Meta;
 import org.jooq.Node;
+// ...
 import org.jooq.Source;
 import org.jooq.Tag;
 import org.jooq.Version;
-import org.jooq.exception.DataMigrationException;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.tools.StringUtils;
 
@@ -277,13 +277,197 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
     @Override
     public final Files migrateTo(Commit resultCommit) {
+        if (equals(resultCommit))
+            if (equals(root()))
+                return FilesImpl.empty(ctx.migrations().version(ROOT));
+            else
+                return FilesImpl.empty(version());
 
         // TODO: Implement reverting a branch up to the common ancestor
         Commit ancestor = commonAncestor(resultCommit);
+
+        // TODO: The reverse check doesn't take into account branching
+        if (ancestor.equals(resultCommit)) {
+            configuration().requireCommercial(() -> "Reverse migrations are a commercial only feature. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+
+
+
+
+        }
+
         return migrateTo0(resultCommit);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private static final record MigrationHistory(
+        Map<String, Map<String, File>> pathHistory,
+        Files result
+    ) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
     private final Files migrateTo0(Commit resultCommit) {
+        return migrateTo1(resultCommit, false).result();
+    }
+
+    private final MigrationHistory migrateTo1(Commit resultCommit, boolean recordPathHistory) {
+        Map<String, Map<String, File>> pathHistory = recordPathHistory ? new HashMap<>() : null;
 
         // History are all the files that have been applied before this commit
         Map<String, File> history = new LinkedHashMap<>();
@@ -297,18 +481,20 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         Map<String, String> tempHistoryKeys = new HashMap<>();
 
         Deque<Commit> commitHistory = new ArrayDeque<>();
-        history(commitHistory, new HashSet<>(), Arrays.asList(resultCommit));
-
         boolean recordingResult = false;
         boolean hasDeletions = false;
         boolean isRoot = equals(root());
         Commit fromSnapshotCommit = null;
+
+        history(commitHistory, new HashSet<>(), Arrays.asList(resultCommit));
 
         commitLoop:
         for (Commit commit : commitHistory) {
             List<File> commitFiles = new ArrayList<>(commit.delta());
 
             // [#9506] Migrations from root to a snapshot can be skipped
+            //   TODO: effectively skip all intermediary steps
+            //   TODO: Support pathHistory
             if (isRoot && anyMatch(commitFiles, f -> f.type() == SNAPSHOT)) {
                 result.clear();
 
@@ -343,6 +529,8 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
                     tempHistory.remove(path);
                     deletions.remove();
+
+                    // TODO: Support pathHistory
                 }
             }
 
@@ -362,6 +550,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
                         result.put(path, file);
 
                     increments.remove();
+
+                    if (pathHistory != null)
+                        pathHistory.computeIfAbsent(path, p -> new LinkedHashMap<>()).put(commit.id(), file);
                 }
             }
 
@@ -384,6 +575,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
                     }
 
                     schemas.remove();
+
+                    if (pathHistory != null)
+                        pathHistory.computeIfAbsent(path, p -> new LinkedHashMap<>()).put(commit.id(), file);
                 }
             }
 
@@ -405,7 +599,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
                     // Altering history is not allowed
                     if (!StringUtils.equals(historicFile.content(), file.content()))
-                        throw new DataMigrationException("Cannot edit increment file that has already been applied: " + file);
+                        throw new DataMigrationVerificationException("Cannot edit increment file that has already been applied: " + file);
 
                     // History was altered, but the alteration was reverted
                     else
@@ -438,13 +632,18 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
             ? version(from, fromSnapshotCommit.id(), versionFiles, filter(fromSnapshotCommit.delta(), f -> f.type() == SNAPSHOT))
             : null;
         Version to = version(from, resultCommit.id(), versionFiles, result.values());
-        return new FilesImpl(from, fromSnapshot, to, result.values());
+        return new MigrationHistory(
+            pathHistory,
+            new FilesImpl(from, fromSnapshot, to, result.values())
+        );
     }
 
     /**
      * Breadth first recursion over commit graph.
      */
     private static final void history(Deque<Commit> commitHistory, Set<Commit> set, List<Commit> commits) {
+
+        // TODO: When encountering a snapshot on a single path (no branches), we can abort recursion
         for (Commit commit : commits)
             if (set.add(commit))
                 commitHistory.push(commit);
@@ -456,6 +655,8 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         if (!p.isEmpty()) {
             List<Commit> l = new ArrayList<>(p);
             Collections.reverse(l);
+
+            // TODO: Use iteration instead of depending on tail recursion optimisation.
             history(commitHistory, set, l);
         }
     }

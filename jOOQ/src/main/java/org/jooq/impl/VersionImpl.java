@@ -195,6 +195,7 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
         if (!target.forceApply())
             return meta().migrateTo(target.meta());
 
+        // TODO: Avoid recursion here, and iterate, instead
         for (Parent parent : target.parents) {
             result = migrateTo(parent.version, result);
 

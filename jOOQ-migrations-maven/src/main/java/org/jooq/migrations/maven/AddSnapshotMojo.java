@@ -44,9 +44,10 @@ import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.EnumSet;
 
-import org.jooq.Commit;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLFlag;
 import org.jooq.History;
@@ -54,49 +55,57 @@ import org.jooq.HistoryVersion;
 import org.jooq.Meta;
 import org.jooq.Migration;
 import org.jooq.Queries;
+import org.jooq.exception.DataMigrationVerificationException;
 
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * Add objects from the configured database schemas to the migration.
+ * Create a snapshot of the current version and add it to the migration.
  *
  * @author Lukas Eder
  */
 @Mojo(
-    name = "add",
+    name = "addSnapshot",
     defaultPhase = GENERATE_SOURCES,
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class AddMojo extends AbstractMigrateMojo {
+public class AddSnapshotMojo extends AbstractMigrateMojo {
+
+    /**
+     * The file name to add untracked objects to, defaulting to <code>[version]-added.sql</code>.
+     */
+    @Parameter(property = "jooq.migrate.addSnapshot.fileName")
+    String fileName;
 
     @Override
     final void execute1(Migration migration) throws Exception {
-        Queries untracked = migration.untracked();
+        History history = migration.dsl().migrations().history();
+        Queries queries = migration.queries();
 
-        if (untracked.queries().length > 0) {
-            History history = migration.dsl().migrations().history();
-            String id = history.available() ? history.current().version().id() : migration.from().id();
-
-            File file = new File(file(directory), id + "/increments/" + id + "-added.sql");
-            file.getParentFile().mkdirs();
-
-            try (FileWriter f = new FileWriter(file);
-                PrintWriter w = new PrintWriter(f)
-            ) {
-                if (getLog().isInfoEnabled())
-                    getLog().info("Writing untracked objects to: " + file + "\n" + untracked);
-
-                w.println("-- Untracked objects of version: " + id);
-
-                if (Commit.ROOT.equals(id)) {
-                    w.println("-- Objects that were present before the root version will not be created during migration on any databases.");
-                    w.println("-- They are added to this file only as a baseline.");
-                }
-
-                w.println(untracked);
-                w.flush();
-            }
+        if (queries.queries().length > 0) {
+            Queries queries2 = migration.queries();
+            getLog().warn("There are outstanding changes that have not been migrated yet, which are not in the snapshot:\n"
+                + queries2);
         }
+
+        HistoryVersion current = history.current();
+        File file = new File(file(directory), current.version().id() + "/snapshots/" + fileName(current.version().id(), fileName, "snapshot"));
+        file.getParentFile().mkdirs();
+
+        DDLExportConfiguration config = new DDLExportConfiguration();
+
+        // Don't create schema in snapshots if it is managed by the migration.
+        if (TRUE.equals(migration.settings().isMigrationSchemataCreateSchemaIfNotExists()))
+            config = config.flags(EnumSet.complementOf(EnumSet.of(DDLFlag.SCHEMA)));
+
+        Meta meta = current.version().meta();
+        String export = meta.ddl(config).toString();
+
+        if (getLog().isInfoEnabled())
+            getLog().info("Writing snapshot to: " + file + "\n" + export);
+
+        Files.writeString(file.toPath(), export, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 }

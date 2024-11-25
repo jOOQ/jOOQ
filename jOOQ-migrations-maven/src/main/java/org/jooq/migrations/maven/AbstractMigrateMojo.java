@@ -100,4 +100,13 @@ public abstract class AbstractMigrateMojo extends AbstractMigrationsMojo {
 
         return f;
     }
+
+    static final String fileName(String id, String fileName, String suffix) {
+        String result = fileName != null ? fileName : id + "-" + suffix;
+
+        if (!result.endsWith(".sql"))
+            result = result + ".sql";
+
+        return result;
+    }
 }

@@ -41,7 +41,6 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
-import static org.jooq.impl.DSL.dropTableIfExists;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.History.HISTORY;
@@ -53,13 +52,16 @@ import static org.jooq.impl.HistoryStatus.REVERTING;
 import static org.jooq.impl.HistoryStatus.STARTING;
 import static org.jooq.impl.HistoryStatus.SUCCESS;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
+import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.jooq.Commit;
@@ -68,6 +70,7 @@ import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.ContextTransactionalRunnable;
 import org.jooq.Files;
+import org.jooq.HistoryVersion;
 import org.jooq.Meta;
 import org.jooq.Migration;
 import org.jooq.MigrationContext;
@@ -516,6 +519,66 @@ final class MigrationImpl extends AbstractScope implements Migration {
         catch (Exception e) {
             throw new DataMigrationException("Exception during migration", e);
         }
+    }
+
+    @Override
+    public final void logHistory() {
+        List<HistoryVersion> versions = collect(() -> history.iterator());
+
+        if (versions.isEmpty()) {
+            log.info("No migration history available yet");
+        }
+        else {
+            log.info("Migration history");
+
+            for (HistoryVersion version : versions.subList(
+                Math.max(0, versions.size() - 5),
+                versions.size()
+            )) {
+                log(version);
+            }
+        }
+    }
+
+    static final void log(HistoryVersion version) {
+        log.info("  " + string(version.migratedAt()) + " - Version: " + string(version.version()));
+
+        if (version.version().parents().size() > 1) {
+            log.info("  Merged parents: ");
+
+            for (Version p : version.version().parents())
+                log.info("  - " + string(p));
+        }
+    }
+
+    private static final String string(Instant instant) {
+        if (instant == null)
+            return "0000-00-00T00:00:00.000Z";
+        else
+            return StringUtils.rightPad(instant.toString(), 24);
+    }
+
+    private static final String string(Version version) {
+        return version.id() + (!isEmpty(version.message()) ? " (" + version.message() + ")" : "");
+    }
+
+    @Override
+    public final void logMigration() {
+        Query[] q = queries().queries();
+        log.info("Outstanding queries from " + from().id() + " to " + to().id() + ": " + (q.length == 0 ? "none" : ""));
+        log(q);
+    }
+
+    @Override
+    public final void logUntracked() {
+        Query[] q = untracked().queries();
+        log.info("Untracked changes at " + from().id() + ": " + (q.length == 0 ? "none" : ""));
+        log(q);
+    }
+
+    static final void log(Query[] queries) {
+        for (int i = 0; i < queries.length; i++)
+            log.info(queries[i]);
     }
 
     // -------------------------------------------------------------------------

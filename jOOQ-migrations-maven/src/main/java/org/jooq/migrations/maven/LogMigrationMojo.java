@@ -45,22 +45,20 @@ import org.jooq.Migration;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * Log various aspects of the current state of the database migration.
+ * Log the outstanding migration queries.
  *
  * @author Lukas Eder
  */
 @Mojo(
-    name = "log",
+    name = "logMigration",
     defaultPhase = GENERATE_SOURCES,
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class LogMojo extends AbstractMigrateMojo {
+public class LogMigrationMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
-        migration.logHistory();
         migration.logMigration();
-        migration.logUntracked();
     }
 }

@@ -45,22 +45,20 @@ import org.jooq.Migration;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * Log various aspects of the current state of the database migration.
+ * Show the history of currently installed versions on the connected database.
  *
  * @author Lukas Eder
  */
 @Mojo(
-    name = "log",
+    name = "logHistory",
     defaultPhase = GENERATE_SOURCES,
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class LogMojo extends AbstractMigrateMojo {
+public class LogHistoryMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
         migration.logHistory();
-        migration.logMigration();
-        migration.logUntracked();
     }
 }

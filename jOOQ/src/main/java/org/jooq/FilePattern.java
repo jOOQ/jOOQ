@@ -330,12 +330,15 @@ public final class FilePattern {
     ) throws java.io.IOException {
         if (file.isFile()) {
             if (regex == null || regex.matcher(file.getCanonicalPath().replace("\\", "/")).matches()) {
-                log.info("Reading from: " + file + " [*]");
+                if (log.isDebugEnabled())
+                    log.debug("Reading from: " + file + " [*]");
+
                 load0(file, loader);
             }
         }
         else if (file.isDirectory()) {
-            log.info("Reading from: " + file);
+            if (log.isDebugEnabled())
+                log.debug("Reading from: " + file);
 
             File[] files = file.listFiles();
 

@@ -91,6 +91,22 @@ public interface Migration extends Scope {
     Queries untracked();
 
     /**
+     * Log the most recent versions from the migration history to the configured
+     * logger.
+     */
+    void logHistory() throws DataMigrationVerificationException;
+
+    /**
+     * Log the outstanding migration to the configured logger.
+     */
+    void logMigration() throws DataMigrationVerificationException;
+
+    /**
+     * Log the untracked database changes of the migration schemas.
+     */
+    void logUntracked() throws DataMigrationVerificationException;
+
+    /**
      * Verify the correctness of a migration.
      *
      * @throws DataMigrationVerificationException When something went wrong during

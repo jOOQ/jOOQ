@@ -39,57 +39,26 @@ package org.jooq.migrations.maven;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
-import static org.jooq.tools.StringUtils.isEmpty;
 
-import java.time.Instant;
-
-import org.jooq.HistoryVersion;
 import org.jooq.Migration;
-import org.jooq.Version;
-import org.jooq.tools.StringUtils;
 
-import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * Show the history of currently installed versions on the connected database.
+ * Log the untracked database changes in the migrated schemas.
  *
  * @author Lukas Eder
  */
 @Mojo(
-    name = "history",
+    name = "logUntracked",
     defaultPhase = GENERATE_SOURCES,
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class HistoryMojo extends AbstractMigrateMojo {
+public class LogUntrackedMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
-        if (getLog().isInfoEnabled())
-            for (HistoryVersion version : migration.dsl().migrations().history())
-                log(getLog(), version);
-    }
-
-    static final void log(Log log, HistoryVersion version) {
-        log.info("  " + string(version.migratedAt()) + " - Version: " + string(version.version()));
-
-        if (version.version().parents().size() > 1) {
-            log.info("  Merged parents: ");
-
-            for (Version p : version.version().parents())
-                log.info("  - " + string(p));
-        }
-    }
-
-    private static final String string(Instant instant) {
-        if (instant == null)
-            return "0000-00-00T00:00:00.000Z";
-        else
-            return StringUtils.rightPad(instant.toString(), 24);
-    }
-
-    private static final String string(Version version) {
-        return version.id() + (!isEmpty(version.message()) ? " (" + version.message() + ")" : "");
+        migration.logUntracked();
     }
 }

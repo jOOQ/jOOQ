@@ -50,6 +50,7 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -250,8 +251,11 @@ public interface ExecuteContext extends Scope {
     Record record();
 
     /**
-     * Calling this has no effect. It is used by jOOQ internally.
+     * Set the last record that was fetched from the result set.
+     * <p>
+     * Users shouldn't call this method, it is used by jOOQ internally.
      */
+    @Internal
     void record(Record record);
 
     /**
@@ -269,8 +273,11 @@ public interface ExecuteContext extends Scope {
     int rows();
 
     /**
-     * Calling this has no effect. It is used by jOOQ internally.
+     * Set the number of rows that were affected by the last statement.
+     * <p>
+     * Users shouldn't call this method, it is used by jOOQ internally.
      */
+    @Internal
     void rows(int rows);
 
     /**
@@ -309,8 +316,11 @@ public interface ExecuteContext extends Scope {
     Result<?> result();
 
     /**
-     * Calling this has no effect. It is used by jOOQ internally.
+     * Set the last result that was fetched from the result set.
+     * <p>
+     * Users shouldn't call this method, it is used by jOOQ internally.
      */
+    @Internal
     void result(Result<?> result);
 
     /**

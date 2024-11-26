@@ -86,7 +86,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     final Map<String, List<Integer>> nameToIndexMapping;
     final List<Object[]>             allBindValues;
     final int                        expectedBindValues;
-    List<Object>                     defaultValues;
+    transient List<Object>           defaultValues;
 
     public BatchSingle(Configuration configuration, Query query) {
         super(configuration);

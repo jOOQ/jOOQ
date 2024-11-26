@@ -86,7 +86,7 @@ public class AddSnapshotMojo extends AbstractMigrateMojo {
 
         if (queries.queries().length > 0) {
             Queries queries2 = migration.queries();
-            getLog().warn("There are outstanding changes that have not been migrated yet, which are not in the snapshot:\n"
+            getLog().warn("There are pending changes that have not been migrated yet, which are not in the snapshot:\n"
                 + queries2);
         }
 

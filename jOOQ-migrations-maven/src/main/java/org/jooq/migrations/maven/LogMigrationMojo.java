@@ -45,7 +45,7 @@ import org.jooq.Migration;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * Log the outstanding migration queries.
+ * Log the pending migration queries.
  *
  * @author Lukas Eder
  */

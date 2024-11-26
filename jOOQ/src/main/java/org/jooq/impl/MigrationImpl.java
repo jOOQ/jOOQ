@@ -565,7 +565,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     @Override
     public final void logMigration() {
         Query[] q = queries().queries();
-        log.info("Outstanding queries from " + from().id() + " to " + to().id() + ": " + (q.length == 0 ? "none" : ""));
+        log.info("Pending queries from " + from().id() + " to " + to().id() + ": " + (q.length == 0 ? "none" : ""));
         log(q);
     }
 

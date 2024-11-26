@@ -97,7 +97,7 @@ public interface Migration extends Scope {
     void logHistory() throws DataMigrationVerificationException;
 
     /**
-     * Log the outstanding migration to the configured logger.
+     * Log the pending migration to the configured logger.
      */
     void logMigration() throws DataMigrationVerificationException;
 

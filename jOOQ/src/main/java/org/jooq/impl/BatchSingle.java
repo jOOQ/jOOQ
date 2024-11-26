@@ -86,6 +86,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     final Map<String, List<Integer>> nameToIndexMapping;
     final List<Object[]>             allBindValues;
     final int                        expectedBindValues;
+    List<Object>                     defaultValues;
 
     public BatchSingle(Configuration configuration, Query query) {
         super(configuration);
@@ -127,7 +128,9 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     @Override
     @SafeVarargs
     public final BatchSingle bind(Map<String, Object>... namedBindValues) {
-        List<Object> defaultValues = dsl.extractBindValues(query);
+        if (defaultValues == null) {
+            defaultValues = dsl.extractBindValues(query);
+        }
 
         Object[][] bindValues = new Object[namedBindValues.length][];
         for (int i = 0; i < bindValues.length; i++) {

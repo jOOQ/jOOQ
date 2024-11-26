@@ -58,6 +58,8 @@ import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashSet;
@@ -345,13 +347,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 // TODO: Implement preconditions
                 // TODO: Implement a listener with a variety of pro / oss features
                 // TODO: Implement additional out-of-the-box sanity checks
-                // TODO: Allow undo migrations only if enabled explicitly
                 // TODO: Add some migration settings, e.g. whether HISTORY.SQL should be filled
                 // TODO: Migrate the HISTORY table with the Migration API
-                // TODO: Create an Enum for HISTORY.STATUS
-                // TODO: Add HISTORY.USERNAME and HOSTNAME columns
-                // TODO: Add HISTORY.COMMENTS column
-                // TODO: Replace (MIGRATED_AT, MIGRATION_TIME) by (MIGRATION_START, MIGRATION_END)
 
                 if (log.isInfoEnabled()) {
                     Commit snapshot = fromSnapshot();
@@ -408,6 +405,14 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     private final HistoryRecord createRecord(HistoryStatus status) {
         HistoryRecord record = history.historyCtx.newRecord(HISTORY);
+        String hostName;
+
+        try {
+            hostName = InetAddress.getLocalHost().getHostName();
+        }
+        catch (UnknownHostException e) {
+            hostName = "unknown";
+        }
 
         record
             .setJooqVersion(Constants.VERSION)
@@ -417,6 +422,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
             .setMigratedToMessage(to().message())
             .setMigratedToTags(new JSONArray(map(to().tags(), Tag::id)).toString())
             .setMigrationTime(0L)
+            .setClientUserName(System.getProperty("user.name"))
+            .setClientHostName(hostName)
             .setSql(queries().toString())
             .setSqlCount(queries().queries().length)
             .setStatus(status)

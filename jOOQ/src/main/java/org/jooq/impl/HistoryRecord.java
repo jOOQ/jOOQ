@@ -86,7 +86,8 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
     }
 
     /**
-     * Setter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_MESSAGE</code>.
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_MESSAGE</code>. A
+     * message associated with the migration execution.
      */
     HistoryRecord setMigratedToMessage(String value) {
         set(4, value);
@@ -94,7 +95,8 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
     }
 
     /**
-     * Getter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_MESSAGE</code>.
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_MESSAGE</code>. A
+     * message associated with the migration execution.
      */
     String getMigratedToMessage() {
         return (String) get(4);
@@ -135,11 +137,45 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
     }
 
     /**
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.CLIENT_USER_NAME</code>. The
+     * client user name that was running the migration.
+     */
+    HistoryRecord setClientUserName(String value) {
+        set(7, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.CLIENT_USER_NAME</code>. The
+     * client user name that was running the migration.
+     */
+    String getClientUserName() {
+        return (String) get(7);
+    }
+
+    /**
+     * Setter for <code>JOOQ_MIGRATION_HISTORY.CLIENT_HOST_NAME</code>. The
+     * client host name that was running the migration.
+     */
+    HistoryRecord setClientHostName(String value) {
+        set(8, value);
+        return this;
+    }
+
+    /**
+     * Getter for <code>JOOQ_MIGRATION_HISTORY.CLIENT_HOST_NAME</code>. The
+     * client host name that was running the migration.
+     */
+    String getClientHostName() {
+        return (String) get(8);
+    }
+
+    /**
      * Setter for <code>JOOQ_MIGRATION_HISTORY.JOOQ_VERSION</code>. The jOOQ
      * version used to migrate to this database version.
      */
     HistoryRecord setJooqVersion(String value) {
-        set(7, value);
+        set(9, value);
         return this;
     }
 
@@ -148,7 +184,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * version used to migrate to this database version.
      */
     String getJooqVersion() {
-        return (String) get(7);
+        return (String) get(9);
     }
 
     /**
@@ -156,7 +192,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * that were run to install this database version.
      */
     HistoryRecord setSql(String value) {
-        set(8, value);
+        set(10, value);
         return this;
     }
 
@@ -165,7 +201,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * that were run to install this database version.
      */
     String getSql() {
-        return (String) get(8);
+        return (String) get(10);
     }
 
     /**
@@ -173,7 +209,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * SQL statements that were run to install this database version.
      */
     HistoryRecord setSqlCount(Integer value) {
-        set(9, value);
+        set(11, value);
         return this;
     }
 
@@ -182,7 +218,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * SQL statements that were run to install this database version.
      */
     Integer getSqlCount() {
-        return (Integer) get(9);
+        return (Integer) get(11);
     }
 
     /**
@@ -190,7 +226,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * version installation status.
      */
     HistoryRecord setStatus(HistoryStatus value) {
-        set(10, value);
+        set(12, value);
         return this;
     }
 
@@ -199,7 +235,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * version installation status.
      */
     HistoryStatus getStatus() {
-        return (HistoryStatus) get(10);
+        return (HistoryStatus) get(12);
     }
 
     /**
@@ -207,7 +243,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * or error message explaining the status.
      */
     HistoryRecord setStatusMessage(String value) {
-        set(11, value);
+        set(13, value);
         return this;
     }
 
@@ -216,7 +252,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * or error message explaining the status.
      */
     String getStatusMessage() {
-        return (String) get(11);
+        return (String) get(13);
     }
 
     /**
@@ -224,7 +260,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * resolution, if any.
      */
     HistoryRecord setResolution(HistoryResolution value) {
-        set(12, value);
+        set(14, value);
         return this;
     }
 
@@ -233,7 +269,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * resolution, if any.
      */
     HistoryResolution getResolution() {
-        return (HistoryResolution) get(12);
+        return (HistoryResolution) get(14);
     }
 
     /**
@@ -241,7 +277,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * info or error message explaining the resolution.
      */
     HistoryRecord setResolutionMessage(String value) {
-        set(13, value);
+        set(15, value);
         return this;
     }
 
@@ -250,7 +286,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
      * info or error message explaining the resolution.
      */
     String getResolutionMessage() {
-        return (String) get(13);
+        return (String) get(15);
     }
 
     // -------------------------------------------------------------------------
@@ -276,7 +312,7 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
     /**
      * Create a detached, initialised HistoryRecord
      */
-    HistoryRecord(Integer id, Timestamp migratedAt, String migratedFrom, String migratedTo, String migratedToMessage, String migratedToTags, Long migrationTime, String jooqVersion, String sql, Integer sqlCount, HistoryStatus status, String statusMessage, HistoryResolution resolution, String resolutionMessage) {
+    HistoryRecord(Integer id, Timestamp migratedAt, String migratedFrom, String migratedTo, String migratedToMessage, String migratedToTags, Long migrationTime, String clientUserName, String clientHostName, String jooqVersion, String sql, Integer sqlCount, HistoryStatus status, String statusMessage, HistoryResolution resolution, String resolutionMessage) {
         super(History.HISTORY);
 
         setId(id);
@@ -286,6 +322,8 @@ class HistoryRecord extends UpdatableRecordImpl<HistoryRecord> {
         setMigratedToMessage(migratedToMessage);
         setMigratedToTags(migratedToTags);
         setMigrationTime(migrationTime);
+        setClientUserName(clientUserName);
+        setClientHostName(clientHostName);
         setJooqVersion(jooqVersion);
         setSql(sql);
         setSqlCount(sqlCount);

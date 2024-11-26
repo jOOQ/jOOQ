@@ -428,15 +428,13 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
 
 
-
-
-
-
-
     private static final record MigrationHistory(
         Map<String, Map<String, File>> pathHistory,
         Files result
     ) {
+
+
+
 
 
 
@@ -494,7 +492,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
             // [#9506] Migrations from root to a snapshot can be skipped
             //   TODO: effectively skip all intermediary steps
-            //   TODO: Support pathHistory
+
+
+
             if (isRoot && anyMatch(commitFiles, f -> f.type() == SNAPSHOT)) {
                 result.clear();
 
@@ -530,7 +530,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
                     tempHistory.remove(path);
                     deletions.remove();
 
-                    // TODO: Support pathHistory
+
+
+
                 }
             }
 
@@ -551,10 +553,27 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
                     increments.remove();
 
-                    if (pathHistory != null)
-                        pathHistory.computeIfAbsent(path, p -> new LinkedHashMap<>()).put(commit.id(), file);
+
+
+
+
                 }
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             // Schema files
             Iterator<File> schemas = commitFiles.iterator();
@@ -576,8 +595,10 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
                     schemas.remove();
 
-                    if (pathHistory != null)
-                        pathHistory.computeIfAbsent(path, p -> new LinkedHashMap<>()).put(commit.id(), file);
+
+
+
+
                 }
             }
 

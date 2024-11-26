@@ -1,0 +1,1 @@
+CREATE INDEX jooq_migr_hist_i1 ON jooq_migration_history (migrated_at);

@@ -65,9 +65,10 @@ class History extends TableImpl<HistoryRecord> {
     final TableField<HistoryRecord, String> MIGRATED_TO = createField(DSL.name("MIGRATED_TO"), SQLDataType.VARCHAR(255).nullable(false), this, "The current database version ID.");
 
     /**
-     * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_MESSAGE</code>.
+     * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_MESSAGE</code>. A
+     * message associated with the migration execution.
      */
-    final TableField<HistoryRecord, String> MIGRATED_TO_MESSAGE = createField(DSL.name("MIGRATED_TO_MESSAGE"), SQLDataType.CLOB.nullable(false), this, "");
+    final TableField<HistoryRecord, String> MIGRATED_TO_MESSAGE = createField(DSL.name("MIGRATED_TO_MESSAGE"), SQLDataType.CLOB.nullable(false), this, "A message associated with the migration execution.");
 
     /**
      * The column <code>JOOQ_MIGRATION_HISTORY.MIGRATED_TO_TAGS</code>. The
@@ -80,6 +81,18 @@ class History extends TableImpl<HistoryRecord> {
      * in milliseconds it took to migrate to this database version.
      */
     final TableField<HistoryRecord, Long> MIGRATION_TIME = createField(DSL.name("MIGRATION_TIME"), SQLDataType.BIGINT, this, "The time in milliseconds it took to migrate to this database version.");
+
+    /**
+     * The column <code>JOOQ_MIGRATION_HISTORY.CLIENT_USER_NAME</code>. The
+     * client user name that was running the migration.
+     */
+    final TableField<HistoryRecord, String> CLIENT_USER_NAME = createField(DSL.name("CLIENT_USER_NAME"), SQLDataType.VARCHAR(255), this, "The client user name that was running the migration.");
+
+    /**
+     * The column <code>JOOQ_MIGRATION_HISTORY.CLIENT_HOST_NAME</code>. The
+     * client host name that was running the migration.
+     */
+    final TableField<HistoryRecord, String> CLIENT_HOST_NAME = createField(DSL.name("CLIENT_HOST_NAME"), SQLDataType.VARCHAR(255), this, "The client host name that was running the migration.");
 
     /**
      * The column <code>JOOQ_MIGRATION_HISTORY.JOOQ_VERSION</code>. The jOOQ

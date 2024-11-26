@@ -129,7 +129,7 @@ final class DefaultMigrationContext extends AbstractScope implements MigrationCo
 
         sb.append(
             "MigrationContext for migration from: " + migrationFrom + " to " + migrationTo + "\n"
-            + "Migration queries:\n" + migrationQueries
+            + "Migration queries:\n" + migrationQueries + "\n"
             + "Revert untracked queries:\n" + revertUntrackedQueries
         );
 

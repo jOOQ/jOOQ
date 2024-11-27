@@ -8027,9 +8027,10 @@ public class JavaGenerator extends AbstractGenerator {
                                 "The one-to-many key " + foreignKey
                               + " generates an inbound key method name " + keyMethodName + " on table " + table
                               + " which conflicts with the previously generated key method name for key " + previousKey
-                              + " Use a custom generator strategy to disambiguate the types. More information here:\n"
+                              + " Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition, InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature. More information here:\n"
                               + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
-                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"
+                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/\n"
+                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths/"
                             );
                             continue inboundFKLoop;
                         }
@@ -8103,9 +8104,9 @@ public class JavaGenerator extends AbstractGenerator {
                                     "The many-to-many key " + manyToManyKey
                                   + " generates an inbound key method name " + keyMethodName + " on table " + table
                                   + " which conflicts with the previously generated key method name for key " + previousKey + "."
-                                  + " Use a custom generator strategy to disambiguate the types. More information here:\n"
-                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
-                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"
+                                  + " Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition, InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature. More information here:\n"
+                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/\n"
+                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths/"
                                 );
                                 continue manyToManyKeyLoop;
                             }

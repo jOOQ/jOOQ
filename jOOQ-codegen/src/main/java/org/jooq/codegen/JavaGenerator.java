@@ -7309,56 +7309,59 @@ public class JavaGenerator extends AbstractGenerator {
                         }
                     }
 
-                    List<ManyToManyKeyDefinition> manyToManyKeys = table.getManyToManyKeys();
-                    Map<TableDefinition, Long> pathCountsManytoMany = manyToManyKeys.stream().collect(groupingBy(d -> d.getForeignKey2().getReferencedTable(), counting()));
+                    // [#17681] The to-one path of the ManyToManyKeyDefinition.foreignKey2 property must be available
+                    if (generateImplicitJoinPathsToOne()) {
+                        List<ManyToManyKeyDefinition> manyToManyKeys = table.getManyToManyKeys();
+                        Map<TableDefinition, Long> pathCountsManytoMany = manyToManyKeys.stream().collect(groupingBy(d -> d.getForeignKey2().getReferencedTable(), counting()));
 
-                    manyToManyKeyLoop:
-                    for (ManyToManyKeyDefinition manyToManyKey : manyToManyKeys) {
-                        final String keyMethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey));
-                        final Definition previousKey;
+                        manyToManyKeyLoop:
+                        for (ManyToManyKeyDefinition manyToManyKey : manyToManyKeys) {
+                            final String keyMethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey));
+                            final Definition previousKey;
 
-                        if ((previousKey = keyMethodNames.putIfAbsent(keyMethodName, manyToManyKey)) != null) {
-                            log.warn("Ambiguous key name",
-                                "The many-to-many key " + manyToManyKey
-                              + " generates an inbound key method name " + keyMethodName + " on table " + table
-                              + " which conflicts with the previously generated key method name for key " + previousKey + "."
-                              + " Use a custom generator strategy to disambiguate the types. More information here:\n"
-                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
-                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"
+                            if ((previousKey = keyMethodNames.putIfAbsent(keyMethodName, manyToManyKey)) != null) {
+                                log.warn("Ambiguous key name",
+                                    "The many-to-many key " + manyToManyKey
+                                  + " generates an inbound key method name " + keyMethodName + " on table " + table
+                                  + " which conflicts with the previously generated key method name for key " + previousKey + "."
+                                  + " Use a custom generator strategy to disambiguate the types. More information here:\n"
+                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
+                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"
+                                );
+                                continue manyToManyKeyLoop;
+                            }
+
+                            final String key1MethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey.getForeignKey1().getInverse()));
+                            final String key2MethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey.getForeignKey2()));
+                            final TableDefinition referencedTable = manyToManyKey.getForeignKey2().getReferencedTable();
+                            final String referencedTableClassName = out.ref(
+                                getStrategy().getFullJavaClassName(referencedTable)
+                                + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(referencedTable, Mode.PATH)) : "")
                             );
-                            continue manyToManyKeyLoop;
-                        }
 
-                        final String key1MethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey.getForeignKey1().getInverse()));
-                        final String key2MethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey.getForeignKey2()));
-                        final TableDefinition referencedTable = manyToManyKey.getForeignKey2().getReferencedTable();
-                        final String referencedTableClassName = out.ref(
-                            getStrategy().getFullJavaClassName(referencedTable)
-                            + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(referencedTable, Mode.PATH)) : "")
-                        );
+                            out.javadoc(
+                                "Get the implicit many-to-many join path to the <code>" + referencedTable.getQualifiedName() + "</code> table"
+                              + (pathCountsManytoMany.get(referencedTable) > 1 ? ", via the <code>" + manyToManyKey.getInputName() + "</code> key" : "")
+                            );
 
-                        out.javadoc(
-                            "Get the implicit many-to-many join path to the <code>" + referencedTable.getQualifiedName() + "</code> table"
-                          + (pathCountsManytoMany.get(referencedTable) > 1 ? ", via the <code>" + manyToManyKey.getInputName() + "</code> key" : "")
-                        );
-
-                        if (scala) {
-                            out.println("%sdef %s: %s = %s.%s", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, key1MethodName, key2MethodName);
-                        }
-                        else if (kotlin) {
-                            if (generateImplicitJoinPathsAsKotlinProperties()) {
-                                out.println("%sval %s: %s", visibility(), keyMethodName, referencedTableClassName);
-                                out.tab(1).println("get(): %s = %s().%s()", referencedTableClassName, key1MethodName, key2MethodName);
+                            if (scala) {
+                                out.println("%sdef %s: %s = %s.%s", visibility(), scalaWhitespaceSuffix(keyMethodName), referencedTableClassName, key1MethodName, key2MethodName);
+                            }
+                            else if (kotlin) {
+                                if (generateImplicitJoinPathsAsKotlinProperties()) {
+                                    out.println("%sval %s: %s", visibility(), keyMethodName, referencedTableClassName);
+                                    out.tab(1).println("get(): %s = %s().%s()", referencedTableClassName, key1MethodName, key2MethodName);
+                                }
+                                else {
+                                    out.println();
+                                    out.println("%sfun %s(): %s = %s().%s()", visibility(), keyMethodName, referencedTableClassName, key1MethodName, key2MethodName);
+                                }
                             }
                             else {
-                                out.println();
-                                out.println("%sfun %s(): %s = %s().%s()", visibility(), keyMethodName, referencedTableClassName, key1MethodName, key2MethodName);
+                                out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);
+                                out.println("return %s().%s();", key1MethodName, key2MethodName);
+                                out.println("}");
                             }
-                        }
-                        else {
-                            out.println("%s%s %s() {", visibility(), referencedTableClassName, keyMethodName);
-                            out.println("return %s().%s();", key1MethodName, key2MethodName);
-                            out.println("}");
                         }
                     }
                 }

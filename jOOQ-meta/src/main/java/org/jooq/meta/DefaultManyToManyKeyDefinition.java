@@ -79,4 +79,9 @@ public class DefaultManyToManyKeyDefinition extends AbstractConstraintDefinition
     public ForeignKeyDefinition getForeignKey2() {
         return foreignKey2;
     }
+
+    @Override
+    public String toString() {
+        return "(" + foreignKey1.getQualifiedName() + ", " + foreignKey2.getQualifiedName() + ")";
+    }
 }

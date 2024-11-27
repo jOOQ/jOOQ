@@ -100,7 +100,7 @@ import org.jooq.tools.json.JSONArray;
  */
 final class MigrationImpl extends AbstractScope implements Migration {
 
-    static final JooqLogger log = JooqLogger.getLogger(Migration.class);
+    static final JooqLogger log = JooqLogger.getLogger(MigrationImpl.class);
     final HistoryImpl       history;
     final Commit            to;
     Commit                  from;
@@ -596,7 +596,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     @Override
-    public final void logMigration() {
+    public final void logPending() {
         Query[] q = queries().queries();
         log.info("Pending queries from " + from().id() + " to " + to().id() + ": " + (q.length == 0 ? "none" : ""));
         log(q);

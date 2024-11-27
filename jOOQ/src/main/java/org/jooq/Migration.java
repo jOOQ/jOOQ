@@ -102,7 +102,7 @@ public interface Migration extends Scope {
     /**
      * Log the pending migration to the configured logger.
      */
-    void logMigration() throws DataMigrationVerificationException;
+    void logPending() throws DataMigrationVerificationException;
 
     /**
      * Log the untracked database changes of the migration schemas.

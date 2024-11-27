@@ -55,10 +55,10 @@ import org.apache.maven.plugins.annotations.Mojo;
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class LogMigrationMojo extends AbstractMigrateMojo {
+public class LogPendingMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
-        migration.logMigration();
+        migration.logPending();
     }
 }

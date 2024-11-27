@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static org.jooq.ContentType.SCRIPT;
 import static org.jooq.impl.DSL.createSchemaIfNotExists;
 import static org.jooq.impl.DSL.dropSchemaIfExists;
 import static org.jooq.impl.DSL.name;
@@ -71,6 +72,7 @@ import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.ContextTransactionalRunnable;
+import org.jooq.File;
 import org.jooq.Files;
 import org.jooq.HistoryVersion;
 import org.jooq.Meta;
@@ -222,17 +224,26 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 );
     }
 
-    static final record Untracked(Meta current, Meta existing) {
+    static final record Untracked(Configuration configuration, Meta current, Meta existing) {
         Queries revert() {
-            return existing().migrateTo(current());
+            if (existing() == null)
+                return configuration().dsl().queries();
+            else
+                return existing().migrateTo(current());
         }
 
         Queries apply() {
-            return current().migrateTo(existing());
+            if (current() == null)
+                return configuration().dsl().queries();
+            else
+                return current().migrateTo(existing());
         }
     }
 
     private final Untracked untracked(Set<Schema> includedSchemas) {
+        if (scriptsOnly())
+            return new Untracked(configuration(), null, null);
+
         MigrationSchema hs = settings().getMigrationHistorySchema();
         MigrationSchema ds = settings().getMigrationDefaultSchema();
 
@@ -272,7 +283,16 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 currentMeta = currentMeta.apply(createSchemaIfNotExists(schema));
         }
 
-        return new Untracked(currentMeta, existingMeta);
+        return new Untracked(configuration(), currentMeta, existingMeta);
+    }
+
+    private final boolean scriptsOnly() {
+        for (Commit commit : commits())
+            for (File file : commit.delta())
+                if (file.type() != SCRIPT)
+                    return false;
+
+        return true;
     }
 
     private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, HistoryRecord currentRecord) {

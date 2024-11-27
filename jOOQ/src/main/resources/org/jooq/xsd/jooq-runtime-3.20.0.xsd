@@ -1544,6 +1544,10 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether {@link #getMigrationSchemata()} should be created if they don't exist.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="migrationDefaultContentType" type="jooq-runtime:MigrationDefaultContentType" minOccurs="0" maxOccurs="1" default="INCREMENT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default {@link org.jooq.ContentType} that is used when loading migrations.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="migrationAllowsUndo" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -1754,6 +1758,13 @@ inside of queries (including procedural statements) are still not supported.]]><
       </element>
     </all>
   </complexType>
+  
+  <simpleType name="MigrationDefaultContentType">
+    <restriction base="string">
+      <enumeration value="INCREMENT"/>
+      <enumeration value="SCRIPT"/>
+    </restriction>
+  </simpleType>
 
   <simpleType name="RenderTable">
     <restriction base="string">

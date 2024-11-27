@@ -41,15 +41,17 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableCollection;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.ContentType.INCREMENT;
+import static org.jooq.ContentType.SCRIPT;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -67,6 +69,7 @@ import org.jooq.FilePattern;
 import org.jooq.Migrations;
 import org.jooq.Source;
 import org.jooq.Tag;
+import org.jooq.conf.MigrationDefaultContentType;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.migrations.xml.jaxb.ChangeType;
 import org.jooq.migrations.xml.jaxb.CommitType;
@@ -173,7 +176,7 @@ final class CommitsImpl implements Commits {
     }
 
     // [#9506] TODO: Formalise this decoding, and make it part of the public API
-    static final class FileData {
+    final class FileData {
         final FilePattern   pattern;
         final Source        source;
         final String        path;
@@ -201,12 +204,11 @@ final class CommitsImpl implements Commits {
             //         - id/increment/[path and message].sql
             //         - id/[path and message].sql
             //         - id.sql
-            String path = pattern.path(source.file());
-            java.io.File p1 = new java.io.File(path).getParentFile();
+            java.io.File p1 = new java.io.File(pattern.path(source.file())).getParentFile();
             java.io.File p2 = p1 != null ? p1.getParentFile() : null;
 
             this.contentType = p2 == null
-                ? ContentType.INCREMENT
+                ? defaultContentType()
                 : contentType(p1.getName());
             this.path = name;
 
@@ -240,6 +242,17 @@ final class CommitsImpl implements Commits {
                     this.tags.add(tag);
                 for (ParentType parent : commit.getParents())
                     this.parents.add(parent.getId());
+            }
+        }
+
+        private final ContentType defaultContentType() {
+            switch (defaultIfNull(configuration.settings().getMigrationDefaultContentType(), MigrationDefaultContentType.INCREMENT)) {
+                case INCREMENT:
+                    return INCREMENT;
+                case SCRIPT:
+                    return SCRIPT;
+                default:
+                    throw new UnsupportedOperationException("Unsupported ContentType: " + configuration.settings().getMigrationDefaultContentType());
             }
         }
 

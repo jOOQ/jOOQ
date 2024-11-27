@@ -481,6 +481,9 @@ public class Settings
     protected MigrationSchema migrationDefaultSchema;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationSchemataCreateSchemaIfNotExists = false;
+    @XmlElement(defaultValue = "INCREMENT")
+    @XmlSchemaType(name = "string")
+    protected MigrationDefaultContentType migrationDefaultContentType = MigrationDefaultContentType.INCREMENT;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationAllowsUndo = false;
     @XmlElement(defaultValue = "false")
@@ -6197,6 +6200,22 @@ public class Settings
     }
 
     /**
+     * The default {@link org.jooq.ContentType} that is used when loading migrations.
+     * 
+     */
+    public MigrationDefaultContentType getMigrationDefaultContentType() {
+        return migrationDefaultContentType;
+    }
+
+    /**
+     * The default {@link org.jooq.ContentType} that is used when loading migrations.
+     * 
+     */
+    public void setMigrationDefaultContentType(MigrationDefaultContentType value) {
+        this.migrationDefaultContentType = value;
+    }
+
+    /**
      * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
      * 
      * @return
@@ -9384,6 +9403,15 @@ public class Settings
     }
 
     /**
+     * The default {@link org.jooq.ContentType} that is used when loading migrations.
+     * 
+     */
+    public Settings withMigrationDefaultContentType(MigrationDefaultContentType value) {
+        setMigrationDefaultContentType(value);
+        return this;
+    }
+
+    /**
      * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
      * 
      */
@@ -9956,6 +9984,7 @@ public class Settings
         builder.append("migrationHistorySchemaCreateSchemaIfNotExists", migrationHistorySchemaCreateSchemaIfNotExists);
         builder.append("migrationDefaultSchema", migrationDefaultSchema);
         builder.append("migrationSchemataCreateSchemaIfNotExists", migrationSchemataCreateSchemaIfNotExists);
+        builder.append("migrationDefaultContentType", migrationDefaultContentType);
         builder.append("migrationAllowsUndo", migrationAllowsUndo);
         builder.append("migrationRevertUntracked", migrationRevertUntracked);
         builder.append("migrationAutoBaseline", migrationAutoBaseline);
@@ -11803,6 +11832,15 @@ public class Settings
                 return false;
             }
         }
+        if (migrationDefaultContentType == null) {
+            if (other.migrationDefaultContentType!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationDefaultContentType.equals(other.migrationDefaultContentType)) {
+                return false;
+            }
+        }
         if (migrationAllowsUndo == null) {
             if (other.migrationAllowsUndo!= null) {
                 return false;
@@ -12324,6 +12362,7 @@ public class Settings
         result = ((prime*result)+((migrationHistorySchemaCreateSchemaIfNotExists == null)? 0 :migrationHistorySchemaCreateSchemaIfNotExists.hashCode()));
         result = ((prime*result)+((migrationDefaultSchema == null)? 0 :migrationDefaultSchema.hashCode()));
         result = ((prime*result)+((migrationSchemataCreateSchemaIfNotExists == null)? 0 :migrationSchemataCreateSchemaIfNotExists.hashCode()));
+        result = ((prime*result)+((migrationDefaultContentType == null)? 0 :migrationDefaultContentType.hashCode()));
         result = ((prime*result)+((migrationAllowsUndo == null)? 0 :migrationAllowsUndo.hashCode()));
         result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
         result = ((prime*result)+((migrationAutoBaseline == null)? 0 :migrationAutoBaseline.hashCode()));

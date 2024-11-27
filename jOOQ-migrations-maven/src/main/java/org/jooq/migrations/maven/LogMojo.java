@@ -60,7 +60,7 @@ public class LogMojo extends AbstractMigrateMojo {
     @Override
     final void execute1(Migration migration) throws Exception {
         migration.logHistory();
-        migration.logMigration();
+        migration.logPending();
         migration.logUntracked();
     }
 }

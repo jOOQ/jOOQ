@@ -82,6 +82,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link CommitProvider} that produces versions from a git repository.
@@ -217,17 +218,25 @@ public final class GitCommitProvider implements CommitProvider {
     private static final Comparator<RevCommit> COMMIT_COMPARATOR = (o1, o2) -> o1.getCommitTime() - o2.getCommitTime();
 
     private final Commit commit(Commit commit, Status status) {
-        List<File> files = new ArrayList<>();
+        List<File> uncommitted = new ArrayList<>();
+        List<File> untracked = new ArrayList<>();
 
-        add(files, status.getAdded());
-        add(files, status.getChanged());
-        add(files, status.getModified());
-        add(files, status.getUntracked());
-        del(files, status.getMissing());
-        del(files, status.getRemoved());
+        add(uncommitted, status.getAdded());
+        add(uncommitted, status.getChanged());
+        del(uncommitted, status.getRemoved());
 
         // [#9506] TODO: It should be possible to migrate to uncommitted changes in dev mode.
-        return commit.commit("uncommitted", "uncommitted", files).valid(false);
+        if (!uncommitted.isEmpty())
+            commit = commit.commit("uncommitted", "uncommitted", uncommitted).valid(false);
+
+        add(untracked, status.getModified());
+        add(untracked, status.getUntracked());
+        del(untracked, status.getMissing());
+
+        if (!untracked.isEmpty())
+            commit = commit.commit("untracked", "untracked", untracked).valid(false);
+
+        return commit;
     }
 
     private void add(List<File> files, Set<String> paths) {

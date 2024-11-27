@@ -647,7 +647,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
                             {content}
                             """.replace("{file}", file.path())
-                               .replace("{content}", file.content())
+                               .replace("{content}", file.content() == null ? "(File was deleted)" : file.content())
                         );
 
                     // History was altered, but the alteration was reverted

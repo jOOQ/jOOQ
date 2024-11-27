@@ -366,7 +366,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                 if (from().equals(to())) {
                     if (log.isInfoEnabled())
-                        log.info("jOOQ Migrations", "Version " + to().id() + " is already installed as the current version.");
+                        log.info("Version " + to().id() + " is already installed as the current version.");
+
                     return;
                 }
 
@@ -378,7 +379,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                 if (log.isInfoEnabled()) {
                     Commit snapshot = fromSnapshot();
-                    log.info("jOOQ Migrations", "Version " + from().id() + " is being migrated to " + to().id() + (snapshot != null ? " (from snapshot: " + snapshot.id() + ")" : ""));
+                    log.info("Version " + from().id() + " is being migrated to " + to().id() + (snapshot != null ? " (from snapshot: " + snapshot.id() + ")" : ""));
                 }
 
                 StopWatch watch = new StopWatch();
@@ -386,7 +387,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 // TODO: Make logging configurable
                 if (log.isDebugEnabled())
                     for (Query query : queries())
-                        log.debug("jOOQ Migrations", dsl().renderInlined(query));
+                        log.debug(dsl().renderInlined(query));
 
                 HistoryRecord record = createRecord(STARTING);
 
@@ -402,7 +403,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     e.printStackTrace(new PrintWriter(s));
 
                     if (log.isErrorEnabled())
-                        log.error("jOOQ Migrations", "Version " + from().id() + " migration to " + to().id() + " failed: " + e.getMessage());
+                        log.error("Version " + from().id() + " migration to " + to().id() + " failed: " + e.getMessage());
 
                     log(watch, record, FAILURE, OPEN, s.toString());
                     throw new DataMigrationRedoLogException(record, e);

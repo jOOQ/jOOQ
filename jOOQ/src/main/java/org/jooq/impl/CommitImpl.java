@@ -66,6 +66,7 @@ import java.util.Set;
 
 import org.jooq.Commit;
 import org.jooq.Configuration;
+import org.jooq.ContentType;
 import org.jooq.DSLContext;
 import org.jooq.File;
 import org.jooq.Files;
@@ -78,6 +79,9 @@ import org.jooq.Version;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -572,7 +576,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
             // Script files
             Iterator<File> scripts = filter(commitFiles.iterator(), f -> f.type() == SCRIPT);
+            boolean hasScripts = false;
             for (File file : iterable(scripts)) {
+                hasScripts = true;
                 String path = file.path();
                 File oldFile = recordingResult ? history.get(path) : history.put(path, file);
 
@@ -594,6 +600,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
                 String path = file.path();
                 String key = commit.id() + "-" + path;
 
+                if (hasScripts)
+                    file = new IgnoreFile(file);
+
                 if (recordingResult) {
                     tempHistory.put(path, file);
                     tempHistoryKeys.put(path, key);
@@ -610,6 +619,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
 
             }
+
+            if (hasScripts)
+                move(tempHistory, result, tempHistoryKeys);
 
             recordingResult |= id().equals(commit.id());
         }
@@ -695,6 +707,28 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         }
     }
 
+    private static final record IgnoreFile(File file) implements File {
+        @Override
+        public final String path() {
+            return file.path();
+        }
+
+        @Override
+        public final String name() {
+            return file.name();
+        }
+
+        @Override
+        public final String content() {
+            return file.content();
+        }
+
+        @Override
+        public final ContentType type() {
+            return file.type();
+        }
+    }
+
     private final Version version(Version from, String newId, Map<String, File> files, Iterable<File> result) {
         Version to = from;
 
@@ -704,8 +738,14 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
             //         Version IDs per file path. It doesn't seem to be necessary anymore.
             // String commitId = newId + "-" + file.path();
 
-            if (file.type() == SCHEMA)
-                to = to.commit(newId, sources(apply(files, file, true).values()).toArray(EMPTY_SOURCE));
+            if (file.type() == SCHEMA) {
+                Meta meta = ctx.meta(sources(apply(files, file, true).values()).toArray(EMPTY_SOURCE));
+
+                if (file instanceof IgnoreFile)
+                    to = ((VersionImpl) to).commit(newId, meta, ctx.queries());
+                else
+                    to = to.commit(newId, meta);
+            }
 
             // [#9506] Scripts must be ignored by the interpreter
             else if (file.type() == SCRIPT)

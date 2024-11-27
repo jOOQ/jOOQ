@@ -227,6 +227,10 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
         return new VersionImpl(ctx.configuration(), newId, newMeta, root, new Version[] { this });
     }
 
+    final Version commit(String newId, Meta newMeta, Queries migration) {
+        return new VersionImpl(ctx.configuration(), newId, newMeta, root, this, migration);
+    }
+
     @Override
     public final Version merge(String newId, Version with) {
         Meta m = commonAncestor(with).meta();

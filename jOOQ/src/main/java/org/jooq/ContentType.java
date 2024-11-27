@@ -58,7 +58,6 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * <li>{@link #SCHEMA}</li>
  * <li>{@link #DECREMENT}</li>
  * </ul>
- * </ul>
  */
 @Experimental
 public enum ContentType {

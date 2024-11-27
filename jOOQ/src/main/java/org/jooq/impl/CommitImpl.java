@@ -641,7 +641,14 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
                     // Altering history is not allowed
                     if (!StringUtils.equals(historicFile.content(), file.content()))
-                        throw new DataMigrationVerificationException("Cannot edit increment file that has already been applied: " + file);
+                        throw new DataMigrationVerificationException("""
+                            Cannot edit increment file that has already been applied: {file}
+                            Please revert the file to its original content:
+
+                            {content}
+                            """.replace("{file}", file.path())
+                               .replace("{content}", file.content())
+                        );
 
                     // History was altered, but the alteration was reverted
                     else

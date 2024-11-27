@@ -7124,7 +7124,7 @@ public class JavaGenerator extends AbstractGenerator {
             // Foreign keys
             List<ForeignKeyDefinition> outboundFKs = table.getForeignKeys();
             List<InverseForeignKeyDefinition> inboundFKs = table.getInverseForeignKeys();
-            Set<String> outboundKeyMethodNames = new HashSet<>();
+            Map<String, Definition> keyMethodNames = new HashMap<>();
 
             // [#1234] Avoid compilation errors when FK identifiers clash with generated path names
             if (kotlin && generateGlobalKeyReferences()) {
@@ -7188,7 +7188,7 @@ public class JavaGenerator extends AbstractGenerator {
                         // [#13008] Prevent conflicts with the below leading underscore
                         final String unquotedKeyMethodName = keyMethodName.replace("`", "");
 
-                        outboundKeyMethodNames.add(keyMethodName);
+                        keyMethodNames.put(keyMethodName, foreignKey);
 
                         if (scala) {}
                         else {
@@ -7242,12 +7242,13 @@ public class JavaGenerator extends AbstractGenerator {
                     inboundFKLoop:
                     for (InverseForeignKeyDefinition foreignKey : inboundFKs) {
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
+                        final Definition previousKey;
 
-                        if (!outboundKeyMethodNames.add(keyMethodName)) {
+                        if ((previousKey = keyMethodNames.putIfAbsent(keyMethodName, foreignKey)) != null) {
                             log.warn("Ambiguous key name",
-                                "The database object " + foreignKey.getQualifiedOutputName()
-                              + " generates an inbound key method name " + keyMethodName
-                              + " which conflicts with the previously generated outbound key method name."
+                                "The one-to-many key " + foreignKey
+                              + " generates an inbound key method name " + keyMethodName + " on table " + table
+                              + " which conflicts with the previously generated key method name for key " + previousKey
                               + " Use a custom generator strategy to disambiguate the types. More information here:\n"
                               + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
                               + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"
@@ -7314,12 +7315,13 @@ public class JavaGenerator extends AbstractGenerator {
                     manyToManyKeyLoop:
                     for (ManyToManyKeyDefinition manyToManyKey : manyToManyKeys) {
                         final String keyMethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey));
+                        final Definition previousKey;
 
-                        if (!outboundKeyMethodNames.add(keyMethodName)) {
+                        if ((previousKey = keyMethodNames.putIfAbsent(keyMethodName, manyToManyKey)) != null) {
                             log.warn("Ambiguous key name",
-                                "The database object " + manyToManyKey.getQualifiedOutputName()
-                              + " generates an inbound key method name " + keyMethodName
-                              + " which conflicts with the previously generated outbound key method name."
+                                "The many-to-many key " + manyToManyKey
+                              + " generates an inbound key method name " + keyMethodName + " on table " + table
+                              + " which conflicts with the previously generated key method name for key " + previousKey + "."
                               + " Use a custom generator strategy to disambiguate the types. More information here:\n"
                               + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
                               + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"

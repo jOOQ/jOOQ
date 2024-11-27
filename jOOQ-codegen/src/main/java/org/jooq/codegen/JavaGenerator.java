@@ -8089,8 +8089,7 @@ public class JavaGenerator extends AbstractGenerator {
                         }
                     }
 
-                    // [#17681] The to-one path of the ManyToManyKeyDefinition.foreignKey2 property must be available
-                    if (generateImplicitJoinPathsToOne()) {
+                    if (generateImplicitJoinPathsManyToMany()) {
                         List<ManyToManyKeyDefinition> manyToManyKeys = table.getManyToManyKeys();
                         Map<TableDefinition, Long> pathCountsManytoMany = manyToManyKeys.stream().collect(groupingBy(d -> d.getForeignKey2().getReferencedTable(), counting()));
 

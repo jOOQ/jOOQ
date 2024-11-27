@@ -161,6 +161,18 @@ public interface Generator {
     void setGenerateImplicitJoinPathsToMany(boolean generateImplicitJoinPathsToMany);
 
     /**
+     * Whether implicit join path constructors on generated tables for
+     * many-to-many relationships should be generated.
+     */
+    boolean generateImplicitJoinPathsManyToMany();
+
+    /**
+     * Whether implicit join path constructors on generated tables for
+     * many-to-many relationships should be generated.
+     */
+    void setGenerateImplicitJoinPathsManyToMany(boolean generateImplicitJoinPathsManyToMany);
+
+    /**
      * Whether to generate implicit join path table subtypes implementing
      * {@link Path} for increased JOIN convenience.
      */

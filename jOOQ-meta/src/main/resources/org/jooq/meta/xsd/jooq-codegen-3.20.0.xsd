@@ -2550,6 +2550,10 @@ This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:prope
       <element name="implicitJoinPathsToMany" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for incoming foreign key relationships (to-many relationships)]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="implicitJoinPathsManyToMany" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path constructors on generated tables for many-to-many relationships. This turns off implicitly, if either of the other path generations are turned off.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="implicitJoinPathTableSubtypes" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate implicit join path table subtypes implementing {@link org.jooq.Path} for increased JOIN convenience.]]></jxb:javadoc></jxb:property></appinfo></annotation>

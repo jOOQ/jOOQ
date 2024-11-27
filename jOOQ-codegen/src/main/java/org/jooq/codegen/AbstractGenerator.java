@@ -76,6 +76,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateUDTPaths                                      = true;
     boolean                            generateImplicitJoinPathsToOne                        = true;
     boolean                            generateImplicitJoinPathsToMany                       = true;
+    boolean                            generateImplicitJoinPathsManyToMany                   = true;
     boolean                            generateImplicitJoinPathTableSubtypes                 = true;
     boolean                            generateImplicitJoinPathUnusedConstructors            = true;
     boolean                            generateImplicitJoinPathsAsKotlinProperties           = true;
@@ -355,6 +356,21 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateImplicitJoinPathsToMany(boolean generateImplicitJoinPathsToMany) {
         this.generateImplicitJoinPathsToMany = generateImplicitJoinPathsToMany;
+    }
+
+    @Override
+    public boolean generateImplicitJoinPathsManyToMany() {
+
+        // [#17681] The to-one path of the ManyToManyKeyDefinition.foreignKey2 property must be available
+        return generateImplicitJoinPathsToMany
+            && generateImplicitJoinPathsToOne()
+            && generateImplicitJoinPathsToMany()
+            && generateRelations();
+    }
+
+    @Override
+    public void setGenerateImplicitJoinPathsManyToMany(boolean generateImplicitJoinPathsManyToMany) {
+        this.generateImplicitJoinPathsManyToMany = generateImplicitJoinPathsManyToMany;
     }
 
     @Override

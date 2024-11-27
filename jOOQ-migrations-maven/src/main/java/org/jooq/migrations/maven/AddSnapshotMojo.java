@@ -38,14 +38,14 @@
 package org.jooq.migrations.maven;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.EnumSet;
 
 import org.jooq.DDLExportConfiguration;
@@ -55,7 +55,6 @@ import org.jooq.HistoryVersion;
 import org.jooq.Meta;
 import org.jooq.Migration;
 import org.jooq.Queries;
-import org.jooq.exception.DataMigrationVerificationException;
 
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -106,6 +105,6 @@ public class AddSnapshotMojo extends AbstractMigrateMojo {
         if (getLog().isInfoEnabled())
             getLog().info("Writing snapshot to: " + file + "\n" + export);
 
-        Files.writeString(file.toPath(), export, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        Files.write(file.toPath(), asList(export), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 }

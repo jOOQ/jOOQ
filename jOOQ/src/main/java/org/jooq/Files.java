@@ -69,6 +69,9 @@ public interface Files extends Iterable<File> {
      * <p>
      * This is EXPERIMENTAL functionality and subject to change in future jOOQ
      * versions.
+     * <p>
+     * This API is part of a commercial only feature. To use this feature,
+     * please use the jOOQ Professional Edition or the jOOQ Enterprise Edition.
      */
     @Nullable
     @Experimental

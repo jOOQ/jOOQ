@@ -46,8 +46,18 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * contained in {@link Commit#delta()} will be processed in the following order:
  * <p>
  * <ul>
- * <li>{@link ContentType#INCREMENT}</li>
- * <li>{@link ContentType#SCHEMA}</li>
+ * <li>{@link #SNAPSHOT} (replacing all other contents of this {@link Commit} as
+ * well as previous commits, if migrating from {@link Commit#root()})</li>
+ * <li>{@link #INCREMENT}</li>
+ * <li>{@link #SCRIPT}</li>
+ * <li>{@link #SCHEMA}</li>
+ * </ul>
+ * <p>
+ * When undoing a migration, the order is:
+ * <ul>
+ * <li>{@link #SCHEMA}</li>
+ * <li>{@link #DECREMENT}</li>
+ * </ul>
  * </ul>
  */
 @Experimental
@@ -102,6 +112,9 @@ public enum ContentType {
      * <p>
      * In order to restore a database, or install a new one, we don't have to go
      * back any further than the snapshot.
+     * <p>
+     * This API is part of a commercial only feature. To use this feature,
+     * please use the jOOQ Professional Edition or the jOOQ Enterprise Edition.
      */
     SNAPSHOT,
 

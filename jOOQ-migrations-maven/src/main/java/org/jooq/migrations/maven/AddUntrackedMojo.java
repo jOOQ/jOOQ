@@ -37,23 +37,17 @@
  */
 package org.jooq.migrations.maven;
 
-import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-import java.util.EnumSet;
+import java.util.Arrays;
 
 import org.jooq.Commit;
-import org.jooq.DDLExportConfiguration;
-import org.jooq.DDLFlag;
 import org.jooq.History;
-import org.jooq.HistoryVersion;
-import org.jooq.Meta;
 import org.jooq.Migration;
 import org.jooq.Queries;
 
@@ -103,7 +97,7 @@ public class AddUntrackedMojo extends AbstractMigrateMojo {
 
             sb.append(untracked);
             sb.append("\n");
-            Files.writeString(file.toPath(), sb.toString(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Files.write(file.toPath(), asList(sb.toString()), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         }
     }
 

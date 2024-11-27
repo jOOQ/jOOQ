@@ -2744,6 +2744,10 @@ final class Tools {
         return array;
     }
 
+    static final <T> Iterable<T> iterable(Iterator<T> iterator) {
+        return () -> iterator;
+    }
+
     static final <T, U> Iterator<U> iterator(Iterator<? extends T> iterator, Function<? super T, ? extends U> mapper) {
         return new Iterator<U>() {
             @Override
@@ -6870,6 +6874,11 @@ final class Tools {
                     throw new NoSuchElementException();
                 uptodate = false;
                 return next;
+            }
+
+            @Override
+            public void remove() {
+                iterator.remove();
             }
         };
     }

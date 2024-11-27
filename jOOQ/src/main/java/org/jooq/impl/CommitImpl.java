@@ -40,10 +40,12 @@ package org.jooq.impl;
 import static org.jooq.ContentType.DECREMENT;
 import static org.jooq.ContentType.INCREMENT;
 import static org.jooq.ContentType.SCHEMA;
+import static org.jooq.ContentType.SCRIPT;
 import static org.jooq.ContentType.SNAPSHOT;
 import static org.jooq.impl.Tools.EMPTY_SOURCE;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.filter;
+import static org.jooq.impl.Tools.iterable;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.util.ArrayDeque;
@@ -74,6 +76,7 @@ import org.jooq.Source;
 import org.jooq.Tag;
 import org.jooq.Version;
 import org.jooq.exception.DataMigrationVerificationException;
+import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -108,6 +111,20 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         this.tags = new ArrayList<>();
         this.delta = map(delta, false);
         this.valid = valid;
+
+        if (delta.size() > this.delta.size()) {
+            throw new DataMigrationVerificationException("Path is ambiguous within commit: " + duplicatePath(delta));
+        }
+    }
+
+    private static final String duplicatePath(Collection<? extends File> files) {
+        Set<String> paths = new HashSet<>();
+
+        for (File file : files)
+            if (!paths.add(file.path()))
+                return file.path();
+
+        return null;
     }
 
     private CommitImpl(CommitImpl copy, boolean newValid) {
@@ -413,21 +430,6 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private static final record MigrationHistory(
         Map<String, Map<String, File>> pathHistory,
         Files result
@@ -490,74 +492,70 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         for (Commit commit : commitHistory) {
             List<File> commitFiles = new ArrayList<>(commit.delta());
 
-            // [#9506] Migrations from root to a snapshot can be skipped
-            //   TODO: effectively skip all intermediary steps
-
-
-
             if (isRoot && anyMatch(commitFiles, f -> f.type() == SNAPSHOT)) {
-                result.clear();
+                configuration().requireCommercial(() -> "Snapshots are a commercial only feature. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
 
-                // [#9506] TODO: Are there impacts on other maps?
-                for (File f : commitFiles)
-                    if (f.type() == SNAPSHOT)
-                        result.put(f.path(), f);
 
-                fromSnapshotCommit = commit;
-                continue commitLoop;
+
+
+
+
+
+
+
+
+
+
+
+
+
             }
 
             // Deletions
-            Iterator<File> deletions = commitFiles.iterator();
-            while (deletions.hasNext()) {
-                File file = deletions.next();
+            Iterator<File> deletions = filter(commitFiles.iterator(), f -> f.content() == null);
+            for (File file : iterable(deletions)) {
+                hasDeletions |= true;
+                String path = file.path();
+                String tempKey = tempHistoryKeys.remove(path);
+                String tempRemove = tempKey != null ? tempKey : path;
+                String key = historyKeys.remove(path);
+                String remove = key != null ? key : path;
 
-                if (file.content() == null) {
-                    hasDeletions |= true;
-                    String path = file.path();
-                    String tempKey = tempHistoryKeys.remove(path);
-                    String tempRemove = tempKey != null ? tempKey : path;
-                    String key = historyKeys.remove(path);
-                    String remove = key != null ? key : path;
+                if (recordingResult && result.remove(tempRemove) == null && file.type() == INCREMENT && history.containsKey(tempRemove))
+                    result.put(tempRemove, file);
 
-                    if (recordingResult && result.remove(tempRemove) == null && file.type() == INCREMENT && history.containsKey(tempRemove))
-                        result.put(tempRemove, file);
-                    else if (recordingResult && result.remove(remove) == null && file.type() == SCHEMA && history.containsKey(remove))
-                        result.put(remove, file);
-                    else
-                        history.remove(tempRemove);
+                // TODO: Support deletions of scripts
+                else if (recordingResult && result.remove(remove) == null && file.type() == SCHEMA && history.containsKey(remove))
+                    result.put(remove, file);
+                else
+                    history.remove(tempRemove);
 
-                    tempHistory.remove(path);
-                    deletions.remove();
-
+                tempHistory.remove(path);
+                deletions.remove();
 
 
 
-                }
+
             }
 
             // Increments
-            Iterator<File> increments = commitFiles.iterator();
-            while (increments.hasNext()) {
-                File file = increments.next();
+            Iterator<File> increments = filter(commitFiles.iterator(), f -> f.type() == INCREMENT);
+            for (File file : iterable(increments)) {
+                String path = file.path();
+                File oldFile = recordingResult ? history.get(path) : history.put(path, file);
 
-                if (file.type() == INCREMENT) {
-                    String path = file.path();
-                    File oldFile = recordingResult ? history.get(path) : history.put(path, file);
+                if (oldFile == null && !tempHistory.isEmpty() && !result.containsKey(path))
+                    move(tempHistory, result, tempHistoryKeys);
 
-                    if (oldFile == null && !tempHistory.isEmpty() && !result.containsKey(path))
-                        move(tempHistory, result, tempHistoryKeys);
+                if (recordingResult)
+                    result.put(path, file);
 
-                    if (recordingResult)
-                        result.put(path, file);
-
-                    increments.remove();
+                increments.remove();
 
 
 
 
 
-                }
             }
 
 
@@ -572,34 +570,45 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
 
 
+            // Script files
+            Iterator<File> scripts = filter(commitFiles.iterator(), f -> f.type() == SCRIPT);
+            for (File file : iterable(scripts)) {
+                String path = file.path();
+                File oldFile = recordingResult ? history.get(path) : history.put(path, file);
+
+                if (oldFile == null && !tempHistory.isEmpty() && !result.containsKey(path))
+                    move(tempHistory, result, tempHistoryKeys);
+
+                if (recordingResult)
+                    result.put(path, file);
+
+                scripts.remove();
 
 
+
+            }
 
             // Schema files
-            Iterator<File> schemas = commitFiles.iterator();
-            while (schemas.hasNext()) {
-                File file = schemas.next();
+            Iterator<File> schemas = filter(commitFiles.iterator(), f -> f.type() == SCHEMA);
+            for (File file : iterable(schemas)) {
+                String path = file.path();
+                String key = commit.id() + "-" + path;
 
-                if (file.type() == SCHEMA) {
-                    String path = file.path();
-                    String key = commit.id() + "-" + path;
-
-                    if (recordingResult) {
-                        tempHistory.put(path, file);
-                        tempHistoryKeys.put(path, key);
-                    }
-                    else {
-                        history.put(key, file);
-                        historyKeys.put(path, key);
-                    }
-
-                    schemas.remove();
-
-
-
-
-
+                if (recordingResult) {
+                    tempHistory.put(path, file);
+                    tempHistoryKeys.put(path, key);
                 }
+                else {
+                    history.put(key, file);
+                    historyKeys.put(path, key);
+                }
+
+                schemas.remove();
+
+
+
+
+
             }
 
             recordingResult |= id().equals(commit.id());
@@ -649,9 +658,13 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
         Map<String, File> versionFiles = new HashMap<>();
         Version from = version(ctx.migrations().version(ROOT), id(), versionFiles, history.values());
-        Version fromSnapshot = fromSnapshotCommit != null
-            ? version(from, fromSnapshotCommit.id(), versionFiles, filter(fromSnapshotCommit.delta(), f -> f.type() == SNAPSHOT))
-            : null;
+        Version fromSnapshot = null;
+
+
+
+
+
+
         Version to = version(from, resultCommit.id(), versionFiles, result.values());
         return new MigrationHistory(
             pathHistory,
@@ -682,7 +695,7 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         }
     }
 
-    private static final Version version(Version from, String newId, Map<String, File> files, Iterable<File> result) {
+    private final Version version(Version from, String newId, Map<String, File> files, Iterable<File> result) {
         Version to = from;
 
         for (File file : result) {
@@ -693,6 +706,10 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
 
             if (file.type() == SCHEMA)
                 to = to.commit(newId, sources(apply(files, file, true).values()).toArray(EMPTY_SOURCE));
+
+            // [#9506] Scripts must be ignored by the interpreter
+            else if (file.type() == SCRIPT)
+                to = to.apply(newId, new IgnoreQuery(file.content(), ctx.configuration()));
             else
                 to = to.apply(newId, file.content());
         }

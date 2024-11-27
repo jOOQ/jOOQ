@@ -68,6 +68,9 @@ public interface Migration extends Scope {
     /**
      * The last {@link ContentType#SNAPSHOT} commit that is being migrated from,
      * or <code>null</code> if there's no snapshot.
+     * <p>
+     * This API is part of a commercial only feature. To use this feature,
+     * please use the jOOQ Professional Edition or the jOOQ Enterprise Edition.
      */
     @Nullable
     Commit fromSnapshot();

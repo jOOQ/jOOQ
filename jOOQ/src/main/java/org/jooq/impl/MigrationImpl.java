@@ -131,8 +131,13 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final Commit fromSnapshot() {
-        Version version = from().migrateTo(to()).fromSnapshot();
-        return version != null ? commits().get(version.id()) : null;
+        if (!configuration().commercial())
+            return null;
+
+
+
+
+
     }
 
     @Override

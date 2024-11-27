@@ -15828,7 +15828,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         IgnoreQuery(String sql) {
-            super(CONFIG.get());
+            this(sql, CONFIG.get());
+        }
+
+        IgnoreQuery(String sql, Configuration configuration) {
+            super(configuration);
 
             this.sql = sql;
         }

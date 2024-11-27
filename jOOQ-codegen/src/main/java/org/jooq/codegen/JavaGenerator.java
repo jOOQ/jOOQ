@@ -7248,7 +7248,7 @@ public class JavaGenerator extends AbstractGenerator {
                             log.warn("Ambiguous key name",
                                 "The one-to-many key " + foreignKey
                               + " generates an inbound key method name " + keyMethodName + " on table " + table
-                              + " which conflicts with the previously generated key method name for key " + previousKey
+                              + " which conflicts with the previously generated key method name for key " + previousKey + "."
                               + " Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition, InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature. More information here:\n"
                               + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
                               + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/\n"
@@ -7325,15 +7325,10 @@ public class JavaGenerator extends AbstractGenerator {
                                     "The many-to-many key " + manyToManyKey
                                   + " generates an inbound key method name " + keyMethodName + " on table " + table
                                   + " which conflicts with the previously generated key method name for key " + previousKey + "."
-<<<<<<< version-3.19.0-branch
-                                  + " Use a custom generator strategy to disambiguate the types. More information here:\n"
-                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
-                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"
-=======
                                   + " Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition, InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature. More information here:\n"
                                   + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/\n"
                                   + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths/"
->>>>>>> 82a6ef7 [jOOQ/jOOQ#17677] Add more context information to "Ambiguous key name" warning in code generator
+                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths/"
                                 );
                                 continue manyToManyKeyLoop;
                             }

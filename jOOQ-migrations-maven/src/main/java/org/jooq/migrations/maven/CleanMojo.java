@@ -66,7 +66,7 @@ public class CleanMojo extends AbstractMigrateMojo {
     @Override
     final void execute1(Migration migration) throws Exception {
         Commit root = migration.to().root();
-        root.settings().setMigrationAllowsUndo(true);
+        root.settings().setMigrationAllowUndo(true);
         migration.dsl().migrations().migrateTo(root).execute();
     }
 }

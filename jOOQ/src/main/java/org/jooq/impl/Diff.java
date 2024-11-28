@@ -72,6 +72,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.jooq.AlterSequenceFlagsStep;
@@ -430,7 +431,7 @@ final class Diff {
 
                     if (type1.defaulted() && !type2.defaulted())
                         r.queries.add(ctx.alterTable(t1).alter(f1).dropDefault());
-                    else if (type2.defaulted() && (!type1.defaulted() || !d2.equals(d1)))
+                    else if (type2.defaulted() && (!type1.defaulted() || !equivalent(d2, d1)))
                         r.queries.add(ctx.alterTable(t1).alter(f1).setDefault((Field) d2));
 
                     if ((type1.hasLength() && type2.hasLength() && (type1.lengthDefined() != type2.lengthDefined() || type1.length() != type2.length()))
@@ -440,6 +441,28 @@ final class Diff {
 
                     // [#9656] TODO: Change collation
                     // [#9656] TODO: Change character set
+                }
+
+                private final boolean equivalent(Field<?> d2, Field<?> d1) {
+                    if (d2.equals(d1))
+                        return true;
+
+                    // [#17688] Some expressions can be considered "equivalent," even if not exactly identical.
+                    //          CAST('a' AS TEXT) is equivalent to 'a'
+                    if (Objects.equals(d2.getDataType().getSQLDataType(), d1.getDataType().getSQLDataType())) {
+                        if (d2 instanceof QOM.Cast<?> c)
+                            d2 = c.$field();
+                        if (d1 instanceof QOM.Cast<?> c)
+                            d1 = c.$field();
+
+                        Val<?> v2 = Tools.extractVal(d2);
+                        Val<?> v1 = Tools.extractVal(d1);
+
+                        if (v2 != null && v1 != null)
+                            return Objects.equals(v2.getValue(), v1.getValue());
+                    }
+
+                    return false;
                 }
 
                 private final boolean respectPkNullability(Field<?> f1, Field<?> f2) {

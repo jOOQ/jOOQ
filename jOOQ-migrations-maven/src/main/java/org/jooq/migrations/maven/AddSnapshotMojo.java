@@ -80,31 +80,35 @@ public class AddSnapshotMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
-        History history = migration.dsl().migrations().history();
-        Queries queries = migration.queries();
+        migration.configuration().requireCommercial(() -> "Snapshots are a commercial only feature. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
 
-        if (queries.queries().length > 0) {
-            Queries queries2 = migration.queries();
-            getLog().warn("There are pending changes that have not been migrated yet, which are not in the snapshot:\n"
-                + queries2);
-        }
 
-        HistoryVersion current = history.current();
-        File file = new File(file(directory), current.version().id() + "/snapshots/" + fileName(current.version().id(), fileName, "snapshot"));
-        file.getParentFile().mkdirs();
 
-        DDLExportConfiguration config = new DDLExportConfiguration();
 
-        // Don't create schema in snapshots if it is managed by the migration.
-        if (TRUE.equals(migration.settings().isMigrationSchemataCreateSchemaIfNotExists()))
-            config = config.flags(EnumSet.complementOf(EnumSet.of(DDLFlag.SCHEMA)));
 
-        Meta meta = current.version().meta();
-        String export = meta.ddl(config).toString();
 
-        if (getLog().isInfoEnabled())
-            getLog().info("Writing snapshot to: " + file + "\n" + export);
 
-        Files.write(file.toPath(), asList(export), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

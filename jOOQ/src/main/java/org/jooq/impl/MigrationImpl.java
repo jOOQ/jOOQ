@@ -199,9 +199,15 @@ final class MigrationImpl extends AbstractScope implements Migration {
         validateCommitProvider(ctx, to());
         revertUntracked(ctx, null, currentRecord);
 
-        // [#9506] TODO: Better error handling helping the understand see their mistake
-        if (!to().valid())
-            throw new DataMigrationVerificationException("Commit is not a valid commit to migrate to: " + to());
+        if (!to().valid() && !TRUE.equals(ctx.settings().isMigrationAllowInvalidCommits()))
+            throw new DataMigrationVerificationException(
+                """
+                Commit is not a valid commit to migrate to: {commit}
+                Invalid commits include:
+                - Uncommitted or untracked changes in the GitCommitProvider
+                - Commits leading to inconsistent migration states due to editing of commit paths
+                """.replace("{commit}", to().id())
+            );
     }
 
     private final void validateCommitProvider(DefaultMigrationContext ctx, Commit commit) {
@@ -216,9 +222,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     The commit referencing the schema: {commit}.
 
                     All schemas that are referenced from commits in a migration must be configured for
-                    inclusion in the migration
-
-                    TODO doclink
+                    inclusion in the migration.
                     """.replace("{schema}", schema.toString())
                        .replace("{commit}", commit.toString())
                 );

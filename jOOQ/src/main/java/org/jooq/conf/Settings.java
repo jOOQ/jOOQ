@@ -485,7 +485,9 @@ public class Settings
     @XmlSchemaType(name = "string")
     protected MigrationDefaultContentType migrationDefaultContentType = MigrationDefaultContentType.INCREMENT;
     @XmlElement(defaultValue = "false")
-    protected Boolean migrationAllowsUndo = false;
+    protected Boolean migrationAllowUndo = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean migrationAllowInvalidCommits = false;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationRevertUntracked = false;
     @XmlElement(defaultValue = "false")
@@ -6223,8 +6225,8 @@ public class Settings
      *     {@link Boolean }
      *     
      */
-    public Boolean isMigrationAllowsUndo() {
-        return migrationAllowsUndo;
+    public Boolean isMigrationAllowUndo() {
+        return migrationAllowUndo;
     }
 
     /**
@@ -6235,8 +6237,32 @@ public class Settings
      *     {@link Boolean }
      *     
      */
-    public void setMigrationAllowsUndo(Boolean value) {
-        this.migrationAllowsUndo = value;
+    public void setMigrationAllowUndo(Boolean value) {
+        this.migrationAllowUndo = value;
+    }
+
+    /**
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationAllowInvalidCommits() {
+        return migrationAllowInvalidCommits;
+    }
+
+    /**
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationAllowInvalidCommits(Boolean value) {
+        this.migrationAllowInvalidCommits = value;
     }
 
     /**
@@ -9415,8 +9441,17 @@ public class Settings
      * Whether migrations are allowed to be executed in inverse order.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly switch between branches in a development environment. This feature is available only in commercial distributions.
      * 
      */
-    public Settings withMigrationAllowsUndo(Boolean value) {
-        setMigrationAllowsUndo(value);
+    public Settings withMigrationAllowUndo(Boolean value) {
+        setMigrationAllowUndo(value);
+        return this;
+    }
+
+    /**
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * 
+     */
+    public Settings withMigrationAllowInvalidCommits(Boolean value) {
+        setMigrationAllowInvalidCommits(value);
         return this;
     }
 
@@ -9985,7 +10020,8 @@ public class Settings
         builder.append("migrationDefaultSchema", migrationDefaultSchema);
         builder.append("migrationSchemataCreateSchemaIfNotExists", migrationSchemataCreateSchemaIfNotExists);
         builder.append("migrationDefaultContentType", migrationDefaultContentType);
-        builder.append("migrationAllowsUndo", migrationAllowsUndo);
+        builder.append("migrationAllowUndo", migrationAllowUndo);
+        builder.append("migrationAllowInvalidCommits", migrationAllowInvalidCommits);
         builder.append("migrationRevertUntracked", migrationRevertUntracked);
         builder.append("migrationAutoBaseline", migrationAutoBaseline);
         builder.append("migrationAutoVerification", migrationAutoVerification);
@@ -11841,12 +11877,21 @@ public class Settings
                 return false;
             }
         }
-        if (migrationAllowsUndo == null) {
-            if (other.migrationAllowsUndo!= null) {
+        if (migrationAllowUndo == null) {
+            if (other.migrationAllowUndo!= null) {
                 return false;
             }
         } else {
-            if (!migrationAllowsUndo.equals(other.migrationAllowsUndo)) {
+            if (!migrationAllowUndo.equals(other.migrationAllowUndo)) {
+                return false;
+            }
+        }
+        if (migrationAllowInvalidCommits == null) {
+            if (other.migrationAllowInvalidCommits!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationAllowInvalidCommits.equals(other.migrationAllowInvalidCommits)) {
                 return false;
             }
         }
@@ -12363,7 +12408,8 @@ public class Settings
         result = ((prime*result)+((migrationDefaultSchema == null)? 0 :migrationDefaultSchema.hashCode()));
         result = ((prime*result)+((migrationSchemataCreateSchemaIfNotExists == null)? 0 :migrationSchemataCreateSchemaIfNotExists.hashCode()));
         result = ((prime*result)+((migrationDefaultContentType == null)? 0 :migrationDefaultContentType.hashCode()));
-        result = ((prime*result)+((migrationAllowsUndo == null)? 0 :migrationAllowsUndo.hashCode()));
+        result = ((prime*result)+((migrationAllowUndo == null)? 0 :migrationAllowUndo.hashCode()));
+        result = ((prime*result)+((migrationAllowInvalidCommits == null)? 0 :migrationAllowInvalidCommits.hashCode()));
         result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
         result = ((prime*result)+((migrationAutoBaseline == null)? 0 :migrationAutoBaseline.hashCode()));
         result = ((prime*result)+((migrationAutoVerification == null)? 0 :migrationAutoVerification.hashCode()));

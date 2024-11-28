@@ -82,7 +82,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link CommitProvider} that produces versions from a git repository.
@@ -225,16 +224,18 @@ public final class GitCommitProvider implements CommitProvider {
         add(uncommitted, status.getChanged());
         del(uncommitted, status.getRemoved());
 
+        String message = null;
+
         // [#9506] TODO: It should be possible to migrate to uncommitted changes in dev mode.
         if (!uncommitted.isEmpty())
-            commit = commit.commit("uncommitted", "uncommitted", uncommitted).valid(false);
+            commit = commit.commit(message = "uncommitted", message, uncommitted).valid(false);
 
         add(untracked, status.getModified());
         add(untracked, status.getUntracked());
         del(untracked, status.getMissing());
 
         if (!untracked.isEmpty())
-            commit = commit.commit("untracked", "untracked", untracked).valid(false);
+            commit = commit.commit(message = message == null ? "untracked" : "uncommitted-and-untracked", message, untracked).valid(false);
 
         return commit;
     }

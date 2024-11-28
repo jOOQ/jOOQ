@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum FetchIntermediateResult {
 
+
+    /**
+     * Always fetch intermediate results
+     * 
+     */
     ALWAYS,
+
+    /**
+     * Fetch intermediate results only when explicitly requested or when execute listeners are present
+     * 
+     */
     WHEN_EXECUTE_LISTENERS_PRESENT,
+
+    /**
+     * Fetch intermediate results only when explicitly requested
+     * 
+     */
     WHEN_RESULT_REQUESTED;
 
     public String value() {

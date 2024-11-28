@@ -23,7 +23,17 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ParseUnsupportedSyntax {
 
+
+    /**
+     * Fail on syntax that is supported (known) by the parser, but not the jOOQ API
+     * 
+     */
     FAIL,
+
+    /**
+     * Ignore syntax that is supported (known) by the parser, but not the jOOQ API
+     * 
+     */
     IGNORE;
 
     public String value() {

@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TransformUnneededArithmeticExpressions {
 
+
+    /**
+     * Never transform unneeded arithmetic expressions
+     * 
+     */
     NEVER,
+
+    /**
+     * Transform arithmetic expressions arising from jOOQ's internals
+     * 
+     */
     INTERNAL,
+
+    /**
+     * Transform all arithmetic expressions
+     * 
+     */
     ALWAYS;
 
     public String value() {

@@ -26,10 +26,35 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum VisibilityModifier {
 
+
+    /**
+     * The generated visibility modifier is the default for the target language to produce <code>public</code> visibility (explicit <code>public</code> in Java, nothing in Kotlin, Scala).
+     * 
+     */
     DEFAULT,
+
+    /**
+     * No visibility modifier is generated.
+     * 
+     */
     NONE,
+
+    /**
+     * An explicit <code>public</code> visibility modifier is generated, where supported (no modifier is generated in Scala).
+     * 
+     */
     PUBLIC,
+
+    /**
+     * An explicit <code>internal</code> visibility modifier is generated, where supported (or <code>public</code>, otherwise).
+     * 
+     */
     INTERNAL,
+
+    /**
+     * A <code>private</code> visibility modifier is generated. This is useful only for {@link ForcedType}, not as a global configuration.
+     * 
+     */
     PRIVATE;
 
     public String value() {

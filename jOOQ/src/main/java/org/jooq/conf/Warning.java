@@ -26,10 +26,35 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum Warning {
 
+
+    /**
+     * Ignore a warning
+     * 
+     */
     IGNORE,
+
+    /**
+     * Log a warning at DEBUG level
+     * 
+     */
     LOG_DEBUG,
+
+    /**
+     * Log a warning at INFO level
+     * 
+     */
     LOG_INFO,
+
+    /**
+     * Log a warning at WARN level
+     * 
+     */
     LOG_WARN,
+
+    /**
+     * Throw an exception
+     * 
+     */
     THROW;
 
     public String value() {

@@ -23,7 +23,17 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum RoutineType {
 
+
+    /**
+     * The routine is a FUNCTION.
+     * 
+     */
     FUNCTION,
+
+    /**
+     * The routine is a PROCEDURE.
+     * 
+     */
     PROCEDURE;
 
     public String value() {

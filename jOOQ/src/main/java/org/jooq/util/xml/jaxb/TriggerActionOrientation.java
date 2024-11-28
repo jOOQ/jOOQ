@@ -23,7 +23,17 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TriggerActionOrientation {
 
+
+    /**
+     * Whether the trigger should fire once per ROW.
+     * 
+     */
     ROW,
+
+    /**
+     * Whether the trigger should fire once per STATEMENT.
+     * 
+     */
     STATEMENT;
 
     public String value() {

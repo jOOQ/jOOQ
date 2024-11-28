@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TriggerActionTiming {
 
+
+    /**
+     * Whether the trigger should fire BEFORE each {@link TriggerActionOrientation#ROW} or {@link TriggerActionOrientation#STATEMENT}.
+     * 
+     */
     BEFORE,
+
+    /**
+     * Whether the trigger should fire AFTER each {@link TriggerActionOrientation#ROW} or {@link TriggerActionOrientation#STATEMENT}.
+     * 
+     */
     AFTER,
+
+    /**
+     * Whether the trigger should fire INSTEAD OF each {@link TriggerActionOrientation#ROW} or {@link TriggerActionOrientation#STATEMENT}.
+     * 
+     */
     INSTEAD_OF;
 
     public String value() {

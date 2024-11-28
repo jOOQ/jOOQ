@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum DiagnosticsConnection {
 
+
+    /**
+     * The DiagnosticsConnection is turned on if used explicitly.
+     * 
+     */
     DEFAULT,
+
+    /**
+     * The DiagnosticsConnection is always turned on for any user connection.
+     * 
+     */
     ON,
+
+    /**
+     * The DiagnosticsConnection is turned off, even when used explicitly.
+     * 
+     */
     OFF;
 
     public String value() {

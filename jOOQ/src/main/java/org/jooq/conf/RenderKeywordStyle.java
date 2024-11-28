@@ -26,9 +26,33 @@ import jakarta.xml.bind.annotation.XmlType;
 @Deprecated
 public enum RenderKeywordStyle {
 
+
+    /**
+     * Keywords are rendered "as is", i.e. mostly in lower case. For instance:
+     *            select .. from .. where ..
+     * 
+     */
     AS_IS,
+
+    /**
+     * Keywords are rendered in lower case. For instance:
+     *            select .. from .. where ..
+     * 
+     */
     LOWER,
+
+    /**
+     * Keywords are rendered in upper case. For instance:
+     *            SELECT .. FROM .. WHERE ..
+     * 
+     */
     UPPER,
+
+    /**
+     * Keywords are rendered in Pascal Case. For instance:
+     *            Select .. From .. Where ..
+     * 
+     */
     PASCAL;
 
     public String value() {

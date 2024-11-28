@@ -25,9 +25,29 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum UpdateUnchangedRecords {
 
+
+    /**
+     * Never update unchanged records
+     * 
+     */
     NEVER,
+
+    /**
+     * Update unchanged records by setting the primary key column to itself, e.g. SET id = id
+     * 
+     */
     SET_PRIMARY_KEY_TO_ITSELF,
+
+    /**
+     * Update unchanged records by setting non-primary key columns to themselves, e.g. SET a = a, b = b
+     * 
+     */
     SET_NON_PRIMARY_KEY_TO_THEMSELVES,
+
+    /**
+     * Update unchanged records by setting record values to the values from the record, e.g. SET a = :a, b = :b. This is the same as calling record.changed(true) prior to updating.
+     * 
+     */
     SET_NON_PRIMARY_KEY_TO_RECORD_VALUES;
 
     public String value() {

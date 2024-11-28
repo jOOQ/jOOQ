@@ -1951,62 +1951,71 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
   <simpleType name="ParamType">
     <restriction base="string">
+      <enumeration value="INDEXED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Execute statements with indexed parameters, the way JDBC expects them.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Execute statements with indexed parameters, the way JDBC expects them -->
-      <enumeration value="INDEXED"/>
+      <enumeration value="FORCE_INDEXED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Execute statements with indexed parameters, forcing explicit inlined and named parameters to be indexed as well.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Execute statements with indexed parameters, forcing explicit inlined and named parameters to be indexed as well -->
-      <enumeration value="FORCE_INDEXED"/>
+      <enumeration value="NAMED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Execute statements with named parameters.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Execute statements with named parameters -->
-      <enumeration value="NAMED"/>
-
-      <!-- Execute statements with named parameters, if a name is given, or inlined parameters otherwise -->
-      <enumeration value="NAMED_OR_INLINED"/>
+      <enumeration value="NAMED_OR_INLINED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Execute statements with named parameters, if a name is given, or inlined parameters otherwise.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
       <!-- Execute statements with inlined parameters -->
-      <enumeration value="INLINED"/>
+      <enumeration value="INLINED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Execute statements with inlined parameters.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="ParamCastMode">
     <restriction base="string">
+      <enumeration value="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Bind values are always cast to their respective type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Bind values are always cast to their respective type. -->
-      <enumeration value="ALWAYS"/>
-
-      <!-- Bind values are cast to their respective type when needed.
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Bind values are cast to their respective type when needed.
 
            Some databases are not able to delay bind value type inference until the execution of a statement.
            They will either reject the value of unknown type, or assume a possibly inappropriate type. In these
            cases, jOOQ will generate an explicit cast(? as datatype) expression around the bind value to help
-           the query parser do its job. The exact behaviour of this mode is undefined and subject to change. -->
-      <enumeration value="DEFAULT"/>
+           the query parser do its job. The exact behaviour of this mode is undefined and subject to change.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Bind values are never cast to their respective type. -->
-      <enumeration value="NEVER"/>
+      <enumeration value="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Bind values are never cast to their respective type.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="StatementType">
     <restriction base="string">
+      <enumeration value="STATIC_STATEMENT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Execute statements with inlined bind values, avoiding JDBC's PreparedStatements]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Execute statements with inlined bind values, avoiding JDBC's PreparedStatements -->
-      <enumeration value="STATIC_STATEMENT"/>
-
-      <!-- Execute statements with bind values, using JDBC's PreparedStatements -->
-      <enumeration value="PREPARED_STATEMENT"/>
+      <enumeration value="PREPARED_STATEMENT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Execute statements with bind values, using JDBC's PreparedStatements]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="InvocationOrder">
     <restriction base="string">
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The first registered listener is invoked first]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- The first registered listener is invoked first -->
-      <enumeration value="DEFAULT"/>
-    
-      <!-- The first registered listener is invoked last -->
-      <enumeration value="REVERSE"/>
+      <enumeration value="REVERSE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The first registered listener is invoked last]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
@@ -2017,95 +2026,108 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       </appinfo>
     </annotation>
     <restriction base="string">
-
-      <!-- Render object names quoted, as defined in the database. Use this
+      <enumeration value="QUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Render object names quoted, as defined in the database. Use this
            to stay on the safe side with case-sensitivity and special
            characters. For instance:
            Oracle    : "SYS"."ALL_TAB_COLS"
            MySQL     : `information_schema`.`TABLES`
-           SQL Server: [INFORMATION_SCHEMA].[TABLES] -->
-      <enumeration value="QUOTED"/>
+           SQL Server: [INFORMATION_SCHEMA].[TABLES]]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Render object names, as defined in the database. For instance:
+      <enumeration value="AS_IS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Render object names, as defined in the database. For instance:
            Oracle    : SYS.ALL_TAB_COLS
            MySQL     : information_schema.TABLES
-           SQL Server: INFORMATION_SCHEMA.TABLES -->
-      <enumeration value="AS_IS"/>
+           SQL Server: INFORMATION_SCHEMA.TABLES]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Force rendering object names in lower case. For instance:
+      <enumeration value="LOWER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force rendering object names in lower case. For instance:
            Oracle    : sys.all_tab_cols
            MySQL     : information_schema.tables
-           SQL Server: information_schema.tables -->
-      <enumeration value="LOWER"/>
+           SQL Server: information_schema.tables]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Force rendering object names in upper case. For instance:
+      <enumeration value="UPPER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force rendering object names in upper case. For instance:
            Oracle    : SYS.ALL_TAB_COLS
            MySQL     : INFORMATION_SCHEMA.TABLES
-           SQL Server: INFORMATION_SCHEMA.TABLES -->
-      <enumeration value="UPPER"/>
+           SQL Server: INFORMATION_SCHEMA.TABLES]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="RenderQuotedNames">
     <restriction base="string">
-
-      <!-- Always render object names quoted, as defined in the database.
+      <enumeration value="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always render object names quoted, as defined in the database.
            Use this to stay on the safe side with case-sensitivity, special
            characters, and keywords. For instance:
            Oracle    : "SYS"."ALL_TAB_COLS"
            MySQL     : `information_schema`.`TABLES`
-           SQL Server: [INFORMATION_SCHEMA].[TABLES] -->
-      <enumeration value="ALWAYS"/>
+           SQL Server: [INFORMATION_SCHEMA].[TABLES]]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Render object names quoted if they are constructed using DSL.quotedName() or DSL.name() -->
-      <enumeration value="EXPLICIT_DEFAULT_QUOTED"/>
+      <enumeration value="EXPLICIT_DEFAULT_QUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Render object names quoted if they are constructed using DSL.quotedName() or DSL.name()]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Render object names quoted if they are constructed using DSL.quotedName() -->
-      <enumeration value="EXPLICIT_DEFAULT_UNQUOTED"/>
+      <enumeration value="EXPLICIT_DEFAULT_UNQUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Render object names quoted if they are constructed using DSL.quotedName()]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Never quote names -->
-      <enumeration value="NEVER"/>
+      <enumeration value="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Never quote names]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="RenderNameCase">
     <restriction base="string">
+      <enumeration value="AS_IS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Render object names, as defined in the database. For instance: schema.TABLE]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Render object names, as defined in the database. For instance: schema.TABLE -->
-      <enumeration value="AS_IS"/>
+      <enumeration value="LOWER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force rendering object names in lower case. For instance: schema."table"]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Force rendering object names in lower case. For instance: schema."table" -->
-      <enumeration value="LOWER"/>
+      <enumeration value="LOWER_IF_UNQUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force rendering object names in lower case, if unquoted. For instance schema."TABLE"]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Force rendering object names in lower case, if unquoted. For instance schema."TABLE" -->
-      <enumeration value="LOWER_IF_UNQUOTED"/>
+      <enumeration value="UPPER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force rendering object names in upper case. For instance: SCHEMA."TABLE"]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Force rendering object names in upper case. For instance: SCHEMA."TABLE" -->
-      <enumeration value="UPPER"/>
-
-      <!-- Force rendering object names in upper case, if unquoted. For instance SCHEMA."table" -->
-      <enumeration value="UPPER_IF_UNQUOTED"/>
+      <enumeration value="UPPER_IF_UNQUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force rendering object names in upper case, if unquoted. For instance SCHEMA."table"]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="RenderKeywordCase">
     <restriction base="string">
+      <enumeration value="AS_IS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Keywords are rendered "as is", i.e. mostly in lower case. For instance:
+           select .. from .. where ..]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Keywords are rendered "as is", i.e. mostly in lower case. For instance:
-           select .. from .. where .. -->
-      <enumeration value="AS_IS"/>
+      <enumeration value="LOWER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Keywords are rendered in lower case. For instance:
+           select .. from .. where ..]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Keywords are rendered in lower case. For instance:
-           select .. from .. where .. -->
-      <enumeration value="LOWER"/>
+      <enumeration value="UPPER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Keywords are rendered in upper case. For instance:
+           SELECT .. FROM .. WHERE ..]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Keywords are rendered in upper case. For instance:
-           SELECT .. FROM .. WHERE .. -->
-      <enumeration value="UPPER"/>
-
-      <!-- Keywords are rendered in Pascal Case. For instance:
-           Select .. From .. Where .. -->
-      <enumeration value="PASCAL"/>
+      <enumeration value="PASCAL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Keywords are rendered in Pascal Case. For instance:
+           Select .. From .. Where ..]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
@@ -2116,22 +2138,25 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       </appinfo>
     </annotation>
     <restriction base="string">
+      <enumeration value="AS_IS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Keywords are rendered "as is", i.e. mostly in lower case. For instance:
+           select .. from .. where ..]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Keywords are rendered "as is", i.e. mostly in lower case. For instance:
-           select .. from .. where .. -->
-      <enumeration value="AS_IS"/>
+      <enumeration value="LOWER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Keywords are rendered in lower case. For instance:
+           select .. from .. where ..]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Keywords are rendered in lower case. For instance:
-           select .. from .. where .. -->
-      <enumeration value="LOWER"/>
+      <enumeration value="UPPER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Keywords are rendered in upper case. For instance:
+           SELECT .. FROM .. WHERE ..]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Keywords are rendered in upper case. For instance:
-           SELECT .. FROM .. WHERE .. -->
-      <enumeration value="UPPER"/>
-
-      <!-- Keywords are rendered in Pascal Case. For instance:
-           Select .. From .. Where .. -->
-      <enumeration value="PASCAL"/>
+      <enumeration value="PASCAL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Keywords are rendered in Pascal Case. For instance:
+           Select .. From .. Where ..]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
@@ -2155,15 +2180,17 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
   
   <simpleType name="DiagnosticsConnection">
     <restriction base="string">
-    
-      <!-- The DiagnosticsConnection is turned on if used explicitly. -->
-      <enumeration value="DEFAULT"/>
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The DiagnosticsConnection is turned on if used explicitly.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- The DiagnosticsConnection is always turned on for any user connection. -->
-      <enumeration value="ON"/>
+      <enumeration value="ON">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The DiagnosticsConnection is always turned on for any user connection.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- The DiagnosticsConnection is turned off, even when used explicitly. -->
-      <enumeration value="OFF"/>
+      <enumeration value="OFF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The DiagnosticsConnection is turned off, even when used explicitly.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
@@ -2177,367 +2204,427 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       <enumeration value="AUTO"/>
         -->
 
-      <!-- Use the database's most sensible default value for ON (MySQL, MariaDB) / OFF (all other databases) -->
-      <enumeration value="DEFAULT"/>
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Use the database's most sensible default value for ON (MySQL, MariaDB) / OFF (all other databases)]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Always escape backslashes. -->
-      <enumeration value="ON"/>
+      <enumeration value="ON">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always escape backslashes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Never escape backslashes. -->
-      <enumeration value="OFF"/>
+      <enumeration value="OFF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Never escape backslashes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="ThrowExceptions">
     <restriction base="string">
+      <enumeration value="THROW_ALL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Collect all exceptions from a batch and throw them all together]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Collect all exceptions from a batch and throw them all together -->
-      <enumeration value="THROW_ALL"/>
+      <enumeration value="THROW_FIRST">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Throw only the first exception from a batch]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Throw only the first exception from a batch -->
-      <enumeration value="THROW_FIRST"/>
-
-      <!-- Throw no exceptions, but collect them in ResultOrRows -->
-      <enumeration value="THROW_NONE"/>
+      <enumeration value="THROW_NONE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Throw no exceptions, but collect them in ResultOrRows]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="ExecuteWithoutWhere">
     <restriction base="string">
+      <enumeration value="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[UPDATE and DELETE statements are allowed to lack a WHERE clause]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- UPDATE and DELETE statements are allowed to lack a WHERE clause -->
-      <enumeration value="IGNORE"/>
+      <enumeration value="LOG_DEBUG">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as DEBUG level]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as DEBUG level -->
-      <enumeration value="LOG_DEBUG"/>
+      <enumeration value="LOG_INFO">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as INFO level]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as INFO level -->
-      <enumeration value="LOG_INFO"/>
+      <enumeration value="LOG_WARN">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as WARN level]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as WARN level -->
-      <enumeration value="LOG_WARN"/>
-
-      <!-- UPDATE and DELETE statements are not allowed to lack a WHERE clause -->
-      <enumeration value="THROW"/>
+      <enumeration value="THROW">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[UPDATE and DELETE statements are not allowed to lack a WHERE clause]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="Warning">
     <restriction base="string">
+      <enumeration value="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Ignore a warning]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Ignore a warning -->
-      <enumeration value="IGNORE"/>
+      <enumeration value="LOG_DEBUG">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Log a warning at DEBUG level]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Log a warning at DEBUG level -->
-      <enumeration value="LOG_DEBUG"/>
+      <enumeration value="LOG_INFO">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Log a warning at INFO level]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Log a warning at INFO level -->
-      <enumeration value="LOG_INFO"/>
+      <enumeration value="LOG_WARN">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Log a warning at WARN level]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Log a warning at WARN level -->
-      <enumeration value="LOG_WARN"/>
-
-      <!-- Throw an exception -->
-      <enumeration value="THROW"/>
+      <enumeration value="THROW">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Throw an exception]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="RenderImplicitJoinType">
     <restriction base="string">
-    
-      <!-- The DEFAULT behaviour, depending on the type of path -->
-      <enumeration value="DEFAULT"/>
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The DEFAULT behaviour, depending on the type of path]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Always render INNER JOIN -->
-      <enumeration value="INNER_JOIN"/>
+      <enumeration value="INNER_JOIN">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always render INNER JOIN]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Always render LEFT JOIN -->
-      <enumeration value="LEFT_JOIN"/>
+      <enumeration value="LEFT_JOIN">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always render LEFT JOIN]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Always render a scalar subquery -->
-      <enumeration value="SCALAR_SUBQUERY"/>
+      <enumeration value="SCALAR_SUBQUERY">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always render a scalar subquery]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Always throw an exception (effectively disallowing the type of implicit joins) -->
-      <enumeration value="THROW"/>
+      <enumeration value="THROW">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always throw an exception (effectively disallowing the type of implicit joins)]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="RenderDefaultNullability">
     <restriction base="string">
-    
-      <!-- Do not produce any nullability clause for Nullability.DEFAULT, and thus produce the dialect specific default behaviors -->
-      <enumeration value="IMPLICIT_DEFAULT"/>
+      <enumeration value="IMPLICIT_DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Do not produce any nullability clause for Nullability.DEFAULT, and thus produce the dialect specific default behaviors]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
       <!-- Produce the dialect specific default behaviour, but generate it explicitly
       <enumeration value="EXPLICIT_DEFAULT"/> 
         -->
       
-      <!-- Produce implicit nullability for Nullability.DEFAULT if NULL is the default for a given dialect, or explicit nullability otherwise (e.g. in both Sybase) -->
-      <enumeration value="IMPLICIT_NULL"/>
+      <enumeration value="IMPLICIT_NULL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Produce implicit nullability for Nullability.DEFAULT if NULL is the default for a given dialect, or explicit nullability otherwise (e.g. in both Sybase)]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Produce explicit nullability for Nullability.DEFAULT, irrespective of the context (e.g. if the column is a primary key) -->
-      <enumeration value="EXPLICIT_NULL"/>
+      <enumeration value="EXPLICIT_NULL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Produce explicit nullability for Nullability.DEFAULT, irrespective of the context (e.g. if the column is a primary key)]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="RenderOptionalKeyword">
     <restriction base="string">
-    
-      <!-- Optional keywords will never be generated (does not affect mandatory keywords). -->
-      <enumeration value="OFF"/>
+      <enumeration value="OFF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Optional keywords will never be generated (does not affect mandatory keywords).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Optional keywords will always be generated (does not affect mandatory keywords). -->
-      <enumeration value="ON"/>
+      <enumeration value="ON">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Optional keywords will always be generated (does not affect mandatory keywords).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- The default applies for optional keywords. -->
-      <enumeration value="DEFAULT"/>
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default applies for optional keywords.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="RenderImplicitWindowRange">
     <restriction base="string">
-    
-      <!-- Implicit RANGE clause will not be generated explicitly. The RDBMS's implicit behaviour is used -->
-      <enumeration value="OFF"/>
+      <enumeration value="OFF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Implicit RANGE clause will not be generated explicitly. The RDBMS's implicit behaviour is used]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Implicit RANGE clause is generated as ROWS UNBOUNDED PRECEDING -->
-      <enumeration value="ROWS_UNBOUNDED_PRECEDING"/>
+      <enumeration value="ROWS_UNBOUNDED_PRECEDING">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Implicit RANGE clause is generated as ROWS UNBOUNDED PRECEDING]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Implicit RANGE clause is generated as ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING -->
-      <enumeration value="ROWS_ALL"/>
+      <enumeration value="ROWS_ALL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Implicit RANGE clause is generated as ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Implicit RANGE clause is generated as RANGE UNBOUNDED PRECEDING -->
-      <enumeration value="RANGE_UNBOUNDED_PRECEDING"/>
+      <enumeration value="RANGE_UNBOUNDED_PRECEDING">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Implicit RANGE clause is generated as RANGE UNBOUNDED PRECEDING]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Implicit RANGE clause is generated as RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING -->
-      <enumeration value="RANGE_ALL"/>
+      <enumeration value="RANGE_ALL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Implicit RANGE clause is generated as RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="InterpreterNameLookupCaseSensitivity">
     <restriction base="string">
-    
-      <!-- The default value depending on Settings.interpreterDialect -->
-      <enumeration value="DEFAULT"/>
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default value depending on Settings.interpreterDialect]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Identifiers are always case sensitive -->
-      <enumeration value="ALWAYS"/>
+      <enumeration value="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Identifiers are always case sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Only quoted identifiers are case sensitive -->
-      <enumeration value="WHEN_QUOTED"/>
+      <enumeration value="WHEN_QUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Only quoted identifiers are case sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Identifiers are never case sensitive -->
-      <enumeration value="NEVER"/>
+      <enumeration value="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Identifiers are never case sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="ParseNameCase">
     <restriction base="string">
 
-      <!-- Parse object names, as defined in the database. For instance: schema.TABLE -->
-      <enumeration value="AS_IS"/>
+      <enumeration value="AS_IS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Parse object names, as defined in the database. For instance: schema.TABLE]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Force parsing object names in lower case. For instance: schema."table" -->
-      <enumeration value="LOWER"/>
+      <enumeration value="LOWER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force parsing object names in lower case. For instance: schema."table"]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Force parsing object names in lower case, if unquoted. For instance schema."TABLE" -->
-      <enumeration value="LOWER_IF_UNQUOTED"/>
+      <enumeration value="LOWER_IF_UNQUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force parsing object names in lower case, if unquoted. For instance schema."TABLE"]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Force parsing object names in upper case. For instance: SCHEMA."TABLE" -->
-      <enumeration value="UPPER"/>
+      <enumeration value="UPPER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force parsing object names in upper case. For instance: SCHEMA."TABLE"]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Force parsing object names in upper case, if unquoted. For instance SCHEMA."table" -->
-      <enumeration value="UPPER_IF_UNQUOTED"/>
+      <enumeration value="UPPER_IF_UNQUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Force parsing object names in upper case, if unquoted. For instance SCHEMA."table"]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Apply the parse dialect specific default behaviour -->
-      <enumeration value="DEFAULT"></enumeration>
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the parse dialect specific default behaviour]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="ParseWithMetaLookups">
     <restriction base="string">
+      <enumeration value="OFF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Meta lookups are deactivated in parser]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Meta lookups are deactivated in parser -->
-      <enumeration value="OFF"/>
+      <enumeration value="IGNORE_ON_FAILURE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Meta lookups are active in parser, but don't throw exceptions on failure]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Meta lookups are active in parser, but don't throw exceptions on failure -->
-      <enumeration value="IGNORE_ON_FAILURE"/>
-
-      <!-- Meta lookups are active in parser and throw exceptions on failure -->
-      <enumeration value="THROW_ON_FAILURE"/>
+      <enumeration value="THROW_ON_FAILURE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Meta lookups are active in parser and throw exceptions on failure]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="ParseUnsupportedSyntax">
     <restriction base="string">
+      <enumeration value="FAIL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fail on syntax that is supported (known) by the parser, but not the jOOQ API]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Fail on syntax that is supported (known) by the parser, but not the jOOQ API -->
-      <enumeration value="FAIL"/>
-
-      <!-- Ignore syntax that is supported (known) by the parser, but not the jOOQ API -->
-      <enumeration value="IGNORE"/>
+      <enumeration value="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Ignore syntax that is supported (known) by the parser, but not the jOOQ API]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="ParseUnknownFunctions">
     <restriction base="string">
+      <enumeration value="FAIL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Functions have to be known by the parser, or by the catalog.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
 
-      <!-- Functions have to be known by the parser, or by the catalog -->
-      <enumeration value="FAIL"/>
-
-      <!-- Unknown functions (parser or catalog) will be passed on as plain SQL -->
-      <enumeration value="IGNORE"/>
+      <enumeration value="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Unknown functions (parser or catalog) will be passed on as plain SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="QueryPoolable">
     <restriction base="string">
+      <enumeration value="TRUE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Statements are poolable]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Statements are poolable -->
-      <enumeration value="TRUE"/>
+      <enumeration value="FALSE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Statements are not poolable]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Statements are not poolable -->
-      <enumeration value="FALSE"/>
-    
-      <!-- Statements may be poolable, according to JDBC's default behaviour -->
-      <enumeration value="DEFAULT"/>
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Statements may be poolable, according to JDBC's default behaviour]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="UpdateUnchangedRecords">
     <restriction base="string">
+      <enumeration value="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Never update unchanged records]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Never update unchanged records -->
-      <enumeration value="NEVER"/>
+      <enumeration value="SET_PRIMARY_KEY_TO_ITSELF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Update unchanged records by setting the primary key column to itself, e.g. SET id = id]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Update unchanged records by setting the primary key column to itself, e.g. SET id = id -->
-      <enumeration value="SET_PRIMARY_KEY_TO_ITSELF"/>
+      <enumeration value="SET_NON_PRIMARY_KEY_TO_THEMSELVES">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Update unchanged records by setting non-primary key columns to themselves, e.g. SET a = a, b = b]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Update unchanged records by setting non-primary key columns to themselves, e.g. SET a = a, b = b -->
-      <enumeration value="SET_NON_PRIMARY_KEY_TO_THEMSELVES"/>
-    
-      <!-- Update unchanged records by setting record values to the values from the record, e.g. SET a = :a, b = :b. This is the same as calling record.changed(true) prior to updating. -->
-      <enumeration value="SET_NON_PRIMARY_KEY_TO_RECORD_VALUES"/>
+      <enumeration value="SET_NON_PRIMARY_KEY_TO_RECORD_VALUES">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Update unchanged records by setting record values to the values from the record, e.g. SET a = :a, b = :b. This is the same as calling record.changed(true) prior to updating.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="RecordDirtyTracking">
     <restriction base="string">
-    
-      <!-- Dirty tracking is based on Record.touched() semantics -->
-      <enumeration value="TOUCHED"/>
+      <enumeration value="TOUCHED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Dirty tracking is based on Record.touched() semantics]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Dirty tracking is based on Record.modified() semantics -->
-      <enumeration value="MODIFIED"/>
+      <enumeration value="MODIFIED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Dirty tracking is based on Record.modified() semantics]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="Transformation">
     <restriction base="string">
-    
-      <!-- Never apply the transformation -->
-      <enumeration value="NEVER"/>
+      <enumeration value="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Never apply the transformation]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Apply the transformation when needed by a dialect -->
-      <enumeration value="WHEN_NEEDED"/>
+      <enumeration value="WHEN_NEEDED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the transformation when needed by a dialect]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Always apply the transformation -->
-      <enumeration value="ALWAYS"/>
+      <enumeration value="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always apply the transformation]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="TransformUnneededArithmeticExpressions">
     <restriction base="string">
-    
-      <!-- Never transform unneeded arithmetic expressions -->
-      <enumeration value="NEVER"/>
+      <enumeration value="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Never transform unneeded arithmetic expressions]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Transform arithmetic expressions arising from jOOQ's internals -->
-      <enumeration value="INTERNAL"/>
+      <enumeration value="INTERNAL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform arithmetic expressions arising from jOOQ's internals]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Transform all arithmetic expressions -->
-      <enumeration value="ALWAYS"/>
+      <enumeration value="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform all arithmetic expressions]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="FetchIntermediateResult">
     <restriction base="string">
+      <enumeration value="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always fetch intermediate results]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Always fetch intermediate results -->
-      <enumeration value="ALWAYS"/>
+      <enumeration value="WHEN_EXECUTE_LISTENERS_PRESENT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fetch intermediate results only when explicitly requested or when execute listeners are present]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Fetch intermediate results only when explicitly requested or when execute listeners are present -->
-      <enumeration value="WHEN_EXECUTE_LISTENERS_PRESENT"/>
-    
-      <!-- Fetch intermediate results only when explicitly requested -->
-      <enumeration value="WHEN_RESULT_REQUESTED"/>
+      <enumeration value="WHEN_RESULT_REQUESTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fetch intermediate results only when explicitly requested]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="NestedCollectionEmulation">
     <restriction base="string">
+      <enumeration value="NATIVE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate native LIST, SET, MULTISET syntax irrespective of support]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Generate native LIST, SET, MULTISET syntax irrespective of support -->
-      <enumeration value="NATIVE"/>
-    
-      <!-- Generate native LIST, SET, MULTISET syntax if supported, or the most optimal emulation, otherwise -->
-      <enumeration value="DEFAULT"/>
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate native LIST, SET, MULTISET syntax if supported, or the most optimal emulation, otherwise]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
       <!-- Emulate LIST, SET, MULTISET syntax using ARRAY and ROW 
       <enumeration value="ARRAY"/>
         -->
         
-      <!-- Emulate LIST, SET, MULTISET syntax using XML -->
-      <enumeration value="XML"/>
+      <enumeration value="XML">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Emulate LIST, SET, MULTISET syntax using XML]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Emulate LIST, SET, MULTISET syntax using JSON -->
-      <enumeration value="JSON"/>
+      <enumeration value="JSON">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Emulate LIST, SET, MULTISET syntax using JSON]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     
-      <!-- Emulate LIST, SET, MULTISET syntax using JSONB -->
-      <enumeration value="JSONB"/>
+      <enumeration value="JSONB">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Emulate LIST, SET, MULTISET syntax using JSONB]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="WriteIfReadonly">
     <restriction base="string">
-    
-      <!-- Allow for writing to readonly fields -->
-      <enumeration value="WRITE"/>
+      <enumeration value="WRITE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Allow for writing to readonly fields]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Ignore writes to readonly fields -->
-      <enumeration value="IGNORE"/>
+      <enumeration value="IGNORE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Ignore writes to readonly fields]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Throw an exception when writing to readonly fields -->
-      <enumeration value="THROW"/>
+      <enumeration value="THROW">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Throw an exception when writing to readonly fields]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="FetchTriggerValuesAfterReturning">
     <restriction base="string">
-    
-      <!-- Never fetch trigger values after returning. -->
-      <enumeration value="NEVER"/>
+      <enumeration value="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Never fetch trigger values after returning.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Fetch trigger values only when triggers are known to be present.
-           Trigger meta data is only available in jOOQ's commercial editions -->
-      <enumeration value="WHEN_NEEDED"/>
+      <enumeration value="WHEN_NEEDED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Fetch trigger values only when triggers are known to be present.
+           Trigger meta data is only available in jOOQ's commercial editions]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Always fetch trigger values. -->
-      <enumeration value="ALWAYS"/>
+      <enumeration value="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always fetch trigger values.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="AutoAliasExpressions">
     <restriction base="string">
-    
-      <!-- Never auto-alias expressions. -->
-      <enumeration value="NEVER"/>
+      <enumeration value="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Never auto-alias expressions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Auto-alias only unnamed expressions. -->
-      <enumeration value="UNNAMED"/>
+      <enumeration value="UNNAMED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Auto-alias only unnamed expressions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
       
-      <!-- Always auto-alias expressions. -->
-      <enumeration value="ALWAYS"/>
+      <enumeration value="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always auto-alias expressions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 </schema>

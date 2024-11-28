@@ -27,11 +27,41 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum Logging {
 
+
+    /**
+     * The <code>TRACE</code> log level.
+     * 
+     */
     TRACE,
+
+    /**
+     * The <code>DEBUG</code> log level.
+     * 
+     */
     DEBUG,
+
+    /**
+     * The <code>INFO</code> log level.
+     * 
+     */
     INFO,
+
+    /**
+     * The <code>WARN</code> log level.
+     * 
+     */
     WARN,
+
+    /**
+     * The <code>ERROR</code> log level.
+     * 
+     */
     ERROR,
+
+    /**
+     * The <code>FATAL</code> log level.
+     * 
+     */
     FATAL;
 
     public String value() {

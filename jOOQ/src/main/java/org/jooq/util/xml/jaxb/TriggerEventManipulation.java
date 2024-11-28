@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TriggerEventManipulation {
 
+
+    /**
+     * Whether the trigger should fire on INSERT.
+     * 
+     */
     INSERT,
+
+    /**
+     * Whether the trigger should fire on UPDATE.
+     * 
+     */
     UPDATE,
+
+    /**
+     * Whether the trigger should fire on DELETE.
+     * 
+     */
     DELETE;
 
     public String value() {

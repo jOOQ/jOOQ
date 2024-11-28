@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum OnError {
 
+
+    /**
+     * On error, the code generation should fail.
+     * 
+     */
     FAIL,
+
+    /**
+     * On error, the code generation should log the error, and continue.
+     * 
+     */
     LOG,
+
+    /**
+     * Suppress all errors.
+     * 
+     */
     SILENT;
 
     public String value() {

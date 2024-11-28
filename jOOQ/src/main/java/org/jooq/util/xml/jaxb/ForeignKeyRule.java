@@ -27,12 +27,37 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ForeignKeyRule {
 
+
+    /**
+     * The DELETE or UPDATE rule is for changes to the referenced table to CASCADE to the referencing table.
+     * 
+     */
     CASCADE("CASCADE"),
+
+    /**
+     * The DELETE or UPDATE rule is for changes to the referenced table to result in SET NULL actions in the referencing table.
+     * 
+     */
     @XmlEnumValue("SET NULL")
     SET_NULL("SET NULL"),
+
+    /**
+     * The DELETE or UPDATE rule is for changes to the referenced table to result in SET DELETE actions in the referencing table.
+     * 
+     */
     @XmlEnumValue("SET DEFAULT")
     SET_DEFAULT("SET DEFAULT"),
+
+    /**
+     * The DELETE or UPDATE rule is to RESTRICT changes to the referenced table.
+     * 
+     */
     RESTRICT("RESTRICT"),
+
+    /**
+     * The DELETE or UPDATE rule is to take NO ACTION on changes to the referenced table. This is similar to {@link #RESTRICT}, but allows for checks to be deferred.
+     * 
+     */
     @XmlEnumValue("NO ACTION")
     NO_ACTION("NO ACTION");
     private final String value;

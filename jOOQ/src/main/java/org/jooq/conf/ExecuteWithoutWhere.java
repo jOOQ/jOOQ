@@ -26,10 +26,35 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ExecuteWithoutWhere {
 
+
+    /**
+     * UPDATE and DELETE statements are allowed to lack a WHERE clause
+     * 
+     */
     IGNORE,
+
+    /**
+     * UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as DEBUG level
+     * 
+     */
     LOG_DEBUG,
+
+    /**
+     * UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as INFO level
+     * 
+     */
     LOG_INFO,
+
+    /**
+     * UPDATE and DELETE statements are allowed to lack a WHERE clause, but this is logged as WARN level
+     * 
+     */
     LOG_WARN,
+
+    /**
+     * UPDATE and DELETE statements are not allowed to lack a WHERE clause
+     * 
+     */
     THROW;
 
     public String value() {

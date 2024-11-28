@@ -26,10 +26,35 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum RenderNameCase {
 
+
+    /**
+     * Render object names, as defined in the database. For instance: schema.TABLE
+     * 
+     */
     AS_IS,
+
+    /**
+     * Force rendering object names in lower case. For instance: schema."table"
+     * 
+     */
     LOWER,
+
+    /**
+     * Force rendering object names in lower case, if unquoted. For instance schema."TABLE"
+     * 
+     */
     LOWER_IF_UNQUOTED,
+
+    /**
+     * Force rendering object names in upper case. For instance: SCHEMA."TABLE"
+     * 
+     */
     UPPER,
+
+    /**
+     * Force rendering object names in upper case, if unquoted. For instance SCHEMA."table"
+     * 
+     */
     UPPER_IF_UNQUOTED;
 
     public String value() {

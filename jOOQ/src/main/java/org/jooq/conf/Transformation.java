@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum Transformation {
 
+
+    /**
+     * Never apply the transformation
+     * 
+     */
     NEVER,
+
+    /**
+     * Apply the transformation when needed by a dialect
+     * 
+     */
     WHEN_NEEDED,
+
+    /**
+     * Always apply the transformation
+     * 
+     */
     ALWAYS;
 
     public String value() {

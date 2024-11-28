@@ -23,7 +23,17 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum InvocationOrder {
 
+
+    /**
+     * The first registered listener is invoked first
+     * 
+     */
     DEFAULT,
+
+    /**
+     * The first registered listener is invoked last
+     * 
+     */
     REVERSE;
 
     public String value() {

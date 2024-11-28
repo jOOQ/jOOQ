@@ -23,7 +23,17 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum RecordDirtyTracking {
 
+
+    /**
+     * Dirty tracking is based on Record.touched() semantics
+     * 
+     */
     TOUCHED,
+
+    /**
+     * Dirty tracking is based on Record.modified() semantics
+     * 
+     */
     MODIFIED;
 
     public String value() {

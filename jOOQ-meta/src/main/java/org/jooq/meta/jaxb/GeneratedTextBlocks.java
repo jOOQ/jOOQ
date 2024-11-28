@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GeneratedTextBlocks {
 
+
+    /**
+     * Text blocks should be used in generated code (for database source code) depending on whether the JDK used for code generation supports text blocks.
+     * 
+     */
     DETECT_FROM_JDK,
+
+    /**
+     * Text blocks should be used in generated code (for database source code).
+     * 
+     */
     ON,
+
+    /**
+     * Text blocks should not be used in generated code.
+     * 
+     */
     OFF;
 
     public String value() {

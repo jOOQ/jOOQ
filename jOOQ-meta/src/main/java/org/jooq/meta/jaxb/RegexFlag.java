@@ -30,14 +30,59 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum RegexFlag {
 
+
+    /**
+     * Apply the {@link java.util.regex.Pattern#UNIX_LINES} flag to regular expressions from the code generation configuration.
+     * 
+     */
     UNIX_LINES,
+
+    /**
+     * Apply the {@link java.util.regex.Pattern#CASE_INSENSITIVE} flag to regular expressions from the code generation configuration.
+     * 
+     */
     CASE_INSENSITIVE,
+
+    /**
+     * Apply the {@link java.util.regex.Pattern#COMMENTS} flag to regular expressions from the code generation configuration.
+     * 
+     */
     COMMENTS,
+
+    /**
+     * Apply the {@link java.util.regex.Pattern#MULTILINE} flag to regular expressions from the code generation configuration.
+     * 
+     */
     MULTILINE,
+
+    /**
+     * Apply the {@link java.util.regex.Pattern#LITERAL} flag to regular expressions from the code generation configuration.
+     * 
+     */
     LITERAL,
+
+    /**
+     * Apply the {@link java.util.regex.Pattern#DOTALL} flag to regular expressions from the code generation configuration.
+     * 
+     */
     DOTALL,
+
+    /**
+     * Apply the {@link java.util.regex.Pattern#UNICODE_CASE} flag to regular expressions from the code generation configuration.
+     * 
+     */
     UNICODE_CASE,
+
+    /**
+     * Apply the {@link java.util.regex.Pattern#CANON_EQ} flag to regular expressions from the code generation configuration.
+     * 
+     */
     CANON_EQ,
+
+    /**
+     * Apply the {@link java.util.regex.Pattern#UNICODE_CHARACTER_CLASS} flag to regular expressions from the code generation configuration.
+     * 
+     */
     UNICODE_CHARACTER_CLASS;
 
     public String value() {

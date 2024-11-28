@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
     xmlns:tns="http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:annox="http://annox.dev.java.net"
     targetNamespace="http://www.jooq.org/xsd/jooq-migrations-3.20.0.xsd"
-    elementFormDefault="qualified">
+    elementFormDefault="qualified"
+    jxb:extensionBindingPrefixes="annox"
+    jxb:version="2.1">
 
     <element name="migrations" type="tns:MigrationsType"/>
     <element name="commit" type="tns:CommitType"/>
@@ -72,11 +76,21 @@
     
     <simpleType name="ChangeType">
         <restriction base="string">
-            <enumeration value="ADD"/>
-            <enumeration value="MODIFY"/>
-            <enumeration value="DELETE"/>
-            <enumeration value="RENAME"/>
-            <enumeration value="COPY"/>
+            <enumeration value="ADD">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[ADD a file to the migration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="MODIFY">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[MODIFY a file from the migration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="DELETE">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[DELETE a file from the migration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="RENAME">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[RENAME a file in the migration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="COPY">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[COPY a file within the migration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
         </restriction>
     </simpleType>
 </schema>

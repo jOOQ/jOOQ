@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum AutoAliasExpressions {
 
+
+    /**
+     * Never auto-alias expressions.
+     * 
+     */
     NEVER,
+
+    /**
+     * Auto-alias only unnamed expressions.
+     * 
+     */
     UNNAMED,
+
+    /**
+     * Always auto-alias expressions.
+     * 
+     */
     ALWAYS;
 
     public String value() {

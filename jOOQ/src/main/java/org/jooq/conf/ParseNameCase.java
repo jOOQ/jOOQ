@@ -27,11 +27,41 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ParseNameCase {
 
+
+    /**
+     * Parse object names, as defined in the database. For instance: schema.TABLE
+     * 
+     */
     AS_IS,
+
+    /**
+     * Force parsing object names in lower case. For instance: schema."table"
+     * 
+     */
     LOWER,
+
+    /**
+     * Force parsing object names in lower case, if unquoted. For instance schema."TABLE"
+     * 
+     */
     LOWER_IF_UNQUOTED,
+
+    /**
+     * Force parsing object names in upper case. For instance: SCHEMA."TABLE"
+     * 
+     */
     UPPER,
+
+    /**
+     * Force parsing object names in upper case, if unquoted. For instance SCHEMA."table"
+     * 
+     */
     UPPER_IF_UNQUOTED,
+
+    /**
+     * Apply the parse dialect specific default behaviour
+     * 
+     */
     DEFAULT;
 
     public String value() {

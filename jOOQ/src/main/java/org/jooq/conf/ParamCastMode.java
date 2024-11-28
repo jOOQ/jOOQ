@@ -24,8 +24,28 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ParamCastMode {
 
+
+    /**
+     * Bind values are always cast to their respective type.
+     * 
+     */
     ALWAYS,
+
+    /**
+     * Bind values are cast to their respective type when needed.
+     * 
+     *            Some databases are not able to delay bind value type inference until the execution of a statement.
+     *            They will either reject the value of unknown type, or assume a possibly inappropriate type. In these
+     *            cases, jOOQ will generate an explicit cast(? as datatype) expression around the bind value to help
+     *            the query parser do its job. The exact behaviour of this mode is undefined and subject to change.
+     * 
+     */
     DEFAULT,
+
+    /**
+     * Bind values are never cast to their respective type.
+     * 
+     */
     NEVER;
 
     public String value() {

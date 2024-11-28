@@ -26,10 +26,35 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum GeneratedAnnotationType {
 
+
+    /**
+     * The <code>Generated</code> annotation should be detected automatically from the JDK used at code generation time.
+     * 
+     */
     DETECT_FROM_JDK,
+
+    /**
+     * Use the <code>javax.annotation.Generated</code> annotation.
+     * 
+     */
     JAVAX_ANNOTATION_GENERATED,
+
+    /**
+     * Use the <code>javax.annotation.processing.Generated</code> annotation.
+     * 
+     */
     JAVAX_ANNOTATION_PROCESSING_GENERATED,
+
+    /**
+     * Use the <code>jakarta.annotation.Generated</code> annotation.
+     * 
+     */
     JAKARTA_ANNOTATION_GENERATED,
+
+    /**
+     * Use the {@link org.jooq.Generated} annotation.
+     * 
+     */
     ORG_JOOQ_GENERATED;
 
     public String value() {

@@ -23,7 +23,17 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum StatementType {
 
+
+    /**
+     * Execute statements with inlined bind values, avoiding JDBC's PreparedStatements
+     * 
+     */
     STATIC_STATEMENT,
+
+    /**
+     * Execute statements with bind values, using JDBC's PreparedStatements
+     * 
+     */
     PREPARED_STATEMENT;
 
     public String value() {

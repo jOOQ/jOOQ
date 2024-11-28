@@ -40,20 +40,38 @@
 
   <simpleType name="Logging">
     <restriction base="string">
-      <enumeration value="TRACE"/>
-      <enumeration value="DEBUG"/>
-      <enumeration value="INFO"/>
-      <enumeration value="WARN"/>
-      <enumeration value="ERROR"/>
-      <enumeration value="FATAL"/>
+      <enumeration value="TRACE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The <code>TRACE</code> log level.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="DEBUG">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The <code>DEBUG</code> log level.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="INFO">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The <code>INFO</code> log level.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="WARN">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The <code>WARN</code> log level.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="ERROR">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The <code>ERROR</code> log level.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="FATAL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The <code>FATAL</code> log level.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="OnError">
     <restriction base="string">
-      <enumeration value="FAIL"/>
-      <enumeration value="LOG"/>
-      <enumeration value="SILENT"/>
+      <enumeration value="FAIL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[On error, the code generation should fail.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="LOG">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[On error, the code generation should log the error, and continue.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="SILENT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Suppress all errors.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
@@ -881,13 +899,27 @@ and follow its (undocumented!) assumptions (e.g. constructors, etc.). Use this a
 
   <simpleType name="MatcherTransformType">
     <restriction base="string">
-      <enumeration value="AS_IS"/>
-      <enumeration value="LOWER"/>
-      <enumeration value="LOWER_FIRST_LETTER"/>
-      <enumeration value="UPPER"/>
-      <enumeration value="UPPER_FIRST_LETTER"/>
-      <enumeration value="CAMEL"/>
-      <enumeration value="PASCAL"/>
+      <enumeration value="AS_IS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link MatcherRule} should not transform identifiers, but output them "as is" (as the input is).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="LOWER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link MatcherRule} should transform identifiers to lower case.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="LOWER_FIRST_LETTER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link MatcherRule} should transform the first letters of identifiers to lower case.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="UPPER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link MatcherRule} should transform identifiers to UPPER case.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="UPPER_FIRST_LETTER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link MatcherRule} should transform the first letters of identifiers to UPPER case.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="CAMEL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link MatcherRule} should transform identifiers to camelCase.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="PASCAL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link MatcherRule} should transform identifiers to PascalCase.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
@@ -2514,12 +2546,24 @@ type. If provided, both "includeExpression" and "includeTypes" must match.]]></j
   
   <simpleType name="ForcedTypeObjectType">
     <restriction base="string">
-      <enumeration value="ALL"/>
-      <enumeration value="ATTRIBUTE"/>
-      <enumeration value="COLUMN"/>
-      <enumeration value="ELEMENT"/>
-      <enumeration value="PARAMETER"/>
-      <enumeration value="SEQUENCE"/>
+      <enumeration value="ALL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link ForcedType} should match all database object types.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="ATTRIBUTE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link ForcedType} should match only UDT attributes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="COLUMN">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link ForcedType} should match only table columns.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="ELEMENT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link ForcedType} should match only array elements.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="PARAMETER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link ForcedType} should match only routine parameters.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="SEQUENCE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link ForcedType} should match only sequences.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
@@ -3234,68 +3278,132 @@ e.g. org.jooq.generated.schema1, org.jooq.generated.schema2]]></jxb:javadoc></jx
 
   <simpleType name="RegexFlag">
     <restriction base="string">
-      <enumeration value="UNIX_LINES"/>
-      <enumeration value="CASE_INSENSITIVE"/>
-      <enumeration value="COMMENTS"/>
-      <enumeration value="MULTILINE"/>
-      <enumeration value="LITERAL"/>
-      <enumeration value="DOTALL"/>
-      <enumeration value="UNICODE_CASE"/>
-      <enumeration value="CANON_EQ"/>
-      <enumeration value="UNICODE_CHARACTER_CLASS"/>
+      <enumeration value="UNIX_LINES">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the {@link java.util.regex.Pattern#UNIX_LINES} flag to regular expressions from the code generation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="CASE_INSENSITIVE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the {@link java.util.regex.Pattern#CASE_INSENSITIVE} flag to regular expressions from the code generation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="COMMENTS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the {@link java.util.regex.Pattern#COMMENTS} flag to regular expressions from the code generation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="MULTILINE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the {@link java.util.regex.Pattern#MULTILINE} flag to regular expressions from the code generation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="LITERAL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the {@link java.util.regex.Pattern#LITERAL} flag to regular expressions from the code generation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="DOTALL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the {@link java.util.regex.Pattern#DOTALL} flag to regular expressions from the code generation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="UNICODE_CASE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the {@link java.util.regex.Pattern#UNICODE_CASE} flag to regular expressions from the code generation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="CANON_EQ">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the {@link java.util.regex.Pattern#CANON_EQ} flag to regular expressions from the code generation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="UNICODE_CHARACTER_CLASS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Apply the {@link java.util.regex.Pattern#UNICODE_CHARACTER_CLASS} flag to regular expressions from the code generation configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="JpaVersion">
     <restriction base="string">
-      <enumeration value="1.0"/>
-      <enumeration value="2.0"/>
-      <enumeration value="2.1"/>
-      <enumeration value="2.2"/>
+      <enumeration value="1.0">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Assume JPA 1.0 support, or later, in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="2.0">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Assume JPA 2.0 support, or later, in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="2.1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Assume JPA 2.1 support, or later, in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="2.2">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Assume JPA 2.2 support, or later, in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 
   <simpleType name="Nullability">
     <restriction base="string">
-      <enumeration value="ALL"/>
-      <enumeration value="NULL"/>
-      <enumeration value="NOT_NULL"/>
+      <enumeration value="ALL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link ForcedType} should match all columns, attributes, and parameters, irrespective of nullability.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="NULL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link ForcedType} should match only columns, attributes, and parameters, which are nullable.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="NOT_NULL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link ForcedType} should match only columns, attributes, and parameters, which are non-nullable.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="VisibilityModifier">
     <restriction base="string">
-      <enumeration value="DEFAULT"/>
-      <enumeration value="NONE"/>
-      <enumeration value="PUBLIC"/>
-      <enumeration value="INTERNAL"/>
-      <enumeration value="PRIVATE"/>
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The generated visibility modifier is the default for the target language to produce <code>public</code> visibility (explicit <code>public</code> in Java, nothing in Kotlin, Scala).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="NONE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[No visibility modifier is generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="PUBLIC">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[An explicit <code>public</code> visibility modifier is generated, where supported (no modifier is generated in Scala).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="INTERNAL">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[An explicit <code>internal</code> visibility modifier is generated, where supported (or <code>public</code>, otherwise).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="PRIVATE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A <code>private</code> visibility modifier is generated. This is useful only for {@link ForcedType}, not as a global configuration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="GeneratedAnnotationType">
     <restriction base="string">
-      <enumeration value="DETECT_FROM_JDK"/>
-      <enumeration value="JAVAX_ANNOTATION_GENERATED"/>
-      <enumeration value="JAVAX_ANNOTATION_PROCESSING_GENERATED"/>
-      <enumeration value="JAKARTA_ANNOTATION_GENERATED"/>
-      <enumeration value="ORG_JOOQ_GENERATED"/>
+      <enumeration value="DETECT_FROM_JDK">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The <code>Generated</code> annotation should be detected automatically from the JDK used at code generation time.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="JAVAX_ANNOTATION_GENERATED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Use the <code>javax.annotation.Generated</code> annotation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="JAVAX_ANNOTATION_PROCESSING_GENERATED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Use the <code>javax.annotation.processing.Generated</code> annotation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="JAKARTA_ANNOTATION_GENERATED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Use the <code>jakarta.annotation.Generated</code> annotation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="ORG_JOOQ_GENERATED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Use the {@link org.jooq.Generated} annotation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="GeneratedTextBlocks">
     <restriction base="string">
-      <enumeration value="DETECT_FROM_JDK"/>
-      <enumeration value="ON"/>
-      <enumeration value="OFF"/>
+      <enumeration value="DETECT_FROM_JDK">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Text blocks should be used in generated code (for database source code) depending on whether the JDK used for code generation supports text blocks.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="ON">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Text blocks should be used in generated code (for database source code).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="OFF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Text blocks should not be used in generated code.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   
   <simpleType name="GeneratedSerialVersionUID">
     <restriction base="string">
-      <enumeration value="HASH"/>
-      <enumeration value="CONSTANT"/>
-      <enumeration value="OFF"/>
+      <enumeration value="HASH">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The generated serialVersionUID should be based on a hash code taken from the generated content.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="CONSTANT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The generated serialVersionUID should be constant.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="OFF">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[No serialVersionUID should be generated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 </schema>

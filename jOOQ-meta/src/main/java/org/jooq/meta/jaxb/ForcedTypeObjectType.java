@@ -27,11 +27,41 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ForcedTypeObjectType {
 
+
+    /**
+     * A {@link ForcedType} should match all database object types.
+     * 
+     */
     ALL,
+
+    /**
+     * A {@link ForcedType} should match only UDT attributes.
+     * 
+     */
     ATTRIBUTE,
+
+    /**
+     * A {@link ForcedType} should match only table columns.
+     * 
+     */
     COLUMN,
+
+    /**
+     * A {@link ForcedType} should match only array elements.
+     * 
+     */
     ELEMENT,
+
+    /**
+     * A {@link ForcedType} should match only routine parameters.
+     * 
+     */
     PARAMETER,
+
+    /**
+     * A {@link ForcedType} should match only sequences.
+     * 
+     */
     SEQUENCE;
 
     public String value() {

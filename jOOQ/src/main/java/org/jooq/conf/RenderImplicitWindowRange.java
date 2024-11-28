@@ -26,10 +26,35 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum RenderImplicitWindowRange {
 
+
+    /**
+     * Implicit RANGE clause will not be generated explicitly. The RDBMS's implicit behaviour is used
+     * 
+     */
     OFF,
+
+    /**
+     * Implicit RANGE clause is generated as ROWS UNBOUNDED PRECEDING
+     * 
+     */
     ROWS_UNBOUNDED_PRECEDING,
+
+    /**
+     * Implicit RANGE clause is generated as ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+     * 
+     */
     ROWS_ALL,
+
+    /**
+     * Implicit RANGE clause is generated as RANGE UNBOUNDED PRECEDING
+     * 
+     */
     RANGE_UNBOUNDED_PRECEDING,
+
+    /**
+     * Implicit RANGE clause is generated as RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+     * 
+     */
     RANGE_ALL;
 
     public String value() {

@@ -24,8 +24,24 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum FetchTriggerValuesAfterReturning {
 
+
+    /**
+     * Never fetch trigger values after returning.
+     * 
+     */
     NEVER,
+
+    /**
+     * Fetch trigger values only when triggers are known to be present.
+     *            Trigger meta data is only available in jOOQ's commercial editions
+     * 
+     */
     WHEN_NEEDED,
+
+    /**
+     * Always fetch trigger values.
+     * 
+     */
     ALWAYS;
 
     public String value() {

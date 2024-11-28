@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
     xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:annox="http://annox.dev.java.net"
     targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd"
-    elementFormDefault="qualified">
+    elementFormDefault="qualified"
+    jxb:extensionBindingPrefixes="annox"
+    jxb:version="2.1">
 
     <element name="information_schema">
         <complexType>
@@ -424,24 +428,40 @@
     
     <simpleType name="TriggerEventManipulation">
         <restriction base="string">
-            <enumeration value="INSERT"/>
-            <enumeration value="UPDATE"/>
-            <enumeration value="DELETE"/>
+            <enumeration value="INSERT">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire on INSERT.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="UPDATE">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire on UPDATE.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="DELETE">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire on DELETE.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
         </restriction>
     </simpleType>
 
     <simpleType name="TriggerActionOrientation">
         <restriction base="string">
-            <enumeration value="ROW"/>
-            <enumeration value="STATEMENT"/>
+            <enumeration value="ROW">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire once per ROW.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="STATEMENT">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire once per STATEMENT.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
         </restriction>
     </simpleType>
 
     <simpleType name="TriggerActionTiming">
         <restriction base="string">
-            <enumeration value="BEFORE"/>
-            <enumeration value="AFTER"/>
-            <enumeration value="INSTEAD_OF"/>
+            <enumeration value="BEFORE">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire BEFORE each {@link TriggerActionOrientation#ROW} or {@link TriggerActionOrientation#STATEMENT}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="AFTER">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire AFTER each {@link TriggerActionOrientation#ROW} or {@link TriggerActionOrientation#STATEMENT}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="INSTEAD_OF">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire INSTEAD OF each {@link TriggerActionOrientation#ROW} or {@link TriggerActionOrientation#STATEMENT}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
         </restriction>
     </simpleType>
     
@@ -456,44 +476,80 @@
 
     <simpleType name="ParameterMode">
         <restriction base="string">
-            <enumeration value="IN"/>
-            <enumeration value="INOUT"/>
-            <enumeration value="OUT"/>
+            <enumeration value="IN">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The parameter is an IN parameter.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="INOUT">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The parameter is an IN/OUT parameter.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="OUT">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The parameter is an OUT parameter.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
         </restriction>
     </simpleType>
 
     <simpleType name="RoutineType">
         <restriction base="string">
-            <enumeration value="FUNCTION"/>
-            <enumeration value="PROCEDURE"/>
+            <enumeration value="FUNCTION">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The routine is a FUNCTION.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="PROCEDURE">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The routine is a PROCEDURE.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
         </restriction>
     </simpleType>
 
     <simpleType name="TableConstraintType">
         <restriction base="string">
-            <enumeration value="PRIMARY KEY"/>
-            <enumeration value="UNIQUE"/>
-            <enumeration value="CHECK"/>
-            <enumeration value="FOREIGN KEY"/>
+            <enumeration value="PRIMARY KEY">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The constraint is a PRIMARY KEY constraint.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="UNIQUE">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The constraint is a UNIQUE constraint.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="CHECK">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The constraint is a CHECK constraint.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="FOREIGN KEY">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The constraint is a FOREIGN KEY constraint.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
         </restriction>
     </simpleType>
     
     <simpleType name="TableType">
         <restriction base="string">
-            <enumeration value="BASE TABLE"/>
-            <enumeration value="VIEW"/>
-            <enumeration value="MATERIALIZED VIEW"/>
-            <enumeration value="GLOBAL TEMPORARY"/>
+            <enumeration value="BASE TABLE">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The table is an ordinary table, or a table whose type isn't recognised by jOOQ (yet).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="VIEW">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The table is a VIEW.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="MATERIALIZED VIEW">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The table is a MATERIALIZED VIEW.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="GLOBAL TEMPORARY">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The table is a TEMPORARY table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
         </restriction>
     </simpleType>
     
     <simpleType name="ForeignKeyRule">
         <restriction base="string">
-            <enumeration value="CASCADE"/>
-            <enumeration value="SET NULL"/>
-            <enumeration value="SET DEFAULT"/>
-            <enumeration value="RESTRICT"/>
-            <enumeration value="NO ACTION"/>
+            <enumeration value="CASCADE">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The DELETE or UPDATE rule is for changes to the referenced table to CASCADE to the referencing table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="SET NULL">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The DELETE or UPDATE rule is for changes to the referenced table to result in SET NULL actions in the referencing table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="SET DEFAULT">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The DELETE or UPDATE rule is for changes to the referenced table to result in SET DELETE actions in the referencing table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="RESTRICT">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The DELETE or UPDATE rule is to RESTRICT changes to the referenced table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="NO ACTION">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The DELETE or UPDATE rule is to take NO ACTION on changes to the referenced table. This is similar to {@link #RESTRICT}, but allows for checks to be deferred.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
         </restriction>
     </simpleType>
 </schema>

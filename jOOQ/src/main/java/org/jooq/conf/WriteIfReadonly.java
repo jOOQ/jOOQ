@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum WriteIfReadonly {
 
+
+    /**
+     * Allow for writing to readonly fields
+     * 
+     */
     WRITE,
+
+    /**
+     * Ignore writes to readonly fields
+     * 
+     */
     IGNORE,
+
+    /**
+     * Throw an exception when writing to readonly fields
+     * 
+     */
     THROW;
 
     public String value() {

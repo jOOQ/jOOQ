@@ -26,9 +26,43 @@ import jakarta.xml.bind.annotation.XmlType;
 @Deprecated
 public enum RenderNameStyle {
 
+
+    /**
+     * Render object names quoted, as defined in the database. Use this
+     *            to stay on the safe side with case-sensitivity and special
+     *            characters. For instance:
+     *            Oracle    : "SYS"."ALL_TAB_COLS"
+     *            MySQL     : `information_schema`.`TABLES`
+     *            SQL Server: [INFORMATION_SCHEMA].[TABLES]
+     * 
+     */
     QUOTED,
+
+    /**
+     * Render object names, as defined in the database. For instance:
+     *            Oracle    : SYS.ALL_TAB_COLS
+     *            MySQL     : information_schema.TABLES
+     *            SQL Server: INFORMATION_SCHEMA.TABLES
+     * 
+     */
     AS_IS,
+
+    /**
+     * Force rendering object names in lower case. For instance:
+     *            Oracle    : sys.all_tab_cols
+     *            MySQL     : information_schema.tables
+     *            SQL Server: information_schema.tables
+     * 
+     */
     LOWER,
+
+    /**
+     * Force rendering object names in upper case. For instance:
+     *            Oracle    : SYS.ALL_TAB_COLS
+     *            MySQL     : INFORMATION_SCHEMA.TABLES
+     *            SQL Server: INFORMATION_SCHEMA.TABLES
+     * 
+     */
     UPPER;
 
     public String value() {

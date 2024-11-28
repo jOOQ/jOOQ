@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum RenderOptionalKeyword {
 
+
+    /**
+     * Optional keywords will never be generated (does not affect mandatory keywords).
+     * 
+     */
     OFF,
+
+    /**
+     * Optional keywords will always be generated (does not affect mandatory keywords).
+     * 
+     */
     ON,
+
+    /**
+     * The default applies for optional keywords.
+     * 
+     */
     DEFAULT;
 
     public String value() {

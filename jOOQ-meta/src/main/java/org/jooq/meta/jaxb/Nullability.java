@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum Nullability {
 
+
+    /**
+     * A {@link ForcedType} should match all columns, attributes, and parameters, irrespective of nullability.
+     * 
+     */
     ALL,
+
+    /**
+     * A {@link ForcedType} should match only columns, attributes, and parameters, which are nullable.
+     * 
+     */
     NULL,
+
+    /**
+     * A {@link ForcedType} should match only columns, attributes, and parameters, which are non-nullable.
+     * 
+     */
     NOT_NULL;
 
     public String value() {

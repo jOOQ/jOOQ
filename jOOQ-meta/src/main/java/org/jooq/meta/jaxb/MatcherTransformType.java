@@ -28,12 +28,47 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum MatcherTransformType {
 
+
+    /**
+     * A {@link MatcherRule} should not transform identifiers, but output them "as is" (as the input is).
+     * 
+     */
     AS_IS,
+
+    /**
+     * A {@link MatcherRule} should transform identifiers to lower case.
+     * 
+     */
     LOWER,
+
+    /**
+     * A {@link MatcherRule} should transform the first letters of identifiers to lower case.
+     * 
+     */
     LOWER_FIRST_LETTER,
+
+    /**
+     * A {@link MatcherRule} should transform identifiers to UPPER case.
+     * 
+     */
     UPPER,
+
+    /**
+     * A {@link MatcherRule} should transform the first letters of identifiers to UPPER case.
+     * 
+     */
     UPPER_FIRST_LETTER,
+
+    /**
+     * A {@link MatcherRule} should transform identifiers to camelCase.
+     * 
+     */
     CAMEL,
+
+    /**
+     * A {@link MatcherRule} should transform identifiers to PascalCase.
+     * 
+     */
     PASCAL;
 
     public String value() {

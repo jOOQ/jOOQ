@@ -26,10 +26,35 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum NestedCollectionEmulation {
 
+
+    /**
+     * Generate native LIST, SET, MULTISET syntax irrespective of support
+     * 
+     */
     NATIVE,
+
+    /**
+     * Generate native LIST, SET, MULTISET syntax if supported, or the most optimal emulation, otherwise
+     * 
+     */
     DEFAULT,
+
+    /**
+     * Emulate LIST, SET, MULTISET syntax using XML
+     * 
+     */
     XML,
+
+    /**
+     * Emulate LIST, SET, MULTISET syntax using JSON
+     * 
+     */
     JSON,
+
+    /**
+     * Emulate LIST, SET, MULTISET syntax using JSONB
+     * 
+     */
     JSONB;
 
     public String value() {

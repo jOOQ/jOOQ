@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ParameterMode {
 
+
+    /**
+     * The parameter is an IN parameter.
+     * 
+     */
     IN,
+
+    /**
+     * The parameter is an IN/OUT parameter.
+     * 
+     */
     INOUT,
+
+    /**
+     * The parameter is an OUT parameter.
+     * 
+     */
     OUT;
 
     public String value() {

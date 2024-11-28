@@ -26,10 +26,35 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ParamType {
 
+
+    /**
+     * Execute statements with indexed parameters, the way JDBC expects them.
+     * 
+     */
     INDEXED,
+
+    /**
+     * Execute statements with indexed parameters, forcing explicit inlined and named parameters to be indexed as well.
+     * 
+     */
     FORCE_INDEXED,
+
+    /**
+     * Execute statements with named parameters.
+     * 
+     */
     NAMED,
+
+    /**
+     * Execute statements with named parameters, if a name is given, or inlined parameters otherwise.
+     * 
+     */
     NAMED_OR_INLINED,
+
+    /**
+     * Execute statements with inlined parameters.
+     * 
+     */
     INLINED;
 
     public String value() {

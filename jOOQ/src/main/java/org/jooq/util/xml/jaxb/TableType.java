@@ -26,11 +26,31 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TableType {
 
+
+    /**
+     * The table is an ordinary table, or a table whose type isn't recognised by jOOQ (yet).
+     * 
+     */
     @XmlEnumValue("BASE TABLE")
     BASE_TABLE("BASE TABLE"),
+
+    /**
+     * The table is a VIEW.
+     * 
+     */
     VIEW("VIEW"),
+
+    /**
+     * The table is a MATERIALIZED VIEW.
+     * 
+     */
     @XmlEnumValue("MATERIALIZED VIEW")
     MATERIALIZED_VIEW("MATERIALIZED VIEW"),
+
+    /**
+     * The table is a TEMPORARY table.
+     * 
+     */
     @XmlEnumValue("GLOBAL TEMPORARY")
     GLOBAL_TEMPORARY("GLOBAL TEMPORARY");
     private final String value;

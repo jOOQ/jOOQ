@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum RenderDefaultNullability {
 
+
+    /**
+     * Do not produce any nullability clause for Nullability.DEFAULT, and thus produce the dialect specific default behaviors
+     * 
+     */
     IMPLICIT_DEFAULT,
+
+    /**
+     * Produce implicit nullability for Nullability.DEFAULT if NULL is the default for a given dialect, or explicit nullability otherwise (e.g. in both Sybase)
+     * 
+     */
     IMPLICIT_NULL,
+
+    /**
+     * Produce explicit nullability for Nullability.DEFAULT, irrespective of the context (e.g. if the column is a primary key)
+     * 
+     */
     EXPLICIT_NULL;
 
     public String value() {

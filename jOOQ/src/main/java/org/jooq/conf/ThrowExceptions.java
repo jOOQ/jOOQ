@@ -24,8 +24,23 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum ThrowExceptions {
 
+
+    /**
+     * Collect all exceptions from a batch and throw them all together
+     * 
+     */
     THROW_ALL,
+
+    /**
+     * Throw only the first exception from a batch
+     * 
+     */
     THROW_FIRST,
+
+    /**
+     * Throw no exceptions, but collect them in ResultOrRows
+     * 
+     */
     THROW_NONE;
 
     public String value() {

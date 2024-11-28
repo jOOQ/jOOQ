@@ -26,10 +26,30 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TableConstraintType {
 
+
+    /**
+     * The constraint is a PRIMARY KEY constraint.
+     * 
+     */
     @XmlEnumValue("PRIMARY KEY")
     PRIMARY_KEY("PRIMARY KEY"),
+
+    /**
+     * The constraint is a UNIQUE constraint.
+     * 
+     */
     UNIQUE("UNIQUE"),
+
+    /**
+     * The constraint is a CHECK constraint.
+     * 
+     */
     CHECK("CHECK"),
+
+    /**
+     * The constraint is a FOREIGN KEY constraint.
+     * 
+     */
     @XmlEnumValue("FOREIGN KEY")
     FOREIGN_KEY("FOREIGN KEY");
     private final String value;

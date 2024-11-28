@@ -25,9 +25,29 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum InterpreterNameLookupCaseSensitivity {
 
+
+    /**
+     * The default value depending on Settings.interpreterDialect
+     * 
+     */
     DEFAULT,
+
+    /**
+     * Identifiers are always case sensitive
+     * 
+     */
     ALWAYS,
+
+    /**
+     * Only quoted identifiers are case sensitive
+     * 
+     */
     WHEN_QUOTED,
+
+    /**
+     * Identifiers are never case sensitive
+     * 
+     */
     NEVER;
 
     public String value() {

@@ -52,6 +52,7 @@ import static org.jooq.impl.Comparators.FOREIGN_KEY_COMP;
 import static org.jooq.impl.Comparators.INDEX_COMP;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
+import static org.jooq.impl.Comparators.UNQUALIFIED_COMP;
 import static org.jooq.impl.ConstraintType.CHECK;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
@@ -591,7 +592,7 @@ final class Diff {
                     allowRenames = false;
             }
 
-            if (allowRenames && NAMED_COMP.compare(k1, k2) != 0)
+            if (allowRenames && UNQUALIFIED_COMP.compare(k1, k2) != 0)
 
                 // [#10813] Don't rename constraints in MySQL
                 if (type != PRIMARY_KEY || !NO_SUPPORT_PK_NAMES.contains(ctx.dialect()))
@@ -622,7 +623,7 @@ final class Diff {
                 return;
             }
 
-            if (NAMED_COMP.compare(k1, k2) != 0)
+            if (UNQUALIFIED_COMP.compare(k1, k2) != 0)
                 r.queries.add(ctx.alterDomain(d1).renameConstraint(n1).to(n2));
         };
     }
@@ -678,7 +679,7 @@ final class Diff {
                     drop.drop(r, ix1);
                     create.create(r, ix2);
                 }
-                else if (NAMED_COMP.compare(ix1, ix2) != 0)
+                else if (UNQUALIFIED_COMP.compare(ix1, ix2) != 0)
                     r.queries.add(ctx.alterTable(t1).renameIndex(ix1).to(ix2));
             },
             true

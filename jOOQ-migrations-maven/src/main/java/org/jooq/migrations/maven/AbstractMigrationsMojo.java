@@ -48,6 +48,8 @@ import java.util.List;
 import org.jooq.CloseableDSLContext;
 import org.jooq.CommitProvider;
 import org.jooq.Configuration;
+import org.jooq.ContentType;
+import org.jooq.SQLDialect;
 import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.conf.MigrationSchema;
 import org.jooq.impl.DSL;
@@ -155,6 +157,34 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
     @Parameter(property = "jooq.migrate.commitProvider")
     String                commitProvider;
 
+    /**
+     * The {@link SQLDialect} to use for the migration.
+     */
+    @Parameter(property = "jooq.migrate.dialect")
+    SQLDialect            dialect;
+
+    /**
+     * The {@link SQLDialect} to use for interpreting
+     * {@link ContentType#SCHEMA}, {@link ContentType#INCREMENT},
+     * {@link ContentType#DECREMENT}.
+     * <p>
+     * This is relevant for interpreting case sensitivity and casing of unquoted
+     * identifiers, among other things. This defaults to {@link #dialect}.
+     */
+    @Parameter(property = "jooq.migrate.interpreterDialect")
+    SQLDialect            interpreterDialect;
+
+    /**
+     * The {@link SQLDialect} to use for interpreting
+     * {@link ContentType#SCHEMA}, {@link ContentType#INCREMENT},
+     * {@link ContentType#DECREMENT}.
+     * <p>
+     * This is relevant for interpreting case sensitivity and casing of unquoted
+     * identifiers, among other things. This defaults to {@link #dialect}.
+     */
+    @Parameter(property = "jooq.migrate.parseDialect")
+    SQLDialect            parseDialect;
+
     @Override
     public final void execute() throws MojoExecutionException {
         if (skip) {
@@ -178,6 +208,14 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
                 ClassUtils.loadClass(driver).getConstructor().newInstance();
 
             try (CloseableDSLContext ctx = DSL.using(jdbc.url, defaultIfNull(jdbc.user, jdbc.username), jdbc.password)) {
+                if (dialect != null)
+                    ctx.configuration().set(dialect);
+
+                if (interpreterDialect != null)
+                    ctx.settings().setInterpreterDialect(interpreterDialect);
+
+                if (parseDialect != null)
+                    ctx.settings().setParseDialect(parseDialect);
 
                 // Initialise Settings
                 // ---------------------------------------------------------------------
@@ -219,7 +257,8 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
                     // [#9506] [#17646] Users may use unnamed constraints in migration scripts.
                     //                  When comparing the schema with the existing schema in the database,
                     //                  we must ignore the database's synthetic constraint names.
-                    .withMigrationIgnoreUnnamedConstraintDiffs(true);
+                    .withMigrationIgnoreUnnamedConstraintDiffs(true)
+                ;
 
                 // Initialise connection
                 // ---------------------------------------------------------------------

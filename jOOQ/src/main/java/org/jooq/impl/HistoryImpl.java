@@ -48,6 +48,7 @@ import static org.jooq.impl.HistoryResolution.OPEN;
 import static org.jooq.impl.HistoryResolution.RESOLVED;
 import static org.jooq.impl.HistoryStatus.SUCCESS;
 import static org.jooq.impl.Tools.isEmpty;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isBlank;
 
 import java.time.Instant;
@@ -67,15 +68,16 @@ import org.jooq.DSLContext;
 import org.jooq.History;
 import org.jooq.HistoryVersion;
 import org.jooq.Schema;
+import org.jooq.Table;
 import org.jooq.Version;
 import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.conf.MappedCatalog;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MigrationSchema;
 import org.jooq.conf.RenderMapping;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -219,19 +221,16 @@ class HistoryImpl extends AbstractScope implements History {
     }
 
     final boolean existsHistory() {
+        Table<HistoryRecord> h = historyCtx.map(HISTORY);
 
         // [#8301] Find a better way to test if our table already exists
-        try {
-            Configuration c = historyCtx
-                .configuration()
-                .derive();
-            c.data("org.jooq.tools.LoggerListener.exception.mute", true);
-            c.dsl().fetchExists(HISTORY);
-            return true;
-        }
-        catch (DataAccessException ignore) {}
-
-        return false;
+        // [#9506] Cannot query table and catch exceptions as that would roll back migration transactions
+        return !historyCtx
+            .meta()
+            .filterSchemas(s -> h.getSchema() == null || s.getName().equals(h.getSchema().getName()))
+            .filterTables(t -> t.getName().equals(h.getName()))
+            .getTables()
+            .isEmpty();
     }
 
     private final List<HistoryVersion> initVersions() {

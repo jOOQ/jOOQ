@@ -123,10 +123,14 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final Commit from() {
+        return from0(false);
+    }
+
+    final Commit from0(boolean baseline) {
         if (from == null)
 
             // TODO: Use pessimistic locking so no one else can migrate in between
-            from = currentCommit();
+            from = currentCommit(baseline);
 
         return from;
     }
@@ -167,12 +171,20 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final Queries untracked() {
-        return untracked(history.schemas()).apply();
+        return untracked(false, history.schemas()).apply();
     }
 
     @Override
     public final void verify() {
-        verify0(migrationContext());
+        verify0(migrationContext(false));
+    }
+
+    @Override
+    public void baseline() {
+        if (history.existsHistory())
+            throw new DataMigrationVerificationException("Cannot create a baseline when a history already exists");
+        else
+            execute0(true);
     }
 
     private final void verify0(DefaultMigrationContext ctx) {
@@ -244,7 +256,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         }
     }
 
-    private final Untracked untracked(Set<Schema> includedSchemas) {
+    private final Untracked untracked(boolean baseline, Set<Schema> includedSchemas) {
         if (scriptsOnly())
             return new Untracked(configuration(), null, null);
 
@@ -258,7 +270,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         else
             historyTables.addAll(map(includedSchemas, s -> table(s.getQualifiedName().append(HISTORY.getUnqualifiedName()))));
 
-        Commit currentCommit = currentCommit();
+        Commit currentCommit = currentCommit(baseline);
         Meta currentMeta = currentCommit.meta();
         Meta existingMeta = dsl().meta()
             .filterSchemas(includedSchemas::contains)
@@ -309,7 +321,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         {queries}
 
                         Possible remedies:
-                        - Use Settings.migrationAutoBaseline to automatically set a baseline.
+                        - Use Settings.migrationAutoBaseline or the baseline command to automatically set a baseline.
                         """.replace("{queries}", "" + ctx.revertUntrackedQueries)
                     );
                 }
@@ -340,30 +352,36 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 execute(ctx, listener, ctx.revertUntrackedQueries);
     }
 
-    final DefaultMigrationContext migrationContext() {
+    final DefaultMigrationContext migrationContext(boolean baseline) {
         Set<Schema> schemas = history.schemas();
 
         return new DefaultMigrationContext(
             configuration(),
             schemas,
-            from(),
+            from0(baseline),
             to(),
             queries(),
-            untracked(schemas).revert()
+            untracked(baseline, schemas).revert()
         );
     }
 
     @Override
     public final void execute() {
+        execute0(false);
+    }
+
+    void execute0(boolean baseline) {
 
         // TODO: Transactions don't really make sense in most dialects. In some, they do
         //       e.g. PostgreSQL supports transactional DDL. Check if we're getting this right.
         run(() -> {
-            DefaultMigrationContext ctx = migrationContext();
+            DefaultMigrationContext ctx = migrationContext(baseline);
             MigrationListener listener = new MigrationListeners(configuration);
 
             if (!FALSE.equals(dsl().settings().isMigrationAutoVerification()))
                 verify0(ctx);
+
+            init();
 
             try {
                 listener.migrationStart(ctx);
@@ -499,17 +517,17 @@ final class MigrationImpl extends AbstractScope implements Migration {
     final void init() {
         history.init();
 
-        MigrationContext ctx = migrationContext();
+        MigrationContext ctx = migrationContext(false);
         if (TRUE.equals(ctx.settings().isMigrationSchemataCreateSchemaIfNotExists()))
             for (Schema schema : ctx.migratedSchemas())
                 dsl().createSchemaIfNotExists(schema).execute();
     }
 
-    final Commit currentCommit() {
+    final Commit currentCommit(boolean baseline) {
         HistoryRecord currentRecord = history.currentHistoryRecord(true);
 
         if (currentRecord == null) {
-            Commit result = TRUE.equals(settings().isMigrationAutoBaseline()) ? to() : to().root();
+            Commit result = baseline || TRUE.equals(settings().isMigrationAutoBaseline()) ? to() : to().root();
 
             if (result == null)
                 throw new DataMigrationVerificationException("CommitProvider did not provide a root version for " + to().id());
@@ -528,7 +546,6 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     private final void run(final ContextTransactionalRunnable runnable) {
         try {
-            init();
             dsl().transaction(runnable);
         }
         catch (DataMigrationRedoLogException e) {

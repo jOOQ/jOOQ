@@ -45,20 +45,21 @@ import org.jooq.Migration;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * Log the pending migration queries.
+ * Create a baseline from the current schema using the pending changes, if they
+ * match.
  *
  * @author Lukas Eder
  */
 @Mojo(
-    name = "logPending",
+    name = "baseline",
     defaultPhase = GENERATE_SOURCES,
     requiresDependencyResolution = TEST,
     threadSafe = true
 )
-public class LogPendingMojo extends AbstractMigrateMojo {
+public class BaselineMojo extends AbstractMigrateMojo {
 
     @Override
     final void execute1(Migration migration) throws Exception {
-        migration.logPending();
+        migration.baseline();
     }
 }

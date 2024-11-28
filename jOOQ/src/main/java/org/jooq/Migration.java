@@ -118,6 +118,15 @@ public interface Migration extends Scope {
     void verify() throws DataMigrationVerificationException;
 
     /**
+     * Create a baseline from the current schema using the pending changes, if
+     * they match.
+     *
+     * @throws DataMigrationVerificationException When something went wrong during
+     *             the creation of the baseline.
+     */
+    void baseline() throws DataMigrationVerificationException;
+
+    /**
      * Apply the migration.
      *
      * @throws DataMigrationException When something went wrong during the

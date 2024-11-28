@@ -115,11 +115,10 @@ implements
         ctx.start(Clause.DROP_SEQUENCE_SEQUENCE)
            .visit(K_DROP)
            .sql(' ')
-           .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE)
-           .sql(' ');
+           .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE);
 
         if (ifExists && supportsIfExists(ctx))
-            ctx.visit(K_IF_EXISTS).sql(' ');
+            ctx.sql(' ').visit(K_IF_EXISTS);
 
 
 

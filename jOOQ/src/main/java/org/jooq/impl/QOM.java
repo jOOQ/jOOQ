@@ -6728,6 +6728,53 @@ public final class QOM {
     }
 
     /**
+     * The <code>ARRAY TO STRING</code> function.
+     * <p>
+     * Join array elements into a string.
+     */
+    public /*sealed*/ interface ArrayToString<T>
+        extends
+            UOperator3<Field<? extends Object[]>, Field<String>, Field<String>, ArrayToString<T>>,
+            org.jooq.Field<String>
+        //permits
+        //    ArrayToString
+    {
+
+        /**
+         * The array whose elements are joined
+         */
+        @NotNull default Field<? extends Object[]> $array() { return $arg1(); }
+
+        /**
+         * The array whose elements are joined
+         */
+        @CheckReturnValue
+        @NotNull default ArrayToString<T> $array(Field<? extends Object[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The delimiter to place between elements
+         */
+        @NotNull default Field<String> $delimiter() { return $arg2(); }
+
+        /**
+         * The delimiter to place between elements
+         */
+        @CheckReturnValue
+        @NotNull default ArrayToString<T> $delimiter(Field<String> newDelimiter) { return $arg2(newDelimiter); }
+
+        /**
+         * The NULL encoding
+         */
+        @Nullable default Field<String> $nullString() { return $arg3(); }
+
+        /**
+         * The NULL encoding
+         */
+        @CheckReturnValue
+        @NotNull default ArrayToString<T> $nullString(Field<String> newNullString) { return $arg3(newNullString); }
+    }
+
+    /**
      * The <code>ARRAY FILTER</code> function.
      * <p>
      * Filter elements out of an array.
@@ -6905,6 +6952,53 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default ArrayNoneMatch<T> $predicate(Lambda1<Field<T>, Condition> newPredicate) { return $arg2(newPredicate); }
+    }
+
+    /**
+     * The <code>STRING TO ARRAY</code> function.
+     * <p>
+     * Split a string into array elements.
+     */
+    public /*sealed*/ interface StringToArray
+        extends
+            UOperator3<Field<String>, Field<String>, Field<String>, StringToArray>,
+            org.jooq.Field<String[]>
+        //permits
+        //    StringToArray
+    {
+
+        /**
+         * The string to split
+         */
+        @NotNull default Field<String> $string() { return $arg1(); }
+
+        /**
+         * The string to split
+         */
+        @CheckReturnValue
+        @NotNull default StringToArray $string(Field<String> newString) { return $arg1(newString); }
+
+        /**
+         * The delimiter to parse between elements
+         */
+        @NotNull default Field<String> $delimiter() { return $arg2(); }
+
+        /**
+         * The delimiter to parse between elements
+         */
+        @CheckReturnValue
+        @NotNull default StringToArray $delimiter(Field<String> newDelimiter) { return $arg2(newDelimiter); }
+
+        /**
+         * The NULL encoding
+         */
+        @Nullable default Field<String> $nullString() { return $arg3(); }
+
+        /**
+         * The NULL encoding
+         */
+        @CheckReturnValue
+        @NotNull default StringToArray $nullString(Field<String> newNullString) { return $arg3(newNullString); }
     }
 
     /**

@@ -23251,6 +23251,64 @@ public class DSL {
     }
 
     /**
+     * The <code>ARRAY_TO_STRING</code> function.
+     * <p>
+     * Join array elements into a string.
+     *
+     * @param array The array whose elements are joined
+     * @param delimiter The delimiter to place between elements
+     * @param nullString The NULL encoding
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<String> arrayToString(Object[] array, @Stringly.Param String delimiter, @Stringly.Param String nullString) {
+        return new ArrayToString<>(Tools.field(array), Tools.field(delimiter), Tools.field(nullString));
+    }
+
+    /**
+     * The <code>ARRAY_TO_STRING</code> function.
+     * <p>
+     * Join array elements into a string.
+     *
+     * @param array The array whose elements are joined
+     * @param delimiter The delimiter to place between elements
+     * @param nullString The NULL encoding
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<String> arrayToString(Field<? extends Object[]> array, Field<String> delimiter, Field<String> nullString) {
+        return new ArrayToString<>(array, delimiter, nullString);
+    }
+
+    /**
+     * The <code>ARRAY_TO_STRING</code> function.
+     * <p>
+     * Join array elements into a string.
+     *
+     * @param array The array whose elements are joined
+     * @param delimiter The delimiter to place between elements
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<String> arrayToString(Object[] array, @Stringly.Param String delimiter) {
+        return new ArrayToString<>(Tools.field(array), Tools.field(delimiter));
+    }
+
+    /**
+     * The <code>ARRAY_TO_STRING</code> function.
+     * <p>
+     * Join array elements into a string.
+     *
+     * @param array The array whose elements are joined
+     * @param delimiter The delimiter to place between elements
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<String> arrayToString(Field<? extends Object[]> array, Field<String> delimiter) {
+        return new ArrayToString<>(array, delimiter);
+    }
+
+    /**
      * The <code>ARRAY_FILTER</code> function.
      * <p>
      * Filter elements out of an array.
@@ -23528,6 +23586,64 @@ public class DSL {
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Condition arrayNoneMatch(Field<T[]> array, Lambda1<Field<T>, Condition> predicate) {
         return new ArrayNoneMatch<>(array, predicate);
+    }
+
+    /**
+     * The <code>STRING_TO_ARRAY</code> function.
+     * <p>
+     * Split a string into array elements.
+     *
+     * @param string The string to split
+     * @param delimiter The delimiter to parse between elements
+     * @param nullString The NULL encoding
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<String[]> stringToArray(@Stringly.Param String string, @Stringly.Param String delimiter, @Stringly.Param String nullString) {
+        return new StringToArray(Tools.field(string), Tools.field(delimiter), Tools.field(nullString));
+    }
+
+    /**
+     * The <code>STRING_TO_ARRAY</code> function.
+     * <p>
+     * Split a string into array elements.
+     *
+     * @param string The string to split
+     * @param delimiter The delimiter to parse between elements
+     * @param nullString The NULL encoding
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter, Field<String> nullString) {
+        return new StringToArray(string, delimiter, nullString);
+    }
+
+    /**
+     * The <code>STRING_TO_ARRAY</code> function.
+     * <p>
+     * Split a string into array elements.
+     *
+     * @param string The string to split
+     * @param delimiter The delimiter to parse between elements
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<String[]> stringToArray(@Stringly.Param String string, @Stringly.Param String delimiter) {
+        return new StringToArray(Tools.field(string), Tools.field(delimiter));
+    }
+
+    /**
+     * The <code>STRING_TO_ARRAY</code> function.
+     * <p>
+     * Split a string into array elements.
+     *
+     * @param string The string to split
+     * @param delimiter The delimiter to parse between elements
+     */
+    @NotNull
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static Field<String[]> stringToArray(Field<String> string, Field<String> delimiter) {
+        return new StringToArray(string, delimiter);
     }
 
     // -------------------------------------------------------------------------

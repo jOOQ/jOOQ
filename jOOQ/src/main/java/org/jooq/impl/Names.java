@@ -262,7 +262,6 @@ final class Names {
     static final Name N_SEQ8                        = systemName("seq8");
     static final Name N_SHL                         = systemName("shl");
     static final Name N_SHR                         = systemName("shr");
-    static final Name N_SPLIT                       = systemName("split");
     static final Name N_SQL_TSI_DAY                 = systemName("sql_tsi_day");
     static final Name N_SQL_TSI_FRAC_SECOND         = systemName("sql_tsi_frac_second");
     static final Name N_SQL_TSI_HOUR                = systemName("sql_tsi_hour");
@@ -355,6 +354,7 @@ final class Names {
     static final Name N_ARRAY_PREPEND               = systemName("array_prepend");
     static final Name N_ARRAY_REMOVE                = systemName("array_remove");
     static final Name N_ARRAY_REPLACE               = systemName("array_replace");
+    static final Name N_ARRAY_TO_STRING             = systemName("array_to_string");
     static final Name N_ARRAY_TRANSFORM             = systemName("array_transform");
     static final Name N_ASC                         = systemName("asc");
     static final Name N_ASCII                       = systemName("ascii");
@@ -593,6 +593,7 @@ final class Names {
     static final Name N_SIN                         = systemName("sin");
     static final Name N_SINH                        = systemName("sinh");
     static final Name N_SPACE                       = systemName("space");
+    static final Name N_SPLIT                       = systemName("split");
     static final Name N_SPLIT_PART                  = systemName("split_part");
     static final Name N_SQR                         = systemName("sqr");
     static final Name N_SQRT                        = systemName("sqrt");
@@ -600,6 +601,7 @@ final class Names {
     static final Name N_STARTS_WITH                 = systemName("starts_with");
     static final Name N_STDDEV_POP                  = systemName("stddev_pop");
     static final Name N_STDDEV_SAMP                 = systemName("stddev_samp");
+    static final Name N_STRING_TO_ARRAY             = systemName("string_to_array");
     static final Name N_STRREVERSE                  = systemName("strreverse");
     static final Name N_STRTOK                      = systemName("strtok");
     static final Name N_STR_SPLIT                   = systemName("str_split");

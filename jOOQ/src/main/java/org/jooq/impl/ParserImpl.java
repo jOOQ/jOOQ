@@ -9063,6 +9063,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return parseFunctionArgs2((f1, f2) -> arrayRemove((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_REPLACE"))
                     return parseFunctionArgs3((f1, f2, f3) -> arrayReplace((Field<Void[]>) f1, (Field<Void>) f2, (Field<Void>) f3));
+                else if (parseFunctionNameIf("ARRAY_TO_STRING"))
+                    return parseFunctionArgs3(DSL::arrayToString, DSL::arrayToString);
                 else if ((field = parseFieldArrayConstructIf()) != null)
                     return field;
                 else if (parseFunctionNameIf("ADD"))
@@ -9618,6 +9620,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     return space((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("SPLIT_PART"))
                     return parseFunctionArgs3(DSL::splitPart);
+                else if (parseFunctionNameIf("SPLIT", "STRING_TO_ARRAY"))
+                    return parseFunctionArgs3(DSL::stringToArray, DSL::stringToArray);
                 else if (parseFunctionNameIf("STR_REPLACE"))
                     return parseFunctionArgs3(DSL::replace, DSL::replace);
                 else if (parseFunctionNameIf("STARTS_WITH", "startsWith"))

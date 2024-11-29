@@ -62,6 +62,7 @@ import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIME_PRECISION;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.isVal1;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isEmpty;
@@ -197,9 +198,9 @@ final class Diff {
                 AlterSequenceFlagsStep stmt = null;
                 AlterSequenceFlagsStep stmt0 = ctx.alterSequence(s1);
 
-                if (s2.getStartWith() != null && !s2.getStartWith().equals(s1.getStartWith()))
+                if (s2.getStartWith() != null && !equivalentStartWith(s2, s1))
                     stmt = defaultIfNull(stmt, stmt0).startWith(s2.getStartWith());
-                else if (s2.getStartWith() == null && s1.getStartWith() != null)
+                else if (s2.getStartWith() == null && s1.getStartWith() != null && !equivalentStartWith(s1, s2))
                     stmt = defaultIfNull(stmt, stmt0).startWith(1);
 
                 if (s2.getIncrementBy() != null && !s2.getIncrementBy().equals(s1.getIncrementBy()))
@@ -231,6 +232,20 @@ final class Diff {
                     r.queries.add(stmt);
             }
         );
+    }
+
+    private final boolean equivalentStartWith(Sequence<?> s2, Sequence<?> s1) {
+        Field<?> sw2 = s2.getStartWith();
+        Field<?> sw1 = s1.getStartWith();
+
+        if (Objects.equals(sw2, sw1))
+            return true;
+        else
+            return equivalentStartWithValue(sw2, sw1) || equivalentStartWithValue(sw1, sw2);
+    }
+
+    private final boolean equivalentStartWithValue(Field<?> sw2, Field<?> sw1) {
+        return sw1 == null && isVal1(sw2, v -> Convert.convert(v.getValue(), int.class) == 1);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

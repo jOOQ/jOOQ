@@ -138,28 +138,28 @@ implements
 
     // This BetweenAndStep implementation implements all types. Type-safety is
     // being checked through the type-safe API. No need for further checks here
-    BetweenAndStep1<T1>,
-    BetweenAndStep2<T1, T2>,
-    BetweenAndStep3<T1, T2, T3>,
-    BetweenAndStep4<T1, T2, T3, T4>,
-    BetweenAndStep5<T1, T2, T3, T4, T5>,
-    BetweenAndStep6<T1, T2, T3, T4, T5, T6>,
-    BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7>,
-    BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8>,
-    BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9>,
-    BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>,
-    BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>,
-    BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>,
-    BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>,
-    BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>,
-    BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>,
-    BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>,
-    BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>,
-    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>,
-    BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>,
-    BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>,
-    BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
-    BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
+    BetweenAndStep1,
+    BetweenAndStep2,
+    BetweenAndStep3,
+    BetweenAndStep4,
+    BetweenAndStep5,
+    BetweenAndStep6,
+    BetweenAndStep7,
+    BetweenAndStep8,
+    BetweenAndStep9,
+    BetweenAndStep10,
+    BetweenAndStep11,
+    BetweenAndStep12,
+    BetweenAndStep13,
+    BetweenAndStep14,
+    BetweenAndStep15,
+    BetweenAndStep16,
+    BetweenAndStep17,
+    BetweenAndStep18,
+    BetweenAndStep19,
+    BetweenAndStep20,
+    BetweenAndStep21,
+    BetweenAndStep22,
     BetweenAndStepN,
     UNotYetImplemented {
 
@@ -202,108 +202,108 @@ implements
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2) {
-        return and(row(t1, t2));
+    public final Condition and(Field field1, Field field2) {
+        return and(row(field1, field2));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
-        return and(row(t1, t2, t3));
+    public final Condition and(Field field1, Field field2, Field field3) {
+        return and(row(field1, field2, field3));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
-        return and(row(t1, t2, t3, t4));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4) {
+        return and(row(field1, field2, field3, field4));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
-        return and(row(t1, t2, t3, t4, t5));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5) {
+        return and(row(field1, field2, field3, field4, field5));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
-        return and(row(t1, t2, t3, t4, t5, t6));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6) {
+        return and(row(field1, field2, field3, field4, field5, field6));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
     }
 
     @Override
-    public final Condition and(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
-        return and(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    public final Condition and(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21, Field field22) {
+        return and(row(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
     @Override
@@ -312,112 +312,112 @@ implements
     }
 
     @Override
-    public final Condition and(T1 t1) {
+    public final Condition and(Object t1) {
         return and(new Object[] { t1 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2) {
+    public final Condition and(Object t1, Object t2) {
         return and(new Object[] { t1, t2 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3) {
+    public final Condition and(Object t1, Object t2, Object t3) {
         return and(new Object[] { t1, t2, t3 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4) {
         return and(new Object[] { t1, t2, t3, t4 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5) {
         return and(new Object[] { t1, t2, t3, t4, t5 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21 });
     }
 
     @Override
-    public final Condition and(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+    public final Condition and(Object t1, Object t2, Object t3, Object t4, Object t5, Object t6, Object t7, Object t8, Object t9, Object t10, Object t11, Object t12, Object t13, Object t14, Object t15, Object t16, Object t17, Object t18, Object t19, Object t20, Object t21, Object t22) {
         return and(new Object[] { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22 });
     }
 
@@ -427,112 +427,112 @@ implements
     }
 
     @Override
-    public final Condition and(Row1<T1> r) {
+    public final Condition and(Row1 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row2<T1, T2> r) {
+    public final Condition and(Row2 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row3<T1, T2, T3> r) {
+    public final Condition and(Row3 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row4<T1, T2, T3, T4> r) {
+    public final Condition and(Row4 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row5<T1, T2, T3, T4, T5> r) {
+    public final Condition and(Row5 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row6<T1, T2, T3, T4, T5, T6> r) {
+    public final Condition and(Row6 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row7<T1, T2, T3, T4, T5, T6, T7> r) {
+    public final Condition and(Row7 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row8<T1, T2, T3, T4, T5, T6, T7, T8> r) {
+    public final Condition and(Row8 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> r) {
+    public final Condition and(Row9 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> r) {
+    public final Condition and(Row10 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> r) {
+    public final Condition and(Row11 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> r) {
+    public final Condition and(Row12 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> r) {
+    public final Condition and(Row13 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> r) {
+    public final Condition and(Row14 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> r) {
+    public final Condition and(Row15 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> r) {
+    public final Condition and(Row16 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> r) {
+    public final Condition and(Row17 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> r) {
+    public final Condition and(Row18 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> r) {
+    public final Condition and(Row19 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> r) {
+    public final Condition and(Row20 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> r) {
+    public final Condition and(Row21 r) {
         return and0(r);
     }
 
     @Override
-    public final Condition and(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> r) {
+    public final Condition and(Row22 r) {
         return and0(r);
     }
 
@@ -542,112 +542,112 @@ implements
     }
 
     @Override
-    public final Condition and(Record1<T1> record) {
+    public final Condition and(Record1 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record2<T1, T2> record) {
+    public final Condition and(Record2 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record3<T1, T2, T3> record) {
+    public final Condition and(Record3 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record4<T1, T2, T3, T4> record) {
+    public final Condition and(Record4 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record5<T1, T2, T3, T4, T5> record) {
+    public final Condition and(Record5 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record6<T1, T2, T3, T4, T5, T6> record) {
+    public final Condition and(Record6 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+    public final Condition and(Record7 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+    public final Condition and(Record8 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+    public final Condition and(Record9 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+    public final Condition and(Record10 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+    public final Condition and(Record11 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+    public final Condition and(Record12 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+    public final Condition and(Record13 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+    public final Condition and(Record14 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+    public final Condition and(Record15 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+    public final Condition and(Record16 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+    public final Condition and(Record17 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+    public final Condition and(Record18 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+    public final Condition and(Record19 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+    public final Condition and(Record20 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+    public final Condition and(Record21 record) {
         return and(record.valuesRow());
     }
 
     @Override
-    public final Condition and(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+    public final Condition and(Record22 record) {
         return and(record.valuesRow());
     }
 

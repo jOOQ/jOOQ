@@ -48,11 +48,11 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.impl.QOM.UEmpty;
-import org.jooq.impl.QOM.UTransient;
 
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings("rawtypes")
 final class ConstraintImpl
 extends
     AbstractNamed
@@ -146,112 +146,112 @@ implements
 
 
     @Override
-    public final <T1> ForeignKeyConstraintImpl foreignKey(Field<T1> field1) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1) {
         return foreignKey(new Field[] { field1 });
     }
 
     @Override
-    public final <T1, T2> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2) {
         return foreignKey(new Field[] { field1, field2 });
     }
 
     @Override
-    public final <T1, T2, T3> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3) {
         return foreignKey(new Field[] { field1, field2, field3 });
     }
 
     @Override
-    public final <T1, T2, T3, T4> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4) {
         return foreignKey(new Field[] { field1, field2, field3, field4 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> ForeignKeyConstraintImpl foreignKey(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+    public final ForeignKeyConstraintImpl foreignKey(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21, Field field22) {
         return foreignKey(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 

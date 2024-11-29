@@ -79,7 +79,7 @@ public interface InsertValuesStep2<R extends Record, T1, T2> extends InsertOnDup
      */
     @NotNull @CheckReturnValue
     @Support
-    InsertValuesStep2<R, T1, T2> values(Collection<?> values);
+    InsertValuesStep2<R, T1, T2> values(Collection values);
 
     /**
      * Add a single row of values to the insert statement.

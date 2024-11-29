@@ -53,7 +53,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings({ "unchecked" })
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class RecordImpl10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends AbstractRecord implements InternalRecord, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> {
 
     RecordImpl10(AbstractRow<?> row) {
@@ -65,63 +65,63 @@ final class RecordImpl10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Abstra
     // ------------------------------------------------------------------------
 
     @Override
-    public RowImpl10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> fieldsRow() {
-        return new RowImpl10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10());
+    public RowImpl10 fieldsRow() {
+        return new RowImpl10(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10());
     }
 
     @Override
-    public final RowImpl10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> valuesRow() {
-        return new RowImpl10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()), Tools.field(value8(), field8()), Tools.field(value9(), field9()), Tools.field(value10(), field10()));
+    public final RowImpl10 valuesRow() {
+        return new RowImpl10(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()), Tools.field(value7(), field7()), Tools.field(value8(), field8()), Tools.field(value9(), field9()), Tools.field(value10(), field10()));
     }
 
     @Override
-    public final Field<T1> field1() {
-        return (@NotNull Field<T1>) fields.field(0);
+    public final Field field1() {
+        return (@NotNull Field) fields.field(0);
     }
 
     @Override
-    public final Field<T2> field2() {
-        return (@NotNull Field<T2>) fields.field(1);
+    public final Field field2() {
+        return (@NotNull Field) fields.field(1);
     }
 
     @Override
-    public final Field<T3> field3() {
-        return (@NotNull Field<T3>) fields.field(2);
+    public final Field field3() {
+        return (@NotNull Field) fields.field(2);
     }
 
     @Override
-    public final Field<T4> field4() {
-        return (@NotNull Field<T4>) fields.field(3);
+    public final Field field4() {
+        return (@NotNull Field) fields.field(3);
     }
 
     @Override
-    public final Field<T5> field5() {
-        return (@NotNull Field<T5>) fields.field(4);
+    public final Field field5() {
+        return (@NotNull Field) fields.field(4);
     }
 
     @Override
-    public final Field<T6> field6() {
-        return (@NotNull Field<T6>) fields.field(5);
+    public final Field field6() {
+        return (@NotNull Field) fields.field(5);
     }
 
     @Override
-    public final Field<T7> field7() {
-        return (@NotNull Field<T7>) fields.field(6);
+    public final Field field7() {
+        return (@NotNull Field) fields.field(6);
     }
 
     @Override
-    public final Field<T8> field8() {
-        return (@NotNull Field<T8>) fields.field(7);
+    public final Field field8() {
+        return (@NotNull Field) fields.field(7);
     }
 
     @Override
-    public final Field<T9> field9() {
-        return (@NotNull Field<T9>) fields.field(8);
+    public final Field field9() {
+        return (@NotNull Field) fields.field(8);
     }
 
     @Override
-    public final Field<T10> field10() {
-        return (@NotNull Field<T10>) fields.field(9);
+    public final Field field10() {
+        return (@NotNull Field) fields.field(9);
     }
 
     @Override
@@ -235,7 +235,7 @@ final class RecordImpl10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Abstra
     }
 
     @Override
-    public final Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+    public final Record10 values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
         set(0, t1);
         set(1, t2);
         set(2, t3);
@@ -250,13 +250,13 @@ final class RecordImpl10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Abstra
     }
 
     @Override
-    public <T> Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> with(Field<T> field, T value) {
-        return (Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>) super.with(field, value);
+    public <T> Record10 with(Field<T> field, T value) {
+        return (Record10) super.with(field, value);
     }
 
     @Override
-    public <T, U> Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
-        return (Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>) super.with(field, value, converter);
+    public <T, U> Record10 with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        return (Record10) super.with(field, value, converter);
     }
 
     @Override

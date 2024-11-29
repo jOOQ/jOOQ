@@ -83,12 +83,12 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final <U> SelectField<U> mapping(Function3<? super T1, ? super T2, ? super T3, ? extends U> function) {
+    public final SelectField mapping(Function3 function) {
         return convertFrom(r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3()));
     }
 
     @Override
-    public final <U> SelectField<U> mapping(Class<U> uType, Function3<? super T1, ? super T2, ? super T3, ? extends U> function) {
+    public final SelectField mapping(Class uType, Function3 function) {
         return convertFrom(uType, r -> r == null ? null : function.apply(r.value1(), r.value2(), r.value3()));
     }
 
@@ -131,7 +131,7 @@ implements
     }
 
     @Override
-    public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition compare(Comparator comparator, Field t1, Field t2, Field t3) {
         return compare(comparator, row(Tools.nullSafe(t1, dataType(0)), Tools.nullSafe(t2, dataType(1)), Tools.nullSafe(t3, dataType(2))));
     }
 
@@ -150,12 +150,12 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final Condition equal(Row3<T1, T2, T3> row) {
+    public final Condition equal(Row3 row) {
         return compare(Comparator.EQUALS, row);
     }
 
     @Override
-    public final Condition equal(Record3<T1, T2, T3> record) {
+    public final Condition equal(Record3 record) {
         return compare(Comparator.EQUALS, record);
     }
 
@@ -165,17 +165,17 @@ implements
     }
 
     @Override
-    public final Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition equal(Field t1, Field t2, Field t3) {
         return compare(Comparator.EQUALS, t1, t2, t3);
     }
 
     @Override
-    public final Condition eq(Row3<T1, T2, T3> row) {
+    public final Condition eq(Row3 row) {
         return equal(row);
     }
 
     @Override
-    public final Condition eq(Record3<T1, T2, T3> record) {
+    public final Condition eq(Record3 record) {
         return equal(record);
     }
 
@@ -185,17 +185,17 @@ implements
     }
 
     @Override
-    public final Condition eq(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition eq(Field t1, Field t2, Field t3) {
         return equal(t1, t2, t3);
     }
 
     @Override
-    public final Condition notEqual(Row3<T1, T2, T3> row) {
+    public final Condition notEqual(Row3 row) {
         return compare(Comparator.NOT_EQUALS, row);
     }
 
     @Override
-    public final Condition notEqual(Record3<T1, T2, T3> record) {
+    public final Condition notEqual(Record3 record) {
         return compare(Comparator.NOT_EQUALS, record);
     }
 
@@ -205,17 +205,17 @@ implements
     }
 
     @Override
-    public final Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition notEqual(Field t1, Field t2, Field t3) {
         return compare(Comparator.NOT_EQUALS, t1, t2, t3);
     }
 
     @Override
-    public final Condition ne(Row3<T1, T2, T3> row) {
+    public final Condition ne(Row3 row) {
         return notEqual(row);
     }
 
     @Override
-    public final Condition ne(Record3<T1, T2, T3> record) {
+    public final Condition ne(Record3 record) {
         return notEqual(record);
     }
 
@@ -225,7 +225,7 @@ implements
     }
 
     @Override
-    public final Condition ne(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition ne(Field t1, Field t2, Field t3) {
         return notEqual(t1, t2, t3);
     }
 
@@ -234,12 +234,12 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final Condition lessThan(Row3<T1, T2, T3> row) {
+    public final Condition lessThan(Row3 row) {
         return compare(Comparator.LESS, row);
     }
 
     @Override
-    public final Condition lessThan(Record3<T1, T2, T3> record) {
+    public final Condition lessThan(Record3 record) {
         return compare(Comparator.LESS, record);
     }
 
@@ -249,17 +249,17 @@ implements
     }
 
     @Override
-    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition lessThan(Field t1, Field t2, Field t3) {
         return compare(Comparator.LESS, t1, t2, t3);
     }
 
     @Override
-    public final Condition lt(Row3<T1, T2, T3> row) {
+    public final Condition lt(Row3 row) {
         return lessThan(row);
     }
 
     @Override
-    public final Condition lt(Record3<T1, T2, T3> record) {
+    public final Condition lt(Record3 record) {
         return lessThan(record);
     }
 
@@ -269,17 +269,17 @@ implements
     }
 
     @Override
-    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition lt(Field t1, Field t2, Field t3) {
         return lessThan(t1, t2, t3);
     }
 
     @Override
-    public final Condition lessOrEqual(Row3<T1, T2, T3> row) {
+    public final Condition lessOrEqual(Row3 row) {
         return compare(Comparator.LESS_OR_EQUAL, row);
     }
 
     @Override
-    public final Condition lessOrEqual(Record3<T1, T2, T3> record) {
+    public final Condition lessOrEqual(Record3 record) {
         return compare(Comparator.LESS_OR_EQUAL, record);
     }
 
@@ -289,17 +289,17 @@ implements
     }
 
     @Override
-    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition lessOrEqual(Field t1, Field t2, Field t3) {
         return compare(Comparator.LESS_OR_EQUAL, t1, t2, t3);
     }
 
     @Override
-    public final Condition le(Row3<T1, T2, T3> row) {
+    public final Condition le(Row3 row) {
         return lessOrEqual(row);
     }
 
     @Override
-    public final Condition le(Record3<T1, T2, T3> record) {
+    public final Condition le(Record3 record) {
         return lessOrEqual(record);
     }
 
@@ -309,17 +309,17 @@ implements
     }
 
     @Override
-    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition le(Field t1, Field t2, Field t3) {
         return lessOrEqual(t1, t2, t3);
     }
 
     @Override
-    public final Condition greaterThan(Row3<T1, T2, T3> row) {
+    public final Condition greaterThan(Row3 row) {
         return compare(Comparator.GREATER, row);
     }
 
     @Override
-    public final Condition greaterThan(Record3<T1, T2, T3> record) {
+    public final Condition greaterThan(Record3 record) {
         return compare(Comparator.GREATER, record);
     }
 
@@ -329,17 +329,17 @@ implements
     }
 
     @Override
-    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition greaterThan(Field t1, Field t2, Field t3) {
         return compare(Comparator.GREATER, t1, t2, t3);
     }
 
     @Override
-    public final Condition gt(Row3<T1, T2, T3> row) {
+    public final Condition gt(Row3 row) {
         return greaterThan(row);
     }
 
     @Override
-    public final Condition gt(Record3<T1, T2, T3> record) {
+    public final Condition gt(Record3 record) {
         return greaterThan(record);
     }
 
@@ -349,17 +349,17 @@ implements
     }
 
     @Override
-    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition gt(Field t1, Field t2, Field t3) {
         return greaterThan(t1, t2, t3);
     }
 
     @Override
-    public final Condition greaterOrEqual(Row3<T1, T2, T3> row) {
+    public final Condition greaterOrEqual(Row3 row) {
         return compare(Comparator.GREATER_OR_EQUAL, row);
     }
 
     @Override
-    public final Condition greaterOrEqual(Record3<T1, T2, T3> record) {
+    public final Condition greaterOrEqual(Record3 record) {
         return compare(Comparator.GREATER_OR_EQUAL, record);
     }
 
@@ -369,17 +369,17 @@ implements
     }
 
     @Override
-    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition greaterOrEqual(Field t1, Field t2, Field t3) {
         return compare(Comparator.GREATER_OR_EQUAL, t1, t2, t3);
     }
 
     @Override
-    public final Condition ge(Row3<T1, T2, T3> row) {
+    public final Condition ge(Row3 row) {
         return greaterOrEqual(row);
     }
 
     @Override
-    public final Condition ge(Record3<T1, T2, T3> record) {
+    public final Condition ge(Record3 record) {
         return greaterOrEqual(record);
     }
 
@@ -389,7 +389,7 @@ implements
     }
 
     @Override
-    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition ge(Field t1, Field t2, Field t3) {
         return greaterOrEqual(t1, t2, t3);
     }
 
@@ -398,122 +398,122 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> between(T1 t1, T2 t2, T3 t3) {
+    public final BetweenAndStep3 between(T1 t1, T2 t2, T3 t3) {
         return between(row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1)), Tools.field(t3, (DataType) dataType(2))));
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> between(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final BetweenAndStep3 between(Field t1, Field t2, Field t3) {
         return between(row(t1, t2, t3));
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> between(Row3<T1, T2, T3> row) {
+    public final BetweenAndStep3 between(Row3 row) {
         return new RowBetweenCondition<>(this, row, false, false);
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> between(Record3<T1, T2, T3> record) {
+    public final BetweenAndStep3 between(Record3 record) {
         return between(record.valuesRow());
     }
 
     @Override
-    public final Condition between(Row3<T1, T2, T3> minValue, Row3<T1, T2, T3> maxValue) {
+    public final Condition between(Row3 minValue, Row3 maxValue) {
         return between(minValue).and(maxValue);
     }
 
     @Override
-    public final Condition between(Record3<T1, T2, T3> minValue, Record3<T1, T2, T3> maxValue) {
+    public final Condition between(Record3 minValue, Record3 maxValue) {
         return between(minValue).and(maxValue);
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> betweenSymmetric(T1 t1, T2 t2, T3 t3) {
+    public final BetweenAndStep3 betweenSymmetric(T1 t1, T2 t2, T3 t3) {
         return betweenSymmetric(row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1)), Tools.field(t3, (DataType) dataType(2))));
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final BetweenAndStep3 betweenSymmetric(Field t1, Field t2, Field t3) {
         return betweenSymmetric(row(t1, t2, t3));
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> betweenSymmetric(Row3<T1, T2, T3> row) {
+    public final BetweenAndStep3 betweenSymmetric(Row3 row) {
         return new RowBetweenCondition<>(this, row, false, true);
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> betweenSymmetric(Record3<T1, T2, T3> record) {
+    public final BetweenAndStep3 betweenSymmetric(Record3 record) {
         return betweenSymmetric(record.valuesRow());
     }
 
     @Override
-    public final Condition betweenSymmetric(Row3<T1, T2, T3> minValue, Row3<T1, T2, T3> maxValue) {
+    public final Condition betweenSymmetric(Row3 minValue, Row3 maxValue) {
         return betweenSymmetric(minValue).and(maxValue);
     }
 
     @Override
-    public final Condition betweenSymmetric(Record3<T1, T2, T3> minValue, Record3<T1, T2, T3> maxValue) {
+    public final Condition betweenSymmetric(Record3 minValue, Record3 maxValue) {
         return betweenSymmetric(minValue).and(maxValue);
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> notBetween(T1 t1, T2 t2, T3 t3) {
+    public final BetweenAndStep3 notBetween(T1 t1, T2 t2, T3 t3) {
         return notBetween(row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1)), Tools.field(t3, (DataType) dataType(2))));
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final BetweenAndStep3 notBetween(Field t1, Field t2, Field t3) {
         return notBetween(row(t1, t2, t3));
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> notBetween(Row3<T1, T2, T3> row) {
+    public final BetweenAndStep3 notBetween(Row3 row) {
         return new RowBetweenCondition<>(this, row, true, false);
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> notBetween(Record3<T1, T2, T3> record) {
+    public final BetweenAndStep3 notBetween(Record3 record) {
         return notBetween(record.valuesRow());
     }
 
     @Override
-    public final Condition notBetween(Row3<T1, T2, T3> minValue, Row3<T1, T2, T3> maxValue) {
+    public final Condition notBetween(Row3 minValue, Row3 maxValue) {
         return notBetween(minValue).and(maxValue);
     }
 
     @Override
-    public final Condition notBetween(Record3<T1, T2, T3> minValue, Record3<T1, T2, T3> maxValue) {
+    public final Condition notBetween(Record3 minValue, Record3 maxValue) {
         return notBetween(minValue).and(maxValue);
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(T1 t1, T2 t2, T3 t3) {
+    public final BetweenAndStep3 notBetweenSymmetric(T1 t1, T2 t2, T3 t3) {
         return notBetweenSymmetric(row(Tools.field(t1, (DataType) dataType(0)), Tools.field(t2, (DataType) dataType(1)), Tools.field(t3, (DataType) dataType(2))));
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final BetweenAndStep3 notBetweenSymmetric(Field t1, Field t2, Field t3) {
         return notBetweenSymmetric(row(t1, t2, t3));
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(Row3<T1, T2, T3> row) {
+    public final BetweenAndStep3 notBetweenSymmetric(Row3 row) {
         return new RowBetweenCondition<>(this, row, true, true);
     }
 
     @Override
-    public final BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(Record3<T1, T2, T3> record) {
+    public final BetweenAndStep3 notBetweenSymmetric(Record3 record) {
         return notBetweenSymmetric(record.valuesRow());
     }
 
     @Override
-    public final Condition notBetweenSymmetric(Row3<T1, T2, T3> minValue, Row3<T1, T2, T3> maxValue) {
+    public final Condition notBetweenSymmetric(Row3 minValue, Row3 maxValue) {
         return notBetweenSymmetric(minValue).and(maxValue);
     }
 
     @Override
-    public final Condition notBetweenSymmetric(Record3<T1, T2, T3> minValue, Record3<T1, T2, T3> maxValue) {
+    public final Condition notBetweenSymmetric(Record3 minValue, Record3 maxValue) {
         return notBetweenSymmetric(minValue).and(maxValue);
     }
 
@@ -522,12 +522,12 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final Condition isNotDistinctFrom(Row3<T1, T2, T3> row) {
+    public final Condition isNotDistinctFrom(Row3 row) {
         return new RowIsDistinctFrom(this, row, true);
     }
 
     @Override
-    public final Condition isNotDistinctFrom(Record3<T1, T2, T3> record) {
+    public final Condition isNotDistinctFrom(Record3 record) {
         return isNotDistinctFrom(record.valuesRow());
     }
 
@@ -537,22 +537,22 @@ implements
     }
 
     @Override
-    public final Condition isNotDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition isNotDistinctFrom(Field t1, Field t2, Field t3) {
         return isNotDistinctFrom(row(t1, t2, t3));
     }
 
     @Override
-    public final Condition isNotDistinctFrom(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition isNotDistinctFrom(Select select) {
         return new RowIsDistinctFrom(this, select, true);
     }
 
     @Override
-    public final Condition isDistinctFrom(Row3<T1, T2, T3> row) {
+    public final Condition isDistinctFrom(Row3 row) {
         return new RowIsDistinctFrom(this, row, false);
     }
 
     @Override
-    public final Condition isDistinctFrom(Record3<T1, T2, T3> record) {
+    public final Condition isDistinctFrom(Record3 record) {
         return isDistinctFrom(record.valuesRow());
     }
 
@@ -562,12 +562,12 @@ implements
     }
 
     @Override
-    public final Condition isDistinctFrom(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+    public final Condition isDistinctFrom(Field t1, Field t2, Field t3) {
         return isDistinctFrom(row(t1, t2, t3));
     }
 
     @Override
-    public final Condition isDistinctFrom(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition isDistinctFrom(Select select) {
         return new RowIsDistinctFrom(this, select, false);
     }
 
@@ -576,12 +576,12 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final Condition in(Row3<T1, T2, T3>... rows) {
+    public final Condition in(Row3... rows) {
         return in(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition in(Record3<T1, T2, T3>... records) {
+    public final Condition in(Record3... records) {
         QueryPartList<Row> rows = new QueryPartList<>();
 
         for (Record record : records)
@@ -591,12 +591,12 @@ implements
     }
 
     @Override
-    public final Condition notIn(Row3<T1, T2, T3>... rows) {
+    public final Condition notIn(Row3... rows) {
         return notIn(Arrays.asList(rows));
     }
 
     @Override
-    public final Condition notIn(Record3<T1, T2, T3>... records) {
+    public final Condition notIn(Record3... records) {
         QueryPartList<Row> rows = new QueryPartList<>();
 
         for (Record record : records)
@@ -606,22 +606,22 @@ implements
     }
 
     @Override
-    public final Condition in(Collection<? extends Row3<T1, T2, T3>> rows) {
+    public final Condition in(Collection rows) {
         return new RowInCondition(this, new QueryPartList<Row>(rows), false);
     }
 
     @Override
-    public final Condition in(Result<? extends Record3<T1, T2, T3>> result) {
+    public final Condition in(Result result) {
         return new RowInCondition(this, new QueryPartList<Row>(Tools.rows(result)), false);
     }
 
     @Override
-    public final Condition notIn(Collection<? extends Row3<T1, T2, T3>> rows) {
+    public final Condition notIn(Collection rows) {
         return new RowInCondition(this, new QueryPartList<Row>(rows), true);
     }
 
     @Override
-    public final Condition notIn(Result<? extends Record3<T1, T2, T3>> result) {
+    public final Condition notIn(Result result) {
         return new RowInCondition(this, new QueryPartList<Row>(Tools.rows(result)), true);
     }
 
@@ -630,132 +630,132 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final Condition equal(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition equal(Select select) {
         return compare(Comparator.EQUALS, select);
     }
 
     @Override
-    public final Condition equal(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition equal(QuantifiedSelect select) {
         return compare(Comparator.EQUALS, select);
     }
 
     @Override
-    public final Condition eq(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition eq(Select select) {
         return equal(select);
     }
 
     @Override
-    public final Condition eq(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition eq(QuantifiedSelect select) {
         return equal(select);
     }
 
     @Override
-    public final Condition notEqual(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition notEqual(Select select) {
         return compare(Comparator.NOT_EQUALS, select);
     }
 
     @Override
-    public final Condition notEqual(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition notEqual(QuantifiedSelect select) {
         return compare(Comparator.NOT_EQUALS, select);
     }
 
     @Override
-    public final Condition ne(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition ne(Select select) {
         return notEqual(select);
     }
 
     @Override
-    public final Condition ne(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition ne(QuantifiedSelect select) {
         return notEqual(select);
     }
 
     @Override
-    public final Condition greaterThan(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition greaterThan(Select select) {
         return compare(Comparator.GREATER, select);
     }
 
     @Override
-    public final Condition greaterThan(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition greaterThan(QuantifiedSelect select) {
         return compare(Comparator.GREATER, select);
     }
 
     @Override
-    public final Condition gt(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition gt(Select select) {
         return greaterThan(select);
     }
 
     @Override
-    public final Condition gt(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition gt(QuantifiedSelect select) {
         return greaterThan(select);
     }
 
     @Override
-    public final Condition greaterOrEqual(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition greaterOrEqual(Select select) {
         return compare(Comparator.GREATER_OR_EQUAL, select);
     }
 
     @Override
-    public final Condition greaterOrEqual(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition greaterOrEqual(QuantifiedSelect select) {
         return compare(Comparator.GREATER_OR_EQUAL, select);
     }
 
     @Override
-    public final Condition ge(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition ge(Select select) {
         return greaterOrEqual(select);
     }
 
     @Override
-    public final Condition ge(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition ge(QuantifiedSelect select) {
         return greaterOrEqual(select);
     }
 
     @Override
-    public final Condition lessThan(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition lessThan(Select select) {
         return compare(Comparator.LESS, select);
     }
 
     @Override
-    public final Condition lessThan(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition lessThan(QuantifiedSelect select) {
         return compare(Comparator.LESS, select);
     }
 
     @Override
-    public final Condition lt(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition lt(Select select) {
         return lessThan(select);
     }
 
     @Override
-    public final Condition lt(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition lt(QuantifiedSelect select) {
         return lessThan(select);
     }
 
     @Override
-    public final Condition lessOrEqual(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition lessOrEqual(Select select) {
         return compare(Comparator.LESS_OR_EQUAL, select);
     }
 
     @Override
-    public final Condition lessOrEqual(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition lessOrEqual(QuantifiedSelect select) {
         return compare(Comparator.LESS_OR_EQUAL, select);
     }
 
     @Override
-    public final Condition le(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition le(Select select) {
         return lessOrEqual(select);
     }
 
     @Override
-    public final Condition le(QuantifiedSelect<? extends Record3<T1, T2, T3>> select) {
+    public final Condition le(QuantifiedSelect select) {
         return lessOrEqual(select);
     }
 
     @Override
-    public final Condition in(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition in(Select select) {
         return compare(Comparator.IN, select);
     }
 
     @Override
-    public final Condition notIn(Select<? extends Record3<T1, T2, T3>> select) {
+    public final Condition notIn(Select select) {
         return compare(Comparator.NOT_IN, select);
     }
 

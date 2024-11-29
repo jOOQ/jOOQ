@@ -37503,7 +37503,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1> Table<Record1<T1>> values(Row1<T1>... rows) {
-        return new Values<Record1<T1>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37538,7 +37538,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2> Table<Record2<T1, T2>> values(Row2<T1, T2>... rows) {
-        return new Values<Record2<T1, T2>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37573,7 +37573,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3> Table<Record3<T1, T2, T3>> values(Row3<T1, T2, T3>... rows) {
-        return new Values<Record3<T1, T2, T3>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37608,7 +37608,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4> Table<Record4<T1, T2, T3, T4>> values(Row4<T1, T2, T3, T4>... rows) {
-        return new Values<Record4<T1, T2, T3, T4>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37643,7 +37643,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5> Table<Record5<T1, T2, T3, T4, T5>> values(Row5<T1, T2, T3, T4, T5>... rows) {
-        return new Values<Record5<T1, T2, T3, T4, T5>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37678,7 +37678,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6> Table<Record6<T1, T2, T3, T4, T5, T6>> values(Row6<T1, T2, T3, T4, T5, T6>... rows) {
-        return new Values<Record6<T1, T2, T3, T4, T5, T6>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37713,7 +37713,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Table<Record7<T1, T2, T3, T4, T5, T6, T7>> values(Row7<T1, T2, T3, T4, T5, T6, T7>... rows) {
-        return new Values<Record7<T1, T2, T3, T4, T5, T6, T7>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37748,7 +37748,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Table<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> values(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows) {
-        return new Values<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37783,7 +37783,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Table<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> values(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>... rows) {
-        return new Values<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37818,7 +37818,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Table<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> values(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... rows) {
-        return new Values<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37853,7 +37853,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Table<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> values(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... rows) {
-        return new Values<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37888,7 +37888,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Table<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> values(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>... rows) {
-        return new Values<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37923,7 +37923,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Table<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> values(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... rows) {
-        return new Values<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37958,7 +37958,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Table<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> values(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... rows) {
-        return new Values<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -37993,7 +37993,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Table<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> values(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>... rows) {
-        return new Values<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -38028,7 +38028,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Table<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> values(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... rows) {
-        return new Values<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -38063,7 +38063,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Table<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> values(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>... rows) {
-        return new Values<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -38098,7 +38098,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Table<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> values(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>... rows) {
-        return new Values<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -38133,7 +38133,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Table<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> values(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... rows) {
-        return new Values<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -38168,7 +38168,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Table<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> values(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>... rows) {
-        return new Values<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -38203,7 +38203,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Table<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> values(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>... rows) {
-        return new Values<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(rows);
+        return new Values(rows);
     }
 
     /**
@@ -38238,7 +38238,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Table<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> values(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>... rows) {
-        return new Values<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(rows);
+        return new Values(rows);
     }
 
 

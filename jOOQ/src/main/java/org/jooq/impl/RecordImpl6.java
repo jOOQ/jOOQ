@@ -53,7 +53,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings({ "unchecked" })
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class RecordImpl6<T1, T2, T3, T4, T5, T6> extends AbstractRecord implements InternalRecord, Record6<T1, T2, T3, T4, T5, T6> {
 
     RecordImpl6(AbstractRow<?> row) {
@@ -65,43 +65,43 @@ final class RecordImpl6<T1, T2, T3, T4, T5, T6> extends AbstractRecord implement
     // ------------------------------------------------------------------------
 
     @Override
-    public RowImpl6<T1, T2, T3, T4, T5, T6> fieldsRow() {
-        return new RowImpl6<T1, T2, T3, T4, T5, T6>(field1(), field2(), field3(), field4(), field5(), field6());
+    public RowImpl6 fieldsRow() {
+        return new RowImpl6(field1(), field2(), field3(), field4(), field5(), field6());
     }
 
     @Override
-    public final RowImpl6<T1, T2, T3, T4, T5, T6> valuesRow() {
-        return new RowImpl6<T1, T2, T3, T4, T5, T6>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()));
+    public final RowImpl6 valuesRow() {
+        return new RowImpl6(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()), Tools.field(value4(), field4()), Tools.field(value5(), field5()), Tools.field(value6(), field6()));
     }
 
     @Override
-    public final Field<T1> field1() {
-        return (@NotNull Field<T1>) fields.field(0);
+    public final Field field1() {
+        return (@NotNull Field) fields.field(0);
     }
 
     @Override
-    public final Field<T2> field2() {
-        return (@NotNull Field<T2>) fields.field(1);
+    public final Field field2() {
+        return (@NotNull Field) fields.field(1);
     }
 
     @Override
-    public final Field<T3> field3() {
-        return (@NotNull Field<T3>) fields.field(2);
+    public final Field field3() {
+        return (@NotNull Field) fields.field(2);
     }
 
     @Override
-    public final Field<T4> field4() {
-        return (@NotNull Field<T4>) fields.field(3);
+    public final Field field4() {
+        return (@NotNull Field) fields.field(3);
     }
 
     @Override
-    public final Field<T5> field5() {
-        return (@NotNull Field<T5>) fields.field(4);
+    public final Field field5() {
+        return (@NotNull Field) fields.field(4);
     }
 
     @Override
-    public final Field<T6> field6() {
-        return (@NotNull Field<T6>) fields.field(5);
+    public final Field field6() {
+        return (@NotNull Field) fields.field(5);
     }
 
     @Override
@@ -171,7 +171,7 @@ final class RecordImpl6<T1, T2, T3, T4, T5, T6> extends AbstractRecord implement
     }
 
     @Override
-    public final Record6<T1, T2, T3, T4, T5, T6> values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+    public final Record6 values(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
         set(0, t1);
         set(1, t2);
         set(2, t3);
@@ -182,13 +182,13 @@ final class RecordImpl6<T1, T2, T3, T4, T5, T6> extends AbstractRecord implement
     }
 
     @Override
-    public <T> Record6<T1, T2, T3, T4, T5, T6> with(Field<T> field, T value) {
-        return (Record6<T1, T2, T3, T4, T5, T6>) super.with(field, value);
+    public <T> Record6 with(Field<T> field, T value) {
+        return (Record6) super.with(field, value);
     }
 
     @Override
-    public <T, U> Record6<T1, T2, T3, T4, T5, T6> with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
-        return (Record6<T1, T2, T3, T4, T5, T6>) super.with(field, value, converter);
+    public <T, U> Record6 with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        return (Record6) super.with(field, value, converter);
     }
 
     @Override

@@ -84,12 +84,12 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final <U> SelectField<U> mapping(Function<? super Object[], ? extends U> function) {
+    public final SelectField mapping(Function function) {
         return convertFrom(r -> r == null ? null : function.apply(r.intoArray()));
     }
 
     @Override
-    public final <U> SelectField<U> mapping(Class<U> uType, Function<? super Object[], ? extends U> function) {
+    public final SelectField mapping(Class uType, Function function) {
         return convertFrom(uType, r -> r == null ? null : function.apply(r.intoArray()));
     }
 
@@ -524,7 +524,7 @@ implements
     }
 
     @Override
-    public final Condition isNotDistinctFrom(Select<? extends Record> select) {
+    public final Condition isNotDistinctFrom(Select select) {
         return new RowIsDistinctFrom(this, select, true);
     }
 
@@ -549,7 +549,7 @@ implements
     }
 
     @Override
-    public final Condition isDistinctFrom(Select<? extends Record> select) {
+    public final Condition isDistinctFrom(Select select) {
         return new RowIsDistinctFrom(this, select, false);
     }
 
@@ -588,22 +588,22 @@ implements
     }
 
     @Override
-    public final Condition in(Collection<? extends RowN> rows) {
+    public final Condition in(Collection rows) {
         return new RowInCondition(this, new QueryPartList<Row>(rows), false);
     }
 
     @Override
-    public final Condition in(Result<? extends Record> result) {
+    public final Condition in(Result result) {
         return new RowInCondition(this, new QueryPartList<Row>(Tools.rows(result)), false);
     }
 
     @Override
-    public final Condition notIn(Collection<? extends RowN> rows) {
+    public final Condition notIn(Collection rows) {
         return new RowInCondition(this, new QueryPartList<Row>(rows), true);
     }
 
     @Override
-    public final Condition notIn(Result<? extends Record> result) {
+    public final Condition notIn(Result result) {
         return new RowInCondition(this, new QueryPartList<Row>(Tools.rows(result)), true);
     }
 
@@ -612,132 +612,132 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    public final Condition equal(Select<? extends Record> select) {
+    public final Condition equal(Select select) {
         return compare(Comparator.EQUALS, select);
     }
 
     @Override
-    public final Condition equal(QuantifiedSelect<? extends Record> select) {
+    public final Condition equal(QuantifiedSelect select) {
         return compare(Comparator.EQUALS, select);
     }
 
     @Override
-    public final Condition eq(Select<? extends Record> select) {
+    public final Condition eq(Select select) {
         return equal(select);
     }
 
     @Override
-    public final Condition eq(QuantifiedSelect<? extends Record> select) {
+    public final Condition eq(QuantifiedSelect select) {
         return equal(select);
     }
 
     @Override
-    public final Condition notEqual(Select<? extends Record> select) {
+    public final Condition notEqual(Select select) {
         return compare(Comparator.NOT_EQUALS, select);
     }
 
     @Override
-    public final Condition notEqual(QuantifiedSelect<? extends Record> select) {
+    public final Condition notEqual(QuantifiedSelect select) {
         return compare(Comparator.NOT_EQUALS, select);
     }
 
     @Override
-    public final Condition ne(Select<? extends Record> select) {
+    public final Condition ne(Select select) {
         return notEqual(select);
     }
 
     @Override
-    public final Condition ne(QuantifiedSelect<? extends Record> select) {
+    public final Condition ne(QuantifiedSelect select) {
         return notEqual(select);
     }
 
     @Override
-    public final Condition greaterThan(Select<? extends Record> select) {
+    public final Condition greaterThan(Select select) {
         return compare(Comparator.GREATER, select);
     }
 
     @Override
-    public final Condition greaterThan(QuantifiedSelect<? extends Record> select) {
+    public final Condition greaterThan(QuantifiedSelect select) {
         return compare(Comparator.GREATER, select);
     }
 
     @Override
-    public final Condition gt(Select<? extends Record> select) {
+    public final Condition gt(Select select) {
         return greaterThan(select);
     }
 
     @Override
-    public final Condition gt(QuantifiedSelect<? extends Record> select) {
+    public final Condition gt(QuantifiedSelect select) {
         return greaterThan(select);
     }
 
     @Override
-    public final Condition greaterOrEqual(Select<? extends Record> select) {
+    public final Condition greaterOrEqual(Select select) {
         return compare(Comparator.GREATER_OR_EQUAL, select);
     }
 
     @Override
-    public final Condition greaterOrEqual(QuantifiedSelect<? extends Record> select) {
+    public final Condition greaterOrEqual(QuantifiedSelect select) {
         return compare(Comparator.GREATER_OR_EQUAL, select);
     }
 
     @Override
-    public final Condition ge(Select<? extends Record> select) {
+    public final Condition ge(Select select) {
         return greaterOrEqual(select);
     }
 
     @Override
-    public final Condition ge(QuantifiedSelect<? extends Record> select) {
+    public final Condition ge(QuantifiedSelect select) {
         return greaterOrEqual(select);
     }
 
     @Override
-    public final Condition lessThan(Select<? extends Record> select) {
+    public final Condition lessThan(Select select) {
         return compare(Comparator.LESS, select);
     }
 
     @Override
-    public final Condition lessThan(QuantifiedSelect<? extends Record> select) {
+    public final Condition lessThan(QuantifiedSelect select) {
         return compare(Comparator.LESS, select);
     }
 
     @Override
-    public final Condition lt(Select<? extends Record> select) {
+    public final Condition lt(Select select) {
         return lessThan(select);
     }
 
     @Override
-    public final Condition lt(QuantifiedSelect<? extends Record> select) {
+    public final Condition lt(QuantifiedSelect select) {
         return lessThan(select);
     }
 
     @Override
-    public final Condition lessOrEqual(Select<? extends Record> select) {
+    public final Condition lessOrEqual(Select select) {
         return compare(Comparator.LESS_OR_EQUAL, select);
     }
 
     @Override
-    public final Condition lessOrEqual(QuantifiedSelect<? extends Record> select) {
+    public final Condition lessOrEqual(QuantifiedSelect select) {
         return compare(Comparator.LESS_OR_EQUAL, select);
     }
 
     @Override
-    public final Condition le(Select<? extends Record> select) {
+    public final Condition le(Select select) {
         return lessOrEqual(select);
     }
 
     @Override
-    public final Condition le(QuantifiedSelect<? extends Record> select) {
+    public final Condition le(QuantifiedSelect select) {
         return lessOrEqual(select);
     }
 
     @Override
-    public final Condition in(Select<? extends Record> select) {
+    public final Condition in(Select select) {
         return compare(Comparator.IN, select);
     }
 
     @Override
-    public final Condition notIn(Select<? extends Record> select) {
+    public final Condition notIn(Select select) {
         return compare(Comparator.NOT_IN, select);
     }
 

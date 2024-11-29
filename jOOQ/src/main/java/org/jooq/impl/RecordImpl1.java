@@ -53,7 +53,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings({ "unchecked" })
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class RecordImpl1<T1> extends AbstractRecord implements InternalRecord, Record1<T1> {
 
     RecordImpl1(AbstractRow<?> row) {
@@ -65,18 +65,18 @@ final class RecordImpl1<T1> extends AbstractRecord implements InternalRecord, Re
     // ------------------------------------------------------------------------
 
     @Override
-    public RowImpl1<T1> fieldsRow() {
-        return new RowImpl1<T1>(field1());
+    public RowImpl1 fieldsRow() {
+        return new RowImpl1(field1());
     }
 
     @Override
-    public final RowImpl1<T1> valuesRow() {
-        return new RowImpl1<T1>(Tools.field(value1(), field1()));
+    public final RowImpl1 valuesRow() {
+        return new RowImpl1(Tools.field(value1(), field1()));
     }
 
     @Override
-    public final Field<T1> field1() {
-        return (@NotNull Field<T1>) fields.field(0);
+    public final Field field1() {
+        return (@NotNull Field) fields.field(0);
     }
 
     @Override
@@ -91,19 +91,19 @@ final class RecordImpl1<T1> extends AbstractRecord implements InternalRecord, Re
     }
 
     @Override
-    public final Record1<T1> values(T1 t1) {
+    public final Record1 values(T1 t1) {
         set(0, t1);
         return this;
     }
 
     @Override
-    public <T> Record1<T1> with(Field<T> field, T value) {
-        return (Record1<T1>) super.with(field, value);
+    public <T> Record1 with(Field<T> field, T value) {
+        return (Record1) super.with(field, value);
     }
 
     @Override
-    public <T, U> Record1<T1> with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
-        return (Record1<T1>) super.with(field, value, converter);
+    public <T, U> Record1 with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        return (Record1) super.with(field, value, converter);
     }
 
     @Override

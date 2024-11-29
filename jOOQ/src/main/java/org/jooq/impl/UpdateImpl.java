@@ -723,113 +723,113 @@ implements
 
 
     @Override
-    public final <T1> UpdateResultStep<Record1<T1>> returningResult(SelectField<T1> field1) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1 });
+    public final UpdateResultStep returningResult(SelectField field1) {
+        return returningResult(new SelectField[] { field1 });
     }
 
     @Override
-    public final <T1, T2> UpdateResultStep<Record2<T1, T2>> returningResult(SelectField<T1> field1, SelectField<T2> field2) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2) {
+        return returningResult(new SelectField[] { field1, field2 });
     }
 
     @Override
-    public final <T1, T2, T3> UpdateResultStep<Record3<T1, T2, T3>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3) {
+        return returningResult(new SelectField[] { field1, field2, field3 });
     }
 
     @Override
-    public final <T1, T2, T3, T4> UpdateResultStep<Record4<T1, T2, T3, T4>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5> UpdateResultStep<Record5<T1, T2, T3, T4, T5>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6> UpdateResultStep<Record6<T1, T2, T3, T4, T5, T6>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7> UpdateResultStep<Record7<T1, T2, T3, T4, T5, T6, T7>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8> UpdateResultStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9> UpdateResultStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> UpdateResultStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> UpdateResultStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> UpdateResultStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> UpdateResultStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> UpdateResultStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13, SelectField field14) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> UpdateResultStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13, SelectField field14, SelectField field15) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> UpdateResultStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13, SelectField field14, SelectField field15, SelectField field16) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> UpdateResultStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13, SelectField field14, SelectField field15, SelectField field16, SelectField field17) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> UpdateResultStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13, SelectField field14, SelectField field15, SelectField field16, SelectField field17, SelectField field18) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> UpdateResultStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13, SelectField field14, SelectField field15, SelectField field16, SelectField field17, SelectField field18, SelectField field19) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> UpdateResultStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13, SelectField field14, SelectField field15, SelectField field16, SelectField field17, SelectField field18, SelectField field19, SelectField field20) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> UpdateResultStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13, SelectField field14, SelectField field15, SelectField field16, SelectField field17, SelectField field18, SelectField field19, SelectField field20, SelectField field21) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
     }
 
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateResultStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> returningResult(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7, SelectField<T8> field8, SelectField<T9> field9, SelectField<T10> field10, SelectField<T11> field11, SelectField<T12> field12, SelectField<T13> field13, SelectField<T14> field14, SelectField<T15> field15, SelectField<T16> field16, SelectField<T17> field17, SelectField<T18> field18, SelectField<T19> field19, SelectField<T20> field20, SelectField<T21> field21, SelectField<T22> field22) {
-        return (UpdateResultStep) returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    public final UpdateResultStep returningResult(SelectField field1, SelectField field2, SelectField field3, SelectField field4, SelectField field5, SelectField field6, SelectField field7, SelectField field8, SelectField field9, SelectField field10, SelectField field11, SelectField field12, SelectField field13, SelectField field14, SelectField field15, SelectField field16, SelectField field17, SelectField field18, SelectField field19, SelectField field20, SelectField field21, SelectField field22) {
+        return returningResult(new SelectField[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
 

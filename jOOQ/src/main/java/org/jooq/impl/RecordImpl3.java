@@ -53,7 +53,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings({ "unchecked" })
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class RecordImpl3<T1, T2, T3> extends AbstractRecord implements InternalRecord, Record3<T1, T2, T3> {
 
     RecordImpl3(AbstractRow<?> row) {
@@ -65,28 +65,28 @@ final class RecordImpl3<T1, T2, T3> extends AbstractRecord implements InternalRe
     // ------------------------------------------------------------------------
 
     @Override
-    public RowImpl3<T1, T2, T3> fieldsRow() {
-        return new RowImpl3<T1, T2, T3>(field1(), field2(), field3());
+    public RowImpl3 fieldsRow() {
+        return new RowImpl3(field1(), field2(), field3());
     }
 
     @Override
-    public final RowImpl3<T1, T2, T3> valuesRow() {
-        return new RowImpl3<T1, T2, T3>(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()));
+    public final RowImpl3 valuesRow() {
+        return new RowImpl3(Tools.field(value1(), field1()), Tools.field(value2(), field2()), Tools.field(value3(), field3()));
     }
 
     @Override
-    public final Field<T1> field1() {
-        return (@NotNull Field<T1>) fields.field(0);
+    public final Field field1() {
+        return (@NotNull Field) fields.field(0);
     }
 
     @Override
-    public final Field<T2> field2() {
-        return (@NotNull Field<T2>) fields.field(1);
+    public final Field field2() {
+        return (@NotNull Field) fields.field(1);
     }
 
     @Override
-    public final Field<T3> field3() {
-        return (@NotNull Field<T3>) fields.field(2);
+    public final Field field3() {
+        return (@NotNull Field) fields.field(2);
     }
 
     @Override
@@ -123,7 +123,7 @@ final class RecordImpl3<T1, T2, T3> extends AbstractRecord implements InternalRe
     }
 
     @Override
-    public final Record3<T1, T2, T3> values(T1 t1, T2 t2, T3 t3) {
+    public final Record3 values(T1 t1, T2 t2, T3 t3) {
         set(0, t1);
         set(1, t2);
         set(2, t3);
@@ -131,13 +131,13 @@ final class RecordImpl3<T1, T2, T3> extends AbstractRecord implements InternalRe
     }
 
     @Override
-    public <T> Record3<T1, T2, T3> with(Field<T> field, T value) {
-        return (Record3<T1, T2, T3>) super.with(field, value);
+    public <T> Record3 with(Field<T> field, T value) {
+        return (Record3) super.with(field, value);
     }
 
     @Override
-    public <T, U> Record3<T1, T2, T3> with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
-        return (Record3<T1, T2, T3>) super.with(field, value, converter);
+    public <T, U> Record3 with(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
+        return (Record3) super.with(field, value, converter);
     }
 
     @Override

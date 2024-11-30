@@ -56,7 +56,7 @@ import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.isVal1;
+import static org.jooq.impl.Tools.isVal0;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isEmpty;
@@ -236,7 +236,7 @@ final class Diff {
     }
 
     private final boolean equivalentStartWithValue(Field<?> sw2, Field<?> sw1) {
-        return sw1 == null && isVal1(sw2, v -> Convert.convert(v.getValue(), int.class) == 1);
+        return sw1 == null && isVal0(sw2, v -> Convert.convert(v.getValue(), int.class) == 1);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -79,7 +79,7 @@ public interface InsertValuesStepN<R extends Record> extends InsertOnDuplicateSt
      */
     @NotNull @CheckReturnValue
     @Support
-    InsertValuesStepN<R> values(Collection values);
+    InsertValuesStepN<R> values(Collection<?> values);
 
     /**
      * Add a single row of values to the insert statement.

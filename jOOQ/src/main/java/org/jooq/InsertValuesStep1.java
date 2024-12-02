@@ -79,7 +79,7 @@ public interface InsertValuesStep1<R extends Record, T1> extends InsertOnDuplica
      */
     @NotNull @CheckReturnValue
     @Support
-    InsertValuesStep1<R, T1> values(Collection values);
+    InsertValuesStep1<R, T1> values(Collection<?> values);
 
     /**
      * Add a single row of values to the insert statement.

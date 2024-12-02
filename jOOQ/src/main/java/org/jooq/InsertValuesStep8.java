@@ -79,7 +79,7 @@ public interface InsertValuesStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7,
      */
     @NotNull @CheckReturnValue
     @Support
-    InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> values(Collection values);
+    InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> values(Collection<?> values);
 
     /**
      * Add a single row of values to the insert statement.

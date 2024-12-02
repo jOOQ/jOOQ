@@ -79,7 +79,7 @@ public interface InsertValuesStep3<R extends Record, T1, T2, T3> extends InsertO
      */
     @NotNull @CheckReturnValue
     @Support
-    InsertValuesStep3<R, T1, T2, T3> values(Collection values);
+    InsertValuesStep3<R, T1, T2, T3> values(Collection<?> values);
 
     /**
      * Add a single row of values to the insert statement.

@@ -174,7 +174,12 @@ implements
         InsertQuery<R> insert = create.insertQuery(getTable());
         List<Field<?>> changedFields = addChangedValues(storeFields, insert, false);
 
-        if (changedFields.isEmpty()) {
+        // [#1596] Set timestamp and/or version columns to appropriate values
+        BigInteger version = addRecordVersion(insert, false);
+        Timestamp timestamp = addRecordTimestamp(insert, false);
+
+        // [#17708] DEFAULT VALUES applies only if we're not generating timestamp and/or version values!
+        if (changedFields.isEmpty() && version == null && timestamp == null) {
 
             // Don't store records if no value was set by client code
             if (FALSE.equals(create.settings().isInsertUnchangedRecords())) {
@@ -187,10 +192,6 @@ implements
             else
                 insert.setDefaultValues();
         }
-
-        // [#1596] Set timestamp and/or version columns to appropriate values
-        BigInteger version = addRecordVersion(insert, false);
-        Timestamp timestamp = addRecordTimestamp(insert, false);
 
         // [#814] Refresh identity and/or main unique key values
         // [#1002] Consider also identity columns of non-updatable records

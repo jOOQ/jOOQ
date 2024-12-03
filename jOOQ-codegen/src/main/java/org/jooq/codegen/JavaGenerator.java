@@ -3366,9 +3366,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sopen class %s : %s<%s>(%s.name(\"%s\"), null, %s, %s)[[before=, ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), packageId, synthetic, interfaces);
 
             out.println();
-            out.println("public companion object {");
+            out.println("%scompanion object {", visibility());
             out.javadoc("The reference instance of <code>%s</code>", udt.getQualifiedOutputName());
-            out.println("public val %s: %s = %s()", getStrategy().getJavaIdentifier(udt), className, className);
+            out.println("%sval %s: %s = %s()", visibility(), getStrategy().getJavaIdentifier(udt), className, className);
             out.println("}");
         }
         else {
@@ -8615,7 +8615,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.println("%scompanion object {", visibility());
             out.javadoc("The reference instance of <code>%s</code>", catalogName);
-            out.println("public val %s: %s = %s()", catalogId, className, className);
+            out.println("%sval %s: %s = %s()", visibility(), catalogId, className, className);
             out.println("}");
         }
         else {
@@ -8742,7 +8742,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sopen class %s : %s(\"%s\", %s)[[before=, ][%s]] {",
                 visibility(), className, classExtends, escapeString(schema.getOutputName()), catalogId, interfaces);
 
-            out.println("public companion object {");
+            out.println("%scompanion object {", visibility());
             out.javadoc("The reference instance of <code>%s</code>", schemaName);
             out.println("%sval %s: %s = %s()", visibility(), scalaWhitespaceSuffix(schemaId), className, className);
             out.println("}");

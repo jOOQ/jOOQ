@@ -38,9 +38,13 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.visitAutoAliased;
 
 import org.jooq.Context;
+import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.SelectFieldOrAsterisk;
 
 /**
@@ -89,7 +93,38 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
             acceptElement0(ctx, part);
     }
 
+    @SuppressWarnings("unchecked")
     private void acceptElement0(Context<?> ctx, F part) {
+        if (ctx.declareFields() && part instanceof Field<?> f) {
+            part = (F) project(ctx, f);
+        }
+
         visitAutoAliased(ctx, part, Context::declareFields, (c, t) -> super.acceptElement(c, t));
+    }
+
+    static final <T> Field<T> project(Context<?> ctx, Field<T> field) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        return field;
     }
 }

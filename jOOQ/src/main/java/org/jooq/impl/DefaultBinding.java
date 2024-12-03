@@ -4020,7 +4020,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Class<?> type = wrapper(converter.fromType());
 
             if (string == null)
-                return converter.from(null, ctx.converterContext());
+                return converter.from(null);
             else if (type == Blob.class)
                 ; // Not supported
             else if (type == Boolean.class)

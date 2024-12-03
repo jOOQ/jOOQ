@@ -38,8 +38,12 @@
 
 package org.jooq.impl;
 
-import org.jooq.Condition;
+import static org.jooq.impl.Tools.unalias;
+
 import org.jooq.Context;
+import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.SelectFieldOrAsterisk;
 
 /**
@@ -90,11 +94,41 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
 
     @SuppressWarnings("unchecked")
     private void acceptElement0(Context<?> ctx, F part) {
+        if (ctx.declareFields() && part instanceof Field<?> f) {
+            part = (F) project(ctx, f);
+        }
+
         F alternative;
 
         if (ctx.declareFields() && part instanceof AutoAlias && (alternative = ((AutoAlias<F>) part).autoAlias(ctx)) != null)
             super.acceptElement(ctx, alternative);
         else
             super.acceptElement(ctx, part);
+    }
+
+    static final <T> Field<T> project(Context<?> ctx, Field<T> field) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        return field;
     }
 }

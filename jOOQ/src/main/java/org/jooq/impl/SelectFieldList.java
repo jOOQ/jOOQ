@@ -38,10 +38,14 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Tools.isInlineVal1;
+import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.visitAutoAliased;
 
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.SelectFieldOrAsterisk;
 
 /**
@@ -93,9 +97,56 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
     @SuppressWarnings("unchecked")
     private void acceptElement0(Context<?> ctx, F part) {
         if (ctx.declareFields() && part instanceof Field<?> f) {
-            part = (F) Tools.castNullLiteralIfNeeded(ctx, f);
+            part = (F) project(ctx, f);
         }
 
         visitAutoAliased(ctx, part, Context::declareFields, (c, t) -> super.acceptElement(c, t));
+    }
+
+    static final <T> Field<T> project(Context<?> ctx, Field<T> field) {
+        switch (ctx.family()) {
+
+            case HSQLDB:
+            case POSTGRES:
+            case YUGABYTEDB: {
+
+                // [#16367] The NULL literal defaults to type TEXT in PostgreSQL.
+                //          if we know the data type, we should cast it explicitly
+                if (ctx.subquery()) {
+                    Field<T> f = unalias(field);
+
+                    if (isInlineVal1(ctx, f, v -> v == null)
+                        && !f.getDataType().isOther()
+                        && !f.getDataType().isString()
+                    ) {
+                        Field<T> cast = f.cast(f.getDataType());
+                        return f == field ? cast : cast.as(field);
+                    }
+                }
+
+                break;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+        return field;
     }
 }

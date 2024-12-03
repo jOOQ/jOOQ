@@ -1986,33 +1986,6 @@ final class Tools {
             return field.cast(type);
     }
 
-    static final <T> Field<T> castNullLiteralIfNeeded(Context<?> ctx, Field<T> field) {
-        switch (ctx.family()) {
-
-            case HSQLDB:
-            case POSTGRES:
-            case YUGABYTEDB:
-
-                // [#16367] The NULL literal defaults to type TEXT in PostgreSQL.
-                //          if we know the data type, we should cast it explicitly
-                if (ctx.subquery()) {
-                    Field<T> f = unalias(field);
-
-                    if (isInlineVal1(ctx, f, v -> v == null)
-                        && !f.getDataType().isOther()
-                        && !f.getDataType().isString()
-                    ) {
-                        Field<T> cast = f.cast(f.getDataType());
-                        return f == field ? cast : cast.as(field);
-                    }
-                }
-
-                break;
-        }
-
-        return field;
-    }
-
     // The following overloads help performance by avoiding runtime data type lookups
     // ------------------------------------------------------------------------------
 

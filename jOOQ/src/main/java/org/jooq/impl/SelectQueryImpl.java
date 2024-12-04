@@ -391,6 +391,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     static final Set<SQLDialect>         NO_SUPPORT_UNION_ORDER_BY_ALIAS = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect>         NO_SUPPORT_WITH_READ_ONLY       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_LIMIT_ZERO           = SQLDialect.supportedBy(DERBY, HSQLDB);
+    static final Set<SQLDialect>         REQUIRES_ORDER_BY_ALIAS_OVERRIDE       = SQLDialect.supportedUntil(MARIADB, MYSQL, TRINO);
     static final Set<SQLDialect>         WRAP_UNION_SUBQ_IN_DERIVED_TABLE_LIMIT = SQLDialect.supportedBy(FIREBIRD);
 
 
@@ -3480,7 +3481,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 // [#2080] DB2, Oracle, and Sybase can deal with column aliases from the SELECT clause
                 // but in case the aliases have been overridden to emulate OFFSET pagination, the
                 // overrides must also apply to the ORDER BY clause
-                if (aliasOverride != null) {
+                // [#16928] [#17676] This is also required in some dialects, but must not be done in others,
+                // e.g. in case there are expressions in ORDER BY (such as in PostgreSQL)
+                if (aliasOverride != null && REQUIRES_ORDER_BY_ALIAS_OVERRIDE.contains(ctx.dialect())) {
                     QueryPart o = actualOrderBy;
 
                     ctx.qualify(

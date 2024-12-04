@@ -98,9 +98,6 @@ final class SQLDataTypes {
         public static final DataType<String>       CHAR                     = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "char(l)");
         public static final DataType<String>       CHARACTER                = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "character(l)");
         public static final DataType<String>       CHARACTERVARYING         = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "character varying(l)");
-        public static final DataType<String>       CLOB                     = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "clob");
-        public static final DataType<String>       CHARLARGEOBJECT          = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "char large object", "clob");
-        public static final DataType<String>       CHARACTERLARGEOBJECT     = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "character large object", "clob");
         public static final DataType<Date>         DATE                     = new BuiltInDataType<>(FAMILY, SQLDataType.DATE, "date");
         public static final DataType<Time>         TIME                     = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time(p)");
         public static final DataType<Time>         TIMEWITHOUTTIMEZONE      = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time(p) without time zone");
@@ -125,7 +122,8 @@ final class SQLDataTypes {
         // -------------------------------------------------------------------------
 
         protected static final DataType<String>    __NCHAR                  = new BuiltInDataType<>(FAMILY, SQLDataType.NCHAR, "char(l)");
-        protected static final DataType<String>    __NCLOB                  = new BuiltInDataType<>(FAMILY, SQLDataType.NCLOB, "clob");
+        protected static final DataType<String>    __NCLOB                  = new BuiltInDataType<>(FAMILY, SQLDataType.NCLOB, "string");
+        protected static final DataType<String>    __CLOB                   = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "string");
         protected static final DataType<String>    __LONGNVARCHAR           = new BuiltInDataType<>(FAMILY, SQLDataType.LONGNVARCHAR, "longvarchar(l)");
         protected static final DataType<String>    __NVARCHAR               = new BuiltInDataType<>(FAMILY, SQLDataType.NVARCHAR, "varchar(l)");
         protected static final DataType<UByte>     __TINYINTUNSIGNED        = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINTUNSIGNED, "smallint");

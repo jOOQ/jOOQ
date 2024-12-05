@@ -11308,7 +11308,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (!(definition instanceof TableDefinition && mode == Mode.PATH)) {
             if (scala) {}
             else if (kotlin)
-                out.println("@Suppress(\"UNCHECKED_CAST\")");
+                out.println("@Suppress(\"warnings\")");
             else if (Internal.javaVersion() >= 21)
                 out.println("@%s({ \"all\", \"unchecked\", \"rawtypes\", \"this-escape\" })", out.ref("java.lang.SuppressWarnings"));
             else
@@ -11356,6 +11356,9 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printGlobalReferencesPackage(JavaWriter out, Definition container, Class<? extends Definition> objectType) {
+        if (kotlin)
+            out.println("@file:Suppress(\"warnings\")");
+
         printGlobalReferencesPackageComment(out, container, objectType);
 
         out.printPackageSpecification(getStrategy().getGlobalReferencesJavaPackageName(container, objectType));

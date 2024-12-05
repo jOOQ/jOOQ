@@ -376,7 +376,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     static final Set<SQLDialect>         NO_SUPPORT_UNION_ORDER_BY_ALIAS = SQLDialect.supportedBy(FIREBIRD);
     static final Set<SQLDialect>         NO_SUPPORT_WITH_READ_ONLY       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_LIMIT_ZERO           = SQLDialect.supportedBy(DERBY, HSQLDB);
-    static final Set<SQLDialect>         REQUIRES_ORDER_BY_ALIAS_OVERRIDE       = SQLDialect.supportedUntil(ASE, AURORA_MYSQL, BIGQUERY, DB2_10, EXASOL, HANA, INFORMIX, MARIADB, MEMSQL, MYSQL, ORACLE12C, REDSHIFT, SNOWFLAKE, SQLSERVER2008, SYBASE, TERADATA, TRINO, VERTICA);
+    static final Set<SQLDialect>         REQUIRES_ORDER_BY_ALIAS_OVERRIDE       = SQLDialect.supportedUntil(MARIADB, MYSQL);
     static final Set<SQLDialect>         WRAP_UNION_SUBQ_IN_DERIVED_TABLE_LIMIT = SQLDialect.supportedBy(FIREBIRD);
 
 

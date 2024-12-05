@@ -383,13 +383,37 @@ public enum SQLDialect {
     /**
      * The PostgreSQL dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #POSTGRES_15}.
+     * This family behaves like the versioned dialect {@link #POSTGRES_17}.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES("Postgres", false, true, new RequiredVersion(15, null, null), SQLDialectCategory.POSTGRES),
+    POSTGRES("Postgres", false, true, new RequiredVersion(17, null, null), SQLDialectCategory.POSTGRES),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

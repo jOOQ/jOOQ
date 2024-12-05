@@ -4263,7 +4263,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<Long> parseSequenceMaxvalueIf() {
-        return parseKeywordIf("MAXVALUE") && (parseIf("=") || true) ? parseUnsignedIntegerOrBindVariable() : null;
+        return parseKeywordIf("MAXVALUE") && (parseIf("=") || true) ? parseSignedIntegerOrBindVariable() : null;
     }
 
     private final boolean parseSequenceNoMinvalueIf() {
@@ -4271,15 +4271,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     private final Field<Long> parseSequenceMinvalueIf() {
-        return parseKeywordIf("MINVALUE") && (parseIf("=") || true) ? parseUnsignedIntegerOrBindVariable() : null;
+        return parseKeywordIf("MINVALUE") && (parseIf("=") || true) ? parseSignedIntegerOrBindVariable() : null;
     }
 
     private final Field<Long> parseSequenceIncrementByIf() {
-        return parseKeywordIf("INCREMENT") && (parseKeywordIf("BY") || parseIf("=") || true) ? parseUnsignedIntegerOrBindVariable() : null;
+        return parseKeywordIf("INCREMENT") && (parseKeywordIf("BY") || parseIf("=") || true) ? parseSignedIntegerOrBindVariable() : null;
     }
 
     private final Field<Long> parseSequenceStartWithIf() {
-        return parseKeywordIf("START") && (parseKeywordIf("WITH") || parseIf("=") || true) ? parseUnsignedIntegerOrBindVariable() : null;
+        return parseKeywordIf("START") && (parseKeywordIf("WITH") || parseIf("=") || true) ? parseSignedIntegerOrBindVariable() : null;
     }
 
     private final Query parseAlterSession() {
@@ -13117,6 +13117,19 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return (Field<Long>) f;
 
         throw expected("Unsigned integer or bind variable");
+    }
+
+    private final Field<Long> parseSignedIntegerOrBindVariable() {
+        Long i = parseSignedIntegerLiteralIf();
+
+        if (i != null)
+            return DSL.inline(i);
+
+        Field<?> f = parseBindVariableIf();
+        if (f != null)
+            return (Field<Long>) f;
+
+        throw expected("Signed integer or bind variable");
     }
 
     @Override

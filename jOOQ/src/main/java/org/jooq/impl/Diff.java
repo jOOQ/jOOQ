@@ -70,6 +70,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.LongFunction;
+import java.util.function.LongSupplier;
+import java.util.function.Supplier;
+import java.util.function.ToLongFunction;
 
 import org.jooq.AlterSequenceFlagsStep;
 import org.jooq.Catalog;
@@ -189,24 +194,24 @@ final class Diff {
                 AlterSequenceFlagsStep stmt = null;
                 AlterSequenceFlagsStep stmt0 = ctx.alterSequence(s1);
 
-                if (s2.getStartWith() != null && !equivalentStartWith(s2, s1))
+                if (s2.getStartWith() != null && !equivalentSequenceFlag(s2, s1, Sequence::getStartWith, this::defaultStartWithValue))
                     stmt = defaultIfNull(stmt, stmt0).startWith(s2.getStartWith());
-                else if (s2.getStartWith() == null && s1.getStartWith() != null && !equivalentStartWith(s1, s2))
-                    stmt = defaultIfNull(stmt, stmt0).startWith(1);
+                else if (s2.getStartWith() == null && s1.getStartWith() != null && !equivalentSequenceFlag(s1, s2, Sequence::getStartWith, this::defaultStartWithValue))
+                    stmt = defaultIfNull(stmt, stmt0).startWith(defaultStartWithValue(s2));
 
-                if (s2.getIncrementBy() != null && !s2.getIncrementBy().equals(s1.getIncrementBy()))
+                if (s2.getIncrementBy() != null && !equivalentSequenceFlag(s2, s1, Sequence::getIncrementBy, this::defaultIncrementByValue))
                     stmt = defaultIfNull(stmt, stmt0).incrementBy(s2.getIncrementBy());
-                else if (s2.getIncrementBy() == null && s1.getIncrementBy() != null)
-                    stmt = defaultIfNull(stmt, stmt0).incrementBy(1);
+                else if (s2.getIncrementBy() == null && s1.getIncrementBy() != null && !equivalentSequenceFlag(s1, s2, Sequence::getIncrementBy, this::defaultIncrementByValue))
+                    stmt = defaultIfNull(stmt, stmt0).incrementBy(defaultIncrementByValue(s2));
 
-                if (s2.getMinvalue() != null && !s2.getMinvalue().equals(s1.getMinvalue()))
+                if (s2.getMinvalue() != null && !equivalentSequenceFlag(s2, s1, Sequence::getMinvalue, this::defaultMinValue))
                     stmt = defaultIfNull(stmt, stmt0).minvalue(s2.getMinvalue());
-                else if (s2.getMinvalue() == null && s1.getMinvalue() != null)
+                else if (s2.getMinvalue() == null && s1.getMinvalue() != null && !equivalentSequenceFlag(s1, s2, Sequence::getMinvalue, this::defaultMinValue))
                     stmt = defaultIfNull(stmt, stmt0).noMinvalue();
 
-                if (s2.getMaxvalue() != null && !s2.getMaxvalue().equals(s1.getMaxvalue()))
+                if (s2.getMaxvalue() != null && !equivalentSequenceFlag(s2, s1, Sequence::getMaxvalue, this::defaultMaxValue))
                     stmt = defaultIfNull(stmt, stmt0).maxvalue(s2.getMaxvalue());
-                else if (s2.getMaxvalue() == null && s1.getMaxvalue() != null)
+                else if (s2.getMaxvalue() == null && s1.getMaxvalue() != null && !equivalentSequenceFlag(s1, s2, Sequence::getMaxvalue, this::defaultMaxValue))
                     stmt = defaultIfNull(stmt, stmt0).noMaxvalue();
 
                 if (s2.getCache() != null && !s2.getCache().equals(s1.getCache()))
@@ -225,18 +230,67 @@ final class Diff {
         );
     }
 
-    private final boolean equivalentStartWith(Sequence<?> s2, Sequence<?> s1) {
-        Field<?> sw2 = s2.getStartWith();
-        Field<?> sw1 = s1.getStartWith();
+    private final boolean equivalentSequenceFlag(
+        Sequence<?> s2,
+        Sequence<?> s1,
+        Function<? super Sequence<?>, ? extends Field<?>> flag,
+        ToLongFunction<? super Sequence<?>> defaultValue
+    ) {
+        Field<?> sw2 = flag.apply(s2);
+        Field<?> sw1 = flag.apply(s1);
 
         if (Objects.equals(sw2, sw1))
             return true;
         else
-            return equivalentStartWithValue(sw2, sw1) || equivalentStartWithValue(sw1, sw2);
+            return equivalentSequenceFlagValue(sw2, sw1, defaultValue.applyAsLong(s2))
+                || equivalentSequenceFlagValue(sw1, sw2, defaultValue.applyAsLong(s1));
     }
 
-    private final boolean equivalentStartWithValue(Field<?> sw2, Field<?> sw1) {
-        return sw1 == null && isVal0(sw2, v -> Convert.convert(v.getValue(), int.class) == 1);
+    private final boolean equivalentSequenceFlagValue(
+        Field<?> sw2,
+        Field<?> sw1,
+        Long defaultValue
+    ) {
+        return sw1 == null && isVal0(sw2, v -> Objects.equals(Convert.convert(v.getValue(), Long.class), defaultValue));
+    }
+
+    private final Long defaultStartWithValue(Sequence<?> s) {
+        switch (ctx.family()) {
+            case HSQLDB:
+                return 0L;
+            default:
+                return 1L;
+        }
+    }
+
+    private final Long defaultIncrementByValue(Sequence<?> s) {
+        return 1L;
+    }
+
+    private final Long defaultMinValue(Sequence<?> s) {
+        if (s.getDataType().getFromType() == Byte.class)
+            return (long) Byte.MIN_VALUE;
+        else if (s.getDataType().getFromType() == Short.class)
+            return (long) Short.MIN_VALUE;
+        else if (s.getDataType().getFromType() == Integer.class)
+            return (long) Integer.MIN_VALUE;
+        else if (s.getDataType().getFromType() == Long.class)
+            return Long.MIN_VALUE;
+        else
+            return null;
+    }
+
+    private final Long defaultMaxValue(Sequence<?> s) {
+        if (s.getDataType().getFromType() == Byte.class)
+            return (long) Byte.MAX_VALUE;
+        else if (s.getDataType().getFromType() == Short.class)
+            return (long) Short.MAX_VALUE;
+        else if (s.getDataType().getFromType() == Integer.class)
+            return (long) Integer.MAX_VALUE;
+        else if (s.getDataType().getFromType() == Long.class)
+            return Long.MAX_VALUE;
+        else
+            return null;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

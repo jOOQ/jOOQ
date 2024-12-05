@@ -115,7 +115,6 @@ implements
             case HSQLDB:
             case IGNITE:
             case MARIADB:
-            case POSTGRES:
             case SQLITE:
             case YUGABYTEDB:
                 ctx.visit(N_MIN);
@@ -128,6 +127,12 @@ implements
             case CLICKHOUSE:
                 ctx.visit(N_ANY);
                 break;
+
+
+
+
+
+
 
 
 

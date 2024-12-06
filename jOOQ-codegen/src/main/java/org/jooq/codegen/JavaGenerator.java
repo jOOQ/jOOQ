@@ -8473,6 +8473,13 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateGlobalObjectNames(Definition container, Class<? extends Definition> objectType) {
+        final List<? extends Definition> children = children(container, objectType);
+
+        if (children.isEmpty()) {
+            log.info("Skipping empty " + objectType.getSimpleName());
+            return;
+        }
+
         log.info("Names", "Generating " + objectType.getSimpleName() + " names for: " + container);
         JavaWriter out = newJavaWriter(getStrategy().getGlobalNamesFile(container, objectType));
         printGlobalNamesPackage(out, container, objectType);
@@ -8490,7 +8497,7 @@ public class JavaGenerator extends AbstractGenerator {
         else
             out.println("%sclass %s {", visibility(), namesClassName);
 
-        for (Definition child : children(container, objectType)) {
+        for (Definition child : children) {
             final String id = getStrategy().getJavaIdentifier(child);
             final String comment = escapeEntities(comment(child));
 

@@ -1234,6 +1234,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
+
+
                 case HSQLDB:
                 default: {
                     rs = executeReturningGeneratedKeys(ctx, listener);

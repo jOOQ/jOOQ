@@ -9364,7 +9364,7 @@ public class JavaGenerator extends AbstractGenerator {
         printGlobalNamesPackage(out, container, objectType);
 
         if (!kotlin) {
-            printClassJavadoc(out, container, "Object names of all " + objectType.getClass() + " types in " + container + ".");
+            printClassJavadoc(out, container, "Object names of all " + objectType.getSimpleName() + " types in " + container + ".");
             printClassAnnotations(out, container, Mode.DEFAULT);
         }
 

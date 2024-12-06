@@ -336,20 +336,16 @@ public class GenerationTool {
                     setConnection(dataSource.getConnection());
                 }
                 else {
-                    String url = System.getProperty("jooq.codegen.jdbc.url");
+                    j = defaultIfNull(j, new Jdbc());
 
-                    if (url != null) {
-                        j = defaultIfNull(j, new Jdbc());
-
-                        set(j, propertyOverride, "jooq.codegen.jdbc.driver", Jdbc::getDriver, Jdbc::setDriver);
-                        set(j, propertyOverride, "jooq.codegen.jdbc.url", Jdbc::getUrl, Jdbc::setUrl);
-                        set(j, propertyOverride, "jooq.codegen.jdbc.user", Jdbc::getUser, Jdbc::setUser);
-                        set(j, propertyOverride, "jooq.codegen.jdbc.username", Jdbc::getUsername, Jdbc::setUsername);
-                        set(j, propertyOverride, "jooq.codegen.jdbc.password", Jdbc::getPassword, Jdbc::setPassword);
-                        set(j, propertyOverride, "jooq.codegen.jdbc.autoCommit", Jdbc::isAutoCommit, Jdbc::setAutoCommit, Boolean::valueOf);
-                        set(j, propertyOverride, "jooq.codegen.jdbc.initScript", Jdbc::getInitScript, Jdbc::setInitScript);
-                        set(j, propertyOverride, "jooq.codegen.jdbc.initSeparator", Jdbc::getInitSeparator, Jdbc::setInitSeparator);
-                    }
+                    set(j, propertyOverride, o -> null, "jooq.codegen.jdbc.driver", Jdbc::getDriver, Jdbc::setDriver);
+                    set(j, propertyOverride, Jdbc::getUrlProperty, "jooq.codegen.jdbc.url", Jdbc::getUrl, Jdbc::setUrl);
+                    set(j, propertyOverride, o -> null, "jooq.codegen.jdbc.user", Jdbc::getUser, Jdbc::setUser);
+                    set(j, propertyOverride, o -> null, "jooq.codegen.jdbc.username", Jdbc::getUsername, Jdbc::setUsername);
+                    set(j, propertyOverride, o -> null, "jooq.codegen.jdbc.password", Jdbc::getPassword, Jdbc::setPassword);
+                    set(j, propertyOverride, o -> null, "jooq.codegen.jdbc.autoCommit", Jdbc::isAutoCommit, Jdbc::setAutoCommit, Boolean::valueOf);
+                    set(j, propertyOverride, o -> null, "jooq.codegen.jdbc.initScript", Jdbc::getInitScript, Jdbc::setInitScript);
+                    set(j, propertyOverride, o -> null, "jooq.codegen.jdbc.initSeparator", Jdbc::getInitSeparator, Jdbc::setInitSeparator);
 
                     if (j != null && !StringUtils.isBlank(j.getUrl())) {
                         try {
@@ -724,10 +720,10 @@ public class GenerationTool {
             if (isBlank(g.getTarget().getEncoding()))
                 g.getTarget().setEncoding(DEFAULT_TARGET_ENCODING);
 
-            set(g.getTarget(), propertyOverride, "jooq.codegen.target.packageName", Target::getPackageName, Target::setPackageName, identity(), DEFAULT_TARGET_PACKAGENAME::equals);
-            set(g.getTarget(), propertyOverride, "jooq.codegen.target.directory", Target::getDirectory, Target::setDirectory, identity(), DEFAULT_TARGET_DIRECTORY::equals);
-            set(g.getTarget(), propertyOverride, "jooq.codegen.target.encoding", Target::getEncoding, Target::setEncoding, identity(), DEFAULT_TARGET_ENCODING::equals);
-            set(g.getTarget(), propertyOverride, "jooq.codegen.target.locale", Target::getLocale, Target::setLocale);
+            set(g.getTarget(), propertyOverride, o -> null, "jooq.codegen.target.packageName", Target::getPackageName, Target::setPackageName, identity(), DEFAULT_TARGET_PACKAGENAME::equals);
+            set(g.getTarget(), propertyOverride, o -> null, "jooq.codegen.target.directory", Target::getDirectory, Target::setDirectory, identity(), DEFAULT_TARGET_DIRECTORY::equals);
+            set(g.getTarget(), propertyOverride, o -> null, "jooq.codegen.target.encoding", Target::getEncoding, Target::setEncoding, identity(), DEFAULT_TARGET_ENCODING::equals);
+            set(g.getTarget(), propertyOverride, o -> null, "jooq.codegen.target.locale", Target::getLocale, Target::setLocale);
 
             // [#2887] [#9727] Patch relative paths to take plugin execution basedir into account
             if (!new File(g.getTarget().getDirectory()).isAbsolute())
@@ -1097,34 +1093,48 @@ public class GenerationTool {
     private <O> void set(
         O configurationObject,
         boolean override,
-        String property,
+        Function<? super O, ? extends String> property,
+        String defaultProperty,
         Function<? super O, ? extends String> get,
         BiConsumer<? super O, ? super String> set
     ) {
-        set(configurationObject, override, property, get, set, Function.identity());
+        set(configurationObject, override, property, defaultProperty, get, set, Function.identity());
     }
 
     private <O, T> void set(
         O configurationObject,
         boolean override,
-        String property,
+        Function<? super O, ? extends String> property,
+        String defaultProperty,
         Function<? super O, ? extends T> get,
         BiConsumer<? super O, ? super T> set,
         Function<? super String, ? extends T> convert
     ) {
-        set(configurationObject, override, property, get, set, convert, t -> t == null);
+        set(configurationObject, override, property, defaultProperty, get, set, convert, t -> t == null);
     }
 
     private <O, T> void set(
         O configurationObject,
         boolean override,
-        String property,
+        Function<? super O, ? extends String> propertyGetter,
+        String defaultProperty,
         Function<? super O, ? extends T> get,
         BiConsumer<? super O, ? super T> set,
         Function<? super String, ? extends T> convert,
         Predicate<? super T> checkDefault
     ) {
-        String p = System.getProperty(property);
+        String property = propertyGetter.apply(configurationObject);
+        String p = null;
+
+        if (property != null) {
+            p = System.getProperty(property);
+
+            if (p != null)
+                override = true;
+        }
+
+        if (p == null)
+            p = System.getProperty(defaultProperty);
 
         if (p != null && (override || checkDefault.test(get.apply(configurationObject))))
             set.accept(configurationObject, convert.apply(p));

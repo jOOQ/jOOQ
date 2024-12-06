@@ -82,8 +82,12 @@
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC driver class.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="url" type="string" minOccurs="1" maxOccurs="1">
+      <element name="url" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The JDBC connection URL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="urlProperty" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The system property name that describes the JDBC connection URL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="schema" type="string" minOccurs="0" maxOccurs="1">

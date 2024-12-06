@@ -35,9 +35,10 @@ public class Jdbc implements Serializable, XMLAppendable
     private final static long serialVersionUID = 32000L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String driver;
-    @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String url;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String urlProperty;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String schema;
     @XmlJavaTypeAdapter(StringAdapter.class)
@@ -85,6 +86,22 @@ public class Jdbc implements Serializable, XMLAppendable
      */
     public void setUrl(String value) {
         this.url = value;
+    }
+
+    /**
+     * The system property name that describes the JDBC connection URL.
+     * 
+     */
+    public String getUrlProperty() {
+        return urlProperty;
+    }
+
+    /**
+     * The system property name that describes the JDBC connection URL.
+     * 
+     */
+    public void setUrlProperty(String value) {
+        this.urlProperty = value;
     }
 
     /**
@@ -239,6 +256,15 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
+     * The system property name that describes the JDBC connection URL.
+     * 
+     */
+    public Jdbc withUrlProperty(String value) {
+        setUrlProperty(value);
+        return this;
+    }
+
+    /**
      * @deprecated Use database schema configuration elements instead.
      * 
      */
@@ -327,6 +353,7 @@ public class Jdbc implements Serializable, XMLAppendable
     public final void appendTo(XMLBuilder builder) {
         builder.append("driver", driver);
         builder.append("url", url);
+        builder.append("urlProperty", urlProperty);
         builder.append("schema", schema);
         builder.append("user", user);
         builder.append("username", username);
@@ -371,6 +398,15 @@ public class Jdbc implements Serializable, XMLAppendable
             }
         } else {
             if (!url.equals(other.url)) {
+                return false;
+            }
+        }
+        if (urlProperty == null) {
+            if (other.urlProperty!= null) {
+                return false;
+            }
+        } else {
+            if (!urlProperty.equals(other.urlProperty)) {
                 return false;
             }
         }
@@ -455,6 +491,7 @@ public class Jdbc implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((driver == null)? 0 :driver.hashCode()));
         result = ((prime*result)+((url == null)? 0 :url.hashCode()));
+        result = ((prime*result)+((urlProperty == null)? 0 :urlProperty.hashCode()));
         result = ((prime*result)+((schema == null)? 0 :schema.hashCode()));
         result = ((prime*result)+((user == null)? 0 :user.hashCode()));
         result = ((prime*result)+((username == null)? 0 :username.hashCode()));

@@ -78,6 +78,7 @@ import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EmbeddableDefinition;
 import org.jooq.meta.EnumDefinition;
+import org.jooq.meta.EnumLiteralDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexDefinition;
@@ -416,6 +417,8 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return "EmbeddableNames";
         else if (EnumDefinition.class.isAssignableFrom(objectType))
             return "EnumNames";
+        else if (EnumLiteralDefinition.class.isAssignableFrom(objectType))
+            return getJavaClassName(container) + "LiteralNames";
         else if (ForeignKeyDefinition.class.isAssignableFrom(objectType))
             return "ForeignKeyNames";
         else if (IdentityDefinition.class.isAssignableFrom(objectType))

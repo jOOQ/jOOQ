@@ -37,8 +37,9 @@
  */
 package org.jooq.meta;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,8 +47,8 @@ import java.util.List;
  */
 public class DefaultEnumDefinition extends AbstractDefinition implements EnumDefinition {
 
-    private final List<String> literals;
-    private final boolean isSynthetic;
+    private final List<EnumLiteralDefinition> literals;
+    private final boolean                     isSynthetic;
 
     public DefaultEnumDefinition(SchemaDefinition schema, String name, String comment) {
         this(schema, name, comment, false);
@@ -71,16 +72,22 @@ public class DefaultEnumDefinition extends AbstractDefinition implements EnumDef
     }
 
     public void addLiteral(String literal) {
-        literals.add(literal);
+        literals.add(new DefaultEnumLiteralDefinition(getDatabase(), this, literal, literal, literals.size() + 1));
     }
 
-    public void addLiterals(String... literal) {
-        literals.addAll(Arrays.asList(literal));
+    public void addLiterals(String... l) {
+        for (String literal : l)
+            addLiteral(literal);
     }
 
     @Override
     public List<String> getLiterals() {
-        return literals;
+        return literals.stream().map(l -> l.getLiteral()).collect(toList());
+    }
+
+    @Override
+    public List<EnumLiteralDefinition> getLiteralDefinitions() {
+        return new ArrayList<>(literals);
     }
 
     @Override

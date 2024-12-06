@@ -197,6 +197,7 @@ import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EmbeddableColumnDefinition;
 import org.jooq.meta.EmbeddableDefinition;
 import org.jooq.meta.EnumDefinition;
+import org.jooq.meta.EnumLiteralDefinition;
 import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.IdentityDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -4477,6 +4478,9 @@ public class JavaGenerator extends AbstractGenerator {
         for (EnumDefinition e : database.getEnums(schema)) {
             try {
                 generateEnum(e);
+
+                if (generateGlobalObjectNames())
+                    generateGlobalObjectNames(e, EnumLiteralDefinition.class);
             }
             catch (Exception ex) {
                 log.error("Error while generating enum " + e, ex);
@@ -9451,6 +9455,10 @@ public class JavaGenerator extends AbstractGenerator {
         else if (container instanceof UDTDefinition u) {
             if (objectType == AttributeDefinition.class)
                 return u.getAttributes();
+        }
+        else if (container instanceof EnumDefinition e) {
+            if (objectType == EnumLiteralDefinition.class)
+                return e.getLiteralDefinitions();
         }
 
 

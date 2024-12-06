@@ -42,27 +42,10 @@ package org.jooq.meta;
  *
  * @author Lukas Eder
  */
-public interface TypedElementDefinition<T extends Definition> extends ContainerElementDefinition<T> {
+public interface ContainerElementDefinition<T extends Definition> extends Definition {
 
     /**
-     * The column / parameter / attribute type after applying forced types.
+     * The container that contains this element.
      */
-    DataTypeDefinition getType();
-
-    /**
-     * The column / parameter / attribute type after applying forced types and
-     * resolving the {@link DataTypeDefinition#getJavaType()}.
-     */
-    DataTypeDefinition getType(JavaTypeResolver resolver);
-
-    /**
-     * The column / parameter type as declared in the database (prior to applying forced types).
-     */
-    DataTypeDefinition getDefinedType();
-
-    /**
-     * The column / parameter / attribute domain type, or <code>null</code>, if
-     * it does not reference a domain.
-     */
-    DomainDefinition getDomain();
+    T getContainer();
 }

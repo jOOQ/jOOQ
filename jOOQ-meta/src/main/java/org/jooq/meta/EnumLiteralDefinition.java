@@ -38,31 +38,14 @@
 package org.jooq.meta;
 
 /**
- * An element that has a data type.
+ * A literal in an {@link EnumDefinition}.
  *
  * @author Lukas Eder
  */
-public interface TypedElementDefinition<T extends Definition> extends ContainerElementDefinition<T> {
+public interface EnumLiteralDefinition extends ContainerElementDefinition<EnumDefinition>, PositionedDefinition {
 
     /**
-     * The column / parameter / attribute type after applying forced types.
+     * The literal.
      */
-    DataTypeDefinition getType();
-
-    /**
-     * The column / parameter / attribute type after applying forced types and
-     * resolving the {@link DataTypeDefinition#getJavaType()}.
-     */
-    DataTypeDefinition getType(JavaTypeResolver resolver);
-
-    /**
-     * The column / parameter type as declared in the database (prior to applying forced types).
-     */
-    DataTypeDefinition getDefinedType();
-
-    /**
-     * The column / parameter / attribute domain type, or <code>null</code>, if
-     * it does not reference a domain.
-     */
-    DomainDefinition getDomain();
+    String getLiteral();
 }

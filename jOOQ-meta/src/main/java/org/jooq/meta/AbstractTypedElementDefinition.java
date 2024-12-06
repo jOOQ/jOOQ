@@ -71,13 +71,15 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 public abstract class AbstractTypedElementDefinition<T extends Definition>
-    extends AbstractDefinition
-    implements TypedElementDefinition<T> {
+extends
+    AbstractContainerElementDefinition<T>
+implements
+    TypedElementDefinition<T>
+{
 
     private static final JooqLogger      log                            = JooqLogger.getLogger(AbstractTypedElementDefinition.class);
     private static final Pattern         LENGTH_PRECISION_SCALE_PATTERN = Pattern.compile("[\\w\\s]+(?:\\(\\s*?(\\d+)\\s*?\\)|\\(\\s*?(\\d+)\\s*?,\\s*?(\\d+)\\s*?\\))");
 
-    private final T                      container;
     private final DataTypeDefinition     definedType;
     private transient DataTypeDefinition type;
 
@@ -86,50 +88,9 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
     }
 
     public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment, String overload) {
-        super(container.getDatabase(),
-              container.getSchema(),
-              protectName(container, name, position),
-              comment,
-              overload);
+        super(container, name, position, comment, overload);
 
-        this.container = container;
         this.definedType = definedType;
-    }
-
-    private static final String protectName(Definition container, String name, int position) {
-        if (name == null) {
-
-            // [#6654] Specific error messages per type
-            if (container instanceof TableDefinition)
-                log.info("Missing name", "Table " + container + " holds a column without a name at position " + position);
-            else if (container instanceof UDTDefinition)
-                log.info("Missing name", "UDT " + container + " holds an attribute without a name at position " + position);
-            else if (container instanceof IndexDefinition)
-                log.info("Missing name", "Index " + container + " holds a column without a name at position " + position);
-            else if (container instanceof RoutineDefinition)
-                log.info("Missing name", "Routine " + container + " holds a parameter without a name at position " + position);
-            else
-                log.info("Missing name", "Object " + container + " holds an element without a name at position " + position);
-
-            return "_" + position;
-        }
-
-        return name;
-    }
-
-    @Override
-    public final T getContainer() {
-        return container;
-    }
-
-    @Override
-    public List<Definition> getDefinitionPath() {
-        List<Definition> result = new ArrayList<>();
-
-        result.addAll(getContainer().getDefinitionPath());
-        result.add(this);
-
-        return result;
     }
 
     @Override

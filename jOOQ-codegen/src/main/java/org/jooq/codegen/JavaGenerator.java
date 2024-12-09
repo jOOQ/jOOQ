@@ -9535,24 +9535,43 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected String getJavaTypeReference(Database db, DataTypeDefinition type, JavaWriter out) {
-
-        // [#4388] TODO: Improve array handling
         if (database.isArrayType(type.getType())) {
-            DataTypeDefinition base = GenerationUtil.getArrayBaseType(db.getDialect(), type);
+            DataTypeDefinition t;
+            DataTypeDefinition base = type;
 
-            // [#252] This check prevents StackOverflowError in case of e.g. PostgreSQL ANYARRAY types
-            if (base != type)
-                return getJavaTypeReference(db, base, out) + ".array()";
-            else
-                return getJavaTypeReference0(db, type, out) + ".array()";
+            do
+                base = GenerationUtil.getArrayBaseType(db.getDialect(), t = base);
+            while (base != t);
+
+            return getJavaTypeReference0(db, base, out, arrayAppender(type));
         }
 
         else
-            return getJavaTypeReference0(db, type, out);
+            return getJavaTypeReference0(db, type, out, arrayAppender(type));
     }
 
-    private String getJavaTypeReference0(Database db, DataTypeDefinition type, JavaWriter out) {
-        return getTypeReference(
+    private Consumer<? super StringBuilder> arrayAppender(DataTypeDefinition type) {
+        if (database.isArrayType(type.getType())) {
+            DataTypeDefinition base = GenerationUtil.getArrayBaseType(database.getDialect(), type);
+
+            // [#252] This check prevents StackOverflowError in case of e.g. PostgreSQL ANYARRAY types
+            if (base != type)
+                return sb -> arrayAppender(base).accept(sb.append(".array()"));
+            else
+                return sb -> sb.append(".array()");
+        }
+
+        else
+            return sb -> {};
+    }
+
+    private String getJavaTypeReference0(
+        Database db,
+        DataTypeDefinition type,
+        JavaWriter out,
+        Consumer<? super StringBuilder> arrayAppender
+    ) {
+        return getTypeReference0(
             db,
             type.getSchema(),
             out,
@@ -9567,7 +9586,8 @@ public class JavaGenerator extends AbstractGenerator {
             type.getGenerationOption(),
             type.getGenerator(),
             type.getDefaultValue(),
-            type.getQualifiedUserType()
+            type.getQualifiedUserType(),
+            arrayAppender
         );
     }
 
@@ -9856,6 +9876,7 @@ public class JavaGenerator extends AbstractGenerator {
         return type;
     }
 
+    @Deprecated
     protected String getTypeReference(
         Database db,
         SchemaDefinition schema,
@@ -9873,6 +9894,29 @@ public class JavaGenerator extends AbstractGenerator {
         String d,
         Name u
     ) {
+        return getTypeReference0(
+            db, schema, out, t, p, s, l, n, i, r, g, go, ge, d, u, x -> {}
+        );
+    }
+
+    private String getTypeReference0(
+        Database db,
+        SchemaDefinition schema,
+        JavaWriter out,
+        String t,
+        int p,
+        int s,
+        int l,
+        boolean n,
+        boolean i,
+        boolean r,
+        String g,
+        GenerationOption go,
+        String ge,
+        String d,
+        Name u,
+        Consumer<? super StringBuilder> arrayAppender
+    ) {
         StringBuilder sb = new StringBuilder();
 
         if (db.getArray(schema, u) != null) {
@@ -9887,18 +9931,21 @@ public class JavaGenerator extends AbstractGenerator {
             final String sqlDataTypeRef = getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)) + ".getDataType()";
             sb.append(sqlDataTypeRef);
 
+            arrayAppender.accept(sb);
             appendTypeReferenceNullability(db, out, sb, n);
-            appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef);
+            appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef, arrayAppender);
         }
         else if (db.getUDT(schema, u) != null) {
             sb.append(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)));
             sb.append(".getDataType()");
+            arrayAppender.accept(sb);
         }
         // [#3942] [#7863] Dialects that support tables as UDTs
         // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
         else if (SUPPORT_TABLE_AS_UDT.contains(db.getDialect()) && db.getTable(schema, u) != null) {
             sb.append(getStrategy().getFullJavaIdentifier(db.getTable(schema, u)));
             sb.append(".getDataType()");
+            arrayAppender.accept(sb);
         }
         else if (db.getEnum(schema, u) != null) {
             sb.append(getJavaTypeReference(db, new DefaultDataTypeDefinition(
@@ -9910,6 +9957,8 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(".asEnumDataType(");
             sb.append(classOf(getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM)));
             sb.append(")");
+
+            arrayAppender.accept(sb);
         }
         else {
             DataType<?> dataType;
@@ -9983,6 +10032,7 @@ public class JavaGenerator extends AbstractGenerator {
                     sb.append(sqlDataTypeRef);
             }
 
+            arrayAppender.accept(sb);
             appendTypeReferenceNullability(db, out, sb, n);
 
             if (dataType.identity())
@@ -10013,7 +10063,7 @@ public class JavaGenerator extends AbstractGenerator {
             // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
             //         report actual values (e.g. MySQL).
             if (dataType.defaulted())
-                appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef);
+                appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef, arrayAppender);
         }
 
         return sb.toString();
@@ -10024,7 +10074,14 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(".nullable(false)");
     }
 
-    private final void appendTypeReferenceDefault(Database db, JavaWriter out, StringBuilder sb, String d, String sqlDataTypeRef) {
+    private final void appendTypeReferenceDefault(
+        Database db,
+        JavaWriter out,
+        StringBuilder sb,
+        String d,
+        String sqlDataTypeRef,
+        Consumer<? super StringBuilder> arrayAppender
+    ) {
         if (d != null) {
             sb.append(".defaultValue(");
 
@@ -10053,8 +10110,9 @@ public class JavaGenerator extends AbstractGenerator {
                   .append("\")");
 
             sb.append(", ")
-              .append(sqlDataTypeRef)
-              .append(")")
+              .append(sqlDataTypeRef);
+            arrayAppender.accept(sb);
+            sb.append(")")
               .append(kotlin && sqlDataTypeRef.contains(".OTHER") ? " as Any?" : "")
               .append(")");
         }

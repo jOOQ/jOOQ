@@ -262,7 +262,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Field<?>... fields);
 
     /**
-     * Add the <code>WHEN MATCHED THEN UPDATE</code> clause to the
+     * Add the <code>WHEN NOT MATCHED THEN INSERT</code> clause to the
      * <code>MERGE</code> statement
      */
     @NotNull @CheckReturnValue

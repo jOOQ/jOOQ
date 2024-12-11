@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.SortOrder.DESC;
+import static org.jooq.codegen.GenerationUtil.escapeString0;
 import static org.jooq.codegen.GeneratorStrategy.Mode.POJO;
 import static org.jooq.codegen.GeneratorStrategy.Mode.RECORD;
 import static org.jooq.codegen.Language.JAVA;
@@ -1329,7 +1330,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (IndexColumnDefinition column : index.getIndexColumns()) {
             orderFields.append(sortFieldSeparator);
-            orderFields.append(out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), colRefSegments(null)));
+            orderFields.append(out.ref(getStrategy().getFullJavaIdentifier(column.getColumn()), colRefSegments(column)));
             orderFields.append(column.getSortOrder() == DESC ? ".desc()" : "");
 
             sortFieldSeparator = ", ";
@@ -8993,7 +8994,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#10007] [#10318] Very long strings cannot be handled by the javac compiler.
         int max = 16384;
         if (string.length() <= max)
-            return escapeString0(string);
+            return escapeString0(language, string);
 
         StringBuilder sb = new StringBuilder("\" + \"");
         for (int i = 0; i < string.length(); i += max) {
@@ -9001,27 +9002,10 @@ public class JavaGenerator extends AbstractGenerator {
                 sb.append("\".toString() + \"");
 
             // [#16662] Delay escaping the string for individual split parts to avoid edge cases
-            sb.append(escapeString0(string.substring(i, Math.min(i + max, string.length()))));
+            sb.append(escapeString0(language, string.substring(i, Math.min(i + max, string.length()))));
         }
 
         return sb.append("\".toString() + \"").toString();
-    }
-
-    private String escapeString0(String string) {
-        if (string == null)
-            return null;
-
-        // [#3450] Escape also the escape sequence, among other things that break Java strings.
-        String result = string.replace("\\", "\\\\")
-                              .replace("\"", "\\\"")
-                              .replace("\n", "\\n")
-                              .replace("\r", "\\r");
-
-        // [#10869] Prevent string interpolation in Kotlin
-        if (kotlin)
-            result = result.replace("$", "\\$");
-
-        return result;
     }
 
     /**

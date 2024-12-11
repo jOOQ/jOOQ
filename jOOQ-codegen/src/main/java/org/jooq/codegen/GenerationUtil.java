@@ -506,6 +506,24 @@ class GenerationUtil {
             return "_" + Integer.toHexString(c);
     }
 
+    static String escapeString0(Language language, String string) {
+        if (string == null)
+            return null;
+
+        // [#3450] Escape also the escape sequence, among other things that break Java strings.
+        String result = string.replace("\\", "\\\\")
+                              .replace("\"", "\\\"")
+                              .replace("\n", "\\n")
+                              .replace("\r", "\\r");
+
+        // [#10869] Prevent string interpolation in Kotlin
+        if (language.isKotlin())
+            result = result.replace("$", "\\$");
+
+        return result;
+    }
+
+
     /**
      * Take a qualified Java type and make it a simple type
      *

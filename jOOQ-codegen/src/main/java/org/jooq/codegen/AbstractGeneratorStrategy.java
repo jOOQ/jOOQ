@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
+import static org.jooq.codegen.GenerationUtil.escapeString0;
 import static org.jooq.codegen.Language.KOTLIN;
 
 /**
@@ -198,6 +199,17 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         }
 
         sb.append(".");
+
+
+
+
+
+
+
+
+
+
+
         sb.append(getJavaIdentifier(definition));
 
         return sb.toString();

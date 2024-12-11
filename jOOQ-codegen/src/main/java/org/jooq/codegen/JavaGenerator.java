@@ -5689,7 +5689,7 @@ public class JavaGenerator extends AbstractGenerator {
         columnLoop:
         for (Definition column : embeddablesAndUnreplacedColumns) {
             final String colName = column.getOutputName();
-            final String colMemberUC = unescapeIdentifier(StringUtils.toUC(getStrategy().getJavaMemberName(column, Mode.DAO), getStrategy().getTargetLocale()));
+            final String colMemberUC = StringUtils.toUC(unescapeIdentifier(getStrategy().getJavaMemberName(column, Mode.DAO)), getStrategy().getTargetLocale());
             final String colTypeFull = getJavaType(column, out, Mode.POJO);
             final String colTypeRecord = out.ref(getJavaType(column, out, Mode.RECORD));
             final String colType = out.ref(colTypeFull);

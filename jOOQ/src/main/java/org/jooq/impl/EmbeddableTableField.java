@@ -48,6 +48,8 @@ import org.jooq.EmbeddableRecord;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
+import org.jooq.RenderContext;
+import org.jooq.Row;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.QOM.UNotYetImplemented;
@@ -97,8 +99,8 @@ implements
         // TODO [#12021] [#12706] ROW must consistently follow MULTISET emulation
         // [#12237] If a RowField is nested somewhere in MULTISET, we must apply
         //          the MULTISET emulation as well, here
-        if (forceMultisetContent(ctx, () -> getDataType().getRow().size() > 1))
-            acceptMultisetContent(ctx, getDataType().getRow(), this, this::acceptRow);
+        if (forceMultisetContent(ctx, () -> toRow().size() > 1))
+            acceptMultisetContent(ctx, toRow(), this, this::acceptRow);
         else if (forceRowContent(ctx))
             acceptRow(ctx);
         else
@@ -106,11 +108,15 @@ implements
     }
 
     private final void acceptRow(Context<?> ctx) {
-        ctx.visit(((AbstractRow<?>) getDataType().getRow()).rf());
+        ctx.visit(toRow().rf());
+    }
+
+    private final AbstractRow<?> toRow() {
+        return ((AbstractRow<?>) getDataType().getRow());
     }
 
     private final void acceptDefault(Context<?> ctx) {
-        ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(getDataType().getRow().fields())));
+        ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(toRow().fields())));
     }
 
     @Override
@@ -122,9 +128,18 @@ implements
     int projectionSize() {
         int result = 0;
 
-        for (Field<?> field : ((AbstractRow<?>) getDataType().getRow()).fields.fields)
+        for (Field<?> field : toRow().fields.fields)
             result += ((AbstractField<?>) field).projectionSize();
 
         return result;
+    }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    String toString0(RenderContext ctx) {
+        return ctx.visit(toRow()).render();
     }
 }

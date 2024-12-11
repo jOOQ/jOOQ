@@ -62,6 +62,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Fields;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.RecordType;
@@ -583,6 +584,16 @@ implements
         fields = add0(fields, f);
     }
 
+
+
+
+
+
+
+
+
+
+
     private static final Field<?>[] add0(Field<?>[] fields, Field<?> field) {
 
         // TODO: [#10481] Can we replace our internal Field<?>[] by an ArrayList<Field<?>>?
@@ -592,6 +603,10 @@ implements
         result[fields.length] = field;
         return result;
     }
+
+
+
+
 
 
 

@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.jooq.Clause.MERGE;
 import static org.jooq.Clause.MERGE_MERGE_INTO;
@@ -119,6 +120,7 @@ import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.filter;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
@@ -1914,7 +1916,8 @@ implements
            .start(MERGE_SET);
 
         // [#7291] Multi MATCHED emulation
-        boolean emulate = false;
+        boolean emulateMatched = false;
+        boolean emulateNotMatched = false;
         boolean requireMatchedConditions = false;
 
         // Prevent error 5324 "In a MERGE statement, a 'WHEN MATCHED' clause with a search condition
@@ -1940,13 +1943,13 @@ implements
 
             for (MatchedClause m : matched) {
                 if (m.delete) {
-                    if (emulate |= matchDelete)
+                    if (emulateMatched |= matchDelete)
                         break emulateCheck;
 
                     matchDelete = true;
                 }
                 else {
-                    if (emulate |= matchUpdate)
+                    if (emulateMatched |= matchUpdate)
                         break emulateCheck;
 
                     matchUpdate = true;
@@ -1954,9 +1957,10 @@ implements
             }
         }
 
-        if (emulate) {
+        if (emulateMatched) {
             MatchedClause update = null;
             MatchedClause delete = null;
+            NotMatchedClause insert = null;
 
             Condition negate = noCondition();
 
@@ -1986,6 +1990,28 @@ implements
 
                     update.condition = update.condition.or(condition);
                 }
+
+                if (REQUIRE_NEGATION.contains(ctx.dialect()))
+                    negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
+            }
+
+            for (NotMatchedClause m : notMatched) {
+                Condition condition = negate.and(m.condition);
+
+                if (insert == null)
+                    insert = new NotMatchedClause(table, noCondition(), m.byTarget);
+
+                for (Entry<Field<?>, List<Field<?>>> e : m.insertMap.values.entrySet()) {
+                    List<Field<?>> l = insert.insertMap.values.get(e.getKey());
+                    Field<?> exp = !isEmpty(l) ? l.get(0) : null;
+
+                    if (exp instanceof CaseSearched c)
+                        c.when(negate.and(condition), e.getValue().get(0));
+                    else
+                        insert.insertMap.values.put(e.getKey(), asList(when(negate.and(condition), (Field) e.getValue().get(0)).else_(e.getKey())));
+                }
+
+                insert.condition = insert.condition.or(condition);
 
                 if (REQUIRE_NEGATION.contains(ctx.dialect()))
                     negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
@@ -2031,8 +2057,45 @@ implements
            .end(MERGE_WHEN_MATCHED_THEN_UPDATE)
            .start(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 
-        for (NotMatchedClause m : notMatched)
-            toSQLNotMatched(ctx, m);
+        if ((NO_SUPPORT_MULTI.contains(ctx.dialect()) && notMatched.size() > 1)) {
+            emulateNotMatched = notMatched.size() > 1;
+        }
+
+        if (emulateNotMatched) {
+            NotMatchedClause insert = null;
+
+            Condition negate = noCondition();
+
+            for (NotMatchedClause m : notMatched) {
+                Condition condition = negate.and(m.condition);
+
+                if (insert == null)
+                    insert = new NotMatchedClause(table, noCondition(), m.byTarget);
+
+                for (Entry<Field<?>, List<Field<?>>> e : m.insertMap.values.entrySet()) {
+                    List<Field<?>> l = insert.insertMap.values.get(e.getKey());
+                    Field<?> exp = !isEmpty(l) ? l.get(0) : null;
+
+                    if (exp instanceof CaseSearched c)
+                        c.when(negate.and(condition), e.getValue().get(0));
+                    else
+                        insert.insertMap.set(e.getKey(), when(negate.and(condition), (Field) e.getValue().get(0)));
+                }
+
+                insert.condition = insert.condition.or(condition);
+
+                if (REQUIRE_NEGATION.contains(ctx.dialect()))
+                    negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
+            }
+
+            if (insert != null)
+                toSQLNotMatched(ctx, insert);
+        }
+
+        else {
+            for (NotMatchedClause m : notMatched)
+                toSQLNotMatched(ctx, m);
+        }
 
         ctx.end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 

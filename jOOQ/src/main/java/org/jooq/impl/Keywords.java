@@ -404,6 +404,7 @@ final class Keywords {
     static final Keyword K_SIBLINGS                 = keyword("siblings");
     static final Keyword K_SIGNAL                   = keyword("signal");
     static final Keyword K_SKIP                     = keyword("skip");
+    static final Keyword K_SOURCE                   = keyword("source");
     static final Keyword K_SQL                      = keyword("sql");
     static final Keyword K_SQLSTATE                 = keyword("sqlstate");
     static final Keyword K_SQL_ERROR_CODE           = keyword("sql_error_code");
@@ -420,6 +421,7 @@ final class Keywords {
     static final Keyword K_SYMMETRIC                = keyword("symmetric");
     static final Keyword K_SYSTEM                   = keyword("system");
     static final Keyword K_TABLE                    = keyword("table");
+    static final Keyword K_TARGET                   = keyword("target");
     static final Keyword K_TEMPORARY                = keyword("temporary");
     static final Keyword K_THEN                     = keyword("then");
     static final Keyword K_THROW                    = keyword("throw");

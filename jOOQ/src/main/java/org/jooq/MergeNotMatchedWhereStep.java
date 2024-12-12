@@ -84,7 +84,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
-public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalStep<R> {
+public interface MergeNotMatchedWhereStep<R extends Record> extends MergeNotMatchedStep<R> {
 
     /**
      * Add an additional <code>WHERE</code> clause to the preceding
@@ -97,7 +97,7 @@ public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalSt
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2 })
-    MergeFinalStep<R> where(Condition condition);
+    MergeNotMatchedStep<R> where(Condition condition);
 
     /**
      * Add an additional <code>WHERE</code> clause to the preceding
@@ -110,5 +110,5 @@ public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalSt
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, H2 })
-    MergeFinalStep<R> where(Field<Boolean> condition);
+    MergeNotMatchedStep<R> where(Field<Boolean> condition);
 }

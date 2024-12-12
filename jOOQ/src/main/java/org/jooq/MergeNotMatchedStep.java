@@ -40,6 +40,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.*;
 
 import java.util.Collection;
+import org.jooq.impl.DSL;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -268,4 +269,286 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED THEN INSERT</code> clause to the
+     * <code>MERGE</code> statement
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatched();
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedAnd(Condition condition);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedAnd(Field<Boolean> condition);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedAnd(SQL sql);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedAnd(String sql);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedAnd(String sql, Object... bindings);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the <code>MERGE</code>
+     * statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedAnd(String sql, QueryPart... parts);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY SOURCE THEN INSERT</code> clause to the
+     * <code>MERGE</code> statement
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    MergeMatchedThenStep<R> whenNotMatchedBySource();
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(Condition condition);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(Field<Boolean> condition);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY SOURCE AND</code> clause to the
+     * <code>MERGE</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(SQL sql);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY SOURCE AND</code> clause to the
+     * <code>MERGE</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(String sql);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY SOURCE AND</code> clause to the
+     * <code>MERGE</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(String sql, Object... bindings);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY SOURCE AND</code> clause to the <code>MERGE</code>
+     * statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES })
+    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(String sql, QueryPart... parts);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY TARGET THEN INSERT</code> clause to the
+     * <code>MERGE</code> statement
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedByTarget();
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(Condition condition);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED AND</code> clause to the
+     * <code>MERGE</code> statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(Field<Boolean> condition);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY TARGET AND</code> clause to the
+     * <code>MERGE</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(SQL sql);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY TARGET AND</code> clause to the
+     * <code>MERGE</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(String sql);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY TARGET AND</code> clause to the
+     * <code>MERGE</code> statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(String sql, Object... bindings);
+
+    /**
+     * Add the <code>WHEN NOT MATCHED BY TARGET AND</code> clause to the <code>MERGE</code>
+     * statement.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see SQL
+     */
+    @PlainSQL
+    @NotNull @CheckReturnValue
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(String sql, QueryPart... parts);
 }

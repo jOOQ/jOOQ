@@ -680,6 +680,8 @@ import org.jooq.Merge;
 import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedStep;
 import org.jooq.MergeMatchedWhereStep;
+import org.jooq.MergeNotMatchedThenStep;
+import org.jooq.MergeNotMatchedWhereStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
@@ -2628,9 +2630,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Condition on = parseCondition();
         boolean update = false;
         boolean insert = false;
-        List<Field<?>> insertColumns = null;
-        List<Field<?>> insertValues = null;
-        Condition insertWhere = null;
         MergeUsingStep<?> s1 = (with == null ? dsl.mergeInto(target) : with.mergeInto(target));
         MergeMatchedStep<?> s2 = s1.using(usingTable).on(on);
 
@@ -2639,17 +2638,27 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             Condition updateAnd = null;
             Condition updateWhere = null;
             Condition deleteWhere = null;
+            List<Field<?>> insertColumns = null;
+            List<Field<?>> insertValues = null;
+            Condition insertAnd = null;
+            Condition insertWhere = null;
 
-            if (parseKeywordIf("WHEN MATCHED")) {
+            boolean notMatchedBySource = false;
+
+            if (parseKeywordIf("WHEN MATCHED") || (notMatchedBySource = parseKeywordIf("WHEN NOT MATCHED BY SOURCE"))) {
                 update = true;
 
                 if (parseKeywordIf("AND"))
                     updateAnd = parseCondition();
 
                 if (parseKeywordIf("THEN DELETE")) {
-                    s2 = updateAnd != null
-                       ? s2.whenMatchedAnd(updateAnd).thenDelete()
-                       : s2.whenMatchedThenDelete();
+                    s2 = notMatchedBySource
+                        ? updateAnd != null
+                            ? s2.whenNotMatchedBySourceAnd(updateAnd).thenDelete()
+                            : s2.whenNotMatchedBySource().thenDelete()
+                        : updateAnd != null
+                            ? s2.whenMatchedAnd(updateAnd).thenDelete()
+                            : s2.whenMatchedThenDelete();
                 }
                 else {
                     parseKeyword("THEN UPDATE SET");
@@ -2662,18 +2671,26 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         deleteWhere = parseCondition();
 
                     if (updateAnd != null) {
-                        s2.whenMatchedAnd(updateAnd).thenUpdate().set(updateSet);
+                        if (notMatchedBySource)
+                            s2.whenNotMatchedBySourceAnd(updateAnd).thenUpdate().set(updateSet);
+                        else
+                            s2.whenMatchedAnd(updateAnd).thenUpdate().set(updateSet);
                     }
                     else {
-                        MergeMatchedWhereStep<?> s3 = s2.whenMatchedThenUpdate().set(updateSet);
+                        MergeMatchedWhereStep<?> s3 = notMatchedBySource
+                            ? s2.whenNotMatchedBySource().thenUpdate().set(updateSet)
+                            : s2.whenMatchedThenUpdate().set(updateSet);
                         MergeMatchedDeleteStep<?> s4 = updateWhere != null ? s3.where(updateWhere) : s3;
                         s2 = deleteWhere != null ? s4.deleteWhere(deleteWhere) : s3;
                     }
                 }
             }
-            else if (!insert && (insert = parseKeywordIf("WHEN NOT MATCHED"))) {
+            else if (parseKeywordIf("WHEN NOT MATCHED")) {
+                insert = true;
+                boolean byTarget = parseKeywordIf("BY TARGET");
+
                 if (parseKeywordIf("AND"))
-                    insertWhere = parseCondition();
+                    insertAnd = parseCondition();
 
                 parseKeyword("THEN INSERT");
                 parse('(');
@@ -2689,6 +2706,16 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 if (insertWhere == null && parseKeywordIf("WHERE"))
                     insertWhere = parseCondition();
+
+                MergeNotMatchedThenStep<?> s3 = byTarget
+                    ? insertAnd != null
+                        ? s2.whenNotMatchedByTargetAnd(insertAnd)
+                        : s2.whenNotMatchedByTarget()
+                    : insertAnd != null
+                        ? s2.whenNotMatchedAnd(insertAnd)
+                        : s2.whenNotMatched();
+                MergeNotMatchedWhereStep<?> s4 = s3.thenInsert(insertColumns).values(insertValues);
+                s2 = (MergeMatchedStep<?>) (insertWhere != null ? s4.where(insertWhere) : s4);
             }
             else
                 break;
@@ -2697,15 +2724,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         if (!update && !insert)
             throw exception("At least one of UPDATE or INSERT clauses is required");
 
-        // TODO support multi clause MERGE
-        // TODO support DELETE
-        Merge<?> s3 = insert
-            ? insertWhere != null
-                ? s2.whenNotMatchedThenInsert(insertColumns).values(insertValues).where(insertWhere)
-                : s2.whenNotMatchedThenInsert(insertColumns).values(insertValues)
-            : s2;
-
-        return s3;
+        return s2;
     }
 
     private final Query parseOpen() {

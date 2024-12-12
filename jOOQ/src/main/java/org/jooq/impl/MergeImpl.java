@@ -49,16 +49,40 @@ import static org.jooq.Clause.MERGE_VALUES;
 import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 // ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
 // ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.TRINO;
+// ...
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
@@ -72,6 +96,7 @@ import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_KEY;
@@ -80,6 +105,8 @@ import static org.jooq.impl.Keywords.K_MERGE_INTO;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_SET;
+import static org.jooq.impl.Keywords.K_SOURCE;
+import static org.jooq.impl.Keywords.K_TARGET;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_UPSERT;
@@ -141,6 +168,7 @@ import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedSetMoreStep;
 import org.jooq.MergeMatchedThenStep;
 import org.jooq.MergeNotMatchedSetMoreStep;
+import org.jooq.MergeNotMatchedThenStep;
 import org.jooq.MergeNotMatchedValuesStep1;
 import org.jooq.MergeNotMatchedValuesStep10;
 import org.jooq.MergeNotMatchedValuesStep11;
@@ -230,6 +258,7 @@ implements
     MergeMatchedSetMoreStep<R>,
     MergeMatchedThenStep<R>,
     MergeNotMatchedSetMoreStep<R>,
+    MergeNotMatchedThenStep<R>,
 
 
 
@@ -267,6 +296,7 @@ implements
 
 
     private static final Set<SQLDialect> NO_SUPPORT_MULTI                        = SQLDialect.supportedBy(HSQLDB);
+    private static final Set<SQLDialect> NO_SUPPORT_BY_TARGET                    = SQLDialect.supportedUntil(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE, TRINO, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRE_NEGATION                        = SQLDialect.supportedBy(H2, HSQLDB);
     private static final Set<SQLDialect> NO_SUPPORT_CONDITION_AFTER_NO_CONDITION = SQLDialect.supportedBy(FIREBIRD, POSTGRES);
 
@@ -279,6 +309,7 @@ implements
     // Flags to keep track of DSL object creation state
     private transient boolean            matchedClause;
     private final List<MatchedClause>    matched;
+    private transient NotMatchedBy       notMatchedBy;
     private transient boolean            notMatchedClause;
     private final List<NotMatchedClause> notMatched;
 
@@ -1008,133 +1039,111 @@ implements
 
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1) {
         return whenNotMatchedThenInsert(new Field[] { field1 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
     }
 
     @Override
-    @SuppressWarnings("hiding")
     public final MergeImpl whenNotMatchedThenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21, Field field22) {
         return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
@@ -1149,11 +1158,275 @@ implements
 
     @Override
     public final MergeImpl whenNotMatchedThenInsert(Collection<? extends Field<?>> fields) {
+        return whenNotMatched().thenInsert(fields);
+    }
+
+
+
+
+    @Override
+    public final MergeImpl whenNotMatched() {
+        return whenNotMatchedAnd0(noCondition());
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedAnd(Condition condition) {
+        return whenNotMatchedAnd0(condition);
+    }
+
+    final MergeImpl whenNotMatchedAnd0(Condition condition) {
         notMatchedClause = true;
-        notMatched.add(new NotMatchedClause(table, noCondition()));
-        getLastNotMatched().insertMap.addFields(fields);
+        notMatchedBy = null;
+        notMatched.add(new NotMatchedClause(table, condition, false));
 
         matchedClause = false;
+        return this;
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedAnd(Field<Boolean> condition) {
+        return whenNotMatchedAnd(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedAnd(SQL sql) {
+        return whenNotMatchedAnd(condition(sql));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedAnd(String sql) {
+        return whenNotMatchedAnd(condition(sql));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedAnd(String sql, Object... bindings) {
+        return whenNotMatchedAnd(condition(sql, bindings));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedAnd(String sql, QueryPart... parts) {
+        return whenNotMatchedAnd(condition(sql, parts));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedBySource() {
+        return whenNotMatchedBySourceAnd0(noCondition());
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedBySourceAnd(Condition condition) {
+        return whenNotMatchedBySourceAnd0(condition);
+    }
+
+    final MergeImpl whenNotMatchedBySourceAnd0(Condition condition) {
+        notMatchedClause = false;
+        notMatchedBy = NotMatchedBy.BY_SOURCE;
+
+        matchedClause = true;
+        matched.add(new MatchedClause(table, condition, false, true));
+        return this;
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedBySourceAnd(Field<Boolean> condition) {
+        return whenNotMatchedBySourceAnd(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedBySourceAnd(SQL sql) {
+        return whenNotMatchedBySourceAnd(condition(sql));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedBySourceAnd(String sql) {
+        return whenNotMatchedBySourceAnd(condition(sql));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedBySourceAnd(String sql, Object... bindings) {
+        return whenNotMatchedBySourceAnd(condition(sql, bindings));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedBySourceAnd(String sql, QueryPart... parts) {
+        return whenNotMatchedBySourceAnd(condition(sql, parts));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedByTarget() {
+        return whenNotMatchedByTargetAnd0(noCondition());
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedByTargetAnd(Condition condition) {
+        return whenNotMatchedByTargetAnd0(condition);
+    }
+
+    final MergeImpl whenNotMatchedByTargetAnd0(Condition condition) {
+        notMatchedClause = true;
+        notMatchedBy = NotMatchedBy.BY_TARGET;
+        notMatched.add(new NotMatchedClause(table, condition, true));
+
+        matchedClause = false;
+        return this;
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedByTargetAnd(Field<Boolean> condition) {
+        return whenNotMatchedByTargetAnd(condition(condition));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedByTargetAnd(SQL sql) {
+        return whenNotMatchedByTargetAnd(condition(sql));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedByTargetAnd(String sql) {
+        return whenNotMatchedByTargetAnd(condition(sql));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedByTargetAnd(String sql, Object... bindings) {
+        return whenNotMatchedByTargetAnd(condition(sql, bindings));
+    }
+
+    @Override
+    public final MergeImpl whenNotMatchedByTargetAnd(String sql, QueryPart... parts) {
+        return whenNotMatchedByTargetAnd(condition(sql, parts));
+    }
+
+
+
+    @Override
+    public final MergeImpl thenInsert() {
+        return thenInsert(emptyList());
+    }
+
+
+
+    @Override
+    public final MergeImpl thenInsert(Field field1) {
+        return thenInsert(new Field[] { field1 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2) {
+        return thenInsert(new Field[] { field1, field2 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3) {
+        return thenInsert(new Field[] { field1, field2, field3 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4) {
+        return thenInsert(new Field[] { field1, field2, field3, field4 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21, Field field22) {
+        return thenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
+
+
+
+    @Override
+    public final MergeImpl thenInsert(Field<?>... fields) {
+        return thenInsert(Arrays.asList(fields));
+    }
+
+    @Override
+    public final MergeImpl thenInsert(Collection<? extends Field<?>> fields) {
+        getLastNotMatched().insertMap.addFields(fields);
+
         return this;
     }
 
@@ -1180,7 +1453,7 @@ implements
         // constraint violations that may occur from updates, otherwise.
         // See https://github.com/jOOQ/jOOQ/issues/7291#issuecomment-610833303
         if (matchedClause)
-            matched.add(matched.size() - 1, new MatchedClause(table, condition, true));
+            matched.add(matched.size() - 1, new MatchedClause(table, condition, true, false));
         else
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
 
@@ -1299,12 +1572,12 @@ implements
         r.usingDual = usingDual;
         r.on.addConditions(extractCondition(on));
         for (MatchedClause m : matched) {
-            MatchedClause m2 = new MatchedClause(t, m.condition, m.delete, new FieldMapForUpdate(t, m.updateMap.setClause, m.updateMap.assignmentClause));
+            MatchedClause m2 = new MatchedClause(t, m.condition, m.delete, m.notMatchedBySource, new FieldMapForUpdate(t, m.updateMap.setClause, m.updateMap.assignmentClause));
             m2.updateMap.putAll(m.updateMap);
             r.matched.add(m2);
         }
         for (NotMatchedClause m : notMatched) {
-            NotMatchedClause m2 = new NotMatchedClause(t, m.condition);
+            NotMatchedClause m2 = new NotMatchedClause(t, m.condition, m.byTarget);
             m2.insertMap.from(m.insertMap);
             r.notMatched.add(m2);
         }
@@ -1696,7 +1969,7 @@ implements
 
                 if (m.delete) {
                     if (delete == null)
-                        delete = new MatchedClause(table, noCondition(), true);
+                        delete = new MatchedClause(table, noCondition(), true, false);
 
                     delete.condition = delete.condition.or(condition);
                 }
@@ -1749,7 +2022,7 @@ implements
             Condition negate = noCondition();
 
             for (MatchedClause m : matched) {
-                toSQLMatched(ctx, new MatchedClause(table, negate.and(m.condition), m.delete, m.updateMap), requireMatchedConditions);
+                toSQLMatched(ctx, new MatchedClause(table, negate.and(m.condition), m.delete, m.notMatchedBySource, m.updateMap), requireMatchedConditions);
                 negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
             }
         }
@@ -1796,10 +2069,14 @@ implements
     }
 
     private final void toSQLMatched(Context<?> ctx, MatchedClause update, MatchedClause delete, boolean requireMatchedConditions) {
-        ctx.formatSeparator()
-           .visit(K_WHEN).sql(' ').visit(K_MATCHED);
-
         MatchedClause m = update != null ? update : delete;
+
+        if (m.notMatchedBySource)
+            ctx.formatSeparator()
+               .visit(K_WHEN).sql(' ').visit(K_NOT).sql(' ').visit(K_MATCHED).sql(' ').visit(K_BY).sql(' ').visit(K_SOURCE);
+        else
+            ctx.formatSeparator()
+               .visit(K_WHEN).sql(' ').visit(K_MATCHED);
 
         // [#7291] Standard SQL AND clause in updates
         if ((requireMatchedConditions || !(m.condition instanceof NoCondition)))
@@ -1837,6 +2114,9 @@ implements
            .visit(K_NOT).sql(' ')
            .visit(K_MATCHED).sql(' ');
 
+        if (m.byTarget && !NO_SUPPORT_BY_TARGET.contains(ctx.dialect()))
+            ctx.visit(K_BY).sql(' ').visit(K_TARGET).sql(' ');
+
         if (!(m.condition instanceof NoCondition))
             ctx.visit(K_AND).sql(' ').visit(m.condition).sql(' ');
 
@@ -1862,33 +2142,42 @@ implements
 
     private static final class MatchedClause implements Serializable {
 
-        FieldMapForUpdate         updateMap;
-        boolean                   delete;
-        Condition                 condition;
+        FieldMapForUpdate updateMap;
+        boolean           delete;
+        boolean           notMatchedBySource;
+        Condition         condition;
 
         MatchedClause(Table<?> table, Condition condition) {
-            this(table, condition, false);
+            this(table, condition, false, false);
         }
 
-        MatchedClause(Table<?> table, Condition condition, boolean delete) {
-            this(table, condition, delete, new FieldMapForUpdate(table, SetClause.MERGE, MERGE_SET_ASSIGNMENT));
+        MatchedClause(Table<?> table, Condition condition, boolean delete, boolean notMatchedBySource) {
+            this(table, condition, delete, notMatchedBySource, new FieldMapForUpdate(table, SetClause.MERGE, MERGE_SET_ASSIGNMENT));
         }
 
-        MatchedClause(Table<?> table, Condition condition, boolean delete, FieldMapForUpdate updateMap) {
+        MatchedClause(Table<?> table, Condition condition, boolean delete, boolean notMatchedBySource, FieldMapForUpdate updateMap) {
             this.updateMap = updateMap;
             this.condition = condition == null ? noCondition() : condition;
             this.delete = delete;
+            this.notMatchedBySource = notMatchedBySource;
         }
     }
 
     private static final class NotMatchedClause implements Serializable {
 
-        FieldMapsForInsert        insertMap;
-        Condition                 condition;
+        FieldMapsForInsert insertMap;
+        Condition          condition;
+        boolean            byTarget;
 
-        NotMatchedClause(Table<?> table, Condition condition) {
+        NotMatchedClause(Table<?> table, Condition condition, boolean byTarget) {
             this.insertMap = new FieldMapsForInsert(table);
             this.condition = condition == null ? noCondition() : condition;
+            this.byTarget = byTarget;
         }
+    }
+
+    private enum NotMatchedBy {
+        BY_TARGET,
+        BY_SOURCE
     }
 }

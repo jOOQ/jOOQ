@@ -2485,15 +2485,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         Field<?>[] insertColumns = null;
         List<Field<?>> insertValues = null;
         Condition insertWhere = null;
-        Map<Field<?>, Object> updateSet;
-        Condition updateAnd = null;
-        Condition updateWhere = null;
-        Condition deleteWhere = null;
-
         MergeUsingStep<?> s1 = (with == null ? dsl.mergeInto(target) : with.mergeInto(target));
         MergeMatchedStep<?> s2 = s1.using(usingTable).on(on);
 
         for (;;) {
+            Map<Field<?>, Object> updateSet;
+            Condition updateAnd = null;
+            Condition updateWhere = null;
+            Condition deleteWhere = null;
+
             if (parseKeywordIf("WHEN MATCHED")) {
                 update = true;
 

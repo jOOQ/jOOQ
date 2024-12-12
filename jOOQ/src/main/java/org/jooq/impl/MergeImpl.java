@@ -309,7 +309,6 @@ implements
     // Flags to keep track of DSL object creation state
     private transient boolean            matchedClause;
     private final List<MatchedClause>    matched;
-    private transient NotMatchedBy       notMatchedBy;
     private transient boolean            notMatchedClause;
     private final List<NotMatchedClause> notMatched;
 
@@ -1176,7 +1175,6 @@ implements
 
     final MergeImpl whenNotMatchedAnd0(Condition condition) {
         notMatchedClause = true;
-        notMatchedBy = null;
         notMatched.add(new NotMatchedClause(table, condition, false));
 
         matchedClause = false;
@@ -1220,7 +1218,6 @@ implements
 
     final MergeImpl whenNotMatchedBySourceAnd0(Condition condition) {
         notMatchedClause = false;
-        notMatchedBy = NotMatchedBy.BY_SOURCE;
 
         matchedClause = true;
         matched.add(new MatchedClause(table, condition, false, true));
@@ -1264,7 +1261,6 @@ implements
 
     final MergeImpl whenNotMatchedByTargetAnd0(Condition condition) {
         notMatchedClause = true;
-        notMatchedBy = NotMatchedBy.BY_TARGET;
         notMatched.add(new NotMatchedClause(table, condition, true));
 
         matchedClause = false;
@@ -2174,10 +2170,5 @@ implements
             this.condition = condition == null ? noCondition() : condition;
             this.byTarget = byTarget;
         }
-    }
-
-    private enum NotMatchedBy {
-        BY_TARGET,
-        BY_SOURCE
     }
 }

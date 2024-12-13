@@ -5695,6 +5695,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String colTypeRecord = out.ref(getJavaType(column, out, Mode.RECORD));
             final String colType = out.ref(colTypeFull);
             final String colIdentifier = out.ref(getStrategy().getFullJavaIdentifier(column), colRefSegments(column));
+            final boolean override = getStrategy().getJavaMemberOverride(column, Mode.DAO);
 
 
 
@@ -5713,26 +5714,27 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 if (column instanceof EmbeddableDefinition)
-                    out.println("%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, new %s(lowerInclusive), new %s(upperInclusive))",
-                        visibility(), colMemberUC, colType, colType, List.class, pType, colIdentifier, colTypeRecord, colTypeRecord);
+                    out.println("%s%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, new %s(lowerInclusive), new %s(upperInclusive))",
+                        visibility(), override ? "override " : "", colMemberUC, colType, colType, List.class, pType, colIdentifier, colTypeRecord, colTypeRecord);
                 else
-                    out.println("%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, lowerInclusive, upperInclusive)",
-                        visibility(), colMemberUC, colType, colType, List.class, pType, colIdentifier);
+                    out.println("%s%sdef fetchRangeOf%s(lowerInclusive: %s, upperInclusive: %s): %s[%s] = fetchRange(%s, lowerInclusive, upperInclusive)",
+                        visibility(), override ? "override " : "", colMemberUC, colType, colType, List.class, pType, colIdentifier);
             }
             else if (kotlin) {
                 if (column instanceof EmbeddableDefinition) {
-                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, if (lowerInclusive != null) %s(lowerInclusive) else null, if (upperInclusive != null) %s(upperInclusive) else null)",
-                        visibility(), colMemberUC, colType, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord, colTypeRecord);
+                    out.println("%s%sfun fetchRangeOf%s(lowerInclusive: %s?, upperInclusive: %s?): %s<%s> = fetchRange(%s, if (lowerInclusive != null) %s(lowerInclusive) else null, if (upperInclusive != null) %s(upperInclusive) else null)",
+                        visibility(), override ? "override " : "", colMemberUC, colType, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord, colTypeRecord);
                 }
                 else {
                     final String nullability = kotlinNullability(out, column, Mode.POJO);
 
-                    out.println("%sfun fetchRangeOf%s(lowerInclusive: %s%s, upperInclusive: %s%s): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
-                        visibility(), colMemberUC, colType, nullability, colType, nullability, out.ref(KLIST), pType, colIdentifier);
+                    out.println("%s%sfun fetchRangeOf%s(lowerInclusive: %s%s, upperInclusive: %s%s): %s<%s> = fetchRange(%s, lowerInclusive, upperInclusive)",
+                        visibility(), override ? "override " : "", colMemberUC, colType, nullability, colType, nullability, out.ref(KLIST), pType, colIdentifier);
                 }
             }
             else {
                 printNonnullAnnotation(out);
+                out.overrideIf(override);
 
                 if (column instanceof EmbeddableDefinition) {
                     out.println("%s%s<%s> fetchRangeOf%s(%s lowerInclusive, %s upperInclusive) {", visibility(), List.class, pType, colMemberUC, colType, colType);
@@ -5753,24 +5755,25 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 if (column instanceof EmbeddableDefinition)
-                    out.println("%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values.map(v => new %s(v)).toArray%s)",
-                        visibility(), colMemberUC, colType, List.class, pType, colIdentifier, colTypeRecord, varargSplice());
+                    out.println("%s%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values.map(v => new %s(v)).toArray%s)",
+                        visibility(), override ? "override " : "", colMemberUC, colType, List.class, pType, colIdentifier, colTypeRecord, varargSplice());
                 else
-                    out.println("%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values%s)",
-                        visibility(), colMemberUC, colType, List.class, pType, colIdentifier, varargSplice());
+                    out.println("%s%sdef fetchBy%s(values: %s*): %s[%s] = fetch(%s, values%s)",
+                        visibility(), override ? "override " : "", colMemberUC, colType, List.class, pType, colIdentifier, varargSplice());
             }
             else if (kotlin) {
                 String toTypedArray = PRIMITIVE_WRAPPERS.contains(colTypeFull) ? ".toTypedArray()" : "";
 
                 if (column instanceof EmbeddableDefinition)
-                    out.println("%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, values.map { %s(it) })",
-                        visibility(), colMemberUC, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord);
+                    out.println("%s%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, values.map { %s(it) })",
+                        visibility(), override ? "override " : "", colMemberUC, colType, out.ref(KLIST), pType, colIdentifier, colTypeRecord);
                 else
-                    out.println("%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, *values%s)",
-                        visibility(), colMemberUC, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
+                    out.println("%s%sfun fetchBy%s(vararg values: %s): %s<%s> = fetch(%s, *values%s)",
+                        visibility(), override ? "override " : "", colMemberUC, colType, out.ref(KLIST), pType, colIdentifier, toTypedArray);
             }
             else {
                 printNonnullAnnotation(out);
+                out.overrideIf(override);
 
                 if (column instanceof EmbeddableDefinition) {
                     out.println("%s%s<%s> fetchBy%s(%s... values) {", visibility(), List.class, pType, colMemberUC, colType);
@@ -5801,13 +5804,14 @@ public class JavaGenerator extends AbstractGenerator {
                             out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
 
                         if (scala) {
-                            out.println("%sdef fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", visibility(), colMemberUC, colType, pType, colIdentifier);
+                            out.println("%s%sdef fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", visibility(), override ? "override " : "", colMemberUC, colType, pType, colIdentifier);
                         }
                         else if (kotlin) {
-                            out.println("%sfun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", visibility(), colMemberUC, colType, pType, colIdentifier);
+                            out.println("%s%sfun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", visibility(), override ? "override " : "", colMemberUC, colType, pType, colIdentifier);
                         }
                         else {
                             printNullableAnnotation(out);
+                            out.overrideIf(override);
                             out.println("%s%s fetchOneBy%s(%s value) {", visibility(), pType, colMemberUC, colType);
                             out.println("return fetchOne(%s, value);", colIdentifier);
                             out.println("}");
@@ -5816,6 +5820,7 @@ public class JavaGenerator extends AbstractGenerator {
                                 out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
 
                             printNonnullAnnotation(out);
+                            out.overrideIf(override);
                             out.println("%s%s<%s> fetchOptionalBy%s(%s value) {", visibility(), Optional.class, pType, colMemberUC, colType);
                             out.println("return fetchOptional(%s, value);", colIdentifier);
                             out.println("}");

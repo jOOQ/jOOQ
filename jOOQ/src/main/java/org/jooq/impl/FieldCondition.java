@@ -107,13 +107,22 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
             case CUBRID:
             case FIREBIRD:
                 ctx.visit(field.eq(inline(true, field.getDataType())));
                 break;
 
             default:
-                ctx.visit(Tools.hasDefaultConverter(field) ? field : field.eq(inline(true, field.getDataType())));
+                ctx.visit(defaultCondition());
                 break;
         }
     }
@@ -128,6 +137,10 @@ implements
 
 
 
+
+    final Field<Boolean> defaultCondition() {
+        return Tools.hasDefaultConverter(field) ? field : field.eq(inline(true, field.getDataType()));
+    }
 
     @Override
     public final boolean hasName(Context<?> ctx) {

@@ -100,14 +100,14 @@ implements
 
 
 
-            case CLICKHOUSE:
-            case DUCKDB:
-            case TRINO:
-                ctx.visit(string.lower().startsWith(prefix.lower()));
-                break;
+
+
+
+
+
 
             default:
-                ctx.visit(string.likeIgnoreCase(DSL.concat(Tools.escapeForLike(prefix, ctx.configuration()), inline("%")), Tools.ESCAPE));
+                ctx.visit(string.lower().startsWith(prefix.lower()));
                 break;
         }
     }

@@ -458,6 +458,7 @@ final class Names {
     static final Name N_DENSE_RANK                  = systemName("dense_rank");
     static final Name N_DIGITS                      = systemName("digits");
     static final Name N_E                           = systemName("e");
+    static final Name N_ENDS_WITH                   = systemName("ends_with");
     static final Name N_EXCLUDED                    = systemName("excluded");
     static final Name N_EXECUTE                     = systemName("execute");
     static final Name N_EXISTS                      = systemName("exists");

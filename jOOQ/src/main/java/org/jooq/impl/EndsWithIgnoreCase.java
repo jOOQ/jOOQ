@@ -100,13 +100,14 @@ implements
 
 
 
-            case CLICKHOUSE:
-            case DUCKDB:
-                ctx.visit(string.lower().endsWith(suffix.lower()));
-                break;
+
+
+
+
+
 
             default:
-                ctx.visit(string.likeIgnoreCase(DSL.concat(inline("%"), Tools.escapeForLike(suffix, ctx.configuration())), Tools.ESCAPE));
+                ctx.visit(string.lower().endsWith(suffix.lower()));
                 break;
         }
     }

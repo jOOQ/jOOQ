@@ -94,6 +94,43 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case TRINO:
+            case YUGABYTEDB:
+                return false;
+
             case DUCKDB:
                 return true;
 
@@ -101,7 +138,7 @@ implements
                 return true;
 
             default:
-                return false;
+                return true;
         }
     }
 
@@ -114,6 +151,45 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case TRINO:
+            case YUGABYTEDB:
+                ctx.visit(DSL.position(Like.requiresStringCast(string), Like.requiresStringCast(suffix)).eq(iadd(isub(Like.requiresStringCast(string).length(), Like.requiresStringCast(suffix).length()), inline(1))));
+                break;
+
             case DUCKDB:
                 ctx.visit(function(N_SUFFIX, BOOLEAN, string, suffix));
                 break;
@@ -123,7 +199,7 @@ implements
                 break;
 
             default:
-                ctx.visit(string.like(DSL.concat(inline("%"), Tools.escapeForLike(suffix, ctx.configuration())), Tools.ESCAPE));
+                ctx.visit(function(N_ENDS_WITH, BOOLEAN, string, suffix));
                 break;
         }
     }

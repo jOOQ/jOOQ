@@ -178,20 +178,14 @@ implements
                 case SIMILAR_TO:
                 case NOT_LIKE:
                 case NOT_SIMILAR_TO:
-                    if (!arg1.getDataType().isString() && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
-                        arg1 = castIfNeeded(arg1, String.class);
-                    if (!arg2.getDataType().isString() && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
-                        arg2 = castIfNeeded(arg2, String.class);
-
+                    arg1 = requiresStringCastOnLike(ctx, arg1);
+                    arg2 = requiresStringCastOnLike(ctx, arg2);
                     break;
 
                 case LIKE_IGNORE_CASE:
                 case NOT_LIKE_IGNORE_CASE:
-                    if (!arg1.getDataType().isString())
-                        arg1 = castIfNeeded(arg1, String.class);
-                    if (!arg2.getDataType().isString())
-                        arg2 = castIfNeeded(arg2, String.class);
-
+                    arg1 = requiresStringCast(arg1);
+                    arg2 = requiresStringCast(arg2);
                     break;
             }
 
@@ -224,6 +218,20 @@ implements
             ctx.sql(' ').visit(K_ESCAPE).sql(' ')
                .visit(inline(escape));
         }
+    }
+
+    static final Field<String> requiresStringCastOnLike(Context<?> ctx, Field<?> arg1) {
+        if (!arg1.getDataType().isString() && REQUIRES_CAST_ON_LIKE.contains(ctx.dialect()))
+            arg1 = castIfNeeded(arg1, String.class);
+
+        return (Field<String>) arg1;
+    }
+
+    static final Field<String> requiresStringCast(Field<?> arg1) {
+        if (!arg1.getDataType().isString())
+            arg1 = castIfNeeded(arg1, String.class);
+
+        return (Field<String>) arg1;
     }
 
 

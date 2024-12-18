@@ -100,12 +100,14 @@ implements
 
 
 
-            case DUCKDB:
-                ctx.visit(value.lower().contains(content.lower()));
-                break;
+
+
+
+
+
 
             default:
-                ctx.visit(value.likeIgnoreCase(DSL.concat(inline("%"), Tools.escapeForLike(content, ctx.configuration()), inline("%")), Tools.ESCAPE));
+                ctx.visit(value.lower().contains(content.lower()));
                 break;
         }
     }

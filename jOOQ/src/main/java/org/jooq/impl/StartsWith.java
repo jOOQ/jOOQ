@@ -114,6 +114,9 @@ implements
 
 
 
+
+
+
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -168,6 +171,10 @@ implements
 
 
 
+
+
+
+
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -179,7 +186,7 @@ implements
             case POSTGRES:
             case SQLITE:
             case YUGABYTEDB:
-                ctx.visit(string.like(DSL.concat(Tools.escapeForLike(prefix, ctx.configuration()), inline("%")), Tools.ESCAPE));
+                ctx.visit(DSL.position(Like.requiresStringCast(string), Like.requiresStringCast(prefix)).eq(inline(1)));
                 break;
 
             case DUCKDB:

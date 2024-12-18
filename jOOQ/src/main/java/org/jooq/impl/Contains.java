@@ -100,11 +100,42 @@ implements
             case YUGABYTEDB:
                 return false;
 
-            case DUCKDB:
-                return true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CLICKHOUSE:
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
+            case TRINO:
+                return false;
 
             default:
-                return false;
+                return true;
         }
     }
 
@@ -132,12 +163,45 @@ implements
                 break;
             }
 
-            case DUCKDB:
-                ctx.visit(function(N_CONTAINS, BOOLEAN, value, content));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CLICKHOUSE:
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
+            case TRINO: {
+                acceptDefault(ctx);
                 break;
+            }
 
             default:
-                acceptDefault(ctx);
+                ctx.visit(function(N_CONTAINS, BOOLEAN, value, content));
                 break;
         }
     }
@@ -152,7 +216,7 @@ implements
 
 
     private final void acceptDefault(Context<?> ctx) {
-        ctx.visit(value.like(DSL.concat(inline("%"), Tools.escapeForLike(content, ctx.configuration()), inline("%")), Tools.ESCAPE));
+        ctx.visit(DSL.position(Like.requiresStringCast(value), Like.requiresStringCast(content)).gt(inline(0)));
     }
 
     // -------------------------------------------------------------------------

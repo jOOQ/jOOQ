@@ -39,14 +39,14 @@ package org.jooq;
 
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.schema;
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isBlank;
 import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -93,20 +93,26 @@ import org.jetbrains.annotations.Nullable;
 @Deprecated(forRemoval = true, since = "2.0")
 public class SchemaMapping implements Serializable {
 
-    private static final JooqLogger                  log               = JooqLogger.getLogger(SchemaMapping.class);
-    private static volatile boolean                  loggedDeprecation = false;
+    private static final JooqLogger   log               = JooqLogger.getLogger(SchemaMapping.class);
+    private static volatile boolean   loggedDeprecation = false;
+    private static final Object       NULL              = new Object();
 
-    private final Configuration                      configuration;
-    private volatile transient Map<String, Catalog>  catalogs;
-    private volatile transient Map<String, Schema>   schemata;
-    private volatile transient Map<String, Table<?>> tables;
-    private volatile transient Map<String, UDT<?>>   udts;
+    private final Configuration       configuration;
+    private final Map<String, Object> catalogs;
+    private final Map<String, Object> schemata;
+    private final Map<String, Object> tables;
+    private final Map<String, Object> udts;
 
     /**
      * Construct a mapping from a {@link Configuration} object
      */
     public SchemaMapping(Configuration configuration) {
         this.configuration = configuration;
+
+        this.catalogs = new ConcurrentHashMap<>();
+        this.schemata = new ConcurrentHashMap<>();
+        this.tables = new ConcurrentHashMap<>();
+        this.udts = new ConcurrentHashMap<>();
     }
 
     private final RenderMapping mapping() {
@@ -291,12 +297,12 @@ public class SchemaMapping implements Serializable {
         if (!m.getCatalogs().isEmpty() || !isEmpty(m.getDefaultCatalog())) {
 
             // Lazy initialise catalog mapping
-            if (!getCatalogs().containsKey(catalogName)) {
+            if (!catalogs.containsKey(catalogName)) {
 
                 // [#1857] thread-safe lazy initialisation for those users who
                 // want to use a Configuration and dependent objects in a "thread-safe" manner
                 synchronized (this) {
-                    if (!getCatalogs().containsKey(catalogName)) {
+                    if (!catalogs.containsKey(catalogName)) {
                         for (MappedCatalog c : m.getCatalogs()) {
 
                             // A configured mapping was found, add a renamed catalog
@@ -319,12 +325,13 @@ public class SchemaMapping implements Serializable {
                             result = null;
 
                         // Add mapped catalog or self if no mapping was found
-                        getCatalogs().put(catalogName, result);
+                        catalogs.put(catalogName, defaultIfNull(result, NULL));
                     }
                 }
             }
 
-            result = getCatalogs().get(catalogName);
+            Object r = catalogs.get(catalogName);
+            result = r == NULL ? null : (Catalog) r;
         }
 
         // [#4642] [#13723] There can still be a default name (e.g. from <outputCatalogToDefault/>
@@ -373,12 +380,12 @@ public class SchemaMapping implements Serializable {
             String key = StringUtils.isEmpty(catalogName) ? schemaName : catalogName + '.' + schemaName;
 
             // Lazy initialise schema mapping
-            if (!getSchemata().containsKey(key)) {
+            if (!schemata.containsKey(key)) {
 
                 // [#1857] thread-safe lazy initialisation for those users who
                 // want to use a Configuration and dependent objects in a "thread-safe" manner
                 synchronized (this) {
-                    if (!getSchemata().containsKey(key)) {
+                    if (!schemata.containsKey(key)) {
 
                         catalogLoop:
                         for (MappedCatalog c : m.getCatalogs()) {
@@ -435,12 +442,13 @@ public class SchemaMapping implements Serializable {
                             result = null;
 
                         // Add mapped schema or self if no mapping was found
-                        getSchemata().put(key, result);
+                        schemata.put(key, defaultIfNull(result, NULL));
                     }
                 }
             }
 
-            result = getSchemata().get(key);
+            Object r = schemata.get(key);
+            result = r == NULL ? null : (Schema) r;
         }
 
         // [#4642] [#13723] There can still be a default name (e.g. from <outputSchemaToDefault/>
@@ -460,7 +468,7 @@ public class SchemaMapping implements Serializable {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Nullable
     public <R extends Record> Table<R> map(Table<R> table) {
-        return map0(table, () -> (Map) getTables(), s -> s.getTables(), RenamedTable::new);
+        return map0(table, () -> (Map) tables, s -> s.getTables(), RenamedTable::new);
     }
 
     /**
@@ -472,12 +480,13 @@ public class SchemaMapping implements Serializable {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Nullable
     public <R extends UDTRecord<R>> UDT<R> map(UDT<R> udt) {
-        return map0(udt, () -> (Map) getUDTs(), s -> s.getUdts(), RenamedUDT::new);
+        return map0(udt, () -> (Map) udts, s -> s.getUdts(), RenamedUDT::new);
     }
 
+    @SuppressWarnings("unchecked")
     private <Q extends Qualified> Q map0(
         Q part,
-        Supplier<Map<String, Q>> map,
+        Supplier<Map<String, Object>> map,
         Function<MappedSchema, ? extends List<? extends MappedSchemaObject>> schemaObjects,
         Function3<Schema, Q, String, Q> rename
     ) {
@@ -567,12 +576,13 @@ public class SchemaMapping implements Serializable {
                             }
 
                         // Add mapped table or self if no mapping was found
-                        map.get().put(key, result);
+                        map.get().put(key, defaultIfNull(result, NULL));
                     }
                 }
             }
 
-            result = map.get().get(key);
+            Object q = map.get().get(key);
+            result = q == NULL ? null : (Q) q;
         }
 
         return result;
@@ -606,62 +616,6 @@ public class SchemaMapping implements Serializable {
      */
     public void setSchemaMapping(Map<String, String> schemaMap) {
         schemaMap.forEach(this::add);
-    }
-
-    private final Map<String, Catalog> getCatalogs() {
-        if (catalogs == null) {
-
-            // [#1857] thread-safe lazy initialisation for those users who
-            // want to use Configuration and dependent objects in a "thread-safe" manner
-            synchronized (this) {
-                if (catalogs == null) {
-                    catalogs = new HashMap<>();
-                }
-            }
-        }
-        return catalogs;
-    }
-
-    private final Map<String, Schema> getSchemata() {
-        if (schemata == null) {
-
-            // [#1857] thread-safe lazy initialisation for those users who
-            // want to use Configuration and dependent objects in a "thread-safe" manner
-            synchronized (this) {
-                if (schemata == null) {
-                    schemata = new HashMap<>();
-                }
-            }
-        }
-        return schemata;
-    }
-
-    private final Map<String, Table<?>> getTables() {
-        if (tables == null) {
-
-            // [#1857] thread-safe lazy initialisation for those users who
-            // want to use Configuration and dependent objects in a "thread-safe" manner
-            synchronized (this) {
-                if (tables == null) {
-                    tables = new HashMap<>();
-                }
-            }
-        }
-        return tables;
-    }
-
-    private final Map<String, UDT<?>> getUDTs() {
-        if (udts == null) {
-
-            // [#1857] thread-safe lazy initialisation for those users who
-            // want to use Configuration and dependent objects in a "thread-safe" manner
-            synchronized (this) {
-                if (udts == null) {
-                    udts = new HashMap<>();
-                }
-            }
-        }
-        return udts;
     }
 
     // ------------------------------------------------------------------------

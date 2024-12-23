@@ -18402,7 +18402,12 @@ public class DSL {
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
     static <T> Field<T> iif0(Name name, Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
-        return new Iif<>(name, condition, Tools.nullSafe(ifTrue), Tools.nullSafe(ifFalse));
+        return new Iif<>(
+            name,
+            condition,
+            Tools.nullSafe(ifTrue, ifFalse.getDataType()),
+            Tools.nullSafe(ifFalse, ifTrue.getDataType())
+        );
     }
 
 

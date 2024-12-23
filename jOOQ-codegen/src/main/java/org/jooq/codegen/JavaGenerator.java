@@ -8287,7 +8287,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             String nullable = "";
-            if (effectivelyNotNull(out, column))
+            if (!column.getType(resolver(out)).isNullable())
                 nullable = ", nullable = false";
 
             String length = "";

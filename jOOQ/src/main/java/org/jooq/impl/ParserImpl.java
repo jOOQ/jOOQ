@@ -3207,7 +3207,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
                     return parseCascadeRestrictIf(
-                        parseIfExists(this::parseIdentifiers,
+                        parseIfExists(this::parseNames,
                             n -> dsl.dropTypeIfExists(n.toArray(EMPTY_NAME)),
                             n -> dsl.dropType(n.toArray(EMPTY_NAME))
                         ),
@@ -12677,6 +12677,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             return name(parseStringLiteral());
         else
             return result;
+    }
+
+    private final List<Name> parseNames() {
+        return parseUniqueList("name", ',', c -> parseName());
     }
 
     @Override

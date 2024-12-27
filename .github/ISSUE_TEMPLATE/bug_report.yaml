@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please fill in all required fields with as many details as possible.
+        Please fill in all required fields with as many details as possible. In order to best track issues, please create a new issue for every problem, don't create summary tickets containing several unrelated issues.
   - type: textarea
     id: expected
     attributes:

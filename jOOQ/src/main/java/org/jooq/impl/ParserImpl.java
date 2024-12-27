@@ -4560,6 +4560,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else if (parseKeywordIf("OWNER TO") && parseUser() != null) {
             return IGNORE.get();
         }
+        else if (parseKeywordIf("OWNED BY") && parseName() != null) {
+            return IGNORE.get();
+        }
         else {
             boolean found = false;
             boolean restart = false;

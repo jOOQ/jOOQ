@@ -85,13 +85,13 @@
             <artifactId>checker</artifactId>
         </dependency>
 
-        <!-- [#12884] [#14055] [#17315]
-             Explicit upgrade of transitive dependency due to CVE-2021-22569, CVE-2024-7254
-             TODO: Remove again when https://github.com/google/error-prone/pull/2819 is released  -->
+        <!-- [#17823]
+             Explicit upgrade of transitive dependency due to CVE-2020-8908, CVE-2023-2976
+             TODO: Remove again when https://github.com/jOOQ/jOOQ/issues/17823  -->
         <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>3.25.5</version>
+            <groupId>io.github.eisop</groupId>
+            <artifactId>dataflow-errorprone</artifactId>
+            <version>3.42.0-eisop5</version>
         </dependency>
         <dependency>
             <groupId>com.google.errorprone</groupId>

@@ -31,7 +31,7 @@
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.7.3</postgres.version>
-        <sqlserver.version>12.8.1.jre11</sqlserver.version>
+        <sqlserver.version>12.9.0.jre11-preview</sqlserver.version>
         <oracle.version>23.5.0.24.07</oracle.version>
 
         <!-- R2DBC SPI version and some matching driver versions -->
@@ -64,9 +64,8 @@
         <liquibase.version>4.25.1</liquibase.version>
         <checkerframework.version>3.44.0</checkerframework.version>
         <spring.version>6.1.14</spring.version>
-        <!-- [#12884] TODO: Remove explicit upgrade of protobuf-java again when https://github.com/google/error-prone/pull/2819 is released  -->
-        <errorprone.version>2.28.0</errorprone.version>
-        <testcontainers.version>1.19.8</testcontainers.version>
+        <errorprone.version>2.36.0</errorprone.version>
+        <testcontainers.version>1.20.4</testcontainers.version>
         <jackson.version>2.16.1</jackson.version>
         <jackson.version.databind>2.16.1</jackson.version.databind>
         <jetbrains.annotations.version>24.1.0</jetbrains.annotations.version>

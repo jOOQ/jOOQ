@@ -2115,11 +2115,17 @@ final class Tools {
         if (value instanceof Val<?> p1) {
             if (p1.inferredDataType && !defaultInferred) {
                 Val<T> p2 = (Val<T>) defaultValue.apply(p1.getValue(), p1);
-                p2.setInline0(p1.isInline());
-                return p2;
+
+                // [#17802] But only if the refinement is for a specific data type
+                if (p1.getDataType().isOther()
+                        || !p2.getDataType().isOther()
+                        || p2.getDataType() instanceof ConvertedDataType) {
+                    p2.setInline0(p1.isInline());
+                    return p2;
+                }
             }
-            else
-                return (Field<T>) p1;
+
+            return (Field<T>) p1;
         }
 
         // Fields can be mixed with constant values

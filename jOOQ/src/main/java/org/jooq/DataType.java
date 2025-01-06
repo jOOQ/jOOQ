@@ -1332,4 +1332,17 @@ public interface DataType<T> extends Named {
      * Whether this data type is a {@link RowId} type.
      */
     boolean isRowId();
+
+    /**
+     * Whether this data type is an OTHER type.
+     * <p>
+     * The {@link SQLDataType#OTHER} type maps any unknown data types to a jOOQ
+     * {@link DataType}. This includes unknown vendor specific types as well as
+     * unknown user defined types which do not have any custom {@link Converter}
+     * or {@link Binding} attached. The type may still be usable with the jOOQ
+     * API, but jOOQ's behaviour may not be well defined. Please note that any
+     * future minor release may add support for a vendor specific type, meaning
+     * the type loses its "otherness."
+     */
+    boolean isOther();
 }

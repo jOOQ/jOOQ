@@ -816,6 +816,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                             return true;
                     }
                 }
+
+                // [#17803] Some dialects require the cast for syntactic reasons (see DefaultDoubleBinding.REQUIRES_LITERAL_CAST)
+                //          Others require it occasionally to prevent wrong type promotions, on literals only.
+                if (dataType.isFloat()) {
+                    switch (ctx.family()) {
+
+
+
+                        case FIREBIRD:
+
+                        // [#10879] We'll need more precise cast types, first!
+                        // case MARIADB:
+                        // case MYSQL:
+                        case POSTGRES:
+
+
+                        case YUGABYTEDB:
+                            return true;
+                    }
+                }
             }
 
             // Many dialects require casts for bind values
@@ -1038,6 +1058,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#7351] UUID data types need to be cast too
             // [#7242] JSON(B) data types need to be cast too
             // [#13252] XML data types need to be cast too
+            // [#17803] Floating point literals need to be cast as well
             else if (REQUIRES_JSON_CAST.contains(ctx.dialect()) &&
                     (sqlDataType == null ||
                     (!sqlDataType.isTemporal()
@@ -1046,7 +1067,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-                        && !sqlDataType.isJSON())))
+                        && !sqlDataType.isJSON())
+                        && !sqlDataType.isFloat()))
                 sql(ctx, converted);
 
 

@@ -1178,6 +1178,7 @@ final class Tools {
 
 
 
+
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
     // ------------------------------------------------------------------------
@@ -5747,19 +5748,29 @@ final class Tools {
             Field<?> v = type.defaultValue();
             ctx.sql(' ').visit(K_DEFAULT).sql(' ');
 
-            // [#15943] Some dialects require parentheses around expressions. We can't use AbstractField::parenthesised
-            //          as that just declares whether an expression requires additional parentheses in operator
-            //          expressions, not if actual parentheses are rendered.
-            if (REQUIRES_PARENTHESISED_DEFAULT.contains(ctx.dialect()))
-                ctx.sql('(').visit(v).sql(')');
 
-            // [#16853] MySQL LOB types can't have defaults. Except if we parenthesise them, then they can o_O
-            else if (REQUIRES_PARENTHESISED_DEFAULT_FOR_LOBS.contains(ctx.dialect()) && (type.isLob() || type.isJSON() || type.isSpatial()))
-                ctx.sql('(').visit(v).sql(')');
 
-            else
-                ctx.visit(v);
+
+
+
+
+            visitDefault(ctx, type, v);
         }
+    }
+
+    private static final void visitDefault(Context<?> ctx, DataType<?> type, Field<?> v) {
+        // [#15943] Some dialects require parentheses around expressions. We can't use AbstractField::parenthesised
+        //          as that just declares whether an expression requires additional parentheses in operator
+        //          expressions, not if actual parentheses are rendered.
+        if (REQUIRES_PARENTHESISED_DEFAULT.contains(ctx.dialect()))
+            ctx.sql('(').visit(v).sql(')');
+
+        // [#16853] MySQL LOB types can't have defaults. Except if we parenthesise them, then they can o_O
+        else if (REQUIRES_PARENTHESISED_DEFAULT_FOR_LOBS.contains(ctx.dialect()) && (type.isLob() || type.isJSON() || type.isSpatial()))
+            ctx.sql('(').visit(v).sql(')');
+
+        else
+            ctx.visit(v);
     }
 
     static final void toSQLDDLTypeDeclaration(Context<?> ctx, DataType<?> type) {

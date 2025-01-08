@@ -1219,8 +1219,7 @@ final class Tools {
     static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT             = SQLDialect.supportedBy(SQLITE);
     static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT_FOR_LOBS    = SQLDialect.supportedBy(MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX = SQLDialect.supportedBy(MARIADB, MYSQL);
-
-
+    static final Set<SQLDialect>         NO_SUPPORT_DEFAULT_CAST                    = SQLDialect.supportedBy(FIREBIRD);
 
 
 
@@ -5996,13 +5995,11 @@ final class Tools {
             Field<?> v = type.defaultValue();
             ctx.sql(' ').visit(K_DEFAULT).sql(' ');
 
-
-
-
-
-
-
-            visitDefault(ctx, type, v);
+            // [#17803] Some dialects can't handle expressions in defaults.
+            if (NO_SUPPORT_DEFAULT_CAST.contains(ctx.dialect()))
+                ctx.castMode(CastMode.NEVER, c -> visitDefault(c, type, v));
+            else
+                visitDefault(ctx, type, v);
         }
     }
 

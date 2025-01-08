@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.19.17-SNAPSHOT</version>
+        <version>3.19.17</version>
     </parent>
 
     <artifactId>jooq-migrations-maven</artifactId>

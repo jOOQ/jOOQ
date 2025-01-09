@@ -1287,6 +1287,11 @@ final class R2DBC {
         }
 
         @Override
+        public final String getNString(int columnIndex) throws SQLException {
+            return nullable(columnIndex, String.class);
+        }
+
+        @Override
         public final byte[] getBytes(int columnIndex) throws SQLException {
 
 

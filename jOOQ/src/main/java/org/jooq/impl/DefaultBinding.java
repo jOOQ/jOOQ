@@ -76,6 +76,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -4851,6 +4852,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final String get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
                 return fallback.get0(ctx);
+
+            // [#17850] In some cases, NULL values can't be read as NVARCHAR as the
+            //          MySQL driver will throw an exception due to a wrong encoding (e.g. ISO 8859-1)
+            else if (ctx.family() == MYSQL)
+                return ctx.resultSet().getObject(ctx.index()) == null
+                    ? null
+                    : ctx.resultSet().getNString(ctx.index());
             else
                 return ctx.resultSet().getNString(ctx.index());
         }

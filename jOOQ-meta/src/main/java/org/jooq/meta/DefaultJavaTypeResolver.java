@@ -82,6 +82,6 @@ final class DefaultJavaTypeResolver implements JavaTypeResolver {
 
     @Override
     public Object cacheKey() {
-        return "";
+        return null;
     }
 }

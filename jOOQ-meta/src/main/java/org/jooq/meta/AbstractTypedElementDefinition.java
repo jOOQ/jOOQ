@@ -146,7 +146,12 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
     @Override
     public DataTypeDefinition getType(JavaTypeResolver resolver) {
-        return resolvedType.computeIfAbsent(resolver.cacheKey(), key -> mapDefinedType(container, this, definedType, resolver));
+        Object key = resolver.cacheKey();
+
+        if (key == null)
+            return mapDefinedType(container, this, definedType, resolver);
+        else
+            return resolvedType.computeIfAbsent(key, k -> mapDefinedType(container, this, definedType, resolver));
     }
 
     @Override

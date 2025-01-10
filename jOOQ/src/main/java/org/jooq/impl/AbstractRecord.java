@@ -848,8 +848,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     // [#10191] Java and Kotlin can produce overloads for this method despite
-    // generic type erasure, but Scala cannot, see
-    // https://twitter.com/lukaseder/status/1262652304773259264
+    // generic type erasure, but Scala cannot
     @Override
     public /* final */ <E> E into(E object) {
         if (object == null)

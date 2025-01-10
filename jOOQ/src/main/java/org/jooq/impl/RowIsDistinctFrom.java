@@ -89,7 +89,6 @@ final class RowIsDistinctFrom extends AbstractCondition implements UNotYetImplem
 
     // An emulation may be required only for the version where a subquery is used
     // E.g. in HSQLDB: https://sourceforge.net/p/hsqldb/bugs/1579/
-    // Or in PostgreSQL: https://twitter.com/pg_xocolatl/status/1260344255035379714
     private static final Set<SQLDialect> EMULATE_DISTINCT_SELECT     = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_DISTINCT_WITH_ARROW = SQLDialect.supportedBy(MARIADB, MYSQL);
 

@@ -79,4 +79,9 @@ final class DefaultJavaTypeResolver implements JavaTypeResolver {
     public <T> T resolveDefinedType(Supplier<T> supplier) {
         return supplier.get();
     }
+
+    @Override
+    public Object cacheKey() {
+        return "";
+    }
 }

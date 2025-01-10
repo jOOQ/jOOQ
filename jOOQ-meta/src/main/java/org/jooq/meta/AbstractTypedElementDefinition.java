@@ -46,7 +46,9 @@ import static org.jooq.tools.StringUtils.isEmpty;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,12 +76,13 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
     extends AbstractDefinition
     implements TypedElementDefinition<T> {
 
-    private static final JooqLogger      log                            = JooqLogger.getLogger(AbstractTypedElementDefinition.class);
-    private static final Pattern         LENGTH_PRECISION_SCALE_PATTERN = Pattern.compile("[\\w\\s]+(?:\\(\\s*?(\\d+)\\s*?\\)|\\(\\s*?(\\d+)\\s*?,\\s*?(\\d+)\\s*?\\))");
+    private static final JooqLogger         log                            = JooqLogger.getLogger(AbstractTypedElementDefinition.class);
+    private static final Pattern            LENGTH_PRECISION_SCALE_PATTERN = Pattern.compile("[\\w\\s]+(?:\\(\\s*?(\\d+)\\s*?\\)|\\(\\s*?(\\d+)\\s*?,\\s*?(\\d+)\\s*?\\))");
 
-    private final T                      container;
-    private final DataTypeDefinition     definedType;
-    private transient DataTypeDefinition type;
+    private final T                         container;
+    private final DataTypeDefinition        definedType;
+    private transient DataTypeDefinition    type;
+    private Map<Object, DataTypeDefinition> resolvedType;
 
     public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment) {
         this(container, name, position, definedType, comment, null);
@@ -94,6 +97,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
         this.container = container;
         this.definedType = definedType;
+        this.resolvedType = new HashMap<>();
     }
 
     private static final String protectName(Definition container, String name, int position) {
@@ -142,7 +146,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
     @Override
     public DataTypeDefinition getType(JavaTypeResolver resolver) {
-        return mapDefinedType(container, this, definedType, resolver);
+        return resolvedType.computeIfAbsent(resolver.cacheKey(), key -> mapDefinedType(container, this, definedType, resolver));
     }
 
     @Override

@@ -47,12 +47,15 @@ import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.DSLContext;
 import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultConfiguration;
 import org.jooq.meta.jaxb.CommentType;
 import org.jooq.tools.StringUtils;
 
@@ -80,6 +83,7 @@ public abstract class AbstractDefinition implements Definition {
     private transient Name          qualifiedInputNamePart;
     private transient Name          qualifiedOutputNamePart;
     private transient Integer       hashCode;
+    private transient List<String>  partiallyQualifiedNames;
 
     public AbstractDefinition(Database database, SchemaDefinition schema, String name) {
         this(database, schema, name, null);
@@ -305,6 +309,23 @@ public abstract class AbstractDefinition implements Definition {
         }
 
         return qualifiedOutputNamePart;
+    }
+
+    // [#16567] Avoid re-creating rendering contexts every time we render a name for matching purposes.
+    private static final DSLContext CTX = new DefaultConfiguration().dsl();
+
+    @Override
+    public final List<String> getPartiallyQualifiedNames() {
+        if (partiallyQualifiedNames == null) {
+            partiallyQualifiedNames = new ArrayList<>();
+
+            List<Name> parts = Arrays.asList(getQualifiedNamePart().parts());
+
+            for (int i = parts.size() - 1; i >= 0; i--)
+                partiallyQualifiedNames.add(CTX.render(DSL.name(parts.subList(i, parts.size()).toArray(new Name[0])).unquotedName()));
+        }
+
+        return partiallyQualifiedNames;
     }
 
     @Override

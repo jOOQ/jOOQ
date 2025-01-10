@@ -46,7 +46,9 @@ import static org.jooq.tools.StringUtils.isEmpty;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,11 +79,12 @@ implements
     TypedElementDefinition<T>
 {
 
-    private static final JooqLogger      log                            = JooqLogger.getLogger(AbstractTypedElementDefinition.class);
-    private static final Pattern         LENGTH_PRECISION_SCALE_PATTERN = Pattern.compile("[\\w\\s]+(?:\\(\\s*?(\\d+)\\s*?\\)|\\(\\s*?(\\d+)\\s*?,\\s*?(\\d+)\\s*?\\))");
+    private static final JooqLogger         log                            = JooqLogger.getLogger(AbstractTypedElementDefinition.class);
+    private static final Pattern            LENGTH_PRECISION_SCALE_PATTERN = Pattern.compile("[\\w\\s]+(?:\\(\\s*?(\\d+)\\s*?\\)|\\(\\s*?(\\d+)\\s*?,\\s*?(\\d+)\\s*?\\))");
 
-    private final DataTypeDefinition     definedType;
-    private transient DataTypeDefinition type;
+    private final DataTypeDefinition        definedType;
+    private transient DataTypeDefinition    type;
+    private Map<Object, DataTypeDefinition> resolvedType;
 
     public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment) {
         this(container, name, position, definedType, comment, null);
@@ -91,6 +94,7 @@ implements
         super(container, name, position, comment, overload);
 
         this.definedType = definedType;
+        this.resolvedType = new HashMap<>();
     }
 
     @Override
@@ -103,7 +107,7 @@ implements
 
     @Override
     public DataTypeDefinition getType(JavaTypeResolver resolver) {
-        return mapDefinedType(container, this, definedType, resolver);
+        return resolvedType.computeIfAbsent(resolver.cacheKey(), key -> mapDefinedType(container, this, definedType, resolver));
     }
 
     @Override

@@ -736,10 +736,8 @@ public abstract class AbstractDatabase implements Database {
             return pattern.matcher(definition.getName()).matches()
                 || pattern.matcher(definition.getQualifiedName()).matches();
 
-        List<Name> parts = Arrays.asList(definition.getQualifiedNamePart().parts());
-
-        for (int i = parts.size() - 1; i >= 0; i--)
-            if (pattern.matcher(DSL.name(parts.subList(i, parts.size()).toArray(new Name[0])).unquotedName().toString()).matches())
+        for (String partiallyQualifiedName : definition.getPartiallyQualifiedNames())
+            if (pattern.matcher(partiallyQualifiedName).matches())
                 return true;
 
         return false;
@@ -753,10 +751,8 @@ public abstract class AbstractDatabase implements Database {
             return set.contains(definition.getName())
                 || set.contains(definition.getQualifiedName());
 
-        List<Name> parts = Arrays.asList(definition.getQualifiedNamePart().parts());
-
-        for (int i = parts.size() - 1; i >= 0; i--)
-            if (set.contains(DSL.name(parts.subList(i, parts.size()).toArray(new Name[0])).unquotedName().toString()))
+        for (String partiallyQualifiedName : definition.getPartiallyQualifiedNames())
+            if (set.contains(partiallyQualifiedName))
                 return true;
 
         return false;

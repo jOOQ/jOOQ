@@ -78,6 +78,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -11604,6 +11605,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         private boolean ignoreImports(Mode m) {
             return m == POJO || m == RECORD;
+        }
+
+        @Override
+        public Object cacheKey() {
+            return new AbstractMap.SimpleImmutableEntry<>(out.file(), mode != null ? mode : Mode.DEFAULT);
         }
     }
 

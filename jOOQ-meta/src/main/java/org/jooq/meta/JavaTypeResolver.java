@@ -103,4 +103,14 @@ public interface JavaTypeResolver {
      * which may not need imports in some output modes.
      */
     <T> T resolveDefinedType(Supplier<T> supplier);
+
+    /**
+     * Get a cache key for this resolver, which can be used for caching calls to
+     * {@link #resolve(DataTypeDefinition)}.
+     * <p>
+     * It can be safely assumed that consecutive calls to
+     * {@link #resolve(DataTypeDefinition)} will produce the same result,
+     * considering the cache key.
+     */
+    Object cacheKey();
 }

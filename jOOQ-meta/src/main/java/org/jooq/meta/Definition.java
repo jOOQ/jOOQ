@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Name;
 // ...
 import org.jooq.meta.jaxb.CommentType;
+import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;
 
 /**
@@ -150,6 +151,14 @@ public interface Definition {
      *         {@link #getOutputName()})
      */
     Name getQualifiedOutputNamePart();
+
+    /**
+     * @return A list of partially qualified names for this definition, going
+     *         from {@link #getName()} (unqualified) to
+     *         {@link #getQualifiedName()} (fully qualified), mostly used for
+     *         caching purposes when looking up {@link ForcedType}.
+     */
+    List<String> getPartiallyQualifiedNames();
 
     /**
      * @return The overload suffix if applicable

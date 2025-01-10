@@ -2350,7 +2350,7 @@ public class JavaGenerator extends AbstractGenerator {
             for (Definition column : columns) {
                 if (column instanceof EmbeddableDefinition e) {
 
-                    // TODO: Setters of X properties cannot accept X? in Kotlin: https://twitter.com/lukaseder/status/1296371561214234624
+                    // TODO: Setters of X properties cannot accept X?
                     if (kotlin)
                         if (pojoArgument)
                             if (kotlinEffectivelyNotNull(out, e, Mode.RECORD))
@@ -3118,8 +3118,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%svoid from(%s from);", visibilityPublic(), qualified);
 
             // [#10191] Java and Kotlin can produce overloads for this method despite
-            // generic type erasure, but Scala cannot, see
-            // https://twitter.com/lukaseder/status/1262652304773259264
+            // generic type erasure, but Scala cannot
             if (scala) {}
             else {
                 out.javadoc("Copy data into another generated Record/POJO implementing the common interface %s", local);
@@ -8938,8 +8937,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (override) {
             // [#10191] Java and Kotlin can produce overloads for this method despite
-            // generic type erasure, but Scala cannot, see
-            // https://twitter.com/lukaseder/status/1262652304773259264
+            // generic type erasure, but Scala cannot
 
             if (scala) {
                 if (mode != Mode.POJO) {

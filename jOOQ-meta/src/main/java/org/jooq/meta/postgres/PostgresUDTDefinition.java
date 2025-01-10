@@ -38,12 +38,17 @@
 package org.jooq.meta.postgres;
 
 import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.when;
+import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.meta.postgres.information_schema.Tables.DOMAINS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_TYPE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -91,7 +96,8 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                     a.IS_NULLABLE,
                     a.ATTRIBUTE_DEFAULT,
                     a.ATTRIBUTE_UDT_SCHEMA,
-                    db.arrayUdtName(a.DATA_TYPE, a.ATTRIBUTE_UDT_NAME).as(a.ATTRIBUTE_UDT_NAME))
+                    db.arrayUdtName(a.DATA_TYPE, a.ATTRIBUTE_UDT_NAME).as(a.ATTRIBUTE_UDT_NAME),
+                    PG_DESCRIPTION.DESCRIPTION)
                 .from(a)
                 .join(pg_a)
                     .on(a.ATTRIBUTE_NAME.eq(pg_a.ATTNAME))
@@ -101,10 +107,14 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                     .on(a.ATTRIBUTE_UDT_CATALOG.eq(d.DOMAIN_CATALOG))
                     .and(a.ATTRIBUTE_UDT_SCHEMA.eq(d.DOMAIN_SCHEMA))
                     .and(a.ATTRIBUTE_UDT_NAME.eq(d.DOMAIN_NAME))
+                .leftJoin(PG_DESCRIPTION)
+                    .on(pg_a.ATTRELID.eq(PG_DESCRIPTION.OBJOID))
+                    .and(PG_DESCRIPTION.CLASSOID.eq(field("'pg_class'::regclass", BIGINT)))
+                    .and(PG_DESCRIPTION.OBJSUBID.eq(pg_a.ATTNUM.coerce(PG_DESCRIPTION.OBJSUBID)))
                 .where(a.UDT_SCHEMA.equal(getSchema().getName()))
                 .and(a.UDT_NAME.equal(getName()))
-                .orderBy(a.ORDINAL_POSITION)) {
-
+                .orderBy(a.ORDINAL_POSITION)
+        ) {
             SchemaDefinition typeSchema = null;
 
             String schemaName = record.get(a.ATTRIBUTE_UDT_SCHEMA);
@@ -130,7 +140,9 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                 this,
                 record.get(a.ATTRIBUTE_NAME),
                 record.get(a.ORDINAL_POSITION),
-                type);
+                type,
+                record.get(PG_DESCRIPTION.DESCRIPTION)
+            );
 
             result.add(column);
         }

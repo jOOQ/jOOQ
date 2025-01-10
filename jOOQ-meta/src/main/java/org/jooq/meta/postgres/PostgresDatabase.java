@@ -862,7 +862,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         return null;
     }
 
-    static record Identifier(String schema, String name) {}
+    static record Identifier(String schema, String name, String comment) {}
 
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
@@ -877,14 +877,20 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             for (Identifier type : create()
                     .select(
                         PG_TYPE.pgNamespace().NSPNAME,
-                        PG_TYPE.TYPNAME)
+                        PG_TYPE.TYPNAME,
+                        PG_DESCRIPTION.DESCRIPTION)
                     .from(PG_TYPE)
+                        .leftJoin(PG_DESCRIPTION)
+                        .on(PG_TYPE.OID.eq(PG_DESCRIPTION.OBJOID))
+                        .and(PG_DESCRIPTION.CLASSOID.eq(field("'pg_type'::regclass", BIGINT)))
+                        .and(PG_DESCRIPTION.OBJSUBID.eq(0))
                     .where(PG_TYPE.pgNamespace().NSPNAME.in(getInputSchemata()))
                     .and(PG_TYPE.OID.in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
                     .orderBy(
                         PG_TYPE.pgNamespace().NSPNAME,
                         PG_TYPE.TYPNAME)
-                    .fetch(mapping(Identifier::new))) {
+                    .fetch(mapping(Identifier::new))
+            ) {
                 DefaultEnumDefinition definition = null;
 
                 for (String label : enumLabels(type.schema, type.name)) {
@@ -892,7 +898,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                     String typeName = String.valueOf(type.name);
 
                     if (definition == null || !definition.getName().equals(typeName)) {
-                        definition = new DefaultEnumDefinition(schema, typeName, null);
+                        definition = new DefaultEnumDefinition(schema, typeName, type.comment);
                         result.add(definition);
                     }
 
@@ -1080,18 +1086,21 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         if (exists(ATTRIBUTES)) {
             for (Identifier udt : create()
                     .select(
-                        ATTRIBUTES.UDT_SCHEMA,
-                        ATTRIBUTES.UDT_NAME)
-                    .from(ATTRIBUTES)
-                    .where(ATTRIBUTES.UDT_SCHEMA.in(getInputSchemata()))
-
-                    // [#14621] Work around https://github.com/yugabyte/yugabyte-db/issues/16081
-                    .groupBy(
-                        ATTRIBUTES.UDT_SCHEMA,
-                        ATTRIBUTES.UDT_NAME)
+                        PG_CLASS.pgNamespace().NSPNAME,
+                        PG_CLASS.RELNAME,
+                        PG_DESCRIPTION.DESCRIPTION)
+                    .from(PG_CLASS)
+                    .leftJoin(PG_TYPE)
+                        .on(PG_CLASS.RELTYPE.eq(PG_TYPE.OID))
+                    .leftJoin(PG_DESCRIPTION)
+                        .on(PG_TYPE.OID.eq(PG_DESCRIPTION.OBJOID))
+                        .and(PG_DESCRIPTION.CLASSOID.eq(field("'pg_type'::regclass", BIGINT)))
+                        .and(PG_DESCRIPTION.OBJSUBID.eq(0))
+                    .where(PG_CLASS.RELKIND.eq(inline("c")))
+                    .and(PG_CLASS.pgNamespace().NSPNAME.in(getInputSchemata()))
                     .orderBy(
-                        ATTRIBUTES.UDT_SCHEMA,
-                        ATTRIBUTES.UDT_NAME)
+                        PG_CLASS.pgNamespace().NSPNAME,
+                        PG_CLASS.RELNAME)
                     .fetch(mapping(Identifier::new))) {
 
                 SchemaDefinition schema = getSchema(udt.schema);

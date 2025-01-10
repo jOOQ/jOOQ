@@ -5045,6 +5045,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultNStringBinding<U> extends InternalBinding<String, U> {
+
+
+
+
+
+
         private final DefaultStringBinding<U> fallback;
 
         DefaultNStringBinding(DataType<String> dataType, Converter<String, U> converter) {

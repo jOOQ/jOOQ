@@ -111,6 +111,8 @@ public interface JavaTypeResolver {
      * It can be safely assumed that consecutive calls to
      * {@link #resolve(DataTypeDefinition)} will produce the same result,
      * considering the cache key.
+     * <p>
+     * A <code>null</code> key means the resolver results cannot be cached.
      */
     Object cacheKey();
 }

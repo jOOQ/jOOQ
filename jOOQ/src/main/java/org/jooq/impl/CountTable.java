@@ -37,11 +37,7 @@
  */
 package org.jooq.impl;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
 import org.jooq.Context;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 import org.jooq.Table;
@@ -69,13 +65,32 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
 
 
 
-            case POSTGRES:
-            case YUGABYTEDB: {
-                super.accept(ctx);
-                break;
-            }
 
-            default: {
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CLICKHOUSE:
+            case CUBRID:
+            case DERBY:
+            case DUCKDB:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case IGNITE:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
+            case TRINO: {
                 UniqueKey<?> pk = table.getPrimaryKey();
 
                 if (pk != null)
@@ -83,6 +98,11 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
                 else
                     super.accept(ctx);
 
+                break;
+            }
+
+            default: {
+                super.accept(ctx);
                 break;
             }
         }

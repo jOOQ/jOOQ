@@ -53,7 +53,7 @@ import org.jooq.Log;
  * <ul>
  * <li>slf4j</li>
  * <li>log4j</li>
- * <li>jav.util.logging</li>
+ * <li>java.util.logging</li>
  * </ul>
  * <code>JooqLogger</code> tries to instantiate any of the above loggers,
  * catching potential {@link NoClassDefFoundError}'s in case any logger API

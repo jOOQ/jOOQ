@@ -75,6 +75,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_AND;
@@ -125,7 +126,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
 
     abstract Function2<? super RowN, ? super RowN[], ? extends Condition> rowCondition();
 
-    static final int limit(Context<?> ctx) {
+    private static final <T> int limit(Context<?> ctx, Field<T> field, QueryPartList<Field<T>> values) {
         if (REQUIRES_IN_LIMIT.contains(ctx.dialect())) {
 
 
@@ -177,7 +178,7 @@ abstract class AbstractInList<T> extends AbstractCondition {
     }
 
     private static final <T> void accept1(Context<?> ctx, boolean in, Field<T> field, QueryPartList<Field<T>> values) {
-        int limit = limit(ctx);
+        int limit = limit(ctx, field, values);
 
 
 
@@ -198,6 +199,22 @@ abstract class AbstractInList<T> extends AbstractCondition {
             else
                 ctx.visit(trueCondition());
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // [#798] Oracle and some other dialects can only hold 1000 values
         // in an IN (...) clause

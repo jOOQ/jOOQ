@@ -30,7 +30,7 @@
         <hsqldb.version>2.7.2</hsqldb.version>
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
-        <postgres.version>42.7.3</postgres.version>
+        <postgres.version>42.7.5</postgres.version>
         <sqlserver.version>12.9.0.jre11-preview</sqlserver.version>
         <oracle.version>23.6.0.24.10</oracle.version>
 

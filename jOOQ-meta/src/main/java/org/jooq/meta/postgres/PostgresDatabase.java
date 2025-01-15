@@ -386,30 +386,34 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         // [#3520] PostgreSQL INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS contains incomplete information about foreign keys
         // The (CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, CONSTRAINT_NAME) tuple is non-unique, in case two tables share the
         // same CONSTRAINT_NAME.
-        // The JDBC driver implements this correctly through the pg_catalog, although the sorting and column name casing is wrong, too.
+        // The JDBC driver implements this correctly through the pg_catalog, although the sorting is wrong, too.
         Result<Record> result = create()
-            .fetch(getConnection().getMetaData().getExportedKeys(null, null, null))
-            .sortAsc("key_seq")
-            .sortAsc("fk_name")
-            .sortAsc("fktable_name")
-            .sortAsc("fktable_schem");
+            .fetch(getConnection().getMetaData().getExportedKeys(null, null, null));
+
+        // [#17873] The column name casing was fixed in 42.7.5
+        boolean upper = result.field("key_seq") == null;
+        result
+            .sortAsc(upper("key_seq", upper))
+            .sortAsc(upper("fk_name", upper))
+            .sortAsc(upper("fktable_name", upper))
+            .sortAsc(upper("fktable_schem", upper));
 
         resultLoop:
         for (Record record : result) {
-            SchemaDefinition foreignKeySchema = getSchema(record.get("fktable_schem", String.class));
-            SchemaDefinition uniqueKeySchema = getSchema(record.get("pktable_schem", String.class));
+            SchemaDefinition foreignKeySchema = getSchema(record.get(upper("fktable_schem", upper), String.class));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get(upper("pktable_schem", upper), String.class));
 
             if (foreignKeySchema == null || uniqueKeySchema == null)
                 continue resultLoop;
 
-            String foreignKey = record.get("fk_name", String.class);
-            String foreignKeyTableName = record.get("fktable_name", String.class);
-            String foreignKeyColumn = record.get("fkcolumn_name", String.class);
-            String uniqueKey = record.get("pk_name", String.class);
-            String uniqueKeyTableName = record.get("pktable_name", String.class);
-            String uniqueKeyColumn = record.get("pkcolumn_name", String.class);
-            ForeignKeyRule deleteRule = foreignKeyRule(record.get("delete_rule", int.class));
-            ForeignKeyRule updateRule = foreignKeyRule(record.get("update_rule", int.class));
+            String foreignKey = record.get(upper("fk_name", upper), String.class);
+            String foreignKeyTableName = record.get(upper("fktable_name", upper), String.class);
+            String foreignKeyColumn = record.get(upper("fkcolumn_name", upper), String.class);
+            String uniqueKey = record.get(upper("pk_name", upper), String.class);
+            String uniqueKeyTableName = record.get(upper("pktable_name", upper), String.class);
+            String uniqueKeyColumn = record.get(upper("pkcolumn_name", upper), String.class);
+            ForeignKeyRule deleteRule = foreignKeyRule(record.get(upper("delete_rule", upper), int.class));
+            ForeignKeyRule updateRule = foreignKeyRule(record.get(upper("update_rule", upper), int.class));
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);
@@ -446,6 +450,10 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 }
             }
         }
+    }
+
+    private String upper(String string, boolean upper) {
+        return upper ? string.toUpperCase() : string;
     }
 
     @Override

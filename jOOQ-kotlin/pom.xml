@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.19.18</version>
+        <version>3.19.19-SNAPSHOT</version>
     </parent>
 
     <artifactId>jooq-kotlin</artifactId>

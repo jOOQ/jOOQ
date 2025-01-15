@@ -119,10 +119,11 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
     final void type(AbstractDataType<T> t) {
         if (t instanceof DataTypeProxy<T> p) {
 
-            // [#11856] [#14343] [#14373] Prevent cycles in DataTypeProxy chains
+            // [#11856] [#14343] [#14373] [#17868] Prevent cycles in DataTypeProxy chains
             IdentityHashMap<AbstractDataType<?>, AbstractDataType<?>> m = new IdentityHashMap<>();
             m.put(this, this);
-            m.put(p, p);
+            if (m.put(p, p) != null)
+                return;
 
             while (p.type() instanceof DataTypeProxy<T> p2) {
                 if (m.put(p2, p2) != null)

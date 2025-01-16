@@ -192,8 +192,14 @@ final class SQLDataTypes {
         static final DataType<String>      __CLOB                = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "varchar");
         static final DataType<byte[]>      __BLOB                = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "varbinary");
         static final DataType<byte[]>      __BINARY              = new BuiltInDataType<>(FAMILY, SQLDataType.BINARY, "varbinary");
+        static final DataType<byte[]>      __LONGVARBINARY       = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "varbinary");
         static final DataType<JSONB>       __JSONB               = new BuiltInDataType<>(FAMILY, SQLDataType.JSONB, "json");
         static final DataType<BigDecimal>  __NUMERIC             = new BuiltInDataType<>(FAMILY, SQLDataType.NUMERIC, "decimal(p, s)");
+        static final DataType<String>      __LONGVARCHAR         = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARCHAR, "varchar");
+        static final DataType<String>      __NCHAR               = new BuiltInDataType<>(FAMILY, SQLDataType.NCHAR, "char(l)");
+        static final DataType<String>      __NVARCHAR            = new BuiltInDataType<>(FAMILY, SQLDataType.NVARCHAR, "varchar(l)");
+        static final DataType<String>      __LONGNVARCHAR        = new BuiltInDataType<>(FAMILY, SQLDataType.LONGNVARCHAR, "varchar");
+        static final DataType<String>      __NCLOB               = new BuiltInDataType<>(FAMILY, SQLDataType.NCLOB, "varchar");
 
         // -------------------------------------------------------------------------
         // Compatibility types for supported Java types
@@ -202,5 +208,4 @@ final class SQLDataTypes {
         static final DataType<BigInteger> __BIGINTEGER           = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL_INTEGER, "decimal(p, s)");
 
     }
-
 }

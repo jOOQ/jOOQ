@@ -116,7 +116,7 @@ public class MySQLDataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<String>     __NCHAR         = new BuiltInDataType<>(FAMILY, SQLDataType.NCHAR, "char", "char");
-    protected static final DataType<String>     __NCLOB         = new BuiltInDataType<>(FAMILY, SQLDataType.NCLOB, "clob", "char");
+    protected static final DataType<String>     __NCLOB         = new BuiltInDataType<>(FAMILY, SQLDataType.NCLOB, "text", "char");
     protected static final DataType<String>     __LONGNVARCHAR  = new BuiltInDataType<>(FAMILY, SQLDataType.LONGNVARCHAR, "varchar", "char");
     protected static final DataType<BigDecimal> __NUMERIC       = new BuiltInDataType<>(FAMILY, SQLDataType.NUMERIC, "decimal", "decimal");
     protected static final DataType<String>     __NVARCHAR      = new BuiltInDataType<>(FAMILY, SQLDataType.NVARCHAR, "varchar", "char");

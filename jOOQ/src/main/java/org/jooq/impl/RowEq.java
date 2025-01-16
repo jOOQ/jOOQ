@@ -109,114 +109,16 @@ implements
 
 
 
-        RowEq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.EQUALS, arg2);
+        RowEq.acceptCompareCondition(ctx, arg1, org.jooq.Comparator.EQUALS, arg2);
     }
 
-    /**
-     * @deprecated - [#12425] After the QOM refactoring, this should be improved
-     */
-    @Deprecated
     static final <T extends Row> void acceptCompareCondition(
         Context<?> ctx,
-        AbstractCondition condition,
         T arg1,
         org.jooq.Comparator op,
         T arg2
     ) {
-
-
-
-
-
-
-        // Regular comparison predicate emulation
-        if ((op == org.jooq.Comparator.EQUALS || op == org.jooq.Comparator.NOT_EQUALS) &&
-
-            // TODO: Re-implement Informix forceEmulation semantics
-            EMULATE_EQ_AND_NE.contains(ctx.dialect())
-        ) {
-
-            Field<?>[] arg2Fields = arg2.fields();
-            Condition result = DSL.and(map(arg1.fields(), (f, i) -> f.equal((Field) arg2Fields[i])));
-
-            if (op == org.jooq.Comparator.NOT_EQUALS)
-                result = result.not();
-
-            ctx.visit(result);
-        }
-
-        // Ordering comparison predicate emulation
-        else if ((op == org.jooq.Comparator.GREATER || op == org.jooq.Comparator.GREATER_OR_EQUAL || op == org.jooq.Comparator.LESS || op == org.jooq.Comparator.LESS_OR_EQUAL) &&
-
-            // TODO: Re-implement Informix forceEmulation semantics
-            EMULATE_RANGES.contains(ctx.dialect())
-        ) {
-
-            // The order component of the comparator (stripping the equal component)
-            org.jooq.Comparator comp
-                = (op == org.jooq.Comparator.GREATER) ? org.jooq.Comparator.GREATER
-                : (op == org.jooq.Comparator.GREATER_OR_EQUAL) ? org.jooq.Comparator.GREATER
-                : (op == org.jooq.Comparator.LESS) ? org.jooq.Comparator.LESS
-                : (op == org.jooq.Comparator.LESS_OR_EQUAL) ? org.jooq.Comparator.LESS
-                : null;
-
-            // [#2658] The factored order component of the comparator (enforcing the equal component)
-            org.jooq.Comparator factored
-                = (op == org.jooq.Comparator.GREATER) ? org.jooq.Comparator.GREATER_OR_EQUAL
-                : (op == org.jooq.Comparator.GREATER_OR_EQUAL) ? org.jooq.Comparator.GREATER_OR_EQUAL
-                : (op == org.jooq.Comparator.LESS) ? org.jooq.Comparator.LESS_OR_EQUAL
-                : (op == org.jooq.Comparator.LESS_OR_EQUAL) ? org.jooq.Comparator.LESS_OR_EQUAL
-                : null;
-
-            // [#14555] Implement recursive emulation
-            Condition result = emulate(arg1, arg2, comp, op);
-
-            // [#2658] For performance reasons, an additional, redundant
-            // predicate is factored out to favour the application of range
-            // scans as the topmost predicate is AND-connected, not
-            // OR-connected:
-            // (A, B, C) > (X, Y, Z)
-            // (A >= X) AND ((A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z))
-            if (arg1.size() > 1)
-                result = arg1.field(0).compare(factored, (Field) arg2.field(0)).and(result);
-
-            ctx.visit(result);
-        }
-
-
-
-
-
-
-
-        else {
-
-            // Some dialects do not support != comparison with rows
-
-
-
-
-
-
-
-
-            {
-                // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = false
-
-
-
-                    ;
-
-                ctx.visit(arg1)
-                   .sql(' ')
-                   .sql(op.toSQL())
-                   .sql(' ')
-                   .sql(extraParentheses ? "(" : "")
-                   .visit(arg2)
-                   .sql(extraParentheses ? ")" : "");
-            }
-        }
+        ctx.visit(new RowCondition(arg1, arg2, op));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

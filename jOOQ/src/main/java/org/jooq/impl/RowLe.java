@@ -102,7 +102,7 @@ implements
 
 
 
-        RowEq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.LESS_OR_EQUAL, arg2);
+        RowEq.acceptCompareCondition(ctx, arg1, org.jooq.Comparator.LESS_OR_EQUAL, arg2);
     }
 
 

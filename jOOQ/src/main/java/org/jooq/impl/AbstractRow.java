@@ -63,6 +63,7 @@ import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -270,6 +271,19 @@ abstract class AbstractRow<R extends Record> extends AbstractQueryPart implement
     // ------------------------------------------------------------------------
     // XXX: Row accessor API
     // ------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     static final Condition compare(Row arg1, Comparator comparator, Row arg2) {
         switch (comparator) {

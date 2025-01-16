@@ -42,6 +42,7 @@ import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.IN;
+import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.Constants.MAX_ROW_DEGREE;
 // ...
@@ -55,12 +56,15 @@ import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
 import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
 
 import java.util.ArrayList;
@@ -68,10 +72,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.jooq.Clause;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Context;
+import org.jooq.Field;
 import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -128,19 +134,34 @@ implements
 
 
 
+        else if (right.size() == 0) {
+            if (not)
+                ctx.visit(trueCondition());
+            else
+                ctx.visit(falseCondition());
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         else {
-            if (right.size() == 0) {
-                if (not)
-                    ctx.visit(trueCondition());
-                else
-                    ctx.visit(falseCondition());
-            }
-            else {
-                ctx.visit(left)
-                   .sql(' ')
-                   .visit((not ? NOT_IN : IN).toKeyword())
-                   .sql(" (").visit(new QueryPartListView<>(AbstractInList.padded(ctx, right, Integer.MAX_VALUE))).sql(')');
-            }
+            ctx.visit(left)
+               .sql(' ')
+               .visit((not ? NOT_IN : IN).toKeyword())
+               .sql(" (").visit(new QueryPartListView<>(AbstractInList.padded(ctx, right, Integer.MAX_VALUE))).sql(')');
         }
     }
 

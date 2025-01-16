@@ -124,8 +124,8 @@ import static org.jooq.SortOrder.DESC;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.getRenderTable;
+import static org.jooq.impl.AsteriskImpl.NO_SUPPORT_NATIVE_EXCEPT;
 import static org.jooq.impl.AsteriskImpl.NO_SUPPORT_UNQUALIFIED_COMBINED;
-import static org.jooq.impl.AsteriskImpl.SUPPORT_NATIVE_EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT;
 import static org.jooq.impl.CombineOperator.EXCEPT_ALL;
 import static org.jooq.impl.CombineOperator.INTERSECT;
@@ -202,7 +202,6 @@ import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.concat;
@@ -308,11 +307,7 @@ import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.SelectGroupByStep;
-import org.jooq.SelectLimitPercentStep;
-import org.jooq.SelectLimitStep;
-import org.jooq.SelectOffsetStep;
 import org.jooq.SelectQuery;
-import org.jooq.SelectWithTiesStep;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -4278,7 +4273,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         boolean knownTableSource = knownTableSource();
 
         // [#7921] Only H2 supports the * EXCEPT (..) syntax
-        boolean resolveExcept = resolveSupported || knownTableSource && !SUPPORT_NATIVE_EXCEPT.contains(ctx.dialect());
+        boolean resolveExcept = resolveSupported || knownTableSource && NO_SUPPORT_NATIVE_EXCEPT.contains(ctx.dialect());
         boolean resolveUnqualifiedCombined = resolveSupported || knownTableSource && NO_SUPPORT_UNQUALIFIED_COMBINED.contains(ctx.dialect());
 
         // [#7921] TODO Find a better, more efficient way to resolve asterisks

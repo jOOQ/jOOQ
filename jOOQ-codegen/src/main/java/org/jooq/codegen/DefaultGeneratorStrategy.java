@@ -106,13 +106,13 @@ import org.jooq.tools.StringUtils;
  */
 public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
-    private String   targetDirectory;
-    private String   targetPackage;
-    private Locale   targetLocale                  = Locale.getDefault();
-    private Language targetLanguage                = Language.JAVA;
-    private boolean  instanceFields                = true;
-    private boolean  javaBeansGettersAndSetters    = false;
-    private boolean  useTableNameForUnambiguousFKs = true;
+    String   targetDirectory;
+    String   targetPackage;
+    Locale   targetLocale                  = Locale.getDefault();
+    Language targetLanguage                = Language.JAVA;
+    boolean  instanceFields                = true;
+    boolean  javaBeansGettersAndSetters    = false;
+    boolean  useTableNameForUnambiguousFKs = true;
 
     // -------------------------------------------------------------------------
     // Initialisation
@@ -263,7 +263,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
 
 
-    private String getterSetterSuffix(Definition definition) {
+    String getterSetterSuffix(Definition definition) {
 
         // [#5354] Please forgive me but this is how it works.
         if (javaBeansGettersAndSetters) {
@@ -666,7 +666,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         StringBuilder result = new StringBuilder();
 
         // [#4562] Some characters should be treated like underscore
-        result.append(StringUtils.toCamelCase(
+        result.append(toPascalCase(
             outputName.replace(' ', '_')
                       .replace('-', '_')
                       .replace('.', '_')
@@ -738,5 +738,24 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     @Override
     public String getOverloadSuffix(Definition definition, Mode mode, String overloadIndex) {
         return overloadIndex;
+    }
+
+    String toPascalCase(String name) {
+        return StringUtils.toCamelCase(name);
+    }
+
+    static Case getCase(String name) {
+        if (name.toUpperCase().equals(name))
+            return Case.UPPER;
+        else if (name.toLowerCase().equals(name))
+            return Case.LOWER;
+        else
+            return Case.MIXED;
+    }
+
+    enum Case {
+        UPPER,
+        LOWER,
+        MIXED
     }
 }

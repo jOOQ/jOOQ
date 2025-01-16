@@ -83,21 +83,6 @@ public class KeepNamesGeneratorStrategy extends DefaultGeneratorStrategy {
             return definition.getOutputName();
     }
 
-    private Case getCase(String name) {
-        if (name.toUpperCase().equals(name))
-            return Case.UPPER;
-        else if (name.toLowerCase().equals(name))
-            return Case.LOWER;
-        else
-            return Case.MIXED;
-    }
-
-    enum Case {
-        UPPER,
-        LOWER,
-        MIXED
-    }
-
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
         return definition.getOutputName();

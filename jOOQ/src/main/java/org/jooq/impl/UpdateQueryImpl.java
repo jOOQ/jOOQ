@@ -931,16 +931,10 @@ implements
         return updateMap.size() > 0;
     }
 
-
-
-
-
-
-
-
-
-
-
+    @Override
+    final int estimatedRowCount(Scope ctx) {
+        return Integer.MAX_VALUE;
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

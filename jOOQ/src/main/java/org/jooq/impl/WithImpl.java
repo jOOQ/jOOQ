@@ -1029,146 +1029,146 @@ implements
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1) {
+    public final MergeUpsert mergeInto(Table table, Field field1) {
         return mergeInto(table, Arrays.asList(field1));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2) {
         return mergeInto(table, Arrays.asList(field1, field2));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3) {
         return mergeInto(table, Arrays.asList(field1, field2, field3));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
     }
 
     @Override
     @Deprecated(forRemoval = true, since = "3.14")
-    public final MergeImpl mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21, Field field22) {
+    public final MergeUpsert mergeInto(Table table, Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21, Field field22) {
         return mergeInto(table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
 
 
     @Override
-    public final MergeImpl mergeInto(Table table, Field... fields) {
+    public final MergeUpsert mergeInto(Table table, Field... fields) {
         return mergeInto(table, Arrays.asList(fields));
     }
 
     @Override
-    public final MergeImpl mergeInto(Table table, Collection fields) {
-        return new MergeImpl(configuration, this, table, fields);
+    public final MergeUpsert mergeInto(Table table, Collection fields) {
+        return new MergeUpsert(configuration, this, table, fields);
     }
 
     @Override

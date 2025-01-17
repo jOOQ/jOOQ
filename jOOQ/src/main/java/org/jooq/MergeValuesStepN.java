@@ -77,8 +77,9 @@ import org.jetbrains.annotations.NotNull;
  *       .execute();
  * </code></pre>
  *
- * @author Lukas Eder
+ * @deprecated - [#10045] - 3.14.0 - Use the standard SQL MERGE API instead, via {@link DSLContext#mergeInto(Table)}
  */
+@Deprecated(forRemoval = true, since = "3.14")
 public interface MergeValuesStepN<R extends Record> {
 
     /**

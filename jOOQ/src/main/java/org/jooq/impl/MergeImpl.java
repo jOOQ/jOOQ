@@ -314,18 +314,7 @@ implements
     private transient boolean            notMatchedClause;
     private final List<NotMatchedClause> notMatched;
 
-    // Objects for the UPSERT syntax (including H2 MERGE, HANA UPSERT, etc.)
-    private boolean                      upsertStyle;
-    private QueryPartList<Field<?>>      upsertFields;
-    private QueryPartList<Field<?>>      upsertKeys;
-    private QueryPartList<Field<?>>      upsertValues;
-    private Select<?>                    upsertSelect;
-
     MergeImpl(Configuration configuration, WithImpl with, Table<R> table) {
-        this(configuration, with, table, null);
-    }
-
-    MergeImpl(Configuration configuration, WithImpl with, Table<R> table, Collection<? extends Field<?>> fields) {
         super(configuration);
 
         this.with = with;
@@ -333,9 +322,6 @@ implements
         this.on = new ConditionProviderImpl();
         this.matched = new ArrayList<>();
         this.notMatched = new ArrayList<>();
-
-        if (fields != null)
-            columns(fields);
     }
 
     // -------------------------------------------------------------------------
@@ -344,27 +330,6 @@ implements
 
     final Table<R> table() {
         return table;
-    }
-
-    final QueryPartList<Field<?>> getUpsertFields() {
-        if (upsertFields == null)
-            upsertFields = new QueryPartList<>(table.fields());
-
-        return upsertFields;
-    }
-
-    final QueryPartList<Field<?>> getUpsertKeys() {
-        if (upsertKeys == null)
-            upsertKeys = new QueryPartList<>();
-
-        return upsertKeys;
-    }
-
-    final QueryPartList<Field<?>> getUpsertValues() {
-        if (upsertValues == null)
-            upsertValues = new QueryPartList<>();
-
-        return upsertValues;
     }
 
     final MatchedClause getLastMatched() {
@@ -376,149 +341,144 @@ implements
     }
 
     @Override
-    public final MergeImpl columns(Field... fields) {
+    public final MergeUpsert columns(Field... fields) {
         return columns(Arrays.asList(fields));
     }
 
     @Override
-    public final MergeImpl columns(Collection fields) {
-        upsertStyle = true;
-        upsertFields = new QueryPartList<>(fields);
-
-        return this;
+    public final MergeUpsert columns(Collection fields) {
+        return new MergeUpsert(configuration(), with, table, fields);
     }
 
 
 
     @Override
-    public final MergeImpl columns(Field field1) {
+    public final MergeUpsert columns(Field field1) {
         return columns(Arrays.asList(field1));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2) {
+    public final MergeUpsert columns(Field field1, Field field2) {
         return columns(Arrays.asList(field1, field2));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3) {
         return columns(Arrays.asList(field1, field2, field3));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4) {
         return columns(Arrays.asList(field1, field2, field3, field4));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
     }
 
     @Override
-    public final MergeImpl columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21, Field field22) {
+    public final MergeUpsert columns(Field field1, Field field2, Field field3, Field field4, Field field5, Field field6, Field field7, Field field8, Field field9, Field field10, Field field11, Field field12, Field field13, Field field14, Field field15, Field field16, Field field17, Field field18, Field field19, Field field20, Field field21, Field field22) {
         return columns(Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
 
 
     @Override
-    public final MergeImpl select(Select select) {
-        upsertStyle = true;
-        upsertSelect = select;
-        return this;
+    public final MergeUpsert select(Select select) {
+        MergeUpsert result = new MergeUpsert(configuration(), with, table);
+        result.upsertSelect = select;
+        return result;
     }
 
     @Override
-    public final MergeImpl key(Field<?>... k) {
+    public final MergeUpsert key(Field<?>... k) {
         return key(Arrays.asList(k));
     }
 
     @Override
-    public final MergeImpl key(Collection<? extends Field<?>> keys) {
-        upsertStyle = true;
-        getUpsertKeys().addAll(keys);
-        return this;
+    public final MergeUpsert key(Collection<? extends Field<?>> keys) {
+        return new MergeUpsert(configuration(), with, table).key(keys);
     }
 
     // -------------------------------------------------------------------------
@@ -752,16 +712,7 @@ implements
 
     @Override
     public final MergeImpl values(Object... values) {
-
-        // [#1541] The VALUES() clause is also supported in the H2-specific
-        // syntax, in case of which, the USING() was not added
-        if (using == null && !usingDual) {
-            upsertStyle = true;
-            getUpsertValues().addAll(Tools.fields(values, getUpsertFields().toArray(EMPTY_FIELD)));
-        }
-        else
-            getLastNotMatched().insertMap.set(Tools.fields(values, getLastNotMatched().insertMap.values.keySet().toArray(EMPTY_FIELD)));
-
+        getLastNotMatched().insertMap.set(Tools.fields(values, getLastNotMatched().insertMap.values.keySet().toArray(EMPTY_FIELD)));
         return this;
     }
 
@@ -1467,97 +1418,6 @@ implements
     // QueryPart API
     // -------------------------------------------------------------------------
 
-    /**
-     * Return a standard MERGE statement emulating the H2-specific syntax
-     */
-    private final QueryPart getStandardMerge(boolean usingSubqueries) {
-
-        // The SRC for the USING() clause:
-        // ------------------------------
-        Table<?> src;
-        List<Field<?>> srcFields;
-
-        // [#5110] This is not yet supported by Derby
-        if (upsertSelect != null) {
-            Table<?> s = upsertSelect.asTable("s");
-
-            // [#579] TODO: Currently, this syntax may require aliasing
-            // on the call-site
-            src = DSL.select(map(s.fieldsRow().fields(), (f, i) -> f.as("s" + (i + 1)))).from(s).asTable("src");
-            srcFields = Arrays.asList(src.fields());
-        }
-        else if (usingSubqueries) {
-            src = DSL.select(map(getUpsertValues(), (f, i) -> f.as("s" + (i + 1)))).asTable("src");
-            srcFields = Arrays.asList(src.fields());
-        }
-        else {
-            src = new Dual();
-            srcFields = map(getUpsertValues(), f -> f);
-        }
-
-        // The condition for the ON clause:
-        // --------------------------------
-        Set<Field<?>> onFields = new HashSet<>();
-        Condition condition = null;
-        if (getUpsertKeys().isEmpty()) {
-            UniqueKey<?> key = table.getPrimaryKey();
-
-            if (key != null) {
-                onFields.addAll(key.getFields());
-
-                for (int i = 0; i < key.getFields().size(); i++) {
-                    Condition rhs = key.getFields().get(i).equal((Field) srcFields.get(i));
-
-                    if (condition == null)
-                        condition = rhs;
-                    else
-                        condition = condition.and(rhs);
-                }
-            }
-
-            // This should probably execute an INSERT statement
-            else
-                throw new IllegalStateException("Cannot omit KEY() clause on a non-Updatable Table");
-        }
-        else {
-            for (int i = 0; i < getUpsertKeys().size(); i++) {
-                int matchIndex = getUpsertFields().indexOf(getUpsertKeys().get(i));
-                if (matchIndex == -1)
-                    throw new IllegalStateException("Fields in KEY() clause must be part of the fields specified in MERGE INTO table (...)");
-
-                onFields.addAll(getUpsertKeys());
-                Condition rhs = getUpsertKeys().get(i).equal((Field) srcFields.get(matchIndex));
-
-                if (condition == null)
-                    condition = rhs;
-                else
-                    condition = condition.and(rhs);
-            }
-        }
-
-        // INSERT and UPDATE clauses
-        // -------------------------
-        Map<Field<?>, Field<?>> update = new LinkedHashMap<>();
-        Map<Field<?>, Field<?>> insert = new LinkedHashMap<>();
-
-        for (int i = 0; i < srcFields.size(); i++) {
-
-            // Oracle does not allow to update fields from the ON clause
-            if (!onFields.contains(getUpsertFields().get(i)))
-                update.put(getUpsertFields().get(i), srcFields.get(i));
-
-            insert.put(getUpsertFields().get(i), srcFields.get(i));
-        }
-
-        return DSL.mergeInto(table)
-                  .using(src)
-                  .on(condition)
-                  .whenMatchedThenUpdate()
-                  .set(update)
-                  .whenNotMatchedThenInsert()
-                  .set(insert);
-    }
-
     final MergeImpl<R, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> copy(Consumer<? super MergeImpl<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?>> finisher) {
         return copy(finisher, table);
     }
@@ -1638,180 +1498,6 @@ implements
         if (with != null)
             ctx.visit(with);
 
-        if (upsertStyle) {
-            switch (ctx.family()) {
-                case H2:
-                    toSQLH2Merge(ctx);
-                    break;
-
-
-
-                case MARIADB:
-                case MYSQL:
-                    toSQLMySQLOnDuplicateKeyUpdate(ctx);
-                    break;
-
-
-
-                case POSTGRES:
-                case YUGABYTEDB:
-                    toPostgresInsertOnConflict(ctx);
-                    break;
-
-
-
-
-
-
-
-                case DERBY:
-                    ctx.visit(getStandardMerge(false));
-                    break;
-
-                default:
-                    ctx.visit(getStandardMerge(true));
-                    break;
-            }
-        }
-        else
-            toSQLStandard(ctx);
-    }
-
-    private final void toSQLMySQLOnDuplicateKeyUpdate(Context<?> ctx) {
-        FieldsImpl<?> fields = new FieldsImpl<>(getUpsertFields());
-        Map<Field<?>, Field<?>> map = new LinkedHashMap<>();
-        for (Field<?> field : fields.fields)
-            map.put(field, getUpsertValues().get(fields.indexOf(field)));
-
-        if (upsertSelect != null) {
-            ctx.sql("[ merge with select is not supported in MySQL / MariaDB ]");
-        }
-        else {
-            ctx.visit(insertInto(table, getUpsertFields())
-               .values(getUpsertValues())
-               .onDuplicateKeyUpdate()
-               .set(map));
-        }
-    }
-
-    private final void toPostgresInsertOnConflict(Context<?> ctx) {
-        if (upsertSelect != null) {
-            ctx.visit(getStandardMerge(true));
-        }
-        else {
-            FieldsImpl<?> fields = new FieldsImpl<>(getUpsertFields());
-            Map<Field<?>, Field<?>> map = new LinkedHashMap<>();
-
-            for (Field<?> field : fields.fields) {
-                int i = fields.indexOf(field);
-
-                if (i > -1 && i < getUpsertValues().size())
-                    map.put(field, getUpsertValues().get(i));
-            }
-
-            ctx.visit(insertInto(table, getUpsertFields())
-               .values(getUpsertValues())
-               .onConflict(getUpsertKeys())
-               .doUpdate()
-               .set(map));
-        }
-    }
-
-    private final void toSQLH2Merge(Context<?> ctx) {
-
-
-
-
-        ctx.visit(K_MERGE_INTO)
-           .sql(' ')
-           .declareTables(true, c -> c.visit(table))
-           .formatSeparator();
-
-        ctx.sql('(')
-           .visit(wrap(collect(removeReadonly(ctx, getUpsertFields()))).qualify(false))
-           .sql(')');
-
-        if (!getUpsertKeys().isEmpty())
-            ctx.formatSeparator()
-               .visit(K_KEY).sql(" (")
-               .visit(wrap(getUpsertKeys()).qualify(false))
-               .sql(')');
-
-        if (upsertSelect != null)
-            ctx.formatSeparator()
-               .visit(upsertSelect);
-        else
-            ctx.formatSeparator()
-               .visit(K_VALUES).sql(" (")
-               .visit(wrap(collect(removeReadonly(ctx, getUpsertFields(), getUpsertValues()))))
-               .sql(')');
-    }
-
-    static final Iterable<Field<?>> removeReadonly(Context<?> ctx, List<Field<?>> it) {
-        return removeReadonly(ctx, it, it);
-    }
-
-    static final Iterable<Field<?>> removeReadonly(Context<?> ctx, List<Field<?>> checkIt, List<Field<?>> removeIt) {
-
-
-
-
-        return removeIt;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private final void toSQLStandard(Context<?> ctx) {
         Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table);
 
         ctx.start(MERGE_MERGE_INTO)

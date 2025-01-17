@@ -56,7 +56,10 @@ import java.util.Collection;
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
- * Example: <pre><code>
+ * Example:
+ *
+ * <pre>
+ * <code>
  * DSLContext create = DSL.using(configuration);
  *
  * TableRecord&lt;?&gt; record =
@@ -65,14 +68,25 @@ import java.util.Collection;
  *       .set(field2, value2)
  *       .returning(field1)
  *       .fetchOne();
- * </code></pre>
+ * </code>
+ * </pre>
  * <p>
  * This implemented differently for every dialect:
  * <ul>
- * <li>Firebird and Postgres have native support for
- * <code>UPDATE … RETURNING</code> clauses</li>
- * <li>DB2 allows to execute
+ * <li>{@link SQLDialect#COCKROACHDB}, {@link SQLDialect#FIREBIRD},
+ * {@link SQLDialect#MARIADB}, {@link SQLDialect#POSTGRES}, and
+ * {@link SQLDialect#YUGABYTEDB} have native support for
+ * <code>UPDATE … RETURNING</code> clauses in SQL</li>
+ * <li>{@link SQLDialect#ORACLE} has native support for
+ * <code>UPDATE … RETURNING</code> in PL/SQL, so jOOQ can render an anonymous
+ * block</li>
+ * <li>{@link SQLDialect#SQLSERVER} supports an <code>UPDATE … OUTPUT</code>
+ * syntax, which can capture defaults and computed column values, though not
+ * trigger generated values.</li>
+ * <li>{@link SQLDialect#DB2} and {@link SQLDialect#H2} allow to execute the
+ * standard SQL data change delta table syntax:
  * <code>SELECT … FROM FINAL TABLE (UPDATE …)</code></li>
+ * <li>Other dialects cannot emulate <code>UPDATE … RETURNING</code>.</li>
  * </ul>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>

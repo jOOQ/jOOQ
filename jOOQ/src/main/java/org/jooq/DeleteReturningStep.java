@@ -56,20 +56,34 @@ import org.jetbrains.annotations.NotNull;
 /**
  * This type is used for the {@link Delete}'s DSL API.
  * <p>
- * Example: <pre><code>
+ * Example:
+ *
+ * <pre>
+ * <code>
  * DSLContext create = DSL.using(configuration);
  *
  * create.delete(table)
  *       .where(field1.greaterThan(100))
  *       .execute();
- * </code></pre>
+ * </code>
+ * </pre>
  * <p>
  * This implemented differently for every dialect:
  * <ul>
- * <li>Firebird and Postgres have native support for
- * <code>UPDATE … RETURNING</code> clauses</li>
- * <li>DB2 allows to execute
+ * <li>{@link SQLDialect#COCKROACHDB} {@link SQLDialect#FIREBIRD},
+ * {@link SQLDialect#MARIADB}, {@link SQLDialect#POSTGRES},
+ * {@link SQLDialect#SQLITE}, {@link SQLDialect#YUGABYTEDB} have native support
+ * for <code>DELETE … RETURNING</code> clauses in SQL</li>
+ * <li>{@link SQLDialect#ORACLE} has native support for
+ * <code>DELETE … RETURNING</code> in PL/SQL, so jOOQ can render an anonymous
+ * block</li>
+ * <li>{@link SQLDialect#SQLSERVER} supports an <code>DELETE … OUTPUT</code>
+ * syntax, which can capture defaults and computed column values, though not
+ * trigger generated values.</li>
+ * <li>{@link SQLDialect#DB2} and {@link SQLDialect#H2} allow to execute the
+ * standard SQL data change delta table syntax:
  * <code>SELECT … FROM FINAL TABLE (DELETE …)</code></li>
+ * <li>Other dialects cannot emulate <code>DELETE … RETURNING</code>.</li>
  * </ul>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>

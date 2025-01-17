@@ -781,13 +781,6 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-
-
-
-
-
-
-
     abstract void accept0(Context<?> ctx);
 
     /**
@@ -1287,6 +1280,12 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         if (estimatedRowCount(ctx) == 1)
             log.debug("RETURNING was set on query, but no rows were returned. This is likely due to a missing identity column (or an identity column unknown to jOOQ).");
     }
+
+    /**
+     * The estimated number of affected rows, {@link Integer#MAX_VALUE}, if
+     * unknown.
+     */
+    abstract int estimatedRowCount(Scope ctx);
 
     /**
      * Make sure a {@link PreparedStatement}, which may be a

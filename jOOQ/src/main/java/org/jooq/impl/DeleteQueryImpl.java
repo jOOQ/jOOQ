@@ -378,15 +378,10 @@ implements
         return super.isExecutable();
     }
 
-
-
-
-
-
-
-
-
-
+    @Override
+    final int estimatedRowCount(Scope ctx) {
+        return Integer.MAX_VALUE;
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

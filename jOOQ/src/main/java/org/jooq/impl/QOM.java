@@ -619,6 +619,76 @@ public final class QOM {
         @NotNull DeleteReturning<?> $returning(Collection<? extends SelectFieldOrAsterisk> returning);
     }
 
+    public interface Merge<R extends org.jooq.Record>
+        extends
+            org.jooq.DMLQuery<R>
+    {
+        @Nullable With $with();
+        @NotNull  Table<R> $into();
+        @CheckReturnValue
+        @NotNull  Merge<?> $into(Table<?> into);
+        @Nullable  TableLike<?> $using();
+        @CheckReturnValue
+        @NotNull  Merge<R> $using(TableLike<?> into);
+        @Nullable Condition $on();
+        @CheckReturnValue
+        @NotNull  Merge<R> $on(Condition condition);
+        @NotNull  UnmodifiableList<? extends MergeMatched> $whenMatched();
+        @CheckReturnValue
+        @NotNull  Merge<R> $whenMatched(Collection<? extends MergeMatched> whenMatched);
+        @NotNull  UnmodifiableList<? extends MergeNotMatched> $whenNotMatched();
+        @CheckReturnValue
+        @NotNull  Merge<R> $whenNotMatched(Collection<? extends MergeNotMatched> whenNotMatched);
+        @NotNull  UnmodifiableList<? extends MergeNotMatchedBySource> $whenNotMatchedBySource();
+        @CheckReturnValue
+        @NotNull  Merge<R> $whenNotMatchedBySource(Collection<? extends MergeNotMatchedBySource> whenNotMatchedBySource);
+    }
+
+    public interface MergeMatched
+        extends
+            org.jooq.QueryPart
+    {
+        @NotNull  UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $updateSet();
+        @CheckReturnValue
+        @NotNull  MergeMatched $updateSet(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> updateSet);
+                  boolean $delete();
+        @CheckReturnValue
+        @NotNull  MergeMatched $delete(boolean delete);
+        @Nullable Condition $where();
+        @CheckReturnValue
+        @NotNull  MergeMatched $where(Condition condition);
+    }
+
+    public interface MergeNotMatched
+        extends
+            org.jooq.QueryPart
+    {
+        @NotNull  UnmodifiableList<? extends Field<?>> $columns();
+        @CheckReturnValue
+        @NotNull  Insert<?> $columns(Collection<? extends Field<?>> columns);
+        @NotNull  UnmodifiableList<? extends Row> $values();
+        @CheckReturnValue
+        @NotNull  Insert<?> $values(Collection<? extends Row> values);
+        @Nullable Condition $where();
+        @CheckReturnValue
+        @NotNull  MergeMatched $where(Condition condition);
+    }
+
+    public interface MergeNotMatchedBySource
+        extends
+            org.jooq.QueryPart
+    {
+        @NotNull  UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $updateSet();
+        @CheckReturnValue
+        @NotNull  MergeMatched $updateSet(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> updateSet);
+                  boolean $delete();
+        @CheckReturnValue
+        @NotNull  MergeMatched $delete(boolean delete);
+        @Nullable Condition $where();
+        @CheckReturnValue
+        @NotNull  MergeMatched $where(Condition condition);
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Schema
     // -------------------------------------------------------------------------

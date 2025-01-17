@@ -119,6 +119,7 @@ import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.collect;
+import static org.jooq.impl.Tools.concat;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
@@ -202,18 +203,34 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
+// ...
+import org.jooq.Row;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableLike;
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
+import org.jooq.impl.QOM.Insert;
+import org.jooq.impl.QOM.Merge;
+import org.jooq.impl.QOM.MergeMatched;
+import org.jooq.impl.QOM.MergeNotMatched;
+import org.jooq.impl.QOM.MergeNotMatchedBySource;
 import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UnmodifiableList;
+import org.jooq.impl.QOM.UnmodifiableMap;
+import org.jooq.impl.QOM.Update;
+import org.jooq.impl.QOM.With;
 import org.jooq.impl.Tools.ExtendedDataKey;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The SQL standard MERGE statement
@@ -221,7 +238,8 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
-final class MergeImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> extends AbstractRowCountQuery
+final class MergeImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>
+extends AbstractRowCountQuery
 implements
 
     // Cascading interface implementations for Merge behaviour
@@ -289,7 +307,12 @@ implements
 
 
 
-    MergeNotMatchedValuesStepN<R> {
+    MergeNotMatchedValuesStepN<R>,
+    QOM.Merge<R>
+{
+
+    private static final JooqLogger      log                                     = JooqLogger.getLogger(MergeImpl.class);
+
     private static final Clause[]        CLAUSES                                 = { MERGE };
 
 
@@ -311,6 +334,8 @@ implements
     // Flags to keep track of DSL object creation state
     private transient boolean            matchedClause;
     private final List<MatchedClause>    matched;
+    private transient boolean            notMatchedBySourceClause;
+    private final List<MatchedClause>    notMatchedBySource;
     private transient boolean            notMatchedClause;
     private final List<NotMatchedClause> notMatched;
 
@@ -321,6 +346,7 @@ implements
         this.table = table;
         this.on = new ConditionProviderImpl();
         this.matched = new ArrayList<>();
+        this.notMatchedBySource = new ArrayList<>();
         this.notMatched = new ArrayList<>();
     }
 
@@ -334,6 +360,10 @@ implements
 
     final MatchedClause getLastMatched() {
         return matched.get(matched.size() - 1);
+    }
+
+    final MatchedClause getLastNotMatchedBySource() {
+        return notMatchedBySource.get(notMatchedBySource.size() - 1);
     }
 
     final NotMatchedClause getLastNotMatched() {
@@ -896,6 +926,7 @@ implements
         matchedClause = true;
         matched.add(new MatchedClause(table, condition));
 
+        notMatchedBySourceClause = false;
         notMatchedClause = false;
         return this;
     }
@@ -932,7 +963,13 @@ implements
 
     @Override
     public final MergeImpl thenDelete() {
-        getLastMatched().delete = true;
+        if (matchedClause)
+            getLastMatched().delete = true;
+        else if (notMatchedBySourceClause)
+            getLastNotMatchedBySource().delete = true;
+        else
+            throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
+
         return this;
     }
 
@@ -945,6 +982,8 @@ implements
     public final <T> MergeImpl set(Field<T> field, Field<T> value) {
         if (matchedClause)
             getLastMatched().updateMap.put(field, nullSafe(value));
+        else if (notMatchedBySourceClause)
+            getLastNotMatchedBySource().updateMap.put(field, nullSafe(value));
         else if (notMatchedClause)
             getLastNotMatched().insertMap.set(field, nullSafe(value));
         else
@@ -970,6 +1009,8 @@ implements
     public final MergeImpl set(Map<?, ?> map) {
         if (matchedClause)
             getLastMatched().updateMap.set(map);
+        else if (notMatchedBySourceClause)
+            getLastNotMatchedBySource().updateMap.set(map);
         else if (notMatchedClause)
             getLastNotMatched().insertMap.set(map);
         else
@@ -1130,6 +1171,7 @@ implements
         notMatchedClause = true;
         notMatched.add(new NotMatchedClause(table, condition, false));
 
+        notMatchedBySourceClause = false;
         matchedClause = false;
         return this;
     }
@@ -1170,10 +1212,11 @@ implements
     }
 
     final MergeImpl whenNotMatchedBySourceAnd0(Condition condition) {
-        notMatchedClause = false;
+        notMatchedBySourceClause = true;
+        notMatchedBySource.add(new MatchedClause(table, condition, false, true));
 
-        matchedClause = true;
-        matched.add(new MatchedClause(table, condition, false, true));
+        notMatchedClause = false;
+        matchedClause = false;
         return this;
     }
 
@@ -1216,6 +1259,7 @@ implements
         notMatchedClause = true;
         notMatched.add(new NotMatchedClause(table, condition, true));
 
+        notMatchedBySourceClause = false;
         matchedClause = false;
         return this;
     }
@@ -1383,6 +1427,8 @@ implements
     public final MergeImpl where(Condition condition) {
         if (matchedClause)
             getLastMatched().condition = condition;
+        else if (notMatchedBySourceClause)
+            getLastNotMatchedBySource().condition = condition;
         else if (notMatchedClause)
             getLastNotMatched().condition = condition;
         else
@@ -1403,6 +1449,8 @@ implements
         // See https://github.com/jOOQ/jOOQ/issues/7291#issuecomment-610833303
         if (matchedClause)
             matched.add(matched.size() - 1, new MatchedClause(table, condition, true, false));
+        else if (notMatchedBySourceClause)
+            notMatchedBySource.add(matched.size() - 1, new MatchedClause(table, condition, true, true));
         else
             throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
 
@@ -1429,10 +1477,14 @@ implements
         r.using = using;
         r.usingDual = usingDual;
         r.on.addConditions(extractCondition(on));
-        for (MatchedClause m : matched) {
+        for (MatchedClause m : concat(matched, notMatchedBySource)) {
             MatchedClause m2 = new MatchedClause(t, m.condition, m.delete, m.notMatchedBySource, new FieldMapForUpdate(t, m.updateMap.setClause, m.updateMap.assignmentClause));
             m2.updateMap.putAll(m.updateMap);
-            r.matched.add(m2);
+
+            if (m.notMatchedBySource)
+                r.notMatchedBySource.add(m2);
+            else
+                r.matched.add(m2);
         }
         for (NotMatchedClause m : notMatched) {
             NotMatchedClause m2 = new NotMatchedClause(t, m.condition, m.byTarget);
@@ -1614,7 +1666,7 @@ implements
         if (NO_SUPPORT_CONDITION_AFTER_NO_CONDITION.contains(ctx.dialect())) {
             boolean withoutMatchedConditionFound = false;
 
-            for (MatchedClause m : matched) {
+            for (MatchedClause m : concat(matched, notMatchedBySource)) {
                 if (requireMatchedConditions |= withoutMatchedConditionFound)
                     break;
 
@@ -1623,11 +1675,11 @@ implements
         }
 
         emulateCheck:
-        if ((NO_SUPPORT_MULTI.contains(ctx.dialect()) && matched.size() > 1)) {
+        if ((NO_SUPPORT_MULTI.contains(ctx.dialect()) && (matched.size() + notMatchedBySource.size()) > 1)) {
             boolean matchUpdate = false;
             boolean matchDelete = false;
 
-            for (MatchedClause m : matched) {
+            for (MatchedClause m : concat(matched, notMatchedBySource)) {
                 if (m.delete) {
                     if (emulateMatched |= matchDelete)
                         break emulateCheck;
@@ -1650,7 +1702,7 @@ implements
 
             Condition negate = noCondition();
 
-            for (MatchedClause m : matched) {
+            for (MatchedClause m : concat(matched, notMatchedBySource)) {
                 Condition condition = negate.and(m.condition);
 
                 if (m.delete) {
@@ -1729,13 +1781,13 @@ implements
         else if (REQUIRE_NEGATION.contains(ctx.dialect())) {
             Condition negate = noCondition();
 
-            for (MatchedClause m : matched) {
+            for (MatchedClause m : concat(matched, notMatchedBySource)) {
                 toSQLMatched(ctx, new MatchedClause(table, negate.and(m.condition), m.delete, m.notMatchedBySource, m.updateMap), requireMatchedConditions);
                 negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
             }
         }
         else {
-            for (MatchedClause m : matched)
+            for (MatchedClause m : concat(matched, notMatchedBySource))
                 toSQLMatched(ctx, m, requireMatchedConditions);
         }
 
@@ -1806,14 +1858,14 @@ implements
 
     }
 
-    private final void toSQLMatched(Context<?> ctx, MatchedClause m, boolean requireMatchedConditions) {
+    static final void toSQLMatched(Context<?> ctx, MatchedClause m, boolean requireMatchedConditions) {
         if (m.delete)
             toSQLMatched(ctx, null, m, requireMatchedConditions);
         else
             toSQLMatched(ctx, m, null, requireMatchedConditions);
     }
 
-    private final void toSQLMatched(Context<?> ctx, MatchedClause update, MatchedClause delete, boolean requireMatchedConditions) {
+    static final void toSQLMatched(Context<?> ctx, MatchedClause update, MatchedClause delete, boolean requireMatchedConditions) {
         MatchedClause m = update != null ? update : delete;
 
         if (m.notMatchedBySource)
@@ -1853,7 +1905,7 @@ implements
         }
     }
 
-    private final void toSQLNotMatched(Context<?> ctx, NotMatchedClause m) {
+    static final void toSQLNotMatched(Context<?> ctx, NotMatchedClause m) {
         ctx.formatSeparator()
            .visit(K_WHEN).sql(' ')
            .visit(K_NOT).sql(' ')
@@ -1885,7 +1937,13 @@ implements
         return CLAUSES;
     }
 
-    private static final class MatchedClause implements Serializable {
+    private static final class MatchedClause
+    extends
+        AbstractQueryPart
+    implements
+        QOM.MergeMatched,
+        QOM.MergeNotMatchedBySource
+    {
 
         FieldMapForUpdate updateMap;
         boolean           delete;
@@ -1906,9 +1964,101 @@ implements
             this.delete = delete;
             this.notMatchedBySource = notMatchedBySource;
         }
+
+        @Override
+        public final void accept(Context<?> ctx) {
+            toSQLMatched(ctx, this, false);
+        }
+
+        private final MatchedClause create(
+            Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> u,
+            boolean d,
+            Condition w
+        ) {
+            MatchedClause result = new MatchedClause(
+                updateMap.table,
+                w,
+                d,
+                notMatchedBySource,
+                new FieldMapForUpdate(updateMap.table, SetClause.MERGE, MERGE_SET_ASSIGNMENT)
+            );
+            result.updateMap.putAll(u);
+            return result;
+        }
+
+        private final MatchedClause copy(Consumer<? super MatchedClause> finisher) {
+            MatchedClause result = create(updateMap, delete, condition);
+            finisher.accept(result);
+            return result;
+        }
+
+        @Override
+        public final UnmodifiableMap<? extends FieldOrRow, ? extends FieldOrRowOrSelect> $updateSet() {
+            return QOM.unmodifiable(updateMap);
+        }
+
+        @Override
+        public final MergeMatched $updateSet(Map<? extends FieldOrRow, ? extends FieldOrRowOrSelect> updateSet) {
+            return copy(c -> {
+                c.delete = false;
+                c.updateMap.clear();
+                c.updateMap.putAll(updateSet);
+            });
+        }
+
+        @Override
+        public final boolean $delete() {
+            return delete;
+        }
+
+        @Override
+        public final MergeMatched $delete(boolean newDelete) {
+            return copy(c -> {
+                c.delete = newDelete;
+                c.updateMap.clear();
+            });
+        }
+
+        @Override
+        public final Condition $where() {
+            return condition instanceof NoCondition ? null : condition;
+        }
+
+        @Override
+        public final MergeMatched $where(Condition newWhere) {
+            return copy(c -> {
+                c.condition = newWhere == null ? noCondition() : newWhere;
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
-    private static final class NotMatchedClause implements Serializable {
+    private static final class NotMatchedClause
+    extends
+        AbstractQueryPart
+    implements
+        QOM.MergeNotMatched
+    {
 
         FieldMapsForInsert insertMap;
         Condition          condition;
@@ -1919,5 +2069,168 @@ implements
             this.condition = condition == null ? noCondition() : condition;
             this.byTarget = byTarget;
         }
+
+        @Override
+        public final void accept(Context<?> ctx) {
+            toSQLNotMatched(ctx, this);
+        }
+
+        @Override
+        public final UnmodifiableList<? extends Field<?>> $columns() {
+            return QOM.unmodifiable(new ArrayList<>(insertMap.values.keySet()));
+        }
+
+        @Override
+        public final Insert<?> $columns(Collection<? extends Field<?>> columns) {
+            throw new UnsupportedOperationException("TODO: Merge and Insert should share QOM logic");
+        }
+
+        @Override
+        public final UnmodifiableList<? extends Row> $values() {
+            return QOM.unmodifiable(insertMap.rows());
+        }
+
+        @Override
+        public final Insert<?> $values(Collection<? extends Row> values) {
+            throw new UnsupportedOperationException("TODO: Merge and Insert should share QOM logic");
+        }
+
+        @Override
+        public final Condition $where() {
+            return condition;
+        }
+
+        @Override
+        public final MergeMatched $where(Condition condition) {
+            throw new UnsupportedOperationException("TODO: Merge and Insert should share QOM logic");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+    // -------------------------------------------------------------------------
+    // QOM API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final With $with() {
+        return with;
+    }
+
+    @Override
+    public final Table<R> $into() {
+        return table;
+    }
+
+    @Override
+    public final Merge<?> $into(Table<?> newInto) {
+        return copy(m -> {}, newInto);
+    }
+
+    @Override
+    public final Condition $on() {
+        return on.getWhereOrNull();
+    }
+
+    @Override
+    public final Merge<R> $on(Condition newOn) {
+        return copy(m -> {
+            m.on.setWhere(newOn);
+        });
+    }
+
+    @Override
+    public final TableLike<?> $using() {
+        return using;
+    }
+
+    @Override
+    public final Merge<R> $using(TableLike<?> newUsing) {
+        return copy(m -> {
+            m.using = newUsing;
+            m.usingDual = newUsing == null;
+        });
+    }
+
+    @Override
+    public final UnmodifiableList<? extends MergeMatched> $whenMatched() {
+        return QOM.unmodifiable(matched);
+    }
+
+    @Override
+    public final Merge<R> $whenMatched(Collection<? extends MergeMatched> newWhenMatched) {
+        return copy(m -> {
+            m.matched.clear();
+
+            for (MergeMatched e : newWhenMatched)
+                if (e instanceof MatchedClause c)
+                    m.matched.add(c);
+                else
+                    throw new IllegalArgumentException("TODO");
+        });
+    }
+
+    @Override
+    public final UnmodifiableList<? extends MergeNotMatched> $whenNotMatched() {
+        return QOM.unmodifiable(notMatched);
+    }
+
+    @Override
+    public final Merge<R> $whenNotMatched(Collection<? extends MergeNotMatched> newWhenNotMatched) {
+        return copy(m -> {
+            m.notMatched.clear();
+
+            for (MergeNotMatched e : newWhenNotMatched)
+                if (e instanceof NotMatchedClause c)
+                    m.notMatched.add(c);
+                else
+                    throw new IllegalArgumentException("TODO");
+        });
+    }
+
+    @Override
+    public final UnmodifiableList<? extends MergeNotMatchedBySource> $whenNotMatchedBySource() {
+        return QOM.unmodifiable(notMatchedBySource);
+    }
+
+    @Override
+    public final Merge<R> $whenNotMatchedBySource(Collection<? extends MergeNotMatchedBySource> newWhenNotMatchedBySource) {
+        return copy(m -> {
+            m.notMatchedBySource.clear();
+
+            for (MergeNotMatchedBySource e : newWhenNotMatchedBySource)
+                if (e instanceof MatchedClause c)
+                    m.notMatchedBySource.add(c);
+                else
+                    throw new IllegalArgumentException("TODO");
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

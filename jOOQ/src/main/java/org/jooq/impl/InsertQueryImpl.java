@@ -1201,6 +1201,17 @@ implements
         return insertMaps.isExecutable() || defaultValues(configuration()) || select != null;
     }
 
+    @Override
+    final int estimatedRowCount(Scope ctx) {
+        if (defaultValues(ctx.configuration()))
+            return 1;
+
+        else if (select != null)
+            return Integer.MAX_VALUE;
+
+        // [#2682] [#15632] Inline derived tables (and policies) may generate a SELECT
+        else if (InlineDerivedTable.inlineDerivedTable(ctx, table(ctx)) instanceof InlineDerivedTable)
+            return Integer.MAX_VALUE;
 
 
 
@@ -1209,24 +1220,9 @@ implements
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        else
+            return insertMaps.rows;
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

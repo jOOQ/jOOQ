@@ -113,6 +113,7 @@ import org.jooq.MergeValuesStep9;
 import org.jooq.MergeValuesStepN;
 // ...
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
@@ -124,66 +125,66 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Deprecated
-final class MergeUpsert
+final class MergeUpsert<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>
 extends AbstractRowCountQuery
 implements
 
-    Merge,
-    MergeColumnsStep,
+    Merge<R>,
+    MergeColumnsStep<R>,
     // Cascading interface implementations for Merge behaviour
 
 
-    MergeKeyStep1,
-    MergeKeyStep2,
-    MergeKeyStep3,
-    MergeKeyStep4,
-    MergeKeyStep5,
-    MergeKeyStep6,
-    MergeKeyStep7,
-    MergeKeyStep8,
-    MergeKeyStep9,
-    MergeKeyStep10,
-    MergeKeyStep11,
-    MergeKeyStep12,
-    MergeKeyStep13,
-    MergeKeyStep14,
-    MergeKeyStep15,
-    MergeKeyStep16,
-    MergeKeyStep17,
-    MergeKeyStep18,
-    MergeKeyStep19,
-    MergeKeyStep20,
-    MergeKeyStep21,
-    MergeKeyStep22,
+    MergeKeyStep1<R, T1>,
+    MergeKeyStep2<R, T1, T2>,
+    MergeKeyStep3<R, T1, T2, T3>,
+    MergeKeyStep4<R, T1, T2, T3, T4>,
+    MergeKeyStep5<R, T1, T2, T3, T4, T5>,
+    MergeKeyStep6<R, T1, T2, T3, T4, T5, T6>,
+    MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7>,
+    MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8>,
+    MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9>,
+    MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>,
+    MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>,
+    MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>,
+    MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>,
+    MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>,
+    MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>,
+    MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>,
+    MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>,
+    MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>,
+    MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>,
+    MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>,
+    MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
+    MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
 
 
 
 
-    MergeValuesStep1,
-    MergeValuesStep2,
-    MergeValuesStep3,
-    MergeValuesStep4,
-    MergeValuesStep5,
-    MergeValuesStep6,
-    MergeValuesStep7,
-    MergeValuesStep8,
-    MergeValuesStep9,
-    MergeValuesStep10,
-    MergeValuesStep11,
-    MergeValuesStep12,
-    MergeValuesStep13,
-    MergeValuesStep14,
-    MergeValuesStep15,
-    MergeValuesStep16,
-    MergeValuesStep17,
-    MergeValuesStep18,
-    MergeValuesStep19,
-    MergeValuesStep20,
-    MergeValuesStep21,
-    MergeValuesStep22,
+    MergeValuesStep1<R, T1>,
+    MergeValuesStep2<R, T1, T2>,
+    MergeValuesStep3<R, T1, T2, T3>,
+    MergeValuesStep4<R, T1, T2, T3, T4>,
+    MergeValuesStep5<R, T1, T2, T3, T4, T5>,
+    MergeValuesStep6<R, T1, T2, T3, T4, T5, T6>,
+    MergeValuesStep7<R, T1, T2, T3, T4, T5, T6, T7>,
+    MergeValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8>,
+    MergeValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9>,
+    MergeValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>,
+    MergeValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>,
+    MergeValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>,
+    MergeValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>,
+    MergeValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>,
+    MergeValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>,
+    MergeValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>,
+    MergeValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>,
+    MergeValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>,
+    MergeValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>,
+    MergeValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>,
+    MergeValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
+    MergeValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
 
 
-    MergeValuesStepN,
+    MergeValuesStepN<R>,
     UNotYetImplemented
 {
 
@@ -592,12 +593,12 @@ implements
     }
 
     @Override
-    public final MergeUpsert values(Field... values) {
+    public final MergeUpsert values(Field<?>... values) {
         return values((Object[]) values);
     }
 
     @Override
-    public final MergeUpsert values(Collection values) {
+    public final MergeUpsert values(Collection<?> values) {
         return values(values.toArray());
     }
 

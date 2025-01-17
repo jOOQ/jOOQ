@@ -1095,6 +1095,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
         // Column stores don't seem support fetching generated keys
         else if (NO_SUPPORT_FETCHING_KEYS.contains(ctx.dialect())) {
+            log.debug("RETURNING was set on query, but dialect doesn't support fetching generated keys: " + ctx.dialect());
             return super.execute(ctx, listener);
         }
         else {
@@ -1117,6 +1118,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                               .fetch();
 
                         returnedResult.attach(((DefaultExecuteContext) ctx).originalConfiguration());
+                        logOnEmptyReturned(ctx);
                         return result;
                     }
                     else
@@ -1326,6 +1328,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
         }
     }
 
+    private final void logOnEmptyReturned(Scope ctx) {
+        if (estimatedRowCount(ctx) == 1)
+            log.debug("RETURNING was set on query, but no rows were returned. This is likely due to a missing identity column (or an identity column unknown to jOOQ).");
+    }
+
     private final int executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
         int result = executeImmediate(ctx.statement()).executeUpdate();
@@ -1441,6 +1448,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 }
             }
         }
+        else
+            logOnEmptyReturned(derivedConfiguration.dsl());
     }
 
     private final Field<?> returnedIdentity() {

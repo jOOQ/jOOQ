@@ -2206,7 +2206,7 @@ implements
             if (e instanceof MatchedClause c)
                 matched.add(c);
             else
-                throw new IllegalArgumentException("TODO");
+                throw new IllegalArgumentException("Custom MergeMatched implementations are not yet supported.");
     }
 
     @Override
@@ -2226,7 +2226,7 @@ implements
             if (e instanceof NotMatchedClause c)
                 notMatched.add(c);
             else
-                throw new IllegalArgumentException("TODO");
+                throw new IllegalArgumentException("Custom MergeNotMatched implementations are not yet supported.");
     }
 
     @Override
@@ -2246,7 +2246,7 @@ implements
             if (e instanceof MatchedClause c)
                 notMatchedBySource.add(c);
             else
-                throw new IllegalArgumentException("TODO");
+                throw new IllegalArgumentException("Custom MergeNotMatchedBySource implementations are not yet supported.");
     }
 
 

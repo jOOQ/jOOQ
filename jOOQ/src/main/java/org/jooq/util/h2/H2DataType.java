@@ -130,6 +130,7 @@ public class H2DataType {
     public static final DataType<String>            CHAR                         = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "char(l)");
     public static final DataType<String>            CHARACTER                    = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "character(l)");
     public static final DataType<String>            LONGVARCHAR                  = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARCHAR, "longvarchar(l)");
+    public static final DataType<String>            LONGNVARCHAR                 = new BuiltInDataType<>(FAMILY, SQLDataType.LONGNVARCHAR, "longnvarchar(l)");
     public static final DataType<String>            CLOB                         = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "clob");
     public static final DataType<String>            CHARLARGEOBJECT              = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "char large object");
     public static final DataType<String>            CHARACTERLARGEOBJECT         = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "character large object");
@@ -153,7 +154,6 @@ public class H2DataType {
     // Compatibility types for supported SQLDialect.H2, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final DataType<String>         __LONGNVARCHAR               = new BuiltInDataType<>(FAMILY, SQLDataType.LONGNVARCHAR, "longvarchar(l)");
     protected static final DataType<Result<Record>> __RESULT                     = new BuiltInDataType<>(FAMILY, SQLDataType.RESULT, "result_set");
 
     // -------------------------------------------------------------------------

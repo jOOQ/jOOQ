@@ -1274,23 +1274,12 @@ implements
 
     @Override
     public final UnmodifiableList<? extends Field<?>> $columns() {
-        return QOM.unmodifiable(new ArrayList<>(insertMaps.values.keySet()));
+        return insertMaps.$columns();
     }
 
     @Override
     public final Insert<?> $columns(Collection<? extends Field<?>> columns) {
-        return copy(i -> {
-            Map<Field<?>, List<Field<?>>> v = new LinkedHashMap<>();
-
-            for (Field<?> c : columns)
-                if (i.insertMaps.values.get(c) == null)
-                    v.put(c, new ArrayList<>(nCopies(i.insertMaps.rows, inline(null, c))));
-                else
-                    v.put(c, i.insertMaps.values.get(c));
-
-            i.insertMaps.values.clear();
-            i.insertMaps.values.putAll(v);
-        });
+        return copy(i -> i.insertMaps.set(columns, null));
     }
 
     @Override
@@ -1328,25 +1317,12 @@ implements
 
     @Override
     public final UnmodifiableList<? extends Row> $values() {
-        return QOM.unmodifiable(insertMaps.rows());
+        return insertMaps.$values();
     }
 
     @Override
     public final Insert<?> $values(Collection<? extends Row> values) {
-        return copy(i -> {
-            i.insertMaps.rows = values.size();
-            Iterator<Entry<Field<?>, List<Field<?>>>> it = i.insertMaps.values.entrySet().iterator();
-            int index = 0;
-
-            while (it.hasNext()) {
-                int c = index;
-                Entry<Field<?>, List<Field<?>>> e = it.next();
-                Field<?> n = inline(null, e.getKey());
-                e.getValue().clear();
-                e.getValue().addAll(map(values, v -> (Field<?>) StringUtils.defaultIfNull(v.field(c), n)));
-                index++;
-            }
-        });
+        return copy(i -> i.insertMaps.set(null, values));
     }
 
     @Override

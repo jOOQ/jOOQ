@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptySet;
+import static java.util.Collections.nCopies;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
@@ -61,6 +62,7 @@ import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
@@ -77,6 +79,7 @@ import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.flattenFieldOrRows;
 import static org.jooq.impl.Tools.lazy;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.orElse;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.selectQueryImpl;
@@ -116,8 +119,12 @@ import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
 import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.ExtendedDataKey;
+import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -142,7 +149,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         this.empty = new LinkedHashMap<>();
     }
 
-    void clear() {
+    final void clear() {
         empty.clear();
         values.clear();
         rows = 0;
@@ -628,6 +635,47 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             Field<?> field = Tools.tableField(table, k);
             values.get(field).set(rows - 1, Tools.field(v, field));
         });
+    }
+
+    final void set(
+        Collection<? extends Field<?>> newColumns,
+        Collection<? extends Row> newValues
+    ) {
+        if (newColumns != null) {
+            Map<Field<?>, List<Field<?>>> v = new LinkedHashMap<>();
+
+            for (Field<?> c : newColumns)
+                if (values.get(c) == null)
+                    v.put(c, new ArrayList<>(nCopies(rows, inline(null, c))));
+                else
+                    v.put(c, values.get(c));
+
+            values.clear();
+            values.putAll(v);
+        }
+
+        if (newValues != null) {
+            rows = newValues.size();
+            Iterator<Entry<Field<?>, List<Field<?>>>> it = values.entrySet().iterator();
+            int index = 0;
+
+            while (it.hasNext()) {
+                int c = index;
+                Entry<Field<?>, List<Field<?>>> e = it.next();
+                Field<?> n = inline(null, e.getKey());
+                e.getValue().clear();
+                e.getValue().addAll(Tools.map(newValues, v -> (Field<?>) StringUtils.defaultIfNull(v.field(c), n)));
+                index++;
+            }
+        }
+    }
+
+    final UnmodifiableList<? extends Field<?>> $columns() {
+        return QOM.unmodifiable(new ArrayList<>(values.keySet()));
+    }
+
+    final UnmodifiableList<? extends Row> $values() {
+        return QOM.unmodifiable(rows());
     }
 
     private final void initNextRow() {

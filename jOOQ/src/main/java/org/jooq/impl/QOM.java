@@ -665,13 +665,13 @@ public final class QOM {
     {
         @NotNull  UnmodifiableList<? extends Field<?>> $columns();
         @CheckReturnValue
-        @NotNull  Insert<?> $columns(Collection<? extends Field<?>> columns);
+        @NotNull  MergeNotMatched $columns(Collection<? extends Field<?>> columns);
         @NotNull  UnmodifiableList<? extends Row> $values();
         @CheckReturnValue
-        @NotNull  Insert<?> $values(Collection<? extends Row> values);
+        @NotNull  MergeNotMatched $values(Collection<? extends Row> values);
         @Nullable Condition $where();
         @CheckReturnValue
-        @NotNull  MergeMatched $where(Condition condition);
+        @NotNull  MergeNotMatched $where(Condition condition);
     }
 
     public interface MergeNotMatchedBySource

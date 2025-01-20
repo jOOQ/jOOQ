@@ -2026,9 +2026,7 @@ implements
 
         @Override
         public final MergeMatched $where(Condition newWhere) {
-            return copy(c -> {
-                c.condition = newWhere == null ? noCondition() : newWhere;
-            });
+            return copy(c -> c.condition = newWhere == null ? noCondition() : newWhere);
         }
 
 
@@ -2075,24 +2073,44 @@ implements
             toSQLNotMatched(ctx, this);
         }
 
-        @Override
-        public final UnmodifiableList<? extends Field<?>> $columns() {
-            return QOM.unmodifiable(new ArrayList<>(insertMap.values.keySet()));
+        private final NotMatchedClause create(
+            Collection<? extends Field<?>> c,
+            Collection<? extends Row> v,
+            Condition w
+        ) {
+            NotMatchedClause result = new NotMatchedClause(
+                insertMap.table,
+                w,
+                byTarget
+            );
+            result.insertMap.set(c, v);
+            return result;
+        }
+
+        private final NotMatchedClause copy(Consumer<? super NotMatchedClause> finisher) {
+            NotMatchedClause result = create($columns(), $values(), condition);
+            finisher.accept(result);
+            return result;
         }
 
         @Override
-        public final Insert<?> $columns(Collection<? extends Field<?>> columns) {
-            throw new UnsupportedOperationException("TODO: Merge and Insert should share QOM logic");
+        public final UnmodifiableList<? extends Field<?>> $columns() {
+            return insertMap.$columns();
+        }
+
+        @Override
+        public final MergeNotMatched $columns(Collection<? extends Field<?>> newColumns) {
+            return copy(c -> c.insertMap.set(newColumns, null));
         }
 
         @Override
         public final UnmodifiableList<? extends Row> $values() {
-            return QOM.unmodifiable(insertMap.rows());
+            return insertMap.$values();
         }
 
         @Override
-        public final Insert<?> $values(Collection<? extends Row> values) {
-            throw new UnsupportedOperationException("TODO: Merge and Insert should share QOM logic");
+        public final MergeNotMatched $values(Collection<? extends Row> newValues) {
+            return copy(c -> c.insertMap.set(null, newValues));
         }
 
         @Override
@@ -2101,9 +2119,15 @@ implements
         }
 
         @Override
-        public final MergeMatched $where(Condition condition) {
-            throw new UnsupportedOperationException("TODO: Merge and Insert should share QOM logic");
+        public final MergeNotMatched $where(Condition newWhere) {
+            return copy(c -> c.condition = newWhere);
         }
+
+
+
+
+
+
 
 
 
@@ -2172,15 +2196,17 @@ implements
 
     @Override
     public final Merge<R> $whenMatched(Collection<? extends MergeMatched> newWhenMatched) {
-        return copy(m -> {
-            m.matched.clear();
+        return copy(m -> m.whenMatched0(newWhenMatched));
+    }
 
-            for (MergeMatched e : newWhenMatched)
-                if (e instanceof MatchedClause c)
-                    m.matched.add(c);
-                else
-                    throw new IllegalArgumentException("TODO");
-        });
+    private final void whenMatched0(Collection<? extends MergeMatched> newWhenMatched) {
+        matched.clear();
+
+        for (MergeMatched e : newWhenMatched)
+            if (e instanceof MatchedClause c)
+                matched.add(c);
+            else
+                throw new IllegalArgumentException("TODO");
     }
 
     @Override
@@ -2190,15 +2216,17 @@ implements
 
     @Override
     public final Merge<R> $whenNotMatched(Collection<? extends MergeNotMatched> newWhenNotMatched) {
-        return copy(m -> {
-            m.notMatched.clear();
+        return copy(m -> m.whenNotMatched0(newWhenNotMatched));
+    }
 
-            for (MergeNotMatched e : newWhenNotMatched)
-                if (e instanceof NotMatchedClause c)
-                    m.notMatched.add(c);
-                else
-                    throw new IllegalArgumentException("TODO");
-        });
+    private final void whenNotMatched0(Collection<? extends MergeNotMatched> newWhenNotMatched) {
+        notMatched.clear();
+
+        for (MergeNotMatched e : newWhenNotMatched)
+            if (e instanceof NotMatchedClause c)
+                notMatched.add(c);
+            else
+                throw new IllegalArgumentException("TODO");
     }
 
     @Override
@@ -2208,16 +2236,36 @@ implements
 
     @Override
     public final Merge<R> $whenNotMatchedBySource(Collection<? extends MergeNotMatchedBySource> newWhenNotMatchedBySource) {
-        return copy(m -> {
-            m.notMatchedBySource.clear();
-
-            for (MergeNotMatchedBySource e : newWhenNotMatchedBySource)
-                if (e instanceof MatchedClause c)
-                    m.notMatchedBySource.add(c);
-                else
-                    throw new IllegalArgumentException("TODO");
-        });
+        return copy(m -> m.whenNotMatchedBySource0(newWhenNotMatchedBySource));
     }
+
+    private final void whenNotMatchedBySource0(Collection<? extends MergeNotMatchedBySource> newWhenNotMatchedBySource) {
+        notMatchedBySource.clear();
+
+        for (MergeNotMatchedBySource e : newWhenNotMatchedBySource)
+            if (e instanceof MatchedClause c)
+                notMatchedBySource.add(c);
+            else
+                throw new IllegalArgumentException("TODO");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

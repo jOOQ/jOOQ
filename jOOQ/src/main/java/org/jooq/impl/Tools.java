@@ -119,6 +119,7 @@ import static org.jooq.impl.DDLStatementType.CREATE_VIEW;
 import static org.jooq.impl.DDLStatementType.DROP_INDEX;
 import static org.jooq.impl.DDLStatementType.DROP_SCHEMA;
 import static org.jooq.impl.DDLStatementType.DROP_SEQUENCE;
+import static org.jooq.impl.DDLStatementType.DROP_SYNONYM;
 import static org.jooq.impl.DDLStatementType.DROP_TABLE;
 import static org.jooq.impl.DDLStatementType.DROP_VIEW;
 import static org.jooq.impl.DSL.all;
@@ -224,7 +225,6 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -269,7 +269,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
-import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.MatchResult;
@@ -5213,6 +5212,8 @@ final class Tools {
 
     static final void tryCatch(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element, Consumer<? super Context<?>> runnable) {
         switch (ctx.family()) {
+
+
 
 
 

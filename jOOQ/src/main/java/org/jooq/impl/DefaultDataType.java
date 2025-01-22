@@ -906,6 +906,9 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
                     If you think jOOQ should be able to infer your user type in your particular query, or if you
                     struggle to address this issue, please report a bug/support request here: https://jooq.org/bug
+
+                    More information here:
+                    https://www.jooq.org/doc/latest/manual/sql-execution/fetching/data-type-lookups/
                     """.replace("{result}", "" + result), new DiscouragedStaticTypeRegistryUsage());
 
             // [#16090] [#16425]

@@ -4743,6 +4743,7 @@ public class Settings
      * The maximum number of allowed bind variables before inlining all values where <code>0</code> uses the dialect defaults: <ul>
      * <li>{@link org.jooq.SQLDialect#ACCESS} : 768</li>
      * <li>{@link org.jooq.SQLDialect#ASE} : 2000</li>
+     * <li>{@link org.jooq.SQLDialect#DATABRICKS} : 256</li>
      * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
      * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
      * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
@@ -4760,6 +4761,7 @@ public class Settings
      * The maximum number of allowed bind variables before inlining all values where <code>0</code> uses the dialect defaults: <ul>
      * <li>{@link org.jooq.SQLDialect#ACCESS} : 768</li>
      * <li>{@link org.jooq.SQLDialect#ASE} : 2000</li>
+     * <li>{@link org.jooq.SQLDialect#DATABRICKS} : 256</li>
      * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
      * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
      * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
@@ -8775,6 +8777,7 @@ public class Settings
      * The maximum number of allowed bind variables before inlining all values where <code>0</code> uses the dialect defaults: <ul>
      * <li>{@link org.jooq.SQLDialect#ACCESS} : 768</li>
      * <li>{@link org.jooq.SQLDialect#ASE} : 2000</li>
+     * <li>{@link org.jooq.SQLDialect#DATABRICKS} : 256</li>
      * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
      * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
      * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>

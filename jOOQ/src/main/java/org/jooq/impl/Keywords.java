@@ -422,6 +422,7 @@ final class Keywords {
     static final Keyword K_SYSTEM                   = keyword("system");
     static final Keyword K_TABLE                    = keyword("table");
     static final Keyword K_TARGET                   = keyword("target");
+    static final Keyword K_TBLPROPERTIES            = keyword("tblproperties");
     static final Keyword K_TEMPORARY                = keyword("temporary");
     static final Keyword K_THEN                     = keyword("then");
     static final Keyword K_THROW                    = keyword("throw");

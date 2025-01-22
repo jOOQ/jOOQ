@@ -538,6 +538,7 @@ implements
 
 
 
+
                 case DERBY:
                 case FIREBIRD:
                 case H2:
@@ -700,6 +701,7 @@ implements
                 }
 
                 // Some databases allow for emulating this clause using a MERGE statement
+
 
 
 

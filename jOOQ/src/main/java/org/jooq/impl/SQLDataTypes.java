@@ -51,6 +51,7 @@ import java.util.UUID;
 import org.jooq.DataType;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+// ...
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -71,6 +72,75 @@ import org.jooq.types.YearToSecond;
 final class SQLDataTypes {
 
     private SQLDataTypes() {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     static class ClickHouseDataType {
 

@@ -105,6 +105,11 @@ implements
             case YUGABYTEDB:
                 return false;
 
+
+
+
+
+
             case TRINO:
                 return true;
 
@@ -137,6 +142,12 @@ implements
                     .where(predicate.$result())
                 )));
                 break;
+
+
+
+
+
+
 
             case TRINO:
                 ctx.visit(function(N_NONE_MATCH, BOOLEAN, array, DSL.field("{0}", OTHER, predicate)));

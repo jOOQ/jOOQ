@@ -44,6 +44,7 @@ import static org.jooq.ExecuteType.DDL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -521,8 +522,14 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
 
 
+
+
         return rendered;
     }
+
+
+
+
 
 
 

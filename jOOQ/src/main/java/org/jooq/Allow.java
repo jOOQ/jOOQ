@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
@@ -158,6 +159,7 @@ public @interface Allow {
      * method that is annotated with {@link Support}.
      */
     SQLDialect[] value() default {
+
 
 
 

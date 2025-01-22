@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
@@ -813,6 +814,9 @@ public final class SQLDataType {
         // TODO [#5713] Make this more reliable using a data type registry
 
         try {
+
+
+
 
 
 

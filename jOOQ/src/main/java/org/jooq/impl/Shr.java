@@ -118,6 +118,7 @@ implements
 
 
 
+
             case TRINO:
                 return true;
 
@@ -161,6 +162,7 @@ implements
             case H2:
                 ctx.visit(function(N_RSHIFT, getDataType(), value, count));
                 break;
+
 
 
 

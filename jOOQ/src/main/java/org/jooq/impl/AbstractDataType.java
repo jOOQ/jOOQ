@@ -45,6 +45,7 @@ import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
@@ -691,8 +692,13 @@ implements
         //         a null value, historically, so removing this check would
         //         introduce a lot of regressions!
         else if (lengthDefined() && length() > 0) {
-            if (isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(dialect))
+            if (isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(dialect)) {
                 return castTypeName0();
+            }
+
+
+
+
 
 
 

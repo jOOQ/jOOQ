@@ -104,6 +104,7 @@ implements
             case HSQLDB:
                 return false;
 
+
             case TRINO:
                 return true;
 
@@ -139,6 +140,7 @@ implements
                     .intersectAll(select(asterisk()).from(unnest(array2)))
                 ));
                 break;
+
 
             case TRINO:
                 ctx.visit(function(N_ARRAYS_OVERLAP, BOOLEAN, array1, array2));

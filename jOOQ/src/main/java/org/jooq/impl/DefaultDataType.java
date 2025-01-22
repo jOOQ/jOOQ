@@ -37,10 +37,12 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Collections.unmodifiableCollection;
 // ...
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
+// ...
 // ...
 import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -88,7 +90,6 @@ import static org.jooq.impl.SQLDataType.TINYINT;
 import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
-import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIME_PRECISION;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.tools.reflect.Reflect.wrapper;
@@ -109,7 +110,6 @@ import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
-import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
@@ -859,6 +859,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     private static final JooqLogger getDataType = JooqLogger.getLogger(DefaultDataType.class, "getDataType", 5);
+    private static final JooqLogger getDataTypeAccess = JooqLogger.getLogger(DefaultDataType.class, "getDataTypeAccess", 50);
     private static final class DiscouragedStaticTypeRegistryUsage extends RuntimeException {}
 
     public static final <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type, DataType<T> fallbackDataType) {
@@ -869,32 +870,49 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         // [#5713] [#15286] TODO: Move this to a dynamic type registry and make warning configurable
         if (LegacyConvertedDataType.isInstance(result)) {
-            DiscouragedStaticTypeRegistryUsage e = new DiscouragedStaticTypeRegistryUsage();
+            if (getDataType.isWarnEnabled())
+                getDataType.warn("Static type registry", """
+                    The deprecated static type registry was being accessed for a non-built-in data type:
 
-            getDataType.warn("Static type registry", """
-                The deprecated static type registry was being accessed for a non-built-in data type: {result}.
+                    {result}
 
-                It is strongly recommended not looking up DataType<T> references from Class<T> references by
-                relying on the internal static type registry. For example, avoid calling DSL.val(Object) or
-                DSL.val(Object, Class), and call DSL.val(Object, DataType), providing an explicit DataType
-                reference to jOOQ if your DataType uses a Converter or a Binding.
+                    It is strongly recommended not looking up DataType<U> references for user-defined types from
+                    Class<U> references by relying on the internal static type registry. For example, avoid calling
+                    DSL.val(Object) or DSL.val(Object, Class), and call DSL.val(Object, DataType), or
+                    DSL.val(Object, Field) instead, providing an explicit DataType reference to jOOQ if your
+                    DataType uses a Converter or a Binding.
 
-                Such a DataType reference can be obtained, for example, using:
+                    The same is true for plain SQL templates, such as DSL.condition("a = ?", userDefinedValue),
+                    which should be replaced by explicit type usage, such as
+                    DSL.condition("a = ?", DSL.val(userDefinedValue, myType))
 
-                - Generated TABLE.COLUMN.getDataType(), if you attached a Converter/Binding to generated code
-                - From a base type, e.g. SQLDataType.VARCHAR.asConvertedDataType(converterOrBinding)
+                    Note, despite the above, in many cases, the user defined type can be inferred correctly,
+                    implicitly by jOOQ, e.g. when writing:
 
-                If you think jOOQ should be able to infer your user type in your particular query,
-                please report a bug here: https://jooq.org/bug
+                    - TABLE.COLUMN.eq(userDefinedValue)
 
-                See https://github.com/jOOQ/jOOQ/issues/15286 for more details.
-                """.replace("{result}", "" + result), e);
+                    In those cases, providing an explicit type reference is unnecessary. If it is necessary, such a
+                    DataType reference can be obtained, for example, using:
+
+                    - Generated TABLE.COLUMN.getDataType(), if you attached a Converter/Binding to generated code
+                    - From a base type, e.g. SQLDataType.VARCHAR.asConvertedDataType(converterOrBinding)
+
+                    If the source of the warning isn't clear due to query complexity, you can turn on the following
+                    system property, which will enable warning logs when the static type registry is accessed, e.g.
+                    at bind value construction time, before this warning here is rendered at bind value rendering
+                    time:
+
+                    -Dorg.jooq.debug-log-on-discouraged-static-type-registry-access=true
+
+                    If you think jOOQ should be able to infer your user type in your particular query, or if you
+                    struggle to address this issue, please report a bug/support request here: https://jooq.org/bug
+                    """.replace("{result}", "" + result), new DiscouragedStaticTypeRegistryUsage());
 
             // [#16090] [#16425]
             // An undocumented flag to throw the logged exception to help with faster fixing of this problem
             // Users should not rely on this flag as it may be removed without announcement when it isn't needed anymore.
             if ("true".equals(System.getProperty("org.jooq.throw-on-discouraged-static-type-registry-access")))
-                throw e;
+                throw new DiscouragedStaticTypeRegistryUsage();
         }
 
         if (result instanceof ArrayDataType<?> a)
@@ -985,8 +1003,43 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
                     throw new SQLDialectNotSupportedException("Type " + type + " is not supported in dialect " + dialect);
             }
 
+            if (result instanceof LegacyConvertedDataType l) {
+                if (debugLogOnDiscouragedStaticTypeRegistryAccess() && getDataTypeAccess.isWarnEnabled())
+                    getDataTypeAccess.warn("Static type registry",
+                        """
+                        A static type registry access candidate has been encountered for data type
+
+                        {type}
+
+                        The system property org.jooq.debug-log-on-discouraged-static-type-registry-access is enabled
+                        to render this static type registry access candidate warning. This logs a warning for every
+                        implicit data type lookup of a user defined data type. It may help debug
+                        DiscouragedStaticTypeRegistryUsage encounters, and should be used only for debugging
+                        purposes, as it also produces false positives for cases where implicit data types can be
+                        correctly looked up from query context, after the construction of the bind value, such as:
+
+                        - TABLE.COLUMN.eq(userDefinedValue)
+
+                        A true positive may be a plain SQL template, for example:
+
+                        - DSL.condition("column = ?", userDefinedValue)
+                        - DSL.field("column", MyType.class)
+                        """.replace("{type}", "" + result),
+                        new DiscouragedStaticTypeRegistryUsage()
+                    );
+            }
+
             return (DataType<T>) result;
         }
+    }
+
+    private static transient Boolean debugLogOnDiscouragedStaticTypeRegistryAccess;
+
+    private static final boolean debugLogOnDiscouragedStaticTypeRegistryAccess() {
+        if (debugLogOnDiscouragedStaticTypeRegistryAccess == null)
+            debugLogOnDiscouragedStaticTypeRegistryAccess = "true".equals(System.getProperty("org.jooq.debug-log-on-discouraged-static-type-registry-access"));
+
+        return TRUE.equals(debugLogOnDiscouragedStaticTypeRegistryAccess);
     }
 
     /**

@@ -104,6 +104,11 @@ implements
             case TRINO:
                 return false;
 
+
+
+
+
+
             case CLICKHOUSE:
                 return false;
 
@@ -127,6 +132,12 @@ implements
             case TRINO:
                 ctx.visit(arrayConcat(array(prepend), array));
                 break;
+
+
+
+
+
+
 
             case CLICKHOUSE:
                 ctx.visit(function(N_arrayPushFront, getDataType(), array, prepend));

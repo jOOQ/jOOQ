@@ -112,6 +112,7 @@ implements
 
 
 
+
             case CLICKHOUSE:
                 return true;
 
@@ -151,6 +152,7 @@ implements
             case HSQLDB:
                 ctx.visit(function(N_BITXOR, getDataType(), arg1, arg2));
                 break;
+
 
 
 

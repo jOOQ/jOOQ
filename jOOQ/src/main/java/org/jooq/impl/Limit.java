@@ -67,6 +67,7 @@ import static org.jooq.impl.Keywords.K_TO;
 import static org.jooq.impl.Keywords.K_TOP;
 import static org.jooq.impl.Keywords.K_WITH_TIES;
 import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.isScalarSubquery;
 
 import org.jooq.Condition;
@@ -370,6 +371,15 @@ final class Limit extends AbstractQueryPart implements UTransient {
                 else
                     return limit;
 
+
+
+
+
+
+
+
+
+
             default:
                 return limit;
         }
@@ -382,6 +392,15 @@ final class Limit extends AbstractQueryPart implements UTransient {
                     return new Cast<>(offsetOrZero, offsetOrZero.getDataType().notNull());
                 else
                     return offsetOrZero;
+
+
+
+
+
+
+
+
+
 
             default:
                 return offsetOrZero;

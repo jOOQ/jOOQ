@@ -131,6 +131,11 @@ implements
             case YUGABYTEDB:
                 return false;
 
+
+
+
+
+
             case DUCKDB:
                 return true;
 
@@ -189,6 +194,12 @@ implements
             case YUGABYTEDB:
                 ctx.visit(DSL.position(Like.requiresStringCast(string), Like.requiresStringCast(suffix)).eq(iadd(isub(Like.requiresStringCast(string).length(), Like.requiresStringCast(suffix).length()), inline(1))));
                 break;
+
+
+
+
+
+
 
             case DUCKDB:
                 ctx.visit(function(N_SUFFIX, BOOLEAN, string, suffix));

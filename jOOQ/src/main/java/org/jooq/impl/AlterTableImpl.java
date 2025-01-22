@@ -256,6 +256,8 @@ implements
 
 
 
+
+
     private final Table<?>               table;
     private final boolean                ifExists;
     private boolean                      ifExistsColumn;
@@ -1479,6 +1481,7 @@ implements
 
 
 
+
                 case TRINO:
                     ctx.visit(K_ALTER_COLUMN);
                     break;
@@ -1505,6 +1508,7 @@ implements
                     case TRINO:
                         ctx.sql(' ').visit(K_SET_DATA_TYPE);
                         break;
+
 
 
 
@@ -1657,6 +1661,7 @@ implements
 
 
 
+
                 ctx.sql(' ');
                 ctx.qualify(false, c -> c.visit(dropColumns));
 
@@ -1719,6 +1724,7 @@ implements
 
     private final Keyword addColumnKeyword(Context<?> ctx) {
         switch (ctx.family()) {
+
 
             case CLICKHOUSE:
             case TRINO:

@@ -122,6 +122,7 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
 
 
 
+
             case MARIADB:
             case MYSQL: {
                 ctx.visit(function(N_ELT, getDataType(), Tools.combine(index, values)));

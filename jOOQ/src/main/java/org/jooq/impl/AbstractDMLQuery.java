@@ -45,6 +45,7 @@ import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -73,7 +74,6 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.conf.SettingsTools.renderLocale;
-import static org.jooq.impl.AbstractDataType.convert0;
 import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
@@ -138,7 +138,6 @@ import java.util.function.BiFunction;
 
 import org.jooq.Asterisk;
 import org.jooq.Binding;
-import org.jooq.BindingGetResultSetContext;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -161,7 +160,6 @@ import org.jooq.QualifiedAsterisk;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
-import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;

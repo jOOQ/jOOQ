@@ -41,11 +41,13 @@ import static org.jooq.Clause.FIELD_ROW;
 // ...
 // ...
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Names.N_COALESCE;
 import static org.jooq.impl.Names.N_ROW;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.extractVal;
 import static org.jooq.impl.Tools.isVal;
 import static org.jooq.impl.Tools.isVal1;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 
 import java.util.Collection;
@@ -75,6 +77,7 @@ import org.jooq.Row2;
 import org.jooq.Select;
 import org.jooq.ContextConverter;
 import org.jooq.SelectField;
+import org.jooq.TableField;
 // ...
 import org.jooq.impl.QOM.UnmodifiableList;
 
@@ -255,6 +258,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
@@ -266,6 +270,21 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+            default:
+                acceptDefault(ctx);
+                break;
+        }
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
         ctx.sql("(")
            .visit(wrap(fields.fields))
            .sql(")");

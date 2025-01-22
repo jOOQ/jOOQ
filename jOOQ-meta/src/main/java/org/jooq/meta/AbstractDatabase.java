@@ -3638,6 +3638,7 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
             case CLICKHOUSE:
             case TRINO:
                 return upper.startsWith("ARRAY(");

@@ -62,6 +62,7 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
@@ -2452,6 +2453,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 default:
                     super.setNull0(ctx);
                     break;
@@ -2574,6 +2576,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, byte[] value) throws SQLException {
             switch (ctx.family()) {
+
+
+
+
+
                 case H2:
                     blobs.set(new DefaultBindingSetStatementContext<>(ctx.executeContext(), ctx.statement(), ctx.index(), value));
                     break;

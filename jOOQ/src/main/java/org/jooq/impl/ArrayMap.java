@@ -113,6 +113,7 @@ implements
             case CLICKHOUSE:
                 return false;
 
+
             case TRINO:
                 return true;
 
@@ -150,6 +151,7 @@ implements
             case CLICKHOUSE:
                 ctx.visit(DSL.function(N_arrayMap, getDataType(), DSL.field("{0}", OTHER, mapper), array));
                 break;
+
 
             case TRINO:
                 ctx.visit(function(N_TRANSFORM, getDataType(), array, DSL.field("{0}", OTHER, mapper)));

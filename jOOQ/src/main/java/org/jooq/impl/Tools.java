@@ -54,6 +54,7 @@ import static org.jooq.ContextConverter.scoped;
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
@@ -487,17 +488,18 @@ final class Tools {
         /**
          * [#1520] Enforce executing static statements.
          * <p>
-         * Some SQL dialects support only a limited amount of bind variables. This
-         * flag is set when static statements have too many bind variables. Known
-         * values are:
+         * Some SQL dialects support only a limited amount of bind variables.
+         * This flag is set when static statements have too many bind variables.
+         * Known values are:
          * <ul>
-         * <li>{@link SQLDialect#ACCESS} : 768</li>
-         * <li>{@link SQLDialect#ASE} : 2000</li>
-         * <li>{@link SQLDialect#INGRES} : 1024</li>
-         * <li>{@link SQLDialect#ORACLE} : 32767</li>
-         * <li>{@link SQLDialect#POSTGRES} : 32767</li>
-         * <li>{@link SQLDialect#SQLITE} : 999</li>
-         * <li>{@link SQLDialect#SQLSERVER} : 2100</li>
+         * <li>{@link org.jooq.SQLDialect#ACCESS} : 768</li>
+         * <li>{@link org.jooq.SQLDialect#ASE} : 2000</li>
+         * <li>{@link org.jooq.SQLDialect#DATABRICKS} : 256</li>
+         * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
+         * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
+         * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
+         * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
+         * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
          * <li>{@link org.jooq.SQLDialect#TERADATA} : 2536</li>
          * </ul>
          */
@@ -1219,6 +1221,8 @@ final class Tools {
     static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT_FOR_LOBS    = SQLDialect.supportedBy(MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_DEFAULT_CAST                    = SQLDialect.supportedBy(FIREBIRD);
+
+
 
 
 
@@ -5799,6 +5803,7 @@ final class Tools {
             }
         }
     }
+
 
 
 

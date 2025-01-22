@@ -45,6 +45,7 @@ import org.jooq.meta.clickhouse.ClickHouseDatabase;
 // ...
 import org.jooq.meta.cubrid.CUBRIDDatabase;
 // ...
+// ...
 import org.jooq.meta.derby.DerbyDatabase;
 import org.jooq.meta.duckdb.DuckDBDatabase;
 // ...
@@ -87,6 +88,7 @@ public class Databases {
         Class<? extends Database> result = JDBCDatabase.class;
 
         switch (dialect.family()) {
+
 
 
 

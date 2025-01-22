@@ -50,6 +50,7 @@ import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
 import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;

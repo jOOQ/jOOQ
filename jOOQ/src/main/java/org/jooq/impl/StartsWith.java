@@ -130,6 +130,11 @@ implements
             case YUGABYTEDB:
                 return false;
 
+
+
+
+
+
             case DUCKDB:
             case TRINO:
                 return true;
@@ -188,6 +193,12 @@ implements
             case YUGABYTEDB:
                 ctx.visit(DSL.position(Like.requiresStringCast(string), Like.requiresStringCast(prefix)).eq(inline(1)));
                 break;
+
+
+
+
+
+
 
             case DUCKDB:
             case TRINO:

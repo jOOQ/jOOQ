@@ -336,6 +336,7 @@ final class Names {
     static final Name N_ACOS                        = systemName("acos");
     static final Name N_ACOSH                       = systemName("acosh");
     static final Name N_ACOTH                       = systemName("acoth");
+    static final Name N_AGGREGATE                   = systemName("aggregate");
     static final Name N_ALL_MATCH                   = systemName("all_match");
     static final Name N_ANY_MATCH                   = systemName("any_match");
     static final Name N_ANY_VALUE                   = systemName("any_value");
@@ -347,6 +348,7 @@ final class Names {
     static final Name N_ARRAY_FILTER                = systemName("array_filter");
     static final Name N_ARRAY_GET                   = systemName("array_get");
     static final Name N_ARRAY_INTERSECT             = systemName("array_intersect");
+    static final Name N_ARRAY_JOIN                  = systemName("array_join");
     static final Name N_ARRAY_LENGTH                = systemName("array_length");
     static final Name N_ARRAY_MAP                   = systemName("array_map");
     static final Name N_ARRAY_NONE_MATCH            = systemName("array_none_match");
@@ -458,6 +460,7 @@ final class Names {
     static final Name N_DENSE_RANK                  = systemName("dense_rank");
     static final Name N_DIGITS                      = systemName("digits");
     static final Name N_E                           = systemName("e");
+    static final Name N_ENDSWITH                    = systemName("endswith");
     static final Name N_ENDS_WITH                   = systemName("ends_with");
     static final Name N_EXCLUDED                    = systemName("excluded");
     static final Name N_EXECUTE                     = systemName("execute");
@@ -599,6 +602,7 @@ final class Names {
     static final Name N_SQR                         = systemName("sqr");
     static final Name N_SQRT                        = systemName("sqrt");
     static final Name N_SQUARE                      = systemName("square");
+    static final Name N_STARTSWITH                  = systemName("startswith");
     static final Name N_STARTS_WITH                 = systemName("starts_with");
     static final Name N_STDDEV_POP                  = systemName("stddev_pop");
     static final Name N_STDDEV_SAMP                 = systemName("stddev_samp");

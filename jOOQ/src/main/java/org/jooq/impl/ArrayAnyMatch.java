@@ -104,6 +104,11 @@ implements
             case YUGABYTEDB:
                 return false;
 
+
+
+
+
+
             case CLICKHOUSE:
                 return false;
 
@@ -138,6 +143,12 @@ implements
                     .where(predicate.$result())
                 )));
                 break;
+
+
+
+
+
+
 
             case CLICKHOUSE:
                 ctx.visit(DSL.function(N_arrayExists, getDataType(), DSL.field("{0}", OTHER, predicate), array));

@@ -540,8 +540,6 @@ public class JDBCUtils {
                 return "com.clickhouse.jdbc.ClickHouseDriver";
             case CUBRID:
                 return "cubrid.jdbc.driver.CUBRIDDriver";
-
-                return "com.databricks.client.jdbc.Driver";
             case DERBY:
                 return "org.apache.derby.jdbc.ClientDriver";
             case DUCKDB:
@@ -564,6 +562,8 @@ public class JDBCUtils {
                 return "org.sqlite.JDBC";
             case YUGABYTEDB:
                 return "com.yugabyte.Driver";
+
+
 
 
 

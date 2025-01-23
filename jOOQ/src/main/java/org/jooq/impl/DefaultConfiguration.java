@@ -84,6 +84,7 @@ import org.jooq.RecordType;
 import org.jooq.RecordUnmapper;
 import org.jooq.RecordUnmapperProvider;
 import org.jooq.SQLDialect;
+import org.jooq.SubscriberProvider;
 import org.jooq.TransactionListener;
 import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
@@ -141,6 +142,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
     private transient CharsetProvider                   charsetProvider;
     private transient ConverterProvider                 converterProvider;
     private transient FormattingProvider                formattingProvider;
+    private transient SubscriberProvider<?>             subscriberProvider;
 
 
 
@@ -210,6 +212,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             null,
             null,
             null,
+            null,
 
 
 
@@ -256,6 +259,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             configuration.charsetProvider,
             configuration.converterProvider,
             configuration.formattingProvider,
+            configuration.subscriberProvider,
 
 
 
@@ -301,6 +305,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         CharsetProvider charsetProvider,
         ConverterProvider converterProvider,
         FormattingProvider formattingProvider,
+        SubscriberProvider<?> subscriberProvider,
 
 
 
@@ -335,6 +340,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         set(charsetProvider);
         set(converterProvider);
         set(formattingProvider);
+        set(subscriberProvider);
 
 
 
@@ -404,6 +410,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -443,6 +450,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -482,6 +490,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -521,6 +530,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -565,6 +575,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -604,6 +615,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -643,6 +655,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -682,6 +695,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -721,6 +735,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -765,6 +780,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -809,6 +825,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -848,6 +865,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -887,6 +905,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -926,6 +945,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -965,6 +985,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -1004,6 +1025,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -1043,6 +1065,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -1087,6 +1110,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -1126,6 +1150,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             newCharsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -1165,6 +1190,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             newConverterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -1204,6 +1230,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             newFormattingProvider,
+            subscriberProvider,
 
 
 
@@ -1216,6 +1243,50 @@ public class DefaultConfiguration extends AbstractConfiguration {
             data
         );
     }
+
+    @Override
+    public final Configuration derive(SubscriberProvider<?> newSubscriberProvider) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            interpreterConnectionProvider,
+            systemConnectionProvider,
+            connectionFactory,
+            metaProvider,
+            commitProvider,
+            executorProvider,
+            cacheProvider,
+            transactionProvider,
+            annotatedPojoMemberProvider,
+            constructorPropertiesProvider,
+            recordMapperProvider,
+            recordUnmapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            migrationListenerProviders,
+            visitListenerProviders,
+            transactionListenerProviders,
+            diagnosticsListenerProviders,
+            unwrapperProvider,
+            charsetProvider,
+            converterProvider,
+            formattingProvider,
+            newSubscriberProvider,
+
+
+
+
+
+
+            clock,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+
+
+
 
 
 
@@ -1399,6 +1470,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -1438,6 +1510,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -1477,6 +1550,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
             charsetProvider,
             converterProvider,
             formattingProvider,
+            subscriberProvider,
 
 
 
@@ -1529,6 +1603,10 @@ public class DefaultConfiguration extends AbstractConfiguration {
     @Override
     public final Configuration set(ConnectionFactory newConnectionFactory) {
         this.connectionFactory = newConnectionFactory;
+
+        if (connectionFactory instanceof DefaultConnectionFactory dcf)
+            dcf.configuration = this;
+
         return this;
     }
 
@@ -1693,6 +1771,12 @@ public class DefaultConfiguration extends AbstractConfiguration {
     @Override
     public final Configuration set(FormattingProvider newFormattingProvider) {
         this.formattingProvider = newFormattingProvider;
+        return this;
+    }
+
+    @Override
+    public final Configuration set(SubscriberProvider<?> newSubscriberProvider) {
+        this.subscriberProvider = newSubscriberProvider;
         return this;
     }
 
@@ -2213,6 +2297,13 @@ public class DefaultConfiguration extends AbstractConfiguration {
             : new DefaultFormattingProvider();
     }
 
+    @Override
+    public final SubscriberProvider<?> subscriberProvider() {
+        return subscriberProvider != null
+            ? subscriberProvider
+            : new DefaultSubscriberProvider<>();
+    }
+
 
 
 
@@ -2333,6 +2424,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         oos.writeObject(serializableOrNull(charsetProvider));
         oos.writeObject(serializableOrNull(converterProvider));
         oos.writeObject(serializableOrNull(formattingProvider));
+        oos.writeObject(serializableOrNull(subscriberProvider));
 
         // [#7062] Exclude reflection cache from serialisation
         for (Entry<Object, Object> entry : data.entrySet()) {
@@ -2391,6 +2483,7 @@ public class DefaultConfiguration extends AbstractConfiguration {
         charsetProvider = (CharsetProvider) ois.readObject();
         converterProvider = (ConverterProvider) ois.readObject();
         formattingProvider = (FormattingProvider) ois.readObject();
+        subscriberProvider = (SubscriberProvider<?>) ois.readObject();
         data = new ConcurrentHashMap<>();
 
         Object key;

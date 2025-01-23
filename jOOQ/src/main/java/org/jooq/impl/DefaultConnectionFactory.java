@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.R2DBC.AbstractSubscription.onRequest;
+import static org.jooq.impl.Tools.CONFIG;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -45,6 +46,7 @@ import java.util.function.IntFunction;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
+import org.jooq.Configuration;
 import org.jooq.exception.DetachedException;
 
 import org.reactivestreams.Publisher;
@@ -65,16 +67,18 @@ import io.r2dbc.spi.ValidationDepth;
  */
 final class DefaultConnectionFactory implements ConnectionFactory {
 
+    Configuration       configuration;
     Connection          connection;
     final boolean       finalize;
     final boolean       nested;
     final AtomicInteger savepoints = new AtomicInteger();
 
-    DefaultConnectionFactory(Connection connection) {
-        this(connection, false, true);
+    DefaultConnectionFactory(Configuration configuration, Connection connection) {
+        this(configuration, connection, false, true);
     }
 
-    DefaultConnectionFactory(Connection connection, boolean finalize, boolean nested) {
+    DefaultConnectionFactory(Configuration configuration, Connection connection, boolean finalize, boolean nested) {
+        this.configuration = configuration != null ? configuration : CONFIG.get();
         this.connection = connection;
         this.finalize = finalize;
         this.nested = nested;
@@ -89,7 +93,7 @@ final class DefaultConnectionFactory implements ConnectionFactory {
 
     @Override
     public final Publisher<? extends Connection> create() {
-        return s -> s.onSubscribe(onRequest(s, x -> {
+        return s -> s.onSubscribe(onRequest(configuration, s, x -> {
             x.onNext(new NonClosingConnection());
             x.onComplete();
         }));
@@ -137,7 +141,7 @@ final class DefaultConnectionFactory implements ConnectionFactory {
 
         @Override
         public Publisher<Void> close() {
-            return s -> s.onSubscribe(onRequest(s, x -> x.onComplete()));
+            return s -> s.onSubscribe(onRequest(configuration, s, x -> x.onComplete()));
         }
 
         @Override

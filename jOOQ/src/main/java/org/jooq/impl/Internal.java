@@ -884,40 +884,6 @@ public final class Internal {
     }
 
     /**
-     * Create a {@link Subscriber} from a set of lambdas.
-     * <p>
-     * This is used for internal purposes and thus subject for change.
-     */
-    public static final <T> Subscriber<T> subscriber(
-        Consumer<? super Subscription> subscription,
-        Consumer<? super T> onNext,
-        Consumer<? super Throwable> onError,
-        Runnable onComplete
-    ) {
-        return new Subscriber<T>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-                subscription.accept(s);
-            }
-
-            @Override
-            public void onNext(T t) {
-                onNext.accept(t);
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                onError.accept(t);
-            }
-
-            @Override
-            public void onComplete() {
-                onComplete.run();
-            }
-        };
-    }
-
-    /**
      * JDK agnostic abstraction over {@link Class#arrayType()} and
      * {@link Array#newInstance(Class, int)}.
      */

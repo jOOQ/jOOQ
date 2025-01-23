@@ -43,7 +43,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.conf.ParamType.NAMED;
-import static org.jooq.impl.Internal.subscriber;
+import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.abstractDMLQuery;
 import static org.jooq.impl.Tools.abstractResultQuery;
@@ -82,7 +82,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -102,6 +101,7 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
+import org.jooq.SubscriberProvider;
 import org.jooq.TransactionalPublishable;
 import org.jooq.XML;
 import org.jooq.conf.Settings;
@@ -149,13 +149,18 @@ final class R2DBC {
 
     static abstract class AbstractSubscription<T> implements org.reactivestreams.Subscription {
 
+        final Configuration         configuration;
         final AtomicBoolean         completed;
         final AtomicLong            requested;
         final Subscriber<? super T> subscriber;
         final Guard                 guard;
 
-        static <T> Subscription onRequest(Subscriber<? super T> s, Consumer<? super Subscriber<? super T>> onRequest) {
-            return new AbstractSubscription<T>(s) {
+        static <T> Subscription onRequest(
+            Configuration configuration,
+            Subscriber<? super T> s,
+            Consumer<? super Subscriber<? super T>> onRequest
+        ) {
+            return new AbstractSubscription<T>(configuration, s) {
                 @Override
                 void request0() {
                     onRequest.accept(subscriber);
@@ -163,7 +168,8 @@ final class R2DBC {
             };
         }
 
-        AbstractSubscription(Subscriber<? super T> subscriber) {
+        AbstractSubscription(Configuration configuration, Subscriber<? super T> subscriber) {
+            this.configuration = configuration;
             this.completed = new AtomicBoolean();
             this.requested = new AtomicLong();
             this.guard = new Guard();
@@ -178,7 +184,9 @@ final class R2DBC {
                     // required_spec317_mustSupportACumulativePendingElementCountUpToLongMaxValue
                     completed.set(true);
                     subscriber.onComplete();
-                }
+                },
+                configuration.subscriberProvider(),
+                subscriber
             );
         }
 
@@ -226,7 +234,25 @@ final class R2DBC {
     // R2DBC implementations
     // -------------------------------------------------------------------------
 
-    static final class Forwarding<T> implements Subscriber<T> {
+    /**
+     * [#14048] A {@link Subscriber} that allows for accessing a downstream
+     * subscriber in order to access its context via
+     * {@link SubscriberProvider#context(Subscriber)}.
+     */
+    interface DownstreamSubscriber<T> extends Subscriber<T> {
+        Subscriber<?> downstream();
+    }
+
+    static final Subscriber<?> downstream(Subscriber<?> subscriber) {
+        Subscriber<?> r = subscriber;
+
+        while (r instanceof DownstreamSubscriber<?> d)
+            r = d.downstream();
+
+        return r;
+    }
+
+    static final class Forwarding<T> implements DownstreamSubscriber<T> {
 
         final int                           forwarderIndex;
         final AbstractResultSubscriber<T>   resultSubscriber;
@@ -236,6 +262,11 @@ final class R2DBC {
             this.forwarderIndex = forwarderIndex;
             this.resultSubscriber = resultSubscriber;
             this.subscription = new AtomicReference<>();
+        }
+
+        @Override
+        public final Subscriber<?> downstream() {
+            return resultSubscriber.downstream.subscriber;
         }
 
         @Override
@@ -271,7 +302,7 @@ final class R2DBC {
         }
     }
 
-    static abstract class AbstractResultSubscriber<T> implements Subscriber<Result> {
+    static abstract class AbstractResultSubscriber<T> implements DownstreamSubscriber<Result> {
 
         final AbstractNonBlockingSubscription<? super T> downstream;
         final AtomicBoolean                              completed;
@@ -286,6 +317,11 @@ final class R2DBC {
             this.completed = new AtomicBoolean();
             this.completionRequested = new AtomicBoolean();
             this.statement = statement;
+        }
+
+        @Override
+        public final Subscriber<?> downstream() {
+            return downstream.subscriber;
         }
 
         @Override
@@ -340,7 +376,9 @@ final class R2DBC {
                         s.onNext(t);
                 },
                 s::onError,
-                s::onComplete
+                s::onComplete,
+                downstream.configuration.subscriberProvider(),
+                this
             ));
         }
     }
@@ -392,7 +430,7 @@ final class R2DBC {
         }
     }
 
-    static abstract class ConnectionSubscriber<T> implements Subscriber<Connection> {
+    static abstract class ConnectionSubscriber<T> implements DownstreamSubscriber<Connection> {
 
         final AbstractNonBlockingSubscription<T> downstream;
         final AtomicReference<Connection>        connection;
@@ -402,6 +440,11 @@ final class R2DBC {
             this.downstream = downstream;
             this.connection = new AtomicReference<>();
             this.subscription = new AtomicReference<>();
+        }
+
+        @Override
+        public final Subscriber<?> downstream() {
+            return downstream.subscriber;
         }
 
         @Override
@@ -607,7 +650,6 @@ final class R2DBC {
 
     static abstract class AbstractNonBlockingSubscription<T> extends AbstractSubscription<T> {
 
-        final Configuration                         configuration;
         final AtomicBoolean                         subscribed;
         final Publisher<? extends Connection>       connection;
         final AtomicInteger                         nextForwarderIndex;
@@ -617,9 +659,8 @@ final class R2DBC {
             Configuration configuration,
             Subscriber<? super T> subscriber
         ) {
-            super(subscriber);
+            super(configuration, subscriber);
 
-            this.configuration = configuration;
             this.subscribed = new AtomicBoolean();
             this.connection = configuration.connectionFactory().create();
             this.nextForwarderIndex = new AtomicInteger();
@@ -642,7 +683,9 @@ final class R2DBC {
                         request1();
                     },
                     delegate::onError,
-                    delegate::onComplete
+                    delegate::onComplete,
+                    configuration.subscriberProvider(),
+                    delegate
                 ));
             }
             else
@@ -700,7 +743,14 @@ final class R2DBC {
                     return c;
                 }
                 else {
-                    c.close().subscribe(subscriber(s -> s.request(Long.MAX_VALUE), t -> {}, t -> {}, onComplete));
+                    c.close().subscribe(subscriber(
+                        s -> s.request(Long.MAX_VALUE),
+                        t -> {},
+                        t -> {},
+                        onComplete,
+                        configuration.subscriberProvider(),
+                        subscriber
+                    ));
                     return null;
                 }
             });
@@ -794,7 +844,7 @@ final class R2DBC {
                             try {
                                 transactional.run(c instanceof NonClosingConnection
                                         ? configuration
-                                        : configuration.derive(new DefaultConnectionFactory(c))).subscribe(subscriber(
+                                        : configuration.derive(new DefaultConnectionFactory(configuration, c))).subscribe(subscriber(
                                     s1 -> s1.request(Long.MAX_VALUE),
                                     subscriber::onNext,
                                     e -> rollback(subscriber, c, e),
@@ -802,8 +852,12 @@ final class R2DBC {
                                         s2 -> s2.request(1),
                                         v -> {},
                                         t -> cancel0(true, () -> subscriber.onError(t)),
-                                        () -> cancel0(true, () -> subscriber.onComplete())
-                                    ))
+                                        () -> cancel0(true, () -> subscriber.onComplete()),
+                                        configuration.subscriberProvider(),
+                                        subscriber
+                                    )),
+                                    configuration.subscriberProvider(),
+                                    subscriber
                                 ));
                             }
 
@@ -812,7 +866,9 @@ final class R2DBC {
                             catch (Exception e) {
                                 rollback(subscriber, c, e);
                             }
-                        }
+                        },
+                        configuration.subscriberProvider(),
+                        subscriber
                     ));
                 }
 
@@ -821,7 +877,9 @@ final class R2DBC {
                         s2 -> s2.request(1),
                         v -> {},
                         t -> cancel0(true, () -> s.onError(t)),
-                        () -> cancel0(true, () -> s.onError(e))
+                        () -> cancel0(true, () -> s.onError(e)),
+                        configuration.subscriberProvider(),
+                        s
                     ));
                 }
             };
@@ -869,9 +927,20 @@ final class R2DBC {
 
     @SuppressWarnings("unchecked")
     static final <T> T block(Publisher<? extends T> publisher) throws Throwable {
+        return block(publisher, CONFIG.get(), null);
+    }
+
+    static final <T> T block(Publisher<? extends T> publisher, Configuration configuration, Subscriber<?> subscriber) throws Throwable {
         Object complete = new Object();
         LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<>();
-        publisher.subscribe(subscriber(s -> s.request(1), queue::add, queue::add, () -> queue.add(complete)));
+        publisher.subscribe(subscriber(
+            s -> s.request(1),
+            queue::add,
+            queue::add,
+            () -> queue.add(complete),
+            configuration.subscriberProvider(),
+            subscriber
+        ));
 
         try {
             Object result = queue.take();
@@ -1612,7 +1681,7 @@ final class R2DBC {
         private volatile Cursor<R>        c;
 
         BlockingRecordSubscription(ResultQueryTrait<R> query, Subscriber<? super R> subscriber) {
-            super(subscriber);
+            super(query.configuration(), subscriber);
 
             this.query = query;
         }
@@ -1652,7 +1721,7 @@ final class R2DBC {
         final AbstractRowCountQuery query;
 
         BlockingRowCountSubscription(AbstractRowCountQuery query, Subscriber<? super Integer> subscriber) {
-            super(subscriber);
+            super(query.configuration(), subscriber);
 
             this.query = query;
         }
@@ -1682,7 +1751,7 @@ final class R2DBC {
             Subscriber<? super T> subscriber,
             TransactionalPublishable<T> transactional
         ) {
-            super(subscriber);
+            super(ctx.configuration(), subscriber);
 
             this.ctx = ctx;
             this.transactional = transactional;
@@ -1691,7 +1760,7 @@ final class R2DBC {
         @Override
         final void request0() {
             try {
-                subscriber.onNext(ctx.transactionResult(c -> block(transactional.run(c))));
+                subscriber.onNext(ctx.transactionResult(c -> block(transactional.run(c), configuration, subscriber)));
                 subscriber.onComplete();
             }
             catch (Throwable t) {
@@ -1718,5 +1787,24 @@ final class R2DBC {
         catch (Throwable t) {
             return "Error while rendering SQL: " + t.getMessage();
         }
+    }
+
+    static final <T, C> Subscriber<T> subscriber(
+        Consumer<Subscription> subscription,
+        Consumer<T> onNext,
+        Consumer<Throwable> onError,
+        Runnable onComplete,
+        SubscriberProvider<C> provider,
+        Subscriber<?> previous
+    ) {
+        return provider.subscriber(
+            subscription,
+            onNext,
+            onError,
+            onComplete,
+            previous != null
+                ? provider.context(downstream(previous))
+                : provider.context()
+        );
     }
 }

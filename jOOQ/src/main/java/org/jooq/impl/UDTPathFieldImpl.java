@@ -44,44 +44,33 @@ import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
-import java.util.stream.Stream;
-
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.DataType;
-import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Package;
-import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RecordQualifier;
-// ...
 import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
-// ...
 import org.jooq.UDT;
 import org.jooq.UDTPathField;
 import org.jooq.UDTRecord;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
-import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * A common base type for UDT path fields.
  *
  * @author Lukas Eder
  */
-@Internal
+@org.jooq.Internal
 public /* non-final */ class UDTPathFieldImpl<R extends Record, U extends UDTRecord<U>, T>
 extends
     AbstractField<T>

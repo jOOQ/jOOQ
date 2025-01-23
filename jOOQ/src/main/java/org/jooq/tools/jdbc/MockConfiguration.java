@@ -69,6 +69,7 @@ import org.jooq.RecordMapperProvider;
 import org.jooq.RecordUnmapper;
 import org.jooq.RecordUnmapperProvider;
 import org.jooq.SQLDialect;
+import org.jooq.SubscriberProvider;
 import org.jooq.TransactionListenerProvider;
 import org.jooq.TransactionProvider;
 // ...
@@ -79,6 +80,8 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.AbstractConfiguration;
 import org.jooq.impl.AnnotatedPojoMemberProvider;
 import org.jooq.impl.DefaultDSLContext;
+
+import org.jetbrains.annotations.NotNull;
 
 import io.r2dbc.spi.ConnectionFactory;
 
@@ -264,6 +267,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public FormattingProvider formattingProvider() {
         return delegate.formattingProvider();
+    }
+
+    @Override
+    public SubscriberProvider<?> subscriberProvider() {
+        return delegate.subscriberProvider();
     }
 
     @Override
@@ -483,6 +491,12 @@ public class MockConfiguration extends AbstractConfiguration {
     }
 
     @Override
+    public Configuration set(SubscriberProvider<?> newSubscriberProvider) {
+        delegate.set(newSubscriberProvider);
+        return this;
+    }
+
+    @Override
     public Configuration set(SQLDialect newDialect) {
         delegate.set(newDialect);
         return this;
@@ -665,6 +679,11 @@ public class MockConfiguration extends AbstractConfiguration {
     @Override
     public Configuration derive(FormattingProvider newFormattingProvider) {
         return new MockConfiguration(delegate.derive(newFormattingProvider), provider);
+    }
+
+    @Override
+    public Configuration derive(SubscriberProvider<?> newSubscriberProvider) {
+        return new MockConfiguration(delegate.derive(newSubscriberProvider), provider);
     }
 
     @Override

@@ -561,6 +561,12 @@ public interface Configuration extends Serializable {
     @NotNull
     FormattingProvider formattingProvider();
 
+    /**
+     * Get the configured <code>SubscriberProvider</code> from this configuration.
+     */
+    @NotNull
+    SubscriberProvider<?> subscriberProvider();
+
 
 
 
@@ -1273,6 +1279,20 @@ public interface Configuration extends Serializable {
     @NotNull
     Configuration set(FormattingProvider newFormattingProvider);
 
+    /**
+     * Change this configuration to hold new subscriber provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newSubscriberProvider The new subscriber provider to be contained in
+     *            the changed configuration.
+     * @return The changed configuration.
+     */
+    @Pro
+    @NotNull
+    Configuration set(SubscriberProvider<?> newSubscriberProvider);
+
 
 
 
@@ -1953,6 +1973,18 @@ public interface Configuration extends Serializable {
      */
     @NotNull
     Configuration derive(FormattingProvider newFormattingProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new subscriber
+     * provider.
+     *
+     * @param newSubscriberProvider The new subscriber provider to be contained in
+     *            the derived configuration.
+     * @return The derived configuration.
+     */
+    @Pro
+    @NotNull
+    Configuration derive(SubscriberProvider<?> newSubscriberProvider);
 
 
 

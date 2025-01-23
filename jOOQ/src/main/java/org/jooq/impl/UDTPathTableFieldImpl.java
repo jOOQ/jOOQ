@@ -50,14 +50,12 @@ import org.jooq.UDTPathField;
 import org.jooq.UDTPathTableField;
 import org.jooq.UDTRecord;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
-
 /**
  * A common base type for table fields that are also {@link UDTPathField}.
  *
  * @author Lukas Eder
  */
-@Internal
+@org.jooq.Internal
 public /* non-final */ class UDTPathTableFieldImpl<R extends Record, U extends UDTRecord<U>, T>
 extends
     UDTPathFieldImpl<R, U, T>

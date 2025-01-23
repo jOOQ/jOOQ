@@ -37,6 +37,10 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
+
+import java.util.List;
+
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Context;
@@ -53,8 +57,6 @@ import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
-
 /**
  * A common base type for UDT's
  * <p>
@@ -62,7 +64,7 @@ import org.jetbrains.annotations.ApiStatus.Internal;
  *
  * @author Lukas Eder
  */
-@Internal
+@org.jooq.Internal
 public /* non-final */ class UDTImpl<R extends UDTRecord<R>>
 extends
     AbstractNamed

@@ -260,6 +260,8 @@ implements
 
 
 
+
+
     private final Table<?>               table;
     private final boolean                ifExists;
     private boolean                      ifExistsColumn;
@@ -1355,8 +1357,16 @@ implements
                 ctx.formatIndentEnd()
                    .formatNewLine();
 
+
+
+
+
+
             if (parens)
                 ctx.sql(')');
+
+
+
 
             acceptFirstBeforeAfter(ctx);
             ctx.end(ALTER_TABLE_ADD);

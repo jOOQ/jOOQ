@@ -1289,7 +1289,6 @@ public interface Configuration extends Serializable {
      *            the changed configuration.
      * @return The changed configuration.
      */
-    @Pro
     @NotNull
     Configuration set(SubscriberProvider<?> newSubscriberProvider);
 

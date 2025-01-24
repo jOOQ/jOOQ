@@ -579,6 +579,17 @@ final class MetaImpl extends AbstractMeta {
                     switch (dsl().family()) {
 
 
+
+
+
+
+
+
+
+
+
+
+
                         case MYSQL:
                         case MARIADB: {
 
@@ -1054,7 +1065,7 @@ final class MetaImpl extends AbstractMeta {
                 name(name),
                 schema,
                 null, (ForeignKey<?, Record>) null, (InverseForeignKey<?, Record>) null, null, null,
-                comment(remarks != null ? remarks : schema.comment(name, null)),
+                comment(remarks != null ? remarks : schema.comment(name)),
                 tableOption(dsl(), schema, name, tableType),
                 null
             );
@@ -1546,6 +1557,14 @@ final class MetaImpl extends AbstractMeta {
                     : false;
 
                 switch (family()) {
+
+
+
+
+
+
+
+
 
 
 

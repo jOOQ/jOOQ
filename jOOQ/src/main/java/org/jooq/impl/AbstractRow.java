@@ -284,7 +284,7 @@ implements
         }
     }
 
-    private final void acceptDefault(Context<?> ctx) {
+    final void acceptDefault(Context<?> ctx) {
         ctx.sql("(")
            .visit(wrap(fields.fields))
            .sql(")");

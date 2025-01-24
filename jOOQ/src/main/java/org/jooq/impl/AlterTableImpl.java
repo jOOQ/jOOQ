@@ -258,6 +258,8 @@ implements
 
 
 
+
+
     private final Table<?>               table;
     private final boolean                ifExists;
     private boolean                      ifExistsColumn;
@@ -1774,6 +1776,7 @@ implements
 
     private final void acceptDropColumn(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 

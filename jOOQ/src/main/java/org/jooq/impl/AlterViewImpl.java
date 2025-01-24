@@ -188,6 +188,10 @@ implements
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS        = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_ALTER_TABLE_RENAME  = SQLDialect.supportedBy(CLICKHOUSE, HSQLDB, YUGABYTEDB);
 
+
+
+
+
     private final boolean supportsIfExists(Context<?> ctx) {
         if (renameTo != null)
             return !NO_SUPPORT_RENAME_IF_EXISTS.contains(ctx.dialect());
@@ -250,11 +254,18 @@ implements
                         ctx.visit(K_MATERIALIZED).sql(' ');
 
                     ctx.visit(K_VIEW).sql(' ').visit(view);
+                    Select<?> s = as;
 
-                    if (!fields.isEmpty())
+                    if (!fields.isEmpty()) {
+
+
+
+
+
                         ctx.sql(" (").visit(QueryPartCollectionView.wrap(fields).qualify(false)).sql(')');
+                    }
 
-                    ctx.formatSeparator().visit(K_AS).formatSeparator().visit(as);
+                    ctx.formatSeparator().visit(K_AS).formatSeparator().visit(s);
                     break;
             }
 

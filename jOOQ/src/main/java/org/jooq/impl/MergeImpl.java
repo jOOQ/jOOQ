@@ -58,6 +58,7 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
@@ -84,13 +85,10 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.conf.WriteIfReadonly.IGNORE;
-import static org.jooq.conf.WriteIfReadonly.THROW;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.trueCondition;
@@ -100,7 +98,6 @@ import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
-import static org.jooq.impl.Keywords.K_KEY;
 import static org.jooq.impl.Keywords.K_MATCHED;
 import static org.jooq.impl.Keywords.K_MERGE_INTO;
 import static org.jooq.impl.Keywords.K_NOT;
@@ -110,28 +107,19 @@ import static org.jooq.impl.Keywords.K_SOURCE;
 import static org.jooq.impl.Keywords.K_TARGET;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_UPDATE;
-import static org.jooq.impl.Keywords.K_UPSERT;
 import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WHERE;
-import static org.jooq.impl.Keywords.K_WITH_PRIMARY_KEY;
-import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
-import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.concat;
-import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.isEmpty;
-import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -212,10 +200,7 @@ import org.jooq.SelectField;
 import org.jooq.Table;
 import org.jooq.TableLike;
 // ...
-import org.jooq.UniqueKey;
-import org.jooq.exception.DataTypeException;
 import org.jooq.impl.FieldMapForUpdate.SetClause;
-import org.jooq.impl.QOM.Insert;
 import org.jooq.impl.QOM.Merge;
 import org.jooq.impl.QOM.MergeMatched;
 import org.jooq.impl.QOM.MergeNotMatched;
@@ -223,14 +208,10 @@ import org.jooq.impl.QOM.MergeNotMatchedBySource;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.UnmodifiableMap;
-import org.jooq.impl.QOM.Update;
 import org.jooq.impl.QOM.With;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * The SQL standard MERGE statement

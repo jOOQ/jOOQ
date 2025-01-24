@@ -699,10 +699,6 @@ implements
 
 
 
-
-
-
-
             else
                 return castTypePrefix0() + "(" + length() + ")" + castTypeSuffix0();
         }

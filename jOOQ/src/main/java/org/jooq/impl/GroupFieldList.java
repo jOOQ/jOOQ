@@ -75,6 +75,7 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.GroupField;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
@@ -130,6 +131,11 @@ final class GroupFieldList extends QueryPartList<GroupField> {
             else
                 super.acceptElement(ctx, part);
         }
+
+
+
+
+
         else
             super.acceptElement(ctx, part);
     }

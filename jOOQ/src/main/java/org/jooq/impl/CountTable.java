@@ -79,6 +79,7 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
 
 
 
+
             case CLICKHOUSE:
             case CUBRID:
             case DERBY:

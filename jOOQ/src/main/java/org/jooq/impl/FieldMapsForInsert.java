@@ -234,6 +234,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
 
 
+
                 case TRINO:
                 case MARIADB: {
                     if (supportsValues(ctx))
@@ -386,6 +387,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
     private final boolean supportsValues(Context<?> ctx) {
         switch (ctx.family()) {
+
 
 
 

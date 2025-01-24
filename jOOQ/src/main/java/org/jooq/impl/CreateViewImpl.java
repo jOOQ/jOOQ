@@ -293,11 +293,15 @@ implements
            // [#4806] CREATE VIEW doesn't accept parameters in most databases
            .visit(
                rename && !renameSupported
-             ? selectFrom(parsed().asTable(name("t"), map(f, Field::getUnqualifiedName, Name[]::new)))
+             ? renameSelect(parsed(), f)
              : query,
                ParamType.INLINED
            )
            .end(Clause.CREATE_VIEW_AS);
+    }
+
+    static final Select<?> renameSelect(Select<?> s, List<? extends Field<?>> f) {
+        return selectFrom(s.asTable(name("t"), map(f, Field::getUnqualifiedName, Name[]::new)));
     }
 
     final Select<?> parsed() {

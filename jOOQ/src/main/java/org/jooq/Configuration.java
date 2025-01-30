@@ -1981,7 +1981,6 @@ public interface Configuration extends Serializable {
      *            the derived configuration.
      * @return The derived configuration.
      */
-    @Pro
     @NotNull
     Configuration derive(SubscriberProvider<?> newSubscriberProvider);
 

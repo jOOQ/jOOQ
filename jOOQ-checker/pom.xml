@@ -88,11 +88,13 @@
         <!-- [#17823]
              Explicit upgrade of transitive dependency due to CVE-2020-8908, CVE-2023-2976
              TODO: Remove again when https://github.com/jOOQ/jOOQ/issues/17823  -->
+
         <dependency>
             <groupId>io.github.eisop</groupId>
             <artifactId>dataflow-errorprone</artifactId>
             <version>3.42.0-eisop5</version>
         </dependency>
+
         <dependency>
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_core</artifactId>

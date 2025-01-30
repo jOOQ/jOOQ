@@ -37,12 +37,13 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.R2DBC.rowCountSubscriber;
+
 import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.RowCountQuery;
 import org.jooq.impl.R2DBC.BlockingRowCountSubscription;
 import org.jooq.impl.R2DBC.QuerySubscription;
-import org.jooq.impl.R2DBC.RowCountSubscriber;
 
 import org.reactivestreams.Subscriber;
 
@@ -62,7 +63,7 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
         ConnectionFactory cf = configuration().connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (t, u, s) -> new RowCountSubscriber(u, s)));
+            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (t, u, s) -> rowCountSubscriber(u, s)));
         else
             subscriber.onSubscribe(new BlockingRowCountSubscription(this, subscriber));
     }

@@ -114,7 +114,6 @@ import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.R2DBC.BlockingRecordSubscription;
 import org.jooq.impl.R2DBC.QuerySubscription;
-import org.jooq.impl.R2DBC.ResultSubscriber;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -367,7 +366,7 @@ extends
         ConnectionFactory cf = configuration().connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, ResultSubscriber::new));
+            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, R2DBC::resultSubscriber));
         else
             subscriber.onSubscribe(new BlockingRecordSubscription<>(this, subscriber));
     }

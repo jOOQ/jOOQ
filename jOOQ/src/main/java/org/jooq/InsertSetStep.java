@@ -37,10 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.conf.Settings;
-
-import org.jetbrains.annotations.*;
-
 // ...
 // ...
 // ...
@@ -49,6 +45,7 @@ import org.jetbrains.annotations.*;
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
+// ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
@@ -77,6 +74,10 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 
 import java.util.Collection;
 import java.util.Map;
+
+import org.jooq.conf.Settings;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This type is used for the {@link Insert}'s alternative DSL API.

@@ -2848,7 +2848,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnTables())
             printClassJavadoc(out, table);
         else
-            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedOutputName() + "</code>.");
     }
 
     /**
@@ -2861,7 +2861,7 @@ public class JavaGenerator extends AbstractGenerator {
      * Subclasses may override this method to provide their own Javadoc.
      */
     protected void generateEmbeddableClassJavadoc(EmbeddableDefinition embeddable, JavaWriter out) {
-        printClassJavadoc(out, "The embeddable <code>" + embeddable.getQualifiedInputName() + "</code>.");
+        printClassJavadoc(out, "The embeddable <code>" + embeddable.getQualifiedOutputName() + "</code>.");
     }
 
     private String refRowType(JavaWriter out, Collection<? extends Definition> columns) {
@@ -3152,7 +3152,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnTables())
             printClassJavadoc(out, table);
         else
-            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateUDTs(SchemaDefinition schema) {
@@ -3330,7 +3330,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnUDTs())
             printClassJavadoc(out, udt);
         else
-            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateUDTPojos(SchemaDefinition schema) {
@@ -3361,7 +3361,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnUDTs())
             printClassJavadoc(out, udt);
         else
-            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateUDTInterfaces(SchemaDefinition schema) {
@@ -3392,7 +3392,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnUDTs())
             printClassJavadoc(out, udt);
         else
-            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedOutputName() + "</code>.");
     }
 
     /**
@@ -3426,7 +3426,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnUDTs())
             printClassJavadoc(out, udt);
         else
-            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The udt <code>" + udt.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateUDTRoutines(SchemaDefinition schema) {
@@ -3781,7 +3781,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnUDTs())
             printClassJavadoc(out, array);
         else
-            printClassJavadoc(out, "The type <code>" + array.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The type <code>" + array.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateEnums(SchemaDefinition schema) {
@@ -3997,7 +3997,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnUDTs())
             printClassJavadoc(out, e);
         else
-            printClassJavadoc(out, "The enum <code>" + e.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The enum <code>" + e.getQualifiedOutputName() + "</code>.");
     }
 
     /**
@@ -4494,7 +4494,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnTables())
             printClassJavadoc(out, dao);
         else
-            printClassJavadoc(out, "The synthetic DAO <code>" + dao.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The synthetic DAO <code>" + dao.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateDaos(SchemaDefinition schema) {
@@ -5119,7 +5119,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnTables())
             printClassJavadoc(out, table);
         else
-            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generatePojos(SchemaDefinition schema) {
@@ -6084,7 +6084,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnTables())
             printClassJavadoc(out, table);
         else
-            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateTables(SchemaDefinition schema) {
@@ -6776,8 +6776,8 @@ public class JavaGenerator extends AbstractGenerator {
                         final String unquotedKeyMethodName = keyMethodName.replace("`", "");
 
                         out.javadoc(
-                            "Get the implicit join path to the <code>" + foreignKey.getReferencedTable().getQualifiedName() + "</code> table"
-                          + (pathCounts.get(foreignKey.getReferencedTable()) > 1 ? ", via the <code>" + foreignKey.getInputName() + "</code> key" : "")
+                            "Get the implicit join path to the <code>" + foreignKey.getReferencedTable().getQualifiedOutputName() + "</code> table"
+                          + (pathCounts.get(foreignKey.getReferencedTable()) > 1 ? ", via the <code>" + foreignKey.getOutputName() + "</code> key" : "")
                           + "."
                         );
 
@@ -7351,7 +7351,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnEmbeddables())
             printClassJavadoc(out, embeddable);
         else
-            printClassJavadoc(out, "The embeddable <code>" + embeddable.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The embeddable <code>" + embeddable.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateEmbeddableInterfaces(SchemaDefinition schema) {
@@ -7382,7 +7382,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnEmbeddables())
             printClassJavadoc(out, embeddable);
         else
-            printClassJavadoc(out, "The embeddable <code>" + embeddable.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The embeddable <code>" + embeddable.getQualifiedOutputName() + "</code>.");
     }
 
     private String converterTemplate(List<String> converter) {
@@ -7546,7 +7546,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnTables())
             printClassJavadoc(out, table);
         else
-            printClassJavadoc(out, "The table <code>" + table.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The table <code>" + table.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateSequences(SchemaDefinition schema) {
@@ -7791,7 +7791,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnCatalogs())
             printClassJavadoc(out, catalog);
         else
-            printClassJavadoc(out, "The catalog <code>" + catalog.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The catalog <code>" + catalog.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateSchema(SchemaDefinition schema) {
@@ -7961,7 +7961,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnSchemas())
             printClassJavadoc(out, schema);
         else
-            printClassJavadoc(out, "The schema <code>" + schema.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The schema <code>" + schema.getQualifiedOutputName() + "</code>.");
     }
 
     protected void printFromAndInto(JavaWriter out, TableDefinition table) {
@@ -8788,7 +8788,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateCommentsOnRoutines())
             printClassJavadoc(out, routine);
         else
-            printClassJavadoc(out, "The routine <code>" + routine.getQualifiedInputName() + "</code>.");
+            printClassJavadoc(out, "The routine <code>" + routine.getQualifiedOutputName() + "</code>.");
     }
 
     protected void printConvenienceMethodFunctionAsField(JavaWriter out, RoutineDefinition function, boolean parametersAsField) {

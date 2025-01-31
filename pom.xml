@@ -133,6 +133,11 @@
             </dependency>
             <dependency>
                 <groupId>org.jooq</groupId>
+                <artifactId>jooq-reactor-extensions</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
                 <artifactId>jooq-jackson-extensions</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -860,6 +865,7 @@
         <module>jOOQ-jackson-extensions</module>
         <module>jOOQ-jpa-extensions</module>
         <module>jOOQ-postgres-extensions</module>
+        <module>jOOQ-reactor-extensions</module>
 
         <module>jOOQ-meta</module>
         <module>jOOQ-meta-extensions</module>

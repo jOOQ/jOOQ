@@ -203,6 +203,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableElement;
 // ...
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
@@ -1775,6 +1776,9 @@ implements
                 break;
         }
     }
+
+
+
 
 
 

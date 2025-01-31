@@ -1029,12 +1029,6 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <ul>
      * <li>{@link SQLDialect#SQLITE}</li>
      * </ul>
-     * <p>
-     * If your dialect does not support this clause, jOOQ will still render it,
-     * if you apply it to your query. This might then cause syntax errors
-     * reported either by your database or your JDBC driver.
-     * <p>
-     * You shouldn't combine this with {@link #setForShare(boolean)}
      *
      * @param forUpdate The flag's value
      */
@@ -1194,12 +1188,6 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * "http://www.postgresql.org/docs/9.0/static/sql-select.html#SQL-FOR-UPDATE-SHARE"
      * >Postgres FOR UPDATE / FOR SHARE</a></li>
      * </ul>
-     * <p>
-     * If your dialect does not support this clause, jOOQ will still render it,
-     * if you apply it to your query. This might then cause syntax errors
-     * reported either by your database or your JDBC driver.
-     * <p>
-     * You shouldn't combine this with {@link #setForUpdate(boolean)}
      *
      * @param forShare The flag's value
      */

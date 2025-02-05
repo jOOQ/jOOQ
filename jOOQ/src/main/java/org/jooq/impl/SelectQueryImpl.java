@@ -2141,7 +2141,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
            .visit(K_FROM).sqlIndentStart(" (")
            .subquery(true);
 
-        toSQLReference0(ctx, new AliasOverride(originalFields, aliasedFields));
+        // [#13560] [#17947] Communicate the enforcement of MULTISET content to the CursorImpl.
+        if (ctx.executeContext() != null)
+            ctx.executeContext().data(DATA_MULTISET_CONTENT, true);
+        ctx.data(DATA_MULTISET_CONTENT, true, c -> toSQLReference0(c, new AliasOverride(originalFields, aliasedFields)));
 
         ctx.subquery(false)
            .sqlIndentEnd(") ")

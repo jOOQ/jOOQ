@@ -260,10 +260,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.jooq.AggregateFunction;
 import org.jooq.Asterisk;
 import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
@@ -1362,6 +1364,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             x.limit.from(limit);
         });
     }
+
+
+
+
+
 
 
 

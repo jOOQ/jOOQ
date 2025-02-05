@@ -306,6 +306,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 if ("record".equalsIgnoreCase(qName) && f.getDataType().isRecord()) {
                     peek.values.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(s::into));
                     s = states.pop();
+                    s.inRecord--;
                     break x;
                 }
                 else if ("result".equalsIgnoreCase(qName) && f.getDataType().isMultiset()) {

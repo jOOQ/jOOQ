@@ -1495,6 +1495,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
     @SuppressWarnings("unchecked")
     @Override
     public final void accept(Context<?> ctx) {

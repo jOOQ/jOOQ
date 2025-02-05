@@ -4409,6 +4409,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+    final boolean isGrouping() {
+
+        // [#15820] TODO: The presence of any aggregate function also implies at least GROUP BY ()
+        return !groupBy.isEmpty() || having.hasWhere();
+    }
+
     final GroupFieldList getGroupBy() {
         return groupBy;
     }

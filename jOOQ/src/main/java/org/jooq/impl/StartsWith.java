@@ -111,12 +111,6 @@ implements
 
 
 
-
-
-
-
-
-
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -129,6 +123,10 @@ implements
             case SQLITE:
             case YUGABYTEDB:
                 return false;
+
+
+
+
 
 
 
@@ -173,13 +171,6 @@ implements
 
 
 
-
-
-
-
-
-
-
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -190,9 +181,16 @@ implements
             case MYSQL:
             case POSTGRES:
             case SQLITE:
-            case YUGABYTEDB:
-                ctx.visit(DSL.position(Like.requiresStringCast(string), Like.requiresStringCast(prefix)).eq(inline(1)));
+            case YUGABYTEDB: {
+                acceptLike(ctx);
                 break;
+            }
+
+
+
+
+
+
 
 
 
@@ -223,6 +221,14 @@ implements
 
 
 
+
+    private final void acceptLike(Context<?> ctx) {
+        ctx.visit(string.like(DSL.concat(Tools.escapeForLike(prefix, ctx.configuration()), inline("%")), Tools.ESCAPE));
+    }
+
+    private final void acceptPosition(Context<?> ctx) {
+        ctx.visit(DSL.position(Like.requiresStringCast(string), Like.requiresStringCast(prefix)).eq(inline(1)));
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

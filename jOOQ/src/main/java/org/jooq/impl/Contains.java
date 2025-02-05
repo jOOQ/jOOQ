@@ -115,12 +115,6 @@ implements
 
 
 
-
-
-
-
-
-
             case CLICKHOUSE:
             case CUBRID:
             case DERBY:
@@ -133,6 +127,12 @@ implements
             case SQLITE:
             case TRINO:
                 return false;
+
+
+
+
+
+
 
             default:
                 return true;
@@ -159,16 +159,9 @@ implements
                 else if (value.getDataType().getType() == JSONB.class || content.getDataType().getType() == JSONB.class)
                     ctx.visit(value).sql(" @> ").visit(content);
                 else
-                    acceptDefault(ctx);
+                    acceptLike(ctx);
                 break;
             }
-
-
-
-
-
-
-
 
 
 
@@ -196,9 +189,17 @@ implements
             case MYSQL:
             case SQLITE:
             case TRINO: {
-                acceptDefault(ctx);
+                acceptLike(ctx);
                 break;
             }
+
+
+
+
+
+
+
+
 
             default:
                 ctx.visit(function(N_CONTAINS, BOOLEAN, value, content));
@@ -215,7 +216,11 @@ implements
 
 
 
-    private final void acceptDefault(Context<?> ctx) {
+    private final void acceptLike(Context<?> ctx) {
+        ctx.visit(value.like(DSL.concat(inline("%"), Tools.escapeForLike(content, ctx.configuration()), inline("%")), Tools.ESCAPE));
+    }
+
+    private final void acceptPosition(Context<?> ctx) {
         ctx.visit(DSL.position(Like.requiresStringCast(value), Like.requiresStringCast(content)).gt(inline(0)));
     }
 

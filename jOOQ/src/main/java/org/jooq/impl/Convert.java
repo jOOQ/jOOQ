@@ -245,6 +245,15 @@ final class Convert {
                     log.debug("Jackson kotlin module is not available");
                 }
 
+                try {
+                    Class<?> jtmc = Class.forName("com.fasterxml.jackson.datatype.jsr310.JavaTimeModule");
+                    Object jtm = jtmc.getDeclaredConstructor().newInstance();
+                    Reflect.on(jsonMapper).call("registerModule", jtm);
+                }
+                catch (Exception e) {
+                    log.debug("JavaTimeModule is not available");
+                }
+
                 jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
                 jsonWriteMethod = klass.getMethod("writeValueAsString", Object.class);
                 log.debug("Jackson is available");

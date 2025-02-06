@@ -63,6 +63,16 @@ public interface WithAsStep14 {
     /**
      * Associate a subselect with a common table expression's table and column
      * names.
+     * <p>
+     * A common table expression renders itself differently, depending on
+     * {@link Context#declareCTE()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The common table expression renders its CTE name
+     * (<code>this</code>) along with the <code>AS (query)</code> clause. This
+     * typically happens in <code>WITH</code> clauses.</li>
+     * <li>Reference: The common table expression renders its alias identifier.
+     * This happens everywhere else.</li>
+     * </ul>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -75,6 +85,16 @@ public interface WithAsStep14 {
      * This adds the PostgreSQL 12 <code>MATERIALIZED</code> hint to the common
      * table expression definition, or silently ignores it, if the hint is not
      * supported.
+     * <p>
+     * A common table expression renders itself differently, depending on
+     * {@link Context#declareCTE()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The common table expression renders its CTE name
+     * (<code>this</code>) along with the <code>AS (query)</code> clause. This
+     * typically happens in <code>WITH</code> clauses.</li>
+     * <li>Reference: The common table expression renders its alias identifier.
+     * This happens everywhere else.</li>
+     * </ul>
      */
     @NotNull @CheckReturnValue
     @Support
@@ -87,6 +107,16 @@ public interface WithAsStep14 {
      * This adds the PostgreSQL 12 <code>NOT MATERIALIZED</code> hint to the
      * common table expression definition, or silently ignores it, if the hint
      * is not supported.
+     * <p>
+     * A common table expression renders itself differently, depending on
+     * {@link Context#declareCTE()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The common table expression renders its CTE name
+     * (<code>this</code>) along with the <code>AS (query)</code> clause. This
+     * typically happens in <code>WITH</code> clauses.</li>
+     * <li>Reference: The common table expression renders its alias identifier.
+     * This happens everywhere else.</li>
+     * </ul>
      */
     @NotNull @CheckReturnValue
     @Support

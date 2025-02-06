@@ -201,6 +201,7 @@ import org.jooq.ConstraintForeignKeyReferencesStep8;
 import org.jooq.ConstraintForeignKeyReferencesStep9;
 import org.jooq.ConstraintForeignKeyReferencesStepN;
 import org.jooq.ConstraintTypeStep;
+import org.jooq.Context;
 // ...
 import org.jooq.Converter;
 import org.jooq.CreateTypeStep;
@@ -12924,6 +12925,17 @@ public class DSL {
 
     /**
      * Create an <code>IN</code> parameter.
+     * <p>
+     * A parameter renders itself differently, depending on
+     * {@link Context#declareParameters()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The paramet renders its {@link Parameter#getParamMode()}
+     * along with the parameter name and data type. This typically happens in
+     * <code>CREATE PROCEDURE</code> or <code>CREATE FUNCTION</code>
+     * clauses.</li>
+     * <li>Reference: The parameter renders its identifier. This happens
+     * everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support
@@ -12933,6 +12945,17 @@ public class DSL {
 
     /**
      * Create an <code>IN</code> parameter.
+     * <p>
+     * A parameter renders itself differently, depending on
+     * {@link Context#declareParameters()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The paramet renders its {@link Parameter#getParamMode()}
+     * along with the parameter name and data type. This typically happens in
+     * <code>CREATE PROCEDURE</code> or <code>CREATE FUNCTION</code>
+     * clauses.</li>
+     * <li>Reference: The parameter renders its identifier. This happens
+     * everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support
@@ -12942,6 +12965,17 @@ public class DSL {
 
     /**
      * Create an <code>IN OUT</code> parameter.
+     * <p>
+     * A parameter renders itself differently, depending on
+     * {@link Context#declareParameters()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The paramet renders its {@link Parameter#getParamMode()}
+     * along with the parameter name and data type. This typically happens in
+     * <code>CREATE PROCEDURE</code> or <code>CREATE FUNCTION</code>
+     * clauses.</li>
+     * <li>Reference: The parameter renders its identifier. This happens
+     * everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support
@@ -12951,6 +12985,17 @@ public class DSL {
 
     /**
      * Create an <code>IN OUT</code> parameter.
+     * <p>
+     * A parameter renders itself differently, depending on
+     * {@link Context#declareParameters()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The paramet renders its {@link Parameter#getParamMode()}
+     * along with the parameter name and data type. This typically happens in
+     * <code>CREATE PROCEDURE</code> or <code>CREATE FUNCTION</code>
+     * clauses.</li>
+     * <li>Reference: The parameter renders its identifier. This happens
+     * everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support
@@ -12960,6 +13005,17 @@ public class DSL {
 
     /**
      * Create an <code>OUT</code> parameter.
+     * <p>
+     * A parameter renders itself differently, depending on
+     * {@link Context#declareParameters()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The paramet renders its {@link Parameter#getParamMode()}
+     * along with the parameter name and data type. This typically happens in
+     * <code>CREATE PROCEDURE</code> or <code>CREATE FUNCTION</code>
+     * clauses.</li>
+     * <li>Reference: The parameter renders its identifier. This happens
+     * everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support
@@ -12969,6 +13025,17 @@ public class DSL {
 
     /**
      * Create an <code>OUT</code> parameter.
+     * <p>
+     * A parameter renders itself differently, depending on
+     * {@link Context#declareParameters()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The paramet renders its {@link Parameter#getParamMode()}
+     * along with the parameter name and data type. This typically happens in
+     * <code>CREATE PROCEDURE</code> or <code>CREATE FUNCTION</code>
+     * clauses.</li>
+     * <li>Reference: The parameter renders its identifier. This happens
+     * everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support

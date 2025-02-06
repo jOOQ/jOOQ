@@ -70,6 +70,8 @@ import java.util.function.Function;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
+import org.jooq.impl.QOM.TableAlias;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -237,6 +239,16 @@ public interface Name extends QueryPart, Comparable<Name> {
 
     /**
      * Create an empty {@link WindowDefinition} from this name.
+     * <p>
+     * A window definition renders itself differently, depending on
+     * {@link Context#declareWindows()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The window definition renders its window name
+     * (<code>this</code>) along with the <code>AS (window specification)</code>
+     * clause. This typically happens in <code>WINDOW</code> clauses.</li>
+     * <li>Reference: The window definition renders its alias identifier. This
+     * happens everywhere else.</li>
+     * </ul>
      *
      * @see #as(WindowSpecification)
      */
@@ -254,6 +266,16 @@ public interface Name extends QueryPart, Comparable<Name> {
      * <li>referenced from the <code>OVER</code> clause (see
      * {@link AggregateFunction#over(WindowDefinition)}</li>
      * </ul>
+     * <p>
+     * A window definition renders itself differently, depending on
+     * {@link Context#declareWindows()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The window definition renders its window name
+     * (<code>this</code>) along with the <code>AS (window specification)</code>
+     * clause. This typically happens in <code>WINDOW</code> clauses.</li>
+     * <li>Reference: The window definition renders its alias identifier. This
+     * happens everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support({ CUBRID, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
@@ -265,6 +287,16 @@ public interface Name extends QueryPart, Comparable<Name> {
      * <p>
      * Column names are implicitly inherited from the <code>SELECT</code>
      * statement.
+     * <p>
+     * A common table expression renders itself differently, depending on
+     * {@link Context#declareCTE()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The common table expression renders its CTE name
+     * (<code>this</code>) along with the <code>AS (query)</code> clause. This
+     * typically happens in <code>WITH</code> clauses.</li>
+     * <li>Reference: The common table expression renders its alias identifier.
+     * This happens everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support
@@ -280,6 +312,16 @@ public interface Name extends QueryPart, Comparable<Name> {
      * <p>
      * Column names are implicitly inherited from the <code>SELECT</code>
      * statement.
+     * <p>
+     * A common table expression renders itself differently, depending on
+     * {@link Context#declareCTE()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The common table expression renders its CTE name
+     * (<code>this</code>) along with the <code>AS (query)</code> clause. This
+     * typically happens in <code>WITH</code> clauses.</li>
+     * <li>Reference: The common table expression renders its alias identifier.
+     * This happens everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support
@@ -295,6 +337,16 @@ public interface Name extends QueryPart, Comparable<Name> {
      * <p>
      * Column names are implicitly inherited from the <code>SELECT</code>
      * statement.
+     * <p>
+     * A common table expression renders itself differently, depending on
+     * {@link Context#declareCTE()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The common table expression renders its CTE name
+     * (<code>this</code>) along with the <code>AS (query)</code> clause. This
+     * typically happens in <code>WITH</code> clauses.</li>
+     * <li>Reference: The common table expression renders its alias identifier.
+     * This happens everywhere else.</li>
+     * </ul>
      */
     @NotNull
     @Support

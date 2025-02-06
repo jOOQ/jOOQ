@@ -41,6 +41,8 @@ import java.util.function.Function;
 
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
+import org.jooq.impl.QOM.FieldAlias;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -61,6 +63,23 @@ public non-sealed interface SelectField<T> extends SelectFieldOrAsterisk, Named,
     /**
      * Create an alias for this field.
      * <p>
+     * A field alias renders itself differently, depending on
+     * {@link Context#declareFields()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The field alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>SELECT</code> and <code>RETURNING</code>
+     * clauses.</li>
+     * <li>Reference: The field alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link FieldAlias#$aliased()}.
+     * <p>
      * Note that the case-sensitivity of the returned field depends on
      * {@link Settings#getRenderQuotedNames()}. By default, field aliases are
      * quoted, and thus case-sensitive in many SQL dialects!
@@ -75,15 +94,30 @@ public non-sealed interface SelectField<T> extends SelectFieldOrAsterisk, Named,
     /**
      * Create an alias for this field.
      * <p>
+     * A field alias renders itself differently, depending on
+     * {@link Context#declareFields()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The field alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>SELECT</code> and <code>RETURNING</code>
+     * clauses.</li>
+     * <li>Reference: The field alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link FieldAlias#$aliased()}.
+     * <p>
      * Note that the case-sensitivity of the returned field depends on
      * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
      * field aliases are quoted, and thus case-sensitive in many SQL dialects -
      * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
-     * <p>
-     * If the argument {@link Name#getName()} is qualified, then the
-     * {@link Name#last()} part will be used.
      *
-     * @param alias The alias name
+     * @param alias The alias name. If {@link Name#getName()} is qualified, then
+     *            the {@link Name#last()} part will be used.
      * @return The field alias
      */
     @NotNull
@@ -92,6 +126,23 @@ public non-sealed interface SelectField<T> extends SelectFieldOrAsterisk, Named,
 
     /**
      * Create an alias for this field based on another field's name.
+     * <p>
+     * A field alias renders itself differently, depending on
+     * {@link Context#declareFields()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The field alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>SELECT</code> and <code>RETURNING</code>
+     * clauses.</li>
+     * <li>Reference: The field alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link FieldAlias#$aliased()}.
      *
      * @param otherField The other field whose name this field is aliased with.
      * @return The field alias.

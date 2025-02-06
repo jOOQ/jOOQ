@@ -74,6 +74,7 @@ public interface FieldLike {
      * quoted, and thus case-sensitive in many SQL dialects!
      *
      * @return This result provider as a Field&lt;?&gt; object
+     * @see SelectField#as(String)
      */
     @NotNull
     <T> Field<T> asField(String alias);

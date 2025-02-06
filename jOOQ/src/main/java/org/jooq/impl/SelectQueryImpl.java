@@ -2030,6 +2030,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
                 case CUBRID:
                 case DUCKDB:
                 case YUGABYTEDB: {

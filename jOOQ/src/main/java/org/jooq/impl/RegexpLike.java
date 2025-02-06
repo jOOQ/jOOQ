@@ -77,6 +77,7 @@ final class RegexpLike extends AbstractCondition implements QOM.RegexpLike {
 
 
 
+
             case CUBRID:
             case H2:
             case MARIADB:

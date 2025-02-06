@@ -92,7 +92,9 @@ import java.util.function.Function;
 import org.jooq.TableOptions.TableType;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.JoinHint;
+import org.jooq.impl.QOM.TableAlias;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -396,15 +398,32 @@ extends
     /**
      * Create an alias for this table.
      * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderQuotedNames()}. By default, table aliases are
-     * quoted, and thus case-sensitive in many SQL dialects!
-     * <p>
      * This method works both to alias the table as well as alias the table in
      * its {@link SelectField} form via the {@link SelectField#as(String)}
      * override. In order to alias only the projected table expression, use
      * {@link DSL#field(SelectField)} to wrap this table into a {@link Field}
      * first.
+     * <p>
+     * A table alias renders itself differently, depending on
+     * {@link Context#declareTables()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The table alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>FROM</code> and <code>INTO</code>
+     * clauses.</li>
+     * <li>Reference: The table alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link TableAlias#$aliased()}.
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderQuotedNames()}. By default, table aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
      *
      * @param alias The alias name
      * @return The table alias
@@ -416,10 +435,6 @@ extends
 
     /**
      * Create an alias for this table and its fields.
-     * <p>
-     * Note that the case-sensitivity of the returned table and columns depends
-     * on {@link Settings#getRenderQuotedNames()}. By default, table aliases are
-     * quoted, and thus case-sensitive in many SQL dialects!
      * <p>
      * <h5>Derived column lists for table references</h5>
      * <p>
@@ -458,6 +473,27 @@ extends
      *   SELECT 1, 2 FROM DUAL
      * ) t
      * </code></pre>
+     * <p>
+     * A table alias renders itself differently, depending on
+     * {@link Context#declareTables()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The table alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>FROM</code> and <code>INTO</code>
+     * clauses.</li>
+     * <li>Reference: The table alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link TableAlias#$aliased()}.
+     * <p>
+     * Note that the case-sensitivity of the returned table and columns depends
+     * on {@link Settings#getRenderQuotedNames()}. By default, table aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
      *
      * @param alias The alias name
      * @param fieldAliases The field aliases. Excess aliases are ignored,
@@ -472,10 +508,6 @@ extends
     /**
      * Create an alias for this table and its fields.
      * <p>
-     * Note that the case-sensitivity of the returned table and columns depends
-     * on {@link Settings#getRenderQuotedNames()}. By default, table aliases are
-     * quoted, and thus case-sensitive in many SQL dialects!
-     * <p>
      * <h5>Derived column lists for table references</h5>
      * <p>
      * Note, not all databases support derived column lists for their table
@@ -513,6 +545,27 @@ extends
      *   SELECT 1, 2 FROM DUAL
      * ) t
      * </code></pre>
+     * <p>
+     * A table alias renders itself differently, depending on
+     * {@link Context#declareTables()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The table alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>FROM</code> and <code>INTO</code>
+     * clauses.</li>
+     * <li>Reference: The table alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link TableAlias#$aliased()}.
+     * <p>
+     * Note that the case-sensitivity of the returned table and columns depends
+     * on {@link Settings#getRenderQuotedNames()}. By default, table aliases are
+     * quoted, and thus case-sensitive in many SQL dialects!
      *
      * @param alias The alias name
      * @param fieldAliases The field aliases. Excess aliases are ignored,
@@ -577,20 +630,35 @@ extends
     /**
      * Create an alias for this table.
      * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
-     * table aliases are quoted, and thus case-sensitive in many SQL dialects -
-     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
-     * <p>
-     * If the argument {@link Name#getName()} is qualified, then the
-     * {@link Name#last()} part will be used.
-     * <p>
      * This method works both to alias the table as well as alias the table in
      * its {@link SelectField} form via the {@link SelectField#as(String)}
      * override. In order to alias only the projected table expression, use
      * {@link DSL#field(SelectField)} to wrap this table into a {@link Field}
+     * <p>
+     * A table alias renders itself differently, depending on
+     * {@link Context#declareTables()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The table alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>FROM</code> and <code>INTO</code>
+     * clauses.</li>
+     * <li>Reference: The table alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link TableAlias#$aliased()}.
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
+     * table aliases are quoted, and thus case-sensitive in many SQL dialects -
+     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
      *
-     * @param alias The alias name
+     * @param alias The alias name. If {@link Name#getName()} is qualified, then
+     *            the {@link Name#last()} part will be used.
      * @return The table alias
      */
     @Override
@@ -601,21 +669,16 @@ extends
     /**
      * Create an alias for this table and its fields.
      * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
-     * table aliases are quoted, and thus case-sensitive in many SQL dialects -
-     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
-     * <p>
-     * If the argument {@link Name#getName()} is qualified, then the
-     * {@link Name#last()} part will be used.
-     * <p>
      * <h5>Derived column lists for table references</h5>
      * <p>
      * Note, not all databases support derived column lists for their table
      * aliases. On the other hand, some databases do support derived column
      * lists, but only for derived tables. jOOQ will try to turn table
      * references into derived tables to make this syntax work. In other words,
-     * the following statements are equivalent: <pre><code>
+     * the following statements are equivalent:
+     *
+     * <pre>
+     * <code>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM my_table t(a, b)
@@ -625,13 +688,17 @@ extends
      * FROM (
      *   SELECT * FROM my_table
      * ) t(a, b)
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * <h5>Derived column lists for derived tables</h5>
      * <p>
      * Other databases may not support derived column lists at all, but they do
      * support common table expressions. The following statements are
-     * equivalent: <pre><code>
+     * equivalent:
+     *
+     * <pre>
+     * <code>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM (
@@ -645,12 +712,37 @@ extends
      *   UNION ALL
      *   SELECT 1, 2 FROM DUAL
      * ) t
-     * </code></pre>
+     * </code>
+     * </pre>
+     * <p>
+     * A table alias renders itself differently, depending on
+     * {@link Context#declareTables()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The table alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>FROM</code> and <code>INTO</code>
+     * clauses.</li>
+     * <li>Reference: The table alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link TableAlias#$aliased()}.
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
+     * table aliases are quoted, and thus case-sensitive in many SQL dialects -
+     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
      *
-     * @param alias The alias name
-     * @param fieldAliases The field aliases. Excess aliases are ignored,
-     *            missing aliases will be substituted by this table's field
-     *            names.
+     * @param alias The alias name. If {@link Name#getName()} is qualified, then
+     *            the {@link Name#last()} part will be used.
+     * @param fieldAliases The field aliases. If {@link Name#getName()} is
+     *            qualified, then the {@link Name#last()} part will be used.
+     *            Excess aliases are ignored, missing aliases will be
+     *            substituted by this table's field names.
      * @return The table alias
      */
     @NotNull
@@ -660,21 +752,16 @@ extends
     /**
      * Create an alias for this table and its fields.
      * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
-     * table aliases are quoted, and thus case-sensitive in many SQL dialects -
-     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
-     * <p>
-     * If the argument {@link Name#getName()} is qualified, then the
-     * {@link Name#last()} part will be used.
-     * <p>
      * <h5>Derived column lists for table references</h5>
      * <p>
      * Note, not all databases support derived column lists for their table
      * aliases. On the other hand, some databases do support derived column
      * lists, but only for derived tables. jOOQ will try to turn table
      * references into derived tables to make this syntax work. In other words,
-     * the following statements are equivalent: <pre><code>
+     * the following statements are equivalent:
+     *
+     * <pre>
+     * <code>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM my_table t(a, b)
@@ -684,13 +771,17 @@ extends
      * FROM (
      *   SELECT * FROM my_table
      * ) t(a, b)
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * <h5>Derived column lists for derived tables</h5>
      * <p>
      * Other databases may not support derived column lists at all, but they do
      * support common table expressions. The following statements are
-     * equivalent: <pre><code>
+     * equivalent:
+     *
+     * <pre>
+     * <code>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM (
@@ -704,12 +795,37 @@ extends
      *   UNION ALL
      *   SELECT 1, 2 FROM DUAL
      * ) t
-     * </code></pre>
+     * </code>
+     * </pre>
+     * <p>
+     * A table alias renders itself differently, depending on
+     * {@link Context#declareTables()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The table alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>FROM</code> and <code>INTO</code>
+     * clauses.</li>
+     * <li>Reference: The table alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link TableAlias#$aliased()}.
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderQuotedNames()} and the {@link Name}. By default,
+     * table aliases are quoted, and thus case-sensitive in many SQL dialects -
+     * use {@link DSL#unquotedName(String...)} for case-insensitive aliases.
      *
-     * @param alias The alias name
-     * @param fieldAliases The field aliases. Excess aliases are ignored,
-     *            missing aliases will be substituted by this table's field
-     *            names.
+     * @param alias The alias name. If {@link Name#getName()} is qualified, then
+     *            the {@link Name#last()} part will be used.
+     * @param fieldAliases The field aliases. If {@link Name#getName()} is
+     *            qualified, then the {@link Name#last()} part will be used.
+     *            Excess aliases are ignored, missing aliases will be
+     *            substituted by this table's field names.
      * @return The table alias
      */
     @NotNull
@@ -727,7 +843,8 @@ extends
      * MY_TABLE.as("t1", f -&gt;"prefix_" + f.getName());
      * </code></pre>
      *
-     * @param alias The alias name
+     * @param alias The alias name. If {@link Name#getName()} is qualified, then
+     *            the {@link Name#last()} part will be used.
      * @param aliasFunction The function providing field aliases.
      * @return The table alias
      * @deprecated - 3.14.0 - [#10156] - These methods will be removed without
@@ -768,6 +885,23 @@ extends
 
     /**
      * Create an alias for this table based on another table's name.
+     * <p>
+     * A table alias renders itself differently, depending on
+     * {@link Context#declareTables()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The table alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>FROM</code> and <code>INTO</code>
+     * clauses.</li>
+     * <li>Reference: The table alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link TableAlias#$aliased()}.
      *
      * @param otherTable The other table whose name this table is aliased with.
      * @return The table alias.
@@ -778,6 +912,23 @@ extends
 
     /**
      * Create an alias for this table based on another table's name.
+     * <p>
+     * A table alias renders itself differently, depending on
+     * {@link Context#declareTables()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The table alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>FROM</code> and <code>INTO</code>
+     * clauses.</li>
+     * <li>Reference: The table alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link TableAlias#$aliased()}.
      *
      * @param otherTable The other table whose name this table is aliased with.
      * @param otherFields The other fields whose field name this table's fields
@@ -790,6 +941,23 @@ extends
 
     /**
      * Create an alias for this table based on another table's name.
+     * <p>
+     * A table alias renders itself differently, depending on
+     * {@link Context#declareTables()}. There are two rendering modes:
+     * <ul>
+     * <li>Declaration: The table alias renders its aliased expression
+     * (<code>this</code>) along with the <code>AS alias</code> clause. This
+     * typically happens in <code>FROM</code> and <code>INTO</code>
+     * clauses.</li>
+     * <li>Reference: The table alias renders its alias identifier. This happens
+     * everywhere else.</li>
+     * </ul>
+     * <p>
+     * <strong>There is no rendering mode that reproduces the aliased expression
+     * as there is no way to formally decide when that mode would be more
+     * appropriate than the referencing of the alias!</strong> If the aliased
+     * expression is the preferred output, it can be extracted from the
+     * {@link QOM} API via {@link TableAlias#$aliased()}.
      *
      * @param otherTable The other table whose name this table is aliased with.
      * @param otherFields The other fields whose field name this table's fields
